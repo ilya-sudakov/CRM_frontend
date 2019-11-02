@@ -1,0 +1,45 @@
+@import "../../../variables.scss";
+
+.authorization {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 25px;
+
+  &__title {
+  }
+
+  &__panel {
+      min-width: 250px;
+      max-width: 500px;
+      border: 1px solid black;
+      padding: 10px 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+ 
+      .authorization__field_name {
+        align-self: flex-start;
+      }
+
+      .authorization__field_input {
+        width: 100%;
+        margin-bottom: 15px;
+
+        input[type="text"] {
+            width: 100%;
+        }
+      }
+
+      .authorization__submit {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+
+          input[type="submit"] {
+            width: 80%;
+          }
+      }
+  }
+}
