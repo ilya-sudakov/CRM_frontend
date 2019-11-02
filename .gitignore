@@ -1,0 +1,39 @@
+HELP.md
+!**/src/main/**
+!**/src/test/**
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+/node_modules
+/src/main/resources/static/built/*
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+*.iws
+*.iml
+*.ipr
+out/
+*.class
+*.jar
+target
+.idea
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
