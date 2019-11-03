@@ -1,15 +1,23 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Header from '../Header/Header.jsx';
 import Clients from './Clients/Clients.jsx';
+import SideMenu from '../SideMenu/SideMenu.jsx';
+import './MainPage.scss';
 
 class MainPage extends React.Component {
     render() {
         return (
-            <React.Fragment>
+            <div className="main_page">
                 <Header />
-                <Clients />
-            </React.Fragment>
+                <div className="main_page__content">
+                    <SideMenu />
+                    <Switch>
+                        {/* <Clients /> */}
+                        <Route path="/clients" component={Clients} />
+                    </Switch>
+                </div>
+            </div>
         );
     }
 }

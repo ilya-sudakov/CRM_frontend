@@ -8,8 +8,20 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 
 class App extends React.Component {
   state = {
+    // isAuthorized: false,
+    // userData: null,
     isAuthorized: true,
-    userData: null,
+    userData: {
+      name: 'Илья Судаков',
+      email: 'ilyasudakov@inbox.ru',
+    }
+  }
+
+  setUserData = (isAuthorized, userData) => {
+    this.setState({
+      isAuthorized: isAuthorized,
+      userData: userData
+    })
   }
 
   componentDidMount() {
@@ -21,7 +33,7 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route path="/login" 
-            render={(props) => <LoginPage isAuthorized={this.state.isAuthorized} {...props} /> } 
+            render={(props) => <LoginPage isAuthorized={this.state.isAuthorized} setUserData={this.setUserData} {...props} /> } 
           />
           <PrivateRoute path="/"
             isAuthorized={this.state.isAuthorized}

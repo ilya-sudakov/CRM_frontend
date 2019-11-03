@@ -8,7 +8,13 @@
     justify-content: space-between;
     align-items: center;
 
-    &__logo {
+    &__company {
+        font-size: 24px;
+        display: flex;
+
+        .header__name {
+            margin-left: 5px;
+        }
     }
 
     &__menu {
@@ -18,7 +24,6 @@
         align-items: center;
 
         .header__item {
-            width: 100%;
             padding: 15px 10px;
             text-align: center;
         }
