@@ -1,6 +1,6 @@
 @import "../../../variables.scss";
 
-.clients {
+.requests {
   width: 100%;
   padding: 25px 0;
   display: flex;
@@ -16,10 +16,12 @@
     border: 1px solid #ccc;
     border-collapse: collapse;
 
-    .clients__action {
+    .requests__action {
       cursor: pointer;
       text-decoration: underline;
     }
+
+    
 
     tr {
       background-color: #f8f8f8;
@@ -30,13 +32,26 @@
       padding: 5px;
       text-align: center;
       border-right: 1px solid #ddd;
+
+      table {
+        width: 100%;
+      }
     }
 
     thead {
       font-size: 80%;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      background-color: #c4c4c4;
     }
+  }
+
+  .requests__table--even {
+    background-color: #c4c4c4;
+  }
+
+  .requests__table--odd {
+    background-color: #f8f8f8;
   }
 
   @media screen and (max-width: 1220px) {
@@ -78,14 +93,16 @@
       text-transform: uppercase;
     }
 
-    &__table td:nth-of-type(1):before { content: "#"; }
-    &__table td:nth-of-type(2):before { content: "Клиент"; }
-    &__table td:nth-of-type(3):before { content: "Контакт"; }
-    &__table td:nth-of-type(4):before { content: "Адрес"; }
-    &__table td:nth-of-type(5):before { content: "Досье"; }
-    &__table td:nth-of-type(6):before { content: "Статус"; }
-    &__table td:nth-of-type(7):before { content: "Упрощенка"; }
-    &__table td:nth-of-type(8):before { content: "Действия"; }
+    // &__table td:nth-of-type(1):before { content: "#"; }
+    // &__table td:nth-of-type(2):before { content: "Дата1"; }
+    // &__table td:nth-of-type(3):before { content: "Продукция"; }
+    // &__table td:nth-of-type(4):before { content: "Количество"; }
+    // &__table td:nth-of-type(5):before { content: "Кодовое слово"; }
+    // &__table td:nth-of-type(6):before { content: "Ответственный"; }
+    // &__table td:nth-of-type(7):before { content: "Дата2"; }
+    &__table td::before {
+      content: attr(data-label);
+    }
 
     &__table td:last-child {
       border-bottom: 0;

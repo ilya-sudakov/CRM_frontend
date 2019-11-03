@@ -1,36 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Clients.scss';
 
-// let clients = [
-//     {
-//         id: 1,
-//         name: 'ООО компания',
-//         contant: '982734982374',
-//         address: 'sdfdf',
-//         dossier: '',
-//         status: 'Клиент',
-//         simplified: true
-//     },
-//     {
-//         id: 2,
-//         name: 'ООО компания',
-//         contant: '982734982374',
-//         address: 'sdfdf',
-//         dossier: '',
-//         status: 'Клиент',
-//         simplified: true
-//     },
-//     {
-//         id: 3,
-//         name: 'ООО компания',
-//         contant: '982734982374',
-//         address: 'sdfdf',
-//         dossier: '',
-//         status: 'Клиент',
-//         simplified: true
-//     },
-// ]
-
 const Clients = () => {
 
     const [clients, setClients] = useState([
@@ -60,12 +30,93 @@ const Clients = () => {
             dossier: '',
             status: 'Клиент',
             simplified: true
-        }
+        },
+        {
+            id: 4,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
+        {
+            id: 5,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
+        {
+            id: 6,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
+        {
+            id: 7,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
+        {
+            id: 8,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
+        {
+            id: 9,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
+        {
+            id: 10,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
+        {
+            id: 11,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
+        {
+            id: 12,
+            name: 'ООО компания',
+            contant: '982734982374',
+            address: 'sdfdf',
+            dossier: '',
+            status: 'Клиент',
+            simplified: true
+        },
     ])
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
-        const newClients = clients.filter( el => el.id != id);
+        const newClients = clients.filter( el => el.id != id );
         setClients(newClients);
     }
 
