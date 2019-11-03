@@ -51,7 +51,7 @@ const Contracts = (props) => {
     }
 
     useEffect(() => {
-        document.title = "Контракты";
+        document.title = "Договоры";
     })
 
     return (

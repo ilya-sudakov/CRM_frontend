@@ -1,15 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import './NewRequest.scss';
 
-const NewRequest = () => {
+const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         client: '',
         contact: '',
+        description: '',
+        status: '',
+        something: '',
     })
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        let inputs = document.querySelectorAll('.new_request__input_field input');
+        setRequestInputs({
+            client: inputs[0].value,
+            contact: inputs[1].value,
+            description: inputs[2].value,
+            status: inputs[3].value,
+            something: inputs[4].value
+        });
+        props.history.push("/requests");
     }
+
+    useEffect(() => {
+        document.title = "Создание заявки";
+    })
 
     return(
         <div className="new_request">
@@ -35,7 +51,7 @@ const NewRequest = () => {
                 <div className="new_request__input_field">
                     <input type="text" />
                 </div>
-                <input className="new_request__submit" type="submit" onClick={handleSubmit}></input>
+                <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить" />
             </form>
         </div>
     );

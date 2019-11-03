@@ -9,18 +9,16 @@ const Requests = (props) => {
             id: 1,
             date1: new Date().getMinutes(),
             date2: new Date().getMinutes(),
+            codeword: 'Андрюха',
+            accountable: 'Петя',
             items: [
                 {
                     name: 'Плинтус1',
-                    amount: '160 кор.',
-                    codeword: 'Андрюха',
-                    accountable: 'Петя'
+                    amount: '160 кор.'
                 },
                 {
                     name: 'Плинтус2',
-                    amount: '160 кор.',
-                    codeword: 'Андрюха',
-                    accountable: 'Петя'
+                    amount: '160 кор.'
                 }
             ]
         },
@@ -28,12 +26,12 @@ const Requests = (props) => {
             id: 2,
             date1: new Date().getMinutes(),
             date2: new Date().getMinutes(),
+            codeword: 'Андрюха',
+            accountable: 'Петя',
             items: [
                 {
                     name: 'Плинтус1',
-                    amount: '160 кор.',
-                    codeword: 'Андрюха',
-                    accountable: 'Петя'
+                    amount: '160 кор.'
                 }
             ]
         },
@@ -41,27 +39,93 @@ const Requests = (props) => {
             id: 3,
             date1: new Date().getMinutes(),
             date2: new Date().getMinutes(),
+            codeword: 'Андрюха',
+            accountable: 'Петя',
             items: [
                 {
                     name: 'Плинтус1',
                     amount: '160 кор.',
-                    codeword: 'Андрюха',
-                    accountable: 'Петя'
                 },
                 {
                     name: 'Плинтус1',
-                    amount: '160 кор.',
-                    codeword: 'Андрюха',
-                    accountable: 'Петя'
+                    amount: '160 кор.'
                 },
                 {
                     name: 'Плинтус1',
-                    amount: '160 кор.',
-                    codeword: 'Андрюха',
-                    accountable: 'Петя'
+                    amount: '160 кор.'
                 }
             ]
         },
+        {
+            id: 4,
+            date1: new Date().getMinutes(),
+            date2: new Date().getMinutes(),
+            codeword: 'Андрюха',
+            accountable: 'Петя',
+            items: [
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.',
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                }
+            ]
+        },
+        {
+            id: 5,
+            date1: new Date().getMinutes(),
+            date2: new Date().getMinutes(),
+            codeword: 'Андрюха',
+            accountable: 'Петя',
+            items: [
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.',
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                },
+                {
+                    name: 'Плинтус1',
+                    amount: '160 кор.'
+                }
+            ]
+        }
     ])
 
     const deleteItem = (event) => {
@@ -121,10 +185,10 @@ const Requests = (props) => {
                                 {order_id === 0 && <td rowSpan={request.items.length} data-label="Дата 1">{request.date1}</td>}
                                 <td data-label="Продукция">{order.name}</td>
                                 <td data-label="Количество">{order.amount}</td>
-                                <td data-label="Кодовое слово">{order.codeword}</td>
-                                <td data-label="Ответственный">{order.accountable}</td>
+                                {order_id === 0 && <td rowSpan={request.items.length} data-label="Кодовое слово">{request.codeword}</td>}
+                                {order_id === 0 && <td rowSpan={request.items.length} data-label="Ответственный">{request.accountable}</td>}
                                 {order_id === 0 && <td rowSpan={request.items.length} data-label="Дата 2">{request.date2}</td>}
-                                {order_id === 0 && <td rowSpan={request.items.length} data-label="Действия">
+                                {order_id === 0 && <td rowSpan={request.items.length} data-label="Действия" className="requests__actions">
                                     <div data-id={request.id} className="requests__action" >Просмотр</div>
                                     <div data-id={request.id} className="requests__action" >Редактировать</div>
                                     <div data-id={request.id} className="requests__action" onClick={deleteItem}>Удалить</div>

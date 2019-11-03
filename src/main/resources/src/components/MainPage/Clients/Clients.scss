@@ -85,10 +85,16 @@
     &__table td:nth-of-type(5):before { content: "Досье"; }
     &__table td:nth-of-type(6):before { content: "Статус"; }
     &__table td:nth-of-type(7):before { content: "Упрощенка"; }
-    &__table td:nth-of-type(8):before { content: "Действия"; }
+    // &__table td:nth-of-type(8):before { content: "Действия"; }
 
     &__table td:last-child {
+      display: flex;
+      justify-content: center;
       border-bottom: 0;
+
+      .clients__action {
+        padding: 5px 10px;
+      }
     }
   }
 }

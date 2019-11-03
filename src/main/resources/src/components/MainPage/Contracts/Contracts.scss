@@ -89,9 +89,16 @@
     &__table td:nth-of-type(9):before { content: "Доставка"; }
     &__table td:nth-of-type(10):before { content: "Статус"; }
     &__table td:nth-of-type(11):before { content: "Заявка"; }
-    &__table td:nth-of-type(12):before { content: "Действия"; }
+    // &__table td:nth-of-type(12):before { content: "Действия"; }
+    
     &__table td:last-child {
+      display: flex;
+      justify-content: center;
       border-bottom: 0;
+
+      .contracts__action {
+        padding: 5px 10px;
+      }
     }
   }
 }
