@@ -9,6 +9,11 @@
 
   &__title {
     margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  &__link {
+    margin-bottom: 15px;
   }
 
   &__table {
@@ -31,7 +36,7 @@
     td {
       padding: 5px;
       text-align: center;
-      border-right: 1px solid #ddd;
+      border-right: 1px solid rgb(207, 207, 207);
 
       table {
         width: 100%;
@@ -47,7 +52,7 @@
   }
 
   .requests__table--even {
-    background-color: #c4c4c4;
+    background-color: #ebebeb;
   }
 
   .requests__table--odd {

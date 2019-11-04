@@ -7,6 +7,7 @@ import SideMenu from '../SideMenu/SideMenu.jsx';
 import Contracts from './Contracts/Contracts.jsx';
 import Requests from './Requests/Requests.jsx';
 import NewRequest from './Requests/NewRequest/NewRequest.jsx';
+import GeneralPage from './GeneralPage/GeneralPage.jsx';
 
 class MainPage extends React.Component {
     render() {
@@ -17,6 +18,7 @@ class MainPage extends React.Component {
                     <SideMenu />
                     <div className="main_page__activity_panel">
                         <Switch>
+                            <Route exact path="/" component={GeneralPage} />
                             <Route exact path="/clients" component={Clients} />
                             <Route exact path="/contracts" component={Contracts} />
                             <Route exact path="/requests" component={Requests} />
