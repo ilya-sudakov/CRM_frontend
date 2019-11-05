@@ -1,55 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import './NewRequest.scss';
+import { addRequest } from '../../../../utils/utilsAPI.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
-        client: '',
-        contact: '',
-        description: '',
-        status: '',
-        something: '',
+        date: "",
+        codeWord: "",
+        responsible: ""
     })
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        let inputs = document.querySelectorAll('.new_request__input_field input');
+        addRequest(requestInputs)
+            .then(() => props.history.push("/requests"))
+    }
+
+    const handleInputChange = e => {
+        const { name, value } = e.target;
         setRequestInputs({
-            client: inputs[0].value,
-            contact: inputs[1].value,
-            description: inputs[2].value,
-            status: inputs[3].value,
-            something: inputs[4].value
-        });
-        props.history.push("/requests");
+            ...requestInputs,
+            [name]: value
+        })
     }
 
     useEffect(() => {
         document.title = "Создание заявки";
     })
 
-    return(
+    return (
         <div className="new_request">
             <div className="new_request__title">Новая заявка</div>
             <form className="new_request__form">
-                <div className="new_request__input_name">Клиент</div>
+                <div className="new_request__input_name">Дата</div>
                 <div className="new_request__input_field">
-                    <input type="text" />
+                    <input type="text" name="date" onChange={handleInputChange} />
                 </div>
-                <div className="new_request__input_name">Контакт</div>
+                <div className="new_request__input_name">Кодовое слово</div>
                 <div className="new_request__input_field">
-                    <input type="text" />
+                    <input type="text" name="codeWord" onChange={handleInputChange} />
                 </div>
-                <div className="new_request__input_name">Описание</div>
+                <div className="new_request__input_name">Ответственный</div>
                 <div className="new_request__input_field">
-                    <input type="text" />
-                </div>
-                <div className="new_request__input_name">Статус</div>
-                <div className="new_request__input_field">
-                    <input type="text" />
-                </div>
-                <div className="new_request__input_name">Заметка</div>
-                <div className="new_request__input_field">
-                    <input type="text" />
+                    <input type="text" name="responsible" onChange={handleInputChange} />
                 </div>
                 <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить" />
             </form>

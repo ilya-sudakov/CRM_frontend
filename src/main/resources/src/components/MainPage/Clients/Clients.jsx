@@ -1,128 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import './Clients.scss';
+import { getClients, deleteClient } from '../../../utils/utilsAPI.jsx';
 
 const Clients = () => {
 
-    const [clients, setClients] = useState([
-        {
-            id: 1,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 2,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 3,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 4,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 5,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 6,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 7,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 8,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 9,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 10,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 11,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-        {
-            id: 12,
-            name: 'ООО компания',
-            contant: '982734982374',
-            address: 'sdfdf',
-            dossier: '',
-            status: 'Клиент',
-            simplified: true
-        },
-    ])
+    const [clients, setClients] = useState([])
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
-        const newClients = clients.filter( el => el.id != id );
-        setClients(newClients);
+        deleteClient(id)
+            .then(() => getClients())
+            .then(res => res.json())
+            .then((clients) => {
+                setClients(clients);
+            })
     }
 
     useEffect(() => {
         document.title = "Клиенты";
-    })
+        getClients()
+            .then(res => res.json())
+            .then((clients) => {
+                setClients(clients);
+            })
+    }, [])
 
     return (
         <div className="clients">
@@ -144,12 +45,12 @@ const Clients = () => {
                     {clients.map((item, id) => (
                         <tr key={id + 1}>
                             <td>{item.id}</td>
-                            <td>{item.name}</td>
+                            <td>{item.client}</td>
                             <td>{item.contant}</td>
                             <td>{item.address !== '' ? item.address : '...'}</td>
-                            <td>{item.dossier !== '' ? item.dossier : '...'}</td>
+                            <td>{item.file !== '' ? item.dossier : '...'}</td>
                             <td>{item.status}</td>
-                            <td>{item.simplified ? 'Да' : 'Нет'}</td>
+                            <td>{item.smpl ? 'Да' : 'Нет'}</td>
                             <td>
                                 <div data-id={item.id} className="clients__action" >Просмотр</div>
                                 <div data-id={item.id} className="clients__action" >Редактировать</div>

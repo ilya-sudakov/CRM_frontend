@@ -1,142 +1,84 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Requests.scss';
+import { getRequests, deleteRequest } from '../../../utils/utilsAPI.jsx';
 
 const Requests = (props) => {
 
-    const [requests, setRequests] = useState([
-        {
-            id: 1,
-            date1: new Date().getMinutes(),
-            date2: new Date().getMinutes(),
-            codeword: 'Андрюха',
-            accountable: 'Петя',
-            items: [
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус2',
-                    amount: '160 кор.'
-                }
-            ]
-        },
-        {
-            id: 2,
-            date1: new Date().getMinutes(),
-            date2: new Date().getMinutes(),
-            codeword: 'Андрюха',
-            accountable: 'Петя',
-            items: [
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                }
-            ]
-        },
-        {
-            id: 3,
-            date1: new Date().getMinutes(),
-            date2: new Date().getMinutes(),
-            codeword: 'Андрюха',
-            accountable: 'Петя',
-            items: [
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.',
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                }
-            ]
-        },
-        {
-            id: 4,
-            date1: new Date().getMinutes(),
-            date2: new Date().getMinutes(),
-            codeword: 'Андрюха',
-            accountable: 'Петя',
-            items: [
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.',
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                }
-            ]
-        },
-        {
-            id: 5,
-            date1: new Date().getMinutes(),
-            date2: new Date().getMinutes(),
-            codeword: 'Андрюха',
-            accountable: 'Петя',
-            items: [
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.',
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                },
-                {
-                    name: 'Плинтус1',
-                    amount: '160 кор.'
-                }
-            ]
-        }
-    ])
+    // const [requests, setRequests] = useState([
+    //     {
+    //         id: 1,
+    //         date1: new Date().getMinutes(),
+    //         date2: new Date().getMinutes(),
+    //         codeword: 'Андрюха',
+    //         accountable: 'Петя',
+    //         items: [
+    //             {
+    //                 name: 'Плинтус1',
+    //                 amount: '160 кор.'
+    //             },
+    //             {
+    //                 name: 'Плинтус2',
+    //                 amount: '160 кор.'
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         id: 2,
+    //         date1: new Date().getMinutes(),
+    //         date2: new Date().getMinutes(),
+    //         codeword: 'Андрюха',
+    //         accountable: 'Петя',
+    //         items: [
+    //             {
+    //                 name: 'Плинтус1',
+    //                 amount: '160 кор.'
+    //             }
+    //         ]
+    //     },
+    //     {
+    //         id: 3,
+    //         date1: new Date().getMinutes(),
+    //         date2: new Date().getMinutes(),
+    //         codeword: 'Андрюха',
+    //         accountable: 'Петя',
+    //         items: [
+    //             {
+    //                 name: 'Плинтус1',
+    //                 amount: '160 кор.',
+    //             },
+    //             {
+    //                 name: 'Плинтус1',
+    //                 amount: '160 кор.'
+    //             },
+    //             {
+    //                 name: 'Плинтус1',
+    //                 amount: '160 кор.'
+    //             }
+    //         ]
+    //     },
+    // ])
+
+    const [requests, setRequests] = useState([])
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
-        const newRequests = requests.filter(el => el.id != id);
-        setRequests(newRequests);
+        deleteRequest(id)
+            .then(() => getRequests())
+            .then(res => res.json())
+            .then((requests) => {
+                setRequests(requests);
+            })
     }
 
     useEffect(() => {
         document.title = "Заявки";
-    })
+        getRequests()
+            .then(res => res.json())
+            .then(requests => {
+                setRequests(requests);
+            })
+    }, [])
 
     return (
         <div className="requests">
@@ -146,12 +88,13 @@ const Requests = (props) => {
                 <thead>
                     <tr>
                         <td>#</td>
-                        <td>Дата 1</td>
-                        <td>Продукция</td>
-                        <td>Количество</td>
+                        {/* <td>Дата 1</td> */}
+                        <td>Дата</td>
+                        {/* <td>Продукция</td> */}
+                        {/* <td>Количество</td> */}
                         <td>Кодовое слово</td>
                         <td>Ответственный</td>
-                        <td>Дата 2</td>
+                        {/* <td>Дата 2</td> */}
                         <td>Действия</td>
                     </tr>
                 </thead>
@@ -178,11 +121,12 @@ const Requests = (props) => {
 
                         </tr>
                     ))} */}
-                    {requests.map((request, request_id) => (
+                    {/* Works w/ items as array */}
+                    {/* {requests.map((request, request_id) => (
                         request.items.map((order, order_id) => (
                             <tr key={request_id + order_id} className={request_id % 2 === 0 ? 'requests__table--even' : 'requests__table--odd'}>
                                 {order_id === 0 && <td rowSpan={request.items.length} data-label="ID">{request.id}</td>}
-                                {order_id === 0 && <td rowSpan={request.items.length} data-label="Дата 1">{request.date1}</td>}
+                                {order_id === 0 && <td rowSpan={request.items.length} data-label="Дата 1">{request.date}</td>}
                                 <td data-label="Продукция">{order.name}</td>
                                 <td data-label="Количество">{order.amount}</td>
                                 {order_id === 0 && <td rowSpan={request.items.length} data-label="Кодовое слово">{request.codeword}</td>}
@@ -195,6 +139,19 @@ const Requests = (props) => {
                                 </td>}
                             </tr>
                         ))
+                    ))}  */}
+                    {requests.map((request, request_id) => (
+                        <tr key={request_id} className={request_id % 2 === 0 ? 'requests__table--even' : 'requests__table--odd'}>
+                            <td data-label="ID">{request.id}</td>
+                            <td data-label="Дата">{request.date}</td>
+                            <td data-label="Кодовое слово">{request.codeWord}</td>
+                            <td data-label="Ответственный">{request.responsible}</td>
+                            <td data-label="Действия" className="requests__actions">
+                                <div data-id={request.id} className="requests__action" >Просмотр</div>
+                                <div data-id={request.id} className="requests__action" >Редактировать</div>
+                                <div data-id={request.id} className="requests__action" onClick={deleteItem}>Удалить</div>
+                            </td>
+                        </tr>
                     ))}
                 </tbody>
             </table>

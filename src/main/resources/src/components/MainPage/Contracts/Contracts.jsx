@@ -1,58 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import './Contracts.scss';
+import { getDocuments, deleteDocument } from '../../../utils/utilsAPI.jsx';
 
 const Contracts = (props) => {
-    const [contracts, setContracts] = useState([
-        {
-            id: 1,
-            number: '10.11.19',
-            date: new Date().getTime(),
-            template: 'договор',
-            client: 'Петя Сидоров',
-            price: 1500,
-            daysLeft: '50',
-            deadline: '10.10.2020',
-            delivery: true,
-            status: 'Согласование макета',
-            requestNumber: '51241',
-        },
-        {
-            id: 2,
-            number: '10.11.19',
-            date: new Date().getTime(),
-            template: 'договор',
-            client: 'Петя Сидоров',
-            price: 15700,
-            daysLeft: '50',
-            deadline: '10.10.2020',
-            delivery: true,
-            status: 'Согласование макета',
-            requestNumber: '51241',
-        },
-        {
-            id: 3,
-            number: '10.11.19',
-            date: new Date().getTime(),
-            template: 'договор',
-            client: 'Петя Сидоров',
-            price: 39000,
-            daysLeft: '50',
-            deadline: '10.10.2020',
-            delivery: true,
-            status: 'Согласование макета',
-            requestNumber: '51241',
-        },
-    ])
+    const [contracts, setContracts] = useState([])
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
-        const newContracts = contracts.filter( el => el.id != id);
-        setContracts(newContracts);
+        deleteDocument(id)
+            .then(() => getDocuments())
+            .then(res => res.json())
+            .then((documents) => {
+                setContracts(documents)
+                console.log(documents);
+                
+            })
     }
 
     useEffect(() => {
         document.title = "Договоры";
-    })
+        getDocuments()
+            .then(res => res.json())
+            .then((documents) => {
+                setContracts(documents);
+            })
+    }, [])
 
     return (
         <div className="contracts">
@@ -87,7 +59,7 @@ const Contracts = (props) => {
                             <td>{item.deadline}</td>
                             <td>{item.delivery ? 'Да' : 'Нет'}</td>
                             <td>{item.status}</td>
-                            <td>{item.requestNumber}</td>
+                            <td>{item.request}</td>
                             <td>
                                 <div data-id={item.id} className="contracts__action" >Просмотр</div>
                                 <div data-id={item.id} className="contracts__action" >Редактировать</div>
