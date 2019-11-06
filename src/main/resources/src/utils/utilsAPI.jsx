@@ -1,6 +1,6 @@
 const request = (options) => {
     const headers = new Headers({
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
     })
 
     const defaults = { headers: headers };
@@ -31,6 +31,14 @@ export function getClients() {
         url: process.env.API_BASE_URL + "/client",
         method: "GET"
     });
+}
+
+export function addClient(newClient) {
+    return request({
+        url: process.env.API_BASE_URL + "/client",
+        method: "POST",
+        body: JSON.stringify(newClient)
+    })
 }
 
 export function deleteClient(id) {

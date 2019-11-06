@@ -12,8 +12,6 @@ const Contracts = (props) => {
             .then(res => res.json())
             .then((documents) => {
                 setContracts(documents)
-                console.log(documents);
-                
             })
     }
 
@@ -48,14 +46,14 @@ const Contracts = (props) => {
                 </thead>
                 <tbody>
                     {contracts.map((item, id) => (
-                        <tr key={id + 1}>
+                        <tr key={id + 1} className={id % 2 === 0 ? 'contracts__table--even' : 'contracts__table--odd'}>
                             <td>{item.id}</td>
                             <td>{item.number}</td>
                             <td>{item.date}</td>
                             <td>{item.template}</td>
                             <td>{item.client}</td>
                             <td>{item.price}</td>
-                            <td>{item.daysLeft}</td>
+                            <td>{item.daysLeft + ' кал. дней'}</td>
                             <td>{item.deadline}</td>
                             <td>{item.delivery ? 'Да' : 'Нет'}</td>
                             <td>{item.status}</td>

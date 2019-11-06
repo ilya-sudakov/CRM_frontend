@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 
-const Header = () => {
+const Header = (props) => {
     return (
         <div className="header">
             <div className="header__company">
@@ -14,7 +14,11 @@ const Header = () => {
                 </div>
             </div>
             <div className="header__menu">
-                <Link className="header__item" to="/login" >
+                <div className="header__item header__item--user">
+                    <div className="header__username">{props.userData.name}</div>
+                    <div className="header__email">{props.userData.email}</div>
+                </div>
+                <Link className="header__item" to="/login">
                     Выход
                 </Link>
             </div>

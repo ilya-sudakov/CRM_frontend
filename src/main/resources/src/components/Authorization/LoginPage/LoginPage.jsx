@@ -19,26 +19,13 @@ const LoginPage = (props) => {
         console.log(email, password);
         const userData = Object.assign({}, email, password);
         props.setUserData(true, userData);
-        // return(
-        //     <Redirect to={{
-        //         pathname: '/',
-        //         from: { from: props.location }
-        //     }} />
-        // );
-        props.history.push('/');
+        props.history.push('/clients');
     }
 
     const handleSignOut = (event) => {
         event.preventDefault();
         props.setUserData(false, null);
     }
-
-    // if (props.isAuthorized) {
-    //     return <Redirect to={{
-    //         pathname: '/',
-    //         state: { from: props.location }
-    //     }} />
-    // }
 
     return (
         <div className="authorization">
@@ -75,7 +62,7 @@ const LoginPage = (props) => {
                                 <input type="submit" onClick={handleSignOut} value="Выйти" />
                             </div>
                         </div>
-                        <Link className="authorization__submit" to="/">Вернуться на главную</Link>
+                        <Link className="authorization__submit" to="/clients">Вернуться на главную</Link>
                     </React.Fragment>
                 )}
         </div>

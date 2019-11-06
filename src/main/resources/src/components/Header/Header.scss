@@ -26,6 +26,24 @@
         .header__item {
             padding: 15px 10px;
             text-align: center;
+
+            &--user {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        &__menu {
+            .header__item {
+                padding: 10px 5px;
+                &--user {
+                    .header__email {
+                        display: none;
+                    }
+                }
+            }
         }
     }
 }

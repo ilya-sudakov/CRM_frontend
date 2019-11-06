@@ -12,6 +12,10 @@
     margin-bottom: 20px;
   }
 
+  &__link {
+    margin-bottom: 15px;
+  }
+
   &__table {
     width: calc(100% - 50px);
     border: 1px solid #ccc;
@@ -38,6 +42,14 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
+  }
+
+  .clients__table--even {
+    background-color: #ebebeb;
+  }
+
+  .clients__table--odd {
+    background-color: #f8f8f8;
   }
 
   @media screen and (max-width: 1220px) {

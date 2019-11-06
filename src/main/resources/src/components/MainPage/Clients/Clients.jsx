@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Clients.scss';
 import { getClients, deleteClient } from '../../../utils/utilsAPI.jsx';
 
@@ -28,6 +29,7 @@ const Clients = () => {
     return (
         <div className="clients">
             <div className="clients__title">Клиенты</div>
+            <Link className="clients__link" to="clients/new">Добавить клиента</Link>
             <table className="clients__table">
                 <thead>
                     <tr>
@@ -43,12 +45,12 @@ const Clients = () => {
                 </thead>
                 <tbody>
                     {clients.map((item, id) => (
-                        <tr key={id + 1}>
+                        <tr key={id + 1} className={id % 2 === 0 ? 'clients__table--even' : 'clients__table--odd'}>
                             <td>{item.id}</td>
                             <td>{item.client}</td>
-                            <td>{item.contant}</td>
+                            <td>{item.contact}</td>
                             <td>{item.address !== '' ? item.address : '...'}</td>
-                            <td>{item.file !== '' ? item.dossier : '...'}</td>
+                            <td>{item.file !== '' ? item.file : '...'}</td>
                             <td>{item.status}</td>
                             <td>{item.smpl ? 'Да' : 'Нет'}</td>
                             <td>

@@ -90,7 +90,7 @@ const Requests = (props) => {
                         <td>#</td>
                         {/* <td>Дата 1</td> */}
                         <td>Дата</td>
-                        {/* <td>Продукция</td> */}
+                        <td>Продукция</td>
                         {/* <td>Количество</td> */}
                         <td>Кодовое слово</td>
                         <td>Ответственный</td>
@@ -144,6 +144,7 @@ const Requests = (props) => {
                         <tr key={request_id} className={request_id % 2 === 0 ? 'requests__table--even' : 'requests__table--odd'}>
                             <td data-label="ID">{request.id}</td>
                             <td data-label="Дата">{request.date}</td>
+                            <td data-label="Продукция">{request.products}</td>
                             <td data-label="Кодовое слово">{request.codeWord}</td>
                             <td data-label="Ответственный">{request.responsible}</td>
                             <td data-label="Действия" className="requests__actions">
