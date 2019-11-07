@@ -31,7 +31,7 @@ const Contracts = (props) => {
                 <thead>
                     <tr>
                         <td>ID</td>
-                        <td>№</td>
+                        {/* <td>№</td> */}
                         <td>Дата</td>
                         <td>Шаблон</td>
                         <td>Клиент</td>
@@ -48,16 +48,16 @@ const Contracts = (props) => {
                     {contracts.map((item, id) => (
                         <tr key={id + 1} className={id % 2 === 0 ? 'contracts__table--even' : 'contracts__table--odd'}>
                             <td>{item.id}</td>
-                            <td>{item.number}</td>
+                            {/* <td>{item.number}</td> */}
                             <td>{item.date}</td>
                             <td>{item.template}</td>
                             <td>{item.client}</td>
                             <td>{item.price}</td>
                             <td>{item.daysLeft + ' кал. дней'}</td>
-                            <td>{item.deadline}</td>
+                            <td>{item.deadline }</td>
                             <td>{item.delivery ? 'Да' : 'Нет'}</td>
-                            <td>{item.status}</td>
-                            <td>{item.request}</td>
+                            <td>{item.status ? item.status : '...'}</td>
+                            <td>{item.request ? item.request : '...'}</td>
                             <td>
                                 <div data-id={item.id} className="contracts__action" >Просмотр</div>
                                 <div data-id={item.id} className="contracts__action" >Редактировать</div>

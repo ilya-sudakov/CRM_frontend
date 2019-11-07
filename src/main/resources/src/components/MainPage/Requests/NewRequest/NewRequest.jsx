@@ -9,15 +9,49 @@ const NewRequest = (props) => {
         codeWord: "",
         responsible: ""
     })
+    const [requestErrors, setRequestErrors] = useState({
+        date: "",
+        products: "",
+        codeWord: "",
+        responsible: ""
+    })
+    const [dateValid, setDateValid] = useState(false);
+    const [productsValid, setProductsValid] = useState(false);
+    const [responsibleValid, setResponsibleValid] = useState(false);
+
+    const validateField = (fieldName, value) => {
+        switch (fieldName) {
+            case 'date':
+                value !== "" ? setDateValid(true) : setDateValid(false);
+                break;
+            case 'products':
+                value !== "" ? setProductsValid(true) : setProductsValid(false);
+                break;
+            case 'responsible':
+                value !== "" ? setResponsibleValid(true) : setResponsibleValid(false);
+                break;
+        }
+    }
+
+    const formIsValid = () => {
+        if (dateValid && productsValid && responsibleValid) {
+            return true;
+        }
+        else {
+            alert("Форма не заполнена");
+            return false;
+        };
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        addRequest(requestInputs)
+        formIsValid() && addRequest(requestInputs)
             .then(() => props.history.push("/requests"))
     }
 
     const handleInputChange = e => {
         const { name, value } = e.target;
+        validateField(name, value);
         setRequestInputs({
             ...requestInputs,
             [name]: value

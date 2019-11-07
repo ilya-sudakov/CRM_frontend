@@ -10,18 +10,48 @@ const newClient = (props) => {
         file: "",
         status: "",
         smpl: true
-    })
+    });
+    const [formErrors, setFormErrors] = useState({
+        client: "",
+        contact: "",
+        address: "",
+        file: "",
+        status: "",
+        smpl: ""
+    });
+    const [clientValid, setClientValid] = useState(false);
+    const [contactValid, setContactValid] = useState(false);
+
+    const validateField = (fieldName, value) => {
+        switch (fieldName) {
+            case 'client':
+                value !== "" ? setClientValid(true) : setClientValid(false);
+                break;
+            case 'contact':
+                value !== "" ? setContactValid(true) : setContactValid(false);
+                break;
+        }
+    }
+
+    const formIsValid = () => {
+        if (clientValid && contactValid) {
+            return true;
+        }
+        else {
+            alert("Форма не заполнена");
+            return false;
+        };
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(clientInputs);
-        
-        addClient(clientInputs)
+        formIsValid() && addClient(clientInputs)
             .then(() => props.history.push("/clients"))
     }
 
     const handleInputChange = e => {
         const { name, value } = e.target;
+        validateField(name, value);
         setClientInputs({
             ...clientInputs,
             [name]: value

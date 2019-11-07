@@ -28,7 +28,7 @@ const request = (options) => {
 
 export function getClients() {
     return request({
-        url: process.env.API_BASE_URL + "/client",
+        url: process.env.API_BASE_URL + "/client/",
         method: "GET"
     });
 }
