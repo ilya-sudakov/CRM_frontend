@@ -94,6 +94,7 @@ const Requests = (props) => {
                         {/* <td>Количество</td> */}
                         <td>Кодовое слово</td>
                         <td>Ответственный</td>
+                        <td>Статус</td>
                         {/* <td>Дата 2</td> */}
                         <td>Действия</td>
                     </tr>
@@ -141,12 +142,19 @@ const Requests = (props) => {
                         ))
                     ))}  */}
                     {requests.map((request, request_id) => (
-                        <tr key={request_id} className={request_id % 2 === 0 ? 'requests__table--even' : 'requests__table--odd'}>
+                        //<tr key={request_id} className={request_id % 2 === 0 ? 'requests__table--even' : 'requests__table--odd'}>
+                        <tr key={request_id} className={
+                            request.status === "Не готово" && "requests__table--status_not_ready" ||
+                            request.status === "В процессе" && "requests__table--status_in_progress" ||
+                            request.status === "Готово к отгрузке" && "requests__table--status_ready" ||
+                            request.status === "Отгружено" && "requests__table--status_shipped"
+                        }>
                             <td data-label="ID">{request.id}</td>
                             <td data-label="Дата">{request.date}</td>
                             <td data-label="Продукция">{request.products}</td>
                             <td data-label="Кодовое слово">{request.codeWord}</td>
                             <td data-label="Ответственный">{request.responsible}</td>
+                            <td data-label="Статус">{request.status}</td>
                             <td data-label="Действия" className="requests__actions">
                                 <div data-id={request.id} className="requests__action" >Просмотр</div>
                                 <div data-id={request.id} className="requests__action" >Редактировать</div>

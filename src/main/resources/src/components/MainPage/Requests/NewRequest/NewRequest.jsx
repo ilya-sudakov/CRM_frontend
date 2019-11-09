@@ -7,13 +7,15 @@ const NewRequest = (props) => {
         date: "",
         products: "",
         codeWord: "",
-        responsible: ""
+        responsible: "",
+        status: "Не готово"
     })
     const [requestErrors, setRequestErrors] = useState({
         date: "",
         products: "",
         codeWord: "",
-        responsible: ""
+        responsible: "",
+        status: "",
     })
     const [dateValid, setDateValid] = useState(false);
     const [productsValid, setProductsValid] = useState(false);
@@ -68,7 +70,10 @@ const NewRequest = (props) => {
             <form className="new_request__form">
                 <div className="new_request__input_name">Дата</div>
                 <div className="new_request__input_field">
-                    <input type="text" name="date" onChange={handleInputChange} />
+                    <input type="date"
+                        name="date"
+                        onChange={handleInputChange}
+                    />
                 </div>
                 <div className="new_request__input_name">Продукция</div>
                 <div className="new_request__input_field">
@@ -81,6 +86,16 @@ const NewRequest = (props) => {
                 <div className="new_request__input_name">Ответственный</div>
                 <div className="new_request__input_field">
                     <input type="text" name="responsible" onChange={handleInputChange} />
+                </div>
+                <div className="new_request__input_name">Статус</div>
+                <div className="new_request__input_field">
+                    {/* <input type="text" name="status" onChange={handleInputChange} /> */}
+                    <select name="status" onChange={handleInputChange}>
+                        <option>Не готово</option>
+                        <option>В процессе</option>
+                        <option>Готово к отгрузке</option>
+                        <option>Отгружено</option>
+                    </select>
                 </div>
                 <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить" />
             </form>

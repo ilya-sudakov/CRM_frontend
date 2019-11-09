@@ -8,13 +8,13 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 
 class App extends React.Component {
   state = {
-    // isAuthorized: false,
-    // userData: null,
-    isAuthorized: true,
-    userData: {
-      name: 'Илья Судаков',
-      email: 'ilyasudakov@inbox.ru',
-    }
+    isAuthorized: false,
+    userData: null,
+    // isAuthorized: true,
+    // userData: {
+    //   name: 'Илья Судаков',
+    //   email: 'ilyasudakov@inbox.ru',
+    // }
   }
 
   setUserData = (isAuthorized, userData) => {
@@ -25,7 +25,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-
+    localStorage.getItem("email") && this.setUserData(true, {
+      email: localStorage.getItem("email")
+    }) 
   }
 
   render() {
