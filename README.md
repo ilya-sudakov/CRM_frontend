@@ -3,7 +3,7 @@
 # Инструкция по установке
 - После копирования репозитория необходимо создать файл 
 
-        ostfix-frontend/.env
+        osfix-frontend/.env
 
     и заполнить его следующим образом:
 
@@ -13,9 +13,9 @@
 
 - Затем необходимо создать папку static/built
 
-        ostfix-frontend/src/main/resources/static/built
+        osfix-frontend/src/main/resources/static/built
 
-- После этих действий в корне фронтэнд проекта ostfix-frontend/ запустите команду:
+- После этих действий в корне фронтэнд проекта osfix-frontend/ запустите команду:
 
         npm install
 

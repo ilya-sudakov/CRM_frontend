@@ -40,6 +40,14 @@
     }
   }
 
+  .contracts__table--even {
+    background-color: #ebebeb;
+  }
+
+  .contracts__table--odd {
+    background-color: #f8f8f8;
+  }
+
   @media screen and (max-width: 1220px) {
     &__table {
       border: 0;

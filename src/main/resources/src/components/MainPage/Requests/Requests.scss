@@ -58,6 +58,22 @@
   .requests__table--odd {
     background-color: #f8f8f8;
   }
+  
+  .requests__table--status_not_ready {
+    background-color: red;
+  }
+
+  .requests__table--status_in_progress {
+    background-color: yellow;
+  }
+
+  .requests__table--status_ready {
+    background-color: green;
+  }
+
+  .requests__table--status_shipped {
+    background-color: #f8f8f8;
+  }
 
   @media screen and (max-width: 1220px) {
     &__table {
