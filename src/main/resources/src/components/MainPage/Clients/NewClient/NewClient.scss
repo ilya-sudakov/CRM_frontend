@@ -1,6 +1,6 @@
 @import "../../../../variables.scss";
 
-.new_request {
+.new_client {
   width: 100%;
   padding: 25px 0;
   display: flex;
@@ -17,7 +17,7 @@
     flex-direction: column;
     align-items: center;
 
-    .new_request__input_field {
+    .new_client__input_field {
       margin-bottom: 10px;
     }
   }
