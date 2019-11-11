@@ -30,7 +30,11 @@ module.exports = {
             {
                 test: /\.scss$/,
                 // MiniCssExtractPlugin.loader для production
-                use: ["style-loader", "css-loader", "sass-loader"],
+                use: [process.env.NODE_ENV === 'production'
+                    ? MiniCssExtractPlugin.loader
+                    : "style-loader", 
+                    "css-loader", "sass-loader"
+                ],
             },
             {
                 test: /\.(png|svg|jpg|gif|ico)$/,

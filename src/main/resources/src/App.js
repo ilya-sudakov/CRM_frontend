@@ -9,7 +9,9 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 class App extends React.Component {
   state = {
     isAuthorized: false,
-    userData: null,
+    userData: {
+      email: ''
+    }
     // isAuthorized: true,
     // userData: {
     //   name: 'Илья Судаков',
@@ -25,17 +27,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    localStorage.getItem("email") && this.setUserData(true, {
-      email: localStorage.getItem("email")
-    }) 
+    if (localStorage.getItem("email") !== "") {
+      this.setUserData(true, {
+        email: localStorage.getItem("email")
+      });
+    }
   }
 
   render() {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path="/login" 
-            render={(props) => <LoginPage isAuthorized={this.state.isAuthorized} setUserData={this.setUserData} {...props} /> } 
+          <Route path="/login"
+            render={(props) => <LoginPage isAuthorized={this.state.isAuthorized} setUserData={this.setUserData} {...props} />}
           />
           <PrivateRoute path="/"
             isAuthorized={this.state.isAuthorized}
