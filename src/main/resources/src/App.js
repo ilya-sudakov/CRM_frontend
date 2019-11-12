@@ -28,8 +28,6 @@ class App extends React.Component {
 
   componentDidMount() {
     if (localStorage.getItem("email") !== "" && localStorage.getItem("email") !== null) {
-      console.log('test');
-      
       this.setUserData(true, {
         email: localStorage.getItem("email")
       });
