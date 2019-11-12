@@ -6,6 +6,7 @@ const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: "",
         products: "",
+        quantity: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
@@ -13,12 +14,14 @@ const NewRequest = (props) => {
     const [requestErrors, setRequestErrors] = useState({
         date: "",
         products: "",
+        quantity: "",
         codeWord: "",
         responsible: "",
         status: "",
     })
     const [dateValid, setDateValid] = useState(false);
     const [productsValid, setProductsValid] = useState(false);
+    const [quantityValid, setQuantityValid] = useState(false);
     const [responsibleValid, setResponsibleValid] = useState(false);
 
     const validateField = (fieldName, value) => {
@@ -29,6 +32,9 @@ const NewRequest = (props) => {
             case 'products':
                 value !== "" ? setProductsValid(true) : setProductsValid(false);
                 break;
+            case 'quantity':
+                setQuantityValid(value !== "");
+                break;
             case 'responsible':
                 value !== "" ? setResponsibleValid(true) : setResponsibleValid(false);
                 break;
@@ -36,7 +42,7 @@ const NewRequest = (props) => {
     }
 
     const formIsValid = () => {
-        if (dateValid && productsValid && responsibleValid) {
+        if (dateValid && productsValid && quantityValid && responsibleValid) {
             return true;
         }
         else {
@@ -78,6 +84,10 @@ const NewRequest = (props) => {
                 <div className="new_request__input_name">Продукция</div>
                 <div className="new_request__input_field">
                     <input type="text" name="products" onChange={handleInputChange} />
+                </div>
+                <div className="new_request__input_name">Количество</div>
+                <div className="new_request__input_field">
+                    <input type="text" name="quantity" onChange={handleInputChange} />
                 </div>
                 <div className="new_request__input_name">Кодовое слово</div>
                 <div className="new_request__input_field">

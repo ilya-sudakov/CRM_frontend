@@ -91,7 +91,7 @@ const Requests = (props) => {
                         {/* <td>Дата 1</td> */}
                         <td>Дата</td>
                         <td>Продукция</td>
-                        {/* <td>Количество</td> */}
+                        <td>Количество</td>
                         <td>Кодовое слово</td>
                         <td>Ответственный</td>
                         <td>Статус</td>
@@ -152,6 +152,7 @@ const Requests = (props) => {
                             <td data-label="ID">{request.id}</td>
                             <td data-label="Дата">{request.date}</td>
                             <td data-label="Продукция">{request.products}</td>
+                            <td data-label="Количество">{request.quantity}</td>
                             <td data-label="Кодовое слово">{request.codeWord}</td>
                             <td data-label="Ответственный">{request.responsible}</td>
                             <td data-label="Статус">{request.status}</td>
