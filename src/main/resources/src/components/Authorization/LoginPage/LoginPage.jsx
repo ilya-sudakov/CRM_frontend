@@ -28,7 +28,7 @@ const LoginPage = (props) => {
 
     const handleSignOut = (event) => {
         event.preventDefault();
-        localStorage.setItem("email", "");
+        localStorage.setItem("email", null);
         props.setUserData(false, null);
     }
 
