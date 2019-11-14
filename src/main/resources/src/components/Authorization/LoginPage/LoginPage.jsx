@@ -19,7 +19,7 @@ const LoginPage = (props) => {
             localStorage.setItem("email", email);
             props.setUserData(true, userData);
 
-            props.history.push('/clients');
+            props.history.push('/requests');
         }
         else {
             alert("Введены некорректные данные");
@@ -68,7 +68,7 @@ const LoginPage = (props) => {
                             </div>
                             <div className="authorization__link">
                                 Нажмите
-                                <Link to="/clients">здесь</Link>
+                                <Link to="/requests">здесь</Link>
                                 чтобы вернуться на главную страницу
                             </div>
                         </div>

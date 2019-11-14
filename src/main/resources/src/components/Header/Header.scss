@@ -7,6 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: $light80-grey;
 
   &__company {
     font-size: 24px;
@@ -23,7 +24,7 @@
     padding: 5px 10px;
     flex-direction: row;
     align-items: center;
-    border: 1px solid #bbbbbb;
+    border: 1px solid #9b9b9b;
     border-radius: 10px;
     cursor: pointer;
 

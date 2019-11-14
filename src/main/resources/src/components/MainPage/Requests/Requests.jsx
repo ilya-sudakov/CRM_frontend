@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Requests.scss';
 import { getRequests, deleteRequest } from '../../../utils/utilsAPI.jsx';
+import TableView from './TableView/TableView.jsx';
+import SearchBar from './SearchBar/SearchBar.jsx';
 
 const Requests = (props) => {
     const [requests, setRequests] = useState([]);
-    const [sortOrder, setSortOrder] = useState({
-        curSort: 'date',
-        date: 'asc'
-    })
+    const [searchQuery, setSearchQuery] = useState('');
+
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
         deleteRequest(id)
@@ -18,6 +18,7 @@ const Requests = (props) => {
                 setRequests(requests);
             })
     }
+
     useEffect(() => {
         document.title = "Заявки";
         getRequests()
@@ -27,44 +28,29 @@ const Requests = (props) => {
             })
     }, [])
 
-    const changeSortOrder = (event) => {
-        const name = event.target.getAttribute("name");
-        setSortOrder({
-            ...sortOrder,
-            [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
-        })
-    }
-
-    const sortRequests = () => {
-        return requests.sort((a, b) => {
-            if (a[sortOrder.curSort] < b[sortOrder.curSort] && a.status !== "Отгружено") {
-                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-            }
-            else if (a.status === "Отгружено") {
-                return 0;
-            }
-            if (a[sortOrder.curSort] > b[sortOrder.curSort] && a.status !== "Отгружено") {
-                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-            }
-            return 0;
-        })
-    }
-
     return (
         <div className="requests">
             <div className="requests__title">Заявки</div>
-            <Link className="requests__link" to="requests/new">Создать заявку</Link>
-            <table className="requests__table">
+            <SearchBar
+                setSearchQuery={setSearchQuery}
+            />
+            {/* <Link className="requests__link" to="requests/new">Создать заявку</Link> */}
+            <TableView
+                data={requests}
+                deleteItem={deleteItem}
+                searchQuery={searchQuery}
+            />
+            {/* Working <table tag> */}
+            {/* <table className="requests__table">
                 <thead>
                     <tr>
                         <td>#</td>
-                        {/* <td>Дата 1</td> */}
                         <td>
                             <span>
                                 Дата
                             </span>
                             <span name="date" className="requests__sortButton" onClick={changeSortOrder}>
-                                {sortOrder.date === 'desc' ? 'v' : '^'}
+                                {sortOrder.date === 'desc' ? '(Убывание)' : '(Возрастание)'}
                             </span>
                         </td>
                         <td>Продукция</td>
@@ -72,12 +58,11 @@ const Requests = (props) => {
                         <td>Кодовое слово</td>
                         <td>Ответственный</td>
                         <td>Статус</td>
-                        {/* <td>Дата 2</td> */}
                         <td>Действия</td>
                     </tr>
                 </thead>
-                <tbody>
-                    {/* {requests.map((request, id) => (
+                <tbody> */}
+            {/* {requests.map((request, id) => (
                         <tr key={id + 1}>
                             <td>{request.id}</td>
                             <td>{request.date1}</td>
@@ -99,8 +84,8 @@ const Requests = (props) => {
 
                         </tr>
                     ))} */}
-                    {/* Works w/ items as array */}
-                    {/* {requests.map((request, request_id) => (
+            {/* Works w/ items as array */}
+            {/* {requests.map((request, request_id) => (
                         request.items.map((order, order_id) => (
                             <tr key={request_id + order_id} className={request_id % 2 === 0 ? 'requests__table--even' : 'requests__table--odd'}>
                                 {order_id === 0 && <td rowSpan={request.items.length} data-label="ID">{request.id}</td>}
@@ -118,7 +103,8 @@ const Requests = (props) => {
                             </tr>
                         ))
                     ))}  */}
-                    {sortRequests().map((request, request_id) => (
+            {/* Working <table tag> */}
+            {/* {sortRequests().map((request, request_id) => (
                         //<tr key={request_id} className={request_id % 2 === 0 ? 'requests__table--even' : 'requests__table--odd'}>
                         <tr key={request_id} className={
                             request.status === "Не готово" && "requests__table--status_not_ready" ||
@@ -141,7 +127,7 @@ const Requests = (props) => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table> */}
         </div>
     )
 }

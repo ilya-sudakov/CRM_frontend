@@ -1,0 +1,104 @@
+@import "../../../../variables.scss";
+
+.tableview {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 50px);
+  font-size: 80%;
+  min-width: 700px;
+
+  &__img {
+    width: 15px;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  &__row {
+    display: flex;
+    // margin-bottom: 1px;
+    // background-color: #eeeeee;
+    background-color: $table-primary__background;
+    border-bottom: 1px solid #eeeeee;
+    padding: 5px 5px;
+
+    .tableview__col {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 0 1 12.5%;
+      // min-width: 100px;
+      // max-width: 150px;
+    }
+
+    .tableview__actions {
+      flex: 0 1 12.5%;
+      display: flex;
+      // flex-wrap: wrap;
+      // flex-direction: row;
+      flex-direction: column;
+      align-items: center;
+
+      .tableview__action {
+        border-radius: 5px;
+        margin-bottom: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        color: $secondary-text-color;
+        background-color: $button__background--inverted;
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+
+    &:first-of-type {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      padding: 10px 5px;
+
+      .tableview__col {
+        // justify-content: space-around;
+      }
+    }
+    &:last-of-type {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+  }
+
+  .tableview__row--even {
+    background-color: #ebebeb;
+  }
+
+  .tableview__row--odd {
+    background-color: #f8f8f8;
+  }
+
+  .tableview__row--status_not_ready {
+    background-color: #c48681;
+  }
+
+  .tableview__row--status_in_progress {
+    background-color: #c5ac7a;
+  }
+
+  .tableview__row--status_ready {
+    background-color: #6f9c8e;
+  }
+
+  .tableview__row--status_shipped {
+    background-color: #f7fcf5;
+  }
+}
+
+@media (max-width: 1024px) {
+  .tableview {
+      flex-direction: column;
+
+    // .tableview__row--header {
+    //   display: none;
+    // }
+  }
+}

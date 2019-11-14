@@ -115,7 +115,7 @@ const NewRequest = (props) => {
                         <option>Отгружено</option>
                     </select>
                 </div> */}
-                <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить" />
+                <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>
         </div>
     );

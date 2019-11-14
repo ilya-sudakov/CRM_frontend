@@ -3,7 +3,8 @@
 .sidemenu {
   //   min-width: 150px;
   max-width: 200px;
-  border-right: 1px solid black;
+  border-right: 1px solid #bbbbbb;
+  background-color: $side_menu__background;
   padding: 15px 25px 0px 25px;
   display: flex;
   flex-direction: column;
@@ -23,8 +24,8 @@
     .sidemenu__link {
         color: $primary-text-color;
         padding: 10px 5px;
-        width: 60%;
-        text-align: center;
+        width: 100%;
+        // text-align: center;
     }
 
     .sidemenu__addButton {

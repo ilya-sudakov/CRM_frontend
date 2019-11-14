@@ -1,0 +1,77 @@
+@import "../../../../variables.scss";
+
+.searchbar {
+  width: calc(100% - 50px);
+  border-radius: 10px;
+  padding: 10px 0;
+  background-color: $table-primary__background;
+  margin-bottom: 20px;
+
+  .searchbar__title {
+      padding-left: 25px;
+      font-size: 135%;
+      margin-bottom: 5px;
+  }
+
+  .searchbar__panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+
+    .searchbar__img {
+      width: 20px;
+      margin-right: 5px;
+    }
+
+    .searchbar__input {
+      // margin-left: 10px;
+      flex: 0 1 75%;
+
+      input[type="text"] {
+        border: 1px solid #bbbbbb;
+        width: calc(100% - 20px);
+        padding: 5px 10px;
+        border-radius: 10px;
+      }
+    }
+
+    .searchbar__searchbutton {
+      // flex: 0 1 5%;
+      font-size: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px 25px;
+      border-radius: 15px;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+    }
+
+    .searchbar__addItem {
+      // flex: 0 1 12.5%;
+      font-size: 80%;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      padding: 5px 25px;
+      border-radius: 15px;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+    }
+  }
+}
