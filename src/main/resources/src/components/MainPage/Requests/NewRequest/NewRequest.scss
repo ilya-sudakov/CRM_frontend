@@ -20,5 +20,10 @@
     .new_request__input_field {
       margin-bottom: 10px;
     }
+    // input[type="date"]::-webkit-calendar-picker-indicator,
+    // input[type="date"]::-webkit-clear-button,
+    input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+    }
   }
 }

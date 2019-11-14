@@ -1,20 +1,20 @@
 @import "../../variables.scss";
 
 .main_page {
-    width: 100%;
-    height: 100%;
-    
+  width: 100%;
+  height: 100%;
 
   &__content {
     display: flex;
     flex-direction: row;
 
-    //1px from header border 
+    //1px from header border
     min-height: calc(100vh - 60px - 1px);
 
     .main_page__activity_panel {
       width: 100%;
       overflow-y: auto;
+      // background-color: $primary-background-color;
       max-height: calc(100vh - 60px - 1px);
     }
   }

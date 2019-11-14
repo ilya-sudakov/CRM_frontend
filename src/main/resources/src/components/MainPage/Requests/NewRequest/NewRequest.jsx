@@ -4,7 +4,7 @@ import { addRequest } from '../../../../utils/utilsAPI.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
-        date: "",
+        date: new Date(),
         products: "",
         quantity: "",
         codeWord: "",
@@ -70,6 +70,14 @@ const NewRequest = (props) => {
         document.title = "Создание заявки";
     })
 
+    const getCurDate = () => {
+        // var monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        //     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        // ];
+        const curDate = new Date();
+        return (curDate.getFullYear() + "-" + curDate.getMonth() + "-" + curDate.getDate());
+    }
+
     return (
         <div className="new_request">
             <div className="new_request__title">Новая заявка</div>
@@ -79,6 +87,7 @@ const NewRequest = (props) => {
                     <input type="date"
                         name="date"
                         onChange={handleInputChange}
+                        defaultValue={getCurDate()}
                     />
                 </div>
                 <div className="new_request__input_name">Продукция</div>
@@ -97,16 +106,15 @@ const NewRequest = (props) => {
                 <div className="new_request__input_field">
                     <input type="text" name="responsible" onChange={handleInputChange} />
                 </div>
-                <div className="new_request__input_name">Статус</div>
+                {/* <div className="new_request__input_name">Статус</div>
                 <div className="new_request__input_field">
-                    {/* <input type="text" name="status" onChange={handleInputChange} /> */}
                     <select name="status" onChange={handleInputChange}>
                         <option>Не готово</option>
                         <option>В процессе</option>
                         <option>Готово к отгрузке</option>
                         <option>Отгружено</option>
                     </select>
-                </div>
+                </div> */}
                 <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить" />
             </form>
         </div>

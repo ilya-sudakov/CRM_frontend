@@ -4,63 +4,11 @@ import './Requests.scss';
 import { getRequests, deleteRequest } from '../../../utils/utilsAPI.jsx';
 
 const Requests = (props) => {
-
-    // const [requests, setRequests] = useState([
-    //     {
-    //         id: 1,
-    //         date1: new Date().getMinutes(),
-    //         date2: new Date().getMinutes(),
-    //         codeword: 'Андрюха',
-    //         accountable: 'Петя',
-    //         items: [
-    //             {
-    //                 name: 'Плинтус1',
-    //                 amount: '160 кор.'
-    //             },
-    //             {
-    //                 name: 'Плинтус2',
-    //                 amount: '160 кор.'
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         id: 2,
-    //         date1: new Date().getMinutes(),
-    //         date2: new Date().getMinutes(),
-    //         codeword: 'Андрюха',
-    //         accountable: 'Петя',
-    //         items: [
-    //             {
-    //                 name: 'Плинтус1',
-    //                 amount: '160 кор.'
-    //             }
-    //         ]
-    //     },
-    //     {
-    //         id: 3,
-    //         date1: new Date().getMinutes(),
-    //         date2: new Date().getMinutes(),
-    //         codeword: 'Андрюха',
-    //         accountable: 'Петя',
-    //         items: [
-    //             {
-    //                 name: 'Плинтус1',
-    //                 amount: '160 кор.',
-    //             },
-    //             {
-    //                 name: 'Плинтус1',
-    //                 amount: '160 кор.'
-    //             },
-    //             {
-    //                 name: 'Плинтус1',
-    //                 amount: '160 кор.'
-    //             }
-    //         ]
-    //     },
-    // ])
-
-    const [requests, setRequests] = useState([])
-
+    const [requests, setRequests] = useState([]);
+    const [sortOrder, setSortOrder] = useState({
+        curSort: 'date',
+        date: 'asc'
+    })
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
         deleteRequest(id)
@@ -70,7 +18,6 @@ const Requests = (props) => {
                 setRequests(requests);
             })
     }
-
     useEffect(() => {
         document.title = "Заявки";
         getRequests()
@@ -79,6 +26,29 @@ const Requests = (props) => {
                 setRequests(requests);
             })
     }, [])
+
+    const changeSortOrder = (event) => {
+        const name = event.target.getAttribute("name");
+        setSortOrder({
+            ...sortOrder,
+            [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
+        })
+    }
+
+    const sortRequests = () => {
+        return requests.sort((a, b) => {
+            if (a[sortOrder.curSort] < b[sortOrder.curSort] && a.status !== "Отгружено") {
+                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+            }
+            else if (a.status === "Отгружено") {
+                return 0;
+            }
+            if (a[sortOrder.curSort] > b[sortOrder.curSort] && a.status !== "Отгружено") {
+                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+            }
+            return 0;
+        })
+    }
 
     return (
         <div className="requests">
@@ -89,7 +59,14 @@ const Requests = (props) => {
                     <tr>
                         <td>#</td>
                         {/* <td>Дата 1</td> */}
-                        <td>Дата</td>
+                        <td>
+                            <span>
+                                Дата
+                            </span>
+                            <span name="date" className="requests__sortButton" onClick={changeSortOrder}>
+                                {sortOrder.date === 'desc' ? 'v' : '^'}
+                            </span>
+                        </td>
                         <td>Продукция</td>
                         <td>Количество</td>
                         <td>Кодовое слово</td>
@@ -141,7 +118,7 @@ const Requests = (props) => {
                             </tr>
                         ))
                     ))}  */}
-                    {requests.map((request, request_id) => (
+                    {sortRequests().map((request, request_id) => (
                         //<tr key={request_id} className={request_id % 2 === 0 ? 'requests__table--even' : 'requests__table--odd'}>
                         <tr key={request_id} className={
                             request.status === "Не готово" && "requests__table--status_not_ready" ||
