@@ -78,6 +78,10 @@
       &--user {
         display: flex;
         flex-direction: column;
+
+        .header__email {
+          font-size: 80%;
+        }
       }
 
       &--button {

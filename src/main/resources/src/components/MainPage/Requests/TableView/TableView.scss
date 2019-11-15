@@ -22,7 +22,7 @@
     // background-color: #eeeeee;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #cccccc;
     padding: 0px 5px;
     text-align: center;
 
@@ -30,11 +30,23 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 15px 0;
+      flex-wrap: wrap;
+      padding: 15px 5px;
       flex: 0 1 12.5%;
-      border-right: 1px solid #eeeeee; //border between columns
+      border-right: 1px solid #cccccc; //border between columns
       // min-width: 100px;
       // max-width: 150px;
+      &:nth-child(1) {
+        flex: 0 1 5%;
+      }
+
+      &:nth-child(2) {
+        flex: 0 1 8%;
+      }
+
+      &:nth-child(3) {
+        flex: 0 1 24.5%;
+      }
 
       &:last-child {
         border-right: none;
@@ -44,6 +56,7 @@
     .tableview__actions {
       flex: 0 1 12.5%;
       display: flex;
+      padding: 15px 5px;
       // flex-wrap: wrap;
       // flex-direction: row;
       flex-direction: column;
@@ -67,7 +80,11 @@
     &:first-of-type {
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      padding: 0px 5px;
+      // padding: 0px 5px;
+
+      .tableview__col {
+        
+      }
     }
     
     &:last-of-type {

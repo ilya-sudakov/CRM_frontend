@@ -24,16 +24,16 @@ const SideMenu = (props) => {
             }
 
             <div className={props.location.pathname.length === 1 ? "sidemenu__item--active" : "sidemenu__item"}>
-                <Link className="sidemenu__link" to="/">Главная</Link>
+                <Link className="sidemenu__link" to="/">Главная (Для теста)</Link>
             </div>
             <div className={props.location.pathname.includes("/clients") ? "sidemenu__item--active" : "sidemenu__item"}>
-                <Link className="sidemenu__link" to="/clients">Клиенты</Link>
+                <Link className="sidemenu__link" to="/clients">Клиенты (Для теста)</Link>
                 <Link to="/clients/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>
             </div>
             <div className={props.location.pathname.includes("/contracts") ? "sidemenu__item--active" : "sidemenu__item"}>
-                <Link className="sidemenu__link" to="/contracts">Договоры</Link>
+                <Link className="sidemenu__link" to="/contracts">Договоры (Для теста)</Link>
                 {/* <Link to="/contracts/new" className="sidemenu__addButton">+</Link> */}
             </div>
             <div className={props.location.pathname.includes("/requests") ? "sidemenu__item--active" : "sidemenu__item"}>
