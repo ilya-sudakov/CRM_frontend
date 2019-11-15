@@ -5,7 +5,7 @@ const PrivateRoute = ({ component: Component, isAuthorized, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            (isAuthorized) ? (
+            (localStorage.getItem("email") !== "" && localStorage.getItem("email") !== null) ? (
                 <Component {...rest} {...props} />
             ) : (
                     <Redirect

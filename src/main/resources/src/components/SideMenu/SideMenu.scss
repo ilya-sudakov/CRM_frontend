@@ -1,21 +1,124 @@
-@import '../../variables.scss';
+@import "../../variables.scss";
 
 .sidemenu {
-    min-width: 150px;
-    border-right: 1px solid black;
-    padding-top: 15px;
+  //   min-width: 150px;
+  // position: fixed;
+  // left: 0;
+  // top: 60px;
+  width: 250px;
+  max-width: 300px;
+  border-right: 1px solid #bbbbbb;
+  background-color: $side_menu__background;
+  padding: 15px 15px 0px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+  color: $primary-text-color;
+
+  &__item, &__item--active, &__item--add {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 10px;
+    margin-bottom: 5px;
+    transition: 0.2s ease-in-out;
+    width: 90%;
+    border-radius: 10px;
+
+    .sidemenu__img {
+      width: 25px;
+      filter: brightness(5);
+    }
+
+    &:hover {
+      background-color: darken($side_menu__background, 10%);
+    }
+
+    &--active {
+      background-color: darken($side_menu__background, 20%);
+
+      &:hover {
+        background-color: darken($side_menu__background, 30%);
+      }
+    }
+
+    &--add {
+      width: 60%;
+      font-size: 80%;
+      justify-content: center;
+      background-color: $button__background--inverted;
+      cursor: pointer;
+      color: $secondary-text-color;
+      text-align: center;
+      white-space: nowrap;
+
+      .sidemenu__img {
+        margin-left: 5px;
+      }
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+      }
+    }
+
+    .sidemenu__link {
+      color: $primary-text-color;
+      padding: 10px 5px;
+      width: 100%;
+      // text-align: center;
+    }
+
+    .sidemenu__addButton {
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      font-size: 25px;
+      // margin-left: 10px;
+      padding: 4px 4px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+      }
+    }
+  }
+
+  &--hidden {
+    background-color: $side_menu__background;
+    width: 0;
+    border: 0;
+    // left: -500px;
+    transition: 0.2s ease-in-out;
+    padding: 15px 0px 0px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    &__item {
-        padding: 10px 15px;
-        margin-bottom: 15px;
+    .sidemenu__item {
+      transition: 0.2s ease-in-out;
+
+      &--add {
+        transition: 0.2s ease-in-out;
+        transform: scaleX(0);
+      }
     }
 
-    @media (max-width: 768px) {
-        & {
-            display: none;
-        }
+    .sidemenu__addButton {
+      transform: scaleX(0);
     }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      flex-wrap: nowrap;
+      display: none;
+
+      .sidemenu__item {
+        display: none;
+      }
+    }
+  }
 }

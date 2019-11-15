@@ -14,12 +14,13 @@ const LoginPage = (props) => {
         event.preventDefault();
         if (email === "test@mail.ru" && password === "password") {
             const userData = Object.assign({
-                email: email
+                email: email,
+                name: 'Тестовый аккаунт'
             });
             localStorage.setItem("email", email);
             props.setUserData(true, userData);
-            
-            props.history.push('/clients');
+
+            props.history.push('/requests');
         }
         else {
             alert("Введены некорректные данные");
@@ -28,6 +29,7 @@ const LoginPage = (props) => {
 
     const handleSignOut = (event) => {
         event.preventDefault();
+        localStorage.removeItem("email");
         props.setUserData(false, null);
     }
 
@@ -36,20 +38,20 @@ const LoginPage = (props) => {
             {!props.isAuthorized ? (
                 <React.Fragment>
                     <div className="authorization__title">
-                        Вход в аккаунт
+                        Авторизация
                     </div>
                     <div className="authorization__panel">
-                        <div className="authorization__field_name">
-                            Почта
-                        </div>
+                        {/* <div className="authorization__field_name">
+                            Email
+                        </div> */}
                         <div className="authorization__field_input">
-                            <input type="text" onChange={e => setEmail(e.target.value)} />
+                            <input type="text" onChange={e => setEmail(e.target.value)} placeholder="Введите email..." defaultValue="" />
                         </div>
-                        <div className="authorization__field_name">
+                        {/* <div className="authorization__field_name">
                             Пароль
-                        </div>
+                        </div> */}
                         <div className="authorization__field_input">
-                            <input type="password" onChange={e => setPassword(e.target.value)} />
+                            <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Введите пароль..." />
                         </div>
                         <div className="authorization__submit">
                             <input type="submit" onClick={handleLogin} value="Войти" />
@@ -65,8 +67,12 @@ const LoginPage = (props) => {
                             <div className="authorization__submit">
                                 <input type="submit" onClick={handleSignOut} value="Выйти" />
                             </div>
+                            <div className="authorization__link">
+                                Нажмите
+                                <Link to="/requests">здесь</Link>
+                                чтобы вернуться на главную страницу
+                            </div>
                         </div>
-                        <Link className="authorization__submit" to="/clients">Вернуться на главную</Link>
                     </React.Fragment>
                 )}
         </div>

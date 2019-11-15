@@ -11,14 +11,28 @@ import GeneralPage from './GeneralPage/GeneralPage.jsx';
 import newClient from './Clients/NewClient/NewClient.jsx';
 
 class MainPage extends React.Component {
+    state = {
+        sidemenu_hidden: false,
+    }
+
+    setSideMenu = (sidemenu_hidden) => {
+        this.setState({
+            sidemenu_hidden: sidemenu_hidden
+        })
+    }
+
     render() {
         return (
             <div className="main_page">
                 <Header 
                     userData={this.props.userData}
+                    sideMenu={this.state.sidemenu_hidden}
+                    setSideMenu={this.setSideMenu}
                 />
                 <div className="main_page__content">
-                    <SideMenu />
+                    <SideMenu 
+                        hidden={this.state.sidemenu_hidden}
+                    />
                     <div className="main_page__activity_panel">
                         <Switch>
                             <Route exact path="/" component={GeneralPage} />

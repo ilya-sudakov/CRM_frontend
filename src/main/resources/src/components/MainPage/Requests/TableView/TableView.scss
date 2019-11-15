@@ -1,0 +1,133 @@
+@import "../../../../variables.scss";
+
+.tableview {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 50px);
+  font-size: 80%;
+  min-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+
+  &__img {
+    width: 15px;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  &__row {
+    display: flex;
+    // margin-bottom: 1px;
+    // background-color: #eeeeee;
+    // background-color: $table-primary__background;
+    background-color: $primary-background-color;
+    border-bottom: 1px solid #eeeeee;
+    padding: 0px 5px;
+    text-align: center;
+
+    .tableview__col {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 0;
+      flex: 0 1 12.5%;
+      border-right: 1px solid #eeeeee; //border between columns
+      // min-width: 100px;
+      // max-width: 150px;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    .tableview__actions {
+      flex: 0 1 12.5%;
+      display: flex;
+      // flex-wrap: wrap;
+      // flex-direction: row;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .tableview__action {
+        border-radius: 5px;
+        margin-bottom: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        color: $secondary-text-color;
+        background-color: $button__background--inverted;
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+
+    &:first-of-type {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding: 0px 5px;
+    }
+    
+    &:last-of-type {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom: 0;
+    }
+  }
+
+  .tableview__row--even {
+    background-color: #ebebeb;
+  }
+
+  .tableview__row--odd {
+    background-color: #f8f8f8;
+  }
+
+  .tableview__row--status_not_ready {
+    background-color: #c48681;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken(#c48681, 5%);
+    }
+  }
+
+  .tableview__row--status_in_progress {
+    background-color: #c5ac7a;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken(#c5ac7a, 5%);
+    }
+  }
+
+  .tableview__row--status_ready {
+    background-color: #6f9c8e;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken(#6f9c8e, 5%);
+    }
+  }
+
+  .tableview__row--status_shipped {
+    background-color: #dbdbdb;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken(#dbdbdb, 5%);
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .tableview {
+      flex-direction: column;
+
+    // .tableview__row--header {
+    //   display: none;
+    // }
+  }
+}

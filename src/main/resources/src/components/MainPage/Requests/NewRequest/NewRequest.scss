@@ -16,9 +16,56 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 400px;
+    max-width: 500px;
+    border-radius: 10px;
+    background-color: $primary-background-color;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    padding: 10px 25px;
+
+    .new_request__input_name {
+      margin-bottom: 5px;
+    }
 
     .new_request__input_field {
-      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      width: calc(100% - 20px);
+      margin-bottom: 15px;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="date"] {
+      border: 1px solid #bbbbbb;
+      width: calc(100% - 20px);
+      padding: 5px 10px;
+      border-radius: 10px;
+
+      &:focus {
+        border: 1px solid $button__background--inverted;
+      }
+    }
+    input[type="date"] {
+      width: calc(50% - 20px);
+    }
+    // input[type="date"]::-webkit-calendar-picker-indicator,
+    // input[type="date"]::-webkit-clear-button,
+    input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+    }
+
+    .new_request__submit {
+      border: 0;
+      cursor: pointer;
+      padding: 15px 25px;
+      border-radius: 15px;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
     }
   }
 }

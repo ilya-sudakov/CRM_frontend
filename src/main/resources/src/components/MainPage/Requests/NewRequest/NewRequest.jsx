@@ -6,6 +6,7 @@ const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: "",
         products: "",
+        quantity: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
@@ -13,12 +14,14 @@ const NewRequest = (props) => {
     const [requestErrors, setRequestErrors] = useState({
         date: "",
         products: "",
+        quantity: "",
         codeWord: "",
         responsible: "",
         status: "",
     })
-    const [dateValid, setDateValid] = useState(false);
+    const [dateValid, setDateValid] = useState(true);
     const [productsValid, setProductsValid] = useState(false);
+    const [quantityValid, setQuantityValid] = useState(false);
     const [responsibleValid, setResponsibleValid] = useState(false);
 
     const validateField = (fieldName, value) => {
@@ -29,6 +32,9 @@ const NewRequest = (props) => {
             case 'products':
                 value !== "" ? setProductsValid(true) : setProductsValid(false);
                 break;
+            case 'quantity':
+                setQuantityValid(value !== "");
+                break;
             case 'responsible':
                 value !== "" ? setResponsibleValid(true) : setResponsibleValid(false);
                 break;
@@ -36,7 +42,7 @@ const NewRequest = (props) => {
     }
 
     const formIsValid = () => {
-        if (dateValid && productsValid && responsibleValid) {
+        if (dateValid && productsValid && quantityValid && responsibleValid) {
             return true;
         }
         else {
@@ -62,7 +68,20 @@ const NewRequest = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
-    })
+        //получаем сегодняшнее число в state
+        setRequestInputs({
+            ...requestInputs,
+            date: getCurDate()
+        })
+    }, [])
+
+    const getCurDate = () => {
+        // var monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        //     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        // ];
+        const curDate = new Date();
+        return (curDate.getFullYear() + "-" + curDate.getMonth() + "-" + curDate.getDate());
+    }
 
     return (
         <div className="new_request">
@@ -73,11 +92,21 @@ const NewRequest = (props) => {
                     <input type="date"
                         name="date"
                         onChange={handleInputChange}
+                        defaultValue={getCurDate()}
                     />
+                    {/* <input type="text"
+                        name="date"
+                        onChange={handleInputChange}
+                        defaultValue={getCurDate()}
+                    /> */}
                 </div>
                 <div className="new_request__input_name">Продукция</div>
                 <div className="new_request__input_field">
                     <input type="text" name="products" onChange={handleInputChange} />
+                </div>
+                <div className="new_request__input_name">Количество</div>
+                <div className="new_request__input_field">
+                    <input type="text" name="quantity" onChange={handleInputChange} />
                 </div>
                 <div className="new_request__input_name">Кодовое слово</div>
                 <div className="new_request__input_field">
@@ -87,17 +116,16 @@ const NewRequest = (props) => {
                 <div className="new_request__input_field">
                     <input type="text" name="responsible" onChange={handleInputChange} />
                 </div>
-                <div className="new_request__input_name">Статус</div>
+                {/* <div className="new_request__input_name">Статус</div>
                 <div className="new_request__input_field">
-                    {/* <input type="text" name="status" onChange={handleInputChange} /> */}
                     <select name="status" onChange={handleInputChange}>
                         <option>Не готово</option>
                         <option>В процессе</option>
                         <option>Готово к отгрузке</option>
                         <option>Отгружено</option>
                     </select>
-                </div>
-                <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить" />
+                </div> */}
+                <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>
         </div>
     );

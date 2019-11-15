@@ -11,16 +11,20 @@
 
     >ACCESS_TOKEN = accessToken
 
-- Затем необходимо создать папку static/built
+    >NODE_ENV = production
 
-        osfix-frontend/src/main/resources/static/built
+- Затем необходимо создать папку static/built, для этого выполните команду:
+
+        npm run mkdir-built
 
 - После этих действий в корне фронтэнд проекта osfix-frontend/ запустите команду:
 
         npm install
 
-- После установки зависимостей, введите 
+- После установки зависимостей, для запуска production версии, введите 
+        
+        npm run prod 
+        
+- Для запуска в режиме development, введите
         
         npm start
-
-всё, счастья, здоровья

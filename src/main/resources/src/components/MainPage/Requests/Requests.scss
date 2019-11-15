@@ -26,7 +26,10 @@
       text-decoration: underline;
     }
 
-    
+    .requests__sortButton {
+      padding: 5px;
+      cursor: pointer;
+    }
 
     tr {
       background-color: #f8f8f8;
@@ -45,8 +48,8 @@
 
     thead {
       font-size: 80%;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      // letter-spacing: 0.1em;
+      // text-transform: uppercase;
       background-color: #c4c4c4;
     }
   }

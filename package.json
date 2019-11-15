@@ -6,11 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
+    "prod": "webpack --mode production && npm run prod-server",
     "start": "npm-run-all --parallel watch:build server-dev clean",
     "watch:build": "webpack --watch",
     "watch:server": "nodemon ./src/main/resources/static/built/bundle.js --watch",
     "server-dev": "webpack-dev-server --watch --host 0.0.0.0 --inline --hot",
-    "clean": "del src\\main\\resources\\static\\built\\*.* /q"
+    "clean": "del src\\main\\resources\\static\\built\\*.* /q",
+    "prod-server": "node server.js",
+    "mkdir-built": "mkdir src\\main\\resources\\static\\built"
   },
   "repository": {
     "type": "git",
@@ -42,6 +45,7 @@
   },
   "dependencies": {
     "dotenv-webpack": "^1.7.0",
+    "express": "^4.17.1",
     "nodemon": "^1.19.3",
     "npm-run-all": "^4.1.5",
     "react": "16.10.2",
