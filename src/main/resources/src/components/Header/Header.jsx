@@ -29,7 +29,7 @@ const Header = (props) => {
             </div>
             <div className="header__menu">
                 <div className="header__item header__item--user">
-                    {/* <div className="header__username">{props.userData.name}</div> */}
+                    <div className="header__username">{props.userData.name}</div>
                     <div className="header__email">{props.userData.email}</div>
                 </div>
                 <Link className="header__item header__item--button" to="/login">

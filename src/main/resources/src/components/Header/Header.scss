@@ -2,12 +2,13 @@
 
 .header {
   height: 60px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 1px 5px rgba(0, 0, 0, 0.24);
+  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 1px 5px rgba(0, 0, 0, 0.24);
+  border-bottom: 1px solid #bbbbbb;
   padding: 0 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $light80-grey;
+  // background-color: $light80-grey;
 
   &__company {
     font-size: 24px;
@@ -26,7 +27,12 @@
     align-items: center;
     border: 1px solid #9b9b9b;
     border-radius: 10px;
+    transition: 0.2s ease-in-out;
     cursor: pointer;
+
+    &:hover {
+      background-color: darken($primary-background-color, 10%);
+    }
 
     .header__name {
       font-size: 80%;

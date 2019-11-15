@@ -10,7 +10,8 @@ class App extends React.Component {
   state = {
     isAuthorized: false,
     userData: {
-      email: ''
+      email: '',
+      name: ''
     }
     // isAuthorized: true,
     // userData: {
@@ -29,7 +30,8 @@ class App extends React.Component {
   componentDidMount() {
     if (localStorage.getItem("email") !== "" && localStorage.getItem("email") !== null) {
       this.setUserData(true, {
-        email: localStorage.getItem("email")
+        email: localStorage.getItem("email"),
+        name: 'Тестовый аккаунт'
       });
     }
   }

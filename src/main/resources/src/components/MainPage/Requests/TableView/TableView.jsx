@@ -11,7 +11,7 @@ const TableView = (props) => {
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
         setSortOrder({
-            ...sortOrder,
+            curSort: name,
             [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
         })
     }
@@ -22,7 +22,7 @@ const TableView = (props) => {
 
     const sortRequests = () => {
         return searchQuery().sort((a, b) => {
-            
+
             if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
@@ -32,8 +32,8 @@ const TableView = (props) => {
             else if (b.status === "Отгружено") {
                 return -1
             }
-            
-            
+
+
             if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
             }
@@ -46,9 +46,11 @@ const TableView = (props) => {
 
     return (
         <div className="tableview">
-            {console.log(props.searchQuery)}
             <div className="tableview__row tableview__row--header">
-                <div className="tableview__col" data-label="ID">ID</div>
+                <div className="tableview__col" data-label="ID">
+                    <span>ID</span>
+                    <img name="id" className="tableview__img" onClick={changeSortOrder} src={sortIcon} />
+                </div>
                 <div className="tableview__col" data-label="Дата">
                     <span>Дата</span>
                     <img name="date" className="tableview__img" onClick={changeSortOrder} src={sortIcon} />

@@ -43,6 +43,10 @@
         width: calc(100% - 20px);
         padding: 10px 10px;
         border-radius: 10px;
+
+        &:focus {
+          border: 1px solid $button__background--inverted;
+        }
       }
     }
 

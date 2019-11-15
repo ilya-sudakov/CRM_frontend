@@ -4,7 +4,7 @@ import { addRequest } from '../../../../utils/utilsAPI.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
-        date: new Date(),
+        date: "",
         products: "",
         quantity: "",
         codeWord: "",
@@ -19,7 +19,7 @@ const NewRequest = (props) => {
         responsible: "",
         status: "",
     })
-    const [dateValid, setDateValid] = useState(false);
+    const [dateValid, setDateValid] = useState(true);
     const [productsValid, setProductsValid] = useState(false);
     const [quantityValid, setQuantityValid] = useState(false);
     const [responsibleValid, setResponsibleValid] = useState(false);
@@ -68,7 +68,12 @@ const NewRequest = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
-    })
+        //получаем сегодняшнее число в state
+        setRequestInputs({
+            ...requestInputs,
+            date: getCurDate()
+        })
+    }, [])
 
     const getCurDate = () => {
         // var monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -89,6 +94,11 @@ const NewRequest = (props) => {
                         onChange={handleInputChange}
                         defaultValue={getCurDate()}
                     />
+                    {/* <input type="text"
+                        name="date"
+                        onChange={handleInputChange}
+                        defaultValue={getCurDate()}
+                    /> */}
                 </div>
                 <div className="new_request__input_name">Продукция</div>
                 <div className="new_request__input_field">

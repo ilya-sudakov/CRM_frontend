@@ -23,7 +23,7 @@ const SearchBar = (props) => {
             <div className="searchbar__panel">
                 <div className="searchbar__input">
                     <input type="text"
-                        placeholder="Введите название для поиска..."
+                        placeholder="Введите название продукции для поиска..."
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={handleEnterPress}
                     ></input>
@@ -32,12 +32,12 @@ const SearchBar = (props) => {
                     <img className="searchbar__img" src={searchImg} />
                     <span>Поиск</span>
                 </div>
-                <Link className="searchbar__addItem" to="requests/new">
+                {/* <Link className="searchbar__addItem" to="requests/new">
                     <img className="searchbar__img" src={plusImg} />
                     <span>Добавить заявку</span>
-                </Link>
+                </Link> */}
             </div>
-        </div >
+        </div>
     );
 };
 

@@ -6,6 +6,8 @@
   width: calc(100% - 50px);
   font-size: 80%;
   min-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
 
   &__img {
     width: 15px;
@@ -18,17 +20,25 @@
     display: flex;
     // margin-bottom: 1px;
     // background-color: #eeeeee;
-    background-color: $table-primary__background;
+    // background-color: $table-primary__background;
+    background-color: $primary-background-color;
     border-bottom: 1px solid #eeeeee;
-    padding: 5px 5px;
+    padding: 0px 5px;
+    text-align: center;
 
     .tableview__col {
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 15px 0;
       flex: 0 1 12.5%;
+      border-right: 1px solid #eeeeee; //border between columns
       // min-width: 100px;
       // max-width: 150px;
+
+      &:last-child {
+        border-right: none;
+      }
     }
 
     .tableview__actions {
@@ -38,6 +48,7 @@
       // flex-direction: row;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
 
       .tableview__action {
         border-radius: 5px;
@@ -54,17 +65,15 @@
     }
 
     &:first-of-type {
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      padding: 10px 5px;
-
-      .tableview__col {
-        // justify-content: space-around;
-      }
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding: 0px 5px;
     }
+    
     &:last-of-type {
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom: 0;
     }
   }
 
@@ -78,18 +87,38 @@
 
   .tableview__row--status_not_ready {
     background-color: #c48681;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken(#c48681, 5%);
+    }
   }
 
   .tableview__row--status_in_progress {
     background-color: #c5ac7a;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken(#c5ac7a, 5%);
+    }
   }
 
   .tableview__row--status_ready {
     background-color: #6f9c8e;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken(#6f9c8e, 5%);
+    }
   }
 
   .tableview__row--status_shipped {
-    background-color: #f7fcf5;
+    background-color: #dbdbdb;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: darken(#dbdbdb, 5%);
+    }
   }
 }
 
