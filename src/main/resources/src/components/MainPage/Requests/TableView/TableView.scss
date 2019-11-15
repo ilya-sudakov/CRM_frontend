@@ -12,18 +12,15 @@
   &__img {
     width: 15px;
     padding: 5px;
-    margin-left: 5px;
+    // margin-left: 5px;
     cursor: pointer;
   }
 
   &__row {
     display: flex;
-    // margin-bottom: 1px;
-    // background-color: #eeeeee;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
     border-bottom: 1px solid #cccccc;
-    padding: 0px 5px;
     text-align: center;
 
     .tableview__col {
@@ -45,7 +42,11 @@
       }
 
       &:nth-child(3) {
-        flex: 0 1 24.5%;
+        flex: 0 1 29.5%;
+      }
+
+      &:nth-child(6) {
+        flex: 0 1 10%;
       }
 
       &:last-child {
@@ -54,7 +55,7 @@
     }
 
     .tableview__actions {
-      flex: 0 1 12.5%;
+      flex: 0 1 10%;
       display: flex;
       padding: 15px 5px;
       // flex-wrap: wrap;
@@ -70,9 +71,15 @@
         cursor: pointer;
         color: $secondary-text-color;
         background-color: $button__background--inverted;
+        transition: 0.2s ease-in-out;
 
         &:last-child {
           margin: 0;
+        }
+
+        &:hover {
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+          background-color: lighten($button__background--inverted, 5%);
         }
       }
     }
@@ -81,9 +88,8 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       // padding: 0px 5px;
-
-      .tableview__col {
-        
+      .tableview__col:last-child {
+        flex: 0 1 10%;
       }
     }
     
@@ -105,6 +111,7 @@
   .tableview__row--status_not_ready {
     background-color: #c48681;
     transition: 0.2s ease-in-out;
+    // color: $secondary-text-color;
 
     &:hover {
       background-color: darken(#c48681, 5%);
@@ -114,6 +121,7 @@
   .tableview__row--status_in_progress {
     background-color: #c5ac7a;
     transition: 0.2s ease-in-out;
+    // color: $secondary-text-color;
 
     &:hover {
       background-color: darken(#c5ac7a, 5%);
@@ -123,6 +131,7 @@
   .tableview__row--status_ready {
     background-color: #6f9c8e;
     transition: 0.2s ease-in-out;
+    // color: $secondary-text-color;
 
     &:hover {
       background-color: darken(#6f9c8e, 5%);

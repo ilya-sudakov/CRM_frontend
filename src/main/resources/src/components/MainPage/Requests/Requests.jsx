@@ -35,6 +35,7 @@ const Requests = (props) => {
                 setSearchQuery={setSearchQuery}
             />
             {/* <Link className="requests__link" to="requests/new">Создать заявку</Link> */}
+            <div className="requests__amount_table">Всего: {requests.length} записей</div>
             <TableView
                 data={requests}
                 deleteItem={deleteItem}
