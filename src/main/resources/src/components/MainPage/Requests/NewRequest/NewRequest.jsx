@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import './NewRequest.scss';
+import DatePicker from 'react-datepicker';
+// import * as DateFNS from "date-fns/esm";
+import ru from 'date-fns/locale/ru'
 import { addRequest } from '../../../../utils/utilsAPI.jsx';
+
+import "react-datepicker/dist/react-datepicker.css";
+import './NewRequest.scss';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
-        date: "",
+        date: new Date(),
         products: "",
         quantity: "",
         codeWord: "",
@@ -69,10 +74,10 @@ const NewRequest = (props) => {
     useEffect(() => {
         document.title = "Создание заявки";
         //получаем сегодняшнее число в state
-        setRequestInputs({
-            ...requestInputs,
-            date: getCurDate()
-        })
+        // setRequestInputs({
+        //     ...requestInputs,
+        //     date: getCurDate()
+        // })
     }, [])
 
     const getCurDate = () => {
@@ -83,22 +88,33 @@ const NewRequest = (props) => {
         return (curDate.getFullYear() + "-" + curDate.getMonth() + "-" + curDate.getDate());
     }
 
+    const handleDateChange = (date) => {
+        validateField("date", date);
+        setRequestInputs({
+            ...requestInputs,
+            date: date
+        })
+    }
+
     return (
         <div className="new_request">
             <div className="new_request__title">Новая заявка</div>
             <form className="new_request__form">
                 <div className="new_request__input_name">Дата</div>
                 <div className="new_request__input_field">
-                    <input type="date"
-                        name="date"
-                        onChange={handleInputChange}
-                        defaultValue={getCurDate()}
-                    />
-                    {/* <input type="text"
+                    {/* <input type="date"
                         name="date"
                         onChange={handleInputChange}
                         defaultValue={getCurDate()}
                     /> */}
+
+                    <DatePicker
+                        selected={requestInputs.date}
+                        onChange={handleInputChange}
+                        dateFormat="dd/MM/yyyy"
+                        onChange={handleDateChange}
+                        locale={ru}
+                    />
                 </div>
                 <div className="new_request__input_name">Продукция</div>
                 <div className="new_request__input_field">

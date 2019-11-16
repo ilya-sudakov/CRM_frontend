@@ -70,7 +70,7 @@ const TableView = (props) => {
                         request.status === "Отгружено" && "tableview__row--status_shipped")
                 }>
                     <div className="tableview__col" data-label="ID">{request.id}</div>
-                    <div className="tableview__col" data-label="Дата">{request.date}</div>
+                    <div className="tableview__col" data-label="Дата">{request.date.split("T")[0]}</div>
                     <div className="tableview__col" data-label="Продукция">{request.products}</div>
                     <div className="tableview__col" data-label="Количество">{request.quantity}</div>
                     <div className="tableview__col" data-label="Кодовое слово">{request.codeWord}</div>
