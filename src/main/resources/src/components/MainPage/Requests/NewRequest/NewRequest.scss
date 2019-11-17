@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 400px;
+    min-width: 300px;
     max-width: 500px;
     border-radius: 10px;
     background-color: $primary-background-color;
@@ -30,8 +30,22 @@
     .new_request__input_field {
       display: flex;
       justify-content: center;
-      width: calc(100% - 20px);
+      width: calc(90% - 20px);
       margin-bottom: 15px;
+
+      .react-datepicker-wrapper {
+        width: 40%;
+
+        .react-datepicker {
+          .react-datepicker__day--selected {
+            background-color: $button__background--inverted !important;
+          }
+        }
+
+        input {
+          text-align: center;
+        }
+      }
     }
     input[type="text"],
     input[type="password"],
@@ -64,6 +78,7 @@
       transition: 0.2s ease-in-out;
 
       &:hover {
+        background-color: lighten($button__background--inverted, 5%);
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
       }
     }

@@ -78,6 +78,11 @@
       &--user {
         display: flex;
         flex-direction: column;
+        margin-right: 5px;
+
+        .header__email {
+          font-size: 80%;
+        }
       }
 
       &--button {
@@ -88,16 +93,26 @@
         transition: 0.2s ease-in-out;
 
         &:hover {
-          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+          background-color: lighten($button__background--inverted, 5%);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
         }
       }
     }
   }
 
   @media (max-width: 768px) {
+    & {
+      padding: 0 10px;
+    }
+
+    .header__sidemenu {
+      font-size: 80%;
+    }
+
     &__menu {
       .header__item {
         padding: 10px 5px;
+        font-size: 80%;
         &--user {
           .header__email {
             display: none;

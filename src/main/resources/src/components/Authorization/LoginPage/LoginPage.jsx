@@ -15,7 +15,7 @@ const LoginPage = (props) => {
         if (email === "test@mail.ru" && password === "password") {
             const userData = Object.assign({
                 email: email,
-                name: 'Тестовый аккаунт'
+                name: 'Иван Иванов'
             });
             localStorage.setItem("email", email);
             props.setUserData(true, userData);

@@ -31,7 +31,7 @@ class App extends React.Component {
     if (localStorage.getItem("email") !== "" && localStorage.getItem("email") !== null) {
       this.setUserData(true, {
         email: localStorage.getItem("email"),
-        name: 'Тестовый аккаунт'
+        name: 'Иван Иванов'
       });
     }
   }
