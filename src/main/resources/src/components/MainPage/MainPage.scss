@@ -14,6 +14,7 @@
     .main_page__activity_panel {
       width: 100%;
       overflow-y: auto;
+      overflow-x: auto;
       background-color: $secondary-background-color;
       max-height: calc(100vh - 60px - 1px);
     }

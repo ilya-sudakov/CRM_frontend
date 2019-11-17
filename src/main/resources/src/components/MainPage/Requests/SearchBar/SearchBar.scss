@@ -30,7 +30,7 @@
 
     .searchbar__input {
       // margin-left: 10px;
-      flex: 0 1 80%;
+      flex: 0 1 calc(80% - 25px);
 
       input[type="text"] {
         border: 1px solid #bbbbbb;
@@ -47,7 +47,7 @@
     .searchbar__searchbutton {
       // flex: 0 1 5%;
       font-size: 80%;
-      width: 15%;
+      width: calc(15% - 25px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -80,6 +80,16 @@
 
       &:hover {
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      width: calc(100% - 10px);
+
+      .searchbar__panel, .searchbar__title {
+        padding: 0 5px;
       }
     }
   }

@@ -85,7 +85,14 @@
     background-color: #f8f8f8;
   }
 
-  @media screen and (max-width: 1220px) {
+  @media (max-width: 768px) {
+    &__amount_table {
+      margin-left: 10px;
+      align-self: flex-start;
+    }
+  }
+
+  @media (max-width: 1220px) {
     &__table {
       border: 0;
     }

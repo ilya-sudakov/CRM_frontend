@@ -101,9 +101,18 @@
   }
 
   @media (max-width: 768px) {
+    & {
+      padding: 0 10px;
+    }
+
+    .header__sidemenu {
+      font-size: 80%;
+    }
+
     &__menu {
       .header__item {
         padding: 10px 5px;
+        font-size: 80%;
         &--user {
           .header__email {
             display: none;
