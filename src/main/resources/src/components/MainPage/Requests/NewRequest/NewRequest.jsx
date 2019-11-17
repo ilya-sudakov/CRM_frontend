@@ -118,19 +118,19 @@ const NewRequest = (props) => {
                 </div>
                 <div className="new_request__input_name">Продукция</div>
                 <div className="new_request__input_field">
-                    <input type="text" name="products" onChange={handleInputChange} />
+                    <input type="text" name="products" autoComplete="off" onChange={handleInputChange} />
                 </div>
                 <div className="new_request__input_name">Количество</div>
                 <div className="new_request__input_field">
-                    <input type="text" name="quantity" onChange={handleInputChange} />
+                    <input type="text" name="quantity" autoComplete="off" onChange={handleInputChange} />
                 </div>
                 <div className="new_request__input_name">Кодовое слово</div>
                 <div className="new_request__input_field">
-                    <input type="text" name="codeWord" onChange={handleInputChange} />
+                    <input type="text" name="codeWord" autoComplete="off" onChange={handleInputChange} />
                 </div>
                 <div className="new_request__input_name">Ответственный</div>
                 <div className="new_request__input_field">
-                    <input type="text" name="responsible" onChange={handleInputChange} />
+                    <input type="text" name="responsible" autoComplete="off" onChange={handleInputChange} />
                 </div>
                 {/* <div className="new_request__input_name">Статус</div>
                 <div className="new_request__input_field">
