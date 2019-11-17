@@ -115,14 +115,25 @@
     }
   }
 
-  // @media (max-width: 768px) {
-  //   & {
-  //     flex-wrap: nowrap;
-  //     display: none;
+  @media (max-width: 1024px) {
+    & {
+      position: fixed;
+      left: 0;
+      height: 100%;
+      z-index: 1;
+      // flex-wrap: nowrap;
+      // display: none;
 
-  //     .sidemenu__item {
-  //       display: none;
-  //     }
-  //   }
-  // }
+      // .sidemenu__item {
+      //   display: none;
+      // }
+
+      &--hidden {
+        position: fixed;
+        left: -150px;
+        height: 100%;
+        z-index: 1;
+      }
+    }
+  }
 }
