@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru'
 import { addRequest } from '../../../../utils/utilsAPI.jsx';
 
-// import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import './NewRequest.scss';
 
