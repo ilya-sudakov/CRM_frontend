@@ -1,35 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import './LoginPage.scss';
+import { login } from '../../../utils/utilsAPI.jsx';
 
 const LoginPage = (props) => {
-    const [email, setEmail] = useState('');
+    const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        document.title = "Вход в аккаунт";
+        document.title = "Авторизация";
     });
 
     const handleLogin = (event) => {
         event.preventDefault();
-        if (email === "test@mail.ru" && password === "password") {
-            const userData = Object.assign({
-                email: email,
-                name: 'Иван Иванов'
-            });
-            localStorage.setItem("email", email);
-            props.setUserData(true, userData);
+        const loginRequest = Object.assign({
+            username: username,
+            password: password
+        });
+        login(loginRequest)
+            .then(res => res.json())
+            .then(response => {
+                props.setUserData(true, response.user);
+                localStorage.setItem("accessToken", response.accessToken);
+                localStorage.setItem("username", response.user.username);
+                props.history.push('/requests');
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        //Для тестов
+        // if (email === "test@mail.ru" && password === "password") {
+        //     const userData = Object.assign({
+        //         email: email,
+        //         name: 'Иван Иванов'
+        //     });
+        //     localStorage.setItem("email", email);
+        //     props.setUserData(true, userData);
 
-            props.history.push('/requests');
-        }
-        else {
-            alert("Введены некорректные данные");
-        }
+        //     props.history.push('/requests');
+        // }
+        // else {
+        //     alert("Введены некорректные данные");
+        // }
     }
 
     const handleSignOut = (event) => {
         event.preventDefault();
-        localStorage.removeItem("email");
+        localStorage.removeItem("username");
+        localStorage.removeItem("accessToken");
         props.setUserData(false, null);
     }
 
@@ -45,7 +63,7 @@ const LoginPage = (props) => {
                             Email
                         </div> */}
                         <div className="authorization__field_input">
-                            <input type="text" onChange={e => setEmail(e.target.value)} placeholder="Введите email..." defaultValue="" />
+                            <input type="text" onChange={e => setUserName(e.target.value)} placeholder="Введите логин..." defaultValue="" />
                         </div>
                         {/* <div className="authorization__field_name">
                             Пароль

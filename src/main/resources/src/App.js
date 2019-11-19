@@ -5,13 +5,17 @@ import './variables.scss';
 import MainPage from './components/MainPage/MainPage.jsx';
 import LoginPage from './components/Authorization/LoginPage/LoginPage.jsx';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
+import { login } from './utils/utilsAPI.jsx';
 
 class App extends React.Component {
   state = {
     isAuthorized: false,
     userData: {
       email: '',
-      name: ''
+      username: '',
+      firstName: '',
+      lastName: '',
+      id: 0
     }
     // isAuthorized: true,
     // userData: {
@@ -28,12 +32,25 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem("email") !== "" && localStorage.getItem("email") !== null) {
-      this.setUserData(true, {
-        email: localStorage.getItem("email"),
-        name: 'Иван Иванов'
+    if (localStorage.getItem("accessToken")) {
+      const loginRequest = Object.assign({
+        username: localStorage.getItem("username"),
+        password: null
       });
+      login(loginRequest)
+        .then(res => res.json())
+        .then(response => {
+          this.setUserData(response.user);
+        })
+        .catch(error => {
+          console.log(error);
+        })
     }
+    //   this.setUserData(true, {
+    //     email: localStorage.getItem("email"),
+    //     username: 'Иван Иванов'
+    //   });
+    // }
   }
 
   render() {

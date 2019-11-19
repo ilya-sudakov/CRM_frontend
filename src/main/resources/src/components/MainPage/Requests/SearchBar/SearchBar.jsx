@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import searchImg from '../../../../../../../../assets/searchbar/search.svg';
-import plusImg from '../../../../../../../../assets/searchbar/plus.svg';
+// import plusImg from '../../../../../../../../assets/searchbar/plus.svg';
 import './SearchBar.scss';
 
 const SearchBar = (props) => {
