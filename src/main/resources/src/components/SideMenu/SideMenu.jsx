@@ -49,13 +49,13 @@ const SideMenu = (props) => {
                 </Link>
             </div>
             <div className={props.location.pathname.includes("/products") ? "sidemenu__item--active" : "sidemenu__item"}>
-                <Link className="sidemenu__link" to="/products">Продукция (В разработке)</Link>
+                <Link className="sidemenu__link" to="/products">Продукция</Link>
                 <Link to="/products/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>
             </div>
             <div className={props.location.pathname.includes("/production-line") ? "sidemenu__item--active" : "sidemenu__item"}>
-                <Link className="sidemenu__link" to="/production-line">Очередь производства (В разработке)</Link>
+                <Link className="sidemenu__link" to="/production-line">Очередь производства</Link>
                 <Link to="/production-line/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>
