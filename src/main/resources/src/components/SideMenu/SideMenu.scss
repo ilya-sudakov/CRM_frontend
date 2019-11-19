@@ -46,7 +46,8 @@
     }
 
     &--add {
-      width: 50%;
+      // width: 50%;
+      width: fit-content;
       font-size: 90%;
       justify-content: center;
       background-color: $button__background--inverted;
@@ -67,8 +68,11 @@
 
     .sidemenu__link {
       color: $primary-text-color;
+      // word-wrap: break-word;
+      white-space: normal;
       padding: 10px 5px;
-      width: 100%;
+      // width: 100%;
+      width: calc(100% - 35px);
       // text-align: center;
     }
 
@@ -130,7 +134,7 @@
 
       &--hidden {
         position: fixed;
-        left: -150px;
+        left: -200px;
         height: 100%;
         z-index: 1;
       }

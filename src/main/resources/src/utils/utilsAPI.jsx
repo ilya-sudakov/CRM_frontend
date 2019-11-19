@@ -3,6 +3,10 @@ const request = (options) => {
         "Content-Type": "application/json"
     })
 
+    if (localStorage.getItem("accessToken")) {
+        headers.append('Authorization', 'Bearer_' + localStorage.getItem("accessToken"))
+    }
+
     const defaults = { headers: headers };
 
     options = Object.assign({}, defaults, options);
@@ -81,5 +85,13 @@ export function addRequest(newRequest) {
         url: process.env.API_BASE_URL + "/request",
         method: "POST",
         body: JSON.stringify(newRequest)
+    })
+}
+
+export function login(loginRequest) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/auth/login",
+        method: "POST",
+        body: JSON.stringify(loginRequest)
     })
 }

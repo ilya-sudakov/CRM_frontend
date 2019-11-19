@@ -77,8 +77,8 @@ const TableView = (props) => {
                     <div className="tableview__col" data-label="Ответственный">{request.responsible}</div>
                     <div className="tableview__col" data-label="Статус">{request.status}</div>
                     <div className="tableview__col" data-label="Действия" className="tableview__actions">
-                        {/* <div data-id={request.id} className="tableview__action" >Просмотр</div>
-                        <div data-id={request.id} className="tableview__action" >Редактировать</div> */}
+                        {/* <div data-id={request.id} className="tableview__action" >Просмотр</div> */}
+                        {/* <div data-id={request.id} className="tableview__action" >Редактировать</div> */}
                         <div data-id={request.id} className="tableview__action" onClick={props.deleteItem}>Удалить</div>
                     </div>
                 </div>
