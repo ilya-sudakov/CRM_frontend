@@ -16,12 +16,12 @@ const TableView = (props) => {
         })
     }
 
-    const searchQuery = () => {
-        return props.data.filter(item => item.products.includes(props.searchQuery))
+    const searchQuery = (data) => {
+        return data.filter(item => item.products.includes(props.searchQuery))
     }
 
-    const sortRequests = () => {
-        return searchQuery().sort((a, b) => {
+    const sortRequests = (data) => {
+        return searchQuery(data).sort((a, b) => {
 
             if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
@@ -44,6 +44,15 @@ const TableView = (props) => {
         })
     }
 
+    const formatDateString = (dateString) => {
+        const newDate = dateString.split("T")[0];
+        return (
+            newDate.split("-")[2] + "." +
+            newDate.split("-")[1] + "." +
+            newDate.split("-")[0]
+        );
+    }
+
     return (
         <div className="tableview">
             <div className="tableview__row tableview__row--header">
@@ -62,7 +71,7 @@ const TableView = (props) => {
                 <div className="tableview__col" data-label="Статус">Статус</div>
                 <div className="tableview__col" data-label="Действия">Действия</div>
             </div>
-            {sortRequests().map((request, request_id) => (
+            {sortRequests(props.data).map((request, request_id) => (
                 <div key={request_id} className={"tableview__row " +
                     (request.status === "Не готово" && "tableview__row--status_not_ready" ||
                         request.status === "В процессе" && "tableview__row--status_in_progress" ||
@@ -70,7 +79,7 @@ const TableView = (props) => {
                         request.status === "Отгружено" && "tableview__row--status_shipped")
                 }>
                     <div className="tableview__col" data-label="ID">{request.id}</div>
-                    <div className="tableview__col" data-label="Дата">{request.date.split("T")[0]}</div>
+                    <div className="tableview__col" data-label="Дата">{formatDateString(request.date)}</div>
                     <div className="tableview__col" data-label="Продукция">{request.products}</div>
                     <div className="tableview__col" data-label="Количество">{request.quantity}</div>
                     <div className="tableview__col" data-label="Кодовое слово">{request.codeWord}</div>

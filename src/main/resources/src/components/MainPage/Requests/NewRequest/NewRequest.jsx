@@ -112,8 +112,9 @@ const NewRequest = (props) => {
                     <DatePicker
                         selected={requestInputs.date}
                         onChange={handleInputChange}
-                        dateFormat="dd/MM/yyyy"
+                        dateFormat="dd.MM.yyyy"
                         onChange={handleDateChange}
+                        disabledKeyboardNavigation
                         locale={ru}
                     />
                 </div>

@@ -17,7 +17,9 @@
   transition: 0.2s ease-in-out;
   color: $primary-text-color;
 
-  &__item, &__item--active, &__item--add {
+  &__item,
+  &__item--active,
+  &__item--add {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -39,6 +41,10 @@
 
     &--active {
       background-color: darken($side_menu__background, 20%);
+
+      .sidemenu__link {
+        color: $secondary-text-color!important;
+      }
 
       &:hover {
         background-color: darken($side_menu__background, 30%);
