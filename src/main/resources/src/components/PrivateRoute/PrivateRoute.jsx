@@ -5,9 +5,12 @@ const PrivateRoute = ({ component: Component, isAuthorized, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            (localStorage.getItem("accessToken") !== "" && localStorage.getItem("accessToken") !== null) ? (
+            // (localStorage.getItem("accessToken") !== "" && localStorage.getItem("accessToken") !== null) ? (
+            (localStorage.getItem("refreshToken")) ? (
+                console.log('rendering component'),
                 <Component {...rest} {...props} />
             ) : (
+                    console.log('rendering login'),
                     <Redirect
                         to={{
                             pathname: '/login',

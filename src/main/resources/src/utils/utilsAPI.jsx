@@ -1,9 +1,9 @@
-const request = (options) => {
+const request = (options, isLogin) => {
     const headers = new Headers({
         "Content-Type": "application/json"
     })
 
-    if (localStorage.getItem("accessToken")) {
+    if (localStorage.getItem("accessToken") && options.url.includes("refreshToken") !== true) {
         headers.append('Authorization', 'Bearer_' + localStorage.getItem("accessToken"))
     }
 
@@ -93,5 +93,13 @@ export function login(loginRequest) {
         url: process.env.API_BASE_URL + "/api/v1/auth/login",
         method: "POST",
         body: JSON.stringify(loginRequest)
+    })
+}
+
+export function refreshToken(refreshToken) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/auth/refreshToken",
+        method: "POST",
+        body: JSON.stringify(refreshToken),
     })
 }

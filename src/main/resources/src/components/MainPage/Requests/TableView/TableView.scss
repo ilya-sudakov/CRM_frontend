@@ -72,6 +72,8 @@
         color: $secondary-text-color;
         background-color: $button__background--inverted;
         transition: 0.2s ease-in-out;
+        word-wrap: break-word;
+        word-break: break-all;
 
         &:last-child {
           margin: 0;

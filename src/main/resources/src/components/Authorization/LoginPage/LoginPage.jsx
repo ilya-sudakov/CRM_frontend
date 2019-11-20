@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import './LoginPage.scss';
-import { login } from '../../../utils/utilsAPI.jsx';
+import { login, refreshToken } from '../../../utils/utilsAPI.jsx';
 
 const LoginPage = (props) => {
     const [username, setUserName] = useState('');
@@ -17,17 +17,61 @@ const LoginPage = (props) => {
             username: username,
             password: password
         });
-        login(loginRequest)
-            .then(res => res.json())
-            .then(response => {
-                props.setUserData(true, response.user);
-                localStorage.setItem("accessToken", response.accessToken);
-                localStorage.setItem("username", response.user.username);
-                props.history.push('/requests');
+        if (localStorage.getItem("refreshToken")) {
+            const refreshTokenObject = Object.assign({
+                refreshToken: localStorage.getItem("refreshToken")
             })
-            .catch((error) => {
-                console.log(error);
-            })
+            refreshToken(refreshTokenObject)
+                .then(res => res.json())
+                .then((response) => {
+                    // console.log(response);
+                    props.setUserData(true, response.user);
+                    localStorage.setItem("accessToken", response.accessToken);
+                    localStorage.setItem("refreshToken", response.refreshToken);
+                    // login(loginRequest)
+                    //   .then(res => res.json())
+                    //   .then(response => {
+                    //     this.setUserData(true, response.user);
+                    //     localStorage.setItem("accessToken", response.accessToken);
+                    //     localStorage.setItem("refreshToken", response.refreshToken);
+                    //   })
+                })
+                .catch((error) => {
+                    console.log(error);
+                    // console.log(this.state);
+                    // this.props.history.push("/login");
+                })
+            // refreshToken(refreshTokenObject)
+            // .then(() => {
+            // login(loginRequest)
+            //     .then(res => res.json())
+            //     .then(response => {
+            //         props.setUserData(true, response.user);
+            //         localStorage.setItem("accessToken", response.accessToken);
+            //         localStorage.setItem("refreshToken", response.refreshToken);
+            //         localStorage.setItem("username", response.user.username);
+            //         props.history.push('/requests');
+            //     })
+            //     // })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     })
+        }
+        else {
+            login(loginRequest)
+                .then(res => res.json())
+                .then(response => {
+                    props.setUserData(true, response.user);
+                    localStorage.setItem("accessToken", response.accessToken);
+                    localStorage.setItem("refreshToken", response.refreshToken);
+                    // localStorage.setItem("username", response.user.username)
+                    props.history.push('/requests');
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+
         //Для тестов
         // if (email === "test@mail.ru" && password === "password") {
         //     const userData = Object.assign({
