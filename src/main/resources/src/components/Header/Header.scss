@@ -113,11 +113,11 @@
       .header__item {
         padding: 10px 5px;
         font-size: 80%;
-        &--user {
-          .header__email {
-            display: none;
-          }
-        }
+        // &--user {
+        //   .header__email {
+        //      display: none;
+        //   }
+        // }
       }
     }
   }

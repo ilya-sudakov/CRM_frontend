@@ -17,11 +17,6 @@ class App extends React.Component {
       lastName: '',
       id: 0
     }
-    // isAuthorized: true,
-    // userData: {
-    //   name: 'Илья Судаков',
-    //   email: 'ilyasudakov@inbox.ru',
-    // }
   }
 
   setUserData = (isAuthorized, userData) => {
@@ -32,67 +27,21 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // if (localStorage.getItem("accessToken")) {
-    //   const loginRequest = Object.assign({
-    //     username: localStorage.getItem("username"),
-    //     password: null
-    //   });
-    //   login(loginRequest)
-    //     .then(res => res.json())
-    //     .then(response => {
-    //       this.setUserData(response.user);
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     })
-    // }
-    const loginRequest = Object.assign({
-      username: localStorage.getItem("username"),
-      password: null
-    });
     if (localStorage.getItem("refreshToken") && this.state.isAuthorized === false) {
-      // console.log("app.refresh");
       const refreshTokenObject = Object.assign({
         refreshToken: localStorage.getItem("refreshToken")
       })
       refreshToken(refreshTokenObject)
         .then(res => res.json())
         .then((response) => {
-          // console.log(response);
           this.setUserData(true, response.user);
           localStorage.setItem("accessToken", response.accessToken);
           localStorage.setItem("refreshToken", response.refreshToken);
-          // login(loginRequest)
-          //   .then(res => res.json())
-          //   .then(response => {
-          //     this.setUserData(true, response.user);
-          //     localStorage.setItem("accessToken", response.accessToken);
-          //     localStorage.setItem("refreshToken", response.refreshToken);
-          //   })
         })
         .catch((error) => {
           console.log(error);
-          // console.log(this.state);
-          // this.props.history.push("/login");
         })
     }
-    // else {
-    //   login(loginRequest)
-    //     .then(res => res.json())
-    //     .then(response => {
-    //       this.setUserData(true, response.user);
-    //       localStorage.setItem("accessToken", response.accessToken);
-    //       localStorage.setItem("refreshToken", response.refreshToken);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
-    // }
-    //   this.setUserData(true, {
-    //     email: localStorage.getItem("email"),
-    //     username: 'Иван Иванов'
-    //   });
-    // }
   }
 
   render() {

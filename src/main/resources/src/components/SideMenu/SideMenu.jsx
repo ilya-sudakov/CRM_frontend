@@ -14,8 +14,9 @@ const SideMenu = (props) => {
                     <Link className="sidemenu__item--add" to={
                         props.location.pathname.includes("/clients") ? "/clients/new"
                             : props.location.pathname.includes("/requests") ? "/requests/new"
-                                : props.location.pathname.includes("/production-line") ? "/production-line/new"
-                                    : ''
+                                : props.location.pathname.includes("/products") ? "/products/new"
+                                    : props.location.pathname.includes("/production-line") ? "/production-line/new"
+                                        : ''
                     }>
                         <span>{props.location.pathname.includes("/clients") ? "Добавить клиента"
                             : props.location.pathname.includes("/requests") ? "Добавить заявку"

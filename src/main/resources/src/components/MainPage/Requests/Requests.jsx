@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Requests.scss';
 import { getRequests, deleteRequest } from '../../../utils/utilsAPI.jsx';
 import TableView from './TableView/TableView.jsx';
-import SearchBar from './SearchBar/SearchBar.jsx';
+import SearchBar from '../SearchBar/SearchBar.jsx';
 
 const Requests = (props) => {
     const [requests, setRequests] = useState([]);
@@ -32,9 +32,10 @@ const Requests = (props) => {
         <div className="requests">
             <div className="requests__title">Заявки</div>
             <SearchBar
+                title="Поиск по заявкам"
+                placeholder="Введите название продукции для поиска..."
                 setSearchQuery={setSearchQuery}
             />
-            {/* <Link className="requests__link" to="requests/new">Создать заявку</Link> */}
             {/* <div className="requests__amount_table">{requests.length} записей из {requests.length}</div> */}
             <div className="requests__amount_table">Всего: {requests.length} записей</div>
             <TableView

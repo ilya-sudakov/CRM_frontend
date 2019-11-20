@@ -24,38 +24,14 @@ const LoginPage = (props) => {
             refreshToken(refreshTokenObject)
                 .then(res => res.json())
                 .then((response) => {
-                    // console.log(response);
                     props.setUserData(true, response.user);
                     localStorage.setItem("accessToken", response.accessToken);
                     localStorage.setItem("refreshToken", response.refreshToken);
-                    // login(loginRequest)
-                    //   .then(res => res.json())
-                    //   .then(response => {
-                    //     this.setUserData(true, response.user);
-                    //     localStorage.setItem("accessToken", response.accessToken);
-                    //     localStorage.setItem("refreshToken", response.refreshToken);
-                    //   })
+                    props.history.push('/requests');
                 })
                 .catch((error) => {
                     console.log(error);
-                    // console.log(this.state);
-                    // this.props.history.push("/login");
                 })
-            // refreshToken(refreshTokenObject)
-            // .then(() => {
-            // login(loginRequest)
-            //     .then(res => res.json())
-            //     .then(response => {
-            //         props.setUserData(true, response.user);
-            //         localStorage.setItem("accessToken", response.accessToken);
-            //         localStorage.setItem("refreshToken", response.refreshToken);
-            //         localStorage.setItem("username", response.user.username);
-            //         props.history.push('/requests');
-            //     })
-            //     // })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     })
         }
         else {
             login(loginRequest)
@@ -64,28 +40,12 @@ const LoginPage = (props) => {
                     props.setUserData(true, response.user);
                     localStorage.setItem("accessToken", response.accessToken);
                     localStorage.setItem("refreshToken", response.refreshToken);
-                    // localStorage.setItem("username", response.user.username)
                     props.history.push('/requests');
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         }
-
-        //Для тестов
-        // if (email === "test@mail.ru" && password === "password") {
-        //     const userData = Object.assign({
-        //         email: email,
-        //         name: 'Иван Иванов'
-        //     });
-        //     localStorage.setItem("email", email);
-        //     props.setUserData(true, userData);
-
-        //     props.history.push('/requests');
-        // }
-        // else {
-        //     alert("Введены некорректные данные");
-        // }
     }
 
     const handleSignOut = (event) => {

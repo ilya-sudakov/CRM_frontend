@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 // import * as DateFNS from "date-fns/esm";
-import ru from 'date-fns/locale/ru'
+import ru from 'date-fns/locale/ru';
 import { addRequest } from '../../../../utils/utilsAPI.jsx';
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -74,20 +74,7 @@ const NewRequest = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
-        //получаем сегодняшнее число в state
-        // setRequestInputs({
-        //     ...requestInputs,
-        //     date: getCurDate()
-        // })
     }, [])
-
-    const getCurDate = () => {
-        // var monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        //     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        // ];
-        const curDate = new Date();
-        return (curDate.getFullYear() + "-" + curDate.getMonth() + "-" + curDate.getDate());
-    }
 
     const handleDateChange = (date) => {
         validateField("date", date);
@@ -103,12 +90,6 @@ const NewRequest = (props) => {
             <form className="new_request__form">
                 <div className="new_request__input_name">Дата</div>
                 <div className="new_request__input_field">
-                    {/* <input type="date"
-                        name="date"
-                        onChange={handleInputChange}
-                        defaultValue={getCurDate()}
-                    /> */}
-
                     <DatePicker
                         selected={requestInputs.date}
                         onChange={handleInputChange}
@@ -134,15 +115,6 @@ const NewRequest = (props) => {
                 <div className="new_request__input_field">
                     <input type="text" name="responsible" autoComplete="off" onChange={handleInputChange} />
                 </div>
-                {/* <div className="new_request__input_name">Статус</div>
-                <div className="new_request__input_field">
-                    <select name="status" onChange={handleInputChange}>
-                        <option>Не готово</option>
-                        <option>В процессе</option>
-                        <option>Готово к отгрузке</option>
-                        <option>Отгружено</option>
-                    </select>
-                </div> */}
                 <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>
         </div>
