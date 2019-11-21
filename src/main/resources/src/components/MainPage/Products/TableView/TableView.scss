@@ -1,6 +1,6 @@
 @import "../../../../variables.scss";
 
-.tableview {
+.tableview_products {
   display: flex;
   flex-direction: column;
   width: calc(100% - 50px);
@@ -16,20 +16,32 @@
     cursor: pointer;
   }
 
+  &__product_img {
+    width: 25px;
+    padding: 5px;
+  }
+
+  .tableview_products__row--header {
+    font-weight: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
   &__row {
     display: flex;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
     border-bottom: 1px solid #cccccc;
     text-align: center;
+    transition: 0.2s ease-in-out;
 
-    .tableview__col {
+    .tableview_products__col {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       padding: 15px 5px;
-      flex: 0 1 12.5%;
+      // flex: 0 1 12.5%;
       border-right: 1px solid #cccccc; //border between columns
       // min-width: 100px;
       // max-width: 150px;
@@ -38,15 +50,23 @@
       }
 
       &:nth-child(2) {
-        flex: 0 1 8%;
+        flex: 0 1 10%;
       }
 
       &:nth-child(3) {
-        flex: 0 1 29.5%;
+        flex: 0 1 30%;
+      }
+
+      &:nth-child(4) {
+        flex: 0 1 20%;
+      }
+
+      &:nth-child(5) {
+        flex: 0 1 20%;
       }
 
       &:nth-child(6) {
-        flex: 0 1 10%;
+        flex: 0 1 12.5%;
       }
 
       &:last-child {
@@ -54,17 +74,15 @@
       }
     }
 
-    .tableview__actions {
-      flex: 0 1 10%;
+    .tableview_products__actions {
+      flex: 0 1 12.5%;
       display: flex;
       padding: 15px 5px;
-      // flex-wrap: wrap;
-      // flex-direction: row;
       flex-direction: column;
       align-items: center;
       justify-content: center;
 
-      .tableview__action {
+      .tableview_products__action {
         font-size: 90%;
         border-radius: 5px;
         margin-bottom: 5px;
@@ -91,9 +109,9 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       // padding: 0px 5px;
-      .tableview__col:last-child {
-        flex: 0 1 10%;
-      }
+      // .tableview_products__col:last-child {
+      //   flex: 0 1 10%;
+      // }
     }
 
     &:last-of-type {
@@ -103,65 +121,28 @@
     }
   }
 
-  .tableview__row--even {
-    background-color: #ebebeb;
-  }
-
-  .tableview__row--odd {
+  .tableview_products__row--even {
     background-color: #f8f8f8;
-  }
-
-  .tableview__row--status_not_ready {
-    background-color: #c48681;
-    transition: 0.2s ease-in-out;
-    // color: $secondary-text-color;
 
     &:hover {
-      background-color: darken(#c48681, 5%);
+      background-color: #f0f0f0;
     }
   }
 
-  .tableview__row--status_in_progress {
-    background-color: #c5ac7a;
-    transition: 0.2s ease-in-out;
-    // color: $secondary-text-color;
+  .tableview_products__row--odd {
+    background-color: #ebebeb;
 
     &:hover {
-      background-color: darken(#c5ac7a, 5%);
-    }
-  }
-
-  .tableview__row--status_ready {
-    background-color: #6f9c8e;
-    transition: 0.2s ease-in-out;
-    // color: $secondary-text-color;
-
-    &:hover {
-      background-color: darken(#6f9c8e, 5%);
-    }
-  }
-
-  .tableview__row--status_shipped {
-    background-color: #dbdbdb;
-    transition: 0.2s ease-in-out;
-
-    &:hover {
-      background-color: darken(#dbdbdb, 5%);
+      background-color: #dbdbdb;
     }
   }
 }
 
 @media (max-width: 1024px) {
-  .tableview {
+  .tableview_products {
     flex-direction: column;
     align-self: flex-start;
     margin-left: 5px;
-
-    &__row:first-of-type {
-      .tableview__col {
-        word-wrap: break-word;
-        word-break: break-all;
-      }
-    }
+    width: calc(100% - 10px);
   }
 }

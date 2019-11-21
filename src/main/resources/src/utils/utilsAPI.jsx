@@ -88,6 +88,21 @@ export function addRequest(newRequest) {
     })
 }
 
+export function getRequestById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/request/" + id,
+        method: "GET"
+    })
+}
+
+export function editRequest(newRequest, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/request/" + id,
+        method: "PUT",
+        body: JSON.stringify(newRequest)
+    })
+}
+
 export function login(loginRequest) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/auth/login",

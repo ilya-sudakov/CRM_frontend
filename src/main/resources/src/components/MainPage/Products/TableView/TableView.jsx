@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
-import './TableView.scss';
+import './Tableview.scss';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'date',
-        date: 'desc'
+        curSort: 'id',
+        id: 'desc'
     })
 
     const changeSortOrder = (event) => {
@@ -17,78 +17,47 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.products.includes(props.searchQuery))
+        return data.filter(item => item.name.includes(props.searchQuery))
     }
 
-    const sortRequests = (data) => {
+    const sortProducts = (data) => {
         return searchQuery(data).sort((a, b) => {
-
-            if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
+            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
-            else if (a.status === "Отгружено") {
-                return 1;
-            }
-            else if (b.status === "Отгружено") {
-                return -1
-            }
-
-
-            if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
+            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-            }
-            else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return 1;
             }
             return 0;
         })
     }
 
-    const formatDateString = (dateString) => {
-        const newDate = dateString.split("T")[0];
-        return (
-            newDate.split("-")[2] + "." +
-            newDate.split("-")[1] + "." +
-            newDate.split("-")[0]
-        );
-    }
-
     return (
-        <div className="tableview">
-            <div className="tableview__row tableview__row--header">
-                <div className="tableview__col" data-label="ID">
+        <div className="tableview_products">
+            <div className="tableview_products__row tableview_products__row--header">
+                <div className="tableview_products__col">
                     <span>ID</span>
-                    <img name="id" className="tableview__img" onClick={changeSortOrder} src={sortIcon} />
+                    <img name="id" className="tableview_products__img" onClick={changeSortOrder} src={sortIcon} />
                 </div>
-                <div className="tableview__col" data-label="Дата">
-                    <span>Дата</span>
-                    <img name="date" className="tableview__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
-                <div className="tableview__col" data-label="Продукция">Продукция</div>
-                <div className="tableview__col" data-label="Количество">Количество</div>
-                <div className="tableview__col" data-label="Кодовое слово">Кодовое слово</div>
-                <div className="tableview__col" data-label="Ответственный">Ответственный</div>
-                <div className="tableview__col" data-label="Статус">Статус</div>
-                <div className="tableview__col" data-label="Действия">Действия</div>
+                <div className="tableview_products__col">Фото</div>
+                <div className="tableview_products__col">Название</div>
+                <div className="tableview_products__col">Артикул</div>
+                <div className="tableview_products__col">Вес</div>
+                <div className="tableview_products__col">Действия</div>
             </div>
-            {sortRequests(props.data).map((request, request_id) => (
-                <div key={request_id} className={"tableview__row " +
-                    (request.status === "Не готово" && "tableview__row--status_not_ready" ||
-                        request.status === "В процессе" && "tableview__row--status_in_progress" ||
-                        request.status === "Готово к отгрузке" && "tableview__row--status_ready" ||
-                        request.status === "Отгружено" && "tableview__row--status_shipped")
-                }>
-                    <div className="tableview__col" data-label="ID">{request.id}</div>
-                    <div className="tableview__col" data-label="Дата">{formatDateString(request.date)}</div>
-                    <div className="tableview__col" data-label="Продукция">{request.products}</div>
-                    <div className="tableview__col" data-label="Количество">{request.quantity}</div>
-                    <div className="tableview__col" data-label="Кодовое слово">{request.codeWord}</div>
-                    <div className="tableview__col" data-label="Ответственный">{request.responsible}</div>
-                    <div className="tableview__col" data-label="Статус">{request.status}</div>
-                    <div className="tableview__col" data-label="Действия" className="tableview__actions">
-                        {/* <div data-id={request.id} className="tableview__action" >Просмотр</div> */}
-                        <div data-id={request.id} className="tableview__action" >Редактировать</div>
-                        {/* <div data-id={request.id} className="tableview__action" onClick={props.deleteItem}>Удалить</div> */}
+            {sortProducts(props.data).map((product, product_id) => (
+                <div key={product_id} className={"tableview_products__row " + (product.id % 2 === 0 ? "tableview_products__row--even" : "tableview_products__row--odd")}>
+                    <div className="tableview_products__col">{product.id}</div>
+                    <div className="tableview_products__col">
+                        <img className="tableview_products__product_img" src={product.imgUrl} alt=""/>
+                    </div>
+                    <div className="tableview_products__col">{product.name}</div>
+                    <div className="tableview_products__col">{product.item}</div>
+                    <div className="tableview_products__col">{product.weight}</div>
+                    <div className="tableview_products__actions">
+                        {/* <div data-id={product.id} className="tableview_products__action" >Просмотр</div> */}
+                        <div data-id={product.id} className="tableview_products__action">Редактировать</div>
+                        {/* <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>
                 </div>
             ))}
