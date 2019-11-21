@@ -9,15 +9,15 @@ const Requests = (props) => {
     const [requests, setRequests] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
-    const deleteItem = (event) => {
-        const id = event.target.dataset.id;
-        deleteRequest(id)
-            .then(() => getRequests())
-            .then(res => res.json())
-            .then((requests) => {
-                setRequests(requests);
-            })
-    }
+    // const deleteItem = (event) => {
+    //     const id = event.target.dataset.id;
+    //     deleteRequest(id)
+    //         .then(() => getRequests())
+    //         .then(res => res.json())
+    //         .then((requests) => {
+    //             setRequests(requests);
+    //         })
+    // }
 
     useEffect(() => {
         document.title = "Заявки";
@@ -40,7 +40,7 @@ const Requests = (props) => {
             <div className="requests__amount_table">Всего: {requests.length} записей</div>
             <TableView
                 data={requests}
-                deleteItem={deleteItem}
+                // deleteItem={deleteItem}
                 searchQuery={searchQuery}
             />
             {/* Working <table tag> */}

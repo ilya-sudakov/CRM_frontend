@@ -11,6 +11,7 @@ import GeneralPage from './GeneralPage/GeneralPage.jsx';
 import newClient from './Clients/NewClient/NewClient.jsx';
 import Products from './Products/Products.jsx';
 import NewProduct from './Products/NewProduct/NewProduct.jsx';
+import EditRequest from './Requests/EditRequest/EditRequest.jsx';
 
 class MainPage extends React.Component {
     state = {
@@ -43,6 +44,7 @@ class MainPage extends React.Component {
                             <Route exact path="/contracts" component={Contracts} />
                             <Route exact path="/requests" component={Requests} />
                             <Route exact path="/requests/new" component={NewRequest} />
+                            <Route path="/requests/edit/" component={EditRequest} />
                             <Route exact path="/products" component={Products} />
                             <Route exact path="/products/new" component={NewProduct} />
                         </Switch>
