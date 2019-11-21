@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
-import './Tableview.scss';
+import './TableView.scss';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
