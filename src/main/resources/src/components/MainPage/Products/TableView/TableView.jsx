@@ -36,7 +36,7 @@ const TableView = (props) => {
         <div className="tableview_products">
             <div className="tableview_products__row tableview_products__row--header">
                 <div className="tableview_products__col">
-                    <span>#</span>
+                    <span>ID</span>
                     <img name="id" className="tableview_products__img" onClick={changeSortOrder} src={sortIcon} />
                 </div>
                 <div className="tableview_products__col">Фото</div>
@@ -49,7 +49,7 @@ const TableView = (props) => {
                 <div key={product_id} className={"tableview_products__row " + (product.id % 2 === 0 ? "tableview_products__row--even" : "tableview_products__row--odd")}>
                     <div className="tableview_products__col">{product.id}</div>
                     <div className="tableview_products__col">
-                        <img src={product.imgUrl} alt=""/>
+                        <img className="tableview_products__product_img" src={product.imgUrl} alt=""/>
                     </div>
                     <div className="tableview_products__col">{product.name}</div>
                     <div className="tableview_products__col">{product.item}</div>

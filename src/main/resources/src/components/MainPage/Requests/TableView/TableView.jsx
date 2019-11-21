@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 
@@ -114,7 +115,7 @@ const TableView = (props) => {
                     <div className="tableview_requests__col">{request.status}</div>
                     <div className="tableview_requests__actions">
                         {/* <div data-id={request.id} className="tableview_requests__action" >Просмотр</div> */}
-                        <div data-id={request.id} className="tableview_requests__action" >Редактировать</div>
+                        <Link to={"/requests/edit/" + request.id} data-id={request.id} className="tableview_requests__action">Редактировать</Link>
                         {/* <div data-id={request.id} className="tableview_requests__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>
                 </div>

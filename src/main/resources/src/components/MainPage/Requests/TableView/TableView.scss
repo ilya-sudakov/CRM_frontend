@@ -62,20 +62,20 @@
       // min-width: 100px;
       // max-width: 150px;
 
-      .tableview_requests__subrow {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        // height: 30px;
-        width: 100%;
-        // padding: 0 5px;
-        border-bottom: 1px solid #cccccc;
-        .tableview_requests__subtext {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-      }
+      // .tableview_requests__subrow {
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      //   // height: 30px;
+      //   width: 100%;
+      //   // padding: 0 5px;
+      //   border-bottom: 1px solid #cccccc;
+      //   .tableview_requests__subtext {
+      //     white-space: nowrap;
+      //     overflow: hidden;
+      //     text-overflow: ellipsis;
+      //   }
+      // }
 
       .tableview_requests__sub_row {
         display: flex;
@@ -239,6 +239,7 @@
     flex-direction: column;
     align-self: flex-start;
     margin-left: 5px;
+    width: calc(100% - 10px);
 
     // &__row:first-of-type {
     //   .tableview_requests__col {

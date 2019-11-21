@@ -16,14 +16,15 @@
     cursor: pointer;
   }
 
+  &__product_img {
+    width: 25px;
+    padding: 5px;
+  }
+
   .tableview_products__row--header {
     font-weight: normal;
     word-wrap: break-word;
     word-break: break-all;
-    
-    .tableview_products__col:first-child {
-      font-size: 125%;
-    }
   }
 
   &__row {
@@ -142,5 +143,6 @@
     flex-direction: column;
     align-self: flex-start;
     margin-left: 5px;
+    width: calc(100% - 10px);
   }
 }
