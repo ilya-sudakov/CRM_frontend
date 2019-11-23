@@ -90,4 +90,14 @@
       }
     }
   }
+
+  @media (max-width: 768px) {
+    .new_request__item {
+      flex-wrap: wrap;
+
+      .new_request__input_field {
+        width: 100%;
+      }
+    }
+  }
 }

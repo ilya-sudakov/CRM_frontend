@@ -109,64 +109,76 @@ const EditRequest = (props) => {
         <div className="edit_request">
             <div className="edit_request__title">Редактирование заявки</div>
             <form className="edit_request__form">
-                <div className="edit_request__input_name">Дата</div>
-                <div className="edit_request__input_field">
-                    <DatePicker
-                        selected={Date.parse(requestInputs.date)}
-                        dateFormat="dd.MM.yyyy"
-                        onChange={handleDateChange}
-                        disabledKeyboardNavigation
-                        locale={ru}
-                    />
+                <div className="edit_request__item">
+                    <div className="edit_request__input_name">Дата</div>
+                    <div className="edit_request__input_field">
+                        <DatePicker
+                            selected={Date.parse(requestInputs.date)}
+                            dateFormat="dd.MM.yyyy"
+                            onChange={handleDateChange}
+                            disabledKeyboardNavigation
+                            locale={ru}
+                        />
+                    </div>
                 </div>
-                <div className="edit_request__input_name">Продукция</div>
-                <div className="edit_request__input_field">
-                    <input type="text"
-                        name="products"
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={requestInputs.products}
-                    />
+                <div className="edit_request__item">
+                    <div className="edit_request__input_name">Продукция</div>
+                    <div className="edit_request__input_field">
+                        <input type="text"
+                            name="products"
+                            autoComplete="off"
+                            onChange={handleInputChange}
+                            defaultValue={requestInputs.products}
+                        />
+                    </div>
                 </div>
-                <div className="edit_request__input_name">Количество</div>
-                <div className="edit_request__input_field">
-                    <input type="text"
-                        name="quantity"
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={requestInputs.quantity}
-                    />
+                <div className="edit_request__item">
+                    <div className="edit_request__input_name">Количество</div>
+                    <div className="edit_request__input_field">
+                        <input type="text"
+                            name="quantity"
+                            autoComplete="off"
+                            onChange={handleInputChange}
+                            defaultValue={requestInputs.quantity}
+                        />
+                    </div>
                 </div>
-                <div className="edit_request__input_name">Кодовое слово</div>
-                <div className="edit_request__input_field">
-                    <input type="text"
-                        name="codeWord"
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={requestInputs.codeWord}
-                    />
+                <div className="edit_request__item">
+                    <div className="edit_request__input_name">Кодовое слово</div>
+                    <div className="edit_request__input_field">
+                        <input type="text"
+                            name="codeWord"
+                            autoComplete="off"
+                            onChange={handleInputChange}
+                            defaultValue={requestInputs.codeWord}
+                        />
+                    </div>
                 </div>
-                <div className="edit_request__input_name">Ответственный</div>
-                <div className="edit_request__input_field">
-                    <input type="text"
-                        name="responsible"
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={requestInputs.responsible}
-                    />
+                <div className="edit_request__item">
+                    <div className="edit_request__input_name">Ответственный</div>
+                    <div className="edit_request__input_field">
+                        <input type="text"
+                            name="responsible"
+                            autoComplete="off"
+                            onChange={handleInputChange}
+                            defaultValue={requestInputs.responsible}
+                        />
+                    </div>
                 </div>
-                <div className="edit_request__input_name">Статус</div>
-                <div className="edit_request__input_field">
-                    <select
-                        name="status"
-                        onChange={handleInputChange}
-                        value={requestInputs.status}
-                    >
-                        <option>Не готово</option>
-                        <option>В процессе</option>
-                        <option>Готово к отгрузке</option>
-                        <option>Отгружено</option>
-                    </select>
+                <div className="edit_request__item">
+                    <div className="edit_request__input_name">Статус</div>
+                    <div className="edit_request__input_field">
+                        <select
+                            name="status"
+                            onChange={handleInputChange}
+                            value={requestInputs.status}
+                        >
+                            <option>Не готово</option>
+                            <option>В процессе</option>
+                            <option>Готово к отгрузке</option>
+                            <option>Отгружено</option>
+                        </select>
+                    </div>
                 </div>
                 <input className="edit_request__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
             </form>
