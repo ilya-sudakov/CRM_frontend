@@ -114,7 +114,7 @@ const TableView = (props) => {
                     <div className="tableview_requests__col">{request.responsible}</div>
                     <div className="tableview_requests__col">{request.status}</div>
                     <div className="tableview_requests__actions">
-                        {/* <div data-id={request.id} className="tableview_requests__action" >Просмотр</div> */}
+                        <Link data-id={request.id} className="tableview_requests__action" >Просмотр</Link>
                         <Link to={"/requests/edit/" + request.id} data-id={request.id} className="tableview_requests__action">Редактировать</Link>
                         {/* <div data-id={request.id} className="tableview_requests__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>
