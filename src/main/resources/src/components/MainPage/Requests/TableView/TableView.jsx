@@ -18,7 +18,7 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.products.includes(props.searchQuery))
+        return data.filter(item => item.products.toLowerCase().includes(props.searchQuery.toLowerCase()))
     }
 
     const sortRequests = (data) => {
