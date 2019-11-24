@@ -17,23 +17,23 @@ const LoginPage = (props) => {
             username: username,
             password: password
         });
-        if (localStorage.getItem("refreshToken")) {
-            const refreshTokenObject = Object.assign({
-                refreshToken: localStorage.getItem("refreshToken")
-            })
-            refreshToken(refreshTokenObject)
-                .then(res => res.json())
-                .then((response) => {
-                    props.setUserData(true, response.user);
-                    localStorage.setItem("accessToken", response.accessToken);
-                    localStorage.setItem("refreshToken", response.refreshToken);
-                    props.history.push('/requests');
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        }
-        else {
+        // if (localStorage.getItem("refreshToken")) {
+        //     const refreshTokenObject = Object.assign({
+        //         refreshToken: localStorage.getItem("refreshToken")
+        //     })
+        //     refreshToken(refreshTokenObject)
+        //         .then(res => res.json())
+        //         .then((response) => {
+        //             props.setUserData(true, response.user);
+        //             localStorage.setItem("accessToken", response.accessToken);
+        //             localStorage.setItem("refreshToken", response.refreshToken);
+        //             props.history.push('/requests');
+        //         })
+        //         .catch((error) => {
+        //             console.log(error);
+        //         })
+        // }
+        // else {
             login(loginRequest)
                 .then(res => res.json())
                 .then(response => {
@@ -45,13 +45,14 @@ const LoginPage = (props) => {
                 .catch((error) => {
                     console.log(error);
                 })
-        }
+        // }
     }
 
     const handleSignOut = (event) => {
         event.preventDefault();
         localStorage.removeItem("username");
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         props.setUserData(false, null);
     }
 
