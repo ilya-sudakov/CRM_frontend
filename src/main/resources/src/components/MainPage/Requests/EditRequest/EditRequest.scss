@@ -18,50 +18,68 @@
     flex-direction: column;
     align-items: center;
     min-width: 300px;
-    max-width: 500px;
+    width: calc(100% - 100px);
+    // max-width: 500px;
     border-radius: 10px;
     background-color: $primary-background-color;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
 
-    .edit_request__input_name {
-      margin-bottom: 5px;
-    }
-
-    .edit_request__input_field {
+    .edit_request__item {
+      width: calc(100% - 20px);
       display: flex;
-      justify-content: center;
-      width: calc(90% - 20px);
-      margin-bottom: 15px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
 
-      .react-datepicker-wrapper {
-        width: 40%;
+      &:first-child {
+        margin-top: 25px;
+      }
+      .edit_request__input_name {
+        color: lighten($primary-text-color, 40%);
+        margin-bottom: 5px;
+        flex: 0 1 20%;
+      }
 
-        .react-datepicker {
-          .react-datepicker__day--selected {
-            background-color: $button__background--inverted !important;
+      .edit_request__input_field {
+        display: flex;
+        justify-content: center;
+        width: calc(90% - 20px);
+        // margin-bottom: 15px;
+
+        .react-datepicker-wrapper {
+          width: 100%;
+
+          .react-datepicker {
+            .react-datepicker__day--selected {
+              background-color: $button__background--inverted !important;
+            }
+          }
+
+          input {
+            // text-align: center;
           }
         }
+      }
+      input[type="text"],
+      input[type="password"] {
+        border: 1px solid #bbbbbb;
+        width: calc(100% - 20px);
+        padding: 5px 10px;
+        border-radius: 10px;
 
-        input {
-          text-align: center;
+        &:focus {
+          border: 1px solid $button__background--inverted;
         }
       }
-    }
-    input[type="text"],
-    input[type="password"],
-    input[type="date"] {
-      border: 1px solid #bbbbbb;
-      width: calc(100% - 20px);
-      padding: 5px 10px;
-      border-radius: 10px;
-
-      &:focus {
-        border: 1px solid $button__background--inverted;
+      select {
+        border: 1px solid #bbbbbb;
+        width: 100%;
+        padding: 5px 10px;
+        border-radius: 10px;
+        outline: none;
       }
-    }
-    input[type="date"] {
-      width: calc(50% - 20px);
     }
 
     .edit_request__submit {
@@ -76,6 +94,16 @@
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .edit_request__item {
+      flex-wrap: wrap;
+
+      .edit_request__input_field {
+        width: 100%;
       }
     }
   }

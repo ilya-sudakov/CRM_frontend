@@ -77,11 +77,62 @@
 
       &--user {
         display: flex;
-        flex-direction: column;
-        margin-right: 5px;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 15px;
+        cursor: pointer;
+        position: relative;
+        padding: 2.5px 10px;
+        border-radius: 10px;
+        border: 1px solid #9b9b9b;
+        transition: 0.2s ease-in-out;
 
-        .header__email {
+        &:hover {
+          background-color: darken($primary-background-color, 10%);
+        }
+
+        .header__profile_data {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .header__userimg {
+            width: 40px;
+            margin-right: 5px;
+          }
+
+          .header__email {
+            font-size: 80%;
+          }
+        }
+
+        .header__profile_menu {
+          background-color: $side_menu__background;
+          border-radius: 10px;
           font-size: 80%;
+          position: absolute;
+          top: 50px;
+          left: 0;
+          width: calc(100% - 10px);
+          padding: 5px 5px;
+          transition: 0.2s ease-in-out;
+          transform-origin: 0 0;
+
+          .header__profile_item {
+            display: block;
+            color: $primary-text-color;
+            padding: 5px 0px;
+            border-radius: 10px;
+            transition: 0.2s ease-in-out;
+
+            &:hover {
+              background-color: darken($side_menu__background, 10%);
+            }
+          }
+
+          &--hidden {
+            transform: scaleY(0);
+          }
         }
       }
 
