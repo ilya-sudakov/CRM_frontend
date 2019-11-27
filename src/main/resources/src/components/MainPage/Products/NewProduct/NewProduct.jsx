@@ -12,7 +12,7 @@ const NewProduct = (props) => {
         item: "",
         weight: "",
     })
-    const [imgName, setImgName] = useState("");
+    const [imgName, setImgName] = useState("Имя файла...");
     const [nameValid, setNameValid] = useState(true);
     const [itemValid, setItemValid] = useState(false);
     const [weightValid, setWeightValid] = useState(false);
@@ -69,31 +69,39 @@ const NewProduct = (props) => {
         <div className="new_product">
             <div className="new_product__title">Новая продукция</div>
             <form className="new_product__form">
-                <div className="new_product__input_name">Наименование</div>
-                <div className="new_product__input_field">
-                    <input type="text" name="name" autoComplete="off" onChange={handleInputChange} />
+                <div className="new_product__item">
+                    <div className="new_product__input_name">Наименование</div>
+                    <div className="new_product__input_field">
+                        <input type="text" name="name" autoComplete="off" onChange={handleInputChange} />
+                    </div>
                 </div>
-                <div className="new_product__input_name">Артикул</div>
-                <div className="new_product__input_field">
-                    <input type="text" name="item" autoComplete="off" onChange={handleInputChange} />
+                <div className="new_product__item">
+                    <div className="new_product__input_name">Артикул</div>
+                    <div className="new_product__input_field">
+                        <input type="text" name="item" autoComplete="off" onChange={handleInputChange} />
+                    </div>
                 </div>
-                <div className="new_product__input_name">Вес изделия</div>
-                <div className="new_product__input_field">
-                    <input type="text" name="weight" autoComplete="off" onChange={handleInputChange} />
+                <div className="new_product__item">
+                    <div className="new_product__input_name">Вес изделия</div>
+                    <div className="new_product__input_field">
+                        <input type="text" name="weight" autoComplete="off" onChange={handleInputChange} />
+                    </div>
                 </div>
-                <div className="new_product__input_name">Фотография</div>
                 {/* <div className="new_product__input_field">
                     <input type="text" name="photo" autoComplete="off" readOnly onChange={handleInputChange} />
                 </div> */}
-                <div className="new_product__file_upload">
-                    <div className="new_product__file_name">
-                        {imgName}
-                    </div>
-                    <label className="new_product__label" htmlFor="file">
-                        Загрузить файл
+                <div className="new_product__item">
+                    <div className="new_product__input_name">Фотография</div>
+                    <div className="new_product__file_upload">
+                        <div className="new_product__file_name">
+                            {imgName}
+                        </div>
+                        <label className="new_product__label" htmlFor="file">
+                            Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
-                    </label>
-                    <input type="file" name="file" id="file" onChange={handleFileInputChange}/>
+                        </label>
+                        <input type="file" name="file" id="file" onChange={handleFileInputChange} />
+                    </div>
                 </div>
                 <input className="new_product__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>
