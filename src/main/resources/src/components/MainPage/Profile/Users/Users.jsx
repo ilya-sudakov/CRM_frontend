@@ -3,7 +3,9 @@ import './Users.scss';
 
 const Users = (props) => {
     return(
-        'Рава'
+        <div className="users_manage">
+            <div className="users_manage__title">Управление пользователями</div>
+        </div>
     )
 };
 

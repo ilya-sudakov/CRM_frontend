@@ -1,0 +1,14 @@
+@import "../../../../variables.scss";
+
+.users_manage {
+  width: 100%;
+  padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+}
