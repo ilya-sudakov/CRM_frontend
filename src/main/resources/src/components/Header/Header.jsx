@@ -10,13 +10,28 @@ const Header = (props) => {
 
     const clickProfileMenu = () => {
         const menu = document.getElementsByClassName("header__profile_menu")[0];
-        menu.classList.contains("header__profile_menu--hidden") 
-        ? menu.classList.remove("header__profile_menu--hidden")
-        : menu.classList.add("header__profile_menu--hidden");
+        const overlay = document.getElementsByClassName("main_page__overlay")[0];
+        if (menu.classList.contains("header__profile_menu--hidden")) {
+            menu.classList.remove("header__profile_menu--hidden");
+            overlay.classList.remove("main_page__overlay--hidden");
+        }
+        else {
+            menu.classList.add("header__profile_menu--hidden");
+            overlay.classList.add("main_page__overlay--hidden");
+        }
+    }
+
+    const clickOverlay = (event) => {
+        const overlay = document.getElementsByClassName("main_page__overlay")[0];
+        if (!overlay.classList.contains("main_page__overlay--hidden")) {
+            overlay.classList.add("main_page__overlay--hidden");
+            clickProfileMenu();
+        }
     }
 
     return (
         <div className="header">
+            <div className="main_page__overlay main_page__overlay--hidden" onClick={clickOverlay}></div>
             <div className="header__company">
                 <div className="header__sidemenu" onClick={sideMenuClickDesktop}>
                     <div className="linesWrapper">

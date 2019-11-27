@@ -14,6 +14,11 @@ const ViewRequest = (props) => {
         status: "Не готово"
     })
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        props.history.push("/requests");
+    }
+
     useEffect(() => {
         document.title = "Просмотр заявки";
         const id = props.history.location.pathname.split("/requests/view/")[1];
@@ -43,12 +48,12 @@ const ViewRequest = (props) => {
     }, [])
 
     return (
-        <div className="new_request">
-            <div className="new_request__title">Редактирование заявки</div>
-            <form className="new_request__form">
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Дата</div>
-                    <div className="new_request__input_field">
+        <div className="view_request">
+            <div className="view_request__title">Просмотр заявки</div>
+            <form className="view_request__form">
+                <div className="view_request__item">
+                    <div className="view_request__input_name">Дата</div>
+                    <div className="view_request__input_field">
                         <DatePicker
                             selected={Date.parse(requestInputs.date)}
                             dateFormat="dd.MM.yyyy"
@@ -57,9 +62,9 @@ const ViewRequest = (props) => {
                         />
                     </div>
                 </div>
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Продукция</div>
-                    <div className="new_request__input_field">
+                <div className="view_request__item">
+                    <div className="view_request__input_name">Продукция</div>
+                    <div className="view_request__input_field">
                         <input type="text"
                             name="products"
                             defaultValue={requestInputs.products}
@@ -67,9 +72,9 @@ const ViewRequest = (props) => {
                         />
                     </div>
                 </div>
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Количество</div>
-                    <div className="new_request__input_field">
+                <div className="view_request__item">
+                    <div className="view_request__input_name">Количество</div>
+                    <div className="view_request__input_field">
                         <input type="text"
                             name="quantity"
                             defaultValue={requestInputs.quantity}
@@ -77,9 +82,9 @@ const ViewRequest = (props) => {
                         />
                     </div>
                 </div>
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Кодовое слово</div>
-                    <div className="new_request__input_field">
+                <div className="view_request__item">
+                    <div className="view_request__input_name">Кодовое слово</div>
+                    <div className="view_request__input_field">
                         <input type="text"
                             name="codeWord"
                             defaultValue={requestInputs.codeWord}
@@ -87,9 +92,9 @@ const ViewRequest = (props) => {
                         />
                     </div>
                 </div>
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Ответственный</div>
-                    <div className="new_request__input_field">
+                <div className="view_request__item">
+                    <div className="view_request__input_name">Ответственный</div>
+                    <div className="view_request__input_field">
                         <input type="text"
                             name="responsible"
                             defaultValue={requestInputs.responsible}
@@ -97,9 +102,9 @@ const ViewRequest = (props) => {
                         />
                     </div>
                 </div>
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Статус</div>
-                    <div className="new_request__input_field">
+                <div className="view_request__item">
+                    <div className="view_request__input_name">Статус</div>
+                    <div className="view_request__input_field">
                         <input type="text"
                             name="status"
                             defaultValue={requestInputs.status}
@@ -107,6 +112,7 @@ const ViewRequest = (props) => {
                         />
                     </div>
                 </div>
+                <input className="view_request__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
             </form>
         </div>
     );
