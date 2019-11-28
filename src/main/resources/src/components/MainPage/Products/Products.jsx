@@ -11,22 +11,31 @@ const Products = (props) => {
             id: 1,
             imgUrl: imgTest,
             name: 'Продукт1',
-            item: 'п',
-            weight: '125г'
+            typeOfProduct: 'п',
+            weight: '125',
+            unit: 'г',
+            packaging: 'коробка',
+            comment: 'комментарий'
         },
         {
             id: 2,
             imgUrl: imgTest,
             name: 'Продукт2',
-            item: 'пf',
-            weight: '11225г'
+            typeOfProduct: 'пf',
+            weight: '11225',
+            unit: 'г',
+            packaging: 'коробка',
+            comment: 'комментарий'
         },
         {
             id: 3,
             imgUrl: imgTest,
             name: '3',
-            item: 'пsfgsf',
-            weight: '112sd25г'
+            typeOfProduct: 'пsfgsf',
+            weight: '112sd25',
+            unit: 'г',
+            packaging: 'коробка',
+            comment: 'комментарий'
         }
     ]);
     const [searchQuery, setSearchQuery] = useState('');
