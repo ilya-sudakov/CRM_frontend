@@ -17,7 +17,7 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.name.includes(props.searchQuery))
+        return data.filter(item => item.name.toLowerCase().includes(props.searchQuery.toLowerCase()))
     }
 
     const sortProducts = (data) => {
@@ -59,7 +59,7 @@ const TableView = (props) => {
                     <div className="tableview_products__col">{product.packaging}</div>
                     <div className="tableview_products__col">{product.comment}</div>
                     <div className="tableview_products__actions">
-                        {/* <div data-id={product.id} className="tableview_products__action" >Просмотр</div> */}
+                        <div data-id={product.id} className="tableview_products__action" >Просмотр</div>
                         <div data-id={product.id} className="tableview_products__action">Редактировать</div>
                         {/* <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>

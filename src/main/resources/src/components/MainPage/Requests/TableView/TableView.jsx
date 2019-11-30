@@ -70,6 +70,7 @@ const TableView = (props) => {
                     <img name="date" className="tableview_requests__img" onClick={changeSortOrder} src={sortIcon} />
                 </div>
                 <div className="tableview_requests__col">Продукция</div>
+                <div className="tableview_requests__col">Фасовка</div>
                 <div className="tableview_requests__col">Количество</div>
                 <div className="tableview_requests__col">Кодовое слово</div>
                 <div className="tableview_requests__col">Ответственный</div>
@@ -87,16 +88,19 @@ const TableView = (props) => {
                     <div className="tableview_requests__col">{formatDateString(request.date)}</div>
                     {/* Корректный вывод в строку без ограничения (в разработке) */}
                     <div className="tableview_requests__col">
-                        <div className="tableview_requests__sub_row" style={{height: `calc(${100/3}%)`}}>
+                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
                             <div className="tableview_requests__sub_col">{request.products}</div>
+                            <div className="tableview_requests__sub_col">Упаковка</div>
                             <div className="tableview_requests__sub_col">{request.quantity}</div>
                         </div>
-                        <div className="tableview_requests__sub_row" style={{height: `calc(${100/3}%)`}}>
+                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
                             <div className="tableview_requests__sub_col">{request.products}</div>
+                            <div className="tableview_requests__sub_col">Упаковка</div>
                             <div className="tableview_requests__sub_col">{request.quantity}</div>
                         </div>
-                        <div className="tableview_requests__sub_row" style={{height: `calc(${100/3}%)`}}>
+                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
                             <div className="tableview_requests__sub_col">{request.products}</div>
+                            <div className="tableview_requests__sub_col">Упаковка</div>
                             <div className="tableview_requests__sub_col">{request.quantity}</div>
                         </div>
                     </div>

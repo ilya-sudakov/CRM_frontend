@@ -87,6 +87,24 @@ const NewProduct = (props) => {
                         <input type="text" name="weight" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
+                <div className="new_product__item">
+                    <div className="new_product__input_name">Единица измерения</div>
+                    <div className="new_product__input_field">
+                        <input type="text" name="unit" autoComplete="off" onChange={handleInputChange} />
+                    </div>
+                </div>
+                <div className="new_product__item">
+                    <div className="new_product__input_name">Упаковка</div>
+                    <div className="new_product__input_field">
+                        <input type="text" name="packaging" autoComplete="off" onChange={handleInputChange} />
+                    </div>
+                </div>
+                <div className="new_product__item">
+                    <div className="new_product__input_name">Комментарий</div>
+                    <div className="new_product__input_field">
+                        <input type="text" name="comment" autoComplete="off" onChange={handleInputChange} />
+                    </div>
+                </div>
                 {/* <div className="new_product__input_field">
                     <input type="text" name="photo" autoComplete="off" readOnly onChange={handleInputChange} />
                 </div> */}
