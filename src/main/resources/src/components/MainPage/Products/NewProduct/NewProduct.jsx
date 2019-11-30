@@ -59,6 +59,10 @@ const NewProduct = (props) => {
     const handleFileInputChange = (event) => {
         let regex = /.+\.(jpeg|jpg|png|img)/;
         let file = event.target.files[0];
+        let reader = new FileReader();
+        reader.onloadend = (() => {
+        })
+        reader.readAsDataURL(file);
         setImgName(file.name.match(regex) !== null ? file.name : 'Некорректный формат файла!');
     }
 
@@ -82,6 +86,12 @@ const NewProduct = (props) => {
                     </div>
                 </div>
                 <div className="new_product__item">
+                    <div className="new_product__input_name">Группа продукции</div>
+                    <div className="new_product__input_field">
+                        <input type="text" name="comment" autoComplete="off" onChange={handleInputChange} />
+                    </div>
+                </div>
+                <div className="new_product__item">
                     <div className="new_product__input_name">Вес изделия</div>
                     <div className="new_product__input_field">
                         <input type="text" name="weight" autoComplete="off" onChange={handleInputChange} />
@@ -90,7 +100,15 @@ const NewProduct = (props) => {
                 <div className="new_product__item">
                     <div className="new_product__input_name">Единица измерения</div>
                     <div className="new_product__input_field">
-                        <input type="text" name="unit" autoComplete="off" onChange={handleInputChange} />
+                        {/* <input type="text" name="unit" autoComplete="off" onChange={handleInputChange} /> */}
+                        <select
+                            name="unit"
+                            onChange={handleInputChange}
+                        >
+                            <option>шт.</option>
+                            <option>тыс. шт.</option>
+                            <option>упак.</option>
+                        </select>
                     </div>
                 </div>
                 <div className="new_product__item">
