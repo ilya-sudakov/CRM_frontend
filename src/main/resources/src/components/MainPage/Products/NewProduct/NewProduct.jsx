@@ -13,6 +13,7 @@ const NewProduct = (props) => {
         weight: "",
     })
     const [imgName, setImgName] = useState("Имя файла...");
+    const [imgBASE64, setImgBASE64] = useState('');
     const [nameValid, setNameValid] = useState(true);
     const [itemValid, setItemValid] = useState(false);
     const [weightValid, setWeightValid] = useState(false);
@@ -59,11 +60,17 @@ const NewProduct = (props) => {
     const handleFileInputChange = (event) => {
         let regex = /.+\.(jpeg|jpg|png|img)/;
         let file = event.target.files[0];
-        let reader = new FileReader();
-        reader.onloadend = (() => {
-        })
-        reader.readAsDataURL(file);
-        setImgName(file.name.match(regex) !== null ? file.name : 'Некорректный формат файла!');
+        if (file.name.match(regex) !== null) {
+            setImgName(file.name);
+            let reader = new FileReader();
+            reader.onloadend = (() => {
+                setImgBASE64(reader.result);
+            });
+            reader.readAsDataURL(file);
+        }
+        else {
+            setImgName('Некорректный формат файла!');
+        }
     }
 
     useEffect(() => {

@@ -14,6 +14,8 @@ import NewProduct from './Products/NewProduct/NewProduct.jsx';
 import EditRequest from './Requests/EditRequest/EditRequest.jsx';
 import ViewRequest from './Requests/ViewRequest/ViewRequest.jsx';
 import Users from './Profile/Users/Users.jsx';
+import PageNotFound from './PageNotFound/PageNotFound.jsx';
+import EditUser from './Profile/Users/EditUser/EditUser.jsx';
 
 class MainPage extends React.Component {
     state = {
@@ -50,6 +52,7 @@ class MainPage extends React.Component {
                         <Switch>
                             <Route exact path="/" component={GeneralPage} />
                             <Route exact path="/profile/users" component={Users} />
+                            <Route path="/profile/users/edit/" component={EditUser} />
                             <Route exact path="/clients" component={Clients} />
                             <Route exact path="/clients/new" component={newClient} />
                             <Route exact path="/contracts" component={Contracts} />
@@ -59,6 +62,7 @@ class MainPage extends React.Component {
                             <Route path="/requests/view/" component={ViewRequest} />
                             <Route exact path="/products" component={Products} />
                             <Route exact path="/products/new" component={NewProduct} />
+                            <Route component={PageNotFound}/>
                         </Switch>
                     </div>
                 </div>

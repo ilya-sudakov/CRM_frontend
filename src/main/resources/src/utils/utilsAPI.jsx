@@ -118,3 +118,10 @@ export function refreshToken(refreshToken) {
         body: JSON.stringify(refreshToken),
     })
 }
+
+export function getUsers() {
+    return request({
+        url: process.env.API_BASE_URL + "/users/",
+        method: "GET"
+    })
+}
