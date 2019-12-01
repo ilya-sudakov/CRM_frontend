@@ -17,6 +17,7 @@ import Users from './Profile/Users/Users.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
 import EditUser from './Profile/Users/EditUser/EditUser.jsx';
 import NewUser from './Profile/Users/NewUser/NewUser.jsx';
+import ViewProduct from './Products/ViewProduct/ViewProduct.jsx';
 
 class MainPage extends React.Component {
     state = {
@@ -64,6 +65,7 @@ class MainPage extends React.Component {
                             <Route path="/requests/view/" component={ViewRequest} />
                             <Route exact path="/products" component={Products} />
                             <Route exact path="/products/new" component={NewProduct} />
+                            <Route path="/products/view/" component={ViewProduct} />
                             <Route component={PageNotFound}/>
                         </Switch>
                     </div>

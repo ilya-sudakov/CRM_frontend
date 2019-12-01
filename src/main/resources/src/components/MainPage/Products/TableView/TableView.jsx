@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 
@@ -59,8 +60,8 @@ const TableView = (props) => {
                     <div className="tableview_products__col">{product.packaging}</div>
                     <div className="tableview_products__col">{product.comment}</div>
                     <div className="tableview_products__actions">
-                        <div data-id={product.id} className="tableview_products__action" >Просмотр</div>
-                        <div data-id={product.id} className="tableview_products__action">Редактировать</div>
+                        <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
+                        <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>
                         {/* <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>
                 </div>

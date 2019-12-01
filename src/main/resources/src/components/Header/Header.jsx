@@ -61,6 +61,7 @@ const Header = (props) => {
                     </div>
                     <div className="header__profile_menu header__profile_menu--hidden">
                         <Link to="/profile/users" className="header__profile_item" onClick={clickProfileMenu}>Управление пользователями</Link>
+                        {/* <Link to="/profile/users" className="header__profile_item">Тест</Link> */}
                     </div>
                 </div>
                 <Link className="header__item header__item--button" to="/login">

@@ -4,7 +4,6 @@ import './ViewRequest.scss';
 import { getRequestById } from '../../../../utils/utilsAPI.jsx';
 
 const ViewRequest = (props) => {
-    const [requestId, setRequestId] = useState(1);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
         products: "",
@@ -26,7 +25,6 @@ const ViewRequest = (props) => {
             alert('Неправильный индекс заявки!');
             props.history.push("/requests");
         } else {
-            setRequestId(id);
             getRequestById(id)
                 .then(res => res.json())
                 .then(oldRequest => {

@@ -48,7 +48,7 @@ const Products = (props) => {
             unit: 'г',
             packaging: 'коробка',
             comment: 'комментарий'
-        },,
+        },
         {
             id: 5,
             imgUrl: imgLandscape,
@@ -58,7 +58,7 @@ const Products = (props) => {
             unit: 'г',
             packaging: 'коробка',
             comment: 'комментарий'
-        },,
+        },
         {
             id: 6,
             imgUrl: imgLandscape,
@@ -68,7 +68,7 @@ const Products = (props) => {
             unit: 'г',
             packaging: 'коробка',
             comment: 'комментарий'
-        },,
+        },
         {
             id: 7,
             imgUrl: imgLandscape,
@@ -78,7 +78,7 @@ const Products = (props) => {
             unit: 'г',
             packaging: 'коробка',
             comment: 'комментарий'
-        },,
+        },
         {
             id: 8,
             imgUrl: imgLandscape,
@@ -88,7 +88,7 @@ const Products = (props) => {
             unit: 'г',
             packaging: 'коробка',
             comment: 'комментарий'
-        },,
+        },
         {
             id: 9,
             imgUrl: imgLandscape,

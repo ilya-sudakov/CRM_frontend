@@ -7,6 +7,9 @@ import LoginPage from './components/Authorization/LoginPage/LoginPage.jsx';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 import { login, refreshToken } from './utils/utilsAPI.jsx';
 
+const ROLE_ADMIN = "ROLE_ADMIN";
+const ROLE_MANAGER = "ROLE_MANAGER";
+
 class App extends React.Component {
   state = {
     isAuthorized: false,

@@ -125,3 +125,19 @@ export function getUsers() {
         method: "GET"
     })
 }
+
+export function EditUser(newUser, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/users/edit/" + id,
+        method: "POST",
+        body: JSON.stringify(newUser)
+    })
+}
+
+export function NewUser(newUser) {
+    return request({
+        url: process.env.API_BASE_URL + "/users/new/",
+        method: "POST",
+        body: JSON.stringify(newUser)
+    })
+}
