@@ -1,6 +1,6 @@
 @import "../../../../variables.scss";
 
-.view_product {
+.edit_product {
   width: 100%;
   padding: 25px 0;
   display: flex;
@@ -27,7 +27,7 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
 
-    .view_product__item {
+    .edit_product__item {
       width: calc(100% - 20px);
       display: flex;
       flex-direction: row;
@@ -39,19 +39,20 @@
         margin-top: 25px;
       }
 
-      .view_product__input_name {
+      .edit_product__input_name {
         color: lighten($primary-text-color, 40%);
         flex: 0 1 20%;
         margin-bottom: 5px;
       }
 
-      .view_product__input_field, .view_product__product_img {
+      .edit_product__input_field,
+      .edit_product__product_img {
         display: flex;
         justify-content: center;
         width: calc(90% - 20px);
       }
 
-      .view_product__product_img {
+      .edit_product__product_img {
         justify-content: flex-start;
         img {
           // width: 100%;
@@ -71,9 +72,67 @@
           border: 1px solid $button__background--inverted;
         }
       }
+
+      select {
+        border: 1px solid #bbbbbb;
+        width: 100%;
+        padding: 5px 10px;
+        border-radius: 10px;
+        outline: none;
+      }
+
+      .edit_product__file_upload {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 5px 0px;
+        width: calc(90% - 20px);
+        display: flex;
+        font-size: 12px;
+        // justify-content: space-between;
+        align-items: center;
+        text-align: center;
+
+        .edit_product__file_name {
+          display: inline-block;
+          margin-right: 10px;
+          padding-bottom: 5px;
+          overflow-x: hidden;
+          // width: 20%;
+          min-width: 20%;
+          border-bottom: 1.5px solid $secondary-background-color;
+        }
+
+        .edit_product__label {
+          padding: 5px 10px;
+          border: 1.5px solid $button__background--hover;
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          transition: 0.2s ease-in-out;
+
+          &:hover {
+            background-color: $button__background--hover;
+            color: $secondary-text-color;
+          }
+
+          .logo {
+            margin-left: 5px;
+          }
+        }
+
+        input[type="file"] {
+          outline: 0;
+          display: none;
+          opacity: 0;
+          pointer-events: none;
+          user-select: none;
+        }
+      }
     }
 
-    .view_product__submit {
+    .edit_product__submit {
       border: 0;
       cursor: pointer;
       padding: 15px 25px;
@@ -90,14 +149,14 @@
   }
 
   @media (max-width: 768px) {
-    .view_product__item {
+    .edit_product__item {
       flex-wrap: wrap;
 
-      .view_product__input_field {
+      .edit_product__input_field {
         width: 100%;
       }
 
-      .view_product__product_img {
+      .edit_product__product_img {
         width: 100%;
         img {
           max-width: 100%;
@@ -105,9 +164,9 @@
         }
       }
 
-      .view_product__file_upload {
+      .edit_product__file_upload {
         width: 100%;
-        .view_product__file_name {
+        .edit_product__file_name {
           width: 80%;
         }
       }

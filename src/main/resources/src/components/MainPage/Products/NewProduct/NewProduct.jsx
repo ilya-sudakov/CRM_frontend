@@ -14,7 +14,7 @@ const NewProduct = (props) => {
     })
     const [imgName, setImgName] = useState("Имя файла...");
     const [imgBASE64, setImgBASE64] = useState('');
-    const [nameValid, setNameValid] = useState(true);
+    const [nameValid, setNameValid] = useState(false);
     const [itemValid, setItemValid] = useState(false);
     const [weightValid, setWeightValid] = useState(false);
 
@@ -45,7 +45,7 @@ const NewProduct = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // formIsValid() && addRequest(requestInputs)
-        //     .then(() => props.history.push("/requests"))
+        //     .then(() => props.history.push("/products"))
     }
 
     const handleInputChange = e => {
