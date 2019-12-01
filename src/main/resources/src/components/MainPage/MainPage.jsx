@@ -16,6 +16,7 @@ import ViewRequest from './Requests/ViewRequest/ViewRequest.jsx';
 import Users from './Profile/Users/Users.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
 import EditUser from './Profile/Users/EditUser/EditUser.jsx';
+import NewUser from './Profile/Users/NewUser/NewUser.jsx';
 
 class MainPage extends React.Component {
     state = {
@@ -52,6 +53,7 @@ class MainPage extends React.Component {
                         <Switch>
                             <Route exact path="/" component={GeneralPage} />
                             <Route exact path="/profile/users" component={Users} />
+                            <Route exact path="/profile/users/new" component={NewUser} />
                             <Route path="/profile/users/edit/" component={EditUser} />
                             <Route exact path="/clients" component={Clients} />
                             <Route exact path="/clients/new" component={newClient} />

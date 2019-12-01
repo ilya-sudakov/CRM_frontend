@@ -1,0 +1,95 @@
+@import "../../../../../variables.scss";
+
+.new_user {
+  width: 100%;
+  padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 300px;
+    width: calc(100% - 100px);
+    // max-width: 500px;
+    border-radius: 10px;
+    background-color: $primary-background-color;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    padding: 10px 25px;
+
+    .new_user__item {
+      width: calc(100% - 20px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+
+      &:first-child {
+        margin-top: 25px;
+      }
+      .new_user__input_name {
+        color: lighten($primary-text-color, 40%);
+        margin-bottom: 5px;
+        flex: 0 1 20%;
+      }
+
+      .new_user__input_field {
+        display: flex;
+        justify-content: center;
+        width: calc(90% - 20px);
+        // margin-bottom: 15px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        border: 1px solid #bbbbbb;
+        width: calc(100% - 20px);
+        padding: 5px 10px;
+        border-radius: 10px;
+
+        &:focus {
+          border: 1px solid $button__background--inverted;
+        }
+      }
+      select {
+        border: 1px solid #bbbbbb;
+        width: 100%;
+        padding: 5px 10px;
+        border-radius: 10px;
+        outline: none;
+      }
+    }
+
+    .new_user__submit {
+      border: 0;
+      cursor: pointer;
+      padding: 15px 25px;
+      border-radius: 15px;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .new_user__item {
+      flex-wrap: wrap;
+
+      .new_user__input_field {
+        width: 100%;
+      }
+    }
+  }
+}
