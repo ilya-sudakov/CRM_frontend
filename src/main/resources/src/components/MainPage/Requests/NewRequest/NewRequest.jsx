@@ -36,7 +36,7 @@ const NewRequest = (props) => {
                 value !== "" ? setDateValid(true) : setDateValid(false);
                 break;
             case 'products':
-                value !== "" ? setProductsValid(true) : setProductsValid(false);
+                value !== [] ? setProductsValid(true) : setProductsValid(false);
                 break;
             case 'quantity':
                 setQuantityValid(value !== "");
@@ -48,7 +48,8 @@ const NewRequest = (props) => {
     }
 
     const formIsValid = () => {
-        if (dateValid && productsValid && quantityValid && responsibleValid) {
+        if (dateValid && productsValid && responsibleValid) {
+            
             return true;
         }
         else {
@@ -89,6 +90,14 @@ const NewRequest = (props) => {
         })
     }
 
+    const handleProductsChange = (newProducts) => {
+        validateField("products", newProducts)
+        setRequestInputs({
+            ...requestInputs,
+            products: newProducts
+        })
+    }
+
     return (
         <div className="new_request">
             <div className="new_request__title">Новая заявка</div>
@@ -112,6 +121,7 @@ const NewRequest = (props) => {
                     </div> */}
                     <Select
                         options={products}
+                        onChange={handleProductsChange}
                     />
                 </div>
                 {/* <div className="new_request__item">

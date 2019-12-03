@@ -81,6 +81,10 @@
         outline: none;
         background-color: $primary-background-color;
       }
+
+      .select {
+        width: calc(90% - 20px);
+      }
     }
 
     .edit_request__submit {

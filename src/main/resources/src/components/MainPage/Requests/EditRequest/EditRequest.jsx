@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import './EditRequest.scss';
-import { getRequestById, editRequest } from '../../../../utils/utilsAPI.jsx';
+import { getRequestById, editRequest, getProducts } from '../../../../utils/utilsAPI.jsx';
+import Select from '../../Select/Select.jsx';
 
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
+    const [products, setProducts] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
         products: "",
@@ -33,7 +35,7 @@ const EditRequest = (props) => {
                 setDateValid(value !== "");
                 break;
             case 'products':
-                setProductsValid(value !== "");
+                setProductsValid(value !== []);
                 break;
             case 'quantity':
                 setQuantityValid(value !== "");
@@ -77,6 +79,14 @@ const EditRequest = (props) => {
         })
     }
 
+    const handleProductsChange = (newProducts) => {
+        validateField("products", newProducts);
+        setRequestInputs({
+            ...requestInputs,
+            products: newProducts
+        })
+    }
+
     useEffect(() => {
         document.title = "Редактирование заявки";
         const id = props.history.location.pathname.split("/requests/edit/")[1];
@@ -102,6 +112,11 @@ const EditRequest = (props) => {
                     alert('Неправильный индекс заявки!');
                     props.history.push("/requests");
                 })
+            getProducts()
+                .then(res => res.json())
+                .then(response => {
+                    setProducts(response);
+                })
         }
     }, [])
 
@@ -123,16 +138,28 @@ const EditRequest = (props) => {
                 </div>
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Продукция</div>
-                    <div className="edit_request__input_field">
+                    {/* <div className="edit_request__input_field">
                         <input type="text"
                             name="products"
                             autoComplete="off"
                             onChange={handleInputChange}
                             defaultValue={requestInputs.products}
                         />
-                    </div>
+                    </div> */}
+                    <Select
+                        options={products}
+                        onChange={handleProductsChange}
+                        // defaultValue={
+                        //     [{
+                        //         id: 1,
+                        //         name: 'Тест',
+                        //         quantity: '100'
+                        //     }]
+                        // }
+                        defaultValue={requestInputs.products}
+                    />
                 </div>
-                <div className="edit_request__item">
+                {/* <div className="edit_request__item">
                     <div className="edit_request__input_name">Количество</div>
                     <div className="edit_request__input_field">
                         <input type="text"
@@ -142,7 +169,7 @@ const EditRequest = (props) => {
                             defaultValue={requestInputs.quantity}
                         />
                     </div>
-                </div>
+                </div> */}
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Кодовое слово</div>
                     <div className="edit_request__input_field">

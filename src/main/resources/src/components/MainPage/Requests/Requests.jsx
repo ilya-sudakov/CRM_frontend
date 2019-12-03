@@ -25,6 +25,7 @@ const Requests = (props) => {
             .then(res => res.json())
             .then(requests => {
                 setRequests(requests);
+                // console.log(requests);
             })
     }, [])
 

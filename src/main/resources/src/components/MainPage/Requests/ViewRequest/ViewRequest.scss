@@ -68,6 +68,10 @@
         border-radius: 10px;
         outline: none;
       }
+
+      .select {
+        width: calc(90% - 20px);
+      }
     }
 
     .view_request__submit {

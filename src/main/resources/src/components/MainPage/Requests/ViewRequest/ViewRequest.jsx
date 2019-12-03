@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import './ViewRequest.scss';
 import { getRequestById } from '../../../../utils/utilsAPI.jsx';
+import Select from '../../Select/Select.jsx';
 
 const ViewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -62,13 +63,18 @@ const ViewRequest = (props) => {
                 </div>
                 <div className="view_request__item">
                     <div className="view_request__input_name">Продукция</div>
-                    <div className="view_request__input_field">
+                    {/* <div className="view_request__input_field">
                         <input type="text"
                             name="products"
                             defaultValue={requestInputs.products}
                             readOnly
                         />
-                    </div>
+                    </div> */}
+                    <Select
+                        // options={products}
+                        readOnly
+                        defaultValue={requestInputs.products}
+                    />
                 </div>
                 <div className="view_request__item">
                     <div className="view_request__input_name">Количество</div>
