@@ -10,7 +10,7 @@ const EditProduct = (props) => {
         group: "",
         unit: "",
         photo: "",
-        typeOfProduct: "",
+        typeOfProduct: "FIRST",
         packaging: "",
         comment: ""
     });
@@ -94,7 +94,8 @@ const EditProduct = (props) => {
                         weight: oldProduct.weight,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
-                        comment: oldProduct.comment
+                        comment: oldProduct.comment,
+                        typeOfProduct: oldProduct.typeOfProduct
                     });
                 })
                 .catch(error => {

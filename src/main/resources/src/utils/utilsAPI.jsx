@@ -20,13 +20,12 @@ const request = (options, isLogin) => {
         //         return json;
         //     })
         // );
-        .then(response => 
-            {
-                if(!response.ok) {
-                    return Promise.reject(response.error);
-                }
-                return response;
+        .then(response => {
+            if (!response.ok) {
+                return Promise.reject(response.error);
             }
+            return response;
+        }
         );
 }
 
@@ -95,6 +94,14 @@ export function getRequestById(id) {
     })
 }
 
+export function editRequestStatus(newStatus, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/request/status/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStatus)
+    })
+}
+
 export function editRequest(newRequest, id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/request/" + id,
@@ -122,6 +129,13 @@ export function refreshToken(refreshToken) {
 export function getUsers() {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/admin/user/",
+        method: "GET"
+    })
+}
+
+export function getUserById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/admin/user/" + id,
         method: "GET"
     })
 }

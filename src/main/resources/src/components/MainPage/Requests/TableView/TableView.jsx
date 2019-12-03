@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
+import { editRequestStatus } from '../../../../utils/utilsAPI.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -20,6 +21,18 @@ const TableView = (props) => {
     const searchQuery = (data) => {
         // return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
         return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
+    }
+
+    const handleStatusChange = (event) => {
+        const status = event.target.value;
+        const id = event.target.getAttribute("id");
+        editRequestStatus({
+            status: status
+        }, id)
+            .then(props.loadData)
+            .catch(error => {
+                console.log(error);                
+            })
     }
 
     const sortRequests = (data) => {
@@ -94,7 +107,7 @@ const TableView = (props) => {
                                 <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.products.length}%)` }}>
                                     <div className="tableview_requests__sub_col">{item.name}</div>
                                     <div className="tableview_requests__sub_col">{item.packaging}</div>
-                                    <div className="tableview_requests__sub_col">{request.quantity}</div>
+                                    <div className="tableview_requests__sub_col">{request.quantity + " " + item.unit}</div>
                                 </div>
                             )
                         })}
@@ -130,7 +143,20 @@ const TableView = (props) => {
                     </div> */}
                     <div className="tableview_requests__col">{request.codeWord}</div>
                     <div className="tableview_requests__col">{request.responsible}</div>
-                    <div className="tableview_requests__col">{request.status}</div>
+                    {/* <div className="tableview_requests__col">{request.status}</div> */}
+                    <div className="tableview_requests__col">
+                        <select
+                            id={request.id}
+                            className="tableview_requests__status_select"
+                            defaultValue={request.status}
+                            onChange={handleStatusChange}
+                        >
+                            <option>Не готово</option>
+                            <option>В процессе</option>
+                            <option>Готово к отгрузке</option>
+                            <option>Отгружено</option>
+                        </select>
+                    </div>
                     <div className="tableview_requests__actions">
                         <Link to={"/requests/view/" + request.id} data-id={request.id} className="tableview_requests__action" >Просмотр</Link>
                         <Link to={"/requests/edit/" + request.id} data-id={request.id} className="tableview_requests__action">Редактировать</Link>

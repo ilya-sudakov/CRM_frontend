@@ -62,7 +62,7 @@ const TableView = (props) => {
                                 : product.typeOfProduct === "THIRD" ? "Третья группа"
                                     : null
                     }</div>
-                    <div className="tableview_products__col">{product.weight + ' ' + product.unit}</div>
+                    <div className="tableview_products__col">{product.weight}</div>
                     <div className="tableview_products__col">{product.packaging}</div>
                     <div className="tableview_products__col">{product.comment}</div>
                     <div className="tableview_products__actions">

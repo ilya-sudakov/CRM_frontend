@@ -146,6 +146,13 @@
       }
     }
 
+    .tableview_requests__status_select {
+      width: 100%;
+      font-size: 90%;
+      border-radius: 5px;
+      outline: 0;
+    }
+
     .tableview_requests__actions {
       flex: 0 1 10%;
       display: flex;

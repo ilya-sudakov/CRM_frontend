@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditUser.scss';
+import { getUserById, editUser } from '../../../../../utils/utilsAPI.jsx';
 // import { getRequestById, editRequest } from '../../../../utils/utilsAPI.jsx';
 
 const EditUser = (props) => {
@@ -44,6 +45,8 @@ const EditUser = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        formIsValid() && editUser(userInputs, userId)
+            .then(() => props.history.push("/profile/users"))
         // formIsValid() && editRequest(requestInputs, requestId)
         // .then(() => props.history.push("/requests"))
     }
@@ -64,24 +67,21 @@ const EditUser = (props) => {
             alert('Неправильный индекс заявки!');
             props.history.push("/profile/users");
         } else {
-            // setRequestId(id);
-            // getRequestById(id)
-            //     .then(res => res.json())
-            //     .then(oldRequest => {
-            //         setRequestInputs({
-            //             date: oldRequest.date,
-            //             products: oldRequest.products,
-            //             quantity: oldRequest.quantity,
-            //             codeWord: oldRequest.codeWord,
-            //             responsible: oldRequest.responsible,
-            //             status: oldRequest.status
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс заявки!');
-            //         props.history.push("/requests");
-            //     })
+            setUserId(id);
+            getUserById(id)
+                .then(res => res.json())
+                .then(oldUser => {
+                    setUserInputs({
+                        username: oldUser.username,
+                        password: oldUser.password,
+                        email: oldUser.email,
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс заявки!');
+                    props.history.push("/profile/users");
+                })
         }
     }, [])
 
