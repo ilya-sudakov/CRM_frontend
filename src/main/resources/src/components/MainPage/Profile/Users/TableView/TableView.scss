@@ -1,6 +1,6 @@
-@import "../../../../variables.scss";
+@import "../../../../../variables.scss";
 
-.tableview_products {
+.tableview_users {
   display: flex;
   flex-direction: column;
   width: calc(100% - 50px);
@@ -15,7 +15,7 @@
     cursor: pointer;
   }
 
-  &__product_img {
+  &__user_img {
     max-width: 90px;
     max-height: 90px;
     // width: 80px;
@@ -26,7 +26,7 @@
     font-size: 100%!important;
     position: sticky; //test
     top: calc(-6px); //test
-    .tableview_products__col {
+    .tableview_users__col {
       &:last-child {
         max-width: 125px;
       }
@@ -35,14 +35,13 @@
 
   &__row {
     display: flex;
-    // background-color: $table-primary__background;
     background-color: $primary-background-color;
     border-bottom: 1px solid #cccccc;
     text-align: center;
     transition: 0.2s ease-in-out;
     font-size: 90%;
 
-    .tableview_products__col {
+    .tableview_users__col {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -57,29 +56,19 @@
       }
 
       &:nth-child(2) {
-        flex: 0 1 8%;
-        min-width: 90px;
-        padding: 2.5px;
+        flex: 0 1 30%;
       }
 
       &:nth-child(3) {
-        flex: 0 1 35%;
+        flex: 0 1 20%;
       }
 
       &:nth-child(4) {
-        flex: 0 1 12.5%;
+        flex: 0 1 30%;
       }
 
       &:nth-child(5) {
-        flex: 0 1 5%;
-      }
-
-      &:nth-child(6) {
         flex: 0 1 10%;
-      }
-
-      &:nth-child(7) {
-        flex: 0 1 15%;
       }
 
       &:last-child {
@@ -88,7 +77,7 @@
       }
     }
 
-    .tableview_products__actions {
+    .tableview_users__actions {
       flex: 0 1 10%;
       display: flex;
       padding: 10px 5px;
@@ -97,7 +86,7 @@
       justify-content: center;
       max-width: 125px;
 
-      .tableview_products__action {
+      .tableview_users__action {
         font-size: 90%;
         width: 75%;
         border-radius: 5px;
@@ -125,7 +114,7 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       // padding: 0px 5px;
-      // .tableview_products__col:last-child {
+      // .tableview_users__col:last-child {
       //   flex: 0 1 10%;
       // }
     }
@@ -137,7 +126,7 @@
     }
   }
 
-  .tableview_products__row--even {
+  .tableview_users__row--even {
     background-color: #f8f8f8;
 
     &:hover {
@@ -145,7 +134,7 @@
     }
   }
 
-  .tableview_products__row--odd {
+  .tableview_users__row--odd {
     background-color: #ebebeb;
 
     &:hover {
@@ -155,7 +144,7 @@
 }
 
 @media (max-width: 1024px) {
-  .tableview_products {
+  .tableview_users {
     flex-direction: column;
     align-self: flex-start;
     margin-left: 5px;

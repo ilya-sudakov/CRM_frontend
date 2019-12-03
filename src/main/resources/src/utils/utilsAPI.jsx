@@ -32,14 +32,14 @@ const request = (options, isLogin) => {
 
 export function getClients() {
     return request({
-        url: process.env.API_BASE_URL + "/client/",
+        url: process.env.API_BASE_URL + "/api/v1/client/",
         method: "GET"
     });
 }
 
 export function addClient(newClient) {
     return request({
-        url: process.env.API_BASE_URL + "/client",
+        url: process.env.API_BASE_URL + "/api/v1/client",
         method: "POST",
         body: JSON.stringify(newClient)
     })
@@ -47,42 +47,42 @@ export function addClient(newClient) {
 
 export function deleteClient(id) {
     return request({
-        url: process.env.API_BASE_URL + "/client/" + id,
+        url: process.env.API_BASE_URL + "/api/v1/client/" + id,
         method: "DELETE"
     })
 }
 
 export function getDocuments() {
     return request({
-        url: process.env.API_BASE_URL + "/document/",
+        url: process.env.API_BASE_URL + "/api/v1/document/",
         method: "GET"
     })
 }
 
 export function deleteDocument(id) {
     return request({
-        url: process.env.API_BASE_URL + "/document/" + id,
+        url: process.env.API_BASE_URL + "/api/v1/document/" + id,
         method: "DELETE"
     })
 }
 
 export function getRequests() {
     return request({
-        url: process.env.API_BASE_URL + "/request/",
+        url: process.env.API_BASE_URL + "/api/v1/request/",
         method: "GET"
     })
 }
 
 export function deleteRequest(id) {
     return request({
-        url: process.env.API_BASE_URL + "/request/" + id,
+        url: process.env.API_BASE_URL + "/api/v1/request/" + id,
         method: "DELETE"
     })
 }
 
 export function addRequest(newRequest) {
     return request({
-        url: process.env.API_BASE_URL + "/request",
+        url: process.env.API_BASE_URL + "/api/v1/request",
         method: "POST",
         body: JSON.stringify(newRequest)
     })
@@ -90,14 +90,14 @@ export function addRequest(newRequest) {
 
 export function getRequestById(id) {
     return request({
-        url: process.env.API_BASE_URL + "/request/" + id,
+        url: process.env.API_BASE_URL + "/api/v1/request/" + id,
         method: "GET"
     })
 }
 
 export function editRequest(newRequest, id) {
     return request({
-        url: process.env.API_BASE_URL + "/request/" + id,
+        url: process.env.API_BASE_URL + "/api/v1/request/" + id,
         method: "PUT",
         body: JSON.stringify(newRequest)
     })
@@ -116,5 +116,58 @@ export function refreshToken(refreshToken) {
         url: process.env.API_BASE_URL + "/api/v1/auth/refreshToken",
         method: "POST",
         body: JSON.stringify(refreshToken),
+    })
+}
+
+export function getUsers() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/admin/user/",
+        method: "GET"
+    })
+}
+
+export function editUser(newUser, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/admin/user/" + id,
+        method: "PUT",
+        body: JSON.stringify(newUser)
+    })
+}
+
+export function addUser(newUser) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/admin/user/",
+        method: "POST",
+        body: JSON.stringify(newUser)
+    })
+}
+
+export function getProducts() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product/",
+        method: "GET"
+    })
+}
+
+export function getProductById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product/" + id,
+        method: "GET"
+    })
+}
+
+export function addProduct(newProduct) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product/",
+        method: "POST",
+        body: JSON.stringify(newProduct)
+    })
+}
+
+export function editProduct(newProduct, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product/" + id,
+        method: "PUT",
+        body: JSON.stringify(newProduct)
     })
 }

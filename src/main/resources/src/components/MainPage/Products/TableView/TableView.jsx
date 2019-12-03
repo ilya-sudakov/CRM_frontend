@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 
@@ -17,7 +18,7 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.name.includes(props.searchQuery))
+        return data.filter(item => item.name.toLowerCase().includes(props.searchQuery.toLowerCase()))
     }
 
     const sortProducts = (data) => {
@@ -41,22 +42,32 @@ const TableView = (props) => {
                 </div>
                 <div className="tableview_products__col">Фото</div>
                 <div className="tableview_products__col">Название</div>
-                <div className="tableview_products__col">Артикул</div>
+                <div className="tableview_products__col">Группа продукции</div>
                 <div className="tableview_products__col">Вес</div>
+                <div className="tableview_products__col">Упаковка</div>
+                <div className="tableview_products__col">Комментарий</div>
                 <div className="tableview_products__col">Действия</div>
             </div>
             {sortProducts(props.data).map((product, product_id) => (
                 <div key={product_id} className={"tableview_products__row " + (product.id % 2 === 0 ? "tableview_products__row--even" : "tableview_products__row--odd")}>
                     <div className="tableview_products__col">{product.id}</div>
                     <div className="tableview_products__col">
-                        <img className="tableview_products__product_img" src={product.imgUrl} alt=""/>
+                        {/* <img className="tableview_products__product_img" src={props.data.imgUrl} alt=""/> */}
+                        <img className="tableview_products__product_img" src={product.photo} alt="" />
                     </div>
                     <div className="tableview_products__col">{product.name}</div>
-                    <div className="tableview_products__col">{product.item}</div>
-                    <div className="tableview_products__col">{product.weight}</div>
+                    <div className="tableview_products__col">{
+                        product.typeOfProduct === "FIRST" ? "Первая группа"
+                            : product.typeOfProduct === "SECOND" ? "Вторая группа"
+                                : product.typeOfProduct === "THIRD" ? "Третья группа"
+                                    : null
+                    }</div>
+                    <div className="tableview_products__col">{product.weight + ' ' + product.unit}</div>
+                    <div className="tableview_products__col">{product.packaging}</div>
+                    <div className="tableview_products__col">{product.comment}</div>
                     <div className="tableview_products__actions">
-                        {/* <div data-id={product.id} className="tableview_products__action" >Просмотр</div> */}
-                        <div data-id={product.id} className="tableview_products__action">Редактировать</div>
+                        <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
+                        <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>
                         {/* <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>
                 </div>

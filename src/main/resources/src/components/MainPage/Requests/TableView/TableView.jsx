@@ -18,7 +18,8 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.products.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        // return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
     }
 
     const sortRequests = (data) => {
@@ -70,6 +71,7 @@ const TableView = (props) => {
                     <img name="date" className="tableview_requests__img" onClick={changeSortOrder} src={sortIcon} />
                 </div>
                 <div className="tableview_requests__col">Продукция</div>
+                <div className="tableview_requests__col">Фасовка</div>
                 <div className="tableview_requests__col">Количество</div>
                 <div className="tableview_requests__col">Кодовое слово</div>
                 <div className="tableview_requests__col">Ответственный</div>
@@ -87,18 +89,30 @@ const TableView = (props) => {
                     <div className="tableview_requests__col">{formatDateString(request.date)}</div>
                     {/* Корректный вывод в строку без ограничения (в разработке) */}
                     <div className="tableview_requests__col">
-                        <div className="tableview_requests__sub_row" style={{height: `calc(${100/3}%)`}}>
+                        {request.products.map((item, index) => {
+                            return (
+                                <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.products.length}%)` }}>
+                                    <div className="tableview_requests__sub_col">{item.name}</div>
+                                    <div className="tableview_requests__sub_col">{item.packaging}</div>
+                                    <div className="tableview_requests__sub_col">{request.quantity}</div>
+                                </div>
+                            )
+                        })}
+                        {/* <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
                             <div className="tableview_requests__sub_col">{request.products}</div>
+                            <div className="tableview_requests__sub_col">Упаковка</div>
                             <div className="tableview_requests__sub_col">{request.quantity}</div>
                         </div>
-                        <div className="tableview_requests__sub_row" style={{height: `calc(${100/3}%)`}}>
+                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
                             <div className="tableview_requests__sub_col">{request.products}</div>
+                            <div className="tableview_requests__sub_col">Упаковка</div>
                             <div className="tableview_requests__sub_col">{request.quantity}</div>
                         </div>
-                        <div className="tableview_requests__sub_row" style={{height: `calc(${100/3}%)`}}>
+                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
                             <div className="tableview_requests__sub_col">{request.products}</div>
+                            <div className="tableview_requests__sub_col">Упаковка</div>
                             <div className="tableview_requests__sub_col">{request.quantity}</div>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Вывод продуктов и кол-ва как строки */}

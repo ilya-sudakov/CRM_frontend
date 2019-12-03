@@ -1,6 +1,6 @@
-@import "../../../../variables.scss";
+@import "../../../../../variables.scss";
 
-.view_request {
+.new_user {
   width: 100%;
   padding: 25px 0;
   display: flex;
@@ -24,7 +24,7 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
 
-    .view_request__item {
+    .new_user__item {
       width: calc(100% - 20px);
       display: flex;
       flex-direction: row;
@@ -35,20 +35,17 @@
       &:first-child {
         margin-top: 25px;
       }
-      .view_request__input_name {
+      .new_user__input_name {
         color: lighten($primary-text-color, 40%);
         margin-bottom: 5px;
         flex: 0 1 20%;
       }
 
-      .view_request__input_field {
+      .new_user__input_field {
         display: flex;
         justify-content: center;
         width: calc(90% - 20px);
-
-        .react-datepicker-wrapper {
-          width: 100%;
-        }
+        // margin-bottom: 15px;
       }
       input[type="text"],
       input[type="password"] {
@@ -67,14 +64,11 @@
         padding: 5px 10px;
         border-radius: 10px;
         outline: none;
-      }
-
-      .select {
-        width: calc(90% - 20px);
+        background-color: $primary-background-color;
       }
     }
 
-    .view_request__submit {
+    .new_user__submit {
       border: 0;
       cursor: pointer;
       padding: 15px 25px;
@@ -91,10 +85,10 @@
   }
 
   @media (max-width: 768px) {
-    .view_request__item {
+    .new_user__item {
       flex-wrap: wrap;
 
-      .view_request__input_field {
+      .new_user__input_field {
         width: 100%;
       }
     }

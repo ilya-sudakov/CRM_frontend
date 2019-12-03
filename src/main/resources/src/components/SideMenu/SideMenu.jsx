@@ -9,20 +9,23 @@ const SideMenu = (props) => {
             {props.location.pathname.includes("/clients") ||
                 props.location.pathname.includes("/requests") ||
                 props.location.pathname.includes("/products") ||
-                props.location.pathname.includes("/production-line") ?
+                props.location.pathname.includes("/production-line") ||
+                props.location.pathname.includes("/profile/users") ?
                 (
                     <Link className="sidemenu__item--add" to={
                         props.location.pathname.includes("/clients") ? "/clients/new"
                             : props.location.pathname.includes("/requests") ? "/requests/new"
                                 : props.location.pathname.includes("/products") ? "/products/new"
                                     : props.location.pathname.includes("/production-line") ? "/production-line/new"
-                                        : ''
+                                        : props.location.pathname.includes("/profile/users") ? "/profile/users/new"
+                                            : ''
                     }>
                         <span>{props.location.pathname.includes("/clients") ? "Добавить клиента"
                             : props.location.pathname.includes("/requests") ? "Добавить заявку"
                                 : props.location.pathname.includes("/products") ? "Добавить продукцию"
                                     : props.location.pathname.includes("/production-line") ? "Добавить заявку"
-                                        : ''
+                                        : props.location.pathname.includes("/profile/users") ? "Добавить пользователя"
+                                            : ''
                         }</span>
                         {/* <img className="sidemenu__img" src={plusImg} /> */}
                     </Link>

@@ -79,6 +79,11 @@
         padding: 5px 10px;
         border-radius: 10px;
         outline: none;
+        background-color: $primary-background-color;
+      }
+
+      .select {
+        width: calc(90% - 20px);
       }
     }
 

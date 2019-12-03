@@ -2,36 +2,21 @@ import React, { useEffect, useState } from 'react';
 import './Products.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-
-import imgTest from '../../../../../../../assets/searchbar/plus.svg'
+import { getProducts } from '../../../utils/utilsAPI.jsx';
 
 const Products = (props) => {
-    const [products, setProducts] = useState([
-        {
-            id: 1,
-            imgUrl: imgTest,
-            name: 'Продукт1',
-            item: 'п',
-            weight: '125г'
-        },
-        {
-            id: 2,
-            imgUrl: imgTest,
-            name: 'Продукт2',
-            item: 'пf',
-            weight: '11225г'
-        },
-        {
-            id: 3,
-            imgUrl: imgTest,
-            name: '3',
-            item: 'пsfgsf',
-            weight: '112sd25г'
-        }
-    ]);
+    const [products, setProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     useEffect(() => {
         document.title = "Продукция";
+        getProducts()
+            .then(response => response.json())
+            .then(response => {
+                setProducts(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }, [])
     return (
         <div className="products">

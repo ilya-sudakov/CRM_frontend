@@ -13,6 +13,12 @@ import Products from './Products/Products.jsx';
 import NewProduct from './Products/NewProduct/NewProduct.jsx';
 import EditRequest from './Requests/EditRequest/EditRequest.jsx';
 import ViewRequest from './Requests/ViewRequest/ViewRequest.jsx';
+import Users from './Profile/Users/Users.jsx';
+import PageNotFound from './PageNotFound/PageNotFound.jsx';
+import EditUser from './Profile/Users/EditUser/EditUser.jsx';
+import NewUser from './Profile/Users/NewUser/NewUser.jsx';
+import ViewProduct from './Products/ViewProduct/ViewProduct.jsx';
+import EditProduct from './Products/EditProduct/EditProduct.jsx';
 
 class MainPage extends React.Component {
     state = {
@@ -25,6 +31,13 @@ class MainPage extends React.Component {
         })
     }
 
+    clickOverlay = (event) => {
+        const overlay = document.getElementsByClassName("main_page__overlay")[0];
+        overlay.classList.contains("main_page__overlay--hidden") 
+        ? overlay.classList.remove("main_page__overlay--hidden")
+        : overlay.classList.add("main_page__overlay--hidden");
+    }
+
     render() {
         return (
             <div className="main_page">
@@ -32,6 +45,7 @@ class MainPage extends React.Component {
                     userData={this.props.userData}
                     sideMenu={this.state.sidemenu_hidden}
                     setSideMenu={this.setSideMenu}
+                    clickOverlay={this.clickOverlay}
                 />
                 <div className="main_page__content">
                     <SideMenu 
@@ -40,6 +54,9 @@ class MainPage extends React.Component {
                     <div className="main_page__activity_panel">
                         <Switch>
                             <Route exact path="/" component={GeneralPage} />
+                            <Route exact path="/profile/users" component={Users} />
+                            <Route exact path="/profile/users/new" component={NewUser} />
+                            <Route path="/profile/users/edit/" component={EditUser} />
                             <Route exact path="/clients" component={Clients} />
                             <Route exact path="/clients/new" component={newClient} />
                             <Route exact path="/contracts" component={Contracts} />
@@ -49,6 +66,9 @@ class MainPage extends React.Component {
                             <Route path="/requests/view/" component={ViewRequest} />
                             <Route exact path="/products" component={Products} />
                             <Route exact path="/products/new" component={NewProduct} />
+                            <Route path="/products/view/" component={ViewProduct} />
+                            <Route path="/products/edit/" component={EditProduct} />
+                            <Route component={PageNotFound}/>
                         </Switch>
                     </div>
                 </div>
