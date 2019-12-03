@@ -6,28 +6,13 @@ import { getUsers } from '../../../../utils/utilsAPI.jsx';
 
 const Users = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [users, setUsers] = useState([
-        {
-            id: 1,
-            username: 'Роман Треухов Сергеевич',
-            password: 'sdsd',
-            email: 'dfdfdf@',
-            role: 'admin'
-        },
-        {
-            id: 2,
-            username: 'Георгий Жора',
-            password: 'sdsd',
-            email: 'dfdfdf@',
-            role: 'user'
-        },
-    ])
+    const [users, setUsers] = useState([])
     useEffect(() => {
         document.title = "Управление пользователями";
         getUsers()
             .then(res => res.json())
             .then(response => {
-                console.log(response);
+                setUsers(response);
             })
             .catch(error => {
                 console.log(error);

@@ -18,7 +18,8 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.products.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        // return data.filter(item => item.products[0].toLowerCase().includes(props.searchQuery.toLowerCase()))
+        return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
     }
 
     const sortRequests = (data) => {
@@ -88,7 +89,14 @@ const TableView = (props) => {
                     <div className="tableview_requests__col">{formatDateString(request.date)}</div>
                     {/* Корректный вывод в строку без ограничения (в разработке) */}
                     <div className="tableview_requests__col">
-                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
+                        {request.products.map((item, index) => {
+                            <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
+                                <div className="tableview_requests__sub_col">{item.name}</div>
+                                <div className="tableview_requests__sub_col">{item.packaging}</div>
+                                <div className="tableview_requests__sub_col">{item.quantity}</div>
+                            </div>
+                        })}
+                        {/* <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
                             <div className="tableview_requests__sub_col">{request.products}</div>
                             <div className="tableview_requests__sub_col">Упаковка</div>
                             <div className="tableview_requests__sub_col">{request.quantity}</div>
@@ -102,7 +110,7 @@ const TableView = (props) => {
                             <div className="tableview_requests__sub_col">{request.products}</div>
                             <div className="tableview_requests__sub_col">Упаковка</div>
                             <div className="tableview_requests__sub_col">{request.quantity}</div>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Вывод продуктов и кол-ва как строки */}

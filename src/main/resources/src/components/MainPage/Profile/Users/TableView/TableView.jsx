@@ -22,7 +22,7 @@ const TableView = (props) => {
     }
 
     const sortUsers = (data) => {
-        return searchQuery(data).sort((a, b) => { 
+        return searchQuery(data).sort((a, b) => {
             if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
@@ -52,7 +52,12 @@ const TableView = (props) => {
                     <div className="tableview_users__col">{user.username}</div>
                     <div className="tableview_users__col">{user.password}</div>
                     <div className="tableview_users__col">{user.email}</div>
-                    <div className="tableview_users__col">{user.role}</div>
+                    <div className="tableview_users__col">{user.roles.map((item) => {
+                        return (item.name === "ROLE_ADMIN" ? "Руководитель "
+                            : item.name === "ROLE_MANAGER" ? "Менеджер1 "
+                            : item.name === "ROLE_WORKSHOP" ? "Цех "
+                            : item.name === "ROLE_USER" ? "Пользователь " : null)
+                    })}</div>
                     <div className="tableview_users__actions">
                         {/* <div data-id={user.id} className="tableview_users__action" >Просмотр</div> */}
                         <Link className="tableview_users__action" to={"/profile/users/edit/" + user.id}>Редактировать</Link>

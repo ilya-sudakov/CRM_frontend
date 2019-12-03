@@ -18,6 +18,7 @@ class App extends React.Component {
       username: '',
       firstName: '',
       lastName: '',
+
       id: 0
     }
   }

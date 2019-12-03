@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import './NewProduct.scss';
+import { addProduct } from '../../../../utils/utilsAPI.jsx';
 
 const NewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
-        name: "",
-        item: "",
-        weight: "",
+        name: null,
+        typeOfProduct: null,
+        comment: null,
+        packaging: null,
+        photo: null,
+        unit: "шт.",
+        weight: null,
+        requests: null,
     })
     const [productErrors, setProductErrors] = useState({
         name: "",
-        item: "",
-        weight: "",
+        type_of_product: "",
+        comment: "",
+        packaging: "",
+        photo: "",
+        unit: "",
+        weight: ""
     })
     const [imgName, setImgName] = useState("Имя файла...");
     const [imgBASE64, setImgBASE64] = useState('');
@@ -23,7 +33,7 @@ const NewProduct = (props) => {
             case 'name':
                 setNameValid(value !== "");
                 break;
-            case 'item':
+            case 'typeOfProduct':
                 setItemValid(value !== "");
                 break;
             case 'weight':
@@ -44,8 +54,8 @@ const NewProduct = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // formIsValid() && addRequest(requestInputs)
-        //     .then(() => props.history.push("/products"))
+        formIsValid() && addProduct(productInputs)
+            .then(() => props.history.push("/products"))
     }
 
     const handleInputChange = e => {
@@ -64,7 +74,11 @@ const NewProduct = (props) => {
             setImgName(file.name);
             let reader = new FileReader();
             reader.onloadend = (() => {
-                setImgBASE64(reader.result);
+                setImgBASE64(reader.result.split("base64,")[1]);
+                setProductInputs({
+                    ...productInputs,
+                    photo: reader.result.split("base64,")[1]
+                })
             });
             reader.readAsDataURL(file);
         }
@@ -86,16 +100,24 @@ const NewProduct = (props) => {
                         <input type="text" name="name" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
-                <div className="new_product__item">
+                {/* <div className="new_product__item">
                     <div className="new_product__input_name">Артикул</div>
                     <div className="new_product__input_field">
                         <input type="text" name="item" autoComplete="off" onChange={handleInputChange} />
                     </div>
-                </div>
+                </div> */}
                 <div className="new_product__item">
                     <div className="new_product__input_name">Группа продукции</div>
                     <div className="new_product__input_field">
-                        <input type="text" name="comment" autoComplete="off" onChange={handleInputChange} />
+                        {/* <input type="text" name="typeOfProduct" autoComplete="off" onChange={handleInputChange} /> */}
+                        <select
+                            name="typeOfProduct"
+                            onChange={handleInputChange}
+                        >
+                            <option value="FIRST">Первая группа</option>
+                            <option value="SECOND">Вторая группа</option>
+                            <option value="THIRD">Третья группа</option>
+                        </select>
                     </div>
                 </div>
                 <div className="new_product__item">

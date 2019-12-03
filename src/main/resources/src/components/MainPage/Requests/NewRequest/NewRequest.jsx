@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
-// import * as DateFNS from "date-fns/esm";
 import ru from 'date-fns/locale/ru';
-import { addRequest } from '../../../../utils/utilsAPI.jsx';
-
+import { addRequest, getProducts } from '../../../../utils/utilsAPI.jsx';
+import Select from '../../Select/Select.jsx';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import './NewRequest.scss';
@@ -29,6 +28,7 @@ const NewRequest = (props) => {
     const [productsValid, setProductsValid] = useState(false);
     const [quantityValid, setQuantityValid] = useState(false);
     const [responsibleValid, setResponsibleValid] = useState(false);
+    const [products, setProducts] = useState([]);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -74,6 +74,11 @@ const NewRequest = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
+        getProducts()
+            .then(res => res.json())
+            .then(response => {
+                setProducts(response);
+            })
     }, [])
 
     const handleDateChange = (date) => {
@@ -102,16 +107,19 @@ const NewRequest = (props) => {
                 </div>
                 <div className="new_request__item">
                     <div className="new_request__input_name">Продукция</div>
-                    <div className="new_request__input_field">
+                    {/* <div className="new_request__input_field">
                         <input type="text" name="products" autoComplete="off" onChange={handleInputChange} />
-                    </div>
+                    </div> */}
+                    <Select
+                        options={products}
+                    />
                 </div>
-                <div className="new_request__item">
+                {/* <div className="new_request__item">
                     <div className="new_request__input_name">Количество</div>
                     <div className="new_request__input_field">
                         <input type="text" name="quantity" autoComplete="off" onChange={handleInputChange} />
                     </div>
-                </div>
+                </div> */}
                 <div className="new_request__item">
                     <div className="new_request__input_name">Кодовое слово</div>
                     <div className="new_request__input_field">

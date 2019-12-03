@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditProduct.scss';
+import { getProductById, editProduct } from '../../../../utils/utilsAPI.jsx';
 
 const EditProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -7,20 +8,46 @@ const EditProduct = (props) => {
         item: "",
         weight: "",
         group: "",
-        weight: "",
         unit: "",
+        photo: "",
+        typeOfProduct: "",
         packaging: "",
         comment: ""
     });
     const [imgName, setImgName] = useState("Имя файла...");
     const [imgBASE64, setImgBASE64] = useState('');
     const [nameValid, setNameValid] = useState(true);
-    const [itemValid, setItemValid] = useState(false);
-    const [weightValid, setWeightValid] = useState(false);
+    const [weightValid, setWeightValid] = useState(true);
+
+    const validateField = (fieldName, value) => {
+        switch (fieldName) {
+            case 'name':
+                setNameValid(value !== "");
+                break;
+            case 'item':
+                setItemValid(value !== "");
+                break;
+            case 'weight':
+                setWeightValid(value !== "");
+                break;
+        }
+    }
+
+    const formIsValid = () => {
+        if (nameValid && weightValid) {
+            return true;
+        }
+        else {
+            alert("Форма не заполнена");
+            return false;
+        };
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        const id = props.history.location.pathname.split("/products/edit/")[1];
+        formIsValid() && editProduct(productInputs, id)
+            .then(() => props.history.push("/products"))
     }
 
     const handleInputChange = (e) => {
@@ -39,7 +66,11 @@ const EditProduct = (props) => {
             setImgName(file.name);
             let reader = new FileReader();
             reader.onloadend = (() => {
-                setImgBASE64(reader.result);
+                setImgBASE64(reader.result.split("base64,")[1]);
+                setProductInputs({
+                    ...productInputs,
+                    photo: reader.result.split("base64,")[1]
+                })
             });
             reader.readAsDataURL(file);
         }
@@ -55,23 +86,22 @@ const EditProduct = (props) => {
             alert('Неправильный индекс заявки!');
             props.history.push("/products");
         } else {
-            // getProductById(id)
-            //     .then(res => res.json())
-            //     .then(oldProduct => {
-            //         setProductInputs({
-            //             date: oldProduct.date,
-            //             products: oldProduct.products,
-            //             quantity: oldProduct.quantity,
-            //             codeWord: oldProduct.codeWord,
-            //             responsible: oldProduct.responsible,
-            //             status: oldProduct.status
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс заявки!');
-            //         props.history.push("/products");
-            //     })
+            getProductById(id)
+                .then(res => res.json())
+                .then(oldProduct => {
+                    setProductInputs({
+                        name: oldProduct.name,
+                        weight: oldProduct.weight,
+                        unit: oldProduct.unit,
+                        packaging: oldProduct.packaging,
+                        comment: oldProduct.comment
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс заявки!');
+                    props.history.push("/products");
+                })
         }
     }, [])
     return (
@@ -89,7 +119,7 @@ const EditProduct = (props) => {
                     <div className="edit_product__input_field">
                         <input type="text"
                             name="name"
-                            defaultValue={name}
+                            defaultValue={productInputs.name}
                             onChange={handleInputChange}
                             autoComplete="off"
                         />
@@ -109,12 +139,22 @@ const EditProduct = (props) => {
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Группа продукции</div>
                     <div className="edit_product__input_field">
-                        <input type="text"
-                            name="comment"
-                            defaultValue={productInputs.group}
+                        {/* <input type="text"
+                            name="typeOfProduct"
+                            defaultValue={productInputs.typeOfProduct}
                             onChange={handleInputChange}
                             autoComplete="off"
-                        />
+                        /> */}
+                        <select
+                            name="typeOfProduct"
+                            onChange={handleInputChange}
+                            defaultValue={productInputs.typeOfProduct}
+                            autoComplete="off"
+                        >
+                            <option value="FIRST">Первая группа</option>
+                            <option value="SECOND">Вторая группа</option>
+                            <option value="THIRD">Третья группа</option>
+                        </select>
                     </div>
                 </div>
                 <div className="edit_product__item">

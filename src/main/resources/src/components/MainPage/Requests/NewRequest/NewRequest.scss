@@ -51,6 +51,7 @@
 
         .react-datepicker-wrapper {
           width: 100%;
+          
 
           .react-datepicker {
             .react-datepicker__day--selected {
@@ -75,6 +76,11 @@
         }
       }
     }
+
+    .select {
+      width: calc(90% - 20px);
+    }
+
     .new_request__submit {
       border: 0;
       cursor: pointer;

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './NewUser.scss';
-// import { getRequestById, editRequest } from '../../../../utils/utilsAPI.jsx';
+import { addUser } from '../../../../../utils/utilsAPI.jsx';
 
 const NewUser = (props) => {
     const [userInputs, setUserInputs] = useState({
         username: "",
         password: "",
         email: "",
-        role: ""
+        role: "ROLE_ADMIN"
     })
-    const [requestErrors, setRequestErrors] = useState({
+    const [userErrors, setUserErrors] = useState({
         username: "",
         password: "",
         email: "",
@@ -45,8 +45,8 @@ const NewUser = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // formIsValid() && editRequest(requestInputs, requestId)
-        // .then(() => props.history.push("/requests"))
+        formIsValid() && addUser(userInputs)
+        .then(() => props.history.push("/profile/users"))
     }
 
     const handleInputChange = (e) => {
@@ -60,22 +60,6 @@ const NewUser = (props) => {
 
     useEffect(() => {
         document.title = "Создание пользователя";
-        // setRequestId(id);
-        // getRequestById(id)
-        //     .then(res => res.json())
-        //     .then(oldRequest => {
-        //         setRequestInputs({
-        //             date: oldRequest.date,
-        //             products: oldRequest.products,
-        //             quantity: oldRequest.quantity,
-        //             codeWord: oldRequest.codeWord,
-        //             responsible: oldRequest.responsible,
-        //             status: oldRequest.status
-        //         });
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
     }, [])
 
     return (
@@ -89,7 +73,6 @@ const NewUser = (props) => {
                             name="username"
                             autoComplete="off"
                             onChange={handleInputChange}
-                            defaultValue={userInputs.username}
                         />
                     </div>
                 </div>
@@ -100,7 +83,6 @@ const NewUser = (props) => {
                             name="password"
                             autoComplete="off"
                             onChange={handleInputChange}
-                            defaultValue={userInputs.password}
                         />
                     </div>
                 </div>
@@ -111,7 +93,6 @@ const NewUser = (props) => {
                             name="email"
                             autoComplete="off"
                             onChange={handleInputChange}
-                            defaultValue={userInputs.email}
                         />
                     </div>
                 </div>
@@ -121,16 +102,15 @@ const NewUser = (props) => {
                         <select
                             name="role"
                             onChange={handleInputChange}
-                            value={userInputs.role}
                         >
-                            <option>Руководитель</option>
-                            <option>Менеджер1</option>
-                            <option>Цех Лепсари</option>
-                            <option>Цех ЛЭМЗ</option>
+                            <option value="ROLE_ADMIN">Руководитель</option>
+                            <option value="ROLE_MANAGER">Менеджер1</option>
+                            <option value="ROLE_WORKSHOP">Цех Лепсари</option>
+                            <option value="ROLE_WORKSHOP">Цех ЛЭМЗ</option>
                         </select>
                     </div>
                 </div>
-                <input className="new_user__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                <input className="new_user__submit" type="submit" onClick={handleSubmit} value="Добавить пользователя" />
             </form>
         </div>
     );

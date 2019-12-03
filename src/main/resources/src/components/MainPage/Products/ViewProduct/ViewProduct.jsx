@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import imgLandscape from '../../../../../../../../assets/product_landscape.jpg';
 import './ViewProduct.scss';
+import { getProductById } from '../../../../utils/utilsAPI.jsx';
 
 const ViewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -8,7 +9,7 @@ const ViewProduct = (props) => {
         item: "",
         weight: "",
         group: "",
-        weight: "",
+        typeOfProduct: "",
         unit: "",
         packaging: "",
         comment: ""
@@ -26,23 +27,24 @@ const ViewProduct = (props) => {
             alert('Неправильный индекс заявки!');
             props.history.push("/products");
         } else {
-            // getProductById(id)
-            //     .then(res => res.json())
-            //     .then(oldProduct => {
-            //         setProductInputs({
-            //             date: oldProduct.date,
-            //             products: oldProduct.products,
-            //             quantity: oldProduct.quantity,
-            //             codeWord: oldProduct.codeWord,
-            //             responsible: oldProduct.responsible,
-            //             status: oldProduct.status
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс заявки!');
-            //         props.history.push("/products");
-            //     })
+            getProductById(id)
+                .then(res => res.json())
+                .then(oldProduct => {
+                    setProductInputs({
+                        name: oldProduct.name,
+                        item: oldProduct.item,
+                        weight: oldProduct.weight,
+                        typeOfProduct: oldProduct.typeOfProduct,
+                        unit: oldProduct.unit,
+                        packaging: oldProduct.packaging,
+                        comment: oldProduct.comment
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс заявки!');
+                    props.history.push("/products");
+                })
         }
     }, [])
     return (
@@ -52,13 +54,14 @@ const ViewProduct = (props) => {
                 <div className="view_product__item">
                     <div className="view_product__input_name">Фотография</div>
                     <div className="view_product__product_img">
+                        {/* <img src={productInputs.photo} alt="" /> */}
                         <img src={imgLandscape} alt="" />
                     </div>
                 </div>
                 <div className="view_product__item">
                     <div className="view_product__input_name">Наименование</div>
                     <div className="view_product__input_field">
-                        <input type="text" name="name" defaultValue={name} readOnly />
+                        <input type="text" name="name" defaultValue={productInputs.name} readOnly />
                     </div>
                 </div>
                 <div className="view_product__item">
@@ -70,7 +73,13 @@ const ViewProduct = (props) => {
                 <div className="view_product__item">
                     <div className="view_product__input_name">Группа продукции</div>
                     <div className="view_product__input_field">
-                        <input type="text" name="comment" defaultValue={productInputs.group} readOnly />
+                        <input type="text" name="comment" defaultValue={
+                            productInputs.typeOfProduct === "FIRST" ? "Первая группа"
+                                : productInputs.typeOfProduct === "SECOND" ? "Вторая группа"
+                                    : productInputs.typeOfProduct === "THIRD" ? "Третья группа"
+                                        : null
+                        }
+                            readOnly />
                     </div>
                 </div>
                 <div className="view_product__item">
