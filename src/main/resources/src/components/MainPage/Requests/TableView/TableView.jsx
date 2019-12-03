@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
@@ -29,9 +29,12 @@ const TableView = (props) => {
         editRequestStatus({
             status: status
         }, id)
-            .then(props.loadData)
+            .then(() => {
+                props.loadData();
+                window.location.reload(); //на данный момент так
+            })
             .catch(error => {
-                console.log(error);                
+                console.log(error);
             })
     }
 
@@ -71,6 +74,10 @@ const TableView = (props) => {
         //     newDate.getDate() + '.' + newDate.getMonth() + '.' + newDate.getFullYear()
         // );
     }
+
+    useEffect(() => {
+        props.loadData();
+    }, [])
 
     return (
         <div className="tableview_requests">

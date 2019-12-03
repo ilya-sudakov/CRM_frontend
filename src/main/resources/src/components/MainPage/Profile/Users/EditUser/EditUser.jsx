@@ -16,7 +16,7 @@ const EditUser = (props) => {
         email: "",
     })
     const [usernameValid, setUsernameValid] = useState(true);
-    const [passwordValid, setPasswordValid] = useState(true);
+    const [passwordValid, setPasswordValid] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
 
     const validateField = (fieldName, value) => {
@@ -73,7 +73,6 @@ const EditUser = (props) => {
                 .then(oldUser => {
                     setUserInputs({
                         username: oldUser.username,
-                        password: oldUser.password,
                         email: oldUser.email,
                     });
                 })
@@ -107,7 +106,6 @@ const EditUser = (props) => {
                             name="password"
                             autoComplete="off"
                             onChange={handleInputChange}
-                            defaultValue={userInputs.password}
                         />
                     </div>
                 </div>

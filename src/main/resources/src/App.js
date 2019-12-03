@@ -38,6 +38,8 @@ class App extends React.Component {
       refreshToken(refreshTokenObject)
         .then(res => res.json())
         .then((response) => {
+          console.log(response);
+          
           this.setUserData(true, response.user);
           localStorage.setItem("accessToken", response.accessToken);
           localStorage.setItem("refreshToken", response.refreshToken);

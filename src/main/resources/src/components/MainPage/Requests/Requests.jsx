@@ -21,7 +21,7 @@ const Requests = (props) => {
 
     useEffect(() => {
         document.title = "Заявки";
-        loadRequests();
+        loadRequests()
     }, [])
 
     const loadRequests = () => {
@@ -45,8 +45,8 @@ const Requests = (props) => {
             <div className="requests__amount_table">Всего: {requests.length} записей</div>
             <TableView
                 data={requests}
+                loadData={loadRequests}
                 // deleteItem={deleteItem}
-                loadData={loadRequests()}
                 searchQuery={searchQuery}
             />
             {/* Working <table tag> */}
