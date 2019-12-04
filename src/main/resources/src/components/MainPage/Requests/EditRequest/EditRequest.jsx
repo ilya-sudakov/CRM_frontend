@@ -149,13 +149,7 @@ const EditRequest = (props) => {
                     <Select
                         options={products}
                         onChange={handleProductsChange}
-                        // defaultValue={
-                        //     [{
-                        //         id: 1,
-                        //         name: 'Тест',
-                        //         quantity: '100'
-                        //     }]
-                        // }
+                        searchPlaceholder="Введите название продукта для поиска..."
                         defaultValue={requestInputs.products}
                     />
                 </div>

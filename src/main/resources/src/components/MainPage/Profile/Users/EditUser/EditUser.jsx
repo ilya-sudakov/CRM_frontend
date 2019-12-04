@@ -47,8 +47,6 @@ const EditUser = (props) => {
         event.preventDefault();
         formIsValid() && editUser(userInputs, userId)
             .then(() => props.history.push("/profile/users"))
-        // formIsValid() && editRequest(requestInputs, requestId)
-        // .then(() => props.history.push("/requests"))
     }
 
     const handleInputChange = (e) => {

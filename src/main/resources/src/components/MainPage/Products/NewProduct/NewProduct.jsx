@@ -5,7 +5,7 @@ import { addProduct } from '../../../../utils/utilsAPI.jsx';
 const NewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
         name: null,
-        typeOfProduct: null,
+        typeOfProduct: "FIRST",
         comment: null,
         packaging: null,
         photo: null,
@@ -25,7 +25,7 @@ const NewProduct = (props) => {
     const [imgName, setImgName] = useState("Имя файла...");
     const [imgBASE64, setImgBASE64] = useState('');
     const [nameValid, setNameValid] = useState(false);
-    const [itemValid, setItemValid] = useState(false);
+    const [typeOfProductValid, setTypeOfProductValid] = useState(true);
     const [weightValid, setWeightValid] = useState(false);
 
     const validateField = (fieldName, value) => {
@@ -34,7 +34,7 @@ const NewProduct = (props) => {
                 setNameValid(value !== "");
                 break;
             case 'typeOfProduct':
-                setItemValid(value !== "");
+                setTypeOfProductValid(value !== "");
                 break;
             case 'weight':
                 setWeightValid(value !== "");
@@ -43,7 +43,7 @@ const NewProduct = (props) => {
     }
 
     const formIsValid = () => {
-        if (nameValid && itemValid && weightValid) {
+        if (nameValid && typeOfProductValid && weightValid) {
             return true;
         }
         else {
@@ -113,6 +113,7 @@ const NewProduct = (props) => {
                         <select
                             name="typeOfProduct"
                             onChange={handleInputChange}
+                            defaultValue={productInputs.typeOfProduct}
                         >
                             <option value="FIRST">Первая группа</option>
                             <option value="SECOND">Вторая группа</option>

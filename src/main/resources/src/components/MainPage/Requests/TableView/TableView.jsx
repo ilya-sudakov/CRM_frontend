@@ -19,7 +19,6 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        // return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
         return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
     }
 
@@ -30,7 +29,6 @@ const TableView = (props) => {
             status: status
         }, id)
             .then(() => {
-                props.loadData();
                 window.location.reload(); //на данный момент так
             })
             .catch(error => {
@@ -69,15 +67,7 @@ const TableView = (props) => {
             newDate.split("-")[1] + "." +
             newDate.split("-")[0]
         );
-        // const newDate = Date.parse(dateString);
-        // return (
-        //     newDate.getDate() + '.' + newDate.getMonth() + '.' + newDate.getFullYear()
-        // );
     }
-
-    useEffect(() => {
-        props.loadData();
-    }, [])
 
     return (
         <div className="tableview_requests">
@@ -114,7 +104,8 @@ const TableView = (props) => {
                                 <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.products.length}%)` }}>
                                     <div className="tableview_requests__sub_col">{item.name}</div>
                                     <div className="tableview_requests__sub_col">{item.packaging}</div>
-                                    <div className="tableview_requests__sub_col">{request.quantity + " " + item.unit}</div>
+                                    {/* <div className="tableview_requests__sub_col">{request.quantity + " " + item.unit}</div> */}
+                                    <div className="tableview_requests__sub_col">{item.quantity}</div>
                                 </div>
                             )
                         })}

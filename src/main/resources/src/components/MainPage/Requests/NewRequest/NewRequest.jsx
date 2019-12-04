@@ -11,7 +11,7 @@ const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: new Date(),
         products: "",
-        quantity: "",
+        // quantity: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
@@ -19,14 +19,14 @@ const NewRequest = (props) => {
     const [requestErrors, setRequestErrors] = useState({
         date: "",
         products: "",
-        quantity: "",
+        // quantity: "",
         codeWord: "",
         responsible: "",
         status: "",
     })
     const [dateValid, setDateValid] = useState(true);
     const [productsValid, setProductsValid] = useState(false);
-    const [quantityValid, setQuantityValid] = useState(false);
+    // const [quantityValid, setQuantityValid] = useState(false);
     const [responsibleValid, setResponsibleValid] = useState(false);
     const [products, setProducts] = useState([]);
 
@@ -38,9 +38,9 @@ const NewRequest = (props) => {
             case 'products':
                 value !== [] ? setProductsValid(true) : setProductsValid(false);
                 break;
-            case 'quantity':
-                setQuantityValid(value !== "");
-                break;
+            // case 'quantity':
+            //     setQuantityValid(value !== "");
+            //     break;
             case 'responsible':
                 value !== "" ? setResponsibleValid(true) : setResponsibleValid(false);
                 break;
@@ -83,6 +83,7 @@ const NewRequest = (props) => {
     }, [])
 
     const handleDateChange = (date) => {
+        const regex = "(0[1-9]|[12]\d|3[01])\.(0[1-9]|1[0-2])\.[12]\d{3})";
         validateField("date", date);
         setRequestInputs({
             ...requestInputs,
@@ -122,6 +123,7 @@ const NewRequest = (props) => {
                     <Select
                         options={products}
                         onChange={handleProductsChange}
+                        searchPlaceholder="Введите название продукта для поиска..."
                     />
                 </div>
                 {/* <div className="new_request__item">

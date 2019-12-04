@@ -55,13 +55,14 @@ const Select = (props) => {
     }
 
     const handleQuantityChange = (event) => {
-        const quantity = event.target.value;
+        const value = event.target.value;
+        const name = event.target.getAttribute("name");
         const id = event.target.getAttribute("id");
         let newSelected = selected;
         newSelected = newSelected.map((item, index) => {
             return ({
                 ...item,
-                quantity: index == id ? quantity : item.quantity
+                [name]: index == id ? value : item[name]
             })
         })
         setSelected([...newSelected]);
@@ -81,6 +82,7 @@ const Select = (props) => {
                 className="select__input"
                 onChange={handleInputChange}
                 onClick={!props.readOnly ? clickOnInput : null}
+                placeholder={props.searchPlaceholder}
                 // onClick={props.readOnly !== undefined ? "true" : "false"}
                 ref={myRef}
                 readOnly={props.readOnly}
@@ -94,6 +96,7 @@ const Select = (props) => {
             </div>}
             {/* {console.log(selected)} */}
             <div className="select__selected">
+                {selected.length !== 0 && <span className="select__selected_title">Выбранная продукция:</span>}
                 {selected.map((item, index) => (
                     <div className="select__selected_row">
                         <div className="select__selected_item" >
@@ -108,6 +111,18 @@ const Select = (props) => {
                                 name="quantity"
                                 autoComplete="off"
                                 defaultValue={item.quantity != 0 ? item.quantity : 0}
+                                onChange={handleQuantityChange}
+                                readOnly={props.readOnly}
+                            />
+                        </div>
+                        <div className="select__selected_packaging">
+                            Фасовка
+                            <input
+                                id={index}
+                                type="text"
+                                name="packaging"
+                                autoComplete="off"
+                                defaultValue={item.packaging != 0 ? item.packaging : 0}
                                 onChange={handleQuantityChange}
                                 readOnly={props.readOnly}
                             />

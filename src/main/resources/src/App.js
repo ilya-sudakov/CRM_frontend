@@ -18,7 +18,7 @@ class App extends React.Component {
       username: '',
       firstName: '',
       lastName: '',
-
+      roles: [],
       id: 0
     }
   }
@@ -30,6 +30,18 @@ class App extends React.Component {
     })
   }
 
+  userHasAccess = (roleNeeded) => {
+    let check = false;
+    this.state.userData.roles.map((item) => {
+      roleNeeded.map((role) => {
+        if (item.name === role) {
+          check = true;
+        }
+      })
+    })
+    return check;
+  }
+
   componentDidMount() {
     if (localStorage.getItem("refreshToken") && this.state.isAuthorized === false) {
       const refreshTokenObject = Object.assign({
@@ -38,8 +50,6 @@ class App extends React.Component {
       refreshToken(refreshTokenObject)
         .then(res => res.json())
         .then((response) => {
-          console.log(response);
-          
           this.setUserData(true, response.user);
           localStorage.setItem("accessToken", response.accessToken);
           localStorage.setItem("refreshToken", response.refreshToken);
@@ -61,6 +71,7 @@ class App extends React.Component {
             isAuthorized={this.state.isAuthorized}
             userData={this.state.userData}
             component={MainPage}
+            userHasAccess={this.userHasAccess}
           ></PrivateRoute>
         </Switch>
       </BrowserRouter>

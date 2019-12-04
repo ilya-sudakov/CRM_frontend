@@ -17,35 +17,17 @@ const LoginPage = (props) => {
             username: username,
             password: password
         });
-        // if (localStorage.getItem("refreshToken")) {
-        //     const refreshTokenObject = Object.assign({
-        //         refreshToken: localStorage.getItem("refreshToken")
-        //     })
-        //     refreshToken(refreshTokenObject)
-        //         .then(res => res.json())
-        //         .then((response) => {
-        //             props.setUserData(true, response.user);
-        //             localStorage.setItem("accessToken", response.accessToken);
-        //             localStorage.setItem("refreshToken", response.refreshToken);
-        //             props.history.push('/requests');
-        //         })
-        //         .catch((error) => {
-        //             console.log(error);
-        //         })
-        // }
-        // else {
-            login(loginRequest)
-                .then(res => res.json())
-                .then(response => {
-                    props.setUserData(true, response.user);
-                    localStorage.setItem("accessToken", response.accessToken);
-                    localStorage.setItem("refreshToken", response.refreshToken);
-                    props.history.push('/requests');
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        // }
+        login(loginRequest)
+            .then(res => res.json())
+            .then(response => {
+                props.setUserData(true, response.user);
+                localStorage.setItem("accessToken", response.accessToken);
+                localStorage.setItem("refreshToken", response.refreshToken);
+                props.history.push('/requests');
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     const handleSignOut = (event) => {
