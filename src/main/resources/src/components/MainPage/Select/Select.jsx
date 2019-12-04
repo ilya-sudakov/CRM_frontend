@@ -25,6 +25,10 @@ const Select = (props) => {
             options.classList.add("select__options--hidden")
         }
     }
+    
+    const clickOnInputBlur = (event) => {
+        console.log(event);
+    }
 
     const clickOnOption = (event) => {
         const value = event.target.getAttribute("name");
@@ -90,12 +94,14 @@ const Select = (props) => {
                 className="select__input"
                 onChange={handleInputChange}
                 onClick={!props.readOnly ? clickOnInput : null}
+                // onBlur={!props.readOnly ? clickOnInputBlur : null}
                 placeholder={props.searchPlaceholder}
                 // onClick={props.readOnly !== undefined ? "true" : "false"}
                 ref={myRef}
                 readOnly={props.readOnly}
             />}
-            {props.options && <div className="select__options select__options--hidden">
+            {props.options && <div className="select__options select__options--hidden" 
+                onBlur={!props.readOnly ? clickOnInputBlur : null}>
                 {search().map((item, index) => (
                     <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
                         {item.name}

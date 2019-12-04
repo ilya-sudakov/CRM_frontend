@@ -136,9 +136,9 @@ const NewProduct = (props) => {
                             name="unit"
                             onChange={handleInputChange}
                         >
-                            <option>шт.</option>
-                            <option>тыс. шт.</option>
-                            <option>упак.</option>
+                            <option value="шт.">Штук</option>
+                            <option value="тыс. шт.">Тысяч Штук</option>
+                            <option value="упак.">Упаковок</option>
                         </select>
                     </div>
                 </div>

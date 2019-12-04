@@ -175,10 +175,11 @@ const EditProduct = (props) => {
                         <select
                             name="unit"
                             onChange={handleInputChange}
+                            value={productInputs.unit}
                         >
-                            <option>шт.</option>
-                            <option>тыс. шт.</option>
-                            <option>упак.</option>
+                            <option value="шт.">Штук</option>
+                            <option value="тыс. шт.">Тысяч Штук</option>
+                            <option value="упак.">Упаковок</option>
                         </select>
                     </div>
                 </div>

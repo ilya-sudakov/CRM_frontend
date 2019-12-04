@@ -103,8 +103,7 @@ const TableView = (props) => {
                                 <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.products.length}%)` }}>
                                     <div className="tableview_requests__sub_col">{item.name}</div>
                                     <div className="tableview_requests__sub_col">{item.packaging}</div>
-                                    {/* <div className="tableview_requests__sub_col">{request.quantity + " " + item.unit}</div> */}
-                                    <div className="tableview_requests__sub_col">{item.quantity}</div>
+                                    <div className="tableview_requests__sub_col">{item.quantity + " " + item.unit}</div>
                                 </div>
                             )
                         })}

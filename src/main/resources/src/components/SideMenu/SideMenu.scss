@@ -43,7 +43,7 @@
       background-color: darken($side_menu__background, 20%);
 
       .sidemenu__link {
-        color: $secondary-text-color!important;
+        color: $secondary-text-color !important;
       }
 
       &:hover {
@@ -74,12 +74,10 @@
 
     .sidemenu__link {
       color: $primary-text-color;
-      // word-wrap: break-word;
-      // white-space: normal;
       padding: 10px 5px;
       // width: 100%;
       width: calc(100% - 35px);
-      // text-align: center;
+      // text-align: center;      
     }
 
     .sidemenu__addButton {

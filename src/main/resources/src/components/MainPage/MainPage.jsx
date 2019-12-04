@@ -20,6 +20,10 @@ import NewUser from './Profile/Users/NewUser/NewUser.jsx';
 import ViewProduct from './Products/ViewProduct/ViewProduct.jsx';
 import EditProduct from './Products/EditProduct/EditProduct.jsx';
 import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx';
+import WorkshopLEMZ from './WorkshopLEMZ/WorkshopLEMZ.jsx';
+import NewRequestLEMZ from './WorkshopLEMZ/NewRequestLEMZ/NewRequestLEMZ.jsx';
+import ViewRequestLEMZ from './WorkshopLEMZ/ViewRequestLEMZ/ViewRequestLEMZ.jsx';
+import EditRequestLEMZ from './WorkshopLEMZ/EditRequestLEMZ/EditRequestLEMZ.jsx';
 
 class MainPage extends React.Component {
     state = {
@@ -109,6 +113,20 @@ class MainPage extends React.Component {
                             <PrivateRoute
                                 exact path="/products/new"
                                 component={NewProduct}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                            />
+                            <Route exact path="/workshop-lemz" component={WorkshopLEMZ} />
+                            <Route path="/workshop-lemz/view/" component={ViewRequestLEMZ} />
+                            <PrivateRoute
+                                exact path="/workshop-lemz/new"
+                                component={NewRequestLEMZ}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                            />
+                            <PrivateRoute
+                                path="/workshop-lemz/edit/"
+                                component={EditRequestLEMZ}
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                             />
