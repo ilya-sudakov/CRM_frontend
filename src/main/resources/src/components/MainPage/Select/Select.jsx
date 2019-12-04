@@ -5,10 +5,11 @@ import './Select.scss';
 const Select = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selected, setSelected] = useState([]);
+    const [options, setOptions] = useState([]);
     let myRef = React.createRef();
 
     const search = () => {
-        return props.options.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        return options.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
     }
 
     const handleInputChange = (event) => {
@@ -28,6 +29,10 @@ const Select = (props) => {
     const clickOnOption = (event) => {
         const value = event.target.getAttribute("name");
         const id = event.target.getAttribute("id");
+        // const optionId = event.target.getAttribute("optionId");
+        // let newOptions = options;
+        // newOptions.splice(optionId, 1);
+        // setOptions([...newOptions]);
         setSelected([
             ...selected,
             {
@@ -73,7 +78,10 @@ const Select = (props) => {
         if (props.defaultValue !== undefined) {
             setSelected([...props.defaultValue])
         }
-    }, [props.defaultValue])
+        if (props.options !== undefined) {
+            setOptions([...props.options])
+        }
+    }, [props.defaultValue, props.options])
 
     return (
         <div className="select">
@@ -89,7 +97,7 @@ const Select = (props) => {
             />}
             {props.options && <div className="select__options select__options--hidden">
                 {search().map((item, index) => (
-                    <div id={item.id} name={item.name} className="select__option_item" onClick={clickOnOption}>
+                    <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
                         {item.name}
                     </div>
                 ))}

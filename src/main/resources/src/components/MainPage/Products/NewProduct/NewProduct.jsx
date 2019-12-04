@@ -96,7 +96,7 @@ const NewProduct = (props) => {
             <div className="new_product__title">Новая продукция</div>
             <form className="new_product__form">
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Наименование</div>
+                    <div className="new_product__input_name">Наименование*</div>
                     <div className="new_product__input_field">
                         <input type="text" name="name" autoComplete="off" onChange={handleInputChange} />
                     </div>
@@ -108,7 +108,7 @@ const NewProduct = (props) => {
                     </div>
                 </div> */}
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Группа продукции</div>
+                    <div className="new_product__input_name">Группа продукции*</div>
                     <div className="new_product__input_field">
                         {/* <input type="text" name="typeOfProduct" autoComplete="off" onChange={handleInputChange} /> */}
                         <select
@@ -123,13 +123,13 @@ const NewProduct = (props) => {
                     </div>
                 </div>
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Вес изделия</div>
+                    <div className="new_product__input_name">Вес изделия*</div>
                     <div className="new_product__input_field">
                         <input type="number" name="weight" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Единица измерения</div>
+                    <div className="new_product__input_name">Единица измерения*</div>
                     <div className="new_product__input_field">
                         {/* <input type="text" name="unit" autoComplete="off" onChange={handleInputChange} /> */}
                         <select
@@ -143,7 +143,7 @@ const NewProduct = (props) => {
                     </div>
                 </div>
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Упаковка</div>
+                    <div className="new_product__input_name">Упаковка*</div>
                     <div className="new_product__input_field">
                         <input type="text" name="packaging" autoComplete="off" onChange={handleInputChange} />
                     </div>
@@ -167,9 +167,10 @@ const NewProduct = (props) => {
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
-                        <input type="file" name="file" id="file" onChange={handleFileInputChange} />
+                        {/* <input type="file" name="file" id="file" onChange={handleFileInputChange} /> */}
                     </div>
                 </div>
+                <div className="new_product__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_product__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>
         </div>

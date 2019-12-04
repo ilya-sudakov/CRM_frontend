@@ -116,7 +116,7 @@ const EditProduct = (props) => {
                     </div>
                 </div> */}
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Наименование</div>
+                    <div className="edit_product__input_name">Наименование*</div>
                     <div className="edit_product__input_field">
                         <input type="text"
                             name="name"
@@ -138,7 +138,7 @@ const EditProduct = (props) => {
                     </div>
                 </div> */}
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Группа продукции</div>
+                    <div className="edit_product__input_name">Группа продукции*</div>
                     <div className="edit_product__input_field">
                         {/* <input type="text"
                             name="typeOfProduct"
@@ -159,7 +159,7 @@ const EditProduct = (props) => {
                     </div>
                 </div>
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Вес изделия</div>
+                    <div className="edit_product__input_name">Вес изделия*</div>
                     <div className="edit_product__input_field">
                         <input type="text"
                             name="weight"
@@ -170,7 +170,7 @@ const EditProduct = (props) => {
                     </div>
                 </div>
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Единица измерения</div>
+                    <div className="edit_product__input_name">Единица измерения*</div>
                     <div className="edit_product__input_field">
                         <select
                             name="unit"
@@ -183,7 +183,7 @@ const EditProduct = (props) => {
                     </div>
                 </div>
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Упаковка</div>
+                    <div className="edit_product__input_name">Упаковка*</div>
                     <div className="edit_product__input_field">
                         <input type="text"
                             name="packaging"
@@ -214,9 +214,10 @@ const EditProduct = (props) => {
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
-                        <input type="file" name="file" id="file" onChange={handleFileInputChange} />
+                        {/* <input type="file" name="file" id="file" onChange={handleFileInputChange} /> */}
                     </div>
                 </div>
+                <div className="edit_product__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_product__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
             </form>
         </div>

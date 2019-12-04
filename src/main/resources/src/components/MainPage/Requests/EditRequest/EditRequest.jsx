@@ -125,7 +125,7 @@ const EditRequest = (props) => {
             <div className="edit_request__title">Редактирование заявки</div>
             <form className="edit_request__form">
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Дата</div>
+                    <div className="edit_request__input_name">Дата*</div>
                     <div className="edit_request__input_field">
                         <DatePicker
                             selected={Date.parse(requestInputs.date)}
@@ -137,7 +137,7 @@ const EditRequest = (props) => {
                     </div>
                 </div>
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Продукция</div>
+                    <div className="edit_request__input_name">Продукция*</div>
                     {/* <div className="edit_request__input_field">
                         <input type="text"
                             name="products"
@@ -165,7 +165,7 @@ const EditRequest = (props) => {
                     </div>
                 </div> */}
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Кодовое слово</div>
+                    <div className="edit_request__input_name">Кодовое слово*</div>
                     <div className="edit_request__input_field">
                         <input type="text"
                             name="codeWord"
@@ -176,7 +176,7 @@ const EditRequest = (props) => {
                     </div>
                 </div>
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Ответственный</div>
+                    <div className="edit_request__input_name">Ответственный*</div>
                     <div className="edit_request__input_field">
                         <input type="text"
                             name="responsible"
@@ -187,7 +187,7 @@ const EditRequest = (props) => {
                     </div>
                 </div>
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Статус</div>
+                    <div className="edit_request__input_name">Статус*</div>
                     <div className="edit_request__input_field">
                         <select
                             name="status"
@@ -201,6 +201,7 @@ const EditRequest = (props) => {
                         </select>
                     </div>
                 </div>
+                <div className="edit_request__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_request__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
             </form>
         </div>

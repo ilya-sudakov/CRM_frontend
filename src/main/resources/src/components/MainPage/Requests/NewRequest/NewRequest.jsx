@@ -104,7 +104,7 @@ const NewRequest = (props) => {
             <div className="new_request__title">Новая заявка</div>
             <form className="new_request__form">
                 <div className="new_request__item">
-                    <div className="new_request__input_name">Дата</div>
+                    <div className="new_request__input_name">Дата*</div>
                     <div className="new_request__input_field">
                         <DatePicker
                             selected={requestInputs.date}
@@ -116,7 +116,7 @@ const NewRequest = (props) => {
                     </div>
                 </div>
                 <div className="new_request__item">
-                    <div className="new_request__input_name">Продукция</div>
+                    <div className="new_request__input_name">Продукция*</div>
                     {/* <div className="new_request__input_field">
                         <input type="text" name="products" autoComplete="off" onChange={handleInputChange} />
                     </div> */}
@@ -133,17 +133,18 @@ const NewRequest = (props) => {
                     </div>
                 </div> */}
                 <div className="new_request__item">
-                    <div className="new_request__input_name">Кодовое слово</div>
+                    <div className="new_request__input_name">Кодовое слово*</div>
                     <div className="new_request__input_field">
                         <input type="text" name="codeWord" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="new_request__item">
-                    <div className="new_request__input_name">Ответственный</div>
+                    <div className="new_request__input_name">Ответственный*</div>
                     <div className="new_request__input_field">
                         <input type="text" name="responsible" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
+                <div className="new_request__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>
         </div>
