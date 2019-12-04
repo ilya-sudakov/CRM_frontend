@@ -97,7 +97,6 @@ const TableView = (props) => {
                 }>
                     <div className="tableview_requests__col">{request.id}</div>
                     <div className="tableview_requests__col">{formatDateString(request.date)}</div>
-                    {/* Корректный вывод в строку без ограничения (в разработке) */}
                     <div className="tableview_requests__col">
                         {request.products.map((item, index) => {
                             return (
@@ -109,27 +108,7 @@ const TableView = (props) => {
                                 </div>
                             )
                         })}
-                        {/* <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
-                            <div className="tableview_requests__sub_col">{request.products}</div>
-                            <div className="tableview_requests__sub_col">Упаковка</div>
-                            <div className="tableview_requests__sub_col">{request.quantity}</div>
-                        </div>
-                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
-                            <div className="tableview_requests__sub_col">{request.products}</div>
-                            <div className="tableview_requests__sub_col">Упаковка</div>
-                            <div className="tableview_requests__sub_col">{request.quantity}</div>
-                        </div>
-                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
-                            <div className="tableview_requests__sub_col">{request.products}</div>
-                            <div className="tableview_requests__sub_col">Упаковка</div>
-                            <div className="tableview_requests__sub_col">{request.quantity}</div>
-                        </div> */}
                     </div>
-
-                    {/* Вывод продуктов и кол-ва как строки */}
-                    {/* <div className="tableview_requests__col">{request.products}</div>
-                    <div className="tableview_requests__col">{request.quantity}</div> */}
-
                     {/* Корректный вывод но с ограничением по количеству символов в строке */}
                     {/* <div className="tableview_requests__col">
                         <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.products}</div></div>
@@ -141,7 +120,6 @@ const TableView = (props) => {
                     </div> */}
                     <div className="tableview_requests__col">{request.codeWord}</div>
                     <div className="tableview_requests__col">{request.responsible}</div>
-                    {/* <div className="tableview_requests__col">{request.status}</div> */}
                     <div className="tableview_requests__col">
                         <select
                             id={request.id}
@@ -156,8 +134,8 @@ const TableView = (props) => {
                         </select>
                     </div>
                     <div className="tableview_requests__actions">
-                        <Link to={"/requests/view/" + request.id} data-id={request.id} className="tableview_requests__action" >Просмотр</Link>
-                        <Link to={"/requests/edit/" + request.id} data-id={request.id} className="tableview_requests__action">Редактировать</Link>
+                        <Link to={"/requests/view/" + request.id} className="tableview_requests__action" >Просмотр</Link>
+                        {<Link to={"/requests/edit/" + request.id} className="tableview_requests__action">Редактировать</Link>}
                         {/* <div data-id={request.id} className="tableview_requests__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>
                 </div>

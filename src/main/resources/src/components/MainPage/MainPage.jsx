@@ -60,8 +60,14 @@ class MainPage extends React.Component {
                             {/* <Route exact path="/profile/users/new" component={NewUser} /> */}
                             {/* <Route path="/profile/users/edit/" component={EditUser} /> */}
                             <PrivateRoute
-                                path="/profile/users/new"
+                                exact path="/profile/users/new"
                                 component={NewUser}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={["ROLE_ADMIN"]}
+                            />
+                            <PrivateRoute
+                                exact path="/profile/users"
+                                component={Users}
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN"]}
                             />
@@ -71,35 +77,41 @@ class MainPage extends React.Component {
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN"]}
                             />
-                            <PrivateRoute
-                                path="/profile/users"
-                                component={Users}
-                                userHasAccess={this.props.userHasAccess}
-                                allowedRoles={["ROLE_ADMIN"]}
-                            />
                             <Route exact path="/clients" component={Clients} />
                             <Route exact path="/clients/new" component={newClient} />
                             <Route exact path="/contracts" component={Contracts} />
                             <Route exact path="/requests" component={Requests} />
+                            <Route path="/requests/view/" component={ViewRequest} />
                             {/* <Route exact path="/requests/new" component={NewRequest} /> */}
+                            {/* <Route path="/requests/edit/" component={EditRequest} /> */}
                             <PrivateRoute
-                                path="/requests/new"
+                                exact path="/requests/new"
                                 component={NewRequest}
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                             />
-                            <Route path="/requests/edit/" component={EditRequest} />
-                            <Route path="/requests/view/" component={ViewRequest} />
+                            <PrivateRoute
+                                path="/requests/edit/"
+                                component={EditRequest}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                            />
                             <Route exact path="/products" component={Products} />
+                            <Route path="/products/view/" component={ViewProduct} />
+                            {/* <Route path="/products/edit/" component={EditProduct} /> */}
                             {/* <Route exact path="/products/new" component={NewProduct} /> */}
                             <PrivateRoute
-                                path="/products/new"
+                                path="/products/edit/"
+                                component={EditProduct}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                            />
+                            <PrivateRoute
+                                exact path="/products/new"
                                 component={NewProduct}
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                             />
-                            <Route path="/products/view/" component={ViewProduct} />
-                            <Route path="/products/edit/" component={EditProduct} />
                             <Route component={PageNotFound} />
                         </Switch>
                     </div>

@@ -117,7 +117,7 @@ const Select = (props) => {
                         </div>
                         <div className="select__selected_packaging">
                             Фасовка
-                            <input
+                            <textarea
                                 id={index}
                                 type="text"
                                 name="packaging"

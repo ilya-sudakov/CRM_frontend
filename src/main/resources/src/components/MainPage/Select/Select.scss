@@ -116,18 +116,24 @@
         justify-content: flex-end;
         align-items: center;
 
-        input[type="text"] {
+        input[type="text"],
+        textarea {
           font-size: 80%;
           margin-left: 10px;
           width: 50% !important;
           display: flex;
           padding: 5px 10px;
           border-radius: 10px;
-          width: 50%;
+          min-height: 1rem;
+          height: calc(1rem + 0px);
+          outline: none;
           position: relative;
           //   width: fit-content;
           align-items: center;
-          border: 1px solid $button__background--inverted;
+
+          &:focus {
+            border: 1px solid $button__background--inverted;
+          }
         }
       }
     }
@@ -139,11 +145,13 @@
       &__selected {
         &_row {
           flex-direction: column;
-          .select__selected_item, .select__selected_packaging, .select__selected_quantity {
+          .select__selected_item,
+          .select__selected_packaging,
+          .select__selected_quantity {
             margin-right: 0;
-            width: calc(100% - 50px)!important;
+            width: calc(100% - 50px) !important;
             input {
-              width: 100%!important;
+              width: 100% !important;
             }
           }
         }
