@@ -126,7 +126,7 @@ const EditProduct = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_product__item">
+                {/* <div className="edit_product__item">
                     <div className="edit_product__input_name">Артикул</div>
                     <div className="edit_product__input_field">
                         <input type="text"
@@ -136,7 +136,7 @@ const EditProduct = (props) => {
                             autoComplete="off"
                         />
                     </div>
-                </div>
+                </div> */}
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Группа продукции</div>
                     <div className="edit_product__input_field">

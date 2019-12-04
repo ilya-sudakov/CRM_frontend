@@ -51,25 +51,24 @@ const ViewProduct = (props) => {
         <div className="view_product">
             <div className="view_product__title">Просмотр продукта</div>
             <form className="view_product__form">
-                <div className="view_product__item">
+                {/* <div className="view_product__item">
                     <div className="view_product__input_name">Фотография</div>
                     <div className="view_product__product_img">
-                        {/* <img src={productInputs.photo} alt="" /> */}
                         <img src={imgLandscape} alt="" />
                     </div>
-                </div>
+                </div> */}
                 <div className="view_product__item">
                     <div className="view_product__input_name">Наименование</div>
                     <div className="view_product__input_field">
                         <input type="text" name="name" defaultValue={productInputs.name} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
+                {/* <div className="view_product__item">
                     <div className="view_product__input_name">Артикул</div>
                     <div className="view_product__input_field">
                         <input type="text" name="item" defaultValue={productInputs.item} readOnly />
                     </div>
-                </div>
+                </div> */}
                 <div className="view_product__item">
                     <div className="view_product__input_name">Группа продукции</div>
                     <div className="view_product__input_field">

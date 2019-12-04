@@ -51,7 +51,8 @@
         width: calc(90% - 20px);
       }
       input[type="text"],
-      input[type="password"] {
+      input[type="password"],
+      input[type="number"] {
         border: 1px solid #bbbbbb;
         width: calc(100% - 20px);
         padding: 5px 10px;

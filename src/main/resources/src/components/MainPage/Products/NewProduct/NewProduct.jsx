@@ -11,7 +11,6 @@ const NewProduct = (props) => {
         photo: null,
         unit: "шт.",
         weight: null,
-        requests: null,
     })
     const [productErrors, setProductErrors] = useState({
         name: "",
@@ -54,6 +53,8 @@ const NewProduct = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(productInputs);
+        
         formIsValid() && addProduct(productInputs)
             .then(() => props.history.push("/products"))
     }
@@ -124,7 +125,7 @@ const NewProduct = (props) => {
                 <div className="new_product__item">
                     <div className="new_product__input_name">Вес изделия</div>
                     <div className="new_product__input_field">
-                        <input type="text" name="weight" autoComplete="off" onChange={handleInputChange} />
+                        <input type="number" name="weight" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="new_product__item">

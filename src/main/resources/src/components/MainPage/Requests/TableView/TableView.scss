@@ -75,6 +75,7 @@
       align-items: center;
       padding: 15px 5px;
       flex: 0 1 12.5%;
+      word-break: break-word;
       border-right: 1px solid #cccccc; //border between columns
 
       .tableview_requests__sub_row {

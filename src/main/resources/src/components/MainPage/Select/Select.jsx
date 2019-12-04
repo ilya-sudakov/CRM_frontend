@@ -107,7 +107,7 @@ const Select = (props) => {
                             Кол-во
                             <input
                                 id={index}
-                                type="text"
+                                type="number"
                                 name="quantity"
                                 autoComplete="off"
                                 defaultValue={item.quantity != 0 ? item.quantity : 0}
@@ -115,7 +115,7 @@ const Select = (props) => {
                                 readOnly={props.readOnly}
                             />
                         </div>
-                        <div className="select__selected_packaging">
+                        {/* <div className="select__selected_packaging">
                             Фасовка
                             <textarea
                                 id={index}
@@ -126,7 +126,7 @@ const Select = (props) => {
                                 onChange={handleQuantityChange}
                                 readOnly={props.readOnly}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 ))}
             </div>
