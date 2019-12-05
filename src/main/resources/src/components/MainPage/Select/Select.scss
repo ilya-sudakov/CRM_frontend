@@ -130,7 +130,8 @@
           padding: 5px 10px;
           border-radius: 10px;
           min-height: 1rem;
-          height: calc(1rem + 0px);
+          // height: calc(1rem + 0px);
+          height: fit-content;
           outline: none;
           position: relative;
           //   width: fit-content;
