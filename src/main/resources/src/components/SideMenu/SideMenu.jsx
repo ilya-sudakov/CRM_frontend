@@ -33,33 +33,33 @@ const SideMenu = (props) => {
                 : null
             }
 
-            <div className={props.location.pathname.length === 1 ? "sidemenu__item--active" : "sidemenu__item"}>
+            <div className={props.location.pathname.length === 1 ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/">Главная (Для теста)</Link>
             </div>
-            <div className={props.location.pathname.includes("/clients") ? "sidemenu__item--active" : "sidemenu__item"}>
+            <div className={props.location.pathname.includes("/clients") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/clients">Клиенты (Для теста)</Link>
                 <Link to="/clients/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>
             </div>
-            <div className={props.location.pathname.includes("/contracts") ? "sidemenu__item--active" : "sidemenu__item"}>
+            <div className={props.location.pathname.includes("/contracts") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/contracts">Договоры (Для теста)</Link>
                 {/* <Link to="/contracts/new" className="sidemenu__addButton">+</Link> */}
             </div>
-            <div className={props.location.pathname.includes("/requests") ? "sidemenu__item--active" : "sidemenu__item"}>
+            <div className={props.location.pathname.includes("/requests") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/requests">Заявки</Link>
                 <Link to="/requests/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>
             </div>
-            <div className={props.location.pathname.includes("/products") ? "sidemenu__item--active" : "sidemenu__item"}>
+            <div className={props.location.pathname.includes("/products") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/products">Продукция</Link>
                 <Link to="/products/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>
             </div>
-            <div className={props.location.pathname.includes("/workshop-lemz") ? "sidemenu__item--active" : "sidemenu__item"}>
-                <Link className="sidemenu__link" to="/workshop-lemz">Очередь производства ЛЭМЗ</Link>
+            <div className={props.location.pathname.includes("/workshop-lemz") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                <Link className="sidemenu__link" to="/workshop-lemz">Заявки ЛЭМЗ</Link>
                 <Link to="/workshop-lemz/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>

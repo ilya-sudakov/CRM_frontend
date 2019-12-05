@@ -56,6 +56,9 @@ class App extends React.Component {
         })
         .catch((error) => {
           console.log(error);
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          window.location.reload();
         })
     }
   }

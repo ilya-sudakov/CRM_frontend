@@ -42,7 +42,8 @@ const Select = (props) => {
             {
                 id: id,
                 name: value,
-                quantity: 0
+                quantity: 0,
+                packaging: ""
             }
         ])
         props.onChange([
@@ -50,7 +51,8 @@ const Select = (props) => {
             {
                 id: id,
                 name: value,
-                quantity: 0
+                quantity: 0,
+                packaging: ""
             }
         ]);
     }
@@ -63,7 +65,7 @@ const Select = (props) => {
         props.onChange([...newSelected]);
     }
 
-    const handleQuantityChange = (event) => {
+    const handleParamChange = (event) => {
         const value = event.target.value;
         const name = event.target.getAttribute("name");
         const id = event.target.getAttribute("id");
@@ -118,18 +120,18 @@ const Select = (props) => {
                             {!props.readOnly && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
                         </div>
                         <div className="select__selected_quantity">
-                            Кол-во
+                            Кол-во*
                             <input
                                 id={index}
                                 type="number"
                                 name="quantity"
                                 autoComplete="off"
                                 defaultValue={item.quantity != 0 ? item.quantity : 0}
-                                onChange={handleQuantityChange}
+                                onChange={handleParamChange}
                                 readOnly={props.readOnly}
                             />
                         </div>
-                        {/* <div className="select__selected_packaging">
+                        <div className="select__selected_packaging">
                             Фасовка
                             <textarea
                                 id={index}
@@ -137,10 +139,10 @@ const Select = (props) => {
                                 name="packaging"
                                 autoComplete="off"
                                 defaultValue={item.packaging != 0 ? item.packaging : 0}
-                                onChange={handleQuantityChange}
+                                onChange={handleParamChange}
                                 readOnly={props.readOnly}
                             />
-                        </div> */}
+                        </div>
                     </div>
                 ))}
             </div>
