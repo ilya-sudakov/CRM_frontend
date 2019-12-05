@@ -100,7 +100,7 @@ const EditRequest = (props) => {
                 .then(oldRequest => {
                     setRequestInputs({
                         date: oldRequest.date,
-                        products: oldRequest.products,
+                        products: oldRequest.requestProducts,
                         quantity: oldRequest.quantity,
                         codeWord: oldRequest.codeWord,
                         responsible: oldRequest.responsible,

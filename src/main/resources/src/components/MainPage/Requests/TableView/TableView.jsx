@@ -19,7 +19,8 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        // return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
     }
 
     const handleStatusChange = (event) => {
@@ -98,12 +99,12 @@ const TableView = (props) => {
                     <div className="tableview_requests__col">{request.id}</div>
                     <div className="tableview_requests__col">{formatDateString(request.date)}</div>
                     <div className="tableview_requests__col">
-                        {request.products.map((item, index) => {
+                        {request.requestProducts.map((item, index) => {
                             return (
-                                <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.products.length}%)` }}>
-                                    <div className="tableview_requests__sub_col">{item.name}</div>
+                                <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.requestProducts.length}%)` }}>
+                                    <div className="tableview_requests__sub_col">{item.product.name}</div>
                                     <div className="tableview_requests__sub_col">{item.packaging}</div>
-                                    <div className="tableview_requests__sub_col">{item.quantity + " " + item.unit}</div>
+                                    <div className="tableview_requests__sub_col">{item.quantity}</div>
                                 </div>
                             )
                         })}

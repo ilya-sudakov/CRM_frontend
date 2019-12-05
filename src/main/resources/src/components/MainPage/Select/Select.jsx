@@ -105,6 +105,7 @@ const Select = (props) => {
             {props.options && <div className="select__options select__options--hidden" 
                 onBlur={!props.readOnly ? clickOnInputBlur : null}>
                 {search().map((item, index) => (
+                    console.log(item),
                     <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
                         {item.name}
                     </div>
@@ -116,11 +117,11 @@ const Select = (props) => {
                 {selected.map((item, index) => (
                     <div className="select__selected_row">
                         <div className="select__selected_item" >
-                            {item.name}
+                            {item.product ? item.product.name : item.name}
                             {!props.readOnly && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
                         </div>
                         <div className="select__selected_quantity">
-                            Кол-во*
+                            Кол-во{!props.readOnly && "*"}
                             <input
                                 id={index}
                                 type="number"
@@ -132,13 +133,13 @@ const Select = (props) => {
                             />
                         </div>
                         <div className="select__selected_packaging">
-                            Фасовка
+                            Фасовка{!props.readOnly && "*"}
                             <textarea
                                 id={index}
                                 type="text"
                                 name="packaging"
                                 autoComplete="off"
-                                defaultValue={item.packaging != 0 ? item.packaging : 0}
+                                defaultValue={item.packaging}
                                 onChange={handleParamChange}
                                 readOnly={props.readOnly}
                             />

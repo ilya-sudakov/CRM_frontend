@@ -8,7 +8,7 @@ const NewProduct = (props) => {
         typeOfProduct: "FIRST",
         comment: null,
         packaging: null,
-        photo: null,
+        photo: "",
         unit: "шт.",
         weight: null,
     })
@@ -75,10 +75,12 @@ const NewProduct = (props) => {
             setImgName(file.name);
             let reader = new FileReader();
             reader.onloadend = (() => {
-                setImgBASE64(reader.result.split("base64,")[1]);
+                // setImgBASE64(reader.result.split("base64,")[1]);
+                setImgBASE64(reader.result);
                 setProductInputs({
                     ...productInputs,
-                    photo: reader.result.split("base64,")[1]
+                    // photo: reader.result.split("base64,")[1]
+                    photo: reader.result
                 })
             });
             reader.readAsDataURL(file);
@@ -167,7 +169,7 @@ const NewProduct = (props) => {
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
-                        {/* <input type="file" name="file" id="file" onChange={handleFileInputChange} /> */}
+                        <input type="file" name="file" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
                 <div className="new_product__input_hint">* - поля, обязательные для заполнения</div>

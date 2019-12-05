@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import './ViewRequestLEMZ.scss';
-import { getRequestById } from '../../../../utils/utilsAPI.jsx';
+import { getRequestById, getRequestLEMZById } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 
 const ViewRequestLEMZ = (props) => {
@@ -12,7 +12,7 @@ const ViewRequestLEMZ = (props) => {
         codeWord: "",
         responsible: "",
         status: "Не готово",
-        dateShipped: "",
+        shippingDate: "",
         comment: ""
     })
 
@@ -28,23 +28,24 @@ const ViewRequestLEMZ = (props) => {
             alert('Неправильный индекс заявки!');
             props.history.push("/workshop-lemz");
         } else {
-            // getRequestById(id)
-            //     .then(res => res.json())
-            //     .then(oldRequest => {
-            //         setRequestInputs({
-            //             date: oldRequest.date,
-            //             products: oldRequest.products,
-            //             // quantity: oldRequest.quantity,
-            //             codeWord: oldRequest.codeWord,
-            //             responsible: oldRequest.responsible,
-            //             status: oldRequest.status
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс заявки!');
-            //         props.history.push("/requests");
-            //     })
+            getRequestLEMZById(id)
+                .then(res => res.json())
+                .then(oldRequest => {
+                    setRequestInputs({
+                        date: oldRequest.date,
+                        products: oldRequest.products,
+                        codeWord: oldRequest.codeWord,
+                        responsible: oldRequest.responsible,
+                        status: oldRequest.status,
+                        shippingDate: oldRequest.shippingDate,
+                        comment: oldRequest.comment
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс заявки!');
+                    props.history.push("/workshop-lemz");
+                })
         }
     }, [])
 
@@ -122,13 +123,13 @@ const ViewRequestLEMZ = (props) => {
                     <div className="view_request_lemz__input_name">Дата отгрузки</div>
                     <div className="view_request_lemz__input_field">
                         <DatePicker
-                            selected={requestInputs.dateShipped}
+                            selected={Date.parse(requestInputs.shippingDate)}
                             dateFormat="dd.MM.yyyy"
                             readOnly
                         />
                     </div>
                 </div>
-                <div className="view_request_lemz__item">
+                {/* <div className="view_request_lemz__item">
                     <div className="view_request_lemz__input_name">Комментарий</div>
                     <div className="view_request_lemz__input_field">
                         <input type="text"
@@ -136,7 +137,7 @@ const ViewRequestLEMZ = (props) => {
                             defaultValue={requestInputs.comment}
                             readOnly />
                     </div>
-                </div>
+                </div> */}
                 <input className="view_request_lemz__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
             </form>
         </div>

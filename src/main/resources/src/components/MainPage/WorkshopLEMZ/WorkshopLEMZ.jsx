@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './WorkshopLEMZ.scss';
-import { getRequests, deleteRequest } from '../../../utils/utilsAPI.jsx';
+import { getRequests, deleteRequest, getRequestsLEMZ } from '../../../utils/utilsAPI.jsx';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 
@@ -20,32 +20,32 @@ const WorkshopLEMZ = (props) => {
 
     useEffect(() => {
         document.title = "Заявки - ЛЭМЗ";
-        // loadRequests()
-        setRequestsLEMZ([
-            {
-                id: 1,
-                date: "2019-12-04T14:06:49.657Z",
-                quantity: null,
-                codeWord: "Компания",
-                products: [
-                    {
-                        comment: "Коммент3",
-                        id: 3,
-                        name: "Что-то там 1",
-                        packaging: "Упаковка",
-                        photo: null,
-                        typeOfProduct: "THIRD",
-                        unit: "шт.",
-                        weight: 100.5
-                    }
-                ],
-                responsible: "Сергей Александрович",
-                status: "В процессе"
-            }
-        ])
+        loadRequestsLEMZ()
+        // setRequestsLEMZ([
+        //     {
+        //         id: 1,
+        //         date: "2019-12-04T14:06:49.657Z",
+        //         quantity: null,
+        //         codeWord: "Компания",
+        //         products: [
+        //             {
+        //                 comment: "Коммент3",
+        //                 id: 3,
+        //                 name: "Что-то там 1",
+        //                 packaging: "Упаковка",
+        //                 photo: null,
+        //                 typeOfProduct: "THIRD",
+        //                 unit: "шт.",
+        //                 weight: 100.5
+        //             }
+        //         ],
+        //         responsible: "Сергей Александрович",
+        //         status: "В процессе"
+        //     }
+        // ])
     }, [])
 
-    const loadRequests = () => {
+    const loadRequestsLEMZ = () => {
         getRequestsLEMZ()
             .then(res => res.json())
             .then(requests => {
@@ -64,7 +64,7 @@ const WorkshopLEMZ = (props) => {
             <div className="requests_LEMZ__amount_table">Всего: {requestsLEMZ.length} записей</div>
             <TableView
                 data={requestsLEMZ}
-                loadData={loadRequests}
+                loadData={loadRequestsLEMZ}
                 // deleteItem={deleteItem}
                 searchQuery={searchQuery}
             />

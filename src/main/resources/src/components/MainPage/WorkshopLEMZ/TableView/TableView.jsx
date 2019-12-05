@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
-import { editRequestStatus } from '../../../../utils/utilsAPI.jsx';
+import { editRequestStatus, editRequestLEMZStatus } from '../../../../utils/utilsAPI.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -19,21 +19,21 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        return data.filter(item => item.codeWord.toLowerCase().includes(props.searchQuery.toLowerCase()))
     }
 
     const handleStatusChange = (event) => {
         const status = event.target.value;
         const id = event.target.getAttribute("id");
-        // editRequestStatus({
-        //     status: status
-        // }, id)
-        //     .then(() => {
-        //         window.location.reload(); //на данный момент так
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
+        editRequestLEMZStatus({
+            status: status
+        }, id)
+            .then(() => {
+                window.location.reload(); //на данный момент так
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const sortRequests = (data) => {
@@ -100,7 +100,7 @@ const TableView = (props) => {
                     <div className="tableview_requests_LEMZ__col">{request.id}</div>
                     <div className="tableview_requests_LEMZ__col">{formatDateString(request.date)}</div>
                     <div className="tableview_requests_LEMZ__col">
-                        {request.products.map((item, index) => {
+                        {/* {request.products.map((item, index) => {
                             return (
                                 <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / request.products.length}%)` }}>
                                     <div className="tableview_requests_LEMZ__sub_col">{item.name}</div>
@@ -108,7 +108,7 @@ const TableView = (props) => {
                                     <div className="tableview_requests_LEMZ__sub_col">{item.quantity + " " + item.unit}</div>
                                 </div>
                             )
-                        })}
+                        })} */}
                     </div>
                     {/* Корректный вывод но с ограничением по количеству символов в строке */}
                     {/* <div className="tableview_requests_LEMZ__col">

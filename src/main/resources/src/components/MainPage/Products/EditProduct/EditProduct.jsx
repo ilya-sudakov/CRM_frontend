@@ -66,10 +66,12 @@ const EditProduct = (props) => {
             setImgName(file.name);
             let reader = new FileReader();
             reader.onloadend = (() => {
-                setImgBASE64(reader.result.split("base64,")[1]);
+                // setImgBASE64(reader.result.split("base64,")[1]);
+                setImgBASE64(reader.result);
                 setProductInputs({
                     ...productInputs,
-                    photo: reader.result.split("base64,")[1]
+                    // photo: reader.result.split("base64,")[1]
+                    photo: reader.result
                 })
             });
             reader.readAsDataURL(file);
@@ -95,7 +97,8 @@ const EditProduct = (props) => {
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
                         comment: oldProduct.comment,
-                        typeOfProduct: oldProduct.typeOfProduct
+                        typeOfProduct: oldProduct.typeOfProduct,
+                        photo: oldProduct.photo
                     });
                 })
                 .catch(error => {
@@ -109,12 +112,12 @@ const EditProduct = (props) => {
         <div className="edit_product">
             <div className="edit_product__title">Редактирование продукта</div>
             <form className="edit_product__form">
-                {/* <div className="edit_product__item">
+                <div className="edit_product__item">
                     <div className="edit_product__input_name">Фотография</div>
                     <div className="edit_product__product_img">
-                        <img src={imgLandscape} alt="" />
+                        <img src={productInputs.photo} alt="" />
                     </div>
-                </div> */}
+                </div>
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Наименование*</div>
                     <div className="edit_product__input_field">
@@ -215,7 +218,7 @@ const EditProduct = (props) => {
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
-                        {/* <input type="file" name="file" id="file" onChange={handleFileInputChange} /> */}
+                        <input type="file" name="file" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
                 <div className="edit_product__input_hint">* - поля, обязательные для заполнения</div>

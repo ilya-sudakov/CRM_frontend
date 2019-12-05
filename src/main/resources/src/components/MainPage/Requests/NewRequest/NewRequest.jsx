@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
-import { addRequest, getProducts } from '../../../../utils/utilsAPI.jsx';
+import { addRequest, getProducts, addProductsToRequest } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
@@ -10,11 +10,15 @@ import './NewRequest.scss';
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: new Date(),
-        products: "",
-        // quantity: "",
+        // products: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
+    })
+    const [productsRequest, setProductsRequest] = useState({
+        productsId: [],
+        quantity: [],
+        packaging: []
     })
     const [requestErrors, setRequestErrors] = useState({
         date: "",
@@ -49,7 +53,7 @@ const NewRequest = (props) => {
 
     const formIsValid = () => {
         if (dateValid && productsValid && responsibleValid) {
-            
+
             return true;
         }
         else {
@@ -60,8 +64,26 @@ const NewRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        requestInputs.products.map((item) => {
+            setProductsRequest({
+                productsId: productsRequest.productsId.push(item.id),
+                quantity: productsRequest.quantity.push(item.quantity),
+                packaging: productsRequest.packaging.push(item.packaging)
+            })
+        })
+        let id = 0;
         formIsValid() && addRequest(requestInputs)
+            .then(res => res.json())
+            .then(res => {
+                id = res.id;
+            })
+            .then(() => {
+                addProductsToRequest(productsRequest, id);
+            })
             .then(() => props.history.push("/requests"))
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {

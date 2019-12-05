@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
-import { addRequest, getProducts } from '../../../../utils/utilsAPI.jsx';
+import { addRequest, getProducts, addRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
@@ -14,9 +14,8 @@ const NewRequestLEMZ = (props) => {
         // quantity: "",
         codeWord: "",
         responsible: "",
-        status: "Не готово",
-        dateShipped: new Date(),
-        status: '',
+        status: "Проблема",
+        shippingDate: new Date(),
         comment: ''
     })
     const [requestErrors, setRequestErrors] = useState({
@@ -51,7 +50,7 @@ const NewRequestLEMZ = (props) => {
     }
 
     const formIsValid = () => {
-        if (dateValid && productsValid && responsibleValid) {
+        if (dateValid && responsibleValid) {
 
             return true;
         }
@@ -63,8 +62,9 @@ const NewRequestLEMZ = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // formIsValid() && addRequest(requestInputs)
-        //     .then(() => props.history.push("/requests"))
+        // console.log(requestInputs);
+        formIsValid() && addRequestLEMZ(requestInputs)
+            .then(() => props.history.push("/workshop-lemz"))
     }
 
     const handleInputChange = e => {
@@ -99,7 +99,7 @@ const NewRequestLEMZ = (props) => {
         validateField("date", date);
         setRequestInputs({
             ...requestInputs,
-            dateShipped: date
+            shippingDate: date
         })
     }
 
@@ -164,14 +164,14 @@ const NewRequestLEMZ = (props) => {
                             onChange={handleInputChange}
                             value={requestInputs.status}
                         >
-                            <option>Проблема</option>
-                            <option>Материалы</option>
-                            <option>Ожидание</option>
-                            <option>В производстве</option>
-                            <option>Готово</option>
-                            <option>Завершено</option>
-                            <option>Отгружено</option>
-                            <option>Приоритет</option>
+                            <option value="Проблема">Проблема</option>
+                            <option value="Материалы">Материалы</option>
+                            <option value="Ожидание">Ожидание</option>
+                            <option value="В производстве">В производстве</option>
+                            <option value="Готово">Готово</option>
+                            <option value="Завершено">Завершено</option>
+                            <option value="Отгружено">Отгружено</option>
+                            <option value="Приоритет">Приоритет</option>
                         </select>
                     </div>
                 </div>
@@ -179,7 +179,7 @@ const NewRequestLEMZ = (props) => {
                     <div className="new_request_lemz__input_name">Дата отгрузки</div>
                     <div className="new_request_lemz__input_field">
                         <DatePicker
-                            selected={requestInputs.dateShipped}
+                            selected={requestInputs.shippingDate}
                             dateFormat="dd.MM.yyyy"
                             onChange={handleDateShippedChange}
                             disabledKeyboardNavigation
@@ -187,12 +187,12 @@ const NewRequestLEMZ = (props) => {
                         />
                     </div>
                 </div>
-                <div className="new_request_lemz__item">
+                {/* <div className="new_request_lemz__item">
                     <div className="new_request_lemz__input_name">Комментарий</div>
                     <div className="new_request_lemz__input_field">
                         <textarea type="text" name="comment" autoComplete="off" onChange={handleInputChange} />
                     </div>
-                </div>
+                </div> */}
                 <div className="new_request_lemz__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_request_lemz__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>

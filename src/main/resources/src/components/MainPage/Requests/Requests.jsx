@@ -28,8 +28,8 @@ const Requests = (props) => {
         getRequests()
             .then(res => res.json())
             .then(requests => {
-                setRequests(requests);
                 // console.log(requests);
+                setRequests(requests);
             })
     }
 
