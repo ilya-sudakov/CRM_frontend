@@ -54,7 +54,7 @@ const NewProduct = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(productInputs);
-        
+
         formIsValid() && addProduct(productInputs)
             .then(() => props.history.push("/products"))
     }
@@ -97,6 +97,12 @@ const NewProduct = (props) => {
         <div className="new_product">
             <div className="new_product__title">Новая продукция</div>
             <form className="new_product__form">
+                {productInputs.photo && <div className="new_product__item">
+                    <div className="new_product__input_name">Фотография</div>
+                    <div className="new_product__product_img">
+                        <img src={productInputs.photo} alt="" />
+                    </div>
+                </div>}
                 <div className="new_product__item">
                     <div className="new_product__input_name">Наименование*</div>
                     <div className="new_product__input_field">

@@ -8,13 +8,19 @@ import Select from '../../Select/Select.jsx';
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
     const [products, setProducts] = useState([]);
+    const [selectedProducts, setSelectedProducts] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
-        products: "",
+        // products: "",
         quantity: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
+    })
+    const [productsRequest, setProductsRequest] = useState({
+        productsId: [],
+        quantity: [],
+        packaging: []
     })
     const [requestErrors, setRequestErrors] = useState({
         date: "",
@@ -58,8 +64,23 @@ const EditRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(requestInputs);
+        
+        requestInputs.products.map((item) => {
+            setProductsRequest({
+                productsId: productsRequest.productsId.push(item.id),
+                quantity: productsRequest.quantity.push(item.quantity),
+                packaging: productsRequest.packaging.push(item.packaging)
+            })
+        })
         formIsValid() && editRequest(requestInputs, requestId)
+            .then(() => {
+                addProductsToRequest(productsRequest, requestId);
+            })
             .then(() => props.history.push("/requests"))
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const handleInputChange = (e) => {
@@ -98,14 +119,17 @@ const EditRequest = (props) => {
             getRequestById(id)
                 .then(res => res.json())
                 .then(oldRequest => {
+                    console.log(oldRequest);
+                    
                     setRequestInputs({
                         date: oldRequest.date,
-                        products: oldRequest.requestProducts,
+                        // products: oldRequest.requestProducts,
                         quantity: oldRequest.quantity,
                         codeWord: oldRequest.codeWord,
                         responsible: oldRequest.responsible,
                         status: oldRequest.status
                     });
+                    setSelectedProducts(oldRequest.requestProducts);
                 })
                 .catch(error => {
                     console.log(error);
@@ -150,7 +174,7 @@ const EditRequest = (props) => {
                         options={products}
                         onChange={handleProductsChange}
                         searchPlaceholder="Введите название продукта для поиска..."
-                        defaultValue={requestInputs.products}
+                        defaultValue={selectedProducts}
                     />
                 </div>
                 {/* <div className="edit_request__item">

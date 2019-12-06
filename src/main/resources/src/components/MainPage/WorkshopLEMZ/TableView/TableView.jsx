@@ -92,10 +92,16 @@ const TableView = (props) => {
             </div>
             {sortRequests(props.data).map((request, request_id) => (
                 <div key={request_id} className={"tableview_requests_LEMZ__row " +
-                    (request.status === "Не готово" && "tableview_requests_LEMZ__row--status_not_ready" ||
-                        request.status === "В процессе" && "tableview_requests_LEMZ__row--status_in_progress" ||
-                        request.status === "Готово к отгрузке" && "tableview_requests_LEMZ__row--status_ready" ||
-                        request.status === "Завершено" && "tableview_requests_LEMZ__row--status_shipped")
+                    (
+                        request.status === "Проблема" && "tableview_requests_LEMZ__row--status_problem" ||
+                        request.status === "Материалы" && "tableview_requests_LEMZ__row--status_materials" ||
+                        request.status === "Ожидание" && "tableview_requests_LEMZ__row--status_waiting" ||
+                        request.status === "В производстве" && "tableview_requests_LEMZ__row--status_in_production" ||
+                        request.status === "Готово" && "tableview_requests_LEMZ__row--status_ready" ||
+                        request.status === "Отгружено" && "tableview_requests_LEMZ__row--status_shipped" ||
+                        request.status === "Приоритет" && "tableview_requests_LEMZ__row--status_priority" ||
+                        request.status === "Завершено" && "tableview_requests_LEMZ__row--status_completed"
+                    )
                 }>
                     <div className="tableview_requests_LEMZ__col">{request.id}</div>
                     <div className="tableview_requests_LEMZ__col">{formatDateString(request.date)}</div>
@@ -128,6 +134,7 @@ const TableView = (props) => {
                             defaultValue={request.status}
                             onChange={handleStatusChange}
                         >
+                            <option>Приоритет</option>
                             <option>Проблема</option>
                             <option>Материалы</option>
                             <option>Ожидание</option>
@@ -135,7 +142,6 @@ const TableView = (props) => {
                             <option>Готово</option>
                             <option>Отгружено</option>
                             <option>Завершено</option>
-                            <option>Приоритет</option>
                         </select>
                     </div>
                     <div className="tableview_requests_LEMZ__col">{request.dateShipped}</div>

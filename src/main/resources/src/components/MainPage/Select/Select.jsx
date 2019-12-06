@@ -105,7 +105,6 @@ const Select = (props) => {
             {props.options && <div className="select__options select__options--hidden" 
                 onBlur={!props.readOnly ? clickOnInputBlur : null}>
                 {search().map((item, index) => (
-                    console.log(item),
                     <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
                         {item.name}
                     </div>

@@ -72,6 +72,8 @@ const NewRequest = (props) => {
             })
         })
         let id = 0;
+        console.log(requestInputs);
+        
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {
