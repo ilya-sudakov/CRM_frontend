@@ -20,7 +20,14 @@ const TableView = (props) => {
 
     const searchQuery = (data) => {
         // return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
-        return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        // return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        return data.filter(item => {
+            return (
+                item.requestProducts.length !== 0 && item.requestProducts[0].product.name
+                    ? item.requestProducts[0].product.name.toLowerCase().includes(props.searchQuery.toLowerCase())
+                    : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
+            )
+        })
     }
 
     const handleStatusChange = (event) => {
