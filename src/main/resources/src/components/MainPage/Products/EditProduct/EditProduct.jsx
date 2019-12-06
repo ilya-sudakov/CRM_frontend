@@ -164,7 +164,7 @@ const EditProduct = (props) => {
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Вес изделия*</div>
                     <div className="edit_product__input_field">
-                        <input type="text"
+                        <input type="number"
                             name="weight"
                             defaultValue={productInputs.weight}
                             onChange={handleInputChange}

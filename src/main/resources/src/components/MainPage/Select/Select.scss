@@ -4,11 +4,26 @@
   width: 100%;
   position: relative;
 
+  .select__overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    // background-color: red;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
   &__input {
     border: 1px solid #bbbbbb;
     width: 100%;
     padding: 5px 10px;
     border-radius: 10px;
+    z-index: 2;
 
     &:focus {
       border: 1px solid $button__background--inverted;
@@ -33,11 +48,15 @@
     flex-direction: column;
     border: 1px solid #aeaeae;
     font-size: 80%;
-    z-index: 1;
+    z-index: 2;
+    transform: scaleX(1);
+    transition: 0.1s ease-in-out;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    transform-origin: 0 0;
 
     &--hidden {
-      display: none;
+      transform: scaleY(0);
+      // display: none;
     }
 
     .select__option_item {

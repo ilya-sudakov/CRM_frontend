@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import './EditRequest.scss';
-import { getRequestById, editRequest, getProducts } from '../../../../utils/utilsAPI.jsx';
+import { getRequestById, editRequest, getProducts, addProductsToRequest } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 
 const EditRequest = (props) => {
@@ -64,9 +64,7 @@ const EditRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(requestInputs);
-        
-        requestInputs.products.map((item) => {
+        selectedProducts.map((item) => {
             setProductsRequest({
                 productsId: productsRequest.productsId.push(item.id),
                 quantity: productsRequest.quantity.push(item.quantity),
@@ -74,13 +72,13 @@ const EditRequest = (props) => {
             })
         })
         formIsValid() && editRequest(requestInputs, requestId)
-            .then(() => {
-                addProductsToRequest(productsRequest, requestId);
-            })
-            .then(() => props.history.push("/requests"))
-            .catch(error => {
-                console.log(error);
-            })
+                .then(() => {
+                    addProductsToRequest(productsRequest, requestId)
+                })
+                .then(() => props.history.push("/requests"))
+                .catch(error => {
+                    console.log(error);
+                })
     }
 
     const handleInputChange = (e) => {
@@ -102,10 +100,11 @@ const EditRequest = (props) => {
 
     const handleProductsChange = (newProducts) => {
         validateField("products", newProducts);
-        setRequestInputs({
-            ...requestInputs,
-            products: newProducts
-        })
+        // setRequestInputs({
+        //     ...requestInputs,
+        //     products: newProducts
+        // })
+        setSelectedProducts(newProducts);
     }
 
     useEffect(() => {
@@ -119,8 +118,6 @@ const EditRequest = (props) => {
             getRequestById(id)
                 .then(res => res.json())
                 .then(oldRequest => {
-                    console.log(oldRequest);
-                    
                     setRequestInputs({
                         date: oldRequest.date,
                         // products: oldRequest.requestProducts,

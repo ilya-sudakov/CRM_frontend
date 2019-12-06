@@ -102,9 +102,9 @@ const TableView = (props) => {
                         {request.requestProducts.map((item, index) => {
                             return (
                                 <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.requestProducts.length}%)` }}>
-                                    <div className="tableview_requests__sub_col">{item.product.name}</div>
+                                    <div className="tableview_requests__sub_col">{item.product && item.product.name}</div>
                                     <div className="tableview_requests__sub_col">{item.packaging}</div>
-                                    <div className="tableview_requests__sub_col">{item.quantity + " " + item.product.unit}</div>
+                                    <div className="tableview_requests__sub_col">{item.quantity + " " + (item.product && item.product.unit)}</div>
                                 </div>
                             )
                         })}

@@ -16,16 +16,37 @@ const Select = (props) => {
         setSearchQuery(event.target.value);
     }
 
-    const clickOnInput = (event) => {
+    // const clickOnInput = (event) => {
+    //     const options = document.getElementsByClassName("select__options")[0];
+    //     if (options.classList.contains("select__options--hidden")) {
+    //         options.classList.remove("select__options--hidden")
+    //     }
+    //     else {
+    //         options.classList.add("select__options--hidden")
+    //     }
+    // }
+
+    const clickOnInput = () => {
         const options = document.getElementsByClassName("select__options")[0];
+        const overlay = document.getElementsByClassName("select__overlay")[0];
         if (options.classList.contains("select__options--hidden")) {
-            options.classList.remove("select__options--hidden")
+            options.classList.remove("select__options--hidden");
+            overlay.classList.remove("select__overlay--hidden");
         }
         else {
-            options.classList.add("select__options--hidden")
+            options.classList.add("select__options--hidden");
+            overlay.classList.add("select__overlay--hidden");
         }
     }
-    
+
+    const clickOverlay = (event) => {
+        const overlay = document.getElementsByClassName("select__overlay")[0];
+        if (!overlay.classList.contains("select__overlay--hidden")) {
+            overlay.classList.add("select__overlay--hidden");
+            clickOnInput();
+        }
+    }
+
     const clickOnInputBlur = (event) => {
         console.log(event);
     }
@@ -91,6 +112,7 @@ const Select = (props) => {
 
     return (
         <div className="select">
+            <div className="select__overlay select__overlay--hidden" onClick={clickOverlay}></div>
             {!props.readOnly && <input
                 type="text"
                 className="select__input"
@@ -102,7 +124,7 @@ const Select = (props) => {
                 ref={myRef}
                 readOnly={props.readOnly}
             />}
-            {props.options && <div className="select__options select__options--hidden" 
+            {props.options && <div className="select__options select__options--hidden"
                 onBlur={!props.readOnly ? clickOnInputBlur : null}>
                 {search().map((item, index) => (
                     <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
