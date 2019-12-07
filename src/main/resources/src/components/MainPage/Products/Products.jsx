@@ -30,6 +30,7 @@ const Products = (props) => {
             <TableView 
                 data={products}
                 searchQuery={searchQuery}
+                userHasAccess={props.userHasAccess}
             />
         </div>
     );

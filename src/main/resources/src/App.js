@@ -18,7 +18,7 @@ class App extends React.Component {
       username: '',
       firstName: '',
       lastName: '',
-
+      roles: [],
       id: 0
     }
   }
@@ -28,6 +28,18 @@ class App extends React.Component {
       isAuthorized: isAuthorized,
       userData: userData
     })
+  }
+
+  userHasAccess = (roleNeeded) => {
+    let check = false;
+    this.state.userData.roles.map((item) => {
+      roleNeeded.map((role) => {
+        if (item.name === role) {
+          check = true;
+        }
+      })
+    })
+    return check;
   }
 
   componentDidMount() {
@@ -44,6 +56,9 @@ class App extends React.Component {
         })
         .catch((error) => {
           console.log(error);
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          window.location.reload();
         })
     }
   }
@@ -59,6 +74,7 @@ class App extends React.Component {
             isAuthorized={this.state.isAuthorized}
             userData={this.state.userData}
             component={MainPage}
+            userHasAccess={this.userHasAccess}
           ></PrivateRoute>
         </Switch>
       </BrowserRouter>

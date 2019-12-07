@@ -10,7 +10,7 @@ const EditProduct = (props) => {
         group: "",
         unit: "",
         photo: "",
-        typeOfProduct: "",
+        typeOfProduct: "FIRST",
         packaging: "",
         comment: ""
     });
@@ -66,10 +66,12 @@ const EditProduct = (props) => {
             setImgName(file.name);
             let reader = new FileReader();
             reader.onloadend = (() => {
-                setImgBASE64(reader.result.split("base64,")[1]);
+                // setImgBASE64(reader.result.split("base64,")[1]);
+                setImgBASE64(reader.result);
                 setProductInputs({
                     ...productInputs,
-                    photo: reader.result.split("base64,")[1]
+                    // photo: reader.result.split("base64,")[1]
+                    photo: reader.result
                 })
             });
             reader.readAsDataURL(file);
@@ -94,7 +96,9 @@ const EditProduct = (props) => {
                         weight: oldProduct.weight,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
-                        comment: oldProduct.comment
+                        comment: oldProduct.comment,
+                        typeOfProduct: oldProduct.typeOfProduct,
+                        photo: oldProduct.photo
                     });
                 })
                 .catch(error => {
@@ -108,14 +112,14 @@ const EditProduct = (props) => {
         <div className="edit_product">
             <div className="edit_product__title">Редактирование продукта</div>
             <form className="edit_product__form">
-                {/* <div className="edit_product__item">
+                <div className="edit_product__item">
                     <div className="edit_product__input_name">Фотография</div>
                     <div className="edit_product__product_img">
-                        <img src={imgLandscape} alt="" />
+                        <img src={productInputs.photo} alt="" />
                     </div>
-                </div> */}
+                </div>
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Наименование</div>
+                    <div className="edit_product__input_name">Наименование*</div>
                     <div className="edit_product__input_field">
                         <input type="text"
                             name="name"
@@ -125,7 +129,7 @@ const EditProduct = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_product__item">
+                {/* <div className="edit_product__item">
                     <div className="edit_product__input_name">Артикул</div>
                     <div className="edit_product__input_field">
                         <input type="text"
@@ -135,9 +139,9 @@ const EditProduct = (props) => {
                             autoComplete="off"
                         />
                     </div>
-                </div>
+                </div> */}
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Группа продукции</div>
+                    <div className="edit_product__input_name">Группа продукции*</div>
                     <div className="edit_product__input_field">
                         {/* <input type="text"
                             name="typeOfProduct"
@@ -158,9 +162,9 @@ const EditProduct = (props) => {
                     </div>
                 </div>
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Вес изделия</div>
+                    <div className="edit_product__input_name">Вес изделия*</div>
                     <div className="edit_product__input_field">
-                        <input type="text"
+                        <input type="number"
                             name="weight"
                             defaultValue={productInputs.weight}
                             onChange={handleInputChange}
@@ -169,20 +173,21 @@ const EditProduct = (props) => {
                     </div>
                 </div>
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Единица измерения</div>
+                    <div className="edit_product__input_name">Единица измерения*</div>
                     <div className="edit_product__input_field">
                         <select
                             name="unit"
                             onChange={handleInputChange}
+                            value={productInputs.unit}
                         >
-                            <option>шт.</option>
-                            <option>тыс. шт.</option>
-                            <option>упак.</option>
+                            <option value="шт.">Штук</option>
+                            <option value="тыс. шт.">Тысяч Штук</option>
+                            <option value="упак.">Упаковок</option>
                         </select>
                     </div>
                 </div>
                 <div className="edit_product__item">
-                    <div className="edit_product__input_name">Упаковка</div>
+                    <div className="edit_product__input_name">Упаковка*</div>
                     <div className="edit_product__input_field">
                         <input type="text"
                             name="packaging"
@@ -216,6 +221,7 @@ const EditProduct = (props) => {
                         <input type="file" name="file" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
+                <div className="edit_product__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_product__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
             </form>
         </div>

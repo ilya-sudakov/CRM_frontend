@@ -20,13 +20,12 @@ const request = (options, isLogin) => {
         //         return json;
         //     })
         // );
-        .then(response => 
-            {
-                if(!response.ok) {
-                    return Promise.reject(response.error);
-                }
-                return response;
+        .then(response => {
+            if (!response.ok) {
+                return Promise.reject(response.error);
             }
+            return response;
+        }
         );
 }
 
@@ -88,10 +87,26 @@ export function addRequest(newRequest) {
     })
 }
 
+export function addProductsToRequest(newRequest, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/request/" + id,
+        method: "POST",
+        body: JSON.stringify(newRequest)
+    })
+}
+
 export function getRequestById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/request/" + id,
         method: "GET"
+    })
+}
+
+export function editRequestStatus(newStatus, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/request/status/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStatus)
     })
 }
 
@@ -122,6 +137,13 @@ export function refreshToken(refreshToken) {
 export function getUsers() {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/admin/user/",
+        method: "GET"
+    })
+}
+
+export function getUserById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/admin/user/" + id,
         method: "GET"
     })
 }
@@ -169,5 +191,50 @@ export function editProduct(newProduct, id) {
         url: process.env.API_BASE_URL + "/api/v1/product/" + id,
         method: "PUT",
         body: JSON.stringify(newProduct)
+    })
+}
+
+export function getRequestsLEMZ() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz/",
+        method: "GET"
+    })
+}
+
+export function deleteRequestLEMZ(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addRequestLEMZ(newRequest) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz/",
+        method: "POST",
+        body: JSON.stringify(newRequest)
+    })
+}
+
+export function getRequestLEMZById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz/" + id,
+        method: "GET"
+    })
+}
+
+export function editRequestLEMZStatus(newStatus, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz/status/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStatus)
+    })
+}
+
+export function editRequestLEMZ(newRequest, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz/" + id,
+        method: "PUT",
+        body: JSON.stringify(newRequest)
     })
 }

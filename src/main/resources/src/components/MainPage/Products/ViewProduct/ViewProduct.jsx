@@ -32,6 +32,7 @@ const ViewProduct = (props) => {
                 .then(oldProduct => {
                     setProductInputs({
                         name: oldProduct.name,
+                        photo: oldProduct.photo,
                         item: oldProduct.item,
                         weight: oldProduct.weight,
                         typeOfProduct: oldProduct.typeOfProduct,
@@ -54,8 +55,7 @@ const ViewProduct = (props) => {
                 <div className="view_product__item">
                     <div className="view_product__input_name">Фотография</div>
                     <div className="view_product__product_img">
-                        {/* <img src={productInputs.photo} alt="" /> */}
-                        <img src={imgLandscape} alt="" />
+                        <img src={productInputs.photo} alt="" />
                     </div>
                 </div>
                 <div className="view_product__item">
@@ -64,12 +64,12 @@ const ViewProduct = (props) => {
                         <input type="text" name="name" defaultValue={productInputs.name} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
+                {/* <div className="view_product__item">
                     <div className="view_product__input_name">Артикул</div>
                     <div className="view_product__input_field">
                         <input type="text" name="item" defaultValue={productInputs.item} readOnly />
                     </div>
-                </div>
+                </div> */}
                 <div className="view_product__item">
                     <div className="view_product__input_name">Группа продукции</div>
                     <div className="view_product__input_field">

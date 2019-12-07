@@ -8,7 +8,7 @@ const ViewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: "",
         products: "",
-        quantity: "",
+        // quantity: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
@@ -31,8 +31,8 @@ const ViewRequest = (props) => {
                 .then(oldRequest => {
                     setRequestInputs({
                         date: oldRequest.date,
-                        products: oldRequest.products,
-                        quantity: oldRequest.quantity,
+                        products: oldRequest.requestProducts,
+                        // quantity: oldRequest.quantity,
                         codeWord: oldRequest.codeWord,
                         responsible: oldRequest.responsible,
                         status: oldRequest.status
@@ -76,7 +76,7 @@ const ViewRequest = (props) => {
                         defaultValue={requestInputs.products}
                     />
                 </div>
-                <div className="view_request__item">
+                {/* <div className="view_request__item">
                     <div className="view_request__input_name">Количество</div>
                     <div className="view_request__input_field">
                         <input type="text"
@@ -85,7 +85,7 @@ const ViewRequest = (props) => {
                             readOnly
                         />
                     </div>
-                </div>
+                </div> */}
                 <div className="view_request__item">
                     <div className="view_request__input_name">Кодовое слово</div>
                     <div className="view_request__input_field">

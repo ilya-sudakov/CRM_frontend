@@ -81,6 +81,14 @@
       width: calc(90% - 20px);
     }
 
+    .new_request__input_hint {
+      text-align: left;
+      width: 100%;
+      font-size: 80%;
+      margin-bottom: 10px;
+      color: lighten($primary-text-color, 60%);
+    }
+
     .new_request__submit {
       border: 0;
       cursor: pointer;

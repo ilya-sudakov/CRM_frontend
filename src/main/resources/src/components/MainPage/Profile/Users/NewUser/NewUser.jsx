@@ -45,6 +45,8 @@ const NewUser = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(userInputs);
+        
         formIsValid() && addUser(userInputs)
         .then(() => props.history.push("/profile/users"))
     }

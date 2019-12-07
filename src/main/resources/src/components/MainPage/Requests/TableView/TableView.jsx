@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
+import { editRequestStatus } from '../../../../utils/utilsAPI.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -18,8 +19,29 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        // return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
-        return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        // return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        return data.filter(item => item.responsible.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        // return data.filter(item => {
+        //     return (
+        //         item.requestProducts.length !== 0 && item.requestProducts[0].product.name !== null
+        //             ? item.requestProducts[0].product.name.toLowerCase().includes(props.searchQuery.toLowerCase())
+        //             : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
+        //     )
+        // })
+    }
+
+    const handleStatusChange = (event) => {
+        const status = event.target.value;
+        const id = event.target.getAttribute("id");
+        editRequestStatus({
+            status: status
+        }, id)
+            .then(() => {
+                window.location.reload(); //на данный момент так
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const sortRequests = (data) => {
@@ -53,10 +75,6 @@ const TableView = (props) => {
             newDate.split("-")[1] + "." +
             newDate.split("-")[0]
         );
-        // const newDate = Date.parse(dateString);
-        // return (
-        //     newDate.getDate() + '.' + newDate.getMonth() + '.' + newDate.getFullYear()
-        // );
     }
 
     return (
@@ -87,38 +105,17 @@ const TableView = (props) => {
                 }>
                     <div className="tableview_requests__col">{request.id}</div>
                     <div className="tableview_requests__col">{formatDateString(request.date)}</div>
-                    {/* Корректный вывод в строку без ограничения (в разработке) */}
                     <div className="tableview_requests__col">
-                        {request.products.map((item, index) => {
+                        {request.requestProducts.map((item, index) => {
                             return (
-                                <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.products.length}%)` }}>
-                                    <div className="tableview_requests__sub_col">{item.name}</div>
+                                <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.requestProducts.length}%)` }}>
+                                    <div className="tableview_requests__sub_col">{item.product && item.product.name}</div>
                                     <div className="tableview_requests__sub_col">{item.packaging}</div>
-                                    <div className="tableview_requests__sub_col">{request.quantity}</div>
+                                    <div className="tableview_requests__sub_col">{item.quantity + " " + (item.product && item.product.unit)}</div>
                                 </div>
                             )
                         })}
-                        {/* <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
-                            <div className="tableview_requests__sub_col">{request.products}</div>
-                            <div className="tableview_requests__sub_col">Упаковка</div>
-                            <div className="tableview_requests__sub_col">{request.quantity}</div>
-                        </div>
-                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
-                            <div className="tableview_requests__sub_col">{request.products}</div>
-                            <div className="tableview_requests__sub_col">Упаковка</div>
-                            <div className="tableview_requests__sub_col">{request.quantity}</div>
-                        </div>
-                        <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / 3}%)` }}>
-                            <div className="tableview_requests__sub_col">{request.products}</div>
-                            <div className="tableview_requests__sub_col">Упаковка</div>
-                            <div className="tableview_requests__sub_col">{request.quantity}</div>
-                        </div> */}
                     </div>
-
-                    {/* Вывод продуктов и кол-ва как строки */}
-                    {/* <div className="tableview_requests__col">{request.products}</div>
-                    <div className="tableview_requests__col">{request.quantity}</div> */}
-
                     {/* Корректный вывод но с ограничением по количеству символов в строке */}
                     {/* <div className="tableview_requests__col">
                         <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.products}</div></div>
@@ -130,10 +127,22 @@ const TableView = (props) => {
                     </div> */}
                     <div className="tableview_requests__col">{request.codeWord}</div>
                     <div className="tableview_requests__col">{request.responsible}</div>
-                    <div className="tableview_requests__col">{request.status}</div>
+                    <div className="tableview_requests__col">
+                        <select
+                            id={request.id}
+                            className="tableview_requests__status_select"
+                            defaultValue={request.status}
+                            onChange={handleStatusChange}
+                        >
+                            <option>Не готово</option>
+                            <option>В процессе</option>
+                            <option>Готово к отгрузке</option>
+                            <option>Отгружено</option>
+                        </select>
+                    </div>
                     <div className="tableview_requests__actions">
-                        <Link to={"/requests/view/" + request.id} data-id={request.id} className="tableview_requests__action" >Просмотр</Link>
-                        <Link to={"/requests/edit/" + request.id} data-id={request.id} className="tableview_requests__action">Редактировать</Link>
+                        <Link to={"/requests/view/" + request.id} className="tableview_requests__action" >Просмотр</Link>
+                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/requests/edit/" + request.id} className="tableview_requests__action">Редактировать</Link>}
                         {/* <div data-id={request.id} className="tableview_requests__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>
                 </div>

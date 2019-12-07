@@ -45,7 +45,7 @@ const TableView = (props) => {
                 <div className="tableview_products__col">Группа продукции</div>
                 <div className="tableview_products__col">Вес</div>
                 <div className="tableview_products__col">Упаковка</div>
-                <div className="tableview_products__col">Комментарий</div>
+                {/* <div className="tableview_products__col">Комментарий</div> */}
                 <div className="tableview_products__col">Действия</div>
             </div>
             {sortProducts(props.data).map((product, product_id) => (
@@ -62,13 +62,12 @@ const TableView = (props) => {
                                 : product.typeOfProduct === "THIRD" ? "Третья группа"
                                     : null
                     }</div>
-                    <div className="tableview_products__col">{product.weight + ' ' + product.unit}</div>
+                    <div className="tableview_products__col">{product.weight}</div>
                     <div className="tableview_products__col">{product.packaging}</div>
-                    <div className="tableview_products__col">{product.comment}</div>
+                    {/* <div className="tableview_products__col">{product.comment}</div> */}
                     <div className="tableview_products__actions">
                         <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
-                        <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>
-                        {/* <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div> */}
+                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>}
                     </div>
                 </div>
             ))}

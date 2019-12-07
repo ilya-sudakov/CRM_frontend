@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
-import { addRequest, getProducts } from '../../../../utils/utilsAPI.jsx';
+import { addRequest, getProducts, addProductsToRequest } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
@@ -10,23 +10,27 @@ import './NewRequest.scss';
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: new Date(),
-        products: "",
-        quantity: "",
+        // products: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
     })
+    const [productsRequest, setProductsRequest] = useState({
+        productsId: [],
+        quantity: [],
+        packaging: []
+    })
     const [requestErrors, setRequestErrors] = useState({
         date: "",
         products: "",
-        quantity: "",
+        // quantity: "",
         codeWord: "",
         responsible: "",
         status: "",
     })
     const [dateValid, setDateValid] = useState(true);
     const [productsValid, setProductsValid] = useState(false);
-    const [quantityValid, setQuantityValid] = useState(false);
+    // const [quantityValid, setQuantityValid] = useState(false);
     const [responsibleValid, setResponsibleValid] = useState(false);
     const [products, setProducts] = useState([]);
 
@@ -38,9 +42,9 @@ const NewRequest = (props) => {
             case 'products':
                 value !== [] ? setProductsValid(true) : setProductsValid(false);
                 break;
-            case 'quantity':
-                setQuantityValid(value !== "");
-                break;
+            // case 'quantity':
+            //     setQuantityValid(value !== "");
+            //     break;
             case 'responsible':
                 value !== "" ? setResponsibleValid(true) : setResponsibleValid(false);
                 break;
@@ -49,7 +53,7 @@ const NewRequest = (props) => {
 
     const formIsValid = () => {
         if (dateValid && productsValid && responsibleValid) {
-            
+
             return true;
         }
         else {
@@ -60,8 +64,28 @@ const NewRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        requestInputs.products.map((item) => {
+            setProductsRequest({
+                productsId: productsRequest.productsId.push(item.id),
+                quantity: productsRequest.quantity.push(item.quantity),
+                packaging: productsRequest.packaging.push(item.packaging)
+            })
+        })
+        let id = 0;
+        console.log(requestInputs);
+        
         formIsValid() && addRequest(requestInputs)
+            .then(res => res.json())
+            .then(res => {
+                id = res.id;
+            })
+            .then(() => {
+                addProductsToRequest(productsRequest, id);
+            })
             .then(() => props.history.push("/requests"))
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {
@@ -83,6 +107,7 @@ const NewRequest = (props) => {
     }, [])
 
     const handleDateChange = (date) => {
+        const regex = "(0[1-9]|[12]\d|3[01])\.(0[1-9]|1[0-2])\.[12]\d{3})";
         validateField("date", date);
         setRequestInputs({
             ...requestInputs,
@@ -103,7 +128,7 @@ const NewRequest = (props) => {
             <div className="new_request__title">Новая заявка</div>
             <form className="new_request__form">
                 <div className="new_request__item">
-                    <div className="new_request__input_name">Дата</div>
+                    <div className="new_request__input_name">Дата*</div>
                     <div className="new_request__input_field">
                         <DatePicker
                             selected={requestInputs.date}
@@ -115,13 +140,14 @@ const NewRequest = (props) => {
                     </div>
                 </div>
                 <div className="new_request__item">
-                    <div className="new_request__input_name">Продукция</div>
+                    <div className="new_request__input_name">Продукция*</div>
                     {/* <div className="new_request__input_field">
                         <input type="text" name="products" autoComplete="off" onChange={handleInputChange} />
                     </div> */}
                     <Select
                         options={products}
                         onChange={handleProductsChange}
+                        searchPlaceholder="Введите название продукта для поиска..."
                     />
                 </div>
                 {/* <div className="new_request__item">
@@ -131,17 +157,18 @@ const NewRequest = (props) => {
                     </div>
                 </div> */}
                 <div className="new_request__item">
-                    <div className="new_request__input_name">Кодовое слово</div>
+                    <div className="new_request__input_name">Кодовое слово*</div>
                     <div className="new_request__input_field">
                         <input type="text" name="codeWord" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="new_request__item">
-                    <div className="new_request__input_name">Ответственный</div>
+                    <div className="new_request__input_name">Ответственный*</div>
                     <div className="new_request__input_field">
                         <input type="text" name="responsible" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
+                <div className="new_request__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>
         </div>

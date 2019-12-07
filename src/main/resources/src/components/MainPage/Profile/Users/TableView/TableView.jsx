@@ -40,8 +40,8 @@ const TableView = (props) => {
                     <span>ID</span>
                     <img name="id" className="tableview_users__img" onClick={changeSortOrder} src={sortIcon} />
                 </div>
-                <div className="tableview_users__col">ФИО</div>
-                <div className="tableview_users__col">Пароль</div>
+                <div className="tableview_users__col">Имя пользователя</div>
+                {/* <div className="tableview_users__col">Пароль</div> */}
                 <div className="tableview_users__col">Эл. почта</div>
                 <div className="tableview_users__col">Роль</div>
                 <div className="tableview_users__col">Действия</div>
@@ -50,7 +50,7 @@ const TableView = (props) => {
                 <div key={user_id} className={"tableview_users__row " + (user.id % 2 === 0 ? "tableview_users__row--even" : "tableview_users__row--odd")}>
                     <div className="tableview_users__col">{user.id}</div>
                     <div className="tableview_users__col">{user.username}</div>
-                    <div className="tableview_users__col">{user.password}</div>
+                    {/* <div className="tableview_users__col">{user.password}</div> */}
                     <div className="tableview_users__col">{user.email}</div>
                     <div className="tableview_users__col">{user.roles.map((item) => {
                         return (item.name === "ROLE_ADMIN" ? "Руководитель "

@@ -2,19 +2,25 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import './EditRequest.scss';
-import { getRequestById, editRequest, getProducts } from '../../../../utils/utilsAPI.jsx';
+import { getRequestById, editRequest, getProducts, addProductsToRequest } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
     const [products, setProducts] = useState([]);
+    const [selectedProducts, setSelectedProducts] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
-        products: "",
+        // products: "",
         quantity: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
+    })
+    const [productsRequest, setProductsRequest] = useState({
+        productsId: [],
+        quantity: [],
+        packaging: []
     })
     const [requestErrors, setRequestErrors] = useState({
         date: "",
@@ -58,8 +64,21 @@ const EditRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        selectedProducts.map((item) => {
+            setProductsRequest({
+                productsId: productsRequest.productsId.push(item.id),
+                quantity: productsRequest.quantity.push(item.quantity),
+                packaging: productsRequest.packaging.push(item.packaging)
+            })
+        })
         formIsValid() && editRequest(requestInputs, requestId)
-            .then(() => props.history.push("/requests"))
+                .then(() => {
+                    addProductsToRequest(productsRequest, requestId)
+                })
+                .then(() => props.history.push("/requests"))
+                .catch(error => {
+                    console.log(error);
+                })
     }
 
     const handleInputChange = (e) => {
@@ -81,10 +100,11 @@ const EditRequest = (props) => {
 
     const handleProductsChange = (newProducts) => {
         validateField("products", newProducts);
-        setRequestInputs({
-            ...requestInputs,
-            products: newProducts
-        })
+        // setRequestInputs({
+        //     ...requestInputs,
+        //     products: newProducts
+        // })
+        setSelectedProducts(newProducts);
     }
 
     useEffect(() => {
@@ -100,12 +120,13 @@ const EditRequest = (props) => {
                 .then(oldRequest => {
                     setRequestInputs({
                         date: oldRequest.date,
-                        products: oldRequest.products,
+                        // products: oldRequest.requestProducts,
                         quantity: oldRequest.quantity,
                         codeWord: oldRequest.codeWord,
                         responsible: oldRequest.responsible,
                         status: oldRequest.status
                     });
+                    setSelectedProducts(oldRequest.requestProducts);
                 })
                 .catch(error => {
                     console.log(error);
@@ -125,7 +146,7 @@ const EditRequest = (props) => {
             <div className="edit_request__title">Редактирование заявки</div>
             <form className="edit_request__form">
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Дата</div>
+                    <div className="edit_request__input_name">Дата*</div>
                     <div className="edit_request__input_field">
                         <DatePicker
                             selected={Date.parse(requestInputs.date)}
@@ -137,7 +158,7 @@ const EditRequest = (props) => {
                     </div>
                 </div>
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Продукция</div>
+                    <div className="edit_request__input_name">Продукция*</div>
                     {/* <div className="edit_request__input_field">
                         <input type="text"
                             name="products"
@@ -149,14 +170,8 @@ const EditRequest = (props) => {
                     <Select
                         options={products}
                         onChange={handleProductsChange}
-                        // defaultValue={
-                        //     [{
-                        //         id: 1,
-                        //         name: 'Тест',
-                        //         quantity: '100'
-                        //     }]
-                        // }
-                        defaultValue={requestInputs.products}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        defaultValue={selectedProducts}
                     />
                 </div>
                 {/* <div className="edit_request__item">
@@ -171,7 +186,7 @@ const EditRequest = (props) => {
                     </div>
                 </div> */}
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Кодовое слово</div>
+                    <div className="edit_request__input_name">Кодовое слово*</div>
                     <div className="edit_request__input_field">
                         <input type="text"
                             name="codeWord"
@@ -182,7 +197,7 @@ const EditRequest = (props) => {
                     </div>
                 </div>
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Ответственный</div>
+                    <div className="edit_request__input_name">Ответственный*</div>
                     <div className="edit_request__input_field">
                         <input type="text"
                             name="responsible"
@@ -193,7 +208,7 @@ const EditRequest = (props) => {
                     </div>
                 </div>
                 <div className="edit_request__item">
-                    <div className="edit_request__input_name">Статус</div>
+                    <div className="edit_request__input_name">Статус*</div>
                     <div className="edit_request__input_field">
                         <select
                             name="status"
@@ -207,6 +222,7 @@ const EditRequest = (props) => {
                         </select>
                     </div>
                 </div>
+                <div className="edit_request__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_request__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
             </form>
         </div>

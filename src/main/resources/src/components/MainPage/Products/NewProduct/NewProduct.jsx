@@ -5,13 +5,12 @@ import { addProduct } from '../../../../utils/utilsAPI.jsx';
 const NewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
         name: null,
-        typeOfProduct: null,
+        typeOfProduct: "FIRST",
         comment: null,
         packaging: null,
-        photo: null,
+        photo: "",
         unit: "шт.",
         weight: null,
-        requests: null,
     })
     const [productErrors, setProductErrors] = useState({
         name: "",
@@ -25,7 +24,7 @@ const NewProduct = (props) => {
     const [imgName, setImgName] = useState("Имя файла...");
     const [imgBASE64, setImgBASE64] = useState('');
     const [nameValid, setNameValid] = useState(false);
-    const [itemValid, setItemValid] = useState(false);
+    const [typeOfProductValid, setTypeOfProductValid] = useState(true);
     const [weightValid, setWeightValid] = useState(false);
 
     const validateField = (fieldName, value) => {
@@ -34,7 +33,7 @@ const NewProduct = (props) => {
                 setNameValid(value !== "");
                 break;
             case 'typeOfProduct':
-                setItemValid(value !== "");
+                setTypeOfProductValid(value !== "");
                 break;
             case 'weight':
                 setWeightValid(value !== "");
@@ -43,7 +42,7 @@ const NewProduct = (props) => {
     }
 
     const formIsValid = () => {
-        if (nameValid && itemValid && weightValid) {
+        if (nameValid && typeOfProductValid && weightValid) {
             return true;
         }
         else {
@@ -54,6 +53,8 @@ const NewProduct = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(productInputs);
+
         formIsValid() && addProduct(productInputs)
             .then(() => props.history.push("/products"))
     }
@@ -74,10 +75,12 @@ const NewProduct = (props) => {
             setImgName(file.name);
             let reader = new FileReader();
             reader.onloadend = (() => {
-                setImgBASE64(reader.result.split("base64,")[1]);
+                // setImgBASE64(reader.result.split("base64,")[1]);
+                setImgBASE64(reader.result);
                 setProductInputs({
                     ...productInputs,
-                    photo: reader.result.split("base64,")[1]
+                    // photo: reader.result.split("base64,")[1]
+                    photo: reader.result
                 })
             });
             reader.readAsDataURL(file);
@@ -94,8 +97,14 @@ const NewProduct = (props) => {
         <div className="new_product">
             <div className="new_product__title">Новая продукция</div>
             <form className="new_product__form">
+                {productInputs.photo && <div className="new_product__item">
+                    <div className="new_product__input_name">Фотография</div>
+                    <div className="new_product__product_img">
+                        <img src={productInputs.photo} alt="" />
+                    </div>
+                </div>}
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Наименование</div>
+                    <div className="new_product__input_name">Наименование*</div>
                     <div className="new_product__input_field">
                         <input type="text" name="name" autoComplete="off" onChange={handleInputChange} />
                     </div>
@@ -107,12 +116,13 @@ const NewProduct = (props) => {
                     </div>
                 </div> */}
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Группа продукции</div>
+                    <div className="new_product__input_name">Группа продукции*</div>
                     <div className="new_product__input_field">
                         {/* <input type="text" name="typeOfProduct" autoComplete="off" onChange={handleInputChange} /> */}
                         <select
                             name="typeOfProduct"
                             onChange={handleInputChange}
+                            defaultValue={productInputs.typeOfProduct}
                         >
                             <option value="FIRST">Первая группа</option>
                             <option value="SECOND">Вторая группа</option>
@@ -121,27 +131,27 @@ const NewProduct = (props) => {
                     </div>
                 </div>
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Вес изделия</div>
+                    <div className="new_product__input_name">Вес изделия*</div>
                     <div className="new_product__input_field">
-                        <input type="text" name="weight" autoComplete="off" onChange={handleInputChange} />
+                        <input type="number" name="weight" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Единица измерения</div>
+                    <div className="new_product__input_name">Единица измерения*</div>
                     <div className="new_product__input_field">
                         {/* <input type="text" name="unit" autoComplete="off" onChange={handleInputChange} /> */}
                         <select
                             name="unit"
                             onChange={handleInputChange}
                         >
-                            <option>шт.</option>
-                            <option>тыс. шт.</option>
-                            <option>упак.</option>
+                            <option value="шт.">Штук</option>
+                            <option value="тыс. шт.">Тысяч Штук</option>
+                            <option value="упак.">Упаковок</option>
                         </select>
                     </div>
                 </div>
                 <div className="new_product__item">
-                    <div className="new_product__input_name">Упаковка</div>
+                    <div className="new_product__input_name">Упаковка*</div>
                     <div className="new_product__input_field">
                         <input type="text" name="packaging" autoComplete="off" onChange={handleInputChange} />
                     </div>
@@ -168,6 +178,7 @@ const NewProduct = (props) => {
                         <input type="file" name="file" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
+                <div className="new_product__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_product__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>
         </div>

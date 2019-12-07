@@ -1,11 +1,11 @@
 @import "../../../../variables.scss";
 
-.tableview_requests {
+.tableview_requests_LEMZ {
   display: flex;
   flex-direction: column;
   width: calc(100% - 50px);
   font-size: 80%;
-  min-width: 950px;
+  min-width: 1250px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
 
@@ -16,28 +16,28 @@
     cursor: pointer;
   }
 
-  .tableview_requests__row--header {
+  .tableview_requests_LEMZ__row--header {
     font-weight: normal;
     word-wrap: break-word;
     word-break: break-all;
     font-size: 100%;
     position: sticky; //test
     top: calc(-6px); //test
-    .tableview_requests__col {
+    .tableview_requests_LEMZ__col {
       &:nth-child(3) {
-        flex: 0 1 calc(30% + 0.75 * 20%);
+        flex: 0 1 calc(24% + 0.75 * 0%);
         justify-content: center;
         padding: 0px 0px;
       }
 
       &:nth-child(4) {
         // flex: 0 1 10%;
-        flex: 0 1 calc(5% + 0.125 * 20%);
+        flex: 0 1 calc(8% + 0.125 * 0%);
         padding: 0;
       }
       &:nth-child(5) {
         // flex: 0 1 10%;
-        flex: 0 1 calc(5% + 0.125 * 20%);
+        flex: 0 1 calc(8% + 0.125 * 0%);
         padding: 0;
       }
 
@@ -48,10 +48,16 @@
 
       &:nth-child(7) {
         flex: 0 1 9%;
+        max-width: 9%;
       }
 
       &:nth-child(8) {
         max-width: 80px;
+      }
+
+      &:nth-child(9) {
+        flex: 0 1 8%;
+        max-width: 65px;
       }
 
       &:last-child {
@@ -69,7 +75,7 @@
     text-align: center;
     transition: 0.2s ease-in-out;
 
-    .tableview_requests__col {
+    .tableview_requests_LEMZ__col {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -78,7 +84,7 @@
       word-break: break-word;
       border-right: 1px solid #cccccc; //border between columns
 
-      .tableview_requests__sub_row {
+      .tableview_requests_LEMZ__sub_row {
         display: flex;
         width: 100%;
         border-bottom: 1px solid #cccccc;
@@ -87,25 +93,25 @@
           border: 0;
         }
 
-        .tableview_requests__sub_col {
+        .tableview_requests_LEMZ__sub_col {
           padding: 5px 0px;
           display: flex;
           justify-content: center;
           align-items: center;
 
           &:first-child {
-            flex: 0 1 75%;
+            flex: 0 1 60%;
             border-right: 1px solid #cccccc;
           }
 
           &:nth-child(2) {
-            flex: 0 1 12.5%;
+            flex: 0 1 20%;
             border-right: 1px solid #cccccc;
           }
 
           &:last-child {
-            flex: 0 1 12.5%;
-            max-width: 12.5%;
+            flex: 0 1 20%;
+            max-width: 20%;
           }
         }
       }
@@ -121,7 +127,7 @@
       }
 
       &:nth-child(3) {
-        flex: 0 1 60%;
+        flex: 0 1 40%;
         padding: 0px;
         flex-direction: column;
         justify-content: stretch;
@@ -142,12 +148,21 @@
         max-width: 80px;
       }
 
+      &:nth-child(7) {
+        flex: 0 1 8%;
+        max-width: 65px;
+      }
+
+      &:nth-child(8) {
+        
+      }
+
       &:last-child {
         border-right: none;
       }
     }
 
-    .tableview_requests__status_select {
+    .tableview_requests_LEMZ__status_select {
       width: 100%;
       padding: 5px 0px;
       font-size: 90%;
@@ -155,7 +170,7 @@
       outline: 0;
     }
 
-    .tableview_requests__actions {
+    .tableview_requests_LEMZ__actions {
       flex: 0 1 10%;
       display: flex;
       padding: 10px 5px;
@@ -164,7 +179,7 @@
       justify-content: center;
       max-width: 125px;
 
-      .tableview_requests__action {
+      .tableview_requests_LEMZ__action {
         font-size: 90%;
         width: 75%;
         border-radius: 5px;
@@ -201,52 +216,80 @@
     }
   }
 
-  .tableview_requests__row--even {
+  .tableview_requests_LEMZ__row--even {
     background-color: #ebebeb;
   }
 
-  .tableview_requests__row--odd {
+  .tableview_requests_LEMZ__row--odd {
     background-color: #f8f8f8;
   }
 
-  .tableview_requests__row--status_not_ready {
+  .tableview_requests_LEMZ__row--status_problem {
     background-color: #c48681;
     &:hover {
       background-color: darken(#c48681, 5%);
     }
   }
 
-  .tableview_requests__row--status_in_progress {
-    background-color: #c5ac7a;
+  .tableview_requests_LEMZ__row--status_materials {
+    background-color: #d4b77e;
     &:hover {
-      background-color: darken(#c5ac7a, 5%);
+      background-color: darken(#d4b77e, 5%);
     }
   }
 
-  .tableview_requests__row--status_ready {
-    background-color: #6f9c8e;
+  .tableview_requests_LEMZ__row--status_waiting {
+    background-color: #9ec2b6;
     &:hover {
-      background-color: darken(#6f9c8e, 5%);
+      background-color: darken(#9ec2b6, 5%);
     }
   }
 
-  .tableview_requests__row--status_shipped {
-    background-color: #dbdbdb;
+  .tableview_requests_LEMZ__row--status_in_production {
+    background-color: #87a8b6;
     &:hover {
-      background-color: darken(#dbdbdb, 5%);
+      background-color: darken(#87a8b6, 5%);
+    }
+  }
+
+  .tableview_requests_LEMZ__row--status_ready {
+    background-color: #5ea76e;
+    &:hover {
+      background-color: darken(#5ea76e, 5%);
+    }
+  }
+
+  .tableview_requests_LEMZ__row--status_shipped {
+    background-color: #95ad7c;
+    &:hover {
+      background-color: darken(#95ad7c, 5%);
+    }
+  }
+
+  .tableview_requests_LEMZ__row--status_completed {
+    background-color: #bed6c3;
+    &:hover {
+      background-color: darken(#bed6c3, 5%);
+    }
+  }
+
+  .tableview_requests_LEMZ__row--status_priority{
+    background-color: #e65252;
+    &:hover {
+      background-color: darken(#e65252, 5%);
     }
   }
 }
 
-@media (max-width: 1024px) {
-  .tableview_requests {
+@media (max-width: 1250px) {
+  .tableview_requests_LEMZ {
     flex-direction: column;
     align-self: flex-start;
     margin-left: 5px;
     width: calc(100% - 10px);
 
     // &__row:first-of-type {
-    //   .tableview_requests__col {
+    //   .tableview_requests_LEMZ__col {
     //     word-wrap: break-word;
     //     word-break: break-all;
     //   }

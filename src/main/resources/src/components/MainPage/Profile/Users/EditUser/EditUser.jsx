@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditUser.scss';
+import { getUserById, editUser } from '../../../../../utils/utilsAPI.jsx';
 // import { getRequestById, editRequest } from '../../../../utils/utilsAPI.jsx';
 
 const EditUser = (props) => {
@@ -15,7 +16,7 @@ const EditUser = (props) => {
         email: "",
     })
     const [usernameValid, setUsernameValid] = useState(true);
-    const [passwordValid, setPasswordValid] = useState(true);
+    const [passwordValid, setPasswordValid] = useState(false);
     const [emailValid, setEmailValid] = useState(true);
 
     const validateField = (fieldName, value) => {
@@ -44,8 +45,8 @@ const EditUser = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // formIsValid() && editRequest(requestInputs, requestId)
-        // .then(() => props.history.push("/requests"))
+        formIsValid() && editUser(userInputs, userId)
+            .then(() => props.history.push("/profile/users"))
     }
 
     const handleInputChange = (e) => {
@@ -64,24 +65,20 @@ const EditUser = (props) => {
             alert('Неправильный индекс заявки!');
             props.history.push("/profile/users");
         } else {
-            // setRequestId(id);
-            // getRequestById(id)
-            //     .then(res => res.json())
-            //     .then(oldRequest => {
-            //         setRequestInputs({
-            //             date: oldRequest.date,
-            //             products: oldRequest.products,
-            //             quantity: oldRequest.quantity,
-            //             codeWord: oldRequest.codeWord,
-            //             responsible: oldRequest.responsible,
-            //             status: oldRequest.status
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс заявки!');
-            //         props.history.push("/requests");
-            //     })
+            setUserId(id);
+            getUserById(id)
+                .then(res => res.json())
+                .then(oldUser => {
+                    setUserInputs({
+                        username: oldUser.username,
+                        email: oldUser.email,
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс заявки!');
+                    props.history.push("/profile/users");
+                })
         }
     }, [])
 
@@ -107,7 +104,6 @@ const EditUser = (props) => {
                             name="password"
                             autoComplete="off"
                             onChange={handleInputChange}
-                            defaultValue={userInputs.password}
                         />
                     </div>
                 </div>
