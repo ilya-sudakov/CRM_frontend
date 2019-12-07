@@ -65,6 +65,7 @@ const WorkshopLEMZ = (props) => {
             <TableView
                 data={requestsLEMZ}
                 loadData={loadRequestsLEMZ}
+                userHasAccess={props.userHasAccess}
                 // deleteItem={deleteItem}
                 searchQuery={searchQuery}
             />

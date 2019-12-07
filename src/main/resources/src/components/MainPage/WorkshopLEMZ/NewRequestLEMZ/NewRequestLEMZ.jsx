@@ -62,7 +62,7 @@ const NewRequestLEMZ = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // console.log(requestInputs);
+        console.log(requestInputs);
         formIsValid() && addRequestLEMZ(requestInputs)
             .then(() => props.history.push("/workshop-lemz"))
     }
@@ -187,12 +187,12 @@ const NewRequestLEMZ = (props) => {
                         />
                     </div>
                 </div>
-                {/* <div className="new_request_lemz__item">
+                <div className="new_request_lemz__item">
                     <div className="new_request_lemz__input_name">Комментарий</div>
                     <div className="new_request_lemz__input_field">
                         <textarea type="text" name="comment" autoComplete="off" onChange={handleInputChange} />
                     </div>
-                </div> */}
+                </div>
                 <div className="new_request_lemz__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_request_lemz__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>

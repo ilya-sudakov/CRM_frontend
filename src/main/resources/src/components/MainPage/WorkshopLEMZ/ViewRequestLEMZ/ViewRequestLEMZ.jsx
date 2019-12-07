@@ -129,7 +129,7 @@ const ViewRequestLEMZ = (props) => {
                         />
                     </div>
                 </div>
-                {/* <div className="view_request_lemz__item">
+                <div className="view_request_lemz__item">
                     <div className="view_request_lemz__input_name">Комментарий</div>
                     <div className="view_request_lemz__input_field">
                         <input type="text"
@@ -137,7 +137,7 @@ const ViewRequestLEMZ = (props) => {
                             defaultValue={requestInputs.comment}
                             readOnly />
                     </div>
-                </div> */}
+                </div>
                 <input className="view_request_lemz__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
             </form>
         </div>

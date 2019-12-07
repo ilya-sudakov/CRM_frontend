@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import './EditRequestLEMZ.scss';
-import { getRequestById, editRequest, getProducts, getRequestLEMZById } from '../../../../utils/utilsAPI.jsx';
+import { getRequestById, editRequest, getProducts, getRequestLEMZById, editRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 
 const EditRequestLEMZ = (props) => {
@@ -10,8 +10,8 @@ const EditRequestLEMZ = (props) => {
     const [products, setProducts] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
-        products: "",
-        quantity: "",
+        // products: "",
+        // quantity: "",
         codeWord: "",
         responsible: "",
         status: "Не готово",
@@ -38,12 +38,6 @@ const EditRequestLEMZ = (props) => {
             case 'date':
                 setDateValid(value !== "");
                 break;
-            case 'products':
-                setProductsValid(value !== []);
-                break;
-            case 'quantity':
-                setQuantityValid(value !== "");
-                break;
             case 'responsible':
                 setResponsibleValid(value !== "");
                 break;
@@ -51,7 +45,7 @@ const EditRequestLEMZ = (props) => {
     }
 
     const formIsValid = () => {
-        if (dateValid && productsValid && quantityValid && responsibleValid) {
+        if (dateValid && responsibleValid) {
             return true;
         }
         else {
@@ -62,8 +56,10 @@ const EditRequestLEMZ = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        formIsValid() && EditRequestLEMZ(requestInputs, requestId)
-            .then(() => props.history.push("/workshop-lemz"))
+        formIsValid() && editRequestLEMZ(requestInputs, requestId)
+            .then(() => {
+                props.history.push("/workshop-lemz")
+            })
     }
 
     const handleInputChange = (e) => {
@@ -102,16 +98,17 @@ const EditRequestLEMZ = (props) => {
             getRequestLEMZById(id)
                 .then(res => res.json())
                 .then(oldRequest => {
-                    setRequestInputs({
-                        date: oldRequest.date,
-                        products: oldRequest.products,
-                        quantity: oldRequest.quantity,
-                        codeWord: oldRequest.codeWord,
-                        responsible: oldRequest.responsible,
-                        status: oldRequest.status,
-                        shippingDate: oldRequest.shippingDate,
-                        comment: oldRequest.comment
-                    });
+                    // console.log(oldRequest),
+                        setRequestInputs({
+                            date: oldRequest.date,
+                            // products: oldRequest.products,
+                            quantity: oldRequest.quantity,
+                            codeWord: oldRequest.codeWord,
+                            responsible: oldRequest.responsible,
+                            status: oldRequest.status,
+                            shippingDate: oldRequest.shippingDate,
+                            comment: oldRequest.comment
+                        });
                 })
                 .catch(error => {
                     console.log(error);
@@ -151,33 +148,14 @@ const EditRequestLEMZ = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_request_lemz__item">
+                {/* <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Продукция*</div>
-                    {/* <div className="edit_request_lemz__input_field">
-                        <input type="text"
-                            name="products"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.products}
-                        />
-                    </div> */}
                     <Select
                         options={products}
                         onChange={handleProductsChange}
                         searchPlaceholder="Введите название продукта для поиска..."
                         defaultValue={requestInputs.products}
                     />
-                </div>
-                {/* <div className="edit_request_lemz__item">
-                    <div className="edit_request_lemz__input_name">Количество</div>
-                    <div className="edit_request_lemz__input_field">
-                        <input type="text"
-                            name="quantity"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.quantity}
-                        />
-                    </div>
                 </div> */}
                 <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Кодовое слово*</div>
@@ -232,7 +210,7 @@ const EditRequestLEMZ = (props) => {
                         />
                     </div>
                 </div>
-                {/* <div className="edit_request_lemz__item">
+                <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Комментарий</div>
                     <div className="edit_request_lemz__input_field">
                         <textarea type="text"
@@ -242,7 +220,7 @@ const EditRequestLEMZ = (props) => {
                             defaultValue={requestInputs.comment}
                         />
                     </div>
-                </div> */}
+                </div>
                 <div className="edit_request_lemz__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_request_lemz__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
             </form>

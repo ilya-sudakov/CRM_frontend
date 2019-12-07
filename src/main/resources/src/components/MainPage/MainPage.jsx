@@ -55,6 +55,7 @@ class MainPage extends React.Component {
                 />
                 <div className="main_page__content">
                     <SideMenu
+                        userHasAccess={this.props.userHasAccess}
                         hidden={this.state.sidemenu_hidden}
                     />
                     <div className="main_page__activity_panel">
@@ -84,7 +85,11 @@ class MainPage extends React.Component {
                             <Route exact path="/clients" component={Clients} />
                             <Route exact path="/clients/new" component={newClient} />
                             <Route exact path="/contracts" component={Contracts} />
-                            <Route exact path="/requests" component={Requests} />
+                            <Route exact path="/requests" render={(props) =>
+                                <Requests
+                                    userHasAccess={this.props.userHasAccess}
+                                />
+                            } />
                             <Route path="/requests/view/" component={ViewRequest} />
                             {/* <Route exact path="/requests/new" component={NewRequest} /> */}
                             {/* <Route path="/requests/edit/" component={EditRequest} /> */}
@@ -100,7 +105,11 @@ class MainPage extends React.Component {
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                             />
-                            <Route exact path="/products" component={Products} />
+                            <Route exact path="/products" render={
+                                (props) => <Products
+                                    userHasAccess={this.props.userHasAccess}
+                                />}
+                            />
                             <Route path="/products/view/" component={ViewProduct} />
                             {/* <Route path="/products/edit/" component={EditProduct} /> */}
                             {/* <Route exact path="/products/new" component={NewProduct} /> */}
@@ -116,7 +125,11 @@ class MainPage extends React.Component {
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                             />
-                            <Route exact path="/workshop-lemz" component={WorkshopLEMZ} />
+                            <Route exact path="/workshop-lemz" render={
+                                (props) => <WorkshopLEMZ
+                                    userHasAccess={this.props.userHasAccess}
+                                />
+                            } />
                             <Route path="/workshop-lemz/view/" component={ViewRequestLEMZ} />
                             <PrivateRoute
                                 exact path="/workshop-lemz/new"

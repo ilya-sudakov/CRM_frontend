@@ -85,6 +85,13 @@
     display: flex;
     flex-direction: column;
 
+    &_photo {
+      max-width: 50px;
+      max-height: 50px;
+      margin-right: 10px;
+      border-radius: 5px;
+    }
+
     &_title {
       margin-top: 10px;
       margin-left: 15px;

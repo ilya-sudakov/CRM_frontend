@@ -47,7 +47,7 @@ const Requests = (props) => {
                 loadData={loadRequests}
                 // deleteItem={deleteItem}
                 searchQuery={searchQuery}
-                // userHasAccess={props.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"])}
+                userHasAccess={props.userHasAccess}
             />
         </div>
     )

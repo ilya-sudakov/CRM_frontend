@@ -137,6 +137,7 @@ const Select = (props) => {
                 {selected.length !== 0 && <span className="select__selected_title">Выбранная продукция:</span>}
                 {selected.map((item, index) => (
                     <div className="select__selected_row">
+                        {/* <img className="select__selected_photo" src={item.product ? item.product.photo : null} alt="" /> */}
                         <div className="select__selected_item" >
                             {item.product ? item.product.name : item.name}
                             {!props.readOnly && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}

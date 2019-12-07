@@ -20,14 +20,14 @@ const TableView = (props) => {
 
     const searchQuery = (data) => {
         // return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
-        // return data.filter(item => item.status.toLowerCase().includes(props.searchQuery.toLowerCase()))
-        return data.filter(item => {
-            return (
-                item.requestProducts.length !== 0 && item.requestProducts[0].product.name
-                    ? item.requestProducts[0].product.name.toLowerCase().includes(props.searchQuery.toLowerCase())
-                    : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
-            )
-        })
+        return data.filter(item => item.responsible.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        // return data.filter(item => {
+        //     return (
+        //         item.requestProducts.length !== 0 && item.requestProducts[0].product.name !== null
+        //             ? item.requestProducts[0].product.name.toLowerCase().includes(props.searchQuery.toLowerCase())
+        //             : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
+        //     )
+        // })
     }
 
     const handleStatusChange = (event) => {
@@ -142,7 +142,7 @@ const TableView = (props) => {
                     </div>
                     <div className="tableview_requests__actions">
                         <Link to={"/requests/view/" + request.id} className="tableview_requests__action" >Просмотр</Link>
-                        {<Link to={"/requests/edit/" + request.id} className="tableview_requests__action">Редактировать</Link>}
+                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/requests/edit/" + request.id} className="tableview_requests__action">Редактировать</Link>}
                         {/* <div data-id={request.id} className="tableview_requests__action" onClick={props.deleteItem}>Удалить</div> */}
                     </div>
                 </div>
