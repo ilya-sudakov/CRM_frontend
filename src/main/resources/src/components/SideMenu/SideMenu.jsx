@@ -44,24 +44,42 @@ const SideMenu = (props) => {
             {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className={props.location.pathname.includes("/contracts") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/contracts">Договоры (Для теста)</Link>
             </div>}
-            <div className={props.location.pathname.includes("/requests") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className={props.location.pathname.includes("/requests") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/requests">Заявки</Link>
                 {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to="/requests/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>}
-            </div>
-            <div className={props.location.pathname.includes("/products") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+            </div>}
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <div className={props.location.pathname.includes("/products") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/products">Продукция</Link>
                 {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to="/products/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>}
-            </div>
-            <div className={props.location.pathname.includes("/workshop-lemz") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
-                <Link className="sidemenu__link" to="/workshop-lemz">Заявки ЛЭМЗ</Link>
+            </div>}
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <div className={props.location.pathname.includes("/workshop-lemz") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                <Link className="sidemenu__link" to="/workshop-lemz">Очередь производства ЛЭМЗ</Link>
                 {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to="/workshop-lemz/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>}
-            </div>
+            </div>}
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <div className={props.location.pathname.includes("/dispatcher/rigging") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                <Link className="sidemenu__link" to="/dispatcher/rigging">Оснастка</Link>
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to="/dispatcher/rigging/new" className="sidemenu__addButton">
+                    <img className="sidemenu__img" src={plusImg} />
+                </Link>}
+            </div>}
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <div className={props.location.pathname.includes("/dispatcher/transportation") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                <Link className="sidemenu__link" to="/dispatcher/transportation">Реестр транспортировок</Link>
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to="/dispatcher/transportation/new" className="sidemenu__addButton">
+                    <img className="sidemenu__img" src={plusImg} />
+                </Link>}
+            </div>}
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <div className={props.location.pathname.includes("/dispatcher/general-tasks") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                <Link className="sidemenu__link" to="/dispatcher/general-tasks">Основные задачи</Link>
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to="/dispatcher/general-tasks/new" className="sidemenu__addButton">
+                    <img className="sidemenu__img" src={plusImg} />
+                </Link>}
+            </div>}
         </div>
     );
 };

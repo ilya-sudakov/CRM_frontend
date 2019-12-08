@@ -24,6 +24,9 @@ import WorkshopLEMZ from './WorkshopLEMZ/WorkshopLEMZ.jsx';
 import NewRequestLEMZ from './WorkshopLEMZ/NewRequestLEMZ/NewRequestLEMZ.jsx';
 import ViewRequestLEMZ from './WorkshopLEMZ/ViewRequestLEMZ/ViewRequestLEMZ.jsx';
 import EditRequestLEMZ from './WorkshopLEMZ/EditRequestLEMZ/EditRequestLEMZ.jsx';
+import Rigging from './Dispatcher/Rigging/Rigging.jsx';
+import Transportation from './Dispatcher/Transportation/Transportation.jsx';
+import GeneralTasks from './Dispatcher/GeneralTasks/GeneralTasks.jsx';
 
 class MainPage extends React.Component {
     state = {
@@ -61,9 +64,6 @@ class MainPage extends React.Component {
                     <div className="main_page__activity_panel">
                         <Switch>
                             <Route exact path="/" component={GeneralPage} />
-                            {/* <Route exact path="/profile/users" component={Users} /> */}
-                            {/* <Route exact path="/profile/users/new" component={NewUser} /> */}
-                            {/* <Route path="/profile/users/edit/" component={EditUser} /> */}
                             <PrivateRoute
                                 exact path="/profile/users/new"
                                 component={NewUser}
@@ -85,14 +85,13 @@ class MainPage extends React.Component {
                             <Route exact path="/clients" component={Clients} />
                             <Route exact path="/clients/new" component={newClient} />
                             <Route exact path="/contracts" component={Contracts} />
-                            <Route exact path="/requests" render={(props) =>
-                                <Requests
-                                    userHasAccess={this.props.userHasAccess}
-                                />
-                            } />
+                            <PrivateRoute
+                                exact path="/requests"
+                                component={Requests}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                            />
                             <Route path="/requests/view/" component={ViewRequest} />
-                            {/* <Route exact path="/requests/new" component={NewRequest} /> */}
-                            {/* <Route path="/requests/edit/" component={EditRequest} /> */}
                             <PrivateRoute
                                 exact path="/requests/new"
                                 component={NewRequest}
@@ -105,14 +104,13 @@ class MainPage extends React.Component {
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                             />
-                            <Route exact path="/products" render={
-                                (props) => <Products
-                                    userHasAccess={this.props.userHasAccess}
-                                />}
+                            <PrivateRoute
+                                exact path="/products"
+                                component={Products}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                             />
                             <Route path="/products/view/" component={ViewProduct} />
-                            {/* <Route path="/products/edit/" component={EditProduct} /> */}
-                            {/* <Route exact path="/products/new" component={NewProduct} /> */}
                             <PrivateRoute
                                 path="/products/edit/"
                                 component={EditProduct}
@@ -125,11 +123,12 @@ class MainPage extends React.Component {
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                             />
-                            <Route exact path="/workshop-lemz" render={
-                                (props) => <WorkshopLEMZ
-                                    userHasAccess={this.props.userHasAccess}
-                                />
-                            } />
+                            <PrivateRoute
+                                exact path="/workshop-lemz"
+                                component={WorkshopLEMZ}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                            />
                             <Route path="/workshop-lemz/view/" component={ViewRequestLEMZ} />
                             <PrivateRoute
                                 exact path="/workshop-lemz/new"
@@ -142,6 +141,24 @@ class MainPage extends React.Component {
                                 component={EditRequestLEMZ}
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                            />
+                            <PrivateRoute
+                                exact path="/dispatcher/rigging"
+                                component={Rigging}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            />
+                            <PrivateRoute
+                                exact path="/dispatcher/transportation"
+                                component={Transportation}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            />
+                            <PrivateRoute
+                                exact path="/dispatcher/general-tasks"
+                                component={GeneralTasks}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                             />
                             <Route component={PageNotFound} />
                         </Switch>
