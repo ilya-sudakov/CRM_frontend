@@ -27,6 +27,10 @@ import EditRequestLEMZ from './WorkshopLEMZ/EditRequestLEMZ/EditRequestLEMZ.jsx'
 import Rigging from './Dispatcher/Rigging/Rigging.jsx';
 import Transportation from './Dispatcher/Transportation/Transportation.jsx';
 import GeneralTasks from './Dispatcher/GeneralTasks/GeneralTasks.jsx';
+import NewTransportation from './Dispatcher/Transportation/NewTransportation/NewTransportation.jsx';
+import EditTransportation from './Dispatcher/Transportation/EditTransportation/EditTransportation.jsx';
+import NewTask from './Dispatcher/GeneralTasks/NewTask/NewTask.jsx';
+import EditTask from './Dispatcher/GeneralTasks/EditTask/EditTask.jsx';
 
 class MainPage extends React.Component {
     state = {
@@ -152,11 +156,35 @@ class MainPage extends React.Component {
                                 exact path="/dispatcher/transportation"
                                 component={Transportation}
                                 userHasAccess={this.props.userHasAccess}
-                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                            />
+                            <PrivateRoute
+                                exact path="/dispatcher/transportation/new"
+                                component={NewTransportation}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                            />
+                            <PrivateRoute
+                                path="/dispatcher/transportation/edit/"
+                                component={EditTransportation}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                             />
                             <PrivateRoute
                                 exact path="/dispatcher/general-tasks"
                                 component={GeneralTasks}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            />
+                            <PrivateRoute
+                                exact path="/dispatcher/general-tasks/new"
+                                component={NewTask}
+                                userHasAccess={this.props.userHasAccess}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            />
+                            <PrivateRoute
+                                path="/dispatcher/general-tasks/edit/"
+                                component={EditTask}
                                 userHasAccess={this.props.userHasAccess}
                                 allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                             />

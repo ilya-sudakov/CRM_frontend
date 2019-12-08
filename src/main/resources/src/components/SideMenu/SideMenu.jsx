@@ -68,9 +68,9 @@ const SideMenu = (props) => {
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>}
             </div>}
-            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <div className={props.location.pathname.includes("/dispatcher/transportation") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && <div className={props.location.pathname.includes("/dispatcher/transportation") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                 <Link className="sidemenu__link" to="/dispatcher/transportation">Реестр транспортировок</Link>
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to="/dispatcher/transportation/new" className="sidemenu__addButton">
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && <Link to="/dispatcher/transportation/new" className="sidemenu__addButton">
                     <img className="sidemenu__img" src={plusImg} />
                 </Link>}
             </div>}

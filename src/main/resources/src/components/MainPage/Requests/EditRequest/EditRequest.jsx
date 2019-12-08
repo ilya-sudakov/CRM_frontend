@@ -174,14 +174,6 @@ const EditRequest = (props) => {
                 </div>
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Продукция*</div>
-                    {/* <div className="edit_request__input_field">
-                        <input type="text"
-                            name="products"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.products}
-                        />
-                    </div> */}
                     <Select
                         options={products}
                         onChange={handleProductsChange}
@@ -189,17 +181,6 @@ const EditRequest = (props) => {
                         defaultValue={selectedProducts}
                     />
                 </div>
-                {/* <div className="edit_request__item">
-                    <div className="edit_request__input_name">Количество</div>
-                    <div className="edit_request__input_field">
-                        <input type="text"
-                            name="quantity"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.quantity}
-                        />
-                    </div>
-                </div> */}
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Кодовое слово*</div>
                     <div className="edit_request__input_field">
@@ -214,12 +195,6 @@ const EditRequest = (props) => {
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Ответственный*</div>
                     <div className="edit_request__input_field">
-                        {/* <input type="text"
-                            name="responsible"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.responsible}
-                        /> */}
                         <SelectUser
                             options={users}
                             defaultValue={requestInputs.responsible}
