@@ -1,0 +1,15 @@
+@import "../../../variables.scss";
+
+.page_loading {
+  width: 100%;
+  padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 25vh;
+
+  &__title {
+    font-size: 104px;
+  }
+}
