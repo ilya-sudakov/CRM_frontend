@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewPart.scss';
+import { addPart } from '../../../../../../utils/utilsAPI.jsx';
 
 const NewTransportation = (props) => {
     const [partInputs, setPartInputs] = useState({
@@ -18,7 +19,7 @@ const NewTransportation = (props) => {
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'package':
+            case 'name':
                 setNameValid(value !== "");
                 break;
         }
@@ -36,10 +37,8 @@ const NewTransportation = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(partInputs);
-
-        // formIsValid() && addPart(partInputs)
-        //     .then(() => props.history.push("/dispatcher/rigging/parts"))
+        formIsValid() && addPart(partInputs)
+            .then(() => props.history.push("/dispatcher/rigging/parts"))
     }
 
     const handleInputChange = e => {

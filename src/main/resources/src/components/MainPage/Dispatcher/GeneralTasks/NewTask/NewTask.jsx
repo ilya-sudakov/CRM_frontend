@@ -4,7 +4,7 @@ import ru from 'date-fns/locale/ru';
 import './NewTask.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
-import { addProduct } from '../../../../../utils/utilsAPI.jsx';
+import { addProduct, addMainTask } from '../../../../../utils/utilsAPI.jsx';
 
 const NewTask = (props) => {
     const [taskInputs, setTaskInputs] = useState({
@@ -13,7 +13,7 @@ const NewTask = (props) => {
         responsible: '',
         dateControl: new Date(),
         status: '',
-        visibility: 'all'
+        // visibility: 'all'
     })
     const [productErrors, setProductErrors] = useState({
         dateCreated: '',
@@ -46,8 +46,8 @@ const NewTask = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(taskInputs);
-        // formIsValid() && addProduct(taskInputs)
-        //     .then(() => props.history.push("/dispatcher/transportation"))
+        formIsValid() && addMainTask(taskInputs)
+            .then(() => props.history.push("/dispatcher/general-tasks"))
     }
 
     const handleInputChange = e => {
@@ -132,7 +132,7 @@ const NewTask = (props) => {
                         />
                     </div>
                 </div>
-                {props.userHasAccess(['ROLE_ADMIN']) && <div className="new_general_task__item">
+                {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="new_general_task__item">
                     <div className="new_general_task__input_name">Видимость*</div>
                     <div className="new_general_task__input_field">
                         <select
@@ -144,7 +144,7 @@ const NewTask = (props) => {
                             <option value="adminOnly">Только руководитель</option>
                         </select>
                     </div>
-                </div>}
+                </div>} */}
                 <div className="new_general_task__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_general_task__submit" type="submit" onClick={handleSubmit} value="Добавить задачу" />
             </form>

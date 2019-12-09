@@ -4,36 +4,36 @@ import ru from 'date-fns/locale/ru';
 import './EditTransportation.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
-import { addProduct } from '../../../../../utils/utilsAPI.jsx';
+import { getTransportationById, editTransportation } from '../../../../../utils/utilsAPI.jsx';
 
 const EditTransportation = (props) => {
     const [transportationInputs, setTransportationInputs] = useState({
         date: new Date(),
-        package: '',
-        from: 'ЦехЛЭМЗ',
-        to: 'ЦехЛЭМЗ',
+        cargo: '',
+        sender: 'ЦехЛЭМЗ',
+        recipient: 'ЦехЛЭМЗ',
         driver: ''
     })
     const [productErrors, setProductErrors] = useState({
         date: '',
-        package: '',
-        from: '',
-        to: '',
+        cargo: '',
+        sender: '',
+        recipient: '',
         driver: ''
     })
     const [transportationId, setTransportationId] = useState(1);
-    const [packageValid, setPackageValid] = useState(false);
+    const [cargoValid, setCargoValid] = useState(true);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'package':
-                setPackageValid(value !== "");
+            case 'cargo':
+                setCargoValid(value !== "");
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (packageValid) {
+        if (cargoValid) {
             return true;
         }
         else {
@@ -44,10 +44,8 @@ const EditTransportation = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(transportationInputs);
-
-        // formIsValid() && addProduct(transportationInputs)
-        //     .then(() => props.history.push("/dispatcher/transportation"))
+        formIsValid() && editTransportation(transportationInputs, transportationId)
+            .then(() => props.history.push("/dispatcher/transportation"))
     }
 
     const handleInputChange = e => {
@@ -76,22 +74,22 @@ const EditTransportation = (props) => {
             props.history.push("/dispatcher/transportation");
         } else {
             setTransportationId(id);
-            // getRequestById(id)
-            //     .then(res => res.json())
-            //     .then(oldRequest => {
-            //         setTransportationInputs({
-            //             date: oldRequest.date,
-            //             package: oldRequest.package,
-            //             from: oldRequest.from,
-            //             to: oldRequest.to,
-            //             driver: oldRequest.driver
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс транспортировки!');
-            //         props.history.push("/dispatcher/transportation");
-            //     })
+            getTransportationById(id)
+                .then(res => res.json())
+                .then(oldRequest => {
+                    setTransportationInputs({
+                        date: oldRequest.date,
+                        cargo: oldRequest.cargo,
+                        sender: oldRequest.sender,
+                        recipient: oldRequest.recipient,
+                        driver: oldRequest.driver
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс транспортировки!');
+                    props.history.push("/dispatcher/transportation");
+                })
         }
     }, [])
     return (
@@ -102,7 +100,7 @@ const EditTransportation = (props) => {
                     <div className="edit_transportation__input_name">Дата*</div>
                     <div className="edit_transportation__input_field">
                         <DatePicker
-                            selected={transportationInputs.date}
+                            selected={Date.parse(transportationInputs.date)}
                             dateFormat="dd.MM.yyyy"
                             onChange={handleDateChange}
                             disabledKeyboardNavigation
@@ -114,10 +112,10 @@ const EditTransportation = (props) => {
                     <div className="edit_transportation__input_name">Товар*</div>
                     <div className="edit_transportation__input_field">
                         <input type="text"
-                            name="package"
+                            name="cargo"
                             autoComplete="off"
                             onChange={handleInputChange}
-                            defaultValue={transportationInputs.package}
+                            defaultValue={transportationInputs.cargo}
                         />
                     </div>
                 </div>
@@ -125,9 +123,9 @@ const EditTransportation = (props) => {
                     <div className="edit_transportation__input_name">Откуда*</div>
                     <div className="edit_transportation__input_field">
                         <select
-                            name="from"
+                            name="sender"
                             onChange={handleInputChange}
-                            defaultValue={transportationInputs.from}
+                            value={transportationInputs.sender}
                         >
                             <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
                             <option value="ЦехЛепсари">ЦехЛепсари</option>
@@ -139,9 +137,9 @@ const EditTransportation = (props) => {
                     <div className="edit_transportation__input_name">Куда*</div>
                     <div className="edit_transportation__input_field">
                         <select
-                            name="to"
+                            name="recipient"
                             onChange={handleInputChange}
-                            defaultValue={transportationInputs.to}
+                            value={transportationInputs.recipient}
                         >
                             <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
                             <option value="ЦехЛепсари">ЦехЛепсари</option>

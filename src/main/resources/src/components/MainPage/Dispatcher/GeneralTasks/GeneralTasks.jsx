@@ -2,27 +2,20 @@ import React, { useEffect, useState } from 'react';
 import './GeneralTasks.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
+import { getMainTasks } from '../../../../utils/utilsAPI.jsx';
 
 const GeneralTasks = (props) => {
-    const [generalTasks, setGeneralTasks] = useState([
-        {
-            id: 1,
-            dateCreated: new Date(),
-            description: 'Описание',
-            responsible: 'Ответственный',
-            dateControl: new Date,
-            status: 'Под контролем',
-        },
-        {
-            id: 2,
-            dateCreated: new Date(),
-            description: 'Описание2',
-            responsible: 'Ответственный2',
-            dateControl: new Date,
-            status: 'Под контролем3',
-        }
-    ]);
+    const [generalTasks, setGeneralTasks] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    useEffect(() => {
+        document.title = "Основные задачи";
+        getMainTasks()
+            .then(res => res.json())
+            .then(res => {
+                // console.log(res);
+                setGeneralTasks(res);
+            })
+    }, [])
 
     return (
         <div className="general_tasks">

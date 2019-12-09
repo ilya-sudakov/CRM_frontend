@@ -94,4 +94,23 @@
     z-index: 0;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
   }
+
+  @media (max-width: 620px) {
+    &__header {
+      .rigging__title {
+        display: none;
+      }
+      .rigging__menu {
+        flex: 0 1 100%;
+
+        .rigging__item {
+          flex-direction: column;
+
+          .rigging__addButton {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
 }

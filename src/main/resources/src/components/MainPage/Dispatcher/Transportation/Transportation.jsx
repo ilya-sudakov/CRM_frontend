@@ -2,30 +2,19 @@ import React, { useEffect, useState } from 'react';
 import './Transportation.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
+import { getTransportations } from '../../../../utils/utilsAPI.jsx';
 
 const Transportation = (props) => {
-    const [transportation, setTransportation] = useState([
-        {
-            id: 1,
-            date: new Date(),
-            package: 'Коробки с углем',
-            from: 'ЦехЛЭМЗ',
-            to: 'ЦехЛЭМЗ',
-            driver: 'Григорий алкаш'
-        },
-        {
-            id: 2,
-            date: new Date(),
-            package: 'Ящики с углем',
-            from: 'ЦехЛЭМЗ',
-            to: 'ЦехЛиговский',
-            driver: 'Виктор алкаш'
-        }
-    ]);
+    const [transportation, setTransportation] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     useEffect(() => {
         document.title = "Реестр транспортировок";
-    })
+        getTransportations()
+            .then(res => res.json())
+            .then(res => {
+                setTransportation(res);
+            })
+    }, [])
 
     return (
         <div className="transportation">

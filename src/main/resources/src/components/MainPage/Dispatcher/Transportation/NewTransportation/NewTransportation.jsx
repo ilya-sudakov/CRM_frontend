@@ -4,35 +4,35 @@ import ru from 'date-fns/locale/ru';
 import './NewTransportation.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
-import { addProduct } from '../../../../../utils/utilsAPI.jsx';
+import { addProduct, addTransportation } from '../../../../../utils/utilsAPI.jsx';
 
 const NewTransportation = (props) => {
     const [transportationInputs, setTransportationInputs] = useState({
         date: new Date(),
-        package: '',
-        from: 'ЦехЛЭМЗ',
-        to: 'ЦехЛЭМЗ',
+        cargo: '',
+        sender: 'ЦехЛЭМЗ',
+        recipient: 'ЦехЛЭМЗ',
         driver: ''
     })
     const [productErrors, setProductErrors] = useState({
         date: '',
-        package: '',
-        from: '',
-        to: '',
+        cargo: '',
+        sender: '',
+        recipient: '',
         driver: ''
     })
-    const [packageValid, setPackageValid] = useState(false);
+    const [cargoValid, setCargoValid] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'package':
-                setPackageValid(value !== "");
+            case 'cargo':
+                setCargoValid(value !== "");
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (packageValid) {
+        if (cargoValid) {
             return true;
         }
         else {
@@ -43,10 +43,8 @@ const NewTransportation = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(transportationInputs);
-
-        // formIsValid() && addProduct(transportationInputs)
-        //     .then(() => props.history.push("/dispatcher/transportation"))
+        formIsValid() && addTransportation(transportationInputs)
+            .then(() => props.history.push("/dispatcher/transportation"))
     }
 
     const handleInputChange = e => {
@@ -89,16 +87,16 @@ const NewTransportation = (props) => {
                 <div className="new_transportation__item">
                     <div className="new_transportation__input_name">Товар*</div>
                     <div className="new_transportation__input_field">
-                        <input type="text" name="package" autoComplete="off" onChange={handleInputChange} />
+                        <input type="text" name="cargo" autoComplete="off" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="new_transportation__item">
                     <div className="new_transportation__input_name">Откуда*</div>
                     <div className="new_transportation__input_field">
                         <select
-                            name="from"
+                            name="sender"
                             onChange={handleInputChange}
-                            defaultValue={transportationInputs.from}
+                            defaultValue={transportationInputs.sender}
                         >
                             <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
                             <option value="ЦехЛепсари">ЦехЛепсари</option>
@@ -110,9 +108,9 @@ const NewTransportation = (props) => {
                     <div className="new_transportation__input_name">Куда*</div>
                     <div className="new_transportation__input_field">
                         <select
-                            name="to"
+                            name="recipient"
                             onChange={handleInputChange}
-                            defaultValue={transportationInputs.to}
+                            defaultValue={transportationInputs.recipient}
                         >
                             <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
                             <option value="ЦехЛепсари">ЦехЛепсари</option>

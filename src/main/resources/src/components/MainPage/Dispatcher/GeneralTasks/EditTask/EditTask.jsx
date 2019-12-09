@@ -4,7 +4,7 @@ import ru from 'date-fns/locale/ru';
 import './EditTask.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
-import { addProduct } from '../../../../../utils/utilsAPI.jsx';
+import { getMainTaskById, editMainTask } from '../../../../../utils/utilsAPI.jsx';
 
 const EditTask = (props) => {
     const [taskId, setTaskId] = useState(1);
@@ -14,7 +14,7 @@ const EditTask = (props) => {
         responsible: '',
         dateControl: new Date(),
         status: '',
-        visibility: 'all'
+        // visibility: 'all'
     })
     const [productErrors, setProductErrors] = useState({
         dateCreated: '',
@@ -46,9 +46,8 @@ const EditTask = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(taskInputs);
-        // formIsValid() && addProduct(taskInputs)
-        //     .then(() => props.history.push("/dispatcher/transportation"))
+        formIsValid() && editMainTask(taskInputs, taskId)
+            .then(() => props.history.push("/dispatcher/general-tasks"))
     }
 
     const handleInputChange = e => {
@@ -68,23 +67,22 @@ const EditTask = (props) => {
             props.history.push("/dispatcher/general-tasks");
         } else {
             setTaskId(id);
-            // getTaskById(id)
-            //     .then(res => res.json())
-            //     .then(oldRequest => {
-            //         setTaskInputs({
-            //             dateCreated: oldRequest.dateCreated,
-            //             description: oldRequest.description,
-            //             responsible: oldRequest.responsible,
-            //             dateControl: oldRequest.dateControl,
-            //             status: oldRequest.status,
-            //             visibility: oldRequest.visibility
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс задачи!');
-            //         props.history.push("/dispatcher/general-tasks");
-            //     })
+            getMainTaskById(id)
+                .then(res => res.json())
+                .then(oldRequest => {
+                    setTaskInputs({
+                        dateCreated: oldRequest.dateCreated,
+                        description: oldRequest.description,
+                        responsible: oldRequest.responsible,
+                        dateControl: oldRequest.dateControl,
+                        status: oldRequest.status
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс задачи!');
+                    props.history.push("/dispatcher/general-tasks");
+                })
         }
     }, [])
     return (
@@ -95,7 +93,7 @@ const EditTask = (props) => {
                     <div className="edit_general_task__input_name">Дата постановки*</div>
                     <div className="edit_general_task__input_field">
                         <DatePicker
-                            selected={taskInputs.dateCreated}
+                            selected={Date.parse(taskInputs.dateCreated)}
                             dateFormat="dd.MM.yyyy"
                             onChange={(dateCreated) => {
                                 validateField("dateCreated", dateCreated);
@@ -135,7 +133,7 @@ const EditTask = (props) => {
                     <div className="edit_general_task__input_name">Дата контроля задачи*</div>
                     <div className="edit_general_task__input_field">
                         <DatePicker
-                            selected={taskInputs.dateControl}
+                            selected={Date.parse(taskInputs.dateControl)}
                             dateFormat="dd.MM.yyyy"
                             onChange={(dateControl) => {
                                 validateField("dateControl", dateControl);
@@ -160,7 +158,7 @@ const EditTask = (props) => {
                         />
                     </div>
                 </div>
-                {props.userHasAccess(['ROLE_ADMIN']) && <div className="edit_general_task__item">
+                {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="edit_general_task__item">
                     <div className="edit_general_task__input_name">Видимость*</div>
                     <div className="edit_general_task__input_field">
                         <select
@@ -172,7 +170,7 @@ const EditTask = (props) => {
                             <option value="adminOnly">Только руководитель</option>
                         </select>
                     </div>
-                </div>}
+                </div>} */}
                 <div className="edit_general_task__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_general_task__submit" type="submit" onClick={handleSubmit} value="Редактировать задачу" />
             </form>

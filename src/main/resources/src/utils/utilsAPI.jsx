@@ -238,3 +238,93 @@ export function editRequestLEMZ(newRequest, id) {
         body: JSON.stringify(newRequest)
     })
 }
+
+export function getMainTasks() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/",
+        method: "GET"
+    })
+}
+
+export function getMainTaskById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/" + id,
+        method: "GET"
+    })
+}
+
+export function addMainTask(newTask) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/",
+        method: "POST",
+        body: JSON.stringify(newTask)
+    })
+}
+
+export function editMainTask(newTask, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/" + id,
+        method: "PUT",
+        body: JSON.stringify(newTask)
+    })
+}
+
+export function getTransportations() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/",
+        method: "GET"
+    })
+}
+
+export function getTransportationById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/" + id,
+        method: "GET"
+    })
+}
+
+export function addTransportation(newTransportation) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/",
+        method: "POST",
+        body: JSON.stringify(newTransportation)
+    })
+}
+
+export function editTransportation(newTransportation, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/" + id,
+        method: "PUT",
+        body: JSON.stringify(newTransportation)
+    })
+}
+
+export function getParts() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/",
+        method: "GET"
+    })
+}
+
+export function getPartById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/" + id,
+        method: "GET"
+    })
+}
+
+export function addPart(newPart) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/",
+        method: "POST",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function editPart(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
+    })
+}
