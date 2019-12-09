@@ -12,14 +12,16 @@ const NewTask = (props) => {
         description: '',
         responsible: '',
         dateControl: new Date(),
-        status: ''
+        status: '',
+        visibility: 'all'
     })
     const [productErrors, setProductErrors] = useState({
         dateCreated: '',
         description: '',
         responsible: '',
         dateControl: '',
-        status: ''
+        status: '',
+        visibility: 'all'
     })
     const [descriptionValid, setDescriptionValid] = useState(false);
 
@@ -130,6 +132,19 @@ const NewTask = (props) => {
                         />
                     </div>
                 </div>
+                {props.userHasAccess(['ROLE_ADMIN']) && <div className="new_general_task__item">
+                    <div className="new_general_task__input_name">Видимость*</div>
+                    <div className="new_general_task__input_field">
+                        <select
+                            name="visibility"
+                            onChange={handleInputChange}
+                            defaultValue={taskInputs.visibility}
+                        >
+                            <option value="all">Всем</option>
+                            <option value="adminOnly">Только руководитель</option>
+                        </select>
+                    </div>
+                </div>}
                 <div className="new_general_task__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_general_task__submit" type="submit" onClick={handleSubmit} value="Добавить задачу" />
             </form>

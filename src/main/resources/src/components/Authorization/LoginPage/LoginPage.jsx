@@ -66,7 +66,7 @@ const LoginPage = (props) => {
             ) : (
                     <React.Fragment>
                         <div className="authorization__title">
-                            Вы уже авторизованы!
+                            Выход из аккаунта
                         </div>
                         <div className="authorization__panel">
                             <div className="authorization__submit">

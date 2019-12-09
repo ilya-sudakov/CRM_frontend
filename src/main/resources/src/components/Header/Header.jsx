@@ -56,7 +56,14 @@ const Header = (props) => {
                         <img className="header__userimg" src={profileSVG} alt="" />
                         <div>
                             <div className="header__username">{props.userData.username}</div>
-                            <div className="header__email">{props.userData.email}</div>
+                            <div className="header__email">{
+                                props.userData.roles[0] && (props.userData.roles[0].name === "ROLE_ADMIN" ? 'Администратор' :
+                                    props.userData.roles[0].name === "ROLE_MANAGER" ? 'Менеджер' :
+                                        props.userData.roles[0].name === "ROLE_DISPATCHER" ? 'Диспетчер' :
+                                            props.userData.roles[0].name === "ROLE_ENGINEER" ? 'Инженер' :
+                                                props.userData.roles[0].name === "ROLE_WORKSHOP" ? 'Цех' :
+                                                    null)
+                            }</div>
                         </div>
                     </div>
                     {props.userHasAccess(["ROLE_ADMIN"]) && <div className="header__profile_menu header__profile_menu--hidden">

@@ -129,7 +129,7 @@ class MainPage extends React.Component {
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
                                 <PrivateRoute
-                                    exact path="/dispatcher/rigging"
+                                    path="/dispatcher/rigging"
                                     component={Rigging}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
@@ -156,7 +156,7 @@ class MainPage extends React.Component {
                                     exact path="/dispatcher/general-tasks"
                                     component={GeneralTasks}
                                     userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP']}
                                 />
                                 <PrivateRoute
                                     exact path="/dispatcher/general-tasks/new"

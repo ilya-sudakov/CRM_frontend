@@ -13,14 +13,16 @@ const EditTask = (props) => {
         description: '',
         responsible: '',
         dateControl: new Date(),
-        status: ''
+        status: '',
+        visibility: 'all'
     })
     const [productErrors, setProductErrors] = useState({
         dateCreated: '',
         description: '',
         responsible: '',
         dateControl: '',
-        status: ''
+        status: '',
+        visibility: ''
     })
     const [descriptionValid, setDescriptionValid] = useState(false);
 
@@ -66,21 +68,22 @@ const EditTask = (props) => {
             props.history.push("/dispatcher/general-tasks");
         } else {
             setTaskId(id);
-            // getRequestById(id)
+            // getTaskById(id)
             //     .then(res => res.json())
             //     .then(oldRequest => {
-            //         setTransportationInputs({
-            //             date: oldRequest.date,
-            //             package: oldRequest.package,
-            //             from: oldRequest.from,
-            //             to: oldRequest.to,
-            //             driver: oldRequest.driver
+            //         setTaskInputs({
+            //             dateCreated: oldRequest.dateCreated,
+            //             description: oldRequest.description,
+            //             responsible: oldRequest.responsible,
+            //             dateControl: oldRequest.dateControl,
+            //             status: oldRequest.status,
+            //             visibility: oldRequest.visibility
             //         });
             //     })
             //     .catch(error => {
             //         console.log(error);
-            //         alert('Неправильный индекс транспортировки!');
-            //         props.history.push("/dispatcher/transportation");
+            //         alert('Неправильный индекс задачи!');
+            //         props.history.push("/dispatcher/general-tasks");
             //     })
         }
     }, [])
@@ -157,6 +160,19 @@ const EditTask = (props) => {
                         />
                     </div>
                 </div>
+                {props.userHasAccess(['ROLE_ADMIN']) && <div className="edit_general_task__item">
+                    <div className="edit_general_task__input_name">Видимость*</div>
+                    <div className="edit_general_task__input_field">
+                        <select
+                            name="visibility"
+                            onChange={handleInputChange}
+                            defaultValue={taskInputs.visibility}
+                        >
+                            <option value="all">Всем</option>
+                            <option value="adminOnly">Только руководитель</option>
+                        </select>
+                    </div>
+                </div>}
                 <div className="edit_general_task__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_general_task__submit" type="submit" onClick={handleSubmit} value="Редактировать задачу" />
             </form>
