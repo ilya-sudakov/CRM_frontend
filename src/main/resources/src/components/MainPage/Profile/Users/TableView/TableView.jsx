@@ -55,8 +55,11 @@ const TableView = (props) => {
                     <div className="tableview_users__col">{user.roles.map((item) => {
                         return (item.name === "ROLE_ADMIN" ? "Руководитель "
                             : item.name === "ROLE_MANAGER" ? "Менеджер1 "
-                            : item.name === "ROLE_WORKSHOP" ? "Цех "
-                            : item.name === "ROLE_USER" ? "Пользователь " : null)
+                                : item.name === "ROLE_WORKSHOP" ? "Цех "
+                                    : item.name === "ROLE_USER" ? "Пользователь "
+                                        : item.name === "ROLE_DISPATCHER" ? "Диспетчер "
+                                            : item.name === "ROLE_ENGINEER" ? "Инженер "
+                                                : null)
                     })}</div>
                     <div className="tableview_users__actions">
                         {/* <div data-id={user.id} className="tableview_users__action" >Просмотр</div> */}

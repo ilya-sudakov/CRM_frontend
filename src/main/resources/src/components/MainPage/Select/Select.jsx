@@ -54,6 +54,7 @@ const Select = (props) => {
     const clickOnOption = (event) => {
         const value = event.target.getAttribute("name");
         const id = event.target.getAttribute("id");
+        clickOnInput();
         // const optionId = event.target.getAttribute("optionId");
         // let newOptions = options;
         // newOptions.splice(optionId, 1);

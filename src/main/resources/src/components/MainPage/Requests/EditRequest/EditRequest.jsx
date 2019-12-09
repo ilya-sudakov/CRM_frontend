@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import './EditRequest.scss';
-import { getRequestById, editRequest, getProducts, addProductsToRequest } from '../../../../utils/utilsAPI.jsx';
+import { getRequestById, editRequest, getProducts, addProductsToRequest, getUsers } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
+import SelectUser from '../../SelectUser/SelectUser.jsx';
 
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
     const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
+    const [users, setUsers] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
         // products: "",
@@ -72,13 +74,13 @@ const EditRequest = (props) => {
             })
         })
         formIsValid() && editRequest(requestInputs, requestId)
-                .then(() => {
-                    addProductsToRequest(productsRequest, requestId)
-                })
-                .then(() => props.history.push("/requests"))
-                .catch(error => {
-                    console.log(error);
-                })
+            .then(() => {
+                addProductsToRequest(productsRequest, requestId)
+            })
+            .then(() => props.history.push("/requests"))
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const handleInputChange = (e) => {
@@ -105,6 +107,14 @@ const EditRequest = (props) => {
         //     products: newProducts
         // })
         setSelectedProducts(newProducts);
+    }
+
+    const handleResponsibleChange = (newResponsible) => {
+        validateField("responsible", newResponsible)
+        setRequestInputs({
+            ...requestInputs,
+            responsible: newResponsible
+        })
     }
 
     useEffect(() => {
@@ -138,6 +148,11 @@ const EditRequest = (props) => {
                 .then(response => {
                     setProducts(response);
                 })
+                .then(() => getUsers())
+                .then(res => res.json())
+                .then(res => {
+                    setUsers(res);
+                })
         }
     }, [])
 
@@ -159,14 +174,6 @@ const EditRequest = (props) => {
                 </div>
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Продукция*</div>
-                    {/* <div className="edit_request__input_field">
-                        <input type="text"
-                            name="products"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.products}
-                        />
-                    </div> */}
                     <Select
                         options={products}
                         onChange={handleProductsChange}
@@ -174,17 +181,6 @@ const EditRequest = (props) => {
                         defaultValue={selectedProducts}
                     />
                 </div>
-                {/* <div className="edit_request__item">
-                    <div className="edit_request__input_name">Количество</div>
-                    <div className="edit_request__input_field">
-                        <input type="text"
-                            name="quantity"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.quantity}
-                        />
-                    </div>
-                </div> */}
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Кодовое слово*</div>
                     <div className="edit_request__input_field">
@@ -199,11 +195,11 @@ const EditRequest = (props) => {
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Ответственный*</div>
                     <div className="edit_request__input_field">
-                        <input type="text"
-                            name="responsible"
-                            autoComplete="off"
-                            onChange={handleInputChange}
+                        <SelectUser
+                            options={users}
                             defaultValue={requestInputs.responsible}
+                            onChange={handleResponsibleChange}
+                            searchPlaceholder="Введите имя пользователя для поиска..."
                         />
                     </div>
                 </div>

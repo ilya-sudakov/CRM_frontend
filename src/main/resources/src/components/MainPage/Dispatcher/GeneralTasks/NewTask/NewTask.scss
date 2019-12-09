@@ -1,6 +1,7 @@
-@import "../../../../variables.scss";
+@import "../../../../../variables.scss";
+@import "../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
-.new_product {
+.new_general_task {
   width: 100%;
   padding: 25px 0;
   display: flex;
@@ -27,7 +28,7 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
 
-    .new_product__item {
+    .new_general_task__item {
       width: calc(100% - 20px);
       display: flex;
       flex-direction: row;
@@ -39,20 +40,30 @@
         margin-top: 25px;
       }
 
-      .new_product__input_name {
+      .react-datepicker-wrapper {
+        width: 100%;
+
+        .react-datepicker {
+          .react-datepicker__day--selected {
+            background-color: $button__background--inverted !important;
+          }
+        }
+      }
+
+      .new_general_task__input_name {
         color: lighten($primary-text-color, 40%);
         flex: 0 1 20%;
         margin-bottom: 5px;
       }
 
-      .new_product__input_field,
-      .new_product__product_img {
+      .new_general_task__input_field,
+      .new_general_task__product_img {
         display: flex;
         justify-content: center;
         width: calc(90% - 20px);
       }
 
-      .new_product__product_img {
+      .new_general_task__product_img {
         justify-content: flex-start;
         img {
           // width: 100%;
@@ -92,7 +103,7 @@
         background-color: $primary-background-color;
       }
 
-      .new_product__file_upload {
+      .new_general_task__file_upload {
         margin-top: 5px;
         margin-bottom: 5px;
         padding: 5px 0px;
@@ -103,7 +114,7 @@
         align-items: center;
         text-align: center;
 
-        .new_product__file_name {
+        .new_general_task__file_name {
           display: inline-block;
           margin-right: 10px;
           padding-bottom: 5px;
@@ -113,7 +124,7 @@
           border-bottom: 1.5px solid $secondary-background-color;
         }
 
-        .new_product__label {
+        .new_general_task__label {
           padding: 5px 10px;
           border: 1.5px solid $button__background--hover;
           border-radius: 10px;
@@ -143,7 +154,7 @@
       }
     }
 
-    .new_product__input_hint {
+    .new_general_task__input_hint {
       text-align: left;
       width: 100%;
       font-size: 80%;
@@ -151,7 +162,7 @@
       color: lighten($primary-text-color, 60%);
     }
 
-    .new_product__submit {
+    .new_general_task__submit {
       border: 0;
       cursor: pointer;
       padding: 15px 25px;
@@ -168,16 +179,16 @@
   }
 
   @media (max-width: 768px) {
-    .new_product__item {
+    .new_general_task__item {
       flex-wrap: wrap;
 
-      .new_product__input_field {
+      .new_general_task__input_field {
         width: 100%;
       }
 
-      .new_product__file_upload {
+      .new_general_task__file_upload {
         width: 100%;
-        .new_product__file_name {
+        .new_general_task__file_name {
           width: 80%;
         }
       }

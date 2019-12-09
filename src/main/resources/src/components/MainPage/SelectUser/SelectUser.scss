@@ -1,0 +1,193 @@
+@import "../../../variables.scss";
+
+.select_user {
+  width: 100%;
+  position: relative;
+
+  .select_user__overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    // background-color: red;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &__input {
+    border: 1px solid #bbbbbb;
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 10px;
+    z-index: 2;
+
+    &:focus {
+      border: 1px solid $button__background--inverted;
+    }
+
+    // &:focus + .select_user__options{
+    //   display: flex;
+    // }
+  }
+
+  &__options {
+    position: absolute;
+    // width: calc(100% - 20px);
+    // left: 10px;
+    width: 100%;
+    padding: 5px 0;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 10px;
+    background-color: $light20-grey;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #aeaeae;
+    font-size: 80%;
+    z-index: 2;
+    transform: scaleX(1);
+    transition: 0.1s ease-in-out;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    transform-origin: 0 0;
+
+    &--hidden {
+      transform: scaleY(0);
+      // display: none;
+    }
+
+    .select_user__option_item {
+      padding: 5px 10px;
+      margin: 0 5px;
+      margin-bottom: 5px;
+      border-radius: 10px;
+      border: 1px solid $button__background--inverted;
+      cursor: pointer;
+      background-color: #ffffff;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        color: $secondary-text-color;
+        background-color: $button__background--inverted;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__select_usered {
+    font-size: 80%;
+    display: flex;
+    flex-direction: column;
+
+    &_photo {
+      max-width: 50px;
+      max-height: 50px;
+      margin-right: 10px;
+      border-radius: 5px;
+    }
+
+    &_title {
+      margin-top: 10px;
+      margin-left: 15px;
+      font-size: 85%;
+      color: lighten($primary-text-color, 40%);
+    }
+
+    &_row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      // flex-wrap: wrap;
+      margin-top: 10px;
+
+      &:first-of-type {
+        margin-top: 5px;
+      }
+
+      .select_user__select_usered_item {
+        display: flex;
+        padding: 5px 10px;
+        border-radius: 10px;
+        width: 50%;
+        margin-right: 30px;
+        position: relative;
+        font-size: 90%;
+        //   width: fit-content;
+        align-items: center;
+        border: 1px solid $button__background--inverted;
+        cursor: pointer;
+        background-color: #ffffff;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .select_user__img {
+          position: absolute;
+          left: calc(100% + 10px);
+          width: 30px;
+        }
+      }
+
+      .select_user__select_usered_quantity,
+      .select_user__select_usered_packaging {
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+          border: 1px solid #bbbbbb;
+          font-size: 80%;
+          margin-left: 10px;
+          width: 50% !important;
+          min-width: 50% !important;
+          display: flex;
+          padding: 5px 10px;
+          border-radius: 10px;
+          min-height: 1rem;
+          height: calc(1rem + 0px);
+          // height: fit-content;
+          outline: none;
+          position: relative;
+          //   width: fit-content;
+          align-items: center;
+
+          &:focus {
+            border: 1px solid $button__background--inverted;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      width: 100% !important;
+      &__select_usered {
+        &_row {
+          flex-direction: column;
+          .select_user__select_usered_item,
+          .select_user__select_usered_packaging,
+          .select_user__select_usered_quantity {
+            margin-right: 0;
+            width: calc(100% - 50px) !important;
+            input {
+              width: 100% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

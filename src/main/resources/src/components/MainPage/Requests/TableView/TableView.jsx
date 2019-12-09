@@ -37,7 +37,7 @@ const TableView = (props) => {
             status: status
         }, id)
             .then(() => {
-                window.location.reload(); //на данный момент так
+                window.location.reload();
             })
             .catch(error => {
                 console.log(error);
@@ -66,6 +66,51 @@ const TableView = (props) => {
             }
             return 0;
         })
+        // let shipped = new Array();
+        // let inProgress = new Array();
+        // searchQuery(data)
+        //     .sort((a, b) => {
+
+        //         if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
+        //             return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+        //         }
+        //         else if (a.status === "Отгружено") {
+        //             return 1;
+        //         }
+        //         else if (b.status === "Отгружено") {
+        //             return -1
+        //         }
+
+
+        //         if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
+        //             return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+        //         }
+        //         else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        //             return 1;
+        //         }
+        //         return 0;
+        //     })
+        //     .filter(item => {
+        //         if (item.status === "Отгружено") {
+        //             shipped.push(item);
+        //         }
+        //         else {
+        //             inProgress.push(item);
+        //         }
+        //     })
+        // inProgress.sort((a, b) => {
+        //     if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        //         return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+        //     }
+
+
+        //     if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        //         return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+        //     }
+        //     return 0;
+        // })
+        // inProgress.push(...shipped);
+        // return inProgress;
     }
 
     const formatDateString = (dateString) => {
