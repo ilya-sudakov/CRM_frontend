@@ -21,7 +21,7 @@ const Transportation = (props) => {
             <div className="transportation__title">Реестр транспортировок</div>
             <SearchBar
                 title="Поиск по транспортировкам"
-                placeholder="Введите () для поиска..."
+                placeholder="Введите название товара для поиска..."
                 setSearchQuery={setSearchQuery}
             />
             <div className="transportation__amount_table">Всего: {transportation.length} записей</div>

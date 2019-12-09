@@ -6,7 +6,7 @@ import {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, WorkshopLEMZ,
     NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask
+    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -169,6 +169,30 @@ class MainPage extends React.Component {
                                     component={EditTask}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                                />
+                                <PrivateRoute
+                                    exact path="/dispatcher/employees"
+                                    component={Employees}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                                />
+                                <PrivateRoute
+                                    exact path="/dispatcher/employees/new"
+                                    component={NewEmployee}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                                />
+                                <PrivateRoute
+                                    path="/dispatcher/employees/edit/"
+                                    component={EditEmployee}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                                />
+                                <PrivateRoute
+                                    path="/dispatcher/employees/view/"
+                                    component={ViewEmployee}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                                 />
                                 <Route component={PageNotFound} />
                             </Switch>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './NewPart.scss';
 import { addPart } from '../../../../../../utils/utilsAPI.jsx';
 
-const NewTransportation = (props) => {
+const NewPart = (props) => {
     const [partInputs, setPartInputs] = useState({
         number: '',
         name: '',
@@ -104,4 +104,4 @@ const NewTransportation = (props) => {
     );
 };
 
-export default NewTransportation;
+export default NewPart;

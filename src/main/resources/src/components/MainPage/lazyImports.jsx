@@ -94,9 +94,25 @@ const EditPart = lazy(
     () => import('./Dispatcher/Rigging/Parts/EditPart/EditPart.jsx')
 )
 
+const Employees = lazy(
+    () => import('./Dispatcher/Employees/Employees.jsx')
+)
+
+const NewEmployee = lazy(
+    () => import('./Dispatcher/Employees/NewEmployee/NewEmployee.jsx')
+)
+
+const EditEmployee = lazy(
+    () => import('./Dispatcher/Employees/EditEmployee/EditEmployee.jsx')
+)
+
+const ViewEmployee = lazy(
+    () => import('./Dispatcher/Employees/ViewEmployee/ViewEmployee.jsx')
+)
+
 export {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, WorkshopLEMZ,
     NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Stamp, Parts, NewPart, EditPart
+    GeneralTasks, NewTask, EditTask, Stamp, Parts, NewPart, EditPart, Employees, NewEmployee, EditEmployee, ViewEmployee
 };

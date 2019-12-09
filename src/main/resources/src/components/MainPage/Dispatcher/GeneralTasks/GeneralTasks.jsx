@@ -22,7 +22,7 @@ const GeneralTasks = (props) => {
             <div className="general_tasks__title">Основные задачи</div>
             <SearchBar
                 title="Поиск по задачам"
-                placeholder="Введите () для поиска..."
+                placeholder="Введите описание задачи для поиска..."
                 setSearchQuery={setSearchQuery}
             />
             <div className="general_tasks__amount_table">Всего: {generalTasks.length} записей</div>
