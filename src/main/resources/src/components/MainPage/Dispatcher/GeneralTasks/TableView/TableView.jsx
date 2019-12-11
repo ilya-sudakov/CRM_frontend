@@ -24,10 +24,10 @@ const TableView = (props) => {
     const sortTasks = (data) => {
         return searchQuery(data).sort((a, b) => {
             if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
             }
             if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
             return 0;
         })

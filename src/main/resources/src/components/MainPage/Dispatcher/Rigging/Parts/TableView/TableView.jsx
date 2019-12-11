@@ -18,16 +18,19 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.number.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        let re = /[.,\s]/gi;
+        return data.filter(item => (
+            item.number.toLowerCase().replace(re, '').includes(props.searchQuery.toLowerCase().replace(re, ''))
+        ))
     }
 
     const sortParts = (data) => {
         return searchQuery(data).sort((a, b) => {
             if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
             }
             if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
             return 0;
         })

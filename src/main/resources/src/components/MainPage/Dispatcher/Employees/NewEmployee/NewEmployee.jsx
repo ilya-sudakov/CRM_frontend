@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewEmployee.scss';
+import { addEmployee } from '../../../../../utils/utilsAPI.jsx';
 
 const NewEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -48,9 +49,8 @@ const NewEmployee = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(employeeInputs);
-        // formIsValid() && addEmployee(employeeInputs)
-        //     .then(() => props.history.push("/dispatcher/employees"))
+        formIsValid() && addEmployee(employeeInputs)
+            .then(() => props.history.push("/dispatcher/employees"))
     }
 
     const handleInputChange = e => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ViewEmployee.scss';
+import { getEmployeeById } from '../../../../../utils/utilsAPI.jsx';
 
 const ViewEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -42,39 +43,39 @@ const ViewEmployee = (props) => {
     }
 
     useEffect(() => {
-        document.title = "Редактирование сотрудника";
+        document.title = "Просмотр сотрудника";
         const id = props.history.location.pathname.split("/dispatcher/employees/view/")[1];
         if (isNaN(Number.parseInt(id))) {
             alert('Неправильный индекс сотрудника!');
             props.history.push("/dispatcher/employees");
         } else {
-            // getEmployeeById(id)
-            //     .then(res => res.json())
-            //     .then(oldRequest => {
-            //         setPartInputs({
-            //             name: oldRequest.name,
-            //             lastName: oldRequest.lastName,
-            //             middleName: oldRequest.middleName,
-            //             yearOfBirth: oldRequest.yearOfBirth,
-            //             citizenship: oldRequest.citizenship,
-            //             position: oldRequest.position,
-            //             workshop: oldRequest.workshop,
-            //             passportScan: oldRequest.passportScan,
-            //             comment: oldRequest.comment,
-            //             relevance: oldRequest.relevance
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс сотрудника!');
-            //         props.history.push("/dispatcher/employees");
-            //     })
+            getEmployeeById(id)
+                .then(res => res.json())
+                .then(oldRequest => {
+                    setEmployeeInputs({
+                        name: oldRequest.name,
+                        lastName: oldRequest.lastName,
+                        middleName: oldRequest.middleName,
+                        yearOfBirth: oldRequest.yearOfBirth,
+                        citizenship: oldRequest.citizenship,
+                        position: oldRequest.position,
+                        workshop: oldRequest.workshop,
+                        passportScan: oldRequest.passportScan1,
+                        comment: oldRequest.comment,
+                        relevance: oldRequest.relevance
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс сотрудника!');
+                    props.history.push("/dispatcher/employees");
+                })
         }
     }, [])
 
     return (
         <div className="view_employee">
-            <div className="view_employee__title">Редактирование сотрудника</div>
+            <div className="view_employee__title">Просмотр сотрудника</div>
             <form className="view_employee__form">
                 <div className="view_employee__item">
                     <div className="view_employee__input_name">Имя</div>
@@ -171,7 +172,7 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                {employeeInputs.passportScan.length != 0 && <div className="view_employee__item">
+                {employeeInputs.passportScan && <div className="view_employee__item">
                     <div className="view_employee__input_name">Паспорт</div>
                     <div className="view_employee__passport_img">
                         {employeeInputs.passportScan.map((photo) => (

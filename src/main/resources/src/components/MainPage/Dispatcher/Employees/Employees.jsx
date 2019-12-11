@@ -2,37 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './Employees.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
+import { getEmployees } from '../../../../utils/utilsAPI.jsx';
 
 const Employees = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [employees, setEmployees] = useState([
-        {
-            id: 1,
-            name: 'Иван',
-            lastName: 'Иванов2',
-            middleName: 'Иванович',
-            yearOfBirth: '2003',
-            citizenship: 'РФ',
-            position: 'Секретарь',
-            workshop: 'Лиговский',
-            passportScan: ['3', '5'],
-            comment: 'Человек',
-            relevance: 'Работает'
-        },
-        {
-            id: 2,
-            name: 'Иван',
-            lastName: 'Иванов1',
-            middleName: 'Иванович',
-            yearOfBirth: '2003',
-            citizenship: 'РФ',
-            position: 'Секретарь',
-            workshop: 'Лиговский',
-            passportScan: ['3', '5'],
-            comment: 'Человек',
-            relevance: 'Работает'
-        },
-    ])
+    const [employees, setEmployees] = useState([]);
+
+    useEffect(() => {
+        document.title="Сотрудники";
+        getEmployees()
+            .then(res => res.json())
+            .then(res => {
+                setEmployees(res);
+            })
+    }, []);
+
     return (
         <div className="employees">
             <div className="employees__title">Сотрудники</div>

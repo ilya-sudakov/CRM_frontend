@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditEmployee.scss';
+import { getEmployeeById, editEmployee } from '../../../../../utils/utilsAPI.jsx';
 
 const EditEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -50,8 +51,8 @@ const EditEmployee = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(employeeInputs);
-        // formIsValid() && editEmployee(employeeInputs)
-        //     .then(() => props.history.push("/dispatcher/employees"))
+        formIsValid() && editEmployee(employeeInputs)
+            .then(() => props.history.push("/dispatcher/employees"))
     }
 
     const handleInputChange = e => {
@@ -71,27 +72,27 @@ const EditEmployee = (props) => {
             props.history.push("/dispatcher/employees");
         } else {
             setEmployeeId(id);
-            // getEmployeeById(id)
-            //     .then(res => res.json())
-            //     .then(oldRequest => {
-            //         setPartInputs({
-            //             name: oldRequest.name,
-            //             lastName: oldRequest.lastName,
-            //             middleName: oldRequest.middleName,
-            //             yearOfBirth: oldRequest.yearOfBirth,
-            //             citizenship: oldRequest.citizenship,
-            //             position: oldRequest.position,
-            //             workshop: oldRequest.workshop,
-            //             passportScan: oldRequest.passportScan,
-            //             comment: oldRequest.comment,
-            //             relevance: oldRequest.relevance
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс сотрудника!');
-            //         props.history.push("/dispatcher/employees");
-            //     })
+            getEmployeeById(id)
+                .then(res => res.json())
+                .then(oldRequest => {
+                    setEmployeeInputs({
+                        name: oldRequest.name,
+                        lastName: oldRequest.lastName,
+                        middleName: oldRequest.middleName,
+                        yearOfBirth: oldRequest.yearOfBirth,
+                        citizenship: oldRequest.citizenship,
+                        position: oldRequest.position,
+                        workshop: oldRequest.workshop,
+                        passportScan: oldRequest.passportScan1,
+                        comment: oldRequest.comment,
+                        relevance: oldRequest.relevance
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс сотрудника!');
+                    props.history.push("/dispatcher/employees");
+                })
         }
     }, [])
 
@@ -103,9 +104,7 @@ const EditEmployee = (props) => {
             if (photo.name.match(regex) !== null) {
                 let prevNames = imgName;
                 prevNames.push(photo.name);
-                setImgName(
-                    prevNames
-                );
+                setImgName(prevNames);
                 let reader = new FileReader();
                 reader.onloadend = (() => {
                     let prevScans = employeeInputs.passportScan;
