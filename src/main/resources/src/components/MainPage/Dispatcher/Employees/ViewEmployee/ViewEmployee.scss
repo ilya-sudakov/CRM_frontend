@@ -74,6 +74,7 @@
 
       .view_employee__passport_img {
         justify-content: flex-start;
+        width: calc(90% - 20px);
         img {
           // width: 100%;
           max-width: 500px;

@@ -11,7 +11,7 @@ const ViewEmployee = (props) => {
         citizenship: '',
         position: '',
         workshop: 'ЦехЛЭМЗ',
-        passportScan: [],
+        passportScan1: [],
         comment: '',
         relevance: 'Работает'
     })
@@ -23,7 +23,7 @@ const ViewEmployee = (props) => {
         citizenship: '',
         position: '',
         workshop: '',
-        passportScan: '',
+        passportScan1: '',
         comment: '',
         relevance: ''
     })
@@ -60,7 +60,7 @@ const ViewEmployee = (props) => {
                         citizenship: oldRequest.citizenship,
                         position: oldRequest.position,
                         workshop: oldRequest.workshop,
-                        passportScan: oldRequest.passportScan1,
+                        passportScan1: oldRequest.passportScan1,
                         comment: oldRequest.comment,
                         relevance: oldRequest.relevance
                     });
@@ -172,12 +172,13 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                {employeeInputs.passportScan && <div className="view_employee__item">
+                {employeeInputs.passportScan1 && <div className="view_employee__item">
                     <div className="view_employee__input_name">Паспорт</div>
                     <div className="view_employee__passport_img">
-                        {employeeInputs.passportScan.map((photo) => (
+                        {/* {employeeInputs.passportScan.map((photo) => (
                             <img src={photo} alt=""/>
-                        ))}
+                        ))} */}
+                        <img src={employeeInputs.passportScan1} alt="" />
                     </div>
                 </div>}
                 <div className="view_employee__item">

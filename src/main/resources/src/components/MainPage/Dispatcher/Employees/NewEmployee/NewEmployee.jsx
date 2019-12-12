@@ -11,7 +11,7 @@ const NewEmployee = (props) => {
         citizenship: '',
         position: '',
         workshop: 'ЦехЛЭМЗ',
-        passportScan: [],
+        passportScan1: '',
         comment: '',
         relevance: 'Работает'
     })
@@ -23,7 +23,7 @@ const NewEmployee = (props) => {
         citizenship: '',
         position: '',
         workshop: '',
-        passportScan: '',
+        passportScan1: '',
         comment: '',
         relevance: ''
     })
@@ -62,24 +62,24 @@ const NewEmployee = (props) => {
         })
     }
 
-    const [imgName, setImgName] = useState([]);
+    // const [imgName, setImgName] = useState([]);
+    const [imgName, setImgName] = useState('');
     const handleFileInputChange = (event) => {
         let regex = /.+\.(jpeg|jpg|png|img)/;
         let file = Array.from(event.target.files);
-        file.map((photo) => {
-            if (photo.name.match(regex) !== null) {
-                let prevNames = imgName;
-                prevNames.push(photo.name);
-                setImgName(
-                    prevNames
-                );
+        file.map((photo, index) => {
+            if (photo.name.match(regex) !== null && index === 0) {
+                // let prevNames = imgName;
+                // prevNames.push(photo.name);
+                // setImgName(prevNames);
+                setImgName(photo.name)
                 let reader = new FileReader();
                 reader.onloadend = (() => {
-                    let prevScans = employeeInputs.passportScan;
-                    prevScans.push(reader.result);
+                    // let prevScans = employeeInputs.passportScan1;
+                    // prevScans.push(reader.result);
                     setEmployeeInputs({
                         ...employeeInputs,
-                        passportScan: prevScans
+                        passportScan1: reader.result
                     })
                 });
                 reader.readAsDataURL(photo);
@@ -168,23 +168,33 @@ const NewEmployee = (props) => {
                         />
                     </div>
                 </div>
+                {employeeInputs.passportScan1 !== '' && <div className="new_employee__item">
+                    <div className="new_employee__input_name">Паспорт</div>
+                    <div className="new_employee__passport_img">
+                        {/* {employeeInputs.passportScan.map((photo) => (
+                            <img src={photo} alt=""/>
+                        ))} */}
+                        <img src={employeeInputs.passportScan1} alt="" />
+                    </div>
+                </div>}
                 <div className="new_employee__item">
                     <div className="new_employee__input_name">Паспорт*</div>
                     <div className="new_employee__file_upload">
                         <div className="new_employee__file_name">
-                            {imgName.map((photo) => {
+                            {/* {imgName.map((photo) => {
                                 return (
                                     <div>
                                         {photo}
                                     </div>
                                 )
-                            })}
+                            })} */}
+                            {imgName}
                         </div>
                         <label className="new_employee__label" htmlFor="file">
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
-                        <input type="file" name="passportScan" id="file" onChange={handleFileInputChange} />
+                        <input type="file" name="passportScan1" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
                 <div className="new_employee__item">

@@ -11,7 +11,7 @@ const EditEmployee = (props) => {
         citizenship: '',
         position: '',
         workshop: 'ЦехЛЭМЗ',
-        passportScan: [],
+        passportScan1: '',
         comment: '',
         relevance: 'Работает'
     })
@@ -23,12 +23,12 @@ const EditEmployee = (props) => {
         citizenship: '',
         position: '',
         workshop: '',
-        passportScan: '',
+        passportScan1: '',
         comment: '',
         relevance: ''
     })
     const [employeeId, setEmployeeId] = useState(1);
-    const [nameValid, setNameValid] = useState(false);
+    const [nameValid, setNameValid] = useState(true);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -50,8 +50,7 @@ const EditEmployee = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(employeeInputs);
-        formIsValid() && editEmployee(employeeInputs)
+        formIsValid() && editEmployee(employeeInputs, employeeId)
             .then(() => props.history.push("/dispatcher/employees"))
     }
 
@@ -83,7 +82,7 @@ const EditEmployee = (props) => {
                         citizenship: oldRequest.citizenship,
                         position: oldRequest.position,
                         workshop: oldRequest.workshop,
-                        passportScan: oldRequest.passportScan1,
+                        passportScan1: oldRequest.passportScan1,
                         comment: oldRequest.comment,
                         relevance: oldRequest.relevance
                     });
@@ -96,22 +95,24 @@ const EditEmployee = (props) => {
         }
     }, [])
 
-    const [imgName, setImgName] = useState([]);
+    // const [imgName, setImgName] = useState([]);
+    const [imgName, setImgName] = useState('');
     const handleFileInputChange = (event) => {
         let regex = /.+\.(jpeg|jpg|png|img)/;
         let file = Array.from(event.target.files);
-        file.map((photo) => {
-            if (photo.name.match(regex) !== null) {
-                let prevNames = imgName;
-                prevNames.push(photo.name);
-                setImgName(prevNames);
+        file.map((photo, index) => {
+            if (photo.name.match(regex) !== null && index === 0) {
+                // let prevNames = imgName;
+                // prevNames.push(photo.name);
+                // setImgName(prevNames);
+                setImgName(photo.name)
                 let reader = new FileReader();
                 reader.onloadend = (() => {
-                    let prevScans = employeeInputs.passportScan;
-                    prevScans.push(reader.result);
+                    // let prevScans = employeeInputs.passportScan1;
+                    // prevScans.push(reader.result);
                     setEmployeeInputs({
                         ...employeeInputs,
-                        passportScan: prevScans
+                        passportScan1: reader.result
                     })
                 });
                 reader.readAsDataURL(photo);
@@ -203,23 +204,33 @@ const EditEmployee = (props) => {
                         />
                     </div>
                 </div>
+                {employeeInputs.passportScan1 && <div className="edit_employee__item">
+                    <div className="edit_employee__input_name">Паспорт</div>
+                    <div className="edit_employee__passport_img">
+                        {/* {employeeInputs.passportScan.map((photo) => (
+                            <img src={photo} alt=""/>
+                        ))} */}
+                        <img src={employeeInputs.passportScan1} alt="" />
+                    </div>
+                </div>}
                 <div className="edit_employee__item">
                     <div className="edit_employee__input_name">Паспорт*</div>
                     <div className="edit_employee__file_upload">
                         <div className="edit_employee__file_name">
-                            {imgName.map((photo) => {
+                            {/* {imgName.map((photo) => {
                                 return (
                                     <div>
                                         {photo}
                                     </div>
                                 )
-                            })}
+                            })} */}
+                            {imgName}
                         </div>
                         <label className="edit_employee__label" htmlFor="file">
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
-                        <input type="file" name="passportScan" id="file" onChange={handleFileInputChange} />
+                        <input type="file" name="passportScan1" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
                 <div className="edit_employee__item">
@@ -247,7 +258,7 @@ const EditEmployee = (props) => {
                     </div>
                 </div>
                 <div className="edit_employee__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_employee__submit" type="submit" onClick={handleSubmit} value="Добавить сотрудника" />
+                <input className="edit_employee__submit" type="submit" onClick={handleSubmit} value="Изменить сотрудника" />
             </form>
         </div>
     );

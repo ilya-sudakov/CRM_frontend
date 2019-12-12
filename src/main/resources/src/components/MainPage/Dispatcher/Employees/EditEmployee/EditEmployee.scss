@@ -62,6 +62,17 @@
         width: calc(90% - 20px);
       }
 
+      .edit_employee__passport_img {
+        justify-content: flex-start;
+        width: calc(90% - 20px);
+        img {
+          // width: 100%;
+          max-width: 500px;
+          max-height: 500px;
+          border-radius: 10px;
+        }
+      }
+
       .edit_employee__product_img {
         justify-content: flex-start;
         img {
