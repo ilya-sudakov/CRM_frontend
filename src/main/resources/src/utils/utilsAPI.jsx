@@ -148,6 +148,13 @@ export function getUserById(id) {
     })
 }
 
+export function deleteUser(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/admin/user/" + id,
+        method: "DELETE"
+    })
+}
+
 export function editUser(newUser, id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/admin/user/" + id,
@@ -175,6 +182,13 @@ export function getProductById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product/" + id,
         method: "GET"
+    })
+}
+
+export function deleteProduct(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product/" + id,
+        method: "DELETE"
     })
 }
 
@@ -253,6 +267,13 @@ export function getMainTaskById(id) {
     })
 }
 
+export function deleteMainTask(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/" + id,
+        method: "DELETE"
+    })
+}
+
 export function addMainTask(newTask) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/mainTask/",
@@ -280,6 +301,13 @@ export function getTransportationById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/shipping/" + id,
         method: "GET"
+    })
+}
+
+export function deleteTransportation(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/" + id,
+        method: "DELETE"
     })
 }
 
@@ -313,6 +341,13 @@ export function getPartById(id) {
     })
 }
 
+export function deletePart(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/" + id,
+        method: "DELETE"
+    })
+}
+
 export function addPart(newPart) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/detail/",
@@ -340,6 +375,13 @@ export function getEmployeeById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/employee/" + id,
         method: "GET"
+    })
+}
+
+export function deleteEmployee(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/employee/" + id,
+        method: "DELETE"
     })
 }
 

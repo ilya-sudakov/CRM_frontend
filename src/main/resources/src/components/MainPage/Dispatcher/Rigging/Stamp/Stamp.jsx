@@ -169,12 +169,23 @@ const Stamp = (props) => {
                 },
             ]
         }
-    ]);
+    ])
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         document.title = "Штампы";
+        // loadStamps();
     }, [])
+
+    const loadStamps = () => {
+        setStamps()
+    }
+
+    const deleteItem = (event) => {
+        const id = event.target.dataset.id;
+        // deleteStamp(id)
+        // .then(() => loadStamps())
+    }
 
     return (
         <div className="stamp">
@@ -188,6 +199,7 @@ const Stamp = (props) => {
                 data={stamps}
                 searchQuery={searchQuery}
                 userHasAccess={props.userHasAccess}
+                deleteItem={deleteItem}
             />
         </div>
     )

@@ -11,7 +11,7 @@ const ViewRequest = (props) => {
         // quantity: "",
         codeWord: "",
         responsible: "",
-        status: "Не готово"
+        status: ""
     })
 
     const handleSubmit = (event) => {
@@ -28,7 +28,7 @@ const ViewRequest = (props) => {
         } else {
             getRequestById(id)
                 .then(res => res.json())
-                .then(oldRequest => {
+                .then(oldRequest => {          
                     setRequestInputs({
                         date: oldRequest.date,
                         products: oldRequest.requestProducts,

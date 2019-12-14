@@ -70,6 +70,7 @@ const TableView = (props) => {
                     <div className="tableview_transportation__actions">
                         {/* <Link to={"/transportation/view/" + transportation.id} className="tableview_transportation__action">Просмотр</Link> */}
                         <Link to={"/dispatcher/transportation/edit/" + transportation.id} className="tableview_transportation__action">Редактировать</Link>
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={transportation.id} className="tableview_transportation__action" onClick={props.deleteItem}>Удалить</div>}
                     </div>
                 </div>
             ))}

@@ -2,13 +2,24 @@ import React, { useEffect, useState } from 'react';
 import './Users.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx'
-import { getUsers } from '../../../../utils/utilsAPI.jsx';
+import { getUsers, deleteUser } from '../../../../utils/utilsAPI.jsx';
 
 const Users = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [users, setUsers] = useState([])
+
     useEffect(() => {
         document.title = "Управление пользователями";
+        loadUsers();
+    }, [])
+
+    const deleteItem = (event) => {
+        const id = event.target.dataset.id;
+        deleteUser(id)
+            .then(() => loadUsers())
+    }
+
+    const loadUsers = () => {
         getUsers()
             .then(res => res.json())
             .then(response => {
@@ -17,7 +28,7 @@ const Users = (props) => {
             .catch(error => {
                 console.log(error);
             })
-    }, [])
+    }
 
     return (
         <div className="users_manage">
@@ -31,6 +42,8 @@ const Users = (props) => {
             <TableView
                 data={users}
                 searchQuery={searchQuery}
+                deleteItem={deleteItem}
+                userHasAccess={props.userHasAccess}
             />
         </div>
     )

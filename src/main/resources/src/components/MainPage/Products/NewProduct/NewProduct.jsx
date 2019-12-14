@@ -53,8 +53,7 @@ const NewProduct = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(productInputs);
-
+        // console.log(productInputs);
         formIsValid() && addProduct(productInputs)
             .then(() => props.history.push("/products"))
     }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
-import { addRequest, getProducts, addRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
+import { addRequest, getProducts, addRequestLEMZ, getUsers } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import './NewRequestLEMZ.scss';
+import SelectUser from '../../SelectUser/SelectUser.jsx';
 
 const NewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -31,6 +32,7 @@ const NewRequestLEMZ = (props) => {
     // const [quantityValid, setQuantityValid] = useState(false);
     const [responsibleValid, setResponsibleValid] = useState(false);
     const [products, setProducts] = useState([]);
+    const [users, setUsers] = useState([]);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -83,6 +85,11 @@ const NewRequestLEMZ = (props) => {
             .then(response => {
                 setProducts(response);
             })
+            .then(() => getUsers())
+            .then(res => res.json())
+            .then(res => {
+                setUsers(res);
+            })
     }, [])
 
     const handleDateChange = (date) => {
@@ -108,6 +115,14 @@ const NewRequestLEMZ = (props) => {
         setRequestInputs({
             ...requestInputs,
             products: newProducts
+        })
+    }
+
+    const handleResponsibleChange = (newResponsible) => {
+        validateField("responsible", newResponsible)
+        setRequestInputs({
+            ...requestInputs,
+            responsible: newResponsible
         })
     }
 
@@ -153,7 +168,12 @@ const NewRequestLEMZ = (props) => {
                 <div className="new_request_lemz__item">
                     <div className="new_request_lemz__input_name">Ответственный*</div>
                     <div className="new_request_lemz__input_field">
-                        <input type="text" name="responsible" autoComplete="off" onChange={handleInputChange} />
+                        {/* <input type="text" name="responsible" autoComplete="off" onChange={handleInputChange} /> */}
+                        <SelectUser
+                            options={users}
+                            onChange={handleResponsibleChange}
+                            searchPlaceholder="Введите имя пользователя для поиска..."
+                        />
                     </div>
                 </div>
                 <div className="new_request_lemz__item">

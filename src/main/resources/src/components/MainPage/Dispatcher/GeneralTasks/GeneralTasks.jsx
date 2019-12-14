@@ -2,20 +2,33 @@ import React, { useEffect, useState } from 'react';
 import './GeneralTasks.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getMainTasks } from '../../../../utils/utilsAPI.jsx';
+import { getMainTasks, deleteMainTask } from '../../../../utils/utilsAPI.jsx';
 
 const GeneralTasks = (props) => {
     const [generalTasks, setGeneralTasks] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     useEffect(() => {
         document.title = "Основные задачи";
+        loadTasks();
+    }, [])
+
+    const loadTasks = () => {
         getMainTasks()
             .then(res => res.json())
             .then(res => {
                 // console.log(res);
                 setGeneralTasks(res);
             })
-    }, [])
+            .catch(error => {
+                console.log(error);                
+            })
+    }
+
+    const deleteItem = (event) => {
+        const id = event.target.dataset.id;
+        deleteMainTask(id)
+            .then(() => loadTasks())
+    }
 
     return (
         <div className="general_tasks">
@@ -30,6 +43,7 @@ const GeneralTasks = (props) => {
                 data={generalTasks}
                 searchQuery={searchQuery}
                 userHasAccess={props.userHasAccess}
+                deleteItem={deleteItem}
             />
         </div>
     )

@@ -123,6 +123,7 @@ const TableView = (props) => {
                         <div className="tableview_stamps__actions">
                             <Link to={"/dispatcher/rigging/stamp/view/" + stamp.id} className="tableview_stamps__action">Просмотр</Link>
                             <Link to={"/dispatcher/rigging/stamp/edit/" + stamp.id} className="tableview_stamps__action">Редактировать</Link>
+                            {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={stamp.id} className="tableview_stamps__action" onClick={props.deleteItem}>Удалить</div>}
                         </div>
                     </div>
                     <div id={stamp_id} className={"tableview_stamps__parts " + ((isPartHidden(stamp.id) === true) && "tableview_stamps__parts--hidden")}>

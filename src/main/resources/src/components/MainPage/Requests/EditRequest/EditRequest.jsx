@@ -211,10 +211,14 @@ const EditRequest = (props) => {
                             onChange={handleInputChange}
                             value={requestInputs.status}
                         >
-                            <option>Не готово</option>
-                            <option>В процессе</option>
-                            <option>Готово к отгрузке</option>
-                            <option>Отгружено</option>
+                            <option value="Проблема">Проблема</option>
+                            <option value="Материалы">Материалы</option>
+                            <option value="Ожидание">Ожидание</option>
+                            <option value="В производстве">В производстве</option>
+                            <option value="Готово">Готово</option>
+                            <option value="Завершено">Завершено</option>
+                            <option value="Отгружено">Отгружено</option>
+                            <option value="Приоритет">Приоритет</option>
                         </select>
                     </div>
                 </div>
