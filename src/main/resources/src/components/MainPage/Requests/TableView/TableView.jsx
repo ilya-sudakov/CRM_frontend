@@ -20,14 +20,18 @@ const TableView = (props) => {
 
     const searchQuery = (data) => {
         // return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
-        return data.filter(item => item.responsible.toLowerCase().includes(props.searchQuery.toLowerCase()))
         // return data.filter(item => {
-        //     return (
-        //         item.requestProducts.length !== 0 && item.requestProducts[0].product.name !== null
-        //             ? item.requestProducts[0].product.name.toLowerCase().includes(props.searchQuery.toLowerCase())
-        //             : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
-        //     )
-        // })
+        //     (item.requestProducts.length > 0)
+        //         ? item.requestProducts[0].name.toLowerCase().includes(props.searchQuery.toLowerCase())
+        //         : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
+        // }
+        return data.filter(item => {
+            return (
+                (item.requestProducts.length !== 0 && item.requestProducts[0].name !== null)
+                    ? item.requestProducts[0].name.toLowerCase().includes(props.searchQuery.toLowerCase())
+                    : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
+            )
+        })
     }
 
     const handleStatusChange = (event) => {
@@ -160,9 +164,9 @@ const TableView = (props) => {
                         {request.requestProducts.map((item, index) => {
                             return (
                                 <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.requestProducts.length}%)` }}>
-                                    <div className="tableview_requests__sub_col">{item.product && item.product.name}</div>
+                                    <div className="tableview_requests__sub_col">{item.name}</div>
                                     <div className="tableview_requests__sub_col">{item.packaging}</div>
-                                    <div className="tableview_requests__sub_col">{item.quantity + " " + (item.product && item.product.unit)}</div>
+                                    <div className="tableview_requests__sub_col">{item.quantity}</div>
                                 </div>
                             )
                         })}

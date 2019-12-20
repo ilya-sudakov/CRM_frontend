@@ -40,7 +40,7 @@ const Rigging = (props) => {
                     <Link to="/dispatcher/rigging/parts" className={props.location.pathname.includes('parts') === true
                         ? "rigging__item--active rigging__item"
                         : "rigging__item"}>
-                        Детали
+                        Запчасти
                         <Link to="/dispatcher/rigging/parts/new" className="rigging__addButton">
                             <img className="rigging__img" src={plusImg} alt="" />
                         </Link>

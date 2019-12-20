@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import './EditRequest.scss';
-import { getRequestById, editRequest, getProducts, addProductsToRequest, getUsers } from '../../../../utils/utilsAPI.jsx';
+import { getRequestById, editRequest, getProducts, addProductsToRequest, getUsers, editProductsToRequest, deleteProductsToRequest } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 import SelectUser from '../../SelectUser/SelectUser.jsx';
 
@@ -13,16 +13,11 @@ const EditRequest = (props) => {
     const [users, setUsers] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
-        // products: "",
+        products: [],
         quantity: "",
         codeWord: "",
         responsible: "",
         status: "Не готово"
-    })
-    const [productsRequest, setProductsRequest] = useState({
-        productsId: [],
-        quantity: [],
-        packaging: []
     })
     const [requestErrors, setRequestErrors] = useState({
         date: "",
@@ -66,18 +61,54 @@ const EditRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        selectedProducts.map((item) => {
-            setProductsRequest({
-                productsId: productsRequest.productsId.push(item.id),
-                quantity: productsRequest.quantity.push(item.quantity),
-                packaging: productsRequest.packaging.push(item.packaging)
-            })
-        })
         formIsValid() && editRequest(requestInputs, requestId)
             .then(() => {
-                addProductsToRequest(productsRequest, requestId)
+                //PUT if edited, POST if product is new
+                const temp = selectedProducts.map((selected) => {
+                    let edited = false;
+                    requestInputs.products.map((item) => {
+                        if (item.id === selected.id) {
+                            edited = true;
+                            return;
+                        }
+                    });
+                    return (edited === true)
+                        ? (
+                            editProductsToRequest({
+                                requestId: requestId,
+                                quantity: selected.quantity,
+                                packaging: selected.packaging,
+                                name: selected.name
+                            }, selected.id)
+                        )
+                        : (
+                            addProductsToRequest({
+                                requestId: requestId,
+                                quantity: selected.quantity,
+                                packaging: selected.packaging,
+                                name: selected.name
+                            })
+                        )
+                })
+                Promise.all(temp)
+                    .then(() => {
+                        //DELETE products removed by user
+                        const temp = requestInputs.products.map((item) => {
+                            let deleted = true;
+                            selectedProducts.map((selected) => {
+                                if (selected.id === item.id) {
+                                    deleted = false;
+                                    return;
+                                }
+                            })
+                            return (deleted === true && deleteProductsToRequest(item.id));
+                        })
+                        Promise.all(temp)
+                            .then(() => {
+                                props.history.push("/requests")
+                            })
+                    })
             })
-            .then(() => props.history.push("/requests"))
             .catch(error => {
                 console.log(error);
             })
@@ -128,9 +159,10 @@ const EditRequest = (props) => {
             getRequestById(id)
                 .then(res => res.json())
                 .then(oldRequest => {
+                    // console.log(oldRequest.requestProducts);
                     setRequestInputs({
                         date: oldRequest.date,
-                        // products: oldRequest.requestProducts,
+                        products: oldRequest.requestProducts,
                         quantity: oldRequest.quantity,
                         codeWord: oldRequest.codeWord,
                         responsible: oldRequest.responsible,

@@ -126,7 +126,7 @@ class MainPage extends React.Component {
                                     path="/workshop-lemz/edit/"
                                     component={EditRequestLEMZ}
                                     userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                                 />
                                 <PrivateRoute
                                     path="/dispatcher/rigging"

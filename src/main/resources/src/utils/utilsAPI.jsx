@@ -87,11 +87,26 @@ export function addRequest(newRequest) {
     })
 }
 
-export function addProductsToRequest(newRequest, id) {
+export function addProductsToRequest(newRequest) {
     return request({
-        url: process.env.API_BASE_URL + "/api/v1/request/" + id,
+        url: process.env.API_BASE_URL + "/api/v1/request_product/",
         method: "POST",
         body: JSON.stringify(newRequest)
+    })
+}
+
+export function editProductsToRequest(newRequest, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/request_product/" + id,
+        method: "PUT",
+        body: JSON.stringify(newRequest)
+    })
+}
+
+export function deleteProductsToRequest(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/request_product/" + id,
+        method: "DELETE"
     })
 }
 

@@ -51,11 +51,11 @@ const NewPart = (props) => {
     }
 
     useEffect(() => {
-        document.title = "Создание детали";
+        document.title = "Создание запчасти";
     }, [])
     return (
         <div className="new_part">
-            <div className="new_part__title">Новая деталь</div>
+            <div className="new_part__title">Новая запчасть</div>
             <form className="new_part__form">
                 <div className="new_part__item">
                     <div className="new_part__input_name">Артикул*</div>
@@ -98,7 +98,7 @@ const NewPart = (props) => {
                     </div>
                 </div>
                 <div className="new_part__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_part__submit" type="submit" onClick={handleSubmit} value="Добавить деталь" />
+                <input className="new_part__submit" type="submit" onClick={handleSubmit} value="Добавить запчасть" />
             </form>
         </div>
     );

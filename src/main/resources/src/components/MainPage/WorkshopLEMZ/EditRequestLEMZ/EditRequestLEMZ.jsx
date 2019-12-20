@@ -150,7 +150,7 @@ const EditRequestLEMZ = (props) => {
         <div className="edit_request_lemz">
             <div className="edit_request_lemz__title">Редактирование заявки ЛЭМЗ</div>
             <form className="edit_request_lemz__form">
-                <div className="edit_request_lemz__item">
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Дата*</div>
                     <div className="edit_request_lemz__input_field">
                         <DatePicker
@@ -162,7 +162,8 @@ const EditRequestLEMZ = (props) => {
                         />
                     </div>
                 </div>
-                {/* <div className="edit_request_lemz__item">
+                }
+                {/* {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Продукция*</div>
                     <Select
                         options={products}
@@ -170,8 +171,8 @@ const EditRequestLEMZ = (props) => {
                         searchPlaceholder="Введите название продукта для поиска..."
                         defaultValue={requestInputs.products}
                     />
-                </div> */}
-                <div className="edit_request_lemz__item">
+                </div>} */}
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Кодовое слово*</div>
                     <div className="edit_request_lemz__input_field">
                         <input type="text"
@@ -181,16 +182,10 @@ const EditRequestLEMZ = (props) => {
                             defaultValue={requestInputs.codeWord}
                         />
                     </div>
-                </div>
-                <div className="edit_request_lemz__item">
+                </div>}
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Ответственный*</div>
                     <div className="edit_request_lemz__input_field">
-                        {/* <input type="text"
-                            name="responsible"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.responsible}
-                        /> */}
                         <SelectUser
                             options={users}
                             onChange={handleResponsibleChange}
@@ -198,7 +193,7 @@ const EditRequestLEMZ = (props) => {
                             searchPlaceholder="Введите имя пользователя для поиска..."
                         />
                     </div>
-                </div>
+                </div>}
                 <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Статус*</div>
                     <div className="edit_request_lemz__input_field">

@@ -178,7 +178,7 @@ const NewProduct = (props) => {
                     </div>
                 </div>
                 <div className="new_product__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_product__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                <input className="new_product__submit" type="submit" onClick={handleSubmit} value="Добавить продукцию" />
             </form>
         </div>
     );

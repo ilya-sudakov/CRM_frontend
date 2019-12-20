@@ -52,10 +52,10 @@ const EditPart = (props) => {
     }
 
     useEffect(() => {
-        document.title = "Редактирование детали";
+        document.title = "Редактирование запчасти";
         const id = props.history.location.pathname.split("/dispatcher/rigging/parts/edit/")[1];
         if (isNaN(Number.parseInt(id))) {
-            alert('Неправильный индекс транспортировки!');
+            alert('Неправильный индекс запчасти!');
             props.history.push("/dispatcher/rigging/parts");
         } else {
             setPartId(id);
@@ -71,14 +71,14 @@ const EditPart = (props) => {
                 })
                 .catch(error => {
                     console.log(error);
-                    alert('Неправильный индекс детали!');
+                    alert('Неправильный индекс запчасти!');
                     props.history.push("/dispatcher/rigging/parts");
                 })
         }
     }, [])
     return (
         <div className="edit_part">
-            <div className="edit_part__title">Редактирование детали</div>
+            <div className="edit_part__title">Редактирование запчасти</div>
             <form className="edit_part__form">
                 <div className="edit_part__item">
                     <div className="edit_part__input_name">Артикул*</div>
@@ -125,7 +125,7 @@ const EditPart = (props) => {
                     </div>
                 </div>
                 <div className="edit_part__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_part__submit" type="submit" onClick={handleSubmit} value="Изменить деталь" />
+                <input className="edit_part__submit" type="submit" onClick={handleSubmit} value="Изменить запчасть" />
             </form>
         </div>
     );

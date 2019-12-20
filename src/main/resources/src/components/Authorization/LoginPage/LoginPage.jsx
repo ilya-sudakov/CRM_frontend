@@ -23,7 +23,7 @@ const LoginPage = (props) => {
                 props.setUserData(true, response.user);
                 localStorage.setItem("accessToken", response.accessToken);
                 localStorage.setItem("refreshToken", response.refreshToken);
-                props.history.push('/requests');
+                props.history.push('/');
             })
             .catch((error) => {
                 console.log(error);
@@ -74,7 +74,7 @@ const LoginPage = (props) => {
                             </div>
                             <div className="authorization__link">
                                 Нажмите
-                                <Link to="/requests">здесь</Link>
+                                <Link to="/">здесь</Link>
                                 чтобы вернуться на главную страницу
                             </div>
                         </div>

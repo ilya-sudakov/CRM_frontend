@@ -9,7 +9,7 @@ const Parts = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        document.title = "Детали";
+        document.title = "Запчасти";
         loadParts();
     }, [])
 
@@ -33,7 +33,7 @@ const Parts = (props) => {
     return (
         <div className="parts">
             <SearchBar
-                title="Поиск деталей"
+                title="Поиск запчастей"
                 placeholder="Введите артикул детали для поиска"
                 setSearchQuery={setSearchQuery}
             />

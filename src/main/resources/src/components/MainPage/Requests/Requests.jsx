@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Requests.scss';
-import { getRequests, deleteRequest } from '../../../utils/utilsAPI.jsx';
+import { getRequests, deleteRequest, deleteProductsToRequest, getRequestById } from '../../../utils/utilsAPI.jsx';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 
@@ -11,8 +11,18 @@ const Requests = (props) => {
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
-        deleteRequest(id)
-            .then(() => loadRequests())
+        getRequestById(id)
+            .then(res => res.json())
+            .then(res => {
+                const temp = res.requestProducts.map((product) => {
+                    return deleteProductsToRequest(product.id)
+                })
+                Promise.all(temp)
+                    .then(() => {
+                        deleteRequest(id)
+                            .then(() => loadRequests())
+                    })
+            })
     }
 
     useEffect(() => {
