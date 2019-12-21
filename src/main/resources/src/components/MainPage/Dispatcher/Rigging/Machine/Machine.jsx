@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import './Stamp.scss';
+import './Machine.scss';
 import TableView from '../TableView/TableView.jsx';
 
-const Stamp = (props) => {
-    const [stamps, setStamps] = useState([
+const Machine = (props) => {
+    const [machines, setMachines] = useState([
         {
             id: 1,
             number: 'ТАМН.043.004',
@@ -174,29 +174,29 @@ const Stamp = (props) => {
 
     useEffect(() => {
         document.title = "Штампы";
-        // loadStamps();
+        // loadMachines();
     }, [])
 
-    const loadStamps = () => {
-        setStamps()
+    const loadMachines = () => {
+        setMachines()
     }
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
         // deleteStamp(id)
-        // .then(() => loadStamps())
+        // .then(() => loadmachines())
     }
 
     return (
-        <div className="stamp">
+        <div className="machine">
             <SearchBar
                 title='Поиск штампа'
                 setSearchQuery={setSearchQuery}
                 placeholder='Введите () для поиска...'
             />
-            <div className="stamp__amount_table">Всего: {stamps.length} записей</div>
+            <div className="machine__amount_table">Всего: {machines.length} записей</div>
             <TableView
-                data={stamps}
+                data={machines}
                 searchQuery={searchQuery}
                 userHasAccess={props.userHasAccess}
                 deleteItem={deleteItem}
@@ -205,4 +205,4 @@ const Stamp = (props) => {
     )
 }
 
-export default Stamp;
+export default Machine;

@@ -71,7 +71,7 @@ const NewRequest = (props) => {
             })
             .then(() => {
                 const temp = requestInputs.requestProducts.map((item) => {
-                    addProductsToRequest({
+                    return addProductsToRequest({
                         requestId: id,
                         quantity: item.quantity,
                         packaging: item.packaging,

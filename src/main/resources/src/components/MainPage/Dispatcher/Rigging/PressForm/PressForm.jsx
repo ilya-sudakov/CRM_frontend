@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import './Stamp.scss';
+import './PressForm.scss';
 import TableView from '../TableView/TableView.jsx';
 
-const Stamp = (props) => {
-    const [stamps, setStamps] = useState([
+const PressForm = (props) => {
+    const [pressForm, setPressForms] = useState([
         {
             id: 1,
             number: 'ТАМН.043.004',
@@ -174,29 +174,29 @@ const Stamp = (props) => {
 
     useEffect(() => {
         document.title = "Штампы";
-        // loadStamps();
+        // loadpressForm();
     }, [])
 
-    const loadStamps = () => {
-        setStamps()
+    const loadpressForm = () => {
+        setPressForms()
     }
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
         // deleteStamp(id)
-        // .then(() => loadStamps())
+        // .then(() => loadpressForm())
     }
 
     return (
-        <div className="stamp">
+        <div className="press_form">
             <SearchBar
                 title='Поиск штампа'
                 setSearchQuery={setSearchQuery}
                 placeholder='Введите () для поиска...'
             />
-            <div className="stamp__amount_table">Всего: {stamps.length} записей</div>
+            <div className="press_form__amount_table">Всего: {pressForm.length} записей</div>
             <TableView
-                data={stamps}
+                data={pressForm}
                 searchQuery={searchQuery}
                 userHasAccess={props.userHasAccess}
                 deleteItem={deleteItem}
@@ -205,4 +205,4 @@ const Stamp = (props) => {
     )
 }
 
-export default Stamp;
+export default PressForm;
