@@ -1,0 +1,68 @@
+@import "../../../../../variables.scss";
+
+.select_parts {
+  width: 100%;
+  position: relative;
+
+  .select_parts__overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    // background-color: red;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &__selected_item {
+    background-color: #dddddd;
+    border-radius: 10px;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 15px;
+
+    margin: 5px 0px;
+
+    .select_parts__selected_name {
+      flex: 0 1 33.3%;
+    }
+  }
+
+  &__button {
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    padding: 10px 10px;
+    border-radius: 15px;
+    background-color: $button__background--inverted;
+    color: #ffffff;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+
+  &__input {
+    border: 1px solid #bbbbbb;
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 10px;
+    z-index: 2;
+
+    &:focus {
+      border: 1px solid $button__background--inverted;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      width: 100% !important;
+    }
+  }
+}

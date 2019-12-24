@@ -14,10 +14,10 @@ const Requests = (props) => {
         getRequestById(id)
             .then(res => res.json())
             .then(res => {
-                const temp = res.requestProducts.map((product) => {
+                const productsArr = res.requestProducts.map((product) => {
                     return deleteProductsToRequest(product.id)
                 })
-                Promise.all(temp)
+                Promise.all(productsArr)
                     .then(() => {
                         deleteRequest(id)
                             .then(() => loadRequests())

@@ -63,14 +63,14 @@ const NewRequest = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let id = 0;
-        console.log(requestInputs);
+        // console.log(requestInputs);
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {
                 id = res.id;
             })
             .then(() => {
-                const temp = requestInputs.requestProducts.map((item) => {
+                const productsArr = requestInputs.requestProducts.map((item) => {
                     return addProductsToRequest({
                         requestId: id,
                         quantity: item.quantity,
@@ -78,7 +78,7 @@ const NewRequest = (props) => {
                         name: item.name
                     })
                 })
-                Promise.all(temp)
+                Promise.all(productsArr)
                     .then(() => props.history.push("/requests"))
             })
             .catch(error => {

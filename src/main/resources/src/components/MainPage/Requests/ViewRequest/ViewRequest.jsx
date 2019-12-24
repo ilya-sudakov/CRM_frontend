@@ -7,8 +7,7 @@ import Select from '../../Select/Select.jsx';
 const ViewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: "",
-        products: "",
-        // quantity: "",
+        requestProducts: "",
         codeWord: "",
         responsible: "",
         status: ""
@@ -31,7 +30,7 @@ const ViewRequest = (props) => {
                 .then(oldRequest => {          
                     setRequestInputs({
                         date: oldRequest.date,
-                        products: oldRequest.requestProducts,
+                        requestProducts: oldRequest.requestProducts,
                         // quantity: oldRequest.quantity,
                         codeWord: oldRequest.codeWord,
                         responsible: oldRequest.responsible,
@@ -73,7 +72,7 @@ const ViewRequest = (props) => {
                     <Select
                         // options={products}
                         readOnly
-                        defaultValue={requestInputs.products}
+                        defaultValue={requestInputs.requestProducts}
                     />
                 </div>
                 {/* <div className="view_request__item">

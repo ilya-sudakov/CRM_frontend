@@ -4,10 +4,12 @@ import ru from 'date-fns/locale/ru';
 import './EditTask.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
-import { getMainTaskById, editMainTask } from '../../../../../utils/utilsAPI.jsx';
+import { getMainTaskById, editMainTask, getUsers } from '../../../../../utils/utilsAPI.jsx';
+import SelectUser from '../../../SelectUser/SelectUser.jsx';
 
 const EditTask = (props) => {
     const [taskId, setTaskId] = useState(1);
+    const [users, setUsers] = useState([]);
     const [taskInputs, setTaskInputs] = useState({
         dateCreated: new Date(),
         description: '',
@@ -24,7 +26,7 @@ const EditTask = (props) => {
         status: '',
         visibility: ''
     })
-    const [descriptionValid, setDescriptionValid] = useState(false);
+    const [descriptionValid, setDescriptionValid] = useState(true);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -59,6 +61,14 @@ const EditTask = (props) => {
         })
     }
 
+    const handleResponsibleChange = (newResponsible) => {
+        validateField("responsible", newResponsible)
+        setTaskInputs({
+            ...taskInputs,
+            responsible: newResponsible
+        })
+    }
+
     useEffect(() => {
         document.title = "Редактирование основной задачи";
         const id = props.history.location.pathname.split("/dispatcher/general-tasks/edit/")[1];
@@ -77,6 +87,13 @@ const EditTask = (props) => {
                         dateControl: oldRequest.dateControl,
                         status: oldRequest.status
                     });
+                })
+                .then(() => {
+                    getUsers()
+                        .then(res => res.json())
+                        .then(res => {
+                            setUsers(res);
+                        })
                 })
                 .catch(error => {
                     console.log(error);
@@ -121,11 +138,17 @@ const EditTask = (props) => {
                 <div className="edit_general_task__item">
                     <div className="edit_general_task__input_name">Ответственный*</div>
                     <div className="edit_general_task__input_field">
-                        <input type="text"
+                        {/* <input type="text"
                             name="responsible"
                             autoComplete="off"
                             defaultValue={taskInputs.responsible}
                             onChange={handleInputChange}
+                        /> */}
+                        <SelectUser
+                            options={users}
+                            onChange={handleResponsibleChange}
+                            defaultValue={taskInputs.responsible}
+                            searchPlaceholder="Введите имя пользователя для поиска..."
                         />
                     </div>
                 </div>

@@ -64,7 +64,7 @@ const EditRequest = (props) => {
         formIsValid() && editRequest(requestInputs, requestId)
             .then(() => {
                 //PUT if edited, POST if product is new
-                const temp = selectedProducts.map((selected) => {
+                const productsArr = selectedProducts.map((selected) => {
                     let edited = false;
                     requestInputs.products.map((item) => {
                         if (item.id === selected.id) {
@@ -90,10 +90,10 @@ const EditRequest = (props) => {
                             })
                         )
                 })
-                Promise.all(temp)
+                Promise.all(productsArr)
                     .then(() => {
                         //DELETE products removed by user
-                        const temp = requestInputs.products.map((item) => {
+                        const productsArr = requestInputs.products.map((item) => {
                             let deleted = true;
                             selectedProducts.map((selected) => {
                                 if (selected.id === item.id) {
@@ -103,7 +103,7 @@ const EditRequest = (props) => {
                             })
                             return (deleted === true && deleteProductsToRequest(item.id));
                         })
-                        Promise.all(temp)
+                        Promise.all(productsArr)
                             .then(() => {
                                 props.history.push("/requests")
                             })

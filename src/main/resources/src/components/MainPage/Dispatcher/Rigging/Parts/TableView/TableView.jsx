@@ -19,8 +19,13 @@ const TableView = (props) => {
 
     const searchQuery = (data) => {
         let re = /[.,\s]/gi;
+        const query = props.searchQuery.toLowerCase();
         return data.filter(item => (
-            item.number.toLowerCase().replace(re, '').includes(props.searchQuery.toLowerCase().replace(re, ''))
+            item.id.toString().includes(query) ||
+            item.name.toLowerCase().includes(query) ||
+            item.dimensions.toLowerCase().includes(query) ||
+            item.processing.toLowerCase().includes(query) ||
+            item.number.toLowerCase().replace(re, '').includes(query.replace(re, ''))
         ))
     }
 

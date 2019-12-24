@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Stamp, Parts, NewPart, EditPart, Machine, PressForm } from '../../lazyImports.jsx';
+import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp } from '../../lazyImports.jsx';
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import plusImg from '../../../../../../../../assets/sidemenu/plus_icon.svg';
@@ -53,6 +53,12 @@ const Rigging = (props) => {
                         <PrivateRoute
                             exact path="/dispatcher/rigging/stamp"
                             component={Stamp}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            exact path="/dispatcher/rigging/stamp/new"
+                            component={NewStamp}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import './ViewRequestLEMZ.scss';
-import { getRequestById, getRequestLEMZById } from '../../../../utils/utilsAPI.jsx';
+import { getRequestLEMZById } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 
 const ViewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: "",
-        products: "",
+        requestProducts: "",
         // quantity: "",
         codeWord: "",
         responsible: "",
@@ -33,7 +33,7 @@ const ViewRequestLEMZ = (props) => {
                 .then(oldRequest => {
                     setRequestInputs({
                         date: oldRequest.date,
-                        products: oldRequest.requestProducts,
+                        requestProducts: oldRequest.lemzProducts,
                         codeWord: oldRequest.codeWord,
                         responsible: oldRequest.responsible,
                         status: oldRequest.status,
@@ -76,7 +76,7 @@ const ViewRequestLEMZ = (props) => {
                     <Select
                         // options={products}
                         readOnly
-                        defaultValue={requestInputs.products}
+                        defaultValue={requestInputs.requestProducts}
                     />
                 </div>
                 {/* <div className="view_request_lemz__item">

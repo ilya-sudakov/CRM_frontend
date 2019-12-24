@@ -82,6 +82,10 @@ const Stamp = lazy(
     () => import('./Dispatcher/Rigging/Stamp/Stamp.jsx')
 )
 
+const NewStamp = lazy(
+    () => import('./Dispatcher/Rigging/Stamp/NewStamp/NewStamp.jsx')
+)
+
 const Machine = lazy(
     () => import('./Dispatcher/Rigging/Machine/Machine.jsx')
 )
@@ -123,5 +127,5 @@ export {
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, WorkshopLEMZ,
     NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Rigging, Transportation, EditTransportation, NewTransportation,
     GeneralTasks, NewTask, EditTask, Stamp, Parts, NewPart, EditPart, Employees, NewEmployee, EditEmployee, ViewEmployee,
-    Machine, PressForm
+    Machine, PressForm, NewStamp
 };

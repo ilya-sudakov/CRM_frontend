@@ -18,7 +18,18 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.name.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        const query = props.searchQuery.toLowerCase();
+        return data.filter(item =>
+            (
+                item.name.toLowerCase().includes(query) ||
+                item.id.toString().includes(query) ||
+                item.typeOfProduct.toLowerCase().includes(query) ||
+                item.weight.toString().includes(query) ||
+                item.packaging.toLowerCase().includes(query) || 
+                item.comment.toLowerCase().includes(query) 
+                // item.vendor.toLowerCase().includes(query)
+            )
+        )
     }
 
     const sortProducts = (data) => {

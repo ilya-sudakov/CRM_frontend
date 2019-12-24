@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
-import { addRequest, getProducts, addRequestLEMZ, getUsers } from '../../../../utils/utilsAPI.jsx';
+import { addRequest, getProducts, addRequestLEMZ, getUsers, addProductsToRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
@@ -11,7 +11,7 @@ import SelectUser from '../../SelectUser/SelectUser.jsx';
 const NewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: new Date(),
-        products: "",
+        // products: "",
         // quantity: "",
         codeWord: "",
         responsible: "",
@@ -21,7 +21,7 @@ const NewRequestLEMZ = (props) => {
     })
     const [requestErrors, setRequestErrors] = useState({
         date: "",
-        products: "",
+        // products: "",
         // quantity: "",
         codeWord: "",
         responsible: "",
@@ -39,7 +39,7 @@ const NewRequestLEMZ = (props) => {
             case 'date':
                 value !== "" ? setDateValid(true) : setDateValid(false);
                 break;
-            case 'products':
+            case 'requestProducts':
                 value !== [] ? setProductsValid(true) : setProductsValid(false);
                 break;
             // case 'quantity':
@@ -64,9 +64,28 @@ const NewRequestLEMZ = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(requestInputs);
+        let id = 0;
+        // console.log(requestInputs);
         formIsValid() && addRequestLEMZ(requestInputs)
-            .then(() => props.history.push("/workshop-lemz"))
+            .then(res => res.json())
+            .then(res => {
+                id = res.id;
+            })
+            .then(() => {
+                const productsArr = requestInputs.requestProducts.map((item) => {
+                    return addProductsToRequestLEMZ({
+                        requestId: id,
+                        quantity: item.quantity,
+                        packaging: item.packaging,
+                        name: item.name
+                    })
+                })
+                Promise.all(productsArr)
+                    .then(() => props.history.push("/workshop-lemz"))
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {
@@ -111,10 +130,10 @@ const NewRequestLEMZ = (props) => {
     }
 
     const handleProductsChange = (newProducts) => {
-        validateField("products", newProducts)
+        validateField("requestProducts", newProducts)
         setRequestInputs({
             ...requestInputs,
-            products: newProducts
+            requestProducts: newProducts
         })
     }
 

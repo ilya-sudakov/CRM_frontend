@@ -68,6 +68,7 @@ const NewTransportation = (props) => {
     useEffect(() => {
         document.title = "Создание записи транспортировки";
     }, [])
+    
     return (
         <div className="new_transportation">
             <div className="new_transportation__title">Новая запись транспортировки</div>

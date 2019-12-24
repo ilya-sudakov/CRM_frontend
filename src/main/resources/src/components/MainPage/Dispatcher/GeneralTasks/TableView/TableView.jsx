@@ -18,7 +18,15 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.description.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        const query = props.searchQuery.toLowerCase();
+        return data.filter(item => (
+            item.id.toString().includes(query) ||
+            item.description.toLowerCase().includes(query) || 
+            item.responsible.toLowerCase().includes(query) ||
+            item.status.toLowerCase().includes(query) ||
+            formatDateString(item.dateCreated).includes(query) ||
+            formatDateString(item.dateControl).includes(query)
+        ))
     }
 
     const sortTasks = (data) => {

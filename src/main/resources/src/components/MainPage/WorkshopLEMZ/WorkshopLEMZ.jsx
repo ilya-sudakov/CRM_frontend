@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './WorkshopLEMZ.scss';
-import { getRequests, deleteRequest, getRequestsLEMZ, deleteRequestLEMZ } from '../../../utils/utilsAPI.jsx';
+import { getRequestsLEMZ, deleteRequestLEMZ, getRequestLEMZById, deleteProductsToRequestLEMZ } from '../../../utils/utilsAPI.jsx';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 
@@ -10,8 +10,21 @@ const WorkshopLEMZ = (props) => {
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
-        deleteRequestLEMZ(id)
-            .then(() => loadRequestsLEMZ())
+        getRequestLEMZById(id)
+            .then(res => res.json())
+            .then(res => {
+                const productsArr = res.lemzProducts.map((product) => {
+                    return deleteProductsToRequestLEMZ(product.id)
+                })
+                Promise.all(productsArr)
+                    .then(() => {
+                        deleteRequestLEMZ(id)
+                            .then(() => loadRequestsLEMZ())
+                    })
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     useEffect(() => {

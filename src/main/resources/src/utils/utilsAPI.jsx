@@ -110,6 +110,29 @@ export function deleteProductsToRequest(id) {
     })
 }
 
+export function addProductsToRequestLEMZ(newRequest) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz_product/",
+        method: "POST",
+        body: JSON.stringify(newRequest)
+    })
+}
+
+export function editProductsToRequestLEMZ(newRequest, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz_product/" + id,
+        method: "PUT",
+        body: JSON.stringify(newRequest)
+    })
+}
+
+export function deleteProductsToRequestLEMZ(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz_product/" + id,
+        method: "DELETE"
+    })
+}
+
 export function getRequestById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/request/" + id,

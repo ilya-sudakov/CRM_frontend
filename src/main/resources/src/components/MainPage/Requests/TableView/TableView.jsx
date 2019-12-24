@@ -19,17 +19,19 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        // return data.filter(item => item.products[0].name.toLowerCase().includes(props.searchQuery.toLowerCase()))
-        // return data.filter(item => {
-        //     (item.requestProducts.length > 0)
-        //         ? item.requestProducts[0].name.toLowerCase().includes(props.searchQuery.toLowerCase())
-        //         : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
-        // }
+        const query = props.searchQuery.toLowerCase();
         return data.filter(item => {
             return (
                 (item.requestProducts.length !== 0 && item.requestProducts[0].name !== null)
-                    ? item.requestProducts[0].name.toLowerCase().includes(props.searchQuery.toLowerCase())
-                    : item.status.toLowerCase().includes(props.searchQuery.toLowerCase())
+                    ? (
+                        item.requestProducts[0].name.toLowerCase().includes(query) ||
+                        item.id.toString().includes(query) ||
+                        formatDateString(item.date).includes(query) ||
+                        item.codeWord.toLowerCase().includes(query) ||
+                        item.status.toLowerCase().includes(query) ||
+                        item.responsible.toLowerCase().includes(query)
+                    )
+                    : item.status.toLowerCase().includes(query)
             )
         })
     }
