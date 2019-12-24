@@ -18,16 +18,24 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.description.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        const query = props.searchQuery.toLowerCase();
+        return data.filter(item => (
+            item.id.toString().includes(query) ||
+            item.description.toLowerCase().includes(query) || 
+            item.responsible.toLowerCase().includes(query) ||
+            item.status.toLowerCase().includes(query) ||
+            formatDateString(item.dateCreated).includes(query) ||
+            formatDateString(item.dateControl).includes(query)
+        ))
     }
 
     const sortTasks = (data) => {
         return searchQuery(data).sort((a, b) => {
             if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
             }
             if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
             return 0;
         })
@@ -65,14 +73,15 @@ const TableView = (props) => {
             {sortTasks(props.data).map((task, task_id) => (
                 <div key={task_id} className={"tableview_general_tasks__row " + (task.id % 2 === 0 ? "tableview_general_tasks__row--even" : "tableview_general_tasks__row--odd")}>
                     <div className="tableview_general_tasks__col">{task.id}</div>
-                    <div className="tableview_general_tasks__col">{Date.parse(task.dateCreated)}</div>
+                    <div className="tableview_general_tasks__col">{formatDateString(task.dateCreated)}</div>
                     <div className="tableview_general_tasks__col">{task.description}</div>
                     <div className="tableview_general_tasks__col">{task.responsible}</div>
-                    <div className="tableview_general_tasks__col">{Date.parse(task.dateControl)}</div>
+                    <div className="tableview_general_tasks__col">{formatDateString(task.dateControl)}</div>
                     <div className="tableview_general_tasks__col">{task.status}</div>
                     <div className="tableview_general_tasks__actions">
                         {/* <Link to={"/task/view/" + task.id} className="tableview_general_tasks__action">Просмотр</Link> */}
-                        <Link to={"/dispatcher/general-tasks/edit/" + task.id} className="tableview_general_tasks__action">Редактировать</Link>
+                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to={"/dispatcher/general-tasks/edit/" + task.id} className="tableview_general_tasks__action">Редактировать</Link>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={task.id} className="tableview_general_tasks__action" onClick={props.deleteItem}>Удалить</div>}
                     </div>
                 </div>
             ))}

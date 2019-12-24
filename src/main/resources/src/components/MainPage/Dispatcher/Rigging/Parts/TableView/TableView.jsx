@@ -18,16 +18,24 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.number.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        let re = /[.,\s]/gi;
+        const query = props.searchQuery.toLowerCase();
+        return data.filter(item => (
+            item.id.toString().includes(query) ||
+            item.name.toLowerCase().includes(query) ||
+            item.dimensions.toLowerCase().includes(query) ||
+            item.processing.toLowerCase().includes(query) ||
+            item.number.toLowerCase().replace(re, '').includes(query.replace(re, ''))
+        ))
     }
 
     const sortParts = (data) => {
         return searchQuery(data).sort((a, b) => {
             if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
             }
             if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
             return 0;
         })
@@ -65,6 +73,7 @@ const TableView = (props) => {
                     <div className="tableview_parts__actions">
                         {/* <Link to={"/part/view/" + part.id} className="tableview_parts__action">Просмотр</Link> */}
                         <Link to={"/dispatcher/rigging/parts/edit/" + part.id} className="tableview_parts__action">Редактировать</Link>
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={part.id} className="tableview_parts__action" onClick={props.deleteItem}>Удалить</div>}
                     </div>
                 </div>
             ))}

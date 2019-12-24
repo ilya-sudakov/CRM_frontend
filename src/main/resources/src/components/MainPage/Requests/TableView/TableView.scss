@@ -209,31 +209,59 @@
     background-color: #f8f8f8;
   }
 
-  .tableview_requests__row--status_not_ready {
+  .tableview_requests__row--status_problem {
     background-color: #c48681;
     &:hover {
       background-color: darken(#c48681, 5%);
     }
   }
 
-  .tableview_requests__row--status_in_progress {
-    background-color: #c5ac7a;
+  .tableview_requests__row--status_materials {
+    background-color: #d4b77e;
     &:hover {
-      background-color: darken(#c5ac7a, 5%);
+      background-color: darken(#d4b77e, 5%);
+    }
+  }
+
+  .tableview_requests__row--status_waiting {
+    background-color: #9ec2b6;
+    &:hover {
+      background-color: darken(#9ec2b6, 5%);
+    }
+  }
+
+  .tableview_requests__row--status_in_production {
+    background-color: #87a8b6;
+    &:hover {
+      background-color: darken(#87a8b6, 5%);
     }
   }
 
   .tableview_requests__row--status_ready {
-    background-color: #6f9c8e;
+    background-color: #5ea76e;
     &:hover {
-      background-color: darken(#6f9c8e, 5%);
+      background-color: darken(#5ea76e, 5%);
     }
   }
 
   .tableview_requests__row--status_shipped {
-    background-color: #dbdbdb;
+    background-color: #95ad7c;
     &:hover {
-      background-color: darken(#dbdbdb, 5%);
+      background-color: darken(#95ad7c, 5%);
+    }
+  }
+
+  .tableview_requests__row--status_completed {
+    background-color: #bed6c3;
+    &:hover {
+      background-color: darken(#bed6c3, 5%);
+    }
+  }
+
+  .tableview_requests__row--status_priority {
+    background-color: #e65252;
+    &:hover {
+      background-color: darken(#e65252, 5%);
     }
   }
 }

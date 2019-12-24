@@ -14,13 +14,9 @@ const NewRequest = (props) => {
         // products: "",
         codeWord: "",
         responsible: "",
-        status: "Не готово"
+        status: "Материалы"
     })
-    const [productsRequest, setProductsRequest] = useState({
-        productsId: [],
-        quantity: [],
-        packaging: []
-    })
+    // const [productsRequest, setProductsRequest] = useState([])
     const [requestErrors, setRequestErrors] = useState({
         date: "",
         products: "",
@@ -41,7 +37,7 @@ const NewRequest = (props) => {
             case 'date':
                 value !== "" ? setDateValid(true) : setDateValid(false);
                 break;
-            case 'products':
+            case 'requestProducts':
                 value !== [] ? setProductsValid(true) : setProductsValid(false);
                 break;
             // case 'quantity':
@@ -66,25 +62,25 @@ const NewRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        requestInputs.products.map((item) => {
-            setProductsRequest({
-                productsId: productsRequest.productsId.push(item.id),
-                quantity: productsRequest.quantity.push(item.quantity),
-                packaging: productsRequest.packaging.push(item.packaging)
-            })
-        })
         let id = 0;
-        console.log(requestInputs);
-
+        // console.log(requestInputs);
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {
                 id = res.id;
             })
             .then(() => {
-                addProductsToRequest(productsRequest, id);
+                const productsArr = requestInputs.requestProducts.map((item) => {
+                    return addProductsToRequest({
+                        requestId: id,
+                        quantity: item.quantity,
+                        packaging: item.packaging,
+                        name: item.name
+                    })
+                })
+                Promise.all(productsArr)
+                    .then(() => props.history.push("/requests"))
             })
-            .then(() => props.history.push("/requests"))
             .catch(error => {
                 console.log(error);
             })
@@ -123,10 +119,10 @@ const NewRequest = (props) => {
     }
 
     const handleProductsChange = (newProducts) => {
-        validateField("products", newProducts)
+        validateField("requestProducts", newProducts)
         setRequestInputs({
             ...requestInputs,
-            products: newProducts
+            requestProducts: newProducts
         })
     }
 

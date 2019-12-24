@@ -82,6 +82,18 @@ const Stamp = lazy(
     () => import('./Dispatcher/Rigging/Stamp/Stamp.jsx')
 )
 
+const NewStamp = lazy(
+    () => import('./Dispatcher/Rigging/Stamp/NewStamp/NewStamp.jsx')
+)
+
+const Machine = lazy(
+    () => import('./Dispatcher/Rigging/Machine/Machine.jsx')
+)
+
+const PressForm = lazy(
+    () => import('./Dispatcher/Rigging/PressForm/PressForm.jsx')
+)
+
 const Parts = lazy(
     () => import('./Dispatcher/Rigging/Parts/Parts.jsx')
 )
@@ -94,9 +106,26 @@ const EditPart = lazy(
     () => import('./Dispatcher/Rigging/Parts/EditPart/EditPart.jsx')
 )
 
+const Employees = lazy(
+    () => import('./Dispatcher/Employees/Employees.jsx')
+)
+
+const NewEmployee = lazy(
+    () => import('./Dispatcher/Employees/NewEmployee/NewEmployee.jsx')
+)
+
+const EditEmployee = lazy(
+    () => import('./Dispatcher/Employees/EditEmployee/EditEmployee.jsx')
+)
+
+const ViewEmployee = lazy(
+    () => import('./Dispatcher/Employees/ViewEmployee/ViewEmployee.jsx')
+)
+
 export {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, WorkshopLEMZ,
     NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Stamp, Parts, NewPart, EditPart
+    GeneralTasks, NewTask, EditTask, Stamp, Parts, NewPart, EditPart, Employees, NewEmployee, EditEmployee, ViewEmployee,
+    Machine, PressForm, NewStamp
 };

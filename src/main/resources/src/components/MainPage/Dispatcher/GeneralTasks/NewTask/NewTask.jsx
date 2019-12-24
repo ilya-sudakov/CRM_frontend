@@ -4,7 +4,8 @@ import ru from 'date-fns/locale/ru';
 import './NewTask.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import '../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
-import { addProduct } from '../../../../../utils/utilsAPI.jsx';
+import { addProduct, addMainTask, getUsers } from '../../../../../utils/utilsAPI.jsx';
+import SelectUser from '../../../SelectUser/SelectUser.jsx';
 
 const NewTask = (props) => {
     const [taskInputs, setTaskInputs] = useState({
@@ -13,7 +14,7 @@ const NewTask = (props) => {
         responsible: '',
         dateControl: new Date(),
         status: '',
-        visibility: 'all'
+        // visibility: 'all'
     })
     const [productErrors, setProductErrors] = useState({
         dateCreated: '',
@@ -24,6 +25,7 @@ const NewTask = (props) => {
         visibility: 'all'
     })
     const [descriptionValid, setDescriptionValid] = useState(false);
+    const [users, setUsers] = useState([]);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -45,9 +47,9 @@ const NewTask = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(taskInputs);
-        // formIsValid() && addProduct(taskInputs)
-        //     .then(() => props.history.push("/dispatcher/transportation"))
+        // console.log(taskInputs);
+        formIsValid() && addMainTask(taskInputs)
+            .then(() => props.history.push("/dispatcher/general-tasks"))
     }
 
     const handleInputChange = e => {
@@ -59,9 +61,23 @@ const NewTask = (props) => {
         })
     }
 
+    const handleResponsibleChange = (newResponsible) => {
+        validateField("responsible", newResponsible)
+        setTaskInputs({
+            ...taskInputs,
+            responsible: newResponsible
+        })
+    }
+
     useEffect(() => {
         document.title = "Создание основной задачи";
+        getUsers()
+            .then(res => res.json())
+            .then(res => {
+                setUsers(res);
+            })
     }, [])
+
     return (
         <div className="new_general_task">
             <div className="new_general_task__title">Новая задача</div>
@@ -97,10 +113,15 @@ const NewTask = (props) => {
                 <div className="new_general_task__item">
                     <div className="new_general_task__input_name">Ответственный*</div>
                     <div className="new_general_task__input_field">
-                        <input type="text"
+                        {/* <input type="text"
                             name="responsible"
                             autoComplete="off"
                             onChange={handleInputChange}
+                        /> */}
+                        <SelectUser
+                            options={users}
+                            onChange={handleResponsibleChange}
+                            searchPlaceholder="Введите имя пользователя для поиска..."
                         />
                     </div>
                 </div>
@@ -132,7 +153,7 @@ const NewTask = (props) => {
                         />
                     </div>
                 </div>
-                {props.userHasAccess(['ROLE_ADMIN']) && <div className="new_general_task__item">
+                {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="new_general_task__item">
                     <div className="new_general_task__input_name">Видимость*</div>
                     <div className="new_general_task__input_field">
                         <select
@@ -144,7 +165,7 @@ const NewTask = (props) => {
                             <option value="adminOnly">Только руководитель</option>
                         </select>
                     </div>
-                </div>}
+                </div>} */}
                 <div className="new_general_task__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_general_task__submit" type="submit" onClick={handleSubmit} value="Добавить задачу" />
             </form>

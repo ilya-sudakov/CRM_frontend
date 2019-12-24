@@ -90,7 +90,7 @@ const Select = (props) => {
     const handleParamChange = (event) => {
         const value = event.target.value;
         const name = event.target.getAttribute("name");
-        const id = event.target.getAttribute("id");
+        const id = event.target.getAttribute(name + "_id");
         let newSelected = selected;
         newSelected = newSelected.map((item, index) => {
             return ({
@@ -146,11 +146,13 @@ const Select = (props) => {
                         <div className="select__selected_quantity">
                             Кол-во{!props.readOnly && "*"}
                             <input
-                                id={index}
-                                type="number"
+                                quantity_id={index}
+                                // type="number"
+                                type="text"
                                 name="quantity"
                                 autoComplete="off"
                                 defaultValue={item.quantity != 0 ? item.quantity : 0}
+                                value={item.quantity}
                                 onChange={handleParamChange}
                                 readOnly={props.readOnly}
                             />
@@ -158,11 +160,12 @@ const Select = (props) => {
                         <div className="select__selected_packaging">
                             Фасовка{!props.readOnly && "*"}
                             <textarea
-                                id={index}
+                                packaging_id={index}
                                 type="text"
                                 name="packaging"
                                 autoComplete="off"
                                 defaultValue={item.packaging}
+                                value={item.packaging}
                                 onChange={handleParamChange}
                                 readOnly={props.readOnly}
                             />

@@ -18,16 +18,24 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.package.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        const query = props.searchQuery.toLowerCase();
+        return data.filter(item => (
+            item.cargo.toLowerCase().includes(query) ||
+            formatDateString(item.date).includes(query) ||
+            item.sender.toLowerCase().includes(query) ||
+            item.recipient.toLowerCase().includes(query) ||
+            item.driver.toLowerCase().includes(query) ||
+            item.id.toString().includes(query)
+        ))
     }
 
     const sortTransportations = (data) => {
         return searchQuery(data).sort((a, b) => {
             if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
             }
             if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
             return 0;
         })
@@ -62,14 +70,15 @@ const TableView = (props) => {
             {sortTransportations(props.data).map((transportation, transportation_id) => (
                 <div key={transportation_id} className={"tableview_transportation__row " + (transportation.id % 2 === 0 ? "tableview_transportation__row--even" : "tableview_transportation__row--odd")}>
                     <div className="tableview_transportation__col">{transportation.id}</div>
-                    <div className="tableview_transportation__col">{Date.parse(transportation.date)}</div>
-                    <div className="tableview_transportation__col">{transportation.package}</div>
-                    <div className="tableview_transportation__col">{transportation.from}</div>
-                    <div className="tableview_transportation__col">{transportation.to}</div>
+                    <div className="tableview_transportation__col">{formatDateString(transportation.date)}</div>
+                    <div className="tableview_transportation__col">{transportation.cargo}</div>
+                    <div className="tableview_transportation__col">{transportation.sender}</div>
+                    <div className="tableview_transportation__col">{transportation.recipient}</div>
                     <div className="tableview_transportation__col">{transportation.driver}</div>
                     <div className="tableview_transportation__actions">
                         {/* <Link to={"/transportation/view/" + transportation.id} className="tableview_transportation__action">Просмотр</Link> */}
                         <Link to={"/dispatcher/transportation/edit/" + transportation.id} className="tableview_transportation__action">Редактировать</Link>
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={transportation.id} className="tableview_transportation__action" onClick={props.deleteItem}>Удалить</div>}
                     </div>
                 </div>
             ))}

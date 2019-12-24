@@ -87,11 +87,49 @@ export function addRequest(newRequest) {
     })
 }
 
-export function addProductsToRequest(newRequest, id) {
+export function addProductsToRequest(newRequest) {
     return request({
-        url: process.env.API_BASE_URL + "/api/v1/request/" + id,
+        url: process.env.API_BASE_URL + "/api/v1/request_product/",
         method: "POST",
         body: JSON.stringify(newRequest)
+    })
+}
+
+export function editProductsToRequest(newRequest, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/request_product/" + id,
+        method: "PUT",
+        body: JSON.stringify(newRequest)
+    })
+}
+
+export function deleteProductsToRequest(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/request_product/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addProductsToRequestLEMZ(newRequest) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz_product/",
+        method: "POST",
+        body: JSON.stringify(newRequest)
+    })
+}
+
+export function editProductsToRequestLEMZ(newRequest, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz_product/" + id,
+        method: "PUT",
+        body: JSON.stringify(newRequest)
+    })
+}
+
+export function deleteProductsToRequestLEMZ(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz_product/" + id,
+        method: "DELETE"
     })
 }
 
@@ -148,6 +186,13 @@ export function getUserById(id) {
     })
 }
 
+export function deleteUser(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/admin/user/" + id,
+        method: "DELETE"
+    })
+}
+
 export function editUser(newUser, id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/admin/user/" + id,
@@ -175,6 +220,13 @@ export function getProductById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product/" + id,
         method: "GET"
+    })
+}
+
+export function deleteProduct(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product/" + id,
+        method: "DELETE"
     })
 }
 
@@ -236,5 +288,153 @@ export function editRequestLEMZ(newRequest, id) {
         url: process.env.API_BASE_URL + "/api/v1/lemz/" + id,
         method: "PUT",
         body: JSON.stringify(newRequest)
+    })
+}
+
+export function getMainTasks() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/",
+        method: "GET"
+    })
+}
+
+export function getMainTaskById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/" + id,
+        method: "GET"
+    })
+}
+
+export function deleteMainTask(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addMainTask(newTask) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/",
+        method: "POST",
+        body: JSON.stringify(newTask)
+    })
+}
+
+export function editMainTask(newTask, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/" + id,
+        method: "PUT",
+        body: JSON.stringify(newTask)
+    })
+}
+
+export function getTransportations() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/",
+        method: "GET"
+    })
+}
+
+export function getTransportationById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/" + id,
+        method: "GET"
+    })
+}
+
+export function deleteTransportation(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addTransportation(newTransportation) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/",
+        method: "POST",
+        body: JSON.stringify(newTransportation)
+    })
+}
+
+export function editTransportation(newTransportation, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/shipping/" + id,
+        method: "PUT",
+        body: JSON.stringify(newTransportation)
+    })
+}
+
+export function getParts() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/",
+        method: "GET"
+    })
+}
+
+export function getPartById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/" + id,
+        method: "GET"
+    })
+}
+
+export function deletePart(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addPart(newPart) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/",
+        method: "POST",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function editPart(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/detail/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function getEmployees() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/employee/",
+        method: "GET"
+    })
+}
+
+export function getEmployeeById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/employee/" + id,
+        method: "GET"
+    })
+}
+
+export function deleteEmployee(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/employee/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addEmployee(newPart) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/employee/",
+        method: "POST",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function editEmployee(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/employee/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
     })
 }

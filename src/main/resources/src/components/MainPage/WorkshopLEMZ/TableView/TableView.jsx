@@ -19,7 +19,22 @@ const TableView = (props) => {
     }
 
     const searchQuery = (data) => {
-        return data.filter(item => item.codeWord.toLowerCase().includes(props.searchQuery.toLowerCase()))
+        const query = props.searchQuery.toLowerCase();
+        return data.filter(item => {
+            return (
+                (item.lemzProducts.length !== 0 && item.lemzProducts[0].name !== null)
+                    ? (
+                        item.lemzProducts[0].name.toLowerCase().includes(query) ||
+                        item.id.toString().includes(query) ||
+                        formatDateString(item.date).includes(query) ||
+                        item.codeWord.toLowerCase().includes(query) ||
+                        item.status.toLowerCase().includes(query) ||
+                        item.responsible.toLowerCase().includes(query) ||
+                        formatDateString(item.shippingDate).includes(query)
+                    )
+                    : item.status.toLowerCase().includes(query)
+            )
+        })
     }
 
     const handleStatusChange = (event) => {
@@ -106,15 +121,15 @@ const TableView = (props) => {
                     <div className="tableview_requests_LEMZ__col">{request.id}</div>
                     <div className="tableview_requests_LEMZ__col">{formatDateString(request.date)}</div>
                     <div className="tableview_requests_LEMZ__col">
-                        {/* {request.products.map((item, index) => {
+                        {request.lemzProducts.map((item, index) => {
                             return (
-                                <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / request.products.length}%)` }}>
+                                <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / request.lemzProducts.length}%)` }}>
                                     <div className="tableview_requests_LEMZ__sub_col">{item.name}</div>
                                     <div className="tableview_requests_LEMZ__sub_col">{item.packaging}</div>
-                                    <div className="tableview_requests_LEMZ__sub_col">{item.quantity + " " + item.unit}</div>
+                                    <div className="tableview_requests_LEMZ__sub_col">{item.quantity}</div>
                                 </div>
                             )
-                        })} */}
+                        })}
                     </div>
                     {/* Корректный вывод но с ограничением по количеству символов в строке */}
                     {/* <div className="tableview_requests_LEMZ__col">
@@ -148,8 +163,8 @@ const TableView = (props) => {
                     <div className="tableview_requests_LEMZ__col">{request.comment}</div>
                     <div className="tableview_requests_LEMZ__actions">
                         <Link to={"/workshop-lemz/view/" + request.id} className="tableview_requests_LEMZ__action" >Просмотр</Link>
-                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/workshop-lemz/edit/" + request.id} className="tableview_requests_LEMZ__action">Редактировать</Link>}
-                        {/* <div data-id={request.id} className="tableview_requests_LEMZ__action" onClick={props.deleteItem}>Удалить</div> */}
+                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/workshop-lemz/edit/" + request.id} className="tableview_requests_LEMZ__action">Редактировать</Link>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_LEMZ__action" onClick={props.deleteItem}>Удалить</div>}
                     </div>
                 </div>
             ))}

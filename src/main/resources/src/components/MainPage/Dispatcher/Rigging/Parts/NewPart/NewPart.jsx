@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './NewPart.scss';
+import { addPart } from '../../../../../../utils/utilsAPI.jsx';
 
-const NewTransportation = (props) => {
+const NewPart = (props) => {
     const [partInputs, setPartInputs] = useState({
         number: '',
         name: '',
@@ -18,7 +19,7 @@ const NewTransportation = (props) => {
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'package':
+            case 'name':
                 setNameValid(value !== "");
                 break;
         }
@@ -36,10 +37,8 @@ const NewTransportation = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(partInputs);
-
-        // formIsValid() && addPart(partInputs)
-        //     .then(() => props.history.push("/dispatcher/rigging/parts"))
+        formIsValid() && addPart(partInputs)
+            .then(() => props.history.push("/dispatcher/rigging/parts"))
     }
 
     const handleInputChange = e => {
@@ -52,11 +51,11 @@ const NewTransportation = (props) => {
     }
 
     useEffect(() => {
-        document.title = "Создание детали";
+        document.title = "Создание запчасти";
     }, [])
     return (
         <div className="new_part">
-            <div className="new_part__title">Новая деталь</div>
+            <div className="new_part__title">Новая запчасть</div>
             <form className="new_part__form">
                 <div className="new_part__item">
                     <div className="new_part__input_name">Артикул*</div>
@@ -99,10 +98,10 @@ const NewTransportation = (props) => {
                     </div>
                 </div>
                 <div className="new_part__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_part__submit" type="submit" onClick={handleSubmit} value="Добавить деталь" />
+                <input className="new_part__submit" type="submit" onClick={handleSubmit} value="Добавить запчасть" />
             </form>
         </div>
     );
 };
 
-export default NewTransportation;
+export default NewPart;

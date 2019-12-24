@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Stamp, Parts, NewPart, EditPart } from '../../lazyImports.jsx';
+import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp } from '../../lazyImports.jsx';
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import plusImg from '../../../../../../../../assets/sidemenu/plus_icon.svg';
@@ -40,7 +40,7 @@ const Rigging = (props) => {
                     <Link to="/dispatcher/rigging/parts" className={props.location.pathname.includes('parts') === true
                         ? "rigging__item--active rigging__item"
                         : "rigging__item"}>
-                        Детали
+                        Запчасти
                         <Link to="/dispatcher/rigging/parts/new" className="rigging__addButton">
                             <img className="rigging__img" src={plusImg} alt="" />
                         </Link>
@@ -53,6 +53,24 @@ const Rigging = (props) => {
                         <PrivateRoute
                             exact path="/dispatcher/rigging/stamp"
                             component={Stamp}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            exact path="/dispatcher/rigging/stamp/new"
+                            component={NewStamp}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            exact path="/dispatcher/rigging/machine"
+                            component={Machine}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            exact path="/dispatcher/rigging/press-form"
+                            component={PressForm}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />
@@ -74,7 +92,7 @@ const Rigging = (props) => {
                             userHasAccess={props.userHasAccess}
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />
-                        <Route component={PageNotFound}/>
+                        <Route component={PageNotFound} />
                     </Switch>
                 </Suspense>
             </div>

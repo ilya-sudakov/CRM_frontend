@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import './EditRequestLEMZ.scss';
-import { getRequestById, editRequest, getProducts, getRequestLEMZById, editRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
+import { getProducts, getRequestLEMZById, editRequestLEMZ, getUsers, editProductsToRequestLEMZ, addProductsToRequestLEMZ, deleteProductsToRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
+import SelectUser from '../../SelectUser/SelectUser.jsx';
 
 const EditRequestLEMZ = (props) => {
     const [requestId, setRequestId] = useState(1);
     const [products, setProducts] = useState([]);
+    const [selectedProducts, setSelectedProducts] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
-        // products: "",
+        products: [],
         // quantity: "",
         codeWord: "",
         responsible: "",
@@ -25,13 +27,14 @@ const EditRequestLEMZ = (props) => {
         codeWord: "",
         responsible: "",
         status: "",
-        dateShipped: "",
+        shippingDate: "",
         comment: ""
     })
     const [dateValid, setDateValid] = useState(true);
     const [productsValid, setProductsValid] = useState(true);
     const [quantityValid, setQuantityValid] = useState(true);
     const [responsibleValid, setResponsibleValid] = useState(true);
+    const [users, setUsers] = useState([]);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -56,9 +59,55 @@ const EditRequestLEMZ = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(requestInputs);
         formIsValid() && editRequestLEMZ(requestInputs, requestId)
             .then(() => {
-                props.history.push("/workshop-lemz")
+                //PUT if edited, POST if product is new
+                const productsArr = selectedProducts.map((selected) => {
+                    let edited = false;
+                    requestInputs.products.map((item) => {
+                        if (item.id === selected.id) {
+                            edited = true;
+                            return;
+                        }
+                    });
+                    return (edited === true)
+                        ? (
+                            editProductsToRequestLEMZ({
+                                requestId: requestId,
+                                quantity: selected.quantity,
+                                packaging: selected.packaging,
+                                name: selected.name
+                            }, selected.id)
+                        )
+                        : (
+                            addProductsToRequestLEMZ({
+                                requestId: requestId,
+                                quantity: selected.quantity,
+                                packaging: selected.packaging,
+                                name: selected.name
+                            })
+                        )
+                })
+                Promise.all(productsArr)
+                    .then(() => {
+                        //DELETE products removed by user
+                        const productsArr = requestInputs.products.map((item) => {
+                            let deleted = true;
+                            selectedProducts.map((selected) => {
+                                if (selected.id === item.id) {
+                                    deleted = false;
+                                    return;
+                                }
+                            })
+                            return (deleted === true && deleteProductsToRequestLEMZ(item.id));
+                        })
+                        Promise.all(productsArr)
+                            .then(() => props.history.push("/workshop-lemz"))
+                    })
+            })
+            .catch(error => {
+                console.log(error);
             })
     }
 
@@ -81,10 +130,11 @@ const EditRequestLEMZ = (props) => {
 
     const handleProductsChange = (newProducts) => {
         validateField("products", newProducts);
-        setRequestInputs({
-            ...requestInputs,
-            products: newProducts
-        })
+        // setRequestInputs({
+        //     ...requestInputs,
+        //     products: newProducts
+        // })
+        setSelectedProducts(newProducts);
     }
 
     useEffect(() => {
@@ -99,36 +149,50 @@ const EditRequestLEMZ = (props) => {
                 .then(res => res.json())
                 .then(oldRequest => {
                     // console.log(oldRequest),
-                        setRequestInputs({
-                            date: oldRequest.date,
-                            // products: oldRequest.products,
-                            quantity: oldRequest.quantity,
-                            codeWord: oldRequest.codeWord,
-                            responsible: oldRequest.responsible,
-                            status: oldRequest.status,
-                            shippingDate: oldRequest.shippingDate,
-                            comment: oldRequest.comment
-                        });
+                    setRequestInputs({
+                        date: oldRequest.date,
+                        products: oldRequest.lemzProducts,
+                        quantity: oldRequest.quantity,
+                        codeWord: oldRequest.codeWord,
+                        responsible: oldRequest.responsible,
+                        status: oldRequest.status,
+                        shippingDate: oldRequest.shippingDate,
+                        comment: oldRequest.comment
+                    });
+                    setSelectedProducts(oldRequest.lemzProducts)
                 })
                 .catch(error => {
                     console.log(error);
                     alert('Неправильный индекс заявки!');
-                    props.history.push("/requests");
+                    props.history.push("/workshop-lemz");
                 })
             getProducts()
                 .then(res => res.json())
                 .then(response => {
                     setProducts(response);
                 })
+                .then(() => getUsers())
+                .then(res => res.json())
+                .then(res => {
+                    setUsers(res);
+                })
         }
     }, [])
 
     const handleDateShippedChange = (date) => {
         const regex = "(0[1-9]|[12]\d|3[01])\.(0[1-9]|1[0-2])\.[12]\d{3})";
-        validateField("date", date);
+        // validateField("date", date);
         setRequestInputs({
             ...requestInputs,
             shippingDate: date
+        })
+    }
+
+    const handleResponsibleChange = (newResponsible) => {
+        validateField("responsible", newResponsible)
+        setRequestInputs({
+            ...requestInputs,
+            responsible: newResponsible
         })
     }
 
@@ -136,7 +200,7 @@ const EditRequestLEMZ = (props) => {
         <div className="edit_request_lemz">
             <div className="edit_request_lemz__title">Редактирование заявки ЛЭМЗ</div>
             <form className="edit_request_lemz__form">
-                <div className="edit_request_lemz__item">
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Дата*</div>
                     <div className="edit_request_lemz__input_field">
                         <DatePicker
@@ -148,16 +212,17 @@ const EditRequestLEMZ = (props) => {
                         />
                     </div>
                 </div>
-                {/* <div className="edit_request_lemz__item">
+                }
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Продукция*</div>
                     <Select
                         options={products}
                         onChange={handleProductsChange}
                         searchPlaceholder="Введите название продукта для поиска..."
-                        defaultValue={requestInputs.products}
+                        defaultValue={selectedProducts}
                     />
-                </div> */}
-                <div className="edit_request_lemz__item">
+                </div>}
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Кодовое слово*</div>
                     <div className="edit_request_lemz__input_field">
                         <input type="text"
@@ -167,18 +232,18 @@ const EditRequestLEMZ = (props) => {
                             defaultValue={requestInputs.codeWord}
                         />
                     </div>
-                </div>
-                <div className="edit_request_lemz__item">
+                </div>}
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Ответственный*</div>
                     <div className="edit_request_lemz__input_field">
-                        <input type="text"
-                            name="responsible"
-                            autoComplete="off"
-                            onChange={handleInputChange}
+                        <SelectUser
+                            options={users}
+                            onChange={handleResponsibleChange}
                             defaultValue={requestInputs.responsible}
+                            searchPlaceholder="Введите имя пользователя для поиска..."
                         />
                     </div>
-                </div>
+                </div>}
                 <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Статус*</div>
                     <div className="edit_request_lemz__input_field">
