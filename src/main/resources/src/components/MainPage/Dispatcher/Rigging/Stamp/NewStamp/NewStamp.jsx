@@ -88,10 +88,8 @@ const NewStamp = (props) => {
                 <div className="new_stamp__item">
                     <div className="new_stamp__input_name">Детали*</div>
                     <div className="new_stamp__input_field">
-                        {/* <input type="text" name="name" autoComplete="off" onChange={handleInputChange} /> */}
                         <SelectParts
                             handlePartsChange={handlePartsChange}
-                            searchPlaceholder="Введите название продукта для поиска..."
                         />
                     </div>
                 </div>

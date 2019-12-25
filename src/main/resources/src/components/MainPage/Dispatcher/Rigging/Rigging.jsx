@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp } from '../../lazyImports.jsx';
+import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp, ViewStamp, EditStamp, NewMachine, NewPressForm, ViewMachine, EditMachine, ViewPressForm, EditPressForm } from '../../lazyImports.jsx';
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import plusImg from '../../../../../../../../assets/sidemenu/plus_icon.svg';
@@ -63,14 +63,62 @@ const Rigging = (props) => {
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />
                         <PrivateRoute
+                            path="/dispatcher/rigging/stamp/view/"
+                            component={ViewStamp}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            path="/dispatcher/rigging/stamp/edit/"
+                            component={EditStamp}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
                             exact path="/dispatcher/rigging/machine"
                             component={Machine}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />
                         <PrivateRoute
+                            exact path="/dispatcher/rigging/machine/new"
+                            component={NewMachine}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            path="/dispatcher/rigging/machine/view/"
+                            component={ViewMachine}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            path="/dispatcher/rigging/machine/edit/"
+                            component={EditMachine}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
                             exact path="/dispatcher/rigging/press-form"
                             component={PressForm}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            exact path="/dispatcher/rigging/press-form/new"
+                            component={NewPressForm}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            path="/dispatcher/rigging/press-form/view/"
+                            component={ViewPressForm}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            path="/dispatcher/rigging/press-form/edit/"
+                            component={EditPressForm}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />

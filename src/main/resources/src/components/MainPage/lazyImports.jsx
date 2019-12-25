@@ -86,12 +86,44 @@ const NewStamp = lazy(
     () => import('./Dispatcher/Rigging/Stamp/NewStamp/NewStamp.jsx')
 )
 
+const ViewStamp = lazy(
+    () => import('./Dispatcher/Rigging/Stamp/ViewStamp/ViewStamp.jsx')
+)
+
+const EditStamp = lazy(
+    () => import('./Dispatcher/Rigging/Stamp/EditStamp/EditStamp.jsx')
+)
+
 const Machine = lazy(
     () => import('./Dispatcher/Rigging/Machine/Machine.jsx')
 )
 
+const NewMachine = lazy(
+    () => import('./Dispatcher/Rigging/Machine/NewMachine/NewMachine.jsx')
+)
+
+const ViewMachine = lazy(
+    () => import('./Dispatcher/Rigging/Machine/ViewMachine/ViewMachine.jsx')
+)
+
+const EditMachine = lazy(
+    () => import('./Dispatcher/Rigging/Machine/EditMachine/EditMachine.jsx')
+)
+
 const PressForm = lazy(
     () => import('./Dispatcher/Rigging/PressForm/PressForm.jsx')
+)
+
+const NewPressForm = lazy(
+    () => import('./Dispatcher/Rigging/PressForm/NewPressForm/NewPressForm.jsx')
+)
+
+const ViewPressForm = lazy(
+    () => import('./Dispatcher/Rigging/PressForm/ViewPressForm/ViewPressForm.jsx')
+)
+
+const EditPressForm = lazy(
+    () => import('./Dispatcher/Rigging/PressForm/EditPressForm/EditPressForm.jsx')
 )
 
 const Parts = lazy(
@@ -123,9 +155,19 @@ const ViewEmployee = lazy(
 )
 
 export {
-    Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
-    NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, WorkshopLEMZ,
-    NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Stamp, Parts, NewPart, EditPart, Employees, NewEmployee, EditEmployee, ViewEmployee,
-    Machine, PressForm, NewStamp
+    Clients, newClient, 
+    Contracts, 
+    Requests, NewRequest, EditRequest, ViewRequest, 
+    GeneralPage, 
+    Products, NewProduct, ViewProduct, EditProduct, 
+    Users, EditUser, NewUser, 
+    WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, 
+    Rigging, 
+    Transportation, EditTransportation, NewTransportation,
+    GeneralTasks, NewTask, EditTask, 
+    Parts, NewPart, EditPart, 
+    Employees, NewEmployee, EditEmployee, ViewEmployee,
+    Stamp, NewStamp, ViewStamp, EditStamp, 
+    Machine, NewMachine, ViewMachine, EditMachine, 
+    PressForm, NewPressForm, ViewPressForm, EditPressForm
 };

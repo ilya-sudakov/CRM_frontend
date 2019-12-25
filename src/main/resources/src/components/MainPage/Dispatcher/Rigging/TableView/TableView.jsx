@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 
@@ -123,8 +123,16 @@ const TableView = (props) => {
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__actions">
-                            <Link to={"/dispatcher/rigging/stamp/view/" + stamp.id} className="tableview_stamps__action">Просмотр</Link>
-                            <Link to={"/dispatcher/rigging/stamp/edit/" + stamp.id} className="tableview_stamps__action">Редактировать</Link>
+                            <Link to={"/dispatcher/rigging/" + (
+                                props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                                props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                            ) + "/view/" + stamp.id} className="tableview_stamps__action">Просмотр</Link>
+                            <Link to={"/dispatcher/rigging/" + (
+                                props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                                props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                            ) + "/edit/" + stamp.id} className="tableview_stamps__action">Редактировать</Link>
                             {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={stamp.id} className="tableview_stamps__action" onClick={props.deleteItem}>Удалить</div>}
                         </div>
                     </div>
@@ -143,7 +151,13 @@ const TableView = (props) => {
                                 <div className="tableview_stamps__col">{part.grinding}</div>
                                 <div className="tableview_stamps__col">{part.erosion}</div>
                                 <div className="tableview_stamps__col">{part.check}</div>
-                                <div className="tableview_stamps__actions"></div>
+                                <div className="tableview_stamps__actions">
+                                    <Link to={"/dispatcher/rigging/" + (
+                                        props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                                        props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                                    ) + "/edit-part/" + stamp.id + '/' + part.id} className="tableview_stamps__action">Редактировать</Link>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -153,4 +167,4 @@ const TableView = (props) => {
     )
 }
 
-export default TableView;
+export default withRouter(TableView);
