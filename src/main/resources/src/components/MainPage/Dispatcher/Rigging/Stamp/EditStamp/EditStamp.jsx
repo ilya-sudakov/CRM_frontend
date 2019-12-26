@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './EditStamp.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { getStampById, editStamp, editPartsOfStamp, addPartsToStamp, deletePartsFromStamp } from '../../../../../../utils/utilsAPI.jsx';
 
 const EditStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -15,6 +16,7 @@ const EditStamp = (props) => {
         comment: '',
         parts: ''
     })
+    const [stampId, setStampId] = useState(0);
     const [nameValid, setNameValid] = useState(true);
 
     const validateField = (fieldName, value) => {
@@ -37,9 +39,51 @@ const EditStamp = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(stampInputs);
-        // formIsValid() && addStamp(stampInputs)
-        //     .then(() => props.history.push("/dispatcher/rigging/stamp"))
+        // console.log(stampInputs.parts);
+        formIsValid() && editStamp(stampInputs, stampId)
+            .then(() => {
+                //PUT if edited, POST if part is new
+                const partsArr = stampInputs.parts.map((selected) => {
+                    let edited = false;
+                    stampInputs.stampParts.map((item) => {
+                        if (item.id === selected.id) {
+                            edited = true;
+                            return;
+                        }
+                    });
+                    return (edited === true)
+                        ? (
+                            editPartsOfStamp({
+                                ...selected,
+                                riggingId: stampId
+                            }, selected.id)
+                        )
+                        : (
+                            addPartsToStamp({
+                                ...selected,
+                                riggingId: stampId
+                            })
+                        )
+                })
+                Promise.all(partsArr)
+                    .then(() => {
+                        //DELETE parts removed by user
+                        const partsArr = stampInputs.stampParts.map((item) => {
+                            let deleted = true;
+                            stampInputs.parts.map((selected) => {
+                                if (selected.id === item.id) {
+                                    deleted = false;
+                                    return;
+                                }
+                            })                                                                                  
+                            return (deleted === true && deletePartsFromStamp(item.id))
+                        })
+                        Promise.all(partsArr)
+                            .then(() => {
+                                props.history.push("/dispatcher/rigging/stamp");
+                            })
+                    })
+            })
     }
 
     const handleInputChange = e => {
@@ -61,6 +105,24 @@ const EditStamp = (props) => {
 
     useEffect(() => {
         document.title = "Редактирование штампа";
+        const id = props.history.location.pathname.split("/dispatcher/rigging/stamp/edit/")[1];
+        setStampId(id);
+        if (isNaN(Number.parseInt(id))) {
+            alert('Неправильный индекс штампа!');
+            props.history.push("/dispatcher/rigging/stamp");
+        } else {
+            getStampById(id)
+                .then(res => res.json())
+                .then(res => {
+                    setStampInputs({
+                        ...res,
+                        parts: res.stampParts
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }, [])
 
     return (
@@ -106,7 +168,7 @@ const EditStamp = (props) => {
                         {/* <input type="text" name="name" autoComplete="off" onChange={handleInputChange} /> */}
                         <SelectParts
                             handlePartsChange={handlePartsChange}
-                            defaultValue={stampInputs.parts}
+                            defaultValue={stampInputs.stampParts}
                             searchPlaceholder="Введите название продукта для поиска..."
                         />
                     </div>

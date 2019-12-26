@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './EditMachine.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { editMachine, editPartsOfMachine, addPartsToStamp, deletePartsFromMachine, getMachineById, addPartsToMachine } from '../../../../../../utils/utilsAPI.jsx';
 
 const EditMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
@@ -9,6 +10,8 @@ const EditMachine = (props) => {
         comment: '',
         parts: []
     })
+
+    const [machineId, setMachineId] = useState(0);
     const [nameValid, setNameValid] = useState(true);
 
     const validateField = (fieldName, value) => {
@@ -31,9 +34,51 @@ const EditMachine = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(machineInputs);
-        // formIsValid() && addMachine(machineInputs)
-        //     .then(() => props.history.push("/dispatcher/rigging/machine"))
+        // console.log(machineInputs);
+        formIsValid() && editMachine(machineInputs, machineId)
+            .then(() => {
+                //PUT if edited, POST if part is new
+                const partsArr = machineInputs.parts.map((selected) => {
+                    let edited = false;
+                    machineInputs.benchParts.map((item) => {
+                        if (item.id === selected.id) {
+                            edited = true;
+                            return;
+                        }
+                    });
+                    return (edited === true)
+                        ? (
+                            editPartsOfMachine({
+                                ...selected,
+                                riggingId: machineId
+                            }, selected.id)
+                        )
+                        : (
+                            addPartsToMachine({
+                                ...selected,
+                                riggingId: machineId
+                            })
+                        )
+                })
+                Promise.all(partsArr)
+                    .then(() => {
+                        //DELETE parts removed by user
+                        const partsArr = machineInputs.benchParts.map((item) => {
+                            let deleted = true;
+                            machineInputs.parts.map((selected) => {
+                                if (selected.id === item.id) {
+                                    deleted = false;
+                                    return;
+                                }
+                            })
+                            return (deleted === true && deletePartsFromMachine(item.id))
+                        })
+                        Promise.all(partsArr)
+                            .then(() => {
+                                props.history.push("/dispatcher/rigging/machine");
+                            })
+                    })
+            })
     }
 
     const handleInputChange = e => {
@@ -54,12 +99,30 @@ const EditMachine = (props) => {
     }
 
     useEffect(() => {
-        document.title = "Редактирование штампа";
+        document.title = "Редактирование станка";
+        const id = props.history.location.pathname.split("/dispatcher/rigging/machine/edit/")[1];
+        setMachineId(id);
+        if (isNaN(Number.parseInt(id))) {
+            alert('Неправильный индекс станка!');
+            props.history.push("/dispatcher/rigging/machine");
+        } else {
+            getMachineById(id)
+                .then(res => res.json())
+                .then(res => {
+                    setMachineInputs({
+                        ...res,
+                        parts: res.benchParts
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }, [])
 
     return (
         <div className="edit_machine">
-            <div className="edit_machine__title">Редактирование штампа</div>
+            <div className="edit_machine__title">Редактирование станка</div>
             <form className="edit_machine__form">
                 <div className="edit_machine__item">
                     <div className="edit_machine__input_name">Название*</div>
@@ -99,7 +162,7 @@ const EditMachine = (props) => {
                     <div className="edit_machine__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
-                            defaultValue={machineInputs.parts}
+                            defaultValue={machineInputs.benchParts}
                         />
                     </div>
                 </div>

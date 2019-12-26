@@ -51,7 +51,7 @@ const TableView = (props) => {
         setPartsVisible([
             ...temp,
         ]);
-    }, [])
+    }, [props.data])
 
     const checkPart = (index) => {
         index = Number.parseInt(index);
@@ -115,7 +115,7 @@ const TableView = (props) => {
                         <div className="tableview_stamps__col">{stamp.name}</div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
-                        <div className="tableview_stamps__col"></div>
+                        <div className="tableview_stamps__col">{stamp.comment}</div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
@@ -137,7 +137,11 @@ const TableView = (props) => {
                         </div>
                     </div>
                     <div id={stamp_id} className={"tableview_stamps__parts " + ((isPartHidden(stamp.id) === true) && "tableview_stamps__parts--hidden")}>
-                        {stamp.parts.map((part, index) => (
+                        {stamp[
+                            props.location.pathname.includes("/dispatcher/rigging/stamp") && "stampParts" ||
+                            props.location.pathname.includes("/dispatcher/rigging/machine") && "benchParts" ||
+                            props.location.pathname.includes("/dispatcher/rigging/press-form") && "pressParts"
+                        ].map((part, index) => (
                             <div key={index} className={"tableview_stamps__row " + (part.id % 2 === 0 ? "tableview_stamps__row--even" : "tableview_stamps__row--odd")}>
                                 <div className="tableview_stamps__col">{part.id}</div>
                                 <div className="tableview_stamps__col">{part.number}</div>
@@ -150,7 +154,7 @@ const TableView = (props) => {
                                 <div className="tableview_stamps__col">{part.harding}</div>
                                 <div className="tableview_stamps__col">{part.grinding}</div>
                                 <div className="tableview_stamps__col">{part.erosion}</div>
-                                <div className="tableview_stamps__col">{part.check}</div>
+                                <div className="tableview_stamps__col">{part.controll}</div>
                                 <div className="tableview_stamps__actions">
                                     <Link to={"/dispatcher/rigging/" + (
                                         props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||

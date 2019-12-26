@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ViewStamp.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { getStampById } from '../../../../../../utils/utilsAPI.jsx';
 
 const ViewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -17,6 +18,20 @@ const ViewStamp = (props) => {
 
     useEffect(() => {
         document.title = "Просмотр штампа";
+        const id = props.history.location.pathname.split("/dispatcher/rigging/stamp/view/")[1];
+        if (isNaN(Number.parseInt(id))) {
+            alert('Неправильный индекс штампа!');
+            props.history.push("/dispatcher/rigging/stamp");
+        } else {
+            getStampById(id)
+                .then(res => res.json())
+                .then(res => {
+                    setStampInputs(res);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }, [])
 
     return (
@@ -61,7 +76,7 @@ const ViewStamp = (props) => {
                     <div className="view_stamp__input_field">
                         <SelectParts
                             readOnly
-                            defaultValue={stampInputs.parts}
+                            defaultValue={stampInputs.stampParts}
                         />
                     </div>
                 </div>

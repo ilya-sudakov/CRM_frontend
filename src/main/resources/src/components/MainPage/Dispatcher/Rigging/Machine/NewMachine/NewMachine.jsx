@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './NewMachine.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { addMachine, addPartsToMachine } from '../../../../../../utils/utilsAPI.jsx';
 
 const NewMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
@@ -31,9 +32,22 @@ const NewMachine = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(machineInputs);
-        // formIsValid() && addMachine(machineInputs)
-        //     .then(() => props.history.push("/dispatcher/rigging/machine"))
+        // console.log(machineInputs);
+        let machineId = 1;
+        formIsValid() && addMachine(machineInputs)
+            .then(res => res.json())
+            .then(res => machineId = res.id)
+            .then(() => {
+                const parts = machineInputs.parts.map((item) => {
+                    let newPart = Object.assign({
+                        ...item,
+                        riggingId: machineId
+                    })
+                    return addPartsToMachine(newPart);
+                })
+                Promise.all(parts)
+                    .then(() => props.history.push("/dispatcher/rigging/machine"))
+            })
     }
 
     const handleInputChange = e => {

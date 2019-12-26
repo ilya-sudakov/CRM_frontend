@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ViewMachine.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { getMachineById } from '../../../../../../utils/utilsAPI.jsx';
 
 const ViewMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
@@ -17,6 +18,20 @@ const ViewMachine = (props) => {
 
     useEffect(() => {
         document.title = "Просмотр станка";
+        const id = props.history.location.pathname.split("/dispatcher/rigging/machine/view/")[1];
+        if (isNaN(Number.parseInt(id))) {
+            alert('Неправильный индекс станка!');
+            props.history.push("/dispatcher/rigging/machine");
+        } else {
+            getMachineById(id)
+                .then(res => res.json())
+                .then(res => {
+                    setMachineInputs(res);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }, [])
 
     return (
@@ -61,7 +76,7 @@ const ViewMachine = (props) => {
                     <div className="view_machine__input_field">
                         <SelectParts
                             readOnly
-                            defaultValue={machineInputs.parts}
+                            defaultValue={machineInputs.benchParts}
                         />
                     </div>
                 </div>

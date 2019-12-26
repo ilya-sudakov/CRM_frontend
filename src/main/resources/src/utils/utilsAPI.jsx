@@ -438,3 +438,228 @@ export function editEmployee(newPart, id) {
         body: JSON.stringify(newPart)
     })
 }
+
+export function getStamp() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/",
+        method: "GET"
+    })
+}
+
+export function getStampById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/" + id,
+        method: "GET"
+    })
+}
+
+export function deleteStamp(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addStamp(newStamp) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/",
+        method: "POST",
+        body: JSON.stringify(newStamp)
+    })
+}
+
+export function editStamp(newStamp, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStamp)
+    })
+}
+
+export function addPartsToStamp(newPart) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/part/",
+        method: "POST",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function editPartsOfStamp(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/part/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function getPartFromStamp(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/part/" + id,
+        method: "GET"
+    })
+}
+
+export function editPartFromStamp(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/part/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function deletePartsFromStamp(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/part/" + id,
+        method: "DELETE"
+    })
+}
+
+export function getMachine() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/",
+        method: "GET"
+    })
+}
+
+export function getMachineById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/" + id,
+        method: "GET"
+    })
+}
+
+export function deleteMachine(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addMachine(newStamp) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/",
+        method: "POST",
+        body: JSON.stringify(newStamp)
+    })
+}
+
+export function editMachine(newStamp, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStamp)
+    })
+}
+
+export function addPartsToMachine(newPart) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/part/",
+        method: "POST",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function editPartsOfMachine(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/part/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function getPartFromMachine(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/part/" + id,
+        method: "GET"
+    })
+}
+
+export function editPartFromMachine(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/part/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function deletePartsFromMachine(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/bench/part/" + id,
+        method: "DELETE"
+    })
+}
+
+export function getPressForm() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/",
+        method: "GET"
+    })
+}
+
+export function getPressFormById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/" + id,
+        method: "GET"
+    })
+}
+
+export function deletePressForm(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/" + id,
+        method: "DELETE"
+    })
+}
+
+export function addPressForm(newStamp) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/",
+        method: "POST",
+        body: JSON.stringify(newStamp)
+    })
+}
+
+export function editPressForm(newStamp, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStamp)
+    })
+}
+
+export function addPartsToPressForm(newPart) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/part/",
+        method: "POST",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function editPartsOfPressForm(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/part/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function getPartFromPressForm(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/part/" + id,
+        method: "GET"
+    })
+}
+
+export function editPartFromPressForm(newPart, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/part/" + id,
+        method: "PUT",
+        body: JSON.stringify(newPart)
+    })
+}
+
+export function deletePartsFromPressForm(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/press/part/" + id,
+        method: "DELETE"
+    })
+}

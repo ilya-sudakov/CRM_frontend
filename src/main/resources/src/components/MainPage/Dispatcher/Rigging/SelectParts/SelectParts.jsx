@@ -48,7 +48,23 @@ const SelectParts = (props) => {
                 harding: '',
                 grinding: '',
                 erosion: '',
-                check: ''
+                controll: ''
+            }
+        ]);
+        props.handlePartsChange([
+            ...selected,
+            {
+                number: '',
+                name: '',
+                amount: '',
+                location: '',
+                comment: '',
+                cuttingDimensions: '',
+                milling: '',
+                harding: '',
+                grinding: '',
+                erosion: '',
+                controll: ''
             }
         ])
     }
@@ -57,7 +73,8 @@ const SelectParts = (props) => {
         const id = e.target.getAttribute("index");
         let temp = selected;
         temp.splice(id, 1);
-        setSelected([...temp])
+        setSelected([...temp]);
+        props.handlePartsChange([...temp]);
     }
 
     const handleInputChange = (event) => {
@@ -242,11 +259,11 @@ const SelectParts = (props) => {
                                 <div className="select_parts__input_field">
                                     <input
                                         type="text"
-                                        name="check"
+                                        name="controll"
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.check}
+                                        defaultValue={item.controll}
                                         readOnly={props.readOnly}
                                     />
                                 </div>

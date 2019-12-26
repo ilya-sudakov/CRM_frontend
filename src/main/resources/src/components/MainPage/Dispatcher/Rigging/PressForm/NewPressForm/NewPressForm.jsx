@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './NewPressForm.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { addPressForm, addPartsToPressForm } from '../../../../../../utils/utilsAPI.jsx';
 
 const NewPressForm = (props) => {
     const [pressFormInputs, setPressFormInputs] = useState({
@@ -31,9 +32,22 @@ const NewPressForm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(pressFormInputs);
-        // formIsValid() && addMachine(pressFormInputs)
-        //     .then(() => props.history.push("/dispatcher/rigging/machine"))
+        // console.log(pressFormInputs);
+        let pressId = 1;
+        formIsValid() && addPressForm(pressFormInputs)
+            .then(res => res.json())
+            .then(res => pressId = res.id)
+            .then(() => {
+                const parts = pressFormInputs.parts.map((item) => {
+                    let newPart = Object.assign({
+                        ...item,
+                        riggingId: pressId
+                    })
+                    return addPartsToPressForm(newPart);
+                })
+                Promise.all(parts)
+                    .then(() => props.history.push("/dispatcher/rigging/press-form"))
+            })
     }
 
     const handleInputChange = e => {

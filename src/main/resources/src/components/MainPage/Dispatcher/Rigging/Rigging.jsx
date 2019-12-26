@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp, ViewStamp, EditStamp, NewMachine, NewPressForm, ViewMachine, EditMachine, ViewPressForm, EditPressForm } from '../../lazyImports.jsx';
+import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp, ViewStamp, EditStamp, NewMachine, NewPressForm, ViewMachine, EditMachine, ViewPressForm, EditPressForm, EditPartInRigging } from '../../lazyImports.jsx';
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import plusImg from '../../../../../../../../assets/sidemenu/plus_icon.svg';
@@ -137,6 +137,16 @@ const Rigging = (props) => {
                         <PrivateRoute
                             path="/dispatcher/rigging/parts/edit/"
                             component={EditPart}
+                            userHasAccess={props.userHasAccess}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                        />
+                        <PrivateRoute
+                            path={"/dispatcher/rigging/" + (
+                                props.location.pathname.includes('stamp') && "stamp" ||
+                                props.location.pathname.includes('machine') && "machine" || 
+                                props.location.pathname.includes('press-form') && "press-form"
+                            ) + "/edit-part/"}
+                            component={EditPartInRigging}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />

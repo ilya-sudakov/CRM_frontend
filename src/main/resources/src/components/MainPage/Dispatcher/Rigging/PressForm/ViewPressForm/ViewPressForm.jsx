@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ViewPressForm.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { getPressFormById } from '../../../../../../utils/utilsAPI.jsx';
 
 const ViewPressForm = (props) => {
     const [pressFormInputs, setPressFormInputs] = useState({
@@ -17,6 +18,20 @@ const ViewPressForm = (props) => {
 
     useEffect(() => {
         document.title = "Просмотр пресс-формы";
+        const id = props.history.location.pathname.split("/dispatcher/rigging/press-form/view/")[1];
+        if (isNaN(Number.parseInt(id))) {
+            alert('Неправильный индекс пресс-формы!');
+            props.history.push("/dispatcher/rigging/press-form");
+        } else {
+            getPressFormById(id)
+                .then(res => res.json())
+                .then(res => {
+                    setPressFormInputs(res);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }, [])
 
     return (
@@ -61,7 +76,7 @@ const ViewPressForm = (props) => {
                     <div className="view_press_form__input_field">
                         <SelectParts
                             readOnly
-                            defaultValue={pressFormInputs.parts}
+                            defaultValue={pressFormInputs.pressParts}
                         />
                     </div>
                 </div>

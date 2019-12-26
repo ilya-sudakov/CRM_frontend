@@ -2,189 +2,43 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import './Stamp.scss';
 import TableView from '../TableView/TableView.jsx';
+import { getStamp, getStampById, deletePartsFromStamp, deleteStamp } from '../../../../../utils/utilsAPI.jsx';
 
 const Stamp = (props) => {
-    const [stamps, setStamps] = useState([
-        {
-            id: 1,
-            number: 'ТАМН.043.004',
-            name: 'Кляймер Злой',
-            comment: '22.05-23.12.3',
-            parts: [
-                {
-                    id: 1,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Айгуль 14.95',
-                    milling: 'Айгуль 14.95',
-                    harding: 'Айгуль 14.95',
-                    grinding: 'Айгуль 14.95',
-                    erosion: 'Айгуль 14.95',
-                    check: 'Айгуль 14.95',
-                },
-                {
-                    id: 2,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Айгуль 14.95',
-                    milling: 'Айгуль 14.95',
-                    harding: 'Айгуль 14.95',
-                    grinding: 'Айгуль 14.95',
-                    erosion: 'Айгуль 14.95',
-                    check: 'Айгуль 14.95',
-                },
-                {
-                    id: 3,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Айгуль 14.95',
-                    milling: 'Айгуль 14.95',
-                    harding: 'Айгуль 14.95',
-                    grinding: 'Айгуль 14.95',
-                    erosion: 'Айгуль 14.95',
-                    check: 'Айгуль 14.95',
-                },
-            ]
-        },
-        {
-            id: 2,
-            number: 'ТАМН.03.004',
-            name: 'Кляймер Зл4ой',
-            comment: '22.05-23.12.3',
-            parts: [
-                {
-                    id: 1,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Георгий 14.95',
-                    milling: 'Георгий 14.95',
-                    harding: 'Георгий 14.95',
-                    grinding: 'Георгий 14.95',
-                    erosion: 'Георгий 14.95',
-                    check: 'Георгий 14.95',
-                },
-                {
-                    id: 3,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Айгуль 14.95',
-                    milling: 'Айгуль 14.95',
-                    harding: 'Айгуль 14.95',
-                    grinding: 'Айгуль 14.95',
-                    erosion: 'Айгуль 14.95',
-                    check: 'Айгуль 14.95',
-                },
-            ]
-        },
-        {
-            id: 5,
-            number: 'ТАМН.03.004',
-            name: 'Кляймер Зл4ой',
-            comment: '22.05-23.12.3',
-            parts: [
-                {
-                    id: 1,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Георгий 14.95',
-                    milling: 'Георгий 14.95',
-                    harding: 'Георгий 14.95',
-                    grinding: 'Георгий 14.95',
-                    erosion: 'Георгий 14.95',
-                    check: 'Георгий 14.95',
-                },
-                {
-                    id: 3,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Айгуль 14.95',
-                    milling: 'Айгуль 14.95',
-                    harding: 'Айгуль 14.95',
-                    grinding: 'Айгуль 14.95',
-                    erosion: 'Айгуль 14.95',
-                    check: 'Айгуль 14.95',
-                },
-                {
-                    id: 3,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Айгуль 14.95',
-                    milling: 'Айгуль 14.95',
-                    harding: 'Айгуль 14.95',
-                    grinding: 'Айгуль 14.95',
-                    erosion: 'Айгуль 14.95',
-                    check: 'Айгуль 14.95',
-                },
-                {
-                    id: 3,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Айгуль 14.95',
-                    milling: 'Айгуль 14.95',
-                    harding: 'Айгуль 14.95',
-                    grinding: 'Айгуль 14.95',
-                    erosion: 'Айгуль 14.95',
-                    check: 'Айгуль 14.95',
-                },
-                {
-                    id: 3,
-                    number: 'ТАМН.043.004',
-                    name: 'Кляймер Злой',
-                    amount: '3',
-                    location: 'Выполнено. Лиговка',
-                    comment: '22.05-23.12.3',
-                    cuttingDimensions: 'Айгуль 14.95',
-                    milling: 'Айгуль 14.95',
-                    harding: 'Айгуль 14.95',
-                    grinding: 'Айгуль 14.95',
-                    erosion: 'Айгуль 14.95',
-                    check: 'Айгуль 14.95',
-                },
-            ]
-        }
-    ])
+    const [stamps, setStamps] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         document.title = "Штампы";
-        // loadStamps();
+        loadStamps();
     }, [])
 
     const loadStamps = () => {
-        setStamps()
+        getStamp()
+            .then(res => res.json())
+            .then(res => {
+                // console.log(res);                
+                setStamps(res);
+            })
+            .catch(error => {
+                console.log(error);                
+            })
     }
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
-        // deleteStamp(id)
-        // .then(() => loadStamps())
+        getStampById(id)
+            .then(res => res.json())
+            .then(res => {
+                const parts = res.stampParts.map((item) => {
+                    return deletePartsFromStamp(item.id);
+                })
+                Promise.all(parts)
+                    .then(() => {
+                        deleteStamp(id)
+                            .then(() => loadStamps())
+                    })
+            })
     }
 
     return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './NewStamp.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { addPartsToStamp, addStamp } from '../../../../../../utils/utilsAPI.jsx';
 
 const NewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -37,9 +38,21 @@ const NewStamp = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(stampInputs);
-        // formIsValid() && addStamp(stampInputs)
-        //     .then(() => props.history.push("/dispatcher/rigging/stamp"))
+        let stampId = 1;
+        formIsValid() && addStamp(stampInputs)
+            .then(res => res.json())
+            .then(res => stampId = res.id)
+            .then(() => {
+                const stamps = stampInputs.parts.map((item) => {
+                    let newPart = Object.assign({
+                        ...item,
+                        riggingId: stampId
+                    })
+                    return addPartsToStamp(newPart);
+                })
+                Promise.all(stamps)
+                    .then(() => props.history.push("/dispatcher/rigging/stamp"))
+            })
     }
 
     const handleInputChange = e => {
