@@ -44,9 +44,9 @@ const PressForm = (props) => {
     return (
         <div className="press_form">
             <SearchBar
-                title='Поиск штампа'
+                title='Поиск пресс-формы'
                 setSearchQuery={setSearchQuery}
-                placeholder='Введите () для поиска...'
+                placeholder='Введите здесь запрос для поиска...'
             />
             <div className="press_form__amount_table">Всего: {pressForm.length} записей</div>
             <TableView

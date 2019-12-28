@@ -9,7 +9,7 @@ const Machine = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        document.title = "Штампы";
+        document.title = "Станки";
         loadMachines();
     }, [])
 
@@ -44,9 +44,9 @@ const Machine = (props) => {
     return (
         <div className="machine">
             <SearchBar
-                title='Поиск штампа'
+                title='Поиск станка'
                 setSearchQuery={setSearchQuery}
-                placeholder='Введите () для поиска...'
+                placeholder='Введите здесь запрос для поиска...'
             />
             <div className="machine__amount_table">Всего: {machines.length} записей</div>
             <TableView

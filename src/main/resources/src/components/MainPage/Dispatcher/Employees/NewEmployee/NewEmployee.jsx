@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './NewEmployee.scss';
 import { addEmployee } from '../../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 
 const NewEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
         name: '',
         lastName: '',
         middleName: '',
-        yearOfBirth: '',
+        yearOfBirth: new Date(),
         citizenship: '',
         position: '',
         workshop: 'ЦехЛЭМЗ',
@@ -15,30 +17,73 @@ const NewEmployee = (props) => {
         comment: '',
         relevance: 'Работает'
     })
-    const [productErrors, setProductErrors] = useState({
-        name: '',
-        lastName: '',
-        middleName: '',
-        yearOfBirth: '',
-        citizenship: '',
-        position: '',
-        workshop: '',
-        passportScan1: '',
-        comment: '',
-        relevance: ''
+    const [employeeErrors, setEmployeeErrors] = useState({
+        name: false,
+        lastName: false,
+        middleName: false,
+        yearOfBirth: false,
+        citizenship: false,
+        position: false,
+        workshop: false,
+        // passportScan1: false,
+        // comment: false,
+        relevance: false
     })
-    const [nameValid, setNameValid] = useState(false);
-
+    const [validInputs, setValidInputs] = useState({
+        name: false,
+        lastName: false,
+        middleName: false,
+        yearOfBirth: true,
+        citizenship: false,
+        position: false,
+        workshop: true,
+        // passportScan1: false,
+        // comment: false,
+        relevance: true
+    })
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'name':
-                setNameValid(value !== "");
+            case 'yearOfBirth':
+                setValidInputs({
+                    ...validInputs,
+                    yearOfBirth: (value !== null)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (nameValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            name: false,
+            lastName: false,
+            middleName: false,
+            yearOfBirth: false,
+            citizenship: false,
+            position: false,
+            workshop: false,
+            // passportScan1: false,
+            // comment: false,
+            relevance: false
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setEmployeeErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -59,6 +104,10 @@ const NewEmployee = (props) => {
         setEmployeeInputs({
             ...employeeInputs,
             [name]: value
+        })
+        setEmployeeErrors({
+            ...employeeErrors,
+            [name]: false
         })
     }
 
@@ -87,6 +136,19 @@ const NewEmployee = (props) => {
         })
     }
 
+    const handleDateChange = (date) => {
+        const regex = "(0[1-9]|[12]\d|3[01])\.(0[1-9]|1[0-2])\.[12]\d{3})";
+        validateField("yearOfBirth", date);
+        setEmployeeInputs({
+            ...employeeInputs,
+            yearOfBirth: date
+        })
+        setEmployeeErrors({
+            ...employeeErrors,
+            yearOfBirth: false
+        })
+    }
+
     useEffect(() => {
         document.title = "Добавление сотрудника";
     }, [])
@@ -94,56 +156,52 @@ const NewEmployee = (props) => {
         <div className="new_employee">
             <div className="new_employee__title">Новый сотрудник</div>
             <form className="new_employee__form">
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Имя*</div>
-                    <div className="new_employee__input_field">
-                        <input type="text"
-                            name="name"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Фамилия*</div>
-                    <div className="new_employee__input_field">
-                        <input type="text"
-                            name="lastName"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Отчество*</div>
-                    <div className="new_employee__input_field">
-                        <input type="text"
-                            name="middleName"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Год рождения*</div>
-                    <div className="new_employee__input_field">
-                        <input type="text"
-                            name="yearOfBirth"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Гражданство*</div>
-                    <div className="new_employee__input_field">
-                        <input type="text"
-                            name="citizenship"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Имя"
+                    required
+                    error={employeeErrors.name}
+                    name="name"
+                    handleInputChange={handleInputChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
+                <InputText
+                    inputName="Фамилия"
+                    required
+                    error={employeeErrors.lastName}
+                    name="lastName"
+                    handleInputChange={handleInputChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
+                <InputText
+                    inputName="Отчество"
+                    required
+                    error={employeeErrors.middleName}
+                    name="middleName"
+                    handleInputChange={handleInputChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
+                <InputDate
+                    inputName="Дата рождения"
+                    required
+                    error={employeeErrors.yearOfBirth}
+                    name="yearOfBirth"
+                    selected={employeeInputs.yearOfBirth}
+                    handleDateChange={handleDateChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
+                <InputText
+                    inputName="Гражданство"
+                    required
+                    error={employeeErrors.citizenship}
+                    name="citizenship"
+                    handleInputChange={handleInputChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
                 <div className="new_employee__item">
                     <div className="new_employee__input_name">Цех*</div>
                     <div className="new_employee__input_field">
@@ -158,16 +216,15 @@ const NewEmployee = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Должность*</div>
-                    <div className="new_employee__input_field">
-                        <input type="text"
-                            name="position"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Должность"
+                    required
+                    error={employeeErrors.position}
+                    name="position"
+                    handleInputChange={handleInputChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
                 {employeeInputs.passportScan1 !== '' && <div className="new_employee__item">
                     <div className="new_employee__input_name">Паспорт</div>
                     <div className="new_employee__passport_img">
@@ -197,16 +254,15 @@ const NewEmployee = (props) => {
                         <input type="file" name="passportScan1" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Комментарий*</div>
-                    <div className="new_employee__input_field">
-                        <input type="text"
-                            name="comment"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Комментарий"
+                    // required
+                    // error={employeeErrors.comment}
+                    name="comment"
+                    handleInputChange={handleInputChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
                 <div className="new_employee__item">
                     <div className="new_employee__input_name">Актуальность*</div>
                     <div className="new_employee__input_field">

@@ -46,7 +46,7 @@ const Stamp = (props) => {
             <SearchBar
                 title='Поиск штампа'
                 setSearchQuery={setSearchQuery}
-                placeholder='Введите () для поиска...'
+                placeholder='Введите здесь запрос для поиска...'
             />
             <div className="stamp__amount_table">Всего: {stamps.length} записей</div>
             <TableView

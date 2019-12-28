@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './NewMachine.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addMachine, addPartsToMachine } from '../../../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 
 const NewMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
@@ -10,18 +11,55 @@ const NewMachine = (props) => {
         comment: '',
         parts: []
     })
-    const [nameValid, setNameValid] = useState(false);
-
+    const [riggingErrors, setRiggingErrors] = useState({
+        name: false,
+        number: false,
+        // comment: false,
+        parts: false,
+    })
+    const [validInputs, setValidInputs] = useState({
+        name: false,
+        number: false,
+        // comment: false,
+        parts: false,
+    })
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'name':
-                setNameValid(value !== "");
+            case 'parts':
+                setValidInputs({
+                    ...validInputs,
+                    parts: (value.length > 0)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (nameValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            name: false,
+            number: false,
+            // comment: false,
+            parts: false,
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setRiggingErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -57,6 +95,10 @@ const NewMachine = (props) => {
             ...machineInputs,
             [name]: value
         })
+        setRiggingErrors({
+            ...riggingErrors,
+            [name]: false
+        })
     }
 
     const handlePartsChange = (newParts) => {
@@ -64,6 +106,10 @@ const NewMachine = (props) => {
         setMachineInputs({
             ...machineInputs,
             parts: newParts
+        })
+        setRiggingErrors({
+            ...riggingErrors,
+            parts: false
         })
     }
 
@@ -75,24 +121,31 @@ const NewMachine = (props) => {
         <div className="new_machine">
             <div className="new_machine__title">Новый станок</div>
             <form className="new_machine__form">
-                <div className="new_machine__item">
-                    <div className="new_machine__input_name">Название*</div>
-                    <div className="new_machine__input_field">
-                        <input type="text" name="name" autoComplete="off" onChange={handleInputChange} />
-                    </div>
-                </div>
-                <div className="new_machine__item">
-                    <div className="new_machine__input_name">Артикул*</div>
-                    <div className="new_machine__input_field">
-                        <input type="text" name="number" autoComplete="off" onChange={handleInputChange} />
-                    </div>
-                </div>
-                <div className="new_machine__item">
-                    <div className="new_machine__input_name">Комментарий</div>
-                    <div className="new_machine__input_field">
-                        <input type="text" name="comment" autoComplete="off" onChange={handleInputChange} />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Название"
+                    required
+                    error={riggingErrors.name}
+                    name="name"
+                    handleInputChange={handleInputChange}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
+                />
+                <InputText
+                    inputName="Артикул"
+                    required
+                    error={riggingErrors.number}
+                    name="number"
+                    handleInputChange={handleInputChange}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
+                />
+                <InputText
+                    inputName="Комментарий"
+                    // required
+                    // error={riggingErrors.comment}
+                    name="comment"
+                    handleInputChange={handleInputChange}
+                />
                 <div className="new_machine__item">
                     <div className="new_machine__input_name">Детали*</div>
                     <div className="new_machine__input_field">

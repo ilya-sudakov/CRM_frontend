@@ -1,57 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import ru from 'date-fns/locale/ru';
 import { addRequest, getProducts, addProductsToRequest, getUsers } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
-import "react-datepicker/dist/react-datepicker.css";
-import '../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import './NewRequest.scss';
-import SelectUser from '../../SelectUser/SelectUser.jsx';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
+import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: new Date(),
-        // products: "",
         codeWord: "",
         responsible: "",
         status: "Материалы"
     })
-    // const [productsRequest, setProductsRequest] = useState([])
     const [requestErrors, setRequestErrors] = useState({
-        date: "",
-        products: "",
-        // quantity: "",
-        codeWord: "",
-        responsible: "",
-        status: "",
+        date: false,
+        requestProducts: false,
+        codeWord: false,
+        responsible: false,
     })
-    const [dateValid, setDateValid] = useState(true);
-    const [productsValid, setProductsValid] = useState(false);
-    // const [quantityValid, setQuantityValid] = useState(false);
-    const [responsibleValid, setResponsibleValid] = useState(false);
+    const [validInputs, setValidInputs] = useState({
+        date: true,
+        requestProducts: false,
+        codeWord: false,
+        responsible: false,
+    })
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'date':
-                value !== "" ? setDateValid(true) : setDateValid(false);
+                setValidInputs({
+                    ...validInputs,
+                    date: (value !== null)
+                });
                 break;
             case 'requestProducts':
-                value !== [] ? setProductsValid(true) : setProductsValid(false);
+                setValidInputs({
+                    ...validInputs,
+                    requestProducts: (value !== [])
+                });
                 break;
-            // case 'quantity':
-            //     setQuantityValid(value !== "");
-            //     break;
-            case 'responsible':
-                value !== "" ? setResponsibleValid(true) : setResponsibleValid(false);
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (dateValid && productsValid && responsibleValid) {
-
+        let check = true;
+        let newErrors = Object.assign({
+            date: false,
+            products: false,
+            codeWord: false,
+            responsible: false,
+        });
+        for (let item in validInputs) {
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setRequestErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -63,7 +81,7 @@ const NewRequest = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let id = 0;
-        // console.log(requestInputs);
+        console.log(requestInputs);
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {
@@ -82,6 +100,7 @@ const NewRequest = (props) => {
                     .then(() => props.history.push("/requests"))
             })
             .catch(error => {
+                alert('Ошибка при добавлении записи')
                 console.log(error);
             })
     }
@@ -92,6 +111,10 @@ const NewRequest = (props) => {
         setRequestInputs({
             ...requestInputs,
             [name]: value
+        })
+        setRequestErrors({
+            ...requestErrors,
+            [name]: false
         })
     }
 
@@ -116,6 +139,10 @@ const NewRequest = (props) => {
             ...requestInputs,
             date: date
         })
+        setRequestErrors({
+            ...requestErrors,
+            date: false
+        })
     }
 
     const handleProductsChange = (newProducts) => {
@@ -123,6 +150,10 @@ const NewRequest = (props) => {
         setRequestInputs({
             ...requestInputs,
             requestProducts: newProducts
+        })
+        setRequestErrors({
+            ...requestErrors,
+            requestProducts: false
         })
     }
 
@@ -132,58 +163,57 @@ const NewRequest = (props) => {
             ...requestInputs,
             responsible: newResponsible
         })
+        setRequestErrors({
+            ...requestErrors,
+            responsible: false
+        })
     }
 
     return (
         <div className="new_request">
             <div className="new_request__title">Новая заявка</div>
             <form className="new_request__form">
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Дата*</div>
-                    <div className="new_request__input_field">
-                        <DatePicker
-                            selected={requestInputs.date}
-                            dateFormat="dd.MM.yyyy"
-                            onChange={handleDateChange}
-                            disabledKeyboardNavigation
-                            locale={ru}
-                        />
-                    </div>
-                </div>
+                <InputDate
+                    inputName="Дата"
+                    required
+                    error={requestErrors.date}
+                    name="date"
+                    selected={requestInputs.date}
+                    handleDateChange={handleDateChange}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 <div className="new_request__item">
                     <div className="new_request__input_name">Продукция*</div>
-                    {/* <div className="new_request__input_field">
-                        <input type="text" name="products" autoComplete="off" onChange={handleInputChange} />
-                    </div> */}
                     <Select
                         options={products}
                         onChange={handleProductsChange}
                         searchPlaceholder="Введите название продукта для поиска..."
+                        error={requestErrors.requestProducts}
+                        errorsArr={requestErrors}
+                        setErrorsArr={setRequestErrors}
                     />
                 </div>
-                {/* <div className="new_request__item">
-                    <div className="new_request__input_name">Количество</div>
-                    <div className="new_request__input_field">
-                        <input type="text" name="quantity" autoComplete="off" onChange={handleInputChange} />
-                    </div>
-                </div> */}
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Кодовое слово*</div>
-                    <div className="new_request__input_field">
-                        <input type="text" name="codeWord" autoComplete="off" onChange={handleInputChange} />
-                    </div>
-                </div>
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Ответственный*</div>
-                    <div className="new_request__input_field">
-                        {/* <input type="text" name="responsible" autoComplete="off" onChange={handleInputChange} /> */}
-                        <SelectUser
-                            options={users}
-                            onChange={handleResponsibleChange}
-                            searchPlaceholder="Введите имя пользователя для поиска..."
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Кодовое слово"
+                    required
+                    error={requestErrors.codeWord}
+                    name="codeWord"
+                    handleInputChange={handleInputChange}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
+                <InputUser
+                    inputName="Ответственный"
+                    required
+                    error={requestErrors.responsible}
+                    name="responsible"
+                    options={users}
+                    handleUserChange={handleResponsibleChange}
+                    searchPlaceholder="Введите имя пользователя для поиска..."
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 <div className="new_request__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
             </form>

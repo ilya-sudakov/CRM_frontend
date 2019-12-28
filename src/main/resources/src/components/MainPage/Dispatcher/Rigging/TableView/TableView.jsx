@@ -24,6 +24,7 @@ const TableView = (props) => {
         return data.filter(item => (
             item.id.toString().includes(query) ||
             item.comment.toLowerCase().includes(query) ||
+            item.name.toLowerCase().includes(query) ||
             item.number.toLowerCase().replace(re, '').includes(query.replace(re, ''))
         ))
     }
@@ -112,7 +113,7 @@ const TableView = (props) => {
                     >
                         <div className="tableview_stamps__col">{stamp.id}</div>
                         <div className="tableview_stamps__col">{stamp.number}</div>
-                        <div className="tableview_stamps__col">{stamp.name}</div>
+                        <div className="tableview_stamps__col"><u>{stamp.name}</u></div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col">{stamp.comment}</div>

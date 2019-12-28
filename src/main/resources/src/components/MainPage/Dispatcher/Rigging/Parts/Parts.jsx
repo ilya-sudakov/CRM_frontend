@@ -34,7 +34,7 @@ const Parts = (props) => {
         <div className="parts">
             <SearchBar
                 title="Поиск запчастей"
-                placeholder="Введите артикул детали для поиска"
+                placeholder="Введите артикул запчасти для поиска..."
                 setSearchQuery={setSearchQuery}
             />
             <div className="parts__amount_table">Всего: {parts.length} записей</div>

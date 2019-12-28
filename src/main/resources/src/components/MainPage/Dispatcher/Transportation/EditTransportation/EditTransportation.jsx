@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import ru from 'date-fns/locale/ru';
 import './EditTransportation.scss';
-import "react-datepicker/dist/react-datepicker.css";
-import '../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import { getTransportationById, editTransportation } from '../../../../../utils/utilsAPI.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 
 const EditTransportation = (props) => {
     const [transportationInputs, setTransportationInputs] = useState({
@@ -14,26 +12,59 @@ const EditTransportation = (props) => {
         recipient: 'ЦехЛЭМЗ',
         driver: ''
     })
-    const [productErrors, setProductErrors] = useState({
-        date: '',
-        cargo: '',
-        sender: '',
-        recipient: '',
-        driver: ''
-    })
     const [transportationId, setTransportationId] = useState(1);
-    const [cargoValid, setCargoValid] = useState(true);
-
+    const [transportationErrors, setTransportationErrors] = useState({
+        date: false,
+        cargo: false,
+        sender: false,
+        recipient: false,
+        driver: false
+    })
+    const [validInputs, setValidInputs] = useState({
+        date: true,
+        cargo: true,
+        sender: true,
+        recipient: true,
+        driver: true
+    })
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'cargo':
-                setCargoValid(value !== "");
+            case 'date':
+                setValidInputs({
+                    ...validInputs,
+                    date: (value !== null)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (cargoValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            date: false,
+            cargo: false,
+            sender: false,
+            recipient: false,
+            driver: false
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setTransportationErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -55,6 +86,10 @@ const EditTransportation = (props) => {
             ...transportationInputs,
             [name]: value
         })
+        setTransportationErrors({
+            ...transportationErrors,
+            [name]: false
+        })
     }
 
     const handleDateChange = (date) => {
@@ -63,6 +98,10 @@ const EditTransportation = (props) => {
         setTransportationInputs({
             ...transportationInputs,
             date: date
+        })
+        setTransportationErrors({
+            ...transportationErrors,
+            date: false
         })
     }
 
@@ -96,29 +135,26 @@ const EditTransportation = (props) => {
         <div className="edit_transportation">
             <div className="edit_transportation__title">Редактирование записи транспортировки</div>
             <form className="edit_transportation__form">
-                <div className="edit_transportation__item">
-                    <div className="edit_transportation__input_name">Дата*</div>
-                    <div className="edit_transportation__input_field">
-                        <DatePicker
-                            selected={Date.parse(transportationInputs.date)}
-                            dateFormat="dd.MM.yyyy"
-                            onChange={handleDateChange}
-                            disabledKeyboardNavigation
-                            locale={ru}
-                        />
-                    </div>
-                </div>
-                <div className="edit_transportation__item">
-                    <div className="edit_transportation__input_name">Товар*</div>
-                    <div className="edit_transportation__input_field">
-                        <input type="text"
-                            name="cargo"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={transportationInputs.cargo}
-                        />
-                    </div>
-                </div>
+                <InputDate
+                    inputName="Дата"
+                    required
+                    error={transportationErrors.date}
+                    name="date"
+                    selected={Date.parse(transportationInputs.date)}
+                    handleDateChange={handleDateChange}
+                    errorsArr={transportationErrors}
+                    setErrorsArr={setTransportationErrors}
+                />
+                <InputText
+                    inputName="Товар"
+                    required
+                    error={transportationErrors.cargo}
+                    name="cargo"
+                    handleInputChange={handleInputChange}
+                    defaultValue={transportationInputs.cargo}
+                    errorsArr={transportationErrors}
+                    setErrorsArr={setTransportationErrors}
+                />
                 <div className="edit_transportation__item">
                     <div className="edit_transportation__input_name">Откуда*</div>
                     <div className="edit_transportation__input_field">
@@ -147,17 +183,16 @@ const EditTransportation = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="edit_transportation__item">
-                    <div className="edit_transportation__input_name">Водитель*</div>
-                    <div className="edit_transportation__input_field">
-                        <input type="text"
-                            name="driver"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={transportationInputs.driver}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Водитель"
+                    required
+                    error={transportationErrors.driver}
+                    name="driver"
+                    handleInputChange={handleInputChange}
+                    defaultValue={transportationInputs.driver}
+                    errorsArr={transportationErrors}
+                    setErrorsArr={setTransportationErrors}
+                />
                 <div className="edit_transportation__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_transportation__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
             </form>

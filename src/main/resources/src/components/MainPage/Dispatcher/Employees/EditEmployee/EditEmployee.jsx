@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './EditEmployee.scss';
 import { getEmployeeById, editEmployee } from '../../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 
 const EditEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -15,31 +17,75 @@ const EditEmployee = (props) => {
         comment: '',
         relevance: 'Работает'
     })
-    const [productErrors, setProductErrors] = useState({
-        name: '',
-        lastName: '',
-        middleName: '',
-        yearOfBirth: '',
-        citizenship: '',
-        position: '',
-        workshop: '',
-        passportScan1: '',
-        comment: '',
-        relevance: ''
-    })
     const [employeeId, setEmployeeId] = useState(1);
-    const [nameValid, setNameValid] = useState(true);
 
+    const [employeeErrors, setEmployeeErrors] = useState({
+        name: false,
+        lastName: false,
+        middleName: false,
+        yearOfBirth: false,
+        citizenship: false,
+        position: false,
+        workshop: false,
+        // passportScan1: false,
+        // comment: false,
+        relevance: false
+    })
+    const [validInputs, setValidInputs] = useState({
+        name: true,
+        lastName: true,
+        middleName: true,
+        yearOfBirth: true,
+        citizenship: true,
+        position: true,
+        workshop: true,
+        // passportScan1: false,
+        // comment: false,
+        relevance: true
+    })
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'name':
-                setNameValid(value !== "");
+            case 'yearOfBirth':
+                setValidInputs({
+                    ...validInputs,
+                    yearOfBirth: (value !== null)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (nameValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            name: false,
+            lastName: false,
+            middleName: false,
+            yearOfBirth: false,
+            citizenship: false,
+            position: false,
+            workshop: false,
+            // passportScan1: false,
+            // comment: false,
+            relevance: false
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setEmployeeErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -60,6 +106,10 @@ const EditEmployee = (props) => {
         setEmployeeInputs({
             ...employeeInputs,
             [name]: value
+        })
+        setEmployeeErrors({
+            ...employeeErrors,
+            [name]: false
         })
     }
 
@@ -120,65 +170,73 @@ const EditEmployee = (props) => {
         })
     }
 
+    const handleDateChange = (date) => {
+        const regex = "(0[1-9]|[12]\d|3[01])\.(0[1-9]|1[0-2])\.[12]\d{3})";
+        validateField("yearOfBirth", date);
+        setEmployeeInputs({
+            ...employeeInputs,
+            yearOfBirth: date
+        })
+        setEmployeeErrors({
+            ...employeeErrors,
+            yearOfBirth: false
+        })
+    }
+
     return (
         <div className="edit_employee">
             <div className="edit_employee__title">Редактирование сотрудника</div>
             <form className="edit_employee__form">
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Имя*</div>
-                    <div className="edit_employee__input_field">
-                        <input type="text"
-                            name="name"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={employeeInputs.name}
-                        />
-                    </div>
-                </div>
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Фамилия*</div>
-                    <div className="edit_employee__input_field">
-                        <input type="text"
-                            name="lastName"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={employeeInputs.lastName}
-                        />
-                    </div>
-                </div>
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Отчество*</div>
-                    <div className="edit_employee__input_field">
-                        <input type="text"
-                            name="middleName"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={employeeInputs.middleName}
-                        />
-                    </div>
-                </div>
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Год рождения*</div>
-                    <div className="edit_employee__input_field">
-                        <input type="text"
-                            name="yearOfBirth"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={employeeInputs.yearOfBirth}
-                        />
-                    </div>
-                </div>
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Гражданство*</div>
-                    <div className="edit_employee__input_field">
-                        <input type="text"
-                            name="citizenship"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={employeeInputs.citizenship}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Имя"
+                    required
+                    error={employeeErrors.name}
+                    defaultValue={employeeInputs.name}
+                    name="name"
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                    handleInputChange={handleInputChange}
+                />
+                <InputText
+                    inputName="Фамилия"
+                    required
+                    error={employeeErrors.lastName}
+                    defaultValue={employeeInputs.lastName}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                    name="lastName"
+                    handleInputChange={handleInputChange}
+                />
+                <InputText
+                    inputName="Отчество"
+                    required
+                    error={employeeErrors.middleName}
+                    name="middleName"
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                    defaultValue={employeeInputs.middleName}
+                    handleInputChange={handleInputChange}
+                />
+                <InputDate
+                    inputName="Дата рождения"
+                    required
+                    error={employeeErrors.yearOfBirth}
+                    name="yearOfBirth"
+                    selected={Date.parse(employeeInputs.yearOfBirth)}
+                    handleDateChange={handleDateChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
+                <InputText
+                    inputName="Гражданство"
+                    required
+                    error={employeeErrors.citizenship}
+                    name="citizenship"
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                    defaultValue={employeeInputs.citizenship}
+                    handleInputChange={handleInputChange}
+                />
                 <div className="edit_employee__item">
                     <div className="edit_employee__input_name">Цех*</div>
                     <div className="edit_employee__input_field">
@@ -193,17 +251,16 @@ const EditEmployee = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Должность*</div>
-                    <div className="edit_employee__input_field">
-                        <input type="text"
-                            name="position"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={employeeInputs.position}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Должность"
+                    required
+                    error={employeeErrors.position}
+                    name="position"
+                    defaultValue={employeeInputs.position}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                    handleInputChange={handleInputChange}
+                />
                 {employeeInputs.passportScan1 && <div className="edit_employee__item">
                     <div className="edit_employee__input_name">Паспорт</div>
                     <div className="edit_employee__passport_img">
@@ -233,17 +290,16 @@ const EditEmployee = (props) => {
                         <input type="file" name="passportScan1" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Комментарий*</div>
-                    <div className="edit_employee__input_field">
-                        <input type="text"
-                            name="comment"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={employeeInputs.comment}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Комментарий"
+                    // required
+                    // error={employeeErrors.comment}
+                    name="comment"
+                    defaultValue={employeeInputs.comment}
+                    handleInputChange={handleInputChange}
+                    errorsArr={employeeErrors}
+                    setErrorsArr={setEmployeeErrors}
+                />
                 <div className="edit_employee__item">
                     <div className="edit_employee__input_name">Актуальность*</div>
                     <div className="edit_employee__input_field">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './EditStamp.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getStampById, editStamp, editPartsOfStamp, addPartsToStamp, deletePartsFromStamp } from '../../../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 
 const EditStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -10,25 +11,56 @@ const EditStamp = (props) => {
         comment: '',
         parts: []
     })
-    const [stampErrors, setStampErrors] = useState({
-        name: '',
-        number: '',
-        comment: '',
-        parts: ''
-    })
     const [stampId, setStampId] = useState(0);
-    const [nameValid, setNameValid] = useState(true);
-
+    const [riggingErrors, setRiggingErrors] = useState({
+        name: false,
+        number: false,
+        // comment: false,
+        parts: false,
+    })
+    const [validInputs, setValidInputs] = useState({
+        name: true,
+        number: true,
+        // comment: true,
+        parts: true,
+    })
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'name':
-                setNameValid(value !== "");
+            case 'parts':
+                setValidInputs({
+                    ...validInputs,
+                    parts: (value.length > 0)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (nameValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            name: false,
+            number: false,
+            // comment: false,
+            parts: false,
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setRiggingErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -75,7 +107,7 @@ const EditStamp = (props) => {
                                     deleted = false;
                                     return;
                                 }
-                            })                                                                                  
+                            })
                             return (deleted === true && deletePartsFromStamp(item.id))
                         })
                         Promise.all(partsArr)
@@ -93,6 +125,10 @@ const EditStamp = (props) => {
             ...stampInputs,
             [name]: value
         })
+        setRiggingErrors({
+            ...riggingErrors,
+            [name]: false
+        })
     }
 
     const handlePartsChange = (newParts) => {
@@ -100,6 +136,10 @@ const EditStamp = (props) => {
         setStampInputs({
             ...stampInputs,
             parts: newParts
+        })
+        setRiggingErrors({
+            ...riggingErrors,
+            parts: false
         })
     }
 
@@ -129,39 +169,34 @@ const EditStamp = (props) => {
         <div className="edit_stamp">
             <div className="edit_stamp__title">Редактирование штампа</div>
             <form className="edit_stamp__form">
-                <div className="edit_stamp__item">
-                    <div className="edit_stamp__input_name">Название*</div>
-                    <div className="edit_stamp__input_field">
-                        <input type="text"
-                            name="name"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={stampInputs.name}
-                        />
-                    </div>
-                </div>
-                <div className="edit_stamp__item">
-                    <div className="edit_stamp__input_name">Артикул*</div>
-                    <div className="edit_stamp__input_field">
-                        <input type="text"
-                            name="number"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={stampInputs.number}
-                        />
-                    </div>
-                </div>
-                <div className="edit_stamp__item">
-                    <div className="edit_stamp__input_name">Комментарий</div>
-                    <div className="edit_stamp__input_field">
-                        <input type="text"
-                            name="comment"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={stampInputs.comment}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Название"
+                    required
+                    error={riggingErrors.name}
+                    name="name"
+                    defaultValue={stampInputs.name}
+                    handleInputChange={handleInputChange}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
+                />
+                <InputText
+                    inputName="Артикул"
+                    required
+                    error={riggingErrors.number}
+                    name="number"
+                    defaultValue={stampInputs.number}
+                    handleInputChange={handleInputChange}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
+                />
+                <InputText
+                    inputName="Комментарий"
+                    // required
+                    // error={riggingErrors.comment}
+                    name="comment"
+                    defaultValue={stampInputs.comment}
+                    handleInputChange={handleInputChange}
+                />
                 <div className="edit_stamp__item">
                     <div className="edit_stamp__input_name">Детали*</div>
                     <div className="edit_stamp__input_field">

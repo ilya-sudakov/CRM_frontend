@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './NewUser.scss';
 import { addUser } from '../../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 
 const NewUser = (props) => {
     const [userInputs, setUserInputs] = useState({
@@ -10,31 +11,48 @@ const NewUser = (props) => {
         role: "ROLE_ADMIN"
     })
     const [userErrors, setUserErrors] = useState({
-        username: "",
-        password: "",
-        email: "",
-        role: ""
+        username: false,
+        password: false,
+        email: false,
+        role: false,
     })
-    const [usernameValid, setUsernameValid] = useState(false);
-    const [passwordValid, setPasswordValid] = useState(false);
-    const [emailValid, setEmailValid] = useState(false);
+    const [validInputs, setValidInputs] = useState({
+        username: false,
+        password: false,
+        email: false,
+        role: true,
+    })
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'username':
-                setUsernameValid(value !== "");
-                break;
-            case 'password':
-                setPasswordValid(value !== "");
-                break;
-            case 'email':
-                setEmailValid(value !== "");
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (usernameValid && passwordValid && emailValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            username: false,
+            password: false,
+            email: false,
+            role: false,
+        });
+        for (let item in validInputs) {
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setUserErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -46,9 +64,9 @@ const NewUser = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(userInputs);
-        
+
         formIsValid() && addUser(userInputs)
-        .then(() => props.history.push("/profile/users"))
+            .then(() => props.history.push("/profile/users"))
     }
 
     const handleInputChange = (e) => {
@@ -57,6 +75,10 @@ const NewUser = (props) => {
         setUserInputs({
             ...userInputs,
             [name]: value
+        })
+        setUserErrors({
+            ...userErrors,
+            [name]: false
         })
     }
 
@@ -68,36 +90,33 @@ const NewUser = (props) => {
         <div className="new_user">
             <div className="new_user__title">Создание пользователя</div>
             <form className="new_user__form">
-                <div className="new_user__item">
-                    <div className="new_user__input_name">Имя пользователя</div>
-                    <div className="new_user__input_field">
-                        <input type="text"
-                            name="username"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="new_user__item">
-                    <div className="new_user__input_name">Пароль</div>
-                    <div className="new_user__input_field">
-                        <input type="text"
-                            name="password"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="new_user__item">
-                    <div className="new_user__input_name">Эл. почта</div>
-                    <div className="new_user__input_field">
-                        <input type="text"
-                            name="email"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Имя пользователя"
+                    required
+                    error={userErrors.username}
+                    name="username"
+                    handleInputChange={handleInputChange}
+                    errorsArr={userErrors}
+                    setErrorsArr={setUserErrors}
+                />
+                <InputText
+                    inputName="Пароль"
+                    required
+                    error={userErrors.password}
+                    name="password"
+                    handleInputChange={handleInputChange}
+                    errorsArr={userErrors}
+                    setErrorsArr={setUserErrors}
+                />
+                <InputText
+                    inputName="Эл. почта"
+                    required
+                    error={userErrors.email}
+                    name="email"
+                    handleInputChange={handleInputChange}
+                    errorsArr={userErrors}
+                    setErrorsArr={setUserErrors}
+                />
                 <div className="new_user__item">
                     <div className="new_user__input_name">Роль</div>
                     <div className="new_user__input_field">
@@ -114,6 +133,7 @@ const NewUser = (props) => {
                         </select>
                     </div>
                 </div>
+                <div className="new_user__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="new_user__submit" type="submit" onClick={handleSubmit} value="Добавить пользователя" />
             </form>
         </div>

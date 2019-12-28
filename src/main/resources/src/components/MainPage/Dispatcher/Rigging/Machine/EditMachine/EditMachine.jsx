@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './EditMachine.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { editMachine, editPartsOfMachine, addPartsToStamp, deletePartsFromMachine, getMachineById, addPartsToMachine } from '../../../../../../utils/utilsAPI.jsx';
+import { editMachine, editPartsOfMachine, deletePartsFromMachine, getMachineById, addPartsToMachine } from '../../../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 
 const EditMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
@@ -10,20 +11,56 @@ const EditMachine = (props) => {
         comment: '',
         parts: []
     })
-
     const [machineId, setMachineId] = useState(0);
-    const [nameValid, setNameValid] = useState(true);
-
+    const [riggingErrors, setRiggingErrors] = useState({
+        name: false,
+        number: false,
+        // comment: false,
+        parts: false,
+    })
+    const [validInputs, setValidInputs] = useState({
+        name: true,
+        number: true,
+        // comment: true,
+        parts: true,
+    })
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'name':
-                setNameValid(value !== "");
+            case 'parts':
+                setValidInputs({
+                    ...validInputs,
+                    parts: (value.length > 0)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (nameValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            name: false,
+            number: false,
+            // comment: false,
+            parts: false,
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setRiggingErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -88,6 +125,10 @@ const EditMachine = (props) => {
             ...machineInputs,
             [name]: value
         })
+        setRiggingErrors({
+            ...riggingErrors,
+            [name]: false
+        })
     }
 
     const handlePartsChange = (newParts) => {
@@ -95,6 +136,10 @@ const EditMachine = (props) => {
         setMachineInputs({
             ...machineInputs,
             parts: newParts
+        })
+        setRiggingErrors({
+            ...riggingErrors,
+            parts: false
         })
     }
 
@@ -124,39 +169,34 @@ const EditMachine = (props) => {
         <div className="edit_machine">
             <div className="edit_machine__title">Редактирование станка</div>
             <form className="edit_machine__form">
-                <div className="edit_machine__item">
-                    <div className="edit_machine__input_name">Название*</div>
-                    <div className="edit_machine__input_field">
-                        <input type="text"
-                            name="name"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={machineInputs.name}
-                        />
-                    </div>
-                </div>
-                <div className="edit_machine__item">
-                    <div className="edit_machine__input_name">Артикул*</div>
-                    <div className="edit_machine__input_field">
-                        <input type="text"
-                            name="number"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={machineInputs.number}
-                        />
-                    </div>
-                </div>
-                <div className="edit_machine__item">
-                    <div className="edit_machine__input_name">Комментарий</div>
-                    <div className="edit_machine__input_field">
-                        <input type="text"
-                            name="comment"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={machineInputs.comment}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Название"
+                    required
+                    error={riggingErrors.name}
+                    name="name"
+                    defaultValue={machineInputs.name}
+                    handleInputChange={handleInputChange}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
+                />
+                <InputText
+                    inputName="Артикул"
+                    required
+                    error={riggingErrors.number}
+                    name="number"
+                    defaultValue={machineInputs.number}
+                    handleInputChange={handleInputChange}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
+                />
+                <InputText
+                    inputName="Комментарий"
+                    // required
+                    // error={riggingErrors.comment}
+                    name="comment"
+                    defaultValue={machineInputs.comment}
+                    handleInputChange={handleInputChange}
+                />
                 <div className="edit_machine__item">
                     <div className="edit_machine__input_name">Детали*</div>
                     <div className="edit_machine__input_field">

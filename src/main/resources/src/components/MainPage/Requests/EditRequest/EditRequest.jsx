@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import ru from 'date-fns/locale/ru';
 import './EditRequest.scss';
 import { getRequestById, editRequest, getProducts, addProductsToRequest, getUsers, editProductsToRequest, deleteProductsToRequest } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
-import SelectUser from '../../SelectUser/SelectUser.jsx';
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
@@ -20,37 +20,61 @@ const EditRequest = (props) => {
         status: "Не готово"
     })
     const [requestErrors, setRequestErrors] = useState({
-        date: "",
-        products: "",
-        quantity: "",
-        codeWord: "",
-        responsible: "",
-        status: "",
+        date: false,
+        requestProducts: false,
+        codeWord: false,
+        responsible: false,
     })
-    const [dateValid, setDateValid] = useState(true);
-    const [productsValid, setProductsValid] = useState(true);
-    const [quantityValid, setQuantityValid] = useState(true);
-    const [responsibleValid, setResponsibleValid] = useState(true);
+    const [validInputs, setValidInputs] = useState({
+        date: true,
+        requestProducts: true,
+        codeWord: true,
+        responsible: true,
+    })
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'date':
-                setDateValid(value !== "");
+                setValidInputs({
+                    ...validInputs,
+                    date: (value !== null)
+                });
                 break;
-            case 'products':
-                setProductsValid(value !== []);
+            case 'requestProducts':
+                setValidInputs({
+                    ...validInputs,
+                    requestProducts: (value.length > 0)
+                });
                 break;
-            case 'quantity':
-                setQuantityValid(value !== "");
-                break;
-            case 'responsible':
-                setResponsibleValid(value !== "");
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (dateValid && productsValid && quantityValid && responsibleValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            date: false,
+            products: false,
+            codeWord: false,
+            responsible: false,
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setRequestErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -110,6 +134,7 @@ const EditRequest = (props) => {
                     })
             })
             .catch(error => {
+                alert('Ошибка при добавлении записи')
                 console.log(error);
             })
     }
@@ -121,6 +146,10 @@ const EditRequest = (props) => {
             ...requestInputs,
             [name]: value
         })
+        setRequestErrors({
+            ...requestErrors,
+            [name]: false
+        })
     }
 
     const handleDateChange = (date) => {
@@ -129,15 +158,19 @@ const EditRequest = (props) => {
             ...requestInputs,
             date: date
         })
+        setRequestErrors({
+            ...requestErrors,
+            date: false
+        })
     }
 
     const handleProductsChange = (newProducts) => {
-        validateField("products", newProducts);
-        // setRequestInputs({
-        //     ...requestInputs,
-        //     products: newProducts
-        // })
+        validateField("requestProducts", newProducts);
         setSelectedProducts(newProducts);
+        setRequestErrors({
+            ...requestErrors,
+            requestProducts: false
+        })
     }
 
     const handleResponsibleChange = (newResponsible) => {
@@ -145,6 +178,10 @@ const EditRequest = (props) => {
         setRequestInputs({
             ...requestInputs,
             responsible: newResponsible
+        })
+        setRequestErrors({
+            ...requestErrors,
+            responsible: false
         })
     }
 
@@ -192,18 +229,16 @@ const EditRequest = (props) => {
         <div className="edit_request">
             <div className="edit_request__title">Редактирование заявки</div>
             <form className="edit_request__form">
-                <div className="edit_request__item">
-                    <div className="edit_request__input_name">Дата*</div>
-                    <div className="edit_request__input_field">
-                        <DatePicker
-                            selected={Date.parse(requestInputs.date)}
-                            dateFormat="dd.MM.yyyy"
-                            onChange={handleDateChange}
-                            disabledKeyboardNavigation
-                            locale={ru}
-                        />
-                    </div>
-                </div>
+                <InputDate
+                    inputName="Дата"
+                    required
+                    error={requestErrors.date}
+                    name="date"
+                    selected={Date.parse(requestInputs.date)}
+                    handleDateChange={handleDateChange}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Продукция*</div>
                     <Select
@@ -211,30 +246,33 @@ const EditRequest = (props) => {
                         onChange={handleProductsChange}
                         searchPlaceholder="Введите название продукта для поиска..."
                         defaultValue={selectedProducts}
+                        error={requestErrors.requestProducts}
+                        errorsArr={requestErrors}
+                        setErrorsArr={setRequestErrors}
                     />
                 </div>
-                <div className="edit_request__item">
-                    <div className="edit_request__input_name">Кодовое слово*</div>
-                    <div className="edit_request__input_field">
-                        <input type="text"
-                            name="codeWord"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.codeWord}
-                        />
-                    </div>
-                </div>
-                <div className="edit_request__item">
-                    <div className="edit_request__input_name">Ответственный*</div>
-                    <div className="edit_request__input_field">
-                        <SelectUser
-                            options={users}
-                            defaultValue={requestInputs.responsible}
-                            onChange={handleResponsibleChange}
-                            searchPlaceholder="Введите имя пользователя для поиска..."
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Кодовое слово"
+                    required
+                    error={requestErrors.codeWord}
+                    name="codeWord"
+                    handleInputChange={handleInputChange}
+                    defaultValue={requestInputs.codeWord}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
+                <InputUser
+                    inputName="Ответственный"
+                    required
+                    error={requestErrors.responsible}
+                    name="responsible"
+                    options={users}
+                    handleUserChange={handleResponsibleChange}
+                    defaultValue={requestInputs.responsible}
+                    searchPlaceholder="Введите имя пользователя для поиска..."
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 <div className="edit_request__item">
                     <div className="edit_request__input_name">Статус*</div>
                     <div className="edit_request__input_field">

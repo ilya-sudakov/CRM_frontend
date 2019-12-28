@@ -6,7 +6,6 @@ const Select = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selected, setSelected] = useState([]);
     const [options, setOptions] = useState([]);
-    let myRef = React.createRef();
 
     const search = () => {
         return options.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -16,26 +15,19 @@ const Select = (props) => {
         setSearchQuery(event.target.value);
     }
 
-    // const clickOnInput = (event) => {
-    //     const options = document.getElementsByClassName("select__options")[0];
-    //     if (options.classList.contains("select__options--hidden")) {
-    //         options.classList.remove("select__options--hidden")
-    //     }
-    //     else {
-    //         options.classList.add("select__options--hidden")
-    //     }
-    // }
-
     const clickOnInput = () => {
         const options = document.getElementsByClassName("select__options")[0];
         const overlay = document.getElementsByClassName("select__overlay")[0];
+        const error = document.getElementsByClassName("select__error")[0];
         if (options.classList.contains("select__options--hidden")) {
             options.classList.remove("select__options--hidden");
             overlay.classList.remove("select__overlay--hidden");
+            error && error.classList.add("select__error--hidden");
         }
         else {
             options.classList.add("select__options--hidden");
             overlay.classList.add("select__overlay--hidden");
+            error && error.classList.remove("select__error--hidden");
         }
     }
 
@@ -55,10 +47,6 @@ const Select = (props) => {
         const value = event.target.getAttribute("name");
         const id = event.target.getAttribute("id");
         clickOnInput();
-        // const optionId = event.target.getAttribute("optionId");
-        // let newOptions = options;
-        // newOptions.splice(optionId, 1);
-        // setOptions([...newOptions]);
         setSelected([
             ...selected,
             {
@@ -116,15 +104,18 @@ const Select = (props) => {
             <div className="select__overlay select__overlay--hidden" onClick={clickOverlay}></div>
             {!props.readOnly && <input
                 type="text"
-                className="select__input"
+                className={props.error === true ? "select__input select__input--error" : "select__input"}
                 onChange={handleInputChange}
                 onClick={!props.readOnly ? clickOnInput : null}
-                // onBlur={!props.readOnly ? clickOnInputBlur : null}
                 placeholder={props.searchPlaceholder}
-                // onClick={props.readOnly !== undefined ? "true" : "false"}
-                ref={myRef}
                 readOnly={props.readOnly}
             />}
+            {props.error === true && <div className="select__error" onClick={
+                props.setErrorsArr ? (() => props.setErrorsArr({
+                    ...props.errorsArr,
+                    [props.name]: false
+                })) : null
+            }>Поле не заполнено!</div>}
             {props.options && <div className="select__options select__options--hidden"
                 onBlur={!props.readOnly ? clickOnInputBlur : null}>
                 {search().map((item, index) => (

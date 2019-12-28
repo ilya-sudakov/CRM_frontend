@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './EditUser.scss';
 import { getUserById, editUser } from '../../../../../utils/utilsAPI.jsx';
-// import { getRequestById, editRequest } from '../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 
 const EditUser = (props) => {
     const [userId, setUserId] = useState(1);
@@ -10,31 +10,49 @@ const EditUser = (props) => {
         password: "",
         email: "",
     })
-    const [requestErrors, setRequestErrors] = useState({
-        username: "",
-        password: "",
-        email: "",
+    const [userErrors, setUserErrors] = useState({
+        username: false,
+        password: false,
+        email: false,
+        role: false,
     })
-    const [usernameValid, setUsernameValid] = useState(true);
-    const [passwordValid, setPasswordValid] = useState(false);
-    const [emailValid, setEmailValid] = useState(true);
+    const [validInputs, setValidInputs] = useState({
+        username: true,
+        password: false,
+        email: true,
+        role: true,
+    })
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'username':
-                setUsernameValid(value !== "");
-                break;
-            case 'password':
-                setPasswordValid(value !== "");
-                break;
-            case 'email':
-                setEmailValid(value !== "");
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (usernameValid && passwordValid && emailValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            username: false,
+            password: false,
+            email: false,
+            role: false,
+        });
+        for (let item in validInputs) {
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setUserErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -46,7 +64,10 @@ const EditUser = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         formIsValid() && editUser(userInputs, userId)
-            .then(() => props.history.push("/profile/users"))
+            .then(() => {
+                props.history.push("/profile/users");
+                document.location.reload(true);
+            })
     }
 
     const handleInputChange = (e) => {
@@ -55,6 +76,10 @@ const EditUser = (props) => {
         setUserInputs({
             ...userInputs,
             [name]: value
+        })
+        setUserErrors({
+            ...userErrors,
+            [name]: false
         })
     }
 
@@ -86,38 +111,36 @@ const EditUser = (props) => {
         <div className="edit_user">
             <div className="edit_user__title">Редактирование пользователя</div>
             <form className="edit_user__form">
-                <div className="edit_user__item">
-                    <div className="edit_user__input_name">Имя пользователя</div>
-                    <div className="edit_user__input_field">
-                        <input type="text"
-                            name="username"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={userInputs.username}
-                        />
-                    </div>
-                </div>
-                <div className="edit_user__item">
-                    <div className="edit_user__input_name">Пароль</div>
-                    <div className="edit_user__input_field">
-                        <input type="text"
-                            name="password"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="edit_user__item">
-                    <div className="edit_user__input_name">Эл. почта</div>
-                    <div className="edit_user__input_field">
-                        <input type="text"
-                            name="email"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={userInputs.email}
-                        />
-                    </div>
-                </div>
+                <InputText
+                    inputName="Имя пользователя"
+                    required
+                    error={userErrors.username}
+                    defaultValue={userInputs.username}
+                    name="username"
+                    handleInputChange={handleInputChange}
+                    errorsArr={userErrors}
+                    setErrorsArr={setUserErrors}
+                />
+                <InputText
+                    inputName="Пароль"
+                    required
+                    error={userErrors.password}
+                    name="password"
+                    handleInputChange={handleInputChange}
+                    errorsArr={userErrors}
+                    setErrorsArr={setUserErrors}
+                />
+                <InputText
+                    inputName="Эл. почта"
+                    required
+                    error={userErrors.email}
+                    defaultValue={userInputs.email}
+                    name="email"
+                    handleInputChange={handleInputChange}
+                    errorsArr={userErrors}
+                    setErrorsArr={setUserErrors}
+                />
+                <div className="edit_user__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_user__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
             </form>
         </div>

@@ -140,6 +140,8 @@
 
       &:nth-child(6) {
         max-width: 80px;
+        display: flex;
+        flex-direction: column;
       }
 
       &:last-child {
@@ -153,6 +155,12 @@
       font-size: 90%;
       border-radius: 5px;
       outline: 0;
+
+      &--color {
+        option[value="red"] {
+          background: red;
+        }
+      }
     }
 
     .tableview_requests__actions {

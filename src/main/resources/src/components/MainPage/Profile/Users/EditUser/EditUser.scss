@@ -23,6 +23,7 @@
     background-color: $primary-background-color;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
+    padding-top: 35px;
 
     .edit_user__item {
       width: calc(100% - 20px);
@@ -60,6 +61,14 @@
       }
     }
 
+    .edit_user__input_hint {
+      text-align: left;
+      width: 100%;
+      font-size: 80%;
+      margin-bottom: 10px;
+      color: lighten($primary-text-color, 60%);
+    }
+
     .edit_user__submit {
       border: 0;
       cursor: pointer;
@@ -74,6 +83,8 @@
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
       }
     }
+
+    
   }
 
   @media (max-width: 768px) {

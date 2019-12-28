@@ -18,6 +18,23 @@
     }
   }
 
+  &__error {
+    width: calc(100% - 20px);
+    margin-top: 1px;
+    font-size: 0.75rem;
+    // position: absolute;
+    // top: 2rem;
+    background-color: #f73434;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: 0.2s ease-in-out;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
   &__input {
     border: 1px solid #bbbbbb;
     width: 100%;
@@ -29,9 +46,9 @@
       border: 1px solid $button__background--inverted;
     }
 
-    // &:focus + .select__options{
-    //   display: flex;
-    // }
+    &--error {
+      border: 1px solid #f73434 !important;
+    }
   }
 
   &__options {

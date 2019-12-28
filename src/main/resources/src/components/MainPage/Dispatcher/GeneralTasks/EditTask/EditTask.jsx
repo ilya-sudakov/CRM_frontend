@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import ru from 'date-fns/locale/ru';
 import './EditTask.scss';
-import "react-datepicker/dist/react-datepicker.css";
-import '../../../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import { getMainTaskById, editMainTask, getUsers } from '../../../../../utils/utilsAPI.jsx';
 import SelectUser from '../../../SelectUser/SelectUser.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
 
 const EditTask = (props) => {
     const [taskId, setTaskId] = useState(1);
@@ -18,26 +17,70 @@ const EditTask = (props) => {
         status: '',
         // visibility: 'all'
     })
-    const [productErrors, setProductErrors] = useState({
-        dateCreated: '',
-        description: '',
-        responsible: '',
-        dateControl: '',
-        status: '',
-        visibility: ''
+    const [taskErrors, setTaskErrors] = useState({
+        dateCreated: false,
+        description: false,
+        responsible: false,
+        dateControl: false,
+        status: false
     })
-    const [descriptionValid, setDescriptionValid] = useState(true);
+    const [validInputs, setValidInputs] = useState({
+        dateCreated: true,
+        description: true,
+        responsible: true,
+        dateControl: true,
+        status: true
+    })
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'description':
-                setDescriptionValid(value !== "");
+            case 'dateCreated':
+                setValidInputs({
+                    ...validInputs,
+                    dateCreated: (value !== null)
+                });
+                break;
+            case 'dateControl':
+                setValidInputs({
+                    ...validInputs,
+                    dateControl: (value !== null)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (descriptionValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            name: false,
+            lastName: false,
+            middleName: false,
+            yearOfBirth: false,
+            citizenship: false,
+            position: false,
+            workshop: false,
+            // passportScan1: false,
+            // comment: false,
+            relevance: false
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setTaskErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
@@ -59,6 +102,10 @@ const EditTask = (props) => {
             ...taskInputs,
             [name]: value
         })
+        setTaskErrors({
+            ...taskErrors,
+            [name]: false
+        })
     }
 
     const handleResponsibleChange = (newResponsible) => {
@@ -66,6 +113,10 @@ const EditTask = (props) => {
         setTaskInputs({
             ...taskInputs,
             responsible: newResponsible
+        })
+        setTaskErrors({
+            ...taskErrors,
+            responsible: false
         })
     }
 
@@ -106,81 +157,78 @@ const EditTask = (props) => {
         <div className="edit_general_task">
             <div className="edit_general_task__title">Редактирование задачи</div>
             <form className="edit_general_task__form">
-                <div className="edit_general_task__item">
-                    <div className="edit_general_task__input_name">Дата постановки*</div>
-                    <div className="edit_general_task__input_field">
-                        <DatePicker
-                            selected={Date.parse(taskInputs.dateCreated)}
-                            dateFormat="dd.MM.yyyy"
-                            onChange={(dateCreated) => {
-                                validateField("dateCreated", dateCreated);
-                                setTaskInputs({
-                                    ...taskInputs,
-                                    dateCreated: dateCreated
-                                })
-                            }}
-                            disabledKeyboardNavigation
-                            locale={ru}
-                        />
-                    </div>
-                </div>
-                <div className="edit_general_task__item">
-                    <div className="edit_general_task__input_name">Описание*</div>
-                    <div className="edit_general_task__input_field">
-                        <input type="text"
-                            name="description"
-                            autoComplete="off"
-                            defaultValue={taskInputs.description}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="edit_general_task__item">
-                    <div className="edit_general_task__input_name">Ответственный*</div>
-                    <div className="edit_general_task__input_field">
-                        {/* <input type="text"
-                            name="responsible"
-                            autoComplete="off"
-                            defaultValue={taskInputs.responsible}
-                            onChange={handleInputChange}
-                        /> */}
-                        <SelectUser
-                            options={users}
-                            onChange={handleResponsibleChange}
-                            defaultValue={taskInputs.responsible}
-                            searchPlaceholder="Введите имя пользователя для поиска..."
-                        />
-                    </div>
-                </div>
-                <div className="edit_general_task__item">
-                    <div className="edit_general_task__input_name">Дата контроля задачи*</div>
-                    <div className="edit_general_task__input_field">
-                        <DatePicker
-                            selected={Date.parse(taskInputs.dateControl)}
-                            dateFormat="dd.MM.yyyy"
-                            onChange={(dateControl) => {
-                                validateField("dateControl", dateControl);
-                                setTaskInputs({
-                                    ...taskInputs,
-                                    dateControl: dateControl
-                                })
-                            }}
-                            disabledKeyboardNavigation
-                            locale={ru}
-                        />
-                    </div>
-                </div>
-                <div className="edit_general_task__item">
-                    <div className="edit_general_task__input_name">Состояние*</div>
-                    <div className="edit_general_task__input_field">
-                        <input type="text"
-                            name="status"
-                            autoComplete="off"
-                            defaultValue={taskInputs.status}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
+                <InputDate
+                    inputName="Дата постановки"
+                    required
+                    error={taskErrors.dateCreated}
+                    name="dateCreated"
+                    selected={Date.parse(taskInputs.dateCreated)}
+                    errorsArr={taskErrors}
+                    setErrorsArr={setTaskErrors}
+                    handleDateChange={(dateCreated) => {
+                        validateField("dateCreated", dateCreated);
+                        setTaskInputs({
+                            ...taskInputs,
+                            dateCreated: dateCreated
+                        });
+                        setTaskErrors({
+                            ...taskErrors,
+                            dateCreated: false
+                        })
+                    }}
+                />
+                <InputText
+                    inputName="Описание"
+                    required
+                    error={taskErrors.description}
+                    name="description"
+                    handleInputChange={handleInputChange}
+                    errorsArr={taskErrors}
+                    setErrorsArr={setTaskErrors}
+                    defaultValue={taskInputs.description}
+                />
+                <InputUser
+                    inputName="Ответственный"
+                    required
+                    error={taskErrors.responsible}
+                    defaultValue={taskInputs.responsible}
+                    name="responsible"
+                    options={users}
+                    handleUserChange={handleResponsibleChange}
+                    errorsArr={taskErrors}
+                    setErrorsArr={setTaskErrors}
+                    searchPlaceholder="Введите имя пользователя для поиска..."
+                />
+                <InputDate
+                    inputName="Дата контроля задачи"
+                    required
+                    error={taskErrors.dateControl}
+                    name="dateControl"
+                    selected={Date.parse(taskInputs.dateControl)}
+                    errorsArr={taskErrors}
+                    setErrorsArr={setTaskErrors}
+                    handleDateChange={(dateControl) => {
+                        validateField("dateControl", dateControl);
+                        setTaskInputs({
+                            ...taskInputs,
+                            dateControl: dateControl
+                        });
+                        setTaskErrors({
+                            ...taskErrors,
+                            dateControl: false
+                        })
+                    }}
+                />
+                <InputText
+                    inputName="Состояние"
+                    required
+                    error={taskErrors.status}
+                    name="status"
+                    errorsArr={taskErrors}
+                    setErrorsArr={setTaskErrors}
+                    handleInputChange={handleInputChange}
+                    defaultValue={taskInputs.status}
+                />
                 {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="edit_general_task__item">
                     <div className="edit_general_task__input_name">Видимость*</div>
                     <div className="edit_general_task__input_field">
