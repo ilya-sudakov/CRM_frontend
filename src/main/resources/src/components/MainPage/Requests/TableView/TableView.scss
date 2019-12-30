@@ -149,16 +149,35 @@
       }
     }
 
-    .tableview_requests__status_select {
+    .tableview_requests__status_select, .tableview_requests__status_select--color {
       width: 100%;
       padding: 5px 0px;
       font-size: 90%;
       border-radius: 5px;
       outline: 0;
+    }
 
-      &--color {
-        option[value="red"] {
-          background: red;
+    .tableview_requests__status_select--color {
+      option {
+        // content: "";
+      }
+
+      option[value="red"] {
+        background: red;
+        &:hover {
+          box-shadow: 0 0 10px 100px red inset;
+        }
+      }
+      option[value="green"] {
+        background: green;
+        &:hover {
+          box-shadow: 0 0 10px 100px green inset;
+        }
+      }
+      option[value="grey"] {
+        background: grey;
+        &:hover {
+          box-shadow: 0 0 10px 100px grey inset;
         }
       }
     }
