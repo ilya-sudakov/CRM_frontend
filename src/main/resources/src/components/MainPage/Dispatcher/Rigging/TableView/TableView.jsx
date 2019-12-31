@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
-import chevronDownIcon from '../../../../../../../../../assets/tableview/chevron-down.svg';
 import './TableView.scss';
+import ColorPicker from '../ColorPicker/ColorPicker.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -83,44 +83,11 @@ const TableView = (props) => {
 
     const handleClickStamp = (event) => {
         let id = event.currentTarget.getAttribute('id');
-        ((event.target.className !== "tableview_stamps__color_name") &&
+        ((event.target.className !== "tableview__color_name") &&
             (!event.target.className.includes("tableview__color_option")) &&
             (!event.target.className.includes("tableview__color_overlay")) &&
-            (!event.target.className.includes("tableview_stamps__img"))
+            (!event.target.className.includes("tableview__img"))
         ) && setPartsVisible([...checkPart(id)]);
-    }
-
-    const clickOnColorPicker = (event) => {
-        let id = event.target.getAttribute("index");
-        //Check if click on chevron, then get currentTarget
-        if (id === null) {
-            id = event.currentTarget.getAttribute("index");
-        }
-        let colorPicker = document.getElementsByClassName("tableview__color_picker")[id];
-        let overlay = document.getElementsByClassName("tableview__color_overlay")[id];
-        if (colorPicker.classList.contains("tableview__color_picker--hidden")) {
-            colorPicker.classList.remove("tableview__color_picker--hidden");
-            overlay.classList.remove("tableview__color_overlay--hidden");
-        }
-        else {
-            colorPicker.classList.add("tableview__color_picker--hidden");
-            overlay.classList.add("tableview__color_overlay--hidden");
-        }
-    }
-
-    const clickOnColorPickerOverlay = (event) => {
-        const id = event.target.getAttribute("index");
-        let overlay = document.getElementsByClassName("tableview__color_overlay")[id];
-        let colorPicker = document.getElementsByClassName("tableview__color_picker")[id];
-        overlay.classList.add("tableview__color_overlay--hidden");
-        colorPicker.classList.add("tableview__color_picker--hidden");
-    }
-
-    const clickOnColorOption = (event) => {
-        const id = event.target.getAttribute("index");
-        const color = event.target.classList[1].split("tableview__color_option--")[1];
-        console.log(id, color);
-        clickOnColorPickerOverlay(event); //Hide options
     }
 
     return (
@@ -154,30 +121,10 @@ const TableView = (props) => {
                         <div className="tableview_stamps__col">{stamp.id}</div>
                         <div className="tableview_stamps__col">{stamp.number}</div>
                         <div className="tableview_stamps__col">
-                            <div className="tableview_stamps__color">
-                                <div className="tableview__color_overlay tableview__color_overlay--hidden" index={selectorId} onClick={clickOnColorPickerOverlay}></div>
-                                <div className="tableview_stamps__color_name" index={selectorId} onClick={clickOnColorPicker}>
-                                    {stamp.name}
-                                    <img className="tableview_stamps__img" src={chevronDownIcon} />
-                                </div>
-                                <div className="tableview__color_picker tableview__color_picker--hidden">
-                                    <div
-                                        index={selectorId}
-                                        onClick={clickOnColorOption}
-                                        className="tableview__color_option tableview__color_option--completed"
-                                    >Завершено</div>
-                                    <div
-                                        index={selectorId}
-                                        onClick={clickOnColorOption}
-                                        className="tableview__color_option tableview__color_option--defect"
-                                    >Брак</div>
-                                    <div
-                                        index={selectorId++}
-                                        onClick={clickOnColorOption}
-                                        className="tableview__color_option tableview__color_option--production"
-                                    >В работе</div>
-                                </div>
-                            </div>
+                            <ColorPicker
+                                defaultName={stamp.name}
+                                index={selectorId++}
+                            />
                         </div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
@@ -213,30 +160,10 @@ const TableView = (props) => {
                                 <div className="tableview_stamps__col">{part.id}</div>
                                 <div className="tableview_stamps__col">{part.number}</div>
                                 <div className="tableview_stamps__col">
-                                    <div className="tableview_stamps__color">
-                                        <div className="tableview__color_overlay tableview__color_overlay--hidden" index={selectorId} onClick={clickOnColorPickerOverlay}></div>
-                                        <div className="tableview_stamps__color_name" index={selectorId} onClick={clickOnColorPicker}>
-                                            {part.name}
-                                            <img className="tableview_stamps__img" src={chevronDownIcon} />
-                                        </div>
-                                        <div className="tableview__color_picker tableview__color_picker--hidden">
-                                            <div
-                                                index={selectorId}
-                                                onClick={clickOnColorOption}
-                                                className="tableview__color_option tableview__color_option--completed"
-                                            >Завершено</div>
-                                            <div
-                                                index={selectorId}
-                                                onClick={clickOnColorOption}
-                                                className="tableview__color_option tableview__color_option--defect"
-                                            >Брак</div>
-                                            <div
-                                                index={selectorId++}
-                                                onClick={clickOnColorOption}
-                                                className="tableview__color_option tableview__color_option--production"
-                                            >В работе</div>
-                                        </div>
-                                    </div>
+                                    <ColorPicker
+                                        defaultName={part.name}
+                                        index={selectorId++}
+                                    />
                                 </div>
                                 <div className="tableview_stamps__col">{part.amount}</div>
                                 <div className="tableview_stamps__col">{part.location}</div>
@@ -260,7 +187,7 @@ const TableView = (props) => {
                 </React.Fragment>
             ))
             }
-        </div >
+        </div>
     )
 }
 

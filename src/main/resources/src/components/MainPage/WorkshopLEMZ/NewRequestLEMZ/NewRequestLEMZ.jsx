@@ -5,6 +5,7 @@ import './NewRequestLEMZ.scss';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
+import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const NewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -206,18 +207,17 @@ const NewRequestLEMZ = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request_lemz__item">
-                    <div className="new_request_lemz__input_name">Продукция*</div>
-                    <Select
-                        options={products}
-                        name="requestProducts"
-                        onChange={handleProductsChange}
-                        error={requestErrors.requestProducts}
-                        searchPlaceholder="Введите название продукта для поиска..."
-                        errorsArr={requestErrors}
-                        setErrorsArr={setRequestErrors}
-                    />
-                </div>
+                <InputProducts
+                    inputName="Продукция"
+                    required
+                    options={products}
+                    name="requestProducts"
+                    onChange={handleProductsChange}
+                    error={requestErrors.requestProducts}
+                    searchPlaceholder="Введите название продукта для поиска..."
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 <InputText
                     inputName="Кодовое слово"
                     required

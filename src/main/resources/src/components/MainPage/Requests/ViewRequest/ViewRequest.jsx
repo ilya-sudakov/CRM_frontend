@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import './ViewRequest.scss';
 import { getRequestById } from '../../../../utils/utilsAPI.jsx';
 import Select from '../../Select/Select.jsx';
+import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const ViewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -27,7 +28,7 @@ const ViewRequest = (props) => {
         } else {
             getRequestById(id)
                 .then(res => res.json())
-                .then(oldRequest => {          
+                .then(oldRequest => {
                     setRequestInputs({
                         date: oldRequest.date,
                         requestProducts: oldRequest.requestProducts,
@@ -60,31 +61,11 @@ const ViewRequest = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_request__item">
-                    <div className="view_request__input_name">Продукция</div>
-                    {/* <div className="view_request__input_field">
-                        <input type="text"
-                            name="products"
-                            defaultValue={requestInputs.products}
-                            readOnly
-                        />
-                    </div> */}
-                    <Select
-                        // options={products}
-                        readOnly
-                        defaultValue={requestInputs.requestProducts}
-                    />
-                </div>
-                {/* <div className="view_request__item">
-                    <div className="view_request__input_name">Количество</div>
-                    <div className="view_request__input_field">
-                        <input type="text"
-                            name="quantity"
-                            defaultValue={requestInputs.quantity}
-                            readOnly
-                        />
-                    </div>
-                </div> */}
+                <InputProducts
+                    inputName="Продукция"
+                    defaultValue={requestInputs.requestProducts}
+                    readOnly
+                />
                 <div className="view_request__item">
                     <div className="view_request__input_name">Кодовое слово</div>
                     <div className="view_request__input_field">

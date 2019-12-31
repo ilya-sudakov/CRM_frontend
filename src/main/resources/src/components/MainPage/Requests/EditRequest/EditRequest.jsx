@@ -5,6 +5,7 @@ import Select from '../../Select/Select.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
+import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
@@ -239,18 +240,17 @@ const EditRequest = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="edit_request__item">
-                    <div className="edit_request__input_name">Продукция*</div>
-                    <Select
-                        options={products}
-                        onChange={handleProductsChange}
-                        searchPlaceholder="Введите название продукта для поиска..."
-                        defaultValue={selectedProducts}
-                        error={requestErrors.requestProducts}
-                        errorsArr={requestErrors}
-                        setErrorsArr={setRequestErrors}
-                    />
-                </div>
+                <InputProducts
+                    inputName="Продукция"
+                    required
+                    options={products}
+                    onChange={handleProductsChange}
+                    defaultValue={selectedProducts}
+                    searchPlaceholder="Введите название продукта для поиска..."
+                    error={requestErrors.requestProducts}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 <InputText
                     inputName="Кодовое слово"
                     required

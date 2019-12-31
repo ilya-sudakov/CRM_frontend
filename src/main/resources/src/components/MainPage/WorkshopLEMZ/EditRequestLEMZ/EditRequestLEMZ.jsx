@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import ru from 'date-fns/locale/ru';
 import './EditRequestLEMZ.scss';
-import { getProducts, getRequestLEMZById, editRequestLEMZ, getUsers, editProductsToRequestLEMZ, addProductsToRequestLEMZ, deleteProductsToRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
-import Select from '../../Select/Select.jsx';
-import SelectUser from '../../SelectUser/SelectUser.jsx';
+import { getProducts, getRequestLEMZById, editRequestLEMZ, getUsers, editProductsToRequestLEMZ, addProductsToRequestLEMZ, deleteProductsToRequestLEMZ } from '../../../../utils/utilsAPI.jsx'
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
+import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const EditRequestLEMZ = (props) => {
     const [requestId, setRequestId] = useState(1);
@@ -267,18 +264,17 @@ const EditRequestLEMZ = (props) => {
                     setErrorsArr={setRequestErrors}
                 />
                 }
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
-                    <div className="edit_request_lemz__input_name">Продукция*</div>
-                    <Select
-                        options={products}
-                        onChange={handleProductsChange}
-                        searchPlaceholder="Введите название продукта для поиска..."
-                        defaultValue={selectedProducts}
-                        error={requestErrors.requestProducts}
-                        errorsArr={requestErrors}
-                        setErrorsArr={setRequestErrors}
-                    />
-                </div>}
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputProducts
+                    inputName="Продукция"
+                    required
+                    options={products}
+                    onChange={handleProductsChange}
+                    searchPlaceholder="Введите название продукта для поиска..."
+                    defaultValue={selectedProducts}
+                    error={requestErrors.requestProducts}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />}
                 {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputText
                     inputName="Кодовое слово"
                     required

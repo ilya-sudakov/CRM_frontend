@@ -17,6 +17,7 @@ const InputDate = (props) => {
                         onChange={props.handleDateChange}
                         disabledKeyboardNavigation
                         locale={ru}
+                        readOnly={props.readOnly}
                     />
                 </div>
             </div>

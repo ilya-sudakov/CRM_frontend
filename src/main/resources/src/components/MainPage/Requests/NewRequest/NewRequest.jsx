@@ -5,6 +5,7 @@ import './NewRequest.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
+import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -183,17 +184,16 @@ const NewRequest = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request__item">
-                    <div className="new_request__input_name">Продукция*</div>
-                    <Select
-                        options={products}
-                        onChange={handleProductsChange}
-                        searchPlaceholder="Введите название продукта для поиска..."
-                        error={requestErrors.requestProducts}
-                        errorsArr={requestErrors}
-                        setErrorsArr={setRequestErrors}
-                    />
-                </div>
+                <InputProducts
+                    inputName="Продукция"
+                    required
+                    options={products}
+                    onChange={handleProductsChange}
+                    searchPlaceholder="Введите название продукта для поиска..."
+                    error={requestErrors.requestProducts}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 <InputText
                     inputName="Кодовое слово"
                     required

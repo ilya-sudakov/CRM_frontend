@@ -58,7 +58,7 @@ const TableView = (props) => {
         <div className="tableview_employees">
             <div className="tableview_employees__row tableview_employees__row--header">
                 <div className="tableview_employees__col">ФИО</div>
-                <div className="tableview_employees__col">Год рождения</div>
+                <div className="tableview_employees__col">Дата рождения</div>
                 <div className="tableview_employees__col">Гражданство</div>
                 <div className="tableview_employees__col">Цех</div>
                 <div className="tableview_employees__col">Должность</div>

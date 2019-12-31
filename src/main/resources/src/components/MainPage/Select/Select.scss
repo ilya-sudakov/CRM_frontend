@@ -3,6 +3,7 @@
 .select {
   width: 100%;
   position: relative;
+  // display: flex;
 
   .select__overlay {
     width: 100vw;
@@ -35,19 +36,137 @@
     }
   }
 
-  &__input {
-    border: 1px solid #bbbbbb;
-    width: 100%;
-    padding: 5px 10px;
-    border-radius: 10px;
-    z-index: 2;
+  &__searchbar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    .select__input {
+      border: 1px solid #bbbbbb;
+      width: 100%;
+      padding: 5px 10px;
+      // border-radius: 10px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      z-index: 2;
 
-    &:focus {
-      border: 1px solid $button__background--inverted;
+      &:focus {
+        border: 1px solid $button__background--inverted;
+      }
+
+      &--error {
+        border: 1px solid #f73434 !important;
+      }
     }
 
-    &--error {
-      border: 1px solid #f73434 !important;
+    .select__search_button {
+      border: 0;
+      flex: 0 1 15%;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: 80%;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+      }
+    }
+
+    .select__window {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(#000000, 0.3);
+      top: 0;
+      left: 0;
+      z-index: 999;
+
+      &--hidden {
+        display: none;
+      }
+
+      &_content {
+        width: 80%;
+        height: 80%;
+        background-color: #eeeeee;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+        border-radius: 10px;
+        border: 1px solid #999999;
+        padding: 15px;
+        overflow-y: auto;
+
+        .tableview_products {
+          width: 100%;
+        }
+
+        .select__window_title {
+          text-align: center;
+          padding: 10px 0px;
+          font-size: 125%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 10px;
+          position: relative;
+        }
+
+        .select__window_exit {
+          position: absolute;
+          width: 45px;
+          height: 45px;
+          right: 0;
+          border-radius: 10px;
+          transition: 0.2s ease-in-out;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #cccccc;
+          }
+          .select__window_bar {
+            height: 2px;
+            width: 25px;
+            content: "";
+            background-color: #000000;
+            position: absolute;
+            right: 9px;
+            bottom: 21px;
+
+            &:first-of-type {
+              transform: rotate(45deg);
+            }
+            &:last-of-type {
+              transform: rotate(-45deg);
+            }
+          }
+        }
+
+        .searchbar {
+          width: 100%;
+        }
+
+        .select__window_button {
+          background-color: $button__background--inverted;
+          color: $secondary-text-color;
+          font-size: 60%;
+          padding: 10px 15px;
+          margin-left: 10px;
+          border-radius: 10px;
+          transition: 0.2s ease-in-out;
+          right: 50px;
+          position: absolute;
+
+          &:hover {
+            background-color: lighten($button__background--inverted, 5%);
+          }
+        }
+      }
     }
   }
 
@@ -55,7 +174,7 @@
     position: absolute;
     // width: calc(100% - 20px);
     // left: 10px;
-    width: 100%;
+    width: calc(85% + 15px);
     padding: 5px 0;
     max-height: 200px;
     overflow-y: auto;
