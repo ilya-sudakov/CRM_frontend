@@ -3,6 +3,7 @@ import './NewPressForm.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addPressForm, addPartsToPressForm } from '../../../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const NewPressForm = (props) => {
     const [pressFormInputs, setPressFormInputs] = useState({
@@ -23,6 +24,7 @@ const NewPressForm = (props) => {
         // comment: false,
         parts: false,
     })
+    const [showError, setShowError] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -63,7 +65,8 @@ const NewPressForm = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -121,6 +124,11 @@ const NewPressForm = (props) => {
         <div className="new_press_form">
             <div className="new_press_form__title">Новая пресс-форма</div>
             <form className="new_press_form__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputText
                     inputName="Название"
                     required

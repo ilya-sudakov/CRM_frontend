@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './EditRequest.scss';
 import { getRequestById, editRequest, getProducts, addProductsToRequest, getUsers, editProductsToRequest, deleteProductsToRequest } from '../../../../utils/utilsAPI.jsx';
-import Select from '../../Select/Select.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
+import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
@@ -31,7 +31,8 @@ const EditRequest = (props) => {
         requestProducts: true,
         codeWord: true,
         responsible: true,
-    })
+    });
+    const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -79,7 +80,8 @@ const EditRequest = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -230,6 +232,11 @@ const EditRequest = (props) => {
         <div className="edit_request">
             <div className="edit_request__title">Редактирование заявки</div>
             <form className="edit_request__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputDate
                     inputName="Дата"
                     required

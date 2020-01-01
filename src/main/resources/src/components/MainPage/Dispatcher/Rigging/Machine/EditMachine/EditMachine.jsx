@@ -3,6 +3,7 @@ import './EditMachine.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { editMachine, editPartsOfMachine, deletePartsFromMachine, getMachineById, addPartsToMachine } from '../../../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
@@ -24,6 +25,7 @@ const EditMachine = (props) => {
         // comment: true,
         parts: true,
     })
+    const [showError, setShowError] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -64,7 +66,8 @@ const EditMachine = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -169,6 +172,11 @@ const EditMachine = (props) => {
         <div className="edit_machine">
             <div className="edit_machine__title">Редактирование станка</div>
             <form className="edit_machine__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputText
                     inputName="Название"
                     required

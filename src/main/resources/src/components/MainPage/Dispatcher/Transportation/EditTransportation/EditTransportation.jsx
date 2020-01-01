@@ -3,6 +3,7 @@ import './EditTransportation.scss';
 import { getTransportationById, editTransportation } from '../../../../../utils/utilsAPI.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditTransportation = (props) => {
     const [transportationInputs, setTransportationInputs] = useState({
@@ -27,6 +28,7 @@ const EditTransportation = (props) => {
         recipient: true,
         driver: true
     })
+    const [showError, setShowError] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'date':
@@ -68,7 +70,8 @@ const EditTransportation = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -135,6 +138,11 @@ const EditTransportation = (props) => {
         <div className="edit_transportation">
             <div className="edit_transportation__title">Редактирование записи транспортировки</div>
             <form className="edit_transportation__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputDate
                     inputName="Дата"
                     required

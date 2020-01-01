@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './EditProduct.scss';
 import { getProductById, editProduct } from '../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -35,6 +36,7 @@ const EditProduct = (props) => {
     })
     const [imgName, setImgName] = useState("Имя файла...");
     const [imgBASE64, setImgBASE64] = useState('');
+    const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -76,7 +78,8 @@ const EditProduct = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -157,6 +160,11 @@ const EditProduct = (props) => {
         <div className="edit_product">
             <div className="edit_product__title">Редактирование продукта</div>
             <form className="edit_product__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Фотография</div>
                     <div className="edit_product__product_img">

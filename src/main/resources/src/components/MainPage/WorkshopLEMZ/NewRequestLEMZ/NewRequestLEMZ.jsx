@@ -6,6 +6,7 @@ import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
+import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const NewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -32,6 +33,7 @@ const NewRequestLEMZ = (props) => {
     })
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
+    const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -85,7 +87,8 @@ const NewRequestLEMZ = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -197,6 +200,11 @@ const NewRequestLEMZ = (props) => {
         <div className="new_request_lemz">
             <div className="new_request_lemz__title">Новая заявка ЛЭМЗ</div>
             <form className="new_request_lemz__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputDate
                     inputName="Дата заявки"
                     required

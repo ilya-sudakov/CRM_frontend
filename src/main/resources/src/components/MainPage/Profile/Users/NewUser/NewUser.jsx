@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './NewUser.scss';
 import { addUser } from '../../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const NewUser = (props) => {
     const [userInputs, setUserInputs] = useState({
@@ -22,6 +23,7 @@ const NewUser = (props) => {
         email: false,
         role: true,
     })
+    const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -56,7 +58,8 @@ const NewUser = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -90,6 +93,11 @@ const NewUser = (props) => {
         <div className="new_user">
             <div className="new_user__title">Создание пользователя</div>
             <form className="new_user__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputText
                     inputName="Имя пользователя"
                     required

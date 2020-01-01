@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './NewTask.scss';
 import { addMainTask, getUsers } from '../../../../../utils/utilsAPI.jsx';
-import SelectUser from '../../../SelectUser/SelectUser.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const NewTask = (props) => {
     const [taskInputs, setTaskInputs] = useState({
@@ -30,6 +30,7 @@ const NewTask = (props) => {
         status: false
     })
     const [users, setUsers] = useState([]);
+    const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -83,7 +84,8 @@ const NewTask = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -133,6 +135,11 @@ const NewTask = (props) => {
         <div className="new_general_task">
             <div className="new_general_task__title">Новая задача</div>
             <form className="new_general_task__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputDate
                     inputName="Дата постановки"
                     required

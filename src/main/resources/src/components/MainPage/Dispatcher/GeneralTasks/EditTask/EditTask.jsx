@@ -5,6 +5,7 @@ import SelectUser from '../../../SelectUser/SelectUser.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditTask = (props) => {
     const [taskId, setTaskId] = useState(1);
@@ -31,6 +32,7 @@ const EditTask = (props) => {
         dateControl: true,
         status: true
     })
+    const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -84,7 +86,8 @@ const EditTask = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -157,6 +160,11 @@ const EditTask = (props) => {
         <div className="edit_general_task">
             <div className="edit_general_task__title">Редактирование задачи</div>
             <form className="edit_general_task__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputDate
                     inputName="Дата постановки"
                     required

@@ -3,6 +3,7 @@ import './EditPressForm.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getPressFormById, editPressForm, editPartFromPressForm, addPartsToPressForm, deletePartsFromPressForm } from '../../../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditPressForm = (props) => {
     const [pressFormInputs, setPressFormInputs] = useState({
@@ -24,6 +25,7 @@ const EditPressForm = (props) => {
         // comment: true,
         parts: true,
     })
+    const [showError, setShowError] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -64,7 +66,8 @@ const EditPressForm = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -169,6 +172,11 @@ const EditPressForm = (props) => {
         <div className="edit_press_form">
             <div className="edit_press_form__title">Редактирование пресс-формы</div>
             <form className="edit_press_form__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputText
                     inputName="Название"
                     required

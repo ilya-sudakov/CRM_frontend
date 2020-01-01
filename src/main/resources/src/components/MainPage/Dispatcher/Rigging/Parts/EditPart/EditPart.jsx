@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './EditPart.scss';
 import { editPart, getPartById } from '../../../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditPart = (props) => {
     const [partInputs, setPartInputs] = useState({
@@ -24,6 +25,7 @@ const EditPart = (props) => {
         dimensions: true,
         processing: true
     })
+    const [showError, setShowError] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             default:
@@ -58,7 +60,8 @@ const EditPart = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -111,6 +114,11 @@ const EditPart = (props) => {
         <div className="edit_part">
             <div className="edit_part__title">Редактирование запчасти</div>
             <form className="edit_part__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputText
                     inputName="Название"
                     required

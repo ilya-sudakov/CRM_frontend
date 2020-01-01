@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { addRequest, getProducts, addProductsToRequest, getUsers } from '../../../../utils/utilsAPI.jsx';
-import Select from '../../Select/Select.jsx';
 import './NewRequest.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
+import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -28,6 +28,7 @@ const NewRequest = (props) => {
     })
     const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
+    const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -74,7 +75,7 @@ const NewRequest = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -82,7 +83,7 @@ const NewRequest = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let id = 0;
-        console.log(requestInputs);
+        // console.log(requestInputs);
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {
@@ -101,7 +102,8 @@ const NewRequest = (props) => {
                     .then(() => props.history.push("/requests"))
             })
             .catch(error => {
-                alert('Ошибка при добавлении записи')
+                alert('Ошибка при добавлении записи');
+                // setShowError(true);
                 console.log(error);
             })
     }
@@ -174,6 +176,11 @@ const NewRequest = (props) => {
         <div className="new_request">
             <div className="new_request__title">Новая заявка</div>
             <form className="new_request__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputDate
                     inputName="Дата"
                     required

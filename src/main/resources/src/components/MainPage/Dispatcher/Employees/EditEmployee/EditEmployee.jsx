@@ -3,6 +3,7 @@ import './EditEmployee.scss';
 import { getEmployeeById, editEmployee } from '../../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -43,6 +44,8 @@ const EditEmployee = (props) => {
         // comment: false,
         relevance: true
     })
+    const [showError, setShowError] = useState(false);
+
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'yearOfBirth':
@@ -89,7 +92,8 @@ const EditEmployee = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -187,6 +191,11 @@ const EditEmployee = (props) => {
         <div className="edit_employee">
             <div className="edit_employee__title">Редактирование сотрудника</div>
             <form className="edit_employee__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputText
                     inputName="Имя"
                     required

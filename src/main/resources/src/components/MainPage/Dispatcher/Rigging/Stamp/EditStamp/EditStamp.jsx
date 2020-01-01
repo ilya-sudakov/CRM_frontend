@@ -3,6 +3,7 @@ import './EditStamp.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getStampById, editStamp, editPartsOfStamp, addPartsToStamp, deletePartsFromStamp } from '../../../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -24,6 +25,7 @@ const EditStamp = (props) => {
         // comment: true,
         parts: true,
     })
+    const [showError, setShowError] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -64,7 +66,8 @@ const EditStamp = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -169,6 +172,11 @@ const EditStamp = (props) => {
         <div className="edit_stamp">
             <div className="edit_stamp__title">Редактирование штампа</div>
             <form className="edit_stamp__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputText
                     inputName="Название"
                     required

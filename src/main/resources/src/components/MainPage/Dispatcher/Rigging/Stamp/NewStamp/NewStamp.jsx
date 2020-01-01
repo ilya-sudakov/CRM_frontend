@@ -3,6 +3,7 @@ import './NewStamp.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addPartsToStamp, addStamp } from '../../../../../../utils/utilsAPI.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const NewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -23,6 +24,8 @@ const NewStamp = (props) => {
         // comment: false,
         parts: false,
     })
+    const [showError, setShowError] = useState(false);
+
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -63,7 +66,8 @@ const NewStamp = (props) => {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -120,6 +124,11 @@ const NewStamp = (props) => {
         <div className="new_stamp">
             <div className="new_stamp__title">Новый штамп</div>
             <form className="new_stamp__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
                 <InputText
                     inputName="Название"
                     required
