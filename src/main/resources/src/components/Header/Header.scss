@@ -10,6 +10,19 @@
   align-items: center;
   // background-color: $light80-grey;
 
+  .main_page__overlay {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
   &__company {
     font-size: 24px;
     display: flex;
@@ -77,11 +90,84 @@
 
       &--user {
         display: flex;
-        flex-direction: column;
-        margin-right: 5px;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 15px;
+        cursor: pointer;
+        position: relative;
+        padding: 2.5px 10px;
+        border-radius: 10px;
+        border: 1px solid #9b9b9b;
+        transition: 0.2s ease-in-out;
+        z-index: 2;
 
-        .header__email {
+        &:hover {
+          background-color: darken($primary-background-color, 10%);
+        }
+
+        .header__profile_data {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .header__userimg {
+            width: 40px;
+            margin-right: 5px;
+          }
+
+          .header__email {
+            font-size: 80%;
+          }
+        }
+
+        .header__profile_menu {
+          background-color: $side_menu__background;
+          border-radius: 10px;
           font-size: 80%;
+          position: absolute;
+          top: 50px;
+          left: 0;
+          width: calc(100% - 10px);
+          min-width: 125px;
+          padding: 5px 5px;
+          transition: 0.2s ease-in-out;
+          transform-origin: 0 0;
+          // z-index: 5;
+
+          .header__profile_item {
+            display: block;
+            color: $primary-text-color;
+            padding: 5px 0px;
+            border-radius: 10px;
+            transition: 0.2s ease-in-out;
+            margin-bottom: 5px;
+
+            &:last-child {
+              margin: 0;
+            }
+
+            &:hover {
+              background-color: darken($side_menu__background, 10%);
+            }
+          }
+
+          .header__profile_overlay {
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            top: 0;
+            left: 0;
+            // z-index: 10;
+            // background-color: red;
+
+            &--hidden {
+              display: none;
+            }
+          }
+
+          &--hidden {
+            transform: scaleY(0);
+          }
         }
       }
 
@@ -114,9 +200,8 @@
         padding: 10px 5px;
         font-size: 80%;
         &--user {
-          .header__email {
-            display: none;
-          }
+          padding: 0px 5px;
+          margin-right: 5px;
         }
       }
     }

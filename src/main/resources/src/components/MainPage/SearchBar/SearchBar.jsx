@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import searchImg from '../../../../../../../../assets/searchbar/search.svg';
-import plusImg from '../../../../../../../../assets/searchbar/plus.svg';
+import searchImg from '../../../../../../../assets/searchbar/search.svg';
 import './SearchBar.scss';
 
 const SearchBar = (props) => {
@@ -19,11 +17,11 @@ const SearchBar = (props) => {
 
     return (
         <div className="searchbar">
-            <div className="searchbar__title">Поиск по заявкам</div>
+            <div className="searchbar__title">{props.title}</div>
             <div className="searchbar__panel">
                 <div className="searchbar__input">
                     <input type="text"
-                        placeholder="Введите название продукции для поиска..."
+                        placeholder={props.placeholder}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={handleEnterPress}
                     ></input>
@@ -32,10 +30,6 @@ const SearchBar = (props) => {
                     <img className="searchbar__img" src={searchImg} />
                     <span>Поиск</span>
                 </div>
-                {/* <Link className="searchbar__addItem" to="requests/new">
-                    <img className="searchbar__img" src={plusImg} />
-                    <span>Добавить заявку</span>
-                </Link> */}
             </div>
         </div>
     );

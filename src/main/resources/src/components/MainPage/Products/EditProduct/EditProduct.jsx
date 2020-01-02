@@ -1,0 +1,262 @@
+import React, { useEffect, useState } from 'react';
+import './EditProduct.scss';
+import { getProductById, editProduct } from '../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+
+const EditProduct = (props) => {
+    const [productInputs, setProductInputs] = useState({
+        name: "",
+        item: "",
+        weight: "",
+        group: "",
+        unit: "шт.",
+        photo: "",
+        typeOfProduct: "FIRST",
+        packaging: "",
+        comment: ""
+    });
+    const [productErrors, setProductErrors] = useState({
+        name: false,
+        typeOfProduct: false,
+        comment: false,
+        packaging: false,
+        photo: false,
+        unit: false,
+        weight: false
+    })
+    const [validInputs, setValidInputs] = useState({
+        name: true,
+        typeOfProduct: true,
+        // comment: false,
+        packaging: true,
+        // photo: false,
+        unit: true,
+        weight: true
+    })
+    const [imgName, setImgName] = useState("Имя файла...");
+    const [imgBASE64, setImgBASE64] = useState('');
+    const [showError, setShowError] = useState(false);
+
+    const validateField = (fieldName, value) => {
+        switch (fieldName) {
+            case 'typeOfProduct':
+                setValidInputs({
+                    ...validInputs,
+                    typeOfProduct: (value !== null)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
+                break;
+        }
+    }
+
+    const formIsValid = () => {
+        let check = true;
+        let newErrors = Object.assign({
+            name: false,
+            typeOfProduct: false,
+            packaging: false,
+            unit: false,
+            weight: false
+        });
+        for (let item in validInputs) {
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setProductErrors(newErrors);
+        if (check === true) {
+            return true;
+        }
+        else {
+            // alert("Форма не заполнена");
+            setShowError(true);
+            return false;
+        };
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const id = props.history.location.pathname.split("/products/edit/")[1];
+        formIsValid() && editProduct(productInputs, id)
+            .then(() => props.history.push("/products"))
+            .catch(error => {
+                alert('Ошибка при добавлении записи');
+            })
+    }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        validateField(name, value);
+        setProductInputs({
+            ...productInputs,
+            [name]: value
+        })
+        setProductErrors({
+            ...productErrors,
+            [name]: false
+        })
+    }
+
+    const handleFileInputChange = (event) => {
+        let regex = /.+\.(jpeg|jpg|png|img)/;
+        let file = event.target.files[0];
+        if (file.name.match(regex) !== null) {
+            setImgName(file.name);
+            let reader = new FileReader();
+            reader.onloadend = (() => {
+                // setImgBASE64(reader.result.split("base64,")[1]);
+                setImgBASE64(reader.result);
+                setProductInputs({
+                    ...productInputs,
+                    // photo: reader.result.split("base64,")[1]
+                    photo: reader.result
+                })
+            });
+            reader.readAsDataURL(file);
+        }
+        else {
+            setImgName('Некорректный формат файла!');
+        }
+    }
+
+    useEffect(() => {
+        document.title = "Редактирование продукта";
+        const id = props.history.location.pathname.split("/products/edit/")[1];
+        if (isNaN(Number.parseInt(id))) {
+            alert('Неправильный индекс заявки!');
+            props.history.push("/products");
+        } else {
+            getProductById(id)
+                .then(res => res.json())
+                .then(oldProduct => {
+                    setProductInputs({
+                        name: oldProduct.name,
+                        weight: oldProduct.weight,
+                        unit: oldProduct.unit,
+                        packaging: oldProduct.packaging,
+                        comment: oldProduct.comment,
+                        typeOfProduct: oldProduct.typeOfProduct,
+                        photo: oldProduct.photo
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс заявки!');
+                    props.history.push("/products");
+                })
+        }
+    }, [])
+    return (
+        <div className="edit_product">
+            <div className="edit_product__title">Редактирование продукта</div>
+            <form className="edit_product__form">
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
+                <div className="edit_product__item">
+                    <div className="edit_product__input_name">Фотография</div>
+                    <div className="edit_product__product_img">
+                        <img src={productInputs.photo} alt="" />
+                    </div>
+                </div>
+                <InputText
+                    inputName="Наименование"
+                    required
+                    error={productErrors.name}
+                    name="name"
+                    defaultValue={productInputs.name}
+                    handleInputChange={handleInputChange}
+                    errorsArr={productErrors}
+                    setErrorsArr={setProductErrors}
+                />
+                <div className="edit_product__item">
+                    <div className="edit_product__input_name">Группа продукции*</div>
+                    <div className="edit_product__input_field">
+                        <select
+                            name="typeOfProduct"
+                            onChange={handleInputChange}
+                            defaultValue={productInputs.typeOfProduct}
+                            autoComplete="off"
+                        >
+                            <option value="FIRST">Первая группа</option>
+                            <option value="SECOND">Вторая группа</option>
+                            <option value="THIRD">Третья группа</option>
+                        </select>
+                    </div>
+                </div>
+                <InputText
+                    inputName="Вес изделия"
+                    required
+                    error={productErrors.weight}
+                    defaultValue={productInputs.weight}
+                    name="weight"
+                    type="number"
+                    handleInputChange={handleInputChange}
+                    errorsArr={productErrors}
+                    setErrorsArr={setProductErrors}
+                />
+                <div className="edit_product__item">
+                    <div className="edit_product__input_name">Единица измерения*</div>
+                    <div className="edit_product__input_field">
+                        <select
+                            name="unit"
+                            onChange={handleInputChange}
+                            value={productInputs.unit}
+                        >
+                            <option value="шт.">Штук</option>
+                            <option value="тыс. шт.">Тысяч Штук</option>
+                            <option value="упак.">Упаковок</option>
+                        </select>
+                    </div>
+                </div>
+                <InputText
+                    inputName="Упаковка"
+                    required
+                    defaultValue={productInputs.packaging}
+                    error={productErrors.packaging}
+                    name="packaging"
+                    handleInputChange={handleInputChange}
+                    errorsArr={productErrors}
+                    setErrorsArr={setProductErrors}
+                />
+                <InputText
+                    inputName="Комментарий"
+                    name="comment"
+                    defaultValue={productInputs.comment}
+                    handleInputChange={handleInputChange}
+                    errorsArr={productErrors}
+                    setErrorsArr={setProductErrors}
+                />
+                <div className="edit_product__item">
+                    <div className="edit_product__input_name">Фотография</div>
+                    <div className="edit_product__file_upload">
+                        <div className="edit_product__file_name">
+                            {imgName}
+                        </div>
+                        <label className="edit_product__label" htmlFor="file">
+                            Загрузить файл
+                                {/* <img className="logo" src={fileUploadImg} alt="" /> */}
+                        </label>
+                        <input type="file" name="file" id="file" onChange={handleFileInputChange} />
+                    </div>
+                </div>
+                <div className="edit_product__input_hint">* - поля, обязательные для заполнения</div>
+                <input className="edit_product__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
+            </form>
+        </div>
+    );
+};
+
+export default EditProduct;
