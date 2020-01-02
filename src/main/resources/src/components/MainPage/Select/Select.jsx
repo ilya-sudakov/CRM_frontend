@@ -108,13 +108,13 @@ const Select = (props) => {
 
     const clickOnSelectWindow = (e) => {
         e.preventDefault();
-        let productsWindow = document.getElementsByClassName("select__window")[0];
-        if (!(e.target.classList[0] === "select__window") && !(e.target.classList.contains("select__window_exit")) && !(e.target.classList.contains("select__window_bar"))) {
-            productsWindow.classList.remove("select__window--hidden");
-        }
-        else {
-            productsWindow.classList.add("select__window--hidden");
-        }
+        // let productsWindow = document.getElementsByClassName("select__window")[0];
+        // if (!(e.target.classList[0] === "select__window") && !(e.target.classList.contains("select__window_exit")) && !(e.target.classList.contains("select__window_bar"))) {
+        //     productsWindow.classList.remove("select__window--hidden");
+        // }
+        // else { 
+        //     productsWindow.classList.add("select__window--hidden");
+        // }
     }
 
     useEffect(() => {
@@ -160,7 +160,7 @@ const Select = (props) => {
                         />
                         <TableView
                             data={products}
-                            searchQuery={searchQuery}
+                            searchQuery={""}
                             deleteItem={null}
                             selecting
                         />

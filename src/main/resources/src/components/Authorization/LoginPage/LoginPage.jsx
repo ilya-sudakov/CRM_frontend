@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import './LoginPage.scss';
 import { login, refreshToken } from '../../../utils/utilsAPI.jsx';
+import ErrorMessage from '../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const LoginPage = (props) => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [showError, setShowError] = useState(false);
 
     useEffect(() => {
         document.title = "Авторизация";
@@ -27,6 +29,7 @@ const LoginPage = (props) => {
             })
             .catch((error) => {
                 console.log(error);
+                setShowError(true);
             })
     }
 
@@ -46,6 +49,11 @@ const LoginPage = (props) => {
                         Авторизация
                     </div>
                     <div className="authorization__panel">
+                        <ErrorMessage
+                            message="Ошибка при авторизации"
+                            showError={showError}
+                            setShowError={setShowError}
+                        />
                         {/* <div className="authorization__field_name">
                             Email
                         </div> */}
