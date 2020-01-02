@@ -23,8 +23,6 @@
     // padding: 5px;
   }
 
-  
-
   &__row,
   &__parts {
     display: flex;
@@ -42,10 +40,12 @@
       justify-content: center;
       align-items: center;
       padding: 15px 5px;
+      // width: 100%;
       // flex: 0 1 12.5%;
       border-right: 1px solid #cccccc; //border between columns
       // min-width: 100px;
       // max-width: 150px;
+
       &:nth-child(1) {
         flex: 0 1 5%;
         max-width: 40px;
@@ -58,9 +58,11 @@
         padding: 2.5px !important;
       }
 
+      //Название
       &:nth-child(3) {
         // flex: 0 1 35%;
         flex: 0 1 10%;
+        padding: 0;
       }
 
       //Кол-во
@@ -80,7 +82,7 @@
       &:nth-child(6) {
         // flex: 0 1 5%;
         flex: 0 1 10%;
-        word-break: break-all;
+        // word-break: break-all;
       }
       &:nth-child(7) {
         // flex: 0 1 5%;
@@ -184,6 +186,25 @@
     }
   }
 
+  .tableview_stamps__row--completed {
+    background-color: #6caa2b;
+    &:hover {
+      background-color: lighten(#6caa2b, 10%);
+    }
+  }
+  .tableview_stamps__row--defect {
+    background-color: #e25c52;
+    &:hover {
+      background-color: lighten(#e25c52, 10%);
+    }
+  }
+  .tableview_stamps__row--production {
+    background-color: #e0e0e0;
+    &:hover {
+      background-color: lighten(#e0e0e0, 10%);
+    }
+  }
+
   &__row--header {
     font-size: 90%;
     position: sticky; //test
@@ -200,14 +221,23 @@
   .tableview_stamps__parts {
     flex-direction: column;
     transform-origin: 0 0;
+    // transform: scaleY(1);
     // transition: 0.2s ease-in-out;
-    transition: none;
+    // transition: none;
     max-height: max-content;
+    // height: 100%;
 
     &--hidden {
-      transform: scaleY(0);
+      // transform: scaleY(0);
       max-height: 0;
+      display: none;
       // transition: 0.2s ease-in-out;
+    }
+    &:last-of-type {
+      .tableview_stamps__row {
+        border-bottom-left-radius: 10px !important;
+        border-bottom-right-radius: 10px !important;
+      }
     }
 
     .tableview_stamps__row {
@@ -217,6 +247,18 @@
 
       .tableview_stamps__col {
         padding: 5px 5px;
+
+        &:nth-child(3) {
+          padding: 0;
+        }
+
+        .tableview__color_name {
+          text-decoration: none;
+        }
+
+        .tableview__color_option {
+          font-size: 110%;
+        }
       }
 
       &:first-of-type {

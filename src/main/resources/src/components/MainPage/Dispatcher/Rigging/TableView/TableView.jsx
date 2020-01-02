@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
+import ColorPicker from '../ColorPicker/ColorPicker.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
         curSort: 'id',
         date: 'desc'
     })
+    let selectorId = 0;
     const [partsVisible, setPartsVisible] = useState([])
 
     const changeSortOrder = (event) => {
@@ -24,6 +26,7 @@ const TableView = (props) => {
         return data.filter(item => (
             item.id.toString().includes(query) ||
             item.comment.toLowerCase().includes(query) ||
+            item.name.toLowerCase().includes(query) ||
             item.number.toLowerCase().replace(re, '').includes(query.replace(re, ''))
         ))
     }
@@ -51,7 +54,7 @@ const TableView = (props) => {
         setPartsVisible([
             ...temp,
         ]);
-    }, [])
+    }, [props.data])
 
     const checkPart = (index) => {
         index = Number.parseInt(index);
@@ -80,7 +83,11 @@ const TableView = (props) => {
 
     const handleClickStamp = (event) => {
         let id = event.currentTarget.getAttribute('id');
-        setPartsVisible([...checkPart(id)]);
+        ((event.target.className !== "tableview__color_name") &&
+            (!event.target.className.includes("tableview__color_option")) &&
+            (!event.target.className.includes("tableview__color_overlay")) &&
+            (!event.target.className.includes("tableview__img"))
+        ) && setPartsVisible([...checkPart(id)]);
     }
 
     return (
@@ -107,15 +114,21 @@ const TableView = (props) => {
                 <React.Fragment>
                     <div
                         id={stamp.id}
-                        className={"tableview_stamps__row " + (stamp.id % 2 === 0 ? "tableview_stamps__row--even" : "tableview_stamps__row--odd")}
+                        // className={"tableview_stamps__row " + (stamp.id % 2 === 0 ? "tableview_stamps__row--even" : "tableview_stamps__row--odd")}
+                        className={"tableview_stamps__row tableview_stamps__row--" + (stamp.color ? stamp.color : "production")}
                         onClick={handleClickStamp}
                     >
                         <div className="tableview_stamps__col">{stamp.id}</div>
                         <div className="tableview_stamps__col">{stamp.number}</div>
-                        <div className="tableview_stamps__col">{stamp.name}</div>
+                        <div className="tableview_stamps__col">
+                            <ColorPicker
+                                defaultName={stamp.name}
+                                index={selectorId++}
+                            />
+                        </div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
-                        <div className="tableview_stamps__col"></div>
+                        <div className="tableview_stamps__col">{stamp.comment}</div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
@@ -123,17 +136,35 @@ const TableView = (props) => {
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__col"></div>
                         <div className="tableview_stamps__actions">
-                            <Link to={"/dispatcher/rigging/stamp/view/" + stamp.id} className="tableview_stamps__action">Просмотр</Link>
-                            <Link to={"/dispatcher/rigging/stamp/edit/" + stamp.id} className="tableview_stamps__action">Редактировать</Link>
+                            <Link to={"/dispatcher/rigging/" + (
+                                props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                                props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                            ) + "/view/" + stamp.id} className="tableview_stamps__action">Просмотр</Link>
+                            <Link to={"/dispatcher/rigging/" + (
+                                props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                                props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                            ) + "/edit/" + stamp.id} className="tableview_stamps__action">Редактировать</Link>
                             {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={stamp.id} className="tableview_stamps__action" onClick={props.deleteItem}>Удалить</div>}
                         </div>
                     </div>
                     <div id={stamp_id} className={"tableview_stamps__parts " + ((isPartHidden(stamp.id) === true) && "tableview_stamps__parts--hidden")}>
-                        {stamp.parts.map((part, index) => (
-                            <div key={index} className={"tableview_stamps__row " + (part.id % 2 === 0 ? "tableview_stamps__row--even" : "tableview_stamps__row--odd")}>
+                        {stamp[
+                            props.location.pathname.includes("/dispatcher/rigging/stamp") && "stampParts" ||
+                            props.location.pathname.includes("/dispatcher/rigging/machine") && "benchParts" ||
+                            props.location.pathname.includes("/dispatcher/rigging/press-form") && "pressParts"
+                        ].map((part, index) => (
+                            //<div key={index} className={"tableview_stamps__row " + (part.id % 2 === 0 ? "tableview_stamps__row--even" : "tableview_stamps__row--odd")}>
+                            <div key={index} className={"tableview_stamps__row tableview_stamps__row--" + (part.color ? part.color : "completed")} >
                                 <div className="tableview_stamps__col">{part.id}</div>
                                 <div className="tableview_stamps__col">{part.number}</div>
-                                <div className="tableview_stamps__col">{part.name}</div>
+                                <div className="tableview_stamps__col">
+                                    <ColorPicker
+                                        defaultName={part.name}
+                                        index={selectorId++}
+                                    />
+                                </div>
                                 <div className="tableview_stamps__col">{part.amount}</div>
                                 <div className="tableview_stamps__col">{part.location}</div>
                                 <div className="tableview_stamps__col">{part.comment}</div>
@@ -142,15 +173,22 @@ const TableView = (props) => {
                                 <div className="tableview_stamps__col">{part.harding}</div>
                                 <div className="tableview_stamps__col">{part.grinding}</div>
                                 <div className="tableview_stamps__col">{part.erosion}</div>
-                                <div className="tableview_stamps__col">{part.check}</div>
-                                <div className="tableview_stamps__actions"></div>
+                                <div className="tableview_stamps__col">{part.controll}</div>
+                                <div className="tableview_stamps__actions">
+                                    <Link to={"/dispatcher/rigging/" + (
+                                        props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                                        props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                                    ) + "/edit-part/" + stamp.id + '/' + part.id} className="tableview_stamps__action">Редактировать</Link>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </React.Fragment>
-            ))}
+            ))
+            }
         </div>
     )
 }
 
-export default TableView;
+export default withRouter(TableView);

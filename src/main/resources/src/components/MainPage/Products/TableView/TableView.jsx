@@ -53,7 +53,7 @@ const TableView = (props) => {
                 </div>
                 <div className="tableview_products__col">Фото</div>
                 <div className="tableview_products__col">Название</div>
-                <div className="tableview_products__col">Группа продукции</div>
+                {/* <div className="tableview_products__col">Группа продукции</div> */}
                 <div className="tableview_products__col">Вес</div>
                 <div className="tableview_products__col">Упаковка</div>
                 {/* <div className="tableview_products__col">Комментарий</div> */}
@@ -67,19 +67,20 @@ const TableView = (props) => {
                         <img className="tableview_products__product_img" src={product.photo} alt="" />
                     </div>
                     <div className="tableview_products__col">{product.name}</div>
-                    <div className="tableview_products__col">{
+                    {/* <div className="tableview_products__col">{
                         product.typeOfProduct === "FIRST" ? "Первая группа"
                             : product.typeOfProduct === "SECOND" ? "Вторая группа"
                                 : product.typeOfProduct === "THIRD" ? "Третья группа"
                                     : null
-                    }</div>
+                    }</div> */}
                     <div className="tableview_products__col">{product.weight}</div>
                     <div className="tableview_products__col">{product.packaging}</div>
                     {/* <div className="tableview_products__col">{product.comment}</div> */}
                     <div className="tableview_products__actions">
                         <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
-                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>}
-                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div>}
+                        {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>}
+                        {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div>}
+                        {props.selecting && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Выбрать</div>}
                     </div>
                 </div>
             ))}

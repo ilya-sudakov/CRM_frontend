@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './EditPart.scss';
 import { editPart, getPartById } from '../../../../../../utils/utilsAPI.jsx';
+import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditPart = (props) => {
     const [partInputs, setPartInputs] = useState({
@@ -9,29 +11,57 @@ const EditPart = (props) => {
         dimensions: '',
         processing: ''
     })
-    const [productErrors, setProductErrors] = useState({
-        number: '',
-        name: '',
-        dimensions: '',
-        processing: ''
-    })
     const [partId, setPartId] = useState(1);
-    const [nameValid, setNameValid] = useState(true);
 
+    const [partErrors, setPartErrors] = useState({
+        number: false,
+        name: false,
+        dimensions: false,
+        processing: false
+    })
+    const [validInputs, setValidInputs] = useState({
+        number: true,
+        name: true,
+        dimensions: true,
+        processing: true
+    })
+    const [showError, setShowError] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'name':
-                setNameValid(value !== "");
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (nameValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            number: false,
+            name: false,
+            dimensions: false,
+            processing: false
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setPartErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
@@ -48,6 +78,10 @@ const EditPart = (props) => {
         setPartInputs({
             ...partInputs,
             [name]: value
+        })
+        setPartErrors({
+            ...partErrors,
+            [name]: false
         })
     }
 
@@ -80,50 +114,51 @@ const EditPart = (props) => {
         <div className="edit_part">
             <div className="edit_part__title">Редактирование запчасти</div>
             <form className="edit_part__form">
-                <div className="edit_part__item">
-                    <div className="edit_part__input_name">Артикул*</div>
-                    <div className="edit_part__input_field">
-                        <input type="text"
-                            name="number"
-                            autoComplete="off"
-                            defaultValue={partInputs.number}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="edit_part__item">
-                    <div className="edit_part__input_name">Название*</div>
-                    <div className="edit_part__input_field">
-                        <input type="text"
-                            name="name"
-                            autoComplete="off"
-                            defaultValue={partInputs.name}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="edit_part__item">
-                    <div className="edit_part__input_name">Размеры*</div>
-                    <div className="edit_part__input_field">
-                        <input type="text"
-                            name="dimensions"
-                            autoComplete="off"
-                            defaultValue={partInputs.dimensions}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
-                <div className="edit_part__item">
-                    <div className="edit_part__input_name">Обработка*</div>
-                    <div className="edit_part__input_field">
-                        <input type="text"
-                            name="processing"
-                            autoComplete="off"
-                            defaultValue={partInputs.processing}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                </div>
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
+                <InputText
+                    inputName="Название"
+                    required
+                    error={partErrors.name}
+                    name="name"
+                    defaultValue={partInputs.name}
+                    handleInputChange={handleInputChange}
+                    errorsArr={partErrors}
+                    setErrorsArr={setPartErrors}
+                />
+                <InputText
+                    inputName="Артикул"
+                    required
+                    error={partErrors.number}
+                    name="number"
+                    defaultValue={partInputs.number}
+                    handleInputChange={handleInputChange}
+                    errorsArr={partErrors}
+                    setErrorsArr={setPartErrors}
+                />
+                <InputText
+                    inputName="Размеры"
+                    required
+                    error={partErrors.dimensions}
+                    name="dimensions"
+                    defaultValue={partInputs.dimensions}
+                    handleInputChange={handleInputChange}
+                    errorsArr={partErrors}
+                    setErrorsArr={setPartErrors}
+                />
+                <InputText
+                    inputName="Обработка"
+                    required
+                    error={partErrors.processing}
+                    name="processing"
+                    defaultValue={partInputs.processing}
+                    handleInputChange={handleInputChange}
+                    errorsArr={partErrors}
+                    setErrorsArr={setPartErrors}
+                />
                 <div className="edit_part__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_part__submit" type="submit" onClick={handleSubmit} value="Изменить запчасть" />
             </form>

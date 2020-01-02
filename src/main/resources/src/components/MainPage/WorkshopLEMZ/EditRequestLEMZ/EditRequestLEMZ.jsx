@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import ru from 'date-fns/locale/ru';
 import './EditRequestLEMZ.scss';
-import { getProducts, getRequestLEMZById, editRequestLEMZ, getUsers, editProductsToRequestLEMZ, addProductsToRequestLEMZ, deleteProductsToRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
-import Select from '../../Select/Select.jsx';
-import SelectUser from '../../SelectUser/SelectUser.jsx';
+import { getProducts, getRequestLEMZById, editRequestLEMZ, getUsers, editProductsToRequestLEMZ, addProductsToRequestLEMZ, deleteProductsToRequestLEMZ } from '../../../../utils/utilsAPI.jsx'
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
+import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
+import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditRequestLEMZ = (props) => {
     const [requestId, setRequestId] = useState(1);
@@ -21,45 +22,84 @@ const EditRequestLEMZ = (props) => {
         comment: ""
     })
     const [requestErrors, setRequestErrors] = useState({
-        date: "",
-        products: "",
-        quantity: "",
-        codeWord: "",
-        responsible: "",
-        status: "",
-        shippingDate: "",
-        comment: ""
+        date: false,
+        requestProducts: false,
+        codeWord: false,
+        responsible: false,
+        shippingDate: false
     })
-    const [dateValid, setDateValid] = useState(true);
-    const [productsValid, setProductsValid] = useState(true);
-    const [quantityValid, setQuantityValid] = useState(true);
-    const [responsibleValid, setResponsibleValid] = useState(true);
+    const [validInputs, setValidInputs] = useState({
+        date: true,
+        requestProducts: true,
+        codeWord: true,
+        responsible: true,
+        shippingDate: true
+    })
     const [users, setUsers] = useState([]);
+    const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'date':
-                setDateValid(value !== "");
+                setValidInputs({
+                    ...validInputs,
+                    date: (value !== null)
+                });
                 break;
-            case 'responsible':
-                setResponsibleValid(value !== "");
+            case 'shippingDate':
+                setValidInputs({
+                    ...validInputs,
+                    shippingDate: (value !== null)
+                });
+                break;
+            case 'requestProducts':
+                setValidInputs({
+                    ...validInputs,
+                    requestProducts: (value.length > 0)
+                });
+                break;
+            default:
+                setValidInputs({
+                    ...validInputs,
+                    [fieldName]: (value !== "")
+                });
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (dateValid && responsibleValid) {
+        console.log(validInputs);
+        let check = true;
+        let newErrors = Object.assign({
+            date: false,
+            requestProducts: false,
+            codeWord: false,
+            responsible: false,
+            shippingDate: false
+        });
+        for (let item in validInputs) {
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setRequestErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(requestInputs);
+        // console.log(requestInputs);
         formIsValid() && editRequestLEMZ(requestInputs, requestId)
             .then(() => {
                 //PUT if edited, POST if product is new
@@ -118,6 +158,10 @@ const EditRequestLEMZ = (props) => {
             ...requestInputs,
             [name]: value
         })
+        setRequestErrors({
+            ...requestErrors,
+            [name]: false
+        })
     }
 
     const handleDateChange = (date) => {
@@ -126,15 +170,19 @@ const EditRequestLEMZ = (props) => {
             ...requestInputs,
             date: date
         })
+        setRequestErrors({
+            ...requestErrors,
+            date: false
+        })
     }
 
     const handleProductsChange = (newProducts) => {
-        validateField("products", newProducts);
-        // setRequestInputs({
-        //     ...requestInputs,
-        //     products: newProducts
-        // })
+        validateField("requestProducts", newProducts);
         setSelectedProducts(newProducts);
+        setRequestErrors({
+            ...requestErrors,
+            requestProducts: false
+        })
     }
 
     useEffect(() => {
@@ -186,6 +234,10 @@ const EditRequestLEMZ = (props) => {
             ...requestInputs,
             shippingDate: date
         })
+        setRequestErrors({
+            ...requestErrors,
+            shippingDate: false
+        })
     }
 
     const handleResponsibleChange = (newResponsible) => {
@@ -194,56 +246,65 @@ const EditRequestLEMZ = (props) => {
             ...requestInputs,
             responsible: newResponsible
         })
+        setRequestErrors({
+            ...requestErrors,
+            responsible: false
+        })
     }
 
     return (
         <div className="edit_request_lemz">
             <div className="edit_request_lemz__title">Редактирование заявки ЛЭМЗ</div>
             <form className="edit_request_lemz__form">
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
-                    <div className="edit_request_lemz__input_name">Дата*</div>
-                    <div className="edit_request_lemz__input_field">
-                        <DatePicker
-                            selected={Date.parse(requestInputs.date)}
-                            dateFormat="dd.MM.yyyy"
-                            onChange={handleDateChange}
-                            disabledKeyboardNavigation
-                            locale={ru}
-                        />
-                    </div>
-                </div>
+                <ErrorMessage
+                    message="Не заполнены все обязательные поля!"
+                    showError={showError}
+                    setShowError={setShowError}
+                />
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputDate
+                    inputName="Дата заявки"
+                    required
+                    error={requestErrors.date}
+                    name="date"
+                    selected={Date.parse(requestInputs.date)}
+                    handleDateChange={handleDateChange}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 }
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
-                    <div className="edit_request_lemz__input_name">Продукция*</div>
-                    <Select
-                        options={products}
-                        onChange={handleProductsChange}
-                        searchPlaceholder="Введите название продукта для поиска..."
-                        defaultValue={selectedProducts}
-                    />
-                </div>}
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
-                    <div className="edit_request_lemz__input_name">Кодовое слово*</div>
-                    <div className="edit_request_lemz__input_field">
-                        <input type="text"
-                            name="codeWord"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.codeWord}
-                        />
-                    </div>
-                </div>}
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className="edit_request_lemz__item">
-                    <div className="edit_request_lemz__input_name">Ответственный*</div>
-                    <div className="edit_request_lemz__input_field">
-                        <SelectUser
-                            options={users}
-                            onChange={handleResponsibleChange}
-                            defaultValue={requestInputs.responsible}
-                            searchPlaceholder="Введите имя пользователя для поиска..."
-                        />
-                    </div>
-                </div>}
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputProducts
+                    inputName="Продукция"
+                    required
+                    options={products}
+                    onChange={handleProductsChange}
+                    searchPlaceholder="Введите название продукта для поиска..."
+                    defaultValue={selectedProducts}
+                    error={requestErrors.requestProducts}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />}
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputText
+                    inputName="Кодовое слово"
+                    required
+                    error={requestErrors.codeWord}
+                    defaultValue={requestInputs.codeWord}
+                    name="codeWord"
+                    handleInputChange={handleInputChange}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />}
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputUser
+                    inputName="Ответственный"
+                    required
+                    error={requestErrors.responsible}
+                    defaultValue={requestInputs.responsible}
+                    name="responsible"
+                    options={users}
+                    handleUserChange={handleResponsibleChange}
+                    searchPlaceholder="Введите имя пользователя для поиска..."
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />}
                 <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Статус*</div>
                     <div className="edit_request_lemz__input_field">
@@ -263,29 +324,22 @@ const EditRequestLEMZ = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="edit_request_lemz__item">
-                    <div className="edit_request_lemz__input_name">Дата отгрузки</div>
-                    <div className="edit_request_lemz__input_field">
-                        <DatePicker
-                            selected={Date.parse(requestInputs.shippingDate)}
-                            dateFormat="dd.MM.yyyy"
-                            onChange={handleDateShippedChange}
-                            disabledKeyboardNavigation
-                            locale={ru}
-                        />
-                    </div>
-                </div>
-                <div className="edit_request_lemz__item">
-                    <div className="edit_request_lemz__input_name">Комментарий</div>
-                    <div className="edit_request_lemz__input_field">
-                        <textarea type="text"
-                            name="comment"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={requestInputs.comment}
-                        />
-                    </div>
-                </div>
+                <InputDate
+                    inputName="Дата отгрузки"
+                    name="shippingDate"
+                    selected={Date.parse(requestInputs.shippingDate)}
+                    handleDateChange={handleDateShippedChange}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
+                <InputText
+                    inputName="Комментарий"
+                    name="comment"
+                    defaultValue={requestInputs.comment}
+                    handleInputChange={handleInputChange}
+                    errorsArr={requestErrors}
+                    setErrorsArr={setRequestErrors}
+                />
                 <div className="edit_request_lemz__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="edit_request_lemz__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
             </form>

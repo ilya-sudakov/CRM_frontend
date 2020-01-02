@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import deleteSVG from '../../../../../../../assets/select/delete.svg';
 import './Select.scss';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+import TableView from '../Products/TableView/TableView.jsx';
+import { getProducts } from '../../../utils/utilsAPI.jsx';
 
 const Select = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selected, setSelected] = useState([]);
     const [options, setOptions] = useState([]);
-    let myRef = React.createRef();
+    const [products, setProducts] = useState([]);
 
     const search = () => {
         return options.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -16,26 +20,19 @@ const Select = (props) => {
         setSearchQuery(event.target.value);
     }
 
-    // const clickOnInput = (event) => {
-    //     const options = document.getElementsByClassName("select__options")[0];
-    //     if (options.classList.contains("select__options--hidden")) {
-    //         options.classList.remove("select__options--hidden")
-    //     }
-    //     else {
-    //         options.classList.add("select__options--hidden")
-    //     }
-    // }
-
     const clickOnInput = () => {
         const options = document.getElementsByClassName("select__options")[0];
         const overlay = document.getElementsByClassName("select__overlay")[0];
+        const error = document.getElementsByClassName("select__error")[0];
         if (options.classList.contains("select__options--hidden")) {
             options.classList.remove("select__options--hidden");
             overlay.classList.remove("select__overlay--hidden");
+            error && error.classList.add("select__error--hidden");
         }
         else {
             options.classList.add("select__options--hidden");
             overlay.classList.add("select__overlay--hidden");
+            error && error.classList.remove("select__error--hidden");
         }
     }
 
@@ -51,14 +48,21 @@ const Select = (props) => {
         console.log(event);
     }
 
+    const loadProducts = () => {
+        getProducts()
+            .then(response => response.json())
+            .then(response => {
+                setProducts(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
     const clickOnOption = (event) => {
         const value = event.target.getAttribute("name");
         const id = event.target.getAttribute("id");
         clickOnInput();
-        // const optionId = event.target.getAttribute("optionId");
-        // let newOptions = options;
-        // newOptions.splice(optionId, 1);
-        // setOptions([...newOptions]);
         setSelected([
             ...selected,
             {
@@ -102,6 +106,17 @@ const Select = (props) => {
         props.onChange([...newSelected]);
     }
 
+    const clickOnSelectWindow = (e) => {
+        e.preventDefault();
+        // let productsWindow = document.getElementsByClassName("select__window")[0];
+        // if (!(e.target.classList[0] === "select__window") && !(e.target.classList.contains("select__window_exit")) && !(e.target.classList.contains("select__window_bar"))) {
+        //     productsWindow.classList.remove("select__window--hidden");
+        // }
+        // else { 
+        //     productsWindow.classList.add("select__window--hidden");
+        // }
+    }
+
     useEffect(() => {
         if (props.defaultValue !== undefined) {
             setSelected([...props.defaultValue])
@@ -109,22 +124,56 @@ const Select = (props) => {
         if (props.options !== undefined) {
             setOptions([...props.options])
         }
+        loadProducts();
     }, [props.defaultValue, props.options])
 
     return (
         <div className="select">
             <div className="select__overlay select__overlay--hidden" onClick={clickOverlay}></div>
-            {!props.readOnly && <input
-                type="text"
-                className="select__input"
-                onChange={handleInputChange}
-                onClick={!props.readOnly ? clickOnInput : null}
-                // onBlur={!props.readOnly ? clickOnInputBlur : null}
-                placeholder={props.searchPlaceholder}
-                // onClick={props.readOnly !== undefined ? "true" : "false"}
-                ref={myRef}
-                readOnly={props.readOnly}
-            />}
+            {!props.readOnly && <div className="select__searchbar">
+                <input
+                    type="text"
+                    className={props.error === true ? "select__input select__input--error" : "select__input"}
+                    onChange={handleInputChange}
+                    onClick={!props.readOnly ? clickOnInput : null}
+                    placeholder={props.searchPlaceholder}
+                    readOnly={props.readOnly}
+                />
+                <button className="select__search_button" onClick={clickOnSelectWindow}>
+                    Обзор
+                </button>
+                {/* Окно для добавления продукции по категориям */}
+                <div className="select__window select__window--hidden" onClick={clickOnSelectWindow}>
+                    <div className="select__window_content">
+                        <div className="select__window_title">
+                            Выбор продукции
+                            <Link to="/products/new" className="select__window_button">Создать продукцию</Link>
+                            <div className="select__window_exit" onClick={clickOnSelectWindow}>
+                                <div className="select__window_bar" onClick={clickOnSelectWindow}></div>
+                                <div className="select__window_bar" onClick={clickOnSelectWindow}></div>
+                            </div>
+                        </div>
+                        <SearchBar
+                            title="Поиск по продукции"
+                            placeholder="Введите название продукции для поиска..."
+                            setSearchQuery={null}
+                        />
+                        <TableView
+                            data={products}
+                            searchQuery={""}
+                            deleteItem={null}
+                            selecting
+                        />
+                    </div>
+                </div>
+            </div>
+            }
+            {props.error === true && <div className="select__error" onClick={
+                props.setErrorsArr ? (() => props.setErrorsArr({
+                    ...props.errorsArr,
+                    [props.name]: false
+                })) : null
+            }>Поле не заполнено!</div>}
             {props.options && <div className="select__options select__options--hidden"
                 onBlur={!props.readOnly ? clickOnInputBlur : null}>
                 {search().map((item, index) => (

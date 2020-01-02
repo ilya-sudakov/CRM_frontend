@@ -188,7 +188,7 @@ const TableView = (props) => {
                         <select
                             id={request.id}
                             className="tableview_requests__status_select"
-                            defaultValue={request.status}
+                            value={request.status}
                             onChange={handleStatusChange}
                         >
                             <option value="Проблема">Проблема</option>
@@ -200,6 +200,16 @@ const TableView = (props) => {
                             <option value="Отгружено">Отгружено</option>
                             <option value="Приоритет">Приоритет</option>
                         </select>
+                        {/* <select
+                            id={request.id}
+                            className="tableview_requests__status_select--color"
+                            defaultValue="Привет"
+                            // onChange={handleStatusChange}
+                        >
+                            <option value="red">Брак</option>
+                            <option value="green">Завершено</option>
+                            <option value="grey">В работе</option>
+                        </select> */}
                     </div>
                     <div className="tableview_requests__actions">
                         <Link to={"/requests/view/" + request.id} className="tableview_requests__action" >Просмотр</Link>

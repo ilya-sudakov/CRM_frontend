@@ -1,0 +1,92 @@
+@import "../../../variables.scss";
+
+.input_text {
+  width: calc(100% - 20px);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  .input_text__error {
+    align-self: flex-end;
+    width: calc(80%);
+    margin-top: 1px;
+    font-size: 0.75rem;
+    // position: absolute;
+    // top: 2rem;
+    background-color: #f73434;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+  }
+
+  .input_text__input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .input_text__input_name {
+      color: lighten($primary-text-color, 40%);
+      //   margin-bottom: 5px;
+      flex: 0 1 20%;
+    }
+
+    .input_text__input_field {
+      display: flex;
+      justify-content: center;
+      width: calc(90% - 20px);
+      position: relative;
+      height: 2rem;
+
+      input[type="text"],
+      input[type="password"],
+      input[type="number"] {
+        border: 1px solid #bbbbbb;
+        width: calc(100% - 20px);
+        padding: 5px 10px;
+        border-radius: 10px;
+        transition: 0.2s ease-in-out;
+      }
+
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+
+      &--error {
+        input[type="text"],
+        input[type="password"] {
+          border: 1px solid #f73434 !important;
+        }
+      }
+
+      &:focus {
+        border: 1px solid $button__background--inverted;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .input_text__input {
+      flex-wrap: wrap;
+
+      .input_text__input_field {
+        width: 100%;
+      }
+    }
+
+    .input_text__error {
+      width: calc(100% - 20px);
+    }
+  }
+}

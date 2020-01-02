@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ViewEmployee.scss';
 import { getEmployeeById } from '../../../../../utils/utilsAPI.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 
 const ViewEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -113,18 +114,12 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Год рождения</div>
-                    <div className="view_employee__input_field">
-                        <input type="text"
-                            name="yearOfBirth"
-                            autoComplete="off"
-                            onChange={handleInputChange}
-                            defaultValue={employeeInputs.yearOfBirth}
-                            readOnly
-                        />
-                    </div>
-                </div>
+                <InputDate
+                    inputName="Дата рождения"
+                    required
+                    selected={Date.parse(employeeInputs.yearOfBirth)}
+                    readOnly
+                />
                 <div className="view_employee__item">
                     <div className="view_employee__input_name">Гражданство</div>
                     <div className="view_employee__input_field">

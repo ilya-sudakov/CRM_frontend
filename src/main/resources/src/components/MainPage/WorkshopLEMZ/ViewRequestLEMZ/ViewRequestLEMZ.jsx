@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import './ViewRequestLEMZ.scss';
 import { getRequestLEMZById } from '../../../../utils/utilsAPI.jsx';
-import Select from '../../Select/Select.jsx';
+import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const ViewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -64,31 +64,11 @@ const ViewRequestLEMZ = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_request_lemz__item">
-                    <div className="view_request_lemz__input_name">Продукция</div>
-                    {/* <div className="view_request_lemz__input_field">
-                        <input type="text"
-                            name="products"
-                            defaultValue={requestInputs.products}
-                            readOnly
-                        />
-                    </div> */}
-                    <Select
-                        // options={products}
-                        readOnly
-                        defaultValue={requestInputs.requestProducts}
-                    />
-                </div>
-                {/* <div className="view_request_lemz__item">
-                    <div className="view_request_lemz__input_name">Количество</div>
-                    <div className="view_request_lemz__input_field">
-                        <input type="text"
-                            name="quantity"
-                            defaultValue={requestInputs.quantity}
-                            readOnly
-                        />
-                    </div>
-                </div> */}
+                <InputProducts
+                    inputName="Продукция"
+                    defaultValue={requestInputs.requestProducts}
+                    readOnly
+                />
                 <div className="view_request_lemz__item">
                     <div className="view_request_lemz__input_name">Кодовое слово</div>
                     <div className="view_request_lemz__input_field">
