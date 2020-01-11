@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewTransportation.scss';
-import { addTransportation } from '../../../../../utils/utilsAPI.jsx';
+import { addTransportation } from '../../../../../utils/RequestsAPI/Transportation.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';

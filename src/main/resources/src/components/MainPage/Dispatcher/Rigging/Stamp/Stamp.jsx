@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import './Stamp.scss';
 import TableView from '../TableView/TableView.jsx';
-import { getStamp, getStampById, deletePartsFromStamp, deleteStamp } from '../../../../../utils/utilsAPI.jsx';
+import { getStamp, getStampById, deletePartsFromStamp, deleteStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 
 const Stamp = (props) => {
     const [stamps, setStamps] = useState([]);

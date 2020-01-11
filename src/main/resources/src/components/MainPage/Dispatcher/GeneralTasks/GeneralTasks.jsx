@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './GeneralTasks.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getMainTasks, deleteMainTask } from '../../../../utils/utilsAPI.jsx';
+import { getMainTasks, deleteMainTask } from '../../../../utils/RequestsAPI/MainTasks.jsx';
 
 const GeneralTasks = (props) => {
     const [generalTasks, setGeneralTasks] = useState([]);

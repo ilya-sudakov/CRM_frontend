@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Contracts.scss';
-import { getDocuments, deleteDocument } from '../../../utils/utilsAPI.jsx';
+import { getDocuments, deleteDocument } from '../../../utils/RequestsAPI/Documents.jsx';
 
 const Contracts = (props) => {
     const [contracts, setContracts] = useState([])

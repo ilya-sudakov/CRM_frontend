@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './NewStamp.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { addPartsToStamp, addStamp } from '../../../../../../utils/utilsAPI.jsx';
+import { addPartsToStamp, addStamp } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 

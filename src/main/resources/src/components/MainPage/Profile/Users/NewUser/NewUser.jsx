@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewUser.scss';
-import { addUser } from '../../../../../utils/utilsAPI.jsx';
+import { addUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
@@ -134,8 +134,8 @@ const NewUser = (props) => {
                         >
                             <option value="ROLE_ADMIN">Руководитель</option>
                             <option value="ROLE_MANAGER">Менеджер1</option>
-                            <option value="ROLE_WORKSHOP">Цех Лепсари</option>
-                            <option value="ROLE_WORKSHOP">Цех ЛЭМЗ</option>
+                            <option value="ROLE_LEPSARI">Цех Лепсари</option>
+                            <option value="ROLE_LEMZ">Цех ЛЭМЗ</option>
                             <option value="ROLE_DISPATCHER">Диспетчер</option>
                             <option value="ROLE_ENGINEER">Инженер</option>
                         </select>

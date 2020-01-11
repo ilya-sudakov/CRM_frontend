@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './NewMachine.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { addMachine, addPartsToMachine } from '../../../../../../utils/utilsAPI.jsx';
+import { addMachine, addPartsToMachine } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 

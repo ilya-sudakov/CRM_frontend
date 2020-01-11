@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import './ViewRequest.scss';
-import { getRequestById } from '../../../../utils/utilsAPI.jsx';
-import Select from '../../Select/Select.jsx';
+import { getRequestById } from '../../../../utils/RequestsAPI/Requests.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const ViewRequest = (props) => {

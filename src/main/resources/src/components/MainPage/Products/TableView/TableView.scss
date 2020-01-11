@@ -23,18 +23,30 @@
     // padding: 5px;
   }
 
+  .tableview_products__row {
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
   &__row--header {
-    font-size: 100%!important;
+    font-size: 100% !important;
     position: sticky; //test
     top: calc(-6px); //test
+    cursor: auto !important;
+    font-weight: normal !important;
     .tableview_products__col {
       &:last-child {
         max-width: 125px;
       }
     }
+    &:hover {
+      background-color: $secondary-text-color !important;
+    }
   }
 
-  &__row {
+  &__row,
+  &__categories {
     display: flex;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
@@ -42,6 +54,8 @@
     text-align: center;
     transition: 0.2s ease-in-out;
     font-size: 80%;
+    font-weight: bold;
+    cursor: pointer;
 
     .tableview_products__col {
       display: flex;
@@ -60,7 +74,7 @@
       &:nth-child(2) {
         flex: 0 1 8%;
         min-width: 90px;
-        padding: 2.5px;
+        // padding: 2.5px;
       }
 
       &:nth-child(3) {
@@ -111,6 +125,7 @@
         transition: 0.2s ease-in-out;
         word-wrap: break-word;
         word-break: break-all;
+        font-weight: normal;
 
         &:last-child {
           margin: 0;
@@ -136,6 +151,54 @@
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
       border-bottom: 0;
+    }
+  }
+
+  .tableview_products__categories {
+    flex-direction: column;
+    transform-origin: 0 0;
+    // transform: scaleY(1);
+    // transition: 0.2s ease-in-out;
+    // transition: none;
+    max-height: max-content;
+    // height: 100%;
+
+    &--hidden {
+      // transform: scaleY(0);
+      max-height: 0;
+      display: none;
+      //
+    }
+
+    .tableview_products__row {
+      font-size: 90%;
+      cursor: auto;
+      font-weight: normal;
+
+      .tableview_products__col {
+        padding: 5px 5px;
+
+        // &:nth-child(3) {
+        //   padding: 0;
+        // }
+
+        .tableview__color_name {
+          text-decoration: none;
+        }
+
+        .tableview__color_option {
+          font-size: 110%;
+        }
+      }
+
+      &:first-of-type {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+      }
+      &:last-of-type {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
     }
   }
 

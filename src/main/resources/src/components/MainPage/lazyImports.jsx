@@ -184,6 +184,46 @@ const EditPartInRigging = lazy(
     () => import('./Dispatcher/Rigging/EditPartInRigging/EditPartInRigging.jsx')
 )
 
+const Work = lazy(
+    () => import('./Work/Work.jsx')
+)
+
+const NewWork = lazy(
+    () => import('./Work/NewWork/NewWork.jsx')
+)
+
+const EditWork = lazy(
+    () => import('./Work/EditWork/EditWork.jsx')
+)
+
+const WorkshopLepsari = lazy(
+    () => import('./WorkshopLepsari/WorkshopLepsari.jsx')
+)
+
+const NewRequestLepsari = lazy(
+    () => import('./WorkshopLepsari/NewRequestLepsari/NewRequestLepsari.jsx')
+)
+
+const ViewRequestLepsari = lazy(
+    () => import('./WorkshopLepsari/ViewRequestLepsari/ViewRequestLepsari.jsx')
+)
+
+const EditRequestLepsari = lazy(
+    () => import('./WorkshopLepsari/EditRequestLepsari/EditRequestLepsari.jsx')
+)
+
+const Storage = lazy(
+    () => import('./Storage/Storage.jsx')
+)
+
+const NewStorage = lazy(
+    () => import('./Storage/NewStorage/NewStorage.jsx')
+)
+
+const EditStorage = lazy(
+    () => import('./Storage/EditStorage/EditStorage.jsx')
+)
+
 export {
     Clients, newClient, 
     Contracts, 
@@ -201,4 +241,7 @@ export {
     Machine, NewMachine, ViewMachine, EditMachine, 
     PressForm, NewPressForm, ViewPressForm, EditPressForm,
     EditPartInRigging,
+    Work, NewWork, EditWork,
+    WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari,
+    Storage, NewStorage, EditStorage
 };

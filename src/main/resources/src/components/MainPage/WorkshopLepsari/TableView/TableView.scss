@@ -1,0 +1,298 @@
+@import "../../../../variables.scss";
+
+.tableview_requests_lepsari {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 50px);
+  font-size: 80%;
+  min-width: 1250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+
+  &__img {
+    width: 15px;
+    margin-left: 5px;
+    // padding: 5px;
+    cursor: pointer;
+  }
+
+  .tableview_requests_lepsari__row--header {
+    font-weight: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-size: 100%;
+    position: sticky; //test
+    top: calc(-6px); //test
+    .tableview_requests_lepsari__col {
+      &:nth-child(3) {
+        flex: 0 1 calc(24% + 0.75 * 0%);
+        justify-content: center;
+        padding: 0px 0px;
+      }
+
+      &:nth-child(4) {
+        // flex: 0 1 10%;
+        flex: 0 1 calc(8% + 0.125 * 0%);
+        padding: 0;
+      }
+      &:nth-child(5) {
+        // flex: 0 1 10%;
+        flex: 0 1 calc(8% + 0.125 * 0%);
+        padding: 0;
+      }
+
+      &:nth-child(6) {
+        flex: 0 1 9%;
+        max-width: 9%;
+      }
+
+      &:nth-child(7) {
+        flex: 0 1 9%;
+        max-width: 9%;
+      }
+
+      &:nth-child(8) {
+        max-width: 80px;
+      }
+
+      &:nth-child(9) {
+        flex: 0 1 8%;
+        max-width: 65px;
+      }
+
+      &:last-child {
+        flex: 0 1 10%;
+        max-width: 125px;
+      }
+    }
+  }
+
+  &__row {
+    font-size: 80%;
+    display: flex;
+    background-color: $primary-background-color;
+    border-bottom: 1px solid #cccccc;
+    text-align: center;
+    transition: 0.2s ease-in-out;
+
+    .tableview_requests_lepsari__col {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 5px;
+      flex: 0 1 12.5%;
+      word-break: break-word;
+      border-right: 1px solid #cccccc; //border between columns
+
+      .tableview_requests_lepsari__sub_row {
+        display: flex;
+        width: 100%;
+        border-bottom: 1px solid #cccccc;
+
+        &:last-child {
+          border: 0;
+        }
+
+        .tableview_requests_lepsari__sub_col {
+          padding: 5px 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &:first-child {
+            flex: 0 1 60%;
+            border-right: 1px solid #cccccc;
+          }
+
+          &:nth-child(2) {
+            flex: 0 1 20%;
+            border-right: 1px solid #cccccc;
+          }
+
+          &:last-child {
+            flex: 0 1 20%;
+            max-width: 20%;
+          }
+        }
+      }
+
+      &:nth-child(1) {
+        flex: 0 1 5%;
+        max-width: 40px;
+      }
+
+      &:nth-child(2) {
+        flex: 0 1 8%;
+        max-width: 65px;
+      }
+
+      &:nth-child(3) {
+        flex: 0 1 40%;
+        padding: 0px;
+        flex-direction: column;
+        justify-content: stretch;
+      }
+
+      &:nth-child(4) {
+        flex: 0 1 9%;
+        max-width: 9%;
+      }
+
+      &:nth-child(5) {
+        // flex: 0 1 10%;
+        flex: 0 1 9%;
+        max-width: 9%;
+      }
+
+      &:nth-child(6) {
+        max-width: 80px;
+      }
+
+      &:nth-child(7) {
+        flex: 0 1 8%;
+        max-width: 65px;
+      }
+
+      &:nth-child(8) {
+        
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    .tableview_requests_lepsari__status_select {
+      width: 100%;
+      padding: 5px 0px;
+      font-size: 90%;
+      border-radius: 5px;
+      outline: 0;
+    }
+
+    .tableview_requests_lepsari__actions {
+      flex: 0 1 10%;
+      display: flex;
+      padding: 10px 5px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 125px;
+
+      .tableview_requests_lepsari__action {
+        font-size: 90%;
+        width: 75%;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        color: $secondary-text-color;
+        background-color: $button__background--inverted;
+        transition: 0.2s ease-in-out;
+        word-wrap: break-word;
+        word-break: break-all;
+
+        &:last-child {
+          margin: 0;
+        }
+
+        &:hover {
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+          background-color: lighten($button__background--inverted, 5%);
+        }
+      }
+    }
+
+    &:first-of-type {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      // padding: 0px 5px;
+    }
+
+    &:last-of-type {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      border-bottom: 0;
+    }
+  }
+
+  .tableview_requests_lepsari__row--even {
+    background-color: #ebebeb;
+  }
+
+  .tableview_requests_lepsari__row--odd {
+    background-color: #f8f8f8;
+  }
+
+  .tableview_requests_lepsari__row--status_problem {
+    background-color: #c48681;
+    &:hover {
+      background-color: darken(#c48681, 5%);
+    }
+  }
+
+  .tableview_requests_lepsari__row--status_materials {
+    background-color: #d4b77e;
+    &:hover {
+      background-color: darken(#d4b77e, 5%);
+    }
+  }
+
+  .tableview_requests_lepsari__row--status_waiting {
+    background-color: #9ec2b6;
+    &:hover {
+      background-color: darken(#9ec2b6, 5%);
+    }
+  }
+
+  .tableview_requests_lepsari__row--status_in_production {
+    background-color: #87a8b6;
+    &:hover {
+      background-color: darken(#87a8b6, 5%);
+    }
+  }
+
+  .tableview_requests_lepsari__row--status_ready {
+    background-color: #5ea76e;
+    &:hover {
+      background-color: darken(#5ea76e, 5%);
+    }
+  }
+
+  .tableview_requests_lepsari__row--status_shipped {
+    background-color: #95ad7c;
+    &:hover {
+      background-color: darken(#95ad7c, 5%);
+    }
+  }
+
+  .tableview_requests_lepsari__row--status_completed {
+    background-color: #bed6c3;
+    &:hover {
+      background-color: darken(#bed6c3, 5%);
+    }
+  }
+
+  .tableview_requests_lepsari__row--status_priority{
+    background-color: #e65252;
+    &:hover {
+      background-color: darken(#e65252, 5%);
+    }
+  }
+}
+
+@media (max-width: 1250px) {
+  .tableview_requests_lepsari {
+    flex-direction: column;
+    align-self: flex-start;
+    margin-left: 5px;
+    width: calc(100% - 10px);
+
+    // &__row:first-of-type {
+    //   .tableview_requests_lepsari__col {
+    //     word-wrap: break-word;
+    //     word-break: break-all;
+    //   }
+    // }
+  }
+}

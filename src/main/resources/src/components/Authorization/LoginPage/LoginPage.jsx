@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import './LoginPage.scss';
-import { login, refreshToken } from '../../../utils/utilsAPI.jsx';
+import { login, refreshToken } from '../../../utils/RequestsAPI/Authorization.jsx';
 import ErrorMessage from '../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const LoginPage = (props) => {

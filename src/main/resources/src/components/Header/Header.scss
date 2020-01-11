@@ -8,6 +8,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  position: -webkit-sticky;
   // background-color: $light80-grey;
 
   .main_page__overlay {
@@ -39,7 +41,7 @@
     flex-direction: row;
     align-items: center;
     border: 1px solid #9b9b9b;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: 0.2s ease-in-out;
     cursor: pointer;
 
@@ -96,7 +98,7 @@
         cursor: pointer;
         position: relative;
         padding: 2.5px 10px;
-        border-radius: 10px;
+        border-radius: 5px;
         border: 1px solid #9b9b9b;
         transition: 0.2s ease-in-out;
         z-index: 2;
@@ -122,7 +124,7 @@
 
         .header__profile_menu {
           background-color: $side_menu__background;
-          border-radius: 10px;
+          border-radius: 5px;
           font-size: 80%;
           position: absolute;
           top: 50px;
@@ -132,13 +134,13 @@
           padding: 5px 5px;
           transition: 0.2s ease-in-out;
           transform-origin: 0 0;
-          // z-index: 5;
+          z-index: 999;
 
           .header__profile_item {
             display: block;
             color: $primary-text-color;
             padding: 5px 0px;
-            border-radius: 10px;
+            border-radius: 5px;
             transition: 0.2s ease-in-out;
             margin-bottom: 5px;
 
@@ -173,7 +175,7 @@
 
       &--button {
         padding: 10px 20px;
-        border-radius: 15px;
+        border-radius: 10px;
         background-color: $button__background--inverted;
         color: $secondary-text-color;
         transition: 0.2s ease-in-out;

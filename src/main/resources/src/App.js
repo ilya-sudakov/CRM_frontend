@@ -5,7 +5,7 @@ import './variables.scss';
 const MainPage = lazy(() => import('./components/MainPage/MainPage.jsx'));
 import LoginPage from './components/Authorization/LoginPage/LoginPage.jsx';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
-import { login, refreshToken } from './utils/utilsAPI.jsx';
+import { login, refreshToken } from './utils/RequestsAPI/Authorization.jsx';
 import PageLoading from './components/MainPage/PageLoading/PageLoading.jsx';
 
 const ROLE_ADMIN = "ROLE_ADMIN";

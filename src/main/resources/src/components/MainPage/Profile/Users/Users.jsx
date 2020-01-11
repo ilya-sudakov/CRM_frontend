@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Users.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx'
-import { getUsers, deleteUser } from '../../../../utils/utilsAPI.jsx';
+import { getUsers, deleteUser } from '../../../../utils/RequestsAPI/Users.jsx';
 
 const Users = (props) => {
     const [searchQuery, setSearchQuery] = useState('');

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditPart.scss';
-import { editPart, getPartById } from '../../../../../../utils/utilsAPI.jsx';
+import { editPart, getPartById } from '../../../../../../utils/RequestsAPI/Parts.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 

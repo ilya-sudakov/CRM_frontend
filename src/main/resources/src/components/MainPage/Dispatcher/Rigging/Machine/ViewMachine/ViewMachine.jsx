@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ViewMachine.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { getMachineById } from '../../../../../../utils/utilsAPI.jsx';
+import { getMachineById } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 
 const ViewMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Clients.scss';
-import { getClients, deleteClient } from '../../../utils/utilsAPI.jsx';
+import { getClients, deleteClient } from '../../../utils/RequestsAPI/Clients.jsx';
 
 const Clients = () => {
 

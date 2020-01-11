@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
-import { editRequestStatus } from '../../../../utils/utilsAPI.jsx';
+import { editRequestStatus } from '../../../../utils/RequestsAPI/Requests.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({

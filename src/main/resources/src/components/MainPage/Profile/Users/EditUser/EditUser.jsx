@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditUser.scss';
-import { getUserById, editUser } from '../../../../../utils/utilsAPI.jsx';
+import { getUserById, editUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 

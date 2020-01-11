@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './NewClient.scss';
-import { addClient } from '../../../../utils/utilsAPI.jsx';
+import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Requests.scss';
-import { getRequests, deleteRequest, deleteProductsToRequest, getRequestById } from '../../../utils/utilsAPI.jsx';
+import { getRequests, deleteRequest, deleteProductsToRequest, getRequestById } from '../../../utils/RequestsAPI/Requests.jsx';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 

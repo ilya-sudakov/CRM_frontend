@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './EditRequest.scss';
-import { getRequestById, editRequest, getProducts, addProductsToRequest, getUsers, editProductsToRequest, deleteProductsToRequest } from '../../../../utils/utilsAPI.jsx';
+import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
+import { getRequestById, editRequest, addProductsToRequest, editProductsToRequest, deleteProductsToRequest } from '../../../../utils/RequestsAPI/Requests.jsx';
+import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';

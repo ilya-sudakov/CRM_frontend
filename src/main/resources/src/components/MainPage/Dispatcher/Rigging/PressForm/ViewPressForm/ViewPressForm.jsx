@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ViewPressForm.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { getPressFormById } from '../../../../../../utils/utilsAPI.jsx';
+import { getPressFormById } from '../../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 
 const ViewPressForm = (props) => {
     const [pressFormInputs, setPressFormInputs] = useState({

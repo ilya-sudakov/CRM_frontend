@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Products.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getProducts, deleteProduct } from '../../../utils/utilsAPI.jsx';
+import { getProducts, deleteProduct } from '../../../utils/RequestsAPI/Products.jsx';
 
 const Products = (props) => {
     const [products, setProducts] = useState([]);

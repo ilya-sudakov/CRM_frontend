@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './NewProduct.scss';
-import { addProduct } from '../../../../utils/utilsAPI.jsx';
+import { addProduct } from '../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
+import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 
 const NewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -132,6 +134,7 @@ const NewProduct = (props) => {
     useEffect(() => {
         document.title = "Создание продукции";
     }, [])
+
     return (
         <div className="new_product">
             <div className="new_product__title">Новая продукция</div>
@@ -170,6 +173,10 @@ const NewProduct = (props) => {
                         </select>
                     </div>
                 </div>
+                <SelectCategory
+                    inputName="Группа продукции - тест"
+                    // required
+                />
                 <InputText
                     inputName="Вес изделия"
                     required

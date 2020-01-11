@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Parts.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getParts, deletePart } from '../../../../../utils/utilsAPI.jsx';
+import { getParts, deletePart } from '../../../../../utils/RequestsAPI/Parts.jsx';
 
 const Parts = (props) => {
     const [parts, setParts] = useState([]);

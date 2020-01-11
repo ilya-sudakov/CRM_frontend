@@ -208,7 +208,9 @@
   &__row--header {
     font-size: 90%;
     position: sticky; //test
+    position: -webkit-sticky;
     top: calc(-6px); //test
+    z-index: 99;
     cursor: default;
     font-weight: normal;
     .tableview_stamps__col {

@@ -10,10 +10,13 @@ const SideMenu = (props) => {
                 props.location.pathname.includes("/requests") ||
                 props.location.pathname.includes("/products") ||
                 props.location.pathname.includes("/workshop-lemz") ||
+                props.location.pathname.includes("/workshop-lepsari") ||
+                props.location.pathname.includes("/workshop-storage") ||
                 props.location.pathname.includes("/profile/users")) ||
                 (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && props.location.pathname.includes("/dispatcher/general-tasks")) ||
                 (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && props.location.pathname.includes("/dispatcher/employees")) ||
-                (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && props.location.pathname.includes("/dispatcher/transportation"))
+                (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && props.location.pathname.includes("/dispatcher/transportation")) ||
+                (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && props.location.pathname.includes("/work-list"))
                 ?
                 (
                     <Link className="sidemenu__item--add" to={
@@ -21,21 +24,27 @@ const SideMenu = (props) => {
                             : props.location.pathname.includes("/requests") ? "/requests/new"
                                 : props.location.pathname.includes("/products") ? "/products/new"
                                     : props.location.pathname.includes("/workshop-lemz") ? "/workshop-lemz/new"
-                                        : props.location.pathname.includes("/profile/users") ? "/profile/users/new"
-                                            : props.location.pathname.includes("/dispatcher/general-tasks") ? "/dispatcher/general-tasks/new"
-                                                : props.location.pathname.includes("/dispatcher/employees") ? "/dispatcher/employees/new"
-                                                    : props.location.pathname.includes("/dispatcher/transportation") ? "/dispatcher/transportation/new"
-                                                        : ''
+                                        : props.location.pathname.includes("/workshop-lepsari") ? "/workshop-lepsari/new"
+                                            : props.location.pathname.includes("/workshop-storage") ? "/workshop-storage/new"
+                                                : props.location.pathname.includes("/profile/users") ? "/profile/users/new"
+                                                    : props.location.pathname.includes("/dispatcher/general-tasks") ? "/dispatcher/general-tasks/new"
+                                                        : props.location.pathname.includes("/dispatcher/employees") ? "/dispatcher/employees/new"
+                                                            : props.location.pathname.includes("/dispatcher/transportation") ? "/dispatcher/transportation/new"
+                                                                : props.location.pathname.includes("/work-list") ? "/work-list/new"
+                                                                    : ''
                     }>
                         <span>{props.location.pathname.includes("/clients") ? "Добавить клиента"
                             : props.location.pathname.includes("/requests") ? "Добавить заявку"
                                 : props.location.pathname.includes("/products") ? "Добавить продукцию"
                                     : props.location.pathname.includes("/workshop-lemz") ? "Добавить заявку"
-                                        : props.location.pathname.includes("/profile/users") ? "Добавить пользователя"
-                                            : props.location.pathname.includes("/dispatcher/general-tasks") ? "Добавить задачу"
-                                                : props.location.pathname.includes("/dispatcher/employees") ? "Добавить сотрудника"
-                                                    : props.location.pathname.includes("/dispatcher/transportation") ? "Добавить транспортировку"
-                                                        : ''
+                                        : props.location.pathname.includes("/workshop-lepsari") ? "Добавить заявку"
+                                            : props.location.pathname.includes("/workshop-storage") ? "Добавить деталь"
+                                                : props.location.pathname.includes("/profile/users") ? "Добавить пользователя"
+                                                    : props.location.pathname.includes("/dispatcher/general-tasks") ? "Добавить задачу"
+                                                        : props.location.pathname.includes("/dispatcher/employees") ? "Добавить сотрудника"
+                                                            : props.location.pathname.includes("/dispatcher/transportation") ? "Добавить транспортировку"
+                                                                : props.location.pathname.includes("/work-list") ? "Добавить работу"
+                                                                    : ''
                         }</span>
                     </Link>
                 )
@@ -43,8 +52,8 @@ const SideMenu = (props) => {
             }
 
             {
-                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <div className={props.location.pathname.length === 1 ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
-                    <Link className="sidemenu__link" to="/">Главная (Для теста)</Link>
+                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <div className={props.location.pathname.length === 1 ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                    <Link className="sidemenu__link" to="/">Главная</Link>
                 </div>
             }
             {
@@ -77,9 +86,17 @@ const SideMenu = (props) => {
                 </div>
             }
             {
-                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <div className={props.location.pathname.includes("/workshop-lemz") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']) && <div className={props.location.pathname.includes("/workshop-lemz") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                     <Link className="sidemenu__link" to="/workshop-lemz">Очередь производства ЛЭМЗ</Link>
                     {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to="/workshop-lemz/new" className="sidemenu__addButton">
+                        <img className="sidemenu__img" src={plusImg} />
+                    </Link>}
+                </div>
+            }
+            {
+                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']) && <div className={props.location.pathname.includes("/workshop-lepsari") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                    <Link className="sidemenu__link" to="/workshop-lepsari">Очередь производства Лепсари</Link>
+                    {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to="/workshop-lepsari/new" className="sidemenu__addButton">
                         <img className="sidemenu__img" src={plusImg} />
                     </Link>}
                 </div>
@@ -112,6 +129,22 @@ const SideMenu = (props) => {
                 props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <div className={props.location.pathname.includes("/dispatcher/general-tasks") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                     <Link className="sidemenu__link" to="/dispatcher/general-tasks">Основные задачи</Link>
                     {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to="/dispatcher/general-tasks/new" className="sidemenu__addButton">
+                        <img className="sidemenu__img" src={plusImg} />
+                    </Link>}
+                </div>
+            }
+            {
+                props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER']) && <div className={props.location.pathname.includes("/work-list") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                    <Link className="sidemenu__link" to="/work-list">Работы</Link>
+                    {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to="/work-list/new" className="sidemenu__addButton">
+                        <img className="sidemenu__img" src={plusImg} />
+                    </Link>}
+                </div>
+            }
+            {
+                props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <div className={props.location.pathname.includes("/workshop-storage") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                    <Link className="sidemenu__link" to="/workshop-storage">Склад</Link>
+                    {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to="/workshop-storage/new" className="sidemenu__addButton">
                         <img className="sidemenu__img" src={plusImg} />
                     </Link>}
                 </div>

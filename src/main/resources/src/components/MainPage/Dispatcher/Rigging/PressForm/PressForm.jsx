@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import './PressForm.scss';
 import TableView from '../TableView/TableView.jsx';
-import { getPressForm, getPressFormById, deletePartsFromPressForm, deletePressForm } from '../../../../../utils/utilsAPI.jsx';
+import { getPressForm, getPressFormById, deletePartsFromPressForm, deletePressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 
 const PressForm = (props) => {
     const [pressForm, setPressForms] = useState([])

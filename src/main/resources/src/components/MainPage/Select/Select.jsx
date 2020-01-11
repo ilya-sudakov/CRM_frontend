@@ -4,7 +4,7 @@ import deleteSVG from '../../../../../../../assets/select/delete.svg';
 import './Select.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from '../Products/TableView/TableView.jsx';
-import { getProducts } from '../../../utils/utilsAPI.jsx';
+import { getProducts } from '../../../utils/RequestsAPI/Products.jsx';
 
 const Select = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -108,13 +108,13 @@ const Select = (props) => {
 
     const clickOnSelectWindow = (e) => {
         e.preventDefault();
-        // let productsWindow = document.getElementsByClassName("select__window")[0];
-        // if (!(e.target.classList[0] === "select__window") && !(e.target.classList.contains("select__window_exit")) && !(e.target.classList.contains("select__window_bar"))) {
-        //     productsWindow.classList.remove("select__window--hidden");
-        // }
-        // else { 
-        //     productsWindow.classList.add("select__window--hidden");
-        // }
+        let productsWindow = document.getElementsByClassName("select__window")[0];
+        if (!(e.target.classList[0] === "select__window") && !(e.target.classList.contains("select__window_exit")) && !(e.target.classList.contains("select__window_bar"))) {
+            productsWindow.classList.remove("select__window--hidden");
+        }
+        else {
+            productsWindow.classList.add("select__window--hidden");
+        }
     }
 
     useEffect(() => {
@@ -178,7 +178,9 @@ const Select = (props) => {
                 onBlur={!props.readOnly ? clickOnInputBlur : null}>
                 {search().map((item, index) => (
                     <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
-                        {item.name}
+                        <img className="select__img" src={item.photo} />
+                        <div>{'№' + item.id + ', ' + item.name}</div>
+                        {/* {item.name} */}
                     </div>
                 ))}
             </div>}

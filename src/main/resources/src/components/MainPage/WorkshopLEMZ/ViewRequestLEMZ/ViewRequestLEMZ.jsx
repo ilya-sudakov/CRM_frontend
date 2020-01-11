@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import './ViewRequestLEMZ.scss';
-import { getRequestLEMZById } from '../../../../utils/utilsAPI.jsx';
+import { getRequestLEMZById } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const ViewRequestLEMZ = (props) => {

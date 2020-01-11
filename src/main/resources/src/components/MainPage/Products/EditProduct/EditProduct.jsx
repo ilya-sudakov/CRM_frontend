@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './EditProduct.scss';
-import { getProductById, editProduct } from '../../../../utils/utilsAPI.jsx';
+import { getProductById, editProduct } from '../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 
 const EditProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -196,6 +197,10 @@ const EditProduct = (props) => {
                         </select>
                     </div>
                 </div>
+                <SelectCategory
+                    inputName="Группа продукции - тест"
+                    // required
+                />
                 <InputText
                     inputName="Вес изделия"
                     required

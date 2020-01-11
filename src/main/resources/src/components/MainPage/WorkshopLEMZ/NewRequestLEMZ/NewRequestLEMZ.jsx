@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts, addRequestLEMZ, getUsers, addProductsToRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
-import Select from '../../Select/Select.jsx';
+import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
+import { addRequestLEMZ, addProductsToRequestLEMZ } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
+import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import './NewRequestLEMZ.scss';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';

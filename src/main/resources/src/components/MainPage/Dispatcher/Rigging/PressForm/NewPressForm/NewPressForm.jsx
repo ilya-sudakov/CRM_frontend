@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './NewPressForm.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { addPressForm, addPartsToPressForm } from '../../../../../../utils/utilsAPI.jsx';
+import { addPressForm, addPartsToPressForm } from '../../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 

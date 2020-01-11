@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Employees.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getEmployees, deleteEmployee } from '../../../../utils/utilsAPI.jsx';
+import { getEmployees, deleteEmployee } from '../../../../utils/RequestsAPI/Employees.jsx';
 
 const Employees = (props) => {
     const [searchQuery, setSearchQuery] = useState('');

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './EditPartInRigging.scss';
-import { getPartFromStamp, editPartFromStamp, getPartFromMachine, editPartFromMachine, editPartFromPressForm, getPartFromPressForm } from '../../../../../utils/utilsAPI.jsx';
-
+import { getPartFromStamp, editPartFromStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import { editPartFromPressForm, getPartFromPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
+import { getPartFromMachine, editPartFromMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 const EditPartInRigging = (props) => {
     const [partInputs, setPartInputs] = useState({
         number: '',

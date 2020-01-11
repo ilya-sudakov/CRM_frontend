@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewEmployee.scss';
-import { addEmployee } from '../../../../../utils/utilsAPI.jsx';
+import { addEmployee } from '../../../../../utils/RequestsAPI/Employees.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';

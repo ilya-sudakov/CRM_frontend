@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Transportation.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getTransportations, deleteTransportation } from '../../../../utils/utilsAPI.jsx';
+import { getTransportations, deleteTransportation } from '../../../../utils/RequestsAPI/Transportation.jsx';
 
 const Transportation = (props) => {
     const [transportation, setTransportation] = useState([]);

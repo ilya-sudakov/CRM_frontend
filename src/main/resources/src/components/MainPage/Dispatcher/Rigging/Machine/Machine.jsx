@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import './Machine.scss';
 import TableView from '../TableView/TableView.jsx';
-import { getMachine, getMachineById, deletePartsFromMachine, deleteMachine } from '../../../../../utils/utilsAPI.jsx';
+import { getMachine, getMachineById, deletePartsFromMachine, deleteMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 
 const Machine = (props) => {
     const [machines, setMachines] = useState([])

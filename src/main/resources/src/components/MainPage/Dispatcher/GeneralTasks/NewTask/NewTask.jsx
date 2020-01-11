@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './NewTask.scss';
-import { addMainTask, getUsers } from '../../../../../utils/utilsAPI.jsx';
+import { addMainTask } from '../../../../../utils/RequestsAPI/MainTasks.jsx';
+import { getUsers } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';

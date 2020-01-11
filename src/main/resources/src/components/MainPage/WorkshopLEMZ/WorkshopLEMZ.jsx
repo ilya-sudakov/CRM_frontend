@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './WorkshopLEMZ.scss';
-import { getRequestsLEMZ, deleteRequestLEMZ, getRequestLEMZById, deleteProductsToRequestLEMZ } from '../../../utils/utilsAPI.jsx';
+import { getRequestsLEMZ, deleteRequestLEMZ, getRequestLEMZById, deleteProductsToRequestLEMZ } from '../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 

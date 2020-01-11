@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ViewEmployee.scss';
-import { getEmployeeById } from '../../../../../utils/utilsAPI.jsx';
+import { getEmployeeById } from '../../../../../utils/RequestsAPI/Employees.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 
 const ViewEmployee = (props) => {

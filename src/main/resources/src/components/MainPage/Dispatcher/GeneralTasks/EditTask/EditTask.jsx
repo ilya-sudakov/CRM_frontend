@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './EditTask.scss';
-import { getMainTaskById, editMainTask, getUsers } from '../../../../../utils/utilsAPI.jsx';
-import SelectUser from '../../../SelectUser/SelectUser.jsx';
+import { getMainTaskById, editMainTask } from '../../../../../utils/RequestsAPI/MainTasks.jsx';
+import { getUsers } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
@@ -60,16 +60,11 @@ const EditTask = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            name: false,
-            lastName: false,
-            middleName: false,
-            yearOfBirth: false,
-            citizenship: false,
-            position: false,
-            workshop: false,
-            // passportScan1: false,
-            // comment: false,
-            relevance: false
+            dateCreated: false,
+            description: false,
+            responsible: false,
+            dateControl: false,
+            status: false
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -134,6 +129,8 @@ const EditTask = (props) => {
             getMainTaskById(id)
                 .then(res => res.json())
                 .then(oldRequest => {
+                    console.log(oldRequest);
+                    
                     setTaskInputs({
                         dateCreated: oldRequest.dateCreated,
                         description: oldRequest.description,

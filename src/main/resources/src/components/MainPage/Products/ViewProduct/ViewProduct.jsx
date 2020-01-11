@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import imgLandscape from '../../../../../../../../assets/product_landscape.jpg';
 import './ViewProduct.scss';
-import { getProductById } from '../../../../utils/utilsAPI.jsx';
+import { getProductById } from '../../../../utils/RequestsAPI/Products.jsx';
 
 const ViewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({

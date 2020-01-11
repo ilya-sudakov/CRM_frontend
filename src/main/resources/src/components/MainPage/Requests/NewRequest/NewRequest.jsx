@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { addRequest, getProducts, addProductsToRequest, getUsers } from '../../../../utils/utilsAPI.jsx';
+import { addRequest, addProductsToRequest } from '../../../../utils/RequestsAPI/Requests.jsx';
+import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
 import './NewRequest.scss';
+import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';

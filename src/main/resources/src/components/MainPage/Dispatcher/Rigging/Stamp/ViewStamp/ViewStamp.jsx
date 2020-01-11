@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ViewStamp.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { getStampById } from '../../../../../../utils/utilsAPI.jsx';
+import { getStampById } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 
 const ViewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
