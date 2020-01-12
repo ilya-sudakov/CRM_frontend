@@ -170,31 +170,6 @@ const Select = (props) => {
                 }}>
                     Обзор
                 </button>
-                {/* Окно для добавления продукции по категориям */}
-                {/* <div className="select__window select__window--hidden" onClick={clickOnSelectWindow}>
-                    <div className="select__window_content">
-                        <div className="select__window_title">
-                            Выбор продукции
-                            <Link to="/products/new" className="select__window_button">Создать продукцию</Link>
-                            <div className="select__window_exit" onClick={clickOnSelectWindow}>
-                                <div className="select__window_bar" onClick={clickOnSelectWindow}></div>
-                                <div className="select__window_bar" onClick={clickOnSelectWindow}></div>
-                            </div>
-                        </div>
-                        <SearchBar
-                            title="Поиск по продукции"
-                            placeholder="Введите название продукции для поиска..."
-                            setSearchQuery={setSearchQueryCategory}
-                        />
-                        <TableView
-                            // data={products}
-                            categories={categories}
-                            searchQuery={searchQueryCategory}
-                            deleteItem={null}
-                            selecting
-                        />
-                    </div>
-                </div> */}
                 <FormWindow
                     title="Выбор продукции"
                     content={
@@ -215,7 +190,7 @@ const Select = (props) => {
                     }
                     headerButton={{
                         name: 'Создать продукцию',
-                        path: 'products/new'
+                        path: '/products/new'
                     }}
                     showWindow={showWindow}
                     setShowWindow={setShowWindow}

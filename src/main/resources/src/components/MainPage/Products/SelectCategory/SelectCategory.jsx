@@ -91,7 +91,7 @@ const SelectCategory = (props) => {
                 }
                 headerButton={{
                     name: 'Создать категорию',
-                    path: 'products/category/new'
+                    path: '/products/category/new'
                 }}
                 showWindow={showWindow}
                 setShowWindow={setShowWindow}
