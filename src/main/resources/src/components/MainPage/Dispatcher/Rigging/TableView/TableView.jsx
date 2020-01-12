@@ -163,7 +163,7 @@ const TableView = (props) => {
                             props.location.pathname.includes("/dispatcher/rigging/press-form") && "pressParts"
                         ].map((part, index) => (
                             //<div key={index} className={"tableview_stamps__row " + (part.id % 2 === 0 ? "tableview_stamps__row--even" : "tableview_stamps__row--odd")}>
-                            <div key={index} className={"tableview_stamps__row tableview_stamps__row--" + (part.color ? part.color : "completed")} >
+                            <div key={index} className={"tableview_stamps__row tableview_stamps__row--" + (part.color ? part.color : "production")} >
                                 <div className="tableview_stamps__col">{part.id}</div>
                                 <div className="tableview_stamps__col">{part.number}</div>
                                 <div className="tableview_stamps__col">

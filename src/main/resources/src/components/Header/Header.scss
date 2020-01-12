@@ -10,6 +10,7 @@
   align-items: center;
   position: sticky;
   position: -webkit-sticky;
+  z-index: 999;
   // background-color: $light80-grey;
 
   .main_page__overlay {
