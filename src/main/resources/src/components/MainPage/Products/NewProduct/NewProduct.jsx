@@ -10,6 +10,7 @@ const NewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
         name: null,
         typeOfProduct: "FIRST",
+        category: null,
         comment: null,
         packaging: null,
         photo: "",
@@ -19,6 +20,7 @@ const NewProduct = (props) => {
     const [productErrors, setProductErrors] = useState({
         name: false,
         type_of_product: false,
+        category: false,
         // comment: false,
         packaging: false,
         photo: false,
@@ -28,6 +30,7 @@ const NewProduct = (props) => {
     const [validInputs, setValidInputs] = useState({
         name: false,
         type_of_product: true,
+        category: false,
         // comment: false,
         packaging: false,
         photo: true,
@@ -46,6 +49,12 @@ const NewProduct = (props) => {
                     typeOfProduct: (value !== null)
                 });
                 break;
+            case 'category':
+                setValidInputs({
+                    ...validInputs,
+                    category: (value !== '')
+                });
+                break;
             default:
                 setValidInputs({
                     ...validInputs,
@@ -60,6 +69,7 @@ const NewProduct = (props) => {
         let newErrors = Object.assign({
             name: false,
             type_of_product: false,
+            category: false,
             // comment: false,
             packaging: false,
             photo: false,
@@ -90,6 +100,9 @@ const NewProduct = (props) => {
         event.preventDefault();
         console.log(productInputs);
         formIsValid() && addProduct(productInputs)
+            .then(() => {
+
+            })
             .then(() => props.history.push("/products"))
             .catch(error => {
                 alert('Ошибка при добавлении записи');
@@ -129,6 +142,18 @@ const NewProduct = (props) => {
         else {
             setImgName('Некорректный формат файла!');
         }
+    }
+
+    const handleCategoryChange = (value) => {
+        validateField('category', value);
+        setProductInputs({
+            ...productInputs,
+            category: value
+        })
+        setProductErrors({
+            ...productErrors,
+            category: false
+        })
     }
 
     useEffect(() => {
@@ -174,8 +199,13 @@ const NewProduct = (props) => {
                     </div>
                 </div>
                 <SelectCategory
-                    inputName="Группа продукции - тест"
-                    // required
+                    inputName="Категория"
+                    required
+                    error={productErrors.category}
+                    name="category"
+                    handleCategoryChange={handleCategoryChange}
+                    errorsArr={productErrors}
+                    setErrorsArr={setProductErrors}
                 />
                 <InputText
                     inputName="Вес изделия"

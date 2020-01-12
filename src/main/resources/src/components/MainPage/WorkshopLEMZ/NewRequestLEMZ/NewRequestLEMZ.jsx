@@ -32,7 +32,6 @@ const NewRequestLEMZ = (props) => {
         responsible: false,
         shippingDate: true
     })
-    const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
 
@@ -135,12 +134,7 @@ const NewRequestLEMZ = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки ЛЭМЗ";
-        getProducts()
-            .then(res => res.json())
-            .then(response => {
-                setProducts(response);
-            })
-            .then(() => getUsers())
+        getUsers()
             .then(res => res.json())
             .then(res => {
                 setUsers(res);
@@ -219,7 +213,7 @@ const NewRequestLEMZ = (props) => {
                 <InputProducts
                     inputName="Продукция"
                     required
-                    options={products}
+                    options
                     name="requestProducts"
                     onChange={handleProductsChange}
                     error={requestErrors.requestProducts}

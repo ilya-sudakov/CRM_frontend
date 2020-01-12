@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditRequestLEMZ.scss';
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
-import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
 import { getRequestLEMZById, editRequestLEMZ, editProductsToRequestLEMZ, addProductsToRequestLEMZ, deleteProductsToRequestLEMZ } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx'
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
@@ -11,7 +10,6 @@ import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditRequestLEMZ = (props) => {
     const [requestId, setRequestId] = useState(1);
-    const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
@@ -216,12 +214,7 @@ const EditRequestLEMZ = (props) => {
                     alert('Неправильный индекс заявки!');
                     props.history.push("/workshop-lemz");
                 })
-            getProducts()
-                .then(res => res.json())
-                .then(response => {
-                    setProducts(response);
-                })
-                .then(() => getUsers())
+            getUsers()
                 .then(res => res.json())
                 .then(res => {
                     setUsers(res);
@@ -277,7 +270,7 @@ const EditRequestLEMZ = (props) => {
                 {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputProducts
                     inputName="Продукция"
                     required
-                    options={products}
+                    options
                     onChange={handleProductsChange}
                     searchPlaceholder="Введите название продукта для поиска..."
                     defaultValue={selectedProducts}

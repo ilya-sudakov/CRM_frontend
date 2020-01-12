@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import './EditWork.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import { addWork, getWorkById } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import { getWorkById, editWork } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
 
 const EditWork = (props) => {
     const [workInputs, setWorkInputs] = useState({
-        name: "",
+        work: "",
     })
     const [workErrors, setWorkErrors] = useState({
-        name: false,
+        work: false,
     })
     const [validInputs, setValidInputs] = useState({
-        name: false,
+        work: false,
     })
     const [showError, setShowError] = useState(false);
+    const [workId, setWorkId] = useState(0);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -30,7 +31,7 @@ const EditWork = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            name: false,
+            work: false,
         });
         for (let item in validInputs) {
             if (validInputs[item] === false) {
@@ -55,7 +56,7 @@ const EditWork = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(workInputs);
-        formIsValid() && addWork(workInputs)
+        formIsValid() && editWork(workInputs, workId)
             .then(() => props.history.push("/work-list"))
     }
 
@@ -79,11 +80,12 @@ const EditWork = (props) => {
             alert('Неправильный индекс работы!');
             props.history.push("/work-list");
         } else {
+            setWorkId(id);
             getWorkById(id)
                 .then(res => res.json())
                 .then(oldWork => {
                     setWorkInputs({
-                        name: oldWork.name,
+                        work: oldWork.work,
                     });
                 })
                 .catch(error => {
@@ -106,9 +108,9 @@ const EditWork = (props) => {
                 <InputText
                     inputName="Название работы"
                     required
-                    error={workErrors.name}
-                    defaultValue={workInputs.name}
-                    name="name"
+                    error={workErrors.work}
+                    defaultValue={workInputs.work}
+                    name="work"
                     handleInputChange={handleInputChange}
                     errorsArr={workErrors}
                     setErrorsArr={setWorkErrors}

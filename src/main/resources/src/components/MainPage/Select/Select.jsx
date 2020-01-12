@@ -4,13 +4,17 @@ import deleteSVG from '../../../../../../../assets/select/delete.svg';
 import './Select.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from '../Products/TableView/TableView.jsx';
-import { getProducts } from '../../../utils/RequestsAPI/Products.jsx';
+import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.jsx';
+import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 
 const Select = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [searchQueryCategory, setSearchQueryCategory] = useState('');
     const [selected, setSelected] = useState([]);
     const [options, setOptions] = useState([]);
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [showWindow, setShowWindow] = useState(false);
 
     const search = () => {
         return options.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -48,11 +52,22 @@ const Select = (props) => {
         console.log(event);
     }
 
-    const loadProducts = () => {
-        getProducts()
+    const loadCategories = () => {
+        getCategories()
             .then(response => response.json())
             .then(response => {
-                setProducts(response);
+                setCategories(response);
+                let result = [];
+                let temp = response.map((cat) => {
+                    let products = cat.products.map(item => {
+                        return item;
+                    })
+                    result.push(...products);
+                })
+                Promise.all(temp)
+                    .then(() => {
+                        setOptions([...result]);
+                    })
             })
             .catch(error => {
                 console.log(error);
@@ -63,6 +78,27 @@ const Select = (props) => {
         const value = event.target.getAttribute("name");
         const id = event.target.getAttribute("id");
         clickOnInput();
+        setSelected([
+            ...selected,
+            {
+                id: id,
+                name: value,
+                quantity: 0,
+                packaging: ""
+            }
+        ])
+        props.onChange([
+            ...selected,
+            {
+                id: id,
+                name: value,
+                quantity: 0,
+                packaging: ""
+            }
+        ]);
+    }
+
+    const selectProduct = (id, value) => {
         setSelected([
             ...selected,
             {
@@ -106,26 +142,15 @@ const Select = (props) => {
         props.onChange([...newSelected]);
     }
 
-    const clickOnSelectWindow = (e) => {
-        e.preventDefault();
-        let productsWindow = document.getElementsByClassName("select__window")[0];
-        if (!(e.target.classList[0] === "select__window") && !(e.target.classList.contains("select__window_exit")) && !(e.target.classList.contains("select__window_bar"))) {
-            productsWindow.classList.remove("select__window--hidden");
-        }
-        else {
-            productsWindow.classList.add("select__window--hidden");
-        }
-    }
-
     useEffect(() => {
         if (props.defaultValue !== undefined) {
             setSelected([...props.defaultValue])
         }
-        if (props.options !== undefined) {
-            setOptions([...props.options])
-        }
-        loadProducts();
-    }, [props.defaultValue, props.options])
+        // if (props.options !== undefined) {
+        //     setOptions([...props.options])
+        // }
+        loadCategories();
+    }, [props.defaultValue])
 
     return (
         <div className="select">
@@ -139,11 +164,14 @@ const Select = (props) => {
                     placeholder={props.searchPlaceholder}
                     readOnly={props.readOnly}
                 />
-                <button className="select__search_button" onClick={clickOnSelectWindow}>
+                <button className="select__search_button" onClick={(e) => {
+                    e.preventDefault();
+                    setShowWindow(!showWindow);
+                }}>
                     Обзор
                 </button>
                 {/* Окно для добавления продукции по категориям */}
-                <div className="select__window select__window--hidden" onClick={clickOnSelectWindow}>
+                {/* <div className="select__window select__window--hidden" onClick={clickOnSelectWindow}>
                     <div className="select__window_content">
                         <div className="select__window_title">
                             Выбор продукции
@@ -156,16 +184,42 @@ const Select = (props) => {
                         <SearchBar
                             title="Поиск по продукции"
                             placeholder="Введите название продукции для поиска..."
-                            setSearchQuery={null}
+                            setSearchQuery={setSearchQueryCategory}
                         />
                         <TableView
-                            data={products}
-                            searchQuery={""}
+                            // data={products}
+                            categories={categories}
+                            searchQuery={searchQueryCategory}
                             deleteItem={null}
                             selecting
                         />
                     </div>
-                </div>
+                </div> */}
+                <FormWindow
+                    title="Выбор продукции"
+                    content={
+                        <React.Fragment>
+                            <SearchBar
+                                title="Поиск по продукции"
+                                placeholder="Введите название продукции для поиска..."
+                                setSearchQuery={setSearchQueryCategory}
+                            />
+                            <TableView
+                                // data={products}
+                                categories={categories}
+                                searchQuery={searchQueryCategory}
+                                deleteItem={null}
+                                selectProduct={selectProduct}
+                            />
+                        </React.Fragment>
+                    }
+                    headerButton={{
+                        name: 'Создать продукцию',
+                        path: 'products/new'
+                    }}
+                    showWindow={showWindow}
+                    setShowWindow={setShowWindow}
+                />
             </div>
             }
             {props.error === true && <div className="select__error" onClick={

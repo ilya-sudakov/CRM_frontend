@@ -134,7 +134,7 @@ const NewPart = (props) => {
                     setErrorsArr={setStorageErrors}
                 />
                 <div className="new_storage__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_storage__submit" type="submit" onClick={handleSubmit} value="Добавить запчасть" />
+                <input className="new_storage__submit" type="submit" onClick={handleSubmit} value="Добавить деталь" />
             </form>
         </div>
     );

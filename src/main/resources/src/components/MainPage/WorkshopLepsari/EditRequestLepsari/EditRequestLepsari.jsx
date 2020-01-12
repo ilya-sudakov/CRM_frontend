@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './EditRequestLepsari.scss';
-import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import { getRequestLepsariById, editProductsToRequestLepsari, addProductsToRequestLepsari, deleteProductsToRequestLepsari, editRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
@@ -11,7 +10,6 @@ import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const EditRequestLepsari = (props) => {
     const [requestId, setRequestId] = useState(1);
-    const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [requestInputs, setRequestInputs] = useState({
         date: "",
@@ -70,7 +68,7 @@ const EditRequestLepsari = (props) => {
     }
 
     const formIsValid = () => {
-        console.log(validInputs);
+        // console.log(validInputs);
         let check = true;
         let newErrors = Object.assign({
             date: false,
@@ -216,12 +214,7 @@ const EditRequestLepsari = (props) => {
                     alert('Неправильный индекс заявки!');
                     props.history.push("/workshop-lepsari");
                 })
-            getProducts()
-                .then(res => res.json())
-                .then(response => {
-                    setProducts(response);
-                })
-                .then(() => getUsers())
+            getUsers()
                 .then(res => res.json())
                 .then(res => {
                     setUsers(res);
@@ -277,7 +270,7 @@ const EditRequestLepsari = (props) => {
                 {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputProducts
                     inputName="Продукция"
                     required
-                    options={products}
+                    options
                     onChange={handleProductsChange}
                     searchPlaceholder="Введите название продукта для поиска..."
                     defaultValue={selectedProducts}

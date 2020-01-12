@@ -224,12 +224,20 @@ const EditStorage = lazy(
     () => import('./Storage/EditStorage/EditStorage.jsx')
 )
 
+const NewCategory = lazy(
+    () => import('./Products/CategoryManagement/NewCategory/NewCategory.jsx')
+)
+
+const EditCategory = lazy(
+    () => import('./Products/CategoryManagement/EditCategory/EditCategory.jsx')
+)
+
 export {
     Clients, newClient, 
     Contracts, 
     Requests, NewRequest, EditRequest, ViewRequest, 
     GeneralPage, 
-    Products, NewProduct, ViewProduct, EditProduct, 
+    Products, NewProduct, ViewProduct, EditProduct, NewCategory, EditCategory,
     Users, EditUser, NewUser, 
     WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, 
     Rigging, 

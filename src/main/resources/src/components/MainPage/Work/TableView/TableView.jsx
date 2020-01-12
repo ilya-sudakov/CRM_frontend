@@ -20,7 +20,7 @@ const TableView = (props) => {
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
         return data.filter(item => (
-            item.name.toLowerCase().includes(query) ||
+            item.work.toLowerCase().includes(query) ||
             item.id.toString().includes(query)
         ))
     }
@@ -50,7 +50,7 @@ const TableView = (props) => {
             {sortProducts(props.data).map((work, work_id) => (
                 <div key={work_id} className={"tableview-work__row " + (work.id % 2 === 0 ? "tableview-work__row--even" : "tableview-work__row--odd")}>
                     <div className="tableview-work__col">{work.id}</div>
-                    <div className="tableview-work__col">{work.name}</div>
+                    <div className="tableview-work__col">{work.work}</div>
                     <div className="tableview-work__actions">
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/work-list/edit/" + work.id} className="tableview-work__action">Редактировать</Link>}
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={work.id} className="tableview-work__action" onClick={props.deleteItem}>Удалить</div>}

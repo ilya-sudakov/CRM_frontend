@@ -14,12 +14,14 @@ const EditProduct = (props) => {
         unit: "шт.",
         photo: "",
         typeOfProduct: "FIRST",
+        category: "",
         packaging: "",
         comment: ""
     });
     const [productErrors, setProductErrors] = useState({
         name: false,
         typeOfProduct: false,
+        category: false,
         comment: false,
         packaging: false,
         photo: false,
@@ -29,6 +31,7 @@ const EditProduct = (props) => {
     const [validInputs, setValidInputs] = useState({
         name: true,
         typeOfProduct: true,
+        category: true,
         // comment: false,
         packaging: true,
         // photo: false,
@@ -61,6 +64,7 @@ const EditProduct = (props) => {
         let newErrors = Object.assign({
             name: false,
             typeOfProduct: false,
+            category: false,
             packaging: false,
             unit: false,
             weight: false
@@ -130,6 +134,18 @@ const EditProduct = (props) => {
         }
     }
 
+    const handleCategoryChange = (value) => {
+        validateField('category', value);
+        setProductInputs({
+            ...productInputs,
+            category: value
+        })
+        setProductErrors({
+            ...productErrors,
+            category: false
+        })
+    }
+
     useEffect(() => {
         document.title = "Редактирование продукта";
         const id = props.history.location.pathname.split("/products/edit/")[1];
@@ -145,6 +161,7 @@ const EditProduct = (props) => {
                         weight: oldProduct.weight,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
+                        category: oldProduct.category,
                         comment: oldProduct.comment,
                         typeOfProduct: oldProduct.typeOfProduct,
                         photo: oldProduct.photo
@@ -198,8 +215,13 @@ const EditProduct = (props) => {
                     </div>
                 </div>
                 <SelectCategory
-                    inputName="Группа продукции - тест"
-                    // required
+                    inputName="Категория"
+                    required
+                    error={productErrors.category}
+                    name="category"
+                    handleCategoryChange={handleCategoryChange}
+                    errorsArr={productErrors}
+                    setErrorsArr={setProductErrors}
                 />
                 <InputText
                     inputName="Вес изделия"

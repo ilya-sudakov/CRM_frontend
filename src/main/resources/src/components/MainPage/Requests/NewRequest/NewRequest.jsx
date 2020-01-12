@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { addRequest, addProductsToRequest } from '../../../../utils/RequestsAPI/Requests.jsx';
-import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
 import './NewRequest.scss';
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
@@ -28,7 +27,6 @@ const NewRequest = (props) => {
         codeWord: false,
         responsible: false,
     })
-    const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
 
@@ -125,12 +123,7 @@ const NewRequest = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
-        getProducts()
-            .then(res => res.json())
-            .then(response => {
-                setProducts(response);
-            })
-            .then(() => getUsers())
+        getUsers()
             .then(res => res.json())
             .then(res => {
                 setUsers(res);
@@ -196,7 +189,7 @@ const NewRequest = (props) => {
                 <InputProducts
                     inputName="Продукция"
                     required
-                    options={products}
+                    options
                     onChange={handleProductsChange}
                     searchPlaceholder="Введите название продукта для поиска..."
                     error={requestErrors.requestProducts}

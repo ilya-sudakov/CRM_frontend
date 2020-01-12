@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
 import './NewRequestLepsari.scss';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
@@ -32,7 +31,6 @@ const NewRequestLepsari = (props) => {
         responsible: false,
         shippingDate: true
     })
-    const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
 
@@ -135,12 +133,7 @@ const NewRequestLepsari = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки Лепсари";
-        getProducts()
-            .then(res => res.json())
-            .then(response => {
-                setProducts(response);
-            })
-            .then(() => getUsers())
+        getUsers()
             .then(res => res.json())
             .then(res => {
                 setUsers(res);
@@ -219,7 +212,7 @@ const NewRequestLepsari = (props) => {
                 <InputProducts
                     inputName="Продукция"
                     required
-                    options={products}
+                    options
                     name="requestProducts"
                     onChange={handleProductsChange}
                     error={requestErrors.requestProducts}

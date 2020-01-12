@@ -94,7 +94,7 @@ const TableView = (props) => {
 
     useEffect(() => {
         let temp = [];
-        categories.map((element, index) => (
+        props.categories.map((element, index) => (
             temp.push({
                 id: element.id,
                 hidden: true
@@ -103,7 +103,7 @@ const TableView = (props) => {
         setProductsVisible([
             ...temp,
         ]);
-    }, [props.data])
+    }, [props.categories])
 
     return (
         <div className="tableview_products">
@@ -137,7 +137,7 @@ const TableView = (props) => {
                         </div>
                     </div>
             ))} */}
-            {categories.map((category, category_id) => (
+            {props.categories.map((category, category_id) => (
                 <React.Fragment>
                     <div id={category.id} key={category_id}
                         className="tableview_products__row"
@@ -145,7 +145,7 @@ const TableView = (props) => {
                     >
                         <div className="tableview_products__col">{category.id}</div>
                         <div className="tableview_products__col"></div>
-                        <div className="tableview_products__col">{category.name}</div>
+                        <div className="tableview_products__col">{category.category}</div>
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col"></div>
@@ -154,12 +154,13 @@ const TableView = (props) => {
                             {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={category_id} className="tableview_products__action" onClick={null}>Удалить</div>}
                         </div>
                     </div>
-                    <div id={category_id} className={"tableview_products__categories " + ((isProductsHidden(category.id) === true) && "tableview_products__categories--hidden")}>
-                        {sortProducts(props.data).map((product, product_id) => (
-                            (product.typeOfProduct === "FIRST" ? "Первая группа" === category.name :
+                    <div id={category_id} className={(isProductsHidden(category.id) === true) ? "tableview_products__categories tableview_products__categories--hidden" : "tableview_products__categories"}>
+                        {sortProducts(category.products).map((product, product_id) => (
+                            /*(product.typeOfProduct === "FIRST" ? "Первая группа" === category.name :
                                 product.typeOfProduct === "SECOND" ? "Вторая группа" === category.name :
                                     product.typeOfProduct === "THIRD" ? "Третья группа" === category.name :
-                                        false) && <div key={product_id} className={"tableview_products__row " + (product.id % 2 === 0 ? "tableview_products__row--even" : "tableview_products__row--odd")}>
+                                        false) &&*/
+                            <div key={product_id} className={"tableview_products__row " + (product.id % 2 === 0 ? "tableview_products__row--even" : "tableview_products__row--odd")}>
                                 <div className="tableview_products__col">{product.id}</div>
                                 <div className="tableview_products__col">
                                     <img className="tableview_products__product_img" src={product.photo} alt="" />
@@ -172,7 +173,7 @@ const TableView = (props) => {
                                     <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
                                     {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>}
                                     {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div>}
-                                    {props.selecting && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Выбрать</div>}
+                                    {props.selectProduct && <div data-id={product.id} className="tableview_products__action" onClick={() => { props.selectProduct(product.id, product.name) }}>Выбрать</div>}
                                 </div>
                             </div>
                         ))}

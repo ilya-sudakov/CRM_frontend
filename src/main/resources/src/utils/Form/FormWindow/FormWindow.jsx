@@ -4,8 +4,8 @@ import './FormWindow.scss';
 
 const FormWindow = (props) => {
     useEffect(() => {
-        
-    }, [])
+        console.log(props.showWindow);
+    }, [props.showWindow])
     const clickOnSelectWindow = (e) => {
         e.preventDefault();
         let productsWindow = document.getElementsByClassName("form-window")[0];
@@ -24,7 +24,7 @@ const FormWindow = (props) => {
             <div className="form-window__content">
                 <div className="form-window__title">
                     {props.title}
-                    {props.headerButton && <Link to="/products/new" className="form-window__button">Создать продукцию</Link>}
+                    {props.headerButton && <Link to={props.headerButton.path} className="form-window__button">{props.headerButton.name}</Link>}
                     <div className="form-window__exit" onClick={clickOnSelectWindow}>
                         <div className="form-window__bar" onClick={clickOnSelectWindow}></div>
                         <div className="form-window__bar" onClick={clickOnSelectWindow}></div>
