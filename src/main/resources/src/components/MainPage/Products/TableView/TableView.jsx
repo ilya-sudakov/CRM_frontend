@@ -34,15 +34,15 @@ const TableView = (props) => {
 
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
-        return data.filter(item =>
-            item.name.toLowerCase().includes(query) ||
-            item.id.toString().includes(query) ||
-            item.typeOfProduct.toLowerCase().includes(query) ||
-            item.weight.toString().includes(query) ||
-            item.packaging.toLowerCase().includes(query) ||
-            item.comment.toLowerCase().includes(query)
-            // item.vendor.toLowerCase().includes(query)
-        )
+        return data.filter(item => {
+            return (item.name.toLowerCase().includes(query) ||
+                item.id.toString().includes(query) ||
+                item.weight.toString().includes(query) ||
+                item.packaging.toLowerCase().includes(query) ||
+                item.comment.toLowerCase().includes(query)
+                // item.vendor.toLowerCase().includes(query)
+            )
+        })
     }
 
     const sortProducts = (data) => {
