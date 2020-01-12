@@ -2,8 +2,8 @@
 
 .select-category {
   width: calc(100% - 20px);
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 25px;
   .select-category__input {
     display: flex;
@@ -76,6 +76,15 @@
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .select-category__input {
+      flex-wrap: wrap;
+      .select-category__input_field {
+        width: 100%;
       }
     }
   }

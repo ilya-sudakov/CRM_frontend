@@ -39,8 +39,8 @@ const SelectCategory = (props) => {
 
     const clickCategory = (categoryId) => {
         setId(categoryId);
-        props.handleCategoryChange(categoryId);
-        setShowWindow(true);
+        props.handleCategoryChange(categoryId)
+        setShowWindow(!showWindow)
     }
 
     return (

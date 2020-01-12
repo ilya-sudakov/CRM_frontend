@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import './FormWindow.scss';
 
 const FormWindow = (props) => {
+
     useEffect(() => {
         console.log(props.showWindow);
-    }, [props.showWindow])
+    }, [props.showWindow, props.setShowWindow])
+
     const clickOnSelectWindow = (e) => {
         e.preventDefault();
         let productsWindow = document.getElementsByClassName("form-window")[0];
