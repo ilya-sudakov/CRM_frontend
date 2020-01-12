@@ -74,3 +74,19 @@ export function deletePartsFromStamp(id) {
         method: "DELETE"
     })
 }
+
+export function editStampColor(color, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/color/" + id,
+        method: "PUT",
+        body: JSON.stringify(color)
+    })
+}
+
+export function editStampPartColor(color, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/stamp/part/color/" + id,
+        method: "PUT",
+        body: JSON.stringify(color)
+    })
+}

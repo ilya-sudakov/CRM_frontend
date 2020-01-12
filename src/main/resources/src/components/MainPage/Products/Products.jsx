@@ -68,7 +68,7 @@ const Products = (props) => {
         <div className="products">
             <div className="products__header">
                 <div className="products__title">Продукция</div>
-                <div className="products__button" onClick={() => setShowWindow(!showWindow)}>Категории</div>
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_ENGINEER']) && <div className="products__button" onClick={() => setShowWindow(!showWindow)}>Категории</div>}
             </div>
             <FormWindow
                 title="Категории продукции"

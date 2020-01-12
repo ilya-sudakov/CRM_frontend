@@ -124,6 +124,13 @@ const TableView = (props) => {
                             <ColorPicker
                                 defaultName={stamp.name}
                                 index={selectorId++}
+                                id={stamp.id}
+                                type={
+                                    (props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                                        props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form")
+                                    + '/rigging'
+                                }
                             />
                         </div>
                         <div className="tableview_stamps__col"></div>
@@ -163,6 +170,13 @@ const TableView = (props) => {
                                     <ColorPicker
                                         defaultName={part.name}
                                         index={selectorId++}
+                                        id={part.id}
+                                        type={
+                                            (props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                                                props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form")
+                                            + '/part'
+                                        }
                                     />
                                 </div>
                                 <div className="tableview_stamps__col">{part.amount}</div>

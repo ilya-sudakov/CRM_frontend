@@ -55,7 +55,7 @@ const SelectCategory = (props) => {
                             // onChange={props.handleInputChange}
                             value={props.defaultValue ? props.defaultValue : id}
                             // onClick={!props.readOnly ? clickOnInput : null}
-                            placeholder={props.searchPlaceholder}
+                            placeholder="Выберите категорию, нажав на кнопку 'Обзор'"
                             readOnly={props.readOnly}
                         />
                         <button className="select-category__search_button" onClick={(e) => {

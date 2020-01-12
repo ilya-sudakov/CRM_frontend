@@ -8,7 +8,6 @@ const ViewProduct = (props) => {
         item: "",
         weight: "",
         group: "",
-        typeOfProduct: "",
         category: "",
         unit: "",
         packaging: "",
@@ -35,7 +34,6 @@ const ViewProduct = (props) => {
                         photo: oldProduct.photo,
                         item: oldProduct.item,
                         weight: oldProduct.weight,
-                        typeOfProduct: oldProduct.typeOfProduct,
                         category: oldProduct.category,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
@@ -63,24 +61,6 @@ const ViewProduct = (props) => {
                     <div className="view_product__input_name">Наименование</div>
                     <div className="view_product__input_field">
                         <input type="text" name="name" defaultValue={productInputs.name} readOnly />
-                    </div>
-                </div>
-                {/* <div className="view_product__item">
-                    <div className="view_product__input_name">Артикул</div>
-                    <div className="view_product__input_field">
-                        <input type="text" name="item" defaultValue={productInputs.item} readOnly />
-                    </div>
-                </div> */}
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Группа продукции</div>
-                    <div className="view_product__input_field">
-                        <input type="text" name="comment" defaultValue={
-                            productInputs.typeOfProduct === "FIRST" ? "Первая группа"
-                                : productInputs.typeOfProduct === "SECOND" ? "Вторая группа"
-                                    : productInputs.typeOfProduct === "THIRD" ? "Третья группа"
-                                        : null
-                        }
-                            readOnly />
                     </div>
                 </div>
                 <div className="view_product__item">

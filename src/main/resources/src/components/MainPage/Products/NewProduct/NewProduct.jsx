@@ -9,7 +9,6 @@ import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 const NewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
         name: null,
-        typeOfProduct: "FIRST",
         category: null,
         comment: null,
         packaging: null,
@@ -19,7 +18,6 @@ const NewProduct = (props) => {
     })
     const [productErrors, setProductErrors] = useState({
         name: false,
-        type_of_product: false,
         category: false,
         // comment: false,
         packaging: false,
@@ -29,7 +27,6 @@ const NewProduct = (props) => {
     })
     const [validInputs, setValidInputs] = useState({
         name: false,
-        type_of_product: true,
         category: false,
         // comment: false,
         packaging: false,
@@ -43,12 +40,6 @@ const NewProduct = (props) => {
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'typeOfProduct':
-                setValidInputs({
-                    ...validInputs,
-                    typeOfProduct: (value !== null)
-                });
-                break;
             case 'category':
                 setValidInputs({
                     ...validInputs,
@@ -68,7 +59,6 @@ const NewProduct = (props) => {
         let check = true;
         let newErrors = Object.assign({
             name: false,
-            type_of_product: false,
             category: false,
             // comment: false,
             packaging: false,
@@ -184,20 +174,6 @@ const NewProduct = (props) => {
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
                 />
-                <div className="new_product__item">
-                    <div className="new_product__input_name">Группа продукции*</div>
-                    <div className="new_product__input_field">
-                        <select
-                            name="typeOfProduct"
-                            onChange={handleInputChange}
-                            defaultValue={productInputs.typeOfProduct}
-                        >
-                            <option value="FIRST">Первая группа</option>
-                            <option value="SECOND">Вторая группа</option>
-                            <option value="THIRD">Третья группа</option>
-                        </select>
-                    </div>
-                </div>
                 <SelectCategory
                     inputName="Категория"
                     required
@@ -206,6 +182,7 @@ const NewProduct = (props) => {
                     handleCategoryChange={handleCategoryChange}
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
+                    readOnly
                 />
                 <InputText
                     inputName="Вес изделия"

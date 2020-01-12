@@ -1,6 +1,9 @@
 import React from 'react';
 import chevronDownIcon from '../../../../../../../../../assets/tableview/chevron-down.svg';
 import './ColorPicker.scss';
+import { editStampColor, editStampPartColor } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import { editPressFormColor, editPressFormPartColor } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
+import { editMachineColor, editMachinePartColor } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 
 const ColorPicker = (props) => {
     const clickOnColorPicker = (event) => {
@@ -30,9 +33,35 @@ const ColorPicker = (props) => {
     }
 
     const clickOnColorOption = (event) => {
-        const id = event.target.getAttribute("index");
+        // const id = Number.parseInt(event.target.getAttribute("index"));
+        const id = props.id;
         const color = event.target.classList[1].split("tableview__color_option--")[1];
-        console.log(id, color);
+        const name = props.type.split('/')[0];
+        const type = props.type.split('/')[1];
+        const req = Object.assign({
+            color: color
+        })
+        switch (name) {
+            case 'stamp':
+                (type === 'rigging') ? editStampColor(req, id)
+                    .then(() => document.location.reload(true))
+                    : editStampPartColor(req, id)
+                        .then(() => document.location.reload(true))
+                break;
+            case 'press-form':
+                (type === 'rigging') ? editPressFormColor(req, id)
+                    .then(() => document.location.reload(true))
+                    : editPressFormPartColor(req, id)
+                        .then(() => document.location.reload(true))
+                break;
+            case 'machine':
+                (type === 'rigging') ? editMachineColor(req, id)
+                    .then(() => document.location.reload(true))
+                    : editMachinePartColor(req, id)
+                        .then(() => document.location.reload(true))
+                break;
+        }
+        // console.log(req, id, type === 'part');
         clickOnColorPickerOverlay(event); //Hide options
     }
 

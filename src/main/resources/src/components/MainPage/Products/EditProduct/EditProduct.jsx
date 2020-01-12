@@ -13,14 +13,12 @@ const EditProduct = (props) => {
         group: "",
         unit: "шт.",
         photo: "",
-        typeOfProduct: "FIRST",
         category: "",
         packaging: "",
         comment: ""
     });
     const [productErrors, setProductErrors] = useState({
         name: false,
-        typeOfProduct: false,
         category: false,
         comment: false,
         packaging: false,
@@ -30,7 +28,6 @@ const EditProduct = (props) => {
     })
     const [validInputs, setValidInputs] = useState({
         name: true,
-        typeOfProduct: true,
         category: true,
         // comment: false,
         packaging: true,
@@ -44,12 +41,6 @@ const EditProduct = (props) => {
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'typeOfProduct':
-                setValidInputs({
-                    ...validInputs,
-                    typeOfProduct: (value !== null)
-                });
-                break;
             default:
                 setValidInputs({
                     ...validInputs,
@@ -63,7 +54,6 @@ const EditProduct = (props) => {
         let check = true;
         let newErrors = Object.assign({
             name: false,
-            typeOfProduct: false,
             category: false,
             packaging: false,
             unit: false,
@@ -163,7 +153,6 @@ const EditProduct = (props) => {
                         packaging: oldProduct.packaging,
                         category: oldProduct.category,
                         comment: oldProduct.comment,
-                        typeOfProduct: oldProduct.typeOfProduct,
                         photo: oldProduct.photo
                     });
                 })
@@ -199,21 +188,6 @@ const EditProduct = (props) => {
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
                 />
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Группа продукции*</div>
-                    <div className="edit_product__input_field">
-                        <select
-                            name="typeOfProduct"
-                            onChange={handleInputChange}
-                            defaultValue={productInputs.typeOfProduct}
-                            autoComplete="off"
-                        >
-                            <option value="FIRST">Первая группа</option>
-                            <option value="SECOND">Вторая группа</option>
-                            <option value="THIRD">Третья группа</option>
-                        </select>
-                    </div>
-                </div>
                 <SelectCategory
                     inputName="Категория"
                     required
@@ -222,6 +196,7 @@ const EditProduct = (props) => {
                     handleCategoryChange={handleCategoryChange}
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
+                    readOnly
                 />
                 <InputText
                     inputName="Вес изделия"
