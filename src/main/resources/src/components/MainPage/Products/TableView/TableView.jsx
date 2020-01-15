@@ -9,20 +9,7 @@ const TableView = (props) => {
         id: 'desc'
     })
     const [productsVisible, setProductsVisible] = useState([]);
-    const [categories, setCategories] = useState([
-        {
-            id: 1,
-            name: 'Первая группа'
-        },
-        {
-            id: 2,
-            name: 'Вторая группа'
-        },
-        {
-            id: 3,
-            name: 'Третья группа'
-        },
-    ])
+    // const [categories, setCategories] = useState([]);
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -35,7 +22,8 @@ const TableView = (props) => {
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
         return data.filter(item => {
-            return (item.name.toLowerCase().includes(query) ||
+            return (
+                item.name.toLowerCase().includes(query) ||
                 item.id.toString().includes(query) ||
                 item.weight.toString().includes(query) ||
                 item.packaging.toLowerCase().includes(query) ||
@@ -84,11 +72,6 @@ const TableView = (props) => {
 
     const handleClickCategory = (event) => {
         let id = event.currentTarget.getAttribute('id');
-        // ((event.target.className !== "tableview__color_name") &&
-        //     (!event.target.className.includes("tableview__color_option")) &&
-        //     (!event.target.className.includes("tableview__color_overlay")) &&
-        //     (!event.target.className.includes("tableview__img"))
-        // ) && 
         setProductsVisible([...checkProduct(id)]);
     }
 
@@ -119,24 +102,6 @@ const TableView = (props) => {
                 <div className="tableview_products__col">Комментарий</div>
                 <div className="tableview_products__col">Действия</div>
             </div>
-            {/* {sortProducts(props.data).map((product, product_id) => (
-                    <div key={product_id} className={"tableview_products__row " + (product.id % 2 === 0 ? "tableview_products__row--even" : "tableview_products__row--odd")}>
-                        <div className="tableview_products__col">{product.id}</div>
-                        <div className="tableview_products__col">
-                            <img className="tableview_products__product_img" src={product.photo} alt="" />
-                        </div>
-                        <div className="tableview_products__col">{product.name}</div>
-                        <div className="tableview_products__col">{product.weight}</div>
-                        <div className="tableview_products__col">{product.packaging}</div>
-                        <div className="tableview_products__col">{product.comment}</div>
-                        <div className="tableview_products__actions">
-                            <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
-                            {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>}
-                            {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div>}
-                            {props.selecting && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Выбрать</div>}
-                        </div>
-                    </div>
-            ))} */}
             {props.categories.map((category, category_id) => (
                 <React.Fragment>
                     <div id={category.id} key={category_id}
@@ -156,10 +121,6 @@ const TableView = (props) => {
                     </div>
                     <div id={category_id} className={(isProductsHidden(category.id) === true) ? "tableview_products__categories tableview_products__categories--hidden" : "tableview_products__categories"}>
                         {sortProducts(category.products).map((product, product_id) => (
-                            /*(product.typeOfProduct === "FIRST" ? "Первая группа" === category.name :
-                                product.typeOfProduct === "SECOND" ? "Вторая группа" === category.name :
-                                    product.typeOfProduct === "THIRD" ? "Третья группа" === category.name :
-                                        false) &&*/
                             <div key={product_id} className={"tableview_products__row " + (product.id % 2 === 0 ? "tableview_products__row--even" : "tableview_products__row--odd")}>
                                 <div className="tableview_products__col">{product.id}</div>
                                 <div className="tableview_products__col">
@@ -173,7 +134,12 @@ const TableView = (props) => {
                                     <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
                                     {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>}
                                     {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div>}
-                                    {props.selectProduct && <div data-id={product.id} className="tableview_products__action" onClick={() => { props.selectProduct(product.id, product.name) }}>Выбрать</div>}
+                                    {props.selectProduct && <div data-id={product.id} className="tableview_products__action" onClick={() => {
+                                        props.selectProduct(product.id, product.name);
+                                        // console.log('products', props.windowChange);
+                                        // props.setShowWindow(!props.showWindow);
+                                        // props.handleWindowChange(false);
+                                    }}>Выбрать</div>}
                                 </div>
                             </div>
                         ))}

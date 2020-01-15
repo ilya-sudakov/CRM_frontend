@@ -131,18 +131,9 @@ const TableView = (props) => {
                             )
                         })}
                     </div>
-                    {/* Корректный вывод но с ограничением по количеству символов в строке */}
-                    {/* <div className="tableview_requests_LEMZ__col">
-                        <div className="tableview_requests_LEMZ__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_LEMZ__subtext">{request.products}</div></div>
-                        <div className="tableview_requests_LEMZ__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_LEMZ__subtext">{request.products}</div></div>
-                    </div>
-                    <div className="tableview_requests_LEMZ__col">
-                        <div className="tableview_requests_LEMZ__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_LEMZ__subtext">{request.quantity}</div></div>
-                        <div className="tableview_requests_LEMZ__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_LEMZ__subtext">{request.quantity}</div></div>
-                    </div> */}
                     <div className="tableview_requests_LEMZ__col">{request.codeWord}</div>
                     <div className="tableview_requests_LEMZ__col">{request.responsible}</div>
-                    <div className="tableview_requests_LEMZ__col">
+                    <div className="tableview_requests_LEMZ__col" >
                         <select
                             id={request.id}
                             className="tableview_requests_LEMZ__status_select"
@@ -158,6 +149,29 @@ const TableView = (props) => {
                             <option>Отгружено</option>
                             <option>Завершено</option>
                         </select>
+                        {/* {request.lemzProducts.map((item, index) => {
+                            return (
+                                <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / request.lemzProducts.length}%)` }}>
+                                    <div className="tableview_requests_LEMZ__sub_col">
+                                        <select
+                                            id={request.id}
+                                            className="tableview_requests_LEMZ__status_select"
+                                            defaultValue={request.status}
+                                            onChange={handleStatusChange}
+                                        >
+                                            <option>Приоритет</option>
+                                            <option>Проблема</option>
+                                            <option>Материалы</option>
+                                            <option>Ожидание</option>
+                                            <option>В производстве</option>
+                                            <option>Готово</option>
+                                            <option>Отгружено</option>
+                                            <option>Завершено</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            )
+                        })} */}
                     </div>
                     <div className="tableview_requests_LEMZ__col">{request.shippingDate && formatDateString(request.shippingDate)}</div>
                     <div className="tableview_requests_LEMZ__col">{request.comment}</div>

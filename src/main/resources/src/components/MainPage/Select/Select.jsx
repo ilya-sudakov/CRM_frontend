@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import deleteSVG from '../../../../../../../assets/select/delete.svg';
 import './Select.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
@@ -12,7 +11,6 @@ const Select = (props) => {
     const [searchQueryCategory, setSearchQueryCategory] = useState('');
     const [selected, setSelected] = useState([]);
     const [options, setOptions] = useState([]);
-    // const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [showWindow, setShowWindow] = useState(false);
 
@@ -46,10 +44,6 @@ const Select = (props) => {
             overlay.classList.add("select__overlay--hidden");
             clickOnInput();
         }
-    }
-
-    const clickOnInputBlur = (event) => {
-        console.log(event);
     }
 
     const loadCategories = () => {
@@ -188,6 +182,15 @@ const Select = (props) => {
                             />
                         </React.Fragment>
                     }
+                    // content={<WindowContent
+                    //     categories={categories}
+                    //     showWindow={showWindow}
+                    //     setShowWindow={setShowWindow}
+                    //     searchQuery={searchQueryCategory}
+                    //     deleteItem={null}
+                    //     selectProduct={selectProduct}
+                    //     setSearchQuery={setSearchQueryCategory}
+                    // />}
                     headerButton={{
                         name: 'Создать продукцию',
                         path: '/products/new'
@@ -203,8 +206,7 @@ const Select = (props) => {
                     [props.name]: false
                 })) : null
             }>Поле не заполнено!</div>}
-            {props.options && <div className="select__options select__options--hidden"
-                onBlur={!props.readOnly ? clickOnInputBlur : null}>
+            {props.options && <div className="select__options select__options--hidden">
                 {search().map((item, index) => (
                     <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
                         <img className="select__img" src={item.photo} />
@@ -256,5 +258,27 @@ const Select = (props) => {
         </div>
     )
 }
+
+const WindowContent = (props) => {
+    useEffect(() => {
+        console.log('windowcontent');
+    }, [])
+    return (
+        <React.Fragment>
+            <SearchBar
+                title="Поиск по продукции"
+                placeholder="Введите название продукции для поиска..."
+                setSearchQuery={props.setSearchQueryCategory}
+            />
+            <TableView
+                // data={products}
+                categories={props.categories}
+                searchQuery={props.searchQueryCategory}
+                deleteItem={null}
+                selectProduct={props.selectProduct}
+            />
+        </React.Fragment>
+    );
+};
 
 export default Select;

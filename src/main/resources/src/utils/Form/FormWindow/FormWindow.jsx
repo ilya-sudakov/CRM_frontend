@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './FormWindow.scss';
 
 const FormWindow = (props) => {
-
+    const [windowChange, setWindowChange] = useState(false);
     useEffect(() => {
         console.log(props.showWindow);
-    }, [props.showWindow, props.setShowWindow])
+    }, [props.showWindow, props.setShowWindow, windowChange])
+
+    const handleWindowChange = (value) => {
+        props.setShowWindow(value);
+    }
 
     const clickOnSelectWindow = (e) => {
         e.preventDefault();
@@ -35,7 +39,7 @@ const FormWindow = (props) => {
                 {props.content}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default FormWindow;

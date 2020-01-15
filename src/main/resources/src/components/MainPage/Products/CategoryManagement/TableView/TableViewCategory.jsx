@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableViewCategory.scss';
@@ -37,6 +37,10 @@ const TableViewCategory = (props) => {
         })
     }
 
+    useEffect(() => {
+        console.log('render tableview');
+    }, [])
+
     return (
         <div className="tableview-category">
             <div className="tableview-category__row tableview-category__row--header">
@@ -55,7 +59,7 @@ const TableViewCategory = (props) => {
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/category/edit/" + category.id} className="tableview-category__action">Редактировать</Link>}
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={category.id} className="tableview-category__action" onClick={props.deleteItem}>Удалить</div>}
                         {props.selectCategory && <div data-id={category.id} className="tableview-category__action" onClick={() => {
-                            props.selectCategory(category.category)
+                            props.selectCategory(category.category);
                         }}>Выбрать</div>}
                     </div>
                 </div>

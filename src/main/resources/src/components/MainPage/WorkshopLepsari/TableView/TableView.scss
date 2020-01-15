@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   width: calc(100% - 50px);
-  font-size: 80%;
+  font-size: 100%;
   min-width: 1250px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
@@ -20,7 +20,7 @@
     font-weight: normal;
     word-wrap: break-word;
     word-break: break-all;
-    font-size: 100%;
+    font-size: 80%;
     position: sticky; //test
     top: calc(-6px); //test
     .tableview_requests_lepsari__col {
@@ -68,7 +68,7 @@
   }
 
   &__row {
-    font-size: 80%;
+    font-size: 75%;
     display: flex;
     background-color: $primary-background-color;
     border-bottom: 1px solid #cccccc;

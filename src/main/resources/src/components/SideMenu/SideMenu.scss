@@ -6,7 +6,7 @@
   // left: 0;
   // top: 60px;
   position: relative;
-  font-size: 80%;
+  font-size: 82%;
   width: 250px;
   max-width: 300px;
   max-height: calc(100vh - 75px - 1px);
@@ -19,6 +19,7 @@
   transition: 0.2s ease-in-out;
   color: $primary-text-color;
   overflow-y: auto;
+  overflow-x: hidden;
 
   &__item,
   &__item--add {
@@ -80,7 +81,7 @@
       color: $primary-text-color;
       padding: 10px 5px;
       // width: 100%;
-      font-size: 95%;
+      font-size: 100%;
       width: calc(100% - 35px);
       // text-align: center;      
     }
