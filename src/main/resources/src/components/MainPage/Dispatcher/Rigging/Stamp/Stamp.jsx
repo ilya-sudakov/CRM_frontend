@@ -53,6 +53,7 @@ const Stamp = (props) => {
                 data={stamps}
                 searchQuery={searchQuery}
                 userHasAccess={props.userHasAccess}
+                loadData={loadStamps}
                 deleteItem={deleteItem}
             />
         </div>

@@ -54,6 +54,7 @@ const PressForm = (props) => {
                 searchQuery={searchQuery}
                 userHasAccess={props.userHasAccess}
                 deleteItem={deleteItem}
+                loadData={loadPressForm}
             />
         </div>
     )

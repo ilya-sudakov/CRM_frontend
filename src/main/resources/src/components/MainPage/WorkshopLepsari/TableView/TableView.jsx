@@ -44,7 +44,7 @@ const TableView = (props) => {
             status: status
         }, id)
             .then(() => {
-                window.location.reload(); //на данный момент так
+                props.loadData();
             })
             .catch(error => {
                 console.log(error);
@@ -89,6 +89,10 @@ const TableView = (props) => {
         //     newDate.split("-")[0]
         // );
     }
+
+    useEffect(() => {
+
+    }, [props.data])
 
     return (
         <div className="tableview_requests_lepsari">

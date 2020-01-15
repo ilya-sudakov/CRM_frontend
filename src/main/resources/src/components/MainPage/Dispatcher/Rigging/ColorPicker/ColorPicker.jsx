@@ -43,22 +43,26 @@ const ColorPicker = (props) => {
         })
         switch (name) {
             case 'stamp':
-                (type === 'rigging') ? editStampColor(req, id)
-                    .then(() => document.location.reload(true))
-                    : editStampPartColor(req, id)
-                        .then(() => document.location.reload(true))
+                if (type === 'rigging') {
+                    editStampColor(req, id)
+                        .then(() => props.loadData())
+                }
+                else {
+                    editStampPartColor(req, id)
+                        .then(() => props.loadData())
+                }
                 break;
             case 'press-form':
                 (type === 'rigging') ? editPressFormColor(req, id)
-                    .then(() => document.location.reload(true))
+                    .then(() => props.loadData())
                     : editPressFormPartColor(req, id)
-                        .then(() => document.location.reload(true))
+                        .then(() => props.loadData())
                 break;
             case 'machine':
                 (type === 'rigging') ? editMachineColor(req, id)
-                    .then(() => document.location.reload(true))
+                    .then(() => props.loadData())
                     : editMachinePartColor(req, id)
-                        .then(() => document.location.reload(true))
+                        .then(() => props.loadData())
                 break;
         }
         // console.log(req, id, type === 'part');

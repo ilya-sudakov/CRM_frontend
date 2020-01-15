@@ -54,6 +54,7 @@ const Machine = (props) => {
                 searchQuery={searchQuery}
                 userHasAccess={props.userHasAccess}
                 deleteItem={deleteItem}
+                loadData={loadMachines}
             />
         </div>
     )

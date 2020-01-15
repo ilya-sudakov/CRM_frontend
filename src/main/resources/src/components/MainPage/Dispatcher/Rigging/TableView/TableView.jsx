@@ -125,6 +125,7 @@ const TableView = (props) => {
                                 defaultName={stamp.name}
                                 index={selectorId++}
                                 id={stamp.id}
+                                loadData={props.loadData}
                                 type={
                                     (props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                                         props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
@@ -171,6 +172,7 @@ const TableView = (props) => {
                                         defaultName={part.name}
                                         index={selectorId++}
                                         id={part.id}
+                                        loadData={props.loadData}
                                         type={
                                             (props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                                                 props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
