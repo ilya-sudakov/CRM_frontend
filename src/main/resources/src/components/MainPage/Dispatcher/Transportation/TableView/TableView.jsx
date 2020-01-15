@@ -42,12 +42,18 @@ const TableView = (props) => {
     }
 
     const formatDateString = (dateString) => {
-        const newDate = dateString.split("T")[0];
+        const testDate = new Date(dateString);
         return (
-            newDate.split("-")[2] + "." +
-            newDate.split("-")[1] + "." +
-            newDate.split("-")[0]
+            ((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
+            + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
+            + '.' + testDate.getFullYear()
         );
+        // const newDate = dateString.split("T")[0];
+        // return (
+        //     newDate.split("-")[2] + "." +
+        //     newDate.split("-")[1] + "." +
+        //     newDate.split("-")[0]
+        // );
     }
 
     return (

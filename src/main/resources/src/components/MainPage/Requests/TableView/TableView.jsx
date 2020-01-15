@@ -72,60 +72,21 @@ const TableView = (props) => {
             }
             return 0;
         })
-        // let shipped = new Array();
-        // let inProgress = new Array();
-        // searchQuery(data)
-        //     .sort((a, b) => {
-
-        //         if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
-        //             return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-        //         }
-        //         else if (a.status === "Отгружено") {
-        //             return 1;
-        //         }
-        //         else if (b.status === "Отгружено") {
-        //             return -1
-        //         }
-
-
-        //         if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
-        //             return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-        //         }
-        //         else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        //             return 1;
-        //         }
-        //         return 0;
-        //     })
-        //     .filter(item => {
-        //         if (item.status === "Отгружено") {
-        //             shipped.push(item);
-        //         }
-        //         else {
-        //             inProgress.push(item);
-        //         }
-        //     })
-        // inProgress.sort((a, b) => {
-        //     if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        //         return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-        //     }
-
-
-        //     if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        //         return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-        //     }
-        //     return 0;
-        // })
-        // inProgress.push(...shipped);
-        // return inProgress;
     }
 
     const formatDateString = (dateString) => {
-        const newDate = dateString.split("T")[0];
+        const testDate = new Date(dateString);
         return (
-            newDate.split("-")[2] + "." +
-            newDate.split("-")[1] + "." +
-            newDate.split("-")[0]
+            ((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
+            + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
+            + '.' + testDate.getFullYear()
         );
+        // const newDate = dateString.split("T")[0];
+        // return (
+        //     newDate.split("-")[2] + "." +
+        //     newDate.split("-")[1] + "." +
+        //     newDate.split("-")[0]
+        // );
     }
 
     return (
