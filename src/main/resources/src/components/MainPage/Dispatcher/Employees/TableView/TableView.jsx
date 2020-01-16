@@ -5,7 +5,7 @@ import './TableView.scss';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'dateCreated',
+        curSort: 'id',
         date: 'desc'
     })
 
@@ -64,7 +64,10 @@ const TableView = (props) => {
         <div className="tableview_employees">
             <div className="tableview_employees__row tableview_employees__row--header">
                 <div className="tableview_employees__col">ФИО</div>
-                <div className="tableview_employees__col">Дата рождения</div>
+                <div className="tableview_employees__col">
+                    <span>Дата рождения</span>
+                    <img name="id" className="tableview_employees__img" onClick={changeSortOrder} src={sortIcon} />
+                </div>
                 <div className="tableview_employees__col">Гражданство</div>
                 <div className="tableview_employees__col">Цех</div>
                 <div className="tableview_employees__col">Должность</div>

@@ -114,7 +114,7 @@
       max-width: 125px;
 
       .tableview_products__action {
-        font-size: 90%;
+        font-size: 85%;
         width: 75%;
         border-radius: 5px;
         margin-bottom: 5px;
@@ -189,6 +189,10 @@
         .tableview__color_option {
           font-size: 110%;
         }
+      }
+
+      .tableview_products__action {
+        font-size: 95%;
       }
 
       &:first-of-type {

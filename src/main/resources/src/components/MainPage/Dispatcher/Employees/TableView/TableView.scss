@@ -11,7 +11,7 @@
 
   &__img {
     width: 15px;
-    margin-left: 5px;
+    // margin-left: 5px;
     cursor: pointer;
   }
 
@@ -57,10 +57,14 @@
         flex: 0 1 20%;
       }
 
+      //Дата рождения
       &:nth-child(2) {
         flex: 0 1 12.5%;
-        max-width: 80px;
+        max-width: 110px;
         word-break: normal;
+        span {
+          width: calc(100% - 30px);
+        }
       }
 
       &:nth-child(3) {
@@ -71,13 +75,15 @@
         flex: 0 1 10%;
       }
 
+      //Должность
       &:nth-child(5) {
         // flex: 0 1 5%;
-        flex: 0 1 10%;
+        flex: 0 1 15%;
       }
 
+      //Комментарий
       &:nth-child(6) {
-        flex: 0 1 25%;
+        flex: 0 1 15%;
       }
       &:nth-child(7) {
         flex: 0 1 10%;
