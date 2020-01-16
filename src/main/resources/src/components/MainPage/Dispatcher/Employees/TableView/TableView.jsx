@@ -66,7 +66,7 @@ const TableView = (props) => {
                 <div className="tableview_employees__col">ФИО</div>
                 <div className="tableview_employees__col">
                     <span>Дата рождения</span>
-                    <img name="id" className="tableview_employees__img" onClick={changeSortOrder} src={sortIcon} />
+                    <img name="yearOfBirth" className="tableview_employees__img" onClick={changeSortOrder} src={sortIcon} />
                 </div>
                 <div className="tableview_employees__col">Гражданство</div>
                 <div className="tableview_employees__col">Цех</div>
