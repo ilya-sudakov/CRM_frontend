@@ -13,6 +13,7 @@ const InputUser = (props) => {
                         onChange={props.handleUserChange}
                         searchPlaceholder={props.searchPlaceholder}
                         defaultValue={props.defaultValue}
+                        readOnly={props.readOnly}
                     />
                 </div>
             </div>

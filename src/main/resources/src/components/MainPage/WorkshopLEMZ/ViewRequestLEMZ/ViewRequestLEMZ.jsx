@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
+import pdfMake from 'pdfmake';
+import font from 'pdfmake/build/vfs_fonts';
 import './ViewRequestLEMZ.scss';
 import { getRequestLEMZById } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
@@ -15,6 +17,7 @@ const ViewRequestLEMZ = (props) => {
         shippingDate: "",
         comment: ""
     })
+    const [itemId, setItemId] = useState(0);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -28,6 +31,7 @@ const ViewRequestLEMZ = (props) => {
             alert('Неправильный индекс заявки!');
             props.history.push("/workshop-lemz");
         } else {
+            setItemId(id);
             getRequestLEMZById(id)
                 .then(res => res.json())
                 .then(oldRequest => {
@@ -48,6 +52,92 @@ const ViewRequestLEMZ = (props) => {
                 })
         }
     }, [])
+
+    const getPdfText = () => {
+        let testDate = new Date(requestInputs.date);
+        var dd = {
+            info: {
+                title: 'Заявка ЛЭМЗ №' + itemId
+            },
+            content: [
+                {
+                    text: 'Заявка ЛЭМЗ №' + itemId + '\n',
+                    alignment: 'center',
+                    style: 'header',
+                },
+                {
+                    text: [
+                        {
+                            text: 'Дата: ',
+                            style: 'subheader'
+                        },
+                        {
+                            text: (((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
+                                + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
+                                + '.' + testDate.getFullYear()) + '\n' + '\n',
+                            style: 'regularText'
+                        }
+                    ],
+                },
+                {
+                    text: 'Продукция: ',
+                    style: 'subheader',
+                    margin: [0, 0, 0, 5],
+                },
+                {
+                    ol: requestInputs.requestProducts.map((item) => {
+                        return {
+                            text: 'Название: ' + item.name + ', Кол-во: ' + item.quantity + ', Фасовка: ' + item.packaging,
+                            margin: [0, 0, 0, 5]
+                        }
+                    })
+                },
+                ('\n'),
+                {
+                    text: [
+                        {
+                            text: 'Кодовое слово: ',
+                            style: 'subheader'
+                        },
+                        {
+                            text: requestInputs.codeWord,
+                            style: 'regularText'
+                        }
+                    ]
+                },
+            ],
+            styles: {
+                header: {
+                    fontSize: 22,
+                    bold: true
+                },
+                subheader: {
+                    fontSize: 18,
+                    bold: true
+                },
+                regularText: {
+                    fontSize: 16
+                },
+            }
+        }
+        pdfMake.vfs = font.pdfMake.vfs;
+        return dd;
+    }
+
+    const PrintRequest = (event) => {
+        event.preventDefault();
+        let dd = getPdfText();
+        pdfMake.createPdf(dd).print();
+    }
+
+    const DownloadRequest = (event) => {
+        event.preventDefault();
+        let dd = getPdfText();
+        let testDate = new Date(requestInputs.date);
+        pdfMake.createPdf(dd).download('заявкаЛЭМЗ№' + itemId + '_' + (((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
+            + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
+            + '.' + testDate.getFullYear()) + '.pdf');
+    }
 
     return (
         <div className="view_request_lemz">
@@ -118,7 +208,11 @@ const ViewRequestLEMZ = (props) => {
                             readOnly />
                     </div>
                 </div>
-                <input className="view_request_lemz__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                <div className="view_request_lemz__buttons">
+                    <input className="view_request_lemz__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                    <input className="view_request_lemz__submit view_request_lemz__submit--inverted" type="submit" onClick={PrintRequest} value="Печать" />
+                    <input className="view_request_lemz__submit view_request_lemz__submit--inverted" type="submit" onClick={DownloadRequest} value="Скачать" />
+                </div>
             </form>
         </div>
     );

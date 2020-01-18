@@ -42,12 +42,12 @@
       }
 
       &:nth-child(6) {
-        flex: 0 1 9%;
-        max-width: 9%;
+        flex: 0 1 10%;
+        max-width: 10%;
       }
 
       &:nth-child(7) {
-        flex: 0 1 9%;
+        flex: 0 1 10%;
       }
 
       &:nth-child(8) {
@@ -128,14 +128,14 @@
       }
 
       &:nth-child(4) {
-        flex: 0 1 9%;
-        max-width: 9%;
+        flex: 0 1 10%;
+        max-width: 10%;
       }
 
       &:nth-child(5) {
         // flex: 0 1 10%;
-        flex: 0 1 9%;
-        max-width: 9%;
+        flex: 0 1 10%;
+        max-width: 10%;
       }
 
       &:nth-child(6) {
@@ -197,6 +197,8 @@
         border-radius: 5px;
         margin-bottom: 5px;
         padding: 5px 10px;
+        border: 0;
+        outline: none;
         cursor: pointer;
         color: $secondary-text-color;
         background-color: $button__background--inverted;

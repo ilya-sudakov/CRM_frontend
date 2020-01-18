@@ -77,7 +77,7 @@ const TableView = (props) => {
                 <div className="tableview_general_tasks__col">Действия</div>
             </div>
             {sortTasks(props.data).map((task, task_id) => (
-                <div key={task_id} className={"tableview_general_tasks__row " + (task.id % 2 === 0 ? "tableview_general_tasks__row--even" : "tableview_general_tasks__row--odd")}>
+                (props.userHasAccess(['ROLE_ADMIN']) || props.userData.username === task.responsible) && <div key={task_id} className={"tableview_general_tasks__row " + (task.id % 2 === 0 ? "tableview_general_tasks__row--even" : "tableview_general_tasks__row--odd")}>
                     <div className="tableview_general_tasks__col">{task.id}</div>
                     <div className="tableview_general_tasks__col">{formatDateString(task.dateCreated)}</div>
                     <div className="tableview_general_tasks__col">{task.description}</div>
@@ -86,7 +86,7 @@ const TableView = (props) => {
                     <div className="tableview_general_tasks__col">{task.status}</div>
                     <div className="tableview_general_tasks__actions">
                         {/* <Link to={"/task/view/" + task.id} className="tableview_general_tasks__action">Просмотр</Link> */}
-                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']) && <Link to={"/dispatcher/general-tasks/edit/" + task.id} className="tableview_general_tasks__action">Редактировать</Link>}
+                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP']) && <Link to={"/dispatcher/general-tasks/edit/" + task.id} className="tableview_general_tasks__action">Редактировать</Link>}
                         {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={task.id} className="tableview_general_tasks__action" onClick={props.deleteItem}>Удалить</div>}
                     </div>
                 </div>

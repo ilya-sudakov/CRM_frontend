@@ -42,6 +42,7 @@ const GeneralTasks = (props) => {
             <TableView
                 data={generalTasks}
                 searchQuery={searchQuery}
+                userData={props.userData}
                 userHasAccess={props.userHasAccess}
                 deleteItem={deleteItem}
             />

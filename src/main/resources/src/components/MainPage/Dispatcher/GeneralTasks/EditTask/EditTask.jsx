@@ -23,14 +23,14 @@ const EditTask = (props) => {
         description: false,
         responsible: false,
         dateControl: false,
-        status: false
+        // status: false
     })
     const [validInputs, setValidInputs] = useState({
         dateCreated: true,
         description: true,
         responsible: true,
         dateControl: true,
-        status: true
+        // status: true
     })
     const [showError, setShowError] = useState(false);
 
@@ -64,7 +64,7 @@ const EditTask = (props) => {
             description: false,
             responsible: false,
             dateControl: false,
-            status: false
+            // status: false
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -169,6 +169,7 @@ const EditTask = (props) => {
                     name="dateCreated"
                     selected={Date.parse(taskInputs.dateCreated)}
                     errorsArr={taskErrors}
+                    readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
                     setErrorsArr={setTaskErrors}
                     handleDateChange={(dateCreated) => {
                         validateField("dateCreated", dateCreated);
@@ -188,6 +189,7 @@ const EditTask = (props) => {
                     error={taskErrors.description}
                     name="description"
                     handleInputChange={handleInputChange}
+                    readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
                     errorsArr={taskErrors}
                     setErrorsArr={setTaskErrors}
                     defaultValue={taskInputs.description}
@@ -197,6 +199,7 @@ const EditTask = (props) => {
                     required
                     error={taskErrors.responsible}
                     defaultValue={taskInputs.responsible}
+                    readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
                     name="responsible"
                     options={users}
                     handleUserChange={handleResponsibleChange}
@@ -210,6 +213,7 @@ const EditTask = (props) => {
                     error={taskErrors.dateControl}
                     name="dateControl"
                     selected={Date.parse(taskInputs.dateControl)}
+                    readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
                     errorsArr={taskErrors}
                     setErrorsArr={setTaskErrors}
                     handleDateChange={(dateControl) => {
@@ -226,11 +230,7 @@ const EditTask = (props) => {
                 />
                 <InputText
                     inputName="Состояние"
-                    required
-                    error={taskErrors.status}
                     name="status"
-                    errorsArr={taskErrors}
-                    setErrorsArr={setTaskErrors}
                     handleInputChange={handleInputChange}
                     defaultValue={taskInputs.status}
                 />

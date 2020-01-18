@@ -87,6 +87,10 @@
         max-width: 9%;
       }
 
+      &:nth-child(8) {
+        flex: 0 1 20%;
+      }
+
       &:nth-child(5) {
         // flex: 0 1 10%;
         flex: 0 1 9%;
@@ -223,6 +227,9 @@
       &:nth-child(9) {
         flex: 0 1 8%;
         max-width: 65px;
+      }
+      &:nth-child(10) {
+        flex: 0 1 20%;
       }
 
       &:last-child {

@@ -25,19 +25,19 @@
     top: calc(-6px); //test
     .tableview_requests_lepsari__col {
       &:nth-child(3) {
-        flex: 0 1 calc(24% + 0.75 * 0%);
+        flex: 0 1 calc(24%);
         justify-content: center;
-        padding: 0px 0px;
+        padding: 0;
       }
 
       &:nth-child(4) {
         // flex: 0 1 10%;
-        flex: 0 1 calc(8% + 0.125 * 0%);
+        flex: 0 1 calc(8%);
         padding: 0;
       }
       &:nth-child(5) {
         // flex: 0 1 10%;
-        flex: 0 1 calc(8% + 0.125 * 0%);
+        flex: 0 1 calc(8%);
         padding: 0;
       }
 
@@ -58,6 +58,10 @@
       &:nth-child(9) {
         flex: 0 1 8%;
         max-width: 65px;
+      }
+
+      &:nth-child(10) {
+        flex: 0 1 20%;
       }
 
       &:last-child {
@@ -126,6 +130,7 @@
         max-width: 65px;
       }
 
+      //Продукция
       &:nth-child(3) {
         flex: 0 1 40%;
         padding: 0px;
@@ -153,8 +158,9 @@
         max-width: 65px;
       }
 
+      //Комментарий
       &:nth-child(8) {
-        
+        flex: 0 1 20%;
       }
 
       &:last-child {
@@ -273,7 +279,7 @@
     }
   }
 
-  .tableview_requests_lepsari__row--status_priority{
+  .tableview_requests_lepsari__row--status_priority {
     background-color: #e65252;
     &:hover {
       background-color: darken(#e65252, 5%);

@@ -89,6 +89,8 @@ const TableView = (props) => {
         // );
     }
 
+    
+
     useEffect(() => {
 
     }, [props.data])

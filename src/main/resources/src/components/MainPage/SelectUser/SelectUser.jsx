@@ -63,19 +63,19 @@ const SelectUser = (props) => {
     return (
         <div className="select_user">
             {search().length != 0 && <div className="select_user__overlay select_user__overlay--hidden" onClick={clickOverlay}></div>}
-            {!props.readOnly &&
-                <input
-                    type="text"
-                    className="select_user__input"
-                    onChange={handleInputChange}
-                    onClick={!props.readOnly ? clickOnInput : null}
-                    value={selectedUser}
-                    placeholder={props.searchPlaceholder}
-                    ref={myRef}
-                    readOnly={props.readOnly}
-                >
 
-                </input>}
+            <input
+                type="text"
+                className="select_user__input"
+                onChange={handleInputChange}
+                onClick={!props.readOnly ? clickOnInput : null}
+                value={!props.readOnly ? selectedUser : props.defaultValue}
+                placeholder={props.searchPlaceholder}
+                ref={myRef}
+                readOnly={props.readOnly}
+            >
+
+            </input>
             {props.options && <div className={"select_user__options select_user__options--hidden" + ((search().length == 0) ? " select_user__options--hidden" : '')}>
                 {search().map((item, index) => (
                     <div id={item.id} optionId={index} name={item.username} className="select_user__option_item" onClick={clickOnOption}>

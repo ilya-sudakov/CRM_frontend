@@ -12,6 +12,7 @@ const InputText = (props) => {
                         autoComplete="off"
                         onChange={props.handleInputChange}
                         defaultValue={props.defaultValue}
+                        readOnly={props.readOnly}
                     />
                 </div>
             </div>

@@ -21,14 +21,14 @@ const NewTask = (props) => {
         description: false,
         responsible: false,
         dateControl: false,
-        status: false
+        // status: false
     })
     const [validInputs, setValidInputs] = useState({
         dateCreated: true,
         description: false,
         responsible: false,
         dateControl: true,
-        status: false
+        // status: false
     })
     const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
@@ -59,16 +59,10 @@ const NewTask = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            name: false,
-            lastName: false,
-            middleName: false,
-            yearOfBirth: false,
-            citizenship: false,
-            position: false,
-            workshop: false,
-            // passportScan1: false,
-            // comment: false,
-            relevance: false
+            dateCreated: false,
+            description: false,
+            responsible: false,
+            dateControl: false,
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -203,12 +197,12 @@ const NewTask = (props) => {
                 />
                 <InputText
                     inputName="Состояние"
-                    required
-                    error={taskErrors.status}
+                    // required
+                    // error={taskErrors.status}
                     name="status"
                     handleInputChange={handleInputChange}
-                    errorsArr={taskErrors}
-                    setErrorsArr={setTaskErrors}
+                    // errorsArr={taskErrors}
+                    // setErrorsArr={setTaskErrors}
                 />
                 {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="new_general_task__item">
                     <div className="new_general_task__input_name">Видимость*</div>

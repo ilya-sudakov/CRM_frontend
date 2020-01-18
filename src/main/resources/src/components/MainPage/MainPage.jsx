@@ -31,6 +31,10 @@ class MainPage extends React.Component {
             : overlay.classList.add("main_page__overlay--hidden");
     }
 
+    componentDidMount() {
+        // console.log(this.props.userData);
+    }
+
     render() {
         return (
             <div className="main_page">
@@ -155,6 +159,7 @@ class MainPage extends React.Component {
                                 <PrivateRoute
                                     exact path="/dispatcher/general-tasks"
                                     component={GeneralTasks}
+                                    userData={this.props.userData}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP']}
                                 />
@@ -168,7 +173,7 @@ class MainPage extends React.Component {
                                     path="/dispatcher/general-tasks/edit/"
                                     component={EditTask}
                                     userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP']}
                                 />
                                 <PrivateRoute
                                     exact path="/dispatcher/employees"

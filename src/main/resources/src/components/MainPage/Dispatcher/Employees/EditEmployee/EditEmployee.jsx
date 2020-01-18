@@ -257,6 +257,8 @@ const EditEmployee = (props) => {
                             <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
                             <option value="ЦехЛепсари">ЦехЛепсари</option>
                             <option value="ЦехЛиговский">ЦехЛиговский</option>
+                            <option value="Офис">Офис</option>
+                            <option value="Уволенные">Уволенные</option>
                         </select>
                     </div>
                 </div>
