@@ -256,7 +256,7 @@ const EditRequestLEMZ = (props) => {
                     showError={showError}
                     setShowError={setShowError}
                 />
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputDate
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputDate
                     inputName="Дата заявки"
                     required
                     error={requestErrors.date}
@@ -265,9 +265,10 @@ const EditRequestLEMZ = (props) => {
                     handleDateChange={handleDateChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
+                    readOnly={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />
                 }
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputProducts
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputProducts
                     inputName="Продукция"
                     required
                     options
@@ -277,8 +278,9 @@ const EditRequestLEMZ = (props) => {
                     error={requestErrors.requestProducts}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
+                    workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />}
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputText
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputText
                     inputName="Кодовое слово"
                     required
                     error={requestErrors.codeWord}
@@ -287,8 +289,9 @@ const EditRequestLEMZ = (props) => {
                     handleInputChange={handleInputChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
+                    readOnly={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />}
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputUser
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputUser
                     inputName="Ответственный"
                     required
                     error={requestErrors.responsible}
@@ -299,6 +302,7 @@ const EditRequestLEMZ = (props) => {
                     searchPlaceholder="Введите имя пользователя для поиска..."
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
+                    readOnly={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />}
                 <div className="edit_request_lemz__item">
                     <div className="edit_request_lemz__input_name">Статус*</div>
@@ -312,6 +316,7 @@ const EditRequestLEMZ = (props) => {
                             <option>Материалы</option>
                             <option>Ожидание</option>
                             <option>В производстве</option>
+                            <option>Частично готово</option>
                             <option>Готово</option>
                             <option>Завершено</option>
                             <option>Отгружено</option>

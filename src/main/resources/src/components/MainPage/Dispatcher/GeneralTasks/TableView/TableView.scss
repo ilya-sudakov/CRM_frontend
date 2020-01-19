@@ -24,7 +24,7 @@
   }
 
   &__row--header {
-    font-size: 80%!important;
+    font-size: 80% !important;
     position: sticky; //test
     top: calc(-6px); //test
     word-break: break-all;
@@ -83,14 +83,29 @@
       &:nth-child(6) {
         flex: 0 1 15%;
       }
+
+      &:nth-child(7) {
+        width: 10%;
+        max-width: 100px;
+        padding: 5px 5pxpx;
+        flex-direction: column;
+      }
       &:last-child {
-        flex: 0 1 10%;
+        flex: 0 1 12%;
         border-right: none;
       }
     }
 
+    .tableview_general_tasks__status_select {
+      width: 100%;
+      padding: 5px 0px;
+      font-size: 90%;
+      border-radius: 5px;
+      outline: 0;
+    }
+
     .tableview_general_tasks__actions {
-      flex: 0 1 10%;
+      flex: 0 1 12%;
       display: flex;
       padding: 10px 5px;
       flex-direction: column;
@@ -151,6 +166,62 @@
 
     &:hover {
       background-color: #dbdbdb;
+    }
+  }
+
+  .tableview_general_tasks__row--status_problem {
+    background-color: #c48681;
+    &:hover {
+      background-color: darken(#c48681, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_materials {
+    background-color: #d4b77e;
+    &:hover {
+      background-color: darken(#d4b77e, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_waiting {
+    background-color: #9ec2b6;
+    &:hover {
+      background-color: darken(#9ec2b6, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_in_production {
+    background-color: #87a8b6;
+    &:hover {
+      background-color: darken(#87a8b6, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_ready {
+    background-color: #5ea76e;
+    &:hover {
+      background-color: darken(#5ea76e, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_shipped {
+    background-color: #95ad7c;
+    &:hover {
+      background-color: darken(#95ad7c, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_completed {
+    background-color: #bed6c3;
+    &:hover {
+      background-color: darken(#bed6c3, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_priority {
+    background-color: #e65252;
+    &:hover {
+      background-color: darken(#e65252, 5%);
     }
   }
 }

@@ -53,7 +53,13 @@ class MainPage extends React.Component {
                     <Suspense fallback={PageLoading}>
                         <div className="main_page__activity_panel">
                             <Switch>
-                                <Route exact path="/" component={GeneralPage} />
+                                {/* <Route exact path="/" component={GeneralPage} /> */}
+                                <PrivateRoute
+                                    exact path="/"
+                                    component={GeneralPage}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_WORKSHOP", "ROLE_MANAGER", "ROLE_DISPATCHER", "ROLE_ENGINEER"]}
+                                />
                                 <PrivateRoute
                                     exact path="/profile/users/new"
                                     component={NewUser}
@@ -124,7 +130,7 @@ class MainPage extends React.Component {
                                     exact path="/workshop-lemz/new"
                                     component={NewRequestLEMZ}
                                     userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                                 />
                                 <PrivateRoute
                                     path="/workshop-lemz/edit/"

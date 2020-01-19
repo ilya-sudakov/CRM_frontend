@@ -99,6 +99,7 @@ const TableView = (props) => {
                 <div className="tableview_products__col">Название</div>
                 <div className="tableview_products__col">Вес</div>
                 <div className="tableview_products__col">Упаковка</div>
+                <div className="tableview_products__col">Место производства</div>
                 <div className="tableview_products__col">Комментарий</div>
                 <div className="tableview_products__col">Действия</div>
             </div>
@@ -111,6 +112,7 @@ const TableView = (props) => {
                         <div className="tableview_products__col">{category.id}</div>
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col">{category.category}</div>
+                        <div className="tableview_products__col"></div>
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col"></div>
@@ -129,6 +131,7 @@ const TableView = (props) => {
                                 <div className="tableview_products__col">{product.name}</div>
                                 <div className="tableview_products__col">{product.weight}</div>
                                 <div className="tableview_products__col">{product.packaging}</div>
+                                <div className="tableview_products__col">{product.productionLocation}</div>
                                 <div className="tableview_products__col">{product.comment}</div>
                                 <div className="tableview_products__actions">
                                     <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>

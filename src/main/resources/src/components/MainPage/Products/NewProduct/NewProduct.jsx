@@ -14,6 +14,7 @@ const NewProduct = (props) => {
         packaging: null,
         photo: "",
         unit: "шт.",
+        productionLocation: null,
         weight: null,
     })
     const [productErrors, setProductErrors] = useState({
@@ -219,6 +220,11 @@ const NewProduct = (props) => {
                 <InputText
                     inputName="Комментарий"
                     name="comment"
+                    handleInputChange={handleInputChange}
+                />
+                <InputText
+                    inputName="Место производства"
+                    name="productionLocation"
                     handleInputChange={handleInputChange}
                 />
                 <div className="new_product__item">

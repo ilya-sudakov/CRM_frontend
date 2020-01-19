@@ -44,6 +44,7 @@
       &:nth-child(6) {
         flex: 0 1 9%;
         max-width: 9%;
+        padding: 15px 5px;
       }
 
       &:nth-child(7) {
@@ -52,7 +53,8 @@
       }
 
       &:nth-child(8) {
-        max-width: 80px;
+        max-width: 100px;
+        padding: 0;
       }
 
       &:nth-child(9) {
@@ -92,6 +94,23 @@
         display: flex;
         width: 100%;
         border-bottom: 1px solid #cccccc;
+        transition: 0.2s ease-in-out;
+
+        &:first-child {
+          font-weight: bold;
+          .tableview_requests_lepsari__sub_col:first-child {
+            flex: 0 1 100%;
+            border: 0;
+          }
+          .tableview_requests_lepsari__sub_col:nth-child(2) {
+            flex: 0 1 0%;
+            border: 0;
+          }
+          .tableview_requests_lepsari__sub_col:nth-child(3) {
+            flex: 0 1 0%;
+            border: 0;
+          }
+        }
 
         &:last-child {
           border: 0;
@@ -149,8 +168,23 @@
         max-width: 9%;
       }
 
+      //статус
       &:nth-child(6) {
-        max-width: 80px;
+        max-width: 100px;
+        padding: 0px 0px;
+        flex-direction: column;
+        .tableview_requests_lepsari__sub_row {
+          // padding: 5px;
+          .tableview_requests_lepsari__sub_col {
+            flex: 0 1 100%;
+            min-width: 100%;
+            border-right: 0;
+          }
+        }
+        .tableview_requests_lepsari__status_select {
+          margin: 0 auto;
+          max-width: 80px;
+        }
       }
 
       &:nth-child(7) {
@@ -170,7 +204,7 @@
 
     .tableview_requests_lepsari__status_select {
       width: 100%;
-      padding: 5px 0px;
+      padding: 2.5px 0px;
       font-size: 90%;
       border-radius: 5px;
       outline: 0;
@@ -188,7 +222,7 @@
       .tableview_requests_lepsari__action {
         font-size: 90%;
         width: 75%;
-        border-radius: 5px;
+        border-radius: 2.5px;
         margin-bottom: 5px;
         padding: 5px 10px;
         cursor: pointer;

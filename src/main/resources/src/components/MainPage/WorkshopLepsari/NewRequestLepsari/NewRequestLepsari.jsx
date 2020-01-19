@@ -254,6 +254,7 @@ const NewRequestLepsari = (props) => {
                             <option value="В производстве">В производстве</option>
                             <option value="Готово">Готово</option>
                             <option value="Завершено">Завершено</option>
+                            <option value="Частично готово">Частично готово</option>
                             <option value="Отгружено">Отгружено</option>
                             <option value="Приоритет">Приоритет</option>
                         </select>

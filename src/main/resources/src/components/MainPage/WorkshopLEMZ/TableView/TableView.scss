@@ -37,9 +37,26 @@
         display: flex;
         width: 100%;
         border-bottom: 1px solid #cccccc;
+        transition: 0.2s ease-in-out;
 
         &:last-child {
           border: 0;
+        }
+
+        &:first-child {
+          font-weight: bold;
+          .tableview_requests_LEMZ__sub_col:first-child {
+            flex: 0 1 100%;
+            border: 0;
+          }
+          .tableview_requests_LEMZ__sub_col:nth-child(2) {
+            flex: 0 1 0%;
+            border: 0;
+          }
+          .tableview_requests_LEMZ__sub_col:nth-child(3) {
+            flex: 0 1 0%;
+            border: 0;
+          }
         }
 
         .tableview_requests_LEMZ__sub_col {
@@ -100,7 +117,7 @@
       //статус
       &:nth-child(6) {
         max-width: 100px;
-        padding: 5px 0px;
+        padding: 0px 0px;
         flex-direction: column;
         .tableview_requests_LEMZ__sub_row {
           // padding: 5px;

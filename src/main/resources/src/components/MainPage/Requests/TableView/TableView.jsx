@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 import { editRequestStatus } from '../../../../utils/RequestsAPI/Requests.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -74,23 +75,6 @@ const TableView = (props) => {
         })
     }
 
-    const formatDateString = (dateString) => {
-        const testDate = new Date(dateString);
-        return (
-            ((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
-            + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
-            + '.' + testDate.getFullYear()
-        );
-        // const newDate = dateString.split("T")[0];
-        // return (
-        //     newDate.split("-")[2] + "." +
-        //     newDate.split("-")[1] + "." +
-        //     newDate.split("-")[0]
-        // );
-    }
-
-    
-
     useEffect(() => {
 
     }, [props.data])
@@ -122,6 +106,7 @@ const TableView = (props) => {
                         request.status === "Ожидание" && "tableview_requests__row--status_waiting" ||
                         request.status === "В производстве" && "tableview_requests__row--status_in_production" ||
                         request.status === "Готово" && "tableview_requests__row--status_ready" ||
+                        request.status === "Частично готово" && "tableview_requests__row--status_ready" ||
                         request.status === "Отгружено" && "tableview_requests__row--status_shipped" ||
                         request.status === "Приоритет" && "tableview_requests__row--status_priority" ||
                         request.status === "Завершено" && "tableview_requests__row--status_completed"
@@ -140,15 +125,6 @@ const TableView = (props) => {
                             )
                         })}
                     </div>
-                    {/* Корректный вывод но с ограничением по количеству символов в строке */}
-                    {/* <div className="tableview_requests__col">
-                        <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.products}</div></div>
-                        <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.products}</div></div>
-                    </div>
-                    <div className="tableview_requests__col">
-                        <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.quantity}</div></div>
-                        <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.quantity}</div></div>
-                    </div> */}
                     <div className="tableview_requests__col">{request.codeWord}</div>
                     <div className="tableview_requests__col">{request.responsible}</div>
                     <div className="tableview_requests__col">
@@ -163,20 +139,11 @@ const TableView = (props) => {
                             <option value="Ожидание">Ожидание</option>
                             <option value="В производстве">В производстве</option>
                             <option value="Готово">Готово</option>
+                            <option value="Частично готово">Частично готово</option>
                             <option value="Завершено">Завершено</option>
                             <option value="Отгружено">Отгружено</option>
                             <option value="Приоритет">Приоритет</option>
                         </select>
-                        {/* <select
-                            id={request.id}
-                            className="tableview_requests__status_select--color"
-                            defaultValue="Привет"
-                            // onChange={handleStatusChange}
-                        >
-                            <option value="red">Брак</option>
-                            <option value="green">Завершено</option>
-                            <option value="grey">В работе</option>
-                        </select> */}
                     </div>
                     <div className="tableview_requests__actions">
                         <Link to={"/requests/view/" + request.id} className="tableview_requests__action" >Просмотр</Link>

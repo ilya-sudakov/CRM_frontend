@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 import { editRequestLepsariStatus } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -75,21 +76,6 @@ const TableView = (props) => {
         })
     }
 
-    const formatDateString = (dateString) => {
-        const testDate = new Date(dateString);
-        return (
-            ((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
-            + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
-            + '.' + testDate.getFullYear()
-        );
-        // const newDate = dateString.split("T")[0];
-        // return (
-        //     newDate.split("-")[2] + "." +
-        //     newDate.split("-")[1] + "." +
-        //     newDate.split("-")[0]
-        // );
-    }
-
     useEffect(() => {
 
     }, [props.data])
@@ -116,67 +102,122 @@ const TableView = (props) => {
                 <div className="tableview_requests_lepsari__col">Действия</div>
             </div>
             {sortRequests(props.data).map((request, request_id) => (
-                <div key={request_id} className={"tableview_requests_lepsari__row " +
-                    (
-                        request.status === "Проблема" && "tableview_requests_lepsari__row--status_problem" ||
-                        request.status === "Материалы" && "tableview_requests_lepsari__row--status_materials" ||
-                        request.status === "Ожидание" && "tableview_requests_lepsari__row--status_waiting" ||
-                        request.status === "В производстве" && "tableview_requests_lepsari__row--status_in_production" ||
-                        request.status === "Готово" && "tableview_requests_lepsari__row--status_ready" ||
-                        request.status === "Отгружено" && "tableview_requests_lepsari__row--status_shipped" ||
-                        request.status === "Приоритет" && "tableview_requests_lepsari__row--status_priority" ||
-                        request.status === "Завершено" && "tableview_requests_lepsari__row--status_completed"
-                    )
-                }>
-                    <div className="tableview_requests_lepsari__col">{request.id}</div>
-                    <div className="tableview_requests_lepsari__col">{formatDateString(request.date)}</div>
-                    <div className="tableview_requests_lepsari__col">
-                        {request.lepsariProducts.map((item, index) => {
-                            return (
-                                <div className="tableview_requests_lepsari__sub_row" style={{ height: `calc(${100 / request.lepsariProducts.length}%)` }}>
-                                    <div className="tableview_requests_lepsari__sub_col">{item.name}</div>
-                                    <div className="tableview_requests_lepsari__sub_col">{item.packaging}</div>
-                                    <div className="tableview_requests_lepsari__sub_col">{item.quantity}</div>
+                <React.Fragment>
+                    <div key={request_id} className={"tableview_requests_lepsari__row " +
+                        (
+                            request.status === "Проблема" && "tableview_requests_lepsari__row--status_problem" ||
+                            request.status === "Материалы" && "tableview_requests_lepsari__row--status_materials" ||
+                            request.status === "Ожидание" && "tableview_requests_lepsari__row--status_waiting" ||
+                            request.status === "В производстве" && "tableview_requests_lepsari__row--status_in_production" ||
+                            request.status === "Готово" && "tableview_requests_lepsari__row--status_ready" ||
+                            request.status === "Частично готово" && "tableview_requests_lepsari__row--status_ready" ||
+                            request.status === "Отгружено" && "tableview_requests_lepsari__row--status_shipped" ||
+                            request.status === "Приоритет" && "tableview_requests_lepsari__row--status_priority" ||
+                            request.status === "Завершено" && "tableview_requests_lepsari__row--status_completed"
+                        )
+                    } style={{ 'min-height': `calc((2rem * (${request.lepsariProducts.length + 1})))` }}>
+                        <div className="tableview_requests_lepsari__col">{request.id}</div>
+                        <div className="tableview_requests_lepsari__col">{formatDateString(request.date)}</div>
+                        <div className="tableview_requests_lepsari__col">
+                            <div className="tableview_requests_lepsari__sub_row" style={{ height: `calc(${100 / (request.lepsariProducts.length)}%)` }}>
+                                <div className="tableview_requests_lepsari__sub_col">{request.codeWord + ' - ' + request.lepsariProducts[0].name}</div>
+                                <div className="tableview_requests_lepsari__sub_col"></div>
+                                <div className="tableview_requests_lepsari__sub_col"></div>
+                            </div>
+                            {request.lepsariProducts.map((item, index) => {
+                                return (
+                                    <div className={"tableview_requests_lepsari__sub_row " +
+                                        (
+                                            request.status === "Проблема" && "tableview_requests_lepsari__row--status_problem" ||
+                                            request.status === "Материалы" && "tableview_requests_lepsari__row--status_materials" ||
+                                            request.status === "Ожидание" && "tableview_requests_lepsari__row--status_waiting" ||
+                                            request.status === "В производстве" && "tableview_requests_lepsari__row--status_in_production" ||
+                                            request.status === "Готово" && "tableview_requests_lepsari__row--status_ready" ||
+                                            request.status === "Частично готово" && "tableview_requests_lepsari__row--status_ready" ||
+                                            request.status === "Отгружено" && "tableview_requests_lepsari__row--status_shipped" ||
+                                            request.status === "Приоритет" && "tableview_requests_lepsari__row--status_priority" ||
+                                            request.status === "Завершено" && "tableview_requests_lepsari__row--status_completed" ||
+                                            "tableview_requests_lepsari__row--status_completed"
+                                        )
+                                    } style={{ height: `calc(${100 / (request.lepsariProducts.length + 1)}%)` }}>
+                                        <div className="tableview_requests_lepsari__sub_col">{item.name}</div>
+                                        <div className="tableview_requests_lepsari__sub_col">{item.packaging}</div>
+                                        <div className="tableview_requests_lepsari__sub_col">{item.quantity}</div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className="tableview_requests_lepsari__col">{request.codeWord}</div>
+                        <div className="tableview_requests_lepsari__col">{request.responsible}</div>
+                        <div className="tableview_requests_lepsari__col">
+                            {/* <select
+                                id={request.id}
+                                className="tableview_requests_lepsari__status_select"
+                                defaultValue={request.status}
+                                onChange={handleStatusChange}
+                            >
+                                <option>Приоритет</option>
+                                <option>Проблема</option>
+                                <option>Материалы</option>
+                                <option>Ожидание</option>
+                                <option>В производстве</option>
+                                <option>Готово</option>
+                                <option>Частично готово</option>
+                                <option>Отгружено</option>
+                                <option>Завершено</option>
+                            </select> */}
+                            <div className="tableview_requests_lepsari__sub_row" style={{ height: `calc(${100 / (request.lepsariProducts.length + 1)}%)` }}>
+                                <div className="tableview_requests_lepsari__sub_col">
+                                    <select
+                                        id={request.id}
+                                        className="tableview_requests_lepsari__status_select"
+                                        defaultValue={request.status}
+                                        onChange={handleStatusChange}
+                                    >
+                                        <option>Приоритет</option>
+                                        <option>Проблема</option>
+                                        <option>Материалы</option>
+                                        <option>Ожидание</option>
+                                        <option>В производстве</option>
+                                        <option>Готово</option>
+                                        <option>Отгружено</option>
+                                        <option>Завершено</option>
+                                    </select>
                                 </div>
-                            )
-                        })}
+                            </div>
+                            {request.lepsariProducts.map((item, index) => {
+                                return (
+                                    <div className={"tableview_requests_lepsari__sub_row"} style={{ height: `calc(${100 / (request.lepsariProducts.length + 1)}%)` }}>
+                                        <div className="tableview_requests_lepsari__sub_col">
+                                            {/* <select
+                                                id={request.id}
+                                                className="tableview_requests_lepsari__status_select"
+                                                defaultValue={request.status}
+                                                onChange={handleStatusChange}
+                                            >
+                                                <option>Приоритет</option>
+                                                <option>Проблема</option>
+                                                <option>Материалы</option>
+                                                <option>Ожидание</option>
+                                                <option>В производстве</option>
+                                                <option>Готово</option>
+                                                <option>Отгружено</option>
+                                                <option>Завершено</option>
+                                            </select> */}
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        <div className="tableview_requests_lepsari__col">{request.shippingDate && formatDateString(request.shippingDate)}</div>
+                        <div className="tableview_requests_lepsari__col">{request.comment}</div>
+                        <div className="tableview_requests_lepsari__actions">
+                            <Link to={"/workshop-lepsari/view/" + request.id} className="tableview_requests_lepsari__action" >Просмотр</Link>
+                            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/workshop-lepsari/edit/" + request.id} className="tableview_requests_lepsari__action">Редактировать</Link>}
+                            {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_lepsari__action" onClick={props.deleteItem}>Удалить</div>}
+                        </div>
                     </div>
-                    {/* Корректный вывод но с ограничением по количеству символов в строке */}
-                    {/* <div className="tableview_requests_lepsari__col">
-                        <div className="tableview_requests_lepsari__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_lepsari__subtext">{request.products}</div></div>
-                        <div className="tableview_requests_lepsari__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_lepsari__subtext">{request.products}</div></div>
-                    </div>
-                    <div className="tableview_requests_lepsari__col">
-                        <div className="tableview_requests_lepsari__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_lepsari__subtext">{request.quantity}</div></div>
-                        <div className="tableview_requests_lepsari__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_lepsari__subtext">{request.quantity}</div></div>
-                    </div> */}
-                    <div className="tableview_requests_lepsari__col">{request.codeWord}</div>
-                    <div className="tableview_requests_lepsari__col">{request.responsible}</div>
-                    <div className="tableview_requests_lepsari__col">
-                        <select
-                            id={request.id}
-                            className="tableview_requests_lepsari__status_select"
-                            defaultValue={request.status}
-                            onChange={handleStatusChange}
-                        >
-                            <option>Приоритет</option>
-                            <option>Проблема</option>
-                            <option>Материалы</option>
-                            <option>Ожидание</option>
-                            <option>В производстве</option>
-                            <option>Готово</option>
-                            <option>Отгружено</option>
-                            <option>Завершено</option>
-                        </select>
-                    </div>
-                    <div className="tableview_requests_lepsari__col">{request.shippingDate && formatDateString(request.shippingDate)}</div>
-                    <div className="tableview_requests_lepsari__col">{request.comment}</div>
-                    <div className="tableview_requests_lepsari__actions">
-                        <Link to={"/workshop-lepsari/view/" + request.id} className="tableview_requests_lepsari__action" >Просмотр</Link>
-                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/workshop-lepsari/edit/" + request.id} className="tableview_requests_lepsari__action">Редактировать</Link>}
-                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_lepsari__action" onClick={props.deleteItem}>Удалить</div>}
-                    </div>
-                </div>
+                </React.Fragment>
             ))}
         </div>
     )

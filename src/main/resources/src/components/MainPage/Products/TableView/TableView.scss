@@ -83,15 +83,19 @@
       }
 
       &:nth-child(4) {
-        flex: 0 1 17.5%;
+        flex: 0 1 10%;
       }
 
       &:nth-child(5) {
-        flex: 0 1 17.5%;
+        flex: 0 1 10%;
       }
 
       &:nth-child(6) {
-        flex: 0 1 10%;
+        flex: 0 1 15%;
+      }
+
+      &:nth-child(7) {
+        flex: 0 1 15%;
       }
 
       // &:nth-child(7) {
@@ -99,13 +103,13 @@
       // }
 
       &:last-child {
-        flex: 0 1 10%;
+        flex: 0 1 12%;
         border-right: none;
       }
     }
 
     .tableview_products__actions {
-      flex: 0 1 10%;
+      flex: 0 1 12%;
       display: flex;
       padding: 10px 5px;
       flex-direction: column;

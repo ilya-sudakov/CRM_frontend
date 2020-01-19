@@ -192,6 +192,7 @@ const EditProduct = (props) => {
                     inputName="Категория"
                     required
                     error={productErrors.category}
+                    defaultValue={productInputs.category}
                     name="category"
                     handleCategoryChange={handleCategoryChange}
                     errorsArr={productErrors}
@@ -238,8 +239,12 @@ const EditProduct = (props) => {
                     name="comment"
                     defaultValue={productInputs.comment}
                     handleInputChange={handleInputChange}
-                    errorsArr={productErrors}
-                    setErrorsArr={setProductErrors}
+                />
+                <InputText
+                    inputName="Место производства"
+                    name="productionLocation"
+                    defaultValue={productInputs.productionLocation}
+                    handleInputChange={handleInputChange}
                 />
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Фотография</div>

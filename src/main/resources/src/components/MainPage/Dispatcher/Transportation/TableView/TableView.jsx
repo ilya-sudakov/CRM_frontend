@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
+import { formatDateString } from '../../../../../utils/functions.jsx';
 import './TableView.scss';
 
 const TableView = (props) => {
@@ -39,21 +40,6 @@ const TableView = (props) => {
             }
             return 0;
         })
-    }
-
-    const formatDateString = (dateString) => {
-        const testDate = new Date(dateString);
-        return (
-            ((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
-            + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
-            + '.' + testDate.getFullYear()
-        );
-        // const newDate = dateString.split("T")[0];
-        // return (
-        //     newDate.split("-")[2] + "." +
-        //     newDate.split("-")[1] + "." +
-        //     newDate.split("-")[0]
-        // );
     }
 
     return (

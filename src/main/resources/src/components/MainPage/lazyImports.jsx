@@ -20,6 +20,14 @@ const GeneralPage = lazy(
     () => import('./GeneralPage/GeneralPage.jsx')
 );
 
+const AdminWorkspace = lazy(
+    () => import('./GeneralPage/AdminWorkspace/AdminWorkspace.jsx')
+)
+
+const Notifications = lazy(
+    () => import('./GeneralPage/Notifications/Notifications.jsx')
+)
+
 const newClient = lazy(
     () => import('./Clients/NewClient/NewClient.jsx')
 );
@@ -236,7 +244,7 @@ export {
     Clients, newClient, 
     Contracts, 
     Requests, NewRequest, EditRequest, ViewRequest, 
-    GeneralPage, 
+    GeneralPage, AdminWorkspace, Notifications,
     Products, NewProduct, ViewProduct, EditProduct, NewCategory, EditCategory,
     Users, EditUser, NewUser, 
     WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, 

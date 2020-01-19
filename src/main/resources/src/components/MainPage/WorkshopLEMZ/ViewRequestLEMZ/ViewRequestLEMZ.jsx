@@ -87,7 +87,9 @@ const ViewRequestLEMZ = (props) => {
                 {
                     ol: requestInputs.requestProducts.map((item) => {
                         return {
-                            text: 'Название: ' + item.name + ', Кол-во: ' + item.quantity + ', Фасовка: ' + item.packaging,
+                            text: [
+                                'Название: ' + item.name + ', Кол-во: ' + item.quantity + ', Фасовка: ' + item.packaging,
+                            ],
                             margin: [0, 0, 0, 5]
                         }
                     })

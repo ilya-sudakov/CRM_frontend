@@ -10,6 +10,7 @@ const ViewProduct = (props) => {
         group: "",
         category: "",
         unit: "",
+        productionLocation: "",
         packaging: "",
         comment: ""
     })
@@ -35,6 +36,7 @@ const ViewProduct = (props) => {
                         item: oldProduct.item,
                         weight: oldProduct.weight,
                         category: oldProduct.category,
+                        productionLocation: oldProduct.productionLocation,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
                         comment: oldProduct.comment
@@ -85,6 +87,12 @@ const ViewProduct = (props) => {
                     <div className="view_product__input_name">Упаковка</div>
                     <div className="view_product__input_field">
                         <input type="text" name="packaging" defaultValue={productInputs.packaging} readOnly />
+                    </div>
+                </div>
+                <div className="view_product__item">
+                    <div className="view_product__input_name">Место производства</div>
+                    <div className="view_product__input_field">
+                        <input type="text" name="productionLocation" defaultValue={productInputs.productionLocation} readOnly />
                     </div>
                 </div>
                 <div className="view_product__item">

@@ -256,7 +256,7 @@ const EditRequestLepsari = (props) => {
                     showError={showError}
                     setShowError={setShowError}
                 />
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputDate
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputDate
                     inputName="Дата заявки"
                     required
                     error={requestErrors.date}
@@ -265,9 +265,10 @@ const EditRequestLepsari = (props) => {
                     handleDateChange={handleDateChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
+                    readOnly={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />
                 }
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputProducts
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputProducts
                     inputName="Продукция"
                     required
                     options
@@ -277,8 +278,9 @@ const EditRequestLepsari = (props) => {
                     error={requestErrors.requestProducts}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
+                    workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />}
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputText
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputText
                     inputName="Кодовое слово"
                     required
                     error={requestErrors.codeWord}
@@ -287,8 +289,9 @@ const EditRequestLepsari = (props) => {
                     handleInputChange={handleInputChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
+                    readOnly={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />}
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <InputUser
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputUser
                     inputName="Ответственный"
                     required
                     error={requestErrors.responsible}
@@ -299,6 +302,7 @@ const EditRequestLepsari = (props) => {
                     searchPlaceholder="Введите имя пользователя для поиска..."
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
+                    readOnly={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />}
                 <div className="edit_request_lepsari__item">
                     <div className="edit_request_lepsari__input_name">Статус*</div>
@@ -313,6 +317,7 @@ const EditRequestLepsari = (props) => {
                             <option>Ожидание</option>
                             <option>В производстве</option>
                             <option>Готово</option>
+                            <option>Частично готово</option>
                             <option>Завершено</option>
                             <option>Отгружено</option>
                             <option>Приоритет</option>

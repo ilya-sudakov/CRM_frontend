@@ -5,6 +5,7 @@ import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from '../Products/TableView/TableView.jsx';
 import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.jsx';
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
+import ColorPicker from './ColorPicker/ColorPicker.jsx';
 
 const Select = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -149,14 +150,14 @@ const Select = (props) => {
     return (
         <div className="select">
             <div className="select__overlay select__overlay--hidden" onClick={clickOverlay}></div>
-            {!props.readOnly && <div className="select__searchbar">
+            {(!props.readOnly && !props.workshop) && <div className="select__searchbar">
                 <input
                     type="text"
                     className={props.error === true ? "select__input select__input--error" : "select__input"}
                     onChange={handleInputChange}
                     onClick={!props.readOnly ? clickOnInput : null}
                     placeholder={props.searchPlaceholder}
-                    readOnly={props.readOnly}
+                    readOnly={props.readOnly || props.workshop}
                 />
                 <button className="select__search_button" onClick={(e) => {
                     e.preventDefault();
@@ -221,9 +222,15 @@ const Select = (props) => {
                 {selected.map((item, index) => (
                     <div className="select__selected_row">
                         {/* <img className="select__selected_photo" src={item.product ? item.product.photo : null} alt="" /> */}
-                        <div className="select__selected_item" >
-                            {item.product ? item.product.name : item.name}
-                            {!props.readOnly && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
+                        <div className={"select__selected_item select__selected_item--" + (item.color ? item.color : "production")}>
+                            {/* {item.name} */}
+                            {!props.readOnly ? <ColorPicker
+                                defaultName={item.name}
+                                index={index}
+                                id={item.id}
+                                // loadData={props.loadData}
+                            /> : <div className="select__selected_name">{item.name}</div>}
+                            {(!props.readOnly && !props.workshop) && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
                         </div>
                         <div className="select__selected_quantity">
                             Кол-во{!props.readOnly && "*"}
@@ -249,7 +256,7 @@ const Select = (props) => {
                                 defaultValue={item.packaging}
                                 value={item.packaging}
                                 onChange={handleParamChange}
-                                readOnly={props.readOnly}
+                                readOnly={props.readOnly || props.workshop}
                             />
                         </div>
                     </div>

@@ -16,6 +16,7 @@ const InputProducts = (props) => {
                     setErrorsArr={props.setErrorsArr}
                     defaultValue={props.defaultValue}
                     readOnly={props.readOnly}
+                    workshop={props.workshop}
                 />
             </div>
         </div>
