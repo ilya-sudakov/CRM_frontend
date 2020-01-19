@@ -143,7 +143,7 @@ const EditRequestLepsari = (props) => {
                             return (deleted === true && deleteProductsToRequestLepsari(item.id));
                         })
                         Promise.all(productsArr)
-                            .then(() => props.history.push("/workshop-lepsari"))
+                            .then(() => props.history.push("/lepsari/workshop-lepsari"))
                     })
             })
             .catch(error => {
@@ -187,10 +187,10 @@ const EditRequestLepsari = (props) => {
 
     useEffect(() => {
         document.title = "Редактирование заявки Лепсари";
-        const id = props.history.location.pathname.split("/workshop-lepsari/edit/")[1];
+        const id = props.history.location.pathname.split("/lepsari/workshop-lepsari/edit/")[1];
         if (isNaN(Number.parseInt(id))) {
             alert('Неправильный индекс заявки!');
-            props.history.push("/workshop-lepsari");
+            props.history.push("/lepsari/workshop-lepsari");
         } else {
             setRequestId(id);
             getRequestLepsariById(id)
@@ -212,7 +212,7 @@ const EditRequestLepsari = (props) => {
                 .catch(error => {
                     console.log(error);
                     alert('Неправильный индекс заявки!');
-                    props.history.push("/workshop-lepsari");
+                    props.history.push("/lepsari/workshop-lepsari");
                 })
             getUsers()
                 .then(res => res.json())

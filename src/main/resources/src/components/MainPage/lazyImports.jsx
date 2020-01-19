@@ -244,6 +244,11 @@ const LEMZ = lazy(
     () => import('./LEMZ/LEMZ.jsx')
 )
 
+const Lepsari = lazy(
+    () => import('./Lepsari/Lepsari.jsx')
+)
+
+
 export {
     Clients, newClient, 
     Contracts, 
@@ -264,5 +269,5 @@ export {
     Work, NewWork, EditWork,
     WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari,
     Storage, NewStorage, EditStorage,
-    LEMZ
+    LEMZ, Lepsari
 };

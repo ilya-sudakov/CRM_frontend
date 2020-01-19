@@ -143,7 +143,7 @@ const EditRequestLEMZ = (props) => {
                             return (deleted === true && deleteProductsToRequestLEMZ(item.id));
                         })
                         Promise.all(productsArr)
-                            .then(() => props.history.push("/workshop-lemz"))
+                            .then(() => props.history.push("/lemz/workshop-lemz"))
                     })
             })
             .catch(error => {
@@ -187,10 +187,10 @@ const EditRequestLEMZ = (props) => {
 
     useEffect(() => {
         document.title = "Редактирование заявки ЛЭМЗ";
-        const id = props.history.location.pathname.split("/workshop-lemz/edit/")[1];
+        const id = props.history.location.pathname.split("/lemz/workshop-lemz/edit/")[1];
         if (isNaN(Number.parseInt(id))) {
             alert('Неправильный индекс заявки!');
-            props.history.push("/workshop-lemz");
+            props.history.push("/lemz/workshop-lemz");
         } else {
             setRequestId(id);
             getRequestLEMZById(id)
@@ -212,7 +212,7 @@ const EditRequestLEMZ = (props) => {
                 .catch(error => {
                     console.log(error);
                     alert('Неправильный индекс заявки!');
-                    props.history.push("/workshop-lemz");
+                    props.history.push("/lemz/workshop-lemz");
                 })
             getUsers()
                 .then(res => res.json())

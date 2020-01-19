@@ -23,15 +23,16 @@ const SideMenu = (props) => {
                         props.location.pathname.includes("/clients") ? "/clients/new"
                             : props.location.pathname.includes("/requests") ? "/requests/new"
                                 : props.location.pathname.includes("/products") ? "/products/new"
-                                    : props.location.pathname.includes("/workshop-lemz") ? "/workshop-lemz/new"
-                                        : props.location.pathname.includes("/workshop-lepsari") ? "/workshop-lepsari/new"
-                                            : props.location.pathname.includes("/workshop-storage") ? "/workshop-storage/new"
-                                                : props.location.pathname.includes("/profile/users") ? "/profile/users/new"
-                                                    : props.location.pathname.includes("/dispatcher/general-tasks") ? "/dispatcher/general-tasks/new"
-                                                        : props.location.pathname.includes("/dispatcher/employees") ? "/dispatcher/employees/new"
-                                                            : props.location.pathname.includes("/dispatcher/transportation") ? "/dispatcher/transportation/new"
-                                                                : props.location.pathname.includes("/work-list") ? "/work-list/new"
-                                                                    : ''
+                                    : props.location.pathname.includes("/workshop-lemz") ? "/lemz/workshop-lemz/new"
+                                        : props.location.pathname.includes("/workshop-lepsari") ? "/lepsari/workshop-lepsari/new"
+                                            : props.location.pathname.includes("/lemz/workshop-storage") ? "/lemz/workshop-storage/new"
+                                                : props.location.pathname.includes("/lepsari/workshop-storage") ? "/lepsari/workshop-storage/new"
+                                                    : props.location.pathname.includes("/profile/users") ? "/profile/users/new"
+                                                        : props.location.pathname.includes("/dispatcher/general-tasks") ? "/dispatcher/general-tasks/new"
+                                                            : props.location.pathname.includes("/dispatcher/employees") ? "/dispatcher/employees/new"
+                                                                : props.location.pathname.includes("/dispatcher/transportation") ? "/dispatcher/transportation/new"
+                                                                    : props.location.pathname.includes("/work-list") ? "/work-list/new"
+                                                                        : ''
                     }>
                         <span>{props.location.pathname.includes("/clients") ? "Добавить клиента"
                             : props.location.pathname.includes("/requests") ? "Добавить заявку"
@@ -86,19 +87,19 @@ const SideMenu = (props) => {
                 </div>
             }
             {
-                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']) && <div className={props.location.pathname.includes("/workshop-lemz") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
-                    <Link className="sidemenu__link" to="/workshop-lemz">Очередь производства ЛЭМЗ</Link>
-                    {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']) && <Link to="/workshop-lemz/new" className="sidemenu__addButton">
+                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']) && <div className={props.location.pathname.includes("/lemz/") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                    <Link className="sidemenu__link" to="/lemz/workshop-lemz">ЛЭМЗ</Link>
+                    {/* {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']) && <Link to="/workshop-lemz/new" className="sidemenu__addButton">
                         <img className="sidemenu__img" src={plusImg} />
-                    </Link>}
+                    </Link>} */}
                 </div>
             }
             {
-                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']) && <div className={props.location.pathname.includes("/workshop-lepsari") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
-                    <Link className="sidemenu__link" to="/workshop-lepsari">Очередь производства Лепсари</Link>
-                    {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']) && <Link to="/workshop-lepsari/new" className="sidemenu__addButton">
+                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']) && <div className={props.location.pathname.includes("/lepsari/") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
+                    <Link className="sidemenu__link" to="/lepsari/workshop-lepsari">Лепсари</Link>
+                    {/* {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']) && <Link to="/workshop-lepsari/new" className="sidemenu__addButton">
                         <img className="sidemenu__img" src={plusImg} />
-                    </Link>}
+                    </Link>} */}
                 </div>
             }
             {
@@ -141,14 +142,14 @@ const SideMenu = (props) => {
                     </Link>}
                 </div>
             }
-            {
+            {/* {
                 props.userHasAccess(['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <div className={props.location.pathname.includes("/workshop-storage") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
                     <Link className="sidemenu__link" to="/workshop-storage">Склад</Link>
                     {props.userHasAccess(['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <Link to="/workshop-storage/new" className="sidemenu__addButton">
                         <img className="sidemenu__img" src={plusImg} />
                     </Link>}
                 </div>
-            }
+            } */}
         </div>
     );
 };

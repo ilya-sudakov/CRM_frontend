@@ -32,7 +32,7 @@ const Storage = (props) => {
 
     return (
         <div className="storage">
-            <div className="storage__title">Склад</div>
+            {/* <div className="storage__title">Склад</div> */}
             <SearchBar
                 title="Поиск по складу"
                 placeholder="Введите артикул детали для поиска..."

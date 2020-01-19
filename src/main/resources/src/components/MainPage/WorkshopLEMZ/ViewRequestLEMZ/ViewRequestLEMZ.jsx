@@ -21,15 +21,15 @@ const ViewRequestLEMZ = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.history.push("/workshop-lemz");
+        props.history.push("/lemz/workshop-lemz");
     }
 
     useEffect(() => {
         document.title = "Просмотр заявки ЛЭМЗ";
-        const id = props.history.location.pathname.split("/workshop-lemz/view/")[1];
+        const id = props.history.location.pathname.split("/lemz/workshop-lemz/view/")[1];
         if (isNaN(Number.parseInt(id))) {
             alert('Неправильный индекс заявки!');
-            props.history.push("/workshop-lemz");
+            props.history.push("/lemz/workshop-lemz");
         } else {
             setItemId(id);
             getRequestLEMZById(id)
@@ -48,7 +48,7 @@ const ViewRequestLEMZ = (props) => {
                 .catch(error => {
                     console.log(error);
                     alert('Неправильный индекс заявки!');
-                    props.history.push("/workshop-lemz");
+                    props.history.push("/lemz/workshop-lemz");
                 })
         }
     }, [])

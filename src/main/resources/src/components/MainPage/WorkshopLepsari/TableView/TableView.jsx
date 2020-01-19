@@ -212,8 +212,8 @@ const TableView = (props) => {
                         <div className="tableview_requests_lepsari__col">{request.shippingDate && formatDateString(request.shippingDate)}</div>
                         <div className="tableview_requests_lepsari__col">{request.comment}</div>
                         <div className="tableview_requests_lepsari__actions">
-                            <Link to={"/workshop-lepsari/view/" + request.id} className="tableview_requests_lepsari__action" >Просмотр</Link>
-                            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/workshop-lepsari/edit/" + request.id} className="tableview_requests_lepsari__action">Редактировать</Link>}
+                            <Link to={"/lepsari/workshop-lepsari/view/" + request.id} className="tableview_requests_lepsari__action" >Просмотр</Link>
+                            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/lepsari/workshop-lepsari/edit/" + request.id} className="tableview_requests_lepsari__action">Редактировать</Link>}
                             {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_lepsari__action" onClick={props.deleteItem}>Удалить</div>}
                         </div>
                     </div>

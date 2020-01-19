@@ -2,72 +2,72 @@ import React, { Suspense } from 'react';
 import PrivateRoute from '../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import plusImg from '../../../../../../../assets/sidemenu/plus_icon.svg';
-import './LEMZ.scss';
+import './Lepsari.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';
-import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage } from '../lazyImports.jsx';
+import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage, WorkshopLepsari, NewRequestLepsari, EditRequestLepsari, ViewRequestLepsari } from '../lazyImports.jsx';
 
-const LEMZ = (props) => {
+const Lepsari = (props) => {
     return (
         <div className="requests">
             <div className="requests__header">
-                <div className="requests__title">ЛЭМЗ</div>
+                <div className="requests__title">Лепсари</div>
                 <div className="requests__menu">
-                    <Link to="/lemz/workshop-lemz" className={props.location.pathname.includes('/lemz/workshop-lemz') === true
+                    <Link to="/lepsari/workshop-lepsari" className={props.location.pathname.includes('/lepsari/workshop-lepsari') === true
                         ? "requests__item--active requests__item"
                         : "requests__item"}>
                         Очередь производства
-                            <Link to="/lemz/workshop-lemz/new" className="requests__addButton">
+                            <Link to="/lepsari/workshop-lepsari/new" className="requests__addButton">
                             <img className="requests__img" src={plusImg} alt="" />
                         </Link>
                     </Link>
-                    <Link to="/lemz/workshop-storage" className={props.location.pathname.includes('/lemz/workshop-storage') === true
+                    {/* <Link to="/lepsari/workshop-storage" className={props.location.pathname.includes('/lepsari/workshop-storage') === true
                         ? "requests__item--active requests__item"
                         : "requests__item"}>
                         Склад
-                            <Link to="/lemz/workshop-storage/new" className="requests__addButton">
+                            <Link to="/lepsari/workshop-storage/new" className="requests__addButton">
                             <img className="requests__img" src={plusImg} alt="" />
                         </Link>
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
             <div className="requests__content">
                 <Suspense fallback={PageLoading}>
                     <Switch>
                         <PrivateRoute
-                            exact path="/lemz/workshop-lemz"
-                            component={WorkshopLEMZ}
+                            exact path="/lepsari/workshop-lepsari"
+                            component={WorkshopLepsari}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />
-                        <Route path="/lemz/workshop-lemz/view/" component={ViewRequestLEMZ} />
+                        <Route path="/lepsari/workshop-lepsari/view/" component={ViewRequestLepsari} />
                         <PrivateRoute
-                            exact path="/lemz/workshop-lemz/new"
-                            component={NewRequestLEMZ}
+                            exact path="/lepsari/workshop-lepsari/new"
+                            component={NewRequestLepsari}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                         />
                         <PrivateRoute
-                            path="/lemz/workshop-lemz/edit/"
-                            component={EditRequestLEMZ}
+                            path="/lepsari/workshop-lepsari/edit/"
+                            component={EditRequestLepsari}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                         />
                         <PrivateRoute
-                            exact path="/lemz/workshop-storage"
+                            exact path="/lepsari/workshop-storage"
                             component={Storage}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                         />
 
                         <PrivateRoute
-                            exact path="/lemz/workshop-storage/new"
+                            exact path="/lepsari/workshop-storage/new"
                             component={NewStorage}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                         />
                         <PrivateRoute
-                            path="/lemz/workshop-storage/edit/"
+                            path="/lepsari/workshop-storage/edit/"
                             component={EditStorage}
                             userHasAccess={props.userHasAccess}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
@@ -80,4 +80,4 @@ const LEMZ = (props) => {
     )
 }
 
-export default LEMZ;
+export default Lepsari;

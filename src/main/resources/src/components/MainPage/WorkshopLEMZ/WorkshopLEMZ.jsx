@@ -42,7 +42,7 @@ const WorkshopLEMZ = (props) => {
 
     return (
         <div className="requests_LEMZ">
-            <div className="requests_LEMZ__title">Заявки на производство ЛЭМЗ</div>
+            {/* <div className="requests_LEMZ__title">Заявки на производство ЛЭМЗ</div> */}
             <SearchBar
                 title="Поиск по заявкам ЛЭМЗ"
                 placeholder="Введите название продукции для поиска..."

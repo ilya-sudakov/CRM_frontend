@@ -21,15 +21,15 @@ const ViewRequestLepsari = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.history.push("/workshop-lepsari");
+        props.history.push("/lepsari/workshop-lepsari");
     }
 
     useEffect(() => {
         document.title = "Просмотр заявки Лепсари";
-        const id = props.history.location.pathname.split("/workshop-lepsari/view/")[1];
+        const id = props.history.location.pathname.split("/lepsari/workshop-lepsari/view/")[1];
         if (isNaN(Number.parseInt(id))) {
             alert('Неправильный индекс заявки!');
-            props.history.push("/workshop-lepsari");
+            props.history.push("/lepsari/workshop-lepsari");
         } else {
             setItemId(id);
             getRequestLepsariById(id)
@@ -48,7 +48,7 @@ const ViewRequestLepsari = (props) => {
                 .catch(error => {
                     console.log(error);
                     alert('Неправильный индекс заявки!');
-                    props.history.push("/workshop-lepsari");
+                    props.history.push("/lepsari/workshop-lepsari");
                 })
         }
     }, [])
