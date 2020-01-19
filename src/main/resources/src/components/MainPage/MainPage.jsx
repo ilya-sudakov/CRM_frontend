@@ -6,7 +6,7 @@ import {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, WorkshopLEMZ,
     NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari, Storage, NewStorage, EditStorage, NewCategory, EditCategory
+    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari, Storage, NewStorage, EditStorage, NewCategory, EditCategory, LEMZ
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -119,6 +119,12 @@ class MainPage extends React.Component {
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
+                                {/* <PrivateRoute
+                                    path="/lemz"
+                                    component={LEMZ}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                                /> */}
                                 <PrivateRoute
                                     exact path="/workshop-lemz"
                                     component={WorkshopLEMZ}

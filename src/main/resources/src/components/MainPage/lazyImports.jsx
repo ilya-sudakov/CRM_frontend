@@ -240,6 +240,10 @@ const EditCategory = lazy(
     () => import('./Products/CategoryManagement/EditCategory/EditCategory.jsx')
 )
 
+const LEMZ = lazy(
+    () => import('./LEMZ/LEMZ.jsx')
+)
+
 export {
     Clients, newClient, 
     Contracts, 
@@ -259,5 +263,6 @@ export {
     EditPartInRigging,
     Work, NewWork, EditWork,
     WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari,
-    Storage, NewStorage, EditStorage
+    Storage, NewStorage, EditStorage,
+    LEMZ
 };
