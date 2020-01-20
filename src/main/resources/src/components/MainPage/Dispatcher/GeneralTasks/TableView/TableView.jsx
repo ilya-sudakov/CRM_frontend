@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import { formatDateString } from '../../../../../utils/functions.jsx';
 import './TableView.scss';
+import { editTaskStatus } from '../../../../../utils/RequestsAPI/MainTasks.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -46,15 +47,15 @@ const TableView = (props) => {
     const handleConditionChange = (event) => {
         const condition = event.target.value;
         const id = event.target.getAttribute("id");
-        // editTaskStatus({
-        //     condition: condition
-        // }, id)
-        //     .then(() => {
-        //         props.loadData();
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
+        editTaskStatus({
+            condition: condition
+        }, id)
+            .then(() => {
+                props.loadData();
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     return (
@@ -86,7 +87,7 @@ const TableView = (props) => {
                         task.condition === "Материалы" && "tableview_general_tasks__row--status_materials" ||
                         task.condition === "Отложено" && "tableview_general_tasks__row--status_waiting" ||
                         task.condition === "Выполнено" && "tableview_general_tasks__row--status_ready" ||
-                        "tableview_general_tasks__row--status_waiting"
+                        "tableview_general_tasks__row--status_materials"
                     )
                 }>
                     <div className="tableview_general_tasks__col">{task.id}</div>
@@ -96,17 +97,17 @@ const TableView = (props) => {
                     <div className="tableview_general_tasks__col">{formatDateString(task.dateControl)}</div>
                     <div className="tableview_general_tasks__col">{task.status}</div>
                     <div className="tableview_general_tasks__col">
-                        {/* <select
+                        <select
                             id={task.id}
                             className="tableview_general_tasks__status_select"
                             defaultValue={task.condition}
                             onChange={handleConditionChange}
                         >
+                            <option>Материалы</option>
                             <option>Выполнено</option>
                             <option>Отложено</option>
-                            <option>Материалы</option>
                             <option>Проблема</option>
-                        </select> */}
+                        </select>
                     </div>
                     <div className="tableview_general_tasks__actions">
                         {/* <Link to={"/task/view/" + task.id} className="tableview_general_tasks__action">Просмотр</Link> */}

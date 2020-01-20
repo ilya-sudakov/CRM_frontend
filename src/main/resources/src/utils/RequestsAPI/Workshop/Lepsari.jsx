@@ -67,3 +67,11 @@ export function deleteProductsToRequestLepsari(id) {
         method: "DELETE"
     })
 }
+
+export function editProductStatusToRequestLepsari(newStatus, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lepsari_product/status/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStatus)
+    })
+}

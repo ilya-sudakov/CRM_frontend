@@ -116,6 +116,7 @@ const EditRequestLEMZ = (props) => {
                             editProductsToRequestLEMZ({
                                 requestId: requestId,
                                 quantity: selected.quantity,
+                                status: selected.status,
                                 packaging: selected.packaging,
                                 name: selected.name
                             }, selected.id)
@@ -125,6 +126,7 @@ const EditRequestLEMZ = (props) => {
                                 requestId: requestId,
                                 quantity: selected.quantity,
                                 packaging: selected.packaging,
+                                status: selected.status,
                                 name: selected.name
                             })
                         )

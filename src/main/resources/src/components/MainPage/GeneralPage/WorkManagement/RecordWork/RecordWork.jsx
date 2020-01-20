@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import './RecordWork.scss';
-import { getUsers } from '../../../../../utils/RequestsAPI/Users.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
+import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
 
 const RecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
         date: new Date(),
-        responsible: '',
+        employee: '',
         works: ''
     })
     const [workTimeErrors, setWorkTimeErrors] = useState({
         date: false,
-        responsible: false,
+        employee: false,
         works: false
     })
     const [validInputs, setValidInputs] = useState({
         date: true,
-        responsible: false,
+        employee: false,
         works: false
     })
-    const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
-    const [showWindow, setShowWindow] = useState(false);
-    const [searchQueryCategory, setSearchQueryCategory] = useState('');
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -50,7 +46,7 @@ const RecordWork = (props) => {
         let check = true;
         let newErrors = Object.assign({
             date: false,
-            responsible: false,
+            employee: false,
             works: false
         });
         for (let item in validInputs) {
@@ -113,37 +109,8 @@ const RecordWork = (props) => {
         })
     }
 
-    const handleDateChange = (date) => {
-        validateField("date", date);
-        setWorkTimeInputs({
-            ...worktimeInputs,
-            date: date
-        })
-        setWorkTimeErrors({
-            ...workTimeErrors,
-            date: false
-        })
-    }
-
-    const handleResponsibleChange = (newResponsible) => {
-        validateField("responsible", newResponsible)
-        setWorkTimeInputs({
-            ...worktimeInputs,
-            responsible: newResponsible
-        })
-        setWorkTimeErrors({
-            ...workTimeErrors,
-            responsible: false
-        })
-    }
-
     useEffect(() => {
         document.title = "Создание заявки";
-        getUsers()
-            .then(res => res.json())
-            .then(res => {
-                setUsers(res);
-            })
     })
 
     return (
@@ -161,34 +128,40 @@ const RecordWork = (props) => {
                     error={workTimeErrors.date}
                     name="date"
                     selected={worktimeInputs.date}
-                    handleDateChange={handleDateChange}
+                    handleDateChange={(date) => {
+                        validateField("date", date);
+                        setWorkTimeInputs({
+                            ...worktimeInputs,
+                            date: date
+                        })
+                        setWorkTimeErrors({
+                            ...workTimeErrors,
+                            date: false
+                        })
+                    }}
                     errorsArr={workTimeErrors}
                     setErrorsArr={setWorkTimeErrors}
                 />
-                {/* Заменить на список сотрудников */}
-                <button className="" onClick={(e) => {
-                    e.preventDefault();
-                    setShowWindow(!showWindow);
-                }}>
-                    Обзор
-                </button>
-                <FormWindow
-                    title="Выбор сотрудника"
-                    content={
-                        <React.Fragment>
-                            <SearchBar
-                                title="Поиск по сотрудникам"
-                                placeholder="Введите ФИО сотрудника для поиска для поиска..."
-                                setSearchQuery={setSearchQueryCategory}
-                            />
-                        </React.Fragment>
-                    }
-                    // headerButton={{
-                    //     name: 'Создать продукцию',
-                    //     path: '/products/new'
-                    // }}
-                    showWindow={showWindow}
-                    setShowWindow={setShowWindow}
+                {/* Список сотрудников */}
+                <SelectEmployee
+                    inputName="Выбор сотрудника"
+                    required
+                    error={workTimeErrors.employee}
+                    name="employee"
+                    handleEmployeeChange={(value) => {
+                        validateField("employee", value);
+                        setWorkTimeInputs({
+                            ...worktimeInputs,
+                            employee: value
+                        })
+                        setWorkTimeErrors({
+                            ...workTimeErrors,
+                            employee: false
+                        })
+                    }}
+                    errorsArr={workTimeErrors}
+                    setErrorsArr={setWorkTimeErrors}
+                    readOnly
                 />
                 {/* Создание работы */}
                 <InputText
@@ -200,6 +173,7 @@ const RecordWork = (props) => {
                     errorsArr={workTimeErrors}
                     setErrorsArr={setWorkTimeErrors}
                 />
+
                 <div className="record-work__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="record-work__submit" type="submit" onClick={handleSubmit} value="Создать запись" />
             </form>

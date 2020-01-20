@@ -19,7 +19,7 @@ const GeneralPage = (props) => {
                     + '.' + (date.getMonth() < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1))
                     + '.' + date.getFullYear()
                 }</div>
-                {/* {props.userHasAccess(['ROLE_ADMIN']) && <Link className="general-page__button" to="work-managment/record-time/new">Учесть рабочее время</Link>} */}
+                {props.userHasAccess(['ROLE_ADMIN']) && <Link className="general-page__button" to="work-managment/record-time/new">Учесть рабочее время</Link>}
                 {
                     props.userHasAccess(['ROLE_ADMIN']) && <AdminWorkspace
                         userHasAccess={props.userHasAccess}

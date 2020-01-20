@@ -1,0 +1,95 @@
+@import "../../../../../variables.scss";
+
+.select-employee {
+  width: calc(100% - 20px);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  .select-employee__input {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .select-employee__input_name {
+      color: lighten($primary-text-color, 40%);
+      flex: 0 1 20%;
+    }
+    .select-employee__input_field {
+      width: calc(90% - 20px);
+    }
+  }
+
+  .select-employee__error {
+    width: 80%;
+    align-self: flex-end;
+    margin-top: 1px;
+    font-size: 0.75rem;
+    // position: absolute;
+    // top: 2rem;
+    background-color: #f73434;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  .select-employee__searchbar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    .select-employee__input {
+      border: 1px solid #bbbbbb;
+      width: 100%;
+      padding: 5px 10px;
+      // border-radius: 10px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      z-index: 0;
+
+      &:focus {
+        border: 1px solid $button__background--inverted;
+      }
+
+      &--error {
+        border: 1px solid #f73434 !important;
+      }
+    }
+
+    .select-employee__search_button {
+      border: 0;
+      flex: 0 1 15%;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: 80%;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+      }
+    }
+  }
+
+  .tableview-employees {
+      width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .select-employee__input {
+      flex-wrap: wrap;
+      .select-employee__input_field {
+        width: 100%;
+      }
+    }
+  }
+}

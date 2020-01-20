@@ -107,6 +107,7 @@ const NewRequestLepsari = (props) => {
                         requestId: id,
                         quantity: item.quantity,
                         packaging: item.packaging,
+                        status: item.status,
                         name: item.name
                     })
                 })

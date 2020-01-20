@@ -45,6 +45,7 @@ const GeneralTasks = (props) => {
                 userData={props.userData}
                 userHasAccess={props.userHasAccess}
                 deleteItem={deleteItem}
+                loadData={loadTasks}
             />
         </div>
     )

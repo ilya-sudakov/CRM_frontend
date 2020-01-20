@@ -80,7 +80,8 @@ const Select = (props) => {
                 id: id,
                 name: value,
                 quantity: 0,
-                packaging: ""
+                packaging: "",
+                status: "production"
             }
         ])
         props.onChange([
@@ -89,7 +90,8 @@ const Select = (props) => {
                 id: id,
                 name: value,
                 quantity: 0,
-                packaging: ""
+                packaging: "",
+                status: "production"
             }
         ]);
     }
@@ -101,7 +103,8 @@ const Select = (props) => {
                 id: id,
                 name: value,
                 quantity: 0,
-                packaging: ""
+                packaging: "",
+                status: "production"
             }
         ])
         props.onChange([
@@ -110,7 +113,8 @@ const Select = (props) => {
                 id: id,
                 name: value,
                 quantity: 0,
-                packaging: ""
+                packaging: "",
+                status: "production"
             }
         ]);
     }
@@ -135,6 +139,19 @@ const Select = (props) => {
             })
         })
         setSelected([...newSelected]);
+        props.onChange([...newSelected]);
+    }
+
+    const handleStatusChange = (color, id) => {
+        let newSelected = selected;
+        newSelected = newSelected.map((item, index) => {
+            return ({
+                ...item,
+                status: item.id == id ? color : item.status
+            })
+        })
+        setSelected([...newSelected]);
+        // console.log(color, id, newSelected);
         props.onChange([...newSelected]);
     }
 
@@ -223,13 +240,14 @@ const Select = (props) => {
                 {selected.map((item, index) => (
                     <div className="select__selected_row">
                         {/* <img className="select__selected_photo" src={item.product ? item.product.photo : null} alt="" /> */}
-                        <div className={"select__selected_item select__selected_item--" + (item.color ? item.color : "production")}>
-                            {/* {!props.readOnly ? <ColorPicker
+                        <div className={"select__selected_item select__selected_item--" + (item.status ? item.status : "production")}>
+                            {!props.readOnly ? <ColorPicker
                                 defaultName={item.name}
                                 index={index}
                                 id={item.id}
-                            /> : <div className="select__selected_name">{item.name}</div>} */}
-                            <div className="select__selected_name">{item.name}</div>
+                                handleStatusChange={handleStatusChange}
+                            /> : <div className="select__selected_name">{item.name}</div>}
+                            {/* <div className="select__selected_name">{item.name}</div> */}
                             {(!props.readOnly && !props.workshop) && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
                         </div>
                         <div className="select__selected_quantity">

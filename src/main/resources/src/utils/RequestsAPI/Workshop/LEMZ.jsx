@@ -67,3 +67,11 @@ export function deleteProductsToRequestLEMZ(id) {
         method: "DELETE"
     })
 }
+
+export function editProductStatusToRequestLEMZ(newStatus, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/lemz_product/status/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStatus)
+    })
+}

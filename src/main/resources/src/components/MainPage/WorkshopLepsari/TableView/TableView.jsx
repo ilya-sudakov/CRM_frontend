@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
-import { editRequestLepsariStatus } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
+import { editRequestLepsariStatus, editProductStatusToRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';
 
 const TableView = (props) => {
@@ -42,6 +42,20 @@ const TableView = (props) => {
         const status = event.target.value;
         const id = event.target.getAttribute("id");
         editRequestLepsariStatus({
+            status: status
+        }, id)
+            .then(() => {
+                props.loadData();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    const handleProductStatusChange = (event) => {
+        const status = event.target.value;
+        const id = event.target.getAttribute("id");
+        editProductStatusToRequestLepsari({
             status: status
         }, id)
             .then(() => {
@@ -126,19 +140,8 @@ const TableView = (props) => {
                             </div>
                             {request.lepsariProducts.map((item, index) => {
                                 return (
-                                    <div className={"tableview_requests_lepsari__sub_row " +
-                                        (
-                                            request.status === "Проблема" && "tableview_requests_lepsari__row--status_problem" ||
-                                            request.status === "Материалы" && "tableview_requests_lepsari__row--status_materials" ||
-                                            request.status === "Ожидание" && "tableview_requests_lepsari__row--status_waiting" ||
-                                            request.status === "В производстве" && "tableview_requests_lepsari__row--status_in_production" ||
-                                            request.status === "Готово" && "tableview_requests_lepsari__row--status_ready" ||
-                                            request.status === "Частично готово" && "tableview_requests_lepsari__row--status_ready" ||
-                                            request.status === "Отгружено" && "tableview_requests_lepsari__row--status_shipped" ||
-                                            request.status === "Приоритет" && "tableview_requests_lepsari__row--status_priority" ||
-                                            request.status === "Завершено" && "tableview_requests_lepsari__row--status_completed" ||
-                                            "tableview_requests_lepsari__row--status_completed"
-                                        )
+                                    <div className={"tableview_requests_lepsari__sub_row tableview_requests_lepsari__row--status-product--" +
+                                        ((item.status ? item.status : "production"))
                                     } style={{ height: `calc(${100 / (request.lepsariProducts.length + 1)}%)` }}>
                                         <div className="tableview_requests_lepsari__sub_col">{item.name}</div>
                                         <div className="tableview_requests_lepsari__sub_col">{item.packaging}</div>
@@ -189,21 +192,16 @@ const TableView = (props) => {
                                 return (
                                     <div className={"tableview_requests_lepsari__sub_row"} style={{ height: `calc(${100 / (request.lepsariProducts.length + 1)}%)` }}>
                                         <div className="tableview_requests_lepsari__sub_col">
-                                            {/* <select
-                                                id={request.id}
+                                            <select
+                                                id={item.id}
                                                 className="tableview_requests_lepsari__status_select"
-                                                defaultValue={request.status}
-                                                onChange={handleStatusChange}
+                                                defaultValue={item.status}
+                                                onChange={handleProductStatusChange}
                                             >
-                                                <option>Приоритет</option>
-                                                <option>Проблема</option>
-                                                <option>Материалы</option>
-                                                <option>Ожидание</option>
-                                                <option>В производстве</option>
-                                                <option>Готово</option>
-                                                <option>Отгружено</option>
-                                                <option>Завершено</option>
-                                            </select> */}
+                                                <option value="production">В работе</option>
+                                                <option value="completed">Завершено</option>
+                                                <option value="defect">Брак</option>
+                                            </select>
                                         </div>
                                     </div>
                                 )

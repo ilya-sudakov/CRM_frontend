@@ -319,6 +319,25 @@
       background-color: darken(#e65252, 5%);
     }
   }
+
+  .tableview_requests_LEMZ__row--status-product--completed {
+    background-color: #6caa2b;
+    &:hover {
+      background-color: darken(#6caa2b, 10%);
+    }
+  }
+  .tableview_requests_LEMZ__row--status-product--defect {
+    background-color: #e25c52;
+    &:hover {
+      background-color: darken(#e25c52, 10%);
+    }
+  }
+  .tableview_requests_LEMZ__row--status-product--production {
+    background-color: #e0e0e0;
+    &:hover {
+      background-color: darken(#e0e0e0, 10%);
+    }
+  }
 }
 
 @media (max-width: 1250px) {

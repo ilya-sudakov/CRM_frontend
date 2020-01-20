@@ -10,6 +10,7 @@ const EditProduct = (props) => {
         name: "",
         item: "",
         weight: "",
+        productionLocation: "",
         group: "",
         unit: "шт.",
         photo: "",
@@ -21,6 +22,7 @@ const EditProduct = (props) => {
         name: false,
         category: false,
         comment: false,
+        // productionLocation: false,
         packaging: false,
         photo: false,
         unit: false,
@@ -31,6 +33,7 @@ const EditProduct = (props) => {
         category: true,
         // comment: false,
         packaging: true,
+        productionLocation: true,
         // photo: false,
         unit: true,
         weight: true
@@ -81,6 +84,7 @@ const EditProduct = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        // console.log(productInputs);        
         const id = props.history.location.pathname.split("/products/edit/")[1];
         formIsValid() && editProduct(productInputs, id)
             .then(() => props.history.push("/products"))
@@ -151,6 +155,7 @@ const EditProduct = (props) => {
                         weight: oldProduct.weight,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
+                        productionLocation: oldProduct.productionLocation,
                         category: oldProduct.category,
                         comment: oldProduct.comment,
                         photo: oldProduct.photo

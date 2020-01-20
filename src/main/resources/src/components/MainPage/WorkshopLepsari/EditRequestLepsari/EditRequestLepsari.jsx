@@ -116,6 +116,7 @@ const EditRequestLepsari = (props) => {
                             editProductsToRequestLepsari({
                                 requestId: requestId,
                                 quantity: selected.quantity,
+                                status: selected.status,
                                 packaging: selected.packaging,
                                 name: selected.name
                             }, selected.id)
@@ -124,6 +125,7 @@ const EditRequestLepsari = (props) => {
                             addProductsToRequestLepsari({
                                 requestId: requestId,
                                 quantity: selected.quantity,
+                                status: selected.status,
                                 packaging: selected.packaging,
                                 name: selected.name
                             })

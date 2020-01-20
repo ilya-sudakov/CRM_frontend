@@ -90,6 +90,7 @@ const EditRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        // console.log(selectedProducts);
         formIsValid() && editRequest(requestInputs, requestId)
             .then(() => {
                 //PUT if edited, POST if product is new
@@ -107,6 +108,7 @@ const EditRequest = (props) => {
                                 requestId: requestId,
                                 quantity: selected.quantity,
                                 packaging: selected.packaging,
+                                status: selected.status,
                                 name: selected.name
                             }, selected.id)
                         )
@@ -115,6 +117,7 @@ const EditRequest = (props) => {
                                 requestId: requestId,
                                 quantity: selected.quantity,
                                 packaging: selected.packaging,
+                                status: selected.status,
                                 name: selected.name
                             })
                         )

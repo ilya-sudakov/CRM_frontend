@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './EditStorage.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import { editStorage, getStorageById } from '../../../../utils/RequestsAPI/Workshop/Storage.jsx';
+import { editStorage, getStorageById } from '../../../../utils/RequestsAPI/Workshop/LemzStorage.jsx';
 
 const EditPart = (props) => {
     const [storageInputs, setStorageInputs] = useState({

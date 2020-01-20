@@ -21,14 +21,14 @@ const Lepsari = (props) => {
                             <img className="requests__img" src={plusImg} alt="" />
                         </Link>
                     </Link>
-                    {/* <Link to="/lepsari/workshop-storage" className={props.location.pathname.includes('/lepsari/workshop-storage') === true
+                    <Link to="/lepsari/workshop-storage" className={props.location.pathname.includes('/lepsari/workshop-storage') === true
                         ? "requests__item--active requests__item"
                         : "requests__item"}>
                         Склад
                             <Link to="/lepsari/workshop-storage/new" className="requests__addButton">
                             <img className="requests__img" src={plusImg} alt="" />
                         </Link>
-                    </Link> */}
+                    </Link>
                 </div>
             </div>
             <div className="requests__content">
