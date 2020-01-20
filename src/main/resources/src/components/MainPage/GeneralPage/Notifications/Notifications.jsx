@@ -44,7 +44,7 @@ const Notifications = (props) => {
             setTimeout(() => element.classList.remove('notifications__item--unread'), (4000 + index * 500));
             //API
         })
-    }, [notifications])
+    }, [])
 
     return (
         <div className="notifications">
