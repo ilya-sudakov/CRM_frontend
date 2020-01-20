@@ -5,13 +5,13 @@ import plusImg from '../../../../../../../assets/sidemenu/plus_icon.svg';
 import './Lepsari.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';
-import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage, WorkshopLepsari, NewRequestLepsari, EditRequestLepsari, ViewRequestLepsari } from '../lazyImports.jsx';
+import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage, WorkshopLepsari, NewRequestLepsari, EditRequestLepsari, ViewRequestLepsari, StorageLepsari, NewStorageLepsari, EditStorageLepsari } from '../lazyImports.jsx';
 
 const Lepsari = (props) => {
     return (
         <div className="requests">
             <div className="requests__header">
-                <div className="requests__title">Лепсари</div>
+                <div className="requests__title">Цех Лепсари</div>
                 <div className="requests__menu">
                     <Link to="/lepsari/workshop-lepsari" className={props.location.pathname.includes('/lepsari/workshop-lepsari') === true
                         ? "requests__item--active requests__item"
@@ -38,39 +38,38 @@ const Lepsari = (props) => {
                             exact path="/lepsari/workshop-lepsari"
                             component={WorkshopLepsari}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEPSARI"]}
                         />
                         <Route path="/lepsari/workshop-lepsari/view/" component={ViewRequestLepsari} />
                         <PrivateRoute
                             exact path="/lepsari/workshop-lepsari/new"
                             component={NewRequestLepsari}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                         />
                         <PrivateRoute
                             path="/lepsari/workshop-lepsari/edit/"
                             component={EditRequestLepsari}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                         />
                         <PrivateRoute
                             exact path="/lepsari/workshop-storage"
-                            component={Storage}
+                            component={StorageLepsari}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEPSARI"]}
                         />
-
                         <PrivateRoute
                             exact path="/lepsari/workshop-storage/new"
-                            component={NewStorage}
+                            component={NewStorageLepsari}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                         />
                         <PrivateRoute
                             path="/lepsari/workshop-storage/edit/"
-                            component={EditStorage}
+                            component={EditStorageLepsari}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                         />
                         <Route component={PageNotFound} />
                     </Switch>

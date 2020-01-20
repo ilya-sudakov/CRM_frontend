@@ -86,7 +86,7 @@ const TableView = (props) => {
                         task.condition === "Материалы" && "tableview_general_tasks__row--status_materials" ||
                         task.condition === "Отложено" && "tableview_general_tasks__row--status_waiting" ||
                         task.condition === "Выполнено" && "tableview_general_tasks__row--status_ready" ||
-                        "tableview_general_tasks__row--status_ready"
+                        "tableview_general_tasks__row--status_waiting"
                     )
                 }>
                     <div className="tableview_general_tasks__col">{task.id}</div>
@@ -96,7 +96,7 @@ const TableView = (props) => {
                     <div className="tableview_general_tasks__col">{formatDateString(task.dateControl)}</div>
                     <div className="tableview_general_tasks__col">{task.status}</div>
                     <div className="tableview_general_tasks__col">
-                        <select
+                        {/* <select
                             id={task.id}
                             className="tableview_general_tasks__status_select"
                             defaultValue={task.condition}
@@ -106,7 +106,7 @@ const TableView = (props) => {
                             <option>Отложено</option>
                             <option>Материалы</option>
                             <option>Проблема</option>
-                        </select>
+                        </select> */}
                     </div>
                     <div className="tableview_general_tasks__actions">
                         {/* <Link to={"/task/view/" + task.id} className="tableview_general_tasks__action">Просмотр</Link> */}

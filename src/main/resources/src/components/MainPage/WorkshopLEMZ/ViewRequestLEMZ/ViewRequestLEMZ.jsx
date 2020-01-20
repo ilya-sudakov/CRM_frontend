@@ -143,7 +143,7 @@ const ViewRequestLEMZ = (props) => {
 
     return (
         <div className="view_request_lemz">
-            <div className="view_request_lemz__title">Просмотр заявки ЛЭМЗ</div>
+            {/* <div className="view_request_lemz__title">Просмотр заявки ЛЭМЗ</div> */}
             <form className="view_request_lemz__form">
                 <div className="view_request_lemz__item">
                     <div className="view_request_lemz__input_name">Дата</div>

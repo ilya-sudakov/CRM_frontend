@@ -47,7 +47,7 @@ const WorkshopLepsari = (props) => {
 
     return (
         <div className="requests_lepsari">
-            <div className="requests_lepsari__title">Заявки на производство Лепсари</div>
+            {/* <div className="requests_lepsari__title">Заявки на производство Лепсари</div> */}
             <SearchBar
                 title="Поиск по заявкам Лепсари"
                 placeholder="Введите название продукции для поиска..."

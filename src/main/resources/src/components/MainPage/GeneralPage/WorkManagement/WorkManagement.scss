@@ -1,0 +1,49 @@
+@import "../../../../variables.scss";
+
+.work-management {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
+  max-width: 500px;
+  max-height: 350px;
+  overflow-y: auto;
+  margin-right: 15px;
+  background-color: $primary-background-color;
+
+  .work-management__title {
+    font-size: 125%;
+    text-align: center;
+    margin: 10px 0;
+  }
+  .work-management__content {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 15px;
+    text-align: center;
+  }
+  .work-management__list {
+    display: flex;
+    flex-direction: column;
+  }
+  .work-management__item {
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border: 1px solid $button__background--inverted;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 85%;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    color: $primary-text-color;
+  }
+  .work-management__item div:first-child {
+      text-decoration: underline;
+  }
+}

@@ -28,6 +28,14 @@ const Notifications = lazy(
     () => import('./GeneralPage/Notifications/Notifications.jsx')
 )
 
+const WorkManagement = lazy(
+    () => import('./GeneralPage/WorkManagement/WorkManagement.jsx')
+)
+
+const RecordWork = lazy(
+    () => import('./GeneralPage/WorkManagement/RecordWork/RecordWork.jsx')
+)
+
 const newClient = lazy(
     () => import('./Clients/NewClient/NewClient.jsx')
 );
@@ -232,6 +240,18 @@ const EditStorage = lazy(
     () => import('./Storage/EditStorage/EditStorage.jsx')
 )
 
+const StorageLepsari = lazy(
+    () => import('./Lepsari/Storage/StorageLepsari.jsx')
+)
+
+const NewStorageLepsari = lazy(
+    () => import('./Lepsari/Storage/NewStorage/NewStorage.jsx')
+)
+
+const EditStorageLepsari = lazy(
+    () => import('./Lepsari/Storage/EditStorage/EditStorage.jsx')
+)
+
 const NewCategory = lazy(
     () => import('./Products/CategoryManagement/NewCategory/NewCategory.jsx')
 )
@@ -253,10 +273,10 @@ export {
     Clients, newClient, 
     Contracts, 
     Requests, NewRequest, EditRequest, ViewRequest, 
-    GeneralPage, AdminWorkspace, Notifications,
+    GeneralPage, AdminWorkspace, Notifications, WorkManagement, RecordWork,
     Products, NewProduct, ViewProduct, EditProduct, NewCategory, EditCategory,
     Users, EditUser, NewUser, 
-    WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, 
+    WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Storage, NewStorage, EditStorage, 
     Rigging, 
     Transportation, EditTransportation, NewTransportation,
     GeneralTasks, NewTask, EditTask, 
@@ -267,7 +287,6 @@ export {
     PressForm, NewPressForm, ViewPressForm, EditPressForm,
     EditPartInRigging,
     Work, NewWork, EditWork,
-    WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari,
-    Storage, NewStorage, EditStorage,
+    WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari, StorageLepsari, NewStorageLepsari, EditStorageLepsari,
     LEMZ, Lepsari
 };

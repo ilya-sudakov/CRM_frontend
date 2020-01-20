@@ -70,8 +70,9 @@ const Select = (props) => {
     }
 
     const clickOnOption = (event) => {
-        const value = event.target.getAttribute("name");
-        const id = event.target.getAttribute("id");
+        const value = event.currentTarget.getAttribute("name");
+        const id = event.currentTarget.getAttribute("id");
+        // console.log(value, id);
         clickOnInput();
         setSelected([
             ...selected,
@@ -223,13 +224,12 @@ const Select = (props) => {
                     <div className="select__selected_row">
                         {/* <img className="select__selected_photo" src={item.product ? item.product.photo : null} alt="" /> */}
                         <div className={"select__selected_item select__selected_item--" + (item.color ? item.color : "production")}>
-                            {/* {item.name} */}
-                            {!props.readOnly ? <ColorPicker
+                            {/* {!props.readOnly ? <ColorPicker
                                 defaultName={item.name}
                                 index={index}
                                 id={item.id}
-                                // loadData={props.loadData}
-                            /> : <div className="select__selected_name">{item.name}</div>}
+                            /> : <div className="select__selected_name">{item.name}</div>} */}
+                            <div className="select__selected_name">{item.name}</div>
                             {(!props.readOnly && !props.workshop) && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
                         </div>
                         <div className="select__selected_quantity">

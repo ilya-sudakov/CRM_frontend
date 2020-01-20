@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './NewStorage.scss';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
-import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import { addStorage } from '../../../../utils/RequestsAPI/Workshop/Storage.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import { addStorage } from '../../../../../utils/RequestsAPI/Workshop/LepsariStorage.jsx';
 
 const NewPart = (props) => {
     const [storageInputs, setStorageInputs] = useState({
@@ -68,7 +68,7 @@ const NewPart = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         formIsValid() && addStorage(storageInputs)
-            .then(() => props.history.push("/lemz/workshop-storage"))
+            .then(() => props.history.push("/lepsari/workshop-storage"))
     }
 
     const handleInputChange = e => {

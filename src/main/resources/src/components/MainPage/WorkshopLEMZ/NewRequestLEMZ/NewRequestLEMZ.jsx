@@ -193,7 +193,7 @@ const NewRequestLEMZ = (props) => {
 
     return (
         <div className="new_request_lemz">
-            <div className="new_request_lemz__title">Новая заявка ЛЭМЗ</div>
+            {/* <div className="new_request_lemz__title">Новая заявка ЛЭМЗ</div> */}
             <form className="new_request_lemz__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"

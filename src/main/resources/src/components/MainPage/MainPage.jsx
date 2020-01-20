@@ -5,7 +5,7 @@ import Header from '../Header/Header.jsx';
 import {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari, Storage, NewStorage, EditStorage, NewCategory, EditCategory, LEMZ, Lepsari
+    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, RecordWork
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -226,6 +226,12 @@ class MainPage extends React.Component {
                                     component={EditCategory}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                                />
+                                <PrivateRoute
+                                    exact path="/work-managment/record-time/new"
+                                    component={RecordWork}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                                 />
                                 <Route component={PageNotFound} />
                             </Switch>

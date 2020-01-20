@@ -11,7 +11,7 @@ const LEMZ = (props) => {
     return (
         <div className="requests">
             <div className="requests__header">
-                <div className="requests__title">ЛЭМЗ</div>
+                <div className="requests__title">Цех ЛЭМЗ</div>
                 <div className="requests__menu">
                     <Link to="/lemz/workshop-lemz" className={props.location.pathname.includes('/lemz/workshop-lemz') === true
                         ? "requests__item--active requests__item"
@@ -38,7 +38,7 @@ const LEMZ = (props) => {
                             exact path="/lemz/workshop-lemz"
                             component={WorkshopLEMZ}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
                         />
                         <Route path="/lemz/workshop-lemz/view/" component={ViewRequestLEMZ} />
                         <PrivateRoute
@@ -57,20 +57,20 @@ const LEMZ = (props) => {
                             exact path="/lemz/workshop-storage"
                             component={Storage}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
                         />
 
                         <PrivateRoute
                             exact path="/lemz/workshop-storage/new"
                             component={NewStorage}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                         />
                         <PrivateRoute
                             path="/lemz/workshop-storage/edit/"
                             component={EditStorage}
                             userHasAccess={props.userHasAccess}
-                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                            allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                         />
                         <Route component={PageNotFound} />
                     </Switch>

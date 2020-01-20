@@ -164,7 +164,7 @@ const TableView = (props) => {
                             <option>Частично готово</option>
                             <option>Завершено</option>
                         </select> */}
-                        <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / (request.lemzProducts.length + 1)}%)` }}>
+                        <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / (request.lemzProducts.length)}%)` }}>
                             <div className="tableview_requests_LEMZ__sub_col">
                                 <select
                                     id={request.id}

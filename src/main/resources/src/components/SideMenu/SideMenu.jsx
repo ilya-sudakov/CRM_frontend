@@ -88,7 +88,7 @@ const SideMenu = (props) => {
             }
             {
                 props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']) && <div className={props.location.pathname.includes("/lemz/") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
-                    <Link className="sidemenu__link" to="/lemz/workshop-lemz">ЛЭМЗ</Link>
+                    <Link className="sidemenu__link" to="/lemz/workshop-lemz">Цех ЛЭМЗ</Link>
                     {/* {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']) && <Link to="/workshop-lemz/new" className="sidemenu__addButton">
                         <img className="sidemenu__img" src={plusImg} />
                     </Link>} */}
@@ -96,7 +96,7 @@ const SideMenu = (props) => {
             }
             {
                 props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']) && <div className={props.location.pathname.includes("/lepsari/") ? "sidemenu__item sidemenu__item--active" : "sidemenu__item"}>
-                    <Link className="sidemenu__link" to="/lepsari/workshop-lepsari">Лепсари</Link>
+                    <Link className="sidemenu__link" to="/lepsari/workshop-lepsari">Цех Лепсари</Link>
                     {/* {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']) && <Link to="/workshop-lepsari/new" className="sidemenu__addButton">
                         <img className="sidemenu__img" src={plusImg} />
                     </Link>} */}

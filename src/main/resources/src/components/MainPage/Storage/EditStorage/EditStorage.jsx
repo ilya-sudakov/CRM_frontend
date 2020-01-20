@@ -69,7 +69,7 @@ const EditPart = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         formIsValid() && editStorage(storageInputs, storageId)
-            .then(() => props.history.push("/workshop-storage"))
+            .then(() => props.history.push("/lemz/workshop-storage"))
     }
 
     const handleInputChange = e => {
@@ -87,10 +87,10 @@ const EditPart = (props) => {
 
     useEffect(() => {
         document.title = "Редактирование детали";
-        const id = props.history.location.pathname.split("/workshop-storage/edit/")[1];
+        const id = props.history.location.pathname.split("/lemz/workshop-storage/edit/")[1];
         if (isNaN(Number.parseInt(id))) {
             alert('Неправильный индекс детали!');
-            props.history.push("/workshop-storage");
+            props.history.push("/lemz/workshop-storage");
         } else {
             setStorageId(id);
             getStorageById(id)
@@ -106,13 +106,13 @@ const EditPart = (props) => {
                 .catch(error => {
                     console.log(error);
                     alert('Неправильный индекс детали!');
-                    props.history.push("/workshop-storage");
+                    props.history.push("/lemz/workshop-storage");
                 })
         }
     }, [])
     return (
         <div className="edit_storage">
-            <div className="edit_storage__title">Редактирование запчасти</div>
+            {/* <div className="edit_storage__title">Редактирование запчасти</div> */}
             <form className="edit_storage__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
