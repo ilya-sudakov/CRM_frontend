@@ -147,6 +147,7 @@ const RecordWork = (props) => {
                     inputName="Выбор сотрудника"
                     required
                     error={workTimeErrors.employee}
+                    userHasAccess={props.userHasAccess}
                     name="employee"
                     handleEmployeeChange={(value) => {
                         validateField("employee", value);

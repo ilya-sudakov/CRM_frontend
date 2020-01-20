@@ -3,7 +3,7 @@ import './SelectEmployee.scss';
 import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx';
+import { getEmployees, getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx';
 
 const SelectEmployee = (props) => {
     const [showWindow, setShowWindow] = useState(false);
@@ -21,7 +21,10 @@ const SelectEmployee = (props) => {
     }, [])
 
     const loadEmployees = () => {
-        getEmployees()
+        let workshop = Object.assign({
+            workshop: props.userHasAccess(['ROLE_LEMZ']) ? 'ЦехЛЭМЗ' : 'ЦехЛепсари'
+        })
+        getEmployeesByWorkshop(workshop)
             .then(res => res.json())
             .then(res => {
                 setEmployees(res);
