@@ -55,6 +55,9 @@ const ViewRequestLepsari = (props) => {
 
     const getPdfText = () => {
         let testDate = new Date(requestInputs.date);
+        let productsArr = requestInputs.requestProducts.map((item) => {
+            return [item.name, item.quantity, item.packaging]
+        })
         var dd = {
             info: {
                 title: 'Заявка Лепсари №' + itemId
@@ -85,12 +88,23 @@ const ViewRequestLepsari = (props) => {
                     margin: [0, 0, 0, 5],
                 },
                 {
-                    ol: requestInputs.requestProducts.map((item) => {
-                        return {
-                            text: 'Название: ' + item.name + ', Кол-во: ' + item.quantity + ', Фасовка: ' + item.packaging,
-                            margin: [0, 0, 0, 5]
-                        }
-                    })
+                    // ol: requestInputs.requestProducts.map((item) => {
+                    //     return {
+                    //         text: 'Название: ' + item.name + ', Кол-во: ' + item.quantity + ', Фасовка: ' + item.packaging,
+                    //         margin: [0, 0, 0, 5]
+                    //     }
+                    // })
+                    table: {
+                        widths: ['*', 125, 125],
+                        body: [
+                            [
+                                { text: 'Название', style: 'tableHeader' },
+                                { text: 'Кол-во', style: 'tableHeader' },
+                                { text: 'Фасовка', style: 'tableHeader' }
+                            ],
+                            ...productsArr
+                        ]
+                    }
                 },
                 ('\n'),
                 {
@@ -118,6 +132,11 @@ const ViewRequestLepsari = (props) => {
                 regularText: {
                     fontSize: 16
                 },
+                tableHeader: {
+                    fontSize: 16,
+                    bold: true,
+                    alignment: 'center'
+                }
             }
         }
         pdfMake.vfs = font.pdfMake.vfs;

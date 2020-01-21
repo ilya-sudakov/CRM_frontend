@@ -5,7 +5,7 @@ import './FormWindow.scss';
 const FormWindow = (props) => {
     const [windowChange, setWindowChange] = useState(false);
     useEffect(() => {
-        console.log(props.showWindow);
+        // console.log(props.showWindow);
     }, [props.showWindow, props.setShowWindow, windowChange])
 
     const handleWindowChange = (value) => {
