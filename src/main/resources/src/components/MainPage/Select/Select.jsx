@@ -264,7 +264,7 @@ const Select = (props) => {
                                 readOnly={props.readOnly}
                             />
                         </div>
-                        <div className="select__selected_packaging">
+                        {!props.noPackaging && <div className="select__selected_packaging">
                             Фасовка{!props.readOnly && "*"}
                             <input
                                 packaging_id={index}
@@ -276,7 +276,7 @@ const Select = (props) => {
                                 onChange={handleParamChange}
                                 readOnly={props.readOnly || props.workshop}
                             />
-                        </div>
+                        </div>}
                     </div>
                 ))}
             </div>

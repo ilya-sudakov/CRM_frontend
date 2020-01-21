@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 
@@ -35,6 +35,10 @@ const TableView = (props) => {
             return 0;
         })
     }
+
+    useEffect(() => {
+        props.setShowWindow(false);
+    }, [props.fullName])
 
     return (
         <div className="tableview-work">

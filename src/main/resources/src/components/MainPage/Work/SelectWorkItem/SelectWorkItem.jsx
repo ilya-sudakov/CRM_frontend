@@ -28,7 +28,7 @@ const SelectWorkItem = (props) => {
         setId(employeeId);
         setFullName(employeeName);
         props.handleWorkItemChange(employeeName, employeeId);
-        // setShowWindow(!showWindow);
+        setShowWindow(!showWindow);
     }
 
     return (
@@ -48,6 +48,7 @@ const SelectWorkItem = (props) => {
                         />
                         <button className="select-work-item__search_button" onClick={(e) => {
                             e.preventDefault();
+                            console.log('Opened window');
                             setShowWindow(!showWindow);
                         }}>Обзор</button>
                     </div>
@@ -61,6 +62,7 @@ const SelectWorkItem = (props) => {
             }>Поле не заполнено!</div>}
             <FormWindow
                 title="Выбор работы"
+                windowName="select-work-item"
                 content={
                     <React.Fragment>
                         <SearchBar
@@ -73,6 +75,9 @@ const SelectWorkItem = (props) => {
                             searchQuery={searchQuery}
                             userHasAccess={props.userHasAccess}
                             selectWork={clickWork}
+                            fullName={fullName}
+                            showWindow={showWindow}
+                            setShowWindow={setShowWindow}
                         />
                     </React.Fragment>
                 }

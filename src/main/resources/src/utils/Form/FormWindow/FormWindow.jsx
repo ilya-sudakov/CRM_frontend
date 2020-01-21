@@ -14,7 +14,7 @@ const FormWindow = (props) => {
 
     const clickOnSelectWindow = (e) => {
         e.preventDefault();
-        let productsWindow = document.getElementsByClassName("form-window")[0];
+        let productsWindow = document.getElementsByClassName(props.windowName ? ("form-window-" + props.windowName) : "form-window")[0];
         if (!(e.target.classList[0] === "form-window") && !(e.target.classList.contains("form-window__exit")) && !(e.target.classList.contains("form-window__bar"))) {
             productsWindow.classList.remove("form-window--hidden");
             props.setShowWindow(true);
@@ -26,7 +26,7 @@ const FormWindow = (props) => {
     }
 
     return (
-        <div className={props.showWindow ? "form-window" : "form-window form-window--hidden"} onClick={clickOnSelectWindow}>
+        <div className={props.showWindow ? (props.windowName ? ("form-window form-window-" + props.windowName) : "form-window") : (props.windowName ? ("form-window-" + props.windowName + ' form-window form-window--hidden') : "form-window form-window--hidden")} onClick={clickOnSelectWindow}>
             <div className="form-window__content">
                 <div className="form-window__title">
                     {props.title}

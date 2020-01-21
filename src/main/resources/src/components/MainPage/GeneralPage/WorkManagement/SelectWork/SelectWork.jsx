@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import deleteSVG from '../../../../../../../../../assets/select/delete.svg';
 import './SelectWork.scss';
 import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx';
+import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const SelectWork = (props) => {
     const [selected, setSelected] = useState([]);
@@ -39,7 +40,7 @@ const SelectWork = (props) => {
         setSelected([
             ...selected,
             {
-                product: '',
+                product: [],
                 work: '',
                 hours: '',
             }
@@ -47,7 +48,7 @@ const SelectWork = (props) => {
         props.handleWorkChange([
             ...selected,
             {
-                product: '',
+                product: [],
                 work: '',
                 hours: '',
             }
@@ -95,7 +96,7 @@ const SelectWork = (props) => {
                                 <span>Работа: </span> {item.work}
                             </div>
                             <div className="select-work__selected_name">
-                                <span>Продукция: </span> {item.product}
+                                <span>Продукция: </span> {(item.product.length > 0) && item.product.reduce((sum, item) => sum + item.name + ' ,', '')}
                             </div>
                             <div className="select-work__selected_name">
                                 <span>Кол-во часов: </span> {item.hours}
@@ -120,6 +121,27 @@ const SelectWork = (props) => {
                             />
                             {/* Вставить InputProducts, только вместо фасовки сделать 
                                 единицу измерения(или просто кол-во оставить) */}
+                            <InputProducts
+                                inputName="Продукция"
+                                options
+                                name="product"
+                                noPackaging
+                                onChange={(value) => {
+                                    // console.log(value)
+                                    let temp = selected;
+                                    let originalItem = selected[index];
+                                    temp.splice(index, 1, {
+                                        ...originalItem,
+                                        product: value
+                                    })
+                                    setSelected([...temp]);
+                                    props.handleWorkChange([...temp])
+                                }}
+                                // error={requestErrors.requestProducts}
+                                searchPlaceholder="Введите название продукта для поиска..."
+                            // errorsArr={requestErrors}
+                            // setErrorsArr={setRequestErrors}
+                            />
                             <div className="select-work__item">
                                 <div className="select-work__input_name">Часы</div>
                                 <div className="select-work__input_field">

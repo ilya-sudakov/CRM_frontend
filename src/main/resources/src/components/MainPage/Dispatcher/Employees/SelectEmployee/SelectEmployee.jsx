@@ -70,6 +70,7 @@ const SelectEmployee = (props) => {
             }>Поле не заполнено!</div>}
             <FormWindow
                 title="Выбор сотрудника"
+                windowName="select-employee-window"
                 content={
                     <React.Fragment>
                         <SearchBar
