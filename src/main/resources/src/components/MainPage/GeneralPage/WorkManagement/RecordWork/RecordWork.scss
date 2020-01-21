@@ -25,13 +25,71 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
     padding-top: 35px;
-    .react-datepicker-wrapper {
-      width: 100%;
+    
+    .record-work__item {
+      width: calc(100% - 20px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
 
-      .react-datepicker {
-        .react-datepicker__day--selected {
-          background-color: $button__background--inverted !important;
+      &:first-child {
+        margin-top: 25px;
+      }
+
+      .react-datepicker-wrapper {
+        width: 100%;
+
+        .react-datepicker {
+          .react-datepicker__day--selected {
+            background-color: $button__background--inverted !important;
+          }
         }
+      }
+
+      .record-work__input_name {
+        color: lighten($primary-text-color, 40%);
+        flex: 0 1 20%;
+        margin-bottom: 5px;
+      }
+
+      .record-work__input_field,
+      .record-work__product_img {
+        display: flex;
+        justify-content: center;
+        width: calc(90% - 20px);
+      }
+
+      .record-work__product_img {
+        justify-content: flex-start;
+        img {
+          // width: 100%;
+          max-width: 500px;
+          max-height: 500px;
+          border-radius: 10px;
+        }
+      }
+      input[type="text"],
+      input[type="password"],
+      input[type="number"] {
+        border: 1px solid #bbbbbb;
+        width: calc(100% - 20px);
+        padding: 5px 10px;
+        border-radius: 10px;
+
+        &:focus {
+          border: 1px solid $button__background--inverted;
+        }
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield;
       }
     }
 

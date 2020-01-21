@@ -3,9 +3,8 @@ import './RecordWork.scss';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
+import SelectWork from '../SelectWork/SelectWork.jsx';
 
 const RecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -165,7 +164,7 @@ const RecordWork = (props) => {
                     readOnly
                 />
                 {/* Создание работы */}
-                <InputText
+                {/* <InputText
                     inputName="Работы"
                     required
                     error={workTimeErrors.works}
@@ -173,8 +172,15 @@ const RecordWork = (props) => {
                     handleInputChange={handleInputChange}
                     errorsArr={workTimeErrors}
                     setErrorsArr={setWorkTimeErrors}
-                />
-
+                /> */}
+                <div className="record-work__item">
+                    <div className="record-work__input_name">Работа*</div>
+                    <div className="record-work__input_field">
+                        <SelectWork
+                            handleWorkChange={null}
+                        />
+                    </div>
+                </div>
                 <div className="record-work__input_hint">* - поля, обязательные для заполнения</div>
                 <input className="record-work__submit" type="submit" onClick={handleSubmit} value="Создать запись" />
             </form>

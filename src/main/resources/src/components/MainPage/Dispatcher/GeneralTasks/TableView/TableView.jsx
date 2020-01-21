@@ -86,6 +86,7 @@ const TableView = (props) => {
                         task.condition === "Проблема" && "tableview_general_tasks__row--status_problem" ||
                         task.condition === "Материалы" && "tableview_general_tasks__row--status_materials" ||
                         task.condition === "Отложено" && "tableview_general_tasks__row--status_waiting" ||
+                        task.condition === "В процессе" && "tableview_general_tasks__row--status_in_production" ||
                         task.condition === "Выполнено" && "tableview_general_tasks__row--status_ready" ||
                         "tableview_general_tasks__row--status_materials"
                     )
@@ -105,6 +106,7 @@ const TableView = (props) => {
                         >
                             <option>Материалы</option>
                             <option>Выполнено</option>
+                            <option>В процессе</option>
                             <option>Отложено</option>
                             <option>Проблема</option>
                         </select>

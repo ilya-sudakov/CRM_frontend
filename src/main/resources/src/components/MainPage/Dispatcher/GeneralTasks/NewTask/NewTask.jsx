@@ -14,7 +14,7 @@ const NewTask = (props) => {
         responsible: '',
         dateControl: new Date(),
         status: '',
-        condition: 'Материалы'
+        condition: 'В процессе'
         // visibility: 'all'
     })
     const [taskErrors, setTaskErrors] = useState({

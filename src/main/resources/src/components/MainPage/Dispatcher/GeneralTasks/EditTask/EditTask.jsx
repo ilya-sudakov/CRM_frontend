@@ -246,6 +246,7 @@ const EditTask = (props) => {
                             <option>Выполнено</option>
                             <option>Отложено</option>
                             <option>Материалы</option>
+                            <option>В процессе</option>
                             <option>Проблема</option>
                         </select>
                     </div>
