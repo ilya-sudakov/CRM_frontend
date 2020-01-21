@@ -14,7 +14,7 @@ const NewProduct = (props) => {
         packaging: null,
         photo: "",
         unit: "шт.",
-        productionLocation: null,
+        productionLocation: 'ЦехЛЭМЗ',
         weight: null,
     })
     const [productErrors, setProductErrors] = useState({
@@ -222,11 +222,19 @@ const NewProduct = (props) => {
                     name="comment"
                     handleInputChange={handleInputChange}
                 />
-                <InputText
-                    inputName="Место производства"
-                    name="productionLocation"
-                    handleInputChange={handleInputChange}
-                />
+                <div className="new_product__item">
+                    <div className="new_product__input_name">Место производства*</div>
+                    <div className="new_product__input_field">
+                        <select
+                            name="productionLocation"
+                            onChange={handleInputChange}
+                        >
+                            <option>ЦехЛЭМЗ</option>
+                            <option>ЦехЛиговский</option>
+                            <option>ЦехЛепсари</option>
+                        </select>
+                    </div>
+                </div>
                 <div className="new_product__item">
                     <div className="new_product__input_name">Фотография</div>
                     <div className="new_product__file_upload">

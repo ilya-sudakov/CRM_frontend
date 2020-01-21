@@ -10,7 +10,7 @@ const EditProduct = (props) => {
         name: "",
         item: "",
         weight: "",
-        productionLocation: "",
+        productionLocation: "ЦехЛЭМЗ",
         group: "",
         unit: "шт.",
         photo: "",
@@ -245,12 +245,20 @@ const EditProduct = (props) => {
                     defaultValue={productInputs.comment}
                     handleInputChange={handleInputChange}
                 />
-                <InputText
-                    inputName="Место производства"
-                    name="productionLocation"
-                    defaultValue={productInputs.productionLocation}
-                    handleInputChange={handleInputChange}
-                />
+                <div className="edit_product__item">
+                    <div className="edit_product__input_name">Место производства*</div>
+                    <div className="edit_product__input_field">
+                        <select
+                            name="productionLocation"
+                            onChange={handleInputChange}
+                            value={productInputs.productionLocation}
+                        >
+                            <option>ЦехЛЭМЗ</option>
+                            <option>ЦехЛиговский</option>
+                            <option>ЦехЛепсари</option>
+                        </select>
+                    </div>
+                </div>
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Фотография</div>
                     <div className="edit_product__file_upload">
