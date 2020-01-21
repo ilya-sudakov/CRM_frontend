@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import deleteSVG from '../../../../../../../../../assets/select/delete.svg';
 import './SelectWork.scss';
+import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx';
 
 const SelectWork = (props) => {
     const [selected, setSelected] = useState([]);
@@ -38,15 +39,17 @@ const SelectWork = (props) => {
         setSelected([
             ...selected,
             {
-                number: '',
-                name: '',
+                product: '',
+                work: '',
+                hours: '',
             }
         ]);
         props.handleWorkChange([
             ...selected,
             {
-                number: '',
-                name: '',
+                product: '',
+                work: '',
+                hours: '',
             }
         ])
     }
@@ -62,7 +65,10 @@ const SelectWork = (props) => {
     const handleInputChange = (event) => {
         const id = event.target.getAttribute("index");
         const name = event.target.getAttribute("name");
-        const value = event.target.value;
+        let value = event.target.value;
+        if (name === 'hours' && value > 12) {
+            value = 12;
+        }
         let temp = selected;
         let originalItem = selected[id];
         temp.splice(id, 1, {
@@ -86,40 +92,44 @@ const SelectWork = (props) => {
                     <div className="select-work__selected_item" >
                         <div className="select-work__selected_header" index={index} onClick={clickOnForm}>
                             <div className="select-work__selected_name">
-                                <span>Название: </span> {item.name}
+                                <span>Работа: </span> {item.work}
                             </div>
                             <div className="select-work__selected_name">
-                                <span>Артикул: </span> {item.number}
+                                <span>Продукция: </span> {item.product}
                             </div>
                             <div className="select-work__selected_name">
-                                <span>Комментарий: </span> {item.comment}
+                                <span>Кол-во часов: </span> {item.hours}
                             </div>
                         </div>
                         <div className="select-work__selected_form select-work__selected_form--hidden" >
+                            <SelectWorkItem
+                                inputName="Выбор работы"
+                                required
+                                handleWorkItemChange={(value) => {
+                                    let temp = selected;
+                                    let originalItem = selected[index];
+                                    temp.splice(index, 1, {
+                                        ...originalItem,
+                                        work: value
+                                    })
+                                    setSelected([...temp]);
+                                    props.handleWorkChange([...temp])
+                                }}
+                                userHasAccess={props.userHasAccess}
+                                readOnly
+                            />
+                            {/* Вставить InputProducts, только вместо фасовки сделать 
+                                единицу измерения(или просто кол-во оставить) */}
                             <div className="select-work__item">
-                                <div className="select-work__input_name">Название</div>
+                                <div className="select-work__input_name">Часы</div>
                                 <div className="select-work__input_field">
                                     <input
-                                        type="text"
-                                        name="name"
+                                        type="number"
+                                        name="hours"
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.name}
-                                        readOnly={props.readOnly}
-                                    />
-                                </div>
-                            </div>
-                            <div className="select-work__item">
-                                <div className="select-work__input_name">Артикул</div>
-                                <div className="select-work__input_field">
-                                    <input
-                                        type="text"
-                                        name="number"
-                                        index={index}
-                                        autoComplete="off"
-                                        onChange={handleInputChange}
-                                        defaultValue={item.number}
+                                        defaultValue={item.hours}
                                         readOnly={props.readOnly}
                                     />
                                 </div>

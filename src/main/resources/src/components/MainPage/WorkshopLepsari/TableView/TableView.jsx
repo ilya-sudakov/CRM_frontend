@@ -183,6 +183,7 @@ const TableView = (props) => {
                                         <option>Ожидание</option>
                                         <option>В производстве</option>
                                         <option>Готово</option>
+                                        <option>Частично готово</option>
                                         <option>Отгружено</option>
                                         <option>Завершено</option>
                                     </select>

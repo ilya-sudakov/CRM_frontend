@@ -32,6 +32,12 @@ const RecordWork = (props) => {
                     date: (value !== null)
                 });
                 break;
+            case 'works':
+                setValidInputs({
+                    ...validInputs,
+                    works: (value !== null)
+                });
+                break;
             default:
                 setValidInputs({
                     ...validInputs,
@@ -164,20 +170,22 @@ const RecordWork = (props) => {
                     readOnly
                 />
                 {/* Создание работы */}
-                {/* <InputText
-                    inputName="Работы"
-                    required
-                    error={workTimeErrors.works}
-                    name="works"
-                    handleInputChange={handleInputChange}
-                    errorsArr={workTimeErrors}
-                    setErrorsArr={setWorkTimeErrors}
-                /> */}
                 <div className="record-work__item">
-                    <div className="record-work__input_name">Работа*</div>
+                    <div className="record-work__input_name">Работы*</div>
                     <div className="record-work__input_field">
                         <SelectWork
-                            handleWorkChange={null}
+                            handleWorkChange={(value) => {
+                                validateField("works", value);
+                                setWorkTimeInputs({
+                                    ...worktimeInputs,
+                                    works: value
+                                })
+                                setWorkTimeErrors({
+                                    ...workTimeErrors,
+                                    works: false
+                                })
+                            }}
+                            userHasAccess={props.userHasAccess}
                         />
                     </div>
                 </div>
