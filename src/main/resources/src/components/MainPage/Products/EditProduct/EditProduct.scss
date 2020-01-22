@@ -54,12 +54,19 @@
       }
 
       .edit_product__product_img {
-        justify-content: flex-start;
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: flex-start;
         img {
           // width: 100%;
           max-width: 500px;
           max-height: 500px;
           border-radius: 10px;
+        }
+        .edit_product__submit {
+          font-size: 80%;
+          margin-top: 10px;
         }
       }
       input[type="text"],

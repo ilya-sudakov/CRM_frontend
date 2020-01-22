@@ -11,7 +11,8 @@ const NewProduct = (props) => {
         name: null,
         category: null,
         comment: null,
-        packaging: null,
+        vendor: null,
+        packaging: '',
         photo: "",
         unit: "шт.",
         productionLocation: 'ЦехЛЭМЗ',
@@ -184,6 +185,14 @@ const NewProduct = (props) => {
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
                     readOnly
+                />
+
+                <InputText
+                    inputName="Артикул"
+                    defaultValue={productInputs.vendor}
+                    name="vendor"
+                    type="text"
+                    handleInputChange={handleInputChange}
                 />
                 <InputText
                     inputName="Вес изделия"

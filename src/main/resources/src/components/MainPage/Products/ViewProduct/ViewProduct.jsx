@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ViewProduct.scss';
 import { getProductById } from '../../../../utils/RequestsAPI/Products.jsx';
+import { imgToBlobDownload } from '../../../../utils/functions.jsx'
 
 const ViewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -8,6 +9,7 @@ const ViewProduct = (props) => {
         item: "",
         weight: "",
         group: "",
+        vendor: "",
         category: "",
         unit: "",
         productionLocation: "",
@@ -36,6 +38,7 @@ const ViewProduct = (props) => {
                         item: oldProduct.item,
                         weight: oldProduct.weight,
                         category: oldProduct.category,
+                        vendor: oldProduct.vendor,
                         productionLocation: oldProduct.productionLocation,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
@@ -49,6 +52,8 @@ const ViewProduct = (props) => {
                 })
         }
     }, [])
+
+
     return (
         <div className="view_product">
             <div className="view_product__title">Просмотр продукта</div>
@@ -57,6 +62,7 @@ const ViewProduct = (props) => {
                     <div className="view_product__input_name">Фотография</div>
                     <div className="view_product__product_img">
                         <img src={productInputs.photo} alt="" />
+                        <div className="view_product__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
                     </div>
                 </div>
                 <div className="view_product__item">
@@ -81,6 +87,12 @@ const ViewProduct = (props) => {
                     <div className="view_product__input_name">Единица измерения</div>
                     <div className="view_product__input_field">
                         <input type="text" name="unit" defaultValue={productInputs.unit} readOnly />
+                    </div>
+                </div>
+                <div className="view_product__item">
+                    <div className="view_product__input_name">Артикул</div>
+                    <div className="view_product__input_field">
+                        <input type="text" name="vendor" defaultValue={productInputs.vendor} readOnly />
                     </div>
                 </div>
                 <div className="view_product__item">

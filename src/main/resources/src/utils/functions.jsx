@@ -6,3 +6,24 @@ export const formatDateString = (dateString) => {
         + '.' + testDate.getFullYear()
     );
 }
+
+export const imgToBlobDownload = (imageSrc, imageName) => {
+    var img = new Image();
+    img.src = imageSrc;
+    var c = document.createElement("canvas");
+    var ctx = c.getContext("2d");
+    c.width = img.naturalWidth;     // update canvas size to match image
+    c.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0);       // draw in image
+    c.toBlob(function (blob) {        // get content as JPEG blob
+        // here the image is a blob
+        let link = document.createElement('a');
+        link.download = imageName;
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        // удаляем внутреннюю ссылку на Blob, что позволит браузеру очистить память
+        URL.revokeObjectURL(link.href);
+    }, "image/jpeg", 1);
+    img.crossOrigin = "";              // if from different origin
+    img.src = "url-to-image";
+}

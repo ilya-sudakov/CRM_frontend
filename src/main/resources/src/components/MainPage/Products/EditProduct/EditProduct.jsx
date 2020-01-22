@@ -4,6 +4,7 @@ import { getProductById, editProduct } from '../../../../utils/RequestsAPI/Produ
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
+import { imgToBlobDownload } from '../../../../utils/functions.jsx'
 
 const EditProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -13,6 +14,7 @@ const EditProduct = (props) => {
         productionLocation: "ЦехЛЭМЗ",
         group: "",
         unit: "шт.",
+        vendor: "",
         photo: "",
         category: "",
         packaging: "",
@@ -155,6 +157,7 @@ const EditProduct = (props) => {
                         weight: oldProduct.weight,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
+                        vendor: oldProduct.vendor,
                         productionLocation: oldProduct.productionLocation,
                         category: oldProduct.category,
                         comment: oldProduct.comment,
@@ -181,6 +184,7 @@ const EditProduct = (props) => {
                     <div className="edit_product__input_name">Фотография</div>
                     <div className="edit_product__product_img">
                         <img src={productInputs.photo} alt="" />
+                        <div className="edit_product__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
                     </div>
                 </div>
                 <InputText
@@ -214,6 +218,13 @@ const EditProduct = (props) => {
                     handleInputChange={handleInputChange}
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
+                />
+                <InputText
+                    inputName="Артикул"
+                    defaultValue={productInputs.vendor}
+                    name="vendor"
+                    type="text"
+                    handleInputChange={handleInputChange}
                 />
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Единица измерения*</div>
