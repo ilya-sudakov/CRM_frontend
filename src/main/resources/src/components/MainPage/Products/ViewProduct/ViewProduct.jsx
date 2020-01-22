@@ -32,6 +32,7 @@ const ViewProduct = (props) => {
             getProductById(id)
                 .then(res => res.json())
                 .then(oldProduct => {
+                    console.log(oldProduct);
                     setProductInputs({
                         name: oldProduct.name,
                         photo: oldProduct.photo,
@@ -60,10 +61,10 @@ const ViewProduct = (props) => {
             <form className="view_product__form">
                 <div className="view_product__item">
                     <div className="view_product__input_name">Фотография</div>
-                    <div className="view_product__product_img">
+                    {productInputs.photo !== '' && <div className="view_product__product_img">
                         <img src={productInputs.photo} alt="" />
                         <div className="view_product__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
-                    </div>
+                    </div>}
                 </div>
                 <div className="view_product__item">
                     <div className="view_product__input_name">Наименование</div>

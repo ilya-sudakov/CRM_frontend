@@ -67,6 +67,7 @@
         .edit_product__submit {
           font-size: 80%;
           margin-top: 10px;
+          padding: 10px 15px;
         }
       }
       input[type="text"],
@@ -124,7 +125,7 @@
         .edit_product__label {
           padding: 5px 10px;
           border: 1.5px solid $button__background--hover;
-          border-radius: 10px;
+          border-radius: 5px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -163,7 +164,7 @@
       border: 0;
       cursor: pointer;
       padding: 15px 25px;
-      border-radius: 15px;
+      border-radius: 5px;
       background-color: $button__background--inverted;
       color: $secondary-text-color;
       transition: 0.2s ease-in-out;

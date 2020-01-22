@@ -96,7 +96,7 @@ const SelectWork = (props) => {
                                 <span>Работа: </span> {item.work}
                             </div>
                             <div className="select-work__selected_name">
-                                <span>Продукция: </span> {(item.product.length > 0) && item.product.reduce((sum, item) => sum + item.name + ' ,', '')}
+                                <span>Продукция: </span> {(item.product.length > 0) && item.product.reduce((sum, item) => sum + item.name + ', ', '')}
                             </div>
                             <div className="select-work__selected_name">
                                 <span>Кол-во часов: </span> {item.hours}

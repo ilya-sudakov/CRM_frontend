@@ -65,6 +65,7 @@
         .view_product__submit {
           font-size: 80%;
           margin-top: 10px;
+          padding: 10px 15px;
         }
       }
       input[type="text"],
@@ -84,7 +85,7 @@
       border: 0;
       cursor: pointer;
       padding: 15px 25px;
-      border-radius: 15px;
+      border-radius: 5px;
       background-color: $button__background--inverted;
       color: $secondary-text-color;
       transition: 0.2s ease-in-out;
