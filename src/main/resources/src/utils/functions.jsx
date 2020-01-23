@@ -1,3 +1,5 @@
+import font from 'pdfmake/build/vfs_fonts';
+
 export const formatDateString = (dateString) => {
     const testDate = new Date(dateString);
     return (
@@ -26,4 +28,85 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
     }, "image/jpeg", 1);
     img.crossOrigin = "";              // if from different origin
     img.src = "url-to-image";
+}
+
+export const getPdfText = (date, requestProducts, codeWord, workshopName, itemId) => {
+    let productsArr = requestProducts.map((item) => {
+        return [item.name, item.quantity, item.packaging]
+    })
+    var dd = {
+        info: {
+            title: 'Заявка ' + workshopName + ' №' + itemId
+        },
+        content: [
+            {
+                text: 'Заявка ' + workshopName + ' №' + itemId + '\n',
+                alignment: 'center',
+                style: 'header',
+            },
+            {
+                text: [
+                    {
+                        text: 'Дата: ',
+                        style: 'subheader'
+                    },
+                    {
+                        text: formatDateString(date) + '\n' + '\n',
+                        style: 'regularText'
+                    }
+                ],
+            },
+            {
+                text: 'Продукция: ',
+                style: 'subheader',
+                margin: [0, 0, 0, 5],
+            },
+            {
+                table: {
+                    widths: ['*', 125, 125],
+                    body: [
+                        [
+                            { text: 'Название', style: 'tableHeader' },
+                            { text: 'Кол-во', style: 'tableHeader' },
+                            { text: 'Фасовка', style: 'tableHeader' }
+                        ],
+                        ...productsArr
+                    ]
+                }
+            },
+            ('\n'),
+            {
+                text: [
+                    {
+                        text: 'Кодовое слово: ',
+                        style: 'subheader'
+                    },
+                    {
+                        text: codeWord,
+                        style: 'regularText'
+                    }
+                ]
+            },
+        ],
+        styles: {
+            header: {
+                fontSize: 22,
+                bold: true
+            },
+            subheader: {
+                fontSize: 18,
+                bold: true
+            },
+            regularText: {
+                fontSize: 16
+            },
+            tableHeader: {
+                fontSize: 16,
+                bold: true,
+                alignment: 'center'
+            }
+        }
+    }
+    pdfMake.vfs = font.pdfMake.vfs;
+    return dd;
 }

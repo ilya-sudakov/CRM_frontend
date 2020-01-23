@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import pdfMake from 'pdfmake';
-import font from 'pdfmake/build/vfs_fonts';
 import './ViewRequestLepsari.scss';
 import { getRequestLepsariById } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
+import { getPdfText, formatDateString } from '../../../../utils/functions.jsx';
 
 const ViewRequestLepsari = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -53,109 +53,16 @@ const ViewRequestLepsari = (props) => {
         }
     }, [])
 
-    const getPdfText = () => {
-        let testDate = new Date(requestInputs.date);
-        let productsArr = requestInputs.requestProducts.map((item) => {
-            return [item.name, item.quantity, item.packaging]
-        })
-        var dd = {
-            info: {
-                title: 'Заявка Лепсари №' + itemId
-            },
-            content: [
-                {
-                    text: 'Заявка Лепсари №' + itemId + '\n',
-                    alignment: 'center',
-                    style: 'header',
-                },
-                {
-                    text: [
-                        {
-                            text: 'Дата: ',
-                            style: 'subheader'
-                        },
-                        {
-                            text: (((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
-                                + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
-                                + '.' + testDate.getFullYear()) + '\n' + '\n',
-                            style: 'regularText'
-                        }
-                    ],
-                },
-                {
-                    text: 'Продукция: ',
-                    style: 'subheader',
-                    margin: [0, 0, 0, 5],
-                },
-                {
-                    // ol: requestInputs.requestProducts.map((item) => {
-                    //     return {
-                    //         text: 'Название: ' + item.name + ', Кол-во: ' + item.quantity + ', Фасовка: ' + item.packaging,
-                    //         margin: [0, 0, 0, 5]
-                    //     }
-                    // })
-                    table: {
-                        widths: ['*', 125, 125],
-                        body: [
-                            [
-                                { text: 'Название', style: 'tableHeader' },
-                                { text: 'Кол-во', style: 'tableHeader' },
-                                { text: 'Фасовка', style: 'tableHeader' }
-                            ],
-                            ...productsArr
-                        ]
-                    }
-                },
-                ('\n'),
-                {
-                    text: [
-                        {
-                            text: 'Кодовое слово: ',
-                            style: 'subheader'
-                        },
-                        {
-                            text: requestInputs.codeWord,
-                            style: 'regularText'
-                        }
-                    ]
-                },
-            ],
-            styles: {
-                header: {
-                    fontSize: 22,
-                    bold: true
-                },
-                subheader: {
-                    fontSize: 18,
-                    bold: true
-                },
-                regularText: {
-                    fontSize: 16
-                },
-                tableHeader: {
-                    fontSize: 16,
-                    bold: true,
-                    alignment: 'center'
-                }
-            }
-        }
-        pdfMake.vfs = font.pdfMake.vfs;
-        return dd;
-    }
-
     const PrintRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText();
+        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛепсари', itemId);
         pdfMake.createPdf(dd).print();
     }
 
     const DownloadRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText();
-        let testDate = new Date(requestInputs.date);
-        pdfMake.createPdf(dd).download('заявкаЛепсари№' + itemId + '_' + (((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
-            + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
-            + '.' + testDate.getFullYear()) + '.pdf');
+        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛепсари', itemId);
+        pdfMake.createPdf(dd).download('заявкаЛепсари№' + itemId + '_' + formatDateString(requestInputs.date) + '.pdf');
     }
 
     return (
