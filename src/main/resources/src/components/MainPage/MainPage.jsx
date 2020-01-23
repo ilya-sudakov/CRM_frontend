@@ -5,7 +5,7 @@ import Header from '../Header/Header.jsx';
 import {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, RecordWork
+    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, RecordWork, LoginHistory
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -60,20 +60,26 @@ class MainPage extends React.Component {
                                     allowedRoles={["ROLE_ADMIN", "ROLE_WORKSHOP", "ROLE_MANAGER", "ROLE_DISPATCHER", "ROLE_ENGINEER"]}
                                 />
                                 <PrivateRoute
-                                    exact path="/profile/users/new"
-                                    component={NewUser}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN"]}
-                                />
-                                <PrivateRoute
                                     exact path="/profile/users"
                                     component={Users}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
                                 <PrivateRoute
+                                    exact path="/profile/users/new"
+                                    component={NewUser}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={["ROLE_ADMIN"]}
+                                />
+                                <PrivateRoute
                                     path="/profile/users/edit/"
                                     component={EditUser}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={["ROLE_ADMIN"]}
+                                />
+                                <PrivateRoute
+                                    exact path="/profile/login-history"
+                                    component={LoginHistory}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />

@@ -68,6 +68,10 @@ const NewUser = lazy(
     () => import('./Profile/Users/NewUser/NewUser.jsx')
 );
 
+const LoginHistory = lazy(
+    () => import('./LoginHistory/LoginHistory.jsx')
+);
+
 const ViewProduct = lazy(
     () => import('./Products/ViewProduct/ViewProduct.jsx')
 );
@@ -275,7 +279,7 @@ export {
     Requests, NewRequest, EditRequest, ViewRequest, 
     GeneralPage, AdminWorkspace, Notifications, WorkManagement, RecordWork,
     Products, NewProduct, ViewProduct, EditProduct, NewCategory, EditCategory,
-    Users, EditUser, NewUser, 
+    Users, EditUser, NewUser, LoginHistory,
     WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Storage, NewStorage, EditStorage, 
     Rigging, 
     Transportation, EditTransportation, NewTransportation,

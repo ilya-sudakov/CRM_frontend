@@ -1,6 +1,6 @@
 @import "../../../../variables.scss";
 
-.tableview_storage {
+.tableview-login-history {
   display: flex;
   flex-direction: column;
   width: calc(100% - 25px);
@@ -27,7 +27,7 @@
     font-size: 80%!important;
     position: sticky; //test
     top: calc(-6px); //test
-    .tableview_storage__col {
+    .tableview-login-history__col {
       &:last-child {
         max-width: 125px;
       }
@@ -43,7 +43,7 @@
     transition: 0.2s ease-in-out;
     font-size: 75%;
 
-    .tableview_storage__col {
+    .tableview-login-history__col {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -58,32 +58,20 @@
       }
 
       &:nth-child(2) {
-        flex: 0 1 15%;
-        min-width: 90px;
-        padding: 2.5px;
+        flex: 0 1 50%;
       }
 
       &:nth-child(3) {
-        // flex: 0 1 35%;
-        flex: 0 1 40%;
+        flex: 0 1 50%;
       }
 
-      &:nth-child(4) {
-        // flex: 0 1 12.5%;
-        flex: 0 1 20%;
-      }
-
-      &:nth-child(5) {
-        // flex: 0 1 5%;
-        flex: 0 1 20%;
-      }
       &:last-child {
         flex: 0 1 10%;
         border-right: none;
       }
     }
 
-    .tableview_storage__actions {
+    .tableview-login-history__actions {
       flex: 0 1 10%;
       display: flex;
       padding: 10px 5px;
@@ -92,7 +80,7 @@
       justify-content: center;
       max-width: 125px;
 
-      .tableview_storage__action {
+      .tableview-login-history__action {
         font-size: 90%;
         width: 75%;
         border-radius: 5px;
@@ -120,7 +108,7 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       // padding: 0px 5px;
-      // .tableview_storage__col:last-child {
+      // .tableview-login-history__col:last-child {
       //   flex: 0 1 10%;
       // }
     }
@@ -132,7 +120,7 @@
     }
   }
 
-  .tableview_storage__row--even {
+  .tableview-login-history__row--even {
     background-color: #f8f8f8;
 
     &:hover {
@@ -140,7 +128,7 @@
     }
   }
 
-  .tableview_storage__row--odd {
+  .tableview-login-history__row--odd {
     background-color: #ebebeb;
 
     &:hover {
@@ -150,7 +138,7 @@
 }
 
 @media (max-width: 1024px) {
-  .tableview_storage {
+  .tableview-login-history {
     flex-direction: column;
     align-self: flex-start;
     margin-left: 5px;
