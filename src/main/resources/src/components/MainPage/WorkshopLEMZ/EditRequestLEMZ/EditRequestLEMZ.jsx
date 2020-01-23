@@ -251,7 +251,7 @@ const EditRequestLEMZ = (props) => {
 
     return (
         <div className="edit_request_lemz">
-            {/* <div className="edit_request_lemz__title">Редактирование заявки ЛЭМЗ</div> */}
+            <div className="edit_request_lemz__title">Редактирование заявки ЛЭМЗ</div>
             <form className="edit_request_lemz__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"

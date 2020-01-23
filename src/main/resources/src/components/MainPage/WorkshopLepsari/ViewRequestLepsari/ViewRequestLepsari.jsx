@@ -67,7 +67,7 @@ const ViewRequestLepsari = (props) => {
 
     return (
         <div className="view_request_lepsari">
-            {/* <div className="view_request_lepsari__title">Просмотр заявки Лепсари</div> */}
+            <div className="view_request_lepsari__title">Просмотр заявки Лепсари</div>
             <form className="view_request_lepsari__form">
                 <div className="view_request_lepsari__item">
                     <div className="view_request_lepsari__input_name">Дата</div>

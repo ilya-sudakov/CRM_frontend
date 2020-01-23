@@ -7,6 +7,13 @@ import { getEmployees, deleteEmployee, getEmployeesByWorkshop } from '../../../.
 const Employees = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [employees, setEmployees] = useState([]);
+    const [workshops, setWorkshops] = useState([
+        'ЦехЛЭМЗ',
+        'ЦехЛепсари',
+        'ЦехЛиговский',
+        'Офис',
+        'Уволенные'
+    ]);
 
     useEffect(() => {
         document.title = "Сотрудники";
@@ -14,49 +21,20 @@ const Employees = (props) => {
     }, []);
 
     const loadEmployees = () => {
-        //Тест типо динамической загрузки
+        //Динамический
         let emplArr = [];
-        let workshop = {
-            workshop: 'ЦехЛЭМЗ'
-        };
-        getEmployeesByWorkshop(workshop)
-            .then(res => res.json())
-            .then(res => {
-                res.map(item => emplArr.push(item));
-                setEmployees([...emplArr]);
-                workshop.workshop = 'ЦехЛепсари';
-            })
-            .then(() => getEmployeesByWorkshop(workshop)
+        workshops.map((item) => {
+            let workshop = {
+                workshop: item
+            };
+            getEmployeesByWorkshop(workshop)
                 .then(res => res.json())
                 .then(res => {
                     res.map(item => emplArr.push(item));
                     setEmployees([...emplArr]);
-                    workshop.workshop = 'ЦехЛиговский';
                 })
-                .then(() => getEmployeesByWorkshop(workshop)
-                    .then(res => res.json())
-                    .then(res => {
-                        res.map(item => emplArr.push(item));
-                        setEmployees([...emplArr]);
-                        workshop.workshop = 'Офис';
-                    })
-                    .then(() => getEmployeesByWorkshop(workshop)
-                        .then(res => res.json())
-                        .then(res => {
-                            res.map(item => emplArr.push(item));
-                            setEmployees([...emplArr]);
-                            workshop.workshop = 'Уволенные';
-                        })
-                        .then(() => getEmployeesByWorkshop(workshop)
-                            .then(res => res.json())
-                            .then(res => {
-                                res.map(item => emplArr.push(item));
-                                setEmployees([...emplArr]);
-                            })
-                        )
-                    )
-                )
-            )
+        })
+        //Стандартный способ
         // getEmployees()
         //     .then(res => res.json())
         //     .then(res => {

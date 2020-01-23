@@ -89,7 +89,7 @@ const NewPart = (props) => {
     }, [])
     return (
         <div className="new_storage">
-            {/* <div className="new_storage__title">Новая деталь</div> */}
+            <div className="new_storage__title">Новая деталь</div>
             <form className="new_storage__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"

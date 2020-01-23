@@ -193,7 +193,7 @@ const NewRequestLepsari = (props) => {
 
     return (
         <div className="new_request_lepsari">
-            {/* <div className="new_request_lepsari__title">Новая заявка Лепсари</div> */}
+            <div className="new_request_lepsari__title">Новая заявка Лепсари</div>
             <form className="new_request_lepsari__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"

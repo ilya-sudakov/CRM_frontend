@@ -112,7 +112,7 @@ const EditPart = (props) => {
     }, [])
     return (
         <div className="edit_storage">
-            {/* <div className="edit_storage__title">Редактирование запчасти</div> */}
+            <div className="edit_storage__title">Редактирование детали</div>
             <form className="edit_storage__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
