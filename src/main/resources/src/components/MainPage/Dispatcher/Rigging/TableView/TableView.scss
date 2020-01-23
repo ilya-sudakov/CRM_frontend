@@ -53,8 +53,8 @@
 
       //Артикул
       &:nth-child(2) {
-        flex: 0 1 6%;
-        min-width: 90px;
+        flex: 0 1 8%;
+        word-break: break-all;
         padding: 2.5px !important;
       }
 
@@ -70,7 +70,7 @@
       &:nth-child(4) {
         // flex: 0 1 12.5%;
         flex: 0 1 5%;
-        max-width: 40px;
+        max-width: 30px;
       }
 
       //Местоположение
@@ -101,13 +101,15 @@
         flex: 0 1 10%;
         word-break: break-all;
       }
+      //Шлифовка
       &:nth-child(10) {
         // flex: 0 1 5%;
         flex: 0 1 10%;
       }
+      //Эрозия
       &:nth-child(11) {
         // flex: 0 1 5%;
-        flex: 0 1 5%;
+        flex: 0 1 7%;
       }
       &:nth-child(12) {
         // flex: 0 1 5%;

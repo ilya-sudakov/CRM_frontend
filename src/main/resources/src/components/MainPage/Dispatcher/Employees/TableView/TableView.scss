@@ -24,10 +24,11 @@
   }
 
   &__row--header {
-    font-size: 80%!important;
+    font-size: 80% !important;
     position: sticky; //test
     top: calc(-6px); //test
     word-break: break-all;
+    font-weight: normal !important;
     .tableview_employees__col {
       &:last-child {
         max-width: 125px;
@@ -35,7 +36,8 @@
     }
   }
 
-  &__row {
+  &__row,
+  &__employees {
     display: flex;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
@@ -43,6 +45,8 @@
     text-align: center;
     transition: 0.2s ease-in-out;
     font-size: 75%;
+    cursor: pointer;
+    font-weight: bold;
 
     .tableview_employees__col {
       display: flex;
@@ -140,6 +144,58 @@
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
       border-bottom: 0;
+    }
+  }
+
+  .tableview_employees__employees {
+    flex-direction: column;
+    transform-origin: 0 0;
+    // transform: scaleY(1);
+    // transition: 0.2s ease-in-out;
+    // transition: none;
+    max-height: max-content;
+    // height: 100%;
+
+    &--hidden {
+      // transform: scaleY(0);
+      max-height: 0;
+      display: none;
+      //
+    }
+
+    .tableview_employees__row {
+      font-size: 90%;
+      cursor: auto;
+      font-weight: normal;
+
+      .tableview_employees__col {
+        padding: 5px 5px;
+
+        // &:nth-child(3) {
+        //   padding: 0;
+        // }
+
+        .tableview__color_name {
+          text-decoration: none;
+        }
+
+        .tableview__color_option {
+          font-size: 110%;
+        }
+      }
+
+      .tableview_employees__action {
+        font-size: 95%;
+      }
+
+      &:first-of-type {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+      }
+      &:last-of-type {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
     }
   }
 

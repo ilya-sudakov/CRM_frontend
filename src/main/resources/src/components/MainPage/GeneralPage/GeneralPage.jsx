@@ -2,46 +2,56 @@ import React, { useState, useEffect } from 'react';
 import XLSX from 'xlsx';
 import { AdminWorkspace } from '../lazyImports.jsx';
 import { Link } from 'react-router-dom';
-
 import './GeneralPage.scss'
+import { formatDateString } from '../../../utils/functions.jsx';
 
 const GeneralPage = (props) => {
     const [date, setDate] = useState(new Date());
 
     const exportCSVFile = (event) => {
         // event.preventDefault();
-        let data = [
+        let dataLEMZ = [
             {
-                // date: 1,
                 fullName: 'Иван Иванов Иванович',
                 hours: 8
             },
             {
-                // date: 2,
                 fullName: 'Иван Иванов Иванови3ч',
                 hours: 3
             },
             {
-                // date: 3,
                 fullName: 'Иван Ива44нов Иванови3ч',
                 hours: 4
             }
         ];
-        let dates = [];
-        data.map((item) => {
-            dates.push(item.date);
-        });
+        let dataLepsari = [
+            {
+                fullName: ' Иванов Иванович',
+                hours: 8
+            },
+            {
+                fullName: 'Иван Иванови3ч',
+                hours: 9
+            },
+            {
+                fullName: 'Иван Ива44нов Иванови3ч',
+                hours: 4
+            }
+        ];
+        //Сегодняшнее число
         let dataWS;
-        // let dataWS = XLSX.utils.aoa_to_sheet([dates]);
-        dataWS = XLSX.utils.json_to_sheet(data); //from json to sheet
+        dataWS = XLSX.utils.aoa_to_sheet([[formatDateString(date)]]);
+        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ЦехЛЭМЗ']], { origin: 'A2' });
+        dataWS = XLSX.utils.sheet_add_json(dataWS, dataLEMZ, { origin: 'A3' }); //from json to sheet
+        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ЦехЛепсари']], { origin: ('A' + (dataLEMZ.length + 4)) });
+        dataWS = XLSX.utils.sheet_add_json(dataWS, dataLepsari, { origin: ('A' + (dataLEMZ.length + 5)), skipHeader: true }); //from json to sheet
         //Кастомные заголовки
-        // dataWS.A1.v = "Дата";
-        dataWS.A1.v = "ФИО работника";
-        dataWS.B1.v = "Часы";
+        dataWS.A3.v = "ФИО работника";
+        dataWS.B3.v = "Часы";
         //Авто определение ширины столбцов
         let objectMaxLength = [];
-        for (let i = 0; i < data.length; i++) {
-            let value = Object.values(data[i]);
+        for (let i = 0; i < dataLEMZ.length; i++) {
+            let value = Object.values(dataLEMZ[i]);
             for (let j = 0; j < value.length; j++) {
                 if (typeof value[j] == "number") {
                     objectMaxLength[j] = 10;
@@ -56,10 +66,16 @@ const GeneralPage = (props) => {
         var wscols = [
             { width: objectMaxLength[0] },  // first column
             { width: objectMaxLength[1] }, // second column
-            // { width: objectMaxLength[2] }, //...
         ];
         //Новая ширина столбцов
         dataWS["!cols"] = wscols;
+        //merge ячеек A1 и B1
+        const mergeCols = [
+            { s: { r: 0, c: 0 }, e: { r: 0, c: 1 } },
+            { s: { r: 1, c: 0 }, e: { r: 1, c: 1 } },
+            { s: { r: (dataLEMZ.length + 3), c: 0 }, e: { r: (dataLEMZ.length + 3), c: 1 } }
+        ];
+        dataWS["!merges"] = mergeCols;
         let wb = XLSX.utils.book_new(); //Создание новой workbook
         XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
         XLSX.writeFile(wb, 'табель.xlsx');
