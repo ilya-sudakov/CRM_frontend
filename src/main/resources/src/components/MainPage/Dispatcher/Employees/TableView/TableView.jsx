@@ -85,16 +85,18 @@ const TableView = (props) => {
     }
 
     useEffect(() => {
-        let temp = [];
-        workshops.map((element, index) => (
-            temp.push({
-                id: index,
-                hidden: true
-            })
-        ));
-        setWorkshopsVisible([
-            ...temp,
-        ]);
+        if (workshopsVisible.length !== 0) {
+            let temp = [];
+            workshops.map((element, index) => (
+                temp.push({
+                    id: index,
+                    hidden: true
+                })
+            ));
+            setWorkshopsVisible([
+                ...temp,
+            ]);
+        }
     }, [props.data])
 
     return (
