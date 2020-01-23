@@ -85,7 +85,7 @@ const TableView = (props) => {
     }
 
     useEffect(() => {
-        if (workshopsVisible.length !== 0) {
+        if (workshopsVisible.length === 0) {
             let temp = [];
             workshops.map((element, index) => (
                 temp.push({
