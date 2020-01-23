@@ -54,7 +54,7 @@
       align-items: center;
       padding: 15px 5px;
       // flex: 0 1 12.5%;
-      border-right: 1px solid #cccccc; //border between columns
+      // border-right: 1px solid #cccccc; //border between columns
       // min-width: 100px;
       // max-width: 150px;
       &:nth-child(1) {
@@ -170,6 +170,7 @@
 
       .tableview_employees__col {
         padding: 5px 5px;
+        border-right: 1px solid #cccccc; //border between columns
 
         // &:nth-child(3) {
         //   padding: 0;
