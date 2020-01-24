@@ -36,7 +36,7 @@
 
     .sidemenu__img {
       width: 20px;
-      filter: brightness(5);
+      // filter: brightness(5);
     }
 
     &:hover {
@@ -66,9 +66,12 @@
       color: $secondary-text-color;
       text-align: center;
       // white-space: nowrap;
+      transform-origin: 0 0;
+      transition: 0.2s ease-in-out;
 
       .sidemenu__img {
-        margin-left: 5px;
+        // margin-left: 5px;
+        // filter: brightness(5);
       }
 
       &:hover {
@@ -77,13 +80,20 @@
       }
     }
 
+    &--hidden {
+      transform: scaleY(0);
+      height: 0;
+      padding: 0;
+      margin: 0;
+    }
+
     .sidemenu__link {
       color: $primary-text-color;
       padding: 10px 5px;
       // width: 100%;
       font-size: 100%;
       width: calc(100% - 35px);
-      // text-align: center;      
+      // text-align: center;
     }
 
     .sidemenu__addButton {
@@ -100,6 +110,13 @@
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
       }
+    }
+  }
+
+  .sidemenu__item,
+  .sidemenu__item--active {
+    .sidemenu__img {
+      filter: brightness(5);
     }
   }
 
@@ -135,7 +152,6 @@
 
       &--add {
         transition: 0.2s ease-in-out;
-        // transform: scaleX(0);
       }
     }
 

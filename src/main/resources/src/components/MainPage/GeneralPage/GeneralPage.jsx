@@ -41,13 +41,14 @@ const GeneralPage = (props) => {
         //Сегодняшнее число
         let dataWS;
         dataWS = XLSX.utils.aoa_to_sheet([[formatDateString(date)]]);
-        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ЦехЛЭМЗ']], { origin: 'A2' });
-        dataWS = XLSX.utils.sheet_add_json(dataWS, dataLEMZ, { origin: 'A3' }); //from json to sheet
-        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ЦехЛепсари']], { origin: ('A' + (dataLEMZ.length + 4)) });
-        dataWS = XLSX.utils.sheet_add_json(dataWS, dataLepsari, { origin: ('A' + (dataLEMZ.length + 5)), skipHeader: true }); //from json to sheet
+        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ФИО работника', 'Часы']], { origin: 'A3' });
+        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ЦехЛЭМЗ']], { origin: 'A5' });
+        dataWS = XLSX.utils.sheet_add_json(dataWS, dataLEMZ, { origin: 'A6', skipHeader: true}); //from json to sheet
+        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ЦехЛепсари']], { origin: ('A' + (dataLEMZ.length + 7)) });
+        dataWS = XLSX.utils.sheet_add_json(dataWS, dataLepsari, { origin: ('A' + (dataLEMZ.length + 8)), skipHeader: true }); //from json to sheet
         //Кастомные заголовки
-        dataWS.A3.v = "ФИО работника";
-        dataWS.B3.v = "Часы";
+        // dataWS.A3.v = "ФИО работника";
+        // dataWS.B3.v = "Часы";
         //Авто определение ширины столбцов
         let objectMaxLength = [];
         for (let i = 0; i < dataLEMZ.length; i++) {
@@ -72,8 +73,8 @@ const GeneralPage = (props) => {
         //merge ячеек A1 и B1
         const mergeCols = [
             { s: { r: 0, c: 0 }, e: { r: 0, c: 1 } },
-            { s: { r: 1, c: 0 }, e: { r: 1, c: 1 } },
-            { s: { r: (dataLEMZ.length + 3), c: 0 }, e: { r: (dataLEMZ.length + 3), c: 1 } }
+            { s: { r: 4, c: 0 }, e: { r: 4, c: 1 } },
+            { s: { r: (dataLEMZ.length + 6), c: 0 }, e: { r: (dataLEMZ.length + 6), c: 1 } }
         ];
         dataWS["!merges"] = mergeCols;
         let wb = XLSX.utils.book_new(); //Создание новой workbook

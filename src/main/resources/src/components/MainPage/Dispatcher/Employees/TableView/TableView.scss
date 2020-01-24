@@ -30,6 +30,7 @@
     word-break: break-all;
     font-weight: normal !important;
     .tableview_employees__col {
+      border-right: 1px solid #cccccc; //border between columns
       &:last-child {
         max-width: 125px;
       }
