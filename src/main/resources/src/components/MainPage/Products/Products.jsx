@@ -3,7 +3,7 @@ import './Products.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
 import { getProducts, deleteProduct } from '../../../utils/RequestsAPI/Products.jsx';
-import { getCategories, deleteCategory } from '../../../utils/RequestsAPI/Products/Categories.jsx';
+import { getCategories, deleteCategory, getCategoriesNames } from '../../../utils/RequestsAPI/Products/Categories.jsx';
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx';
 
@@ -60,7 +60,7 @@ const Products = (props) => {
                 console.log(error);
             })
         //Динамическая загрузка продукции
-        // getCategoriesOnly() //Только категории
+        // getCategoriesNames() //Только категории
         //     .then(res => res.json())
         //     .then(res => {
         //         let categoriesArr = res;

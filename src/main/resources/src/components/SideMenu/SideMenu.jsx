@@ -40,7 +40,7 @@ const SideMenu = (props) => {
             pathname: "/lemz/",
             linkTo: "/lemz/workshop-lemz",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
-            name: 'ЦехЛэмз'
+            name: 'ЦехЛЭМЗ'
         },
         {
             pathname: "/lemz/workshop-lemz",

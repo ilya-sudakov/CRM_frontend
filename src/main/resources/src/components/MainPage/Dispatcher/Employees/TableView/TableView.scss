@@ -203,10 +203,10 @@
   }
 
   .tableview_employees__row--even {
-    background-color: #f8f8f8;
+    background-color: #fbfbfb;
 
     &:hover {
-      background-color: #f0f0f0;
+      background-color: darken(#fbfbfb, 5%);
     }
   }
 

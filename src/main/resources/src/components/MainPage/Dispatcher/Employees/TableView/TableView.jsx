@@ -132,7 +132,7 @@ const TableView = (props) => {
             ))} */}
             {workshops.map((item, index) => (
                 <React.Fragment>
-                    <div className="tableview_employees__row" id={index} onClick={handleClickWorkshop}>
+                    <div className="tableview_employees__row tableview_employees__row--even" id={index} onClick={handleClickWorkshop}>
                         <div className="tableview_employees__col"></div>
                         <div className="tableview_employees__col"></div>
                         <div className="tableview_employees__col"></div>

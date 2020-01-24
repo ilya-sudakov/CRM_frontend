@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import PrivateRoute from '../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
-import plusImg from '../../../../../../../assets/sidemenu/plus_icon.svg';
+import plusImg from '../../../../../../../assets/sidemenu/plus.png';
 import './Lepsari.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';

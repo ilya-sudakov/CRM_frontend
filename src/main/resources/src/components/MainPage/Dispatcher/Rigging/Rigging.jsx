@@ -2,7 +2,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp, ViewStamp, EditStamp, NewMachine, NewPressForm, ViewMachine, EditMachine, ViewPressForm, EditPressForm, EditPartInRigging } from '../../lazyImports.jsx';
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
-import plusImg from '../../../../../../../../assets/sidemenu/plus_icon.svg';
+import plusImg from '../../../../../../../../assets/sidemenu/plus.png';
 import './Rigging.scss';
 import PageNotFound from '../../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../../PageLoading/PageLoading.jsx';

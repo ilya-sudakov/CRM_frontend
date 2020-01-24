@@ -7,6 +7,13 @@ export function getCategories() {
     })
 }
 
+export function getCategoriesNames() {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product_category/name/",
+        method: "GET"
+    })
+}
+
 export function getCategoryById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product_category/" + id,
