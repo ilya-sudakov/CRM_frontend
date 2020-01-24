@@ -50,7 +50,7 @@ class MainPage extends React.Component {
                         hidden={this.state.sidemenu_hidden}
                     />
                     <div className="main_page__activity_panel">
-                        <Suspense fallback={PageLoading}>
+                        <Suspense fallback={<PageLoading />}>
                             <Switch>
                                 <PrivateRoute
                                     exact path="/"
@@ -240,7 +240,7 @@ class MainPage extends React.Component {
                                 />
                                 <Route component={PageNotFound} />
                             </Switch>
-                    </Suspense>
+                        </Suspense>
                     </div>
                 </div>
             </div>
