@@ -32,7 +32,7 @@ const SideMenu = (props) => {
         {
             pathname: "/products",
             name: "Продукция",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             addButtonName: "Добавить продукцию"
         },
@@ -111,7 +111,7 @@ const SideMenu = (props) => {
         {
             pathname: "/dispatcher/general-tasks",
             name: "Основные задачи",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
             addButtonName: "Добавить задачу"
         },
@@ -132,7 +132,7 @@ const SideMenu = (props) => {
         {
             pathname: "/work-list",
             name: "Список работ",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER'],
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
             addButtonName: "Добавить работу"
         },
@@ -176,7 +176,7 @@ const SideMenu = (props) => {
                         </div>
                 })
             }
-        </div >
+        </div>
     );
 };
 
