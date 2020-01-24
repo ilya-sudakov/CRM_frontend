@@ -16,6 +16,7 @@ const EditTask = (props) => {
         responsible: '',
         dateControl: new Date(),
         status: '',
+        condition: 'Материалы'
         // visibility: 'all'
     })
     const [taskErrors, setTaskErrors] = useState({
@@ -129,13 +130,13 @@ const EditTask = (props) => {
             getMainTaskById(id)
                 .then(res => res.json())
                 .then(oldRequest => {
-                    console.log(oldRequest);
-                    
+                    // console.log(oldRequest);
                     setTaskInputs({
                         dateCreated: oldRequest.dateCreated,
                         description: oldRequest.description,
                         responsible: oldRequest.responsible,
                         dateControl: oldRequest.dateControl,
+                        condition: oldRequest.condition,
                         status: oldRequest.status
                     });
                 })
@@ -234,6 +235,22 @@ const EditTask = (props) => {
                     handleInputChange={handleInputChange}
                     defaultValue={taskInputs.status}
                 />
+                <div className="edit_general_task__item">
+                    <div className="edit_general_task__input_name">Статус*</div>
+                    <div className="edit_general_task__input_field">
+                        <select
+                            name="condition"
+                            onChange={handleInputChange}
+                            defaultValue={taskInputs.condition}
+                        >
+                            <option>Выполнено</option>
+                            <option>Отложено</option>
+                            <option>Материалы</option>
+                            <option>В процессе</option>
+                            <option>Проблема</option>
+                        </select>
+                    </div>
+                </div>
                 {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="edit_general_task__item">
                     <div className="edit_general_task__input_name">Видимость*</div>
                     <div className="edit_general_task__input_field">

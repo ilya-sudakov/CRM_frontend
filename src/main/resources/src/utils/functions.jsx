@@ -1,3 +1,5 @@
+import font from 'pdfmake/build/vfs_fonts';
+
 export const formatDateString = (dateString) => {
     const testDate = new Date(dateString);
     return (
@@ -5,4 +7,106 @@ export const formatDateString = (dateString) => {
         + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
         + '.' + testDate.getFullYear()
     );
+}
+
+export const imgToBlobDownload = (imageSrc, imageName) => {
+    var img = new Image();
+    img.src = imageSrc;
+    var c = document.createElement("canvas");
+    var ctx = c.getContext("2d");
+    c.width = img.naturalWidth;     // update canvas size to match image
+    c.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0);       // draw in image
+    c.toBlob(function (blob) {        // get content as JPEG blob
+        // here the image is a blob
+        let link = document.createElement('a');
+        link.download = imageName;
+        link.href = URL.createObjectURL(blob);
+        link.click();
+        // удаляем внутреннюю ссылку на Blob, что позволит браузеру очистить память
+        URL.revokeObjectURL(link.href);
+    }, "image/jpeg", 1);
+    img.crossOrigin = "";              // if from different origin
+    img.src = "url-to-image";
+}
+
+export const getPdfText = (date, requestProducts, codeWord, workshopName, itemId) => {
+    let productsArr = requestProducts.map((item) => {
+        return [item.name, item.quantity, item.packaging]
+    })
+    var dd = {
+        info: {
+            title: 'Заявка ' + workshopName + ' №' + itemId
+        },
+        content: [
+            {
+                text: 'Заявка ' + workshopName + ' №' + itemId + '\n',
+                alignment: 'center',
+                style: 'header',
+            },
+            {
+                text: [
+                    {
+                        text: 'Дата: ',
+                        style: 'subheader'
+                    },
+                    {
+                        text: formatDateString(date) + '\n' + '\n',
+                        style: 'regularText'
+                    }
+                ],
+            },
+            {
+                text: 'Продукция: ',
+                style: 'subheader',
+                margin: [0, 0, 0, 5],
+            },
+            {
+                table: {
+                    widths: ['*', 125, 125],
+                    body: [
+                        [
+                            { text: 'Название', style: 'tableHeader' },
+                            { text: 'Кол-во', style: 'tableHeader' },
+                            { text: 'Фасовка', style: 'tableHeader' }
+                        ],
+                        ...productsArr
+                    ]
+                }
+            },
+            ('\n'),
+            {
+                text: [
+                    {
+                        text: 'Кодовое слово: ',
+                        style: 'subheader'
+                    },
+                    {
+                        text: codeWord,
+                        style: 'regularText'
+                    }
+                ]
+            },
+        ],
+        styles: {
+            header: {
+                fontSize: 22,
+                bold: true
+            },
+            subheader: {
+                fontSize: 18,
+                bold: true
+            },
+            regularText: {
+                fontSize: 16
+            },
+            tableHeader: {
+                fontSize: 16,
+                bold: true,
+                alignment: 'center'
+            }
+        }
+    }
+    pdfMake.vfs = font.pdfMake.vfs;
+    return dd;
 }

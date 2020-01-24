@@ -3,9 +3,9 @@
 .tableview_requests_LEMZ {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 50px);
+  width: calc(100% - 25px);
   font-size: 100%;
-  min-width: 1250px;
+  min-width: 1180px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
 
@@ -20,7 +20,7 @@
     font-size: 75%;
     display: flex;
     background-color: $primary-background-color;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid $table_border;
     text-align: center;
     transition: 0.2s ease-in-out;
 
@@ -31,12 +31,12 @@
       padding: 15px 5px;
       flex: 0 1 12.5%;
       word-break: break-word;
-      border-right: 1px solid #cccccc; //border between columns
+      border-right: 1px solid $table_border; //border between columns
 
       .tableview_requests_LEMZ__sub_row {
         display: flex;
         width: 100%;
-        border-bottom: 1px solid #cccccc;
+        border-bottom: 1px solid $table_border;
         transition: 0.2s ease-in-out;
 
         &:last-child {
@@ -67,12 +67,12 @@
 
           &:first-child {
             flex: 0 1 60%;
-            border-right: 1px solid #cccccc;
+            border-right: 1px solid $table_border;
           }
 
           &:nth-child(2) {
             flex: 0 1 20%;
-            border-right: 1px solid #cccccc;
+            border-right: 1px solid $table_border;
           }
 
           &:last-child {
@@ -208,6 +208,7 @@
     position: sticky; //test
     top: calc(-6px); //test
     .tableview_requests_LEMZ__col {
+      border: 0.5px solid $table-border__header;
       &:nth-child(3) {
         flex: 0 1 calc(24% + 0.75 * 0%);
         justify-content: center;
@@ -319,9 +320,28 @@
       background-color: darken(#e65252, 5%);
     }
   }
+
+  .tableview_requests_LEMZ__row--status-product--completed {
+    background-color: #bed6c3;
+    &:hover {
+      background-color: darken(#bed6c3, 5%);
+    }
+  }
+  .tableview_requests_LEMZ__row--status-product--defect {
+    background-color: #c48681;
+    &:hover {
+      background-color: darken(#c48681, 5%);
+    }
+  }
+  .tableview_requests_LEMZ__row--status-product--production {
+    background-color: #87a8b6;
+    &:hover {
+      background-color: darken(#87a8b6, 5%);
+    }
+  }
 }
 
-@media (max-width: 1250px) {
+@media (max-width: 1500px) {
   .tableview_requests_LEMZ {
     flex-direction: column;
     align-self: flex-start;

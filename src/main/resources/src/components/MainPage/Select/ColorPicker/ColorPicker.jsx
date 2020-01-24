@@ -36,7 +36,8 @@ const ColorPicker = (props) => {
         const req = Object.assign({
             color: color
         })
-        console.log(color, id);
+        // console.log(color, id);
+        props.handleStatusChange(color, id);
         clickOnColorPickerOverlay(event); //Hide options
     }
 

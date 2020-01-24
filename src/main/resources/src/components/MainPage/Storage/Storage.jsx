@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Storage.scss';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
-import { deleteStorage, getStorage } from '../../../utils/RequestsAPI/Workshop/Storage.jsx';
+import { deleteStorage, getStorage } from '../../../utils/RequestsAPI/Workshop/LemzStorage.jsx';
 
 const Storage = (props) => {
     const [storage, setStorage] = useState([]);
@@ -32,7 +32,7 @@ const Storage = (props) => {
 
     return (
         <div className="storage">
-            <div className="storage__title">Склад</div>
+            {/* <div className="storage__title">Склад</div> */}
             <SearchBar
                 title="Поиск по складу"
                 placeholder="Введите артикул детали для поиска..."

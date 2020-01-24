@@ -243,21 +243,21 @@
     }
 
     .select__selected_item--completed {
-      background-color: #6caa2b;
+      background-color: #5ea76e;
       &:hover {
-        background-color: darken(#6caa2b, 10%);
+        background-color: darken(#5ea76e, 5%);
       }
     }
     .select__selected_item--defect {
-      background-color: #e25c52;
+      background-color: #c48681;
       &:hover {
-        background-color: darken(#e25c52, 10%);
+        background-color: darken(#c48681, 5%);
       }
     }
     .select__selected_item--production {
-      background-color: #e0e0e0;
+      background-color: #87a8b6;
       &:hover {
-        background-color: darken(#e0e0e0, 10%);
+        background-color: darken(#87a8b6, 5%);
       }
     }
   }
@@ -274,7 +274,7 @@
           .select__selected_quantity {
             margin-right: 0;
             margin-bottom: 5px;
-            width: calc(100% - 50px) !important;
+            width: calc(100% - 80px) !important;
             input {
               width: 100%;
             }

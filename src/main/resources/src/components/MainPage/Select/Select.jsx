@@ -70,8 +70,9 @@ const Select = (props) => {
     }
 
     const clickOnOption = (event) => {
-        const value = event.target.getAttribute("name");
-        const id = event.target.getAttribute("id");
+        const value = event.currentTarget.getAttribute("name");
+        const id = event.currentTarget.getAttribute("id");
+        // console.log(value, id);
         clickOnInput();
         setSelected([
             ...selected,
@@ -79,7 +80,8 @@ const Select = (props) => {
                 id: id,
                 name: value,
                 quantity: 0,
-                packaging: ""
+                packaging: "",
+                status: "production"
             }
         ])
         props.onChange([
@@ -88,7 +90,8 @@ const Select = (props) => {
                 id: id,
                 name: value,
                 quantity: 0,
-                packaging: ""
+                packaging: "",
+                status: "production"
             }
         ]);
     }
@@ -100,7 +103,8 @@ const Select = (props) => {
                 id: id,
                 name: value,
                 quantity: 0,
-                packaging: ""
+                packaging: "",
+                status: "production"
             }
         ])
         props.onChange([
@@ -109,7 +113,8 @@ const Select = (props) => {
                 id: id,
                 name: value,
                 quantity: 0,
-                packaging: ""
+                packaging: "",
+                status: "production"
             }
         ]);
     }
@@ -134,6 +139,19 @@ const Select = (props) => {
             })
         })
         setSelected([...newSelected]);
+        props.onChange([...newSelected]);
+    }
+
+    const handleStatusChange = (color, id) => {
+        let newSelected = selected;
+        newSelected = newSelected.map((item, index) => {
+            return ({
+                ...item,
+                status: item.id == id ? color : item.status
+            })
+        })
+        setSelected([...newSelected]);
+        // console.log(color, id, newSelected);
         props.onChange([...newSelected]);
     }
 
@@ -222,14 +240,14 @@ const Select = (props) => {
                 {selected.map((item, index) => (
                     <div className="select__selected_row">
                         {/* <img className="select__selected_photo" src={item.product ? item.product.photo : null} alt="" /> */}
-                        <div className={"select__selected_item select__selected_item--" + (item.color ? item.color : "production")}>
-                            {/* {item.name} */}
+                        <div className={"select__selected_item select__selected_item--" + (item.status ? item.status : "production")}>
                             {!props.readOnly ? <ColorPicker
                                 defaultName={item.name}
                                 index={index}
                                 id={item.id}
-                                // loadData={props.loadData}
+                                handleStatusChange={handleStatusChange}
                             /> : <div className="select__selected_name">{item.name}</div>}
+                            {/* <div className="select__selected_name">{item.name}</div> */}
                             {(!props.readOnly && !props.workshop) && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
                         </div>
                         <div className="select__selected_quantity">
@@ -246,9 +264,9 @@ const Select = (props) => {
                                 readOnly={props.readOnly}
                             />
                         </div>
-                        <div className="select__selected_packaging">
+                        {!props.noPackaging && <div className="select__selected_packaging">
                             Фасовка{!props.readOnly && "*"}
-                            <textarea
+                            <input
                                 packaging_id={index}
                                 type="text"
                                 name="packaging"
@@ -258,7 +276,7 @@ const Select = (props) => {
                                 onChange={handleParamChange}
                                 readOnly={props.readOnly || props.workshop}
                             />
-                        </div>
+                        </div>}
                     </div>
                 ))}
             </div>

@@ -26,29 +26,33 @@ const Notifications = (props) => {
     ])
 
     const deleteNotification = (event) => {
-        let id = event.target.getAttribute('id');
-        console.log(id);
+        let id = Number.parseInt(event.target.getAttribute('id'));
         //API
+        let newNotifications = [];
+        notifications.map((item) => {
+            if (item.id !== id) {
+                newNotifications.push(item);
+            }
+        })  
+        setNotifications([...newNotifications]);
     }
 
     useEffect(() => {
         //После рендера делаем непрочитанные уведомления - прочитанными
         let unreadNotifications = Array.from(document.getElementsByClassName('notifications__item notifications__item--unread'));
         unreadNotifications.forEach((element, index) => {
-            setTimeout(() => element.classList.remove('notifications__item--unread'), (3000 + index * 500));
+            setTimeout(() => element.classList.remove('notifications__item--unread'), (4000 + index * 500));
             //API
         })
     }, [])
 
     return (
         <div className="notifications">
-            <div className="notifications__title">Уведомления</div>
+            <div className="notifications__title">Уведомления (Тест)</div>
             <div className="notifications__content">
                 <div className="notifications__list">
                     {notifications.map((item, index) => (
-                        <div className={item.read ? "notifications__item" : (
-                            "notifications__item notifications__item--unread"
-                        )}>
+                        <div className={item.read ? "notifications__item" : "notifications__item notifications__item--unread"}>
                             <div className="notifications__description">{item.name}</div>
                             <div className="notifications__description">Дата: {formatDateString(item.expirationTime)}</div>
                             <img id={item.id} className="notifications__img" src={deleteSVG} alt="" onClick={deleteNotification} />

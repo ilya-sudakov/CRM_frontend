@@ -72,7 +72,7 @@ const TableView = (props) => {
                     <div className="tableview_storage__col">{storage.comment}</div>
                     <div className="tableview_storage__actions">
                         {/* <Link to={"/storage/view/" + storage.id} className="tableview_storage__action">Просмотр</Link> */}
-                        <Link to={"/workshop-storage/edit/" + storage.id} className="tableview_storage__action">Редактировать</Link>
+                        <Link to={"/lemz/workshop-storage/edit/" + storage.id} className="tableview_storage__action">Редактировать</Link>
                         {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={storage.id} className="tableview_storage__action" onClick={props.deleteItem}>Удалить</div>}
                     </div>
                 </div>

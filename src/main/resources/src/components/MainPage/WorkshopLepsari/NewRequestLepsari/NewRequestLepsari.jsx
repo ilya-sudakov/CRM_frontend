@@ -107,11 +107,12 @@ const NewRequestLepsari = (props) => {
                         requestId: id,
                         quantity: item.quantity,
                         packaging: item.packaging,
+                        status: item.status,
                         name: item.name
                     })
                 })
                 Promise.all(productsArr)
-                    .then(() => props.history.push("/workshop-lepsari"))
+                    .then(() => props.history.push("/lepsari/workshop-lepsari"))
             })
             .catch(error => {
                 console.log(error);

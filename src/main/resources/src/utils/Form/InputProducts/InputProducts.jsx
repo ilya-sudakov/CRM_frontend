@@ -17,6 +17,7 @@ const InputProducts = (props) => {
                     defaultValue={props.defaultValue}
                     readOnly={props.readOnly}
                     workshop={props.workshop}
+                    noPackaging={props.noPackaging}
                 />
             </div>
         </div>

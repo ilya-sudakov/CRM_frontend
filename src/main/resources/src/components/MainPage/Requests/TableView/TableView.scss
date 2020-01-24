@@ -3,7 +3,7 @@
 .tableview_requests {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 50px);
+  width: calc(100% - 25px);
   font-size: 100%;
   min-width: 950px;
   border-radius: 10px;
@@ -24,6 +24,7 @@
     position: sticky; //test
     top: calc(-6px); //test
     .tableview_requests__col {
+      border-right: 1px solid $table-border__header; //border between columns
       &:nth-child(3) {
         flex: 0 1 calc(30% + 0.75 * 20%);
         justify-content: center;
@@ -65,7 +66,7 @@
     font-size: 70%;
     display: flex;
     background-color: $primary-background-color;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid $table-border;
     text-align: center;
     transition: 0.2s ease-in-out;
 
@@ -76,12 +77,12 @@
       padding: 15px 5px;
       flex: 0 1 12.5%;
       word-break: break-word;
-      border-right: 1px solid #cccccc; //border between columns
+      border-right: 1px solid $table-border; //border between columns
 
       .tableview_requests__sub_row {
         display: flex;
         width: 100%;
-        border-bottom: 1px solid #cccccc;
+        border-bottom: 1px solid $table-border;
 
         &:last-child {
           border: 0;
@@ -95,12 +96,12 @@
 
           &:first-child {
             flex: 0 1 75%;
-            border-right: 1px solid #cccccc;
+            border-right: 1px solid $table-border;
           }
 
           &:nth-child(2) {
             flex: 0 1 12.5%;
-            border-right: 1px solid #cccccc;
+            border-right: 1px solid $table-border;
           }
 
           &:last-child {

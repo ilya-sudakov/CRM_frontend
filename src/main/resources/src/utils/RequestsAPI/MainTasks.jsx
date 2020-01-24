@@ -36,3 +36,11 @@ export function editMainTask(newTask, id) {
         body: JSON.stringify(newTask)
     })
 }
+
+export function editTaskStatus(newStatus, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/mainTask/condition/" + id,
+        method: "PUT",
+        body: JSON.stringify(newStatus)
+    })
+}

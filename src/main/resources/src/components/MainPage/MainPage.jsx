@@ -4,9 +4,8 @@ import './MainPage.scss';
 import Header from '../Header/Header.jsx';
 import {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
-    NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, WorkshopLEMZ,
-    NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari, Storage, NewStorage, EditStorage, NewCategory, EditCategory, LEMZ
+    NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, Rigging, Transportation, EditTransportation, NewTransportation,
+    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, RecordWork, LoginHistory
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -61,20 +60,26 @@ class MainPage extends React.Component {
                                     allowedRoles={["ROLE_ADMIN", "ROLE_WORKSHOP", "ROLE_MANAGER", "ROLE_DISPATCHER", "ROLE_ENGINEER"]}
                                 />
                                 <PrivateRoute
-                                    exact path="/profile/users/new"
-                                    component={NewUser}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN"]}
-                                />
-                                <PrivateRoute
                                     exact path="/profile/users"
                                     component={Users}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
                                 <PrivateRoute
+                                    exact path="/profile/users/new"
+                                    component={NewUser}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={["ROLE_ADMIN"]}
+                                />
+                                <PrivateRoute
                                     path="/profile/users/edit/"
                                     component={EditUser}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={["ROLE_ADMIN"]}
+                                />
+                                <PrivateRoute
+                                    exact path="/profile/login-history"
+                                    component={LoginHistory}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
@@ -119,30 +124,17 @@ class MainPage extends React.Component {
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
-                                {/* <PrivateRoute
+                                <PrivateRoute
                                     path="/lemz"
                                     component={LEMZ}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
-                                /> */}
-                                <PrivateRoute
-                                    exact path="/workshop-lemz"
-                                    component={WorkshopLEMZ}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
-                                />
-                                <Route path="/workshop-lemz/view/" component={ViewRequestLEMZ} />
-                                <PrivateRoute
-                                    exact path="/workshop-lemz/new"
-                                    component={NewRequestLEMZ}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                                 />
                                 <PrivateRoute
-                                    path="/workshop-lemz/edit/"
-                                    component={EditRequestLEMZ}
+                                    path="/lepsari"
+                                    component={Lepsari}
                                     userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                                 />
                                 <PrivateRoute
                                     path="/dispatcher/rigging"
@@ -230,48 +222,6 @@ class MainPage extends React.Component {
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                                 />
                                 <PrivateRoute
-                                    exact path="/workshop-lepsari"
-                                    component={WorkshopLepsari}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
-                                />
-                                <PrivateRoute
-                                    exact path="/workshop-lepsari/new"
-                                    component={NewRequestLepsari}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
-                                />
-                                <PrivateRoute
-                                    path="/workshop-lepsari/view/"
-                                    component={ViewRequestLepsari}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
-                                />
-                                <PrivateRoute
-                                    path="/workshop-lepsari/edit/"
-                                    component={EditRequestLepsari}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
-                                />
-                                <PrivateRoute
-                                    exact path="/workshop-storage"
-                                    component={Storage}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
-                                />
-                                <PrivateRoute
-                                    exact path="/workshop-storage/new"
-                                    component={NewStorage}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
-                                />
-                                <PrivateRoute
-                                    path="/workshop-storage/edit/"
-                                    component={EditStorage}
-                                    userHasAccess={this.props.userHasAccess}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
-                                />
-                                <PrivateRoute
                                     exact path="/products/category/new"
                                     component={NewCategory}
                                     userHasAccess={this.props.userHasAccess}
@@ -282,6 +232,12 @@ class MainPage extends React.Component {
                                     component={EditCategory}
                                     userHasAccess={this.props.userHasAccess}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                                />
+                                <PrivateRoute
+                                    exact path="/work-managment/record-time/new"
+                                    component={RecordWork}
+                                    userHasAccess={this.props.userHasAccess}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                                 />
                                 <Route component={PageNotFound} />
                             </Switch>

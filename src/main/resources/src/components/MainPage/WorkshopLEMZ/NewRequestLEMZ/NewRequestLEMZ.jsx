@@ -108,11 +108,12 @@ const NewRequestLEMZ = (props) => {
                         requestId: id,
                         quantity: item.quantity,
                         packaging: item.packaging,
+                        status: item.status,
                         name: item.name
                     })
                 })
                 Promise.all(productsArr)
-                    .then(() => props.history.push("/workshop-lemz"))
+                    .then(() => props.history.push("/lemz/workshop-lemz"))
             })
             .catch(error => {
                 console.log(error);

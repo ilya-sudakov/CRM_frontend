@@ -123,7 +123,7 @@ const TableView = (props) => {
                     </div>
                     <div id={category_id} className={(isProductsHidden(category.id) === true) ? "tableview_products__categories tableview_products__categories--hidden" : "tableview_products__categories"}>
                         {sortProducts(category.products).map((product, product_id) => (
-                            <div key={product_id} className={"tableview_products__row " + (product.id % 2 === 0 ? "tableview_products__row--even" : "tableview_products__row--odd")}>
+                            <div key={product_id} className={"tableview_products__row tableview_products__row--odd"}>
                                 <div className="tableview_products__col">{product.id}</div>
                                 <div className="tableview_products__col">
                                     <img className="tableview_products__product_img" src={product.photo} alt="" />

@@ -8,7 +8,7 @@ import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx';
 
 const Products = (props) => {
-    // const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
     const [productsCount, setProductsCount] = useState(0);
     const [categories, setCategories] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -50,18 +50,33 @@ const Products = (props) => {
             .then(response => response.json())
             .then(response => {
                 // console.log(response);
-                let count = 0;
-                response.map(item => {
-                    item.products.map(() => {
-                        count++;
-                    })
-                })
+                let count = response.reduce((total, item) => {
+                    return (total + item.products.length);
+                }, 0)
                 setProductsCount(count);
                 setCategories(response);
             })
             .catch(error => {
                 console.log(error);
             })
+        //Динамическая загрузка продукции
+        // getCategoriesOnly() //Только категории
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         let categoriesArr = res;
+        //         let productsArr = [];
+        //         categoriesArr.map((item) => {
+        //             let category = {
+        //                 category: item
+        //             };
+        //             getProductsByCategory(category) //Продукция по категории
+        //                 .then(res => res.json())
+        //                 .then(res => {
+        //                     res.map(item => productsArr.push(item));
+        //                     setProducts([...productsArr]);
+        //                 })
+        //         })
+        //     })
     }
 
     return (

@@ -1,0 +1,97 @@
+@import "../../../../variables.scss";
+
+.select-work-item {
+  width: calc(100% - 0px);
+  display: flex;
+  flex-direction: column;
+  // margin-bottom: 25px;
+  .select-work-item__input {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .select-work-item__input_name {
+      color: lighten($primary-text-color, 40%);
+      font-size: 80%;
+      flex: 0 1 20%;
+    }
+    .select-work-item__input_field {
+      width: calc(80% - 0px);
+    }
+  }
+
+  .select-work-item__error {
+    width: 80%;
+    align-self: flex-end;
+    margin-top: 1px;
+    font-size: 0.75rem;
+    // position: absolute;
+    // top: 2rem;
+    background-color: #f73434;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  .select-work-item__searchbar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: calc(100% - 0px);
+    .select-work-item__input {
+      border: 1px solid #bbbbbb;
+      width: 100%;
+      padding: 5px 10px;
+      border-radius: 0px !important;
+      border-top-left-radius: 10px !important;
+      border-bottom-left-radius: 10px !important;
+      z-index: 0;
+
+      &:focus {
+        border: 1px solid $button__background--inverted;
+      }
+
+      &--error {
+        border: 1px solid #f73434 !important;
+      }
+    }
+
+    .select-work-item__search_button {
+      border: 0;
+      flex: 0 1 15%;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      outline: none;
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: 80%;
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+      }
+    }
+  }
+
+  .tableview-work {
+      width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .select-work-item__input {
+      flex-wrap: wrap;
+      .select-work-item__input_field {
+        width: 100%;
+      }
+    }
+  }
+}

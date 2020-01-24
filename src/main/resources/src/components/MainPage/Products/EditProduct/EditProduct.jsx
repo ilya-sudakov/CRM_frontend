@@ -4,14 +4,17 @@ import { getProductById, editProduct } from '../../../../utils/RequestsAPI/Produ
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
+import { imgToBlobDownload } from '../../../../utils/functions.jsx'
 
 const EditProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
         name: "",
         item: "",
         weight: "",
+        productionLocation: "ЦехЛЭМЗ",
         group: "",
         unit: "шт.",
+        vendor: "",
         photo: "",
         category: "",
         packaging: "",
@@ -21,6 +24,7 @@ const EditProduct = (props) => {
         name: false,
         category: false,
         comment: false,
+        // productionLocation: false,
         packaging: false,
         photo: false,
         unit: false,
@@ -31,6 +35,7 @@ const EditProduct = (props) => {
         category: true,
         // comment: false,
         packaging: true,
+        productionLocation: true,
         // photo: false,
         unit: true,
         weight: true
@@ -81,6 +86,7 @@ const EditProduct = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        // console.log(productInputs);        
         const id = props.history.location.pathname.split("/products/edit/")[1];
         formIsValid() && editProduct(productInputs, id)
             .then(() => props.history.push("/products"))
@@ -151,6 +157,8 @@ const EditProduct = (props) => {
                         weight: oldProduct.weight,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
+                        vendor: oldProduct.vendor,
+                        productionLocation: oldProduct.productionLocation,
                         category: oldProduct.category,
                         comment: oldProduct.comment,
                         photo: oldProduct.photo
@@ -176,6 +184,7 @@ const EditProduct = (props) => {
                     <div className="edit_product__input_name">Фотография</div>
                     <div className="edit_product__product_img">
                         <img src={productInputs.photo} alt="" />
+                        <div className="edit_product__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
                     </div>
                 </div>
                 <InputText
@@ -210,6 +219,13 @@ const EditProduct = (props) => {
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
                 />
+                <InputText
+                    inputName="Артикул"
+                    defaultValue={productInputs.vendor}
+                    name="vendor"
+                    type="text"
+                    handleInputChange={handleInputChange}
+                />
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Единица измерения*</div>
                     <div className="edit_product__input_field">
@@ -240,12 +256,20 @@ const EditProduct = (props) => {
                     defaultValue={productInputs.comment}
                     handleInputChange={handleInputChange}
                 />
-                <InputText
-                    inputName="Место производства"
-                    name="productionLocation"
-                    defaultValue={productInputs.productionLocation}
-                    handleInputChange={handleInputChange}
-                />
+                <div className="edit_product__item">
+                    <div className="edit_product__input_name">Место производства*</div>
+                    <div className="edit_product__input_field">
+                        <select
+                            name="productionLocation"
+                            onChange={handleInputChange}
+                            value={productInputs.productionLocation}
+                        >
+                            <option>ЦехЛЭМЗ</option>
+                            <option>ЦехЛиговский</option>
+                            <option>ЦехЛепсари</option>
+                        </select>
+                    </div>
+                </div>
                 <div className="edit_product__item">
                     <div className="edit_product__input_name">Фотография</div>
                     <div className="edit_product__file_upload">

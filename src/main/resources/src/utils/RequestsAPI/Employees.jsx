@@ -14,6 +14,14 @@ export function getEmployeeById(id) {
     })
 }
 
+export function getEmployeesByWorkshop(Workshop) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/employee/workshop",
+        method: "POST",
+        body: JSON.stringify(Workshop)
+    })
+}
+
 export function deleteEmployee(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/employee/" + id,

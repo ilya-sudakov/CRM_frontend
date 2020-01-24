@@ -3,7 +3,7 @@
 .tableview_general_tasks {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 50px);
+  width: calc(100% - 25px);
   font-size: 100%;
   min-width: 950px;
   border-radius: 10px;
@@ -29,6 +29,7 @@
     top: calc(-6px); //test
     word-break: break-all;
     .tableview_general_tasks__col {
+      border: 1px solid $table-border__header;
       &:last-child {
         max-width: 125px;
       }
@@ -39,7 +40,7 @@
     display: flex;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid $table-border;
     text-align: center;
     transition: 0.2s ease-in-out;
     font-size: 75%;
@@ -50,7 +51,7 @@
       align-items: center;
       padding: 15px 5px;
       // flex: 0 1 12.5%;
-      border-right: 1px solid #cccccc; //border between columns
+      border-right: 1px solid $table-border; //border between columns
       // min-width: 100px;
       // max-width: 150px;
       &:nth-child(1) {
@@ -191,9 +192,9 @@
   }
 
   .tableview_general_tasks__row--status_in_production {
-    background-color: #87a8b6;
+    background-color: #6696aa;
     &:hover {
-      background-color: darken(#87a8b6, 5%);
+      background-color: darken(#6696aa, 5%);
     }
   }
 

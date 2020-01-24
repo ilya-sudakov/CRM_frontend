@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import { formatDateString } from '../../../../../utils/functions.jsx';
 import './TableView.scss';
+import { editTaskStatus } from '../../../../../utils/RequestsAPI/MainTasks.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -46,15 +47,15 @@ const TableView = (props) => {
     const handleConditionChange = (event) => {
         const condition = event.target.value;
         const id = event.target.getAttribute("id");
-        // editTaskStatus({
-        //     condition: condition
-        // }, id)
-        //     .then(() => {
-        //         props.loadData();
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     })
+        editTaskStatus({
+            condition: condition
+        }, id)
+            .then(() => {
+                props.loadData();
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     return (
@@ -85,8 +86,9 @@ const TableView = (props) => {
                         task.condition === "Проблема" && "tableview_general_tasks__row--status_problem" ||
                         task.condition === "Материалы" && "tableview_general_tasks__row--status_materials" ||
                         task.condition === "Отложено" && "tableview_general_tasks__row--status_waiting" ||
+                        task.condition === "В процессе" && "tableview_general_tasks__row--status_in_production" ||
                         task.condition === "Выполнено" && "tableview_general_tasks__row--status_ready" ||
-                        "tableview_general_tasks__row--status_ready"
+                        "tableview_general_tasks__row--status_materials"
                     )
                 }>
                     <div className="tableview_general_tasks__col">{task.id}</div>
@@ -102,9 +104,10 @@ const TableView = (props) => {
                             defaultValue={task.condition}
                             onChange={handleConditionChange}
                         >
-                            <option>Выполнено</option>
-                            <option>Отложено</option>
                             <option>Материалы</option>
+                            <option>Выполнено</option>
+                            <option>В процессе</option>
+                            <option>Отложено</option>
                             <option>Проблема</option>
                         </select>
                     </div>
