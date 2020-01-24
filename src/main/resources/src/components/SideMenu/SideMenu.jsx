@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import plusImg from '../../../../../../assets/sidemenu/plus_icon.svg'
+import plusImg from '../../../../../../assets/sidemenu/plus.png'
 import './SideMenu.scss';
 
 const SideMenu = (props) => {

@@ -49,10 +49,9 @@ class MainPage extends React.Component {
                         userHasAccess={this.props.userHasAccess}
                         hidden={this.state.sidemenu_hidden}
                     />
-                    <Suspense fallback={PageLoading}>
-                        <div className="main_page__activity_panel">
+                    <div className="main_page__activity_panel">
+                        <Suspense fallback={PageLoading}>
                             <Switch>
-                                {/* <Route exact path="/" component={GeneralPage} /> */}
                                 <PrivateRoute
                                     exact path="/"
                                     component={GeneralPage}
@@ -241,8 +240,8 @@ class MainPage extends React.Component {
                                 />
                                 <Route component={PageNotFound} />
                             </Switch>
-                        </div>
                     </Suspense>
+                    </div>
                 </div>
             </div>
         );
