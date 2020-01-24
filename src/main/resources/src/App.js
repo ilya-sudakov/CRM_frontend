@@ -71,7 +71,7 @@ class App extends React.Component {
           <Route path="/login"
             render={(props) => <LoginPage isAuthorized={this.state.isAuthorized} setUserData={this.setUserData} {...props} />}
           />
-          <Suspense fallback={PageLoading}>
+          <Suspense fallback={<PageLoading />}>
             <PrivateRoute path="/"
               isAuthorized={this.state.isAuthorized}
               userData={this.state.userData}

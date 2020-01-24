@@ -32,7 +32,7 @@ const LEMZ = (props) => {
                 </div>
             </div>
             <div className="requests__content">
-                <Suspense fallback={PageLoading}>
+                <Suspense fallback={<PageLoading />}>
                     <Switch>
                         <PrivateRoute
                             exact path="/lemz/workshop-lemz"

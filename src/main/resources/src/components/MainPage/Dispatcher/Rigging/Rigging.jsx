@@ -48,7 +48,7 @@ const Rigging = (props) => {
                 </div>
             </div>
             <div className="rigging__content">
-                <Suspense fallback={PageLoading}>
+                <Suspense fallback={<PageLoading />}>
                     <Switch>
                         <PrivateRoute
                             exact path="/dispatcher/rigging/stamp"
@@ -143,7 +143,7 @@ const Rigging = (props) => {
                         <PrivateRoute
                             path={"/dispatcher/rigging/" + (
                                 props.location.pathname.includes('stamp') && "stamp" ||
-                                props.location.pathname.includes('machine') && "machine" || 
+                                props.location.pathname.includes('machine') && "machine" ||
                                 props.location.pathname.includes('press-form') && "press-form"
                             ) + "/edit-part/"}
                             component={EditPartInRigging}

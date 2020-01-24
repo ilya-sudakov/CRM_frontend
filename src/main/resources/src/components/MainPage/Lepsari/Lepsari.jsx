@@ -32,7 +32,7 @@ const Lepsari = (props) => {
                 </div>
             </div>
             <div className="requests__content">
-                <Suspense fallback={PageLoading}>
+                <Suspense fallback={<PageLoading />}>
                     <Switch>
                         <PrivateRoute
                             exact path="/lepsari/workshop-lepsari"
