@@ -39,7 +39,7 @@ const TableViewCategory = (props) => {
 
     useEffect(() => {
         props.setShowWindow && props.setShowWindow(false);
-    }, [props.closeWindow])
+    }, [props.data, props.closeWindow])
 
     return (
         <div className="tableview-category">
