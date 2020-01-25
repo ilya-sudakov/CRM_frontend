@@ -46,7 +46,7 @@ const SideMenu = (props) => {
             pathname: "/lemz/workshop-lemz",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
-            addButtonName: "Добавить заявку"
+            addButtonName: "Добавить план производства"
         },
         {
             pathname: "/lepsari/",
@@ -58,7 +58,7 @@ const SideMenu = (props) => {
             pathname: "/lepsari/workshop-lepsari",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI'],
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI'],
-            addButtonName: "Добавить заявку"
+            addButtonName: "Добавить план производства"
         },
         {
             pathname: "/lemz/workshop-storage",
@@ -144,16 +144,20 @@ const SideMenu = (props) => {
 
     return (
         <div className={props.hidden ? "sidemenu--hidden" : "sidemenu"}>
-            {sidemenuItems.map((item) => {
-                return <Link className={(
-                    item.addButtonName &&
-                    props.userHasAccess(item.addButtonRoles) &&
-                    props.location.pathname.includes(item.pathname)
-                ) ? "sidemenu__item--add" : "sidemenu__item--add sidemenu__item--hidden"
-                } to={item.pathname + '/new'} >
-                    <span>{item.addButtonName}</span>
-                </Link>
-            })}
+            <div className="sidemenu__add-buttons">
+                {
+                    sidemenuItems.map((item) => {
+                        return <Link className={(
+                            item.addButtonName &&
+                            props.userHasAccess(item.addButtonRoles) &&
+                            props.location.pathname.includes(item.pathname)
+                        ) ? "sidemenu__item--add" : "sidemenu__item--add sidemenu__item--hidden"
+                        } to={item.pathname + '/new'} >
+                            <span>{item.addButtonName}</span>
+                        </Link>
+                    })
+                }
+            </div>
             {
                 sidemenuItems.map((item) => {
                     return (
@@ -176,7 +180,7 @@ const SideMenu = (props) => {
                         </div>
                 })
             }
-        </div>
+        </div >
     );
 };
 

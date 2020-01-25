@@ -21,6 +21,14 @@
   overflow-y: auto;
   overflow-x: hidden;
 
+  .sidemenu__add-buttons {
+    display: flex;
+    flex-direction: column;
+    min-height: 40px;
+    // justify-content: center;
+    align-items: center;
+  }
+
   &__item,
   &__item--add {
     display: flex;
@@ -68,6 +76,7 @@
       // white-space: nowrap;
       transform-origin: 0 0;
       transition: 0.2s ease-in-out;
+      margin-bottom: 0;
 
       // .sidemenu__img {
       //   // margin-left: 5px;
