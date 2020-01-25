@@ -111,7 +111,10 @@ const TableView = (props) => {
                 <div className="tableview_requests_lepsari__col">Кодовое слово</div>
                 <div className="tableview_requests_lepsari__col">Ответственный</div>
                 <div className="tableview_requests_lepsari__col">Статус</div>
-                <div className="tableview_requests_lepsari__col">Дата отгрузки</div>
+                <div className="tableview_requests_lepsari__col">
+                    <span>Дата отгрузки</span>
+                    <img name="shippingDate" className="tableview_requests_lepsari__img" onClick={changeSortOrder} src={sortIcon} />
+                </div>
                 <div className="tableview_requests_lepsari__col">Комментарий</div>
                 <div className="tableview_requests_lepsari__col">Действия</div>
             </div>

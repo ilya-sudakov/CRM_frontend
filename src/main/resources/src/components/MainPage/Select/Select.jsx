@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import deleteSVG from '../../../../../../../assets/select/delete.svg';
 import './Select.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
@@ -152,9 +152,19 @@ const Select = (props) => {
             })
         })
         setSelected([...newSelected]);
-        console.log(color, id, newSelected);
+        // console.log(color, id, newSelected);
         props.onChange([...newSelected]);
     }
+
+    const pressEscKey = useCallback((event) => {
+        if (event.keyCode === 27) {
+            const options = document.getElementsByClassName("select__options")[0];
+            if (!options.classList.contains("select__options--hidden")) {
+                // options.classList.add("select__options--hidden");
+                clickOnInput();
+            }
+        }
+    }, [])
 
     useEffect(() => {
         if (props.defaultValue !== undefined) {
@@ -163,7 +173,11 @@ const Select = (props) => {
         // if (props.options !== undefined) {
         //     setOptions([...props.options])
         // }
+        document.addEventListener("keydown", pressEscKey, false);
         (categories.length === 0) && loadCategories();
+        return () => {
+            document.removeEventListener("keydown", pressEscKey, false);
+        };
     }, [props.defaultValue])
 
     return (

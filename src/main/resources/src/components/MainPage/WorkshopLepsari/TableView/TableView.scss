@@ -58,9 +58,11 @@
         padding: 0;
       }
 
+      //Дата отгрузки
       &:nth-child(9) {
         flex: 0 1 8%;
-        max-width: 65px;
+        max-width: 100px;
+        // max-width: 65px;
       }
 
       &:nth-child(10) {
@@ -188,9 +190,10 @@
         }
       }
 
+      //Дата отгрузки
       &:nth-child(7) {
         flex: 0 1 8%;
-        max-width: 65px;
+        max-width: 100px;
       }
 
       //Комментарий

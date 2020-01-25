@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import deleteSVG from '../../../../../../../assets/select/delete.svg';
 import './SelectUser.scss';
 import { getUsers } from '../../../utils/RequestsAPI/Users.jsx';
@@ -52,6 +52,17 @@ const SelectUser = (props) => {
         props.onChange(value);
     }
 
+    const pressEscKey = useCallback((event) => {
+        if (event.keyCode === 27) {
+            const options = document.getElementsByClassName("select_user__options")[0];
+            const overlay = document.getElementsByClassName("select_user__overlay")[0];
+            if (!options.classList.contains("select_user__options--hidden")) {
+                options.classList.add("select_user__options--hidden");
+                overlay.classList.add("select_user__overlay--hidden");
+            }
+        }
+    }, [])
+
     useEffect(() => {
         // if (props.options !== undefined) {
         //     setOptions([...props.options])
@@ -67,6 +78,10 @@ const SelectUser = (props) => {
         if (props.defaultValue) {
             setSelectedUser(props.defaultValue);
         }
+        document.addEventListener("keydown", pressEscKey, false);
+        return () => {
+            document.removeEventListener("keydown", pressEscKey, false);
+        };
     }, [options])
 
     return (
