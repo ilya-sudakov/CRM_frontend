@@ -5,7 +5,7 @@ import './ViewRequest.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestById } from '../../../../utils/RequestsAPI/Requests.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
-import { formatDateString, getPdfText } from '../../../../utils/functions.jsx';
+import { formatDateString, getRequestPdfText } from '../../../../utils/functions.jsx';
 
 const ViewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -52,13 +52,13 @@ const ViewRequest = (props) => {
 
     const PrintRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, '', itemId);
+        let dd = getRequestPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, '', itemId);
         pdfMake.createPdf(dd).print();
     }
 
     const DownloadRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, '', itemId);
+        let dd = getRequestPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, '', itemId);
         pdfMake.createPdf(dd).download('заявка№' + itemId + '_' + formatDateString(requestInputs.date) + '.pdf');
     }
 

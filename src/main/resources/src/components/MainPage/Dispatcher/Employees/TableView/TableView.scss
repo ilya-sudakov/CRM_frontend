@@ -28,6 +28,7 @@
     position: sticky; //test
     top: calc(-6px); //test
     word-break: break-all;
+    cursor: auto !important;
     font-weight: normal !important;
     .tableview_employees__col {
       border-right: 1px solid #cccccc; //border between columns

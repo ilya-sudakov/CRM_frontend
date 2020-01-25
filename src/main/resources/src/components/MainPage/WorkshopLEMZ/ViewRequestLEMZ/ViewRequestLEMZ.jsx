@@ -5,7 +5,7 @@ import './ViewRequestLEMZ.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestLEMZById } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
-import { getPdfText, formatDateString } from '../../../../utils/functions.jsx';
+import { getRequestPdfText, formatDateString } from '../../../../utils/functions.jsx';
 
 const ViewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -56,13 +56,13 @@ const ViewRequestLEMZ = (props) => {
 
     const PrintRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛЭМЗ', itemId);
+        let dd = getRequestPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛЭМЗ', itemId);
         pdfMake.createPdf(dd).print();
     }
 
     const DownloadRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛЭМЗ', itemId);
+        let dd = getRequestPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛЭМЗ', itemId);
         pdfMake.createPdf(dd).download('ПланПроизводства№' + itemId + '_' + formatDateString(requestInputs.date) + '.pdf');
     }
 

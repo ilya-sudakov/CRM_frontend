@@ -30,7 +30,7 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
     img.src = "url-to-image";
 }
 
-export const getPdfText = (date, requestProducts, codeWord, workshopName, itemId) => {
+export const getRequestPdfText = (date, requestProducts, codeWord, workshopName, itemId) => {
     let productsArr = requestProducts.map((item) => {
         return [item.name, item.quantity, item.packaging, '', '']
     })

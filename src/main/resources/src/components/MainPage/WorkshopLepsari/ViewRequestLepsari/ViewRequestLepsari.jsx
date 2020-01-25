@@ -5,7 +5,7 @@ import './ViewRequestLepsari.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestLepsariById } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
-import { getPdfText, formatDateString } from '../../../../utils/functions.jsx';
+import { getRequestPdfText, formatDateString } from '../../../../utils/functions.jsx';
 
 const ViewRequestLepsari = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -56,13 +56,13 @@ const ViewRequestLepsari = (props) => {
 
     const PrintRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛепсари', itemId);
+        let dd = getRequestPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛепсари', itemId);
         pdfMake.createPdf(dd).print();
     }
 
     const DownloadRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛепсари', itemId);
+        let dd = getRequestPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛепсари', itemId);
         pdfMake.createPdf(dd).download('ПланПроизводства№' + itemId + '_' + formatDateString(requestInputs.date) + '.pdf');
     }
 
