@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './NewMachine.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addMachine, addPartsToMachine } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
@@ -121,9 +122,9 @@ const NewMachine = (props) => {
     }, [])
 
     return (
-        <div className="new_machine">
-            <div className="new_machine__title">Новый станок</div>
-            <form className="new_machine__form">
+        <div className="main-form">
+            <div className="main-form__title">Новый станок</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -154,16 +155,19 @@ const NewMachine = (props) => {
                     name="comment"
                     handleInputChange={handleInputChange}
                 />
-                <div className="new_machine__item">
-                    <div className="new_machine__input_name">Детали*</div>
-                    <div className="new_machine__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
                         />
                     </div>
                 </div>
-                <div className="new_machine__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_machine__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/machine')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                </div>
             </form>
         </div>
     )

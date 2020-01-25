@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './EditPressForm.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getPressFormById, editPressForm, editPartFromPressForm, addPartsToPressForm, deletePartsFromPressForm } from '../../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
@@ -169,9 +170,9 @@ const EditPressForm = (props) => {
     }, [])
 
     return (
-        <div className="edit_press_form">
-            <div className="edit_press_form__title">Редактирование пресс-формы</div>
-            <form className="edit_press_form__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование пресс-формы</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -205,17 +206,20 @@ const EditPressForm = (props) => {
                     defaultValue={pressFormInputs.comment}
                     handleInputChange={handleInputChange}
                 />
-                <div className="edit_press_form__item">
-                    <div className="edit_press_form__input_name">Детали*</div>
-                    <div className="edit_press_form__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
                             defaultValue={pressFormInputs.pressParts}
                         />
                     </div>
                 </div>
-                <div className="edit_press_form__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_press_form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/press-form')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                </div>
             </form>
         </div>
     )

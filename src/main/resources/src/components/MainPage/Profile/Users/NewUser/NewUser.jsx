@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewUser.scss';
+import '../../../../../utils/Form/Form.scss';
 import { addUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
@@ -90,9 +91,9 @@ const NewUser = (props) => {
     }, [])
 
     return (
-        <div className="new_user">
-            <div className="new_user__title">Создание пользователя</div>
-            <form className="new_user__form">
+        <div className="main-form">
+            <div className="main-form__title">Создание пользователя</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -125,9 +126,9 @@ const NewUser = (props) => {
                     errorsArr={userErrors}
                     setErrorsArr={setUserErrors}
                 />
-                <div className="new_user__item">
-                    <div className="new_user__input_name">Роль</div>
-                    <div className="new_user__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Роль</div>
+                    <div className="main-form__input_field">
                         <select
                             name="role"
                             onChange={handleInputChange}
@@ -141,8 +142,11 @@ const NewUser = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="new_user__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_user__submit" type="submit" onClick={handleSubmit} value="Добавить пользователя" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/profile/users')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить пользователя" />
+                </div>
             </form>
         </div>
     );

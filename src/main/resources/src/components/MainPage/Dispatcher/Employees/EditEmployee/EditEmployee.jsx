@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditEmployee.scss';
+import '../../../../../utils/Form/Form.scss';
 import { getEmployeeById, editEmployee } from '../../../../../utils/RequestsAPI/Employees.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
@@ -188,9 +189,9 @@ const EditEmployee = (props) => {
     }
 
     return (
-        <div className="edit_employee">
-            <div className="edit_employee__title">Редактирование сотрудника</div>
-            <form className="edit_employee__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование сотрудника</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -246,9 +247,9 @@ const EditEmployee = (props) => {
                     defaultValue={employeeInputs.citizenship}
                     handleInputChange={handleInputChange}
                 />
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Цех*</div>
-                    <div className="edit_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Цех*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="workshop"
                             onChange={handleInputChange}
@@ -272,19 +273,19 @@ const EditEmployee = (props) => {
                     setErrorsArr={setEmployeeErrors}
                     handleInputChange={handleInputChange}
                 />
-                {employeeInputs.passportScan1 && <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Паспорт</div>
-                    <div className="edit_employee__passport_img">
+                {employeeInputs.passportScan1 && <div className="main-form__item">
+                    <div className="main-form__input_name">Паспорт</div>
+                    <div className="main-form__passport_img">
                         {/* {employeeInputs.passportScan.map((photo) => (
                             <img src={photo} alt=""/>
                         ))} */}
                         <img src={employeeInputs.passportScan1} alt="" />
                     </div>
                 </div>}
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Паспорт*</div>
-                    <div className="edit_employee__file_upload">
-                        <div className="edit_employee__file_name">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Паспорт*</div>
+                    <div className="main-form__file_upload">
+                        <div className="main-form__file_name">
                             {/* {imgName.map((photo) => {
                                 return (
                                     <div>
@@ -294,7 +295,7 @@ const EditEmployee = (props) => {
                             })} */}
                             {imgName}
                         </div>
-                        <label className="edit_employee__label" htmlFor="file">
+                        <label className="main-form__label" htmlFor="file">
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
@@ -311,9 +312,9 @@ const EditEmployee = (props) => {
                     errorsArr={employeeErrors}
                     setErrorsArr={setEmployeeErrors}
                 />
-                <div className="edit_employee__item">
-                    <div className="edit_employee__input_name">Актуальность*</div>
-                    <div className="edit_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Актуальность*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="relevance"
                             onChange={handleInputChange}
@@ -324,8 +325,11 @@ const EditEmployee = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="edit_employee__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_employee__submit" type="submit" onClick={handleSubmit} value="Изменить сотрудника" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/employees')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить сотрудника" />
+                </div>
             </form>
         </div>
     );

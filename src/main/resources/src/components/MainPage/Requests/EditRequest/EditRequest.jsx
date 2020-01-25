@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditRequest.scss';
+import '../../../../utils/Form/Form.scss';
 import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
 import { getRequestById, editRequest, addProductsToRequest, editProductsToRequest, deleteProductsToRequest } from '../../../../utils/RequestsAPI/Requests.jsx';
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
@@ -234,9 +235,9 @@ const EditRequest = (props) => {
     }, [])
 
     return (
-        <div className="edit_request">
-            <div className="edit_request__title">Редактирование заявки</div>
-            <form className="edit_request__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование заявки</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -254,7 +255,7 @@ const EditRequest = (props) => {
                 />
                 <InputProducts
                     inputName="Продукция"
-userHasAccess={props.userHasAccess}                    
+                    userHasAccess={props.userHasAccess}
                     required
                     options={products}
                     onChange={handleProductsChange}
@@ -276,8 +277,8 @@ userHasAccess={props.userHasAccess}
                 />
                 <InputUser
                     inputName="Ответственный"
-                    
-userData={props.userData}           
+
+                    userData={props.userData}
                     required
                     error={requestErrors.responsible}
                     name="responsible"
@@ -288,9 +289,9 @@ userData={props.userData}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="edit_request__item">
-                    <div className="edit_request__input_name">Статус*</div>
-                    <div className="edit_request__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Статус*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="status"
                             onChange={handleInputChange}
@@ -308,8 +309,11 @@ userData={props.userData}
                         </select>
                     </div>
                 </div>
-                <div className="edit_request__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_request__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <div className="main-form__submit main-form__submit--inverted" onClick={() => props.history.push("/requests")}>Вернуться назад</div>
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                </div>
             </form>
         </div>
     );

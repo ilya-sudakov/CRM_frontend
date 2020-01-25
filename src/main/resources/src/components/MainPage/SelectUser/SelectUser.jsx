@@ -72,7 +72,6 @@ const SelectUser = (props) => {
     return (
         <div className="select_user">
             {search().length != 0 && <div className="select_user__overlay select_user__overlay--hidden" onClick={clickOverlay}></div>}
-
             <input
                 type="text"
                 className="select_user__input"

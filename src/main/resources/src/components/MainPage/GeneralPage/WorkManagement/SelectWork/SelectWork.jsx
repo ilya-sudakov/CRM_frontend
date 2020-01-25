@@ -143,6 +143,7 @@ const SelectWork = (props) => {
                                     setSelected([...temp]);
                                     props.handleWorkChange([...temp])
                                 }}
+                                userHasAccess={props.userHasAccess}
                                 // error={requestErrors.requestProducts}
                                 searchPlaceholder="Введите название продукта для поиска..."
                             // errorsArr={requestErrors}

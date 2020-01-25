@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './EditMachine.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { editMachine, editPartsOfMachine, deletePartsFromMachine, getMachineById, addPartsToMachine } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
@@ -169,9 +170,9 @@ const EditMachine = (props) => {
     }, [])
 
     return (
-        <div className="edit_machine">
-            <div className="edit_machine__title">Редактирование станка</div>
-            <form className="edit_machine__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование станка</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -205,17 +206,20 @@ const EditMachine = (props) => {
                     defaultValue={machineInputs.comment}
                     handleInputChange={handleInputChange}
                 />
-                <div className="edit_machine__item">
-                    <div className="edit_machine__input_name">Детали*</div>
-                    <div className="edit_machine__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
                             defaultValue={machineInputs.benchParts}
                         />
                     </div>
                 </div>
-                <div className="edit_machine__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_machine__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/machine')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                </div>
             </form>
         </div>
     )

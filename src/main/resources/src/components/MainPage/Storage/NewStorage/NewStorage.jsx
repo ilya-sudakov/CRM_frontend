@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewStorage.scss';
+import '../../../../utils/Form/Form.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import { addStorage } from '../../../../utils/RequestsAPI/Workshop/LemzStorage.jsx';
@@ -88,9 +89,9 @@ const NewPart = (props) => {
         document.title = "Добавление детали на склад";
     }, [])
     return (
-        <div className="new_storage">
-            <div className="new_storage__title">Новая деталь</div>
-            <form className="new_storage__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая деталь</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -133,8 +134,11 @@ const NewPart = (props) => {
                     errorsArr={storageErrors}
                     setErrorsArr={setStorageErrors}
                 />
-                <div className="new_storage__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_storage__submit" type="submit" onClick={handleSubmit} value="Добавить деталь" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lemz/workshop-storage')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить деталь" />
+                </div>
             </form>
         </div>
     );

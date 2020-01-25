@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { addRequest, addProductsToRequest } from '../../../../utils/RequestsAPI/Requests.jsx';
 import './NewRequest.scss';
+import '../../../../utils/Form/Form.scss';
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
@@ -168,9 +169,9 @@ const NewRequest = (props) => {
     }
 
     return (
-        <div className="new_request">
-            <div className="new_request__title">Новая заявка</div>
-            <form className="new_request__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая заявка</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -218,8 +219,11 @@ const NewRequest = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <div className="main-form__submit main-form__submit--inverted" onClick={() => props.history.push("/requests")}>Вернуться назад</div>
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                </div>
             </form>
         </div>
     );

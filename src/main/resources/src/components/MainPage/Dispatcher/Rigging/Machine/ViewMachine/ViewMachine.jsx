@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ViewMachine.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getMachineById } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 
@@ -35,12 +36,12 @@ const ViewMachine = (props) => {
     }, [])
 
     return (
-        <div className="view_machine">
-            <div className="view_machine__title">Просмотр станка</div>
-            <form className="view_machine__form">
-                <div className="view_machine__item">
-                    <div className="view_machine__input_name">Название</div>
-                    <div className="view_machine__input_field">
+        <div className="main-form">
+            <div className="main-form__title">Просмотр станка</div>
+            <form className="main-form__form">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Название</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="name"
                             autoComplete="off"
@@ -49,9 +50,9 @@ const ViewMachine = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_machine__item">
-                    <div className="view_machine__input_name">Артикул</div>
-                    <div className="view_machine__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Артикул</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="number"
                             autoComplete="off"
@@ -60,9 +61,9 @@ const ViewMachine = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_machine__item">
-                    <div className="view_machine__input_name">Комментарий</div>
-                    <div className="view_machine__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Комментарий</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="comment"
                             autoComplete="off"
@@ -71,16 +72,18 @@ const ViewMachine = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_machine__item">
-                    <div className="view_machine__input_name">Детали</div>
-                    <div className="view_machine__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             readOnly
                             defaultValue={machineInputs.benchParts}
                         />
                     </div>
                 </div>
-                <input className="view_machine__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                </div>
             </form>
         </div>
     )

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewProduct.scss';
+import '../../../../utils/Form/Form.scss';
 import { addProduct } from '../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
@@ -153,12 +154,12 @@ const NewProduct = (props) => {
     }, [])
 
     return (
-        <div className="new_product">
-            <div className="new_product__title">Новая продукция</div>
-            <form className="new_product__form">
-                {productInputs.photo && <div className="new_product__item">
-                    <div className="new_product__input_name">Фотография</div>
-                    <div className="new_product__product_img">
+        <div className="main-form">
+            <div className="main-form__title">Новая продукция</div>
+            <form className="main-form__form">
+                {productInputs.photo && <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография</div>
+                    <div className="main-form__product_img">
                         <img src={productInputs.photo} alt="" />
                     </div>
                 </div>}
@@ -204,9 +205,9 @@ const NewProduct = (props) => {
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
                 />
-                <div className="new_product__item">
-                    <div className="new_product__input_name">Единица измерения*</div>
-                    <div className="new_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Единица измерения*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="unit"
                             onChange={handleInputChange}
@@ -231,9 +232,9 @@ const NewProduct = (props) => {
                     name="comment"
                     handleInputChange={handleInputChange}
                 />
-                <div className="new_product__item">
-                    <div className="new_product__input_name">Место производства*</div>
-                    <div className="new_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Место производства*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="productionLocation"
                             onChange={handleInputChange}
@@ -244,21 +245,24 @@ const NewProduct = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="new_product__item">
-                    <div className="new_product__input_name">Фотография</div>
-                    <div className="new_product__file_upload">
-                        <div className="new_product__file_name">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография</div>
+                    <div className="main-form__file_upload">
+                        <div className="main-form__file_name">
                             {imgName}
                         </div>
-                        <label className="new_product__label" htmlFor="file">
+                        <label className="main-form__label" htmlFor="file">
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
                         <input type="file" name="file" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
-                <div className="new_product__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_product__submit" type="submit" onClick={handleSubmit} value="Добавить продукцию" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/products')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить продукцию" />
+                </div>
             </form>
         </div>
     );

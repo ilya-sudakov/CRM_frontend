@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './NewStamp.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addPartsToStamp, addStamp } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
@@ -121,9 +122,9 @@ const NewStamp = (props) => {
     }, [])
 
     return (
-        <div className="new_stamp">
-            <div className="new_stamp__title">Новый штамп</div>
-            <form className="new_stamp__form">
+        <div className="main-form">
+            <div className="main-form__title">Новый штамп</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -154,16 +155,19 @@ const NewStamp = (props) => {
                     name="comment"
                     handleInputChange={handleInputChange}
                 />
-                <div className="new_stamp__item">
-                    <div className="new_stamp__input_name">Детали*</div>
-                    <div className="new_stamp__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
                         />
                     </div>
                 </div>
-                <div className="new_stamp__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_stamp__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/stamp')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                </div>
             </form>
         </div>
     )

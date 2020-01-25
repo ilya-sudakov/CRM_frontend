@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditStorage.scss';
+import '../../../../../utils/Form/Form.scss';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import { editStorage, getStorageById } from '../../../../../utils/RequestsAPI/Workshop/LepsariStorage.jsx';
@@ -111,9 +112,9 @@ const EditPart = (props) => {
         }
     }, [])
     return (
-        <div className="edit_storage">
-            <div className="edit_storage__title">Редактирование детали</div>
-            <form className="edit_storage__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование детали</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -160,8 +161,11 @@ const EditPart = (props) => {
                     errorsArr={storageErrors}
                     setErrorsArr={setStorageErrors}
                 />
-                <div className="edit_storage__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_storage__submit" type="submit" onClick={handleSubmit} value="Изменить деталь" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lepsari/workshop-storage')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить деталь" />
+                </div>
             </form>
         </div>
     );

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './RecordWork.scss';
+import '../../../../../utils/Form/Form.scss';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
 import SelectWork from '../SelectWork/SelectWork.jsx';
 
@@ -119,9 +119,9 @@ const RecordWork = (props) => {
     })
 
     return (
-        <div className="record-work">
-            <div className="record-work__title">Новая запись о работе</div>
-            <form className="record-work__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая запись о работе</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -170,9 +170,9 @@ const RecordWork = (props) => {
                     readOnly
                 />
                 {/* Создание работы */}
-                <div className="record-work__item">
-                    <div className="record-work__input_name">Работы*</div>
-                    <div className="record-work__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Работы*</div>
+                    <div className="main-form__input_field">
                         <SelectWork
                             handleWorkChange={(value) => {
                                 validateField("works", value);
@@ -189,8 +189,11 @@ const RecordWork = (props) => {
                         />
                     </div>
                 </div>
-                <div className="record-work__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="record-work__submit" type="submit" onClick={handleSubmit} value="Создать запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Создать запись" />
+                </div>
             </form>
         </div>
     );

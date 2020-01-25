@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditUser.scss';
+import '../../../../../utils/Form/Form.scss';
 import { getUserById, editUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
@@ -111,9 +112,9 @@ const EditUser = (props) => {
     }, [])
 
     return (
-        <div className="edit_user">
-            <div className="edit_user__title">Редактирование пользователя</div>
-            <form className="edit_user__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование пользователя</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -148,8 +149,11 @@ const EditUser = (props) => {
                     errorsArr={userErrors}
                     setErrorsArr={setUserErrors}
                 />
-                <div className="edit_user__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_user__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/profile/users')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                </div>
             </form>
         </div>
     );

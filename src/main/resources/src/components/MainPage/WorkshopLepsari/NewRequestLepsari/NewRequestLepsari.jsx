@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './NewRequestLepsari.scss';
+import '../../../../utils/Form/Form.scss';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
@@ -185,9 +186,9 @@ const NewRequestLepsari = (props) => {
     }
 
     return (
-        <div className="new_request_lepsari">
-            <div className="new_request_lepsari__title">Новая заявка Лепсари</div>
-            <form className="new_request_lepsari__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая заявка Лепсари</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -226,8 +227,7 @@ const NewRequestLepsari = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
-                    
-userData={props.userData}           
+                    userData={props.userData}
                     required
                     error={requestErrors.responsible}
                     name="responsible"
@@ -236,9 +236,9 @@ userData={props.userData}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request_lepsari__item">
-                    <div className="new_request_lepsari__input_name">Статус*</div>
-                    <div className="new_request_lepsari__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Статус*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="status"
                             onChange={handleInputChange}
@@ -271,8 +271,11 @@ userData={props.userData}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request_lepsari__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_request_lepsari__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lepsari/workshop-lepsari')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                </div>
             </form>
         </div>
     );

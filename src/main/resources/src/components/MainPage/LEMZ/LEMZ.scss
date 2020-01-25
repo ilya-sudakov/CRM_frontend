@@ -95,6 +95,23 @@
     z-index: 5;
     transition: 0.2s ease-in-out;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+
+    .main-form {
+      padding: 0;
+
+      .main-form__title {
+        margin-bottom: 0;
+      }
+      .main-form__form {
+        box-shadow: none;
+        width: calc(100% - 40px);
+        padding: 0;
+
+        .input_date:first-child() {
+          margin-top: 15px;
+        }
+      }
+    }
   }
 
   @media (max-width: 620px) {

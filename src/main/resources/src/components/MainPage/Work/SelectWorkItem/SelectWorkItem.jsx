@@ -35,7 +35,7 @@ const SelectWorkItem = (props) => {
         <div className="select-work-item">
             <div className="select-work-item__input">
                 <div className="select-work-item__input_name">{props.inputName + (props.required ? '*' : '')}</div>
-                <div className={"select-work-item__input_field"}>
+                <div className="select-work-item__input_field">
                     <div className="select-work-item__searchbar">
                         <input
                             type="text"

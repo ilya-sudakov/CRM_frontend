@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditCategory.scss';
+import '../../../../../utils/Form/Form.scss';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import { addCategory, getCategoryById, editCategory } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
@@ -97,9 +98,9 @@ const EditCategory = (props) => {
     }, [])
 
     return (
-        <div className="edit-category">
-            <div className="edit-category__title">Редактирование категории</div>
-            <form className="edit-category__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование категории</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -115,8 +116,11 @@ const EditCategory = (props) => {
                     errorsArr={errors}
                     setErrorsArr={setErrors}
                 />
-                <div className="edit-category__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit-category__submit" type="submit" onClick={handleSubmit} value="Редактировать категорию" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/products')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать категорию" />
+                </div>
             </form>
         </div>
     );

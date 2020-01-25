@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ViewProduct.scss';
+import '../../../../utils/Form/Form.scss';
 import { getProductById } from '../../../../utils/RequestsAPI/Products.jsx';
 import { imgToBlobDownload } from '../../../../utils/functions.jsx'
 
@@ -56,65 +57,67 @@ const ViewProduct = (props) => {
 
 
     return (
-        <div className="view_product">
-            <div className="view_product__title">Просмотр продукта</div>
-            <form className="view_product__form">
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Фотография</div>
-                    {productInputs.photo !== '' && <div className="view_product__product_img">
+        <div className="main-form">
+            <div className="main-form__title">Просмотр продукта</div>
+            <form className="main-form__form">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография</div>
+                    {productInputs.photo !== '' && <div className="main-form__product_img">
                         <img src={productInputs.photo} alt="" />
-                        <div className="view_product__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
+                        <div className="main-form__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
                     </div>}
                 </div>
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Наименование</div>
-                    <div className="view_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Наименование</div>
+                    <div className="main-form__input_field">
                         <input type="text" name="name" defaultValue={productInputs.name} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Категория</div>
-                    <div className="view_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Категория</div>
+                    <div className="main-form__input_field">
                         <input type="text" name="weight" defaultValue={productInputs.category} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Вес изделия</div>
-                    <div className="view_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Вес изделия</div>
+                    <div className="main-form__input_field">
                         <input type="text" name="weight" defaultValue={productInputs.weight} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Единица измерения</div>
-                    <div className="view_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Единица измерения</div>
+                    <div className="main-form__input_field">
                         <input type="text" name="unit" defaultValue={productInputs.unit} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Артикул</div>
-                    <div className="view_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Артикул</div>
+                    <div className="main-form__input_field">
                         <input type="text" name="vendor" defaultValue={productInputs.vendor} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Упаковка</div>
-                    <div className="view_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Упаковка</div>
+                    <div className="main-form__input_field">
                         <input type="text" name="packaging" defaultValue={productInputs.packaging} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Место производства</div>
-                    <div className="view_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Место производства</div>
+                    <div className="main-form__input_field">
                         <input type="text" name="productionLocation" defaultValue={productInputs.productionLocation} readOnly />
                     </div>
                 </div>
-                <div className="view_product__item">
-                    <div className="view_product__input_name">Комментарий</div>
-                    <div className="view_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Комментарий</div>
+                    <div className="main-form__input_field">
                         <input type="text" name="comment" defaultValue={productInputs.comment} readOnly />
                     </div>
                 </div>
-                <input className="view_product__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                </div>
             </form>
         </div>
     );

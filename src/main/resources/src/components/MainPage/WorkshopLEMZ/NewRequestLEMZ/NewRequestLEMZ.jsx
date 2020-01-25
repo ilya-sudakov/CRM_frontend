@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
 import { addRequestLEMZ, addProductsToRequestLEMZ } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import './NewRequestLEMZ.scss';
+import '../../../../utils/Form/Form.scss';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
@@ -193,9 +193,9 @@ const NewRequestLEMZ = (props) => {
     }
 
     return (
-        <div className="new_request_lemz">
-            <div className="new_request_lemz__title">Новая заявка ЛЭМЗ</div>
-            <form className="new_request_lemz__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая заявка ЛЭМЗ</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -244,9 +244,9 @@ const NewRequestLEMZ = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request_lemz__item">
-                    <div className="new_request_lemz__input_name">Статус*</div>
-                    <div className="new_request_lemz__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Статус*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="status"
                             onChange={handleInputChange}
@@ -279,8 +279,11 @@ const NewRequestLEMZ = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request_lemz__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_request_lemz__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lemz/workshop-lemz')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                </div>
             </form>
         </div>
     );

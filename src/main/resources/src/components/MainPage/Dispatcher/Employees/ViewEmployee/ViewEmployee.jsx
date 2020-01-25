@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ViewEmployee.scss';
+import '../../../../../utils/Form/Form.scss';
 import { getEmployeeById } from '../../../../../utils/RequestsAPI/Employees.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 
@@ -75,12 +76,12 @@ const ViewEmployee = (props) => {
     }, [])
 
     return (
-        <div className="view_employee">
-            <div className="view_employee__title">Просмотр сотрудника</div>
-            <form className="view_employee__form">
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Имя</div>
-                    <div className="view_employee__input_field">
+        <div className="main-form">
+            <div className="main-form__title">Просмотр сотрудника</div>
+            <form className="main-form__form">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Имя</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="name"
                             autoComplete="off"
@@ -90,9 +91,9 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Фамилия</div>
-                    <div className="view_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фамилия</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="lastName"
                             autoComplete="off"
@@ -102,9 +103,9 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Отчество</div>
-                    <div className="view_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Отчество</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="middleName"
                             autoComplete="off"
@@ -120,9 +121,9 @@ const ViewEmployee = (props) => {
                     selected={Date.parse(employeeInputs.yearOfBirth)}
                     readOnly
                 />
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Гражданство</div>
-                    <div className="view_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Гражданство</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="citizenship"
                             autoComplete="off"
@@ -132,9 +133,9 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Цех</div>
-                    <div className="view_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Цех</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="workshop"
                             onChange={handleInputChange}
@@ -143,9 +144,9 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Должность</div>
-                    <div className="view_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Должность</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="position"
                             autoComplete="off"
@@ -155,9 +156,9 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Комментарий</div>
-                    <div className="view_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Комментарий</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="comment"
                             autoComplete="off"
@@ -167,18 +168,18 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                {employeeInputs.passportScan1 && <div className="view_employee__item">
-                    <div className="view_employee__input_name">Паспорт</div>
-                    <div className="view_employee__passport_img">
+                {employeeInputs.passportScan1 && <div className="main-form__item">
+                    <div className="main-form__input_name">Паспорт</div>
+                    <div className="main-form__passport_img">
                         {/* {employeeInputs.passportScan.map((photo) => (
                             <img src={photo} alt=""/>
                         ))} */}
                         <img src={employeeInputs.passportScan1} alt="" />
                     </div>
                 </div>}
-                <div className="view_employee__item">
-                    <div className="view_employee__input_name">Актуальность</div>
-                    <div className="view_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Актуальность</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="relevance"
                             onChange={handleInputChange}
@@ -187,7 +188,9 @@ const ViewEmployee = (props) => {
                         />
                     </div>
                 </div>
-                <input className="view_employee__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/employees')} value="Вернуться назад" />
+                </div>
             </form>
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditTransportation.scss';
+import '../../../../../utils/Form/Form.scss';
 import { getTransportationById, editTransportation } from '../../../../../utils/RequestsAPI/Transportation.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
@@ -135,9 +136,9 @@ const EditTransportation = (props) => {
         }
     }, [])
     return (
-        <div className="edit_transportation">
-            <div className="edit_transportation__title">Редактирование записи транспортировки</div>
-            <form className="edit_transportation__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование записи транспортировки</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -163,9 +164,9 @@ const EditTransportation = (props) => {
                     errorsArr={transportationErrors}
                     setErrorsArr={setTransportationErrors}
                 />
-                <div className="edit_transportation__item">
-                    <div className="edit_transportation__input_name">Откуда*</div>
-                    <div className="edit_transportation__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Откуда*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="sender"
                             onChange={handleInputChange}
@@ -177,9 +178,9 @@ const EditTransportation = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="edit_transportation__item">
-                    <div className="edit_transportation__input_name">Куда*</div>
-                    <div className="edit_transportation__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Куда*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="recipient"
                             onChange={handleInputChange}
@@ -201,8 +202,11 @@ const EditTransportation = (props) => {
                     errorsArr={transportationErrors}
                     setErrorsArr={setTransportationErrors}
                 />
-                <div className="edit_transportation__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_transportation__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/transportation')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                </div>
             </form>
         </div>
     );

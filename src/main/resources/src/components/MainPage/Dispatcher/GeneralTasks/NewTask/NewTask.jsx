@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewTask.scss';
+import '../../../../../utils/Form/Form.scss';
 import { addMainTask } from '../../../../../utils/RequestsAPI/MainTasks.jsx';
 import { getUsers } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
@@ -128,9 +129,9 @@ const NewTask = (props) => {
     }, [])
 
     return (
-        <div className="new_general_task">
-            <div className="new_general_task__title">Новая задача</div>
-            <form className="new_general_task__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая задача</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -167,8 +168,7 @@ const NewTask = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
-                    
-userData={props.userData}           
+                    userData={props.userData}
                     required
                     error={taskErrors.responsible}
                     name="responsible"
@@ -200,28 +200,14 @@ userData={props.userData}
                 />
                 <InputText
                     inputName="Состояние"
-                    // required
-                    // error={taskErrors.status}
                     name="status"
                     handleInputChange={handleInputChange}
-                    // errorsArr={taskErrors}
-                    // setErrorsArr={setTaskErrors}
                 />
-                {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="new_general_task__item">
-                    <div className="new_general_task__input_name">Видимость*</div>
-                    <div className="new_general_task__input_field">
-                        <select
-                            name="visibility"
-                            onChange={handleInputChange}
-                            defaultValue={taskInputs.visibility}
-                        >
-                            <option value="all">Всем</option>
-                            <option value="adminOnly">Только руководитель</option>
-                        </select>
-                    </div>
-                </div>} */}
-                <div className="new_general_task__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_general_task__submit" type="submit" onClick={handleSubmit} value="Добавить задачу" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/general-tasks')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить задачу" />
+                </div>
             </form>
         </div>
     );

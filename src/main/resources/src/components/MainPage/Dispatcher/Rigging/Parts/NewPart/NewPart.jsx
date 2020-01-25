@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './NewPart.scss';
+import '../../../../../../utils/Form/Form.scss';
 import { addPart } from '../../../../../../utils/RequestsAPI/Parts.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
@@ -88,9 +89,9 @@ const NewPart = (props) => {
         document.title = "Создание запчасти";
     }, [])
     return (
-        <div className="new_part">
-            <div className="new_part__title">Новая запчасть</div>
-            <form className="new_part__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая запчасть</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -132,8 +133,11 @@ const NewPart = (props) => {
                     errorsArr={partErrors}
                     setErrorsArr={setPartErrors}
                 />
-                <div className="new_part__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_part__submit" type="submit" onClick={handleSubmit} value="Добавить запчасть" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/parts')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запчасть" />
+                </div>
             </form>
         </div>
     );

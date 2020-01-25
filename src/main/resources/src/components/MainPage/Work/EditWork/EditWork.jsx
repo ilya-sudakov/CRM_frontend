@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditWork.scss';
+import '../../../../utils/Form/Form.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import { getWorkById, editWork } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
@@ -97,9 +98,9 @@ const EditWork = (props) => {
     }, [])
 
     return (
-        <div className="edit_work">
-            <div className="edit_work__title">Редактирование работы</div>
-            <form className="edit_work__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование работы</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -115,8 +116,11 @@ const EditWork = (props) => {
                     errorsArr={workErrors}
                     setErrorsArr={setWorkErrors}
                 />
-                <div className="edit_work__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_work__submit" type="submit" onClick={handleSubmit} value="Изменить работу" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/work-list')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить работу" />
+                </div>
             </form>
         </div>
     );

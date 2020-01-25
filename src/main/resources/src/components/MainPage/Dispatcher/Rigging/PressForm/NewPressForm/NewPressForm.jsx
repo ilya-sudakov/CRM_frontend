@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './NewPressForm.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addPressForm, addPartsToPressForm } from '../../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
@@ -121,9 +122,9 @@ const NewPressForm = (props) => {
     }, [])
 
     return (
-        <div className="new_press_form">
-            <div className="new_press_form__title">Новая пресс-форма</div>
-            <form className="new_press_form__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая пресс-форма</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -154,16 +155,19 @@ const NewPressForm = (props) => {
                     name="comment"
                     handleInputChange={handleInputChange}
                 />
-                <div className="new_press_form__item">
-                    <div className="new_press_form__input_name">Детали*</div>
-                    <div className="new_press_form__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
                         />
                     </div>
                 </div>
-                <div className="new_press_form__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_press_form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/press-form')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                </div>
             </form>
         </div>
     )

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditProduct.scss';
+import '../../../../utils/Form/Form.scss';
 import { getProductById, editProduct } from '../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
@@ -172,19 +173,19 @@ const EditProduct = (props) => {
         }
     }, [])
     return (
-        <div className="edit_product">
-            <div className="edit_product__title">Редактирование продукта</div>
-            <form className="edit_product__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование продукта</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
                     setShowError={setShowError}
                 />
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Фотография</div>
-                    <div className="edit_product__product_img">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография</div>
+                    <div className="main-form__product_img">
                         <img src={productInputs.photo} alt="" />
-                        <div className="edit_product__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
+                        <div className="main-form__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
                     </div>
                 </div>
                 <InputText
@@ -226,9 +227,9 @@ const EditProduct = (props) => {
                     type="text"
                     handleInputChange={handleInputChange}
                 />
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Единица измерения*</div>
-                    <div className="edit_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Единица измерения*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="unit"
                             onChange={handleInputChange}
@@ -256,9 +257,9 @@ const EditProduct = (props) => {
                     defaultValue={productInputs.comment}
                     handleInputChange={handleInputChange}
                 />
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Место производства*</div>
-                    <div className="edit_product__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Место производства*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="productionLocation"
                             onChange={handleInputChange}
@@ -270,21 +271,24 @@ const EditProduct = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Фотография</div>
-                    <div className="edit_product__file_upload">
-                        <div className="edit_product__file_name">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография</div>
+                    <div className="main-form__file_upload">
+                        <div className="main-form__file_name">
                             {imgName}
                         </div>
-                        <label className="edit_product__label" htmlFor="file">
+                        <label className="main-form__label" htmlFor="file">
                             Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                         </label>
                         <input type="file" name="file" id="file" onChange={handleFileInputChange} />
                     </div>
                 </div>
-                <div className="edit_product__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_product__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/products')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
+                </div>
             </form>
         </div>
     );
