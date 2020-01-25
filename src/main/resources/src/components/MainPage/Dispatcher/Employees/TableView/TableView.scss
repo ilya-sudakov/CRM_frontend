@@ -77,14 +77,15 @@
         flex: 0 1 10%;
       }
 
+      //Подразделение
       &:nth-child(4) {
-        flex: 0 1 10%;
+        flex: 0 1 15%;
       }
 
       //Должность
       &:nth-child(5) {
         // flex: 0 1 5%;
-        flex: 0 1 15%;
+        flex: 0 1 20%;
       }
 
       //Комментарий
@@ -110,7 +111,7 @@
       max-width: 125px;
 
       .tableview_employees__action {
-        font-size: 90%;
+        font-size: 80% !important;
         width: 75%;
         border-radius: 5px;
         margin-bottom: 5px;
@@ -156,7 +157,7 @@
     // transition: 0.2s ease-in-out;
     // transition: none;
     max-height: max-content;
-    font-size: 80%;
+    font-size: 95%;
     // height: 100%;
 
     &--hidden {
