@@ -152,7 +152,7 @@ const Select = (props) => {
             })
         })
         setSelected([...newSelected]);
-        // console.log(color, id, newSelected);
+        console.log(color, id, newSelected);
         props.onChange([...newSelected]);
     }
 
@@ -170,6 +170,12 @@ const Select = (props) => {
         <div className="select">
             <div className="select__overlay select__overlay--hidden" onClick={clickOverlay}></div>
             {(!props.readOnly && !props.workshop) && <div className="select__searchbar">
+                <button className="select__search_button" onClick={(e) => {
+                    e.preventDefault();
+                    setShowWindow(!showWindow);
+                }}>
+                    Добавить продукцию
+                </button>
                 <input
                     type="text"
                     className={props.error === true ? "select__input select__input--error" : "select__input"}
@@ -178,12 +184,6 @@ const Select = (props) => {
                     placeholder={props.searchPlaceholder}
                     readOnly={props.readOnly || props.workshop}
                 />
-                <button className="select__search_button" onClick={(e) => {
-                    e.preventDefault();
-                    setShowWindow(!showWindow);
-                }}>
-                    Обзор
-                </button>
                 <FormWindow
                     title="Выбор продукции"
                     content={
