@@ -62,7 +62,7 @@ const ViewRequestLEMZ = (props) => {
     const DownloadRequest = (event) => {
         event.preventDefault();
         let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'ЦехЛЭМЗ', itemId);
-        pdfMake.createPdf(dd).download('заявкаЛЭМЗ№' + itemId + '_' + formatDateString(requestInputs.date) + '.pdf');
+        pdfMake.createPdf(dd).download('ПланПроизводства№' + itemId + '_' + formatDateString(requestInputs.date) + '.pdf');
     }
 
     return (

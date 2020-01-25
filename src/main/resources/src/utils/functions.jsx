@@ -32,18 +32,30 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
 
 export const getPdfText = (date, requestProducts, codeWord, workshopName, itemId) => {
     let productsArr = requestProducts.map((item) => {
-        return [item.name, item.quantity, item.packaging]
+        return [item.name, item.quantity, item.packaging, '', '']
     })
     var dd = {
         info: {
-            title: 'Заявка ' + workshopName + ' №' + itemId
+            title: 'План производства №' + itemId
         },
         content: [
             {
-                text: 'Заявка ' + workshopName + ' №' + itemId + '\n',
+                text: 'План производства' + ' №' + itemId + '\n',
                 alignment: 'center',
                 style: 'header',
             },
+            workshopName ? {
+                text: [
+                    {
+                        text: '\n' + 'Подразделение: ',
+                        style: 'subheader'
+                    },
+                    {
+                        text: workshopName + '\n' + '\n',
+                        style: 'regularText'
+                    }
+                ],
+            } : '\n',
             {
                 text: [
                     {
@@ -63,12 +75,14 @@ export const getPdfText = (date, requestProducts, codeWord, workshopName, itemId
             },
             {
                 table: {
-                    widths: ['*', 125, 125],
+                    widths: ['*', 70, 70, 70, 70],
                     body: [
                         [
                             { text: 'Название', style: 'tableHeader' },
                             { text: 'Кол-во', style: 'tableHeader' },
-                            { text: 'Фасовка', style: 'tableHeader' }
+                            { text: 'Фасовка', style: 'tableHeader' },
+                            { text: '', style: 'tableHeader' },
+                            { text: '', style: 'tableHeader' }
                         ],
                         ...productsArr
                     ]

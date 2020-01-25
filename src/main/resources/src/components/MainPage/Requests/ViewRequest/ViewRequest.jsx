@@ -51,13 +51,13 @@ const ViewRequest = (props) => {
 
     const PrintRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'на производство', itemId);
+        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, '', itemId);
         pdfMake.createPdf(dd).print();
     }
 
     const DownloadRequest = (event) => {
         event.preventDefault();
-        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, 'на производство', itemId);
+        let dd = getPdfText(requestInputs.date, requestInputs.requestProducts, requestInputs.codeWord, '', itemId);
         pdfMake.createPdf(dd).download('заявка№' + itemId + '_' + formatDateString(requestInputs.date) + '.pdf');
     }
 

@@ -149,6 +149,19 @@
     align-items: center;
     // z-index: 99;
 
+    .sidemenu__add-buttons {
+      display: flex;
+      flex-direction: column;
+      min-height: 40px;
+      width: 0;
+      // justify-content: center;
+      align-items: center;
+
+      .sidemenu__item--add {
+        transform: scaleX(0);
+      }
+    }
+
     .sidemenu__item {
       transition: 0.2s ease-in-out;
 
