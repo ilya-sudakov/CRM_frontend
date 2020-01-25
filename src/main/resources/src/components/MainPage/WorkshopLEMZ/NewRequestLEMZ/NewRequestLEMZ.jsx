@@ -14,7 +14,7 @@ const NewRequestLEMZ = (props) => {
         date: new Date(),
         codeWord: "",
         responsible: "",
-        status: "Проблема",
+        status: "Ожидание",
         shippingDate: new Date(),
         comment: ''
     })
@@ -213,6 +213,7 @@ const NewRequestLEMZ = (props) => {
                 />
                 <InputProducts
                     inputName="Продукция"
+                    userHasAccess={props.userHasAccess}
                     required
                     options
                     name="requestProducts"
@@ -233,6 +234,7 @@ const NewRequestLEMZ = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+                    userData={props.userData}
                     required
                     error={requestErrors.responsible}
                     name="responsible"

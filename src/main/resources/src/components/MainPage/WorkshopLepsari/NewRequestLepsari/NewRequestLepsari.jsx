@@ -5,7 +5,6 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import { addProductsToRequestLepsari, addRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 
 const NewRequestLepsari = (props) => {
@@ -13,7 +12,7 @@ const NewRequestLepsari = (props) => {
         date: new Date(),
         codeWord: "",
         responsible: "",
-        status: "Проблема",
+        status: "Ожидание",
         shippingDate: new Date(),
         comment: ''
     })
@@ -31,7 +30,6 @@ const NewRequestLepsari = (props) => {
         responsible: false,
         shippingDate: true
     })
-    const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
@@ -134,11 +132,6 @@ const NewRequestLepsari = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки Лепсари";
-        getUsers()
-            .then(res => res.json())
-            .then(res => {
-                setUsers(res);
-            })
     }, [])
 
     const handleDateChange = (date) => {
@@ -212,6 +205,7 @@ const NewRequestLepsari = (props) => {
                 />
                 <InputProducts
                     inputName="Продукция"
+                    userHasAccess={props.userHasAccess}
                     required
                     options
                     name="requestProducts"
@@ -232,10 +226,11 @@ const NewRequestLepsari = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+                    
+userData={props.userData}           
                     required
                     error={requestErrors.responsible}
                     name="responsible"
-                    options={users}
                     handleUserChange={handleResponsibleChange}
                     searchPlaceholder="Введите имя пользователя для поиска..."
                     errorsArr={requestErrors}

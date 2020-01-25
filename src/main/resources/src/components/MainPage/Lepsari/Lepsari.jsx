@@ -45,12 +45,14 @@ const Lepsari = (props) => {
                             exact path="/lepsari/workshop-lepsari/new"
                             component={NewRequestLepsari}
                             userHasAccess={props.userHasAccess}
+                            userData={props.userData}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                         />
                         <PrivateRoute
                             path="/lepsari/workshop-lepsari/edit/"
                             component={EditRequestLepsari}
                             userHasAccess={props.userHasAccess}
+                            userData={props.userData}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                         />
                         <PrivateRoute
@@ -63,12 +65,14 @@ const Lepsari = (props) => {
                             exact path="/lepsari/workshop-storage/new"
                             component={NewStorageLepsari}
                             userHasAccess={props.userHasAccess}
+                            userData={props.userData}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                         />
                         <PrivateRoute
                             path="/lepsari/workshop-storage/edit/"
                             component={EditStorageLepsari}
                             userHasAccess={props.userHasAccess}
+                            userData={props.userData}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                         />
                         <Route component={PageNotFound} />

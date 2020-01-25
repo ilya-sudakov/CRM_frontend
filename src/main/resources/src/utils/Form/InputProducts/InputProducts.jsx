@@ -21,6 +21,7 @@ const InputProducts = (props) => {
                     readOnly={props.readOnly}
                     workshop={props.workshop}
                     noPackaging={props.noPackaging}
+                    userHasAccess={props.userHasAccess}
                 />
             </div>
         </div>

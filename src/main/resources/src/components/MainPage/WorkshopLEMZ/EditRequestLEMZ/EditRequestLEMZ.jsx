@@ -272,6 +272,7 @@ const EditRequestLEMZ = (props) => {
                 }
                 {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputProducts
                     inputName="Продукция"
+userHasAccess={props.userHasAccess}                    
                     required
                     options
                     onChange={handleProductsChange}
@@ -295,6 +296,8 @@ const EditRequestLEMZ = (props) => {
                 />}
                 {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && <InputUser
                     inputName="Ответственный"
+                    
+userData={props.userData}           
                     required
                     error={requestErrors.responsible}
                     defaultValue={requestInputs.responsible}

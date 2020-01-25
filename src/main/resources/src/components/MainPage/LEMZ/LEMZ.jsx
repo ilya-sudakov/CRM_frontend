@@ -45,12 +45,14 @@ const LEMZ = (props) => {
                             exact path="/lemz/workshop-lemz/new"
                             component={NewRequestLEMZ}
                             userHasAccess={props.userHasAccess}
+                            userData={props.userData}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                         />
                         <PrivateRoute
                             path="/lemz/workshop-lemz/edit/"
                             component={EditRequestLEMZ}
                             userHasAccess={props.userHasAccess}
+                            userData={props.userData}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                         />
                         <PrivateRoute
@@ -64,12 +66,14 @@ const LEMZ = (props) => {
                             exact path="/lemz/workshop-storage/new"
                             component={NewStorage}
                             userHasAccess={props.userHasAccess}
+                            userData={props.userData}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                         />
                         <PrivateRoute
                             path="/lemz/workshop-storage/edit/"
                             component={EditStorage}
                             userHasAccess={props.userHasAccess}
+                            userData={props.userData}
                             allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                         />
                         <Route component={PageNotFound} />

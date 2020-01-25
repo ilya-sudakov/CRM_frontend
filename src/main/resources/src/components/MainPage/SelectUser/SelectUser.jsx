@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import deleteSVG from '../../../../../../../assets/select/delete.svg';
 import './SelectUser.scss';
+import { getUsers } from '../../../utils/RequestsAPI/Users.jsx';
 
 const SelectUser = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -52,13 +53,21 @@ const SelectUser = (props) => {
     }
 
     useEffect(() => {
-        if (props.options !== undefined) {
-            setOptions([...props.options])
-        }
+        // if (props.options !== undefined) {
+        //     setOptions([...props.options])
+        // }
+        getUsers()
+            .then(res => res.json())
+            .then(res => {
+                setOptions(res);
+            })
+            .catch(error => {
+                !props.defaultValue && setSelectedUser(props.userData.username);
+            })
         if (props.defaultValue) {
             setSelectedUser(props.defaultValue);
         }
-    }, [props.options])
+    }, [options])
 
     return (
         <div className="select_user">
@@ -72,11 +81,9 @@ const SelectUser = (props) => {
                 value={!props.readOnly ? selectedUser : props.defaultValue}
                 placeholder={props.searchPlaceholder}
                 ref={myRef}
-                readOnly={props.readOnly}
-            >
-
-            </input>
-            {props.options && <div className={"select_user__options select_user__options--hidden" + ((search().length == 0) ? " select_user__options--hidden" : '')}>
+                readOnly={props.readOnly || (options.length === 0)}
+            />
+            {options && <div className={"select_user__options select_user__options--hidden" + ((search().length == 0) ? " select_user__options--hidden" : '')}>
                 {search().map((item, index) => (
                     <div id={item.id} optionId={index} name={item.username} className="select_user__option_item" onClick={clickOnOption}>
                         {item.username}

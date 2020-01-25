@@ -13,7 +13,7 @@ const NewRequest = (props) => {
         date: new Date(),
         codeWord: "",
         responsible: "",
-        status: "Материалы"
+        status: "Ожидание"
     })
     const [requestErrors, setRequestErrors] = useState({
         date: false,
@@ -188,6 +188,7 @@ const NewRequest = (props) => {
                 />
                 <InputProducts
                     inputName="Продукция"
+                    userHasAccess={props.userHasAccess}
                     required
                     options
                     onChange={handleProductsChange}
@@ -207,6 +208,7 @@ const NewRequest = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+                    userData={props.userData}
                     required
                     error={requestErrors.responsible}
                     name="responsible"

@@ -167,6 +167,8 @@ const NewTask = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+                    
+userData={props.userData}           
                     required
                     error={taskErrors.responsible}
                     name="responsible"

@@ -56,30 +56,35 @@ class MainPage extends React.Component {
                                     exact path="/"
                                     component={GeneralPage}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_WORKSHOP", "ROLE_MANAGER", "ROLE_DISPATCHER", "ROLE_ENGINEER"]}
                                 />
                                 <PrivateRoute
                                     exact path="/profile/users"
                                     component={Users}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
                                 <PrivateRoute
                                     exact path="/profile/users/new"
                                     component={NewUser}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
                                 <PrivateRoute
                                     path="/profile/users/edit/"
                                     component={EditUser}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
                                 <PrivateRoute
                                     exact path="/profile/login-history"
                                     component={LoginHistory}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
                                 <Route exact path="/clients" component={Clients} />
@@ -89,6 +94,7 @@ class MainPage extends React.Component {
                                     exact path="/requests"
                                     component={Requests}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
                                 <Route path="/requests/view/" component={ViewRequest} />
@@ -96,18 +102,21 @@ class MainPage extends React.Component {
                                     exact path="/requests/new"
                                     component={NewRequest}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
                                 <PrivateRoute
                                     path="/requests/edit/"
                                     component={EditRequest}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
                                 <PrivateRoute
                                     exact path="/products"
                                     component={Products}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                                 />
                                 <Route path="/products/view/" component={ViewProduct} />
@@ -115,48 +124,56 @@ class MainPage extends React.Component {
                                     path="/products/edit/"
                                     component={EditProduct}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
                                 <PrivateRoute
                                     exact path="/products/new"
                                     component={NewProduct}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
                                 <PrivateRoute
                                     path="/lemz"
                                     component={LEMZ}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                                 />
                                 <PrivateRoute
                                     path="/lepsari"
                                     component={Lepsari}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                                 />
                                 <PrivateRoute
                                     path="/dispatcher/rigging"
                                     component={Rigging}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                                 />
                                 <PrivateRoute
                                     exact path="/dispatcher/transportation"
                                     component={Transportation}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                                 />
                                 <PrivateRoute
                                     exact path="/dispatcher/transportation/new"
                                     component={NewTransportation}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                                 />
                                 <PrivateRoute
                                     path="/dispatcher/transportation/edit/"
                                     component={EditTransportation}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                                 />
                                 <PrivateRoute
@@ -164,78 +181,91 @@ class MainPage extends React.Component {
                                     component={GeneralTasks}
                                     userData={this.props.userData}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP']}
                                 />
                                 <PrivateRoute
                                     exact path="/dispatcher/general-tasks/new"
                                     component={NewTask}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                                 />
                                 <PrivateRoute
                                     path="/dispatcher/general-tasks/edit/"
                                     component={EditTask}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP']}
                                 />
                                 <PrivateRoute
                                     exact path="/dispatcher/employees"
                                     component={Employees}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                                 />
                                 <PrivateRoute
                                     exact path="/dispatcher/employees/new"
                                     component={NewEmployee}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                                 />
                                 <PrivateRoute
                                     path="/dispatcher/employees/edit/"
                                     component={EditEmployee}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                                 />
                                 <PrivateRoute
                                     path="/dispatcher/employees/view/"
                                     component={ViewEmployee}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                                 />
                                 <PrivateRoute
                                     exact path="/work-list"
                                     component={Work}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                                 />
                                 <PrivateRoute
                                     exact path="/work-list/new"
                                     component={NewWork}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                                 />
                                 <PrivateRoute
                                     path="/work-list/edit/"
                                     component={EditWork}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
                                 />
                                 <PrivateRoute
                                     exact path="/products/category/new"
                                     component={NewCategory}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                                 />
                                 <PrivateRoute
                                     path="/products/category/edit/"
                                     component={EditCategory}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
                                 <PrivateRoute
                                     exact path="/work-managment/record-time/new"
                                     component={RecordWork}
                                     userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                                 />
                                 <Route component={PageNotFound} />

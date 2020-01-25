@@ -197,6 +197,8 @@ const EditTask = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+                    
+userData={props.userData}           
                     required
                     error={taskErrors.responsible}
                     defaultValue={taskInputs.responsible}

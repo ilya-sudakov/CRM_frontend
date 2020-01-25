@@ -254,6 +254,7 @@ const EditRequest = (props) => {
                 />
                 <InputProducts
                     inputName="Продукция"
+userHasAccess={props.userHasAccess}                    
                     required
                     options={products}
                     onChange={handleProductsChange}
@@ -275,6 +276,8 @@ const EditRequest = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+                    
+userData={props.userData}           
                     required
                     error={requestErrors.responsible}
                     name="responsible"

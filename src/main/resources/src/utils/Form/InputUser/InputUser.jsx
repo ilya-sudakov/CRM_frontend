@@ -9,11 +9,11 @@ const InputUser = (props) => {
                 <div className="input_user__input_name">{props.inputName + (props.required ? '*' : '')}</div>
                 <div className={props.error === true ? "input_user__input_field input_user__input_field--error" : "input_user__input_field"}>
                     <SelectUser
-                        options={props.options}
                         onChange={props.handleUserChange}
                         searchPlaceholder={props.searchPlaceholder}
                         defaultValue={props.defaultValue}
                         readOnly={props.readOnly}
+                        userData={props.userData}
                     />
                 </div>
             </div>

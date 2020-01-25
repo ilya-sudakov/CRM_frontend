@@ -214,10 +214,10 @@ const Select = (props) => {
                     //     selectProduct={selectProduct}
                     //     setSearchQuery={setSearchQueryCategory}
                     // />}
-                    headerButton={{
+                    headerButton={props.userHasAccess(['ROLE_ADMIN']) ? {
                         name: 'Создать продукцию',
                         path: '/products/new'
-                    }}
+                    } : null}
                     showWindow={showWindow}
                     setShowWindow={setShowWindow}
                 />

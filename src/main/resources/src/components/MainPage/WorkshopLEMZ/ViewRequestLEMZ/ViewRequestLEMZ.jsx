@@ -82,6 +82,7 @@ const ViewRequestLEMZ = (props) => {
                 </div>
                 <InputProducts
                     inputName="Продукция"
+userHasAccess={props.userHasAccess}                    
                     defaultValue={requestInputs.requestProducts}
                     readOnly
                 />
