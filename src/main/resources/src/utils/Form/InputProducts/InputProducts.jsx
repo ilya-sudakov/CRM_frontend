@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './InputProducts.scss';
 import Select from '../../../components/MainPage/Select/Select.jsx';
 
 const InputProducts = (props) => {
+    useEffect(() => {
+
+    }, [])
     return (
         <div className="input_products">
             <div className="input_products__input">

@@ -14,6 +14,7 @@ const Select = (props) => {
     const [options, setOptions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [showWindow, setShowWindow] = useState(false);
+    const [closeWindow, setCloseWindow] = useState(false);
 
     const search = () => {
         return options.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -162,7 +163,7 @@ const Select = (props) => {
         // if (props.options !== undefined) {
         //     setOptions([...props.options])
         // }
-        loadCategories();
+        (categories.length === 0) && loadCategories();
     }, [props.defaultValue])
 
     return (
@@ -198,6 +199,9 @@ const Select = (props) => {
                                 searchQuery={searchQueryCategory}
                                 deleteItem={null}
                                 selectProduct={selectProduct}
+                                closeWindow={closeWindow}
+                                setCloseWindow={setCloseWindow}
+                                setShowWindow={setShowWindow}
                             />
                         </React.Fragment>
                     }

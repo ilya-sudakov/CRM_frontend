@@ -3,10 +3,11 @@ import './SelectCategory.scss';
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableViewCategory from '../CategoryManagement/TableView/TableViewCategory.jsx';
-import { getCategories } from '../../../../utils/RequestsAPI/Products/Categories.jsx';
+import { getCategories, getCategoriesNames } from '../../../../utils/RequestsAPI/Products/Categories.jsx';
 
 const SelectCategory = (props) => {
     const [showWindow, setShowWindow] = useState(false);
+    const [closeWindow, setCloseWindow] = useState(false);
     const [categories, setCategories] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [id, setId] = useState('');
@@ -16,11 +17,11 @@ const SelectCategory = (props) => {
     }
 
     useEffect(() => {
-        loadCategories();
+        (categories.length === 0) && loadCategories();
     }, [])
 
     const loadCategories = () => {
-        getCategories()
+        getCategoriesNames()
             .then(response => response.json())
             .then(response => {
                 // console.log(response);
@@ -86,6 +87,9 @@ const SelectCategory = (props) => {
                             userHasAccess={props.userHasAccess}
                             deleteItem={deleteItemCategory}
                             selectCategory={clickCategory}
+                            setCloseWindow={setCloseWindow}
+                            closeWindow={closeWindow}
+                            setShowWindow={setShowWindow}
                         />
                     </React.Fragment>
                 }

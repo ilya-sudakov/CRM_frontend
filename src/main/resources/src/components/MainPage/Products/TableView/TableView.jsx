@@ -86,7 +86,8 @@ const TableView = (props) => {
         setProductsVisible([
             ...temp,
         ]);
-    }, [props.categories])
+        props.closeWindow && props.setShowWindow(false);
+    }, [props.categories, props.closeWindow]);
 
     return (
         <div className="tableview_products">
@@ -137,12 +138,14 @@ const TableView = (props) => {
                                     <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
                                     {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>}
                                     {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div>}
-                                    {props.selectProduct && <div data-id={product.id} className="tableview_products__action" onClick={() => {
+                                    {props.selectProduct && <div data-id={product.id} className="tableview_products__action tableview_products__action--break-normal" onClick={() => {
                                         props.selectProduct(product.id, product.name);
-                                        // console.log('products', props.windowChange);
-                                        // props.setShowWindow(!props.showWindow);
-                                        // props.handleWindowChange(false);
-                                    }}>Выбрать</div>}
+                                        props.setCloseWindow(!props.closeWindow);
+                                    }}>Выбрать (закрыть)</div>}
+                                    {props.selectProduct && <div data-id={product.id} className="tableview_products__action tableview_products__action--break-normal" onClick={() => {
+                                        props.selectProduct(product.id, product.name);
+                                        // props.setCloseWindow(false);
+                                    }}>Выбрать (продолжить)</div>}
                                 </div>
                             </div>
                         ))}

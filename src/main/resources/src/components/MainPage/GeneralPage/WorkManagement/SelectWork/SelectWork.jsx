@@ -37,6 +37,8 @@ const SelectWork = (props) => {
 
     const handleNewPart = (e) => {
         e.preventDefault();
+        //Открыть по дефолту форму
+        const id = selected.length;
         setSelected([
             ...selected,
             {
@@ -52,7 +54,11 @@ const SelectWork = (props) => {
                 work: '',
                 hours: '',
             }
-        ])
+        ]);
+        // const form = document.getElementsByClassName("select-work__selected_form")[0];
+        // console.log(form);
+        
+        // form.classList.remove("select-work__selected_form--hidden");
     }
 
     const deletePart = (e) => {
@@ -102,7 +108,7 @@ const SelectWork = (props) => {
                                 <span>Кол-во часов: </span> {item.hours}
                             </div>
                         </div>
-                        <div className="select-work__selected_form select-work__selected_form--hidden" >
+                        <div className="select-work__selected_form" >
                             <SelectWorkItem
                                 inputName="Выбор работы"
                                 required

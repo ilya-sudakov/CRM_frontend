@@ -140,6 +140,9 @@
           background-color: lighten($button__background--inverted, 5%);
         }
       }
+      .tableview_products__action--break-normal {
+        word-break: normal;
+      }
     }
 
     &:first-of-type {

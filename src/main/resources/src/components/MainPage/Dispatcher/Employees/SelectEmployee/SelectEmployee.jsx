@@ -7,6 +7,7 @@ import { getEmployees, getEmployeesByWorkshop } from '../../../../../utils/Reque
 
 const SelectEmployee = (props) => {
     const [showWindow, setShowWindow] = useState(false);
+    const [closeWindow, setCloseWindow] = useState(false);
     const [employees, setEmployees] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [id, setId] = useState(0);
@@ -17,7 +18,7 @@ const SelectEmployee = (props) => {
     }
 
     useEffect(() => {
-        loadEmployees();
+        (employees.length === 0) && loadEmployees();
     }, [])
 
     const loadEmployees = () => {
@@ -83,6 +84,9 @@ const SelectEmployee = (props) => {
                             searchQuery={searchQuery}
                             userHasAccess={props.userHasAccess}
                             selectEmployee={clickEmployee}
+                            setCloseWindow={setCloseWindow}
+                            closeWindow={closeWindow}
+                            setShowWindow={setShowWindow}
                         />
                     </React.Fragment>
                 }

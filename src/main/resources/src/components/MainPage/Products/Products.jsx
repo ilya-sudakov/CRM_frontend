@@ -11,6 +11,7 @@ const Products = (props) => {
     const [products, setProducts] = useState([]);
     const [productsCount, setProductsCount] = useState(0);
     const [categories, setCategories] = useState([]);
+    const [categoriesNames, setCategoriesNames] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchQueryCategory, setSearchQueryCategory] = useState('');
     const [showWindow, setShowWindow] = useState(false);
@@ -59,6 +60,11 @@ const Products = (props) => {
             .catch(error => {
                 console.log(error);
             })
+        getCategoriesNames()
+            .then(res => res.json())
+            .then(res => {
+                setCategoriesNames(res);
+            })
         //Динамическая загрузка продукции
         // getCategoriesNames() //Только категории
         //     .then(res => res.json())
@@ -95,7 +101,7 @@ const Products = (props) => {
                             setSearchQuery={setSearchQueryCategory}
                         />
                         <TableViewCategory
-                            data={categories}
+                            data={categoriesNames}
                             searchQuery={searchQueryCategory}
                             userHasAccess={props.userHasAccess}
                             deleteItem={deleteItemCategory}

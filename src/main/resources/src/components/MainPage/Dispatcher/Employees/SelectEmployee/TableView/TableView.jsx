@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
@@ -46,6 +46,10 @@ const TableView = (props) => {
         })
     }
 
+    useEffect(() => {
+        props.setShowWindow && props.setShowWindow(false);
+    }, [props.closeWindow])
+
     return (
         <div className="tableview-employees">
             <div className="tableview-employees__row tableview-employees__row--header">
@@ -73,6 +77,7 @@ const TableView = (props) => {
                     <div className="tableview-employees__actions">
                         <div data-id={employee.id} className="tableview-employees__action" onClick={() => {
                             props.selectEmployee(employee.lastName + ' ' + employee.name + ' ' + employee.middleName, employee.id);
+                            props.setCloseWindow(!props.closeWindow);
                         }}>Выбрать</div>
                     </div>
                 </div>
