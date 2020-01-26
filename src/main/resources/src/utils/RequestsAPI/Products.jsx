@@ -14,6 +14,14 @@ export function getProductById(id) {
     })
 }
 
+export function getProductsByCategory(category) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product/category/",
+        method: "POST",
+        body: JSON.stringify(category)
+    })
+}
+
 export function deleteProduct(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product/" + id,

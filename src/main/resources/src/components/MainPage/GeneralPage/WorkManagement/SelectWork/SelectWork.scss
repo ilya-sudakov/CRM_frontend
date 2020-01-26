@@ -22,20 +22,23 @@
     width: 100%;
     margin-top: 15px;
 
-    .input_products__input {
-      width: calc(100% - 70px);
-    }
-    .input_products__input_name {
-      font-size: 85%;
-    }
+    // .input_products__input {
+    //   width: calc(100% - 10px);
+    // }
+    // .input_products__input_name {
+    //   font-size: 85%;
+    // }
     .select {
-      width: 80%;
+      // width: calc(80% - 5px);
+      // width: 100%;
+      flex: 0 1 calc(80% - 0px);
+      // font-size: 80%;
     }
-    .select__input {
-      font-size: 80%;
-      border-top-right-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
-    }
+    // .select__input {
+    //   font-size: 80%;
+    //   border-top-right-radius: 0 !important;
+    //   border-bottom-right-radius: 0 !important;
+    // }
   }
 
   &__selected_item {
