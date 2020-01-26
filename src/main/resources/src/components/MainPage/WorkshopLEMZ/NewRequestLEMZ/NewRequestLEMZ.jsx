@@ -15,7 +15,7 @@ const NewRequestLEMZ = (props) => {
         codeWord: "",
         responsible: "",
         status: "Ожидание",
-        shippingDate: new Date().setDate(new Date().getDate() + 7), //Прибавляем 7 дней к сегодняшнему числу
+        shippingDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
         comment: ''
     })
     const [requestErrors, setRequestErrors] = useState({

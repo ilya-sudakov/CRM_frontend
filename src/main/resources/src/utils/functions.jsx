@@ -152,6 +152,18 @@ export const getRequestsListPdfText = (requests, workshopName, productsName) => 
                     ],
                 },
                 {
+                    text: [
+                        {
+                            text: 'Статус: ',
+                            style: 'subheader'
+                        },
+                        {
+                            text: item.status + '\n',
+                            style: 'regularText'
+                        }
+                    ],
+                },
+                {
                     text: 'Продукция: ',
                     style: 'subheader',
                     margin: [0, 0, 0, 5],

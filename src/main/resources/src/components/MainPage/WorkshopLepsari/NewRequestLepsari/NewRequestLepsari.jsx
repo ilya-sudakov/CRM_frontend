@@ -14,7 +14,7 @@ const NewRequestLepsari = (props) => {
         codeWord: "",
         responsible: "",
         status: "Ожидание",
-        shippingDate: new Date().setDate(new Date().getDate() + 7),
+        shippingDate: new Date(new Date().setDate(new Date().getDate() + 7)),
         comment: ''
     })
     const [requestErrors, setRequestErrors] = useState({
@@ -94,7 +94,7 @@ const NewRequestLepsari = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let id = 0;
-        // console.log(requestInputs);
+        console.log(requestInputs);
         formIsValid() && addRequestLepsari(requestInputs)
             .then(res => res.json())
             .then(res => {
