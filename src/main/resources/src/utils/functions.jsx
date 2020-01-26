@@ -252,3 +252,85 @@ export const getRequestsListPdfText = (requests, workshopName, productsName) => 
     pdfMake.vfs = font.pdfMake.vfs;
     return dd;
 }
+
+export const getEmployeesListPdfText = (employees, workshops) => {
+    const employeesList = [];
+    workshops.map(workshop => {
+        employeesList.push({
+            text: [
+                {
+                    text: '\n' + 'Подразделение: ',
+                    style: 'header',
+                    alignment: 'center'
+                },
+                {
+                    text: workshop + '\n\n',
+                    style: 'regularText'
+                }
+            ],
+        });
+        let employeeInfo = [];
+        employees.map(item => {
+            if (item.workshop === workshop) {
+                employeeInfo.push([
+                    (item.lastName + ' ' + item.name + ' ' + item.middleName),
+                    formatDateString(item.yearOfBirth),
+                    item.citizenship,
+                    item.position
+                ]);
+            }
+        })
+        employeesList.push({
+            table: {
+                widths: ['*', 70, 80, 120],
+                body: [
+                    [
+                        { text: 'ФИО', style: 'tableHeader' },
+                        { text: 'Дата рождения', style: 'tableHeader' },
+                        { text: 'Гражданство', style: 'tableHeader' },
+                        { text: 'Должность', style: 'tableHeader' },
+                    ],
+                    ...employeeInfo
+                ]
+            }
+        })
+
+    })
+    var dd = {
+        info: {
+            title: 'Список сотрудников'
+        },
+        content: [
+            {
+                text: 'Список сотрудников\n',
+                alignment: 'center',
+                style: 'title',
+            },
+            ...employeesList
+        ],
+        styles: {
+            header: {
+                fontSize: 22,
+                bold: true
+            },
+            title: {
+                fontSize: 24,
+                bold: true
+            },
+            subheader: {
+                fontSize: 18,
+                bold: true
+            },
+            regularText: {
+                fontSize: 16
+            },
+            tableHeader: {
+                fontSize: 12,
+                bold: true,
+                alignment: 'center'
+            }
+        }
+    }
+    pdfMake.vfs = font.pdfMake.vfs;
+    return dd;
+}
