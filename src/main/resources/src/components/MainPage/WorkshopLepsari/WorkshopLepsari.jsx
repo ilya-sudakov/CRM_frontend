@@ -54,23 +54,25 @@ const WorkshopLepsari = (props) => {
 
     return (
         <div className="requests_lepsari">
-            {/* <div className="requests_lepsari__title">Заявки на производство Лепсари</div> */}
-            <SearchBar
-                title="Поиск по заявкам Лепсари"
-                placeholder="Введите название продукции для поиска..."
-                setSearchQuery={setSearchQuery}
-            />
-            <div className="requests_lepsari__info-panel">
-                <div className="requests_lepsari__button" onClick={printRequestsList}>Печать списка</div>
-                <div className="requests_lepsari__amount_table">Всего: {requestLepsari.length} записей</div>
+            <div className="main-window">
+                {/* <div className="main-window__title">Заявки на производство Лепсари</div> */}
+                <SearchBar
+                    title="Поиск по заявкам Лепсари"
+                    placeholder="Введите название продукции для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__button" onClick={printRequestsList}>Печать списка</div>
+                    <div className="main-window__amount_table">Всего: {requestLepsari.length} записей</div>
+                </div>
+                <TableView
+                    data={requestLepsari}
+                    loadData={loadRequestLepsari}
+                    userHasAccess={props.userHasAccess}
+                    deleteItem={deleteItem}
+                    searchQuery={searchQuery}
+                />
             </div>
-            <TableView
-                data={requestLepsari}
-                loadData={loadRequestLepsari}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-                searchQuery={searchQuery}
-            />
         </div>
     )
 }

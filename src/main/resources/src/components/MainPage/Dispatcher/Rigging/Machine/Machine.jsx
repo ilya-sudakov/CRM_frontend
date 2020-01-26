@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import './Machine.scss';
+import '../../../../../utils/MainWindow/MainWindow.scss';
 import TableView from '../TableView/TableView.jsx';
 import { getMachine, getMachineById, deletePartsFromMachine, deleteMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 
@@ -43,19 +44,23 @@ const Machine = (props) => {
 
     return (
         <div className="machine">
-            <SearchBar
-                title='Поиск станка'
-                setSearchQuery={setSearchQuery}
-                placeholder='Введите здесь запрос для поиска...'
-            />
-            <div className="machine__amount_table">Всего: {machines.length} записей</div>
-            <TableView
-                data={machines}
-                searchQuery={searchQuery}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-                loadData={loadMachines}
-            />
+            <div className="main-window">
+                <SearchBar
+                    title='Поиск станка'
+                    setSearchQuery={setSearchQuery}
+                    placeholder='Введите здесь запрос для поиска...'
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__amount_table">Всего: {machines.length} записей</div>
+                </div>
+                <TableView
+                    data={machines}
+                    searchQuery={searchQuery}
+                    userHasAccess={props.userHasAccess}
+                    deleteItem={deleteItem}
+                    loadData={loadMachines}
+                />
+            </div>
         </div>
     )
 }

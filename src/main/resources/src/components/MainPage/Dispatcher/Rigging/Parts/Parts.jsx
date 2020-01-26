@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Parts.scss';
+import '../../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
 import { getParts, deletePart } from '../../../../../utils/RequestsAPI/Parts.jsx';
@@ -20,7 +21,7 @@ const Parts = (props) => {
                 setParts(res);
             })
             .catch(error => {
-                console.log(error);                
+                console.log(error);
             })
     }
 
@@ -32,18 +33,22 @@ const Parts = (props) => {
 
     return (
         <div className="parts">
-            <SearchBar
-                title="Поиск запчастей"
-                placeholder="Введите артикул запчасти для поиска..."
-                setSearchQuery={setSearchQuery}
-            />
-            <div className="parts__amount_table">Всего: {parts.length} записей</div>
-            <TableView
-                data={parts}
-                searchQuery={searchQuery}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-            />
+            <div className="main-window">
+                <SearchBar
+                    title="Поиск запчастей"
+                    placeholder="Введите артикул запчасти для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__amount_table">Всего: {parts.length} записей</div>
+                </div>
+                <TableView
+                    data={parts}
+                    searchQuery={searchQuery}
+                    userHasAccess={props.userHasAccess}
+                    deleteItem={deleteItem}
+                />
+            </div>
         </div>
     )
 }

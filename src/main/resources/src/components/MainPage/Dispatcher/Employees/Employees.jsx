@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Employees.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
 import pdfMake from 'pdfmake';
@@ -66,22 +67,24 @@ const Employees = (props) => {
 
     return (
         <div className="employees">
-            <div className="employees__title">Сотрудники</div>
-            <SearchBar
-                title="Поиск сотрудников"
-                placeholder="Введите фамилию сотрудника для поиска..."
-                setSearchQuery={setSearchQuery}
-            />
-            <div className="employees__info-panel">
-                <div className="employees__button" onClick={printEmployeesList}>Печать списка</div>
-                <div className="employees__amount_table">Всего: {employees.length} записей</div>
+            <div className="main-window">
+                <div className="main-window__title">Сотрудники</div>
+                <SearchBar
+                    title="Поиск сотрудников"
+                    placeholder="Введите фамилию сотрудника для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__button" onClick={printEmployeesList}>Печать списка</div>
+                    <div className="main-window__amount_table">Всего: {employees.length} записей</div>
+                </div>
+                <TableView
+                    data={employees}
+                    searchQuery={searchQuery}
+                    userHasAccess={props.userHasAccess}
+                    deleteItem={deleteItem}
+                />
             </div>
-            <TableView
-                data={employees}
-                searchQuery={searchQuery}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-            />
         </div>
     )
 }

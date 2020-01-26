@@ -1,0 +1,91 @@
+@import "../../variables.scss";
+
+.main-window {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .main-window__title {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  .main-window__link {
+    margin-bottom: 15px;
+  }
+
+  .main-window__header {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .main-window__img {
+    width: 20px;
+    filter: brightness(5);
+  }
+
+  .main-window__addButton {
+    background-color: $button__background--inverted;
+    color: $secondary-text-color;
+    width: 20px;
+    max-height: 20px;
+    margin-left: 10px;
+    padding: 3px 3px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+    }
+  }
+  .main-window__addButton--text {
+    width: fit-content;
+    padding: 5px 10px;
+  }
+
+  .main-window__header .main-window__title {
+    margin: 0;
+  }
+  .main-window__header .main-window__button {
+    margin-left: 10px;
+  }
+
+  .main-window__info-panel {
+    width: calc(100% - 50px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .main-window__amount_table {
+    font-size: 75%;
+  }
+
+  .main-window__button {
+    background-color: $button__background--inverted;
+    color: $secondary-text-color;
+    border-radius: 5px;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size: 90%;
+    margin-right: 10px;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+
+  @media (max-width: 768px) {
+  }
+}

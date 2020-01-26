@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './WorkshopLEMZ.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
 import pdfMake from 'pdfmake';
 import { getRequestsLEMZ, deleteRequestLEMZ, getRequestLEMZById, deleteProductsToRequestLEMZ } from '../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import TableView from './TableView/TableView.jsx';
@@ -49,23 +50,24 @@ const WorkshopLEMZ = (props) => {
 
     return (
         <div className="requests_LEMZ">
-            {/* <div className="requests_LEMZ__title">Заявки на производство ЛЭМЗ</div> */}
-            <SearchBar
-                title="Поиск по заявкам ЛЭМЗ"
-                placeholder="Введите название продукции для поиска..."
-                setSearchQuery={setSearchQuery}
-            />
-            <div className="requests_LEMZ__info-panel">
-                <div className="requests_LEMZ__button" onClick={printRequestsList}>Печать списка</div>
-                <div className="requests_LEMZ__amount_table">Всего: {requestsLEMZ.length} записей</div>
+            <div className="main-window">
+                <SearchBar
+                    title="Поиск по заявкам ЛЭМЗ"
+                    placeholder="Введите название продукции для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__button" onClick={printRequestsList}>Печать списка</div>
+                    <div className="main-window__amount_table">Всего: {requestsLEMZ.length} записей</div>
+                </div>
+                <TableView
+                    data={requestsLEMZ}
+                    loadData={loadRequestsLEMZ}
+                    userHasAccess={props.userHasAccess}
+                    deleteItem={deleteItem}
+                    searchQuery={searchQuery}
+                />
             </div>
-            <TableView
-                data={requestsLEMZ}
-                loadData={loadRequestsLEMZ}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-                searchQuery={searchQuery}
-            />
         </div>
     )
 }

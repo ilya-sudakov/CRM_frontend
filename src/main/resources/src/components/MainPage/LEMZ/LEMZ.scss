@@ -1,63 +1,32 @@
 @import "../../../variables.scss";
 
 .requests {
-  // width: calc(100% - 25px);
-  height: calc(100% - 20px);
-  padding: 10px 0;
-  display: flex;
-  margin: 0px auto;
-  flex-direction: column;
-  align-items: center;
-
-  &__addButton {
-    background-color: $button__background--inverted;
-    color: $secondary-text-color;
-    // font-size: 25px;
-    width: 20px;
-    max-height: 20px;
-    margin-left: 10px;
-    padding: 3px 3px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    transition: 0.2s ease-in-out;
-
-    &:hover {
-      background-color: lighten($button__background--inverted, 5%);
-    }
+  .main-window {
+    padding: 10px 0;
   }
-  .requests__addButton--text {
-    width: fit-content;
-    padding: 5px 10px;
-  }
-
-  &__img {
-    width: 20px;
-    filter: brightness(5);
-  }
-
-  &__header {
+  .main-window__header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: calc(100% - 25px);
+    width: calc(100% - 25px) !important;
     border-top-left-radius: 10px;
     text-align: center;
     z-index: 1;
+    margin: 0 !important;
 
-    .requests__title {
+    .main-window__title {
       flex: 0 1 20%;
       font-size: 24px;
       padding: 10px 0;
       margin: 0;
     }
 
-    .requests__menu {
+    .main-window__menu {
       display: flex;
       flex: 0 1 80%;
       align-self: flex-end;
 
-      .requests__item {
+      .main-window__item {
         width: 100%;
         margin-right: 2.5px;
         font-size: 80%;
@@ -89,9 +58,9 @@
     }
   }
 
-  &__content {
+  .main-window__content {
     width: calc(100% - 25px);
-    padding: 25px 0;
+    padding: 5px 0;
     background-color: $primary-background-color;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -102,8 +71,6 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
 
     .main-form {
-      padding: 0;
-
       .main-form__title {
         margin-bottom: 20px;
       }
@@ -111,26 +78,22 @@
         box-shadow: none;
         width: calc(100% - 40px);
         padding: 0;
-
-        // .input_date:first-child() {
-        //   margin-top: 15px;
-        // }
       }
     }
   }
 
   @media (max-width: 620px) {
-    &__header {
-      .requests__title {
+    .main-window__header {
+      .main-window__title {
         display: none;
       }
-      .requests__menu {
+      .main-window__menu {
         flex: 0 1 100%;
 
-        .requests__item {
+        .main-window__item {
           flex-direction: column;
 
-          .requests__addButton {
+          .main-window__addButton {
             margin: 0;
           }
         }

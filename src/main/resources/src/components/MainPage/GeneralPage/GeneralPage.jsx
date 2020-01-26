@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import XLSX from 'xlsx';
 import { AdminWorkspace } from '../lazyImports.jsx';
 import { Link } from 'react-router-dom';
-import './GeneralPage.scss'
+import './GeneralPage.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
 import { formatDateString } from '../../../utils/functions.jsx';
 
 const GeneralPage = (props) => {
@@ -43,7 +44,7 @@ const GeneralPage = (props) => {
         dataWS = XLSX.utils.aoa_to_sheet([[formatDateString(date)]]);
         dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ФИО работника', 'Часы']], { origin: 'A3' });
         dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ЦехЛЭМЗ']], { origin: 'A5' });
-        dataWS = XLSX.utils.sheet_add_json(dataWS, dataLEMZ, { origin: 'A6', skipHeader: true}); //from json to sheet
+        dataWS = XLSX.utils.sheet_add_json(dataWS, dataLEMZ, { origin: 'A6', skipHeader: true }); //from json to sheet
         dataWS = XLSX.utils.sheet_add_aoa(dataWS, [['ЦехЛепсари']], { origin: ('A' + (dataLEMZ.length + 7)) });
         dataWS = XLSX.utils.sheet_add_json(dataWS, dataLepsari, { origin: ('A' + (dataLEMZ.length + 8)), skipHeader: true }); //from json to sheet
         //Кастомные заголовки
@@ -88,18 +89,20 @@ const GeneralPage = (props) => {
 
     return (
         <div className="general-page">
-            <div className="general-page__title">Главная страница</div>
-            <div className="general-page__content">
-                <div className="general-page__date">{'Дата: ' + formatDateString(date)}</div>
-                <div className="general-page__control-panel">
-                    {props.userHasAccess(['ROLE_ADMIN']) && <Link className="general-page__button" to="work-managment/record-time/new">Учесть рабочее время</Link>}
-                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="general-page__button" onClick={exportCSVFile}>Скачать Табель</div>}
+            <div className="main-window">
+                <div className="main-window__title">Главная страница</div>
+                <div className="main-window__content">
+                    <div className="main-window__date">{'Дата: ' + formatDateString(date)}</div>
+                    <div className="main-window__control-panel">
+                        {props.userHasAccess(['ROLE_ADMIN']) && <Link className="main-window__button" to="work-managment/record-time/new">Учесть рабочее время</Link>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={exportCSVFile}>Скачать Табель</div>}
+                    </div>
+                    {
+                        props.userHasAccess(['ROLE_ADMIN']) && <AdminWorkspace
+                            userHasAccess={props.userHasAccess}
+                        />
+                    }
                 </div>
-                {
-                    props.userHasAccess(['ROLE_ADMIN']) && <AdminWorkspace
-                        userHasAccess={props.userHasAccess}
-                    />
-                }
             </div>
         </div>
     );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import './PressForm.scss';
+import '../../../../../utils/MainWindow/MainWindow.scss';
 import TableView from '../TableView/TableView.jsx';
 import { getPressForm, getPressFormById, deletePartsFromPressForm, deletePressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 
@@ -43,19 +44,23 @@ const PressForm = (props) => {
 
     return (
         <div className="press_form">
-            <SearchBar
-                title='Поиск пресс-формы'
-                setSearchQuery={setSearchQuery}
-                placeholder='Введите здесь запрос для поиска...'
-            />
-            <div className="press_form__amount_table">Всего: {pressForm.length} записей</div>
-            <TableView
-                data={pressForm}
-                searchQuery={searchQuery}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-                loadData={loadPressForm}
-            />
+            <div className="main-window">
+                <SearchBar
+                    title='Поиск пресс-формы'
+                    setSearchQuery={setSearchQuery}
+                    placeholder='Введите здесь запрос для поиска...'
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__amount_table">Всего: {pressForm.length} записей</div>
+                </div>
+                <TableView
+                    data={pressForm}
+                    searchQuery={searchQuery}
+                    userHasAccess={props.userHasAccess}
+                    deleteItem={deleteItem}
+                    loadData={loadPressForm}
+                />
+            </div>
         </div>
     )
 }

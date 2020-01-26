@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Storage.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { deleteStorage, getStorage } from '../../../utils/RequestsAPI/Workshop/LemzStorage.jsx';
@@ -32,19 +33,22 @@ const Storage = (props) => {
 
     return (
         <div className="storage">
-            {/* <div className="storage__title">Склад</div> */}
-            <SearchBar
-                title="Поиск по складу"
-                placeholder="Введите артикул детали для поиска..."
-                setSearchQuery={setSearchQuery}
-            />
-            <div className="storage__amount_table">Всего: {storage.length} записей</div>
-            <TableView
-                data={storage}
-                searchQuery={searchQuery}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-            />
+            <div className="main-window">
+                <SearchBar
+                    title="Поиск по складу"
+                    placeholder="Введите артикул детали для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__amount_table">Всего: {storage.length} записей</div>
+                </div>
+                <TableView
+                    data={storage}
+                    searchQuery={searchQuery}
+                    userHasAccess={props.userHasAccess}
+                    deleteItem={deleteItem}
+                />
+            </div>
         </div>
     )
 }

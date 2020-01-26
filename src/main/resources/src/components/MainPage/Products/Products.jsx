@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Products.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
 import { getProducts, deleteProduct } from '../../../utils/RequestsAPI/Products.jsx';
@@ -87,46 +88,50 @@ const Products = (props) => {
 
     return (
         <div className="products">
-            <div className="products__header">
-                <div className="products__title">Продукция</div>
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_ENGINEER']) && <div className="products__button" onClick={() => setShowWindow(!showWindow)}>Категории</div>}
+            <div className="main-window">
+                <div className="main-window__header">
+                    <div className="main-window__title">Продукция</div>
+                    {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_ENGINEER']) && <div className="main-window__button" onClick={() => setShowWindow(!showWindow)}>Категории</div>}
+                </div>
+                <FormWindow
+                    title="Категории продукции"
+                    content={
+                        <React.Fragment>
+                            <SearchBar
+                                title="Поиск по категориям"
+                                placeholder="Введите название категории для поиска..."
+                                setSearchQuery={setSearchQueryCategory}
+                            />
+                            <TableViewCategory
+                                data={categoriesNames}
+                                searchQuery={searchQueryCategory}
+                                userHasAccess={props.userHasAccess}
+                                deleteItem={deleteItemCategory}
+                            />
+                        </React.Fragment>
+                    }
+                    headerButton={{
+                        name: 'Создать категорию',
+                        path: '/products/category/new'
+                    }}
+                    showWindow={showWindow}
+                    setShowWindow={setShowWindow}
+                />
+                <SearchBar
+                    title="Поиск продукции"
+                    placeholder="Введите название продукции для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__amount_table">Всего: {productsCount} записей</div>
+                </div>
+                <TableView
+                    categories={categories}
+                    searchQuery={searchQuery}
+                    userHasAccess={props.userHasAccess}
+                    deleteItem={deleteItem}
+                />
             </div>
-            <FormWindow
-                title="Категории продукции"
-                content={
-                    <React.Fragment>
-                        <SearchBar
-                            title="Поиск по категориям"
-                            placeholder="Введите название категории для поиска..."
-                            setSearchQuery={setSearchQueryCategory}
-                        />
-                        <TableViewCategory
-                            data={categoriesNames}
-                            searchQuery={searchQueryCategory}
-                            userHasAccess={props.userHasAccess}
-                            deleteItem={deleteItemCategory}
-                        />
-                    </React.Fragment>
-                }
-                headerButton={{
-                    name: 'Создать категорию',
-                    path: '/products/category/new'
-                }}
-                showWindow={showWindow}
-                setShowWindow={setShowWindow}
-            />
-            <SearchBar
-                title="Поиск продукции"
-                placeholder="Введите название продукции для поиска..."
-                setSearchQuery={setSearchQuery}
-            />
-            <div className="products__amount_table">Всего: {productsCount} записей</div>
-            <TableView
-                categories={categories}
-                searchQuery={searchQuery}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-            />
         </div>
     );
 };
