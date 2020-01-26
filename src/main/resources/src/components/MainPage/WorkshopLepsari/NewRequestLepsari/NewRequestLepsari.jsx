@@ -14,7 +14,7 @@ const NewRequestLepsari = (props) => {
         codeWord: "",
         responsible: "",
         status: "Ожидание",
-        shippingDate: new Date(),
+        shippingDate: new Date().setDate(new Date().getDate() + 7),
         comment: ''
     })
     const [requestErrors, setRequestErrors] = useState({

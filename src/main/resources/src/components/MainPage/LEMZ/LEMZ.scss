@@ -100,16 +100,16 @@
       padding: 0;
 
       .main-form__title {
-        margin-bottom: 0;
+        margin-bottom: 20px;
       }
       .main-form__form {
         box-shadow: none;
         width: calc(100% - 40px);
         padding: 0;
 
-        .input_date:first-child() {
-          margin-top: 15px;
-        }
+        // .input_date:first-child() {
+        //   margin-top: 15px;
+        // }
       }
     }
   }
