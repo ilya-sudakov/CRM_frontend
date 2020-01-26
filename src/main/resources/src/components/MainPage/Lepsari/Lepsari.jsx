@@ -5,7 +5,7 @@ import plusImg from '../../../../../../../assets/sidemenu/plus.png';
 import './Lepsari.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';
-import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage, WorkshopLepsari, NewRequestLepsari, EditRequestLepsari, ViewRequestLepsari, StorageLepsari, NewStorageLepsari, EditStorageLepsari } from '../lazyImports.jsx';
+import { WorkshopLepsari, NewRequestLepsari, EditRequestLepsari, ViewRequestLepsari, StorageLepsari, NewStorageLepsari, EditStorageLepsari } from '../lazyImports.jsx';
 
 const Lepsari = (props) => {
     return (

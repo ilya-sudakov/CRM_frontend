@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './WorkshopLEMZ.scss';
+import pdfMake from 'pdfmake';
 import { getRequestsLEMZ, deleteRequestLEMZ, getRequestLEMZById, deleteProductsToRequestLEMZ } from '../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
+import { getRequestsListPdfText } from '../../../utils/functions.jsx';
 
 const WorkshopLEMZ = (props) => {
     const [requestsLEMZ, setRequestsLEMZ] = useState([]);
@@ -27,6 +29,11 @@ const WorkshopLEMZ = (props) => {
             })
     }
 
+    const printRequestsList = () => {
+        let dd = getRequestsListPdfText(requestsLEMZ.sort((a, b) => (a.id - b.id)), 'ЦехЛЭМЗ', 'lemzProducts');
+        pdfMake.createPdf(dd).print();
+    }
+
     useEffect(() => {
         document.title = "Заявки - ЛЭМЗ";
         loadRequestsLEMZ()
@@ -48,7 +55,10 @@ const WorkshopLEMZ = (props) => {
                 placeholder="Введите название продукции для поиска..."
                 setSearchQuery={setSearchQuery}
             />
-            <div className="requests_LEMZ__amount_table">Всего: {requestsLEMZ.length} записей</div>
+            <div className="requests_LEMZ__info-panel">
+                <div className="requests_LEMZ__button" onClick={printRequestsList}>Печать списка</div>
+                <div className="requests_LEMZ__amount_table">Всего: {requestsLEMZ.length} записей</div>
+            </div>
             <TableView
                 data={requestsLEMZ}
                 loadData={loadRequestsLEMZ}

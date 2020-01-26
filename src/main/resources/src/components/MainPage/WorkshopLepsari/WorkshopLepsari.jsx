@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import pdfMake from 'pdfmake';
 import './WorkshopLepsari.scss';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
@@ -8,6 +9,7 @@ import {
     deleteProductsToRequestLepsari,
     deleteRequestLepsari
 } from '../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
+import { getRequestsListPdfText } from '../../../utils/functions.jsx';
 
 const WorkshopLepsari = (props) => {
     const [requestLepsari, setRequestLepsari] = useState([]);
@@ -37,6 +39,11 @@ const WorkshopLepsari = (props) => {
         loadRequestLepsari()
     }, [])
 
+    const printRequestsList = () => {
+        let dd = getRequestsListPdfText(requestLepsari.sort((a, b) => (a.id - b.id)), 'ЦехЛепсари', 'lepsariProducts');
+        pdfMake.createPdf(dd).print();
+    }
+
     const loadRequestLepsari = () => {
         getRequestsLepsari()
             .then(res => res.json())
@@ -53,7 +60,10 @@ const WorkshopLepsari = (props) => {
                 placeholder="Введите название продукции для поиска..."
                 setSearchQuery={setSearchQuery}
             />
-            <div className="requests_lepsari__amount_table">Всего: {requestLepsari.length} записей</div>
+            <div className="requests_lepsari__info-panel">
+                <div className="requests_lepsari__button" onClick={printRequestsList}>Печать списка</div>
+                <div className="requests_lepsari__amount_table">Всего: {requestLepsari.length} записей</div>
+            </div>
             <TableView
                 data={requestLepsari}
                 loadData={loadRequestLepsari}

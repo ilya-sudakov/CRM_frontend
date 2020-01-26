@@ -16,50 +16,37 @@
     margin-bottom: 15px;
   }
 
-  &__amount_table {
-    align-self: flex-end;
-    font-size: 75%;
-    margin-bottom: 5px;
-    margin-right: 35px;
+  &__info-panel {
+    width: calc(100% - 50px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
   }
 
-  // &__table {
-  //   width: calc(100% - 80px);
-  //   border: 1px solid #ccc;
-  //   border-collapse: collapse;
+  &__amount_table {
+    // align-self: flex-end;
+    font-size: 75%;
+    // margin-bottom: 5px;
+    // margin-right: 35px;
+  }
 
-  //   .requests_lepsari__action {
-  //     cursor: pointer;
-  //     text-decoration: underline;
-  //   }
+  &__button {
+    background-color: $button__background--inverted;
+    color: $secondary-text-color;
+    border-radius: 5px;
+    padding: 2.5px 10px;
+    cursor: pointer;
+    font-size: 90%;
+    margin-right: 10px;
+    transition: 0.2s ease-in-out;
 
-  //   .requests_lepsari__sortButton {
-  //     padding: 5px;
-  //     cursor: pointer;
-  //   }
-
-  //   tr {
-  //     background-color: #f8f8f8;
-  //     border: 1px solid #ddd;
-  //   }
-
-  //   td {
-  //     padding: 5px;
-  //     text-align: center;
-  //     border-right: 1px solid rgb(207, 207, 207);
-
-  //     table {
-  //       width: 100%;
-  //     }
-  //   }
-
-  //   thead {
-  //     font-size: 80%;
-  //     // letter-spacing: 0.1em;
-  //     // text-transform: uppercase;
-  //     background-color: #c4c4c4;
-  //   }
-  // }
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
 
   .requests_lepsari__table--even {
     background-color: #ebebeb;
@@ -68,7 +55,7 @@
   .requests_lepsari__table--odd {
     background-color: #f8f8f8;
   }
-  
+
   .requests_lepsari__table--status_not_ready {
     background-color: red;
   }

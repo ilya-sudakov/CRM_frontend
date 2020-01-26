@@ -16,11 +16,36 @@
     margin-bottom: 15px;
   }
 
+  &__info-panel {
+    width: calc(100% - 50px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
   &__amount_table {
-    align-self: flex-end;
+    // align-self: flex-end;
     font-size: 75%;
-    margin-bottom: 5px;
-    margin-right: 35px;
+    // margin-bottom: 5px;
+    // margin-right: 35px;
+  }
+
+  &__button {
+    background-color: $button__background--inverted;
+    color: $secondary-text-color;
+    border-radius: 5px;
+    padding: 2.5px 10px;
+    cursor: pointer;
+    font-size: 90%;
+    margin-right: 10px;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
   }
 
   // &__table {
@@ -68,7 +93,7 @@
   .requests_LEMZ__table--odd {
     background-color: #f8f8f8;
   }
-  
+
   .requests_LEMZ__table--status_not_ready {
     background-color: red;
   }
@@ -86,67 +111,8 @@
   }
 
   @media (max-width: 768px) {
-    &__amount_table {
-      margin-left: 10px;
-      align-self: flex-start;
-    }
   }
 
   @media (max-width: 1220px) {
-    // &__table {
-    //   border: 0;
-    // }
-
-    // &__table caption {
-    //   font-size: 1.3em;
-    // }
-
-    // &__table thead {
-    //   border: none;
-    //   clip: rect(0 0 0 0);
-    //   height: 1px;
-    //   margin: -1px;
-    //   overflow: hidden;
-    //   padding: 0;
-    //   position: absolute;
-    //   width: 1px;
-    // }
-
-    // &__table tr {
-    //   border-bottom: 3px solid #ddd;
-    //   display: block;
-    //   margin-bottom: 0.625em;
-    // }
-
-    // &__table td {
-    //   border-bottom: 1px solid #ddd;
-    //   display: block;
-    //   font-size: 0.8em;
-    //   text-align: right;
-    // }
-
-    // &__table td::before {
-    //   float: left;
-    //   font-weight: bold;
-    //   text-transform: uppercase;
-    // }
-
-    // &__table td::before {
-    //   content: attr(data-label);
-    // }
-
-    // &__table .requests_LEMZ__actions {
-    //   display: flex;
-    //   justify-content: center;
-    //   border-bottom: 0;
-
-    //   .requests_LEMZ__action {
-    //     padding: 5px 10px;
-    //   }
-
-    //   &::before {
-    //     content: "";
-    //   }
-    // }
   }
 }
