@@ -49,7 +49,12 @@ const Employees = (props) => {
     }
 
     const printEmployeesList = () => {
-        let dd = getEmployeesListPdfText(employees, workshops);
+        let dd = getEmployeesListPdfText(employees.sort((a, b) => {
+            if (a.lastName < b.lastName) {
+                return -1;
+            }
+            else return 1;
+        }), workshops);
         pdfMake.createPdf(dd).print();
     }
 
