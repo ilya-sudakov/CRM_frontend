@@ -13,6 +13,7 @@ const Select = (props) => {
     const [selected, setSelected] = useState([]);
     const [options, setOptions] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]);
     const [showWindow, setShowWindow] = useState(false);
     const [closeWindow, setCloseWindow] = useState(false);
 
@@ -62,6 +63,7 @@ const Select = (props) => {
                 })
                 Promise.all(temp)
                     .then(() => {
+                        setProducts([...result]);
                         setOptions([...result]);
                     })
             })
@@ -208,7 +210,7 @@ const Select = (props) => {
                                 setSearchQuery={setSearchQueryCategory}
                             />
                             <TableView
-                                // data={products}
+                                products={products}
                                 categories={categories}
                                 searchQuery={searchQueryCategory}
                                 deleteItem={null}
