@@ -29,7 +29,7 @@
     // top: 2rem;
     background-color: #f73434;
     color: #ffffff;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px 10px;
     transition: 0.2s ease-in-out;
     cursor: pointer;
@@ -48,8 +48,8 @@
       width: 100%;
       padding: 5px 10px;
       // border-radius: 10px;
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
       z-index: 0;
 
       &:focus {
@@ -66,8 +66,8 @@
       flex: 0 1 15%;
       background-color: $button__background--inverted;
       color: $secondary-text-color;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
       outline: none;
       cursor: pointer;
       padding: 5px 10px;
