@@ -7,7 +7,7 @@ const ImgLoader = (props) => {
             {
                 (props.imgSrc && props.imgSrc !== '')
                     ? <img className={props.imgClass} src={props.imgSrc} alt="" />
-                    : <div class="lds-roller">
+                    : <div class={props.imgClass + " lds-roller"}>
                         <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
                     </div>
             }

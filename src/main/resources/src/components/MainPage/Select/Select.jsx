@@ -3,9 +3,11 @@ import deleteSVG from '../../../../../../../assets/select/delete.svg';
 import './Select.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from '../Products/TableView/TableView.jsx';
-import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.jsx';
+import { getCategories, getCategoriesNames } from '../../../utils/RequestsAPI/Products/Categories.jsx';
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import ColorPicker from './ColorPicker/ColorPicker.jsx';
+import { getProductsByCategory, getProductById } from '../../../utils/RequestsAPI/Products.jsx';
+import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const Select = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -18,7 +20,7 @@ const Select = (props) => {
     const [closeWindow, setCloseWindow] = useState(false);
 
     const search = () => {
-        return options.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        return products.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
     }
 
     const handleInputChange = (event) => {
@@ -50,23 +52,57 @@ const Select = (props) => {
     }
 
     const loadCategories = () => {
-        getCategories()
-            .then(response => response.json())
-            .then(response => {
-                setCategories(response);
-                let result = [];
-                let temp = response.map((cat) => {
-                    let products = cat.products.map(item => {
-                        return item;
-                    })
-                    result.push(...products);
+        // getCategories()
+        //     .then(response => response.json())
+        //     .then(response => {
+        //         setCategories(response);
+        //         let result = [];
+        //         let temp = response.map((cat) => {
+        //             let products = cat.products.map(item => {
+        //                 return item;
+        //             })
+        //             result.push(...products);
+        //         })
+        //         Promise.all(temp)
+        //             .then(() => {
+        //                 setProducts([...result]);
+        //                 setOptions([...result]);
+        //             })
+        //Динамическая загрузка продукции
+        getCategoriesNames() //Только категории
+            .then(res => res.json())
+            .then(res => {
+                const categoriesArr = res;
+                setCategories(res);
+                let productsArr = [];
+                const temp = categoriesArr.map((item) => {
+                    let category = {
+                        category: item.name
+                    };
+                    return getProductsByCategory(category) //Продукция по категории
+                        .then(res => res.json())
+                        .then(res => {
+                            res.map(item => productsArr.push(item));
+                            setProducts([...productsArr]);
+                        })
                 })
                 Promise.all(temp)
                     .then(() => {
-                        setProducts([...result]);
-                        setOptions([...result]);
+                        //Загружаем картинки по отдельности для каждой продукции
+                        const temp = productsArr.map((item, index) => {
+                            getProductById(item.id)
+                                .then(res => res.json())
+                                .then(res => {
+                                    // console.log(res);
+                                    productsArr.splice(index, 1, res);
+                                    setProducts([...productsArr]);
+                                })
+                        })
+                        Promise.all(temp)
+                            .then(() => console.log('all images downloaded'))
                     })
             })
+
             .catch(error => {
                 console.log(error);
             })
@@ -248,13 +284,14 @@ const Select = (props) => {
             {props.options && <div className="select__options select__options--hidden">
                 {search().map((item, index) => (
                     <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
-                        <img className="select__img" src={item.photo} />
+                        <ImgLoader
+                            imgSrc={item.photo}
+                            imgClass="select__img"
+                        />
                         <div>{'№' + item.id + ', ' + item.name}</div>
-                        {/* {item.name} */}
                     </div>
                 ))}
             </div>}
-            {/* {console.log(selected)} */}
             <div className="select__selected">
                 {selected.length !== 0 && <span className="select__selected_title">Выбранная продукция:</span>}
                 {selected.map((item, index) => (
@@ -267,14 +304,12 @@ const Select = (props) => {
                                 id={item.id}
                                 handleStatusChange={handleStatusChange}
                             /> : <div className="select__selected_name">{item.name}</div>}
-                            {/* <div className="select__selected_name">{item.name}</div> */}
                             {(!props.readOnly && !props.workshop) && <img id={index} className="select__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
                         </div>
                         <div className="select__selected_quantity">
                             Кол-во{!props.readOnly && "*"}
                             <input
                                 quantity_id={index}
-                                // type="number"
                                 type="text"
                                 name="quantity"
                                 autoComplete="off"
