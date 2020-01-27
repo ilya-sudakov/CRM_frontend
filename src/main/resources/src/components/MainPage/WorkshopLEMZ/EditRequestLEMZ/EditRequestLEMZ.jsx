@@ -60,16 +60,18 @@ const EditRequestLEMZ = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
 
     const formIsValid = () => {
-        console.log(validInputs);
+        // console.log(validInputs);
         let check = true;
         let newErrors = Object.assign({
             date: false,
@@ -343,8 +345,6 @@ const EditRequestLEMZ = (props) => {
                     name="comment"
                     defaultValue={requestInputs.comment}
                     handleInputChange={handleInputChange}
-                    errorsArr={requestErrors}
-                    setErrorsArr={setRequestErrors}
                 />
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">

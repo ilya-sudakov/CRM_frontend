@@ -30,10 +30,12 @@ const EditPart = (props) => {
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
