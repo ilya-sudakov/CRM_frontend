@@ -22,7 +22,8 @@ const SelectWork = (props) => {
         if (props.options !== undefined) {
             setOptions([...props.options])
         }
-    }, [props.defaultValue, props.options])
+        
+    }, [props.defaultValue, props.options, props.products])
 
     const clickOnForm = (e) => {
         const id = e.currentTarget.getAttribute("index");
@@ -57,7 +58,7 @@ const SelectWork = (props) => {
         ]);
         // const form = document.getElementsByClassName("select-work__selected_form")[0];
         // console.log(form);
-        
+
         // form.classList.remove("select-work__selected_form--hidden");
     }
 
@@ -132,6 +133,8 @@ const SelectWork = (props) => {
                                 inputName="Продукция"
                                 options
                                 id={index}
+                                categories={props.categories}
+                                products={props.products}
                                 name="product"
                                 noPackaging
                                 onChange={(value) => {

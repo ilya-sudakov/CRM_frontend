@@ -5,6 +5,8 @@ import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.js
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
 import SelectWork from '../SelectWork/SelectWork.jsx';
+import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
+import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 
 const RecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -23,6 +25,8 @@ const RecordWork = (props) => {
         works: false
     })
     const [showError, setShowError] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -118,7 +122,43 @@ const RecordWork = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
-    })
+        //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
+        getCategoriesNames() //Только категории
+            .then(res => res.json())
+            .then(res => {
+                const categoriesArr = res;
+                setCategories(res);
+                let productsArr = [];
+                const temp = categoriesArr.map((item) => {
+                    let category = {
+                        category: item.name
+                    };
+                    return getProductsByCategory(category) //Продукция по категории
+                        .then(res => res.json())
+                        .then(res => {
+                            res.map(item => productsArr.push(item));
+                            setProducts([...productsArr]);
+                        })
+                })
+                Promise.all(temp)
+                    .then(() => {
+                        //Загружаем картинки по отдельности для каждой продукции
+                        const temp = productsArr.map((item, index) => {
+                            getProductById(item.id)
+                                .then(res => res.json())
+                                .then(res => {
+                                    // console.log(res);
+                                    productsArr.splice(index, 1, res);
+                                    setProducts([...productsArr]);
+                                })
+                        })
+                        Promise.all(temp)
+                            .then(() => {
+                                // console.log('all images downloaded');
+                            })
+                    })
+            })
+    }, [])
 
     return (
         <div className="main-form">
@@ -189,6 +229,8 @@ const RecordWork = (props) => {
                                 })
                             }}
                             userHasAccess={props.userHasAccess}
+                            categories={categories}
+                            products={products}
                         />
                     </div>
                 </div>

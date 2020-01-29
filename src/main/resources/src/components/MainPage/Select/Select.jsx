@@ -13,7 +13,6 @@ const Select = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchQueryCategory, setSearchQueryCategory] = useState('');
     const [selected, setSelected] = useState([]);
-    const [options, setOptions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [showWindow, setShowWindow] = useState(false);
@@ -69,45 +68,51 @@ const Select = (props) => {
         //                 setOptions([...result]);
         //             })
         //Динамическая загрузка продукции
-        getCategoriesNames() //Только категории
-            .then(res => res.json())
-            .then(res => {
-                const categoriesArr = res;
-                setCategories(res);
-                let productsArr = [];
-                const temp = categoriesArr.map((item) => {
-                    let category = {
-                        category: item.name
-                    };
-                    return getProductsByCategory(category) //Продукция по категории
-                        .then(res => res.json())
-                        .then(res => {
-                            res.map(item => productsArr.push(item));
-                            setProducts([...productsArr]);
-                        })
-                })
-                Promise.all(temp)
-                    .then(() => {
-                        //Загружаем картинки по отдельности для каждой продукции
-                        const temp = productsArr.map((item, index) => {
-                            getProductById(item.id)
-                                .then(res => res.json())
-                                .then(res => {
-                                    // console.log(res);
-                                    productsArr.splice(index, 1, res);
-                                    setProducts([...productsArr]);
-                                })
-                        })
-                        Promise.all(temp)
-                            .then(() => {
-                                // console.log('all images downloaded');
+        if (props.categories && props.products) {
+
+            setCategories([...props.categories]);
+            setProducts([...props.products]);
+        }
+        else {
+            getCategoriesNames() //Только категории
+                .then(res => res.json())
+                .then(res => {
+                    const categoriesArr = res;
+                    setCategories(res);
+                    let productsArr = [];
+                    const temp = categoriesArr.map((item) => {
+                        let category = {
+                            category: item.name
+                        };
+                        return getProductsByCategory(category) //Продукция по категории
+                            .then(res => res.json())
+                            .then(res => {
+                                res.map(item => productsArr.push(item));
+                                setProducts([...productsArr]);
                             })
                     })
-            })
-
-            .catch(error => {
-                console.log(error);
-            })
+                    Promise.all(temp)
+                        .then(() => {
+                            //Загружаем картинки по отдельности для каждой продукции
+                            const temp = productsArr.map((item, index) => {
+                                getProductById(item.id)
+                                    .then(res => res.json())
+                                    .then(res => {
+                                        // console.log(res);
+                                        productsArr.splice(index, 1, res);
+                                        setProducts([...productsArr]);
+                                    })
+                            })
+                            Promise.all(temp)
+                                .then(() => {
+                                    // console.log('all images downloaded');
+                                })
+                        })
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
 
     const clickOnOption = (event) => {
@@ -218,7 +223,7 @@ const Select = (props) => {
         return () => {
             document.removeEventListener("keydown", pressEscKey, false);
         };
-    }, [props.defaultValue])
+    }, [props.defaultValue, props.products])
 
     return (
         <div className="select">

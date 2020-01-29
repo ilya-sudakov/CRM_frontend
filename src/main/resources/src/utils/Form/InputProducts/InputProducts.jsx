@@ -5,7 +5,7 @@ import Select from '../../../components/MainPage/Select/Select.jsx';
 const InputProducts = (props) => {
     useEffect(() => {
 
-    }, [])
+    }, [props.products])
     return (
         <div className="input_products">
             <div className="input_products__input">
@@ -19,6 +19,8 @@ const InputProducts = (props) => {
                     setErrorsArr={props.setErrorsArr}
                     defaultValue={props.defaultValue}
                     readOnly={props.readOnly}
+                    categories={props.categories}
+                    products={props.products}
                     workshop={props.workshop}
                     noPackaging={props.noPackaging}
                     userHasAccess={props.userHasAccess}
