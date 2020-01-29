@@ -82,7 +82,7 @@ const SelectUser = (props) => {
         return () => {
             document.removeEventListener("keydown", pressEscKey, false);
         };
-    }, [options])
+    }, [props.defaultValue])
 
     return (
         <div className="select_user">
