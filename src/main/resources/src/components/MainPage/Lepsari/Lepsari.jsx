@@ -47,6 +47,10 @@ const Lepsari = (props) => {
                                 exact path="/lepsari/workshop-lepsari/new"
                                 component={NewRequestLepsari}
                                 userHasAccess={props.userHasAccess}
+                                transferState={props.transferState}
+                                transferData={props.transferData}
+                                setTransferState={props.setTransferState}
+                                setTransferData={props.setTransferData}
                                 userData={props.userData}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                             />

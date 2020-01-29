@@ -149,6 +149,7 @@ const TableView = (props) => {
                         <Link to={"/requests/view/" + request.id} className="tableview_requests__action" >Просмотр</Link>
                         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/requests/edit/" + request.id} className="tableview_requests__action">Редактировать</Link>}
                         {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests__action" onClick={props.deleteItem}>Удалить</div>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests__action" onClick={() => props.transferRequest(request.id)}>Перенести</div>}
                     </div>
                 </div>
             ))}

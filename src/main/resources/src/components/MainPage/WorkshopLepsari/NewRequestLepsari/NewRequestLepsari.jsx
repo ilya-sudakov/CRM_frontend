@@ -96,7 +96,7 @@ const NewRequestLepsari = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let id = 0;
-        console.log(requestInputs);
+        // console.log(requestInputs);
         formIsValid() && addRequestLepsari(requestInputs)
             .then(res => res.json())
             .then(res => {
@@ -135,6 +135,28 @@ const NewRequestLepsari = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки Лепсари";
+        // console.log(props.transferState, props.transferData);
+        //Если есть перенос данных, то добавляем их в state
+        if (props.transferState === true && props.transferData !== null) {
+            props.setTransferState(false);
+            setRequestInputs({
+                date: props.transferData.date,
+                requestProducts: props.transferData.requestProducts,
+                quantity: props.transferData.quantity,
+                codeWord: props.transferData.codeWord,
+                responsible: props.transferData.responsible,
+                status: props.transferData.status,
+                shippingDate: new Date(new Date(props.transferData.date).setDate(new Date(props.transferData.date).getDate() + 7)),
+                comment: '',
+            });
+            setValidInputs({
+                date: true,
+                requestProducts: true,
+                codeWord: true,
+                responsible: true,
+                shippingDate: true
+            });
+        }
     }, [])
 
     const handleDateChange = (date) => {
@@ -201,7 +223,7 @@ const NewRequestLepsari = (props) => {
                     required
                     error={requestErrors.date}
                     name="date"
-                    selected={requestInputs.date}
+                    selected={Date.parse(requestInputs.date)}
                     handleDateChange={handleDateChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
@@ -214,6 +236,7 @@ const NewRequestLepsari = (props) => {
                     name="requestProducts"
                     onChange={handleProductsChange}
                     error={requestErrors.requestProducts}
+                    defaultValue={requestInputs.requestProducts}
                     searchPlaceholder="Введите название продукта для поиска..."
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
@@ -224,6 +247,7 @@ const NewRequestLepsari = (props) => {
                     error={requestErrors.codeWord}
                     name="codeWord"
                     handleInputChange={handleInputChange}
+                    defaultValue={requestInputs.codeWord}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
@@ -232,6 +256,7 @@ const NewRequestLepsari = (props) => {
                     userData={props.userData}
                     required
                     error={requestErrors.responsible}
+                    defaultValue={requestInputs.responsible}
                     name="responsible"
                     handleUserChange={handleResponsibleChange}
                     searchPlaceholder="Введите имя пользователя для поиска..."

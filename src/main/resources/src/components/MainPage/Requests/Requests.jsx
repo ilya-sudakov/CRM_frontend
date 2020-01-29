@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import '../../../utils/MainWindow/MainWindow.scss';
 import './Requests.scss';
+import '../../../utils/Form/Form.scss';
 import { getRequests, deleteRequest, deleteProductsToRequest, getRequestById } from '../../../utils/RequestsAPI/Requests.jsx';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
+import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 
 const Requests = (props) => {
     const [requests, setRequests] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [showWindow, setShowWindow] = useState(false);
+    const [toWorkshop, setToWorkshop] = useState('lemz');
+    const [requestId, setRequestId] = useState(0);
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
@@ -39,10 +44,54 @@ const Requests = (props) => {
             })
     }
 
+    const transferRequest = (id) => {
+        setRequestId(id);
+        setShowWindow(!showWindow);
+    }
+
     return (
         <div className="requests">
             <div className="main-window">
                 <div className="main-window__title">Заявки</div>
+                <FormWindow
+                    title="Перенос заявки в план производства"
+                    windowName="transfer-request"
+                    content={
+                        <React.Fragment>
+                            <div className="main-form">
+                                <div className="main-form__form">
+                                    <div className="main-form__item">
+                                        <div className="main-form__input_name">Подразделение</div>
+                                        <div className="main-form__input_field">
+                                            <select
+                                                name="workshop"
+                                                onChange={(event) => {
+                                                    setToWorkshop(event.target.value);
+                                                }}
+                                            >
+                                                <option value="lemz">ЦехЛЭМЗ</option>
+                                                <option value="lepsari">ЦехЛепсари</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="main-form__buttons">
+                                        <input className="main-form__submit" type="submit" onClick={() => {
+                                            props.setTransferState(true);
+                                            props.setTransferData(requests.find(item => {
+                                                if (item.id === requestId) {
+                                                    return true
+                                                }
+                                            }))
+                                            props.history.push(toWorkshop + '/workshop-' + toWorkshop + '/new');
+                                        }} value="Перенести в цех" />
+                                    </div>
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    }
+                    showWindow={showWindow}
+                    setShowWindow={setShowWindow}
+                />
                 <SearchBar
                     title="Поиск по заявкам"
                     placeholder="Введите название продукции для поиска..."
@@ -55,6 +104,7 @@ const Requests = (props) => {
                     data={requests}
                     loadData={loadRequests}
                     deleteItem={deleteItem}
+                    transferRequest={transferRequest}
                     searchQuery={searchQuery}
                     userHasAccess={props.userHasAccess}
                 />

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { addRequestLEMZ, addProductsToRequestLEMZ } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
-import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import './NewRequestLEMZ.scss';
 import '../../../../utils/Form/Form.scss';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
@@ -32,7 +31,6 @@ const NewRequestLEMZ = (props) => {
         responsible: false,
         shippingDate: true
     })
-    const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
 
     const validateField = (fieldName, value) => {
@@ -137,11 +135,28 @@ const NewRequestLEMZ = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки ЛЭМЗ";
-        getUsers()
-            .then(res => res.json())
-            .then(res => {
-                setUsers(res);
-            })
+        // console.log(props.transferState, props.transferData);
+        //Если есть перенос данных, то добавляем их в state
+        if (props.transferState === true && props.transferData !== null) {
+            props.setTransferState(false);
+            setRequestInputs({
+                date: props.transferData.date,
+                requestProducts: props.transferData.requestProducts,
+                quantity: props.transferData.quantity,
+                codeWord: props.transferData.codeWord,
+                responsible: props.transferData.responsible,
+                status: props.transferData.status,
+                shippingDate: new Date(new Date(props.transferData.date).setDate(new Date(props.transferData.date).getDate() + 7)),
+                comment: '',
+            });
+            setValidInputs({
+                date: true,
+                requestProducts: true,
+                codeWord: true,
+                responsible: true,
+                shippingDate: true
+            });
+        }
     }, [])
 
     const handleDateChange = (date) => {
@@ -208,7 +223,7 @@ const NewRequestLEMZ = (props) => {
                     required
                     error={requestErrors.date}
                     name="date"
-                    selected={requestInputs.date}
+                    selected={Date.parse(requestInputs.date)}
                     handleDateChange={handleDateChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
@@ -220,6 +235,7 @@ const NewRequestLEMZ = (props) => {
                     options
                     name="requestProducts"
                     onChange={handleProductsChange}
+                    defaultValue={requestInputs.requestProducts}
                     error={requestErrors.requestProducts}
                     searchPlaceholder="Введите название продукта для поиска..."
                     errorsArr={requestErrors}
@@ -231,6 +247,7 @@ const NewRequestLEMZ = (props) => {
                     error={requestErrors.codeWord}
                     name="codeWord"
                     handleInputChange={handleInputChange}
+                    defaultValue={requestInputs.codeWord}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
@@ -239,8 +256,8 @@ const NewRequestLEMZ = (props) => {
                     userData={props.userData}
                     required
                     error={requestErrors.responsible}
+                    defaultValue={requestInputs.responsible}
                     name="responsible"
-                    options={users}
                     handleUserChange={handleResponsibleChange}
                     searchPlaceholder="Введите имя пользователя для поиска..."
                     errorsArr={requestErrors}

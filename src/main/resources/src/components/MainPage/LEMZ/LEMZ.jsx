@@ -48,6 +48,10 @@ const LEMZ = (props) => {
                                 component={NewRequestLEMZ}
                                 userHasAccess={props.userHasAccess}
                                 userData={props.userData}
+                                transferState={props.transferState}
+                                transferData={props.transferData}
+                                setTransferState={props.setTransferState}
+                                setTransferData={props.setTransferData}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                             />
                             <PrivateRoute

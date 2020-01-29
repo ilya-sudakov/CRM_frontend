@@ -15,6 +15,8 @@ import PageLoading from './PageLoading/PageLoading.jsx';
 class MainPage extends React.Component {
     state = {
         sidemenu_hidden: false,
+        transferState: false,
+        transferData: null
     }
 
     setSideMenu = (sidemenu_hidden) => {
@@ -31,7 +33,7 @@ class MainPage extends React.Component {
     }
 
     componentDidMount() {
-        // console.log(this.props.userData);
+        // console.log(this.state.transferState, this.state.transferData);
     }
 
     render() {
@@ -96,6 +98,12 @@ class MainPage extends React.Component {
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                                    setTransferState={(value) => this.setState({
+                                        transferState: value
+                                    })}
+                                    setTransferData={(value) => this.setState({
+                                        transferData: value
+                                    })}
                                 />
                                 <Route path="/requests/view/" component={ViewRequest} />
                                 <PrivateRoute
@@ -139,6 +147,14 @@ class MainPage extends React.Component {
                                     component={LEMZ}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
+                                    transferState={this.state.transferState}
+                                    transferData={this.state.transferData}
+                                    setTransferState={(value) => this.setState({
+                                        transferState: value
+                                    })}
+                                    setTransferData={(value) => this.setState({
+                                        transferData: value
+                                    })}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                                 />
                                 <PrivateRoute
@@ -146,6 +162,14 @@ class MainPage extends React.Component {
                                     component={Lepsari}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
+                                    transferState={this.state.transferState}
+                                    transferData={this.state.transferData}
+                                    setTransferState={(value) => this.setState({
+                                        transferState: value
+                                    })}
+                                    setTransferData={(value) => this.setState({
+                                        transferData: value
+                                    })}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
                                 />
                                 <PrivateRoute

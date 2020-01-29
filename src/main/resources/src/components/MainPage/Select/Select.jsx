@@ -266,15 +266,6 @@ const Select = (props) => {
                             />
                         </React.Fragment>
                     }
-                    // content={<WindowContent
-                    //     categories={categories}
-                    //     showWindow={showWindow}
-                    //     setShowWindow={setShowWindow}
-                    //     searchQuery={searchQueryCategory}
-                    //     deleteItem={null}
-                    //     selectProduct={selectProduct}
-                    //     setSearchQuery={setSearchQueryCategory}
-                    // />}
                     headerButton={props.userHasAccess(['ROLE_ADMIN']) ? {
                         name: 'Создать продукцию',
                         path: '/products/new'
@@ -347,27 +338,4 @@ const Select = (props) => {
         </div>
     )
 }
-
-const WindowContent = (props) => {
-    useEffect(() => {
-        console.log('windowcontent');
-    }, [])
-    return (
-        <React.Fragment>
-            <SearchBar
-                title="Поиск по продукции"
-                placeholder="Введите название продукции для поиска..."
-                setSearchQuery={props.setSearchQueryCategory}
-            />
-            <TableView
-                // data={products}
-                categories={props.categories}
-                searchQuery={props.searchQueryCategory}
-                deleteItem={null}
-                selectProduct={props.selectProduct}
-            />
-        </React.Fragment>
-    );
-};
-
 export default Select;
