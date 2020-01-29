@@ -45,7 +45,7 @@ const SelectWork = (props) => {
             {
                 product: [],
                 work: '',
-                hours: '',
+                hours: 0,
             }
         ]);
         props.handleWorkChange([
@@ -53,7 +53,7 @@ const SelectWork = (props) => {
             {
                 product: [],
                 work: '',
-                hours: '',
+                hours: 0,
             }
         ]);
         // const form = document.getElementsByClassName("select-work__selected_form")[0];
