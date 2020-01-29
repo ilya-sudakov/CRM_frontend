@@ -4,10 +4,11 @@
   width: calc(100% - 0px);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   // margin-bottom: 25px;
   .select-work-item__input {
     display: flex;
-    width: calc(100% - 70px);
+    width: calc(100% - 0px);
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -44,15 +45,16 @@
     display: flex;
     flex-direction: row;
     position: relative;
-    width: calc(100% - 0px);
+    width: calc(100% - 5px);
     .select-work-item__input {
       border: 1px solid #bbbbbb;
-      width: (100%);
+      flex: 0 1 85%;
       padding: 5px 10px;
       border-radius: 0px !important;
       border-top-left-radius: 10px !important;
       border-bottom-left-radius: 10px !important;
       z-index: 0;
+      min-width: 0 !important;
 
       &:focus {
         border: 1px solid $button__background--inverted;
