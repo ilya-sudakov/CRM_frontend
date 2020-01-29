@@ -6,15 +6,11 @@ const FormWindow = (props) => {
     const [windowChange, setWindowChange] = useState(false);
     useEffect(() => {
         // console.log(props.showWindow);
-    }, [props.showWindow, props.setShowWindow, windowChange])
-
-    const handleWindowChange = (value) => {
-        props.setShowWindow(value);
-    }
+    }, [props.showWindow, props.setShowWindow, windowChange]);
 
     const clickOnSelectWindow = (e) => {
         e.preventDefault();
-        let productsWindow = document.getElementsByClassName(props.windowName ? ("form-window-" + props.windowName) : "form-window")[0];
+        let productsWindow = document.getElementsByClassName(props.windowName ? ("form-window-" + props.windowName) : "form-window")[props.id ? props.id : 0];
         if (!(e.target.classList[0] === "form-window") && !(e.target.classList.contains("form-window__exit")) && !(e.target.classList.contains("form-window__bar"))) {
             productsWindow.classList.remove("form-window--hidden");
             props.setShowWindow(true);

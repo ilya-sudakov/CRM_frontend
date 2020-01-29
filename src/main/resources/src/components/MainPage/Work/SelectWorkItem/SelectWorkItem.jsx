@@ -48,7 +48,6 @@ const SelectWorkItem = (props) => {
                         />
                         <button className="select-work-item__search_button" onClick={(e) => {
                             e.preventDefault();
-                            console.log('Opened window');
                             setShowWindow(!showWindow);
                         }}>Обзор</button>
                     </div>
@@ -63,6 +62,7 @@ const SelectWorkItem = (props) => {
             <FormWindow
                 title="Выбор работы"
                 windowName="select-work-item"
+                id={props.id}
                 content={
                     <React.Fragment>
                         <SearchBar

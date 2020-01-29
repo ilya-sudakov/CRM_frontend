@@ -28,9 +28,9 @@ const Select = (props) => {
     }
 
     const clickOnInput = () => {
-        const options = document.getElementsByClassName("select__options")[0];
-        const overlay = document.getElementsByClassName("select__overlay")[0];
-        const error = document.getElementsByClassName("select__error")[0];
+        const options = document.getElementsByClassName("select__options")[props.id ? props.id : 0];
+        const overlay = document.getElementsByClassName("select__overlay")[props.id ? props.id : 0];
+        const error = document.getElementsByClassName("select__error")[props.id ? props.id : 0];
         if (options.classList.contains("select__options--hidden")) {
             options.classList.remove("select__options--hidden");
             overlay.classList.remove("select__overlay--hidden");
@@ -44,7 +44,7 @@ const Select = (props) => {
     }
 
     const clickOverlay = (event) => {
-        const overlay = document.getElementsByClassName("select__overlay")[0];
+        const overlay = document.getElementsByClassName("select__overlay")[props.id ? props.id : 0];
         if (!overlay.classList.contains("select__overlay--hidden")) {
             overlay.classList.add("select__overlay--hidden");
             clickOnInput();
@@ -99,7 +99,9 @@ const Select = (props) => {
                                 })
                         })
                         Promise.all(temp)
-                            .then(() => console.log('all images downloaded'))
+                            .then(() => {
+                                // console.log('all images downloaded');
+                            })
                     })
             })
 
@@ -196,7 +198,7 @@ const Select = (props) => {
 
     const pressEscKey = useCallback((event) => {
         if (event.keyCode === 27) {
-            const options = document.getElementsByClassName("select__options")[0];
+            const options = document.getElementsByClassName("select__options")[props.id ? props.id : 0];
             if (!options.classList.contains("select__options--hidden")) {
                 // options.classList.add("select__options--hidden");
                 clickOnInput();
@@ -238,6 +240,8 @@ const Select = (props) => {
                 />
                 <FormWindow
                     title="Выбор продукции"
+                    windowName="select-products"
+                    id={props.id}
                     content={
                         <React.Fragment>
                             <SearchBar

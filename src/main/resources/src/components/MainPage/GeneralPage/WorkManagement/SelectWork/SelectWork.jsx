@@ -112,6 +112,7 @@ const SelectWork = (props) => {
                             <SelectWorkItem
                                 inputName="Выбор работы"
                                 required
+                                id={index}
                                 handleWorkItemChange={(value) => {
                                     let temp = selected;
                                     let originalItem = selected[index];
@@ -130,6 +131,7 @@ const SelectWork = (props) => {
                             <InputProducts
                                 inputName="Продукция"
                                 options
+                                id={index}
                                 name="product"
                                 noPackaging
                                 onChange={(value) => {
