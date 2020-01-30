@@ -136,6 +136,34 @@ const EditRecordWork = (props) => {
             alert('Неправильный индекс работы!');
             props.history.push("/");
         } else {
+            setWorkTimeInputs({
+                date: new Date(1 + '/' + 1 + '/' + 2020),
+                employee: 'Иван Васильевич Иванов',
+                works: [
+                    {
+                        product: [
+                            {
+                                id: "7",
+                                name: "Товар1",
+                                quantity: "4",
+                            }
+                        ],
+                        work: 'Фрезировка',
+                        hours: 7
+                    },
+                    {
+                        product: [
+                            {
+                                id: "7",
+                                name: "Товар1",
+                                quantity: "4",
+                            }
+                        ],
+                        work: 'Фрезировка',
+                        hours: 3
+                    }
+                ]
+            })
             //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
             getCategoriesNames() //Только категории
                 .then(res => res.json())
@@ -169,34 +197,6 @@ const EditRecordWork = (props) => {
                             Promise.all(temp)
                                 .then(() => {
                                     // console.log('all images downloaded');
-                                    setWorkTimeInputs({
-                                        date: new Date(1 + '/' + 1 + '/' + 2020),
-                                        employee: 'Иван Васильевич Иванов',
-                                        works: [
-                                            {
-                                                product: [
-                                                    {
-                                                        id: "7",
-                                                        name: "Товар1",
-                                                        quantity: "4",
-                                                    }
-                                                ],
-                                                work: 'Фрезировка',
-                                                hours: 7
-                                            },
-                                            {
-                                                product: [
-                                                    {
-                                                        id: "7",
-                                                        name: "Товар1",
-                                                        quantity: "4",
-                                                    }
-                                                ],
-                                                work: 'Фрезировка',
-                                                hours: 3
-                                            }
-                                        ]
-                                    })
                                 })
                         })
                 })
