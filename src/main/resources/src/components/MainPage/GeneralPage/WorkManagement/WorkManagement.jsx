@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './WorkManagement.scss';
 import { Link } from 'react-router-dom';
+import searchImg from '../../../../../../../../assets/searchbar/search.svg';
 
 const WorkManagement = (props) => {
     const [recordedWork, setRecordedWork] = useState([
@@ -49,7 +50,10 @@ const WorkManagement = (props) => {
                     <button className="work-management__search-button" onClick={(event) => {
                         event.preventDefault();
                         setSearchQuery(document.getElementsByClassName('work-management__input')[0].value);
-                    }}>Поиск</button>
+                    }}>
+                        <img className="work-management__img" src={searchImg} alt=""/>
+                        <span>Поиск</span>
+                    </button>
                 </div>
                 {(recordedWork.length === 0) && <div className="work-management__info">Нет записей о проведенной работе за сегодня!</div>}
                 <div className="work-management__list">
