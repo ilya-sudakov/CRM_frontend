@@ -7,6 +7,7 @@ import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectE
 import SelectWork from '../SelectWork/SelectWork.jsx';
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 
 const NewRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -27,6 +28,7 @@ const NewRecordWork = (props) => {
     const [showError, setShowError] = useState(false);
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
+    const [totalHours, setTotalHours] = useState(0);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -236,11 +238,18 @@ const NewRecordWork = (props) => {
                                 })
                             }}
                             userHasAccess={props.userHasAccess}
+                            totalHours={totalHours}
+                            setTotalHours={setTotalHours}
                             categories={categories}
                             products={products}
                         />
                     </div>
                 </div>
+                <InputText
+                    inputName="Всего часов"
+                    readOnly
+                    defaultValue={totalHours}
+                />
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/')} value="Вернуться назад" />

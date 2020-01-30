@@ -67,6 +67,11 @@ const SelectWork = (props) => {
         let temp = selected;
         temp.splice(id, 1);
         setSelected([...temp]);
+        const total = temp.reduce((sum, cur) => sum + Number.parseInt(cur.hours), 0);
+        if (isNaN(total)) {
+            props.setTotalHours(0);
+        }
+        else props.setTotalHours(total);
         props.handleWorkChange([...temp]);
     }
 
@@ -83,6 +88,12 @@ const SelectWork = (props) => {
             ...originalItem,
             [name]: value
         })
+        if (name === 'hours') {
+            const total = temp.reduce((sum, cur) => sum + Number.parseInt(cur.hours), 0);
+            if (isNaN(total))
+                props.setTotalHours(0);
+            else props.setTotalHours(total);
+        }
         setSelected([...temp]);
         props.handleWorkChange([...temp])
     }
