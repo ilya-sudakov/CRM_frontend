@@ -136,50 +136,7 @@ const EditRecordWork = (props) => {
             alert('Неправильный индекс работы!');
             props.history.push("/");
         } else {
-            setWorkTimeInputs({
-                date: new Date(1 + '/' + 1 + '/' + 2020),
-                employee: 'Иван Васильевич Иванов',
-                works: [
-                    {
-                        product: [
-                            {
-                                id: "7",
-                                name: "Товар1",
-                                quantity: "4",
-                            }
-                        ],
-                        work: 'Фрезировка',
-                        hours: 7
-                    },
-                    {
-                        product: [
-                            {
-                                id: "7",
-                                name: "Товар1",
-                                quantity: "4",
-                            }
-                        ],
-                        work: 'Фрезировка',
-                        hours: 3
-                    }
-                ]
-            })
-            // setStorageId(id);
-            // getStorageById(id)
-            //     .then(res => res.json())
-            //     .then(oldRequest => {
-            //         setStorageInputs({
-            //             name: oldRequest.name,
-            //             number: oldRequest.number,
-            //             quantity: oldRequest.quantity,
-            //             comment: oldRequest.comment
-            //         });
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         alert('Неправильный индекс работы!');
-            //         props.history.push("/");
-            //     })
+            //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
             getCategoriesNames() //Только категории
                 .then(res => res.json())
                 .then(res => {
@@ -204,7 +161,7 @@ const EditRecordWork = (props) => {
                                 getProductById(item.id)
                                     .then(res => res.json())
                                     .then(res => {
-                                        // console.log(res);
+                                        // console.log(res.photo);
                                         productsArr.splice(index, 1, res);
                                         setProducts([...productsArr]);
                                     })
@@ -212,11 +169,39 @@ const EditRecordWork = (props) => {
                             Promise.all(temp)
                                 .then(() => {
                                     // console.log('all images downloaded');
+                                    setWorkTimeInputs({
+                                        date: new Date(1 + '/' + 1 + '/' + 2020),
+                                        employee: 'Иван Васильевич Иванов',
+                                        works: [
+                                            {
+                                                product: [
+                                                    {
+                                                        id: "7",
+                                                        name: "Товар1",
+                                                        quantity: "4",
+                                                    }
+                                                ],
+                                                work: 'Фрезировка',
+                                                hours: 7
+                                            },
+                                            {
+                                                product: [
+                                                    {
+                                                        id: "7",
+                                                        name: "Товар1",
+                                                        quantity: "4",
+                                                    }
+                                                ],
+                                                work: 'Фрезировка',
+                                                hours: 3
+                                            }
+                                        ]
+                                    })
                                 })
                         })
                 })
+
         }
-        //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
     }, [])
 
     return (

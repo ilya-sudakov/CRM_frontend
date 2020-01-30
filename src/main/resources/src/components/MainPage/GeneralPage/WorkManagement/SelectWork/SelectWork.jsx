@@ -167,10 +167,8 @@ const SelectWork = (props) => {
                                     props.handleWorkChange([...temp])
                                 }}
                                 userHasAccess={props.userHasAccess}
-                                // error={requestErrors.requestProducts}
                                 searchPlaceholder="Введите название продукта для поиска..."
-                            // errorsArr={requestErrors}
-                            // setErrorsArr={setRequestErrors}
+                                workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
                             />
                             <div className="select-work__item">
                                 <div className="select-work__input_name">Часы</div>

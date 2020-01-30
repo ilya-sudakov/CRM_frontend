@@ -19,7 +19,8 @@ const Select = (props) => {
     const [closeWindow, setCloseWindow] = useState(false);
 
     const search = () => {
-        return products.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        // console.log(products);
+        return (props.products ? props.products : products).filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
     }
 
     const handleInputChange = (event) => {
@@ -220,12 +221,12 @@ const Select = (props) => {
         //     setOptions([...props.options])
         // }
         document.addEventListener("keydown", pressEscKey, false);
-        (categories.length === 0 || props.products.length !== 0 ) && loadCategories();
+        (categories.length === 0) && loadCategories();
         // loadCategories();
         return () => {
             document.removeEventListener("keydown", pressEscKey, false);
         };
-    }, [props.defaultValue, props.products])
+    }, [props.defaultValue, props.categories])
 
     return (
         <div className="select">
@@ -257,7 +258,8 @@ const Select = (props) => {
                                 setSearchQuery={setSearchQueryCategory}
                             />
                             <TableView
-                                products={products}
+                                // products={products}
+                                products={props.products ? props.products : products}
                                 categories={categories}
                                 searchQuery={searchQueryCategory}
                                 deleteItem={null}
