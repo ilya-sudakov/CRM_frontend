@@ -28,7 +28,7 @@ const NewTask = (props) => {
     const [validInputs, setValidInputs] = useState({
         dateCreated: true,
         description: false,
-        responsible: false,
+        responsible: (props.userHasAccess(['ROLE_ADMIN']) ? false : true),
         dateControl: true,
         // status: false
     })

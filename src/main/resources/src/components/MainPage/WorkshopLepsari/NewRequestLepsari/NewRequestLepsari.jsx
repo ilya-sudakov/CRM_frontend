@@ -28,7 +28,7 @@ const NewRequestLepsari = (props) => {
         date: true,
         requestProducts: false,
         codeWord: false,
-        responsible: false,
+        responsible:  (props.userHasAccess(['ROLE_ADMIN']) ? false : true),
         shippingDate: true
     })
     const [showError, setShowError] = useState(false);
