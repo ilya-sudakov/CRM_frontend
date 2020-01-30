@@ -23,11 +23,21 @@ const SelectEmployee = (props) => {
 
     const loadEmployees = () => {
         let workshop = Object.assign({
-            workshop: props.userHasAccess(['ROLE_LEMZ']) ? 'ЦехЛЭМЗ'
-                : props.userHasAccess(['ROLE_LEPSARI']) ? 'ЦехЛепсари'
-                    : 'ЦехЛиговский'
+            workshop: props.userHasAccess(['ROLE_ADMIN'])
+                ? 'Админ'
+                : props.userHasAccess(['ROLE_LEMZ'])
+                    ? 'ЦехЛЭМЗ'
+                    : props.userHasAccess(['ROLE_LEPSARI'])
+                        ? 'ЦехЛепсари'
+                        : 'ЦехЛиговский'
         })
-        getEmployeesByWorkshop(workshop)
+        if (workshop.workshop === 'Админ') {
+            getEmployees()
+                .then(res => res.json())
+                .then(res => {
+                    setEmployees(res);
+                })
+        } else getEmployeesByWorkshop(workshop)
             .then(res => res.json())
             .then(res => {
                 setEmployees(res);
