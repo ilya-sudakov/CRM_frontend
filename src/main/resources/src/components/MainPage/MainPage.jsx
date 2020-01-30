@@ -5,7 +5,7 @@ import Header from '../Header/Header.jsx';
 import {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, RecordWork, LoginHistory
+    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, NewRecordWork, LoginHistory, EditRecordWork
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -287,7 +287,14 @@ class MainPage extends React.Component {
                                 />
                                 <PrivateRoute
                                     exact path="/work-managment/record-time/new"
-                                    component={RecordWork}
+                                    component={NewRecordWork}
+                                    userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                                />
+                                <PrivateRoute
+                                    path="/work-managment/record-time/edit/"
+                                    component={EditRecordWork}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}

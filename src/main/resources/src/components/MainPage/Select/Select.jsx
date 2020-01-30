@@ -69,7 +69,8 @@ const Select = (props) => {
         //             })
         //Динамическая загрузка продукции
         if (props.categories && props.products) {
-
+            // console.log('already have loaded products');
+            // console.log(props.products);
             setCategories([...props.categories]);
             setProducts([...props.products]);
         }
@@ -219,7 +220,8 @@ const Select = (props) => {
         //     setOptions([...props.options])
         // }
         document.addEventListener("keydown", pressEscKey, false);
-        (categories.length === 0) && loadCategories();
+        // (categories.length === 0) && loadCategories();
+        loadCategories();
         return () => {
             document.removeEventListener("keydown", pressEscKey, false);
         };

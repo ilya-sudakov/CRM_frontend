@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './RecordWork.scss';
+import './NewRecordWork.scss';
 import '../../../../../utils/Form/Form.scss';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
@@ -8,11 +8,11 @@ import SelectWork from '../SelectWork/SelectWork.jsx';
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 
-const RecordWork = (props) => {
+const NewRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
         date: new Date(),
-        employee: '',
-        works: ''
+        employee: null,
+        works: []
     })
     const [workTimeErrors, setWorkTimeErrors] = useState({
         date: false,
@@ -82,7 +82,14 @@ const RecordWork = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         let id = 0;
-        console.log(worktimeInputs);
+        const temp = Object.assign({
+            date: worktimeInputs.date.getDate(),
+            month: (worktimeInputs.date.getMonth() + 1),
+            year: worktimeInputs.date.getFullYear(),
+            employee: worktimeInputs.employee,
+            works: worktimeInputs.works
+        });
+        console.log(temp);
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {
@@ -244,4 +251,4 @@ const RecordWork = (props) => {
     );
 };
 
-export default RecordWork;
+export default NewRecordWork;

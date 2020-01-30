@@ -32,8 +32,12 @@ const WorkManagement = lazy(
     () => import('./GeneralPage/WorkManagement/WorkManagement.jsx')
 )
 
-const RecordWork = lazy(
-    () => import('./GeneralPage/WorkManagement/RecordWork/RecordWork.jsx')
+const NewRecordWork = lazy(
+    () => import('./GeneralPage/WorkManagement/NewRecordWork/NewRecordWork.jsx')
+)
+
+const EditRecordWork = lazy(
+    () => import('./GeneralPage/WorkManagement/EditRecordWork/EditRecordWork.jsx')
 )
 
 const newClient = lazy(
@@ -274,20 +278,20 @@ const Lepsari = lazy(
 
 
 export {
-    Clients, newClient, 
-    Contracts, 
-    Requests, NewRequest, EditRequest, ViewRequest, 
-    GeneralPage, AdminWorkspace, Notifications, WorkManagement, RecordWork,
+    Clients, newClient,
+    Contracts,
+    Requests, NewRequest, EditRequest, ViewRequest,
+    GeneralPage, AdminWorkspace, Notifications, WorkManagement, NewRecordWork, EditRecordWork,
     Products, NewProduct, ViewProduct, EditProduct, NewCategory, EditCategory,
     Users, EditUser, NewUser, LoginHistory,
-    WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Storage, NewStorage, EditStorage, 
-    Rigging, 
+    WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Storage, NewStorage, EditStorage,
+    Rigging,
     Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, 
-    Parts, NewPart, EditPart, 
+    GeneralTasks, NewTask, EditTask,
+    Parts, NewPart, EditPart,
     Employees, NewEmployee, EditEmployee, ViewEmployee,
-    Stamp, NewStamp, ViewStamp, EditStamp, 
-    Machine, NewMachine, ViewMachine, EditMachine, 
+    Stamp, NewStamp, ViewStamp, EditStamp,
+    Machine, NewMachine, ViewMachine, EditMachine,
     PressForm, NewPressForm, ViewPressForm, EditPressForm,
     EditPartInRigging,
     Work, NewWork, EditWork,

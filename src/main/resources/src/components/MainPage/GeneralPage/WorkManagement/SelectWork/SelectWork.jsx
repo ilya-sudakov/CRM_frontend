@@ -22,7 +22,7 @@ const SelectWork = (props) => {
         if (props.options !== undefined) {
             setOptions([...props.options])
         }
-        
+
     }, [props.defaultValue, props.options, props.products])
 
     const clickOnForm = (e) => {
@@ -113,6 +113,7 @@ const SelectWork = (props) => {
                             <SelectWorkItem
                                 inputName="Выбор работы"
                                 required
+                                defaultValue={item.work}
                                 id={index}
                                 handleWorkItemChange={(value) => {
                                     let temp = selected;
@@ -133,6 +134,7 @@ const SelectWork = (props) => {
                                 inputName="Продукция"
                                 options
                                 id={index}
+                                defaultValue={item.product}
                                 categories={props.categories}
                                 products={props.products}
                                 name="product"
