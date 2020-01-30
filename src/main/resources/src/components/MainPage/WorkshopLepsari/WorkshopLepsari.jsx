@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import pdfMake from 'pdfmake';
 import './WorkshopLepsari.scss';
+import PrintIcon from '../../../../../../../assets/print.png';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import {
@@ -62,7 +63,10 @@ const WorkshopLepsari = (props) => {
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
-                    <div className="main-window__button" onClick={printRequestsList}>Печать списка</div>
+                    <div className="main-window__button" onClick={printRequestsList}>
+                        <img className="main-window__img" src={PrintIcon} alt="" />
+                        <span>Печать списка</span>
+                    </div>
                     <div className="main-window__amount_table">Всего: {requestLepsari.length} записей</div>
                 </div>
                 <TableView

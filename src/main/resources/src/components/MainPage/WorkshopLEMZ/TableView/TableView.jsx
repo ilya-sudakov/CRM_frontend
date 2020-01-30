@@ -87,7 +87,7 @@ const TableView = (props) => {
                 return 1;
             }
             return 0;
-        })
+        });
     }
 
     useEffect(() => {

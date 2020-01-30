@@ -170,9 +170,9 @@ const NewEmployee = (props) => {
                 <InputText
                     inputName="Имя"
                     required
-                    error={employeeErrors.name}
                     name="name"
                     handleInputChange={handleInputChange}
+                    error={employeeErrors.name}
                     errorsArr={employeeErrors}
                     setErrorsArr={setEmployeeErrors}
                 />

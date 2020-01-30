@@ -3,6 +3,7 @@ import './Employees.scss';
 import '../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
+import PrintIcon from '../../../../../../../../assets/print.png';
 import pdfMake from 'pdfmake';
 import { getEmployeesListPdfText } from '../../../../utils/functions.jsx';
 import { getEmployees, deleteEmployee, getEmployeesByWorkshop } from '../../../../utils/RequestsAPI/Employees.jsx';
@@ -75,7 +76,10 @@ const Employees = (props) => {
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
-                    <div className="main-window__button" onClick={printEmployeesList}>Печать списка</div>
+                    <div className="main-window__button" onClick={printEmployeesList}>
+                        <img className="main-window__img" src={PrintIcon} alt="" />
+                        <span>Печать списка</span>
+                    </div>
                     <div className="main-window__amount_table">Всего: {employees.length} записей</div>
                 </div>
                 <TableView

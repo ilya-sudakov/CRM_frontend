@@ -13,14 +13,14 @@ const SideMenu = (props) => {
         {
             pathname: "/clients",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            name: "Клиенты (для теста)",
+            name: "Клиенты",
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             addButtonName: "Добавить клиента"
         },
         {
             pathname: "/contracts",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            name: "Договоры (для теста)"
+            name: "Договоры"
         },
         {
             pathname: "/requests",

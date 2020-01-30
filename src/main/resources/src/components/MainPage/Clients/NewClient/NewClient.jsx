@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './NewClient.scss';
+import '../../../../utils/Form/Form.scss';
 import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -12,39 +15,70 @@ const newClient = (props) => {
         smpl: true
     });
     const [formErrors, setFormErrors] = useState({
-        client: "",
-        contact: "",
-        address: "",
-        file: "",
-        status: "",
-        smpl: ""
+        client: false,
+        contact: false,
+        address: false,
+        file: false,
+        status: false,
+        smpl: false,
     });
-    const [clientValid, setClientValid] = useState(false);
-    const [contactValid, setContactValid] = useState(false);
+    const [validInputs, setValidInputs] = useState({
+        client: false,
+        contact: false,
+        address: false,
+        file: false,
+        status: false,
+        smpl: true,
+    });
 
+    const [showError, setShowError] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'client':
-                value !== "" ? setClientValid(true) : setClientValid(false);
-                break;
-            case 'contact':
-                value !== "" ? setContactValid(true) : setContactValid(false);
+            default:
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
 
     const formIsValid = () => {
-        if (clientValid && contactValid) {
+        let check = true;
+        let newErrors = Object.assign({
+            client: false,
+            contact: false,
+            address: false,
+            file: false,
+            status: false,
+            smpl: false,
+        });
+        for (let item in validInputs) {
+            // console.log(item, validInputs[item]);            
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setFormErrors(newErrors);
+        if (check === true) {
             return true;
         }
         else {
-            alert("Форма не заполнена");
+            // alert("Форма не заполнена");
+            setShowError(true);
             return false;
         };
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(clientInputs);
         formIsValid() && addClient(clientInputs)
             .then(() => props.history.push("/clients"))
     }
@@ -56,6 +90,10 @@ const newClient = (props) => {
             ...clientInputs,
             [name]: value
         })
+        setFormErrors({
+            ...formErrors,
+            [name]: false
+        })
     }
 
     useEffect(() => {
@@ -64,38 +102,74 @@ const newClient = (props) => {
 
     return (
         <div className="new_client">
-            <div className="new_client__title">Новый клиент</div>
-            <form className="new_client__form">
-                <div className="new_client__input_name">Клиент</div>
-                <div className="new_client__input_field">
-                    <input type="text" name="client" onChange={handleInputChange} />
-                </div>
-                <div className="new_client__input_name">Контакт</div>
-                <div className="new_client__input_field">
-                    <input type="text" name="contact" onChange={handleInputChange} />
-                </div>
-                <div className="new_client__input_name">Адрес</div>
-                <div className="new_client__input_field">
-                    <input type="text" name="address" onChange={handleInputChange} />
-                </div>
-                <div className="new_client__input_name">Досье</div>
-                <div className="new_client__input_field">
-                    <input type="text" name="file" onChange={handleInputChange} />
-                </div>
-                <div className="new_client__input_name">Статус</div>
-                <div className="new_client__input_field">
-                    <input type="text" name="status" onChange={handleInputChange} />
-                </div>
-                <div className="new_client__input_name">Упрощенка</div>
-                <div className="new_client__input_field">
-                    {/* <input type="text" name="smpl" onChange={handleInputChange} /> */}
-                    <select name="smpl" onChange={handleInputChange}>
-                        <option value="true">Да</option>
-                        <option value="false">Нет</option>
-                    </select>
-                </div>
-                <input className="new_client__submit" type="submit" onClick={handleSubmit} value="Добавить" />
-            </form>
+            <div className="main-form">
+                <div className="main-form__title">Новый клиент</div>
+                <form className="main-form__form">
+                    <ErrorMessage
+                        message="Не заполнены все обязательные поля!"
+                        showError={showError}
+                        setShowError={setShowError}
+                    />
+                    <InputText
+                        inputName="Клиент"
+                        required
+                        name="client"
+                        error={formErrors.client}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Контакт"
+                        required
+                        name="contact"
+                        error={formErrors.contact}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Адрес"
+                        required
+                        name="address"
+                        error={formErrors.address}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Досье"
+                        required
+                        name="file"
+                        error={formErrors.file}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Статус"
+                        required
+                        name="status"
+                        error={formErrors.status}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Упрощенка</div>
+                        <div className="main-form__input_field">
+                            <select name="smpl" onChange={handleInputChange}>
+                                <option value={true}>Да</option>
+                                <option value={false}>Нет</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="main-form__buttons">
+                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients')} value="Вернуться назад" />
+                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить клиента" />
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };
