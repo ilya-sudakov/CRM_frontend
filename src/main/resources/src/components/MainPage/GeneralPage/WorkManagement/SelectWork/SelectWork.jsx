@@ -17,7 +17,12 @@ const SelectWork = (props) => {
 
     useEffect(() => {
         if (props.defaultValue !== undefined) {
-            setSelected([...props.defaultValue])
+            setSelected([...props.defaultValue]);
+            const total = props.defaultValue.reduce((sum, cur) => sum + Number.parseInt(cur.hours), 0);
+            if (isNaN(total)) {
+                props.setTotalHours(0);
+            }
+            else props.setTotalHours(total);
         }
         if (props.options !== undefined) {
             setOptions([...props.options])
