@@ -201,10 +201,18 @@
       color: $secondary-text-color;
       transition: 0.2s ease-in-out;
       margin-right: 10px;
+      outline: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+      & .main-form__img {
+        width: 25px;
+        margin-right: 5px;
       }
     }
     .main-form__submit--inverted {

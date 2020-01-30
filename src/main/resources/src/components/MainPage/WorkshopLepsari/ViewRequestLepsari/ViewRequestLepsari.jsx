@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import pdfMake from 'pdfmake';
+import PrintIcon from '../../../../../../../../assets/print.png';
+import DownloadIcon from '../../../../../../../../assets/download.png';
 import './ViewRequestLepsari.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestLepsariById } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
@@ -138,9 +140,14 @@ const ViewRequestLepsari = (props) => {
                 </div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
-                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={PrintRequest} value="Печать" />
-                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={DownloadRequest} value="Скачать" />
-                </div>
+                    <button className="main-form__submit main-form__submit--inverted" onClick={PrintRequest} >
+                        <img className="main-form__img" src={PrintIcon} alt="" />
+                        <span>Печать</span>
+                    </button>
+                    <button className="main-form__submit main-form__submit--inverted" onClick={DownloadRequest}>
+                        <img className="main-form__img" src={DownloadIcon} alt="" />
+                        <span>Скачать</span>
+                    </button></div>
             </form>
         </div>
     );
