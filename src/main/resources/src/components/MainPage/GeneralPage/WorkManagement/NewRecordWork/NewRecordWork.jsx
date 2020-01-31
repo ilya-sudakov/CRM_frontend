@@ -89,7 +89,7 @@ const NewRecordWork = (props) => {
             day: worktimeInputs.date.getDate(),
             month: (worktimeInputs.date.getMonth() + 1),
             year: worktimeInputs.date.getFullYear(),
-            employeeId: worktimeInputs.employee,
+            employeeId: worktimeInputs.employeeId,
             workListId: worktimeInputs.works[0].workId,
             hours: totalHours
         });
