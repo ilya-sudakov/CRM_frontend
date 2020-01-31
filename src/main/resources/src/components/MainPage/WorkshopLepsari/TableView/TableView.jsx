@@ -23,7 +23,7 @@ const TableView = (props) => {
         const query = props.searchQuery.toLowerCase();
         return data.filter(item => {
             return (
-                (item.lepsariProducts.length !== 0 && item.lepsariProducts[0].name !== null)
+                (item.lepsariProducts[0].name && item.lepsariProducts.length !== 0 && item.lepsariProducts[0].name !== null)
                     ? (
                         item.lepsariProducts[0].name.toLowerCase().includes(query) ||
                         item.id.toString().includes(query) ||
@@ -138,7 +138,7 @@ const TableView = (props) => {
                         <div className="tableview_requests_lepsari__col">{formatDateString(request.date)}</div>
                         <div className="tableview_requests_lepsari__col">
                             <div className="tableview_requests_lepsari__sub_row" style={{ height: `calc(${100 / (request.lepsariProducts.length)}%)` }}>
-                                <div className="tableview_requests_lepsari__sub_col">{request.codeWord + ' - ' + request.lepsariProducts[0].name}</div>
+                                <div className="tableview_requests_lepsari__sub_col">{request.codeWord + ' - ' + (request.lepsariProducts[0].name && request.lepsariProducts[0].name)}</div>
                                 <div className="tableview_requests_lepsari__sub_col"></div>
                                 <div className="tableview_requests_lepsari__sub_col"></div>
                             </div>
@@ -147,7 +147,7 @@ const TableView = (props) => {
                                     <div className={"tableview_requests_lepsari__sub_row tableview_requests_lepsari__row--status-product--" +
                                         ((item.status ? item.status : "production"))
                                     } style={{ height: `calc(${100 / (request.lepsariProducts.length + 1)}%)` }}>
-                                        <div className="tableview_requests_lepsari__sub_col">{item.name}</div>
+                                        <div className="tableview_requests_lepsari__sub_col">{item.name && item.name}</div>
                                         <div className="tableview_requests_lepsari__sub_col">{item.packaging}</div>
                                         <div className="tableview_requests_lepsari__sub_col">{item.quantity}</div>
                                     </div>
