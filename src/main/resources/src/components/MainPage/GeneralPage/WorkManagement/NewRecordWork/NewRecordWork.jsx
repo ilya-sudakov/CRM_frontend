@@ -8,6 +8,7 @@ import SelectWork from '../SelectWork/SelectWork.jsx';
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import { addRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 
 const NewRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -92,23 +93,10 @@ const NewRecordWork = (props) => {
             workListId: worktimeInputs.works[0].workId,
             hours: totalHours
         });
-        console.log(temp);
-        formIsValid() && addRequest(requestInputs)
-            .then(res => res.json())
-            .then(res => {
-                id = res.id;
-            })
+        // console.log(temp);
+        formIsValid() && addRecordedWork(temp)
             .then(() => {
-                const productsArr = requestInputs.requestProducts.map((item) => {
-                    return addProductsToRequest({
-                        requestId: id,
-                        quantity: item.quantity,
-                        packaging: item.packaging,
-                        name: item.name
-                    })
-                })
-                Promise.all(productsArr)
-                    .then(() => props.history.push("/"))
+                props.history.push("/");
             })
             .catch(error => {
                 alert('Ошибка при добавлении записи');
@@ -211,7 +199,7 @@ const NewRecordWork = (props) => {
                         validateField("employee", value);
                         setWorkTimeInputs({
                             ...worktimeInputs,
-                            employee: value
+                            employeeId: value
                         })
                         setWorkTimeErrors({
                             ...workTimeErrors,

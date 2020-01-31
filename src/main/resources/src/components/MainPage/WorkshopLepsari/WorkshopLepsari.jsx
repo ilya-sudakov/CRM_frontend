@@ -38,7 +38,7 @@ const WorkshopLepsari = (props) => {
     useEffect(() => {
         document.title = "Заявки - Лепсари";
         
-        console.log(requestLepsari);
+        // console.log(requestLepsari);
         loadRequestLepsari();
     }, [])
 

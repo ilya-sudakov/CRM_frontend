@@ -118,7 +118,7 @@ const SelectWork = (props) => {
                     <div className="select-work__selected_item" >
                         <div className="select-work__selected_header" index={index} onClick={clickOnForm}>
                             <div className="select-work__selected_name">
-                                <span>Работа: </span> {item.work}
+                                <span>Работа: </span> {item.workName}
                             </div>
                             <div className="select-work__selected_name">
                                 <span>Продукция: </span> {(item.product.length > 0) && item.product.reduce((sum, item) => sum + item.name + ', ', '')}

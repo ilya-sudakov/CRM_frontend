@@ -8,6 +8,7 @@ import SelectWork from '../SelectWork/SelectWork.jsx';
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import { getRecordedWorkById } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 
 const EditRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -23,7 +24,7 @@ const EditRecordWork = (props) => {
     const [validInputs, setValidInputs] = useState({
         date: true,
         employee: true,
-        works: false
+        works: true
     })
     const [showError, setShowError] = useState(false);
     const [categories, setCategories] = useState([]);
@@ -88,27 +89,15 @@ const EditRecordWork = (props) => {
             day: worktimeInputs.date.getDate(),
             month: (worktimeInputs.date.getMonth() + 1),
             year: worktimeInputs.date.getFullYear(),
-            employeeId: worktimeInputs.employee,
-            workListId: worktimeInputs.works[0].work,
-            hours: totalHours
+            employeeId: worktimeInputs.employeeId,
+            workListId: worktimeInputs.works[0].workId,
+            hours: totalHours,
+            products: worktimeInputs.works[0].product
         });
         console.log(temp);
-        formIsValid() && addRequest(requestInputs)
-            .then(res => res.json())
-            .then(res => {
-                id = res.id;
-            })
+        formIsValid() && EditRecordWork(temp)
             .then(() => {
-                const productsArr = requestInputs.requestProducts.map((item) => {
-                    return addProductsToRequest({
-                        requestId: id,
-                        quantity: item.quantity,
-                        packaging: item.packaging,
-                        name: item.name
-                    })
-                })
-                Promise.all(productsArr)
-                    .then(() => props.history.push("/"))
+                props.history.push("/");
             })
             .catch(error => {
                 alert('Ошибка при добавлении записи');
@@ -137,71 +126,60 @@ const EditRecordWork = (props) => {
             alert('Неправильный индекс работы!');
             props.history.push("/");
         } else {
-            setWorkTimeInputs({
-                date: new Date(1 + '/' + 1 + '/' + 2020),
-                employee: 'Иван Васильевич Иванов',
-                works: [
-                    {
-                        product: [
-                            {
-                                id: "7",
-                                name: "Товар1",
-                                quantity: "4",
-                            }
-                        ],
-                        work: 'Фрезировка',
-                        hours: 7
-                    },
-                    {
-                        product: [
-                            {
-                                id: "7",
-                                name: "Товар1",
-                                quantity: "4",
-                            }
-                        ],
-                        work: 'Фрезировка',
-                        hours: 3
-                    }
-                ]
-            })
-            //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
-            getCategoriesNames() //Только категории
+            getRecordedWorkById(id)
                 .then(res => res.json())
                 .then(res => {
-                    const categoriesArr = res;
-                    setCategories(res);
-                    let productsArr = [];
-                    const temp = categoriesArr.map((item) => {
-                        let category = {
-                            category: item.name
-                        };
-                        return getProductsByCategory(category) //Продукция по категории
-                            .then(res => res.json())
-                            .then(res => {
-                                res.map(item => productsArr.push(item));
-                                setProducts([...productsArr]);
-                            })
+                    console.log(res);
+                    setWorkTimeInputs({
+                        date: new Date(res.year, (res.month - 1), res.day),
+                        employeeId: res.employee.id,
+                        employeeName: res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName,
+                        works: [{
+                            workName: res.workList.work,
+                            workId: res.workList.id,
+                            hours: res.hours,
+                            product: res.products
+                        }]
                     })
-                    Promise.all(temp)
-                        .then(() => {
-                            //Загружаем картинки по отдельности для каждой продукции
-                            const temp = productsArr.map((item, index) => {
-                                getProductById(item.id)
+                })
+                .then(() => {
+                    //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
+                    getCategoriesNames() //Только категории
+                        .then(res => res.json())
+                        .then(res => {
+                            const categoriesArr = res;
+                            setCategories(res);
+                            let productsArr = [];
+                            const temp = categoriesArr.map((item) => {
+                                let category = {
+                                    category: item.name
+                                };
+                                return getProductsByCategory(category) //Продукция по категории
                                     .then(res => res.json())
                                     .then(res => {
-                                        // console.log(res.photo);
-                                        productsArr.splice(index, 1, res);
+                                        res.map(item => productsArr.push(item));
                                         setProducts([...productsArr]);
                                     })
                             })
                             Promise.all(temp)
                                 .then(() => {
-                                    // console.log('all images downloaded');
+                                    //Загружаем картинки по отдельности для каждой продукции
+                                    const temp = productsArr.map((item, index) => {
+                                        getProductById(item.id)
+                                            .then(res => res.json())
+                                            .then(res => {
+                                                // console.log(res.photo);
+                                                productsArr.splice(index, 1, res);
+                                                setProducts([...productsArr]);
+                                            })
+                                    })
+                                    Promise.all(temp)
+                                        .then(() => {
+                                            // console.log('all images downloaded');
+                                        })
                                 })
                         })
                 })
-
         }
     }, [])
 
@@ -217,7 +195,7 @@ const EditRecordWork = (props) => {
                 <InputDate
                     inputName="Дата"
                     required
-                    error={workTimeErrors.date}
+                    error={Date.parse(workTimeErrors.date)}
                     name="date"
                     selected={worktimeInputs.date}
                     handleDateChange={(date) => {
@@ -240,14 +218,14 @@ const EditRecordWork = (props) => {
                     required
                     error={workTimeErrors.employee}
                     userHasAccess={props.userHasAccess}
-                    defaultValue={worktimeInputs.employee}
+                    defaultValue={worktimeInputs.employeeName}
                     windowName="select-employee"
                     name="employee"
                     handleEmployeeChange={(value) => {
                         validateField("employee", value);
                         setWorkTimeInputs({
                             ...worktimeInputs,
-                            employee: value
+                            employeeId: value
                         })
                         setWorkTimeErrors({
                             ...workTimeErrors,
