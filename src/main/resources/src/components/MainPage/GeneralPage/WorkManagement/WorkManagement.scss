@@ -14,9 +14,46 @@
   background-color: $primary-background-color;
 
   .work-management__title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     font-size: 125%;
-    text-align: center;
+    // text-align: center;
     margin: 10px 0;
+    margin-bottom: 15px;
+    position: relative;
+  }
+  .work-management__button {
+    // margin-left: 10px;
+    position: absolute;
+    right: 5px;
+    border: 0;
+    cursor: pointer;
+    padding: 5px 10px; 
+    border-radius: 5px;
+    font-size: 80%;
+    background-color: $button__background--inverted;
+    color: $secondary-text-color;
+    transition: 0.2s ease-in-out;
+    margin-right: 10px;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+  .work-management__button--inverted {
+    background-color: $secondary-text-color;
+    color: $primary-text-color;
+    border: 1px solid $button__background--inverted;
+
+    &:hover {
+      color: $secondary-text-color;
+    }
   }
   .work-management__content {
     display: flex;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './WorkManagement.scss';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import searchImg from '../../../../../../../../assets/searchbar/search.svg';
 import { getRecordedWorks, getRecordedWorkByMonth } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 
@@ -20,15 +20,20 @@ const WorkManagement = (props) => {
 
     return (
         <div className="work-management">
-            <div className="work-management__title">{
-                'Учет рабочего времени - ' + (
-                    props.userHasAccess(['ROLE_ADMIN'])
-                        ? 'Сводка предприятия'
-                        : props.userHasAccess(['ROLE_LEMZ'])
-                            ? 'ЦехЛЭМЗ'
-                            : 'ЦехЛепсари'
-                )
-            }</div>
+            <div className="work-management__title">
+                <span>{
+                    'Учет рабочего времени - ' + (
+                        props.userHasAccess(['ROLE_ADMIN'])
+                            ? 'Сводка дня'
+                            : props.userHasAccess(['ROLE_LEMZ'])
+                                ? 'ЦехЛЭМЗ'
+                                : 'ЦехЛепсари'
+                    )
+                }</span>
+                <div className="work-management__button work-management__button--inverted" onClick={() => {
+                    props.history.push("/work-managment");
+                }}>Перейти</div>
+            </div>
             <div className="work-management__content">
                 <div className="work-management__search-bar">
                     <input
@@ -70,4 +75,4 @@ const WorkManagement = (props) => {
     );
 };
 
-export default WorkManagement;
+export default withRouter(WorkManagement);

@@ -32,6 +32,10 @@ const WorkManagement = lazy(
     () => import('./GeneralPage/WorkManagement/WorkManagement.jsx')
 )
 
+const WorkManagementPage = lazy(
+    () => import('./GeneralPage/WorkManagement/WorkManagementPage/WorkManagementPage.jsx')
+)
+
 const NewRecordWork = lazy(
     () => import('./GeneralPage/WorkManagement/NewRecordWork/NewRecordWork.jsx')
 )
@@ -281,7 +285,7 @@ export {
     Clients, newClient,
     Contracts,
     Requests, NewRequest, EditRequest, ViewRequest,
-    GeneralPage, AdminWorkspace, Notifications, WorkManagement, NewRecordWork, EditRecordWork,
+    GeneralPage, AdminWorkspace, Notifications, WorkManagement, NewRecordWork, EditRecordWork, WorkManagementPage,
     Products, NewProduct, ViewProduct, EditProduct, NewCategory, EditCategory,
     Users, EditUser, NewUser, LoginHistory,
     WorkshopLEMZ, NewRequestLEMZ, ViewRequestLEMZ, EditRequestLEMZ, Storage, NewStorage, EditStorage,

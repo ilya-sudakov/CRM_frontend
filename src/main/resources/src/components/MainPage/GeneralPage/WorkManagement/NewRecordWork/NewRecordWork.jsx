@@ -8,7 +8,7 @@ import SelectWork from '../SelectWork/SelectWork.jsx';
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import { addRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { addRecordedWork, addProductToRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 
 const NewRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -95,8 +95,16 @@ const NewRecordWork = (props) => {
         });
         // console.log(temp);
         formIsValid() && addRecordedWork(temp)
-            .then(() => {
-                props.history.push("/");
+            .then(res => res.json())
+            .then((res) => {
+                // console.log(res);
+                const productsArr =  worktimeInputs.works[0].product.map(item => {
+                    addProductToRecordedWork(res.id, item.id, item.quantity)
+                })
+                Promise.all(productsArr)
+                    .then(() => {
+                        props.history.push("/");
+                    })
             })
             .catch(error => {
                 alert('Ошибка при добавлении записи');

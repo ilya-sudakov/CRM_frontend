@@ -21,6 +21,13 @@ export function getRecordedWorkByMonth(month) {
     })
 }
 
+export function addProductToRecordedWork(id, productId, productQuantity) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/work_control/product/" + id + '&' + productId + '&' + productQuantity,
+        method: "GET"
+    })
+}
+
 export function deleteRecordedWork(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/work_control/" + id,
@@ -36,9 +43,9 @@ export function addRecordedWork(newWork) {
     })
 }
 
-export function editRecordedWork(newWork) {
+export function editRecordedWork(newWork, id) {
     return request({
-        url: process.env.API_BASE_URL + "/api/v1/work_control/",
+        url: process.env.API_BASE_URL + "/api/v1/work_control/" + id,
         method: "PUT",
         body: JSON.stringify(newWork)
     })

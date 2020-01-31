@@ -4,14 +4,14 @@ import XLSX from 'xlsx';
 import { Notifications, WorkManagement } from '../../lazyImports.jsx';
 
 const AdminWorkspace = (props) => {
-    
+
 
     return (
         <div className="admin-workspace">
-            <Notifications
+            <WorkManagement
                 userHasAccess={props.userHasAccess}
             />
-            <WorkManagement
+            <Notifications
                 userHasAccess={props.userHasAccess}
             />
             {/* <button className="admin-workspace__button" onClick={exportCSVFile}>Скачать Табель</button> */}

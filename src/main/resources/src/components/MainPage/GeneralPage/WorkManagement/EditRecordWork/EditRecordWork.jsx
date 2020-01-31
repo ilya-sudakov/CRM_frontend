@@ -30,6 +30,7 @@ const EditRecordWork = (props) => {
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [totalHours, setTotalHours] = useState(0);
+    const [itemId, setItemId] = useState(0);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -95,7 +96,7 @@ const EditRecordWork = (props) => {
             products: worktimeInputs.works[0].product
         });
         console.log(temp);
-        formIsValid() && EditRecordWork(temp)
+        formIsValid() && EditRecordWork(temp, itemId)
             .then(() => {
                 props.history.push("/");
             })
@@ -126,6 +127,7 @@ const EditRecordWork = (props) => {
             alert('Неправильный индекс работы!');
             props.history.push("/");
         } else {
+            setItemId(id);
             getRecordedWorkById(id)
                 .then(res => res.json())
                 .then(res => {
@@ -138,7 +140,7 @@ const EditRecordWork = (props) => {
                             workName: res.workList.work,
                             workId: res.workList.id,
                             hours: res.hours,
-                            product: res.products
+                            product: res.workControlProduct
                         }]
                     })
                 })
