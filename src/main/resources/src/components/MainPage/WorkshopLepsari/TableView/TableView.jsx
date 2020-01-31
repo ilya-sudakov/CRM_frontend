@@ -91,7 +91,8 @@ const TableView = (props) => {
     }
 
     useEffect(() => {
-
+        console.log(props.data);
+        
     }, [props.data])
 
     return (

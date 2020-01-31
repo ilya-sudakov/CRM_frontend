@@ -49,7 +49,8 @@ const SelectWork = (props) => {
             ...selected,
             {
                 product: [],
-                work: '',
+                workName: '',
+                workId: null,
                 hours: 0,
             }
         ]);
@@ -57,7 +58,8 @@ const SelectWork = (props) => {
             ...selected,
             {
                 product: [],
-                work: '',
+                workName: '',
+                workId: null,
                 hours: 0,
             }
         ]);
@@ -129,14 +131,15 @@ const SelectWork = (props) => {
                             <SelectWorkItem
                                 inputName="Выбор работы"
                                 required
-                                defaultValue={item.work}
+                                defaultValue={item.workName}
                                 id={index}
-                                handleWorkItemChange={(value) => {
+                                handleWorkItemChange={(name, id) => {
                                     let temp = selected;
                                     let originalItem = selected[index];
                                     temp.splice(index, 1, {
                                         ...originalItem,
-                                        work: value
+                                        workName: name,
+                                        workId: id
                                     })
                                     setSelected([...temp]);
                                     props.handleWorkChange([...temp])

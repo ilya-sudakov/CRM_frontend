@@ -85,11 +85,12 @@ const NewRecordWork = (props) => {
         event.preventDefault();
         let id = 0;
         const temp = Object.assign({
-            date: worktimeInputs.date.getDate(),
+            day: worktimeInputs.date.getDate(),
             month: (worktimeInputs.date.getMonth() + 1),
             year: worktimeInputs.date.getFullYear(),
-            employee: worktimeInputs.employee,
-            works: worktimeInputs.works
+            employeeId: worktimeInputs.employee,
+            workListId: worktimeInputs.works[0].workId,
+            hours: totalHours
         });
         console.log(temp);
         formIsValid() && addRequest(requestInputs)
