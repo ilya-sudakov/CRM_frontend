@@ -23,7 +23,7 @@ const TableView = (props) => {
         const query = props.searchQuery.toLowerCase();
         return data.filter(item => {
             return (
-                (item.lepsariProducts[0].name && item.lepsariProducts.length !== 0 && item.lepsariProducts[0].name !== null)
+                (item.lepsariProducts.length > 0 && item.lepsariProducts.length !== 0 && item.lepsariProducts[0].name !== null)
                     ? (
                         item.lepsariProducts[0].name.toLowerCase().includes(query) ||
                         item.id.toString().includes(query) ||
