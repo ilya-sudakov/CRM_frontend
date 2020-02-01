@@ -93,14 +93,13 @@ const NewRequestLepsari = (props) => {
         };
     }
 
-    async function handleSubmit(event) {
+    function handleSubmit(event) {
         event.preventDefault();
         let id = 0;
         // console.log(requestInputs);
-        formIsValid() && await asyncAddRequestLepsari(requestInputs)
+        formIsValid() && addRequestLepsari(requestInputs)
             .then(res => res.json())
             .then(res => {
-                console.log('addedRequest');
                 id = res.id;
             })
             .then(() => {
@@ -304,7 +303,7 @@ const NewRequestLepsari = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lepsari/workshop-lepsari')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                    <input className="main-form__submit" type="submit" onClick={(event) => handleSubmit(event)} value="Оформить заявку" />
                 </div>
             </form>
         </div>
