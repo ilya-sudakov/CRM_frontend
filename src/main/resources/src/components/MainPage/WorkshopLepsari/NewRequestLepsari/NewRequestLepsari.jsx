@@ -6,7 +6,7 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import { addProductsToRequestLepsari, addRequestLepsari, asyncAddRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
+import { addProductsToRequestLepsari, addRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 
 const NewRequestLepsari = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -93,8 +93,9 @@ const NewRequestLepsari = (props) => {
         };
     }
 
-    function handleSubmit(event) {
+    const handleSubmit = (event) => {
         event.preventDefault();
+        console.log('started submitting');
         let id = 0;
         // console.log(requestInputs);
         formIsValid() && addRequestLepsari(requestInputs)
@@ -230,19 +231,36 @@ const NewRequestLepsari = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <InputProducts
-                    inputName="Продукция"
-                    userHasAccess={props.userHasAccess}
-                    required
-                    options
-                    name="requestProducts"
-                    onChange={handleProductsChange}
-                    error={requestErrors.requestProducts}
-                    defaultValue={requestInputs.requestProducts}
-                    searchPlaceholder="Введите название продукта для поиска..."
-                    errorsArr={requestErrors}
-                    setErrorsArr={setRequestErrors}
-                />
+                {props.transferState
+                    ? <InputProducts
+                        inputName="Продукция"
+                        userHasAccess={props.userHasAccess}
+                        required
+                        options
+                        products={[]}
+                        categories={[]}
+                        name="requestProducts"
+                        onChange={handleProductsChange}
+                        error={requestErrors.requestProducts}
+                        defaultValue={requestInputs.requestProducts}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        errorsArr={requestErrors}
+                        setErrorsArr={setRequestErrors}
+                    />
+                    : <InputProducts
+                        inputName="Продукция"
+                        userHasAccess={props.userHasAccess}
+                        required
+                        options
+                        name="requestProducts"
+                        onChange={handleProductsChange}
+                        error={requestErrors.requestProducts}
+                        defaultValue={requestInputs.requestProducts}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        errorsArr={requestErrors}
+                        setErrorsArr={setRequestErrors}
+                    />
+                }
                 <InputText
                     inputName="Кодовое слово"
                     required

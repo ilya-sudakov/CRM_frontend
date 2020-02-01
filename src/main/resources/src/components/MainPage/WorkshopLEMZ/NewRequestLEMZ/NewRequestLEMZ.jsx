@@ -228,19 +228,38 @@ const NewRequestLEMZ = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <InputProducts
-                    inputName="Продукция"
-                    userHasAccess={props.userHasAccess}
-                    required
-                    options
-                    name="requestProducts"
-                    onChange={handleProductsChange}
-                    defaultValue={requestInputs.requestProducts}
-                    error={requestErrors.requestProducts}
-                    searchPlaceholder="Введите название продукта для поиска..."
-                    errorsArr={requestErrors}
-                    setErrorsArr={setRequestErrors}
-                />
+                {props.transferState
+                    ? <InputProducts
+                        inputName="Продукция"
+                        userHasAccess={props.userHasAccess}
+                        required
+                        options
+                        name="requestProducts"
+                        onChange={handleProductsChange}
+                        products={[]}
+                        categories={[]}
+                        defaultValue={requestInputs.requestProducts}
+                        error={requestErrors.requestProducts}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        errorsArr={requestErrors}
+                        setErrorsArr={setRequestErrors}
+                    />
+                    : <InputProducts
+                        inputName="Продукция"
+                        userHasAccess={props.userHasAccess}
+                        required
+                        options
+                        name="requestProducts"
+                        onChange={handleProductsChange}
+                        products={[]}
+                        categories={[]}
+                        defaultValue={requestInputs.requestProducts}
+                        error={requestErrors.requestProducts}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        errorsArr={requestErrors}
+                        setErrorsArr={setRequestErrors}
+                    />
+                }
                 <InputText
                     inputName="Кодовое слово"
                     required

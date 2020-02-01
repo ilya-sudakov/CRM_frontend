@@ -22,14 +22,6 @@ export function addRequestLepsari(newRequest) {
     })
 }
 
-export async function asyncAddRequestLepsari(newRequest) {
-    return request({
-        url: process.env.API_BASE_URL + "/api/v1/lepsari/",
-        method: "POST",
-        body: JSON.stringify(newRequest)
-    })
-}
-
 export function getRequestLepsariById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/lepsari/" + id,
