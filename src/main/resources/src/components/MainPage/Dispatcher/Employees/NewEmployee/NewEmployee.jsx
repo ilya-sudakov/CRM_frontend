@@ -108,6 +108,8 @@ const NewEmployee = (props) => {
             .then(() => props.history.push("/dispatcher/employees"))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

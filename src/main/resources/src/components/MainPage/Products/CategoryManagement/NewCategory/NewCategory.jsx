@@ -66,6 +66,8 @@ const NewCategory = (props) => {
             .then(() => props.history.push("/products"))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

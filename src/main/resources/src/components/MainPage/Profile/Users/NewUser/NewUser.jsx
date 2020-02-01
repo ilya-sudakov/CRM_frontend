@@ -79,6 +79,8 @@ const NewUser = (props) => {
             .then(() => props.history.push("/profile/users"))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

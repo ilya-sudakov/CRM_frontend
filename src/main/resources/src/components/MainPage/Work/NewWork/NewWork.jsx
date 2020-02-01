@@ -66,6 +66,8 @@ const NewWork = (props) => {
             .then(() => props.history.push("/work-list"))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

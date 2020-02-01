@@ -81,6 +81,7 @@ const NewRequest = (props) => {
         }
         else {
             setShowError(true);
+            setIsLoading(false);
             return false;
         };
     }

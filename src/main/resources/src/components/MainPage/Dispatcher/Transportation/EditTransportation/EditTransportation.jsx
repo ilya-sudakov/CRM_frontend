@@ -89,6 +89,8 @@ const EditTransportation = (props) => {
             .then(() => props.history.push("/dispatcher/transportation"))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

@@ -101,6 +101,8 @@ const EditTask = (props) => {
             .then(() => props.history.push("/dispatcher/general-tasks"))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

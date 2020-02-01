@@ -79,6 +79,8 @@ const EditPart = (props) => {
             .then(() => props.history.push("/lemz/workshop-storage"))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

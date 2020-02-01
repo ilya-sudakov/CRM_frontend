@@ -128,6 +128,8 @@ const EditMachine = (props) => {
             })
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

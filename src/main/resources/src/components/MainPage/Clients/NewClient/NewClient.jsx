@@ -88,6 +88,8 @@ const newClient = (props) => {
             .then(() => props.history.push("/clients"))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

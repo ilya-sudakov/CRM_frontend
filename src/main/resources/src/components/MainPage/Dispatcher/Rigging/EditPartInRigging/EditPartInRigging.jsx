@@ -22,6 +22,7 @@ const EditPartInRigging = (props) => {
     const [nameValid, setNameValid] = useState(true);
     const [partId, setPartId] = useState(0);
     const [rigId, setRigId] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -66,6 +67,8 @@ const EditPartInRigging = (props) => {
             )))
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 

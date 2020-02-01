@@ -27,6 +27,7 @@ const NewStamp = (props) => {
         parts: false,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -96,6 +97,8 @@ const NewStamp = (props) => {
             })
             .catch(error => {
                 setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 
