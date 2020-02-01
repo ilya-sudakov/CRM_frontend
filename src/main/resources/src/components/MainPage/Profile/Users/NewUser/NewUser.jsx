@@ -4,6 +4,7 @@ import '../../../../../utils/Form/Form.scss';
 import { addUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewUser = (props) => {
     const [userInputs, setUserInputs] = useState({
@@ -63,7 +64,7 @@ const NewUser = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -76,6 +77,9 @@ const NewUser = (props) => {
 
         formIsValid() && addUser(userInputs)
             .then(() => props.history.push("/profile/users"))
+            .catch(error => {
+                setIsLoading(false);
+            })
     }
 
     const handleInputChange = (e) => {
@@ -151,6 +155,7 @@ const NewUser = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/profile/users')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить пользователя" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

@@ -5,6 +5,7 @@ import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getStampById, editStamp, editPartsOfStamp, addPartsToStamp, deletePartsFromStamp } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -71,7 +72,7 @@ const EditStamp = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -124,6 +125,9 @@ const EditStamp = (props) => {
                                 props.history.push("/dispatcher/rigging/stamp");
                             })
                     })
+            })
+            .catch(error => {
+                setIsLoading(false);
             })
     }
 
@@ -226,6 +230,7 @@ const EditStamp = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/stamp')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

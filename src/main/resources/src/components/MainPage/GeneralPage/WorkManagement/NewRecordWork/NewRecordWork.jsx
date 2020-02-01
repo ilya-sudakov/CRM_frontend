@@ -9,6 +9,7 @@ import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Ca
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import { addRecordedWork, addProductToRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -100,7 +101,7 @@ const NewRecordWork = (props) => {
             .then(res => res.json())
             .then((res) => {
                 // console.log(res);
-                const productsArr =  worktimeInputs.works[0].product.map(item => {
+                const productsArr = worktimeInputs.works[0].product.map(item => {
                     addProductToRecordedWork(res.id, item.id, item.quantity)
                 })
                 Promise.all(productsArr)
@@ -110,6 +111,7 @@ const NewRecordWork = (props) => {
             })
             .catch(error => {
                 alert('Ошибка при добавлении записи');
+                setIsLoading(false);
                 // setShowError(true);
                 console.log(error);
             })
@@ -253,6 +255,7 @@ const NewRecordWork = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Создать запись" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

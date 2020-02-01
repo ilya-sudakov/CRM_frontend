@@ -9,6 +9,7 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
@@ -87,7 +88,7 @@ const EditRequest = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -148,6 +149,7 @@ const EditRequest = (props) => {
                     })
             })
             .catch(error => {
+                setIsLoading(false);
                 alert('Ошибка при добавлении записи')
                 console.log(error);
             })
@@ -318,6 +320,7 @@ const EditRequest = (props) => {
                 <div className="main-form__buttons">
                     <div className="main-form__submit main-form__submit--inverted" onClick={() => props.history.push("/requests")}>Вернуться назад</div>
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

@@ -5,6 +5,7 @@ import { addEmployee } from '../../../../../utils/RequestsAPI/Employees.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -94,7 +95,7 @@ const NewEmployee = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -105,6 +106,9 @@ const NewEmployee = (props) => {
         setIsLoading(true);
         formIsValid() && addEmployee(employeeInputs)
             .then(() => props.history.push("/dispatcher/employees"))
+            .catch(error => {
+                setIsLoading(false);
+            })
     }
 
     const handleInputChange = e => {
@@ -296,6 +300,7 @@ const NewEmployee = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/employees')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить сотрудника" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

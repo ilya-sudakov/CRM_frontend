@@ -5,6 +5,7 @@ import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { editMachine, editPartsOfMachine, deletePartsFromMachine, getMachineById, addPartsToMachine } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
@@ -71,7 +72,7 @@ const EditMachine = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -124,6 +125,9 @@ const EditMachine = (props) => {
                                 props.history.push("/dispatcher/rigging/machine");
                             })
                     })
+            })
+            .catch(error => {
+                setIsLoading(false);
             })
     }
 
@@ -224,6 +228,7 @@ const EditMachine = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/machine')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

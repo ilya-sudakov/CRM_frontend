@@ -9,6 +9,7 @@ import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Ca
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import { getRecordedWorkById } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -105,6 +106,7 @@ const EditRecordWork = (props) => {
             .catch(error => {
                 alert('Ошибка при добавлении записи');
                 // setShowError(true);
+                setIsLoading(false);
                 console.log(error);
             })
     }
@@ -274,6 +276,7 @@ const EditRecordWork = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

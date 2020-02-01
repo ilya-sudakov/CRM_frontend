@@ -4,6 +4,7 @@ import '../../../../utils/Form/Form.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import { addWork } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewWork = (props) => {
     const [workInputs, setWorkInputs] = useState({
@@ -51,7 +52,7 @@ const NewWork = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -63,6 +64,9 @@ const NewWork = (props) => {
         console.log(workInputs);
         formIsValid() && addWork(workInputs)
             .then(() => props.history.push("/work-list"))
+            .catch(error => {
+                setIsLoading(false);
+            })
     }
 
     const handleInputChange = (e) => {
@@ -104,6 +108,7 @@ const NewWork = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/work-list')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить работу" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

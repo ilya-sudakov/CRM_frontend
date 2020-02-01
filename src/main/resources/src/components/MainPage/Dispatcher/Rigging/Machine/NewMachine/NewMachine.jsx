@@ -5,6 +5,7 @@ import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addMachine, addPartsToMachine } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
@@ -95,6 +96,9 @@ const NewMachine = (props) => {
                 Promise.all(parts)
                     .then(() => props.history.push("/dispatcher/rigging/machine"))
             })
+            .catch(error => {
+                setIsLoading(false);
+            })
     }
 
     const handleInputChange = e => {
@@ -172,6 +176,7 @@ const NewMachine = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/machine')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

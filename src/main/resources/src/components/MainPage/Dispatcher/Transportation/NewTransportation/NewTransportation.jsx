@@ -5,6 +5,7 @@ import { addTransportation } from '../../../../../utils/RequestsAPI/Transportati
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewTransportation = (props) => {
     const [transportationInputs, setTransportationInputs] = useState({
@@ -74,7 +75,7 @@ const NewTransportation = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -85,6 +86,9 @@ const NewTransportation = (props) => {
         setIsLoading(true);
         formIsValid() && addTransportation(transportationInputs)
             .then(() => props.history.push("/dispatcher/transportation"))
+            .catch(error => {
+                setIsLoading(false);
+            })
     }
 
     const handleInputChange = e => {
@@ -186,6 +190,7 @@ const NewTransportation = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/transportation')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

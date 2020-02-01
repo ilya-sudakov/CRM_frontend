@@ -4,6 +4,7 @@ import '../../../../../utils/Form/Form.scss';
 import { getPartFromStamp, editPartFromStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 import { editPartFromPressForm, getPartFromPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 import { getPartFromMachine, editPartFromMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 const EditPartInRigging = (props) => {
     const [partInputs, setPartInputs] = useState({
         number: '',
@@ -63,6 +64,9 @@ const EditPartInRigging = (props) => {
                 props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
                 props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
             )))
+            .catch(error => {
+                setIsLoading(false);
+            })
     }
 
     const handleInputChange = e => {
@@ -244,6 +248,7 @@ const EditPartInRigging = (props) => {
                         props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
                     ))} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать деталь" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

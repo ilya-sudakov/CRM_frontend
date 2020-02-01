@@ -4,6 +4,7 @@ import '../../../../../../utils/Form/Form.scss';
 import { editPart, getPartById } from '../../../../../../utils/RequestsAPI/Parts.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditPart = (props) => {
     const [partInputs, setPartInputs] = useState({
@@ -76,6 +77,9 @@ const EditPart = (props) => {
         setIsLoading(true);
         formIsValid() && editPart(partInputs, partId)
             .then(() => props.history.push("/dispatcher/rigging/parts"))
+            .catch(error => {
+                setIsLoading(false);
+            })
     }
 
     const handleInputChange = e => {
@@ -169,6 +173,7 @@ const EditPart = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/parts')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить запчасть" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

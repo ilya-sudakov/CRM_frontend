@@ -4,6 +4,7 @@ import '../../../../../utils/Form/Form.scss';
 import { getUserById, editUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditUser = (props) => {
     const [userId, setUserId] = useState(1);
@@ -63,7 +64,7 @@ const EditUser = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -76,6 +77,9 @@ const EditUser = (props) => {
             .then(() => {
                 props.history.push("/profile/users");
                 document.location.reload(true);
+            })
+            .catch(error => {
+                setIsLoading(false);
             })
     }
 
@@ -158,6 +162,7 @@ const EditUser = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/profile/users')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

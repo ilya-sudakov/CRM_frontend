@@ -5,6 +5,7 @@ import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addPressForm, addPartsToPressForm } from '../../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewPressForm = (props) => {
     const [pressFormInputs, setPressFormInputs] = useState({
@@ -70,7 +71,7 @@ const NewPressForm = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -94,6 +95,9 @@ const NewPressForm = (props) => {
                 })
                 Promise.all(parts)
                     .then(() => props.history.push("/dispatcher/rigging/press-form"))
+            })
+            .catch(error => {
+                setIsLoading(false);
             })
     }
 
@@ -172,6 +176,7 @@ const NewPressForm = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/press-form')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

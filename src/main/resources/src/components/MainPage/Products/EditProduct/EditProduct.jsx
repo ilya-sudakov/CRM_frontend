@@ -6,6 +6,7 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 import { imgToBlobDownload } from '../../../../utils/functions.jsx'
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -83,7 +84,7 @@ const EditProduct = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -97,6 +98,7 @@ const EditProduct = (props) => {
         formIsValid() && editProduct(productInputs, id)
             .then(() => props.history.push("/products"))
             .catch(error => {
+                setIsLoading(false);
                 alert('Ошибка при добавлении записи');
             })
     }
@@ -293,6 +295,7 @@ const EditProduct = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/products')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

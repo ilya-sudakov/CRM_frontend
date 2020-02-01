@@ -5,6 +5,7 @@ import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { addPartsToStamp, addStamp } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -26,7 +27,6 @@ const NewStamp = (props) => {
         parts: false,
     })
     const [showError, setShowError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -71,7 +71,7 @@ const NewStamp = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -79,7 +79,6 @@ const NewStamp = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setIsLoading(true);
         let stampId = 1;
         formIsValid() && addStamp(stampInputs)
             .then(res => res.json())
@@ -94,6 +93,9 @@ const NewStamp = (props) => {
                 })
                 Promise.all(stamps)
                     .then(() => props.history.push("/dispatcher/rigging/stamp"))
+            })
+            .catch(error => {
+                setIsLoading(false);
             })
     }
 
@@ -172,6 +174,7 @@ const NewStamp = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/stamp')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

@@ -8,6 +8,7 @@ import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -108,6 +109,7 @@ const NewRequest = (props) => {
             })
             .catch(error => {
                 alert('Ошибка при добавлении записи');
+                setIsLoading(false);
                 // setShowError(true);
                 console.log(error);
             })
@@ -227,6 +229,7 @@ const NewRequest = (props) => {
                 <div className="main-form__buttons">
                     <div className="main-form__submit main-form__submit--inverted" onClick={() => props.history.push("/requests")}>Вернуться назад</div>
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

@@ -4,6 +4,7 @@ import '../../../../utils/Form/Form.scss';
 import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -33,6 +34,7 @@ const newClient = (props) => {
 
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             default:
@@ -72,7 +74,7 @@ const newClient = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -84,6 +86,9 @@ const newClient = (props) => {
         console.log(clientInputs);
         formIsValid() && addClient(clientInputs)
             .then(() => props.history.push("/clients"))
+            .catch(error => {
+                setIsLoading(false);
+            })
     }
 
     const handleInputChange = e => {
@@ -170,6 +175,7 @@ const newClient = (props) => {
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients')} value="Вернуться назад" />
                         <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить клиента" />
+                        {isLoading && <ImgLoader />}
                     </div>
                 </form>
             </div>
