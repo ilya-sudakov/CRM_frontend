@@ -6,7 +6,7 @@ import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'id',
+        curSort: 'name',
         id: 'desc'
     })
     const [productsVisible, setProductsVisible] = useState([]);
@@ -23,13 +23,13 @@ const TableView = (props) => {
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
         return data.filter(item => {
+            console.log(query, item);
             return (
                 item.name.toLowerCase().includes(query) ||
                 item.id.toString().includes(query) ||
                 item.weight.toString().includes(query) ||
                 item.packaging.toLowerCase().includes(query) ||
                 item.comment.toLowerCase().includes(query)
-                // item.vendor.toLowerCase().includes(query)
             )
         })
     }
@@ -93,10 +93,10 @@ const TableView = (props) => {
     return (
         <div className="tableview_products">
             <div className="tableview_products__row tableview_products__row--header">
-                <div className="tableview_products__col">
+                {/* <div className="tableview_products__col">
                     <span>ID</span>
                     <img name="id" className="tableview_products__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_products__col">Фото</div>
                 <div className="tableview_products__col">Название</div>
                 <div className="tableview_products__col">Вес</div>
@@ -111,7 +111,7 @@ const TableView = (props) => {
                         className="tableview_products__row"
                         onClick={handleClickCategory}
                     >
-                        <div className="tableview_products__col">{category.id}</div>
+                        {/* <div className="tableview_products__col">{category.id}</div> */}
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col">{category.name}</div>
                         <div className="tableview_products__col"></div>
@@ -126,7 +126,7 @@ const TableView = (props) => {
                     <div id={category_id} className={(isProductsHidden(category.id) === true) ? "tableview_products__categories tableview_products__categories--hidden" : "tableview_products__categories"}>
                         {sortProducts(props.products).map((product, product_id) => (
                             (product.category === category.name) && <div key={product_id} className={"tableview_products__row tableview_products__row--odd"}>
-                                <div className="tableview_products__col">{product.id}</div>
+                                {/* <div className="tableview_products__col">{product.id}</div> */}
                                 <div className="tableview_products__col">
                                     <ImgLoader
                                         imgSrc={product.photo}

@@ -97,10 +97,10 @@ const TableView = (props) => {
     return (
         <div className="tableview_requests_LEMZ">
             <div className="tableview_requests_LEMZ__row tableview_requests_LEMZ__row--header">
-                <div className="tableview_requests_LEMZ__col">
+                {/* <div className="tableview_requests_LEMZ__col">
                     <span>ID</span>
                     <img name="id" className="tableview_requests_LEMZ__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_requests_LEMZ__col">
                     <span>Дата</span>
                     <img name="date" className="tableview_requests_LEMZ__img" onClick={changeSortOrder} src={sortIcon} />
@@ -132,7 +132,7 @@ const TableView = (props) => {
                         request.status === "Завершено" && "tableview_requests_LEMZ__row--status_completed"
                     )
                 } style={{ 'min-height': `calc((2rem * (${request.lemzProducts.length + 1})))` }}>
-                    <div className="tableview_requests_LEMZ__col">{request.id}</div>
+                    {/* <div className="tableview_requests_LEMZ__col">{request.id}</div> */}
                     <div className="tableview_requests_LEMZ__col">{formatDateString(request.date)}</div>
                     <div className="tableview_requests_LEMZ__col">
                         <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / (request.lemzProducts.length)}%)` }}>

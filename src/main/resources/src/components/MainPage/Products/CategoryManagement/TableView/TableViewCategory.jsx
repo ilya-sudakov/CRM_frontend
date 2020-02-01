@@ -5,7 +5,7 @@ import './TableViewCategory.scss';
 
 const TableViewCategory = (props) => {
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'id',
+        curSort: 'name',
         id: 'desc'
     })
 
@@ -44,16 +44,16 @@ const TableViewCategory = (props) => {
     return (
         <div className="tableview-category">
             <div className="tableview-category__row tableview-category__row--header">
-                <div className="tableview-category__col">
+                {/* <div className="tableview-category__col">
                     <span>ID</span>
                     <img name="id" className="tableview-category__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview-category__col">Название</div>
                 <div className="tableview-category__col">Действия</div>
             </div>
             {sortProducts(props.data).map((category, category_id) => (
                 <div key={category_id} className={"tableview-category__row " + (category.id % 2 === 0 ? "tableview-category__row--even" : "tableview-category__row--odd")}>
-                    <div className="tableview-category__col">{category.id}</div>
+                    {/* <div className="tableview-category__col">{category.id}</div> */}
                     <div className="tableview-category__col">{category.name}</div>
                     <div className="tableview-category__actions">
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/category/edit/" + category.id} className="tableview-category__action">Редактировать</Link>}

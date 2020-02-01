@@ -52,34 +52,30 @@
       border-right: 1px solid #cccccc; //border between columns
       // min-width: 100px;
       // max-width: 150px;
-      &:nth-child(1) {
-        flex: 0 1 5%;
-        max-width: 40px;
-      }
 
-      &:nth-child(2) {
+      &:nth-child(1) {
         flex: 0 1 8%;
         min-width: 90px;
         padding: 2.5px;
       }
 
       //Товар
-      &:nth-child(3) {
+      &:nth-child(2) {
         // flex: 0 1 35%;
         flex: 0 1 60%;
       }
 
-      &:nth-child(4) {
+      &:nth-child(3) {
         // flex: 0 1 12.5%;
         flex: 0 1 10%;
       }
 
-      &:nth-child(5) {
+      &:nth-child(4) {
         // flex: 0 1 5%;
         flex: 0 1 10%;
       }
 
-      &:nth-child(6) {
+      &:nth-child(5) {
         flex: 0 1 10%;
       }
       &:last-child {

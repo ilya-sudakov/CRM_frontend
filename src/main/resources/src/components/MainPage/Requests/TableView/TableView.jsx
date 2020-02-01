@@ -82,10 +82,10 @@ const TableView = (props) => {
     return (
         <div className="tableview_requests">
             <div className="tableview_requests__row tableview_requests__row--header">
-                <div className="tableview_requests__col">
+                {/* <div className="tableview_requests__col">
                     <span>ID</span>
                     <img name="id" className="tableview_requests__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_requests__col">
                     <span>Дата</span>
                     <img name="date" className="tableview_requests__img" onClick={changeSortOrder} src={sortIcon} />
@@ -112,7 +112,7 @@ const TableView = (props) => {
                         request.status === "Завершено" && "tableview_requests__row--status_completed"
                     )
                 }>
-                    <div className="tableview_requests__col">{request.id}</div>
+                    {/* <div className="tableview_requests__col">{request.id}</div> */}
                     <div className="tableview_requests__col">{formatDateString(request.date)}</div>
                     <div className="tableview_requests__col">
                         {request.requestProducts.map((item, index) => {

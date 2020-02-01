@@ -98,10 +98,10 @@ const TableView = (props) => {
     return (
         <div className="tableview_requests_lepsari">
             <div className="tableview_requests_lepsari__row tableview_requests_lepsari__row--header">
-                <div className="tableview_requests_lepsari__col">
+                {/* <div className="tableview_requests_lepsari__col">
                     <span>ID</span>
                     <img name="id" className="tableview_requests_lepsari__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_requests_lepsari__col">
                     <span>Дата</span>
                     <img name="date" className="tableview_requests_lepsari__img" onClick={changeSortOrder} src={sortIcon} />
@@ -134,7 +134,7 @@ const TableView = (props) => {
                             request.status === "Завершено" && "tableview_requests_lepsari__row--status_completed"
                         )
                     } style={{ 'min-height': `calc((2rem * (${request.lepsariProducts.length + 1})))` }}>
-                        <div className="tableview_requests_lepsari__col">{request.id}</div>
+                        {/* <div className="tableview_requests_lepsari__col">{request.id}</div> */}
                         <div className="tableview_requests_lepsari__col">{formatDateString(request.date)}</div>
                         <div className="tableview_requests_lepsari__col">
                             <div className="tableview_requests_lepsari__sub_row" style={{ height: `calc(${100 / (request.lepsariProducts.length)}%)` }}>

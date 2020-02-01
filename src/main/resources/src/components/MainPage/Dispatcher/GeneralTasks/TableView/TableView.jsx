@@ -61,10 +61,10 @@ const TableView = (props) => {
     return (
         <div className="tableview_general_tasks">
             <div className="tableview_general_tasks__row tableview_general_tasks__row--header">
-                <div className="tableview_general_tasks__col">
+                {/* <div className="tableview_general_tasks__col">
                     <span>ID</span>
                     <img name="id" className="tableview_general_tasks__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_general_tasks__col">
                     <span>Дата постановки</span>
                     <img name="dateCreated" className="tableview_general_tasks__img" onClick={changeSortOrder} src={sortIcon} />
@@ -91,7 +91,7 @@ const TableView = (props) => {
                         "tableview_general_tasks__row--status_materials"
                     )
                 }>
-                    <div className="tableview_general_tasks__col">{task.id}</div>
+                    {/* <div className="tableview_general_tasks__col">{task.id}</div> */}
                     <div className="tableview_general_tasks__col">{formatDateString(task.dateCreated)}</div>
                     <div className="tableview_general_tasks__col">{task.description}</div>
                     <div className="tableview_general_tasks__col">{task.responsible}</div>

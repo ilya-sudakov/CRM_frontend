@@ -6,8 +6,8 @@ import './TableView.scss';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'id',
-        date: 'desc'
+        curSort: 'date',
+        date: 'asc'
     })
 
     const changeSortOrder = (event) => {
@@ -45,10 +45,10 @@ const TableView = (props) => {
     return (
         <div className="tableview_transportation">
             <div className="tableview_transportation__row tableview_transportation__row--header">
-                <div className="tableview_transportation__col">
+                {/* <div className="tableview_transportation__col">
                     <span>ID</span>
                     <img name="id" className="tableview_transportation__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_transportation__col">
                     <span>Дата</span>
                     <img name="date" className="tableview_transportation__img" onClick={changeSortOrder} src={sortIcon} />
@@ -61,7 +61,7 @@ const TableView = (props) => {
             </div>
             {sortTransportations(props.data).map((transportation, transportation_id) => (
                 <div key={transportation_id} className={"tableview_transportation__row " + (transportation.id % 2 === 0 ? "tableview_transportation__row--even" : "tableview_transportation__row--odd")}>
-                    <div className="tableview_transportation__col">{transportation.id}</div>
+                    {/* <div className="tableview_transportation__col">{transportation.id}</div> */}
                     <div className="tableview_transportation__col">{formatDateString(transportation.date)}</div>
                     <div className="tableview_transportation__col">{transportation.cargo}</div>
                     <div className="tableview_transportation__col">{transportation.sender}</div>
