@@ -16,11 +16,51 @@
     cursor: pointer;
   }
 
+  .tableview_requests__menu {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #eaeaec;
+  }
+
+  .tableview_requests__item {
+    width: 100%;
+    margin-right: 2.5px;
+    font-size: 80%;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: lighten($primary-text-color, 100%);
+    background-color: darken($table-primary__background, 10%);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    &:hover {
+      color: lighten($primary-text-color, 10%);
+      background-color: darken($primary-background-color, 5%);
+    }
+
+    &--active {
+      color: lighten($primary-text-color, 50%);
+      background-color: $primary-background-color;
+    }
+  }
+
   .tableview_requests__row--header {
     font-weight: normal;
     word-wrap: break-word;
     word-break: break-all;
     font-size: 80%;
+    border-top: 1px solid $table-border__header; //border between columns
     position: sticky; //test
     top: calc(-6px); //test
     .tableview_requests__col {
@@ -145,7 +185,8 @@
       }
     }
 
-    .tableview_requests__status_select, .tableview_requests__status_select--color {
+    .tableview_requests__status_select,
+    .tableview_requests__status_select--color {
       width: 100%;
       padding: 5px 0px;
       font-size: 90%;

@@ -6,6 +6,7 @@ import { editRequestLEMZStatus, editProductStatusToRequestLEMZ } from '../../../
 import { formatDateString } from '../../../../utils/functions.jsx';
 
 const TableView = (props) => {
+    const [curPage, setCurPage] = useState('Открытые');
     const [sortOrder, setSortOrder] = useState({
         curSort: 'date',
         date: 'desc'
@@ -21,7 +22,14 @@ const TableView = (props) => {
 
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
+        //Временно
         return data.filter(item => {
+            if (curPage === 'Открытые') {
+                if (item.status !== 'Завершено') return true;
+            } else {
+                if (item.status === 'Завершено') return true;
+            }
+        }).filter(item => {
             return (
                 (item.lemzProducts.length !== 0 && item.lemzProducts[0].name !== null)
                     ? (
@@ -36,6 +44,21 @@ const TableView = (props) => {
                     : item.status.toLowerCase().includes(query)
             )
         })
+        // return data.filter(item => {
+        //     return (
+        //         (item.lemzProducts.length !== 0 && item.lemzProducts[0].name !== null)
+        //             ? (
+        //                 item.lemzProducts[0].name.toLowerCase().includes(query) ||
+        //                 item.id.toString().includes(query) ||
+        //                 formatDateString(item.date).includes(query) ||
+        //                 item.codeWord.toLowerCase().includes(query) ||
+        //                 item.status.toLowerCase().includes(query) ||
+        //                 item.responsible.toLowerCase().includes(query) ||
+        //                 formatDateString(item.shippingDate).includes(query)
+        //             )
+        //             : item.status.toLowerCase().includes(query)
+        //     )
+        // })
     }
 
     const handleStatusChange = (event) => {
@@ -69,25 +92,35 @@ const TableView = (props) => {
     const sortRequests = (data) => {
         return searchQuery(data).sort((a, b) => {
 
-            if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Завершено" || b.status === "Завершено") === false) {
+            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
-            else if (a.status === "Завершено") {
-                return 1;
-            }
-            else if (b.status === "Завершено") {
-                return -1
-            }
-
-
-            if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Завершено" || b.status === "Завершено") === false) {
+            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-            }
-            else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return 1;
             }
             return 0;
         });
+        // return searchQuery(data).sort((a, b) => {
+
+        //     if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Завершено" || b.status === "Завершено") === false) {
+        //         return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+        //     }
+        //     else if (a.status === "Завершено") {
+        //         return 1;
+        //     }
+        //     else if (b.status === "Завершено") {
+        //         return -1
+        //     }
+
+
+        //     if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Завершено" || b.status === "Завершено") === false) {
+        //         return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+        //     }
+        //     else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        //         return 1;
+        //     }
+        //     return 0;
+        // });
     }
 
     useEffect(() => {
@@ -97,8 +130,14 @@ const TableView = (props) => {
     return (
         <div className="tableview_requests_LEMZ">
             <div className="tableview_requests_LEMZ__menu">
-                <div className="tableview_requests_LEMZ__item tableview_requests_LEMZ__item--active">Открытые</div>
-                <div className="tableview_requests_LEMZ__item">Завершенные</div>
+                <div className={curPage === 'Открытые'
+                    ? "tableview_requests_LEMZ__item--active tableview_requests_LEMZ__item"
+                    : "tableview_requests_LEMZ__item"}
+                    onClick={() => setCurPage('Открытые')}>Открытые</div>
+                <div className={curPage === 'Завершено'
+                    ? "tableview_requests_LEMZ__item--active tableview_requests_LEMZ__item"
+                    : "tableview_requests_LEMZ__item"}
+                    onClick={() => setCurPage('Завершено')}>Завершено</div>
             </div>
             <div className="tableview_requests_LEMZ__row tableview_requests_LEMZ__row--header">
                 {/* <div className="tableview_requests_LEMZ__col">
