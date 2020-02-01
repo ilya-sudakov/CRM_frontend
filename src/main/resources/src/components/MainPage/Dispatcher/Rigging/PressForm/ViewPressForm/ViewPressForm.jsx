@@ -14,7 +14,6 @@ const ViewPressForm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setIsLoading(true);
         props.history.push("/dispatcher/rigging/press-form");
     }
 

@@ -1,5 +1,7 @@
 @import "../../../../variables.scss";
 
-.view_request_lemz {
-  
+.view-request-lemz {
+  .main-form__buttons {
+    align-items: stretch !important;
+  }
 }
