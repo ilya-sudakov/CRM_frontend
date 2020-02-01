@@ -276,19 +276,21 @@ export const getEmployeesListPdfText = (employees, workshops) => {
                     (item.lastName + ' ' + item.name + ' ' + item.middleName),
                     formatDateString(item.yearOfBirth),
                     item.citizenship,
-                    item.position
+                    item.position,
+                    ''
                 ]);
             }
         })
         employeesList.push({
             table: {
-                widths: ['*', 70, 80, 120],
+                widths: ['*', 70, 80, 120, 100],
                 body: [
                     [
                         { text: 'ФИО', style: 'tableHeader' },
                         { text: 'Дата рождения', style: 'tableHeader' },
                         { text: 'Гражданство', style: 'tableHeader' },
                         { text: 'Должность', style: 'tableHeader' },
+                        { text: '', style: 'tableHeader' },
                     ],
                     ...employeeInfo
                 ]
@@ -303,6 +305,85 @@ export const getEmployeesListPdfText = (employees, workshops) => {
         content: [
             {
                 text: 'Список сотрудников\n',
+                alignment: 'center',
+                style: 'title',
+            },
+            ...employeesList
+        ],
+        styles: {
+            header: {
+                fontSize: 22,
+                bold: true
+            },
+            title: {
+                fontSize: 24,
+                bold: true
+            },
+            subheader: {
+                fontSize: 18,
+                bold: true
+            },
+            regularText: {
+                fontSize: 16
+            },
+            tableHeader: {
+                fontSize: 12,
+                bold: true,
+                alignment: 'center'
+            }
+        }
+    }
+    pdfMake.vfs = font.pdfMake.vfs;
+    return dd;
+}
+
+export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
+    const employeesList = [];
+    // employeesList.push({
+    //     text: [
+    //         {
+    //             text: '\n' + 'Подразделение: ',
+    //             style: 'header',
+    //             alignment: 'center'
+    //         },
+    //         {
+    //             text: workshop + '\n\n',
+    //             style: 'regularText'
+    //         }
+    //     ],
+    // });
+    let employeeInfo = [];
+    employees.map(item => {
+        employeeInfo.push([
+            (item.lastName + ' ' + item.name + ' ' + item.middleName),
+            formatDateString(item.yearOfBirth),
+            item.citizenship,
+            item.position,
+            ''
+        ]);
+    })
+    employeesList.push({
+        table: {
+            widths: ['*', 70, 80, 120, 100],
+            body: [
+                [
+                    { text: 'ФИО', style: 'tableHeader' },
+                    { text: 'Дата рождения', style: 'tableHeader' },
+                    { text: 'Гражданство', style: 'tableHeader' },
+                    { text: 'Должность', style: 'tableHeader' },
+                    { text: '', style: 'tableHeader' }
+                ],
+                ...employeeInfo
+            ]
+        }
+    })
+    var dd = {
+        info: {
+            title: 'Список сотрудников - ' + workshop
+        },
+        content: [
+            {
+                text: 'Список сотрудников ' + workshop + '\n\n',
                 alignment: 'center',
                 style: 'title',
             },

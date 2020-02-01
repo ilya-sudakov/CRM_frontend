@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
+import pdfMake from 'pdfmake';
 import './TableView.scss';
-import { formatDateString } from '../../../../../utils/functions.jsx';
+import { formatDateString, getEmployeesByWorkshopListPdfText } from '../../../../../utils/functions.jsx';
 
 const TableView = (props) => {
     const [workshops, setWorkshops] = useState([
@@ -140,7 +141,12 @@ const TableView = (props) => {
                         <div className="tableview_employees__col"></div>
                         <div className="tableview_employees__col"></div>
                         <div className="tableview_employees__col"></div>
-                        <div className="tableview_employees__actions"></div>
+                        <div className="tableview_employees__actions">
+                            <div className="tableview_employees__action" onClick={() => {
+                                let dd = getEmployeesByWorkshopListPdfText(props.data.filter(employee => (employee.workshop === item)), item);
+                                pdfMake.createPdf(dd).print();
+                            }}>Печать</div>
+                        </div>
                     </div>
                     <div id={index} className={(isWorkshopHidden(index) === true)
                         ? "tableview_employees__employees tableview_employees__employees--hidden"

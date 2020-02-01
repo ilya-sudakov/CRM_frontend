@@ -23,12 +23,11 @@ const TableView = (props) => {
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
         return data.filter(item => {
-            console.log(query, item);
             return (
                 item.name.toLowerCase().includes(query) ||
                 item.id.toString().includes(query) ||
                 item.weight.toString().includes(query) ||
-                (item.comment !== null) && item.packaging.toLowerCase().includes(query) ||
+                (item.packaging !== null) && item.packaging.toLowerCase().includes(query) ||
                 (item.comment !== null) && item.comment.toLowerCase().includes(query)
             )
         })
