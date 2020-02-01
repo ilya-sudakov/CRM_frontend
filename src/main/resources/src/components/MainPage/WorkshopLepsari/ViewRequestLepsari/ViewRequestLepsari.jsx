@@ -116,7 +116,7 @@ const ViewRequestLepsari = (props) => {
                         <div className="main-form__input_field">
                             <input type="text"
                                 name="status"
-                                defaultValue={requestInputs.status}
+                                value={requestInputs.status}
                                 readOnly
                             />
                         </div>
