@@ -1,5 +1,89 @@
-@import '../../../../../variables.scss';
+@import "../../../../../variables.scss";
 
 .work-management-page {
-    
+  .main-window__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // flex-wrap: wrap;
+    .main-window__button {
+      font-size: 60%;
+    }
+
+    .main-window__img {
+      margin-right: 5px;
+      // filter: brightness(5);
+      filter: invert(1);
+    }
+  }
+  .main-window__info-panel {
+    justify-content: space-between !important;
+    align-items: center;
+    .work-management-page__date-pick {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .work-management-page__workshop-pick {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .main-window__button:last-child {
+        font-size: 75%;
+        padding: 5px 10px;
+        margin: 0;
+        margin-left: 15px;
+        // max-width: 70px;
+        // text-align: center;
+      }
+    }
+  }
+  .work-management-page__list {
+    width: calc(100% - 30px);
+    // padding: 0 15px;
+  }
+  .work-management-page__item {
+    padding: 10px 15px;
+    border: 1px solid $button__background--inverted;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    transition: 200ms ease-in-out;
+    cursor: pointer;
+    background-color: $white;
+    color: $primary-text-color;
+    border-radius: 5px;
+    &:hover {
+      color: $secondary-text-color;
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+  .work-management-page__item span {
+    flex: 0 1 33.3%;
+    &:nth-child(2) {
+      text-align: center;
+    }
+    &:nth-child(3) {
+      text-align: right;
+    }
+  }
+  .input_date {
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+  .input_date__input_name {
+    margin-right: 5px;
+  }
+  .react-datepicker-wrapper {
+    width: 100%;
+
+    .react-datepicker {
+      width: 100%;
+      .react-datepicker__day--selected {
+        background-color: $button__background--inverted !important;
+      }
+    }
+  }
 }

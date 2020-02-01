@@ -51,7 +51,7 @@ const Select = (props) => {
         }
     }
 
-    const loadCategories = () => {
+    async function loadCategories() {
         // getCategories()
         //     .then(response => response.json())
         //     .then(response => {

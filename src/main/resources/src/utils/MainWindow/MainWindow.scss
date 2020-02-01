@@ -89,10 +89,21 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    border: 1px solid transparent;
 
     &:hover {
       background-color: lighten($button__background--inverted, 5%);
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+
+  .main-window__button--inverted {
+    background-color: $secondary-text-color;
+    color: $primary-text-color;
+    border: 1px solid $button__background--inverted;
+
+    &:hover {
+      color: $secondary-text-color;
     }
   }
 
