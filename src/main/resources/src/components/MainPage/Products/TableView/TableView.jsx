@@ -96,12 +96,12 @@ const TableView = (props) => {
                     <span>ID</span>
                     <img name="id" className="tableview_products__img" onClick={changeSortOrder} src={sortIcon} />
                 </div> */}
-                <div className="tableview_products__col">Фото</div>
+                <div className="tableview_products__col"></div>
                 <div className="tableview_products__col">Название</div>
-                <div className="tableview_products__col">Вес</div>
-                <div className="tableview_products__col">Упаковка</div>
-                <div className="tableview_products__col">Место производства</div>
-                <div className="tableview_products__col">Комментарий</div>
+                <div className="tableview_products__col"></div>
+                <div className="tableview_products__col"></div>
+                <div className="tableview_products__col"></div>
+                <div className="tableview_products__col"></div>
                 <div className="tableview_products__col">Действия</div>
             </div>
             {props.categories.map((category, category_id) => (
@@ -123,6 +123,15 @@ const TableView = (props) => {
                         </div>
                     </div>
                     <div id={category_id} className={(isProductsHidden(category.id) === true) ? "tableview_products__categories tableview_products__categories--hidden" : "tableview_products__categories"}>
+                        <div className="tableview_products__row tableview_products__row--header">
+                            <div className="tableview_products__col">Фото</div>
+                            <div className="tableview_products__col">Название</div>
+                            <div className="tableview_products__col">Вес</div>
+                            <div className="tableview_products__col">Упаковка</div>
+                            <div className="tableview_products__col">Место производства</div>
+                            <div className="tableview_products__col">Комментарий</div>
+                            <div className="tableview_products__col">Действия</div>
+                        </div>
                         {sortProducts(props.products).map((product, product_id) => (
                             (product.category === category.name) && <div key={product_id} className={"tableview_products__row tableview_products__row--odd"}>
                                 {/* <div className="tableview_products__col">{product.id}</div> */}
