@@ -87,34 +87,46 @@ const NewRecordWork = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
-        let id = 0;
-        const temp = Object.assign({
-            day: worktimeInputs.date.getDate(),
-            month: (worktimeInputs.date.getMonth() + 1),
-            year: worktimeInputs.date.getFullYear(),
-            employeeId: worktimeInputs.employeeId,
-            workListId: worktimeInputs.works[0].workId,
-            hours: totalHours
-        });
-        // console.log(temp);
-        formIsValid() && addRecordedWork(temp)
-            .then(res => res.json())
-            .then((res) => {
-                // console.log(res);
-                const productsArr = worktimeInputs.works[0].product.map(item => {
-                    addProductToRecordedWork(res.id, item.id, item.quantity)
-                })
-                Promise.all(productsArr)
-                    .then(() => {
-                        props.history.push("/");
+        // console.log(worktimeInputs);
+        worktimeInputs.works.map(item => {
+            const temp = Object.assign({
+                day: worktimeInputs.date.getDate(),
+                month: (worktimeInputs.date.getMonth() + 1),
+                year: worktimeInputs.date.getFullYear(),
+                employeeId: worktimeInputs.employeeId,
+                workListId: item.workId,
+                hours: item.hours
+            });
+            if (formIsValid())
+                return addRecordedWork(temp)
+                    .then(res => res.json())
+                    .then(res => {
+                        // console.log(res);
+                        const productsArr = item.product.map(product => {
+                            addProductToRecordedWork(res.id, product.id, product.quantity)
+                        })
+                        Promise.all(productsArr)
+                            .then(() => {
+                                props.history.push("/");
+                            })
                     })
-            })
-            .catch(error => {
-                alert('Ошибка при добавлении записи');
-                setIsLoading(false);
-                // setShowError(true);
-                console.log(error);
-            })
+                    .catch(error => {
+                        alert('Ошибка при добавлении записи');
+                        setIsLoading(false);
+                        // setShowError(true);
+                        console.log(error);
+                    })
+        })
+        // const temp = Object.assign({
+        //     day: worktimeInputs.date.getDate(),
+        //     month: (worktimeInputs.date.getMonth() + 1),
+        //     year: worktimeInputs.date.getFullYear(),
+        //     employeeId: worktimeInputs.employeeId,
+        //     workListId: worktimeInputs.works[0].workId,
+        //     hours: totalHours
+        // });
+        // console.log(temp);
+
     }
 
     const handleInputChange = e => {

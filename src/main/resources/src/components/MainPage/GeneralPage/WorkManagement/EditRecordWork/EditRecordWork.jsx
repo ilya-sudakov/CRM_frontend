@@ -8,14 +8,15 @@ import SelectWork from '../SelectWork/SelectWork.jsx';
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import { getRecordedWorkById } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getRecordedWorkById, editRecordedWork, deleteProductToRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
         date: new Date(),
         employee: null,
-        works: []
+        works: [],
+        originalWorks: []
     })
     const [workTimeErrors, setWorkTimeErrors] = useState({
         date: false,
@@ -88,27 +89,41 @@ const EditRecordWork = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
-        let id = 0;
-        const temp = Object.assign({
-            day: worktimeInputs.date.getDate(),
-            month: (worktimeInputs.date.getMonth() + 1),
-            year: worktimeInputs.date.getFullYear(),
-            employeeId: worktimeInputs.employeeId,
-            workListId: worktimeInputs.works[0].workId,
-            hours: totalHours,
-            products: worktimeInputs.works[0].product
-        });
-        console.log(temp);
-        formIsValid() && EditRecordWork(temp, itemId)
-            .then(() => {
-                props.history.push("/");
-            })
-            .catch(error => {
-                alert('Ошибка при добавлении записи');
-                // setShowError(true);
-                setIsLoading(false);
-                console.log(error);
-            })
+        // console.log(worktimeInputs);
+        const editedInputs = worktimeInputs.works.map(item => {
+            const temp = Object.assign({
+                day: worktimeInputs.date.getDate(),
+                month: (worktimeInputs.date.getMonth() + 1),
+                year: worktimeInputs.date.getFullYear(),
+                employeeId: worktimeInputs.employeeId,
+                workListId: item.workId,
+                hours: item.hours
+            });
+            console.log(temp);
+            if (formIsValid())
+                return editRecordedWork(temp, itemId)
+                    .then(() => {
+                        // console.log(res);
+                        const oldProductsArr = worktimeInputs.originalWorks.products.map(product => {
+                            deleteProductToRecordedWork(itemId, product.id, product.quantity)
+                        })
+                        const productsArr = item.product.map(product => {
+                            addProductToRecordedWork(itemId, product.id, product.quantity)
+                        })
+                        Promise.all(oldProductsArr, productsArr)
+                            .then(() => {
+                                props.history.push("/");
+                            })
+                    })
+                    .catch(error => {
+                        alert('Ошибка при добавлении записи');
+                        setIsLoading(false);
+                        // setShowError(true);
+                        console.log(error);
+                    })
+            Promise.all(editedInputs)
+                .then(() => { })
+        })
     }
 
     const handleInputChange = e => {
@@ -141,6 +156,12 @@ const EditRecordWork = (props) => {
                         employeeId: res.employee.id,
                         employeeName: res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName,
                         works: [{
+                            workName: res.workList.work,
+                            workId: res.workList.id,
+                            hours: res.hours,
+                            product: res.workControlProduct
+                        }],
+                        originalWorks: [{
                             workName: res.workList.work,
                             workId: res.workList.id,
                             hours: res.hours,

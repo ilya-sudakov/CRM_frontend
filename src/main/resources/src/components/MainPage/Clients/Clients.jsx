@@ -36,7 +36,6 @@ const Clients = () => {
                 <table className="main-window__table">
                     <thead>
                         <tr>
-                            <td>#</td>
                             <td>Клиент</td>
                             <td>Контакт</td>
                             <td>Адрес</td>
@@ -49,7 +48,6 @@ const Clients = () => {
                     <tbody>
                         {clients.map((item, id) => (
                             <tr key={id + 1} className={id % 2 === 0 ? 'main-window__table--even' : 'main-window__table--odd'}>
-                                <td>{item.id}</td>
                                 <td>{item.client}</td>
                                 <td>{item.contact}</td>
                                 <td>{item.address !== '' ? item.address : '...'}</td>

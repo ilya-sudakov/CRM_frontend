@@ -20,7 +20,20 @@ const Select = (props) => {
 
     const search = () => {
         // console.log(products);
-        return (props.products ? props.products : products).filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        let searchArr = searchQuery.split(" ");
+        return (props.products ? props.products : products).filter(item => {
+            let check = true;
+            searchArr.map(searchWord => {
+                if (item.name.toLowerCase().includes(searchWord.toLowerCase()) === false)
+                    check = false;
+            })
+            if (check === true) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        })
     }
 
     const handleInputChange = (event) => {
