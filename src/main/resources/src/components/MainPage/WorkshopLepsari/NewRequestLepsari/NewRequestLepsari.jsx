@@ -100,6 +100,8 @@ const NewRequestLepsari = (props) => {
         formIsValid() && addRequestLepsari(requestInputs)
             .then(res => res.json())
             .then(res => {
+                console.log('addedRequest');
+                
                 id = res.id;
             })
             .then(() => {
