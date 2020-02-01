@@ -256,8 +256,6 @@ const NewRequestLEMZ = (props) => {
                         options
                         name="requestProducts"
                         onChange={handleProductsChange}
-                        products={[]}
-                        categories={[]}
                         defaultValue={requestInputs.requestProducts}
                         error={requestErrors.requestProducts}
                         searchPlaceholder="Введите название продукта для поиска..."

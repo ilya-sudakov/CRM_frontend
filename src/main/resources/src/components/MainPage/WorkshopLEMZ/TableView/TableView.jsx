@@ -96,6 +96,10 @@ const TableView = (props) => {
 
     return (
         <div className="tableview_requests_LEMZ">
+            <div className="tableview_requests_LEMZ__menu">
+                <div className="tableview_requests_LEMZ__item tableview_requests_LEMZ__item--active">Открытые</div>
+                <div className="tableview_requests_LEMZ__item">Завершенные</div>
+            </div>
             <div className="tableview_requests_LEMZ__row tableview_requests_LEMZ__row--header">
                 {/* <div className="tableview_requests_LEMZ__col">
                     <span>ID</span>

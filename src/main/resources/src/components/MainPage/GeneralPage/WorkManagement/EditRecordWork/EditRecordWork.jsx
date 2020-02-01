@@ -8,7 +8,7 @@ import SelectWork from '../SelectWork/SelectWork.jsx';
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import { getRecordedWorkById, editRecordedWork, deleteProductToRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getRecordedWorkById, editRecordedWork, deleteProductToRecordedWork, addProductToRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditRecordWork = (props) => {
@@ -91,6 +91,7 @@ const EditRecordWork = (props) => {
         setIsLoading(true);
         // console.log(worktimeInputs);
         const editedInputs = worktimeInputs.works.map(item => {
+            // console.log('works');
             const temp = Object.assign({
                 day: worktimeInputs.date.getDate(),
                 month: (worktimeInputs.date.getMonth() + 1),
@@ -99,20 +100,23 @@ const EditRecordWork = (props) => {
                 workListId: item.workId,
                 hours: item.hours
             });
-            console.log(temp);
-            if (formIsValid())
+            // console.log(temp);
+            if (formIsValid()) {
                 return editRecordedWork(temp, itemId)
                     .then(() => {
                         // console.log(res);
-                        const oldProductsArr = worktimeInputs.originalWorks.products.map(product => {
+                        const oldProductsArr = worktimeInputs.originalWorks[0].product.map(product => {
                             deleteProductToRecordedWork(itemId, product.id, product.quantity)
                         })
-                        const productsArr = item.product.map(product => {
-                            addProductToRecordedWork(itemId, product.id, product.quantity)
-                        })
-                        Promise.all(oldProductsArr, productsArr)
+                        Promise.all(oldProductsArr)
                             .then(() => {
-                                props.history.push("/");
+                                const productsArr = item.product.map(product => {
+                                    addProductToRecordedWork(itemId, product.id, product.quantity)
+                                })
+                                Promise.all(productsArr)
+                                    .then(() => {
+                                        props.history.push("/");
+                                    })
                             })
                     })
                     .catch(error => {
@@ -121,8 +125,11 @@ const EditRecordWork = (props) => {
                         // setShowError(true);
                         console.log(error);
                     })
+            }
             Promise.all(editedInputs)
-                .then(() => { })
+                .then(() => { 
+
+                })
         })
     }
 
@@ -159,13 +166,25 @@ const EditRecordWork = (props) => {
                             workName: res.workList.work,
                             workId: res.workList.id,
                             hours: res.hours,
-                            product: res.workControlProduct
+                            product: [
+                                ...res.workControlProduct.map(item => Object.assign({
+                                    id: item.product.id,
+                                    name: item.product.name,
+                                    quantity: item.quantity
+                                }))
+                            ]
                         }],
                         originalWorks: [{
                             workName: res.workList.work,
                             workId: res.workList.id,
                             hours: res.hours,
-                            product: res.workControlProduct
+                            product: [
+                                ...res.workControlProduct.map(item => Object.assign({
+                                    id: item.product.id,
+                                    name: item.product.name,
+                                    quantity: item.quantity
+                                }))
+                            ]
                         }]
                     })
                 })

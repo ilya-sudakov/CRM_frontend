@@ -13,7 +13,7 @@ const WorkManagement = (props) => {
         getRecordedWorkByMonth(new Date().getMonth() + 1)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 setRecordedWork(res);
             })
     }, [])

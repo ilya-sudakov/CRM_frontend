@@ -52,12 +52,8 @@
       border-right: 1px solid #cccccc; //border between columns
       // min-width: 100px;
       // max-width: 150px;
-      &:nth-child(1) {
-        flex: 0 1 5%;
-        max-width: 40px;
-      }
 
-      &:nth-child(2) {
+      &:nth-child(1) {
         flex: 0 1 100%;
       }
 
