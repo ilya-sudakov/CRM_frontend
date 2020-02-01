@@ -140,7 +140,21 @@ const TableView = (props) => {
                             <div className="tableview_requests_LEMZ__sub_col"></div>
                             <div className="tableview_requests_LEMZ__sub_col"></div>
                         </div>
-                        {request.lemzProducts.map((item, index) => {
+                        {request.lemzProducts.sort((a, b) => {
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            if (a.name === b.name && a.id < b.id) {
+                                return -1;
+                            }
+                            if (a.name === b.name && a.id > b.id) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((item, index) => {
                             return (
                                 <div className={"tableview_requests_LEMZ__sub_row tableview_requests_LEMZ__row--status-product--" +
                                     ((item.status ? item.status : "production"))} style={{ height: `calc(${100 / request.lemzProducts.length}%)` }}>

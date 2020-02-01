@@ -162,7 +162,21 @@ const TableView = (props) => {
                             props.location.pathname.includes("/dispatcher/rigging/stamp") && "stampParts" ||
                             props.location.pathname.includes("/dispatcher/rigging/machine") && "benchParts" ||
                             props.location.pathname.includes("/dispatcher/rigging/press-form") && "pressParts"
-                        ].map((part, index) => (
+                        ].sort((a, b) => {
+                            if (a.number < b.number) {
+                                return -1;
+                            }
+                            if (a.number > b.number) {
+                                return 1;
+                            }
+                            if (a.number === b.number && a.id < b.id) {
+                                return -1;
+                            }
+                            if (a.number === b.number && a.id > b.id) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((part, index) => (
                             //<div key={index} className={"tableview_stamps__row " + (part.id % 2 === 0 ? "tableview_stamps__row--even" : "tableview_stamps__row--odd")}>
                             <div key={index} className={"tableview_stamps__row tableview_stamps__row--" + (part.color ? part.color : "production")} >
                                 <div className="tableview_stamps__col">{part.id}</div>

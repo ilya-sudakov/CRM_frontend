@@ -138,11 +138,25 @@ const TableView = (props) => {
                         <div className="tableview_requests_lepsari__col">{formatDateString(request.date)}</div>
                         <div className="tableview_requests_lepsari__col">
                             <div className="tableview_requests_lepsari__sub_row" style={{ height: `calc(${100 / (request.lepsariProducts.length)}%)` }}>
-                                { (request.lepsariProducts.length > 0) && <div className="tableview_requests_lepsari__sub_col">{request.codeWord + ' - ' + (request.lepsariProducts[0].name)}</div> }
-                                { (request.lepsariProducts.length > 0) && <div className="tableview_requests_lepsari__sub_col"></div> }
-                                { (request.lepsariProducts.length > 0) && <div className="tableview_requests_lepsari__sub_col"></div> }
+                                {(request.lepsariProducts.length > 0) && <div className="tableview_requests_lepsari__sub_col">{request.codeWord + ' - ' + (request.lepsariProducts[0].name)}</div>}
+                                {(request.lepsariProducts.length > 0) && <div className="tableview_requests_lepsari__sub_col"></div>}
+                                {(request.lepsariProducts.length > 0) && <div className="tableview_requests_lepsari__sub_col"></div>}
                             </div>
-                            {(request.lepsariProducts.length > 0) && request.lepsariProducts.map((item, index) => {
+                            {(request.lepsariProducts.length > 0) && request.lepsariProducts.sort((a, b) => {
+                                if (a.name < b.name) {
+                                    return -1;
+                                }
+                                if (a.name > b.name) {
+                                    return 1;
+                                }
+                                if (a.name === b.name && a.id < b.id) {
+                                    return -1;
+                                }
+                                if (a.name === b.name && a.id > b.id) {
+                                    return 1;
+                                }
+                                return 0;
+                            }).map((item, index) => {
                                 return (
                                     <div className={"tableview_requests_lepsari__sub_row tableview_requests_lepsari__row--status-product--" +
                                         ((item.status ? item.status : "production"))
