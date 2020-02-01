@@ -32,6 +32,7 @@ const newClient = (props) => {
     });
 
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             default:
@@ -71,6 +72,7 @@ const newClient = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -78,6 +80,7 @@ const newClient = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         console.log(clientInputs);
         formIsValid() && addClient(clientInputs)
             .then(() => props.history.push("/clients"))

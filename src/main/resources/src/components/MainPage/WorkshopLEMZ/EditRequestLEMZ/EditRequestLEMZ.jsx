@@ -8,6 +8,7 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditRequestLEMZ = (props) => {
     const [requestId, setRequestId] = useState(1);
@@ -38,6 +39,7 @@ const EditRequestLEMZ = (props) => {
     })
     const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -95,6 +97,7 @@ const EditRequestLEMZ = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -102,6 +105,7 @@ const EditRequestLEMZ = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(requestInputs);
         formIsValid() && editRequestLEMZ(requestInputs, requestId)
             .then(() => {
@@ -152,6 +156,7 @@ const EditRequestLEMZ = (props) => {
                     })
             })
             .catch(error => {
+                setIsLoading(false);
                 console.log(error);
             })
     }
@@ -350,6 +355,7 @@ const EditRequestLEMZ = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lemz/workshop-lemz')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

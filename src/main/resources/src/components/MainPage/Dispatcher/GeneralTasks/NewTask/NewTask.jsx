@@ -34,6 +34,7 @@ const NewTask = (props) => {
     })
     const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -84,6 +85,7 @@ const NewTask = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -91,6 +93,7 @@ const NewTask = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(taskInputs);
         formIsValid() && addMainTask(taskInputs)
             .then(() => props.history.push("/dispatcher/general-tasks"))

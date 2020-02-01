@@ -30,6 +30,7 @@ const EditTransportation = (props) => {
         driver: true
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'date':
@@ -74,6 +75,7 @@ const EditTransportation = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -81,6 +83,7 @@ const EditTransportation = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && editTransportation(transportationInputs, transportationId)
             .then(() => props.history.push("/dispatcher/transportation"))
     }

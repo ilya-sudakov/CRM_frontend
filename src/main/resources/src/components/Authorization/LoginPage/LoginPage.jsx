@@ -8,6 +8,7 @@ const LoginPage = (props) => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         document.title = "Авторизация";

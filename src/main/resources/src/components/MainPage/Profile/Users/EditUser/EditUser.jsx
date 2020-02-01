@@ -25,6 +25,7 @@ const EditUser = (props) => {
         role: true,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -62,6 +63,7 @@ const EditUser = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -69,6 +71,7 @@ const EditUser = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && editUser(userInputs, userId)
             .then(() => {
                 props.history.push("/profile/users");

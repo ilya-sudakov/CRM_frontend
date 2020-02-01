@@ -228,6 +228,8 @@
   .main-form__buttons {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
   @media (max-width: 768px) {
     .main-form__form {

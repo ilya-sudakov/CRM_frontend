@@ -46,6 +46,7 @@ const EditEmployee = (props) => {
         relevance: true
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -96,6 +97,7 @@ const EditEmployee = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -103,6 +105,7 @@ const EditEmployee = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && editEmployee(employeeInputs, employeeId)
             .then(() => props.history.push("/dispatcher/employees"))
     }

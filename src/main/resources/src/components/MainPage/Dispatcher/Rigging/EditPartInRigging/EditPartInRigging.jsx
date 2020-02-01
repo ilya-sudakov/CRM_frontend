@@ -42,6 +42,7 @@ const EditPartInRigging = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && (
             props.location.pathname.includes("/dispatcher/rigging/stamp") && editPartFromStamp({
                 ...partInputs,

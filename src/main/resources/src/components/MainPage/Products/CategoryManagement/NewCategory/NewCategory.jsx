@@ -16,6 +16,7 @@ const NewCategory = (props) => {
         category: false,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -50,6 +51,7 @@ const NewCategory = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -57,6 +59,7 @@ const NewCategory = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(categoryInputs);
         formIsValid() && addCategory(categoryInputs)
             .then(() => props.history.push("/products"))

@@ -44,6 +44,7 @@ const NewEmployee = (props) => {
         relevance: true
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'yearOfBirth':
@@ -93,6 +94,7 @@ const NewEmployee = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -100,6 +102,7 @@ const NewEmployee = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && addEmployee(employeeInputs)
             .then(() => props.history.push("/dispatcher/employees"))
     }

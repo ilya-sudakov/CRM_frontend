@@ -16,6 +16,7 @@ const EditCategory = (props) => {
         category: false,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [categoryId, setCategoryId] = useState(0);
 
     const validateField = (fieldName, value) => {
@@ -51,6 +52,7 @@ const EditCategory = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -58,6 +60,7 @@ const EditCategory = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(categoryInputs);
         formIsValid() && editCategory(categoryInputs, categoryId)
             .then(() => props.history.push("/products"))

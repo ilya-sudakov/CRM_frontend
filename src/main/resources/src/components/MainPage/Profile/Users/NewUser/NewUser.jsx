@@ -25,6 +25,7 @@ const NewUser = (props) => {
         role: true,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -62,6 +63,7 @@ const NewUser = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -69,6 +71,7 @@ const NewUser = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         console.log(userInputs);
 
         formIsValid() && addUser(userInputs)

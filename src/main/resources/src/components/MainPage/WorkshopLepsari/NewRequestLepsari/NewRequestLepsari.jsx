@@ -7,6 +7,7 @@ import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import { addProductsToRequestLepsari, addRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewRequestLepsari = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -32,6 +33,7 @@ const NewRequestLepsari = (props) => {
         shippingDate: true
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -88,6 +90,7 @@ const NewRequestLepsari = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -95,7 +98,7 @@ const NewRequestLepsari = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('started submitting');
+        setIsLoading(true);
         let id = 0;
         // console.log(requestInputs);
         formIsValid() && addRequestLepsari(requestInputs)
@@ -115,10 +118,12 @@ const NewRequestLepsari = (props) => {
                 })
                 Promise.all(productsArr)
                     .then(() => {
+                        setIsLoading(false);
                         props.history.push("/lepsari/workshop-lepsari");
                     })
             })
             .catch(error => {
+                setIsLoading(false);
                 console.log(error);
             })
     }
@@ -322,6 +327,7 @@ const NewRequestLepsari = (props) => {
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lepsari/workshop-lepsari')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={(event) => handleSubmit(event)} value="Оформить заявку" />
+                    {isLoading && <ImgLoader />}
                 </div>
             </form>
         </div>

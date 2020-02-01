@@ -30,6 +30,7 @@ const NewRequest = (props) => {
     })
     const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -85,6 +86,7 @@ const NewRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         let id = 0;
         // console.log(requestInputs);
         formIsValid() && addRequest(requestInputs)

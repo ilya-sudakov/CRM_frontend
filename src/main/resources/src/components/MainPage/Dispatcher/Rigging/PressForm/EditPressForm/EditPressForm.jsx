@@ -27,6 +27,7 @@ const EditPressForm = (props) => {
         parts: true,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -70,6 +71,7 @@ const EditPressForm = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -77,6 +79,7 @@ const EditPressForm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(pressFormInputs);
         formIsValid() && editPressForm(pressFormInputs, pressFormId)
             .then(() => {

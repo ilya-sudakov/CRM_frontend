@@ -36,6 +36,7 @@ const EditRequest = (props) => {
         responsible: true,
     });
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -86,6 +87,7 @@ const EditRequest = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -93,6 +95,7 @@ const EditRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(selectedProducts);
         formIsValid() && editRequest(requestInputs, requestId)
             .then(() => {

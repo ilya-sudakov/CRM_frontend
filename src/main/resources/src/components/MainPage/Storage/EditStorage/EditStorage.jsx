@@ -27,6 +27,7 @@ const EditPart = (props) => {
         comment: true
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             default:
@@ -64,6 +65,7 @@ const EditPart = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -71,6 +73,7 @@ const EditPart = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && editStorage(storageInputs, storageId)
             .then(() => props.history.push("/lemz/workshop-storage"))
     }

@@ -40,6 +40,7 @@ const NewProduct = (props) => {
     const [imgName, setImgName] = useState("Имя файла...");
     const [imgBASE64, setImgBASE64] = useState('');
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -86,6 +87,7 @@ const NewProduct = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -93,6 +95,7 @@ const NewProduct = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         console.log(productInputs);
         formIsValid() && addProduct(productInputs)
             .then(() => {

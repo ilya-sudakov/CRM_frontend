@@ -26,6 +26,7 @@ const NewMachine = (props) => {
         parts: false,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -69,6 +70,7 @@ const NewMachine = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -76,6 +78,7 @@ const NewMachine = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(machineInputs);
         let machineId = 1;
         formIsValid() && addMachine(machineInputs)

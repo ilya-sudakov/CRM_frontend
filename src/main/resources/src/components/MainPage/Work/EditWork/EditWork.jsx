@@ -16,6 +16,7 @@ const EditWork = (props) => {
         work: false,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [workId, setWorkId] = useState(0);
 
     const validateField = (fieldName, value) => {
@@ -51,6 +52,7 @@ const EditWork = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -58,6 +60,7 @@ const EditWork = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         console.log(workInputs);
         formIsValid() && editWork(workInputs, workId)
             .then(() => props.history.push("/work-list"))

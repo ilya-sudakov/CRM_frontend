@@ -27,6 +27,7 @@ const EditRecordWork = (props) => {
         works: true
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [totalHours, setTotalHours] = useState(0);
@@ -85,6 +86,7 @@ const EditRecordWork = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         let id = 0;
         const temp = Object.assign({
             day: worktimeInputs.date.getDate(),

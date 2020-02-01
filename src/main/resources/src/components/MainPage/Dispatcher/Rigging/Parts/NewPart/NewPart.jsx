@@ -25,6 +25,7 @@ const NewPart = (props) => {
         processing: false
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -63,6 +64,7 @@ const NewPart = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -70,6 +72,7 @@ const NewPart = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && addPart(partInputs)
             .then(() => props.history.push("/dispatcher/rigging/parts"))
     }

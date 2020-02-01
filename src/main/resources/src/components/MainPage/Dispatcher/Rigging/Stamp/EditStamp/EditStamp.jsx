@@ -27,6 +27,7 @@ const EditStamp = (props) => {
         parts: true,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -70,6 +71,7 @@ const EditStamp = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+           setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -77,6 +79,7 @@ const EditStamp = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(stampInputs.parts);
         formIsValid() && editStamp(stampInputs, stampId)
             .then(() => {

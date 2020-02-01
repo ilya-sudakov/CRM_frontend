@@ -24,6 +24,7 @@ const ViewRequestLepsari = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         props.history.push("/lepsari/workshop-lepsari");
     }
 
