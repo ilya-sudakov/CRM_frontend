@@ -6,7 +6,7 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import { addProductsToRequestLepsari, addRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
+import { addProductsToRequestLepsari, addRequestLepsari, asyncAddRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 
 const NewRequestLepsari = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -97,11 +97,10 @@ const NewRequestLepsari = (props) => {
         event.preventDefault();
         let id = 0;
         // console.log(requestInputs);
-        formIsValid() && addRequestLepsari(requestInputs)
+        formIsValid() && await asyncAddRequestLepsari(requestInputs)
             .then(res => res.json())
             .then(res => {
                 console.log('addedRequest');
-
                 id = res.id;
             })
             .then(() => {
@@ -115,7 +114,9 @@ const NewRequestLepsari = (props) => {
                     })
                 })
                 Promise.all(productsArr)
-                    .then(() => props.history.push("/lepsari/workshop-lepsari"))
+                    .then(() => {
+                        props.history.push("/lepsari/workshop-lepsari");
+                    })
             })
             .catch(error => {
                 console.log(error);
@@ -303,7 +304,7 @@ const NewRequestLepsari = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lepsari/workshop-lepsari')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={() => { await handleSubmit() }} value="Оформить заявку" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
                 </div>
             </form>
         </div>
