@@ -189,6 +189,7 @@ const WorkManagementPage = (props) => {
                         <span>ФИО: {workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</span>
                         <span>Часы: {workItem.hours}</span>
                         <span>Подразделение: {workItem.employee.workshop}</span>
+                        <span>Дата: {formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
                         <div className="work-management-page__actions">
                             <Link to={"work-managment/record-time/edit/" + workItem.id} className="work-management-page__action">Редактировать</Link>
                             <div className="work-management-page__action" onClick={() => {

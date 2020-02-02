@@ -53,7 +53,7 @@
     justify-content: space-between;
     align-items: center;
     transition: 200ms ease-in-out;
-    cursor: pointer;
+    // cursor: pointer;
     background-color: $white;
     color: $primary-text-color;
     border-radius: 5px;
@@ -68,12 +68,16 @@
     }
   }
   .work-management-page__item span {
-    flex: 0 1 25%;
+    flex: 0 1 20%;
     &:nth-child(2) {
       text-align: center;
     }
     &:nth-child(3) {
-      text-align: right;
+      text-align: center;
+    }
+    
+    &:nth-child(4) {
+      text-align: center;
     }
   }
   .work-management-page__actions {
