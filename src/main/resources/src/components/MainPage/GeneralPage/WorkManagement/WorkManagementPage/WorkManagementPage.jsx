@@ -174,7 +174,7 @@ const WorkManagementPage = (props) => {
                                 setWorkshops([...temp]);
                             }}
                         >{item.name}</div>)}
-                        <div className="main-window__amount_table">Всего: {0} записей</div>
+                        <div className="main-window__amount_table">Всего: {workItems.length} записей</div>
                         <div
                             className="main-window__button"
                             onClick={() => loadWorks()}

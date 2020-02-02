@@ -11,9 +11,9 @@ const AdminWorkspace = (props) => {
             <WorkManagement
                 userHasAccess={props.userHasAccess}
             />
-            <Notifications
+            {props.userHasAccess(['ROLE_ADMIN']) && <Notifications
                 userHasAccess={props.userHasAccess}
-            />
+            />}
             {/* <button className="admin-workspace__button" onClick={exportCSVFile}>Скачать Табель</button> */}
         </div>
     );
