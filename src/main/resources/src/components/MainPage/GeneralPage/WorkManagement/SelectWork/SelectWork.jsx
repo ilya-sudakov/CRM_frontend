@@ -5,7 +5,14 @@ import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx';
 import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
 
 const SelectWork = (props) => {
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState([
+        {
+            product: [],
+            workName: '',
+            workId: null,
+            hours: 0,
+        }
+    ]);
     const [options, setOptions] = useState([]);
 
     const clickOverlay = (event) => {
@@ -188,7 +195,7 @@ const SelectWork = (props) => {
                                 </div>
                             </div>
                         </div>
-                        {!props.readOnly &&
+                        {!props.readOnly && (index !== 0) &&
                             <img index={index} onClick={deletePart} className="select-work__img" src={deleteSVG} />
                         }
                     </div>

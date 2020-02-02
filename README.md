@@ -1,4 +1,4 @@
-# Osfix - Фронтэнд
+# Osfix - Фронтенд
 
 # Инструкция по установке
 - После копирования репозитория необходимо создать файл 
@@ -7,7 +7,7 @@
 
     и заполнить его следующим образом:
 
-    >API_BASE_URL = http://localhost:8080
+    >API_BASE_URL = http://localhost:1337
 
     >ACCESS_TOKEN = accessToken
 

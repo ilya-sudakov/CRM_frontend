@@ -54,6 +54,7 @@ const TableView = (props) => {
                     <img name="date" className="tableview_transportation__img" onClick={changeSortOrder} src={sortIcon} />
                 </div>
                 <div className="tableview_transportation__col">Товар</div>
+                <div className="tableview_transportation__col">Кол-во</div>
                 <div className="tableview_transportation__col">Откуда</div>
                 <div className="tableview_transportation__col">Куда</div>
                 <div className="tableview_transportation__col">Водитель</div>
@@ -64,6 +65,7 @@ const TableView = (props) => {
                     {/* <div className="tableview_transportation__col">{transportation.id}</div> */}
                     <div className="tableview_transportation__col">{formatDateString(transportation.date)}</div>
                     <div className="tableview_transportation__col">{transportation.cargo}</div>
+                    <div className="tableview_transportation__col">{transportation.quantity}</div>
                     <div className="tableview_transportation__col">{transportation.sender}</div>
                     <div className="tableview_transportation__col">{transportation.recipient}</div>
                     <div className="tableview_transportation__col">{transportation.driver}</div>
