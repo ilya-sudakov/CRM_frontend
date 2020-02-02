@@ -107,7 +107,7 @@ const NewRecordWork = (props) => {
                         })
                         Promise.all(productsArr)
                             .then(() => {
-                                props.history.push("/");
+                                props.history.push("/work-managment");
                             })
                     })
                     .catch(error => {

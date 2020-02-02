@@ -176,7 +176,7 @@ const WorkManagementPage = (props) => {
                         >{item.name}</div>)}
                         <div className="main-window__amount_table">Всего: {0} записей</div>
                         <div
-                            className="main-window__button main-window__button--inverted"
+                            className="main-window__button"
                             onClick={() => loadWorks()}
                         >Применить фильтр</div>
                     </div>
