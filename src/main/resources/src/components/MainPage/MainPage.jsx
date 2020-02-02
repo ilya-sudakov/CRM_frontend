@@ -290,21 +290,21 @@ class MainPage extends React.Component {
                                     component={WorkManagementPage}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP", "ROLE_DISPATCHER"]}
                                 />
                                 <PrivateRoute
                                     exact path="/work-managment/record-time/new"
                                     component={NewRecordWork}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP", "ROLE_DISPATCHER"]}
                                 />
                                 <PrivateRoute
                                     path="/work-managment/record-time/edit/"
                                     component={EditRecordWork}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
-                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP", "ROLE_DISPATCHER"]}
                                 />
                                 <Route component={PageNotFound} />
                             </Switch>

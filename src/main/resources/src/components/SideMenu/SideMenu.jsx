@@ -7,7 +7,7 @@ const SideMenu = (props) => {
     const [sidemenuItems, setSidemenuItems] = useState([
         {
             pathname: '/',
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP', 'ROLE_DISPATCHER'],
             name: "Главная"
         },
         {
