@@ -8,7 +8,7 @@ import SelectWork from '../SelectWork/SelectWork.jsx';
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx';
 import { getProductById, getProductsByCategory } from '../../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import { getRecordedWorkById, editRecordedWork, deleteProductToRecordedWork, addProductToRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getRecordedWorkById, editRecordedWork, deleteProductFromRecordedWork, addProductToRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditRecordWork = (props) => {
@@ -106,7 +106,7 @@ const EditRecordWork = (props) => {
                     .then(() => {
                         // console.log(res);
                         const oldProductsArr = worktimeInputs.originalWorks[0].product.map(product => {
-                            deleteProductToRecordedWork(itemId, product.id, product.quantity)
+                            deleteProductFromRecordedWork(itemId, product.id, product.quantity)
                         })
                         Promise.all(oldProductsArr)
                             .then(() => {
@@ -314,7 +314,7 @@ const EditRecordWork = (props) => {
                 />
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
-                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/')} value="Вернуться назад" />
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/work-managment')} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
                     {isLoading && <ImgLoader />}
                 </div>

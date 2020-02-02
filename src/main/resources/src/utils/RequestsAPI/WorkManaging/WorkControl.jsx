@@ -28,7 +28,7 @@ export function addProductToRecordedWork(id, productId, productQuantity) {
     })
 }
 
-export function deleteProductToRecordedWork(id, productId) {
+export function deleteProductFromRecordedWork(id, productId) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/work_control/product/" + id + '&' + productId,
         method: "DELETE"

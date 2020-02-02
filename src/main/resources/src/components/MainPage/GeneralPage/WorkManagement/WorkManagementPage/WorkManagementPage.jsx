@@ -7,7 +7,7 @@ import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import DownloadIcon from '../../../../../../../../../assets/download.png';
 import { formatDateString } from '../../../../../utils/functions.jsx';
-import { getRecordedWorkByMonth } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getRecordedWorkByMonth, deleteRecordedWork, deleteProductFromRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 
 const WorkManagementPage = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -27,7 +27,7 @@ const WorkManagementPage = (props) => {
         }
     ]);
     const [dates, setDates] = useState({
-        start: new Date((new Date()).setMonth(0)),
+        start: new Date(new Date().setDate((new Date()).getDate() - 1)),
         end: new Date()
     });
 
@@ -181,12 +181,31 @@ const WorkManagementPage = (props) => {
                         >Применить фильтр</div>
                     </div>
                 </div>
+                <div className="main-window__sort-panel">
+
+                </div>
                 <div className="work-management-page__list">
-                    {workItems.map(item => <Link className="work-management-page__item" to={"work-managment/record-time/edit/" + item.id}>
-                        <span>ФИО: {item.employee.lastName + ' ' + item.employee.name + ' ' + item.employee.middleName}</span>
-                        <span>Часы: {item.hours}</span>
-                        <span>Подразделение: {item.employee.workshop}</span>
-                    </Link>)}
+                    {workItems.map(workItem => <div className="work-management-page__item">
+                        <span>ФИО: {workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</span>
+                        <span>Часы: {workItem.hours}</span>
+                        <span>Подразделение: {workItem.employee.workshop}</span>
+                        <div className="work-management-page__actions">
+                            <Link to={"work-managment/record-time/edit/" + workItem.id} className="work-management-page__action">Редактировать</Link>
+                            <div className="work-management-page__action" onClick={() => {
+                                // console.log(workItem);
+                                const deletedProducts = workItem.workControlProduct.map(product => {
+                                    return deleteProductFromRecordedWork(workItem.id, product.product.id)
+                                })
+                                Promise.all(deletedProducts)
+                                    .then(() => {
+                                        deleteRecordedWork(workItem.id)
+                                            .then(() => {
+                                                loadWorks()
+                                            })
+                                    })
+                            }}>Удалить</div>
+                        </div>
+                    </div>)}
                 </div>
             </div>
         </div>

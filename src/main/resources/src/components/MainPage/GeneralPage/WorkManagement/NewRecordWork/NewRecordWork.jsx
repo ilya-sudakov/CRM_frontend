@@ -88,7 +88,7 @@ const NewRecordWork = (props) => {
         event.preventDefault();
         setIsLoading(true);
         // console.log(worktimeInputs);
-        worktimeInputs.works.map(item => {
+        const newWork = worktimeInputs.works.map(item => {
             const temp = Object.assign({
                 day: worktimeInputs.date.getDate(),
                 month: (worktimeInputs.date.getMonth() + 1),
@@ -117,6 +117,10 @@ const NewRecordWork = (props) => {
                         console.log(error);
                     })
         })
+        Promise.all(newWork)
+            .then(() => {
+                setIsLoading(false);
+            })
         // const temp = Object.assign({
         //     day: worktimeInputs.date.getDate(),
         //     month: (worktimeInputs.date.getMonth() + 1),
