@@ -87,6 +87,23 @@
       text-align: center;
     }
   }
+  .main-window__sort-panel {
+    display: flex;
+    width: calc(100% - 50px);
+    margin-bottom: 5px;
+    font-size: 80%;
+    color: #666666;
+    align-items: center;
+    & span {
+      margin-right: 5px;
+    }
+    & select {
+      outline: none;
+      border-radius: 5px;
+      min-width: 100px;
+      padding: 2.5px 5px;
+    }
+  }
   .work-management-page__actions {
     display: flex;
     flex-direction: column;

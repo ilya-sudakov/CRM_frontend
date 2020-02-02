@@ -182,7 +182,12 @@ const WorkManagementPage = (props) => {
                     </div>
                 </div>
                 <div className="main-window__sort-panel">
-
+                    <span>Сортировать: </span>
+                    <select>
+                        <option>По часам</option>
+                        <option>По алфавиту (А-Я)</option>
+                        <option>По алфавиту (Я-А)</option>
+                    </select>
                 </div>
                 <div className="work-management-page__list">
                     {workItems.map(workItem => <div className="work-management-page__item">

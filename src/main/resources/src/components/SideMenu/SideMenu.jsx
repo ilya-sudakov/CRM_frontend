@@ -18,6 +18,13 @@ const SideMenu = (props) => {
             addButtonName: "Добавить клиента"
         },
         {
+            pathname: "/work-managment",
+            AddButtonLinkTo: "/work-managment/record-time/new",
+            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER'],
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER'],
+            addButtonName: "Учесть рабочее время"
+        },
+        {
             pathname: "/contracts",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             name: "Договоры"
@@ -152,7 +159,7 @@ const SideMenu = (props) => {
                             props.userHasAccess(item.addButtonRoles) &&
                             props.location.pathname.includes(item.pathname)
                         ) ? "sidemenu__item--add" : "sidemenu__item--add sidemenu__item--hidden"
-                        } to={item.pathname + '/new'} >
+                        } to={item.AddButtonLinkTo ? item.AddButtonLinkTo : (item.pathname + '/new')} >
                             <span>{item.addButtonName}</span>
                         </Link>
                     })
