@@ -28,6 +28,7 @@ const GeneralPage = (props) => {
         dataWS = XLSX.utils.aoa_to_sheet([dates[0]]);
         let globalIndex = 2;
         let employeesList = [];
+        let employeesWorksList = [];
         const allWorkshops = workshops.map(workshop => {
             // console.log(workshop);
             return getEmployeesByWorkshop({
@@ -54,6 +55,7 @@ const GeneralPage = (props) => {
                         .then(res => res.json())
                         .then(res => {
                             // console.log(res);
+                            employeesWorksList.push(res);
                             let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
                             dates[0].map(date => {
                                 let check = null;
@@ -82,50 +84,45 @@ const GeneralPage = (props) => {
                     .then(() => {
                         dataWS = XLSX.utils.sheet_add_aoa(dataWS, [dates[1]], { origin: ('A' + ((globalIndex++) + 1)) });
                         globalIndex++;
-                        const allEmployees = employeesList.sort((a, b) => {
-                            if (a.lastName < b.lastName) {
+                        const allEmployees = employeesWorksList.sort((a, b) => {
+                            if (a.employee.lastName < b.employee.lastName) {
                                 return -1;
                             }
-                            if (a.lastName > b.lastName) {
+                            if (a.employee.lastName > b.employee.lastName) {
                                 return 1;
                             }
                             return 0;
-                        }).map(item => {
-                            return getWorkReportByEmployee(item.id, ((new Date()).getMonth() + 1))
-                                .then(res => res.json())
-                                .then(res => {
-                                    // console.log(res);
-                                    let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
-                                    dates[1].map(date => {
-                                        let check = null;
-                                        res.days.map(workDay => {
-                                            if (workDay.day === (date + 1)) {
-                                                // console.log(workDay.day, date);
-                                                check = workDay.hours;
-                                            }
-                                        })
-                                        if ((dates[0].length - 1) < employeeInfo[0].length) {
-                                            return;
-                                        }
-                                        if (check === null) {
-                                            return employeeInfo[0].push('');
-                                        }
-                                        else {
-                                            return employeeInfo[0].push(check);
-                                        }
-
-                                    })
-                                    // console.log([employeeInfo[0]]);
-                                    var wscols = [
-                                        { width: 25 },  // first column
-                                    ];
-                                    //Новая ширина столбцов
-                                    dataWS["!cols"] = wscols;
-                                    dataWS = XLSX.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
+                        }).map((res, index) => {
+                            // console.log(res);
+                            let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
+                            dates[1].map(date => {
+                                let check = null;
+                                res.days.map(workDay => {
+                                    if (workDay.day === (date + 1)) {
+                                        // console.log(workDay.day, date);
+                                        check = workDay.hours;
+                                    }
                                 })
+                                if ((dates[0].length - 1) < employeeInfo[0].length) {
+                                    return;
+                                }
+                                if (check === null) {
+                                    employeeInfo[0].push('');
+                                }
+                                else {
+                                    employeeInfo[0].push(check);
+                                }
+                            })
+                            dataWS = XLSX.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
                         })
                         Promise.all(allEmployees)
                             .then(() => {
+                                // console.log([employeeInfo[0]]);
+                                var wscols = [
+                                    { width: 25 },  // first column
+                                ];
+                                //Новая ширина столбцов
+                                dataWS["!cols"] = wscols;
                                 let wb = XLSX.utils.book_new(); //Создание новой workbook
                                 XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
                                 XLSX.writeFile(wb, 'табель.xlsx');
