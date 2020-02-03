@@ -29,7 +29,7 @@ const GeneralPage = (props) => {
         let globalIndex = 2;
         let employeesList = [];
         const allWorkshops = workshops.map(workshop => {
-            console.log(workshop);
+            // console.log(workshop);
             return getEmployeesByWorkshop({
                 workshop: workshop
             })
@@ -41,7 +41,15 @@ const GeneralPage = (props) => {
         Promise.all(allWorkshops)
             .then(() => {
                 // console.log(employeesList);
-                const allEmployees = employeesList.map(item => {
+                const allEmployees = employeesList.sort((a, b) => {
+                    if (a.lastName < b.lastName) {
+                        return -1;
+                    }
+                    if (a.lastName > b.lastName) {
+                        return 1;
+                    }
+                    return 0;
+                }).map(item => {
                     return getWorkReportByEmployee(item.id, ((new Date()).getMonth() + 1))
                         .then(res => res.json())
                         .then(res => {
@@ -72,64 +80,53 @@ const GeneralPage = (props) => {
                 })
                 Promise.all(allEmployees)
                     .then(() => {
-                        // console.log('saving xlsx');
-                        let wb = XLSX.utils.book_new(); //Создание новой workbook
-                        XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
-                        XLSX.writeFile(wb, 'табель.xlsx');
+                        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [dates[1]], { origin: ('A' + ((globalIndex++) + 1)) });
+                        globalIndex++;
+                        const allEmployees = employeesList.sort((a, b) => {
+                            if (a.lastName < b.lastName) {
+                                return -1;
+                            }
+                            if (a.lastName > b.lastName) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map(item => {
+                            return getWorkReportByEmployee(item.id, ((new Date()).getMonth() + 1))
+                                .then(res => res.json())
+                                .then(res => {
+                                    // console.log(res);
+                                    let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
+                                    dates[1].map(date => {
+                                        let check = null;
+                                        res.days.map(workDay => {
+                                            if (workDay.day === (date + 1)) {
+                                                // console.log(workDay.day, date);
+                                                check = workDay.hours;
+                                            }
+                                        })
+                                        if ((dates[0].length - 1) < employeeInfo[0].length) {
+                                            return;
+                                        }
+                                        if (check === null) {
+                                            return employeeInfo[0].push('');
+                                        }
+                                        else {
+                                            return employeeInfo[0].push(check);
+                                        }
+
+                                    })
+                                    // console.log([employeeInfo[0]]);
+                                    dataWS = XLSX.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
+                                })
+                        })
+                        Promise.all(allEmployees)
+                            .then(() => {
+                                let wb = XLSX.utils.book_new(); //Создание новой workbook
+                                XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
+                                XLSX.writeFile(wb, 'табель.xlsx');
+                            })
                     })
             })
-            .then(() => {
-            })
-
-        // const allWorkshops = workshops.map(workshop => {
-        //     console.log(workshop);
-        //     return getEmployeesByWorkshop({
-        //         workshop: workshop
-        //     })
-        //         .then(employees => employees.json())
-        //         .then(employees => {
-        //             const allEmployees = employees.map(item => {
-        //                 return getWorkReportByEmployee(item.id, ((new Date()).getMonth() + 1))
-        //                     .then(res => res.json())
-        //                     .then(res => {
-        //                         // console.log(res);
-        //                         let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
-        //                         dates[0].map(date => {
-        //                             let check = null;
-        //                             res.days.map(workDay => {
-        //                                 if (workDay.day === (date + 1)) {
-        //                                     // console.log(workDay.day, date);
-        //                                      check = workDay.hours;
-        //                                 }
-        //                             })
-        //                             if ((dates[0].length - 1) < employeeInfo[0].length) {
-        //                                 return;
-        //                             }
-        //                             if (check === null) {
-        //                                  employeeInfo[0].push('');
-        //                             }
-        //                             else {
-        //                                  employeeInfo[0].push(check);
-        //                             }
-
-        //                         })
-        //                         console.log([employeeInfo[0]]);
-        //                         dataWS = XLSX.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
-        //                     })
-        //             })
-        //             Promise.all(allEmployees)
-        //                 .then(() => {
-        //                     console.log('все сотрудники цеха' + workshop);
-        //                 })
-        // })
-        // })
-        // Promise.all(allWorkshops)
-        //     .then(() => {
-        // console.log('saving xlsx');
-        // let wb = XLSX.utils.book_new(); //Создание новой workbook
-        // XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
-        // XLSX.writeFile(wb, 'табель.xlsx');
-        //     })
     }
 
     useEffect(() => {
