@@ -57,7 +57,7 @@ const GeneralPage = (props) => {
                     return getWorkReportByEmployee(item.id, ((new Date()).getMonth() + 1))
                         .then(res => res.json())
                         .then(res => {
-                            // console.log(res);
+                            console.log(res);
                             employeesWorksList.push(res);
                             let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
                             dates[0].map(date => {
@@ -126,9 +126,25 @@ const GeneralPage = (props) => {
                                 ];
                                 //Новая ширина столбцов
                                 dataWS["!cols"] = wscols;
+                                const months = [
+                                    'Январь',
+                                    'Февраль',
+                                    'Март',
+                                    'Апрель',
+                                    'Май',
+                                    'Июнь',
+                                    'Июль',
+                                    'Август',
+                                    'Сентябрь',
+                                    'Октябрь',
+                                    'Ноябрь',
+                                    'Декабрь'
+                                ]
                                 let wb = XLSX.utils.book_new(); //Создание новой workbook
                                 XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
-                                XLSX.writeFile(wb, 'табель.xlsx');
+                                XLSX.writeFile(wb, 'Табель-' + (
+                                    (months[(new Date()).getMonth() + 1])
+                                ) + '_' + ((new Date()).getFullYear()) + '.xlsx');
                                 setIsLoading(false);
                             })
                     })
