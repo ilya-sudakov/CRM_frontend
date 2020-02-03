@@ -116,6 +116,11 @@ const GeneralPage = (props) => {
 
                                     })
                                     // console.log([employeeInfo[0]]);
+                                    var wscols = [
+                                        { width: 25 },  // first column
+                                    ];
+                                    //Новая ширина столбцов
+                                    dataWS["!cols"] = wscols;
                                     dataWS = XLSX.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
                                 })
                         })
