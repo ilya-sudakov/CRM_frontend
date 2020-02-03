@@ -13,8 +13,17 @@
     .main-window__control-panel {
       display: flex;
       flex-direction: row;
+      // height: 200px;
       margin-bottom: 10px;
+      align-items: flex-start;
+      justify-content: center;
+      position: relative;
     }
+    .img-loader {
+      position: absolute;
+      top: -20px;
+      right: -80px;
+    } 
     &__date {
       padding: 5px;
       font-size: 90%;

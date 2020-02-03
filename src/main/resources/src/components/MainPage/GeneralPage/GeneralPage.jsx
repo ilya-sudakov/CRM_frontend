@@ -7,6 +7,7 @@ import '../../../utils/MainWindow/MainWindow.scss';
 import { formatDateString } from '../../../utils/functions.jsx';
 import { getRecordedWorkByMonth, getWorkReportByEmployee } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { getEmployeesByWorkshop } from '../../../utils/RequestsAPI/Employees.jsx';
+import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const GeneralPage = (props) => {
     const [date, setDate] = useState(new Date());
@@ -17,9 +18,11 @@ const GeneralPage = (props) => {
         'Офис',
         'Уволенные'
     ]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const exportCSVFile = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         const dates = [[''], ['']];
         for (let i = 1; i < new Date((new Date()).getFullYear(), (new Date()).getMonth() + 1, 0).getDate() + 1; i++)
             if (i < 16) dates[0].push(i);
@@ -126,6 +129,7 @@ const GeneralPage = (props) => {
                                 let wb = XLSX.utils.book_new(); //Создание новой workbook
                                 XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
                                 XLSX.writeFile(wb, 'табель.xlsx');
+                                setIsLoading(false);
                             })
                     })
             })
@@ -144,6 +148,7 @@ const GeneralPage = (props) => {
                     <div className="main-window__control-panel">
                         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER']) && <Link className="main-window__button" to="work-managment/record-time/new">Учесть рабочее время</Link>}
                         {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={exportCSVFile}>Скачать Табель</div>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && isLoading && <ImgLoader />}
                     </div>
                     {
                         props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER']) && <AdminWorkspace
