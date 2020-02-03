@@ -21,7 +21,7 @@ const GeneralPage = (props) => {
     const exportCSVFile = (event) => {
         event.preventDefault();
         const dates = [[''], ['']];
-        for (let i = 1; i < 32; i++)
+        for (let i = 1; i < new Date((new Date()).getFullYear(), (new Date()).getMonth() + 1, 0).getDate() + 1; i++)
             if (i < 16) dates[0].push(i);
             else dates[1].push(i);
         let dataWS;
