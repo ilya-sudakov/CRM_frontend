@@ -109,7 +109,7 @@ const WorkManagementPage = (props) => {
         getRecordedWorkByMonth((dates.start.getMonth() + 1))
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 setWorkItems(res);
             })
     }
@@ -190,7 +190,13 @@ const WorkManagementPage = (props) => {
                     </select>
                 </div>
                 <div className="work-management-page__list">
-                    {workItems.map(workItem => <div className="work-management-page__item">
+                    {workItems.filter(item => (
+                        item.employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item.employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item.employee.middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item.employee.workshop.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery)
+                    )).map(workItem => <div className="work-management-page__item">
                         <span>ФИО: {workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</span>
                         <span>Часы: {workItem.hours}</span>
                         <span>Подразделение: {workItem.employee.workshop}</span>
