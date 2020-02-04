@@ -3,6 +3,7 @@ import './WorkManagement.scss';
 import { Link, withRouter } from 'react-router-dom';
 import searchImg from '../../../../../../../../assets/searchbar/search.svg';
 import { getRecordedWorks, getRecordedWorkByMonth } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
 
 const WorkManagement = (props) => {
     const [recordedWork, setRecordedWork] = useState([]);
@@ -21,6 +22,7 @@ const WorkManagement = (props) => {
     return (
         <div className="work-management">
             <div className="work-management__title">
+                <div className="work-management__date">{formatDateString(new Date())}</div>
                 <span>{
                     'Учет рабочего времени - ' + (
                         props.userHasAccess(['ROLE_ADMIN'])
@@ -58,9 +60,9 @@ const WorkManagement = (props) => {
                         ? <div className="work-management__info">Нет записей о проведенной работе за сегодня!</div>
                         : <div className="work-management__list">
                             {recordedWork.filter(item => (
-                                item.employee.lastName.includes(searchQuery) ||
+                                item.employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                 item.hours.toString().includes(searchQuery) ||
-                                item.employee.workshop.includes(searchQuery)
+                                item.employee.workshop.toLowerCase().includes(searchQuery.toLowerCase())
                             )).map((item) => (
                                 <Link className="work-management__item" to={'/work-managment/record-time/edit/' + item.id}>
                                     <div>{item.employee.lastName + ' ' + item.employee.name + ' ' + item.employee.middleName}</div>

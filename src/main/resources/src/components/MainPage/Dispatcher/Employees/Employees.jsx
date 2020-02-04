@@ -18,6 +18,7 @@ const Employees = (props) => {
         'Офис',
         'Уволенные'
     ]);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         document.title = "Сотрудники";

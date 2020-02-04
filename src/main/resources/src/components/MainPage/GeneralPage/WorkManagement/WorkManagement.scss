@@ -24,13 +24,22 @@
     // margin-bottom: 15px;
     position: relative;
   }
+  .work-management__title .work-management__date {
+    // width: fit-content;
+    // margin-right: auto;
+    position: absolute;
+    left: 25px;
+    top: 5px;
+    font-size: 65%;
+    color: #666666;
+  }
   .work-management__button {
     // margin-left: 10px;
     position: absolute;
     right: 5px;
     border: 0;
     cursor: pointer;
-    padding: 5px 10px; 
+    padding: 5px 10px;
     border-radius: 5px;
     font-size: 80%;
     background-color: $button__background--inverted;

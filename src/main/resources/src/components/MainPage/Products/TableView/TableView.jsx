@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
+import plusIcon from '../../../../../../../../assets/tableview/add_item.png';
+import plusContIcon from '../../../../../../../../assets/tableview/add_cont.png';
 import './TableView.scss';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
@@ -151,14 +153,20 @@ const TableView = (props) => {
                                     <Link to={"/products/view/" + product.id} className="tableview_products__action">Просмотр</Link>
                                     {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/edit/" + product.id} className="tableview_products__action">Редактировать</Link>}
                                     {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={product.id} className="tableview_products__action" onClick={props.deleteItem}>Удалить</div>}
-                                    {props.selectProduct && <div data-id={product.id} className="tableview_products__action tableview_products__action--break-normal" onClick={() => {
-                                        props.selectProduct(product.id, product.name);
-                                        props.setCloseWindow(!props.closeWindow);
-                                    }}>Выбрать (закрыть)</div>}
-                                    {props.selectProduct && <div data-id={product.id} className="tableview_products__action tableview_products__action--break-normal" onClick={() => {
-                                        props.selectProduct(product.id, product.name);
-                                        // props.setCloseWindow(false);
-                                    }}>Выбрать (продолжить)</div>}
+                                    {props.selectProduct && <div className="tableview_products__action tableview_products__action--double">
+                                        <div data-id={product.id} className="tableview_products__action tableview_products__action--continue" onClick={() => {
+                                            props.selectProduct(product.id, product.name);
+                                            // props.setCloseWindow(!props.closeWindow);
+                                        }}>
+                                            <img className="tableview_products__img" src={plusContIcon} alt="" />
+                                        </div>
+                                        <div data-id={product.id} className="tableview_products__action tableview_products__action--close" onClick={() => {
+                                            props.selectProduct(product.id, product.name);
+                                            props.setCloseWindow(!props.closeWindow);
+                                        }}>
+                                            <img className="tableview_products__img" src={plusIcon} alt="" />
+                                        </div>
+                                    </div>}
                                 </div>
                             </div>
                         ))}
