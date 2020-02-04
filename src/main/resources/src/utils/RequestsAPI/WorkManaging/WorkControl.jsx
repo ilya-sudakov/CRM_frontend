@@ -21,6 +21,13 @@ export function getRecordedWorkByMonth(month) {
     })
 }
 
+export function getRecordedWorkByDay(month, day) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/work_control/day/" + day + '&' + month,
+        method: "GET"
+    })
+}
+
 export function getWorkReportByEmployee(id, month) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/work_control/report/" + id + '&' + month,

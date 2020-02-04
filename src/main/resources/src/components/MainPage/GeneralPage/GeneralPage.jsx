@@ -96,7 +96,7 @@ const GeneralPage = (props) => {
                             }
                             return 0;
                         }).map((res, index) => {
-                            // console.log(res);
+                            console.log(res);
                             let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
                             dates[1].map(date => {
                                 let check = null;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './WorkManagement.scss';
 import { Link, withRouter } from 'react-router-dom';
 import searchImg from '../../../../../../../../assets/searchbar/search.svg';
-import { getRecordedWorks, getRecordedWorkByMonth } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getRecordedWorks, getRecordedWorkByMonth, getRecordedWorkByDay } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';
 
 const WorkManagement = (props) => {
@@ -11,7 +11,7 @@ const WorkManagement = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        getRecordedWorkByMonth(new Date().getMonth() + 1)
+        getRecordedWorkByDay((new Date()).getMonth() + 1, (new Date()).getDate())
             .then(res => res.json())
             .then(res => {
                 // console.log(res);

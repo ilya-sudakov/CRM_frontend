@@ -6,7 +6,7 @@ import TableView from '../Products/TableView/TableView.jsx';
 import { getCategories, getCategoriesNames } from '../../../utils/RequestsAPI/Products/Categories.jsx';
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import ColorPicker from './ColorPicker/ColorPicker.jsx';
-import { getProductsByCategory, getProductById } from '../../../utils/RequestsAPI/Products.jsx';
+import { getProductsByCategory, getProductById, getProductsByLocation } from '../../../utils/RequestsAPI/Products.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const Select = (props) => {
@@ -95,17 +95,51 @@ const Select = (props) => {
                     const categoriesArr = res;
                     setCategories(res);
                     let productsArr = [];
-                    const temp = categoriesArr.map((item) => {
-                        let category = {
-                            category: item.name
-                        };
-                        return getProductsByCategory(category) //Продукция по категории
+                    // const temp = categoriesArr.map((item) => {
+                    //     let category = {
+                    //         category: item.name
+                    //     };
+                    //     return getProductsByCategory(category) //Продукция по категории
+                    //         .then(res => res.json())
+                    //         .then(res => {
+                    //             res.map(item => productsArr.push(item));
+                    //             setProducts([...productsArr]);
+                    //         })
+                    // })
+                    let temp;
+                    if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'])) {
+                        temp = categoriesArr.map((item) => {
+                            let category = {
+                                category: item.name
+                            };
+                            return getProductsByCategory(category) //Продукция по категории
+                                .then(res => res.json())
+                                .then(res => {
+                                    res.map(item => productsArr.push(item));
+                                    setProducts([...productsArr]);
+                                })
+                        })
+                    }
+                    else if (props.userHasAccess(['ROLE_LEMZ'])) {
+                        temp = getProductsByLocation({
+                            productionLocation: 'ЦехЛЭМЗ'
+                        })
                             .then(res => res.json())
                             .then(res => {
                                 res.map(item => productsArr.push(item));
                                 setProducts([...productsArr]);
                             })
-                    })
+                    }
+                    else if (props.userHasAccess(['ROLE_LEPSARI'])) {
+                        temp = getProductsByLocation({
+                            productionLocation: 'ЦехЛепсари'
+                        })
+                            .then(res => res.json())
+                            .then(res => {
+                                res.map(item => productsArr.push(item));
+                                setProducts([...productsArr]);
+                            })
+                    }
                     Promise.all(temp)
                         .then(() => {
                             //Загружаем картинки по отдельности для каждой продукции

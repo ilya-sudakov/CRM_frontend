@@ -22,6 +22,14 @@ export function getProductsByCategory(category) {
     })
 }
 
+export function getProductsByLocation(workshop) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/product/location/",
+        method: "POST",
+        body: JSON.stringify(workshop)
+    })
+}
+
 export function deleteProduct(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product/" + id,
