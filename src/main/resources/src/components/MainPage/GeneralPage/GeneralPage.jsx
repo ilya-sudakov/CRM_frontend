@@ -39,28 +39,26 @@ const GeneralPage = (props) => {
             })
                 .then(employees => employees.json())
                 .then(employees => {
-                    let newEmployees = employees.sort((a, b) => {
-                        if (a.lastName < b.lastName) {
-                            return -1;
-                        }
-                        if (a.lastName > b.lastName) {
-                            return 1;
-                        }
-                        return 0;
-                    });
-                    employeesList.push(...newEmployees);
+                    employeesList.push(...employees);
                 })
         })
         Promise.all(allWorkshops)
             .then(() => {
-                // console.log(employeesList);
-                const allEmployees = employeesList.map(item => {
+                const allEmployees = employeesList.sort((a, b) => {
+                    if (a.lastName < b.lastName) {
+                        return -1;
+                    }
+                    if (a.lastName > b.lastName) {
+                        return 1;
+                    }
+                    return 0;
+                }).map(item => {                       
                     return getWorkReportByEmployee(item.id, ((new Date()).getMonth() + 1))
                         .then(res => res.json())
                         .then(res => {
                             // console.log(res);
                             employeesWorksList.push(res);
-                            let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
+                            let employeeInfo = [[(item.lastName + ' ' + item.name + ' ' + item.middleName)]];
                             dates[0].map(date => {
                                 let check = null;
                                 res.days.map(workDay => {
@@ -88,7 +86,15 @@ const GeneralPage = (props) => {
                     .then(() => {
                         dataWS = XLSX.utils.sheet_add_aoa(dataWS, [dates[1]], { origin: ('A' + ((globalIndex++) + 1)) });
                         globalIndex++;
-                        const allEmployees = employeesWorksList.map((res, index) => {
+                        const allEmployees = employeesWorksList.sort((a, b) => {
+                            if (a.employee.lastName < b.employee.lastName) {
+                                return -1;
+                            }
+                            if (a.employee.lastName > b.employee.lastName) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((res, index) => {
                             // console.log(res);
                             let employeeInfo = [[(res.employee.lastName + ' ' + res.employee.name + ' ' + res.employee.middleName)]];
                             dates[1].map(date => {
