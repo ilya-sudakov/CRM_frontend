@@ -61,7 +61,7 @@ const TableView = (props) => {
                 <div className="tableview_transportation__col">Действия</div>
             </div>
             {sortTransportations(props.data).map((transportation, transportation_id) => (
-                <div key={transportation_id} className={"tableview_transportation__row " + (transportation.id % 2 === 0 ? "tableview_transportation__row--even" : "tableview_transportation__row--odd")}>
+                <div key={transportation_id} className="tableview_transportation__row tableview_transportation__row--even" >
                     {/* <div className="tableview_transportation__col">{transportation.id}</div> */}
                     <div className="tableview_transportation__col">{formatDateString(transportation.date)}</div>
                     <div className="tableview_transportation__col">{transportation.cargo}</div>

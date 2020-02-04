@@ -52,7 +52,7 @@ const GeneralPage = (props) => {
                         return 1;
                     }
                     return 0;
-                }).map(item => {                       
+                }).map(item => {                           
                     return getWorkReportByEmployee(item.id, ((new Date()).getMonth() + 1))
                         .then(res => res.json())
                         .then(res => {

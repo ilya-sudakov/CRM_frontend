@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import profileSVG from '../../../../../../assets/header/profile.svg';
+import profileSVG from '../../../../../../assets/header/profile1.svg';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 
