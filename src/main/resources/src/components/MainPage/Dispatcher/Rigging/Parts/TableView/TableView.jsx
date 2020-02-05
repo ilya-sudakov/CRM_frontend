@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
+import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
         curSort: 'id',
         date: 'desc'
     })
+    const [isLoading, setIsLoading] = useState(true);
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -41,14 +43,9 @@ const TableView = (props) => {
         })
     }
 
-    const formatDateString = (dateString) => {
-        const newDate = dateString.split("T")[0];
-        return (
-            newDate.split("-")[2] + "." +
-            newDate.split("-")[1] + "." +
-            newDate.split("-")[0]
-        );
-    }
+    useEffect(() => {
+        props.data.length > 0 && setIsLoading(false);
+    }, [props.data])
 
     return (
         <div className="tableview_parts">
@@ -63,6 +60,10 @@ const TableView = (props) => {
                 <div className="tableview_parts__col">Обработка</div>
                 <div className="tableview_parts__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_parts__row tableview_parts__row--even"
+            />}
             {sortParts(props.data).map((part, part_id) => (
                 <div key={part_id} className={"tableview_parts__row " + (part.id % 2 === 0 ? "tableview_parts__row--even" : "tableview_parts__row--odd")}>
                     <div className="tableview_parts__col">{part.id}</div>

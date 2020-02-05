@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import { formatDateString } from '../../../../../utils/functions.jsx';
 import './TableView.scss';
 import { editTaskStatus } from '../../../../../utils/RequestsAPI/MainTasks.jsx';
+import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
         curSort: 'dateCreated',
         date: 'desc'
     })
+    const [isLoading, setIsLoading] = useState(true);
     let selectorId = 0;
 
     const changeSortOrder = (event) => {
@@ -58,6 +60,10 @@ const TableView = (props) => {
             })
     }
 
+    useEffect(() => {
+        props.data.length > 0 && setIsLoading(false)
+    }, [props.data])
+
     return (
         <div className="tableview_general_tasks">
             <div className="tableview_general_tasks__row tableview_general_tasks__row--header">
@@ -79,6 +85,10 @@ const TableView = (props) => {
                 <div className="tableview_general_tasks__col">Статус</div>
                 <div className="tableview_general_tasks__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_general_tasks__row tableview_general_tasks__row--even"
+            />}
             {sortTasks(props.data).map((task, task_id) => (
                 (props.userHasAccess(['ROLE_ADMIN']) || props.userData.username === task.responsible) &&
                 <div key={task_id} className={"tableview_general_tasks__row " +

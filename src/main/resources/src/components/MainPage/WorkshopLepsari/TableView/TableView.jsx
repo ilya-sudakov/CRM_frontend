@@ -4,9 +4,11 @@ import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 import { editRequestLepsariStatus, editProductStatusToRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';
+import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [curPage, setCurPage] = useState('Открытые');
+    const [isLoading, setIsLoading] = useState(true);
     const [sortOrder, setSortOrder] = useState({
         curSort: 'date',
         date: 'desc'
@@ -125,7 +127,7 @@ const TableView = (props) => {
 
     useEffect(() => {
         // console.log(props.data);
-
+        props.data.length > 0 && setIsLoading(false);
     }, [props.data])
 
     return (
@@ -162,6 +164,10 @@ const TableView = (props) => {
                 <div className="tableview_requests_lepsari__col">Комментарий</div>
                 <div className="tableview_requests_lepsari__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_requests_lepsari__row tableview_requests_lepsari__row--even"
+            />}
             {sortRequests(props.data).map((request, request_id) => (
                 <React.Fragment>
                     <div key={request_id} className={"tableview_requests_lepsari__row " +

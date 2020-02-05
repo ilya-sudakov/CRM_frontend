@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 import ColorPicker from '../ColorPicker/ColorPicker.jsx';
+import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -10,6 +11,7 @@ const TableView = (props) => {
         date: 'desc'
     })
     let selectorId = 0;
+    const [isLoading, setIsLoading] = useState(true);
     const [partsVisible, setPartsVisible] = useState([])
 
     const changeSortOrder = (event) => {
@@ -54,6 +56,7 @@ const TableView = (props) => {
         setPartsVisible([
             ...temp,
         ]);
+        props.data.length > 0 && setIsLoading(false);
     }, [props.data])
 
     const checkPart = (index) => {
@@ -110,6 +113,10 @@ const TableView = (props) => {
                 <div className="tableview_stamps__col">Проверка</div>
                 <div className="tableview_stamps__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_stamps__row tableview_stamps__row--even"
+            />}
             {sortStamps(props.data).map((stamp, stamp_id) => (
                 <React.Fragment>
                     <div

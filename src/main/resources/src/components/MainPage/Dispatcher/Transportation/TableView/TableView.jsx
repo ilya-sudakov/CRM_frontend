@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import { formatDateString } from '../../../../../utils/functions.jsx';
 import './TableView.scss';
+import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
         curSort: 'date',
         date: 'asc'
     })
+    const [isLoading, setIsLoading] = useState(true);
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -29,6 +31,10 @@ const TableView = (props) => {
             item.id.toString().includes(query)
         ))
     }
+
+    useEffect(() => {
+        props.data.length > 0 && setIsLoading(false);
+    }, [props.data])
 
     const sortTransportations = (data) => {
         return searchQuery(data).sort((a, b) => {
@@ -60,6 +66,10 @@ const TableView = (props) => {
                 <div className="tableview_transportation__col">Водитель</div>
                 <div className="tableview_transportation__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_transportation__row tableview_transportation__row--even"
+            />}
             {sortTransportations(props.data).map((transportation, transportation_id) => (
                 <div key={transportation_id} className="tableview_transportation__row tableview_transportation__row--even" >
                     {/* <div className="tableview_transportation__col">{transportation.id}</div> */}

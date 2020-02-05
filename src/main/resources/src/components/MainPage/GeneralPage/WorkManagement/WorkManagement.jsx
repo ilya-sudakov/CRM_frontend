@@ -4,18 +4,21 @@ import { Link, withRouter } from 'react-router-dom';
 import searchImg from '../../../../../../../../assets/searchbar/search.svg';
 import { getRecordedWorks, getRecordedWorkByMonth, getRecordedWorkByDay } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';
+import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const WorkManagement = (props) => {
     const [recordedWork, setRecordedWork] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
+        setIsLoading(true);
         getRecordedWorkByDay((new Date()).getMonth() + 1, (new Date()).getDate())
             .then(res => res.json())
             .then(res => {
                 // console.log(res);
                 setRecordedWork(res);
+                setIsLoading(false);
             })
     }, [])
 
@@ -57,7 +60,9 @@ const WorkManagement = (props) => {
                 </div>
                 {
                     (recordedWork.length === 0)
-                        ? <div className="work-management__info">Нет записей о проведенной работе за сегодня!</div>
+                        ? (isLoading
+                            ? <TableDataLoading className="work-management__item" />
+                            : <div className="work-management__info">Нет записей о проведенной работе за сегодня!</div>)
                         : <div className="work-management__list">
                             {recordedWork.filter(item => (
                                 item.employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||

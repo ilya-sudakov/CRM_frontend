@@ -5,12 +5,14 @@ import plusIcon from '../../../../../../../../assets/tableview/add_item.png';
 import plusContIcon from '../../../../../../../../assets/tableview/add_cont.png';
 import './TableView.scss';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
         curSort: 'name',
         id: 'desc'
     })
+    const [isLoading, setIsLoading] = useState(true);
     const [productsVisible, setProductsVisible] = useState([]);
     // const [categories, setCategories] = useState([]);
 
@@ -89,6 +91,7 @@ const TableView = (props) => {
             ...temp,
         ]);
         props.closeWindow && props.setShowWindow(false);
+        props.categories.length > 0 && setIsLoading(false);
     }, [props.categories, props.closeWindow]);
 
     return (
@@ -134,6 +137,10 @@ const TableView = (props) => {
                             <div className="tableview_products__col">Комментарий</div>
                             <div className="tableview_products__col">Действия</div>
                         </div>
+                        {isLoading && <TableDataLoading
+                            minHeight='50px'
+                            className="tableview_products__row tableview_products__row--even"
+                        />}
                         {sortProducts(props.products).map((product, product_id) => (
                             (product.category === category.name) && <div key={product_id} className={"tableview_products__row tableview_products__row--odd"}>
                                 {/* <div className="tableview_products__col">{product.id}</div> */}

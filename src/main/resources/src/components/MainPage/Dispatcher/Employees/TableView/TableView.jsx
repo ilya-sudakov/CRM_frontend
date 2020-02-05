@@ -4,6 +4,7 @@ import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png'
 import pdfMake from 'pdfmake';
 import './TableView.scss';
 import { formatDateString, getEmployeesByWorkshopListPdfText } from '../../../../../utils/functions.jsx';
+import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [workshops, setWorkshops] = useState([
@@ -14,6 +15,7 @@ const TableView = (props) => {
         'Уволенные'
     ]);
     const [workshopsVisible, setWorkshopsVisible] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [sortOrder, setSortOrder] = useState({
         curSort: 'id',
         date: 'desc'
@@ -98,6 +100,7 @@ const TableView = (props) => {
                 ...temp,
             ]);
         }
+        props.data.length > 0 && setIsLoading(false);
     }, [props.data])
 
     return (
@@ -151,6 +154,10 @@ const TableView = (props) => {
                     <div id={index} className={(isWorkshopHidden(index) === true)
                         ? "tableview_employees__employees tableview_employees__employees--hidden"
                         : "tableview_employees__employees"}>
+                        {isLoading && <TableDataLoading
+                            minHeight='50px'
+                            className="tableview_employees__row tableview_employees__row--even"
+                        />}
                         {sortEmployees(props.data).map((employee, employee_id) => (
                             (item === employee.workshop) && <div key={employee_id} className={"tableview_employees__row tableview_employees__row--odd"}>
                                 <div className="tableview_employees__col">{employee.lastName + ' ' + employee.name + ' ' + employee.middleName}</div>

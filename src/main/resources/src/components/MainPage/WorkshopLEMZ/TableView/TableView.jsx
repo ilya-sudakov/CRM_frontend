@@ -4,9 +4,11 @@ import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 import { editRequestLEMZStatus, editProductStatusToRequestLEMZ } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';
+import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [curPage, setCurPage] = useState('Открытые');
+    const [isLoading, setIsLoading] = useState(true);
     const [sortOrder, setSortOrder] = useState({
         curSort: 'date',
         date: 'desc'
@@ -124,7 +126,7 @@ const TableView = (props) => {
     }
 
     useEffect(() => {
-
+        props.data.length > 0 && setIsLoading(false);
     }, [props.data])
 
     return (
@@ -161,6 +163,10 @@ const TableView = (props) => {
                 <div className="tableview_requests_LEMZ__col">Комментарий</div>
                 <div className="tableview_requests_LEMZ__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_requests_LEMZ__row tableview_requests_LEMZ__row--even"
+            />}
             {sortRequests(props.data).map((request, request_id) => (
                 <div key={request_id} className={"tableview_requests_LEMZ__row " +
                     (
