@@ -20,7 +20,7 @@
     min-width: 250px;
     max-width: 500px;
     // border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
     display: flex;
@@ -44,7 +44,7 @@
         border: 1px solid #bbbbbb;
         width: calc(100% - 20px);
         padding: 10px 10px;
-        border-radius: 10px;
+        border-radius: 5px;
 
         &:focus {
           border: 1px solid $button__background--inverted;
@@ -79,7 +79,7 @@
         // padding: 0;
         border: 0;
         padding: 15px 10px;
-        border-radius: 10px;
+        border-radius: 5px;
         box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.24);
         transition: 0.2s ease-in-out;
         cursor: pointer;
