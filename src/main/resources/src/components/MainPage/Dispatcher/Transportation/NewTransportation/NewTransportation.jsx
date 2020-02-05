@@ -11,6 +11,7 @@ const NewTransportation = (props) => {
     const [transportationInputs, setTransportationInputs] = useState({
         date: new Date(),
         cargo: '',
+        quantity: '',
         sender: 'ЦехЛЭМЗ',
         recipient: 'ЦехЛЭМЗ',
         driver: ''
@@ -150,6 +151,11 @@ const NewTransportation = (props) => {
                     handleInputChange={handleInputChange}
                     errorsArr={transportationErrors}
                     setErrorsArr={setTransportationErrors}
+                />
+                <InputText
+                    inputName="Кол-во"
+                    name="quantity"
+                    handleInputChange={handleInputChange}
                 />
                 <div className="main-form__item">
                     <div className="main-form__input_name">Откуда*</div>

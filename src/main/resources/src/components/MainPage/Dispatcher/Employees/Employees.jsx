@@ -7,6 +7,7 @@ import PrintIcon from '../../../../../../../../assets/print.png';
 import pdfMake from 'pdfmake';
 import { getEmployeesListPdfText } from '../../../../utils/functions.jsx';
 import { getEmployees, deleteEmployee, getEmployeesByWorkshop } from '../../../../utils/RequestsAPI/Employees.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const Employees = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -26,6 +27,7 @@ const Employees = (props) => {
     }, []);
 
     const loadEmployees = () => {
+        setIsLoading(true);
         //Динамический
         let emplArr = [];
         workshops.map((item) => {
@@ -37,6 +39,7 @@ const Employees = (props) => {
                 .then(res => {
                     res.map(item => emplArr.push(item));
                     setEmployees([...emplArr]);
+                    setIsLoading(false);
                 })
         })
         //Стандартный способ
@@ -77,10 +80,10 @@ const Employees = (props) => {
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
-                    <div className="main-window__button" onClick={printEmployeesList}>
+                    {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printEmployeesList}>
                         <img className="main-window__img" src={PrintIcon} alt="" />
                         <span>Печать списка</span>
-                    </div>
+                    </div>}
                     <div className="main-window__amount_table">Всего: {employees.length} записей</div>
                 </div>
                 <TableView

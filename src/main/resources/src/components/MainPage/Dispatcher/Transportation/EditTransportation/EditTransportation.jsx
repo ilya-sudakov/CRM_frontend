@@ -11,6 +11,7 @@ const EditTransportation = (props) => {
     const [transportationInputs, setTransportationInputs] = useState({
         date: new Date(),
         cargo: '',
+        quantity: '',
         sender: 'ЦехЛЭМЗ',
         recipient: 'ЦехЛЭМЗ',
         driver: ''
@@ -134,6 +135,7 @@ const EditTransportation = (props) => {
                     setTransportationInputs({
                         date: oldRequest.date,
                         cargo: oldRequest.cargo,
+                        quantity: oldRequest.quantity,
                         sender: oldRequest.sender,
                         recipient: oldRequest.recipient,
                         driver: oldRequest.driver
@@ -174,6 +176,12 @@ const EditTransportation = (props) => {
                     defaultValue={transportationInputs.cargo}
                     errorsArr={transportationErrors}
                     setErrorsArr={setTransportationErrors}
+                />
+                <InputText
+                    inputName="Кол-во"
+                    name="quantity"
+                    defaultValue={transportationInputs.quantity}
+                    handleInputChange={handleInputChange}
                 />
                 <div className="main-form__item">
                     <div className="main-form__input_name">Откуда*</div>
