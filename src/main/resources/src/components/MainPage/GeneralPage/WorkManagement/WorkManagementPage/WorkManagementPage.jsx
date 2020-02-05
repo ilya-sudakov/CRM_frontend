@@ -32,6 +32,18 @@ const WorkManagementPage = (props) => {
         end: new Date()
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [sortOrder, setSortOrder] = useState({
+        curSort: 'lastName',
+        date: 'desc'
+    })
+    const changeSortOrder = (event) => {
+        const name = event.target.value.split(' ')[0];
+        const order = event.target.value.split(' ')[1];
+        setSortOrder({
+            curSort: name,
+            [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
+        })
+    }
 
     // const exportCSVFile = () => {
     //     let dataLEMZ = [
@@ -186,10 +198,10 @@ const WorkManagementPage = (props) => {
                 </div>
                 <div className="main-window__sort-panel">
                     <span>Сортировать: </span>
-                    <select>
-                        <option>По часам</option>
-                        <option>По алфавиту (А-Я)</option>
-                        <option>По алфавиту (Я-А)</option>
+                    <select onChange={changeSortOrder}>
+                        <option value="lastName desc">По алфавиту (А-Я)</option>
+                        <option value="lastName asc">По алфавиту (Я-А)</option>
+                        <option value="hours desc">По часам</option>
                     </select>
                 </div>
                 <div className="work-management-page__list">
@@ -202,7 +214,25 @@ const WorkManagementPage = (props) => {
                         item.employee.middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         item.employee.workshop.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery)
-                    )).map(workItem =>
+                    )).sort((a, b) => {
+                        if (sortOrder.curSort === 'lastName') {
+                            if (a.employee[sortOrder.curSort] < b.employee[sortOrder.curSort]) {
+                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                            }
+                            if (a.employee[sortOrder.curSort] > b.employee[sortOrder.curSort]) {
+                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                            }
+                            return 0;
+                        } else {
+                            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                            }
+                            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                            }
+                            return 0;
+                        }
+                    }).map(workItem =>
                         <div className="work-management-page__item">
                             <span>ФИО: {workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</span>
                             <span>Часы: {workItem.hours}</span>
