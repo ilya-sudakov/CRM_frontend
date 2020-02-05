@@ -12,7 +12,8 @@ const NewMachine = (props) => {
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
     const [riggingErrors, setRiggingErrors] = useState({
         name: false,
@@ -71,7 +72,7 @@ const NewMachine = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };

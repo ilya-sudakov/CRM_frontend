@@ -3,13 +3,15 @@ import './ViewStamp.scss';
 import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getStampById } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
 
 const ViewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
 
     const handleSubmit = (event) => {
@@ -78,6 +80,17 @@ const ViewStamp = (props) => {
                         <SelectParts
                             readOnly
                             defaultValue={stampInputs.stampParts}
+                        />
+                    </div>
+                </div>
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Дата последнего изменения</div>
+                    <div className="main-form__input_field">
+                        <input type="text"
+                            name="lastEdited"
+                            autoComplete="off"
+                            readOnly
+                            defaultValue={formatDateString(stampInputs.lastEdited)}
                         />
                     </div>
                 </div>

@@ -3,13 +3,15 @@ import './ViewMachine.scss';
 import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getMachineById } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
 
 const ViewMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
 
     const handleSubmit = (event) => {
@@ -78,6 +80,17 @@ const ViewMachine = (props) => {
                         <SelectParts
                             readOnly
                             defaultValue={machineInputs.benchParts}
+                        />
+                    </div>
+                </div>
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Дата последнего изменения</div>
+                    <div className="main-form__input_field">
+                        <input type="text"
+                            name="lastEdited"
+                            autoComplete="off"
+                            readOnly
+                            defaultValue={formatDateString(machineInputs.lastEdited)}
                         />
                     </div>
                 </div>

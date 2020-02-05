@@ -31,13 +31,13 @@
     .authorization__field_name {
       align-self: flex-start;
       font-size: 80%;
-      margin-bottom: 5px;
+      // margin-bottom: 5px;
       padding-left: 10px;
     }
 
     .authorization__field_input {
       width: 100%;
-      margin: 10px 0;
+      margin: 5px 0;
 
       input[type="text"],
       input[type="password"] {

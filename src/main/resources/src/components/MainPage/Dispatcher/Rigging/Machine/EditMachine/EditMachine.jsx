@@ -6,13 +6,15 @@ import { editMachine, editPartsOfMachine, deletePartsFromMachine, getMachineById
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
 
 const EditMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
     const [machineId, setMachineId] = useState(0);
     const [riggingErrors, setRiggingErrors] = useState({
@@ -82,7 +84,7 @@ const EditMachine = (props) => {
         event.preventDefault();
         setIsLoading(true);
         // console.log(machineInputs);
-        formIsValid() && editMachine(machineInputs, machineId)
+        formIsValid() && editMachine({ ...machineInputs, lastEdited: new Date() }, machineId)
             .then(() => {
                 //PUT if edited, POST if part is new
                 const partsArr = machineInputs.parts.map((selected) => {
@@ -226,6 +228,12 @@ const EditMachine = (props) => {
                         />
                     </div>
                 </div>
+                <InputText
+                    inputName="Дата последнего изменения"
+                    name="lastEdited"
+                    readOnly
+                    defaultValue={formatDateString(machineInputs.lastEdited)}
+                />
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/machine')} value="Вернуться назад" />

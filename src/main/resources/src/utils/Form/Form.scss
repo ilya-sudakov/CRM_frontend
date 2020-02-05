@@ -42,7 +42,8 @@
       .main-form__input_name {
         color: lighten($primary-text-color, 40%);
         margin-bottom: 5px;
-        flex: 0 1 20%;
+        padding-right: 10px;
+        flex: 0 1 calc(20% - 10px);
       }
 
       .main-form__input_field,

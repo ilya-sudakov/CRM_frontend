@@ -3,13 +3,15 @@ import './ViewPressForm.scss';
 import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { getPressFormById } from '../../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
 
 const ViewPressForm = (props) => {
     const [pressFormInputs, setPressFormInputs] = useState({
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
 
     const handleSubmit = (event) => {
@@ -78,6 +80,17 @@ const ViewPressForm = (props) => {
                         <SelectParts
                             readOnly
                             defaultValue={pressFormInputs.pressParts}
+                        />
+                    </div>
+                </div>
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Дата последнего изменения</div>
+                    <div className="main-form__input_field">
+                        <input type="text"
+                            name="lastEdited"
+                            autoComplete="off"
+                            readOnly
+                            defaultValue={formatDateString(pressFormInputs.lastEdited)}
                         />
                     </div>
                 </div>

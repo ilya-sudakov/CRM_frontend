@@ -12,7 +12,8 @@ const NewPressForm = (props) => {
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
     const [riggingErrors, setRiggingErrors] = useState({
         name: false,

@@ -6,13 +6,15 @@ import { getPressFormById, editPressForm, editPartFromPressForm, addPartsToPress
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
 
 const EditPressForm = (props) => {
     const [pressFormInputs, setPressFormInputs] = useState({
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
     const [pressFormId, setPressFormId] = useState(0);
     const [riggingErrors, setRiggingErrors] = useState({
@@ -82,7 +84,7 @@ const EditPressForm = (props) => {
         event.preventDefault();
         setIsLoading(true);
         // console.log(pressFormInputs);
-        formIsValid() && editPressForm(pressFormInputs, pressFormId)
+        formIsValid() && editPressForm({ ...pressFormInputs, lastEdited: new Date() }, pressFormId)
             .then(() => {
                 //PUT if edited, POST if part is new
                 const partsArr = pressFormInputs.parts.map((selected) => {
@@ -226,6 +228,12 @@ const EditPressForm = (props) => {
                         />
                     </div>
                 </div>
+                <InputText
+                    inputName="Дата последнего изменения"
+                    name="lastEdited"
+                    readOnly
+                    defaultValue={formatDateString(pressFormInputs.lastEdited)}
+                />
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/press-form')} value="Вернуться назад" />
