@@ -30,18 +30,21 @@ const Employees = (props) => {
         setIsLoading(true);
         //Динамический
         let emplArr = [];
-        workshops.map((item) => {
+        const temp = workshops.map((item) => {
             let workshop = {
                 workshop: item
             };
-            getEmployeesByWorkshop(workshop)
+            return getEmployeesByWorkshop(workshop)
                 .then(res => res.json())
                 .then(res => {
                     res.map(item => emplArr.push(item));
                     setEmployees([...emplArr]);
-                    setIsLoading(false);
                 })
         })
+        Promise.all(temp)
+            .then(() => {
+                setIsLoading(false);
+            })
         //Стандартный способ
         // getEmployees()
         //     .then(res => res.json())

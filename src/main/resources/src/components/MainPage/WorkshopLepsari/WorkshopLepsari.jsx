@@ -11,10 +11,12 @@ import {
     deleteRequestLepsari
 } from '../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 import { getRequestsListPdfText } from '../../../utils/functions.jsx';
+import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const WorkshopLepsari = (props) => {
     const [requestLepsari, setRequestLepsari] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
@@ -37,8 +39,6 @@ const WorkshopLepsari = (props) => {
 
     useEffect(() => {
         document.title = "Заявки - Лепсари";
-        
-        // console.log(requestLepsari);
         loadRequestLepsari();
     }, [])
 
@@ -48,10 +48,13 @@ const WorkshopLepsari = (props) => {
     }
 
     const loadRequestLepsari = () => {
+        setIsLoading(true);
         getRequestsLepsari()
             .then(res => res.json())
             .then(requests => {
+                // console.log(requests);                
                 setRequestLepsari(requests);
+                setIsLoading(false);
             })
     }
 
@@ -65,10 +68,10 @@ const WorkshopLepsari = (props) => {
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
-                    <div className="main-window__button" onClick={printRequestsList}>
+                    {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printRequestsList}>
                         <img className="main-window__img" src={PrintIcon} alt="" />
                         <span>Печать списка</span>
-                    </div>
+                    </div>}
                     <div className="main-window__amount_table">Всего: {requestLepsari.length} записей</div>
                 </div>
                 <TableView
