@@ -29,8 +29,23 @@ const GeneralPage = (props) => {
             if (i < 16) dates[0].push(i);
             else dates[1].push(i);
         let dataWS;
-        dataWS = XLSX.utils.aoa_to_sheet([dates[0]]);
-        let globalIndex = 2;
+        const months = [
+            'Январь',
+            'Февраль',
+            'Март',
+            'Апрель',
+            'Май',
+            'Июнь',
+            'Июль',
+            'Август',
+            'Сентябрь',
+            'Октябрь',
+            'Ноябрь',
+            'Декабрь'
+        ]
+        dataWS = XLSX.utils.aoa_to_sheet([['Табель - ' + (months[new Date().getMonth()])]]);
+        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [dates[0]], { origin: 'A3'});
+        let globalIndex = 4;
         let employeesList = [];
         let employeesWorksList = [];
         const allWorkshops = workshops.map(workshop => {
@@ -126,20 +141,6 @@ const GeneralPage = (props) => {
                                 ];
                                 //Новая ширина столбцов
                                 dataWS["!cols"] = wscols;
-                                const months = [
-                                    'Январь',
-                                    'Февраль',
-                                    'Март',
-                                    'Апрель',
-                                    'Май',
-                                    'Июнь',
-                                    'Июль',
-                                    'Август',
-                                    'Сентябрь',
-                                    'Октябрь',
-                                    'Ноябрь',
-                                    'Декабрь'
-                                ]
                                 let wb = XLSX.utils.book_new(); //Создание новой workbook
                                 XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
                                 XLSX.writeFile(wb, 'Табель-' + (

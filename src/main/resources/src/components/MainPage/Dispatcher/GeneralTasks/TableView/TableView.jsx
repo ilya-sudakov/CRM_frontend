@@ -111,7 +111,7 @@ const TableView = (props) => {
                         <select
                             id={task.id}
                             className="tableview_general_tasks__status_select"
-                            defaultValue={task.condition}
+                            value={task.condition}
                             onChange={handleConditionChange}
                         >
                             <option>Материалы</option>

@@ -238,7 +238,7 @@ const TableView = (props) => {
                                 <select
                                     id={request.id}
                                     className="tableview_requests_LEMZ__status_select"
-                                    defaultValue={request.status}
+                                    value={request.status}
                                     onChange={handleStatusChange}
                                 >
                                     <option>Приоритет</option>
@@ -260,7 +260,7 @@ const TableView = (props) => {
                                         <select
                                             id={item.id}
                                             className="tableview_requests_LEMZ__status_select"
-                                            defaultValue={item.status}
+                                            value={item.status}
                                             onChange={handleProductStatusChange}
                                         >
                                             <option value="production">В работе</option>
