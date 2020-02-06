@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './Parts.scss';
 import '../../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import TableView from './TableView/TableView.jsx';
+// import TableView from './TableView/TableView.jsx';
+import TableView from '../TableView/TableView.jsx';
 import { getParts, deletePart } from '../../../../../utils/RequestsAPI/Parts.jsx';
 
 const Parts = (props) => {
@@ -47,6 +48,7 @@ const Parts = (props) => {
                     searchQuery={searchQuery}
                     userHasAccess={props.userHasAccess}
                     deleteItem={deleteItem}
+                    loadData={loadParts}
                 />
             </div>
         </div>

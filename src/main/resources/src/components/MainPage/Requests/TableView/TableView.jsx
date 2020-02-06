@@ -112,7 +112,7 @@ const TableView = (props) => {
     }
 
     useEffect(() => {
-        props.data.length > 0 && setIsLoading(false);
+        props.data && setIsLoading(false);
     }, [props.data])
 
     return (

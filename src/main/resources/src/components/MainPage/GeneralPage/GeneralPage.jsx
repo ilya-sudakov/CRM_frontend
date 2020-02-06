@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import XLSX from 'xlsx';
+import XLSX2 from 'xlsx';
+import FileSaver from 'file-saver';
 import { AdminWorkspace } from '../lazyImports.jsx';
 import { Link } from 'react-router-dom';
 import './GeneralPage.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
-import { formatDateString } from '../../../utils/functions.jsx';
 import DownloadIcon from '../../../../../../../assets/download.png';
 import { getRecordedWorkByMonth, getWorkReportByEmployee } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { getEmployeesByWorkshop } from '../../../utils/RequestsAPI/Employees.jsx';
@@ -43,8 +43,9 @@ const GeneralPage = (props) => {
             'Ноябрь',
             'Декабрь'
         ]
-        dataWS = XLSX.utils.aoa_to_sheet([['Табель - ' + (months[new Date().getMonth()])]]);
-        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [dates[0]], { origin: 'A3'});
+        // console.log(XLSX.version)
+        dataWS = XLSX2.utils.aoa_to_sheet([['Табель - ' + (months[new Date().getMonth()])]]);
+        dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[0]], { origin: 'A3' });
         let globalIndex = 4;
         let employeesList = [];
         let employeesWorksList = [];
@@ -95,12 +96,12 @@ const GeneralPage = (props) => {
 
                             })
                             // console.log([employeeInfo[0]]);
-                            dataWS = XLSX.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
+                            dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
                         })
                 })
                 Promise.all(allEmployees)
                     .then(() => {
-                        dataWS = XLSX.utils.sheet_add_aoa(dataWS, [dates[1]], { origin: ('A' + ((globalIndex++) + 1)) });
+                        dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[1]], { origin: ('A' + ((globalIndex++) + 1)) });
                         globalIndex++;
                         const allEmployees = employeesWorksList.sort((a, b) => {
                             if (a.employee.lastName < b.employee.lastName) {
@@ -131,7 +132,7 @@ const GeneralPage = (props) => {
                                     employeeInfo[0].push(check);
                                 }
                             })
-                            dataWS = XLSX.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
+                            dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
                         })
                         Promise.all(allEmployees)
                             .then(() => {
@@ -141,11 +142,37 @@ const GeneralPage = (props) => {
                                 ];
                                 //Новая ширина столбцов
                                 dataWS["!cols"] = wscols;
-                                let wb = XLSX.utils.book_new(); //Создание новой workbook
-                                XLSX.utils.book_append_sheet(wb, dataWS, 'Табель');
-                                XLSX.writeFile(wb, 'Табель-' + (
+                                //merge ячеек A1 и B1
+                                const mergeCols = [
+                                    { s: { r: 0, c: 0 }, e: { r: 0, c: dates[0].length } },
+                                ];
+                                dataWS["A1"].s = {
+                                    font: {
+                                        sz: 14,
+                                        bold: true
+                                    },
+                                    alignment: {
+                                        horizontal: "center",
+                                        vertical: "center",
+                                    }
+                                }
+                                console.log(dataWS.A1);
+                                // dataWS["!merges"] = mergeCols;
+                                let wb = XLSX2.utils.book_new(); //Создание новой workbook
+                                XLSX2.utils.book_append_sheet(wb, dataWS, 'Табель');
+                                // XLSX2.writeFile(wb, 'Табель-' + (
+                                //     (months[(new Date()).getMonth()])
+                                // ) + '_' + ((new Date()).getFullYear()) + '.xlsx');
+                                var wboutput = XLSX2.write(wb, { bookType: 'xlsx', bookSST: false, type: 'binary' });
+                                function s2ab(s) {
+                                    var buf = new ArrayBuffer(s.length);
+                                    var view = new Uint8Array(buf);
+                                    for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                                    return buf;
+                                }
+                                FileSaver.saveAs(new Blob([s2ab(wboutput)], { type: "" }), 'Табель-' + (
                                     (months[(new Date()).getMonth()])
-                                ) + '_' + ((new Date()).getFullYear()) + '.xlsx');
+                                ) + '_' + ((new Date()).getFullYear()) + '.xlsx')
                                 setIsLoading(false);
                             })
                     })

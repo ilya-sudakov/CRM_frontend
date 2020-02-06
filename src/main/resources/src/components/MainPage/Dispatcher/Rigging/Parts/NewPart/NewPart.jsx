@@ -1,35 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import './NewPart.scss';
 import '../../../../../../utils/Form/Form.scss';
-import { addPart } from '../../../../../../utils/RequestsAPI/Parts.jsx';
+// import { addPart } from '../../../../../../utils/RequestsAPI/Parts.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { addPart, addPartsToPart } from '../../../../../../utils/RequestsAPI/Rigging/Parts.jsx';
 
 const NewPart = (props) => {
     const [partInputs, setPartInputs] = useState({
-        number: '',
         name: '',
-        dimensions: '',
-        processing: ''
+        number: '',
+        comment: '',
+        parts: [],
+        lastEdited: new Date()
     })
-    const [partErrors, setPartErrors] = useState({
-        number: false,
+    const [riggingErrors, setRiggingErrors] = useState({
         name: false,
-        dimensions: false,
-        processing: false
+        number: false,
+        // comment: false,
+        parts: false,
     })
     const [validInputs, setValidInputs] = useState({
-        number: false,
         name: false,
-        dimensions: false,
-        processing: false
+        number: false,
+        // comment: false,
+        parts: false,
     })
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
     const validateField = (fieldName, value) => {
         switch (fieldName) {
+            case 'parts':
+                setValidInputs({
+                    ...validInputs,
+                    parts: (value.length > 0)
+                });
+                break;
             default:
                 if (validInputs[fieldName] !== undefined) {
                     setValidInputs({
@@ -44,10 +52,10 @@ const NewPart = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            number: false,
             name: false,
-            dimensions: false,
-            processing: false
+            number: false,
+            // comment: false,
+            parts: false,
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -59,7 +67,7 @@ const NewPart = (props) => {
                 })
             }
         }
-        setPartErrors(newErrors);
+        setRiggingErrors(newErrors);
         if (check === true) {
             return true;
         }
@@ -74,8 +82,21 @@ const NewPart = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
+        let partId = 1;
         formIsValid() && addPart(partInputs)
-            .then(() => props.history.push("/dispatcher/rigging/parts"))
+            .then(res => res.json())
+            .then(res => partId = res.id)
+            .then(() => {
+                const parts = partInputs.parts.map((item) => {
+                    let newPart = Object.assign({
+                        ...item,
+                        riggingId: partId
+                    })
+                    return addPartsToPart(newPart);
+                })
+                Promise.all(parts)
+                    .then(() => props.history.push("/dispatcher/rigging/parts"))
+            })
             .catch(error => {
                 setIsLoading(false);
                 alert('Ошибка при добавлении записи');
@@ -90,9 +111,21 @@ const NewPart = (props) => {
             ...partInputs,
             [name]: value
         })
-        setPartErrors({
-            ...partErrors,
+        setRiggingErrors({
+            ...riggingErrors,
             [name]: false
+        })
+    }
+
+    const handlePartsChange = (newParts) => {
+        validateField("parts", newParts);
+        setPartInputs({
+            ...partInputs,
+            parts: newParts
+        })
+        setRiggingErrors({
+            ...riggingErrors,
+            parts: false
         })
     }
 
@@ -111,39 +144,36 @@ const NewPart = (props) => {
                 <InputText
                     inputName="Название"
                     required
-                    error={partErrors.name}
+                    error={riggingErrors.name}
                     name="name"
                     handleInputChange={handleInputChange}
-                    errorsArr={partErrors}
-                    setErrorsArr={setPartErrors}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
                 />
                 <InputText
                     inputName="Артикул"
                     required
-                    error={partErrors.number}
+                    error={riggingErrors.number}
                     name="number"
                     handleInputChange={handleInputChange}
-                    errorsArr={partErrors}
-                    setErrorsArr={setPartErrors}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
                 />
                 <InputText
-                    inputName="Размеры"
-                    required
-                    error={partErrors.dimensions}
-                    name="dimensions"
+                    inputName="Комментарий"
+                    // required
+                    // error={riggingErrors.comment}
+                    name="comment"
                     handleInputChange={handleInputChange}
-                    errorsArr={partErrors}
-                    setErrorsArr={setPartErrors}
                 />
-                <InputText
-                    inputName="Обработка"
-                    required
-                    error={partErrors.processing}
-                    name="processing"
-                    handleInputChange={handleInputChange}
-                    errorsArr={partErrors}
-                    setErrorsArr={setPartErrors}
-                />
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
+                        <SelectParts
+                            handlePartsChange={handlePartsChange}
+                        />
+                    </div>
+                </div>
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/parts')} value="Вернуться назад" />
