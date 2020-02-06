@@ -4,7 +4,8 @@ import '../../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 // import TableView from './TableView/TableView.jsx';
 import TableView from '../TableView/TableView.jsx';
-import { getParts, deletePart } from '../../../../../utils/RequestsAPI/Parts.jsx';
+import { getPart, deletePart, deletePartsFromPart, getPartById } from '../../../../../utils/RequestsAPI/Rigging/Parts.jsx';
+// import { getParts, deletePart } from '../../../../../utils/RequestsAPI/Parts.jsx';
 
 const Parts = (props) => {
     const [parts, setParts] = useState([]);
@@ -16,7 +17,7 @@ const Parts = (props) => {
     }, [])
 
     const loadParts = () => {
-        getParts()
+        getPart()
             .then(res => res.json())
             .then(res => {
                 setParts(res);
@@ -28,8 +29,18 @@ const Parts = (props) => {
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
-        deletePart(id)
-            .then(() => loadParts())
+        getPartById(id)
+            .then(res => res.json())
+            .then(res => {
+                const parts = res.benchParts.map((item) => {
+                    return deletePartsFromPart(item.id);
+                })
+                Promise.all(parts)
+                    .then(() => {
+                        deletePart(id)
+                            .then(() => loadParts())
+                    })
+            })
     }
 
     return (
