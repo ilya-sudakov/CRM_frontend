@@ -16,6 +16,9 @@
       filter: invert(1);
     }
   }
+  .work-management-page__mobile-text {
+    display: none;
+  }
   .main-window__info-panel {
     justify-content: space-between !important;
     align-items: center;
@@ -165,6 +168,35 @@
       .react-datepicker__day--selected {
         background-color: $button__background--inverted !important;
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .work-management-page__item--header {
+      display: none;
+    }
+    .work-management-page__mobile-text {
+      display: block;
+    }
+    .work-management-page__item {
+      flex-direction: column;
+    }
+    .work-management-page__item span {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .work-management-page__actions {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    .work-management-page__action {
+      margin-bottom: 0;
+      margin-right: 5px;
     }
   }
 }

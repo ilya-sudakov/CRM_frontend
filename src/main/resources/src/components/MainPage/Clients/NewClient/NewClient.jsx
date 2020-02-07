@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './NewClient.scss';
 import '../../../../utils/Form/Form.scss';
 import { getInfoByINN, getBIKByINN } from '../../../../utils/RequestsAPI/Clients.jsx';
+import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -217,7 +219,19 @@ const newClient = (props) => {
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
-                    <InputText
+                    {/* Добавление юридических лиц */}
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Юридическое лицо*</div>
+                        <div className="main-form__input_field">
+                            <SelectLegalEntity
+                                handleEntityChange={(value) => {
+                                    validateField("legalEntity", value);
+                                }}
+                                userHasAccess={props.userHasAccess}
+                            />
+                        </div>
+                    </div>
+                    {/* <InputText
                         inputName="Юридическое лицо"
                         required
                         name="legalEntity"
@@ -294,8 +308,20 @@ const newClient = (props) => {
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
-                    />
-                    <InputText
+                    /> */}
+                    {/* Добавление юридических лиц */}
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Контактное лицо*</div>
+                        <div className="main-form__input_field">
+                            <SelectContacts
+                                handleContactsChange={(value) => {
+                                    validateField("contacts", value);
+                                }}
+                                userHasAccess={props.userHasAccess}
+                            />
+                        </div>
+                    </div>
+                    {/* <InputText
                         inputName="Контактные лица"
                         required
                         name="contacts"
@@ -303,7 +329,7 @@ const newClient = (props) => {
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
-                    />
+                    /> */}
                     <InputText
                         inputName="Сайт"
                         required

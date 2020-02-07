@@ -87,4 +87,33 @@
       margin-bottom: 0;
     }
   }
+
+  @media (max-width: 768px) {
+    .clients__item--header {
+      display: none;
+    }
+    .clients__mobile-text {
+      display: block;
+    }
+    .clients__item {
+      flex-direction: column;
+    }
+    .clients__item span {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .clients__actions {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    .clients__action {
+      margin-bottom: 0;
+      margin-right: 5px;
+    }
+  }
 }

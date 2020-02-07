@@ -262,11 +262,15 @@ const WorkManagementPage = (props) => {
                         }
                     }).map(workItem =>
                         <div className="work-management-page__item">
-                            <span>{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</span>
-                            <span>{workItem.hours}</span>
-                            <span>{workItem.employee.workshop}</span>
-                            <span>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
+                            <span>
+                                <div className="work-management-page__mobile-text">ФИО: </div>
+                                <div className="work-management-page__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
+                            </span>
+                            <span><div className="work-management-page__mobile-text">Часы: </div>{workItem.hours}</span>
+                            <span><div className="work-management-page__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span>
+                            <span><div className="work-management-page__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
                             <div className="work-management-page__actions">
+                                {/* <div className="work-management-page__mobile-text">Действия: </div> */}
                                 <Link to={"work-managment/record-time/edit/" + workItem.id} className="work-management-page__action">Редактировать</Link>
                                 <div className="work-management-page__action" onClick={() => {
                                     const deletedProducts = workItem.workControlProduct.map(product => {
