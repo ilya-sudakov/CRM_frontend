@@ -89,8 +89,20 @@ class MainPage extends React.Component {
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
-                                <Route exact path="/clients" component={Clients} />
-                                <Route exact path="/clients/new" component={newClient} />
+                                <PrivateRoute
+                                    exact path="/clients"
+                                    component={Clients}
+                                    userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                                />
+                                <PrivateRoute
+                                    exact path="/clients/new"
+                                    component={newClient}
+                                    userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                                />
                                 <Route exact path="/contracts" component={Contracts} />
                                 <PrivateRoute
                                     exact path="/requests"

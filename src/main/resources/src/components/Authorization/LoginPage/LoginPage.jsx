@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import './LoginPage.scss';
 import { login, refreshToken } from '../../../utils/RequestsAPI/Authorization.jsx';
+import profileSVG from '../../../../../../../assets/header/profile1.svg';
 import ErrorMessage from '../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 
 const LoginPage = (props) => {
@@ -47,7 +48,8 @@ const LoginPage = (props) => {
             {!props.isAuthorized ? (
                 <React.Fragment>
                     <div className="authorization__title">
-                        Авторизация
+                        <img className="authorization__img" src={profileSVG} alt="" />
+                        <span>Авторизация</span>
                     </div>
                     <div className="authorization__panel">
                         <ErrorMessage
@@ -75,7 +77,8 @@ const LoginPage = (props) => {
             ) : (
                     <React.Fragment>
                         <div className="authorization__title">
-                            Выход из аккаунта
+                            <img className="authorization__img" src={profileSVG} alt="" />
+                            <span>Выход из аккаунта</span>
                         </div>
                         <div className="authorization__panel">
                             <div className="authorization__submit">

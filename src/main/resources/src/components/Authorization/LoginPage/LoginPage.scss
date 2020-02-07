@@ -7,13 +7,24 @@
   align-items: center;
   padding-top: 25px;
   background-color: $secondary-background-color;
+  background-color: #00d4d4;
   height: calc(100vh - 25px);
 
   &__title {
     // margin-top: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     margin-top: 5vh;
     margin-bottom: 10px;
     font-size: 150%;
+    color: $secondary-text-color;
+  }
+  .authorization__img {
+    width: 50px;
+    margin-right: 5px;
+    filter: brightness(4);
   }
 
   &__panel {

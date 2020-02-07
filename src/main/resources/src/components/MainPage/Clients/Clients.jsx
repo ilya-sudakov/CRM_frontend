@@ -5,7 +5,7 @@ import { getClients, deleteClient } from '../../../utils/RequestsAPI/Clients.jsx
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 
-const Clients = () => {
+const Clients = (props) => {
     const [clients, setClients] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
@@ -91,6 +91,7 @@ const Clients = () => {
                             <div className="clients__actions">
                                 <div className="clients__action" onClick={() => { }}>Просмотр</div>
                                 <div className="clients__action" onClick={() => { }}>Редактировать</div>
+                                {props.userHasAccess(['ROLE_ADMIN']) && <div className="clients__action" onClick={() => { }}>Удалить</div>}
                             </div>
                         </div>
                     })}
