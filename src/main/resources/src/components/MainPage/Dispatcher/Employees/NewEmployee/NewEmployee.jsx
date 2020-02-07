@@ -104,6 +104,8 @@ const NewEmployee = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
+        console.log(employeeInputs);
+        
         formIsValid() && addEmployee(employeeInputs)
             .then(() => props.history.push("/dispatcher/employees"))
             .catch(error => {

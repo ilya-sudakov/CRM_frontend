@@ -90,7 +90,7 @@ const NewRequest = (props) => {
         event.preventDefault();
         setIsLoading(true);
         let id = 0;
-        // console.log(requestInputs);
+        console.log(requestInputs);
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {

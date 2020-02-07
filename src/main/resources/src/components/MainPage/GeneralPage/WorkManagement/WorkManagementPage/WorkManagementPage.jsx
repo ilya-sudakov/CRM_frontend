@@ -25,6 +25,10 @@ const WorkManagementPage = (props) => {
         {
             name: 'ЦехЛиговский',
             active: true
+        },
+        {
+            name: 'Офис',
+            active: true
         }
     ]);
     const [dates, setDates] = useState({
@@ -128,7 +132,7 @@ const WorkManagementPage = (props) => {
         )
             .then(res => res.json())
             .then(res => {
-                // console.log(res);
+                console.log(res);
                 setWorkItems(res);
                 setIsLoading(false);
             })
@@ -213,13 +217,25 @@ const WorkManagementPage = (props) => {
                     {isLoading && <TableDataLoading
                         className="work-management-page__item"
                     />}
-                    {workItems.filter(item => (
-                        item.employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        item.employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        item.employee.middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        item.employee.workshop.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                        formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery)
-                    )).sort((a, b) => {
+                    {workItems.filter(item => {
+                        if (
+                            item.employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            item.employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            item.employee.middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            item.employee.workshop.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery)
+                        ) {
+                            let check = false;
+                            workshops.map(workshop => {
+                                if (workshop.active && (workshop.name === item.employee.workshop)) {
+                                    check = true;
+                                    return;
+                                }
+                            })
+                            return check;
+                        }
+                    }
+                    ).sort((a, b) => {
                         if (sortOrder.curSort === 'lastName') {
                             if (a.employee[sortOrder.curSort] < b.employee[sortOrder.curSort]) {
                                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
@@ -259,7 +275,8 @@ const WorkManagementPage = (props) => {
                                 }}>Удалить</div>
                             </div>
                         </div>
-                    )}
+                    )
+                    }
                 </div>
             </div>
         </div>

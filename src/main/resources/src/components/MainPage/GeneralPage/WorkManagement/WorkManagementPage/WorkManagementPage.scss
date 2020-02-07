@@ -31,6 +31,10 @@
       align-items: center;
       font-size: 90%;
 
+      .main-window__button--inverted {
+        color: #666666;
+      }
+
       .main-window__button:last-child {
         font-size: 75%;
         padding: 5px 10px;
