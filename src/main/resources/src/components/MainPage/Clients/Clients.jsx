@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './Clients.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
 import { getClients, deleteClient } from '../../../utils/RequestsAPI/Clients.jsx';
+import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
+import SearchBar from '../SearchBar/SearchBar.jsx';
 
 const Clients = () => {
-
-    const [clients, setClients] = useState([])
+    const [clients, setClients] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
@@ -17,52 +20,81 @@ const Clients = () => {
             })
     }
 
+    const loadData = () => {
+        // getClients()
+        //     .then(res => res.json())
+        //     .then((clients) => {
+        //         setClients(clients);
+        //         setIsLoading(false);
+        //     })
+        setClients([
+            {
+                name: 'СБЕРБАНК РОССИИ',
+                legalEntity: '3',
+                INN: '7707083893',
+                KPP: '3',
+                OGRN: '3',
+                BIK: '3',
+                checkingAccount: '3',
+                legalAddress: '3',
+                factualAddress: '3',
+                contacts: '3',
+                site: '3',
+                comment: 'Готовы! Буквы с радиусом 102,56 (1 запасная у Паши без)',
+                storageAddress: '3',
+                WorkConditions: '3',
+                price: '3',
+                discount: '3',
+                check: '3',
+                workHistory: '3',
+                clientType: 'Активные'
+            }
+        ])
+        setIsLoading(false);
+    }
+
     useEffect(() => {
         document.title = "Клиенты";
-        getClients()
-            .then(res => res.json())
-            .then((clients) => {
-                setClients(clients);
-            })
+        loadData();
     }, [])
 
     return (
         <div className="clients">
             <div className="main-window">
                 <div className="main-window__title">Клиенты</div>
+                <SearchBar
+                    title="Поиск по клиентам"
+                    placeholder="Введите запрос для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
                 <div className="main-window__info-panel">
                     <div className="main-window__amount_table">Всего: {clients.length} записей</div>
                 </div>
-                <table className="main-window__table">
-                    <thead>
-                        <tr>
-                            <td>Клиент</td>
-                            <td>Контакт</td>
-                            <td>Адрес</td>
-                            <td>Досье</td>
-                            <td>Статус</td>
-                            <td>Упрощенка</td>
-                            <td>Действия</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {clients.map((item, id) => (
-                            <tr key={id + 1} className={id % 2 === 0 ? 'main-window__table--even' : 'main-window__table--odd'}>
-                                <td>{item.client}</td>
-                                <td>{item.contact}</td>
-                                <td>{item.address !== '' ? item.address : '...'}</td>
-                                <td>{item.file !== '' ? item.file : '...'}</td>
-                                <td>{item.status}</td>
-                                <td>{item.smpl ? 'Да' : 'Нет'}</td>
-                                <td>
-                                    <div data-id={item.id} className="main-window__action" >Просмотр</div>
-                                    <div data-id={item.id} className="main-window__action" >Редактировать</div>
-                                    <div data-id={item.id} className="main-window__action" onClick={deleteItem}>Удалить</div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div className="clients__list">
+                    <div className="clients__item clients__item--header">
+                        <span>Название</span>
+                        <span>ИНН</span>
+                        <span>Контакты</span>
+                        <span>Комментарий</span>
+                        <div className="clients__actions">Действие</div>
+                    </div>
+                    {isLoading && <TableDataLoading
+                        className="clients__item"
+                        minHeight="20px"
+                    />}
+                    {clients.map((item) => {
+                        return <div className="clients__item">
+                            <span>{item.name}</span>
+                            <span>{item.INN}</span>
+                            <span>{item.contacts}</span>
+                            <span>{item.comment}</span>
+                            <div className="clients__actions">
+                                <div className="clients__action" onClick={() => { }}>Просмотр</div>
+                                <div className="clients__action" onClick={() => { }}>Редактировать</div>
+                            </div>
+                        </div>
+                    })}
+                </div>
             </div>
         </div>
     );

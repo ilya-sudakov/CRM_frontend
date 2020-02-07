@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './NewClient.scss';
 import '../../../../utils/Form/Form.scss';
-import { addClient, getInfoByINN, getBIKByINN } from '../../../../utils/RequestsAPI/Clients.jsx';
+import { getInfoByINN, getBIKByINN } from '../../../../utils/RequestsAPI/Clients.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
@@ -25,7 +25,8 @@ const newClient = (props) => {
         price: '',
         discount: '',
         check: '',
-        workHistory: ''
+        workHistory: '',
+        clientType: 'Активные'
     });
     const [formErrors, setFormErrors] = useState({
         name: false,
@@ -131,7 +132,7 @@ const newClient = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
-        console.log(clientInputs);
+        // console.log(clientInputs);
         // formIsValid() && addClient(clientInputs)
         //     .then(() => props.history.push("/clients"))
         //     .catch(error => {
@@ -139,33 +140,43 @@ const newClient = (props) => {
         //         alert('Ошибка при добавлении записи');
         //         console.log(error);
         //     })
-        getInfoByINN({ query: clientInputs.INN })
+        //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
+        getInfoByINN({ query: clientInputs.INN, branch_type: 'MAIN' })
             .then(res => res.json())
             .then(res => {
-                // console.log(res.suggestions[0].data);
+                console.log(res);
                 setIsLoading(false);
-                let newData = Object.assign({
-                    ...clientInputs,
-                    name: res.suggestions[0].data.name.full,
-                    KPP: res.suggestions[0].data.kpp,
-                    OGRN: res.suggestions[0].data.ogrn,
-                    legalAddress: res.suggestions[0].data.address.value,
-                    legalEntity: res.suggestions[0].data.management.name
-                })
-                return newData;
+                if (res.suggestions.length > 0) {
+                    let newData = Object.assign({
+                        ...clientInputs,
+                        name: res.suggestions[0].data.name.full,
+                        KPP: res.suggestions[0].data.kpp,
+                        OGRN: res.suggestions[0].data.ogrn,
+                        legalAddress: res.suggestions[0].data.address.value,
+                        legalEntity: res.suggestions[0].data.management.name
+                    })
+                    return newData;
+                }
+                else return null;
             })
             .then((newData) => {
-                getBIKByINN({ query: newData.name })
-                    .then(res => res.json())
-                    .then(res => {
-                        console.log(res);
-                        setIsLoading(false);
-                        setClientInputs({
-                            ...clientInputs,
-                            ...newData,
-                            BIK: res.suggestions[0].data.bic,
+                if (newData !== null) {
+                    //Получаем БИК банка по названию компании
+                    getBIKByINN({ query: newData.name })
+                        .then(res => res.json())
+                        .then(res => {
+                            // console.log(res);
+                            setIsLoading(false);
+                            setClientInputs({
+                                ...clientInputs,
+                                ...newData,
+                                BIK: res.suggestions[0].data.bic,
+                            })
                         })
-                    })
+                }
+                else {
+                    alert("Не найдено данных с данным ИНН");
+                }
             })
     }
 
@@ -363,6 +374,19 @@ const newClient = (props) => {
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Тип клиента*</div>
+                        <div className="main-form__input_field">
+                            <select
+                                name="clientType"
+                                onChange={handleInputChange}
+                                defaultValue={clientInputs.clientType}
+                            >
+                                <option value="Активные">Активные</option>
+                                <option value="Потенциальные">Потенциальные</option>
+                            </select>
+                        </div>
+                    </div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients')} value="Вернуться назад" />
                         <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить клиента" />

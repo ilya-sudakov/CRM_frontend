@@ -145,7 +145,7 @@ const WorkManagementPage = (props) => {
     return (
         <div className="work-management-page">
             <div className="main-window">
-                <div className="main-window__header">
+                <div className="main-window__title">
                     <div className="main-window__title">
                         <span>Учет рабочего времени</span>
                         {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => { exportCSVFile() }}>
@@ -214,6 +214,13 @@ const WorkManagementPage = (props) => {
                     </select>
                 </div>
                 <div className="work-management-page__list">
+                    <div className="work-management-page__item work-management-page__item--header">
+                        <span>ФИО</span>
+                        <span>Часы</span>
+                        <span>Подразделение</span>
+                        <span>Дата</span>
+                        <div className="work-management-page__actions">Действие</div>
+                    </div>
                     {isLoading && <TableDataLoading
                         className="work-management-page__item"
                     />}
@@ -255,10 +262,10 @@ const WorkManagementPage = (props) => {
                         }
                     }).map(workItem =>
                         <div className="work-management-page__item">
-                            <span>ФИО: {workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</span>
-                            <span>Часы: {workItem.hours}</span>
-                            <span>Подразделение: {workItem.employee.workshop}</span>
-                            <span>Дата: {formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
+                            <span>{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</span>
+                            <span>{workItem.hours}</span>
+                            <span>{workItem.employee.workshop}</span>
+                            <span>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
                             <div className="work-management-page__actions">
                                 <Link to={"work-managment/record-time/edit/" + workItem.id} className="work-management-page__action">Редактировать</Link>
                                 <div className="work-management-page__action" onClick={() => {
