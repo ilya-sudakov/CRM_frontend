@@ -192,6 +192,10 @@ const EditPart = lazy(
     () => import('./Dispatcher/Rigging/Parts/EditPart/EditPart.jsx')
 )
 
+const ViewPart = lazy(
+    () => import('./Dispatcher/Rigging/Parts/ViewPart/ViewPart.jsx')
+)
+
 const Employees = lazy(
     () => import('./Dispatcher/Employees/Employees.jsx')
 )
@@ -292,7 +296,7 @@ export {
     Rigging,
     Transportation, EditTransportation, NewTransportation,
     GeneralTasks, NewTask, EditTask,
-    Parts, NewPart, EditPart,
+    Parts, NewPart, EditPart, ViewPart,
     Employees, NewEmployee, EditEmployee, ViewEmployee,
     Stamp, NewStamp, ViewStamp, EditStamp,
     Machine, NewMachine, ViewMachine, EditMachine,

@@ -89,7 +89,7 @@ const EditPart = (props) => {
                 //PUT if edited, POST if part is new
                 const partsArr = partInputs.parts.map((selected) => {
                     let edited = false;
-                    partInputs.benchParts.map((item) => {
+                    partInputs.detailParts.map((item) => {
                         if (item.id === selected.id) {
                             edited = true;
                             return;
@@ -112,7 +112,7 @@ const EditPart = (props) => {
                 Promise.all(partsArr)
                     .then(() => {
                         //DELETE parts removed by user
-                        const partsArr = partInputs.benchParts.map((item) => {
+                        const partsArr = partInputs.detailParts.map((item) => {
                             let deleted = true;
                             partInputs.parts.map((selected) => {
                                 if (selected.id === item.id) {
@@ -161,7 +161,7 @@ const EditPart = (props) => {
                 .then(res => {
                     setPartInputs({
                         ...res,
-                        parts: res.benchParts
+                        parts: res.detailParts
                     });
                 })
                 .catch(error => {
@@ -224,7 +224,7 @@ const EditPart = (props) => {
                     <div className="main-form__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
-                            defaultValue={partInputs.benchParts}
+                            defaultValue={partInputs.detailParts}
                         />
                     </div>
                 </div>

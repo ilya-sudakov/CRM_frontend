@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp, ViewStamp, EditStamp, NewMachine, NewPressForm, ViewMachine, EditMachine, ViewPressForm, EditPressForm, EditPartInRigging } from '../../lazyImports.jsx';
+import { Stamp, Parts, NewPart, EditPart, Machine, PressForm, NewStamp, ViewStamp, EditStamp, NewMachine, NewPressForm, ViewMachine, EditMachine, ViewPressForm, EditPressForm, EditPartInRigging, ViewPart } from '../../lazyImports.jsx';
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import plusImg from '../../../../../../../../assets/sidemenu/plus.png';
@@ -141,6 +141,12 @@ const Rigging = (props) => {
                                 component={EditPart}
                                 userHasAccess={props.userHasAccess}
                                 allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+                            />
+                            <PrivateRoute
+                                path="/dispatcher/rigging/parts/view/"
+                                component={ViewPart}
+                                userHasAccess={props.userHasAccess}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP']}
                             />
                             <PrivateRoute
                                 path={"/dispatcher/rigging/" + (

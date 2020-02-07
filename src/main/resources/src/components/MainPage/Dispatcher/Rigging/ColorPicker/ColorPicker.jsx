@@ -4,6 +4,7 @@ import './ColorPicker.scss';
 import { editStampColor, editStampPartColor } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 import { editPressFormColor, editPressFormPartColor } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 import { editMachineColor, editMachinePartColor } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
+import { editPartColor, editPartPartColor } from '../../../../../utils/RequestsAPI/Rigging/Parts.jsx';
 
 const ColorPicker = (props) => {
     const clickOnColorPicker = (event) => {
@@ -62,6 +63,12 @@ const ColorPicker = (props) => {
                 (type === 'rigging') ? editMachineColor(req, id)
                     .then(() => props.loadData())
                     : editMachinePartColor(req, id)
+                        .then(() => props.loadData())
+                break;
+            case 'parts':
+                (type === 'rigging') ? editPartColor(req, id)
+                    .then(() => props.loadData())
+                    : editPartPartColor(req, id)
                         .then(() => props.loadData())
                 break;
         }

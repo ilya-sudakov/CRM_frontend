@@ -5,6 +5,7 @@ import { getPartFromStamp, editPartFromStamp } from '../../../../../utils/Reques
 import { editPartFromPressForm, getPartFromPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
 import { getPartFromMachine, editPartFromMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import { editPartFromPart, getPartFromPart } from '../../../../../utils/RequestsAPI/Rigging/Parts.jsx';
 const EditPartInRigging = (props) => {
     const [partInputs, setPartInputs] = useState({
         number: '',
@@ -57,13 +58,18 @@ const EditPartInRigging = (props) => {
             props.location.pathname.includes("/dispatcher/rigging/press-form") && editPartFromPressForm({
                 ...partInputs,
                 riggingId: rigId
+            }, partId) ||
+            props.location.pathname.includes("/dispatcher/rigging/parts") && editPartFromPart({
+                ...partInputs,
+                riggingId: rigId
             }, partId)
         )
 
             .then(() => props.history.push("/dispatcher/rigging/" + (
                 props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                 props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
             )))
             .catch(error => {
                 setIsLoading(false);
@@ -86,7 +92,8 @@ const EditPartInRigging = (props) => {
         let rigId = props.history.location.pathname.split("/dispatcher/rigging/" + (
             props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
             props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-            props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+            props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+            props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
         ) + "/edit-part/")[1];
         const partId = rigId.split("/")[1];
         rigId = rigId.split("/")[0];
@@ -98,7 +105,8 @@ const EditPartInRigging = (props) => {
             (
                 props.location.pathname.includes("/dispatcher/rigging/stamp") && getPartFromStamp(partId) ||
                 props.location.pathname.includes("/dispatcher/rigging/machine") && getPartFromMachine(partId) ||
-                props.location.pathname.includes("/dispatcher/rigging/press-form") && getPartFromPressForm(partId)
+                props.location.pathname.includes("/dispatcher/rigging/press-form") && getPartFromPressForm(partId) ||
+                props.location.pathname.includes("/dispatcher/rigging/parts") && getPartFromPart(partId)
             )
                 .then(res => res.json())
                 .then(res => {
@@ -248,7 +256,8 @@ const EditPartInRigging = (props) => {
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push("/dispatcher/rigging/" + (
                         props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                         props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                        props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
                     ))} value="Вернуться назад" />
                     <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать деталь" />
                     {isLoading && <ImgLoader />}

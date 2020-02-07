@@ -136,7 +136,8 @@ const TableView = (props) => {
                                 type={
                                     (props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                                         props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-                                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form")
+                                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                                        props.location.pathname.includes("/dispatcher/rigging/parts") && "parts")
                                     + '/rigging'
                                 }
                             />
@@ -154,12 +155,14 @@ const TableView = (props) => {
                             <Link to={"/dispatcher/rigging/" + (
                                 props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                                 props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                                props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
                             ) + "/view/" + stamp.id} className="tableview_stamps__action">Просмотр</Link>
                             <Link to={"/dispatcher/rigging/" + (
                                 props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                                 props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                                props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
                             ) + "/edit/" + stamp.id} className="tableview_stamps__action">Редактировать</Link>
                             {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={stamp.id} className="tableview_stamps__action" onClick={props.deleteItem}>Удалить</div>}
                         </div>
@@ -168,7 +171,8 @@ const TableView = (props) => {
                         {stamp[
                             props.location.pathname.includes("/dispatcher/rigging/stamp") && "stampParts" ||
                             props.location.pathname.includes("/dispatcher/rigging/machine") && "benchParts" ||
-                            props.location.pathname.includes("/dispatcher/rigging/press-form") && "pressParts"
+                            props.location.pathname.includes("/dispatcher/rigging/press-form") && "pressParts" ||
+                            props.location.pathname.includes("/dispatcher/rigging/parts") && "detailParts"
                         ].sort((a, b) => {
                             if (a.number < b.number) {
                                 return -1;
@@ -197,7 +201,8 @@ const TableView = (props) => {
                                         type={
                                             (props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                                                 props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-                                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form")
+                                                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                                                props.location.pathname.includes("/dispatcher/rigging/parts") && "parts")
                                             + '/part'
                                         }
                                     />
@@ -215,7 +220,8 @@ const TableView = (props) => {
                                     <Link to={"/dispatcher/rigging/" + (
                                         props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                                         props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-                                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                                        props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
                                     ) + "/edit-part/" + stamp.id + '/' + part.id} className="tableview_stamps__action">Редактировать</Link>
                                 </div>
                             </div>
