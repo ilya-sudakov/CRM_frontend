@@ -144,25 +144,22 @@ const GeneralPage = (props) => {
                                 dataWS["!cols"] = wscols;
                                 //merge ячеек A1 и B1
                                 const mergeCols = [
-                                    { s: { r: 0, c: 0 }, e: { r: 0, c: dates[0].length } },
+                                    { s: { r: 0, c: 0 }, e: { r: 0, c: (dates[0].length - 1) } },
                                 ];
-                                dataWS["A1"].s = {
-                                    font: {
-                                        sz: 14,
-                                        bold: true
-                                    },
-                                    alignment: {
-                                        horizontal: "center",
-                                        vertical: "center",
-                                    }
-                                }
-                                console.log(dataWS.A1);
-                                // dataWS["!merges"] = mergeCols;
+                                // dataWS["A1"].s = {
+                                //     font: {
+                                //         sz: 14,
+                                //         bold: true
+                                //     },
+                                //     alignment: {
+                                //         horizontal: "center",
+                                //         vertical: "center",
+                                //     }
+                                // }
+                                // // console.log(dataWS.A1);
+                                dataWS["!merges"] = mergeCols;
                                 let wb = XLSX2.utils.book_new(); //Создание новой workbook
                                 XLSX2.utils.book_append_sheet(wb, dataWS, 'Табель');
-                                // XLSX2.writeFile(wb, 'Табель-' + (
-                                //     (months[(new Date()).getMonth()])
-                                // ) + '_' + ((new Date()).getFullYear()) + '.xlsx');
                                 var wboutput = XLSX2.write(wb, { bookType: 'xlsx', bookSST: false, type: 'binary' });
                                 function s2ab(s) {
                                     var buf = new ArrayBuffer(s.length);

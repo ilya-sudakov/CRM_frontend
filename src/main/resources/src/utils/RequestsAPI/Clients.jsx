@@ -1,4 +1,4 @@
-import { request } from '../utilsAPI.jsx';
+import { request, requestINN } from '../utilsAPI.jsx';
 
 export function getClients() {
     return request({
@@ -19,5 +19,21 @@ export function deleteClient(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/client/" + id,
         method: "DELETE"
+    })
+}
+
+export function getInfoByINN(INN) {
+    return requestINN({
+        url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party',
+        method: "POST",
+        body: JSON.stringify(INN)
+    })
+}
+
+export function getBIKByINN(INN) {
+    return requestINN({
+        url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/bank',
+        method: "POST",
+        body: JSON.stringify(INN)
     })
 }

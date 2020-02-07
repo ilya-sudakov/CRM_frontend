@@ -33,18 +33,32 @@ const Notifications = (props) => {
             if (item.id !== id) {
                 newNotifications.push(item);
             }
-        })  
+        })
         setNotifications([...newNotifications]);
     }
 
     useEffect(() => {
+        console.log(notifications);
+
         //После рендера делаем непрочитанные уведомления - прочитанными
         let unreadNotifications = Array.from(document.getElementsByClassName('notifications__item notifications__item--unread'));
         unreadNotifications.forEach((element, index) => {
             setTimeout(() => element.classList.remove('notifications__item--unread'), (4000 + index * 500));
             //API
         })
-    }, [])
+        // let newNotifications = notifications;
+        // const temp = notifications.map((item, index) => {
+        //     if (item.read === false) {
+        //         return setTimeout(() => {
+        //             newNotifications.splice(index, 1, {
+        //                 ...item, 
+        //                 read: true
+        //             })
+        //             setNotifications([...newNotifications]);
+        //         }, (4000 + index * 500));
+        //     }
+        // })
+    }, [notifications])
 
     return (
         <div className="notifications">

@@ -1,35 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import './NewClient.scss';
 import '../../../../utils/Form/Form.scss';
-import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
+import { addClient, getInfoByINN, getBIKByINN } from '../../../../utils/RequestsAPI/Clients.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
-        client: "",
-        contact: "",
-        address: "",
-        file: "",
-        status: "",
-        smpl: true
+        name: '',
+        legalEntity: '',
+        INN: '7707083893',
+        KPP: '',
+        OGRN: '',
+        BIK: '',
+        checkingAccount: '',
+        legalAddress: '',
+        factualAddress: '',
+        contacts: '',
+        site: '',
+        comment: '',
+        storageAddress: '',
+        WorkConditions: '',
+        price: '',
+        discount: '',
+        check: '',
+        workHistory: ''
     });
     const [formErrors, setFormErrors] = useState({
-        client: false,
-        contact: false,
-        address: false,
-        file: false,
-        status: false,
-        smpl: false,
+        name: false,
+        legalEntity: false,
+        INN: false,
+        KPP: false,
+        OGRN: false,
+        BIK: false,
+        checkingAccount: false,
+        legalAddress: false,
+        factualAddress: false,
+        contacts: false,
+        site: false,
+        comment: false,
+        storageAddress: false,
+        WorkConditions: false,
+        price: false,
+        discount: false,
+        check: false,
+        workHistory: false
     });
     const [validInputs, setValidInputs] = useState({
-        client: false,
-        contact: false,
-        address: false,
-        file: false,
-        status: false,
-        smpl: true,
+        name: false,
+        legalEntity: false,
+        INN: false,
+        KPP: false,
+        OGRN: false,
+        BIK: false,
+        checkingAccount: false,
+        legalAddress: false,
+        factualAddress: false,
+        contacts: false,
+        site: false,
+        comment: false,
+        storageAddress: false,
+        WorkConditions: false,
+        price: false,
+        discount: false,
+        check: false,
+        workHistory: false
     });
 
     const [showError, setShowError] = useState(false);
@@ -51,12 +87,24 @@ const newClient = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            client: false,
-            contact: false,
-            address: false,
-            file: false,
-            status: false,
-            smpl: false,
+            name: false,
+            legalEntity: false,
+            INN: false,
+            KPP: false,
+            OGRN: false,
+            BIK: false,
+            checkingAccount: false,
+            legalAddress: false,
+            factualAddress: false,
+            contacts: false,
+            site: false,
+            comment: false,
+            storageAddress: false,
+            WorkConditions: false,
+            price: false,
+            discount: false,
+            check: false,
+            workHistory: false
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -84,12 +132,40 @@ const newClient = (props) => {
         event.preventDefault();
         setIsLoading(true);
         console.log(clientInputs);
-        formIsValid() && addClient(clientInputs)
-            .then(() => props.history.push("/clients"))
-            .catch(error => {
+        // formIsValid() && addClient(clientInputs)
+        //     .then(() => props.history.push("/clients"))
+        //     .catch(error => {
+        //         setIsLoading(false);
+        //         alert('Ошибка при добавлении записи');
+        //         console.log(error);
+        //     })
+        getInfoByINN({ query: clientInputs.INN })
+            .then(res => res.json())
+            .then(res => {
+                // console.log(res.suggestions[0].data);
                 setIsLoading(false);
-                alert('Ошибка при добавлении записи');
-                console.log(error);
+                let newData = Object.assign({
+                    ...clientInputs,
+                    name: res.suggestions[0].data.name.full,
+                    KPP: res.suggestions[0].data.kpp,
+                    OGRN: res.suggestions[0].data.ogrn,
+                    legalAddress: res.suggestions[0].data.address.value,
+                    legalEntity: res.suggestions[0].data.management.name
+                })
+                return newData;
+            })
+            .then((newData) => {
+                getBIKByINN({ query: newData.name })
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res);
+                        setIsLoading(false);
+                        setClientInputs({
+                            ...clientInputs,
+                            ...newData,
+                            BIK: res.suggestions[0].data.bic,
+                        })
+                    })
             })
     }
 
@@ -121,59 +197,172 @@ const newClient = (props) => {
                         setShowError={setShowError}
                     />
                     <InputText
-                        inputName="Клиент"
+                        inputName="Название"
                         required
-                        name="client"
-                        error={formErrors.client}
+                        name="name"
+                        error={formErrors.name}
+                        defaultValue={clientInputs.name}
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
                     <InputText
-                        inputName="Контакт"
+                        inputName="Юридическое лицо"
                         required
-                        name="contact"
-                        error={formErrors.contact}
+                        name="legalEntity"
+                        error={formErrors.legalEntity}
+                        defaultValue={clientInputs.legalEntity}
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
                     <InputText
-                        inputName="Адрес"
+                        inputName="ИНН"
                         required
-                        name="address"
-                        error={formErrors.address}
+                        name="INN"
+                        error={formErrors.INN}
+                        defaultValue={clientInputs.INN}
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
                     <InputText
-                        inputName="Досье"
+                        inputName="КПП"
                         required
-                        name="file"
-                        error={formErrors.file}
+                        name="KPP"
+                        defaultValue={clientInputs.KPP}
+                        error={formErrors.KPP}
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
                     <InputText
-                        inputName="Статус"
+                        inputName="ОГРН"
                         required
-                        name="status"
-                        error={formErrors.status}
+                        name="OGRN"
+                        error={formErrors.OGRN}
+                        defaultValue={clientInputs.OGRN}
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
-                    <div className="main-form__item">
-                        <div className="main-form__input_name">Упрощенка</div>
-                        <div className="main-form__input_field">
-                            <select name="smpl" onChange={handleInputChange}>
-                                <option value={true}>Да</option>
-                                <option value={false}>Нет</option>
-                            </select>
-                        </div>
-                    </div>
+                    <InputText
+                        inputName="БИК"
+                        required
+                        name="BIK"
+                        error={formErrors.BIK}
+                        defaultValue={clientInputs.BIK}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Расчетный счет"
+                        required
+                        name="checkingAccount"
+                        error={formErrors.checkingAccount}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Юридический адрес"
+                        required
+                        name="legalAddress"
+                        error={formErrors.legalAddress}
+                        defaultValue={clientInputs.legalAddress}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Фактический адрес"
+                        required
+                        name="factualAddress"
+                        error={formErrors.factualAddress}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Контактные лица"
+                        required
+                        name="contacts"
+                        error={formErrors.contacts}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Сайт"
+                        required
+                        name="site"
+                        error={formErrors.site}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Комментарий"
+                        required
+                        name="comment"
+                        error={formErrors.comment}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Адрес склада"
+                        required
+                        name="storageAddress"
+                        error={formErrors.storageAddress}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Условия работы"
+                        name="WorkConditions"
+                        error={formErrors.WorkConditions}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Прайс"
+                        name="price"
+                        error={formErrors.price}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Скидки"
+                        required
+                        name="discount"
+                        error={formErrors.discount}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="Акт сверки"
+                        required
+                        name="check"
+                        error={formErrors.check}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
+                    <InputText
+                        inputName="История работы"
+                        required
+                        name="workHistory"
+                        error={formErrors.workHistory}
+                        errorsArr={formErrors}
+                        setErrorsArr={setFormErrors}
+                        handleInputChange={handleInputChange}
+                    />
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients')} value="Вернуться назад" />
                         <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить клиента" />
