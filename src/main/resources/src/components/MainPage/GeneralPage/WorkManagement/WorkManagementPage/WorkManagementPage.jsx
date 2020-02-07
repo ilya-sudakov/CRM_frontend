@@ -35,11 +35,11 @@ const WorkManagementPage = (props) => {
         start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
         end: new Date()
     });
-    const [isLoading, setIsLoading] = useState(false);
     const [sortOrder, setSortOrder] = useState({
         curSort: 'lastName',
         date: 'desc'
     })
+    const [isLoading, setIsLoading] = useState(false);
     const changeSortOrder = (event) => {
         const name = event.target.value.split(' ')[0];
         const order = event.target.value.split(' ')[1];
@@ -148,10 +148,10 @@ const WorkManagementPage = (props) => {
                 <div className="main-window__header">
                     <div className="main-window__title">
                         <span>Учет рабочего времени</span>
-                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => { exportCSVFile() }}>
+                        {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => { exportCSVFile() }}>
                             <img className="main-window__img" src={DownloadIcon} alt="" />
                             <span>Скачать Excel</span>
-                        </div>}
+                        </div>} */}
                     </div>
                 </div>
                 <SearchBar
@@ -206,7 +206,7 @@ const WorkManagementPage = (props) => {
                     </div>
                 </div>
                 <div className="main-window__sort-panel">
-                    <span>Сортировать: </span>
+                    <span>Сортировка: </span>
                     <select onChange={changeSortOrder}>
                         <option value="lastName desc">По алфавиту (А-Я)</option>
                         <option value="lastName asc">По алфавиту (Я-А)</option>

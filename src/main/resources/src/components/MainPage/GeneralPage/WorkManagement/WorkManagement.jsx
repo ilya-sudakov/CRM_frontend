@@ -30,9 +30,17 @@ const WorkManagement = (props) => {
                     'Учет рабочего времени - ' + (
                         props.userHasAccess(['ROLE_ADMIN'])
                             ? 'Сводка дня'
-                            : props.userHasAccess(['ROLE_LEMZ'])
-                                ? 'ЦехЛЭМЗ'
-                                : 'ЦехЛепсари'
+                            : props.userHasAccess(['ROLE_DISPATCHER'])
+                                ? 'Офис'
+                                : props.userHasAccess(['ROLE_LEPSARI'])
+                                    ? 'ЦехЛепсари'
+                                    : props.userHasAccess(['ROLE_LEMZ'])
+                                        ? 'ЦехЛЭМЗ'
+                                        : props.userHasAccess(['ROLE_WORKSHOP'])
+                                            ? 'ЦехЛиговский'
+                                            : props.userHasAccess(['ROLE_MANAGER'])
+                                                ? 'Менеджер'
+                                                : props.userHasAccess(['ROLE_ENGINEER']) && 'Инженер'
                     )
                 }</span>
                 <div className="work-management__button work-management__button--inverted" onClick={() => {
