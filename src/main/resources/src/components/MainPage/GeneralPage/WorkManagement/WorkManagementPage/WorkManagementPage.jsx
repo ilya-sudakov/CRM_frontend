@@ -7,7 +7,7 @@ import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import DownloadIcon from '../../../../../../../../../assets/download.png';
 import { formatDateString } from '../../../../../utils/functions.jsx';
-import { getRecordedWorkByMonth, deleteRecordedWork, deleteProductFromRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getRecordedWorkByDateRange, deleteRecordedWork, deleteProductFromRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const WorkManagementPage = (props) => {
@@ -28,7 +28,7 @@ const WorkManagementPage = (props) => {
         }
     ]);
     const [dates, setDates] = useState({
-        start: new Date(new Date().setDate((new Date()).getDate() - 1)),
+        start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
         end: new Date()
     });
     const [isLoading, setIsLoading] = useState(false);
@@ -120,7 +120,12 @@ const WorkManagementPage = (props) => {
 
     const loadWorks = () => {
         setIsLoading(true);
-        getRecordedWorkByMonth((dates.start.getMonth() + 1))
+        getRecordedWorkByDateRange(
+            (dates.start.getDate()),
+            (dates.start.getMonth() + 1),
+            (dates.end.getDate()),
+            (dates.end.getMonth() + 1)
+        )
             .then(res => res.json())
             .then(res => {
                 // console.log(res);
