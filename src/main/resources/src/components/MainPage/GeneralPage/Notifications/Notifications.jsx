@@ -38,7 +38,7 @@ const Notifications = (props) => {
     }
 
     useEffect(() => {
-        console.log(notifications);
+        // console.log(notifications);
 
         //После рендера делаем непрочитанные уведомления - прочитанными
         let unreadNotifications = Array.from(document.getElementsByClassName('notifications__item notifications__item--unread'));

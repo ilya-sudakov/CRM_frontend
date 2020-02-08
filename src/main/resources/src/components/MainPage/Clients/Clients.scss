@@ -94,13 +94,14 @@
     }
     .clients__mobile-text {
       display: block;
+      text-align: left;
     }
     .clients__item {
       flex-direction: column;
     }
     .clients__item span {
       width: 100%;
-      text-align: center;
+      text-align: right;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -108,11 +109,12 @@
     }
     .clients__actions {
       flex-direction: row;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
+      flex-wrap: wrap;
     }
     .clients__action {
-      margin-bottom: 0;
+      margin-bottom: 2.5px;
       margin-right: 5px;
     }
   }

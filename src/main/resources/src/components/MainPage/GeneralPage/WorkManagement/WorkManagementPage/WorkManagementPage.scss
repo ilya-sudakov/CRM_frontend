@@ -20,7 +20,7 @@
     display: none;
   }
   .main-window__info-panel {
-    justify-content: space-between !important;
+    justify-content: space-between;
     align-items: center;
     .work-management-page__date-pick {
       display: flex;
@@ -154,7 +154,7 @@
     margin-bottom: 0;
     margin-right: 10px;
     & .input_date__input_field input[type="text"] {
-      width: fit-content !important;
+      width: fit-content;
     }
   }
   .input_date__input_name {
@@ -177,13 +177,32 @@
     }
     .work-management-page__mobile-text {
       display: block;
+      text-align: left;
+    }
+    .main-window__info-panel {
+      flex-direction: column;
+    }
+    .work-management-page__date-pick {
+      margin-bottom: 5px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      & .input_date, & .input_date input {
+        width: 100% !important;
+      }
+    }
+    .work-management-page__workshop-pick {
+      flex-wrap: wrap;
+    }
+    .main-window__button {
+      margin-bottom: 5px;
     }
     .work-management-page__item {
       flex-direction: column;
     }
     .work-management-page__item span {
       width: 100%;
-      text-align: center;
+      text-align: right;
       display: flex;
       flex-direction: row;
       justify-content: space-between;

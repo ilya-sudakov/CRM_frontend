@@ -40,7 +40,7 @@ const Clients = (props) => {
                 factualAddress: '3',
                 contacts: '42849283-74928-374',
                 site: '3',
-                comment: 'Готовы! Буквы с радиусом 102,56 (1 запасная у Паши без)',
+                comment: 'Комментарий',
                 storageAddress: '3',
                 WorkConditions: '3',
                 price: '3',
@@ -61,7 +61,7 @@ const Clients = (props) => {
                 factualAddress: '3',
                 contacts: '42849283-74928-374',
                 site: '3',
-                comment: 'Готовы! Буквы с радиусом 102,56 (1 запасная у Паши без)',
+                comment: 'Комментарий',
                 storageAddress: '3',
                 WorkConditions: '3',
                 price: '3',
@@ -105,10 +105,10 @@ const Clients = (props) => {
                     />}
                     {clients.map((item) => {
                         return <div className="clients__item">
-                            <span>{item.name}</span>
-                            <span>{item.INN}</span>
-                            <span>{item.contacts}</span>
-                            <span>{item.comment}</span>
+                            <span><div className="clients__mobile-text">Название: </div>{item.name}</span>
+                            <span><div className="clients__mobile-text">ИНН: </div>{item.INN}</span>
+                            <span><div className="clients__mobile-text">Контактное лицо: </div>{item.contacts}</span>
+                            <span><div className="clients__mobile-text">Комментарий: </div>{item.comment}</span>
                             <div className="clients__actions">
                                 <div className="clients__action" onClick={() => { }}>Просмотр</div>
                                 <div className="clients__action" onClick={() => { }}>Редактировать</div>
