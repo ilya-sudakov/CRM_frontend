@@ -135,7 +135,7 @@ const SelectLegalEntity = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.INN}
+                                        value={item.INN}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -149,7 +149,7 @@ const SelectLegalEntity = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.KPP}
+                                        value={item.KPP}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -163,7 +163,7 @@ const SelectLegalEntity = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.OGRN}
+                                        value={item.OGRN}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -177,7 +177,7 @@ const SelectLegalEntity = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.BIK}
+                                        value={item.BIK}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -191,7 +191,7 @@ const SelectLegalEntity = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.checkingAccount}
+                                        value={item.checkingAccount}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -205,7 +205,7 @@ const SelectLegalEntity = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.legalAddress}
+                                        value={item.legalAddress}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -219,7 +219,7 @@ const SelectLegalEntity = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.factualAddress}
+                                        value={item.factualAddress}
                                         readOnly={props.readOnly}
                                     />
                                 </div>

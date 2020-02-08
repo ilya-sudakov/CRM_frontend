@@ -11,15 +11,8 @@ import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
         name: '',
-        legalEntity: '',
-        INN: '7707083893',
-        KPP: '',
-        OGRN: '',
-        BIK: '',
-        checkingAccount: '',
-        legalAddress: '',
-        factualAddress: '',
-        contacts: '',
+        legalEntity: [],
+        contacts: [],
         site: '',
         comment: '',
         storageAddress: '',
@@ -33,13 +26,6 @@ const newClient = (props) => {
     const [formErrors, setFormErrors] = useState({
         name: false,
         legalEntity: false,
-        INN: false,
-        KPP: false,
-        OGRN: false,
-        BIK: false,
-        checkingAccount: false,
-        legalAddress: false,
-        factualAddress: false,
         contacts: false,
         site: false,
         comment: false,
@@ -53,13 +39,6 @@ const newClient = (props) => {
     const [validInputs, setValidInputs] = useState({
         name: false,
         legalEntity: false,
-        INN: false,
-        KPP: false,
-        OGRN: false,
-        BIK: false,
-        checkingAccount: false,
-        legalAddress: false,
-        factualAddress: false,
         contacts: false,
         site: false,
         comment: false,
@@ -92,13 +71,6 @@ const newClient = (props) => {
         let newErrors = Object.assign({
             name: false,
             legalEntity: false,
-            INN: false,
-            KPP: false,
-            OGRN: false,
-            BIK: false,
-            checkingAccount: false,
-            legalAddress: false,
-            factualAddress: false,
             contacts: false,
             site: false,
             comment: false,
@@ -134,51 +106,13 @@ const newClient = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
-        // console.log(clientInputs);
-        // formIsValid() && addClient(clientInputs)
-        //     .then(() => props.history.push("/clients"))
-        //     .catch(error => {
-        //         setIsLoading(false);
-        //         alert('Ошибка при добавлении записи');
-        //         console.log(error);
-        //     })
-        //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
-        getInfoByINN({ query: clientInputs.INN, branch_type: 'MAIN' })
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
+        console.log(clientInputs);
+        formIsValid() && addClient(clientInputs)
+            .then(() => props.history.push("/clients"))
+            .catch(error => {
                 setIsLoading(false);
-                if (res.suggestions.length > 0) {
-                    let newData = Object.assign({
-                        ...clientInputs,
-                        name: res.suggestions[0].data.name.full,
-                        KPP: res.suggestions[0].data.kpp,
-                        OGRN: res.suggestions[0].data.ogrn,
-                        legalAddress: res.suggestions[0].data.address.value,
-                        legalEntity: res.suggestions[0].data.management.name
-                    })
-                    return newData;
-                }
-                else return null;
-            })
-            .then((newData) => {
-                if (newData !== null) {
-                    //Получаем БИК банка по названию компании
-                    getBIKByINN({ query: newData.name })
-                        .then(res => res.json())
-                        .then(res => {
-                            // console.log(res);
-                            setIsLoading(false);
-                            setClientInputs({
-                                ...clientInputs,
-                                ...newData,
-                                BIK: res.suggestions[0].data.bic,
-                            })
-                        })
-                }
-                else {
-                    alert("Не найдено данных с данным ИНН");
-                }
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 
@@ -231,85 +165,7 @@ const newClient = (props) => {
                             />
                         </div>
                     </div>
-                    {/* <InputText
-                        inputName="Юридическое лицо"
-                        required
-                        name="legalEntity"
-                        error={formErrors.legalEntity}
-                        defaultValue={clientInputs.legalEntity}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    />
-                    <InputText
-                        inputName="ИНН"
-                        required
-                        name="INN"
-                        error={formErrors.INN}
-                        defaultValue={clientInputs.INN}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    />
-                    <InputText
-                        inputName="КПП"
-                        required
-                        name="KPP"
-                        defaultValue={clientInputs.KPP}
-                        error={formErrors.KPP}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    />
-                    <InputText
-                        inputName="ОГРН"
-                        required
-                        name="OGRN"
-                        error={formErrors.OGRN}
-                        defaultValue={clientInputs.OGRN}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    />
-                    <InputText
-                        inputName="БИК"
-                        required
-                        name="BIK"
-                        error={formErrors.BIK}
-                        defaultValue={clientInputs.BIK}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    />
-                    <InputText
-                        inputName="Расчетный счет"
-                        required
-                        name="checkingAccount"
-                        error={formErrors.checkingAccount}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    />
-                    <InputText
-                        inputName="Юридический адрес"
-                        required
-                        name="legalAddress"
-                        error={formErrors.legalAddress}
-                        defaultValue={clientInputs.legalAddress}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    />
-                    <InputText
-                        inputName="Фактический адрес"
-                        required
-                        name="factualAddress"
-                        error={formErrors.factualAddress}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    /> */}
-                    {/* Добавление юридических лиц */}
+                    {/* Добавление контактных лиц */}
                     <div className="main-form__item">
                         <div className="main-form__input_name">Контактное лицо*</div>
                         <div className="main-form__input_field">
@@ -321,15 +177,6 @@ const newClient = (props) => {
                             />
                         </div>
                     </div>
-                    {/* <InputText
-                        inputName="Контактные лица"
-                        required
-                        name="contacts"
-                        error={formErrors.contacts}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    /> */}
                     <InputText
                         inputName="Сайт"
                         required
