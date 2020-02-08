@@ -56,7 +56,7 @@ const TableView = (props) => {
                 className="ttableview_users__row ttableview_users__row--even"
             />}
             {sortUsers(props.data).map((user, user_id) => (
-                <div key={user_id} className={"tableview_users__row " + (user.id % 2 === 0 ? "tableview_users__row--even" : "tableview_users__row--odd")}>
+                <div key={user_id} className="tableview_users__row tableview_users__row--odd">
                     {/* <div className="tableview_users__col">{user.id}</div> */}
                     <div className="tableview_users__col">{user.username}</div>
                     <div className="tableview_users__col">{user.email}</div>
@@ -68,7 +68,8 @@ const TableView = (props) => {
                                         : item.name === "ROLE_ENGINEER" ? "Инженер "
                                             : item.name === "ROLE_LEMZ" ? "Цех ЛЭМЗ "
                                                 : item.name === "ROLE_LEPSARI" ? "Цех Лепсари "
-                                                    : null)
+                                                    : item.name === "ROLE_LIGOVSKY" ? "Цех Лиговский "
+                                                        : null)
                     })}</div>
                     <div className="tableview_users__actions">
                         {/* <div data-id={user.id} className="tableview_users__action" >Просмотр</div> */}

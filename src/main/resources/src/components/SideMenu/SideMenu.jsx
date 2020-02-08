@@ -8,6 +8,10 @@ const SideMenu = (props) => {
         {
             pathname: '/',
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER', 'ROLE_LEMZ', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER'],
+            addButtonName: "Учесть рабочее время",
+            linkTo: "/",
+            addButtonLinkTo: "/work-managment/record-time/new",
             name: "Главная"
         },
         {
@@ -17,13 +21,13 @@ const SideMenu = (props) => {
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             addButtonName: "Добавить клиента"
         },
-        {
-            pathname: "/work-managment",
-            AddButtonLinkTo: "/work-managment/record-time/new",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER'],
-            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER'],
-            addButtonName: "Учесть рабочее время"
-        },
+        // {
+        //     pathname: "/work-managment",
+        //     AddButtonLinkTo: "/work-managment/record-time/new",
+        //     mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER', 'ROLE_LEMZ', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER'],
+        //     addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER', 'ROLE_LEMZ', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER'],
+        //     addButtonName: "Учесть рабочее время"
+        // },
         {
             pathname: "/contracts",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
@@ -154,12 +158,16 @@ const SideMenu = (props) => {
             <div className="sidemenu__add-buttons">
                 {
                     sidemenuItems.map((item) => {
-                        return <Link className={(
-                            item.addButtonName &&
-                            props.userHasAccess(item.addButtonRoles) &&
-                            props.location.pathname.includes(item.pathname)
-                        ) ? "sidemenu__item--add" : "sidemenu__item--add sidemenu__item--hidden"
-                        } to={item.AddButtonLinkTo ? item.AddButtonLinkTo : (item.pathname + '/new')} >
+                        return <Link className={
+                            (item.addButtonName &&
+                                props.userHasAccess(item.addButtonRoles) &&
+                                props.location.pathname.includes(item.pathname) &&
+                                (item.pathname !== "/"))
+                                ? "sidemenu__item--add"
+                                : (props.location.pathname.length === 1 && props.location.pathname.includes(item.pathname))
+                                    ? "sidemenu__item--add"
+                                    : "sidemenu__item--add sidemenu__item--hidden"
+                        } to={item.addButtonLinkTo ? item.addButtonLinkTo : (item.pathname + '/new')} >
                             <span>{item.addButtonName}</span>
                         </Link>
                     })
@@ -180,6 +188,7 @@ const SideMenu = (props) => {
                             <Link className="sidemenu__link" to={item.linkTo ? item.linkTo : item.pathname}>{item.name}</Link>
                             {(
                                 item.addButtonName &&
+                                item.pathname !== '/' &&
                                 props.userHasAccess(item.addButtonRoles)
                             ) && <Link to={item.pathname + '/new'} className="sidemenu__addButton">
                                     <img className="sidemenu__img" src={plusImg} />
@@ -187,7 +196,7 @@ const SideMenu = (props) => {
                         </div>
                 })
             }
-        </div >
+        </div>
     );
 };
 

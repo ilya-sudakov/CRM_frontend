@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import XLSX from 'xlsx';
 import './WorkManagementPage.scss';
 import '../../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
@@ -16,18 +15,22 @@ const WorkManagementPage = (props) => {
     const [workshops, setWorkshops] = useState([
         {
             name: 'ЦехЛЭМЗ',
+            visibility: ['ROLE_ADMIN', 'ROLE_LEMZ'],
             active: true
         },
         {
             name: 'ЦехЛепсари',
+            visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
             active: true
         },
         {
             name: 'ЦехЛиговский',
+            visibility: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER', 'ROLE_MANAGER'],
             active: true
         },
         {
             name: 'Офис',
+            visibility: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER'],
             active: true
         }
     ]);
@@ -185,24 +188,29 @@ const WorkManagementPage = (props) => {
                                 }}
                             />
                         </div>
-                    </div>
-                    <div className="work-management-page__workshop-pick">
-                        {workshops.map((item, index) => <div
-                            className={item.active ? "main-window__button" : "main-window__button main-window__button--inverted"}
-                            onClick={() => {
-                                let temp = workshops;
-                                temp.splice(index, 1, {
-                                    name: item.name,
-                                    active: !item.active
-                                })
-                                setWorkshops([...temp]);
-                            }}
-                        >{item.name}</div>)}
-                        <div className="main-window__amount_table">Всего: {workItems.length} записей</div>
                         <div
                             className="main-window__button"
                             onClick={() => loadWorks()}
                         >Применить фильтр</div>
+                    </div>
+                    <div className="work-management-page__workshop-pick">
+                        {workshops.map((item, index) => {
+                            if (props.userHasAccess(item.visibility)) {
+                                return <div
+                                    className={item.active ? "main-window__button" : "main-window__button main-window__button--inverted"}
+                                    onClick={() => {
+                                        let temp = workshops;
+                                        temp.splice(index, 1, {
+                                            ...temp[index],
+                                            name: item.name,
+                                            active: !item.active
+                                        })
+                                        setWorkshops([...temp]);
+                                    }}
+                                >{item.name}</div>
+                            }
+                        })}
+                        <div className="main-window__amount_table">Всего: {workItems.length} записей</div>
                     </div>
                 </div>
                 <div className="main-window__sort-panel">

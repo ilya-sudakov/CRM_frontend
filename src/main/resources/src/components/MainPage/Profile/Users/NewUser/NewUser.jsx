@@ -148,6 +148,7 @@ const NewUser = (props) => {
                             <option value="ROLE_MANAGER">Менеджер1</option>
                             <option value="ROLE_LEPSARI">Цех Лепсари</option>
                             <option value="ROLE_LEMZ">Цех ЛЭМЗ</option>
+                            <option value="ROLE_LIGOVSKIY">Цех Лиговский</option>
                             <option value="ROLE_DISPATCHER">Диспетчер</option>
                             <option value="ROLE_ENGINEER">Инженер</option>
                         </select>

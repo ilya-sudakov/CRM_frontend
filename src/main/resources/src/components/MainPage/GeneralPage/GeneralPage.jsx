@@ -187,7 +187,7 @@ const GeneralPage = (props) => {
                 <div className="main-window__content">
                     {/* <div className="main-window__date">{'Дата: ' + formatDateString(date)}</div> */}
                     <div className="main-window__control-panel">
-                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER']) && <Link className="main-window__button" to="work-managment/record-time/new">Учесть рабочее время</Link>}
+                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY']) && <Link className="main-window__button" to="work-managment/record-time/new">Учесть рабочее время</Link>}
                         {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={exportCSVFile}>
                             <img className="main-window__img" src={DownloadIcon} alt="" />
                             <span>Скачать Табель</span>
@@ -195,7 +195,14 @@ const GeneralPage = (props) => {
                         {props.userHasAccess(['ROLE_ADMIN']) && isLoading && <ImgLoader />}
                     </div>
                     {
-                        props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER']) && <AdminWorkspace
+                        props.userHasAccess([
+                            'ROLE_ADMIN',
+                            'ROLE_DISPATCHER',
+                            'ROLE_MANAGER',
+                            'ROLE_LIGOVSKIY',
+                            'ROLE_LEMZ',
+                            'ROLE_LEPSARI'
+                        ]) && <AdminWorkspace
                             userHasAccess={props.userHasAccess}
                         />
                     }

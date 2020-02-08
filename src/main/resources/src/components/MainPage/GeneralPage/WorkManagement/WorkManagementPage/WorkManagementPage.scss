@@ -20,13 +20,17 @@
     display: none;
   }
   .main-window__info-panel {
-    justify-content: space-between;
+    justify-content: space-between !important;
     align-items: center;
     .work-management-page__date-pick {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 80%;
+
+      .main-window__button {
+        // align-items: ;
+      }
     }
     .work-management-page__workshop-pick {
       display: flex;
@@ -34,13 +38,15 @@
       align-items: center;
       font-size: 90%;
 
+      .main-window__button {
+        font-size: 75%;
+        padding: 5px 10px;
+      }
       .main-window__button--inverted {
         color: #666666;
       }
 
       .main-window__button:last-child {
-        font-size: 75%;
-        padding: 5px 10px;
         margin: 0;
         margin-left: 15px;
         // max-width: 70px;
@@ -180,14 +186,15 @@
       text-align: left;
     }
     .main-window__info-panel {
-      flex-direction: column;
+      flex-direction: column !important;
     }
     .work-management-page__date-pick {
       margin-bottom: 5px;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      & .input_date, & .input_date input {
+      & .input_date,
+      & .input_date input {
         width: 100% !important;
       }
     }
@@ -214,6 +221,7 @@
       align-items: center;
     }
     .work-management-page__action {
+      font-size: 90%;
       margin-bottom: 0;
       margin-right: 5px;
     }

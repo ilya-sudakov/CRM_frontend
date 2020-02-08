@@ -228,11 +228,10 @@ const SelectLegalEntity = (props) => {
                                 event.preventDefault();
                                 setIsLoading(true);
                                 //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
-                                getInfoByINN({ query: item.INN, branch_type: 'MAIN' })
+                                getInfoByINN({ query: item.INN })
                                     .then(res => res.json())
                                     .then(res => {
-                                        console.log(res);
-                                        setIsLoading(false);
+                                        console.log(res.suggestions[0].data.name.full);
                                         if (res.suggestions.length > 0) {
                                             let newData = Object.assign({
                                                 ...item,
@@ -252,16 +251,17 @@ const SelectLegalEntity = (props) => {
                                             getBIKByINN({ query: newData.name })
                                                 .then(res => res.json())
                                                 .then(res => {
-                                                    // console.log(res);
+                                                    console.log(res);
                                                     setIsLoading(false);
                                                     let temp = selected;
                                                     temp.splice(index, 1, {
                                                         ...item,
                                                         ...newData,
-                                                        BIK: res.suggestions[0].data.bic,
+                                                        BIK: res.suggestions.length > 0 ? res.suggestions[0].data.bic : '',
                                                     })
                                                     setSelected([...temp]);
                                                     props.handleLegalEntityChange([...temp])
+                                                    setIsLoading(false);
                                                 })
                                         }
                                         else {
