@@ -68,7 +68,7 @@ const TableView = (props) => {
                                         : item.name === "ROLE_ENGINEER" ? "Инженер "
                                             : item.name === "ROLE_LEMZ" ? "Цех ЛЭМЗ "
                                                 : item.name === "ROLE_LEPSARI" ? "Цех Лепсари "
-                                                    : item.name === "ROLE_LIGOVSKY" ? "Цех Лиговский "
+                                                    : item.name === "ROLE_LIGOVSKIY" ? "Цех Лиговский "
                                                         : null)
                     })}</div>
                     <div className="tableview_users__actions">

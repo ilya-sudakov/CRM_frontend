@@ -35,7 +35,10 @@ const WorkManagementPage = (props) => {
         }
     ]);
     const [dates, setDates] = useState({
-        start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
+        // start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
+        // end: new Date()
+        // start: new Date(new Date().setDate((new Date()).getDate() - 1)),
+        start: new Date(),
         end: new Date()
     });
     const [sortOrder, setSortOrder] = useState({

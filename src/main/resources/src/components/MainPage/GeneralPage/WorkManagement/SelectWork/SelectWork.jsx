@@ -178,7 +178,7 @@ const SelectWork = (props) => {
                                 }}
                                 userHasAccess={props.userHasAccess}
                                 searchPlaceholder="Введите название продукта для поиска..."
-                                workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
+                                // workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
                             />
                             <div className="select-work__item">
                                 <div className="select-work__input_name">Часы</div>
