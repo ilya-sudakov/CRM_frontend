@@ -4,6 +4,8 @@ import '../../../utils/MainWindow/MainWindow.scss';
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import { getPriceListPdfText } from '../../../utils/functions.jsx';
+import pdfMake from 'pdfmake';
 
 const PriceList = (props) => {
     const [priceList, setPriceList] = useState([]);
@@ -116,7 +118,16 @@ const PriceList = (props) => {
             <div className="main-window">
                 <div className="main-window__header">
                     <div className="main-window__title">Каталог продукции</div>
-                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => { }}>Скачать .pdf</div>}
+                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => {
+                        // let dd;
+                        getPriceListPdfText([
+                            'Крепеж для ДПК досок',
+                            'Крепеж для деревянных досок'
+                        ], priceList)
+                            .then(PriceTextList => {
+                                pdfMake.createPdf(PriceTextList).open();
+                            })
+                    }}>Скачать .pdf</div>}
                 </div>
                 <SearchBar
                     title="Поиск по клиентам"
@@ -132,9 +143,9 @@ const PriceList = (props) => {
                         <span>Название</span>
                         <span>Описание</span>
                         <span>Категория</span>
-                        <span>Розничная цена</span>
-                        <span>Цена &lt; 1500 шт.</span>
-                        <span>Цена &lt; 5000 шт.</span>
+                        <span>Розница</span>
+                        <span>ц. &lt; 1500 шт.</span>
+                        <span>ц. &lt; 5000 шт.</span>
                         <div className="main-window__actions">Действие</div>
                     </div>
                     {isLoading && <TableDataLoading

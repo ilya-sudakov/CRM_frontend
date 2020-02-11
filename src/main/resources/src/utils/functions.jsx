@@ -1,4 +1,5 @@
 import font from 'pdfmake/build/vfs_fonts';
+import testImg from '../../../../../assets/header/profile.png';
 
 export const formatDateString = (dateString) => {
     const testDate = new Date(dateString);
@@ -393,6 +394,120 @@ export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
             header: {
                 fontSize: 22,
                 bold: true
+            },
+            title: {
+                fontSize: 24,
+                bold: true
+            },
+            subheader: {
+                fontSize: 18,
+                bold: true
+            },
+            regularText: {
+                fontSize: 16
+            },
+            tableHeader: {
+                fontSize: 12,
+                bold: true,
+                alignment: 'center'
+            }
+        }
+    }
+    pdfMake.vfs = font.pdfMake.vfs;
+    return dd;
+}
+
+function getDataUri(url) {
+    return new Promise((resolve, reject) => {
+        var img = new Image();
+        img.setAttribute("crossOrigin", "anonymous");
+        img.onload = () => {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            var dataURL = canvas.toDataURL("image/png");
+            resolve(dataURL);
+        };
+        img.onerror = error => {
+            reject(error);
+        };
+        img.src = url;
+    });
+}
+
+export function getPriceListPdfText(categories, priceList) {
+    let finalList = [];
+    const temp = categories.map(category => {
+        finalList.push({
+            text: category,
+            style: 'header'
+        })
+        return priceList.map(groupOfProducts => {
+            if (category === groupOfProducts.category) {
+                return getDataUri(testImg)
+                    .then((dataURI) => {
+                        finalList.push({
+                            text: 'fdf',
+                            columns: [
+                                {
+                                    image: dataURI,
+                                    width: 100
+                                },
+                                {
+                                    text: groupOfProducts.name,
+                                    style: 'subheader'
+                                }
+                            ]
+                        });
+                        finalList.push(
+                            ...groupOfProducts.products.map(product => {
+                                return {
+                                    text: product.name
+                                }
+                            })
+                        );
+                    })
+            }
+        })
+    })
+    let dd = {
+        info: {
+            title: 'Прайс-лист'
+        },
+        header: {
+            alignment: 'justify',
+            margin: [40, 30, 40, 30],
+            columns: [
+                {
+                    text: 'contacts',
+                    alignment: 'left'
+                },
+                {
+                    text: 'logo',
+                    alignment: 'right'
+                }
+            ]
+        },
+        pageMargins: [40, 80, 40, 60],
+        footer: {
+            text: 'Страница',
+            alignment: 'center'
+        },
+        content: [
+            // {
+            //     text: 'Прайс-лист\n\n',
+            //     alignment: 'center',
+            //     style: 'title',
+            // },
+            finalList
+        ],
+        styles: {
+            header: {
+                fontSize: 22,
+                bold: true,
+                alignment: 'center'
             },
             title: {
                 fontSize: 24,
