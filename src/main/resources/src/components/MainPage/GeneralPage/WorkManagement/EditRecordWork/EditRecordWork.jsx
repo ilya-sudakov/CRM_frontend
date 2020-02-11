@@ -100,7 +100,7 @@ const EditRecordWork = (props) => {
                 workListId: item.workId,
                 hours: item.hours
             });
-            // console.log(temp);
+            console.log(temp);
             if (formIsValid()) {
                 if (index === 0) {
                     return editRecordedWork(temp, itemId)

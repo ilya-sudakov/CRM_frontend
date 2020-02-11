@@ -224,16 +224,16 @@ const WorkManagementPage = (props) => {
                         <option value="hours desc">По часам</option>
                     </select>
                 </div>
-                <div className="work-management-page__list">
-                    <div className="work-management-page__item work-management-page__item--header">
+                <div className="main-window__list">
+                    <div className="main-window__list-item main-window__list-item--header">
                         <span>ФИО</span>
                         <span>Часы</span>
                         <span>Подразделение</span>
                         <span>Дата</span>
-                        <div className="work-management-page__actions">Действие</div>
+                        <div className="main-window__actions">Действие</div>
                     </div>
                     {isLoading && <TableDataLoading
-                        className="work-management-page__item"
+                        className="main-window__list-item"
                     />}
                     {workItems.filter(item => {
                         if (
@@ -272,18 +272,18 @@ const WorkManagementPage = (props) => {
                             return 0;
                         }
                     }).map(workItem =>
-                        <div className="work-management-page__item">
+                        <div className="main-window__list-item">
                             <span>
-                                <div className="work-management-page__mobile-text">ФИО: </div>
-                                <div className="work-management-page__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
+                                <div className="main-window__mobile-text">ФИО: </div>
+                                <div className="main-window__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
                             </span>
-                            <span><div className="work-management-page__mobile-text">Часы: </div>{workItem.hours}</span>
-                            <span><div className="work-management-page__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span>
-                            <span><div className="work-management-page__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
-                            <div className="work-management-page__actions">
-                                {/* <div className="work-management-page__mobile-text">Действия: </div> */}
-                                <Link to={"work-managment/record-time/edit/" + workItem.id} className="work-management-page__action">Редактировать</Link>
-                                <div className="work-management-page__action" onClick={() => {
+                            <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span>
+                            <span><div className="main-window__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span>
+                            <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
+                            <div className="main-window__actions">
+                                {/* <div className="main-window__mobile-text">Действия: </div> */}
+                                <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action">Редактировать</Link>
+                                <div className="main-window__action" onClick={() => {
                                     const deletedProducts = workItem.workControlProduct.map(product => {
                                         return deleteProductFromRecordedWork(workItem.id, product.product.id)
                                     })

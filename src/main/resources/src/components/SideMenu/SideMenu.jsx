@@ -48,6 +48,13 @@ const SideMenu = (props) => {
             addButtonName: "Добавить продукцию"
         },
         {
+            pathname: "/price-list",
+            name: "Каталог продукции",
+            mainRoles: ['ROLE_ADMIN'],
+            addButtonRoles: ['ROLE_ADMIN'],
+            addButtonName: "Добавить продукцию"
+        },
+        {
             pathname: "/lemz/",
             linkTo: "/lemz/workshop-lemz",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],

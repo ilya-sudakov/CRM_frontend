@@ -91,28 +91,28 @@ const Clients = (props) => {
                 <div className="main-window__info-panel">
                     <div className="main-window__amount_table">Всего: {clients.length} записей</div>
                 </div>
-                <div className="clients__list">
-                    <div className="clients__item clients__item--header">
+                <div className="main-window__list">
+                    <div className="main-window__list-item main-window__list-item--header">
                         <span>Название</span>
                         <span>ИНН</span>
                         <span>Контакты</span>
                         <span>Комментарий</span>
-                        <div className="clients__actions">Действие</div>
+                        <div className="main-window__actions">Действие</div>
                     </div>
                     {isLoading && <TableDataLoading
-                        className="clients__item"
+                        className="main-window__list-item"
                         minHeight="20px"
                     />}
                     {clients.map((item) => {
-                        return <div className="clients__item">
-                            <span><div className="clients__mobile-text">Название: </div>{item.name}</span>
-                            <span><div className="clients__mobile-text">ИНН: </div>{item.INN}</span>
-                            <span><div className="clients__mobile-text">Контактное лицо: </div>{item.contacts}</span>
-                            <span><div className="clients__mobile-text">Комментарий: </div>{item.comment}</span>
-                            <div className="clients__actions">
-                                <div className="clients__action" onClick={() => { }}>Просмотр</div>
-                                <div className="clients__action" onClick={() => { }}>Редактировать</div>
-                                {props.userHasAccess(['ROLE_ADMIN']) && <div className="clients__action" onClick={() => { }}>Удалить</div>}
+                        return <div className="main-window__list-item">
+                            <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
+                            <span><div className="main-window__mobile-text">ИНН: </div>{item.INN}</span>
+                            <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts}</span>
+                            <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
+                            <div className="main-window__actions">
+                                <div className="main-window__action" onClick={() => { }}>Просмотр</div>
+                                <div className="main-window__action" onClick={() => { }}>Редактировать</div>
+                                {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => { }}>Удалить</div>}
                             </div>
                         </div>
                     })}

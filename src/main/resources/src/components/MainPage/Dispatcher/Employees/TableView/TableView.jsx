@@ -159,7 +159,7 @@ const TableView = (props) => {
                             className="tableview_employees__row tableview_employees__row--even"
                         />}
                         {sortEmployees(props.data).map((employee, employee_id) => (
-                            (item === employee.workshop) && <div key={employee_id} className={"tableview_employees__row tableview_employees__row--odd"}>
+                            ((item === employee.workshop) || (item === 'Уволенные' && employee.relevance === 'Уволен')) && <div key={employee_id} className={"tableview_employees__row tableview_employees__row--odd"}>
                                 <div className="tableview_employees__col">{employee.lastName + ' ' + employee.name + ' ' + employee.middleName}</div>
                                 <div className="tableview_employees__col">{formatDateString(employee.yearOfBirth)}</div>
                                 <div className="tableview_employees__col">{employee.citizenship}</div>
