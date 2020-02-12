@@ -288,6 +288,10 @@ const PriceList = lazy(
     () => import('./PriceList/PriceList.jsx')
 )
 
+const NewPriceList = lazy(
+    () => import('./PriceList/NewPriceList/NewPriceList.jsx')
+)
+
 
 export {
     Clients, newClient,
@@ -309,5 +313,5 @@ export {
     Work, NewWork, EditWork,
     WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari, StorageLepsari, NewStorageLepsari, EditStorageLepsari,
     LEMZ, Lepsari,
-    PriceList
+    PriceList, NewPriceList
 };

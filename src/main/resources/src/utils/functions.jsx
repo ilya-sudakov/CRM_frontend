@@ -1,5 +1,8 @@
 import font from 'pdfmake/build/vfs_fonts';
-import testImg from '../../../../../assets/header/profile.png';
+import pdfMake from 'pdfmake';
+import testImg from '../../../../../assets/priceList/test.jpg';
+import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
+import contactsImg from '../../../../../assets/priceList/contacts.png';
 
 export const formatDateString = (dateString) => {
     const testDate = new Date(dateString);
@@ -420,7 +423,7 @@ export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
 function getDataUri(url) {
     return new Promise((resolve, reject) => {
         var img = new Image();
-        img.setAttribute("crossOrigin", "anonymous");
+        // img.setAttribute("crossOrigin", "anonymous");
         img.onload = () => {
             var canvas = document.createElement("canvas");
             canvas.width = img.width;
@@ -439,94 +442,192 @@ function getDataUri(url) {
 
 export function getPriceListPdfText(categories, priceList) {
     let finalList = [];
-    const temp = categories.map(category => {
-        finalList.push({
-            text: category,
-            style: 'header'
-        })
-        return priceList.map(groupOfProducts => {
+    let dd;
+    const temp = categories.sort((a, b) => {
+        if (a.category < b.category) {
+            return -1;
+        }
+        if (a.category > b.category) {
+            return 1;
+        }
+        return 0;
+    }).map(category => {
+        let fullGroup = [];
+        return Promise.all(priceList.map(groupOfProducts => {
             if (category === groupOfProducts.category) {
+                // console.log(category, groupOfProducts.products.length);
                 return getDataUri(testImg)
                     .then((dataURI) => {
-                        finalList.push({
-                            text: 'fdf',
+                        // console.log(temp3);
+                        fullGroup.push({
+                            text: [{
+                                text: ' ',
+                                style: 'subheader'
+                            }, {
+                                text: groupOfProducts.name,
+                                style: 'subheader'
+                            }, {
+                                text: ' ',
+                                style: 'subheader'
+                            }, {
+                                text: '  ' + groupOfProducts.description,
+                                style: 'regularText',
+                            }],
+                            headlineLevel: 1,
+                            margin: [0, 10, 0, 10]
+                        });
+                        fullGroup.push({
+                            // alignment: 'justify',
                             columns: [
                                 {
                                     image: dataURI,
-                                    width: 100
+                                    width: 80
                                 },
                                 {
-                                    text: groupOfProducts.name,
-                                    style: 'subheader'
+                                    table: {
+                                        widths: ['*', '*', '*', '*', '*', '*'],
+                                        body: [
+                                            [
+                                                'Артикул',
+                                                'Описание',
+                                                'Ед. изм.',
+                                                'Розница',
+                                                'до 1500 шт.',
+                                                'до 5000 шт.'
+                                            ],
+                                            ...groupOfProducts.products.map(product => {
+                                                // return {
+                                                //     text: product.name
+                                                // };
+                                                return [
+                                                    product.number,
+                                                    product.description,
+                                                    product.units,
+                                                    product.retailPrice,
+                                                    product.lessThan1500Price,
+                                                    product.lessThan5000Price
+                                                ];
+                                            }),
+                                        ]
+                                    },
+                                    alignment: 'center',
+                                    width: '*',
+                                    margin: [20, 0, 0, 10]
                                 }
                             ]
                         });
-                        finalList.push(
-                            ...groupOfProducts.products.map(product => {
-                                return {
-                                    text: product.name
+                        fullGroup.push({
+                            alignment: 'justify',
+                            width: '*',
+                            margin: [0, 0, 0, 5],
+                            columns: [
+                                {
+                                    table: {
+                                        body: [
+                                            [
+                                                {
+                                                    border: [true, false, false, false],
+                                                    style: 'regularText',
+                                                    borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
+                                                    text: groupOfProducts.description
+                                                },
+                                            ]
+                                        ],
+                                        // margin: [0, 0, 0, 200],
+                                        // heights: 1,
+                                    }
+                                },
+                                {
+                                    text: ' Смотреть на сайте ',
+                                    link: groupOfProducts.linkAddress,
+                                    fontSize: 12,
+                                    margin: [0, 0, 3, 0],
+                                    color: 'white',
+                                    background: '#e30434',
+                                    alignment: 'right'
                                 }
-                            })
-                        );
+                            ]
+                        })
                     })
             }
-        })
+        }))
+            .then(() => {
+                finalList.push({
+                    text: category,
+                    style: 'header'
+                }, ...fullGroup);
+            })
     })
-    let dd = {
-        info: {
-            title: 'Прайс-лист'
-        },
-        header: {
-            alignment: 'justify',
-            margin: [40, 30, 40, 30],
-            columns: [
-                {
-                    text: 'contacts',
-                    alignment: 'left'
+    Promise.all(temp)
+        .then(async () => {
+            dd = {
+                info: {
+                    title: 'Прайс-лист'
                 },
-                {
-                    text: 'logo',
-                    alignment: 'right'
+                header: [
+                    {
+                        alignment: 'justify',
+                        width: '*',
+                        margin: [40, 40, 40, 30],
+                        columns: [
+                            {
+                                image: await getDataUri(contactsImg),
+                                width: 200,
+                                alignment: 'left'
+                            },
+                            {
+                                image: await getDataUri(companyLogo),
+                                // width: 100,
+                                fit: [100, 100],
+                                alignment: 'right'
+                            }
+                        ]
+                    }],
+                pageMargins: [40, 100, 40, 30],
+                // pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
+                //     return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
+                // },
+                footer: function (currentPage, pageCount) {
+                    return {
+                        text: 'Страница ' + currentPage.toString(),
+                        alignment: 'center'
+                    }
+                },
+                content: [
+                    { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#e30434' }] },
+                    finalList
+                ],
+                styles: {
+                    header: {
+                        fontSize: 20,
+                        bold: true,
+                        alignment: 'center',
+                        margin: [0, 5, 0, 5]
+                    },
+                    title: {
+                        fontSize: 24,
+                        bold: true
+                    },
+                    subheader: {
+                        fontSize: 14,
+                        bold: true,
+                        margin: [0, 0, 0, 5],
+                        color: 'white',
+                        background: '#e30434'
+                    },
+                    regularText: {
+                        fontSize: 10,
+                        italics: true
+                    },
+                    tableHeader: {
+                        fontSize: 12,
+                        bold: true,
+                        alignment: 'center'
+                    }
                 }
-            ]
-        },
-        pageMargins: [40, 80, 40, 60],
-        footer: {
-            text: 'Страница',
-            alignment: 'center'
-        },
-        content: [
-            // {
-            //     text: 'Прайс-лист\n\n',
-            //     alignment: 'center',
-            //     style: 'title',
-            // },
-            finalList
-        ],
-        styles: {
-            header: {
-                fontSize: 22,
-                bold: true,
-                alignment: 'center'
-            },
-            title: {
-                fontSize: 24,
-                bold: true
-            },
-            subheader: {
-                fontSize: 18,
-                bold: true
-            },
-            regularText: {
-                fontSize: 16
-            },
-            tableHeader: {
-                fontSize: 12,
-                bold: true,
-                alignment: 'center'
             }
-        }
-    }
-    pdfMake.vfs = font.pdfMake.vfs;
-    return dd;
+            pdfMake.vfs = font.pdfMake.vfs;
+            pdfMake.createPdf(dd).open();
+            // return dd;
+        })
 }

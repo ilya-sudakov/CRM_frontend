@@ -5,7 +5,6 @@ import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDat
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import { getPriceListPdfText } from '../../../utils/functions.jsx';
-import pdfMake from 'pdfmake';
 
 const PriceList = (props) => {
     const [priceList, setPriceList] = useState([]);
@@ -34,6 +33,7 @@ const PriceList = (props) => {
                 id: 1,
                 name: 'OSFIX КОНСТРУКТОР 130',
                 description: ' sd sdf sd fsd fds f',
+                linkAddress: 'https://trello.com/c/HLJQbCNq',
                 products: [
                     {
                         id: 1,
@@ -104,6 +104,214 @@ const PriceList = (props) => {
                 lessThan5000Price: 30,
                 isVisible: false
             },
+            {
+                id: 3,
+                name: 'OSFIX КОНСТРУКТОР 100',
+                description: ' sd sdf sd fsd fds f',
+                category: 'Крепежные инструменты',
+                products: [
+                    {
+                        id: 1,
+                        name: 'Продукт1',
+                        number: 'цинк с/д и б/д',
+                        description: 'цинк с/д и б/д',
+                        units: 'цинк с/д и б/д',
+                        retailPrice: 200,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 2,
+                        name: 'Продукт2',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 1,
+                        name: 'Продукт1',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 200,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 2,
+                        name: 'Продукт2',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    }
+                ],
+                retailPrice: 300,
+                lessThan1500Price: 32,
+                lessThan5000Price: 30,
+                isVisible: false
+            },
+            {
+                id: 4,
+                name: 'OSFIX КОНСТРУКТОР 1000',
+                description: ' sd sdf sd fsd fds f',
+                category: 'Крепежные инструменты',
+                products: [
+                    {
+                        id: 1,
+                        name: 'Продукт1',
+                        number: 'цинк с/д и б/д',
+                        description: 'цинк с/д и б/д',
+                        units: 'цинк с/д и б/д',
+                        retailPrice: 200,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 2,
+                        name: 'Продукт2',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 1,
+                        name: 'Продукт1',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 200,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 2,
+                        name: 'Продукт2',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    }
+                ],
+                retailPrice: 300,
+                lessThan1500Price: 32,
+                lessThan5000Price: 30,
+                isVisible: false
+            },
+            {
+                id: 3,
+                name: 'OSFIX КОНСТРУКТОР 100',
+                description: ' sd sdf sd fsd fds f',
+                category: 'Крепежные инструменты',
+                products: [
+                    {
+                        id: 1,
+                        name: 'Продукт1',
+                        number: 'цинк с/д и б/д',
+                        description: 'цинк с/д и б/д',
+                        units: 'цинк с/д и б/д',
+                        retailPrice: 200,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 2,
+                        name: 'Продукт2',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 1,
+                        name: 'Продукт1',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 200,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 2,
+                        name: 'Продукт2',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    }
+                ],
+                retailPrice: 300,
+                lessThan1500Price: 32,
+                lessThan5000Price: 30,
+                isVisible: false
+            },
+            {
+                id: 3,
+                name: 'OSFIX КОНСТРУКТОР 100',
+                description: ' sd sdf sd fsd fds f',
+                category: 'Крепежные инструменты',
+                products: [
+                    {
+                        id: 1,
+                        name: 'Продукт1',
+                        number: 'цинк с/д и б/д',
+                        description: 'цинк с/д и б/д',
+                        units: 'цинк с/д и б/д',
+                        retailPrice: 200,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 2,
+                        name: 'Продукт2',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 1,
+                        name: 'Продукт1',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 200,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    },
+                    {
+                        id: 2,
+                        name: 'Продукт2',
+                        number: '',
+                        description: '',
+                        units: '',
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30
+                    }
+                ],
+                retailPrice: 300,
+                lessThan1500Price: 32,
+                lessThan5000Price: 30,
+                isVisible: false
+            },
         ])
         setIsLoading(false);
     }
@@ -121,12 +329,13 @@ const PriceList = (props) => {
                     {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => {
                         // let dd;
                         getPriceListPdfText([
+                            'Крепеж для деревянных досок',
                             'Крепеж для ДПК досок',
-                            'Крепеж для деревянных досок'
+                            'Крепежные инструменты'
                         ], priceList)
-                            .then(PriceTextList => {
-                                pdfMake.createPdf(PriceTextList).open();
-                            })
+                        // .then(PriceTextList => {
+                        //     pdfMake.createPdf(PriceTextList).open();
+                        // })
                     }}>Скачать .pdf</div>}
                 </div>
                 <SearchBar
@@ -152,7 +361,15 @@ const PriceList = (props) => {
                         className="main-window__list-item"
                         minHeight="20px"
                     />}
-                    {priceList.map((item, index) => {
+                    {priceList.sort((a, b) => {
+                        if (a.category < b.category) {
+                            return -1;
+                        }
+                        if (a.category > b.category) {
+                            return 1;
+                        }
+                        return 0;
+                    }).map((item, index) => {
                         return <React.Fragment>
                             <div className="main-window__list-item" onClick={() => {
                                 let temp = priceList;
