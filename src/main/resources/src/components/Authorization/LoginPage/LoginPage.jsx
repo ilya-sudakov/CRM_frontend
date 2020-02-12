@@ -4,6 +4,7 @@ import './LoginPage.scss';
 import { login, refreshToken } from '../../../utils/RequestsAPI/Authorization.jsx';
 import profileSVG from '../../../../../../../assets/header/profile1.svg';
 import ErrorMessage from '../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import exitSVG from '../../../../../../../assets/header/exit.svg';
 
 const LoginPage = (props) => {
     const [username, setUserName] = useState('');
@@ -69,9 +70,10 @@ const LoginPage = (props) => {
                         <div className="authorization__field_input">
                             <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Введите пароль..." />
                         </div>
-                        <div className="authorization__submit">
-                            <input type="submit" onClick={handleLogin} value="Войти" />
-                        </div>
+                        <button className="authorization__submit" onClick={handleLogin} >
+                            <span>Войти</span>
+                            <img className="authorization__img authorization__img--mirrored" src={exitSVG} alt="" />
+                        </button>
                     </div>
                 </React.Fragment>
             ) : (
@@ -81,9 +83,10 @@ const LoginPage = (props) => {
                             <span>Выход из аккаунта</span>
                         </div>
                         <div className="authorization__panel">
-                            <div className="authorization__submit">
-                                <input type="submit" onClick={handleSignOut} value="Выйти" />
-                            </div>
+                            <button className="authorization__submit" onClick={handleSignOut}>
+                                <span>Выйти</span>
+                                <img className="authorization__img" src={exitSVG} alt="" />
+                            </button>
                             <div className="authorization__link">
                                 Нажмите
                                 <Link to="/">здесь</Link>

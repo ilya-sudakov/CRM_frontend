@@ -13,6 +13,10 @@
   z-index: 999;
   // background-color: $light80-grey;
 
+  .header__img {
+    width: 35px;
+  }
+
   .main_page__overlay {
     width: 100vw;
     height: 100vh;
@@ -90,6 +94,20 @@
     .header__item {
       padding: 15px 10px;
       text-align: center;
+
+      &:last-child {
+        transition: all 200ms ease-in-out;
+        padding: 2.5px 5px;
+        &:hover {
+          background-color: $button__background--inverted;
+          border-radius: 5px;
+
+          & .header__img {
+            transition: all 200ms ease-in-out;
+            filter: brightness(5);
+          }
+        }
+      }
 
       &--user {
         display: flex;
@@ -196,6 +214,9 @@
 
     .header__sidemenu {
       font-size: 80%;
+    }
+    .header__img {
+      width: 25px;
     }
 
     &__menu {

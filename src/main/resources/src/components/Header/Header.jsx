@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import profileSVG from '../../../../../../assets/header/profile1.svg';
+import exitSVG from '../../../../../../assets/header/exit.svg';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 
@@ -71,8 +72,9 @@ const Header = (props) => {
                         <Link to="/profile/login-history" className="header__profile_item" onClick={clickProfileMenu}>История входов</Link>
                     </div>}
                 </div>
-                <Link className="header__item header__item--button" to="/login">
-                    Выйти
+                <Link className="header__item" to="/login">
+                    {/* Выйти */}
+                    <img className="header__img" src={exitSVG} alt="" />
                 </Link>
             </div>
         </div>

@@ -28,6 +28,10 @@
     filter: brightness(4);
   }
 
+  .authorization__img--mirrored {
+    transform: scaleX(-1);
+  }
+
   &__panel {
     min-width: 250px;
     max-width: 500px;
@@ -81,26 +85,27 @@
       display: flex;
       justify-content: center;
       margin: 10px 0;
-      // cursor: pointer;
+      width: 100%;
+      align-items: center;
+      color: $secondary-text-color;
+      background-color: $button__background--inverted;
+      // margin: 0;
+      // padding: 0;
+      border: 0;
+      padding: 15px 10px;
+      border-radius: 5px;
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.24);
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
 
-      input[type="submit"] {
-        width: 100%;
-        color: $secondary-text-color;
-        background-color: $button__background--inverted;
-        // margin: 0;
-        // padding: 0;
-        border: 0;
-        padding: 15px 10px;
-        border-radius: 5px;
-        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.24);
-        transition: 0.2s ease-in-out;
-        cursor: pointer;
-
-        &:hover {
-          background-color: lighten($button__background--inverted, 5%);
-          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-        }
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
       }
+    }
+    .authorization__submit .authorization__img {
+      width: 25px;
+      margin-left: 5px;
     }
   }
 }
