@@ -444,36 +444,49 @@ export function getPriceListPdfText(categories, priceList) {
     let finalList = [];
     let dd;
     const temp = categories.sort((a, b) => {
-        if (a.category < b.category) {
+        if (a.name < b.name) {
             return -1;
         }
-        if (a.category > b.category) {
+        if (a.name > b.name) {
             return 1;
         }
         return 0;
     }).map(category => {
         let fullGroup = [];
         return Promise.all(priceList.map(groupOfProducts => {
-            if (category === groupOfProducts.category) {
+            if (category.name === groupOfProducts.category) {
                 // console.log(category, groupOfProducts.products.length);
                 return getDataUri(testImg)
                     .then((dataURI) => {
                         // console.log(temp3);
                         fullGroup.push({
-                            text: [{
-                                text: ' ',
-                                style: 'subheader'
-                            }, {
-                                text: groupOfProducts.name,
-                                style: 'subheader'
-                            }, {
-                                text: ' ',
-                                style: 'subheader'
-                            }, {
-                                text: '  ' + groupOfProducts.description,
-                                style: 'regularText',
-                            }],
-                            headlineLevel: 1,
+                            width: '*',
+                            columns: [
+                                {
+                                    text: [{
+                                        text: ' ',
+                                        style: 'subheader'
+                                    }, {
+                                        text: groupOfProducts.name,
+                                        style: 'subheader'
+                                    }, {
+                                        text: ' ',
+                                        style: 'subheader'
+                                    }, {
+                                        text: '  ' + groupOfProducts.description,
+                                        style: 'regularText',
+                                    }],
+                                    width: '*'
+                                },
+                                {
+                                    text: {
+                                        text: groupOfProducts.locationType,
+                                        style: 'regularText',
+                                        alignment: 'right'
+                                    },
+                                    width: 100,
+                                    alignment: 'right'
+                                }],
                             margin: [0, 10, 0, 10]
                         });
                         fullGroup.push({
@@ -512,6 +525,7 @@ export function getPriceListPdfText(categories, priceList) {
                                     },
                                     alignment: 'center',
                                     width: '*',
+                                    fontSize: 10,
                                     margin: [20, 0, 0, 10]
                                 }
                             ]
@@ -552,8 +566,8 @@ export function getPriceListPdfText(categories, priceList) {
             }
         }))
             .then(() => {
-                finalList.push({
-                    text: category,
+                fullGroup.length > 0 && finalList.push({
+                    text: category.name,
                     style: 'header'
                 }, ...fullGroup);
             })

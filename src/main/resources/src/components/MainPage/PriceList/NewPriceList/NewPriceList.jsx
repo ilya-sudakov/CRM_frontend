@@ -4,6 +4,7 @@ import '../../../../utils/Form/Form.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import SelectPriceItem from '../SelectPriceItem/SelectPriceItem.jsx';
 
 const NewPriceList = (props) => {
     const [priceListInputs, setPriceListInputs] = useState({
@@ -151,6 +152,8 @@ const NewPriceList = (props) => {
                         handleInputChange={handleInputChange}
                     />
                     {/* Картинка */}
+
+
                     <InputText
                         inputName="Описание"
                         required
@@ -161,6 +164,17 @@ const NewPriceList = (props) => {
                         handleInputChange={handleInputChange}
                     />
                     {/* SelectPriceProduct */}
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Продукция*</div>
+                        <div className="main-form__input_field">
+                            <SelectPriceItem
+                                handlePriceItemChange={(value) => {
+                                    validateField("contacts", value);
+                                }}
+                                userHasAccess={props.userHasAccess}
+                            />
+                        </div>
+                    </div>
                     <div className="main-form__item">
                         <div className="main-form__input_name">Тип местоположения*</div>
                         <div className="main-form__input_field">

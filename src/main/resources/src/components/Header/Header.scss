@@ -98,15 +98,15 @@
       &:last-child {
         transition: all 200ms ease-in-out;
         padding: 2.5px 5px;
-        &:hover {
-          background-color: $button__background--inverted;
-          border-radius: 5px;
+        // &:hover {
+        //   background-color: $button__background--inverted;
+        //   border-radius: 5px;
 
-          & .header__img {
-            transition: all 200ms ease-in-out;
-            filter: brightness(5);
-          }
-        }
+        //   & .header__img {
+        //     transition: all 200ms ease-in-out;
+        //     filter: brightness(5);
+        //   }
+        // }
       }
 
       &--user {

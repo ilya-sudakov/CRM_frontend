@@ -5,11 +5,34 @@ import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDat
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import { getPriceListPdfText } from '../../../utils/functions.jsx';
+import testImg from '../../../../../../../assets/priceList/test.jpg';
 
 const PriceList = (props) => {
     const [priceList, setPriceList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    const [categories, setCategories] = useState([
+        {
+            name: 'Крепеж для деревянных досок',
+            active: true
+        },
+        {
+            name: 'Крепеж для ДПК досок',
+            active: true
+        },
+        {
+            name: 'Крепежные элементы',
+            active: true
+        },
+        {
+            name: 'Продукция для подконструкций',
+            active: true
+        },
+        {
+            name: 'Крепеж для НВФ',
+            active: true
+        },
+    ])
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
@@ -28,12 +51,14 @@ const PriceList = (props) => {
         //         setprice-list(price-list);
         //         setIsLoading(false);
         //     })
-        setPriceList([
+        const data = [
             {
                 id: 1,
                 name: 'OSFIX КОНСТРУКТОР 130',
+                img: testImg,
                 description: ' sd sdf sd fsd fds f',
                 linkAddress: 'https://trello.com/c/HLJQbCNq',
+                locationType: 'Фасад',
                 products: [
                     {
                         id: 1,
@@ -49,14 +74,17 @@ const PriceList = (props) => {
                 retailPrice: 200,
                 lessThan1500Price: 32,
                 lessThan5000Price: 30,
+                img: testImg,
                 category: 'Крепеж для деревянных досок',
-                isVisible: false
+                // isVisible: false
             },
             {
                 id: 2,
                 name: 'OSFIX КОНСТРУКТОР 110',
-                description: ' sd sdf sd fsd fds f',
+                description: '123 sd sdf sd fsd fds f',
+                img: testImg,
                 category: 'Крепеж для ДПК досок',
+                locationType: 'Фасад',
                 products: [
                     {
                         id: 1,
@@ -102,13 +130,15 @@ const PriceList = (props) => {
                 retailPrice: 300,
                 lessThan1500Price: 32,
                 lessThan5000Price: 30,
-                isVisible: false
+                // isVisible: false
             },
             {
                 id: 3,
                 name: 'OSFIX КОНСТРУКТОР 100',
-                description: ' sd sdf sd fsd fds f',
-                category: 'Крепежные инструменты',
+                description: 'вапвапвап sd sdf sd fsd fds f',
+                img: testImg,
+                category: 'Крепежные элементы',
+                locationType: 'Фасад',
                 products: [
                     {
                         id: 1,
@@ -154,13 +184,14 @@ const PriceList = (props) => {
                 retailPrice: 300,
                 lessThan1500Price: 32,
                 lessThan5000Price: 30,
-                isVisible: false
+                // isVisible: false
             },
             {
                 id: 4,
                 name: 'OSFIX КОНСТРУКТОР 1000',
                 description: ' sd sdf sd fsd fds f',
-                category: 'Крепежные инструменты',
+                img: testImg,
+                category: 'Крепежные элементы',
                 products: [
                     {
                         id: 1,
@@ -206,13 +237,13 @@ const PriceList = (props) => {
                 retailPrice: 300,
                 lessThan1500Price: 32,
                 lessThan5000Price: 30,
-                isVisible: false
+                // isVisible: false
             },
             {
-                id: 3,
-                name: 'OSFIX КОНСТРУКТОР 100',
+                id: 5,
+                name: 'OSFIX КОНСТРУКТОР 1900',
                 description: ' sd sdf sd fsd fds f',
-                category: 'Крепежные инструменты',
+                category: 'Крепежные элементы',
                 products: [
                     {
                         id: 1,
@@ -241,6 +272,15 @@ const PriceList = (props) => {
                         description: '',
                         units: '',
                         retailPrice: 200,
+                        cost: 2.86,
+                        retailMarketPrice: 17.6,
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30,
+                        partnerPrice: 2,
+                        dealerPrice: 3,
+                        distributorPrice: 5,
+                        stopPrice: 12,
                         lessThan1500Price: 32,
                         lessThan5000Price: 30
                     },
@@ -252,19 +292,35 @@ const PriceList = (props) => {
                         units: '',
                         retailPrice: 300,
                         lessThan1500Price: 32,
-                        lessThan5000Price: 30
+                        lessThan5000Price: 30,
+                        cost: 2.86,
+                        retailMarketPrice: 17.6,
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30,
+                        partnerPrice: 2,
+                        dealerPrice: 3,
+                        distributorPrice: 5,
+                        stopPrice: 12,
                     }
                 ],
+                cost: 2.86,
+                retailMarketPrice: 17.6,
                 retailPrice: 300,
                 lessThan1500Price: 32,
                 lessThan5000Price: 30,
-                isVisible: false
+                partnerPrice: 2,
+                dealerPrice: 3,
+                distributorPrice: 5,
+                stopPrice: 12,
+                // isVisible: false
             },
             {
-                id: 3,
-                name: 'OSFIX КОНСТРУКТОР 100',
-                description: ' sd sdf sd fsd fds f',
-                category: 'Крепежные инструменты',
+                id: 6,
+                name: 'Конструктор 190 цинк с/д и б/д',
+                description: 'фирмупак 80штук',
+                img: testImg,
+                category: 'Крепежные элементы',
                 products: [
                     {
                         id: 1,
@@ -274,27 +330,51 @@ const PriceList = (props) => {
                         units: 'цинк с/д и б/д',
                         retailPrice: 200,
                         lessThan1500Price: 32,
-                        lessThan5000Price: 30
+                        cost: 2.86,
+                        retailMarketPrice: 17.6,
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30,
+                        partnerPrice: 2,
+                        dealerPrice: 3,
+                        distributorPrice: 5,
+                        stopPrice: 12,
                     },
                     {
                         id: 2,
                         name: 'Продукт2',
                         number: '',
-                        description: '',
+                        description: 'фирмупак 80штук',
                         units: '',
                         retailPrice: 300,
                         lessThan1500Price: 32,
-                        lessThan5000Price: 30
+                        cost: 2.86,
+                        retailMarketPrice: 17.6,
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30,
+                        partnerPrice: 2,
+                        dealerPrice: 3,
+                        distributorPrice: 5,
+                        stopPrice: 12,
                     },
                     {
                         id: 1,
                         name: 'Продукт1',
                         number: '',
-                        description: '',
+                        description: 'фирмупак 80штук',
                         units: '',
                         retailPrice: 200,
                         lessThan1500Price: 32,
-                        lessThan5000Price: 30
+                        cost: 2.86,
+                        retailMarketPrice: 17.6,
+                        retailPrice: 300,
+                        lessThan1500Price: 32,
+                        lessThan5000Price: 30,
+                        partnerPrice: 2,
+                        dealerPrice: 3,
+                        distributorPrice: 5,
+                        stopPrice: 12,
                     },
                     {
                         id: 2,
@@ -309,12 +389,60 @@ const PriceList = (props) => {
                 ],
                 retailPrice: 300,
                 lessThan1500Price: 32,
-                lessThan5000Price: 30,
-                isVisible: false
+                cost: 2.86,
+                retailMarketPrice: 17.60,
+                retailPrice: 17.60,
+                lessThan1500Price: 17.60,
+                lessThan5000Price: 17.60,
+                partnerPrice: 17.60,
+                dealerPrice: 17.60,
+                distributorPrice: 17.60,
+                stopPrice: 17.60,
+                // isVisible: false
             },
-        ])
+        ];
+        setPriceList(data)
         setIsLoading(false);
+        setCheckedItems(data.map(item => {
+            return {
+                id: item.id,
+                active: true
+            }
+        }))
     }
+
+    const handleCheckboxChange = (event) => {
+        // event.preventDefault();
+        const name = event.target.name;
+        const value = event.target.checked;
+        const id = event.target.id;
+        if (name === 'header') {
+            setCheckedItems([
+                ...checkedItems.map(item => {
+                    return {
+                        ...item,
+                        active: value
+                    }
+                })
+            ])
+        }
+        else {
+            let temp = checkedItems.map(item => {
+                // console.log(id, item.id)
+                if (item.id === Number.parseInt(id)) {
+                    return {
+                        ...item,
+                        active: value
+                    }
+                }
+                else {
+                    return item;
+                }
+            });
+            setCheckedItems([...temp]);
+        }
+    }
+    const [checkedItems, setCheckedItems] = useState([]);
 
     useEffect(() => {
         document.title = "Каталог продукции";
@@ -327,24 +455,39 @@ const PriceList = (props) => {
                 <div className="main-window__header">
                     <div className="main-window__title">Каталог продукции</div>
                     {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => {
-                        // let dd;
-                        getPriceListPdfText([
-                            'Крепеж для деревянных досок',
-                            'Крепеж для ДПК досок',
-                            'Крепежные инструменты'
-                        ], priceList)
-                        // .then(PriceTextList => {
-                        //     pdfMake.createPdf(PriceTextList).open();
-                        // })
+                        getPriceListPdfText(categories, priceList.filter(item => {
+                            return checkedItems.find(checkedItem => {
+                                return item.id === Number.parseInt(checkedItem.id)
+                            }).active;
+                        }))
                     }}>Скачать .pdf</div>}
+                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => {
+                        
+                    }}>Редактировать коэффициенты</div>}
                 </div>
                 <SearchBar
-                    title="Поиск по клиентам"
+                    title="Поиск по каталогу продукции"
                     placeholder="Введите запрос для поиска..."
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
-                    <div className="main-window__amount_table">Всего: {priceList.length} записей</div>
+                    <div className="price-list__category-pick">
+                        {categories.map((item, index) => {
+                            return <div
+                                className={item.active ? "main-window__button" : "main-window__button main-window__button--inverted"}
+                                onClick={() => {
+                                    let temp = categories;
+                                    temp.splice(index, 1, {
+                                        ...temp[index],
+                                        name: item.name,
+                                        active: !item.active
+                                    })
+                                    setCategories([...temp]);
+                                }}
+                            >{item.name}</div>
+                        })}
+                        <div className="main-window__amount_table">Всего: {priceList.length + priceList.reduce((prev, cur) => prev + cur.products.length, 0)} записей</div>
+                    </div>
                 </div>
                 <div className="main-window__list">
                     <div className="main-window__list-item main-window__list-item--header">
@@ -352,54 +495,137 @@ const PriceList = (props) => {
                         <span>Название</span>
                         <span>Описание</span>
                         <span>Категория</span>
+                        <span>Розница (рын. цена)</span>
                         <span>Розница</span>
-                        <span>ц. &lt; 1500 шт.</span>
-                        <span>ц. &lt; 5000 шт.</span>
+                        <span>до 1500 шт.</span>
+                        <span>до 5000 шт.</span>
+                        <span>Партнер</span>
+                        <span>Дилер</span>
+                        <span>Дистрибутор</span>
+                        <span>Стопцена</span>
+                        <span>
+                            <input
+                                type="checkbox"
+                                name="header"
+                                defaultChecked={true}
+                                onChange={handleCheckboxChange}
+                            />
+                        </span>
                         <div className="main-window__actions">Действие</div>
                     </div>
                     {isLoading && <TableDataLoading
                         className="main-window__list-item"
                         minHeight="20px"
                     />}
-                    {priceList.sort((a, b) => {
-                        if (a.category < b.category) {
-                            return -1;
-                        }
-                        if (a.category > b.category) {
-                            return 1;
-                        }
-                        return 0;
-                    }).map((item, index) => {
-                        return <React.Fragment>
-                            <div className="main-window__list-item" onClick={() => {
-                                let temp = priceList;
-                                temp.splice(index, 1, {
-                                    ...item,
-                                    isVisible: !item.isVisible
-                                });
-                                console.log(temp);
-                                setPriceList([
-                                    ...temp
-                                ])
-                            }}>
-                                <span><div className="main-window__mobile-text">Фото: </div>
-                                    <ImgLoader
-                                        imgSrc={item.img}
-                                    />
-                                </span>
-                                <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
-                                <span><div className="main-window__mobile-text">Описание: </div>{item.description}</span>
-                                <span><div className="main-window__mobile-text">Категория: </div>{item.category}</span>
-                                <span><div className="main-window__mobile-text">Розничная цена: </div>{item.retailPrice}</span>
-                                <span><div className="main-window__mobile-text">цена &lt; 1500 шт.: </div>{item.lessThan1500Price}</span>
-                                <span><div className="main-window__mobile-text">цена &lt; 5000 шт.: </div>{item.lessThan5000Price}</span>
-                                <div className="main-window__actions">
-                                    <div className="main-window__action" onClick={() => { }}>Просмотр</div>
-                                    <div className="main-window__action" onClick={() => { }}>Редактировать</div>
-                                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => { }}>Удалить</div>}
+                    {priceList
+                        .sort((a, b) => {
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            return 0;
+                        })
+                        .filter(item => {
+                            let check = false;
+                            if (
+                                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                item.category.toLowerCase().includes(searchQuery.toLowerCase())
+                            ) {
+                                categories.map(category => {
+                                    if (category.active && (category.name === item.category)) {
+                                        check = true;
+                                        return;
+                                    }
+                                })
+                            }
+                            return check;
+                        })
+                        .map((item, index) => {
+                            return <React.Fragment>
+                                <div className="main-window__list-item" onClick={() => {
+                                    let temp = priceList;
+                                    temp.splice(index, 1, {
+                                        ...item,
+                                        isVisible: !item.isVisible
+                                    });
+                                    // console.log(temp);
+                                    setPriceList([
+                                        ...temp
+                                    ])
+                                }}>
+                                    <span>
+                                        <div className="main-window__mobile-text">Фото: </div>
+                                        <ImgLoader
+                                            imgClass="main-window__img"
+                                            imgSrc={item.img}
+                                        />
+                                    </span>
+                                    <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
+                                    <span><div className="main-window__mobile-text">Описание: </div>{item.description}</span>
+                                    <span><div className="main-window__mobile-text">Категория: </div>{item.category}</span>
+                                    <span><div className="main-window__mobile-text">Розница (рыночная цена): </div>{item.retailMarketPrice}</span>
+                                    <span><div className="main-window__mobile-text">Розница: </div>{item.retailPrice}</span>
+                                    <span><div className="main-window__mobile-text">цена &lt; 1500 шт.: </div>{item.lessThan1500Price}</span>
+                                    <span><div className="main-window__mobile-text">цена &lt; 5000 шт.: </div>{item.lessThan5000Price}</span>
+                                    <span><div className="main-window__mobile-text">Партнер: </div>{item.partnerPrice}</span>
+                                    <span><div className="main-window__mobile-text">Дилер: </div>{item.dealerPrice}</span>
+                                    <span><div className="main-window__mobile-text">Дистрибутор: </div>{item.distributorPrice}</span>
+                                    <span><div className="main-window__mobile-text">Стопцена: </div>{item.stopPrice}</span>
+                                    <span><div className="main-window__mobile-text">Выбрать: </div>
+                                        <input
+                                            type="checkbox"
+                                            id={item.id}
+                                            name="groupOfProducts"
+                                            checked={checkedItems.find(checkedItem => checkedItem.id === item.id).active}
+                                            onChange={handleCheckboxChange}
+                                        />
+                                    </span>
+                                    <div className="main-window__actions">
+                                        <div className="main-window__action" onClick={() => props.history.push('/price-list/view/' + item.id)}>Просмотр</div>
+                                        <div className="main-window__action" onClick={() => props.history.push('/price-list/edit/' + item.id)}>Редактировать</div>
+                                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => { }}>Удалить</div>}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className={item.isVisible === true ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}
+                                {item.products.filter(item =>
+                                    item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                    item.description.toLowerCase().includes(searchQuery.toLowerCase())
+                                ).map(product => <div className="main-window__list-item">
+                                    <span>
+                                        <div className="main-window__mobile-text">Фото: </div>
+                                        <ImgLoader
+                                            imgClass="main-window__img"
+                                            imgSrc={item.img}
+                                        />
+                                    </span>
+                                    <span><div className="main-window__mobile-text">Название: </div>{product.name}</span>
+                                    <span><div className="main-window__mobile-text">Описание: </div>{product.description}</span>
+                                    <span><div className="main-window__mobile-text">Категория: </div>{product.category}</span>
+                                    <span><div className="main-window__mobile-text">Розница (рыночная цена): </div>{product.retailMarketPrice}</span>
+                                    <span><div className="main-window__mobile-text">Розница: </div>{product.retailPrice}</span>
+                                    <span><div className="main-window__mobile-text">цена &lt; 1500 шт.: </div>{product.lessThan1500Price}</span>
+                                    <span><div className="main-window__mobile-text">цена &lt; 5000 шт.: </div>{product.lessThan5000Price}</span>
+                                    <span><div className="main-window__mobile-text">Партнер: </div>{product.partnerPrice}</span>
+                                    <span><div className="main-window__mobile-text">Дилер: </div>{product.dealerPrice}</span>
+                                    <span><div className="main-window__mobile-text">Дистрибутор: </div>{product.distributorPrice}</span>
+                                    <span><div className="main-window__mobile-text">Стопцена: </div>{product.stopPrice}</span>
+                                    <span><div className="main-window__mobile-text">Выбрать: </div>
+                                        {/* <input
+                                        type="checkbox"
+                                        id={item.id}
+                                        name="product"
+                                        checked={true}
+                                        onChange={handleCheckboxChange}
+                                    /> */}
+                                    </span>
+                                    <div className="main-window__actions">
+                                        <div className="main-window__action" onClick={() => props.history.push('/price-list/view/' + item.id)}>Просмотр</div>
+                                        <div className="main-window__action" onClick={() => props.history.push('/price-list/edit/' + item.id)}>Редактировать</div>
+                                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => { }}>Удалить</div>}
+                                    </div>
+                                </div>)}
+                                {/* <div className={item.isVisible === true ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}
                                 style={{ minHeight: `calc(${item.isVisible ? item.products.length : 0}*60px + 0px)` }}>
                                 {item.products.map(product => <div className="main-window__list-item">
                                     <span></span>
@@ -413,12 +639,12 @@ const PriceList = (props) => {
                                         {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => { }}>Удалить</div>}
                                     </div>
                                 </div>)}
-                            </div>
-                        </React.Fragment>
-                    })}
+                            </div> */}
+                            </React.Fragment>
+                        })}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
