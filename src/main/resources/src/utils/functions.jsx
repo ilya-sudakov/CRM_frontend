@@ -440,7 +440,7 @@ function getDataUri(url) {
     });
 }
 
-export function getPriceListPdfText(categories, priceList) {
+export function getPriceListPdfText(categories, priceList, optionalCols) {
     let finalList = [];
     let dd;
     const temp = categories.sort((a, b) => {
@@ -498,15 +498,29 @@ export function getPriceListPdfText(categories, priceList) {
                                 },
                                 {
                                     table: {
-                                        widths: ['*', '*', '*', '*', '*', '*'],
+                                        widths: ['*', '*', '*', 33, 30, 30, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 45 : 50)],
                                         body: [
                                             [
-                                                'Артикул',
-                                                'Описание',
-                                                'Ед. изм.',
-                                                'Розница',
-                                                'до 1500 шт.',
-                                                'до 5000 шт.'
+                                                { text: '', border: [false, false, false, false] },
+                                                { text: '', border: [false, false, false, false] },
+                                                { text: '', border: [false, false, false, false] },
+                                                {
+                                                    text: 'Цена за штуку',
+                                                    colSpan: (3 + optionalCols.length),
+                                                    bold: true
+                                                },
+                                                {},
+                                                {},
+                                                ...optionalCols.map(() => { })
+                                            ],
+                                            [
+                                                { text: 'Артикул', bold: true },
+                                                { text: 'Описание', bold: true },
+                                                { text: 'Ед. изм.', bold: true },
+                                                { text: 'Розница', bold: true },
+                                                { text: 'до 1500 шт.', bold: true },
+                                                { text: 'до 5000 шт.', bold: true },
+                                                ...optionalCols.map(column => { return { text: column.name, bold: true } })
                                             ],
                                             ...groupOfProducts.products.map(product => {
                                                 // return {
@@ -516,16 +530,34 @@ export function getPriceListPdfText(categories, priceList) {
                                                     product.number,
                                                     product.description,
                                                     product.units,
-                                                    product.retailPrice,
-                                                    product.lessThan1500Price,
-                                                    product.lessThan5000Price
+                                                    product.retailPrice + ' ₽',
+                                                    product.lessThan1500Price + ' ₽',
+                                                    product.lessThan5000Price + ' ₽',
+                                                    ...optionalCols.map(column => product[column.property] !== undefined
+                                                        ? product[column.property] + ' ₽'
+                                                        : '')
                                                 ];
                                             }),
                                         ]
                                     },
+                                    layout: {
+                                        hLineWidth: function (i, node) {
+                                            return 1;
+                                        },
+                                        vLineWidth: function (i, node) {
+                                            return 1;
+                                        },
+                                        hLineColor: function (i, node) {
+                                            return '#222222';
+                                        },
+                                        vLineColor: function (i, node) {
+                                            return '#222222';
+                                        },
+                                    },
                                     alignment: 'center',
                                     width: '*',
-                                    fontSize: 10,
+                                    fontSize: 8,
+                                    color: '#333333',
                                     margin: [20, 0, 0, 10]
                                 }
                             ]
@@ -565,11 +597,28 @@ export function getPriceListPdfText(categories, priceList) {
                     })
             }
         }))
-            .then(() => {
+            .then(async () => {
                 fullGroup.length > 0 && finalList.push({
-                    text: category.name,
-                    style: 'header'
-                }, ...fullGroup);
+                    stack: [
+                        {
+                            image: await getDataUri(category.img),
+                            width: 400,
+                            alignment: 'center',
+                            // margin: [0, 10, 0, 10]
+                        },
+                        {
+                            text: category.name,
+                            style: 'header',
+                            bold: false,
+                            color: '#ffffff',
+                            alignment: 'center',
+                            relativePosition: { x: 0, y: -37 }
+                            // absolutePosition: {x: 100, y: 50}
+                        },
+                        ...fullGroup
+                    ],
+                    margin: [0, 10, 0, 10]
+                })
             })
     })
     Promise.all(temp)
@@ -597,14 +646,49 @@ export function getPriceListPdfText(categories, priceList) {
                             }
                         ]
                     }],
-                pageMargins: [40, 100, 40, 30],
+                pageMargins: [40, 100, 40, 60],
                 // pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
                 //     return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
                 // },
                 footer: function (currentPage, pageCount) {
-                    return {
+                    if (currentPage === pageCount) {
+                        return [
+                            {
+                                canvas: [{
+                                    type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#e30434'
+                                }],
+                                alignment: 'justify',
+                                width: '*',
+                                margin: [40, 0, 40, 10],
+                            },
+                            {
+                                text: [
+                                    { text: 'ИНН ', fontSize: 10, bold: true }, { text: '7842143789\t', fontSize: 10 },
+                                    { text: 'КПП ', fontSize: 10, bold: true }, { text: '784201001\t', fontSize: 10 },
+                                    { text: 'ОГРН ', fontSize: 10, bold: true }, { text: '117784736458\t', fontSize: 10 },
+                                    { text: 'ОКПО ', fontSize: 10, bold: true }, { text: '20161337\n', fontSize: 10 },
+                                    { text: 'Банк ', fontSize: 10, bold: true }, { text: 'Филиал No7806 ВТБ (ПАО)\t', fontSize: 10 },
+                                    { text: 'Расчетный счет № ', fontSize: 10, bold: true }, { text: '40702810117060000232\t', fontSize: 10 },
+                                    { text: 'БИК ', fontSize: 10, bold: true }, { text: '044030707\t', fontSize: 10 },
+                                ],
+                                alignment: 'left',
+                                width: '*',
+                                margin: [40, 0, 40, 0],
+                            },
+                            {
+                                text: 'Страница ' + currentPage.toString(),
+                                alignment: 'center',
+                                fontSize: 11,
+                                color: '#555555'
+                            }
+                        ]
+                    }
+                    else return {
                         text: 'Страница ' + currentPage.toString(),
-                        alignment: 'center'
+                        alignment: 'center',
+                        fontSize: 11,
+                        color: '#555555',
+                        margin: [0, 20, 0, 0]
                     }
                 },
                 content: [

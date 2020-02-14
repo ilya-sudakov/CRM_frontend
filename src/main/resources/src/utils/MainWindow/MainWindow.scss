@@ -124,11 +124,16 @@
     justify-content: space-between;
     align-items: center;
     transition: 200ms ease-in-out;
-    // cursor: pointer;
     background-color: $white;
     color: $primary-text-color;
     border-radius: 5px;
     font-size: 90%;
+    //design test 
+    margin-top: 0;
+    border-top: none ;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid #aaaaaa;  
     &:first-child {
       margin-top: 0;
     }

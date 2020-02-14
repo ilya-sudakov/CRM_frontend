@@ -12,6 +12,10 @@
       justify-content: center;
       align-items: center;
       font-size: 90%;
+      
+      .main-window__amount_table:not(:last-child) {
+        margin-right: 10px;
+      }
 
       .main-window__button {
         font-size: 85%;
@@ -23,9 +27,30 @@
 
       .main-window__button:last-child {
         margin: 0;
-        margin-left: 15px;
+        // margin-left: 15px;
         // max-width: 70px;
         // text-align: center;
+      }
+    }
+    .price-list__cols-pick {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 90%;
+
+      .main-window__button {
+        font-size: 85%;
+        padding: 5px 10px;
+      }
+      .main-window__button--inverted {
+        color: #666666;
+      }
+
+      .main-window__button:last-child {
+        margin: 0;
+      }
+      .main-window__amount_table {
+        margin-right: 10px;
       }
     }
   }
@@ -40,7 +65,9 @@
     border-right: 1px solid #aaaaaa;
   }
   .main-window__list-item {
-    // cursor: pointer;
+    & span {
+      // border-right: 1px solid #aaaaaa;
+    }
     & span:nth-child(1) {
       flex: 0 1 100px;
       .img-loader {
