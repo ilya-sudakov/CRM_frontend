@@ -1,5 +1,11 @@
 @import "../../../../variables.scss";
 
-.new_client {
-  
+.new-price-item {
+  .main-form__checkbox-container {
+    padding-left: 35px;
+    margin-bottom: 12px;
+  }
+  .main-form__input_field--vertical {
+    flex-direction: column;
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import deleteSVG from '../../../../../../../../assets/select/delete.svg';
 import './SelectPriceItem.scss';
+import { getPriceListCoefficient } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
 
 const SelectPriceItem = (props) => {
     const [selected, setSelected] = useState([
@@ -9,11 +10,26 @@ const SelectPriceItem = (props) => {
             description: '',
             retailPrice: 0,
             lessThan1500Price: 0,
-            lessThan5000Price: 0
+            lessThan5000Price: 0,
+            retailMarketPrice: 0,
+            cost: 0,
+            dealerPrice: 0,
+            distributorPrice: 0,
+            partnerPrice: 0,
+            stopPrice: 0
         }
     ]);
     const [options, setOptions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [coefficients, setCoefficients] = useState({
+        retailPrice: 1,
+        dealerPrice: 0.56,
+        distributorPrice: 0.485,
+        partnerPrice: 0.79,
+        stopPrice: 0.4545,
+        lessThan5000Price: 0.89,
+        lessThan1500Price: 0.96,
+    })
 
     const clickOverlay = (event) => {
         const overlay = document.getElementsByClassName("select-price-item__overlay")[0];
@@ -29,7 +45,19 @@ const SelectPriceItem = (props) => {
         if (props.options !== undefined) {
             setOptions([...props.options])
         }
-
+        getPriceListCoefficient()
+            .then(res => res.json())
+            .then(res => {
+                setCoefficients({
+                    retailPrice: Number.parseFloat(res.retailPrice),
+                    dealerPrice: Number.parseFloat(res.dealerPrice),
+                    distributorPrice: Number.parseFloat(res.distributorPrice),
+                    partnerPrice: Number.parseFloat(res.partnerPrice),
+                    stopPrice: Number.parseFloat(res.stopPrice),
+                    lessThan5000Price: Number.parseFloat(res.lessThan5000Price),
+                    lessThan1500Price: Number.parseFloat(res.lessThan1500Price),
+                })
+            })
     }, [props.defaultValue, props.options])
 
     const clickOnForm = (e) => {
@@ -54,7 +82,13 @@ const SelectPriceItem = (props) => {
                 description: '',
                 retailPrice: 0,
                 lessThan1500Price: 0,
-                lessThan5000Price: 0
+                lessThan5000Price: 0,
+                retailMarketPrice: 0,
+                cost: 0,
+                dealerPrice: 0,
+                distributorPrice: 0,
+                partnerPrice: 0,
+                stopPrice: 0
             }
         ]);
         props.handlePriceItemChange([
@@ -62,9 +96,15 @@ const SelectPriceItem = (props) => {
             {
                 name: '',
                 description: '',
-                retailPrice: 0,
+                retailMarketPrice: 0,
+                lessThan5000Price: 0,
                 lessThan1500Price: 0,
-                lessThan5000Price: 0
+                retailPrice: 0,
+                cost: 0,
+                dealerPrice: 0,
+                distributorPrice: 0,
+                partnerPrice: 0,
+                stopPrice: 0
             }
         ]);
     }
@@ -83,12 +123,46 @@ const SelectPriceItem = (props) => {
         let value = event.target.value;
         let temp = selected;
         let originalItem = selected[id];
-        temp.splice(id, 1, {
-            ...originalItem,
-            [name]: value
-        })
-        setSelected([...temp]);
-        props.handlePriceItemChange([...temp])
+        if (name === 'cost') {
+            value = parseFloat(value);
+            temp.splice(id, 1, {
+                ...originalItem,
+                [name]: value,
+                retailPrice: originalItem.retailMarketPrice,
+                dealerPrice: (value + (originalItem.retailMarketPrice - value) * coefficients.dealerPrice).toFixed(2),
+                distributorPrice: (value + (originalItem.retailMarketPrice - value) * coefficients.distributorPrice).toFixed(2),
+                partnerPrice: (value + (originalItem.retailMarketPrice - value) * coefficients.partnerPrice).toFixed(2),
+                stopPrice: (value + (originalItem.retailMarketPrice - value) * coefficients.stopPrice).toFixed(2),
+                lessThan5000Price: (value + (originalItem.retailMarketPrice - value) * coefficients.lessThan5000Price).toFixed(2),
+                lessThan1500Price: (value + (originalItem.retailMarketPrice - value) * coefficients.lessThan1500Price).toFixed(2),
+            })
+            setSelected([...temp]);
+            props.handlePriceItemChange([...temp])
+        }
+        else if (name === 'retailMarketPrice') {
+            value = parseFloat(value);
+            temp.splice(id, 1, {
+                ...originalItem,
+                [name]: value,
+                retailPrice: value,
+                dealerPrice: (originalItem.cost + (value - originalItem.cost) * coefficients.dealerPrice).toFixed(2),
+                distributorPrice: (originalItem.cost + (value - originalItem.cost) * coefficients.distributorPrice).toFixed(2),
+                partnerPrice: (originalItem.cost + (value - originalItem.cost) * coefficients.partnerPrice).toFixed(2),
+                stopPrice: (originalItem.cost + (value - originalItem.cost) * coefficients.stopPrice).toFixed(2),
+                lessThan5000Price: (originalItem.cost + (value - originalItem.cost) * coefficients.lessThan5000Price).toFixed(2),
+                lessThan1500Price: (originalItem.cost + (value - originalItem.cost) * coefficients.lessThan1500Price).toFixed(2),
+            })
+            setSelected([...temp]);
+            props.handlePriceItemChange([...temp])
+        }
+        else {
+            temp.splice(id, 1, {
+                ...originalItem,
+                [name]: value
+            })
+            setSelected([...temp]);
+            props.handlePriceItemChange([...temp])
+        }
     }
 
     return (
@@ -163,6 +237,34 @@ const SelectPriceItem = (props) => {
                                 </div>
                             </div>
                             <div className="select-price-item__item">
+                                <div className="select-price-item__input_name">Себестоимость</div>
+                                <div className="select-price-item__input_field">
+                                    <input
+                                        type="number"
+                                        name="cost"
+                                        index={index}
+                                        autoComplete="off"
+                                        onChange={handleInputChange}
+                                        defaultValue={item.cost}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-price-item__item">
+                                <div className="select-price-item__input_name">Розница (рыночная цена)</div>
+                                <div className="select-price-item__input_field">
+                                    <input
+                                        type="number"
+                                        name="retailMarketPrice"
+                                        index={index}
+                                        autoComplete="off"
+                                        onChange={handleInputChange}
+                                        defaultValue={item.retailMarketPrice}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-price-item__item">
                                 <div className="select-price-item__input_name">Розница</div>
                                 <div className="select-price-item__input_field">
                                     <input
@@ -171,7 +273,7 @@ const SelectPriceItem = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.retailPrice}
+                                        value={item.retailPrice}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -185,7 +287,7 @@ const SelectPriceItem = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.lessThan1500Price}
+                                        value={item.lessThan1500Price}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -199,7 +301,63 @@ const SelectPriceItem = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.lessThan5000Price}
+                                        value={item.lessThan5000Price}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-price-item__item">
+                                <div className="select-price-item__input_name">Партнер</div>
+                                <div className="select-price-item__input_field">
+                                    <input
+                                        type="number"
+                                        name="cost"
+                                        index={index}
+                                        autoComplete="off"
+                                        onChange={handleInputChange}
+                                        value={item.partnerPrice}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-price-item__item">
+                                <div className="select-price-item__input_name">Дилер</div>
+                                <div className="select-price-item__input_field">
+                                    <input
+                                        type="number"
+                                        name="dealerPrice"
+                                        index={index}
+                                        autoComplete="off"
+                                        onChange={handleInputChange}
+                                        value={item.dealerPrice}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-price-item__item">
+                                <div className="select-price-item__input_name">Дистрибутор</div>
+                                <div className="select-price-item__input_field">
+                                    <input
+                                        type="number"
+                                        name="distributorPrice"
+                                        index={index}
+                                        autoComplete="off"
+                                        onChange={handleInputChange}
+                                        value={item.distributorPrice}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-price-item__item">
+                                <div className="select-price-item__input_name">Стопцена</div>
+                                <div className="select-price-item__input_field">
+                                    <input
+                                        type="number"
+                                        name="stopPrice"
+                                        index={index}
+                                        autoComplete="off"
+                                        onChange={handleInputChange}
+                                        value={item.stopPrice}
                                         readOnly={props.readOnly}
                                     />
                                 </div>

@@ -455,8 +455,8 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
         let fullGroup = [];
         return Promise.all(priceList.map(groupOfProducts => {
             if (category.name === groupOfProducts.category) {
-                // console.log(category, groupOfProducts.products.length);
-                return getDataUri(testImg)
+                console.log(groupOfProducts.img);
+                return getDataUri((groupOfProducts.img !== null && groupOfProducts.img !== '') ? groupOfProducts.img : testImg)
                     .then((dataURI) => {
                         // console.log(temp3);
                         fullGroup.push({
@@ -494,7 +494,7 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                             columns: [
                                 {
                                     image: dataURI,
-                                    width: 80
+                                    width: optionalCols.length > 2 ? 62 : 100
                                 },
                                 {
                                     table: {
@@ -575,7 +575,7 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                                                     border: [true, false, false, false],
                                                     style: 'regularText',
                                                     borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
-                                                    text: groupOfProducts.description
+                                                    text: groupOfProducts.infoText
                                                 },
                                             ]
                                         ],
@@ -603,6 +603,7 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                         {
                             image: await getDataUri(category.img),
                             width: 400,
+                            height: 40,
                             alignment: 'center',
                             // margin: [0, 10, 0, 10]
                         },

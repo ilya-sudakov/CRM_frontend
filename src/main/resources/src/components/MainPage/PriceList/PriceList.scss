@@ -6,13 +6,16 @@
     max-width: 80px;
     max-height: 80px;
   }
+  .main-window__header .main-window__button {
+    margin-right: 0;
+  }
   .main-window__info-panel {
     .price-list__category-pick {
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 90%;
-      
+
       .main-window__amount_table:not(:last-child) {
         margin-right: 10px;
       }
@@ -110,6 +113,9 @@
     }
     & span:nth-child(13) {
       flex: 0 1 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
   .main-window__actions .main-window__action {

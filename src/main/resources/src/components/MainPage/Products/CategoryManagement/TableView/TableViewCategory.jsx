@@ -52,7 +52,7 @@ const TableViewCategory = (props) => {
                 <div className="tableview-category__col">Действия</div>
             </div>
             {sortProducts(props.data).map((category, category_id) => (
-                <div key={category_id} className={"tableview-category__row " + (category.id % 2 === 0 ? "tableview-category__row--even" : "tableview-category__row--odd")}>
+                <div key={category_id} className="tableview-category__row tableview-category__row--even">
                     {/* <div className="tableview-category__col">{category.id}</div> */}
                     <div className="tableview-category__col">{category.name}</div>
                     <div className="tableview-category__actions">

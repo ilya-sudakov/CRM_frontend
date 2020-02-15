@@ -10,11 +10,34 @@ import category1Img from '../../../../../../../assets/priceList/крепеж_д�
 import category2Img from '../../../../../../../assets/priceList/крепеж_для_дпк_досок.jpg';
 import category3Img from '../../../../../../../assets/priceList/крепежные_элементы.jpg';
 import categoryImg from '../../../../../../../assets/priceList/крепежные_элементы.jpg';
+import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
+import EditCoefficient from './EditCoefficient/EditCoefficient.jsx';
+import { getPriceList, deletePriceGroupById, deleteProductFromPriceGroupById } from '../../../utils/RequestsAPI/PriceList/PriceList.jsx';
 
 const PriceList = (props) => {
     const [priceList, setPriceList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    const [showWindow, setShowWindow] = useState(false);
+    const [checkedItems, setCheckedItems] = useState([]);
+    const [closeWindow, setCloseWindow] = useState(false);
+    const [optionalCols, setOptionalCols] = useState([
+        {
+            property: 'partnerPrice',
+            name: 'Партнер',
+            active: false
+        },
+        {
+            property: 'dealerPrice',
+            name: 'Дилер',
+            active: false
+        },
+        {
+            property: 'distributorPrice',
+            name: 'Дистрибутор',
+            active: false
+        }
+    ])
     const [categories, setCategories] = useState([
         {
             name: 'Крепеж для деревянных досок',
@@ -44,386 +67,44 @@ const PriceList = (props) => {
     ])
 
     const deleteItem = (event) => {
-        const id = event.target.dataset.id;
-        deleteClient(id)
-            .then(() => getprice - list())
-            .then(res => res.json())
-            .then((priceList) => {
-                setPriceList(priceList);
-            })
+        const id = Number.parseInt(event.target.id);
+        const name = event.target.getAttribute("name");
+        // const name = event.target.dataset.product_id;
+        loadData();
+        if (name === 'group') {
+            let originalItem = priceList.find(item => item.id === id && item);
+            Promise.all(originalItem.products.map(item => {
+                return deleteProductFromPriceGroupById(item.id)
+            }))
+                .then(() => {
+                    deletePriceGroupById(id)
+                        .then(() => {
+                            loadData();
+                        })
+                })
+        }
+        else {
+            deleteProductFromPriceGroupById(id)
+                .then(() => {
+                    loadData();
+                })
+        }
     }
 
     const loadData = () => {
-        // getprice-list()
-        //     .then(res => res.json())
-        //     .then((price-list) => {
-        //         setprice-list(price-list);
-        //         setIsLoading(false);
-        //     })
-        const data = [
-            {
-                id: 1,
-                name: 'OSFIX КОНСТРУКТОР 130',
-                img: testImg,
-                description: ' sd sdf sd fsd fds f',
-                linkAddress: 'https://trello.com/c/HLJQbCNq',
-                locationType: 'Фасад',
-                products: [
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: 'цинк с/д и б/д',
-                        description: 'цинк с/д и б/д',
-                        units: 'цинк с/д и б/д',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
+        getPriceList()
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                setCheckedItems([...res.map(item => {
+                    return {
+                        id: item.id,
+                        active: true
                     }
-                ],
-                retailPrice: 200,
-                lessThan1500Price: 32,
-                lessThan5000Price: 30,
-                img: testImg,
-                category: 'Крепеж для деревянных досок',
-                // isVisible: false
-            },
-            {
-                id: 2,
-                name: 'OSFIX КОНСТРУКТОР 110',
-                description: '123 sd sdf sd fsd fds f',
-                img: testImg,
-                category: 'Крепеж для ДПК досок',
-                locationType: 'Фасад',
-                products: [
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: 'цинк с/д и б/д',
-                        description: 'цинк с/д и б/д',
-                        units: 'цинк с/д и б/д',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    }
-                ],
-                retailPrice: 300,
-                lessThan1500Price: 32,
-                lessThan5000Price: 30,
-                // isVisible: false
-            },
-            {
-                id: 3,
-                name: 'OSFIX КОНСТРУКТОР 100',
-                description: 'вапвапвап sd sdf sd fsd fds f',
-                img: testImg,
-                category: 'Крепежные элементы',
-                locationType: 'Фасад',
-                products: [
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: 'цинк с/д и б/д',
-                        description: 'цинк с/д и б/д',
-                        units: 'цинк с/д и б/д',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    }
-                ],
-                retailPrice: 300,
-                lessThan1500Price: 32,
-                lessThan5000Price: 30,
-                // isVisible: false
-            },
-            {
-                id: 4,
-                name: 'OSFIX КОНСТРУКТОР 1000',
-                description: ' sd sdf sd fsd fds f',
-                img: testImg,
-                category: 'Крепежные элементы',
-                products: [
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: 'цинк с/д и б/д',
-                        description: 'цинк с/д и б/д',
-                        units: 'цинк с/д и б/д',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    }
-                ],
-                retailPrice: 300,
-                lessThan1500Price: 32,
-                lessThan5000Price: 30,
-                // isVisible: false
-            },
-            {
-                id: 5,
-                name: 'OSFIX КОНСТРУКТОР 1900',
-                description: ' sd sdf sd fsd fds f',
-                category: 'Крепежные элементы',
-                products: [
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: 'цинк с/д и б/д',
-                        description: 'цинк с/д и б/д',
-                        units: 'цинк с/д и б/д',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 200,
-                        cost: 2.86,
-                        retailMarketPrice: 17.6,
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30,
-                        partnerPrice: 2,
-                        dealerPrice: 3,
-                        distributorPrice: 5,
-                        stopPrice: 12,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30,
-                        cost: 2.86,
-                        retailMarketPrice: 17.6,
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30,
-                        partnerPrice: 2,
-                        dealerPrice: 3,
-                        distributorPrice: 5,
-                        stopPrice: 12,
-                    }
-                ],
-                cost: 2.86,
-                retailMarketPrice: 17.6,
-                retailPrice: 300,
-                lessThan1500Price: 32,
-                lessThan5000Price: 30,
-                partnerPrice: 2,
-                dealerPrice: 3,
-                distributorPrice: 5,
-                stopPrice: 12,
-                // isVisible: false
-            },
-            {
-                id: 6,
-                name: 'Конструктор 190 цинк с/д и б/д',
-                description: 'фирмупак 80штук',
-                img: testImg,
-                category: 'Крепежные элементы',
-                products: [
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: 'цинк с/д и б/д',
-                        description: 'цинк с/д и б/д',
-                        units: 'цинк с/д и б/д',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        cost: 2.86,
-                        retailMarketPrice: 17.6,
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30,
-                        partnerPrice: 2,
-                        dealerPrice: 3,
-                        distributorPrice: 5,
-                        stopPrice: 12,
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: 'фирмупак 80штук',
-                        units: '',
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        cost: 2.86,
-                        retailMarketPrice: 17.6,
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30,
-                        partnerPrice: 2,
-                        dealerPrice: 3,
-                        distributorPrice: 5,
-                        stopPrice: 12,
-                    },
-                    {
-                        id: 1,
-                        name: 'Продукт1',
-                        number: '',
-                        description: 'фирмупак 80штук',
-                        units: '',
-                        retailPrice: 200,
-                        lessThan1500Price: 32,
-                        cost: 2.86,
-                        retailMarketPrice: 17.6,
-                        retailPrice: 300,
-                        lessThan1500Price: 32,
-                        lessThan5000Price: 30,
-                        partnerPrice: 2,
-                        dealerPrice: 3,
-                        distributorPrice: 5,
-                        stopPrice: 12,
-                    },
-                    {
-                        id: 2,
-                        name: 'Продукт2',
-                        number: '',
-                        description: '',
-                        units: '',
-                        cost: 2.86,
-                        retailMarketPrice: 17.60,
-                        retailPrice: 17.60,
-                        lessThan1500Price: 17.60,
-                        lessThan5000Price: 17.60,
-                        partnerPrice: 17.60,
-                        dealerPrice: 17.60,
-                        distributorPrice: 17.60,
-                        stopPrice: 17.60,
-                    }
-                ],
-                retailPrice: 300,
-                lessThan1500Price: 32,
-                cost: 2.86,
-                retailMarketPrice: 17.60,
-                retailPrice: 17.60,
-                lessThan1500Price: 17.60,
-                lessThan5000Price: 17.60,
-                partnerPrice: 17.60,
-                dealerPrice: 17.60,
-                distributorPrice: 17.60,
-                stopPrice: 17.60,
-                // isVisible: false
-            },
-        ];
-        setPriceList(data)
-        setIsLoading(false);
-        setCheckedItems(data.map(item => {
-            return {
-                id: item.id,
-                active: true
-            }
-        }))
+                })])
+                setPriceList(res)
+                setIsLoading(false);
+            })
     }
 
     const handleCheckboxChange = (event) => {
@@ -457,24 +138,6 @@ const PriceList = (props) => {
             setCheckedItems([...temp]);
         }
     }
-    const [checkedItems, setCheckedItems] = useState([]);
-    const [optionalCols, setOptionalCols] = useState([
-        {
-            property: 'partnerPrice',
-            name: 'Партнер',
-            active: false
-        },
-        {
-            property: 'dealerPrice',
-            name: 'Дилер',
-            active: false
-        },
-        {
-            property: 'distributorPrice',
-            name: 'Дистрибутор',
-            active: false
-        }
-    ])
 
     useEffect(() => {
         document.title = "Каталог продукции";
@@ -484,6 +147,25 @@ const PriceList = (props) => {
     return (
         <div className="price-list">
             <div className="main-window">
+                <FormWindow
+                    title="Коэффициенты"
+                    content={
+                        <React.Fragment>
+                            <EditCoefficient
+                                showWindow={showWindow}
+                                setShowWindow={setShowWindow}
+                                setCloseWindow={setCloseWindow}
+                                closeWindow={closeWindow}
+                            />
+                        </React.Fragment>
+                    }
+                    headerButton={{
+                        name: 'Добавить товар',
+                        path: '/price-list/new'
+                    }}
+                    showWindow={showWindow}
+                    setShowWindow={setShowWindow}
+                />
                 <div className="main-window__header">
                     <div className="main-window__title">Каталог продукции</div>
                     {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => {
@@ -495,9 +177,7 @@ const PriceList = (props) => {
                             optionalCols.filter(item => item.active && item)
                         )
                     }}>Скачать .pdf</div>}
-                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => {
-
-                    }}>Редактировать коэффициенты</div>}
+                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => setShowWindow(!showWindow)}>Редактировать коэффициенты</div>}
                 </div>
                 <SearchBar
                     title="Поиск по каталогу продукции"
@@ -507,7 +187,15 @@ const PriceList = (props) => {
                 <div className="main-window__info-panel">
                     <div className="price-list__category-pick">
                         <div className="main-window__amount_table">Фильтр по категории:</div>
-                        {categories.map((item, index) => {
+                        {categories.sort((a, b) => {
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((item, index) => {
                             return <div
                                 className={item.active ? "main-window__button" : "main-window__button main-window__button--inverted"}
                                 onClick={() => {
@@ -557,12 +245,15 @@ const PriceList = (props) => {
                         <span>Дистрибутор</span>
                         <span>Стопцена</span>
                         <span>
-                            <input
-                                type="checkbox"
-                                name="header"
-                                defaultChecked={true}
-                                onChange={handleCheckboxChange}
-                            />
+                            <label class="main-window__checkbox-container">
+                                <input
+                                    type="checkbox"
+                                    name="header"
+                                    defaultChecked={true}
+                                    onChange={handleCheckboxChange}
+                                />
+                                <div class="main-window__checkmark"></div>
+                            </label>
                         </span>
                         <div className="main-window__actions">Действие</div>
                     </div>
@@ -617,18 +308,21 @@ const PriceList = (props) => {
                                     <span><div className="main-window__mobile-text">Дистрибутор: </div>{item.distributorPrice}</span>
                                     <span><div className="main-window__mobile-text">Стопцена: </div>{item.stopPrice}</span>
                                     <span><div className="main-window__mobile-text">Выбрать: </div>
-                                        <input
-                                            type="checkbox"
-                                            id={item.id}
-                                            name="groupOfProducts"
-                                            checked={checkedItems.find(checkedItem => checkedItem.id === item.id).active}
-                                            onChange={handleCheckboxChange}
-                                        />
+                                        <label class="main-window__checkbox-container">
+                                            <input
+                                                type="checkbox"
+                                                id={item.id}
+                                                name="groupOfProducts"
+                                                checked={checkedItems.find(checkedItem => checkedItem.id === item.id) !== undefined ? checkedItems.find(checkedItem => checkedItem.id === item.id).active : true}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                            <div class="main-window__checkmark"></div>
+                                        </label>
                                     </span>
                                     <div className="main-window__actions">
                                         <div className="main-window__action" onClick={() => props.history.push('/price-list/view/' + item.id)}>Просмотр</div>
                                         <div className="main-window__action" onClick={() => props.history.push('/price-list/edit/' + item.id)}>Редактировать</div>
-                                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => { }}>Удалить</div>}
+                                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" id={item.id} name="group" onClick={deleteItem}>Удалить</div>}
                                     </div>
                                 </div>
                                 {item.products.filter(item =>
@@ -644,7 +338,7 @@ const PriceList = (props) => {
                                     </span>
                                     <span><div className="main-window__mobile-text">Название: </div>{product.name}</span>
                                     <span><div className="main-window__mobile-text">Описание: </div>{product.description}</span>
-                                    <span><div className="main-window__mobile-text">Категория: </div>{product.category}</span>
+                                    <span><div className="main-window__mobile-text">Категория: </div>{item.category}</span>
                                     <span><div className="main-window__mobile-text">Розница (рыночная цена): </div>{product.retailMarketPrice}</span>
                                     <span><div className="main-window__mobile-text">Розница: </div>{product.retailPrice}</span>
                                     <span><div className="main-window__mobile-text">цена &lt; 1500 шт.: </div>{product.lessThan1500Price}</span>
@@ -654,40 +348,18 @@ const PriceList = (props) => {
                                     <span><div className="main-window__mobile-text">Дистрибутор: </div>{product.distributorPrice}</span>
                                     <span><div className="main-window__mobile-text">Стопцена: </div>{product.stopPrice}</span>
                                     <span><div className="main-window__mobile-text">Выбрать: </div>
-                                        {/* <input
-                                        type="checkbox"
-                                        id={item.id}
-                                        name="product"
-                                        checked={true}
-                                        onChange={handleCheckboxChange}
-                                    /> */}
                                     </span>
                                     <div className="main-window__actions">
                                         <div className="main-window__action" onClick={() => props.history.push('/price-list/view/' + item.id)}>Просмотр</div>
                                         <div className="main-window__action" onClick={() => props.history.push('/price-list/edit/' + item.id)}>Редактировать</div>
-                                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => { }}>Удалить</div>}
+                                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" id={product.id} name="product" onClick={deleteItem}>Удалить</div>}
                                     </div>
                                 </div>)}
-                                {/* <div className={item.isVisible === true ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}
-                                style={{ minHeight: `calc(${item.isVisible ? item.products.length : 0}*60px + 0px)` }}>
-                                {item.products.map(product => <div className="main-window__list-item">
-                                    <span></span>
-                                    <span><div className="main-window__mobile-text">Название: </div>{product.name}</span>
-                                    <span><div className="main-window__mobile-text">Описание: </div>{product.description}</span>
-                                    <span><div className="main-window__mobile-text">Категория: </div>{product.category}</span>
-                                    <span><div className="main-window__mobile-text">Розничная цена: </div>{product.retailPrice}</span>
-                                    <span><div className="main-window__mobile-text">цена &lt; 1500 шт.: </div>{product.lessThan1500Price}</span>
-                                    <span><div className="main-window__mobile-text">цена &lt; 5000 шт.: </div>{product.lessThan5000Price}</span>
-                                    <div className="main-window__actions">
-                                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => { }}>Удалить</div>}
-                                    </div>
-                                </div>)}
-                            </div> */}
                             </React.Fragment>
                         })}
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 
