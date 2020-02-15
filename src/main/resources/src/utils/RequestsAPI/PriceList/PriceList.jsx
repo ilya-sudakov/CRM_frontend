@@ -14,6 +14,13 @@ export function deletePriceGroupById(id) {
     })
 }
 
+export function getPriceGroupById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/price_group/" + id,
+        method: "GET"
+    })
+}
+
 export function addPriceGroup(newRequest) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/price_group/",
