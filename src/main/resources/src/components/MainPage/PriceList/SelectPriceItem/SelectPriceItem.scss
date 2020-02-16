@@ -39,6 +39,12 @@
       min-width: 0 !important;
     }
   }
+  .main-form__item {
+    margin-bottom: 0px;
+  }
+  .select-price-item__selected_item:first-child {
+    margin-top: 0 !important;
+  }
 
   &__selected_item {
     background-color: #dddddd;
@@ -49,7 +55,7 @@
     position: relative;
     transition: 0.2s ease-in-out;
 
-    &:first-child {
+    &:first-of-type {
       width: calc(100% - 30px);
     }
 

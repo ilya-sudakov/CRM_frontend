@@ -8,4 +8,16 @@
   .main-form__input_field--vertical {
     flex-direction: column;
   }
+  hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 96%;
+    background-color: $button__background--inverted;
+    height: 1px;
+    margin-bottom: 20px;
+  }
+  .main-form__buttons {
+    margin-bottom: 25px;
+  }
 }

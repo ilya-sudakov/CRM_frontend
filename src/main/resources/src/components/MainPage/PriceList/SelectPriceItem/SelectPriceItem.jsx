@@ -4,8 +4,11 @@ import './SelectPriceItem.scss';
 import { getPriceListCoefficient } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
 
 const SelectPriceItem = (props) => {
+    const [imgName, setImgName] = useState("Имя файла...");
     const [selected, setSelected] = useState([
         {
+            number: '',
+            units: '',
             name: '',
             description: '',
             retailPrice: 0,
@@ -30,13 +33,9 @@ const SelectPriceItem = (props) => {
         lessThan5000Price: 0.89,
         lessThan1500Price: 0.96,
     })
-
-    const clickOverlay = (event) => {
-        const overlay = document.getElementsByClassName("select-price-item__overlay")[0];
-        if (!overlay.classList.contains("select-price-item__overlay--hidden")) {
-            overlay.classList.add("select-price-item__overlay--hidden");
-        }
-    }
+    // const [visibleItems, setVisibleItems] = useState([{
+    //     id: 
+    // }])
 
     useEffect(() => {
         if (props.defaultValue !== undefined) {
@@ -62,7 +61,7 @@ const SelectPriceItem = (props) => {
 
     const clickOnForm = (e) => {
         const id = e.currentTarget.getAttribute("index");
-        const form = document.getElementsByClassName("select-price-item__selected_form")[id];
+        const form = document.getElementsByClassName(props.uniqueId ? ("select-price-item__selected_form-" + props.uniqueId) : "select-price-item__selected_form")[id];
         if (form.classList.contains("select-price-item__selected_form--hidden")) {
             e.target.type !== 'text' && !e.target.classList.contains("select-price-item__img") && form.classList.remove("select-price-item__selected_form--hidden");
         }
@@ -78,6 +77,8 @@ const SelectPriceItem = (props) => {
         setSelected([
             ...selected,
             {
+                number: '',
+                units: '',
                 name: '',
                 description: '',
                 retailPrice: 0,
@@ -94,6 +95,8 @@ const SelectPriceItem = (props) => {
         props.handlePriceItemChange([
             ...selected,
             {
+                number: '',
+                units: '',
                 name: '',
                 description: '',
                 retailMarketPrice: 0,
@@ -167,13 +170,40 @@ const SelectPriceItem = (props) => {
 
     return (
         <div className="select-price-item">
-            <div className="select-price-item__overlay select-price-item__overlay--hidden" onClick={clickOverlay}></div>
             {!props.readOnly &&
                 <button className="select-price-item__button" onClick={handleNewPriceItem}>
                     Добавить продукцию
                 </button>
             }
             <div className="select-price-item__selected">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография</div>
+                    <div className="main-form__file_upload">
+                        <div className="main-form__file_name">
+                            {imgName}
+                        </div>
+                        <label className="main-form__label" htmlFor={"file" + props.uniqueId}>
+                            Загрузить файл
+                                {/* <img className="logo" src={fileUploadImg} alt="" /> */}
+                        </label>
+                        <input type="file" name="file" id={"file" + props.uniqueId} onChange={(event) => {
+                            let regex = /.+\.(jpeg|jpg|png|img)/;
+                            let file = event.target.files[0];
+                            if (file.name.match(regex) !== null) {
+                                setImgName(file.name);
+                                let reader = new FileReader();
+                                reader.onloadend = (() => {
+                                    // console.log('loaded pic for id #' + props.uniqueId);
+                                    props.handleImgChange(reader.result)
+                                });
+                                reader.readAsDataURL(file);
+                            }
+                            else {
+                                setImgName('Некорректный формат файла!');
+                            }
+                        }} />
+                    </div>
+                </div>
                 {selected.map((item, index) => (
                     <div className="select-price-item__selected_item" >
                         <div className="select-price-item__selected_header" index={index} onClick={clickOnForm}>
@@ -193,7 +223,7 @@ const SelectPriceItem = (props) => {
                                 <span>до 5000 шт.: </span> <span>{item.lessThan5000Price}</span>
                             </div>
                         </div>
-                        <div className="select-price-item__selected_form" >
+                        <div className={props.uniqueId ? ("select-price-item__selected_form select-price-item__selected_form--hidden select-price-item__selected_form-" + props.uniqueId) : "select-price-item__selected_form select-price-item__selected_form--hidden"}>
                             <div className="select-price-item__item">
                                 <div className="select-price-item__input_name">Название</div>
                                 <div className="select-price-item__input_field">

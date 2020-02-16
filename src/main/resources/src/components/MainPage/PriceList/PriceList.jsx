@@ -174,7 +174,9 @@ const PriceList = (props) => {
                             priceList.filter(item => checkedItems.find(checkedItem => {
                                 return item.id === Number.parseInt(checkedItem.id)
                             }).active),
-                            optionalCols.filter(item => item.active && item)
+                            optionalCols.filter(item => item.active && item),
+                            [],
+                            ''
                         )
                     }}>Скачать .pdf</div>}
                     {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => setShowWindow(!showWindow)}>Редактировать коэффициенты</div>}

@@ -3,6 +3,7 @@ import pdfMake from 'pdfmake';
 import testImg from '../../../../../assets/priceList/test.jpg';
 import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
 import contactsImg from '../../../../../assets/priceList/contacts.png';
+import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
 
 export const formatDateString = (dateString) => {
     const testDate = new Date(dateString);
@@ -440,9 +441,10 @@ function getDataUri(url) {
     });
 }
 
-export function getPriceListPdfText(categories, priceList, optionalCols) {
+export async function getPriceListPdfText(categories, priceList, optionalCols, locationTypes, disclaimer) {
     let finalList = [];
     let dd;
+    let linkButtonData = await getDataUri(linkButtonImg);
     const temp = categories.sort((a, b) => {
         if (a.name < b.name) {
             return -1;
@@ -451,172 +453,253 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
             return 1;
         }
         return 0;
-    }).map(category => {
+    }).map(async category => {
         let fullGroup = [];
-        return Promise.all(priceList.map(groupOfProducts => {
+        return Promise.all(priceList.sort(async (a, b) => {
+            if (a.name < b.name) {
+                return -1;
+            }
+            if (a.name > b.name) {
+                return 1;
+            }
+            return 0;
+        }).map(async groupOfProducts => {
+            let locations = [];
             if (category.name === groupOfProducts.category) {
-                console.log(groupOfProducts.img);
                 return getDataUri((groupOfProducts.img !== null && groupOfProducts.img !== '') ? groupOfProducts.img : testImg)
-                    .then((dataURI) => {
-                        // console.log(temp3);
-                        fullGroup.push({
-                            width: '*',
-                            columns: [
-                                {
-                                    text: [{
-                                        text: ' ',
-                                        style: 'subheader'
-                                    }, {
-                                        text: groupOfProducts.name,
-                                        style: 'subheader'
-                                    }, {
-                                        text: ' ',
-                                        style: 'subheader'
-                                    }, {
-                                        text: '  ' + groupOfProducts.description,
-                                        style: 'regularText',
-                                    }],
-                                    width: '*'
-                                },
-                                {
-                                    text: {
-                                        text: groupOfProducts.locationType,
-                                        style: 'regularText',
-                                        alignment: 'right'
-                                    },
-                                    width: 100,
-                                    alignment: 'right'
-                                }],
-                            margin: [0, 10, 0, 10]
-                        });
-                        fullGroup.push({
-                            // alignment: 'justify',
-                            columns: [
-                                {
-                                    image: dataURI,
-                                    width: optionalCols.length > 2 ? 62 : 100
-                                },
-                                {
-                                    table: {
-                                        widths: ['*', '*', '*', 33, 30, 30, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 45 : 50)],
-                                        body: [
-                                            [
-                                                { text: '', border: [false, false, false, false] },
-                                                { text: '', border: [false, false, false, false] },
-                                                { text: '', border: [false, false, false, false] },
-                                                {
-                                                    text: 'Цена за штуку',
-                                                    colSpan: (3 + optionalCols.length),
-                                                    bold: true
-                                                },
-                                                {},
-                                                {},
-                                                ...optionalCols.map(() => { })
-                                            ],
-                                            [
-                                                { text: 'Артикул', bold: true },
-                                                { text: 'Описание', bold: true },
-                                                { text: 'Ед. изм.', bold: true },
-                                                { text: 'Розница', bold: true },
-                                                { text: 'до 1500 шт.', bold: true },
-                                                { text: 'до 5000 шт.', bold: true },
-                                                ...optionalCols.map(column => { return { text: column.name, bold: true } })
-                                            ],
-                                            ...groupOfProducts.products.map(product => {
-                                                // return {
-                                                //     text: product.name
-                                                // };
-                                                return [
-                                                    product.number,
-                                                    product.description,
-                                                    product.units,
-                                                    product.retailPrice + ' ₽',
-                                                    product.lessThan1500Price + ' ₽',
-                                                    product.lessThan5000Price + ' ₽',
-                                                    ...optionalCols.map(column => product[column.property] !== undefined
-                                                        ? product[column.property] + ' ₽'
-                                                        : '')
-                                                ];
-                                            }),
-                                        ]
-                                    },
-                                    layout: {
-                                        hLineWidth: function (i, node) {
-                                            return 1;
-                                        },
-                                        vLineWidth: function (i, node) {
-                                            return 1;
-                                        },
-                                        hLineColor: function (i, node) {
-                                            return '#222222';
-                                        },
-                                        vLineColor: function (i, node) {
-                                            return '#222222';
-                                        },
-                                    },
-                                    alignment: 'center',
-                                    width: '*',
-                                    fontSize: 8,
-                                    color: '#333333',
-                                    margin: [20, 0, 0, 10]
+                    .then(async (dataURI) => {
+                        return Promise.all(groupOfProducts.locationType.split('/').sort((a, b) => {
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map(location => {
+                            return Promise.all(locationTypes.map(async locationType => {
+                                if (locationType.name === location) {
+                                    return locations.push({
+                                        image: await getDataUri(locationType.img),
+                                        width: 14
+                                    })
                                 }
-                            ]
-                        });
-                        fullGroup.push({
-                            alignment: 'justify',
-                            width: '*',
-                            margin: [0, 0, 0, 5],
-                            columns: [
-                                {
-                                    table: {
-                                        body: [
-                                            [
+                            }))
+                        }))
+                            .then(() => {
+                                fullGroup.push({
+                                    unbreakable: true,
+                                    stack: [
+                                        {
+                                            width: '*',
+                                            headlineLevel: 1,
+                                            columns: [
                                                 {
-                                                    border: [true, false, false, false],
-                                                    style: 'regularText',
-                                                    borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
-                                                    text: groupOfProducts.infoText
+                                                    text: [{
+                                                        text: ' ',
+                                                        style: 'subheader'
+                                                    }, {
+                                                        text: groupOfProducts.name.toUpperCase(),
+                                                        style: 'subheader'
+                                                    }, {
+                                                        text: ' ',
+                                                        style: 'subheader'
+                                                    }, {
+                                                        text: '  ' + groupOfProducts.description,
+                                                        style: 'regularText',
+                                                        color: '#666666',
+                                                        fontSize: 8
+                                                    }],
+                                                    width: '*'
                                                 },
+                                                {
+                                                    columns: [
+                                                        {
+                                                            text: {
+                                                                text: groupOfProducts.locationType,
+                                                                style: 'regularText',
+                                                                fontSize: 8,
+                                                                color: '#e30434',
+                                                                alignment: 'right'
+                                                            },
+                                                            margin: [0, 5, 2, 0]
+                                                        },
+                                                        ...locations
+                                                    ],
+                                                    columnGap: 3,
+                                                    width: 100,
+                                                    // alignment: 'right'
+                                                }],
+                                            margin: [0, 10, 0, 10]
+                                        },
+                                        {
+                                            // alignment: 'justify',
+                                            columns: [
+                                                {
+                                                    image: dataURI,
+                                                    width: optionalCols.length > 2 ? 62 : 100,
+                                                    // margin: [0, groupOfProducts.products.length * 3, 0, 0]
+                                                    margin: [0, 0, 0, 0]
+                                                },
+                                                {
+                                                    unbreakable: true,
+                                                    table: {
+                                                        widths: ['*', '*', '*', 33, 30, 30, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 45 : 50)],
+                                                        body: [
+                                                            [
+                                                                { text: '', border: [false, false, false, false] },
+                                                                { text: '', border: [false, false, false, false] },
+                                                                { text: '', border: [false, false, false, false] },
+                                                                {
+                                                                    text: groupOfProducts.priceHeader ? groupOfProducts.priceHeader : 'Цена за штуку',
+                                                                    colSpan: (3 + optionalCols.length),
+                                                                    bold: true
+                                                                },
+                                                                {},
+                                                                {},
+                                                                ...optionalCols.map(() => { })
+                                                            ],
+                                                            [
+                                                                { text: 'Артикул', bold: true },
+                                                                { text: 'Описание', bold: true },
+                                                                { text: 'Ед. изм.', bold: true },
+                                                                { text: groupOfProducts.retailName ? groupOfProducts.retailName : 'Розница', bold: true },
+                                                                { text: groupOfProducts.firstPriceName ? groupOfProducts.firstPriceName : 'до 1500 шт.', bold: true },
+                                                                { text: groupOfProducts.secondPriceName ? groupOfProducts.secondPriceName : 'до 5000 шт.', bold: true },
+                                                                ...optionalCols.map(column => { return { text: column.name, bold: true } })
+                                                            ],
+                                                            ...groupOfProducts.products.map(product => {
+                                                                // return {
+                                                                //     text: product.name
+                                                                // };
+                                                                return [
+                                                                    product.number,
+                                                                    product.description,
+                                                                    product.units,
+                                                                    product.retailPrice + ' ₽',
+                                                                    product.lessThan1500Price + ' ₽',
+                                                                    product.lessThan5000Price + ' ₽',
+                                                                    ...optionalCols.map(column => product[column.property] !== undefined
+                                                                        ? product[column.property] + ' ₽'
+                                                                        : '')
+                                                                ];
+                                                            }),
+                                                        ]
+                                                    },
+                                                    layout: {
+                                                        hLineWidth: function (i, node) {
+                                                            return 1;
+                                                        },
+                                                        vLineWidth: function (i, node) {
+                                                            return 1;
+                                                        },
+                                                        hLineColor: function (i, node) {
+                                                            return '#222222';
+                                                        },
+                                                        vLineColor: function (i, node) {
+                                                            return '#222222';
+                                                        },
+                                                    },
+                                                    alignment: 'center',
+                                                    width: '*',
+                                                    fontSize: 8,
+                                                    color: '#333333',
+                                                    margin: [20, 0, 0, 5]
+                                                }
                                             ]
-                                        ],
-                                        // margin: [0, 0, 0, 200],
-                                        // heights: 1,
-                                    }
-                                },
-                                {
-                                    text: ' Смотреть на сайте ',
-                                    link: groupOfProducts.linkAddress,
-                                    fontSize: 12,
-                                    margin: [0, 0, 3, 0],
-                                    color: 'white',
-                                    background: '#e30434',
-                                    alignment: 'right'
-                                }
-                            ]
-                        })
+                                        },
+                                        {
+                                            alignment: 'justify',
+                                            width: '*',
+                                            margin: [0, 0, 0, 10],
+                                            columns: [
+                                                {
+                                                    table: {
+                                                        body: [
+                                                            [
+                                                                {
+                                                                    border: [true, false, false, false],
+                                                                    style: 'regularText',
+                                                                    borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
+                                                                    text: groupOfProducts.infoText
+                                                                },
+                                                            ]
+                                                        ],
+                                                        // margin: [0, 0, 0, 200],
+                                                        // heights: 1,
+                                                    }
+                                                },
+                                                {
+                                                    // text: ' Смотреть на сайте '.toUpperCase(),
+                                                    // link: groupOfProducts.linkAddress,
+                                                    // fontSize: 8,
+                                                    // margin: [0, 0, 3, 0],
+                                                    // color: 'white',
+                                                    // background: '#e30434',
+                                                    // alignment: 'right'
+                                                    image: linkButtonData,
+                                                    link: groupOfProducts.linkAddress,
+                                                    width: 90,
+                                                    alignment: 'right'
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                })
+                            })
                     })
             }
         }))
             .then(async () => {
+                const tempImg = await getDataUri(category.img);
                 fullGroup.length > 0 && finalList.push({
                     stack: [
                         {
-                            image: await getDataUri(category.img),
-                            width: 400,
-                            height: 40,
+                            image: tempImg,
+                            width: 510,
+                            height: 50,
                             alignment: 'center',
                             // margin: [0, 10, 0, 10]
                         },
                         {
-                            text: category.name,
+                            text: category.name.toUpperCase(),
                             style: 'header',
-                            bold: false,
+                            fontSize: 16,
                             color: '#ffffff',
                             alignment: 'center',
-                            relativePosition: { x: 0, y: -37 }
+                            relativePosition: { x: 0, y: -38 }
                             // absolutePosition: {x: 100, y: 50}
                         },
-                        ...fullGroup
+                        // console.log(...fullGroup.map((item, index) => {
+                        //     if (index === 0) {
+                        //         return {
+                        //             unbreakable: true,
+                        //             stack: [
+                        //                 ...item.stack,
+                        //                 {
+                        //                     image: tempImg,
+                        //                     width: 510,
+                        //                     height: 50,
+                        //                     alignment: 'center',
+                        //                     // margin: [0, 10, 0, 10]
+                        //                 },
+                        //                 {
+                        //                     text: category.name.toUpperCase(),
+                        //                     style: 'header',
+                        //                     fontSize: 16,
+                        //                     color: '#ffffff',
+                        //                     alignment: 'center',
+                        //                     relativePosition: { x: 0, y: -38 }
+                        //                     // absolutePosition: {x: 100, y: 50}
+                        //                 }
+                        //             ]
+                        //         }
+                        //     }
+                        //     return item
+                        // })),
+                        ...fullGroup.map(item => {
+                            return item
+                        })
                     ],
                     margin: [0, 10, 0, 10]
                 })
@@ -632,7 +715,7 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                     {
                         alignment: 'justify',
                         width: '*',
-                        margin: [40, 40, 40, 30],
+                        margin: [40, 40, 40, 0],
                         columns: [
                             {
                                 image: await getDataUri(contactsImg),
@@ -646,8 +729,15 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                                 alignment: 'right'
                             }
                         ]
-                    }],
-                pageMargins: [40, 100, 40, 60],
+                    },
+                    {
+                        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 2, lineColor: '#e30434' }],
+                        alignment: 'justify',
+                        width: '*',
+                        margin: [40, 5, 40, 40],
+                    },
+                ],
+                pageMargins: [40, 110, 40, 70],
                 // pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
                 //     return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
                 // },
@@ -656,7 +746,7 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                         return [
                             {
                                 canvas: [{
-                                    type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#e30434'
+                                    type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 2, lineColor: '#e30434'
                                 }],
                                 alignment: 'justify',
                                 width: '*',
@@ -674,7 +764,7 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                                 ],
                                 alignment: 'left',
                                 width: '*',
-                                margin: [40, 0, 40, 0],
+                                margin: [40, 0, 40, 10],
                             },
                             {
                                 text: 'Страница ' + currentPage.toString(),
@@ -693,8 +783,14 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                     }
                 },
                 content: [
-                    { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1, lineColor: '#e30434' }] },
-                    finalList
+                    // { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 2, lineColor: '#e30434' }] },
+                    finalList,
+                    {
+                        text: disclaimer,
+                        margin: [0, 10, 0, 0],
+                        fontSize: 12,
+                        alignment: 'left'
+                    }
                 ],
                 styles: {
                     header: {
@@ -708,7 +804,7 @@ export function getPriceListPdfText(categories, priceList, optionalCols) {
                         bold: true
                     },
                     subheader: {
-                        fontSize: 14,
+                        fontSize: 12,
                         bold: true,
                         margin: [0, 0, 0, 5],
                         color: 'white',

@@ -5,9 +5,73 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectPriceItem from '../SelectPriceItem/SelectPriceItem.jsx';
+import XLSX from 'xlsx';
 import { addPriceGroup, addProductToPriceGroup, getPriceListCoefficient } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
+import { getPriceListPdfText, getHTML } from '../../../../utils/functions.jsx';
+import testImg from '../../../../../../../../assets/priceList/test.jpg';
+import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.jpg';
+import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.jpg';
+import category3Img from '../../../../../../../../assets/priceList/крепежные_элементы.jpg';
+import categoryImg from '../../../../../../../../assets/priceList/крепежные_элементы.jpg';
+import locationType1Img from '../../../../../../../../assets/priceList/Фасад.png';
+import locationType2Img from '../../../../../../../../assets/priceList/Терраса.png';
 
 const NewPriceList = (props) => {
+    const [locationTypes, setLocationTypes] = useState([
+        {
+            name: 'Фасад',
+            img: locationType1Img
+        },
+        {
+            name: 'Терраса',
+            img: locationType2Img
+        },
+    ])
+    const [optionalCols, setOptionalCols] = useState([
+        {
+            property: 'partnerPrice',
+            name: 'Партнер',
+            active: false
+        },
+        {
+            property: 'dealerPrice',
+            name: 'Дилер',
+            active: false
+        },
+        {
+            property: 'distributorPrice',
+            name: 'Дистрибутор',
+            active: false
+        }
+    ])
+    const [categories, setCategories] = useState([
+        {
+            name: 'Крепеж для деревянных досок',
+            img: category1Img,
+            active: true
+        },
+        {
+            name: 'Крепеж для ДПК досок',
+            img: category2Img,
+            active: true
+        },
+        {
+            name: 'Крепежные элементы',
+            img: category3Img,
+            active: true
+        },
+        {
+            name: 'Продукция для подконструкций',
+            img: categoryImg,
+            active: true
+        },
+        {
+            name: 'Крепеж для НВФ',
+            img: categoryImg,
+            active: true
+        },
+    ]);
+    const [disclaimer, setDisclaimer] = useState('');
     const [priceListInputs, setPriceListInputs] = useState({
         name: '',
         description: '',
@@ -59,7 +123,8 @@ const NewPriceList = (props) => {
         stopPrice: 0.4545,
         lessThan5000Price: 0.89,
         lessThan1500Price: 0.96,
-    })
+    });
+    const [priceList, setPriceList] = useState([]);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -212,9 +277,9 @@ const NewPriceList = (props) => {
     return (
         <div className="new-price-item">
             <div className="main-form">
-                <div className="main-form__title">Новая продукция</div>
+                <div className="main-form__title">Считать данные из файла</div>
                 <form className="main-form__form">
-                    <ErrorMessage
+                    {/* <ErrorMessage
                         message="Не заполнены все обязательные поля!"
                         showError={showError}
                         setShowError={setShowError}
@@ -293,7 +358,6 @@ const NewPriceList = (props) => {
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
-                    {/* SelectPriceProduct */}
                     <div className="main-form__item">
                         <div className="main-form__input_name">Продукция*</div>
                         <div className="main-form__input_field">
@@ -381,36 +445,128 @@ const NewPriceList = (props) => {
                                 <div class="main-form__checkmark"></div>
                             </label>
                         </div>
-                    </div>
-                    {priceListInputs.img && <div className="main-form__item">
+                    </div>*/}
+                    {/* {priceListInputs.img && <div className="main-form__item">
                         <div className="main-form__input_name">Фотография</div>
                         <div className="main-form__product_img">
                             <img src={priceListInputs.img} alt="" />
                         </div>
-                    </div>}
+                    </div>} */}
                     <div className="main-form__item">
-                        <div className="main-form__input_name">Фотография</div>
+                        <div className="main-form__input_name">Файл .xlsx</div>
                         <div className="main-form__file_upload">
                             <div className="main-form__file_name">
                                 {imgName}
                             </div>
                             <label className="main-form__label" htmlFor="file">
                                 Загрузить файл
-                                {/* <img className="logo" src={fileUploadImg} alt="" /> */}
                             </label>
                             <input type="file" name="file" id="file" onChange={(event) => {
-                                let regex = /.+\.(jpeg|jpg|png|img)/;
+                                let regex = /.+\.(xlsx|csv)/;
                                 let file = event.target.files[0];
                                 if (file.name.match(regex) !== null) {
                                     setImgName(file.name);
                                     let reader = new FileReader();
                                     reader.onloadend = (() => {
-                                        setPriceListInputs({
-                                            ...priceListInputs,
-                                            img: reader.result
-                                        })
+                                        let data = new Uint8Array(reader.result);
+                                        let wb = XLSX.read(data, { type: 'array' });
+                                        var firstSheetName = wb.SheetNames[0];
+                                        let firstSheet = wb.Sheets[firstSheetName];
+                                        var excelRows = XLSX.utils.sheet_to_json(firstSheet);
+                                        // console.log(excelRows);
+                                        setDisclaimer(excelRows[excelRows.length - 1].id);
+                                        let newData = [];
+                                        let tempNumber = '000';
+                                        let groupData = null;
+                                        let startId = 0, endId = 0;
+                                        for (let index = 3; index < excelRows.length; index++) {
+                                            let item = excelRows[index];
+                                            if (item.id === '1.') {
+                                                startId = index;
+                                                endId = index;
+                                                groupData = Object.assign({
+                                                    id: item.id,
+                                                    img: '',
+                                                    category: item.category,
+                                                    name: item.groupName,
+                                                    description: item.description,
+                                                    infoText: item.infoText,
+                                                    linkAddress: item.linkAddress,
+                                                    locationType: item.locationType,
+                                                    priceHeader: item.priceHeader,
+                                                    retailName: item.retailName,
+                                                    firstPriceName: item.firstPriceName,
+                                                    secondPriceName: item.secondPriceName,
+                                                    dealerName: item.dealerName,
+                                                    distributorName: item.distributorName,
+                                                    partnerName: item.partnerName
+                                                });
+                                                tempNumber = item.number.substring(0, 3);
+                                            } else {
+                                                let products = [];
+                                                for (let i = startId; i <= endId; i++) {
+                                                    products.push(Object.assign({
+                                                        id: excelRows[i].id,
+                                                        number: excelRows[i].number,
+                                                        name: excelRows[i].name,
+                                                        description: excelRows[i].productDescription,
+                                                        units: excelRows[i].units,
+                                                        lessThan1500Price: excelRows[i].firstPrice.toFixed(2),
+                                                        lessThan5000Price: excelRows[i].secondPrice.toFixed(2),
+                                                        cost: excelRows[i].cost.toFixed(2),
+                                                        retailMarketPrice: excelRows[i].retailMarketPrice.toFixed(2),
+                                                        retailPrice: excelRows[i].retailPrice.toFixed(2),
+                                                        firstPrice: excelRows[i].firstPrice.toFixed(2),
+                                                        secondPrice: excelRows[i].secondPrice.toFixed(2),
+                                                        partnerPrice: excelRows[i].partnerPrice.toFixed(2),
+                                                        dealerPrice: excelRows[i].dealerPrice.toFixed(2),
+                                                        distributorPrice: excelRows[i].distributorPrice.toFixed(2),
+                                                    }));
+                                                }
+                                                if (item.number) {
+                                                    if (item.number.includes(tempNumber)) {
+                                                        endId++;
+                                                    }
+                                                    else {
+                                                        newData.push({
+                                                            ...groupData,
+                                                            products
+                                                        });
+                                                        groupData = Object.assign({
+                                                            id: item.id,
+                                                            img: '',
+                                                            category: item.category,
+                                                            name: item.groupName,
+                                                            description: item.description,
+                                                            infoText: item.infoText,
+                                                            linkAddress: item.linkAddress,
+                                                            locationType: item.locationType,
+                                                            priceHeader: item.priceHeader,
+                                                            retailName: item.retailName,
+                                                            firstPriceName: item.firstPriceName,
+                                                            secondPriceName: item.secondPriceName,
+                                                            dealerName: item.dealerName,
+                                                            distributorName: item.distributorName,
+                                                            partnerName: item.partnerName
+                                                        });
+                                                        startId = index;
+                                                        endId = index;
+                                                        tempNumber = item.number.substring(0, 3);
+                                                    }
+                                                }
+                                                else {
+                                                    newData.push({
+                                                        ...groupData,
+                                                        products
+                                                    });
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        setPriceList(newData);
+                                        console.log(newData)
                                     });
-                                    reader.readAsDataURL(file);
+                                    reader.readAsArrayBuffer(file);
                                 }
                                 else {
                                     setImgName('Некорректный формат файла!');
@@ -418,7 +574,67 @@ const NewPriceList = (props) => {
                             }} />
                         </div>
                     </div>
-                    <InputText
+                    <div className="main-form__buttons">
+                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/price-list')} value="Вернуться назад" />
+                        {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить продукцию" /> */}
+                        {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={() => {
+                            setIsLoading(true);
+                            getPriceListPdfText(
+                                categories,
+                                priceList,
+                                optionalCols.filter(item => item.active && item),
+                                locationTypes,
+                                disclaimer
+                            );
+                            setIsLoading(false);
+                        }} value="Открыть .pdf" />}
+                        {isLoading && <ImgLoader />}
+                    </div>
+                    {priceList.map((item, index) => {
+                        return <React.Fragment>
+                            {/* <hr /> */}
+                            <InputText
+                                inputName="Группа продукций"
+                                name="name"
+                                defaultValue={item.name}
+                                handleInputChange={(event) => {
+                                    let temp = priceList;
+                                    temp.splice(index, 1, {
+                                        ...item,
+                                        name: event.target.value
+                                    })
+                                    setPriceList([...temp])
+                                }}
+                            />
+                            <div className="main-form__item">
+                                <div className="main-form__input_name">Продукция</div>
+                                <div className="main-form__input_field">
+                                    <SelectPriceItem
+                                        handlePriceItemChange={(value) => {
+                                            let temp = priceList;
+                                            temp.splice(index, 1, {
+                                                ...item,
+                                                products: value
+                                            })
+                                            setPriceList([...temp])
+                                        }}
+                                        handleImgChange={(newImg) => {
+                                            let temp = priceList;
+                                            temp.splice(index, 1, {
+                                                ...item,
+                                                img: newImg
+                                            })
+                                            setPriceList([...temp])
+                                        }}
+                                        uniqueId={index}
+                                        defaultValue={item.products}
+                                        userHasAccess={props.userHasAccess}
+                                    />
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    })}
+                    {/* <InputText
                         inputName="Ссылка на продукцию"
                         required
                         name="linkAddress"
@@ -451,12 +667,20 @@ const NewPriceList = (props) => {
                                 <option>Крепеж для НВФ</option>
                             </select>
                         </div>
-                    </div>
-                    <div className="main-form__buttons">
+                    </div> */}
+                    {/* <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/price-list')} value="Вернуться назад" />
-                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить продукцию" />
+                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => {
+                            setIsLoading(true);
+                            getPriceListPdfText(
+                                categories,
+                                priceList,
+                                optionalCols.filter(item => item.active && item)
+                            );
+                            setIsLoading(false);
+                        }} value="Открыть .pdf" />
                         {isLoading && <ImgLoader />}
-                    </div>
+                    </div> */}
                 </form>
             </div>
         </div>

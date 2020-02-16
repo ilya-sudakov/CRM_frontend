@@ -193,7 +193,6 @@ const ViewPriceList = (props) => {
                     </div> */}
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/price-list')} value="Вернуться назад" />
-                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить продукцию" />
                         {isLoading && <ImgLoader />}
                     </div>
                 </form>
