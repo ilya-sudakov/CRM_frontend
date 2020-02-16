@@ -1,4 +1,5 @@
-import font from 'pdfmake/build/vfs_fonts';
+import font from 'pdfmake/build/vfs_fonts_old.js';
+import DejaVuSans from 'pdfmake/build/vfs_fonts.js'
 import pdfMake from 'pdfmake';
 import testImg from '../../../../../assets/priceList/test.jpg';
 import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
@@ -500,7 +501,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                         style: 'subheader'
                                                     }, {
                                                         text: groupOfProducts.name.toUpperCase(),
-                                                        style: 'subheader'
+                                                        style: 'subheader',
+                                                        fontSize: 11
                                                     }, {
                                                         text: ' ',
                                                         style: 'subheader'
@@ -544,7 +546,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                 {
                                                     unbreakable: true,
                                                     table: {
-                                                        widths: ['*', '*', '*', 33, 30, 30, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 45 : 50)],
+                                                        widths: [40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 49)],
                                                         body: [
                                                             [
                                                                 { text: '', border: [false, false, false, false] },
@@ -553,35 +555,90 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                 {
                                                                     text: groupOfProducts.priceHeader ? groupOfProducts.priceHeader : 'Цена за штуку',
                                                                     colSpan: (3 + optionalCols.length),
-                                                                    bold: true
+                                                                    // bold: true,
+                                                                    italics: true
                                                                 },
                                                                 {},
                                                                 {},
                                                                 ...optionalCols.map(() => { })
                                                             ],
                                                             [
-                                                                { text: 'Артикул', bold: true },
-                                                                { text: 'Описание', bold: true },
-                                                                { text: 'Ед. изм.', bold: true },
-                                                                { text: groupOfProducts.retailName ? groupOfProducts.retailName : 'Розница', bold: true },
-                                                                { text: groupOfProducts.firstPriceName ? groupOfProducts.firstPriceName : 'до 1500 шт.', bold: true },
-                                                                { text: groupOfProducts.secondPriceName ? groupOfProducts.secondPriceName : 'до 5000 шт.', bold: true },
-                                                                ...optionalCols.map(column => { return { text: column.name, bold: true } })
+                                                                {
+                                                                    text: 'Артикул',
+                                                                    // bold: true
+                                                                    margin: [0, 5, 0, 0]
+                                                                },
+                                                                {
+                                                                    text: 'Описание',
+                                                                    // bold: true
+                                                                    margin: [0, 5, 0, 0]
+                                                                },
+                                                                {
+                                                                    text: 'Ед. изм.',
+                                                                    // bold: true
+                                                                    margin: [0, 5, 0, 0]
+                                                                },
+                                                                {
+                                                                    text: groupOfProducts.retailName ? groupOfProducts.retailName : 'Розница',
+                                                                    // bold: true
+                                                                    margin: [0, 4.5, 0, 0]
+                                                                },
+                                                                {
+                                                                    text: groupOfProducts.firstPriceName ? groupOfProducts.firstPriceName : 'до 1500 шт.',
+                                                                    // bold: true
+                                                                    margin: [0, 1.5, 0, 0]
+                                                                },
+                                                                {
+                                                                    text: groupOfProducts.secondPriceName ? groupOfProducts.secondPriceName : 'до 5000 шт.',
+                                                                    // bold: true
+                                                                    margin: [0, 1.5, 0, 0]
+                                                                },
+                                                                ...optionalCols.map(column => {
+                                                                    return {
+                                                                        text: column.name,
+                                                                        // bold: true
+                                                                        margin: [0, 4.5, 0, 0]
+                                                                    }
+                                                                })
                                                             ],
                                                             ...groupOfProducts.products.map(product => {
                                                                 // return {
                                                                 //     text: product.name
                                                                 // };
                                                                 return [
-                                                                    product.number,
-                                                                    product.description,
-                                                                    product.units,
-                                                                    product.retailPrice + ' ₽',
-                                                                    product.lessThan1500Price + ' ₽',
-                                                                    product.lessThan5000Price + ' ₽',
+                                                                    {
+                                                                        text: product.number,
+                                                                        margin: [0, optionalCols.length > 1 ? 5 : 0, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: product.description,
+                                                                        margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: product.units,
+                                                                        margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: product.retailPrice + ' ₽',
+                                                                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: product.lessThan1500Price + ' ₽',
+                                                                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: product.lessThan5000Price + ' ₽',
+                                                                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                    },
                                                                     ...optionalCols.map(column => product[column.property] !== undefined
-                                                                        ? product[column.property] + ' ₽'
-                                                                        : '')
+                                                                        ? {
+                                                                            text: product[column.property] + ' ₽',
+                                                                            margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                        }
+                                                                        : {
+                                                                            text: '',
+                                                                            margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                        })
                                                                 ];
                                                             }),
                                                         ]
@@ -594,16 +651,16 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                             return 1;
                                                         },
                                                         hLineColor: function (i, node) {
-                                                            return '#222222';
+                                                            return '#444444';
                                                         },
                                                         vLineColor: function (i, node) {
-                                                            return '#222222';
+                                                            return '#444444';
                                                         },
                                                     },
                                                     alignment: 'center',
                                                     width: '*',
                                                     fontSize: 8,
-                                                    color: '#333333',
+                                                    color: '#555555',
                                                     margin: [20, 0, 0, 5]
                                                 }
                                             ]
@@ -621,13 +678,15 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                     border: [true, false, false, false],
                                                                     style: 'regularText',
                                                                     borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
-                                                                    text: groupOfProducts.infoText
+                                                                    text: groupOfProducts.infoText,
+
+                                                                    margin: [0, 0, 10, 0],
                                                                 },
                                                             ]
                                                         ],
                                                         // margin: [0, 0, 0, 200],
                                                         // heights: 1,
-                                                    }
+                                                    },
                                                 },
                                                 {
                                                     // text: ' Смотреть на сайте '.toUpperCase(),
@@ -639,7 +698,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     // alignment: 'right'
                                                     image: linkButtonData,
                                                     link: groupOfProducts.linkAddress,
-                                                    width: 90,
+                                                    width: 100,
                                                     alignment: 'right'
                                                 }
                                             ]
@@ -652,57 +711,59 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
         }))
             .then(async () => {
                 const tempImg = await getDataUri(category.img);
+                //Перенос категории на некст страницу если она без продукции
                 fullGroup.length > 0 && finalList.push({
                     stack: [
-                        {
-                            image: tempImg,
-                            width: 510,
-                            height: 50,
-                            alignment: 'center',
-                            // margin: [0, 10, 0, 10]
-                        },
-                        {
-                            text: category.name.toUpperCase(),
-                            style: 'header',
-                            fontSize: 16,
-                            color: '#ffffff',
-                            alignment: 'center',
-                            relativePosition: { x: 0, y: -38 }
-                            // absolutePosition: {x: 100, y: 50}
-                        },
-                        // console.log(...fullGroup.map((item, index) => {
-                        //     if (index === 0) {
-                        //         return {
-                        //             unbreakable: true,
-                        //             stack: [
-                        //                 ...item.stack,
-                        //                 {
-                        //                     image: tempImg,
-                        //                     width: 510,
-                        //                     height: 50,
-                        //                     alignment: 'center',
-                        //                     // margin: [0, 10, 0, 10]
-                        //                 },
-                        //                 {
-                        //                     text: category.name.toUpperCase(),
-                        //                     style: 'header',
-                        //                     fontSize: 16,
-                        //                     color: '#ffffff',
-                        //                     alignment: 'center',
-                        //                     relativePosition: { x: 0, y: -38 }
-                        //                     // absolutePosition: {x: 100, y: 50}
-                        //                 }
-                        //             ]
-                        //         }
-                        //     }
-                        //     return item
-                        // })),
-                        ...fullGroup.map(item => {
-                            return item
-                        })
-                    ],
-                    margin: [0, 10, 0, 10]
+                        ...fullGroup.map((item, index) => {
+                            if (index === 0) {
+                                return {
+                                    unbreakable: true,
+                                    stack: [
+                                        {
+                                            image: tempImg,
+                                            width: 510,
+                                            height: 50,
+                                            alignment: 'center',
+                                        },
+                                        {
+                                            text: category.name.toUpperCase(),
+                                            style: 'header',
+                                            fontSize: 16,
+                                            color: '#ffffff',
+                                            alignment: 'center',
+                                            relativePosition: { x: 0, y: -38 }
+                                        },
+                                        ...item.stack
+                                    ]
+                                }
+                            }
+                            else return item
+                        }),
+                    ]
                 })
+                //Без переноса категории на некст страницу если она без продукции
+                // fullGroup.length > 0 && finalList.push({
+                //     stack: [
+                //         {
+                //             image: tempImg,
+                //             width: 510,
+                //             height: 54,
+                //             alignment: 'center',
+                //         },
+                //         {
+                //             text: category.name.toUpperCase(),
+                //             style: 'header',
+                //             fontSize: 16,
+                //             color: '#ffffff',
+                //             alignment: 'center',
+                //             relativePosition: { x: 0, y: -40 }
+                //         },
+                //         ...fullGroup.map(item => {
+                //             return item
+                //         })
+                //     ],
+                //     margin: [0, 10, 0, 10]
+                // })
             })
     })
     Promise.all(temp)
@@ -711,6 +772,9 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 info: {
                     title: 'Прайс-лист'
                 },
+                // defaultStyle: {
+                //     font: 'DejaVuSans'
+                // },
                 header: [
                     {
                         alignment: 'justify',
@@ -719,13 +783,25 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         columns: [
                             {
                                 image: await getDataUri(contactsImg),
-                                width: 200,
+                                width: 10,
+                                alignment: 'left'
+                            },
+                            {
+                                text: [
+                                    { text: 'ООО «ОСФИКС»\n', bold: true, fontSize: 10, margin: [0, 0, 0, 2] },
+                                    { text: 'Лиговский пр., 52, Санкт-Петербург, 191040\n', link: 'https://yandex.ru/maps/-/CKUrY0Ih', fontSize: 10, lineHeight: 1.1 },
+                                    { text: 'osfix.ru\n', fontSize: 10, link: 'https://www.osfix.ru', lineHeight: 1.1 },
+                                    { text: 'info@osfix.ru\n', fontSize: 10, lineHeight: 1.1 },
+                                    { text: '+7 (812) 449-10-09\n', link: 'tel:88124491009', fontSize: 10, lineHeight: 1.1 },
+                                ],
+                                margin: [5, 0, 0, 0],
                                 alignment: 'left'
                             },
                             {
                                 image: await getDataUri(companyLogo),
                                 // width: 100,
                                 fit: [100, 100],
+                                margin: [0, 13, 0, 0],
                                 alignment: 'right'
                             }
                         ]
@@ -737,7 +813,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         margin: [40, 5, 40, 40],
                     },
                 ],
-                pageMargins: [40, 110, 40, 70],
+                pageMargins: [40, 125, 40, 70],
                 // pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
                 //     return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
                 // },
@@ -782,8 +858,10 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         margin: [0, 20, 0, 0]
                     }
                 },
+                // defaultStyle: {
+                //     font: 'DejaVuSans'
+                // },
                 content: [
-                    // { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 2, lineColor: '#e30434' }] },
                     finalList,
                     {
                         text: disclaimer,
@@ -820,7 +898,16 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         alignment: 'center'
                     }
                 }
-            }
+            };
+            // pdfMake.fonts = {
+            //     DejaVuSans: {
+            //         normal: 'DejaVuSans.ttf',
+            //         bold: 'DejaVuSans-Bold.ttf',
+            //         italics: 'DejaVuSans-Oblique.ttf',
+            //         bolditalics: 'DejaVuSans-BoldOblique.ttf'
+            //     }
+            // };
+            // pdfMake.vfs = DejaVuSans.pdfMake.vfs;
             pdfMake.vfs = font.pdfMake.vfs;
             pdfMake.createPdf(dd).open();
             // return dd;
