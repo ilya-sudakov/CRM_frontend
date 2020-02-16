@@ -1,7 +1,7 @@
 import font from 'pdfmake/build/vfs_fonts_old.js';
 import DejaVuSans from 'pdfmake/build/vfs_fonts.js'
 import pdfMake from 'pdfmake';
-import testImg from '../../../../../assets/priceList/test.jpg';
+import testImg from '../../../../../assets/priceList/no_img.png';
 import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
 import contactsImg from '../../../../../assets/priceList/contacts.png';
 import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
@@ -469,20 +469,25 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
             if (category.name === groupOfProducts.category) {
                 return getDataUri((groupOfProducts.img !== null && groupOfProducts.img !== '') ? groupOfProducts.img : testImg)
                     .then(async (dataURI) => {
-                        return Promise.all(groupOfProducts.locationType.split('/').sort((a, b) => {
-                            if (a.name < b.name) {
-                                return -1;
-                            }
-                            if (a.name > b.name) {
-                                return 1;
-                            }
-                            return 0;
-                        }).map(location => {
+                        return Promise.all(groupOfProducts.locationType.split('/').map(location => {
                             return Promise.all(locationTypes.map(async locationType => {
                                 if (locationType.name === location) {
                                     return locations.push({
-                                        image: await getDataUri(locationType.img),
-                                        width: 14
+                                        columnGap: 1,
+                                        columns: [
+                                            {
+                                                text: location,
+                                                style: 'regularText',
+                                                fontSize: 8,
+                                                color: '#e30434',
+                                                alignment: 'right',
+                                                margin: [0, 5, 1, 0]
+                                            },
+                                            {
+                                                image: await getDataUri(locationType.img),
+                                                width: 14
+                                            }
+                                        ]
                                     })
                                 }
                             }))
@@ -496,39 +501,44 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                             headlineLevel: 1,
                                             columns: [
                                                 {
-                                                    text: [{
-                                                        text: ' ',
-                                                        style: 'subheader'
-                                                    }, {
-                                                        text: groupOfProducts.name.toUpperCase(),
-                                                        style: 'subheader',
-                                                        fontSize: 11
-                                                    }, {
-                                                        text: ' ',
-                                                        style: 'subheader'
-                                                    }, {
-                                                        text: '  ' + groupOfProducts.description,
-                                                        style: 'regularText',
-                                                        color: '#666666',
-                                                        fontSize: 8
-                                                    }],
+                                                    text: [
+                                                        {
+                                                            text: ' ',
+                                                            style: 'subheader'
+                                                        },
+                                                        {
+                                                            text: groupOfProducts.name.toUpperCase(),
+                                                            style: 'subheader',
+                                                            fontSize: 11
+                                                        },
+                                                        {
+                                                            text: ' ',
+                                                            style: 'subheader'
+                                                        },
+                                                        {
+                                                            text: '  ' + groupOfProducts.description,
+                                                            style: 'regularText',
+                                                            color: '#666666',
+                                                            fontSize: 8
+                                                        }
+                                                    ],
                                                     width: '*'
                                                 },
                                                 {
                                                     columns: [
-                                                        {
-                                                            text: {
-                                                                text: groupOfProducts.locationType,
-                                                                style: 'regularText',
-                                                                fontSize: 8,
-                                                                color: '#e30434',
-                                                                alignment: 'right'
-                                                            },
-                                                            margin: [0, 5, 2, 0]
-                                                        },
+                                                        // {
+                                                        //     text: {
+                                                        //         text: groupOfProducts.locationType,
+                                                        //         style: 'regularText',
+                                                        //         fontSize: 8,
+                                                        //         color: '#e30434',
+                                                        //         alignment: 'right'
+                                                        //     },
+                                                        //     margin: [0, 5, 2, 0]
+                                                        // },
                                                         ...locations
                                                     ],
-                                                    columnGap: 3,
+                                                    columnGap: 1,
                                                     width: 100,
                                                     // alignment: 'right'
                                                 }],
@@ -539,9 +549,9 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                             columns: [
                                                 {
                                                     image: dataURI,
-                                                    width: optionalCols.length > 2 ? 62 : 100,
+                                                    width: optionalCols.length > 2 ? 62 : 90,
                                                     // margin: [0, groupOfProducts.products.length * 3, 0, 0]
-                                                    margin: [0, 0, 0, 0]
+                                                    margin: [0, 0, 0, 10]
                                                 },
                                                 {
                                                     unbreakable: true,
@@ -661,7 +671,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     width: '*',
                                                     fontSize: 8,
                                                     color: '#555555',
-                                                    margin: [20, 0, 0, 5]
+                                                    margin: [10, 0, 0, 5]
                                                 }
                                             ]
                                         },
@@ -813,6 +823,12 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         margin: [40, 5, 40, 40],
                     },
                 ],
+                // pageMargins: function (currentPage, pageCount) {
+                //     if (currentPage === pageCount) {
+                //         return [40, 125, 40, 170]
+                //     }
+                //     else return [40, 125, 40, 70]
+                // },
                 pageMargins: [40, 125, 40, 70],
                 // pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
                 //     return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
@@ -834,7 +850,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                     { text: 'КПП ', fontSize: 10, bold: true }, { text: '784201001\t', fontSize: 10 },
                                     { text: 'ОГРН ', fontSize: 10, bold: true }, { text: '117784736458\t', fontSize: 10 },
                                     { text: 'ОКПО ', fontSize: 10, bold: true }, { text: '20161337\n', fontSize: 10 },
-                                    { text: 'Банк ', fontSize: 10, bold: true }, { text: 'Филиал No7806 ВТБ (ПАО)\t', fontSize: 10 },
+                                    { text: 'Банк ', fontSize: 10, bold: true }, { text: 'Филиал №7806 ВТБ (ПАО)\t', fontSize: 10 },
                                     { text: 'Расчетный счет № ', fontSize: 10, bold: true }, { text: '40702810117060000232\t', fontSize: 10 },
                                     { text: 'БИК ', fontSize: 10, bold: true }, { text: '044030707\t', fontSize: 10 },
                                 ],
@@ -846,7 +862,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                 text: 'Страница ' + currentPage.toString(),
                                 alignment: 'center',
                                 fontSize: 11,
-                                color: '#555555'
+                                color: '#999999'
                             }
                         ]
                     }
@@ -854,7 +870,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         text: 'Страница ' + currentPage.toString(),
                         alignment: 'center',
                         fontSize: 11,
-                        color: '#555555',
+                        color: '#999999',
                         margin: [0, 20, 0, 0]
                     }
                 },
@@ -865,9 +881,9 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                     finalList,
                     {
                         text: disclaimer,
-                        margin: [0, 10, 0, 0],
+                        margin: [0, 50, 0, 0],
                         fontSize: 12,
-                        alignment: 'left'
+                        alignment: 'left',
                     }
                 ],
                 styles: {

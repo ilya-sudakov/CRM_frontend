@@ -176,7 +176,7 @@ const PriceList = (props) => {
                             }).active),
                             optionalCols.filter(item => item.active && item),
                             [],
-                            ''
+                            'Тест 123'
                         )
                     }}>Скачать .pdf</div>}
                     {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => setShowWindow(!showWindow)}>Редактировать коэффициенты</div>}

@@ -275,7 +275,7 @@ const SelectPriceItem = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.cost}
+                                        value={item.cost}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -289,7 +289,7 @@ const SelectPriceItem = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.retailMarketPrice}
+                                        value={item.retailMarketPrice}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
