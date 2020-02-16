@@ -1,5 +1,5 @@
-import font from 'pdfmake/build/vfs_fonts_old.js';
-import DejaVuSans from 'pdfmake/build/vfs_fonts.js'
+import font from 'pdfmake/build/vfs_fonts.js';
+// import DejaVuSans from 'pdfmake/build/vfs_fonts_new.js'
 import pdfMake from 'pdfmake';
 import testImg from '../../../../../assets/priceList/no_img.png';
 import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
