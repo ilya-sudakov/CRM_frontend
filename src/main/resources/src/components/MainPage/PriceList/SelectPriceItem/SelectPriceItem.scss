@@ -45,7 +45,12 @@
   .select-price-item__selected_item:first-child {
     margin-top: 0 !important;
   }
-
+  .main-form__product_img {
+    max-width: 200px;
+    & img {
+      max-width: 200px !important;
+    }
+  }
   &__selected_item {
     background-color: #dddddd;
     border-radius: 5px;

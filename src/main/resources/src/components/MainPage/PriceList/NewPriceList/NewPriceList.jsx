@@ -6,8 +6,9 @@ import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectPriceItem from '../SelectPriceItem/SelectPriceItem.jsx';
 import XLSX from 'xlsx';
-import { addPriceGroup, addProductToPriceGroup, getPriceListCoefficient } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
+import { addPriceGroup, addProductToPriceGroup, getPriceListCoefficient, getImage } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
 import { getPriceListPdfText, getHTML } from '../../../../utils/functions.jsx';
+import fileImg from '../../../../../../../../assets/file.svg';
 import testImg from '../../../../../../../../assets/priceList/test.jpg';
 import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.jpg';
 import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.jpg';
@@ -29,11 +30,6 @@ const NewPriceList = (props) => {
     ])
     const [optionalCols, setOptionalCols] = useState([
         {
-            property: 'partnerPrice',
-            name: 'Партнер',
-            active: false
-        },
-        {
             property: 'dealerPrice',
             name: 'Дилер',
             active: false
@@ -41,6 +37,11 @@ const NewPriceList = (props) => {
         {
             property: 'distributorPrice',
             name: 'Дистрибутор',
+            active: false
+        },
+        {
+            property: 'partnerPrice',
+            name: 'Партнер',
             active: false
         }
     ])
@@ -460,6 +461,7 @@ const NewPriceList = (props) => {
                             </div>
                             <label className="main-form__label" htmlFor="file">
                                 Загрузить файл
+                                <img className="main-form__img" src={fileImg} alt="" />
                             </label>
                             <input type="file" name="file" id="file" onChange={(event) => {
                                 let regex = /.+\.(xlsx|csv)/;
@@ -473,7 +475,7 @@ const NewPriceList = (props) => {
                                         var firstSheetName = wb.SheetNames[0];
                                         let firstSheet = wb.Sheets[firstSheetName];
                                         var excelRows = XLSX.utils.sheet_to_json(firstSheet);
-                                        // console.log(excelRows);
+                                        console.log(excelRows);
                                         setDisclaimer(excelRows[excelRows.length - 1].id);
                                         let newData = [];
                                         let tempNumber = '000';
@@ -499,7 +501,8 @@ const NewPriceList = (props) => {
                                                     secondPriceName: item.secondPriceName,
                                                     dealerName: item.dealerName,
                                                     distributorName: item.distributorName,
-                                                    partnerName: item.partnerName
+                                                    partnerName: item.partnerName,
+                                                    active: true
                                                 });
                                                 tempNumber = item.number.substring(0, 3);
                                             } else {
@@ -547,7 +550,8 @@ const NewPriceList = (props) => {
                                                             secondPriceName: item.secondPriceName,
                                                             dealerName: item.dealerName,
                                                             distributorName: item.distributorName,
-                                                            partnerName: item.partnerName
+                                                            partnerName: item.partnerName,
+                                                            active: true
                                                         });
                                                         startId = index;
                                                         endId = index;
@@ -576,13 +580,12 @@ const NewPriceList = (props) => {
                     </div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/price-list')} value="Вернуться назад" />
-                        {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить продукцию" /> */}
                         {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
                             event.preventDefault();
                             setIsLoading(true);
                             getPriceListPdfText(
                                 categories,
-                                priceList,
+                                priceList.filter(item => item.active),
                                 optionalCols.filter(item => item.active && item),
                                 locationTypes,
                                 disclaimer
@@ -591,10 +594,46 @@ const NewPriceList = (props) => {
                         }} value="Открыть .pdf" />}
                         {isLoading && <ImgLoader />}
                     </div>
+                    {priceList.length > 0 && <div className="main-form__buttons">
+                        <label className="main-form__checkbox-container">Выделить все группы товаров
+                            <input
+                                type="checkbox"
+                                name="header"
+                                onChange={(event) => {
+                                    const name = event.target.name;
+                                    const value = event.target.checked;
+                                    let originalList = priceList.map(item => {
+                                        return {
+                                            ...item,
+                                            active: value
+                                        }
+                                    })
+                                    setPriceList([...originalList])
+                                }}
+                                defaultChecked={true}
+                            />
+                            <div class="main-form__checkmark"></div>
+                        </label>
+                        <div className="main-form__info-panel">
+                            <span>Дополнительные столбцы: </span>
+                            {optionalCols.map((item, index) => {
+                                return <div
+                                    className={item.active ? "main-form__button" : "main-form__button main-form__button--inverted"}
+                                    onClick={() => {
+                                        let temp = optionalCols;
+                                        temp.splice(index, 1, {
+                                            ...item,
+                                            active: !item.active
+                                        })
+                                        setOptionalCols([...temp]);
+                                    }}
+                                >{item.name}</div>
+                            })}
+                        </div>
+                    </div>}
                     {priceList.map((item, index) => {
                         return <React.Fragment>
-                            {/* <hr /> */}
-                            <InputText
+                            {/* <InputText
                                 inputName="Группа продукций"
                                 name="name"
                                 defaultValue={item.name}
@@ -606,8 +645,46 @@ const NewPriceList = (props) => {
                                     })
                                     setPriceList([...temp])
                                 }}
-                            />
+                            /> */}
                             <div className="main-form__item">
+                                <div className="main-form__input_name">Группа продукций</div>
+                                <label class="main-form__checkbox-container">
+                                    <input
+                                        type="checkbox"
+                                        name='groupOfProducts'
+                                        onChange={(event) => {
+                                            const name = event.target.name;
+                                            const value = event.target.checked;
+                                            let originalList = priceList;
+                                            originalList.splice(index, 1, {
+                                                ...item,
+                                                active: value
+                                            })
+                                            setPriceList([...originalList])
+                                        }}
+                                        checked={item.active}
+                                    />
+                                    <div class="main-form__checkmark"></div>
+                                </label>
+                                <div className="main-form__input_field">
+                                    <input
+                                        name="name"
+                                        type="text"
+                                        autoComplete="off"
+                                        onChange={(event) => {
+                                            let temp = priceList;
+                                            temp.splice(index, 1, {
+                                                ...item,
+                                                name: event.target.value
+                                            })
+                                            setPriceList([...temp])
+                                        }}
+                                        value={item.name}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className={item.active ? "main-form__item" : " main-form__item main-form__item--hidden"}>
                                 <div className="main-form__input_name">Продукция</div>
                                 <div className="main-form__input_field">
                                     <SelectPriceItem
@@ -669,22 +746,9 @@ const NewPriceList = (props) => {
                             </select>
                         </div>
                     </div> */}
-                    {/* <div className="main-form__buttons">
-                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/price-list')} value="Вернуться назад" />
-                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => {
-                            setIsLoading(true);
-                            getPriceListPdfText(
-                                categories,
-                                priceList,
-                                optionalCols.filter(item => item.active && item)
-                            );
-                            setIsLoading(false);
-                        }} value="Открыть .pdf" />
-                        {isLoading && <ImgLoader />}
-                    </div> */}
                 </form>
             </div>
-        </div>
+        </div >
     );
 };
 

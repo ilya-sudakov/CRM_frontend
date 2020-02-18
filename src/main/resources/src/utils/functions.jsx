@@ -551,7 +551,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     image: dataURI,
                                                     width: optionalCols.length > 2 ? 62 : 90,
                                                     // margin: [0, groupOfProducts.products.length * 3, 0, 0]
-                                                    margin: [0, 0, 0, 10]
+                                                    margin: [0, 5, 0, 10]
                                                 },
                                                 {
                                                     unbreakable: true,
@@ -603,9 +603,14 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                     // bold: true
                                                                     margin: [0, 1.5, 0, 0]
                                                                 },
-                                                                ...optionalCols.map(column => {
+                                                                ...optionalCols.map((column, index) => {
                                                                     return {
-                                                                        text: column.name,
+                                                                        text: column.property === 'partnerPrice'
+                                                                            ? groupOfProducts.partnerName
+                                                                            : column.property === 'dealerPrice'
+                                                                                ? groupOfProducts.dealerName
+                                                                                : column.property === 'distributorPrice'
+                                                                                && groupOfProducts.distributorName,
                                                                         // bold: true
                                                                         margin: [0, 4.5, 0, 0]
                                                                     }
@@ -694,8 +699,6 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                 },
                                                             ]
                                                         ],
-                                                        // margin: [0, 0, 0, 200],
-                                                        // heights: 1,
                                                     },
                                                 },
                                                 {
@@ -879,11 +882,55 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 // },
                 content: [
                     finalList,
+                    // {
+                    //     text: disclaimer,
+                    //     margin: [0, 50, 0, 0],
+                    //     alignment: 'left',
+                    // }
+                    // {
+                    // margin: [0, 50, 0, 0],
+                    // alignment: 'center',
+                    // text: [
+                    //     {
+                    //         text: ' ',
+                    //         style: 'subheader',
+                    //     },
+                    //     {
+                    //         text: 'Дополнительная информация',
+                    //         italics: true,
+                    //         fontSize: 14,
+                    //         style: 'subheader'
+                    //     },
+                    //     {
+                    //         text: ' ',
+                    //         style: 'subheader',
+                    //     },
+                    // ]
+                    // },
                     {
-                        text: disclaimer,
                         margin: [0, 50, 0, 0],
-                        fontSize: 12,
-                        alignment: 'left',
+                        table: {
+                            body: [
+                                [
+                                    {
+                                        border: [true, false, false, false],
+                                        fontSize: 12,
+                                        borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
+                                        text: [
+                                            // {
+                                            //     text: 'Дополнительная информация:\n\n',
+                                            //     italics: true,
+                                            //     fontSize: 10,
+                                            // },
+                                            {
+                                                text: disclaimer
+                                            }
+                                        ],
+                                        margin: [0, 0, 10, 0],
+                                    },
+                                ]
+                            ],
+                        },
                     }
                 ],
                 styles: {

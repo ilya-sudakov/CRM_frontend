@@ -33,6 +33,7 @@ const SelectPriceItem = (props) => {
         lessThan5000Price: 0.89,
         lessThan1500Price: 0.96,
     })
+    const [groupImg, setGroupImg] = useState(null);
     // const [visibleItems, setVisibleItems] = useState([{
     //     id: 
     // }])
@@ -178,31 +179,39 @@ const SelectPriceItem = (props) => {
             <div className="select-price-item__selected">
                 <div className="main-form__item">
                     <div className="main-form__input_name">Фотография</div>
-                    <div className="main-form__file_upload">
-                        <div className="main-form__file_name">
-                            {imgName}
-                        </div>
-                        <label className="main-form__label" htmlFor={"file" + props.uniqueId}>
-                            Загрузить файл
+                    <div className="main-form__input_field">
+                        {groupImg &&
+                            <div className="main-form__product_img">
+                                <img src={groupImg} alt="" />
+                            </div>
+                        }
+                        <div className="main-form__file_upload">
+                            <div className="main-form__file_name">
+                                {imgName}
+                            </div>
+                            <label className="main-form__label" htmlFor={"file" + props.uniqueId}>
+                                Загрузить файл
                                 {/* <img className="logo" src={fileUploadImg} alt="" /> */}
-                        </label>
-                        <input type="file" name="file" id={"file" + props.uniqueId} onChange={(event) => {
-                            let regex = /.+\.(jpeg|jpg|png|img)/;
-                            let file = event.target.files[0];
-                            if (file.name.match(regex) !== null) {
-                                setImgName(file.name);
-                                let reader = new FileReader();
-                                reader.onloadend = (() => {
-                                    // console.log('loaded pic for id #' + props.uniqueId);
-                                    props.handleImgChange(reader.result)
-                                });
-                                reader.readAsDataURL(file);
-                            }
-                            else {
-                                setImgName('Некорректный формат файла!');
-                            }
-                        }} />
+                            </label>
+                            <input type="file" name="file" id={"file" + props.uniqueId} onChange={(event) => {
+                                let regex = /.+\.(jpeg|jpg|png|img)/;
+                                let file = event.target.files[0];
+                                if (file.name.match(regex) !== null) {
+                                    setImgName(file.name);
+                                    let reader = new FileReader();
+                                    reader.onloadend = (() => {
+                                        setGroupImg(reader.result)
+                                        props.handleImgChange(reader.result)
+                                    });
+                                    reader.readAsDataURL(file);
+                                }
+                                else {
+                                    setImgName('Некорректный формат файла!');
+                                }
+                            }} />
+                        </div>
                     </div>
+
                 </div>
                 {selected.map((item, index) => (
                     <div className="select-price-item__selected_item" >

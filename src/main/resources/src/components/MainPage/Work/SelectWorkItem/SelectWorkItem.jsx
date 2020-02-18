@@ -36,6 +36,10 @@ const SelectWorkItem = (props) => {
             <div className="select-work-item__input">
                 <div className="select-work-item__input_name">{props.inputName + (props.required ? '*' : '')}</div>
                 <div className="select-work-item__input_field">
+                    <button className="select-work-item__button" onClick={(e) => {
+                        e.preventDefault();
+                        setShowWindow(!showWindow);
+                    }}>Выбрать тип работы</button>
                     <div className="select-work-item__searchbar">
                         <input
                             type="text"
@@ -43,13 +47,9 @@ const SelectWorkItem = (props) => {
                             // onChange={props.handleInputChange}
                             value={props.defaultValue ? props.defaultValue : fullName}
                             // onClick={!props.readOnly ? clickOnInput : null}
-                            placeholder="Выберите работу, нажав на кнопку 'Обзор'"
+                            placeholder="Выберите работу, нажав на кнопку 'Выбрать тип работы'"
                             readOnly={props.readOnly}
                         />
-                        <button className="select-work-item__search_button" onClick={(e) => {
-                            e.preventDefault();
-                            setShowWindow(!showWindow);
-                        }}>Обзор</button>
                     </div>
                 </div>
             </div>

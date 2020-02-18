@@ -26,7 +26,8 @@
   &__row--header {
     font-size: 80%!important;
     position: sticky; //test
-    top: calc(-6px); //test
+    // top: calc(-6px); //test
+    top: calc(-3%); //test
     word-break: break-all;
     .tableview-employees__col {
       &:last-child {

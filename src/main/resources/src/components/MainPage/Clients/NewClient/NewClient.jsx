@@ -158,8 +158,12 @@ const newClient = (props) => {
                         <div className="main-form__input_name">Юридическое лицо*</div>
                         <div className="main-form__input_field">
                             <SelectLegalEntity
-                                handleEntityChange={(value) => {
+                                handleLegalEntityChange={(value) => {
                                     validateField("legalEntity", value);
+                                    setClientInputs({
+                                        ...clientInputs,
+                                        legalEntity: value
+                                    })
                                 }}
                                 userHasAccess={props.userHasAccess}
                             />
@@ -172,6 +176,10 @@ const newClient = (props) => {
                             <SelectContacts
                                 handleContactsChange={(value) => {
                                     validateField("contacts", value);
+                                    setClientInputs({
+                                        ...clientInputs,
+                                        contacts: value
+                                    })
                                 }}
                                 userHasAccess={props.userHasAccess}
                             />

@@ -46,13 +46,14 @@
     flex-direction: row;
     position: relative;
     width: calc(100% - 5px);
+    margin-top: 5px;
     .select-work-item__input {
       border: 1px solid #bbbbbb;
-      flex: 0 1 85%;
+      flex: 0 1 100%;
       padding: 5px 10px;
-      border-radius: 0px !important;
-      border-top-left-radius: 5px !important;
-      border-bottom-left-radius: 5px !important;
+      border-radius: 5px;
+      // border-top-left-radius: 5px !important;
+      // border-bottom-left-radius: 5px !important;
       z-index: 0;
       min-width: 0 !important;
 
@@ -64,28 +65,27 @@
         border: 1px solid #f73434 !important;
       }
     }
+  }
 
-    .select-work-item__search_button {
-      border: 0;
-      flex: 0 1 15%;
-      background-color: $button__background--inverted;
-      color: $secondary-text-color;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-      outline: none;
-      cursor: pointer;
-      padding: 5px 10px;
-      font-size: 80%;
-      transition: 0.2s ease-in-out;
+  &__button {
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    font-size: 70%;
+    padding: 10px 10px;
+    border-radius: 5px;
+    background-color: $button__background--inverted;
+    color: #ffffff;
+    transition: 0.2s ease-in-out;
 
-      &:hover {
-        background-color: lighten($button__background--inverted, 5%);
-      }
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     }
   }
 
   .tableview-work {
-      width: 100%;
+    width: 100%;
   }
 
   @media (max-width: 768px) {

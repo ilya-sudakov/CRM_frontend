@@ -20,7 +20,7 @@
     position: relative;
     // padding-left: 35px;
     // margin-bottom: 12px;
-    width: 25px;
+    // width: 25px;
     height: 25px;
     cursor: pointer;
     font-size: 16px;
@@ -110,6 +110,8 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 25px;
+      // transition: 200ms ease-in-out;
+      // transform-origin: 0 0;
 
       // &:first-child {
       //   margin-top: 15px;
@@ -205,6 +207,58 @@
 
       .select {
         width: calc(90% - 20px);
+      }
+    }
+
+    .main-form__item--hidden {
+      transform: scaleY(0);
+      height: 0;
+      margin: 0;
+    }
+
+    .main-form__info-panel {
+      width: calc(100% - 50px);
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      & span {
+        font-size: 90%;
+        margin-right: 10px;
+      }
+    }
+
+    .main-form__button {
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      border-radius: 5px;
+      padding: 10px 10px;
+      cursor: pointer;
+      font-size: 90%;
+      margin-right: 10px;
+      transition: 0.2s ease-in-out;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 5px;
+      border: 1px solid transparent;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+    }
+
+    .main-form__button--inverted {
+      background-color: $secondary-text-color;
+      color: $primary-text-color;
+      border: 1px solid $button__background--inverted;
+
+      &:hover {
+        color: $secondary-text-color;
       }
     }
 
@@ -307,6 +361,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 25px);
   }
   @media (max-width: 768px) {
     .main-form__form {

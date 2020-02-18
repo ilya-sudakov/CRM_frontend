@@ -7,7 +7,7 @@ import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 const SelectLegalEntity = (props) => {
     const [selected, setSelected] = useState([
         {
-            INN: '7707083893',
+            INN: '7842143789',
             KPP: '',
             OGRN: '',
             BIK: '',
@@ -54,7 +54,7 @@ const SelectLegalEntity = (props) => {
         setSelected([
             ...selected,
             {
-                INN: '7707083893',
+                INN: '7842143789',
                 KPP: '',
                 OGRN: '',
                 BIK: '',
@@ -66,7 +66,7 @@ const SelectLegalEntity = (props) => {
         props.handleLegalEntityChange([
             ...selected,
             {
-                INN: '7707083893',
+                INN: '7842143789',
                 KPP: '',
                 OGRN: '',
                 BIK: '',
@@ -228,10 +228,10 @@ const SelectLegalEntity = (props) => {
                                 event.preventDefault();
                                 setIsLoading(true);
                                 //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
-                                getInfoByINN({ query: item.INN })
+                                getInfoByINN({ query: item.INN, branch_type: 'MAIN' })
                                     .then(res => res.json())
                                     .then(res => {
-                                        console.log(res.suggestions[0].data.name.full);
+                                        console.log(res);
                                         if (res.suggestions.length > 0) {
                                             let newData = Object.assign({
                                                 ...item,
