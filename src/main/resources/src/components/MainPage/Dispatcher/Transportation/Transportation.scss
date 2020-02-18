@@ -1,5 +1,19 @@
-@import '../../../../variables.scss';
+@import "../../../../variables.scss";
 
 .transportation {
-  
+  .main-window__filter-pick {
+    margin-bottom: 5px;
+    .main-window__button:last-child {
+      margin-right: auto;
+    }
+  }
+  .transportation__container {
+    // width: fit-content;
+    width: 100%;
+    // margin-right: auto;
+  }
+  .transportation__text {
+    //   flex: 0 1 20%;
+    width: 30%;
+  }
 }

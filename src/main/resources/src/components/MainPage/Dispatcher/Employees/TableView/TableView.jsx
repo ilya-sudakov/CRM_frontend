@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import pdfMake from 'pdfmake';
 import './TableView.scss';
-import { formatDateString, getEmployeesByWorkshopListPdfText } from '../../../../../utils/functions.jsx';
+import { formatDateString } from '../../../../../utils/functions.jsx';
+import { getEmployeesByWorkshopListPdfText } from '../../../../../utils/pdfFunctions.jsx';
 import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {

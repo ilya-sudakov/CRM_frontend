@@ -100,7 +100,15 @@ const SelectParts = (props) => {
                 </button>
             }
             <div className="select_parts__selected">
-                {selected.map((item, index) => (
+                {selected.sort((a, b) => {
+                    if (a.number < b.number) {
+                        return -1;
+                    }
+                    if (a.number > b.number) {
+                        return 1;
+                    }
+                    return 0;
+                }).map((item, index) => (
                     <div className="select_parts__selected_item" >
                         <div className="select_parts__selected_header" index={index} onClick={clickOnForm}>
                             <div className="select_parts__selected_name">

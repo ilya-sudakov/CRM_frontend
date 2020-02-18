@@ -7,7 +7,8 @@ import './ViewRequest.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestById } from '../../../../utils/RequestsAPI/Requests.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
-import { formatDateString, getRequestPdfText } from '../../../../utils/functions.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import { getRequestPdfText } from '../../../../utils/pdfFunctions.jsx';
 
 const ViewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({

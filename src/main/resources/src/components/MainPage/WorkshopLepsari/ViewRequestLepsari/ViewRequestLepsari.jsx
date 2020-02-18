@@ -7,7 +7,8 @@ import './ViewRequestLepsari.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestLepsariById } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
-import { getRequestPdfText, formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import { getRequestPdfText } from '../../../../utils/pdfFunctions.jsx';
 
 const ViewRequestLepsari = (props) => {
     const [requestInputs, setRequestInputs] = useState({

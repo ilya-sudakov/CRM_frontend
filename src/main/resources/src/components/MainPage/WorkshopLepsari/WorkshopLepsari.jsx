@@ -10,7 +10,7 @@ import {
     deleteProductsToRequestLepsari,
     deleteRequestLepsari
 } from '../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
-import { getRequestsListPdfText } from '../../../utils/functions.jsx';
+import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const WorkshopLepsari = (props) => {

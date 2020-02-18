@@ -7,7 +7,8 @@ import './ViewRequestLEMZ.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestLEMZById } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
-import { getRequestPdfText, formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import { getRequestPdfText } from '../../../../utils/pdfFunctions.jsx';
 
 const ViewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({

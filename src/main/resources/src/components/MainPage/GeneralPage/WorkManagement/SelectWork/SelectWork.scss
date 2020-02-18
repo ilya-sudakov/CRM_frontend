@@ -50,6 +50,10 @@
     position: relative;
     transition: 0.2s ease-in-out;
 
+    &:first-child {
+      margin-top: 5px;
+    }
+
     &:hover {
       background-color: darken(#dddddd, 10%);
     }

@@ -4,7 +4,7 @@ import '../../../utils/MainWindow/MainWindow.scss';
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
-import { getPriceListPdfText } from '../../../utils/functions.jsx';
+import { getPriceListPdfText } from '../../../utils/pdfFunctions.jsx';
 import testImg from '../../../../../../../assets/priceList/test.jpg';
 import category1Img from '../../../../../../../assets/priceList/крепеж_для_деревянных_досок.jpg';
 import category2Img from '../../../../../../../assets/priceList/крепеж_для_дпк_досок.jpg';

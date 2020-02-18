@@ -184,11 +184,11 @@ const SelectPriceItem = (props) => {
                 {!props.readOnly && <div className="main-form__item">
                     <div className="main-form__input_name">Фотография</div>
                     <div className="main-form__input_field">
-                        {/* {groupImg &&
+                        {groupImg &&
                             <div className="main-form__product_img">
                                 <img src={groupImg} alt="" />
                             </div>
-                        } */}
+                        }
                         {!props.readOnly && <FileUploader
                             uniqueId={"file" + props.uniqueId}
                             regex={/.+\.(jpeg|jpg|png|img)/}

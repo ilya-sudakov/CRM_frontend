@@ -5,7 +5,7 @@ import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectPriceItem from '../SelectPriceItem/SelectPriceItem.jsx';
 import XLSX from 'xlsx';
 import { addPriceGroup, addProductToPriceGroup, getPriceListCoefficient, getImage } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
-import { getPriceListPdfText, getHTML } from '../../../../utils/functions.jsx';
+import { getPriceListPdfText } from '../../../../utils/pdfFunctions.jsx';
 import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.jpg';
 import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.jpg';
 import category3Img from '../../../../../../../../assets/priceList/крепежные_элементы.jpg';
@@ -211,99 +211,104 @@ const NewPriceList = (props) => {
         let firstSheet = wb.Sheets[firstSheetName];
         var excelRows = XLSX.utils.sheet_to_json(firstSheet);
         console.log(excelRows);
-        setDisclaimer(excelRows[excelRows.length - 1].id);
-        let newData = [];
-        let tempNumber = '000';
-        let groupData = null;
-        let startId = 0, endId = 0;
-        for (let index = 3; index < excelRows.length; index++) {
-            let item = excelRows[index];
-            if (item.id === '1.') {
-                startId = index;
-                endId = index;
-                groupData = Object.assign({
-                    id: item.id,
-                    img: '',
-                    category: item.category,
-                    name: item.groupName,
-                    description: item.description,
-                    infoText: item.infoText,
-                    linkAddress: item.linkAddress,
-                    locationType: item.locationType,
-                    priceHeader: item.priceHeader,
-                    retailName: item.retailName,
-                    firstPriceName: item.firstPriceName,
-                    secondPriceName: item.secondPriceName,
-                    dealerName: item.dealerName,
-                    distributorName: item.distributorName,
-                    partnerName: item.partnerName,
-                    active: true
-                });
-                tempNumber = item.number.substring(0, 3);
-            } else {
-                let products = [];
-                for (let i = startId; i <= endId; i++) {
-                    products.push(Object.assign({
-                        id: excelRows[i].id,
-                        number: excelRows[i].number,
-                        name: excelRows[i].name,
-                        description: excelRows[i].productDescription,
-                        units: excelRows[i].units,
-                        lessThan1500Price: excelRows[i].firstPrice.toFixed(2),
-                        lessThan5000Price: excelRows[i].secondPrice.toFixed(2),
-                        cost: excelRows[i].cost.toFixed(2),
-                        retailMarketPrice: excelRows[i].retailMarketPrice.toFixed(2),
-                        retailPrice: excelRows[i].retailPrice.toFixed(2),
-                        firstPrice: excelRows[i].firstPrice.toFixed(2),
-                        secondPrice: excelRows[i].secondPrice.toFixed(2),
-                        partnerPrice: excelRows[i].partnerPrice.toFixed(2),
-                        dealerPrice: excelRows[i].dealerPrice.toFixed(2),
-                        distributorPrice: excelRows[i].distributorPrice.toFixed(2),
-                    }));
-                }
-                if (item.number) {
-                    if (item.number.includes(tempNumber)) {
-                        endId++;
+        if (excelRows.length === 0) {
+            alert('Файл пустой либо заполнен некорректно!')
+        }
+        else {
+            setDisclaimer(excelRows[excelRows.length - 1].id);
+            let newData = [];
+            let tempNumber = '000';
+            let groupData = null;
+            let startId = 0, endId = 0;
+            for (let index = 3; index < excelRows.length; index++) {
+                let item = excelRows[index];
+                if (item.id === '1.') {
+                    startId = index;
+                    endId = index;
+                    groupData = Object.assign({
+                        id: item.id,
+                        img: '',
+                        category: item.category,
+                        name: item.groupName,
+                        description: item.description,
+                        infoText: item.infoText,
+                        linkAddress: item.linkAddress,
+                        locationType: item.locationType,
+                        priceHeader: item.priceHeader,
+                        retailName: item.retailName,
+                        firstPriceName: item.firstPriceName,
+                        secondPriceName: item.secondPriceName,
+                        dealerName: item.dealerName,
+                        distributorName: item.distributorName,
+                        partnerName: item.partnerName,
+                        active: true
+                    });
+                    tempNumber = item.number.substring(0, 3);
+                } else {
+                    let products = [];
+                    for (let i = startId; i <= endId; i++) {
+                        products.push(Object.assign({
+                            id: excelRows[i].id,
+                            number: excelRows[i].number,
+                            name: excelRows[i].name,
+                            description: excelRows[i].productDescription,
+                            units: excelRows[i].units,
+                            lessThan1500Price: excelRows[i].firstPrice.toFixed(2),
+                            lessThan5000Price: excelRows[i].secondPrice.toFixed(2),
+                            cost: excelRows[i].cost.toFixed(2),
+                            retailMarketPrice: excelRows[i].retailMarketPrice.toFixed(2),
+                            retailPrice: excelRows[i].retailPrice.toFixed(2),
+                            firstPrice: excelRows[i].firstPrice.toFixed(2),
+                            secondPrice: excelRows[i].secondPrice.toFixed(2),
+                            partnerPrice: excelRows[i].partnerPrice.toFixed(2),
+                            dealerPrice: excelRows[i].dealerPrice.toFixed(2),
+                            distributorPrice: excelRows[i].distributorPrice.toFixed(2),
+                        }));
+                    }
+                    if (item.number) {
+                        if (item.number.includes(tempNumber)) {
+                            endId++;
+                        }
+                        else {
+                            newData.push({
+                                ...groupData,
+                                products
+                            });
+                            groupData = Object.assign({
+                                id: item.id,
+                                img: '',
+                                category: item.category,
+                                name: item.groupName,
+                                description: item.description,
+                                infoText: item.infoText,
+                                linkAddress: item.linkAddress,
+                                locationType: item.locationType,
+                                priceHeader: item.priceHeader,
+                                retailName: item.retailName,
+                                firstPriceName: item.firstPriceName,
+                                secondPriceName: item.secondPriceName,
+                                dealerName: item.dealerName,
+                                distributorName: item.distributorName,
+                                partnerName: item.partnerName,
+                                active: true
+                            });
+                            startId = index;
+                            endId = index;
+                            tempNumber = item.number.substring(0, 3);
+                        }
                     }
                     else {
                         newData.push({
                             ...groupData,
                             products
                         });
-                        groupData = Object.assign({
-                            id: item.id,
-                            img: '',
-                            category: item.category,
-                            name: item.groupName,
-                            description: item.description,
-                            infoText: item.infoText,
-                            linkAddress: item.linkAddress,
-                            locationType: item.locationType,
-                            priceHeader: item.priceHeader,
-                            retailName: item.retailName,
-                            firstPriceName: item.firstPriceName,
-                            secondPriceName: item.secondPriceName,
-                            dealerName: item.dealerName,
-                            distributorName: item.distributorName,
-                            partnerName: item.partnerName,
-                            active: true
-                        });
-                        startId = index;
-                        endId = index;
-                        tempNumber = item.number.substring(0, 3);
+                        break;
                     }
                 }
-                else {
-                    newData.push({
-                        ...groupData,
-                        products
-                    });
-                    break;
-                }
             }
+            setPriceList(newData);
+            console.log(newData)
         }
-        setPriceList(newData);
-        console.log(newData)
     }
 
     const handleInputChange = e => {
@@ -358,20 +363,20 @@ const NewPriceList = (props) => {
 
     useEffect(() => {
         document.title = "Добавление продукции";
-        getPriceListCoefficient()
-            .then(res => res.json())
-            .then(res => {
-                // console.log(res);
-                setCoefficients({
-                    retailPrice: Number.parseFloat(res.retailPrice),
-                    dealerPrice: Number.parseFloat(res.dealerPrice),
-                    distributorPrice: Number.parseFloat(res.distributorPrice),
-                    partnerPrice: Number.parseFloat(res.partnerPrice),
-                    stopPrice: Number.parseFloat(res.stopPrice),
-                    lessThan5000Price: Number.parseFloat(res.lessThan5000Price),
-                    lessThan1500Price: Number.parseFloat(res.lessThan1500Price),
-                })
-            })
+        // getPriceListCoefficient()
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         // console.log(res);
+        //         setCoefficients({
+        //             retailPrice: Number.parseFloat(res.retailPrice),
+        //             dealerPrice: Number.parseFloat(res.dealerPrice),
+        //             distributorPrice: Number.parseFloat(res.distributorPrice),
+        //             partnerPrice: Number.parseFloat(res.partnerPrice),
+        //             stopPrice: Number.parseFloat(res.stopPrice),
+        //             lessThan5000Price: Number.parseFloat(res.lessThan5000Price),
+        //             lessThan1500Price: Number.parseFloat(res.lessThan1500Price),
+        //         })
+        //     })
     }, [])
 
     return (

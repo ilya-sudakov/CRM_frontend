@@ -40,6 +40,21 @@
     display: none;
   }
 
+  .main-window__filter-pick {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 90%;
+
+    .main-window__button {
+      font-size: 75%;
+      padding: 5px 10px;
+    }
+    .main-window__button--inverted {
+      color: #666666;
+    }
+  }
+
   .main-window__addButton {
     background-color: $button__background--inverted;
     color: $secondary-text-color;

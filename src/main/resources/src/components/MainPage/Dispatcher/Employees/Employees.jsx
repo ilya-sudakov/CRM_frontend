@@ -5,7 +5,7 @@ import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
 import PrintIcon from '../../../../../../../../assets/print.png';
 import pdfMake from 'pdfmake';
-import { getEmployeesListPdfText } from '../../../../utils/functions.jsx';
+import { getEmployeesListPdfText } from '../../../../utils/pdfFunctions.jsx';
 import { getEmployees, deleteEmployee, getEmployeesByWorkshop } from '../../../../utils/RequestsAPI/Employees.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
