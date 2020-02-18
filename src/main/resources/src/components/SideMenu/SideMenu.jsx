@@ -21,13 +21,13 @@ const SideMenu = (props) => {
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             addButtonName: "Добавить клиента"
         },
-        // {
-        //     pathname: "/work-managment",
-        //     AddButtonLinkTo: "/work-managment/record-time/new",
-        //     mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER', 'ROLE_LEMZ', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER'],
-        //     addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER', 'ROLE_LEMZ', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER'],
-        //     addButtonName: "Учесть рабочее время"
-        // },
+        {
+            pathname: "/work-managment",
+            addButtonLinkTo: "/work-managment/record-time/new",
+            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER', 'ROLE_LEMZ', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER'],
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER', 'ROLE_LEMZ', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER'],
+            addButtonName: "Учесть рабочее время"
+        },
         {
             pathname: "/contracts",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
@@ -166,10 +166,12 @@ const SideMenu = (props) => {
                 {
                     sidemenuItems.map((item) => {
                         return <Link className={
-                            (item.addButtonName &&
+                            (
+                                item.addButtonName &&
                                 props.userHasAccess(item.addButtonRoles) &&
                                 props.location.pathname.includes(item.pathname) &&
-                                (item.pathname !== "/"))
+                                (item.pathname !== "/")
+                            )
                                 ? "sidemenu__item--add"
                                 : (props.location.pathname.length === 1 && props.location.pathname.includes(item.pathname))
                                     ? "sidemenu__item--add"

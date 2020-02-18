@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import deleteSVG from '../../../../../../../../assets/select/delete.svg';
 import './SelectPriceItem.scss';
 import { getPriceListCoefficient } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
+import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 
 const SelectPriceItem = (props) => {
-    const [imgName, setImgName] = useState("Имя файла...");
+    // const [imgName, setImgName] = useState("Имя файла...");
     const [selected, setSelected] = useState([
         {
             number: '',
@@ -44,6 +45,9 @@ const SelectPriceItem = (props) => {
         }
         if (props.options !== undefined) {
             setOptions([...props.options])
+        }
+        if (props.groupImg !== undefined) {
+            setGroupImg(props.groupImg)
         }
         getPriceListCoefficient()
             .then(res => res.json())
@@ -177,42 +181,24 @@ const SelectPriceItem = (props) => {
                 </button>
             }
             <div className="select-price-item__selected">
-                <div className="main-form__item">
+                {!props.readOnly && <div className="main-form__item">
                     <div className="main-form__input_name">Фотография</div>
                     <div className="main-form__input_field">
-                        {groupImg &&
+                        {/* {groupImg &&
                             <div className="main-form__product_img">
                                 <img src={groupImg} alt="" />
                             </div>
-                        }
-                        <div className="main-form__file_upload">
-                            <div className="main-form__file_name">
-                                {imgName}
-                            </div>
-                            <label className="main-form__label" htmlFor={"file" + props.uniqueId}>
-                                Загрузить файл
-                                {/* <img className="logo" src={fileUploadImg} alt="" /> */}
-                            </label>
-                            <input type="file" name="file" id={"file" + props.uniqueId} onChange={(event) => {
-                                let regex = /.+\.(jpeg|jpg|png|img)/;
-                                let file = event.target.files[0];
-                                if (file.name.match(regex) !== null) {
-                                    setImgName(file.name);
-                                    let reader = new FileReader();
-                                    reader.onloadend = (() => {
-                                        setGroupImg(reader.result)
-                                        props.handleImgChange(reader.result)
-                                    });
-                                    reader.readAsDataURL(file);
-                                }
-                                else {
-                                    setImgName('Некорректный формат файла!');
-                                }
-                            }} />
-                        </div>
+                        } */}
+                        {!props.readOnly && <FileUploader
+                            uniqueId={"file" + props.uniqueId}
+                            regex={/.+\.(jpeg|jpg|png|img)/}
+                            onChange={(result) => {
+                                setGroupImg(result)
+                                props.handleImgChange(result)
+                            }}
+                        />}
                     </div>
-
-                </div>
+                </div>}
                 {selected.map((item, index) => (
                     <div className="select-price-item__selected_item" >
                         <div className="select-price-item__selected_header" index={index} onClick={clickOnForm}>

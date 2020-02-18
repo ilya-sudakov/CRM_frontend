@@ -6,6 +6,7 @@ import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx';
 
 const EditEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -161,31 +162,6 @@ const EditEmployee = (props) => {
         }
     }, [])
 
-    // const [imgName, setImgName] = useState([]);
-    const [imgName, setImgName] = useState('');
-    const handleFileInputChange = (event) => {
-        let regex = /.+\.(jpeg|jpg|png|img)/;
-        let file = Array.from(event.target.files);
-        file.map((photo, index) => {
-            if (photo.name.match(regex) !== null && index === 0) {
-                // let prevNames = imgName;
-                // prevNames.push(photo.name);
-                // setImgName(prevNames);
-                setImgName(photo.name)
-                let reader = new FileReader();
-                reader.onloadend = (() => {
-                    // let prevScans = employeeInputs.passportScan1;
-                    // prevScans.push(reader.result);
-                    setEmployeeInputs({
-                        ...employeeInputs,
-                        passportScan1: reader.result
-                    })
-                });
-                reader.readAsDataURL(photo);
-            }
-        })
-    }
-
     const handleDateChange = (date) => {
         const regex = "(0[1-9]|[12]\d|3[01])\.(0[1-9]|1[0-2])\.[12]\d{3})";
         validateField("yearOfBirth", date);
@@ -295,23 +271,16 @@ const EditEmployee = (props) => {
                 </div>}
                 <div className="main-form__item">
                     <div className="main-form__input_name">Паспорт*</div>
-                    <div className="main-form__file_upload">
-                        <div className="main-form__file_name">
-                            {/* {imgName.map((photo) => {
-                                return (
-                                    <div>
-                                        {photo}
-                                    </div>
-                                )
-                            })} */}
-                            {imgName}
-                        </div>
-                        <label className="main-form__label" htmlFor="file">
-                            Загрузить файл
-                                {/* <img className="logo" src={fileUploadImg} alt="" /> */}
-                        </label>
-                        <input type="file" name="passportScan1" id="file" onChange={handleFileInputChange} />
-                    </div>
+                    <FileUploader
+                        regex={/.+\.(jpeg|jpg|png|img)/}
+                        uniqueId={0}
+                        onChange={(result) => {
+                            setEmployeeInputs({
+                                ...employeeInputs,
+                                passportScan1: result
+                            })
+                        }}
+                    />
                 </div>
                 <InputText
                     inputName="Комментарий"

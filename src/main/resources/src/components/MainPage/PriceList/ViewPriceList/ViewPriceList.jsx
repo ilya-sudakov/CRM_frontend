@@ -110,6 +110,7 @@ const ViewPriceList = (props) => {
                                         products: value
                                     })
                                 }}
+                                groupImg={priceListInputs.img}
                                 readOnly
                                 userHasAccess={props.userHasAccess}
                                 defaultValue={priceListInputs.products}

@@ -6,6 +6,7 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 
 const NewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -37,8 +38,6 @@ const NewProduct = (props) => {
         unit: true,
         weight: false
     })
-    const [imgName, setImgName] = useState("Имя файла...");
-    const [imgBASE64, setImgBASE64] = useState('');
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -87,7 +86,7 @@ const NewProduct = (props) => {
         }
         else {
             // alert("Форма не заполнена");
-           setIsLoading(false);
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -119,28 +118,6 @@ const NewProduct = (props) => {
             ...productErrors,
             [name]: false
         })
-    }
-
-    const handleFileInputChange = (event) => {
-        let regex = /.+\.(jpeg|jpg|png|img)/;
-        let file = event.target.files[0];
-        if (file.name.match(regex) !== null) {
-            setImgName(file.name);
-            let reader = new FileReader();
-            reader.onloadend = (() => {
-                // setImgBASE64(reader.result.split("base64,")[1]);
-                setImgBASE64(reader.result);
-                setProductInputs({
-                    ...productInputs,
-                    // photo: reader.result.split("base64,")[1]
-                    photo: reader.result
-                })
-            });
-            reader.readAsDataURL(file);
-        }
-        else {
-            setImgName('Некорректный формат файла!');
-        }
     }
 
     const handleCategoryChange = (value) => {
@@ -253,16 +230,16 @@ const NewProduct = (props) => {
                 </div>
                 <div className="main-form__item">
                     <div className="main-form__input_name">Фотография</div>
-                    <div className="main-form__file_upload">
-                        <div className="main-form__file_name">
-                            {imgName}
-                        </div>
-                        <label className="main-form__label" htmlFor="file">
-                            Загрузить файл
-                                {/* <img className="logo" src={fileUploadImg} alt="" /> */}
-                        </label>
-                        <input type="file" name="file" id="file" onChange={handleFileInputChange} />
-                    </div>
+                    <FileUploader
+                        regex={/.+\.(jpeg|jpg|png|img)/}
+                        uniqueId={0}
+                        onChange={(result) => {
+                            setProductInputs({
+                                ...productInputs,
+                                photo: result
+                            })
+                        }}
+                    />
                 </div>
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
