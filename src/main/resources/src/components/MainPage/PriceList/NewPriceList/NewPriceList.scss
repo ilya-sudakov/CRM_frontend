@@ -1,17 +1,17 @@
 @import "../../../../variables.scss";
 
 .new-price-item {
-  .main-form__checkbox-container {
+  .checkbox__container {
     padding-left: 35px;
     margin-bottom: 12px;
   }
+  .main-form__item .checkbox__container {
+    // height: 100%;
+    padding-left: 15px;
+    margin-bottom: 0;
+  }
   .main-form__input_field--vertical {
     flex-direction: column;
-  }
-  .main-form__item .main-form__checkbox-container {
-    // height: 100%;
-    padding-left: 35px;
-    margin-bottom: 0;
   }
   .main-form__info-panel {
     width: 50% !important;
@@ -22,8 +22,11 @@
   }
   .main-form__buttons {
     margin-bottom: 20px;
-    .main-form__checkbox-container {
+    .checkbox {
       width: 50%;
+    }
+    .checkbox__container {
+      width: 100%;
     }
   }
 }

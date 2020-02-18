@@ -13,6 +13,7 @@ import categoryImg from '../../../../../../../assets/priceList/крепежны�
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import EditCoefficient from './EditCoefficient/EditCoefficient.jsx';
 import { getPriceList, deletePriceGroupById, deleteProductFromPriceGroupById } from '../../../utils/RequestsAPI/PriceList/PriceList.jsx';
+import CheckBox from '../../../utils/Form/CheckBox/CheckBox.jsx';
 
 const PriceList = (props) => {
     const [priceList, setPriceList] = useState([]);
@@ -107,11 +108,7 @@ const PriceList = (props) => {
             })
     }
 
-    const handleCheckboxChange = (event) => {
-        // event.preventDefault();
-        const name = event.target.name;
-        const value = event.target.checked;
-        const id = event.target.id;
+    const handleCheckboxChange = (value, name, id) => {
         if (name === 'header') {
             setCheckedItems([
                 ...checkedItems.map(item => {
@@ -247,15 +244,13 @@ const PriceList = (props) => {
                         <span>Дистрибутор</span>
                         <span>Стопцена</span>
                         <span>
-                            <label class="main-window__checkbox-container">
-                                <input
-                                    type="checkbox"
-                                    name="header"
-                                    defaultChecked={true}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <div class="main-window__checkmark"></div>
-                            </label>
+                            <CheckBox
+                                defaultChecked={true}
+                                name="header"
+                                onChange={(value, name, id) => {
+                                    handleCheckboxChange(value, name, id)
+                                }}
+                            />
                         </span>
                         <div className="main-window__actions">Действие</div>
                     </div>
@@ -310,7 +305,7 @@ const PriceList = (props) => {
                                     <span><div className="main-window__mobile-text">Дистрибутор: </div>{item.distributorPrice}</span>
                                     <span><div className="main-window__mobile-text">Стопцена: </div>{item.stopPrice}</span>
                                     <span><div className="main-window__mobile-text">Выбрать: </div>
-                                        <label class="main-window__checkbox-container">
+                                        {/* <label class="main-window__checkbox-container">
                                             <input
                                                 type="checkbox"
                                                 id={item.id}
@@ -319,7 +314,15 @@ const PriceList = (props) => {
                                                 onChange={handleCheckboxChange}
                                             />
                                             <div class="main-window__checkmark"></div>
-                                        </label>
+                                        </label> */}
+                                        <CheckBox
+                                            checked={checkedItems.find(checkedItem => checkedItem.id === item.id) !== undefined ? checkedItems.find(checkedItem => checkedItem.id === item.id).active : true}
+                                            name="groupOfProducts"
+                                            id={item.id}
+                                            onChange={(value, name, id) => {
+                                                handleCheckboxChange(value, name, id)
+                                            }}
+                                        />
                                     </span>
                                     <div className="main-window__actions">
                                         <div className="main-window__action" onClick={() => props.history.push('/price-list/view/' + item.id)}>Просмотр</div>

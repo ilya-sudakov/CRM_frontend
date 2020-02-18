@@ -68,9 +68,6 @@
     border-right: 1px solid #aaaaaa;
   }
   .main-window__list-item {
-    & span {
-      // border-right: 1px solid #aaaaaa;
-    }
     & span:nth-child(1) {
       flex: 0 1 100px;
       .img-loader {

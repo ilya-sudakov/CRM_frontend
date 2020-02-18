@@ -6,6 +6,7 @@ import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectPriceItem from '../SelectPriceItem/SelectPriceItem.jsx';
 import { addPriceGroup, addProductToPriceGroup, getPriceListCoefficient, getPriceGroupById } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 
 const ViewPriceList = (props) => {
     const [priceListInputs, setPriceListInputs] = useState({
@@ -120,36 +121,34 @@ const ViewPriceList = (props) => {
                     <div className="main-form__item">
                         <div className="main-form__input_name">Тип местоположения*</div>
                         <div className="main-form__input_field main-form__input_field--vertical">
-                            <label class="main-form__checkbox-container">
-                                Фасад
-                                <input
-                                    type="checkbox"
-                                    name="locationType"
-                                    value="Фасад"
-                                    disabled="disabled" 
-                                    defaultChecked={priceListInputs.locationType.reduce((prev, cur) => {
+                            <CheckBox
+                                text="Фасад"
+                                defaultChecked={
+                                    priceListInputs.locationType.reduce((prev, cur) => {
                                         if (cur === 'Фасад') {
                                             return true
                                         }
-                                    }, false)}
-                                />
-                                <div class="main-form__checkmark"></div>
-                            </label>
-                            <label class="main-form__checkbox-container">
-                                Терраса
-                                <input
-                                    type="checkbox"
-                                    name="locationType"
-                                    value="Терраса"
-                                    disabled="disabled" 
-                                    defaultChecked={priceListInputs.locationType.reduce((prev, cur) => {
+                                        else return false;
+                                    }, false)
+                                }
+                                disabled="disabled"
+                                value="Фасад"
+                                name="locationType"
+                            />
+                            <CheckBox
+                                text="Терраса"
+                                defaultChecked={
+                                    priceListInputs.locationType.reduce((prev, cur) => {
                                         if (cur === 'Терраса') {
                                             return true
                                         }
-                                    }, false)}
-                                />
-                                <div class="main-form__checkmark"></div>
-                            </label>
+                                        else return false;
+                                    }, false)
+                                }
+                                disabled="disabled"
+                                value="Терраса"
+                                name="locationType"
+                            />
                         </div>
                     </div>
                     {priceListInputs.img && <div className="main-form__item">
@@ -177,21 +176,6 @@ const ViewPriceList = (props) => {
                         defaultValue={priceListInputs.category}
                         name="category"
                     />
-                    {/* <div className="main-form__item">
-                        <div className="main-form__input_name">Категория*</div>
-                        <div className="main-form__input_field">
-                            <select
-                                name="category"
-                                defaultValue={priceListInputs.category}
-                            >
-                                <option>Крепеж для деревянных досок</option>
-                                <option>Крепеж для ДПК досок</option>
-                                <option>Крепежные элементы</option>
-                                <option>Продукция для подконструкций</option>
-                                <option>Крепеж для НВФ</option>
-                            </select>
-                        </div>
-                    </div> */}
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/price-list')} value="Вернуться назад" />
                         {isLoading && <ImgLoader />}

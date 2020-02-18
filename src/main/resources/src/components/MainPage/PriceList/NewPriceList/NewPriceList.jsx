@@ -13,6 +13,7 @@ import categoryImg from '../../../../../../../../assets/priceList/крепежн
 import locationType1Img from '../../../../../../../../assets/priceList/Фасад.png';
 import locationType2Img from '../../../../../../../../assets/priceList/Терраса.png';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 
 const NewPriceList = (props) => {
     const [locationTypes, setLocationTypes] = useState([
@@ -69,140 +70,139 @@ const NewPriceList = (props) => {
             active: true
         },
     ]);
-    const [disclaimer, setDisclaimer] = useState('');
-    const [priceListInputs, setPriceListInputs] = useState({
-        name: '',
-        description: '',
-        products: [],
-        locationType: ['Фасад'],
-        linkAddress: '',
-        infoText: '',
-        cost: 0,
-        dealerPrice: 0,
-        distributorPrice: 0,
-        partnerPrice: 0,
-        img: '',
-        retailMarketPrice: 0,
-        category: 'Крепеж для деревянных досок'
-    });
-    const [formErrors, setFormErrors] = useState({
-        name: false,
-        description: false,
-        products: false,
-        linkAddress: false,
-        infoText: false,
-        cost: false,
-        dealerPrice: false,
-        distributorPrice: false,
-        partnerPrice: false,
-        retailMarketPrice: false,
-    });
-    const [validInputs, setValidInputs] = useState({
-        name: false,
-        description: false,
-        products: false,
-        linkAddress: false,
-        infoText: false,
-        cost: false,
-        dealerPrice: true,
-        distributorPrice: true,
-        partnerPrice: true,
-        retailMarketPrice: false,
-    });
-
-    const [showError, setShowError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [imgName, setImgName] = useState("Имя файла...");
-    const [coefficients, setCoefficients] = useState({
-        retailPrice: 1,
-        dealerPrice: 0.56,
-        distributorPrice: 0.485,
-        partnerPrice: 0.79,
-        stopPrice: 0.4545,
-        lessThan5000Price: 0.89,
-        lessThan1500Price: 0.96,
-    });
     const [priceList, setPriceList] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [disclaimer, setDisclaimer] = useState('');
+    // const [priceListInputs, setPriceListInputs] = useState({
+    //     name: '',
+    //     description: '',
+    //     products: [],
+    //     locationType: ['Фасад'],
+    //     linkAddress: '',
+    //     infoText: '',
+    //     cost: 0,
+    //     dealerPrice: 0,
+    //     distributorPrice: 0,
+    //     partnerPrice: 0,
+    //     img: '',
+    //     retailMarketPrice: 0,
+    //     category: 'Крепеж для деревянных досок'
+    // });
+    // const [formErrors, setFormErrors] = useState({
+    //     name: false,
+    //     description: false,
+    //     products: false,
+    //     linkAddress: false,
+    //     infoText: false,
+    //     cost: false,
+    //     dealerPrice: false,
+    //     distributorPrice: false,
+    //     partnerPrice: false,
+    //     retailMarketPrice: false,
+    // });
+    // const [validInputs, setValidInputs] = useState({
+    //     name: false,
+    //     description: false,
+    //     products: false,
+    //     linkAddress: false,
+    //     infoText: false,
+    //     cost: false,
+    //     dealerPrice: true,
+    //     distributorPrice: true,
+    //     partnerPrice: true,
+    //     retailMarketPrice: false,
+    // });
 
-    const validateField = (fieldName, value) => {
-        switch (fieldName) {
-            default:
-                if (validInputs[fieldName] !== undefined) {
-                    setValidInputs({
-                        ...validInputs,
-                        [fieldName]: (value !== "")
-                    })
-                }
-                break;
-        }
-    }
+    // const [showError, setShowError] = useState(false);
+    // const [coefficients, setCoefficients] = useState({
+    //     retailPrice: 1,
+    //     dealerPrice: 0.56,
+    //     distributorPrice: 0.485,
+    //     partnerPrice: 0.79,
+    //     stopPrice: 0.4545,
+    //     lessThan5000Price: 0.89,
+    //     lessThan1500Price: 0.96,
+    // });
 
-    const formIsValid = () => {
-        let check = true;
-        let newErrors = Object.assign({
-            name: false,
-            description: false,
-            products: false,
-            linkAddress: false,
-            infoText: false,
-            cost: false,
-            dealerPrice: false,
-            distributorPrice: false,
-            partnerPrice: false,
-            retailMarketPrice: false,
-        });
-        for (let item in validInputs) {
-            // console.log(item, validInputs[item]);            
-            if (validInputs[item] === false) {
-                check = false;
-                newErrors = Object.assign({
-                    ...newErrors,
-                    [item]: true
-                })
-            }
-        }
-        setFormErrors(newErrors);
-        if (check === true) {
-            return true;
-        }
-        else {
-            // alert("Форма не заполнена");
-            setIsLoading(false);
-            setShowError(true);
-            return false;
-        };
-    }
+    // const validateField = (fieldName, value) => {
+    //     switch (fieldName) {
+    //         default:
+    //             if (validInputs[fieldName] !== undefined) {
+    //                 setValidInputs({
+    //                     ...validInputs,
+    //                     [fieldName]: (value !== "")
+    //                 })
+    //             }
+    //             break;
+    //     }
+    // }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setIsLoading(true);
-        console.log(priceListInputs);
-        formIsValid() && addPriceGroup({
-            ...priceListInputs,
-            locationType: priceListInputs.locationType.reduce((sum, cur, index) => {
-                if (index < (priceListInputs.locationType.length - 1)) {
-                    return (sum + cur + '/')
-                }
-                else {
-                    return (sum + cur)
-                }
-            }, '')
-        })
-            .then(res => res.json())
-            .then((res) => {
-                Promise.all(priceListInputs.products.map(item => {
-                    console.log({ ...item, priceGroupProductId: res.id });
+    // const formIsValid = () => {
+    //     let check = true;
+    //     let newErrors = Object.assign({
+    //         name: false,
+    //         description: false,
+    //         products: false,
+    //         linkAddress: false,
+    //         infoText: false,
+    //         cost: false,
+    //         dealerPrice: false,
+    //         distributorPrice: false,
+    //         partnerPrice: false,
+    //         retailMarketPrice: false,
+    //     });
+    //     for (let item in validInputs) {
+    //         // console.log(item, validInputs[item]);            
+    //         if (validInputs[item] === false) {
+    //             check = false;
+    //             newErrors = Object.assign({
+    //                 ...newErrors,
+    //                 [item]: true
+    //             })
+    //         }
+    //     }
+    //     setFormErrors(newErrors);
+    //     if (check === true) {
+    //         return true;
+    //     }
+    //     else {
+    //         // alert("Форма не заполнена");
+    //         setIsLoading(false);
+    //         setShowError(true);
+    //         return false;
+    //     };
+    // }
 
-                    return addProductToPriceGroup({ ...item, priceGroupProductId: res.id });
-                }))
-                    .then(() => props.history.push("/price-list"))
-                    .catch(error => {
-                        setIsLoading(false);
-                        alert('Ошибка при добавлении записи');
-                        console.log(error);
-                    })
-            })
-    }
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     setIsLoading(true);
+    //     console.log(priceListInputs);
+    //     formIsValid() && addPriceGroup({
+    //         ...priceListInputs,
+    //         locationType: priceListInputs.locationType.reduce((sum, cur, index) => {
+    //             if (index < (priceListInputs.locationType.length - 1)) {
+    //                 return (sum + cur + '/')
+    //             }
+    //             else {
+    //                 return (sum + cur)
+    //             }
+    //         }, '')
+    //     })
+    //         .then(res => res.json())
+    //         .then((res) => {
+    //             Promise.all(priceListInputs.products.map(item => {
+    //                 console.log({ ...item, priceGroupProductId: res.id });
+
+    //                 return addProductToPriceGroup({ ...item, priceGroupProductId: res.id });
+    //             }))
+    //                 .then(() => props.history.push("/price-list"))
+    //                 .catch(error => {
+    //                     setIsLoading(false);
+    //                     alert('Ошибка при добавлении записи');
+    //                     console.log(error);
+    //                 })
+    //         })
+    // }
 
     const parseExcelData = (result) => {
         let data = new Uint8Array(result);
@@ -407,25 +407,20 @@ const NewPriceList = (props) => {
                         {isLoading && <ImgLoader />}
                     </div>
                     {priceList.length > 0 && <div className="main-form__buttons">
-                        <label className="main-form__checkbox-container">Выделить все группы товаров
-                            <input
-                                type="checkbox"
-                                name="header"
-                                onChange={(event) => {
-                                    const name = event.target.name;
-                                    const value = event.target.checked;
-                                    let originalList = priceList.map(item => {
-                                        return {
-                                            ...item,
-                                            active: value
-                                        }
-                                    })
-                                    setPriceList([...originalList])
-                                }}
-                                defaultChecked={true}
-                            />
-                            <div class="main-form__checkmark"></div>
-                        </label>
+                        <CheckBox
+                            text="Выделить все группы товаров"
+                            defaultChecked={true}
+                            name="header"
+                            onChange={(value) => {
+                                let originalList = priceList.map(item => {
+                                    return {
+                                        ...item,
+                                        active: value
+                                    }
+                                })
+                                setPriceList([...originalList])
+                            }}
+                        />
                         <div className="main-form__info-panel">
                             <span>Дополнительные столбцы: </span>
                             {optionalCols.map((item, index) => {
@@ -447,24 +442,18 @@ const NewPriceList = (props) => {
                         return <React.Fragment>
                             <div className="main-form__item">
                                 <div className="main-form__input_name">Группа продукций</div>
-                                <label class="main-form__checkbox-container">
-                                    <input
-                                        type="checkbox"
-                                        name='groupOfProducts'
-                                        onChange={(event) => {
-                                            const name = event.target.name;
-                                            const value = event.target.checked;
-                                            let originalList = priceList;
-                                            originalList.splice(index, 1, {
-                                                ...item,
-                                                active: value
-                                            })
-                                            setPriceList([...originalList])
-                                        }}
-                                        checked={item.active}
-                                    />
-                                    <div class="main-form__checkmark"></div>
-                                </label>
+                                <CheckBox
+                                    checked={item.active}
+                                    name='groupOfProducts'
+                                    onChange={(value) => {
+                                        let originalList = priceList;
+                                        originalList.splice(index, 1, {
+                                            ...item,
+                                            active: value
+                                        })
+                                        setPriceList([...originalList])
+                                    }}
+                                />
                                 <div className="main-form__input_field">
                                     <input
                                         name="name"
@@ -513,7 +502,7 @@ const NewPriceList = (props) => {
                     })}
                 </form>
             </div>
-        </div >
+        </div>
     );
 };
 
