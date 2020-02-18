@@ -99,7 +99,7 @@ const Transportation = (props) => {
                 <div className="main-window__info-panel">
                     <div className="transportation__container">
                         <div className="main-window__filter-pick">
-                            <span className="transportation__text">Фильтр по подразделениям (куда): </span>
+                            <span className="transportation__text">Фильтр по подразделениям - Куда: </span>
                             {workshops.map((item, index) => {
                                 if (props.userHasAccess(item.visibility)) {
                                     return <div
@@ -118,7 +118,7 @@ const Transportation = (props) => {
                             })}
                         </div>
                         <div className="main-window__filter-pick">
-                            <span className="transportation__text">Фильтр по подразделениям(откуда): </span>
+                            <span className="transportation__text">Фильтр по подразделениям - Откуда: </span>
                             {workshops.map((item, index) => {
                                 if (props.userHasAccess(item.visibility)) {
                                     return <div

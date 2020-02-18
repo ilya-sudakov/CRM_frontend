@@ -1,7 +1,11 @@
 import font from 'pdfmake/build/vfs_fonts.js';
 // import DejaVuSans from 'pdfmake/build/vfs_fonts_new.js'
 import pdfMake from 'pdfmake';
-import { formatDateString } from './functions.jsx';
+import testImg from '../../../../../assets/priceList/no_img.png';
+import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
+import contactsImg from '../../../../../assets/priceList/contacts.png';
+import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
+import { formatDateString, getDataUri } from './functions.jsx';
 
 export const getTransportationListPdfText = (transportation) => {
     const transportationList = [];

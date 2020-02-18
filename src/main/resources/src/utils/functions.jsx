@@ -1,11 +1,3 @@
-import font from 'pdfmake/build/vfs_fonts.js';
-// import DejaVuSans from 'pdfmake/build/vfs_fonts_new.js'
-import pdfMake from 'pdfmake';
-import testImg from '../../../../../assets/priceList/no_img.png';
-import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
-import contactsImg from '../../../../../assets/priceList/contacts.png';
-import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
-
 export const formatDateString = (dateString) => {
     const testDate = new Date(dateString);
     return (
@@ -36,7 +28,7 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
     img.src = "url-to-image";
 }
 
-function getDataUri(url) {
+export function getDataUri(url) {
     return new Promise((resolve, reject) => {
         var img = new Image();
         // img.setAttribute("crossOrigin", "anonymous");
