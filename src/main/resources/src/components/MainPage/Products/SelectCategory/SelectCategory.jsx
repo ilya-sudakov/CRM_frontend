@@ -49,6 +49,10 @@ const SelectCategory = (props) => {
             <div className="select-category__input">
                 <div className="select-category__input_name">{props.inputName + (props.required ? '*' : '')}</div>
                 <div className={"select-category__input_field"}>
+                    <button className="select-category__button" onClick={(e) => {
+                        e.preventDefault();
+                        setShowWindow(!showWindow);
+                    }}>Выбрать категорию</button>
                     <div className="select-category__searchbar">
                         <input
                             type="text"
@@ -56,13 +60,9 @@ const SelectCategory = (props) => {
                             // onChange={props.handleInputChange}
                             value={props.defaultValue ? props.defaultValue : id}
                             // onClick={!props.readOnly ? clickOnInput : null}
-                            placeholder="Выберите категорию, нажав на кнопку 'Обзор'"
+                            placeholder="Выберите категорию, нажав на кнопку 'Выбрать категорию'"
                             readOnly={props.readOnly}
                         />
-                        <button className="select-category__search_button" onClick={(e) => {
-                            e.preventDefault();
-                            setShowWindow(!showWindow);
-                        }}>Обзор</button>
                     </div>
                 </div>
             </div>

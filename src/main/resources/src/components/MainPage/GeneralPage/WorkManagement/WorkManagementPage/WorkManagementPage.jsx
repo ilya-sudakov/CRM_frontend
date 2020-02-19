@@ -30,7 +30,7 @@ const WorkManagementPage = (props) => {
         },
         {
             name: 'Офис',
-            visibility: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER'],
+            visibility: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER', 'ROLE_ENGINEER'],
             active: true
         }
     ]);
