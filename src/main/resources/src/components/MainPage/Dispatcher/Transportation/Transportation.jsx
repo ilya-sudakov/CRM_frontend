@@ -98,27 +98,9 @@ const Transportation = (props) => {
                 />
                 <div className="main-window__info-panel">
                     <div className="transportation__container">
+                        <span>Фильтр по подразделениям</span>
                         <div className="main-window__filter-pick">
-                            <span className="transportation__text">Фильтр по подразделениям - Куда: </span>
-                            {workshops.map((item, index) => {
-                                if (props.userHasAccess(item.visibility)) {
-                                    return <div
-                                        className={item.recipientActive ? "main-window__button" : "main-window__button main-window__button--inverted"}
-                                        onClick={() => {
-                                            let temp = workshops;
-                                            temp.splice(index, 1, {
-                                                ...temp[index],
-                                                name: item.name,
-                                                recipientActive: !item.recipientActive
-                                            })
-                                            setWorkshops([...temp]);
-                                        }}
-                                    >{item.name}</div>
-                                }
-                            })}
-                        </div>
-                        <div className="main-window__filter-pick">
-                            <span className="transportation__text">Фильтр по подразделениям - Откуда: </span>
+                            <span className="transportation__text">Откуда: </span>
                             {workshops.map((item, index) => {
                                 if (props.userHasAccess(item.visibility)) {
                                     return <div
@@ -129,6 +111,25 @@ const Transportation = (props) => {
                                                 ...temp[index],
                                                 name: item.name,
                                                 senderActive: !item.senderActive
+                                            })
+                                            setWorkshops([...temp]);
+                                        }}
+                                    >{item.name}</div>
+                                }
+                            })}
+                        </div>
+                        <div className="main-window__filter-pick">
+                            <span className="transportation__text">Куда: </span>
+                            {workshops.map((item, index) => {
+                                if (props.userHasAccess(item.visibility)) {
+                                    return <div
+                                        className={item.recipientActive ? "main-window__button" : "main-window__button main-window__button--inverted"}
+                                        onClick={() => {
+                                            let temp = workshops;
+                                            temp.splice(index, 1, {
+                                                ...temp[index],
+                                                name: item.name,
+                                                recipientActive: !item.recipientActive
                                             })
                                             setWorkshops([...temp]);
                                         }}

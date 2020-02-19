@@ -22,7 +22,7 @@ export const getTransportationListPdfText = (transportation) => {
     })
     transportationList.push({
         table: {
-            widths: [60, 100, 40, 80, 80, '*'],
+            widths: [60, 140, 40, 80, 80, '*'],
             body: [
                 [
                     { text: 'Дата', style: 'tableHeader' },
