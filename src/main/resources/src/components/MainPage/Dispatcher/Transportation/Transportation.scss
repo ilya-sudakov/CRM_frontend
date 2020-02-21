@@ -19,6 +19,10 @@
     text-align: right;
     padding-right: 10px;
   }
+  .main-window__button {
+    text-align: center;
+    max-height: 30px;
+  }
 
   @media (max-width: 768px) {
     .main-window__info-panel {

@@ -455,7 +455,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
     let finalList = [];
     let dd;
     let linkButtonData = await getDataUri(linkButtonImg);
-    const temp = categories.sort((a, b) => {
+    const temp = categories.sort(async (a, b) => {
         if (a.name < b.name) {
             return -1;
         }
@@ -733,10 +733,27 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
         }))
             .then(async () => {
                 const tempImg = await getDataUri(category.img);
+                const sortedArr = fullGroup.sort((a, b) => {
+                    // if (a.stack[0].columns[0].text[1].text < b.stack[0].columns[0].text[1].text) {
+                    //     return -1;
+                    // }
+                    // if (a.stack[0].columns[0].text[1].text > b.stack[0].columns[0].text[1].text) {
+                    //     return 1;
+                    // }
+                    // return 0;
+                    // console.log(a.stack[0].columns[0].text[1].text, '<', b.stack[0].columns[0].text[1].text,a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }));
+                    if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) < 0) {
+                        return -1;
+                    }
+                    if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) > 0) {
+                        return 1;
+                    }
+                    return 0;
+                });
                 //Перенос категории на некст страницу если она без продукции
                 fullGroup.length > 0 && finalList.push({
                     stack: [
-                        ...fullGroup.map((item, index) => {
+                        ...sortedArr.map((item, index) => {
                             if (index === 0) {
                                 return {
                                     unbreakable: true,
@@ -790,6 +807,17 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
     })
     Promise.all(temp)
         .then(async () => {
+            // console.log(finalList);
+            finalList = finalList.sort((a, b) => {
+                // console.log(a.stack[0].stack[1]);
+                if (a.stack[0].stack[1].text.localeCompare(b.stack[0].stack[1].text, undefined, { numeric: true }) < 0) {
+                    return -1;
+                }
+                if (a.stack[0].stack[1].text.localeCompare(b.stack[0].columns[0].text[1].text.stack[0].stack[1].text, undefined, { numeric: true }) > 0) {
+                    return 1;
+                }
+                return 0;
+            })
             dd = {
                 info: {
                     title: 'Прайс-лист'

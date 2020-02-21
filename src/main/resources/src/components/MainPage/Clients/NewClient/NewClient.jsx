@@ -7,6 +7,7 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -228,7 +229,7 @@ const newClient = (props) => {
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
-                    <InputText
+                    {/* <InputText
                         inputName="Скидки"
                         required
                         name="discount"
@@ -236,7 +237,28 @@ const newClient = (props) => {
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
-                    />
+                    /> */}
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Скидки</div>
+                        <div className="main-form__input_field main-form__input_field--vertical">
+                            <CheckBox
+                                text="Скидка №1"
+                                uniqueId={0}
+                                defaultChecked={true}
+                                onChange={(value) => {
+
+                                }}
+                            />
+                            <CheckBox
+                                text="Скидка №2"
+                                uniqueId={1}
+                                defaultChecked={true}
+                                onChange={(value) => {
+
+                                }}
+                            />
+                        </div>
+                    </div>
                     <InputText
                         inputName="Акт сверки"
                         required

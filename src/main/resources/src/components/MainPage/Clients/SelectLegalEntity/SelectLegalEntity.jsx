@@ -260,12 +260,13 @@ const SelectLegalEntity = (props) => {
                                                         BIK: res.suggestions.length > 0 ? res.suggestions[0].data.bic : '',
                                                     })
                                                     setSelected([...temp]);
-                                                    props.handleLegalEntityChange([...temp])
+                                                    props.handleLegalEntityChange([...temp]);
                                                     setIsLoading(false);
                                                 })
                                         }
                                         else {
                                             alert("Не найдено данных с данным ИНН");
+                                                    setIsLoading(false);
                                         }
                                     })
                             }}>
