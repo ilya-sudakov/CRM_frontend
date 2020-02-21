@@ -10,6 +10,12 @@
   align-items: center;
   text-align: center;
 
+  .file-uploader__img {
+    filter: brightness(0.9);
+    transition: all 0.1s ease-in-out;
+    margin-left: 5px;
+  }
+
   .file-uploader__file_name {
     display: inline-block;
     margin-right: 10px;
@@ -33,6 +39,10 @@
     &:hover {
       background-color: $button__background--hover;
       color: $secondary-text-color;
+
+      & .file-uploader__img {
+        filter: brightness(3);
+      }
     }
 
     .logo {
