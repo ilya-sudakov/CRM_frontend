@@ -455,25 +455,9 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
     let finalList = [];
     let dd;
     let linkButtonData = await getDataUri(linkButtonImg);
-    const temp = categories.sort(async (a, b) => {
-        if (a.name < b.name) {
-            return -1;
-        }
-        if (a.name > b.name) {
-            return 1;
-        }
-        return 0;
-    }).map(async category => {
+    const temp = categories.map(async category => {
         let fullGroup = [];
-        return Promise.all(priceList.sort(async (a, b) => {
-            if (a.name < b.name) {
-                return -1;
-            }
-            if (a.name > b.name) {
-                return 1;
-            }
-            return 0;
-        }).map(async groupOfProducts => {
+        return Promise.all(priceList.map(async groupOfProducts => {
             let locations = [];
             if (category.name === groupOfProducts.category) {
                 return getDataUri((groupOfProducts.img !== null && groupOfProducts.img !== '') ? groupOfProducts.img : testImg)
@@ -545,7 +529,16 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                         //     },
                                                         //     margin: [0, 5, 2, 0]
                                                         // },
-                                                        ...locations
+                                                        ...locations.sort((a, b) => {
+                                                            if (locations.length <= 1) return 0;
+                                                            if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) < 0) {
+                                                                return -1;
+                                                            }
+                                                            if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) > 0) {
+                                                                return 1;
+                                                            }
+                                                            return 0;
+                                                        })
                                                     ],
                                                     columnGap: 1,
                                                     width: 100,
@@ -734,14 +727,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
             .then(async () => {
                 const tempImg = await getDataUri(category.img);
                 const sortedArr = fullGroup.sort((a, b) => {
-                    // if (a.stack[0].columns[0].text[1].text < b.stack[0].columns[0].text[1].text) {
-                    //     return -1;
-                    // }
-                    // if (a.stack[0].columns[0].text[1].text > b.stack[0].columns[0].text[1].text) {
-                    //     return 1;
-                    // }
-                    // return 0;
-                    // console.log(a.stack[0].columns[0].text[1].text, '<', b.stack[0].columns[0].text[1].text,a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }));
+                    if (fullGroup.length <= 1) return 0;
                     if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) < 0) {
                         return -1;
                     }
@@ -810,6 +796,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
             // console.log(finalList);
             finalList = finalList.sort((a, b) => {
                 // console.log(a.stack[0].stack[1]);
+                if (finalList.length <= 1) return 0;
                 if (a.stack[0].stack[1].text.localeCompare(b.stack[0].stack[1].text, undefined, { numeric: true }) < 0) {
                     return -1;
                 }
