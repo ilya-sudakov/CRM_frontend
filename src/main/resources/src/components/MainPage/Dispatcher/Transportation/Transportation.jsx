@@ -8,6 +8,7 @@ import TableView from './TableView/TableView.jsx';
 import { getTransportations, deleteTransportation } from '../../../../utils/RequestsAPI/Transportation.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import { getTransportationListPdfText } from '../../../../utils/pdfFunctions.jsx';
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 
 const Transportation = (props) => {
     const [transportation, setTransportation] = useState([]);
@@ -117,6 +118,20 @@ const Transportation = (props) => {
                                     >{item.name}</div>
                                 }
                             })}
+                            <CheckBox
+                                text="Выделить все"
+                                onChange={(value) => {
+                                    let temp = workshops.map(item => {
+                                        return {
+                                            ...item,
+                                            senderActive: value
+                                        }
+                                    })
+                                    setWorkshops([...temp]);
+                                }}
+                                defaultChecked={true}
+                                uniqueId={0}
+                            />
                         </div>
                         <div className="main-window__filter-pick">
                             <span className="transportation__text">Куда: </span>
@@ -136,6 +151,20 @@ const Transportation = (props) => {
                                     >{item.name}</div>
                                 }
                             })}
+                            <CheckBox
+                                text="Выделить все"
+                                onChange={(value) => {
+                                    let temp = workshops.map(item => {
+                                        return {
+                                            ...item,
+                                            recipientActive: value
+                                        }
+                                    })
+                                    setWorkshops([...temp]);
+                                }}
+                                defaultChecked={true}
+                                uniqueId={1}
+                            />
                         </div>
                     </div>
                     {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printTransportationList}>
