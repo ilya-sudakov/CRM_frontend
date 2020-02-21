@@ -531,13 +531,15 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                         // },
                                                         ...locations.sort((a, b) => {
                                                             if (locations.length <= 1) return 0;
-                                                            if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) < 0) {
-                                                                return -1;
+                                                            else {
+                                                                if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) < 0) {
+                                                                    return -1;
+                                                                }
+                                                                if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) > 0) {
+                                                                    return 1;
+                                                                }
+                                                                return 0;
                                                             }
-                                                            if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) > 0) {
-                                                                return 1;
-                                                            }
-                                                            return 0;
                                                         })
                                                     ],
                                                     columnGap: 1,
@@ -728,13 +730,15 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 const tempImg = await getDataUri(category.img);
                 const sortedArr = fullGroup.sort((a, b) => {
                     if (fullGroup.length <= 1) return 0;
-                    if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) < 0) {
-                        return -1;
+                    else {
+                        if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) < 0) {
+                            return -1;
+                        }
+                        if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) > 0) {
+                            return 1;
+                        }
+                        return 0;
                     }
-                    if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) > 0) {
-                        return 1;
-                    }
-                    return 0;
                 });
                 //Перенос категории на некст страницу если она без продукции
                 fullGroup.length > 0 && finalList.push({
@@ -797,13 +801,15 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
             finalList = finalList.sort((a, b) => {
                 // console.log(a.stack[0].stack[1]);
                 if (finalList.length <= 1) return 0;
-                if (a.stack[0].stack[1].text.localeCompare(b.stack[0].stack[1].text, undefined, { numeric: true }) < 0) {
-                    return -1;
+                else {
+                    if (a.stack[0].stack[1].text.localeCompare(b.stack[0].stack[1].text, undefined, { numeric: true }) < 0) {
+                        return -1;
+                    }
+                    if (a.stack[0].stack[1].text.localeCompare(b.stack[0].columns[0].text[1].text.stack[0].stack[1].text, undefined, { numeric: true }) > 0) {
+                        return 1;
+                    }
+                    return 0;
                 }
-                if (a.stack[0].stack[1].text.localeCompare(b.stack[0].columns[0].text[1].text.stack[0].stack[1].text, undefined, { numeric: true }) > 0) {
-                    return 1;
-                }
-                return 0;
             })
             dd = {
                 info: {
