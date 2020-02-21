@@ -67,6 +67,9 @@
     align-items: center;
     border-right: 1px solid #aaaaaa;
   }
+  // .main-window__list-item--header span:last-child .checkbox__text{
+  //   border: 0 !important;
+  // }
   .main-window__list-item {
     & span:nth-child(1) {
       flex: 0 1 100px;

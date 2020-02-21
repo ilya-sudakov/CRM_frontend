@@ -20,11 +20,11 @@ const LoginPage = (props) => {
 
     useEffect(() => {
         document.title = "Авторизация";
-        if (localStorage.getItem("rememberUser") === "true") {
-            setRememberUser(true);
+        if (localStorage.getItem("rememberUser")) {
+            setRememberUser(localStorage.getItem("rememberUser"));
         }
         else {
-            setRememberUser(false);
+            setRememberUser(true);
         }
     }, []);
 
