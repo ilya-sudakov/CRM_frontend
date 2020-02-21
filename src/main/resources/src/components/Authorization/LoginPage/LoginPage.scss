@@ -8,8 +8,11 @@
   padding-top: 25px;
   // background-color: $secondary-background-color;
   // background-color: #00d4d4;
-  background-color: #a0d4d4;
+  // background-color: #a0d4d4;
+  // background-color: #5cbdbd;
   height: calc(100vh - 25px);
+  background: rgb(132, 202, 226);
+  background: linear-gradient(228deg, rgba(132, 202, 226, 1) 30%, rgba(0, 163, 162, 1) 100%);
 
   &__title {
     // margin-top: 10vh;
@@ -26,6 +29,12 @@
     width: 50px;
     margin-right: 5px;
     filter: brightness(4);
+  }
+
+  .authorization__img--logo {
+    width: 25%;
+    margin-bottom: 25px;
+    filter: none;
   }
 
   .authorization__img--mirrored {
@@ -54,17 +63,61 @@
     .authorization__field_input {
       width: 100%;
       margin: 5px 0;
+      position: relative;
+      --padding-left: 35px;
 
       input[type="text"],
       input[type="password"] {
         border: 1px solid #bbbbbb;
-        width: calc(100% - 20px);
+        width: calc(100% - 10px - var(--padding-left));
         padding: 10px 10px;
         border-radius: 5px;
+        padding-left: var(--padding-left);
 
         &:focus {
           border: 1px solid $button__background--inverted;
         }
+      }
+      & .authorization__line {
+        width: 25px;
+        height: 2px;
+        // background-color: red;
+        background-color: #000000;
+        border-radius: 999px;
+        position: absolute;
+        right: 5px;
+        top: 19px;
+        // transform-origin: 0 0;
+        transform: scale(1);
+        transform: rotate(-45deg);
+        cursor: pointer;
+        transition: 0.1s ease-in-out;
+      }
+      & .authorization__line--hidden {
+        transform: scale(0);
+        height: 0;
+        transform: rotate(0);
+        transition: 0.1s ease-in-out;
+      }
+    }
+    .authorization__field_input .authorization__img {
+      position: absolute;
+      // width: 30px;
+      width: 25px;
+      top: 0.5rem;
+      left: 5px;
+      // right: 0;
+      margin-right: 0;
+      filter: brightness(70%);
+      &.authorization__img--password {
+        width: 20px;
+        // margin-right: 8px;
+        // top: 0.5rem;
+      }
+      &.authorization__img--eye {
+        left: auto;
+        right: 5px;
+        cursor: pointer;
       }
     }
 
