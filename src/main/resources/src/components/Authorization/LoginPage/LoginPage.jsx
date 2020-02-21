@@ -6,9 +6,9 @@ import profileSVG from '../../../../../../../assets/header/profile1.svg';
 import companyLogo from '../../../../../../../assets/priceList/osfix_logo.png';
 import PasswordIcon from '../../../../../../../assets/loginPage/password.png';
 import eyeIcon from '../../../../../../../assets/loginPage/eye.png';
-import eyeClosedIcon from '../../../../../../../assets/loginPage/eye_closed.png';
 import ErrorMessage from '../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import exitSVG from '../../../../../../../assets/header/exit.svg';
+import CheckBox from '../../../utils/Form/CheckBox/CheckBox.jsx';
 
 const LoginPage = (props) => {
     const [username, setUserName] = useState('');
@@ -16,10 +16,17 @@ const LoginPage = (props) => {
     const [showError, setShowError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [rememberUser, setRememberUser] = useState(true);
 
     useEffect(() => {
         document.title = "Авторизация";
-    });
+        if (localStorage.getItem("rememberUser") === "true") {
+            setRememberUser(true);
+        }
+        else {
+            setRememberUser(false);
+        }
+    }, []);
 
     const handleLogin = (event) => {
         event.preventDefault();
@@ -30,6 +37,7 @@ const LoginPage = (props) => {
         login(loginRequest)
             .then(res => res.json())
             .then(response => {
+                localStorage.setItem("rememberUser", rememberUser);
                 props.setUserData(true, response.user);
                 localStorage.setItem("accessToken", response.accessToken);
                 localStorage.setItem("refreshToken", response.refreshToken);
@@ -80,6 +88,11 @@ const LoginPage = (props) => {
                             <img className="authorization__img authorization__img--password" src={PasswordIcon} alt="" />
                             <input type={showPassword ? "text" : "password"} onChange={e => setPassword(e.target.value)} placeholder="Введите пароль..." />
                         </div>
+                        <CheckBox
+                            text="Запомнить меня"
+                            checked={rememberUser}
+                            onChange={(value) => { setRememberUser(!rememberUser); }}
+                        />
                         <button className="authorization__submit" onClick={handleLogin} >
                             <span>Войти</span>
                             <img className="authorization__img authorization__img--mirrored" src={exitSVG} alt="" />
