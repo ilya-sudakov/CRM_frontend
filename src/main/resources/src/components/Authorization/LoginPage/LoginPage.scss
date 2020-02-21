@@ -28,10 +28,11 @@
   .authorization__img {
     width: 50px;
     margin-right: 5px;
-    filter: brightness(4);
+    filter: brightness(3);
   }
 
   .authorization__img--logo {
+    min-width: 150px;
     width: 25%;
     margin-bottom: 25px;
     filter: none;
@@ -87,16 +88,16 @@
         position: absolute;
         right: 5px;
         top: 19px;
-        // transform-origin: 0 0;
-        transform: scale(1);
+        transform-origin: 50% 100%;
+        transform: scaleX(1);
         transform: rotate(-45deg);
         cursor: pointer;
         transition: 0.1s ease-in-out;
       }
       & .authorization__line--hidden {
-        transform: scale(0);
+        transform: scaleX(0);
         height: 0;
-        transform: rotate(0);
+        // transform: rotate(0);
         transition: 0.1s ease-in-out;
       }
     }
@@ -163,10 +164,10 @@
     }
   }
   & .checkbox {
-    width: 100%;
-    margin: 5px 0 10px 0px;
+    width: calc(100% - 35px);
+    margin: 5px auto 10px 0px;
     &__container {
-      padding-left: 30px;
+      padding-left: 35px;
       width: 100% !important;
 
       & input:checked ~ .checkbox__checkmark {
