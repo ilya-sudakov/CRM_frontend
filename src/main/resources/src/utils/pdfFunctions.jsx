@@ -741,7 +741,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                     }
                 });
                 //Перенос категории на некст страницу если она без продукции
-                fullGroup.length > 0 && finalList.push({
+                fullGroup.length > 0 && category.active && finalList.push({
                     stack: [
                         ...sortedArr.map((item, index) => {
                             if (index === 0) {
@@ -799,13 +799,13 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
         .then(async () => {
             // console.log(finalList);
             finalList = finalList.sort((a, b) => {
-                // console.log(a.stack[0].stack[1]);
+                // console.log(a.stack[0], b.stack[0]);
                 if (finalList.length <= 1) return 0;
                 else {
                     if (a.stack[0].stack[1].text.localeCompare(b.stack[0].stack[1].text, undefined, { numeric: true }) < 0) {
                         return -1;
                     }
-                    if (a.stack[0].stack[1].text.localeCompare(b.stack[0].columns[0].text[1].text.stack[0].stack[1].text, undefined, { numeric: true }) > 0) {
+                    if (a.stack[0].stack[1].text.localeCompare(b.stack[0].stack[1].text, undefined, { numeric: true }) > 0) {
                         return 1;
                     }
                     return 0;

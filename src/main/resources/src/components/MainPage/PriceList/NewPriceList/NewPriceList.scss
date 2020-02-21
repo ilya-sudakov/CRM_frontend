@@ -1,6 +1,21 @@
 @import "../../../../variables.scss";
 
 .new-price-item {
+  .new-price-item__checkbox-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    .checkbox {
+      margin-bottom: 10px;
+    }
+  }
+  .main-form__form {
+    .main-form__title {
+      width: 100%;
+    }
+  }
   .checkbox__container {
     padding-left: 35px !important;
     margin-bottom: 12px;

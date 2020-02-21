@@ -412,20 +412,36 @@ const NewPriceList = (props) => {
                         {isLoading && <ImgLoader />}
                     </div>
                     {priceList.length > 0 && <div className="main-form__buttons">
-                        <CheckBox
-                            text="Выделить все группы товаров"
-                            defaultChecked={true}
-                            name="header"
-                            onChange={(value) => {
-                                let originalList = priceList.map(item => {
-                                    return {
-                                        ...item,
-                                        active: value
-                                    }
-                                })
-                                setPriceList([...originalList])
-                            }}
-                        />
+                        <div className="new-price-item__checkbox-container">
+                            <CheckBox
+                                text="Выделить все категории"
+                                defaultChecked={true}
+                                name="header"
+                                onChange={(value) => {
+                                    let originalList = categories.map(item => {
+                                        return {
+                                            ...item,
+                                            active: value
+                                        }
+                                    })
+                                    setCategories([...originalList])
+                                }}
+                            />
+                            <CheckBox
+                                text="Выделить все группы товаров"
+                                defaultChecked={true}
+                                name="header"
+                                onChange={(value) => {
+                                    let originalList = priceList.map(item => {
+                                        return {
+                                            ...item,
+                                            active: value
+                                        }
+                                    })
+                                    setPriceList([...originalList])
+                                }}
+                            />
+                        </div>
                         <div className="main-form__info-panel">
                             <span>Дополнительные столбцы: </span>
                             {optionalCols.map((item, index) => {
@@ -443,7 +459,110 @@ const NewPriceList = (props) => {
                             })}
                         </div>
                     </div>}
-                    {priceList.map((item, index) => {
+                    {
+                        categories.map((category, categoryIndex) => {
+                            if (priceList.reduce((prev, cur) => {
+                                if (cur.category === category.name) {
+                                    return prev + 1;
+                                }
+                                else {
+                                    return prev;
+                                }
+                            }, 0) > 0) {
+                                return <React.Fragment>
+                                    <div className="main-form__item">
+                                        <div className="main-form__input_name">Категория</div>
+                                        <CheckBox
+                                            checked={category.active}
+                                            name='category'
+                                            onChange={(value) => {
+                                                let originalList = categories;
+                                                originalList.splice(categoryIndex, 1, {
+                                                    ...category,
+                                                    active: value
+                                                })
+                                                setCategories([...originalList])
+                                            }}
+                                        />
+                                        <div className="main-form__input_field">
+                                            {/* <input
+                                            name="categoryName"
+                                            type="text"
+                                            value={item.name}
+                                            readOnly
+                                        /> */}
+                                            <div className="main-form__title">{category.name}</div>
+                                        </div>
+                                    </div>
+                                    {category.active && priceList.map((item, index) => {
+                                        if (item.category === category.name) {
+                                            return <React.Fragment>
+                                                <div className="main-form__item">
+                                                    <div className="main-form__input_name">Группа продукций</div>
+                                                    <CheckBox
+                                                        checked={item.active}
+                                                        name='groupOfProducts'
+                                                        onChange={(value) => {
+                                                            let originalList = priceList;
+                                                            originalList.splice(index, 1, {
+                                                                ...item,
+                                                                active: value
+                                                            })
+                                                            setPriceList([...originalList])
+                                                        }}
+                                                    />
+                                                    <div className="main-form__input_field">
+                                                        <input
+                                                            name="name"
+                                                            type="text"
+                                                            autoComplete="off"
+                                                            onChange={(event) => {
+                                                                let temp = priceList;
+                                                                temp.splice(index, 1, {
+                                                                    ...item,
+                                                                    name: event.target.value
+                                                                })
+                                                                setPriceList([...temp])
+                                                            }}
+                                                            value={item.name}
+                                                            readOnly={props.readOnly}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className={item.active ? "main-form__item" : " main-form__item main-form__item--hidden"}>
+                                                    <div className="main-form__input_name">Продукция</div>
+                                                    <div className="main-form__input_field">
+                                                        <SelectPriceItem
+                                                            handlePriceItemChange={(value) => {
+                                                                let temp = priceList;
+                                                                temp.splice(index, 1, {
+                                                                    ...item,
+                                                                    products: value
+                                                                })
+                                                                setPriceList([...temp])
+                                                            }}
+                                                            handleImgChange={(newImg) => {
+                                                                let temp = priceList;
+                                                                temp.splice(index, 1, {
+                                                                    ...item,
+                                                                    img: newImg
+                                                                })
+                                                                setPriceList([...temp])
+                                                            }}
+                                                            uniqueId={index}
+                                                            defaultValue={item.products}
+                                                            userHasAccess={props.userHasAccess}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </React.Fragment>
+                                        }
+                                    })}
+                                </React.Fragment>
+                            }
+                        })
+                    }
+                    {/* {priceList.map((item, index) => {
                         return <React.Fragment>
                             <div className="main-form__item">
                                 <div className="main-form__input_name">Группа продукций</div>
@@ -504,7 +623,7 @@ const NewPriceList = (props) => {
                                 </div>
                             </div>
                         </React.Fragment>
-                    })}
+                    })} */}
                 </form>
             </div>
         </div>
