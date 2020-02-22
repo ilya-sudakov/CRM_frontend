@@ -62,7 +62,8 @@ module.exports = {
             inject: false,
             hash: true,
             template: "./src/main/resources/templates/index.html",
-            filename: "index.html"
+            filename: "index.html",
+            favicon: "./assets/favicon.ico"
         }),
         new Dotenv({
             path: "./.env",
