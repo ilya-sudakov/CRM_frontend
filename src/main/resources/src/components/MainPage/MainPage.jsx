@@ -134,8 +134,8 @@ class MainPage extends React.Component {
                                 />
                                 <PrivateRoute
                                     exact path="/price-list"
-                                    // component={PriceList}
-                                    component={NewPriceList}
+                                    component={PriceList}
+                                    // component={NewPriceList}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}

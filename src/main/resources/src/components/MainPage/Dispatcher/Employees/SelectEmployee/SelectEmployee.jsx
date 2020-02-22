@@ -31,7 +31,7 @@ const SelectEmployee = (props) => {
                         ? 'ЦехЛЭМЗ'
                         : props.userHasAccess(['ROLE_LEPSARI'])
                             ? 'ЦехЛепсари'
-                            : props.userHasAccess(['ROLE_LIGOSVKIY'])
+                            : props.userHasAccess(['ROLE_LIGOVSKIY'])
                                 ? 'ЦехЛиговский'
                                 : props.userHasAccess(['ROLE_ENGINEER'])
                                 && 'Офис'
