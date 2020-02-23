@@ -204,6 +204,10 @@ const NewPriceList = (props) => {
     //         })
     // }
 
+    const isExistingCategory = (category) => {
+        return categories.find(item => item.name === category);
+    }
+
     const parseExcelData = (result) => {
         let data = new Uint8Array(result);
         let wb = XLSX.read(data, { type: 'array' });
@@ -225,9 +229,19 @@ const NewPriceList = (props) => {
                 if (item.id === '1.') {
                     startId = index;
                     endId = index;
+                    if (!isExistingCategory(item.category)) {
+                        let newCategories = categories;
+                        newCategories.push({
+                            img: categoryImg,
+                            name: item.category,
+                            active: true
+                        })
+                    }
                     groupData = Object.assign({
                         id: item.id,
                         img: '',
+                        draftImg: '',
+                        number: item.number,
                         category: item.category,
                         name: item.groupName,
                         description: item.description,
@@ -241,7 +255,10 @@ const NewPriceList = (props) => {
                         dealerName: item.dealerName,
                         distributorName: item.distributorName,
                         partnerName: item.partnerName,
-                        active: true
+                        active: true,
+                        newItem: item.newItem === 'да' ? true : false,
+                        uniqueItem: item.uniqueItem === 'да' ? true : false,
+                        proprietaryItem: item.proprietaryItem === 'да' ? true : false
                     });
                     tempNumber = item.number.substring(0, 3);
                 } else {
@@ -263,6 +280,8 @@ const NewPriceList = (props) => {
                             partnerPrice: excelRows[i].partnerPrice.toFixed(2),
                             dealerPrice: excelRows[i].dealerPrice.toFixed(2),
                             distributorPrice: excelRows[i].distributorPrice.toFixed(2),
+                            onSale: excelRows[i].onSale === 'да' ? true : false,
+                            isTopSeller: excelRows[i].topSeller === 'да' ? true : false
                         }));
                     }
                     if (item.number) {
@@ -270,6 +289,14 @@ const NewPriceList = (props) => {
                             endId++;
                         }
                         else {
+                            if (!isExistingCategory(item.category)) {
+                                let newCategories = categories;
+                                newCategories.push({
+                                    img: categoryImg,
+                                    name: item.category,
+                                    active: true
+                                })
+                            }
                             newData.push({
                                 ...groupData,
                                 products
@@ -277,6 +304,8 @@ const NewPriceList = (props) => {
                             groupData = Object.assign({
                                 id: item.id,
                                 img: '',
+                                draftImg: '',
+                                number: item.number,
                                 category: item.category,
                                 name: item.groupName,
                                 description: item.description,
@@ -290,7 +319,10 @@ const NewPriceList = (props) => {
                                 dealerName: item.dealerName,
                                 distributorName: item.distributorName,
                                 partnerName: item.partnerName,
-                                active: true
+                                active: true,
+                                newItem: item.newItem === 'да' ? true : false,
+                                uniqueItem: item.uniqueItem === 'да' ? true : false,
+                                proprietaryItem: item.proprietaryItem === 'да' ? true : false
                             });
                             startId = index;
                             endId = index;
@@ -470,7 +502,7 @@ const NewPriceList = (props) => {
                                 }
                             }, 0) > 0) {
                                 return <React.Fragment>
-                                    <div className="main-form__item">
+                                    <div className="main-form__item main-form__item--header">
                                         <div className="main-form__input_name">Категория</div>
                                         <CheckBox
                                             checked={category.active}
@@ -492,9 +524,35 @@ const NewPriceList = (props) => {
                                             readOnly
                                         /> */}
                                             <div className="main-form__title">{category.name}</div>
+                                            <div className="main-form__product_img">
+                                                <img src={category.img} alt="" />
+                                            </div>
+                                            <FileUploader
+                                                uniqueId={"categoryImg" + categoryIndex}
+                                                regex={/.+\.(jpeg|jpg|png|img)/}
+                                                onChange={(result) => {
+                                                    let temp = categories;
+                                                    temp.splice(categoryIndex, 1, {
+                                                        ...category,
+                                                        img: result
+                                                    });
+                                                    setCategories([...temp]);
+                                                }}
+                                            />
                                         </div>
                                     </div>
-                                    {category.active && priceList.map((item, index) => {
+                                    {category.active && priceList.sort((a, b) => {
+                                        if (priceList.length <= 1) return 0;
+                                        else {
+                                            if (a.id.localeCompare(b.id, undefined, { numeric: true }) < 0) {
+                                                return -1;
+                                            }
+                                            if (a.id.localeCompare(b.id, undefined, { numeric: true }) > 0) {
+                                                return 1;
+                                            }
+                                            return 0;
+                                        }
+                                    }).map((item, index) => {
                                         if (item.category === category.name) {
                                             return <React.Fragment>
                                                 <div className="main-form__item">
@@ -541,16 +599,39 @@ const NewPriceList = (props) => {
                                                                 })
                                                                 setPriceList([...temp])
                                                             }}
-                                                            handleImgChange={(newImg) => {
+                                                            newItem={item.newItem}
+                                                            uniqueItem={item.uniqueItem}
+                                                            proprietaryItem={item.proprietaryItem}
+                                                            handleLabelChange={(value, name) => {
+                                                                console.log(item[name])
                                                                 let temp = priceList;
                                                                 temp.splice(index, 1, {
                                                                     ...item,
-                                                                    img: newImg
+                                                                    [name]: value
+                                                                })
+                                                                setPriceList([...temp]);
+                                                            }}
+                                                            handleImgChange={(newImg, name) => {
+                                                                let temp = priceList;
+                                                                temp.splice(index, 1, {
+                                                                    ...item,
+                                                                    [name]: newImg
                                                                 })
                                                                 setPriceList([...temp])
                                                             }}
                                                             uniqueId={index}
-                                                            defaultValue={item.products}
+                                                            defaultValue={item.products.sort((a, b) => {
+                                                                if (priceList.length <= 1) return 0;
+                                                                else {
+                                                                    if (a.number.localeCompare(b.number, undefined, { numeric: true }) < 0) {
+                                                                        return -1;
+                                                                    }
+                                                                    if (a.number.localeCompare(b.number, undefined, { numeric: true }) > 0) {
+                                                                        return 1;
+                                                                    }
+                                                                    return 0;
+                                                                }
+                                                            })}
                                                             userHasAccess={props.userHasAccess}
                                                         />
                                                     </div>

@@ -3,6 +3,7 @@ import deleteSVG from '../../../../../../../../assets/select/delete.svg';
 import './SelectPriceItem.scss';
 import { getPriceListCoefficient } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 
 const SelectPriceItem = (props) => {
     // const [imgName, setImgName] = useState("Имя файла...");
@@ -20,11 +21,16 @@ const SelectPriceItem = (props) => {
             dealerPrice: 0,
             distributorPrice: 0,
             partnerPrice: 0,
-            stopPrice: 0
+            stopPrice: 0,
+            onSale: false,
+            isTopSeller: false,
         }
     ]);
     const [options, setOptions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [newItem, setNewItem] = useState(false);
+    const [uniqueItem, setUniqueItem] = useState(false);
+    const [proprietaryItem, setProprietaryItem] = useState(false);
     const [coefficients, setCoefficients] = useState({
         retailPrice: 1,
         dealerPrice: 0.56,
@@ -35,6 +41,7 @@ const SelectPriceItem = (props) => {
         lessThan1500Price: 0.96,
     })
     const [groupImg, setGroupImg] = useState(null);
+    const [draftImg, setDraftImg] = useState(null);
     // const [visibleItems, setVisibleItems] = useState([{
     //     id: 
     // }])
@@ -48,6 +55,18 @@ const SelectPriceItem = (props) => {
         }
         if (props.groupImg !== undefined) {
             setGroupImg(props.groupImg)
+        }
+        if (props.draftImg !== undefined) {
+            setGroupImg(props.draftImg)
+        }
+        if (props.newItem !== undefined) {
+            setNewItem(props.newItem)
+        }
+        if (props.uniqueItem !== undefined) {
+            setUniqueItem(props.uniqueItem)
+        }
+        if (props.proprietaryItem !== undefined) {
+            setProprietaryItem(props.proprietaryItem)
         }
         getPriceListCoefficient()
             .then(res => res.json())
@@ -94,7 +113,9 @@ const SelectPriceItem = (props) => {
                 dealerPrice: 0,
                 distributorPrice: 0,
                 partnerPrice: 0,
-                stopPrice: 0
+                stopPrice: 0,
+                onSale: false,
+                isTopSeller: false,
             }
         ]);
         props.handlePriceItemChange([
@@ -112,7 +133,9 @@ const SelectPriceItem = (props) => {
                 dealerPrice: 0,
                 distributorPrice: 0,
                 partnerPrice: 0,
-                stopPrice: 0
+                stopPrice: 0,
+                onSale: false,
+                isTopSeller: false,
             }
         ]);
     }
@@ -182,7 +205,7 @@ const SelectPriceItem = (props) => {
             }
             <div className="select-price-item__selected">
                 {!props.readOnly && <div className="main-form__item">
-                    <div className="main-form__input_name">Фотография</div>
+                    <div className="main-form__input_name">Фотография 1</div>
                     <div className="main-form__input_field">
                         {groupImg &&
                             <div className="main-form__product_img">
@@ -190,15 +213,65 @@ const SelectPriceItem = (props) => {
                             </div>
                         }
                         {!props.readOnly && <FileUploader
-                            uniqueId={"file" + props.uniqueId}
+                            uniqueId={"file1" + props.uniqueId}
                             regex={/.+\.(jpeg|jpg|png|img)/}
                             onChange={(result) => {
                                 setGroupImg(result)
-                                props.handleImgChange(result)
+                                props.handleImgChange(result, 'img')
                             }}
                         />}
                     </div>
                 </div>}
+                {!props.readOnly && <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография 2</div>
+                    <div className="main-form__input_field">
+                        {draftImg &&
+                            <div className="main-form__product_img">
+                                <img src={draftImg} alt="" />
+                            </div>
+                        }
+                        {!props.readOnly && <FileUploader
+                            uniqueId={"file2" + props.uniqueId}
+                            regex={/.+\.(jpeg|jpg|png|img)/}
+                            onChange={(result) => {
+                                setDraftImg(result)
+                                props.handleImgChange(result, 'draftImg')
+                            }}
+                        />}
+                    </div>
+                </div>}
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Ярлыки</div>
+                    <div className="main-form__input_field">
+                        <CheckBox
+                            text="Новинка"
+                            checked={newItem}
+                            name="newItem"
+                            onChange={(value, name) => {
+                                setNewItem(value);
+                                props.handleLabelChange(value, name);
+                            }}
+                        />
+                        <CheckBox
+                            text="Уникальная"
+                            checked={uniqueItem}
+                            name="uniqueItem"
+                            onChange={(value, name) => {
+                                setUniqueItem(value);
+                                props.handleLabelChange(value, name);
+                            }}
+                        />
+                        <CheckBox
+                            text="Запатентована"
+                            checked={proprietaryItem}
+                            name="proprietaryItem"
+                            onChange={(value, name) => {
+                                setProprietaryItem(value);
+                                props.handleLabelChange(value, name);
+                            }}
+                        />
+                    </div>
+                </div>
                 {selected.map((item, index) => (
                     <div className="select-price-item__selected_item" >
                         <div className="select-price-item__selected_header" index={index} onClick={clickOnForm}>
@@ -384,6 +457,40 @@ const SelectPriceItem = (props) => {
                                         onChange={handleInputChange}
                                         value={item.stopPrice}
                                         readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-price-item__item">
+                                <div className="select-price-item__input_name">Акция</div>
+                                <div className="select-price-item__input_field">
+                                    <CheckBox
+                                        checked={item.onSale}
+                                        onChange={(value) => {
+                                            let temp = selected;
+                                            temp.splice(index, 1, {
+                                                ...item,
+                                                onSale: value
+                                            })
+                                            setSelected([...temp]);
+                                            props.handlePriceItemChange([...temp]);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-price-item__item">
+                                <div className="select-price-item__input_name">Хит</div>
+                                <div className="select-price-item__input_field">
+                                    <CheckBox
+                                        checked={item.isTopSeller}
+                                        onChange={(value) => {
+                                            let temp = selected;
+                                            temp.splice(index, 1, {
+                                                ...item,
+                                                isTopSeller: value
+                                            })
+                                            setSelected([...temp]);
+                                            props.handlePriceItemChange([...temp]);
+                                        }}
                                     />
                                 </div>
                             </div>

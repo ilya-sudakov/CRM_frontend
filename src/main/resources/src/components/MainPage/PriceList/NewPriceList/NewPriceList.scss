@@ -31,9 +31,31 @@
   .main-form__info-panel {
     width: 50% !important;
   }
+  .main-form__item--header {
+    background-color: #dddddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 125%;
+    & .main-form__input_name {
+      color: #000000 !important;
+    }
+  }
   .main-form__item .main-form__input_field {
     // width: calc(100% - 0px) !important;
     justify-content: flex-start !important;
+    align-items: center;
+    & .main-form__product_img {
+      max-width: 150px;
+      & img {
+        width: 100%;
+        min-height: 25px;
+      }
+    }
+    & .file-uploader {
+      margin-left: 15px;
+      // margin-right: auto;
+      // justify-content: flex-end;
+    }
   }
   .main-form__buttons {
     margin-bottom: 20px;

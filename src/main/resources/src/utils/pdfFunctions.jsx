@@ -5,6 +5,11 @@ import testImg from '../../../../../assets/priceList/no_img.png';
 import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
 import contactsImg from '../../../../../assets/priceList/contacts.png';
 import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
+import saleImg from '../../../../../assets/priceList/sale.png';
+import topSellerImg from '../../../../../assets/priceList/top_seller.png';
+import newItemImg from '../../../../../assets/priceList/new_item.png';
+import uniqueItemImg from '../../../../../assets/priceList/unique_item.png';
+import proprietaryItemImg from '../../../../../assets/priceList/proprietary_item.png';
 import { formatDateString, getDataUri } from './functions.jsx';
 
 export const getTransportationListPdfText = (transportation) => {
@@ -485,7 +490,24 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                 }
                             }))
                         }))
-                            .then(() => {
+                            .then(async () => {
+                                const saleImgData = await getDataUri(saleImg);
+                                const topSellerImgData = await getDataUri(topSellerImg);
+                                const newItemImgData = await getDataUri(newItemImg);
+                                const uniqueItemImgData = await getDataUri(uniqueItemImg);
+                                const proprietaryItemImgData = await getDataUri(proprietaryItemImg);
+                                let draftImgData = '';
+                                const testImgData = await getDataUri(testImg);
+                                if (groupOfProducts.draftImg !== null && groupOfProducts.draftImg !== '') {
+                                    draftImgData = await getDataUri(groupOfProducts.draftImg);
+                                }
+                                let noTags = true;
+                                groupOfProducts.products.map(item => {
+                                    if (item.isTopSeller || item.onSale) {
+                                        noTags = false;
+                                        return;
+                                    };
+                                });
                                 fullGroup.push({
                                     unbreakable: true,
                                     stack: [
@@ -502,7 +524,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                         {
                                                             text: groupOfProducts.name.toUpperCase(),
                                                             style: 'subheader',
-                                                            fontSize: 11
+                                                            fontSize: 11,
+                                                            groupId: groupOfProducts.id
                                                         },
                                                         {
                                                             text: ' ',
@@ -518,147 +541,372 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     width: '*'
                                                 },
                                                 {
-                                                    columns: [
-                                                        // {
-                                                        //     text: {
-                                                        //         text: groupOfProducts.locationType,
-                                                        //         style: 'regularText',
-                                                        //         fontSize: 8,
-                                                        //         color: '#e30434',
-                                                        //         alignment: 'right'
-                                                        //     },
-                                                        //     margin: [0, 5, 2, 0]
-                                                        // },
-                                                        ...locations.sort((a, b) => {
-                                                            if (locations.length <= 1) return 0;
-                                                            else {
-                                                                if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) < 0) {
-                                                                    return -1;
-                                                                }
-                                                                if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) > 0) {
-                                                                    return 1;
-                                                                }
-                                                                return 0;
-                                                            }
-                                                        })
-                                                    ],
-                                                    columnGap: 1,
-                                                    width: 100,
-                                                    // alignment: 'right'
-                                                }],
-                                            margin: [0, 10, 0, 10]
-                                        },
-                                        {
-                                            // alignment: 'justify',
-                                            columns: [
-                                                {
-                                                    image: dataURI,
-                                                    width: optionalCols.length > 2 ? 62 : 90,
-                                                    // margin: [0, groupOfProducts.products.length * 3, 0, 0]
-                                                    margin: [0, 5, 0, 10]
-                                                },
-                                                {
-                                                    unbreakable: true,
-                                                    table: {
-                                                        widths: [40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 49)],
-                                                        body: [
-                                                            [
-                                                                { text: '', border: [false, false, false, false] },
-                                                                { text: '', border: [false, false, false, false] },
-                                                                { text: '', border: [false, false, false, false] },
-                                                                {
-                                                                    text: groupOfProducts.priceHeader ? groupOfProducts.priceHeader : 'Цена за штуку',
-                                                                    colSpan: (3 + optionalCols.length),
-                                                                    // bold: true,
-                                                                    italics: true
-                                                                },
-                                                                {},
-                                                                {},
-                                                                ...optionalCols.map(() => { })
-                                                            ],
-                                                            [
-                                                                {
-                                                                    text: 'Артикул',
-                                                                    // bold: true
-                                                                    margin: [0, 5, 0, 0]
-                                                                },
-                                                                {
-                                                                    text: 'Описание',
-                                                                    // bold: true
-                                                                    margin: [0, 5, 0, 0]
-                                                                },
-                                                                {
-                                                                    text: 'Ед. изм.',
-                                                                    // bold: true
-                                                                    margin: [0, 5, 0, 0]
-                                                                },
-                                                                {
-                                                                    text: groupOfProducts.retailName ? groupOfProducts.retailName : 'Розница',
-                                                                    // bold: true
-                                                                    margin: [0, 4.5, 0, 0]
-                                                                },
-                                                                {
-                                                                    text: groupOfProducts.firstPriceName ? groupOfProducts.firstPriceName : 'до 1500 шт.',
-                                                                    // bold: true
-                                                                    margin: [0, 1.5, 0, 0]
-                                                                },
-                                                                {
-                                                                    text: groupOfProducts.secondPriceName ? groupOfProducts.secondPriceName : 'до 5000 шт.',
-                                                                    // bold: true
-                                                                    margin: [0, 1.5, 0, 0]
-                                                                },
-                                                                ...optionalCols.map((column, index) => {
-                                                                    return {
-                                                                        text: column.property === 'partnerPrice'
-                                                                            ? groupOfProducts.partnerName
-                                                                            : column.property === 'dealerPrice'
-                                                                                ? groupOfProducts.dealerName
-                                                                                : column.property === 'distributorPrice'
-                                                                                && groupOfProducts.distributorName,
-                                                                        // bold: true
-                                                                        margin: [0, 4.5, 0, 0]
+                                                    stack: [
+                                                        {
+                                                            columns: [
+                                                                ...locations.sort((a, b) => {
+                                                                    if (locations.length <= 1) return 0;
+                                                                    else {
+                                                                        if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) < 0) {
+                                                                            return -1;
+                                                                        }
+                                                                        if (a.columns[0].text.localeCompare(b.columns[0].text, undefined, { numeric: true }) > 0) {
+                                                                            return 1;
+                                                                        }
+                                                                        return 0;
                                                                     }
                                                                 })
                                                             ],
-                                                            ...groupOfProducts.products.map(product => {
+                                                            margin: [0, 0, 0, 2.5],
+                                                            columnGap: 1,
+                                                            width: 100,
+                                                            // alignment: 'right'
+                                                        },
+                                                        // (groupOfProducts.newItem || groupOfProducts.uniqueItem || groupOfProducts.proprietaryItem)
+                                                        //     ? {
+                                                        //         image: (
+                                                        //             groupOfProducts.newItem
+                                                        //                 ? newItemImgData
+                                                        //                 : groupOfProducts.uniqueItem
+                                                        //                     ? uniqueItemImgData
+                                                        //                     : proprietaryItemImgData
+                                                        //         ),
+                                                        //         fit: [60, 20]
+                                                        //     }
+                                                        //     : {
+                                                        //         text: ' '
+                                                        //     },
+                                                    ],
+                                                    width: 100,
+                                                }
+                                            ],
+                                            margin: [0, 10, 0, 10]
+                                        },
+                                        {
+                                            columns: [
+                                                (groupOfProducts.newItem || groupOfProducts.uniqueItem || groupOfProducts.proprietaryItem)
+                                                    ? {
+                                                        width: 60,
+                                                        stack: [
+                                                            groupOfProducts.newItem
+                                                                ? {
+                                                                    image: newItemImgData,
+                                                                    // fit: [60, 20],
+                                                                    width: 70,
+                                                                    margin: [70, 5, 0, 0],
+                                                                    alignment: 'left'
+                                                                }
+                                                                : {
+                                                                    text: ' ',
+                                                                    // fit: [60, 20],
+                                                                    width: 60,
+                                                                    lineHeight: 0,
+                                                                    margin: [80, 0, 0, 0],
+                                                                    alignment: 'left'
+                                                                },
+                                                            groupOfProducts.uniqueItem
+                                                                ? {
+                                                                    image: uniqueItemImgData,
+                                                                    // fit: [60, 20],
+                                                                    width: 80,
+                                                                    margin: [60, 5, 0, 0],
+                                                                    alignment: 'left'
+                                                                }
+                                                                : {
+                                                                    text: ' ',
+                                                                    // fit: [60, 20],
+                                                                    width: 60,
+                                                                    margin: [80, 0, 0, 0],
+                                                                    lineHeight: 0,
+                                                                    alignment: 'left'
+                                                                },
+                                                            groupOfProducts.proprietaryItem
+                                                                ? {
+                                                                    image: proprietaryItemImgData,
+                                                                    // fit: [60, 20],
+                                                                    width: 100,
+                                                                    margin: [40, 5, 0, 0],
+                                                                    alignment: 'left'
+                                                                }
+                                                                : {
+                                                                    text: ' ',
+                                                                    // fit: [60, 20],
+                                                                    width: 60,
+                                                                    margin: [80, 0, 0, 0],
+                                                                    lineHeight: 0,
+                                                                    alignment: 'left'
+                                                                },
+                                                        ]
+                                                    }
+                                                    : {
+                                                        text: ' ',
+                                                        alignment: 'left',
+                                                        width: 60,
+                                                        margin: [80, 0, 0, 0],
+                                                    },
+                                                {
+                                                    image: dataURI,
+                                                    fit: [140, 100],
+                                                    // margin: [80, 0, 0, 5],
+                                                    margin: [80, 0, 0, 5],
+                                                    alignment: 'left'
+                                                },
+                                                {
+                                                    image: draftImgData !== '' ? draftImgData : testImgData,
+                                                    // width: 200,
+                                                    fit: [140, 100],
+                                                    // margin: [70, 0, 0, 5],
+                                                    margin: [0, 0, 40, 5],
+                                                    alignment: 'right'
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            columns: [
+                                                // {
+                                                //     image: dataURI,
+                                                //     width: optionalCols.length > 2 ? 62 : 90,
+                                                //     // margin: [0, groupOfProducts.products.length * 3, 0, 0]
+                                                //     margin: [0, 5, 0, 10]
+                                                // },
+                                                {
+                                                    unbreakable: true,
+                                                    table: {
+                                                        widths: (noTags === true)
+                                                            ? [40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 49)]
+                                                            : [60, 40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 49)],
+                                                        body: [
+                                                            noTags === false
+                                                                ? [
+                                                                    { text: '', border: [false, false, false, false] },
+                                                                    { text: '', border: [false, false, false, false] },
+                                                                    { text: '', border: [false, false, false, false] },
+                                                                    { text: '', border: [false, false, false, false] },
+                                                                    {
+                                                                        text: groupOfProducts.priceHeader ? groupOfProducts.priceHeader : 'Цена за штуку',
+                                                                        colSpan: (3 + optionalCols.length),
+                                                                        // bold: true,
+                                                                        italics: true
+                                                                    },
+                                                                    {},
+                                                                    {},
+                                                                    ...optionalCols.map(() => { })
+                                                                ]
+                                                                : [
+                                                                    // { text: '', border: [false, false, false, false] },
+                                                                    { text: '', border: [false, false, false, false] },
+                                                                    { text: '', border: [false, false, false, false] },
+                                                                    { text: '', border: [false, false, false, false] },
+                                                                    {
+                                                                        text: groupOfProducts.priceHeader ? groupOfProducts.priceHeader : 'Цена за штуку',
+                                                                        colSpan: (3 + optionalCols.length),
+                                                                        // bold: true,
+                                                                        italics: true
+                                                                    },
+                                                                    {},
+                                                                    {},
+                                                                    ...optionalCols.map(() => { })
+                                                                ],
+                                                            noTags === false
+                                                                ? [
+                                                                    {
+                                                                        text: '',
+                                                                        border: [false, false, false, false]
+                                                                    },
+                                                                    {
+                                                                        text: 'Артикул',
+                                                                        // bold: true
+                                                                        margin: [0, 5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: 'Описание',
+                                                                        // bold: true
+                                                                        margin: [0, 5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: 'Ед. изм.',
+                                                                        // bold: true
+                                                                        margin: [0, 5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: groupOfProducts.retailName ? groupOfProducts.retailName : 'Розница',
+                                                                        // bold: true
+                                                                        margin: [0, 4.5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: groupOfProducts.firstPriceName ? groupOfProducts.firstPriceName : 'до 1500 шт.',
+                                                                        // bold: true
+                                                                        margin: [0, 1.5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: groupOfProducts.secondPriceName ? groupOfProducts.secondPriceName : 'до 5000 шт.',
+                                                                        // bold: true
+                                                                        margin: [0, 1.5, 0, 0]
+                                                                    },
+                                                                    ...optionalCols.map((column, index) => {
+                                                                        return {
+                                                                            text: column.property === 'partnerPrice'
+                                                                                ? groupOfProducts.partnerName
+                                                                                : column.property === 'dealerPrice'
+                                                                                    ? groupOfProducts.dealerName
+                                                                                    : column.property === 'distributorPrice'
+                                                                                    && groupOfProducts.distributorName,
+                                                                            // bold: true
+                                                                            margin: [0, 4.5, 0, 0]
+                                                                        }
+                                                                    })
+                                                                ]
+                                                                : [
+                                                                    // {
+                                                                    //     text: '',
+                                                                    //     border: [false, false, false, false]
+                                                                    // },
+                                                                    {
+                                                                        text: 'Артикул',
+                                                                        // bold: true
+                                                                        margin: [0, 5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: 'Описание',
+                                                                        // bold: true
+                                                                        margin: [0, 5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: 'Ед. изм.',
+                                                                        // bold: true
+                                                                        margin: [0, 5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: groupOfProducts.retailName ? groupOfProducts.retailName : 'Розница',
+                                                                        // bold: true
+                                                                        margin: [0, 4.5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: groupOfProducts.firstPriceName ? groupOfProducts.firstPriceName : 'до 1500 шт.',
+                                                                        // bold: true
+                                                                        margin: [0, 1.5, 0, 0]
+                                                                    },
+                                                                    {
+                                                                        text: groupOfProducts.secondPriceName ? groupOfProducts.secondPriceName : 'до 5000 шт.',
+                                                                        // bold: true
+                                                                        margin: [0, 1.5, 0, 0]
+                                                                    },
+                                                                    ...optionalCols.map((column, index) => {
+                                                                        return {
+                                                                            text: column.property === 'partnerPrice'
+                                                                                ? groupOfProducts.partnerName
+                                                                                : column.property === 'dealerPrice'
+                                                                                    ? groupOfProducts.dealerName
+                                                                                    : column.property === 'distributorPrice'
+                                                                                    && groupOfProducts.distributorName,
+                                                                            // bold: true
+                                                                            margin: [0, 4.5, 0, 0]
+                                                                        }
+                                                                    })
+                                                                ],
+                                                            ...groupOfProducts.products.sort((a, b) => {
+                                                                if (a.number.localeCompare(b.number, undefined, { numeric: true }) < 0) {
+                                                                    return -1;
+                                                                }
+                                                                if (a.number.localeCompare(b.number, undefined, { numeric: true }) > 0) {
+                                                                    return 1;
+                                                                }
+                                                                return 0;
+                                                            }).map((product) => {
                                                                 // return {
                                                                 //     text: product.name
                                                                 // };
-                                                                return [
-                                                                    {
-                                                                        text: product.number,
-                                                                        margin: [0, optionalCols.length > 1 ? 5 : 0, 0, 0]
-                                                                    },
-                                                                    {
-                                                                        text: product.description,
-                                                                        margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
-                                                                    },
-                                                                    {
-                                                                        text: product.units,
-                                                                        margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
-                                                                    },
-                                                                    {
-                                                                        text: product.retailPrice + ' ₽',
-                                                                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
-                                                                    },
-                                                                    {
-                                                                        text: product.lessThan1500Price + ' ₽',
-                                                                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
-                                                                    },
-                                                                    {
-                                                                        text: product.lessThan5000Price + ' ₽',
-                                                                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
-                                                                    },
-                                                                    ...optionalCols.map(column => product[column.property] !== undefined
-                                                                        ? {
-                                                                            text: product[column.property] + ' ₽',
+                                                                if (noTags === false) {
+                                                                    return [
+                                                                        (product.onSale || product.isTopSeller)
+                                                                            ? {
+                                                                                image: (
+                                                                                    product.isTopSeller
+                                                                                        ? topSellerImgData
+                                                                                        : product.onSale
+                                                                                            ? saleImgData
+                                                                                            : ''
+                                                                                ),
+                                                                                // width: 60,
+                                                                                fit: [60, 15],
+                                                                                border: [false, false, false, false]
+                                                                            }
+                                                                            : {
+                                                                                text: '',
+                                                                                border: [false, false, false, false]
+                                                                            },
+                                                                        {
+                                                                            text: product.number,
+                                                                            margin: [0, optionalCols.length > 1 ? 5 : 0, 0, 0]
+                                                                        },
+                                                                        {
+                                                                            text: product.description,
+                                                                            margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
+                                                                        },
+                                                                        {
+                                                                            text: product.units,
+                                                                            margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
+                                                                        },
+                                                                        {
+                                                                            text: (product.retailPrice !== '' && !Number.isNaN(product.retailPrice) && product.retailPrice !== 0) ? product.retailPrice + ' ₽' : ' ',
                                                                             margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
-                                                                        }
-                                                                        : {
-                                                                            text: '',
+                                                                        },
+                                                                        {
+                                                                            text: (product.lessThan1500Price !== '' && !Number.isNaN(product.lessThan1500Price) && product.lessThan1500Price !== 0) ? product.lessThan1500Price + ' ₽' : ' ',
                                                                             margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
-                                                                        })
-                                                                ];
+                                                                        },
+                                                                        {
+                                                                            text: (product.lessThan5000Price !== '' && !Number.isNaN(product.lessThan5000Price) && product.lessThan5000Price !== 0) ? product.lessThan5000Price + ' ₽' : ' ',
+                                                                            margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                        },
+                                                                        ...optionalCols.map(column => product[column.property] !== undefined
+                                                                            ? {
+                                                                                text: (product[column.property] !== '' && !Number.isNaN(product[column.property]) && product[column.property] !== 0) ? product[column.property] + ' ₽' : ' ',
+                                                                                margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                            }
+                                                                            : {
+                                                                                text: '',
+                                                                                margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                            })
+                                                                    ]
+                                                                }
+                                                                else {
+                                                                    return [
+                                                                        {
+                                                                            text: product.number,
+                                                                            margin: [0, optionalCols.length > 1 ? 5 : 0, 0, 0]
+                                                                        },
+                                                                        {
+                                                                            text: product.description,
+                                                                            margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
+                                                                        },
+                                                                        {
+                                                                            text: product.units,
+                                                                            margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
+                                                                        },
+                                                                        {
+                                                                            text: (product.retailPrice !== '' && !Number.isNaN(product.retailPrice) && product.retailPrice !== 0) ? product.retailPrice + ' ₽' : ' ',
+                                                                            margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                        },
+                                                                        {
+                                                                            text: (product.lessThan1500Price !== '' && !Number.isNaN(product.lessThan1500Price) && product.lessThan1500Price !== 0) ? product.lessThan1500Price + ' ₽' : ' ',
+                                                                            margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                        },
+                                                                        {
+                                                                            text: (product.lessThan5000Price !== '' && !Number.isNaN(product.lessThan5000Price) && product.lessThan5000Price !== 0) ? product.lessThan5000Price + ' ₽' : ' ',
+                                                                            margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                        },
+                                                                        ...optionalCols.map(column => product[column.property] !== undefined
+                                                                            ? {
+                                                                                text: (product[column.property] !== '' && !Number.isNaN(product[column.property]) && product[column.property] !== 0) ? product[column.property] + ' ₽' : ' ',
+                                                                                margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                            }
+                                                                            : {
+                                                                                text: '',
+                                                                                margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0]
+                                                                            })
+                                                                    ];
+                                                                }
                                                             }),
                                                         ]
                                                     },
@@ -680,7 +928,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     width: '*',
                                                     fontSize: 8,
                                                     color: '#555555',
-                                                    margin: [10, 0, 0, 5]
+                                                    // margin: [10, 0, 0, 5]
+                                                    margin: [0, 0, 0, 5]
                                                 }
                                             ]
                                         },
@@ -731,10 +980,10 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 const sortedArr = fullGroup.sort((a, b) => {
                     if (fullGroup.length <= 1) return 0;
                     else {
-                        if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) < 0) {
+                        if (a.stack[0].columns[0].text[1].groupId.localeCompare(b.stack[0].columns[0].text[1].groupId, undefined, { numeric: true }) < 0) {
                             return -1;
                         }
-                        if (a.stack[0].columns[0].text[1].text.localeCompare(b.stack[0].columns[0].text[1].text, undefined, { numeric: true }) > 0) {
+                        if (a.stack[0].columns[0].text[1].groupId.localeCompare(b.stack[0].columns[0].text[1].groupId, undefined, { numeric: true }) > 0) {
                             return 1;
                         }
                         return 0;
@@ -938,7 +1187,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                     // ]
                     // },
                     {
-                        margin: [0, 50, 0, 0],
+                        // margin: [0, 50, 0, 0],
+                        margin: [0, 10, 0, 0],
                         table: {
                             body: [
                                 [

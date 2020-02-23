@@ -41,6 +41,11 @@
   }
   .main-form__item {
     margin-bottom: 0px;
+    margin-top: 0px;
+
+    & .checkbox {
+      margin-right: 25px;
+    }
   }
   .select-price-item__selected_item:first-child {
     margin-top: 0 !important;
@@ -110,7 +115,7 @@
       transform-origin: 0 0;
       min-height: 100px;
       // height: fit-content;
-      height: 440px;
+      height: 500px;
       width: calc(100%);
       padding-bottom: 10px;
       transition: 0.2s ease-in-out;
@@ -184,7 +189,7 @@
 
   @media (max-width: 768px) {
     .select-price-item__selected_form {
-      height: 666px;
+      height: 750px;
     }
     .select-price-item__selected_form--hidden {
       height: 0;
