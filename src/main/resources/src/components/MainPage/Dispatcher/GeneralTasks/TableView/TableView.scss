@@ -121,6 +121,7 @@
         transition: 0.2s ease-in-out;
         word-wrap: break-word;
         word-break: break-all;
+        border: 1px solid #ddd;
 
         &:last-child {
           margin: 0;
@@ -187,9 +188,9 @@
   }
 
   .tableview_general_tasks__row--status_in_production {
-    background-color: #6696aa;
+    background-color: #7dbfdb;
     &:hover {
-      background-color: darken(#6696aa, 5%);
+      background-color: darken(#7dbfdb, 5%);
     }
   }
 

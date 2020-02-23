@@ -38,12 +38,18 @@
     margin-bottom: 5px;
     transition: 0.2s ease-in-out;
     width: 90%;
+    font-size: 95%;
     border-radius: 5px;
     white-space: nowrap;
 
     .sidemenu__img {
       width: 20px;
       // filter: brightness(5);
+    }
+    
+    .sidemenu__img--bigger {
+      width: 25px;
+      height: 25px;
     }
 
     &:hover {
@@ -96,12 +102,24 @@
     }
 
     .sidemenu__link {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       color: $primary-text-color;
-      padding: 10px 5px;
+      padding: 7.5px 5px;
+      padding-left: 0;
       // width: 100%;
       font-size: 100%;
       width: calc(100% - 35px);
       // text-align: center;
+
+      & .sidemenu__img {
+        // width: 25px;
+        margin-right: 7.5px;
+      }
+      & .sidemenu__img--bigger {
+        margin-right: 2.5px;
+      }
     }
 
     .sidemenu__addButton {
@@ -109,7 +127,7 @@
       color: $secondary-text-color;
       font-size: 25px;
       // margin-left: 10px;
-      padding: 3px 3px;
+      padding: 2px;
       border-radius: 5px;
       display: flex;
       align-items: center;
