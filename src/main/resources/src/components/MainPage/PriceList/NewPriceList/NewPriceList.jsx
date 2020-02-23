@@ -6,10 +6,10 @@ import SelectPriceItem from '../SelectPriceItem/SelectPriceItem.jsx';
 import XLSX from 'xlsx';
 import { addPriceGroup, addProductToPriceGroup, getPriceListCoefficient, getImage } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
 import { getPriceListPdfText } from '../../../../utils/pdfFunctions.jsx';
-import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.jpg';
-import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.jpg';
-import category3Img from '../../../../../../../../assets/priceList/крепежные_элементы.jpg';
-import categoryImg from '../../../../../../../../assets/priceList/крепежные_элементы.jpg';
+import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.png';
+import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.png';
+import category3Img from '../../../../../../../../assets/priceList/крепежные_элементы.png';
+import categoryImg from '../../../../../../../../assets/priceList/крепежные_элементы.png';
 import locationType1Img from '../../../../../../../../assets/priceList/Фасад.png';
 import locationType2Img from '../../../../../../../../assets/priceList/Терраса.png';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
@@ -523,10 +523,13 @@ const NewPriceList = (props) => {
                                             value={item.name}
                                             readOnly
                                         /> */}
-                                            <div className="main-form__title">{category.name}</div>
-                                            <div className="main-form__product_img">
+                                            <div className="main-form__title" style={{
+                                                backgroundImage: `url('${category.img}')`,
+                                                backgroundSize: '100% 100%',
+                                            }}>{category.name}</div>
+                                            {/* <div className="main-form__product_img">
                                                 <img src={category.img} alt="" />
-                                            </div>
+                                            </div> */}
                                             <FileUploader
                                                 uniqueId={"categoryImg" + categoryIndex}
                                                 regex={/.+\.(jpeg|jpg|png|img)/}

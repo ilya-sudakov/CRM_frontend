@@ -5,10 +5,10 @@ import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDat
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import { getPriceListPdfText } from '../../../utils/pdfFunctions.jsx';
-import category1Img from '../../../../../../../assets/priceList/крепеж_для_деревянных_досок.jpg';
-import category2Img from '../../../../../../../assets/priceList/крепеж_для_дпк_досок.jpg';
-import category3Img from '../../../../../../../assets/priceList/крепежные_элементы.jpg';
-import categoryImg from '../../../../../../../assets/priceList/крепежные_элементы.jpg';
+import category1Img from '../../../../../../../assets/priceList/крепеж_для_деревянных_досок.png';
+import category2Img from '../../../../../../../assets/priceList/крепеж_для_дпк_досок.png';
+import category3Img from '../../../../../../../assets/priceList/крепежные_элементы.png';
+import categoryImg from '../../../../../../../assets/priceList/крепежные_элементы.png';
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import EditCoefficient from './EditCoefficient/EditCoefficient.jsx';
 import { getPriceList, deletePriceGroupById, deleteProductFromPriceGroupById } from '../../../utils/RequestsAPI/PriceList/PriceList.jsx';
