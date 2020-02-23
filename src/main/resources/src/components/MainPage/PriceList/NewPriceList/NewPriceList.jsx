@@ -492,7 +492,15 @@ const NewPriceList = (props) => {
                         </div>
                     </div>}
                     {
-                        categories.map((category, categoryIndex) => {
+                        categories.sort((a, b) => {
+                            if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
+                                return -1;
+                            }
+                            if (a.name.localeCompare(b.name, undefined, { numeric: true }) > 0) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((category, categoryIndex) => {
                             if (priceList.reduce((prev, cur) => {
                                 if (cur.category === category.name) {
                                     return prev + 1;
@@ -545,16 +553,13 @@ const NewPriceList = (props) => {
                                         </div>
                                     </div>
                                     {category.active && priceList.sort((a, b) => {
-                                        if (priceList.length <= 1) return 0;
-                                        else {
-                                            if (a.id.localeCompare(b.id, undefined, { numeric: true }) < 0) {
-                                                return -1;
-                                            }
-                                            if (a.id.localeCompare(b.id, undefined, { numeric: true }) > 0) {
-                                                return 1;
-                                            }
-                                            return 0;
+                                        if (a.id.localeCompare(b.id, undefined, { numeric: true }) < 0) {
+                                            return -1;
                                         }
+                                        if (a.id.localeCompare(b.id, undefined, { numeric: true }) > 0) {
+                                            return 1;
+                                        }
+                                        return 0;
                                     }).map((item, index) => {
                                         if (item.category === category.name) {
                                             return <React.Fragment>
