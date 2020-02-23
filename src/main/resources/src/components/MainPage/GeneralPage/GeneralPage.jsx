@@ -50,7 +50,19 @@ const GeneralPage = (props) => {
         let globalIndex = 4;
         let employeesList = [];
         let employeesWorksList = [];
-        const allWorkshops = workshops.map(workshop => {
+        let filteredWorkshops = [];
+        if (props.userHasAccess(['ROLE_ADMIN']) || props.userHasAccess(['ROLE_DISPATCHER'])) {
+            filteredWorkshops = workshops;
+        } else if (props.userHasAccess(['ROLE_LEMZ'])) {
+            filteredWorkshops = ['ЦехЛЭМЗ'];
+        } else if (props.userHasAccess(['ROLE_LEPSARI'])) {
+            filteredWorkshops = ['ЦехЛепсари'];
+        } else if (props.userHasAccess(['ROLE_LIGOVSKIY'])) {
+            filteredWorkshops = ['ЦехЛиговский'];
+        } else if (props.userHasAccess(['ROLE_ENGINEER'])) {
+            filteredWorkshops = ['Офис'];
+        }
+        const allWorkshops = filteredWorkshops.map(workshop => {
             // console.log(workshop);
             return getEmployeesByWorkshop({
                 workshop: workshop
@@ -63,10 +75,10 @@ const GeneralPage = (props) => {
         Promise.all(allWorkshops)
             .then(() => {
                 const allEmployees = employeesList.sort((a, b) => {
-                    if (a.lastName < b.lastName) {
+                    if (a.lastName.localeCompare(b.lastName, undefined, { numeric: true }) < 0) {
                         return -1;
                     }
-                    if (a.lastName > b.lastName) {
+                    if (a.lastName.localeCompare(b.lastName, undefined, { numeric: true }) > 0) {
                         return 1;
                     }
                     return 0;
@@ -96,7 +108,17 @@ const GeneralPage = (props) => {
                                 }
 
                             })
-                            // console.log([employeeInfo[0]]);
+                            // employeeInfo[0].sort((a, b) => {
+                            //     console.log(a);
+                            //     if (a.lastName.localeCompare(b.lastName, undefined, { numeric: true }) < 0) {
+                            //         return -1;
+                            //     }
+                            //     if (a.lastName.localeCompare(b.lastName, undefined, { numeric: true }) > 0) {
+                            //         return 1;
+                            //     }
+                            //     return 0;
+                            // })
+                            // console.log(employeeInfo[0]);
                             dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
                         })
                 })
@@ -190,10 +212,12 @@ const GeneralPage = (props) => {
                     <div className="main-window__control-panel">
                         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER']) && <Link className="main-window__button" to="work-managment/record-time/new">Учесть рабочее время</Link>}
                         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <ManagerWorkspace />}
-                        {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={exportCSVFile}>
+                        {/* {props.userHasAccess(['ROLE_ADMIN']) &&  */}
+                        <div className="main-window__button" onClick={exportCSVFile}>
                             <img className="main-window__img" src={DownloadIcon} alt="" />
                             <span>Скачать Табель</span>
-                        </div>}
+                        </div>
+                        {/* } */}
                         {props.userHasAccess(['ROLE_ADMIN']) && isLoading && <ImgLoader />}
                     </div>
                     {
