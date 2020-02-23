@@ -11,6 +11,7 @@ import clientImg from '../../../../../../assets/sidemenu/client.svg';
 import contractImg from '../../../../../../assets/sidemenu/contract.svg';
 import listImg from '../../../../../../assets/sidemenu/list.svg';
 import boxImg from '../../../../../../assets/sidemenu/box.svg';
+import screwImg from '../../../../../../assets/sidemenu/screw.svg';
 import playListImg from '../../../../../../assets/sidemenu/play_list.svg';
 import './SideMenu.scss';
 
@@ -77,7 +78,9 @@ const SideMenu = (props) => {
             pathname: "/lemz/",
             linkTo: "/lemz/workshop-lemz",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
-            name: 'ЦехЛЭМЗ'
+            name: 'ЦехЛЭМЗ',
+            icon: screwImg,
+            iconClassName: 'sidemenu__img--bigger'
         },
         {
             pathname: "/lemz/workshop-lemz",
@@ -89,7 +92,9 @@ const SideMenu = (props) => {
             pathname: "/lepsari/",
             linkTo: "/lepsari/workshop-lepsari",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI'],
-            name: 'ЦехЛепсари'
+            name: 'ЦехЛепсари',
+            icon: screwImg,
+            iconClassName: 'sidemenu__img--bigger'
         },
         {
             pathname: "/lepsari/workshop-lepsari",
