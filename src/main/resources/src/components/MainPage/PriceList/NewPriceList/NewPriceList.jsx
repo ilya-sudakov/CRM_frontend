@@ -9,7 +9,7 @@ import { getPriceListPdfText } from '../../../../utils/pdfFunctions.jsx';
 import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.png';
 import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.png';
 import category3Img from '../../../../../../../../assets/priceList/крепежные_элементы.png';
-import categoryImg from '../../../../../../../../assets/priceList/default_category1.png';
+import categoryImg from '../../../../../../../../assets/priceList/default_category.png';
 import locationType1Img from '../../../../../../../../assets/priceList/Фасад.png';
 import locationType2Img from '../../../../../../../../assets/priceList/Терраса.png';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
@@ -233,7 +233,7 @@ const NewPriceList = (props) => {
                         let newCategories = categories;
                         newCategories.push({
                             img: categoryImg,
-                            name: item.category,
+                            name: (item.category !== undefined) ? item.category : '',
                             active: true
                         })
                     }
@@ -270,16 +270,16 @@ const NewPriceList = (props) => {
                             name: excelRows[i].name,
                             description: excelRows[i].productDescription,
                             units: excelRows[i].units,
-                            lessThan1500Price: excelRows[i].firstPrice.toFixed(2),
-                            lessThan5000Price: excelRows[i].secondPrice.toFixed(2),
-                            cost: excelRows[i].cost.toFixed(2),
-                            retailMarketPrice: excelRows[i].retailMarketPrice.toFixed(2),
-                            retailPrice: excelRows[i].retailPrice.toFixed(2),
-                            firstPrice: excelRows[i].firstPrice.toFixed(2),
-                            secondPrice: excelRows[i].secondPrice.toFixed(2),
-                            partnerPrice: excelRows[i].partnerPrice.toFixed(2),
-                            dealerPrice: excelRows[i].dealerPrice.toFixed(2),
-                            distributorPrice: excelRows[i].distributorPrice.toFixed(2),
+                            lessThan1500Price: excelRows[i].firstPrice ? excelRows[i].firstPrice.toFixed(2) : 0,
+                            lessThan5000Price: excelRows[i].secondPrice ? excelRows[i].secondPrice.toFixed(2) : 0,
+                            cost: excelRows[i].cost ? excelRows[i].cost.toFixed(2) : 0,
+                            retailMarketPrice: excelRows[i].retailMarketPrice ? excelRows[i].retailMarketPrice.toFixed(2) : 0,
+                            retailPrice: excelRows[i].retailPrice ? excelRows[i].retailPrice.toFixed(2) : 0,
+                            firstPrice: excelRows[i].firstPrice ? excelRows[i].firstPrice.toFixed(2) : 0,
+                            secondPrice: excelRows[i].secondPrice ? excelRows[i].secondPrice.toFixed(2) : 0,
+                            partnerPrice: excelRows[i].partnerPrice ? excelRows[i].partnerPrice.toFixed(2) : 0,
+                            dealerPrice: excelRows[i].dealerPrice ? excelRows[i].dealerPrice.toFixed(2) : 0,
+                            distributorPrice: excelRows[i].distributorPrice ? excelRows[i].distributorPrice.toFixed(2) : 0,
                             onSale: excelRows[i].onSale === 'да' ? true : false,
                             isTopSeller: excelRows[i].topSeller === 'да' ? true : false
                         }));
@@ -293,7 +293,7 @@ const NewPriceList = (props) => {
                                 let newCategories = categories;
                                 newCategories.push({
                                     img: categoryImg,
-                                    name: item.category,
+                                    name: (item.category !== undefined) ? item.category : '',
                                     active: true
                                 })
                             }
@@ -493,6 +493,7 @@ const NewPriceList = (props) => {
                     </div>}
                     {
                         categories.sort((a, b) => {
+                            {/* console.log(a) */ }
                             if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
                                 return -1;
                             }
