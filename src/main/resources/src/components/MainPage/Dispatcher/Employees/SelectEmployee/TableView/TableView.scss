@@ -29,6 +29,7 @@
     // top: calc(-6px); //test
     top: calc(-3%); //test
     word-break: break-all;
+    border-bottom: 1px solid #cccccc; 
     .tableview-employees__col {
       &:last-child {
         max-width: 125px;
