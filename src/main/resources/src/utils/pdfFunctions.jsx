@@ -509,7 +509,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                     };
                                 });
                                 fullGroup.push({
-                                    unbreakable: true,
+                                    unbreakable: groupOfProducts.products.length <= 20 ? true : false,
                                     stack: [
                                         {
                                             width: '*',
@@ -670,7 +670,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                 //     margin: [0, 5, 0, 10]
                                                 // },
                                                 {
-                                                    unbreakable: true,
+                                                    unbreakable: groupOfProducts.products.length <= 20 ? true : false,
                                                     table: {
                                                         widths: (noTags === true)
                                                             ? [40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 49)]
@@ -999,7 +999,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         ...sortedArr.map((item, index) => {
                             if (index === 0) {
                                 return {
-                                    unbreakable: true,
+                                    unbreakable: item.stack[2].columns[0].table.body.length <= 20 ? true : false,
                                     stack: [
                                         {
                                             image: tempImg,
