@@ -15,12 +15,12 @@ const WorkManagementPage = (props) => {
     const [workshops, setWorkshops] = useState([
         {
             name: 'ЦехЛЭМЗ',
-            visibility: ['ROLE_ADMIN', 'ROLE_LEMZ'],
+            visibility: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
             active: true
         },
         {
             name: 'ЦехЛепсари',
-            visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
+            visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
             active: true
         },
         {
@@ -172,7 +172,10 @@ const WorkManagementPage = (props) => {
                         ) {
                             let check = false;
                             workshops.map(workshop => {
-                                if (workshop.active && (workshop.name === item.employee.workshop)) {
+                                if (
+                                    workshop.active && (workshop.name === item.employee.workshop) &&
+                                    props.userHasAccess(workshop.visibility)
+                                ) {
                                     check = true;
                                     return;
                                 }
