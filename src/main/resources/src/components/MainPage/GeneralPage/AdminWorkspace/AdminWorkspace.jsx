@@ -11,9 +11,9 @@ const AdminWorkspace = (props) => {
             <WorkManagement
                 userHasAccess={props.userHasAccess}
             />
-            {props.userHasAccess(['ROLE_ADMIN']) && <Notifications
+            {/* {props.userHasAccess(['ROLE_ADMIN']) && <Notifications
                 userHasAccess={props.userHasAccess}
-            />}
+            />} */}
         </div>
     );
 };

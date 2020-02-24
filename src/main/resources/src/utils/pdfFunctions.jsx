@@ -978,16 +978,20 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
             .then(async () => {
                 const tempImg = await getDataUri(category.img);
                 const sortedArr = fullGroup.sort((a, b) => {
-                    if (fullGroup.length <= 1) return 0;
-                    else {
-                        if (a.stack[0].columns[0].text[1].groupId.localeCompare(b.stack[0].columns[0].text[1].groupId, undefined, { numeric: true }) < 0) {
-                            return -1;
-                        }
-                        if (a.stack[0].columns[0].text[1].groupId.localeCompare(b.stack[0].columns[0].text[1].groupId, undefined, { numeric: true }) > 0) {
-                            return 1;
-                        }
-                        return 0;
+                    // if (a.stack[0].columns[0].text[1].groupId.localeCompare(b.stack[0].columns[0].text[1].groupId, undefined, { numeric: true }) < 0) {
+                    //     return -1;
+                    // }
+                    // if (a.stack[0].columns[0].text[1].groupId.localeCompare(b.stack[0].columns[0].text[1].groupId, undefined, { numeric: true }) > 0) {
+                    //     return 1;
+                    // }
+                    // return 0;
+                    if (a.stack[0].columns[0].text[1].groupId < b.stack[0].columns[0].text[1].groupId) {
+                        return -1;
                     }
+                    if (a.stack[0].columns[0].text[1].groupId > b.stack[0].columns[0].text[1].groupId) {
+                        return 1;
+                    }
+                    return 0;
                 });
                 //Перенос категории на некст страницу если она без продукции
                 fullGroup.length > 0 && category.active && finalList.push({

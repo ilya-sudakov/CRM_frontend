@@ -226,7 +226,7 @@ const NewPriceList = (props) => {
             let startId = 0, endId = 0;
             for (let index = 3; index < excelRows.length; index++) {
                 let item = excelRows[index];
-                if (item.id === '1.') {
+                if (item.id === 1) {
                     startId = index;
                     endId = index;
                     if (!isExistingCategory(item.category)) {
@@ -554,10 +554,17 @@ const NewPriceList = (props) => {
                                         </div>
                                     </div>
                                     {category.active && priceList.sort((a, b) => {
-                                        if (a.id.localeCompare(b.id, undefined, { numeric: true }) < 0) {
+                                        {/* if (a.id.localeCompare(b.id, undefined, { numeric: true }) < 0) {
                                             return -1;
                                         }
                                         if (a.id.localeCompare(b.id, undefined, { numeric: true }) > 0) {
+                                            return 1;
+                                        }
+                                        return 0; */}
+                                        if (a.id < b.id) {
+                                            return -1;
+                                        }
+                                        if (a.id > b.id) {
                                             return 1;
                                         }
                                         return 0;
