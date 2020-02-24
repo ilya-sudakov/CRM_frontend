@@ -30,10 +30,21 @@
     }
   }
 
+  & .header__link {
+    display: flex;
+    margin-left: 15px;
+    margin-bottom: 15px;
+  }
+
+  & .header__logo {
+    width: 100px;
+  }
+
   &__company {
     font-size: 24px;
     display: flex;
     align-items: center;
+    margin-top: 5px;
 
     .header__name {
       margin-left: 5px;
@@ -44,33 +55,36 @@
 
   .header__sidemenu {
     display: flex;
-    padding: 5px 10px;
+    // padding: 5px 10px;
+    padding: 5px 5px;
     flex-direction: row;
     align-items: center;
-    border: 1px solid #9b9b9b;
-    border-radius: 5px;
+    // border: 1px solid #9b9b9b;
+    border-radius: 10px;
     transition: 0.2s ease-in-out;
     cursor: pointer;
     // background-color: $button__background--inverted !important;
 
     &:hover {
+      padding: 10px 5px;
       background-color: darken($primary-background-color, 10%);
     }
 
     .header__name {
-      font-size: 80%;
+      font-size: 14px;
     }
 
     .linesWrapper {
       display: flex;
       flex-direction: column;
-      height: 25px;
-      margin-right: 10px;
+      height: 20px;
+      // margin-right: 5px;
       transition: 0.2s ease-in-out;
 
       .line {
         height: 3px;
-        margin: 3px auto;
+        // margin: 3px auto;
+        margin-bottom: 5px;
         width: 30px;
         border-radius: 5px;
         background-color: $primary-text-color;
@@ -84,6 +98,9 @@
 
         &:nth-child(2) {
           transform-origin: 0 100%;
+        }
+        &:last-child {
+          margin-bottom: 0;
         }
       }
     }
@@ -121,28 +138,41 @@
         margin-right: 10px;
         cursor: pointer;
         position: relative;
-        padding: 2.5px 10px;
-        border-radius: 5px;
+        padding: 2.5px 5px;
+        padding-left: 10px;
+        // font-size: 85%;
+        border-radius: 25px;
+        min-width: 120px;
         border: 1px solid #9b9b9b;
         transition: 0.2s ease-in-out;
         z-index: 2;
 
         &:hover {
-          background-color: darken($primary-background-color, 10%);
+          background-color: darken($primary-background-color, 7.5%);
         }
 
         .header__profile_data {
           display: flex;
           flex-direction: row;
           align-items: center;
+          justify-content: flex-end;
+          width: 100%;
+          text-align: center !important;
 
           .header__userimg {
             width: 40px;
-            margin-right: 5px;
+            margin-left: 5px;
+            // margin-right: 5px;
           }
 
           .header__email {
             font-size: 80%;
+          }
+
+          .header__username {
+            font-size: 90%;
+            width: calc(100% - 45px);
+            text-align: center;
           }
         }
 
@@ -152,21 +182,40 @@
           font-size: 80%;
           position: absolute;
           top: 50px;
-          left: 0;
-          width: calc(100% - 10px);
-          min-width: 125px;
+          // left: 0;
+          right: 0;
+          // width: calc(100% - 10px);
+          width: calc(100% + 25px);
+          min-width: 165px;
           padding: 5px 5px;
           transition: 0.2s ease-in-out;
-          transform-origin: 0 0;
+          transform-origin: 80% 0%;
           z-index: 999;
 
           .header__profile_item {
-            display: block;
+            display: flex;
+            align-items: center;
             color: $primary-text-color;
             padding: 10px 0px;
             border-radius: 5px;
             transition: 0.2s ease-in-out;
             margin-bottom: 5px;
+            text-align: left;
+
+            // &:first-child {
+            //   flex-direction: column;
+            //   text-align: center;
+            //   // padding-left: 25px;
+            // }
+
+            & span {
+              width: calc(100% - 30px);
+            }
+
+            & .header__img {
+              width: 25px;
+              margin: 0 10px;
+            }
 
             &:last-child {
               margin: 0;
@@ -192,7 +241,7 @@
           }
 
           &--hidden {
-            transform: scaleY(0);
+            transform: scale(0);
           }
         }
       }
@@ -209,6 +258,15 @@
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
         }
       }
+    }
+  }
+
+  @media (max-width: 425px) {
+    .header__logo {
+      // display: none;
+      width: 60px;
+      margin-left: 5px;
+      margin-bottom: 10px;
     }
   }
 
