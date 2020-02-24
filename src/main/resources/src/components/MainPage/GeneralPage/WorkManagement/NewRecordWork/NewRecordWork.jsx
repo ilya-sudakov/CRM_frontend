@@ -10,6 +10,7 @@ import { getProductById, getProductsByCategory } from '../../../../../utils/Requ
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import { addRecordedWork, addProductToRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx';
 
 const NewRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -87,7 +88,7 @@ const NewRecordWork = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
-        // console.log(worktimeInputs);
+        console.log(worktimeInputs);
         const newWork = worktimeInputs.works.map(item => {
             const temp = Object.assign({
                 day: worktimeInputs.date.getDate(),
@@ -274,7 +275,7 @@ const NewRecordWork = (props) => {
                     {isLoading && <ImgLoader />}
                 </div>
             </form>
-        </div>
+        </div >
     );
 };
 
