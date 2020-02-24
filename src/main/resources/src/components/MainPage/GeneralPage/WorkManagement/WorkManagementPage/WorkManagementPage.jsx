@@ -65,7 +65,7 @@ const WorkManagementPage = (props) => {
         )
             .then(res => res.json())
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 setWorkItems(res);
                 setIsLoading(false);
             })

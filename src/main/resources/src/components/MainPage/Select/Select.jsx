@@ -41,8 +41,8 @@ const Select = (props) => {
     }
 
     const clickOnInput = () => {
-        const options = document.getElementsByClassName("select__options")[props.id ? props.id : 0];
-        const overlay = document.getElementsByClassName("select__overlay")[props.id ? props.id : 0];
+        const options = document.getElementsByClassName(props.customName ? "select__options" + props.customName : "select__options")[props.id ? props.id : 0];
+        const overlay = document.getElementsByClassName(props.customName ? "select__overlay" + props.customName : "select__overlay")[props.id ? props.id : 0];
         const error = document.getElementsByClassName("select__error")[props.id ? props.id : 0];
         if (options.classList.contains("select__options--hidden")) {
             options.classList.remove("select__options--hidden");
@@ -57,7 +57,7 @@ const Select = (props) => {
     }
 
     const clickOverlay = (event) => {
-        const overlay = document.getElementsByClassName("select__overlay")[props.id ? props.id : 0];
+        const overlay = document.getElementsByClassName(props.customName ? "select__overlay" + props.customName : "select__overlay")[props.id ? props.id : 0];
         if (!overlay.classList.contains("select__overlay--hidden")) {
             overlay.classList.add("select__overlay--hidden");
             clickOnInput();
@@ -277,7 +277,7 @@ const Select = (props) => {
 
     return (
         <div className="select">
-            <div className="select__overlay select__overlay--hidden" onClick={clickOverlay}></div>
+            <div className={props.customName ? "select__overlay select__overlay" + props.customName + " select__overlay--hidden" : "select__overlay select__overlay--hidden"} onClick={clickOverlay}></div>
             {(!props.readOnly && !props.workshop) && <div className="select__searchbar">
                 <button className="select__search_button" onClick={(e) => {
                     e.preventDefault();
@@ -295,8 +295,8 @@ const Select = (props) => {
                 />
                 <FormWindow
                     title="Выбор продукции"
-                    windowName="select-products"
-                    id={props.id}
+                    windowName={props.customName ? props.customName : "select-products"}
+                    id={props.formId ? props.formId : props.id}
                     content={
                         <React.Fragment>
                             <SearchBar
@@ -332,7 +332,7 @@ const Select = (props) => {
                     [props.name]: false
                 })) : null
             }>Поле не заполнено!</div>}
-            {props.options && <div className="select__options select__options--hidden">
+            {props.options && <div className={props.customName ? "select__options select__options" + props.customName + " select__options--hidden" : "select__options select__options--hidden"}>
                 {search().map((item, index) => (
                     <div id={item.id} optionId={index} name={item.name} className="select__option_item" onClick={clickOnOption}>
                         <ImgLoader

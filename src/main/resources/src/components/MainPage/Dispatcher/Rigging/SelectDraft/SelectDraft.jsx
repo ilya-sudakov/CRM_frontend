@@ -40,8 +40,8 @@ const SelectDraft = (props) => {
     }
 
     const clickOnInput = () => {
-        const options = document.getElementsByClassName("select-draft__options")[props.id ? props.id : 0];
-        const overlay = document.getElementsByClassName("select-draft__overlay")[props.id ? props.id : 0];
+        const options = document.getElementsByClassName(props.id ? "select-draft__options" + props.id : "select-draft__options")[0];
+        const overlay = document.getElementsByClassName(props.id ? "select-draft__overlay" + props.id : "select-draft__overlay")[0];
         const error = document.getElementsByClassName("select-draft__error")[props.id ? props.id : 0];
         if (options.classList.contains("select-draft__options--hidden")) {
             options.classList.remove("select-draft__options--hidden");
@@ -56,7 +56,7 @@ const SelectDraft = (props) => {
     }
 
     const clickOverlay = (event) => {
-        const overlay = document.getElementsByClassName("select-draft__overlay")[props.id ? props.id : 0];
+        const overlay = document.getElementsByClassName(props.id ? "select-draft__overlay" + props.id : "select-draft__overlay")[0];
         if (!overlay.classList.contains("select-draft__overlay--hidden")) {
             overlay.classList.add("select-draft__overlay--hidden");
             clickOnInput();
@@ -191,7 +191,7 @@ const SelectDraft = (props) => {
 
     const pressEscKey = useCallback((event) => {
         if (event.keyCode === 27) {
-            const options = document.getElementsByClassName("select-draft__options")[props.id ? props.id : 0];
+            const options = document.getElementsByClassName(props.id ? "select-draft__options" + props.id : "select-draft__options")[props.id ? props.id : 0];
             if (!options.classList.contains("select-draft__options--hidden")) {
                 // options.classList.add("select-draft__options--hidden");
                 clickOnInput();
@@ -213,7 +213,7 @@ const SelectDraft = (props) => {
 
     return (
         <div className="select-draft">
-            <div className="select-draft__overlay select-draft__overlay--hidden" onClick={clickOverlay}></div>
+            <div className={props.id ? "select-draft__overlay select-draft__overlay" + props.id + " select-draft__overlay--hidden" : "select-draft__overlay select-draft__overlay--hidden"} onClick={clickOverlay}></div>
             {(!props.readOnly && !props.workshop) && <div className="select-draft__searchbar">
                 <button className="select-draft__search_button" onClick={(e) => {
                     e.preventDefault();
@@ -231,8 +231,8 @@ const SelectDraft = (props) => {
                 />
                 <FormWindow
                     title="Выбор чертежа"
-                    windowName="select-drafts"
-                    // id={0}
+                    windowName={"select-drafts" + props.id}
+                    // id={props.id}
                     content={
                         <React.Fragment>
                             <SearchBar
@@ -265,7 +265,7 @@ const SelectDraft = (props) => {
                     [props.name]: false
                 })) : null
             }>Поле не заполнено!</div>}
-            {props.options && <div className="select-draft__options select-draft__options--hidden">
+            {props.options && <div className={props.id ? "select-draft__options select-draft__options" + props.id + " select-draft__options--hidden" : "select-draft__options select-draft__options--hidden"}>
                 {search().map((item, index) => (
                     <div id={item.id} type={item.type} optionId={index} name={item.name} className="select-draft__option_item" onClick={clickOnOption}>
                         <div>{'№' + item.number + ', ' + item.name}</div>

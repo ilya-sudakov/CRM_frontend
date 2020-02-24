@@ -47,6 +47,7 @@ const TableView = (props) => {
         <div className="tableview-work">
             <div className="tableview-work__row tableview-work__row--header">
                 <div className="tableview-work__col">Название</div>
+                <div className="tableview-work__col">Тип</div>
                 <div className="tableview-work__col">Действия</div>
             </div>
             {isLoading && <TableDataLoading
@@ -56,6 +57,7 @@ const TableView = (props) => {
             {sortProducts(props.data).map((work, work_id) => (
                 <div key={work_id} className="tableview-work__row tableview-work__row--even">
                     <div className="tableview-work__col">{work.work}</div>
+                    <div className="tableview-work__col">{work.typeOfWork}</div>
                     <div className="tableview-work__actions">
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/work-list/edit/" + work.id} className="tableview-work__action">Редактировать</Link>}
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={work.id} className="tableview-work__action" onClick={props.deleteItem}>Удалить</div>}

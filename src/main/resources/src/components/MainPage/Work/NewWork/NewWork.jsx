@@ -9,12 +9,13 @@ import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 const NewWork = (props) => {
     const [workInputs, setWorkInputs] = useState({
         work: "",
+        typeOfWork: "Продукция"
     })
     const [workErrors, setWorkErrors] = useState({
-        work: false,
+        work: false
     })
     const [validInputs, setValidInputs] = useState({
-        work: false,
+        work: false
     })
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +36,7 @@ const NewWork = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            work: false,
+            work: false
         });
         for (let item in validInputs) {
             if (validInputs[item] === false) {
@@ -106,6 +107,18 @@ const NewWork = (props) => {
                     errorsArr={workErrors}
                     setErrorsArr={setWorkErrors}
                 />
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Тип работы</div>
+                    <div className="main-form__input_field">
+                        <select
+                            name="typeOfWork"
+                            onChange={handleInputChange}
+                        >
+                            <option>Продукция</option>
+                            <option>Чертеж</option>
+                        </select>
+                    </div>
+                </div>
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/work-list')} value="Вернуться назад" />

@@ -10,12 +10,14 @@ const SelectWork = (props) => {
         {
             product: [],
             workName: '',
+            workType: '',
             workId: null,
             hours: 0,
+            draft: []
         }
     ]);
     const [options, setOptions] = useState([]);
-    const [curItemsType, setCurItemsType] = useState('products');
+    const [curItemsType, setCurItemsType] = useState('');
 
     const clickOverlay = (event) => {
         const overlay = document.getElementsByClassName("select-work__overlay")[0];
@@ -142,14 +144,17 @@ const SelectWork = (props) => {
                                 required
                                 defaultValue={item.workName}
                                 id={index}
-                                handleWorkItemChange={(name, id) => {
+                                handleWorkItemChange={(name, id, type) => {
+                                    console.log(name, id, type);
                                     let temp = selected;
                                     let originalItem = selected[index];
                                     temp.splice(index, 1, {
                                         ...originalItem,
+                                        workType: type,
                                         workName: name,
                                         workId: id
-                                    })
+                                    });
+                                    setCurItemsType(type);
                                     setSelected([...temp]);
                                     props.handleWorkChange([...temp])
                                 }}
@@ -158,11 +163,12 @@ const SelectWork = (props) => {
                             />
                             {/* Вставить InputProducts, только вместо фасовки сделать 
                                 единицу измерения(или просто кол-во оставить) */}
-                            {curItemsType === 'products'
+                            {selected[index].workType === 'Продукция'
                                 ? <InputProducts
                                     inputName="Продукция"
                                     options
-                                    id={index}
+                                    id={0}
+                                    customName={'select-products' + index}
                                     defaultValue={item.product}
                                     categories={props.categories}
                                     products={props.products}
@@ -183,15 +189,20 @@ const SelectWork = (props) => {
                                     searchPlaceholder="Введите название продукта для поиска..."
                                 // workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
                                 />
-                                : <div className="select-work__item">
+                                : (selected[index].workType !== '') && <div className="select-work__item">
                                     <div className="select-work__input_name">Чертежи</div>
                                     <div className="select-work__input_field">
                                         <SelectDraft
                                             onChange={(value) => {
-                                                setWorkTimeInputs({
-                                                    ...worktimeInputs,
-                                                    drafts: value
+                                                // console.log(value)
+                                                let temp = selected;
+                                                let originalItem = selected[index];
+                                                temp.splice(index, 1, {
+                                                    ...originalItem,
+                                                    draft: value
                                                 })
+                                                setSelected([...temp]);
+                                                props.handleWorkChange([...temp]);
                                             }}
                                             options
                                             searchPlaceholder={"Добавьте чертеж нажав на кнопку 'Добавить чертеж'"}
@@ -205,7 +216,7 @@ const SelectWork = (props) => {
                                             // workshop={props.workshop}
                                             // noPackaging={props.noPackaging}
                                             userHasAccess={props.userHasAccess}
-                                            id={0}
+                                            id={index}
                                         />
                                     </div>
                                 </div>}

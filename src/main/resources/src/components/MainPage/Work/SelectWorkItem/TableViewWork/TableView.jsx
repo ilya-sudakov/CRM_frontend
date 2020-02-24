@@ -48,15 +48,17 @@ const TableView = (props) => {
                     <img name="id" className="tableview-work__img" onClick={changeSortOrder} src={sortIcon} />
                 </div> */}
                 <div className="tableview-work__col">Название</div>
+                <div className="tableview-work__col">Тип</div>
                 <div className="tableview-work__col">Действия</div>
             </div>
             {sortProducts(props.data).map((work, work_id) => (
                 <div key={work_id} className="tableview-work__row tableview-work__row--even">
                     {/* <div className="tableview-work__col">{work.id}</div> */}
                     <div className="tableview-work__col">{work.work}</div>
+                    <div className="tableview-work__col">{work.typeOfWork}</div>
                     <div className="tableview-work__actions">
                         <div data-id={work.id} className="tableview-work__action" onClick={() => {
-                            props.selectWork(work.work, work.id);
+                            props.selectWork(work.work, work.id, work.typeOfWork);
                         }}>Выбрать</div>
                     </div>
                 </div>

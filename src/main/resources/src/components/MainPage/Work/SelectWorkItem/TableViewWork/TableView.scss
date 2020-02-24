@@ -24,7 +24,7 @@
   }
 
   &__row--header {
-    font-size: 80%!important;
+    font-size: 80% !important;
     position: sticky; //test
     top: calc(-6px); //test
     .tableview-work__col {
@@ -54,7 +54,11 @@
       // max-width: 150px;
 
       &:nth-child(1) {
-        flex: 0 1 100%;
+        flex: 0 1 60%;
+      }
+
+      &:nth-child(2) {
+        flex: 0 1 40%;
       }
 
       &:last-child {

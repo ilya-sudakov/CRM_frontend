@@ -20,6 +20,8 @@ const InputProducts = (props) => {
                     defaultValue={props.defaultValue}
                     readOnly={props.readOnly}
                     categories={props.categories}
+                    customName={props.customName}
+                    formId={props.formId}
                     products={props.products}
                     workshop={props.workshop}
                     noPackaging={props.noPackaging}

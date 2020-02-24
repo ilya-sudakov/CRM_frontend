@@ -23,6 +23,7 @@ const Work = (props) => {
         getWork()
             .then(response => response.json())
             .then(response => {
+                console.log(response);
                 setWork(response);
             })
             .catch(error => {

@@ -8,6 +8,7 @@ import TableView from './TableViewWork/TableView.jsx';
 const SelectWorkItem = (props) => {
     const [showWindow, setShowWindow] = useState(false);
     const [works, setWorks] = useState([]);
+    const [workType, setWorkType] = useState('Продукция');
     const [searchQuery, setSearchQuery] = useState('');
     const [id, setId] = useState(0);
     const [fullName, setFullName] = useState('');
@@ -24,10 +25,11 @@ const SelectWorkItem = (props) => {
             })
     }
 
-    const clickWork = (employeeName, employeeId) => {
+    const clickWork = (employeeName, employeeId, newWorkType) => {
         setId(employeeId);
         setFullName(employeeName);
-        props.handleWorkItemChange(employeeName, employeeId);
+        setWorkType(newWorkType);
+        props.handleWorkItemChange(employeeName, employeeId, newWorkType);
         setShowWindow(!showWindow);
     }
 
