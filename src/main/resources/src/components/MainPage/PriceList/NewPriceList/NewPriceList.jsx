@@ -9,7 +9,7 @@ import { getPriceListPdfText } from '../../../../utils/pdfFunctions.jsx';
 import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.png';
 import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.png';
 import category3Img from '../../../../../../../../assets/priceList/крепежные_элементы.png';
-import categoryImg from '../../../../../../../../assets/priceList/крепежные_элементы.png';
+import categoryImg from '../../../../../../../../assets/priceList/default_category1.png';
 import locationType1Img from '../../../../../../../../assets/priceList/Фасад.png';
 import locationType2Img from '../../../../../../../../assets/priceList/Терраса.png';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
