@@ -28,18 +28,21 @@ const NewPriceList = (props) => {
     ])
     const [optionalCols, setOptionalCols] = useState([
         {
+            id: 1,
+            property: 'partnerPrice',
+            name: 'Партнер',
+            active: false
+        },
+        {
+            id: 2,
             property: 'dealerPrice',
             name: 'Дилер',
             active: false
         },
         {
+            id: 3,
             property: 'distributorPrice',
             name: 'Дистрибутор',
-            active: false
-        },
-        {
-            property: 'partnerPrice',
-            name: 'Партнер',
             active: false
         }
     ])
@@ -435,7 +438,15 @@ const NewPriceList = (props) => {
                             getPriceListPdfText(
                                 categories,
                                 priceList.filter(item => item.active),
-                                optionalCols.filter(item => item.active && item),
+                                optionalCols.filter(item => item.active && item).sort((a, b) => {
+                                    if (a.id < b.id) {
+                                        return -1;
+                                    }
+                                    if (a.id > b.id) {
+                                        return 1;
+                                    }
+                                    return 0;
+                                }),
                                 locationTypes,
                                 disclaimer
                             );

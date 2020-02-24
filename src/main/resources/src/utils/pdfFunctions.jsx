@@ -719,7 +719,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                         margin: [0, 5, 0, 0]
                                                                     },
                                                                     {
-                                                                        text: 'Описание',
+                                                                        text: 'Название',
                                                                         // bold: true
                                                                         margin: [0, 5, 0, 0]
                                                                     },
@@ -767,7 +767,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                         margin: [0, 5, 0, 0]
                                                                     },
                                                                     {
-                                                                        text: 'Описание',
+                                                                        text: 'Название',
                                                                         // bold: true
                                                                         margin: [0, 5, 0, 0]
                                                                     },
@@ -840,7 +840,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                             margin: [0, optionalCols.length > 1 ? 5 : 0, 0, 0]
                                                                         },
                                                                         {
-                                                                            text: product.description,
+                                                                            text: product.name,
                                                                             margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
                                                                         },
                                                                         {
@@ -877,7 +877,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                             margin: [0, optionalCols.length > 1 ? 5 : 0, 0, 0]
                                                                         },
                                                                         {
-                                                                            text: product.description,
+                                                                            text: product.name,
                                                                             margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0]
                                                                         },
                                                                         {
