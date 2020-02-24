@@ -673,8 +673,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     unbreakable: groupOfProducts.products.length <= 20 ? true : false,
                                                     table: {
                                                         widths: (noTags === true)
-                                                            ? [40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 49)]
-                                                            : [60, 40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 49)],
+                                                            ? [40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 35)]
+                                                            : [60, 40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 35)],
                                                         body: [
                                                             noTags === false
                                                                 ? [
@@ -731,7 +731,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                     {
                                                                         text: groupOfProducts.retailName ? groupOfProducts.retailName : 'Розница',
                                                                         // bold: true
-                                                                        margin: [0, 4.5, 0, 0]
+                                                                        margin: [0, 1.5, 0, 0]
                                                                     },
                                                                     {
                                                                         text: groupOfProducts.firstPriceName ? groupOfProducts.firstPriceName : 'до 1500 шт.',
@@ -752,7 +752,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                                     : column.property === 'distributorPrice'
                                                                                     && groupOfProducts.distributorName,
                                                                             // bold: true
-                                                                            margin: [0, 4.5, 0, 0]
+                                                                            margin: [0, 1.5, 0, 0]
                                                                         }
                                                                     })
                                                                 ]
@@ -779,7 +779,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                     {
                                                                         text: groupOfProducts.retailName ? groupOfProducts.retailName : 'Розница',
                                                                         // bold: true
-                                                                        margin: [0, 4.5, 0, 0]
+                                                                        margin: [0, 1.5, 0, 0]
                                                                     },
                                                                     {
                                                                         text: groupOfProducts.firstPriceName ? groupOfProducts.firstPriceName : 'до 1500 шт.',
@@ -800,7 +800,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                                     : column.property === 'distributorPrice'
                                                                                     && groupOfProducts.distributorName,
                                                                             // bold: true
-                                                                            margin: [0, 4.5, 0, 0]
+                                                                            margin: [0, 1.5, 0, 0]
                                                                         }
                                                                     })
                                                                 ],
