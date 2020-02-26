@@ -42,13 +42,13 @@ const SideMenu = (props) => {
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_DISPATCHER', 'ROLE_LEMZ', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER'],
             addButtonName: "Учесть рабочее время"
         },
-        {
-            pathname: "/contracts",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            name: "Договоры",
-            icon: contractImg,
-            iconClassName: 'sidemenu__img--bigger'
-        },
+        // {
+        //     pathname: "/contracts",
+        //     mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+        //     name: "Договоры",
+        //     icon: contractImg,
+        //     iconClassName: 'sidemenu__img--bigger'
+        // },
         {
             pathname: "/requests",
             name: "Заявки",
@@ -227,7 +227,7 @@ const SideMenu = (props) => {
                                 : "sidemenu__item"
                     }>
                             <Link className="sidemenu__link" to={item.linkTo ? item.linkTo : item.pathname}>
-                                {item.icon && <img className={"sidemenu__img " + item.iconClassName} src={item.icon} alt="" />}
+                                {item.icon && <img className={item.iconClassName ? "sidemenu__img sidemenu__img--icon " + item.iconClassName : "sidemenu__img sidemenu__img--icon"} src={item.icon} alt="" />}
                                 {item.name}
                             </Link>
                             {(

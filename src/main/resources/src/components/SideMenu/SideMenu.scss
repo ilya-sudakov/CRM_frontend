@@ -79,6 +79,13 @@
       }
     }
 
+    .sidemenu__img--icon {
+      transition: filter 0.5s;
+      transform: translate3d(-1px, -1px, 0);
+      border: solid 1px transparent;
+      border-width: 1px 0 0 1px;
+    }
+
     &--add {
       // width: 50%;
       width: fit-content;
@@ -118,6 +125,7 @@
       align-items: center;
       color: $primary-text-color;
       padding: 7.5px 5px;
+      overflow: hidden;
       padding-left: 0;
       // width: 100%;
       font-size: 100%;
@@ -154,7 +162,7 @@
 
   .sidemenu__item,
   .sidemenu__item--active {
-    .sidemenu__img {
+    .sidemenu__img:first-of-type {
       // filter: brightness(5);
     }
   }
@@ -188,7 +196,7 @@
       align-items: center;
 
       .sidemenu__item--add {
-        transform: scaleX(0);
+        transform: scale(0);
       }
     }
 
