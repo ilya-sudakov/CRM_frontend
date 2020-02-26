@@ -2,7 +2,7 @@
 
 .header {
   height: 60px;
-  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 1px 5px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15), 0 0px 1px rgba(0, 0, 0, 0.15);
   border-bottom: 1px solid #bbbbbb;
   padding: 0 25px;
   display: flex;
@@ -11,7 +11,6 @@
   position: sticky;
   position: -webkit-sticky;
   z-index: 999;
-  // background-color: $light80-grey;
 
   .header__img {
     width: 35px;
