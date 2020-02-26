@@ -16,10 +16,12 @@
       // height: 200px;
       margin-bottom: 10px;
       align-items: flex-start;
+      flex-wrap: wrap;
       justify-content: center;
       position: relative;
       .main-window__button {
         padding: 5px 10px;
+        margin-top: 5px;
         line-height: 2rem;
       }
     }
@@ -36,6 +38,12 @@
     &__date {
       padding: 5px;
       font-size: 90%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main-window__control-panel {
+      justify-content: flex-start !important;
     }
   }
 }

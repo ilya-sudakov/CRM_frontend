@@ -16,27 +16,26 @@
   .work-management__title {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     font-size: 125%;
-    // text-align: center;
-    margin: 15px 0;
-    // margin-bottom: 15px;
+    // margin: 15px 0;
+    padding: 15px 15px;
     position: relative;
+    & span {
+      padding: 0 10px;
+    }
   }
   .work-management__title .work-management__date {
-    // width: fit-content;
-    // margin-right: auto;
-    position: absolute;
-    left: 25px;
-    top: 5px;
+    // position: absolute;
+    // left: 25px;
+    // top: 5px;
     font-size: 65%;
     color: #666666;
   }
   .work-management__button {
-    // margin-left: 10px;
-    position: absolute;
-    right: 5px;
+    // position: absolute;
+    // right: 5px;
     border: 0;
     cursor: pointer;
     padding: 5px 10px;
@@ -45,7 +44,7 @@
     background-color: $button__background--inverted;
     color: $secondary-text-color;
     transition: 0.2s ease-in-out;
-    margin-right: 10px;
+    // margin-right: 10px;
     outline: none;
     display: flex;
     justify-content: center;
@@ -165,5 +164,23 @@
     text-decoration: underline;
     flex: 0 1 33.3%;
     text-align: right;
+  }
+
+  @media (max-width: 768px) {
+    .work-management__title {
+      flex-direction: column;
+      align-items: center;
+      & .work-management__date {
+        margin-right: auto;
+      }
+      & .work-management__button {
+        margin-top: 5px;
+        margin-left: auto;
+      }
+    }
+    .work-management__item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }

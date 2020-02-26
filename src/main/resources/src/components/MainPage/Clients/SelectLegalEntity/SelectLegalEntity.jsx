@@ -7,6 +7,7 @@ import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 const SelectLegalEntity = (props) => {
     const [selected, setSelected] = useState([
         {
+            name: '',
             INN: '7842143789',
             KPP: '',
             OGRN: '',
@@ -54,6 +55,7 @@ const SelectLegalEntity = (props) => {
         setSelected([
             ...selected,
             {
+                name: '',
                 INN: '7842143789',
                 KPP: '',
                 OGRN: '',
@@ -66,6 +68,7 @@ const SelectLegalEntity = (props) => {
         props.handleLegalEntityChange([
             ...selected,
             {
+                name: '',
                 INN: '7842143789',
                 KPP: '',
                 OGRN: '',
@@ -119,13 +122,27 @@ const SelectLegalEntity = (props) => {
                                 <span>ИНН: </span> <span>{item.INN}</span>
                             </div>
                             <div className="select-legal-entity__selected_name">
-                                <span>ОГРН: </span> <span>{item.OGRN}</span>
+                                <span>Название: </span> <span>{item.name}</span>
                             </div>
                             <div className="select-legal-entity__selected_name">
                                 <span>Адрес: </span> <span>{item.legalAddress}</span>
                             </div>
                         </div>
                         <div className="select-legal-entity__selected_form" >
+                            <div className="select-legal-entity__item">
+                                <div className="select-legal-entity__input_name">Название</div>
+                                <div className="select-legal-entity__input_field">
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        index={index}
+                                        autoComplete="off"
+                                        onChange={handleInputChange}
+                                        value={item.name}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
                             <div className="select-legal-entity__item">
                                 <div className="select-legal-entity__input_name">ИНН</div>
                                 <div className="select-legal-entity__input_field">
@@ -235,7 +252,7 @@ const SelectLegalEntity = (props) => {
                                         if (res.suggestions.length > 0) {
                                             let newData = Object.assign({
                                                 ...item,
-                                                name: res.suggestions[0].data.name.full,
+                                                name: res.suggestions[0].data.name.short_with_opf,
                                                 KPP: res.suggestions[0].data.kpp,
                                                 OGRN: res.suggestions[0].data.ogrn,
                                                 legalAddress: res.suggestions[0].data.address.value,
@@ -266,7 +283,7 @@ const SelectLegalEntity = (props) => {
                                         }
                                         else {
                                             alert("Не найдено данных с данным ИНН");
-                                                    setIsLoading(false);
+                                            setIsLoading(false);
                                         }
                                     })
                             }}>
