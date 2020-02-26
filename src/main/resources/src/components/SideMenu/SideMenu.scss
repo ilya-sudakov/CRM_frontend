@@ -9,7 +9,8 @@
   font-size: 82%;
   width: 250px;
   max-height: calc(100vh - 70px - 1px);
-  border-right: 1px solid #bbbbbb;
+  max-height: calc(100vh - 70px);
+  border-right: 1px solid #444444;
   background-color: $side_menu__background;
   padding: 7.5px 10px 0px 10px;
   display: flex;
@@ -44,9 +45,9 @@
 
     .sidemenu__img {
       width: 20px;
-      // filter: brightness(5);
+      filter: brightness(2);
     }
-    
+
     .sidemenu__img--bigger {
       width: 25px;
       height: 25px;
@@ -57,14 +58,24 @@
     }
 
     &--active {
-      background-color: darken($side_menu__background, 20%);
+      background-color: $button__background--inverted;
+      // background-color: darken($side_menu__background, 20%);
+
+      & .sidemenu__img {
+        filter: brightness(3);
+      }
 
       .sidemenu__link {
         color: $secondary-text-color !important;
       }
 
+      & .sidemenu__addButton {
+        background-color: lighten($button__background--inverted, 5%) !important;
+      }
+
       &:hover {
-        background-color: darken($side_menu__background, 30%);
+        background-color: darken($button__background--inverted, 5%);
+        // background-color: darken($side_menu__background, 30%);
       }
     }
 
@@ -95,7 +106,7 @@
     }
 
     &--hidden {
-      transform: scaleY(0);
+      transform: scale(0);
       height: 0;
       padding: 0;
       margin: 0;
@@ -112,6 +123,7 @@
       font-size: 100%;
       width: calc(100% - 35px);
       // text-align: center;
+      color: #dddddd;
 
       & .sidemenu__img {
         // width: 25px;
@@ -132,6 +144,7 @@
       display: flex;
       align-items: center;
       transition: 0.2s ease-in-out;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
