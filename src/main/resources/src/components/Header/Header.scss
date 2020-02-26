@@ -200,7 +200,8 @@
           .header__profile_item {
             display: flex;
             align-items: center;
-            color: $primary-text-color;
+            // color: $primary-text-color;
+            color: #dddddd;
             padding: 10px 0px;
             border-radius: 5px;
             transition: 0.2s ease-in-out;
@@ -220,6 +221,7 @@
             & .header__img {
               width: 25px;
               margin: 0 10px;
+              filter: brightness(2);
             }
 
             &:last-child {
