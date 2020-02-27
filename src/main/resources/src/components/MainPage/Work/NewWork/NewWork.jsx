@@ -116,6 +116,7 @@ const NewWork = (props) => {
                         >
                             <option>Продукция</option>
                             <option>Чертеж</option>
+                            <option>Без продукции/чертежа</option>
                         </select>
                     </div>
                 </div>

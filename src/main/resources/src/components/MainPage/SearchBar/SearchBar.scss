@@ -39,7 +39,7 @@
         width: calc(100% - 20px);
         padding: 5px 10px;
         border-radius: 5px;
-
+        transition: 200ms ease-in-out;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
 
@@ -91,13 +91,39 @@
     }
   }
 
+  @media (max-width: 425px) {
+    .searchbar__panel,
+    .searchbar__title {
+      padding: 0 10px !important;
+    }
+
+    .searchbar__title {
+      font-size: 110%;
+    }
+    .searchbar__input {
+      font-size: 80%;
+      & input {
+        line-height: 1.5rem;
+        font-size: 80%;
+      }
+    }
+    .searchbar__searchbutton {
+      & .searchbar__img {
+        margin: 0;
+      }
+      & span {
+        display: none;
+      }
+    }
+  }
+
   @media (max-width: 768px) {
     & {
       width: calc(100% - 10px);
 
       .searchbar__panel,
       .searchbar__title {
-        padding: 0 5px;
+        padding: 0 20px;
       }
     }
   }

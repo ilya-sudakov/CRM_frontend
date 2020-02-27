@@ -163,8 +163,8 @@ const SelectWork = (props) => {
                             />
                             {/* Вставить InputProducts, только вместо фасовки сделать 
                                 единицу измерения(или просто кол-во оставить) */}
-                            {//selected[index].workType === 'Продукция'
-                                // ? 
+                            {selected[index].workType === 'Продукция'
+                                ?
                                 <InputProducts
                                     inputName="Продукция"
                                     options
@@ -190,8 +190,9 @@ const SelectWork = (props) => {
                                     searchPlaceholder="Введите название продукта для поиска..."
                                 // workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
                                 />
+                                : null
                             }
-                           {/* //:(selected[index].workType !== '') &&  */}
+                            {/* //:(selected[index].workType !== '') &&  */}
                             {/* <div className="select-work__item">
                                 <div className="select-work__input_name">Чертежи</div>
                                 <div className="select-work__input_field">

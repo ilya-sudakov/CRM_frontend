@@ -153,6 +153,10 @@
       align-items: center;
       transition: 0.2s ease-in-out;
       box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      transition: filter 0.5s;
+      transform: translate3d(-1px, -1px, 0);
+      border: solid 1px transparent;
+      border-width: 1px 0 0 1px;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
