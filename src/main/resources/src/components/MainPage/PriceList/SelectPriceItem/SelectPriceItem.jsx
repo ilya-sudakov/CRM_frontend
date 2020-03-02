@@ -62,28 +62,37 @@ const SelectPriceItem = (props) => {
         if (props.groupImg2 !== undefined) {
             setGroupImg1(props.groupImg2)
         }
-        if (props.newItem !== undefined) {
-            setNewItem(props.newItem)
+        if (props.groupImg3 !== undefined) {
+            setGroupImg3(props.groupImg3)
         }
-        if (props.uniqueItem !== undefined) {
-            setUniqueItem(props.uniqueItem)
+        if (props.groupImg4 !== undefined) {
+            setGroupImg4(props.groupImg4)
         }
+        if (props.footerImg !== undefined) {
+            setFooterImg(props.footerImg)
+        }
+        // if (props.newItem !== undefined) {
+        //     setNewItem(props.newItem)
+        // }
+        // if (props.uniqueItem !== undefined) {
+        //     setUniqueItem(props.uniqueItem)
+        // }
         if (props.proprietaryItem !== undefined) {
             setProprietaryItem(props.proprietaryItem)
         }
-        getPriceListCoefficient()
-            .then(res => res.json())
-            .then(res => {
-                setCoefficients({
-                    retailPrice: Number.parseFloat(res.retailPrice),
-                    dealerPrice: Number.parseFloat(res.dealerPrice),
-                    distributorPrice: Number.parseFloat(res.distributorPrice),
-                    partnerPrice: Number.parseFloat(res.partnerPrice),
-                    stopPrice: Number.parseFloat(res.stopPrice),
-                    lessThan5000Price: Number.parseFloat(res.lessThan5000Price),
-                    lessThan1500Price: Number.parseFloat(res.lessThan1500Price),
-                })
-            })
+        // getPriceListCoefficient()
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         setCoefficients({
+        //             retailPrice: Number.parseFloat(res.retailPrice),
+        //             dealerPrice: Number.parseFloat(res.dealerPrice),
+        //             distributorPrice: Number.parseFloat(res.distributorPrice),
+        //             partnerPrice: Number.parseFloat(res.partnerPrice),
+        //             stopPrice: Number.parseFloat(res.stopPrice),
+        //             lessThan5000Price: Number.parseFloat(res.lessThan5000Price),
+        //             lessThan1500Price: Number.parseFloat(res.lessThan1500Price),
+        //         })
+        //     })
     }, [props.defaultValue, props.options])
 
     const clickOnForm = (e) => {
@@ -323,10 +332,10 @@ const SelectPriceItem = (props) => {
                         <CheckBox
                             text="Запатентована"
                             checked={proprietaryItem}
-                            name="proprietaryItem"
+                            name="proprietaryItemText"
                             onChange={(value, name) => {
                                 setProprietaryItem(value);
-                                props.handleLabelChange(value, name);
+                                props.handleLabelChange('Патент', name);
                             }}
                         />
                     </div>

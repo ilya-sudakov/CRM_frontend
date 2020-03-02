@@ -292,7 +292,7 @@ const NewPriceList = (props) => {
                         {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
                             event.preventDefault();
                             setIsLoading(true);
-                            console.log(priceList)
+                            console.log(priceList);
                             getPriceListPdfText(
                                 categories,
                                 priceList.filter(item => item.active),
@@ -310,6 +310,12 @@ const NewPriceList = (props) => {
                             );
                             setIsLoading(false);
                         }} value="Открыть .pdf" />}
+                        {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
+                            event.preventDefault();
+                            setIsLoading(true);
+                            console.log(priceList)
+                            setIsLoading(false);
+                        }} value="Сохранить данные" />}
                         {isLoading && <ImgLoader />}
                     </div>
                     {priceList.length > 0 && <div className="main-form__buttons">

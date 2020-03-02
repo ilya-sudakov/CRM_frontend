@@ -835,7 +835,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                         groupOfProducts.footerImg !== ''
                                             ? {
                                                 image: await getDataUri(groupOfProducts.footerImg),
-                                                fit: [512, 120],
+                                                fit: [512, 100],
                                                 // width: 512,
                                                 // height: 100
                                             }
@@ -866,7 +866,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         ...sortedArr.map((item, index) => {
                             if (index === 0) {
                                 return {
-                                    unbreakable: item.stack[2].columns[0].table.body.length <= 20 ? true : false,
+                                    unbreakable: item.stack[2].columns[0].table.body.length <= 8 ? true : false,
                                     stack: [
                                         {
                                             image: tempImg,
