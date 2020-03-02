@@ -40,8 +40,11 @@ const SelectPriceItem = (props) => {
         lessThan5000Price: 0.89,
         lessThan1500Price: 0.96,
     })
-    const [groupImg, setGroupImg] = useState(null);
-    const [draftImg, setDraftImg] = useState(null);
+    const [groupImg1, setGroupImg1] = useState(null);
+    const [groupImg2, setGroupImg2] = useState(null);
+    const [groupImg3, setGroupImg3] = useState(null);
+    const [groupImg4, setGroupImg4] = useState(null);
+    const [footerImg, setFooterImg] = useState(null);
     // const [visibleItems, setVisibleItems] = useState([{
     //     id: 
     // }])
@@ -53,11 +56,11 @@ const SelectPriceItem = (props) => {
         if (props.options !== undefined) {
             setOptions([...props.options])
         }
-        if (props.groupImg !== undefined) {
-            setGroupImg(props.groupImg)
+        if (props.groupImg1 !== undefined) {
+            setGroupImg1(props.groupImg1)
         }
-        if (props.draftImg !== undefined) {
-            setGroupImg(props.draftImg)
+        if (props.groupImg2 !== undefined) {
+            setGroupImg1(props.groupImg2)
         }
         if (props.newItem !== undefined) {
             setNewItem(props.newItem)
@@ -204,46 +207,102 @@ const SelectPriceItem = (props) => {
                 </button>
             }
             <div className="select-price-item__selected">
-                {!props.readOnly && <div className="main-form__item">
-                    <div className="main-form__input_name">Фотография 1</div>
-                    <div className="main-form__input_field">
-                        {groupImg &&
-                            <div className="main-form__product_img">
-                                <img src={groupImg} alt="" />
-                            </div>
-                        }
-                        {!props.readOnly && <FileUploader
-                            uniqueId={"file1" + props.uniqueId}
-                            regex={/.+\.(jpeg|jpg|png|img)/}
-                            onChange={(result) => {
-                                setGroupImg(result)
-                                props.handleImgChange(result, 'img')
-                            }}
-                        />}
+                {!props.readOnly && <React.Fragment>
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Фотография 1</div>
+                        <div className="main-form__input_field">
+                            {groupImg1 &&
+                                <div className="main-form__product_img">
+                                    <img src={groupImg1} alt="" />
+                                </div>
+                            }
+                            {!props.readOnly && <FileUploader
+                                uniqueId={"file1" + props.uniqueId}
+                                regex={/.+\.(jpeg|jpg|png|img)/}
+                                onChange={(result) => {
+                                    setGroupImg1(result)
+                                    props.handleImgChange(result, 'img')
+                                }}
+                            />}
+                        </div>
                     </div>
-                </div>}
-                {!props.readOnly && <div className="main-form__item">
-                    <div className="main-form__input_name">Фотография 2</div>
-                    <div className="main-form__input_field">
-                        {draftImg &&
-                            <div className="main-form__product_img">
-                                <img src={draftImg} alt="" />
-                            </div>
-                        }
-                        {!props.readOnly && <FileUploader
-                            uniqueId={"file2" + props.uniqueId}
-                            regex={/.+\.(jpeg|jpg|png|img)/}
-                            onChange={(result) => {
-                                setDraftImg(result)
-                                props.handleImgChange(result, 'draftImg')
-                            }}
-                        />}
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Фотография 2</div>
+                        <div className="main-form__input_field">
+                            {groupImg2 &&
+                                <div className="main-form__product_img">
+                                    <img src={groupImg2} alt="" />
+                                </div>
+                            }
+                            {!props.readOnly && <FileUploader
+                                uniqueId={"file2" + props.uniqueId}
+                                regex={/.+\.(jpeg|jpg|png|img)/}
+                                onChange={(result) => {
+                                    setGroupImg2(result)
+                                    props.handleImgChange(result, 'groupImg2')
+                                }}
+                            />}
+                        </div>
                     </div>
-                </div>}
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Фотография 3</div>
+                        <div className="main-form__input_field">
+                            {groupImg3 &&
+                                <div className="main-form__product_img">
+                                    <img src={groupImg3} alt="" />
+                                </div>
+                            }
+                            {!props.readOnly && <FileUploader
+                                uniqueId={"file3" + props.uniqueId}
+                                regex={/.+\.(jpeg|jpg|png|img)/}
+                                onChange={(result) => {
+                                    setGroupImg3(result)
+                                    props.handleImgChange(result, 'groupImg3')
+                                }}
+                            />}
+                        </div>
+                    </div>
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Фотография 4</div>
+                        <div className="main-form__input_field">
+                            {groupImg4 &&
+                                <div className="main-form__product_img">
+                                    <img src={groupImg4} alt="" />
+                                </div>
+                            }
+                            {!props.readOnly && <FileUploader
+                                uniqueId={"file4" + props.uniqueId}
+                                regex={/.+\.(jpeg|jpg|png|img)/}
+                                onChange={(result) => {
+                                    setGroupImg4(result)
+                                    props.handleImgChange(result, 'groupImg4')
+                                }}
+                            />}
+                        </div>
+                    </div>
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Фотография снизу</div>
+                        <div className="main-form__input_field">
+                            {footerImg &&
+                                <div className="main-form__product_img">
+                                    <img src={footerImg} alt="" />
+                                </div>
+                            }
+                            {!props.readOnly && <FileUploader
+                                uniqueId={"file5" + props.uniqueId}
+                                regex={/.+\.(jpeg|jpg|png|img)/}
+                                onChange={(result) => {
+                                    setFooterImg(result)
+                                    props.handleImgChange(result, 'footerImg')
+                                }}
+                            />}
+                        </div>
+                    </div>
+                </React.Fragment>}
                 <div className="main-form__item">
                     <div className="main-form__input_name">Ярлыки</div>
                     <div className="main-form__input_field">
-                        <CheckBox
+                        {/* <CheckBox
                             text="Новинка"
                             checked={newItem}
                             name="newItem"
@@ -260,7 +319,7 @@ const SelectPriceItem = (props) => {
                                 setUniqueItem(value);
                                 props.handleLabelChange(value, name);
                             }}
-                        />
+                        /> */}
                         <CheckBox
                             text="Запатентована"
                             checked={proprietaryItem}
@@ -334,7 +393,7 @@ const SelectPriceItem = (props) => {
                                     />
                                 </div>
                             </div>
-                            <div className="select-price-item__item">
+                            {/* <div className="select-price-item__item">
                                 <div className="select-price-item__input_name">Себестоимость</div>
                                 <div className="select-price-item__input_field">
                                     <input
@@ -347,7 +406,7 @@ const SelectPriceItem = (props) => {
                                         readOnly={props.readOnly}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="select-price-item__item">
                                 <div className="select-price-item__input_name">Розница (рыночная цена)</div>
                                 <div className="select-price-item__input_field">
@@ -477,7 +536,7 @@ const SelectPriceItem = (props) => {
                                     />
                                 </div>
                             </div>
-                            <div className="select-price-item__item">
+                            {/* <div className="select-price-item__item">
                                 <div className="select-price-item__input_name">Хит</div>
                                 <div className="select-price-item__input_field">
                                     <CheckBox
@@ -493,7 +552,7 @@ const SelectPriceItem = (props) => {
                                         }}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         {!props.readOnly && (index !== 0) &&
                             <img index={index} onClick={deletePriceItem} className="select-price-item__img" src={deleteSVG} />

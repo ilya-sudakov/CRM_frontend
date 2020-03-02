@@ -61,6 +61,7 @@ const SelectWork = (props) => {
             {
                 product: [],
                 workName: '',
+                workType: '',
                 workId: null,
                 hours: 0,
             }
@@ -71,6 +72,7 @@ const SelectWork = (props) => {
                 product: [],
                 workName: '',
                 workId: null,
+                workType: '',
                 hours: 0,
             }
         ]);
