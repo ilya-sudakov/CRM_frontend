@@ -70,8 +70,8 @@ const SideMenu = (props) => {
             pathname: "/price-list",
             name: "Каталог продукции",
             mainRoles: ['ROLE_ADMIN'],
-            addButtonRoles: ['ROLE_ADMIN'],
-            addButtonName: "Добавить продукцию",
+            // addButtonRoles: ['ROLE_ADMIN'],
+            // addButtonName: "Добавить продукцию",
             icon: priceListImg,
         },
         {
