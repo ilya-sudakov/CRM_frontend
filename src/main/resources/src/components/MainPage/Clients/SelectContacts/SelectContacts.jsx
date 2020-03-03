@@ -8,6 +8,7 @@ const SelectContacts = (props) => {
             name: '',
             lastName: '',
             email: '',
+            position: '',
             phoneNumber: ''
         }
     ]);
@@ -52,6 +53,7 @@ const SelectContacts = (props) => {
                 name: '',
                 lastName: '',
                 email: '',
+                position: '',
                 phoneNumber: ''
             }
         ]);
@@ -61,6 +63,7 @@ const SelectContacts = (props) => {
                 name: '',
                 lastName: '',
                 email: '',
+                position: '',
                 phoneNumber: ''
             }
         ]);
@@ -135,6 +138,20 @@ const SelectContacts = (props) => {
                                         autoComplete="off"
                                         onChange={handleInputChange}
                                         defaultValue={item.lastName}
+                                        readOnly={props.readOnly}
+                                    />
+                                </div>
+                            </div>
+                            <div className="select-contacts__item">
+                                <div className="select-contacts__input_name">Должность</div>
+                                <div className="select-contacts__input_field">
+                                    <input
+                                        type="text"
+                                        name="position"
+                                        index={index}
+                                        autoComplete="off"
+                                        onChange={handleInputChange}
+                                        defaultValue={item.position}
                                         readOnly={props.readOnly}
                                     />
                                 </div>

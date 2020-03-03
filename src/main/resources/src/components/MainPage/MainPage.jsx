@@ -123,6 +123,14 @@ class MainPage extends React.Component {
                                     component={NewRequest}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
+                                    transferState={this.state.transferState}
+                                    transferData={this.state.transferData}
+                                    setTransferState={(value) => this.setState({
+                                        transferState: value
+                                    })}
+                                    setTransferData={(value) => this.setState({
+                                        transferData: value
+                                    })}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
                                 <PrivateRoute

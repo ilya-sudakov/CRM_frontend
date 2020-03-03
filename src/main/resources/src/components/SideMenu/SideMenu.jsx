@@ -30,9 +30,17 @@ const SideMenu = (props) => {
         {
             pathname: "/clients",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            name: "Клиенты",
+            name: "Активные клиенты",
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             addButtonName: "Добавить клиента",
+            icon: clientImg
+        },
+        {
+            pathname: "/clients",
+            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+            name: "Потенциальные клиенты",
+            // addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+            // addButtonName: "Добавить клиента",
             icon: clientImg
         },
         {

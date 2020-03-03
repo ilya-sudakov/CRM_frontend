@@ -49,6 +49,16 @@ const Requests = (props) => {
         setShowWindow(!showWindow);
     }
 
+    const copyRequest = (id) => {
+        props.setTransferState(true);
+        props.setTransferData(requests.find(item => {
+            if (item.id === id) {
+                return true
+            }
+        }))
+        props.history.push('/requests/new');
+    }
+
     return (
         <div className="requests">
             <div className="main-window">
@@ -105,6 +115,7 @@ const Requests = (props) => {
                     loadData={loadRequests}
                     deleteItem={deleteItem}
                     transferRequest={transferRequest}
+                    copyRequest={copyRequest}
                     searchQuery={searchQuery}
                     userHasAccess={props.userHasAccess}
                 />

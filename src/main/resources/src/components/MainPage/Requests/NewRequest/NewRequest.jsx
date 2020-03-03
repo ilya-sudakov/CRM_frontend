@@ -131,6 +131,23 @@ const NewRequest = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
+        if (props.transferState === true && props.transferData !== null) {
+            props.setTransferState(false);
+            setRequestInputs({
+                date: props.transferData.date,
+                products: props.transferData.requestProducts,
+                quantity: props.transferData.quantity,
+                codeWord: props.transferData.codeWord,
+                responsible: props.transferData.responsible,
+                status: props.transferData.status,
+            });
+            setValidInputs({
+                date: true,
+                requestProducts: true,
+                codeWord: true,
+                responsible: true,
+            });
+        }
         getUsers()
             .then(res => res.json())
             .then(res => {
@@ -189,7 +206,7 @@ const NewRequest = (props) => {
                     required
                     error={requestErrors.date}
                     name="date"
-                    selected={requestInputs.date}
+                    selected={Date.parse(requestInputs.date)}
                     handleDateChange={handleDateChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
@@ -197,6 +214,7 @@ const NewRequest = (props) => {
                 <InputProducts
                     inputName="Продукция"
                     userHasAccess={props.userHasAccess}
+                    defaultValue={requestInputs.products}
                     required
                     options
                     onChange={handleProductsChange}
@@ -209,6 +227,7 @@ const NewRequest = (props) => {
                     inputName="Кодовое слово"
                     required
                     error={requestErrors.codeWord}
+                    defaultValue={requestInputs.codeWord}
                     name="codeWord"
                     handleInputChange={handleInputChange}
                     errorsArr={requestErrors}
@@ -222,6 +241,7 @@ const NewRequest = (props) => {
                     name="responsible"
                     options={users}
                     handleUserChange={handleResponsibleChange}
+                    defaultValue={requestInputs.responsible}
                     searchPlaceholder="Введите имя пользователя для поиска..."
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
