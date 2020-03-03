@@ -281,6 +281,7 @@ const TableView = (props) => {
                             <Link to={"/lepsari/workshop-lepsari/view/" + request.id} className="tableview_requests_lepsari__action" >Просмотр</Link>
                             {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/lepsari/workshop-lepsari/edit/" + request.id} className="tableview_requests_lepsari__action">Редактировать</Link>}
                             {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_lepsari__action" onClick={props.deleteItem}>Удалить</div>}
+                            {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_lepsari__action" onClick={() => props.copyRequest(request.id)}>Копировать</div>}
                         </div>
                     </div>
                 </React.Fragment>

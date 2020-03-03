@@ -37,6 +37,16 @@ const WorkshopLepsari = (props) => {
             })
     }
 
+    const copyRequest = (id) => {
+        props.setTransferState(true);
+        props.setTransferData(requestLepsari.find(item => {
+            if (item.id === id) {
+                return true
+            }
+        }))
+        props.history.push('/lepsari/workshop-lepsari/new');
+    }
+
     useEffect(() => {
         document.title = "Заявки - Лепсари";
         loadRequestLepsari();
@@ -79,6 +89,7 @@ const WorkshopLepsari = (props) => {
                     loadData={loadRequestLepsari}
                     userHasAccess={props.userHasAccess}
                     deleteItem={deleteItem}
+                    copyRequest={copyRequest}
                     searchQuery={searchQuery}
                 />
             </div>

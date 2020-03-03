@@ -278,6 +278,7 @@ const TableView = (props) => {
                         <Link to={"/lemz/workshop-lemz/view/" + request.id} className="tableview_requests_LEMZ__action" >Просмотр</Link>
                         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/lemz/workshop-lemz/edit/" + request.id} className="tableview_requests_LEMZ__action">Редактировать</Link>}
                         {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_LEMZ__action" onClick={props.deleteItem}>Удалить</div>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_LEMZ__action" onClick={() => props.copyRequest(request.id)}>Копировать</div>}
                     </div>
                 </div>
             ))}

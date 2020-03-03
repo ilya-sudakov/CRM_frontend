@@ -38,6 +38,16 @@ const WorkshopLEMZ = (props) => {
         pdfMake.createPdf(dd).print();
     }
 
+    const copyRequest = (id) => {
+        props.setTransferState(true);
+        props.setTransferData(requestsLEMZ.find(item => {
+            if (item.id === id) {
+                return true
+            }
+        }))
+        props.history.push('/lemz/workshop-lemz/new');
+    }
+
     useEffect(() => {
         document.title = "Заявки - ЛЭМЗ";
         loadRequestsLEMZ()
@@ -73,6 +83,7 @@ const WorkshopLEMZ = (props) => {
                     loadData={loadRequestsLEMZ}
                     userHasAccess={props.userHasAccess}
                     deleteItem={deleteItem}
+                    copyRequest={copyRequest}
                     searchQuery={searchQuery}
                 />
             </div>

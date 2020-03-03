@@ -146,13 +146,13 @@ const NewRequestLEMZ = (props) => {
             props.setTransferState(false);
             setRequestInputs({
                 date: props.transferData.date,
-                requestProducts: props.transferData.requestProducts,
+                requestProducts: props.transferData.requestProducts ? props.transferData.requestProducts : props.transferData.lemzProducts,
                 quantity: props.transferData.quantity,
                 codeWord: props.transferData.codeWord,
                 responsible: props.transferData.responsible,
                 status: props.transferData.status,
                 shippingDate: new Date(new Date(props.transferData.date).setDate(new Date(props.transferData.date).getDate() + 7)),
-                comment: '',
+                comment: props.transferData.comment ? props.transferData.comment : '',
             });
             setValidInputs({
                 date: true,
@@ -316,6 +316,7 @@ const NewRequestLEMZ = (props) => {
                 <InputText
                     inputName="Комментарий"
                     name="comment"
+                    defaultValue={requestInputs.comment}
                     handleInputChange={handleInputChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}

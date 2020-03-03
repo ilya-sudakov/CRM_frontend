@@ -135,7 +135,7 @@ const NewRequest = (props) => {
             props.setTransferState(false);
             setRequestInputs({
                 date: props.transferData.date,
-                products: props.transferData.requestProducts,
+                requestProducts: props.transferData.requestProducts,
                 quantity: props.transferData.quantity,
                 codeWord: props.transferData.codeWord,
                 responsible: props.transferData.responsible,
@@ -214,7 +214,7 @@ const NewRequest = (props) => {
                 <InputProducts
                     inputName="Продукция"
                     userHasAccess={props.userHasAccess}
-                    defaultValue={requestInputs.products}
+                    defaultValue={requestInputs.requestProducts}
                     required
                     options
                     onChange={handleProductsChange}
