@@ -466,7 +466,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
         return Promise.all(priceList.map(async groupOfProducts => {
             let locations = [];
             if (category.name === groupOfProducts.category) {
-                return getDataUri((groupOfProducts.img !== null && groupOfProducts.img !== '') ? groupOfProducts.img : testImg)
+                return getDataUri((groupOfProducts.groupImg1 !== null && groupOfProducts.groupImg1 !== '') ? groupOfProducts.groupImg1 : testImg)
                     .then(async (dataURI) => {
                         return Promise.all(groupOfProducts.locationType.split('/').map(location => {
                             return Promise.all(locationTypes.map(async locationType => {
@@ -704,7 +704,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                                 },
                                                                                 {
                                                                                     text: product.name,
-                                                                                    margin: [5, optionalCols.length > 1 ? 1 : 0, 0, 0],
+                                                                                    margin: [5, optionalCols.length > 1 ? 3 : 1, 0, 0],
                                                                                     alignment: 'left',
                                                                                     bold: product.onSale,
                                                                                     color: '#111111'
@@ -866,7 +866,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         ...sortedArr.map((item, index) => {
                             if (index === 0) {
                                 return {
-                                    unbreakable: item.stack[2].columns[0].table.body.length <= 8 ? true : false,
+                                    unbreakable: item.stack[2].columns[0].table.body.length <= 5 ? true : false,
                                     stack: [
                                         {
                                             image: tempImg,

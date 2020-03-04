@@ -4,7 +4,7 @@ import '../../../../utils/Form/Form.scss';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectPriceItem from '../SelectPriceItem/SelectPriceItem.jsx';
 import XLSX from 'xlsx';
-import { addPriceGroup, addProductToPriceGroup, getPriceListCoefficient, getImage } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
+import { addPriceGroup, addProductToPriceGroup, getPriceListCoefficient, getImage, getPriceGroupImageByName, updatePriceGroupByName } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
 import { getPriceListPdfText } from '../../../../utils/pdfFunctions.jsx';
 import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.png';
 import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.png';
@@ -74,11 +74,56 @@ const NewPriceList = (props) => {
         },
     ]);
     const [priceList, setPriceList] = useState([]);
+    const [groupOfProductsList, setGroupOfProductsList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [disclaimer, setDisclaimer] = useState('');
 
     const isExistingCategory = (category) => {
         return categories.find(item => item.name === category);
+    }
+
+    const loadImages = (data) => {
+        setIsLoading(true);
+        // console.log(priceList);
+        Promise.all(data.map((item, index) => {
+            return getPriceGroupImageByName(item.number)
+                .then(res => {
+                    // console.log(res);
+                    
+                    return res.json()
+                })
+                .then(res => {
+                    console.log(res, item.number);
+                    let temp = data;
+                    temp.splice(index, 1, {
+                        ...temp[index],
+                        groupImg1: res.imgOne,
+                        groupImg2: res.imgTwo,
+                        groupImg3: res.imgThree,
+                        groupImg4: res.imgFour,
+                        footerImg: res.imgFive,
+                    });
+                    setPriceList(temp)
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        })).then(() => setIsLoading(false));
+    }
+
+    const saveImages = () => {
+        setIsLoading(true);
+        // console.log(priceList);
+        Promise.all(priceList.map((item, index) => {
+            return updatePriceGroupByName(item.number, {
+                name: item.number,
+                imgOne: item.groupImg1,
+                imgTwo: item.groupImg2,
+                imgThree: item.groupImg3,
+                imgFour: item.groupImg4,
+                imgFive: item.footerImg,
+            })
+        })).then(() => setIsLoading(false))
     }
 
     const parseExcelData = (result) => {
@@ -87,7 +132,7 @@ const NewPriceList = (props) => {
         var firstSheetName = wb.SheetNames[0];
         let firstSheet = wb.Sheets[firstSheetName];
         var excelRows = XLSX.utils.sheet_to_json(firstSheet);
-        console.log(excelRows);
+        // console.log(excelRows);
         if (excelRows.length === 0) {
             alert('Файл пустой либо заполнен некорректно!')
         }
@@ -105,14 +150,14 @@ const NewPriceList = (props) => {
                     if (!isExistingCategory(item.category)) {
                         let newCategories = categories;
                         newCategories.push({
-                            img: categoryImg,
+                            groupImg1: categoryImg,
                             name: (item.category !== undefined) ? item.category : '',
                             active: true
                         })
                     }
                     groupData = Object.assign({
                         id: item.id,
-                        img: '',
+                        groupImg1: '',
                         groupImg2: '',
                         groupImg3: '',
                         groupImg4: '',
@@ -165,18 +210,19 @@ const NewPriceList = (props) => {
                             if (!isExistingCategory(item.category)) {
                                 let newCategories = categories;
                                 newCategories.push({
-                                    img: categoryImg,
+                                    groupImg1: categoryImg,
                                     name: (item.category !== undefined) ? item.category : '',
                                     active: true
                                 })
                             }
+
                             newData.push({
                                 ...groupData,
                                 products
                             });
                             groupData = Object.assign({
                                 id: item.id,
-                                img: '',
+                                groupImg1: '',
                                 groupImg2: '',
                                 groupImg3: '',
                                 groupImg4: '',
@@ -212,8 +258,9 @@ const NewPriceList = (props) => {
                     }
                 }
             }
+            // console.log(newData)
             setPriceList(newData);
-            console.log(newData)
+            return loadImages(newData);
         }
     }
 
@@ -269,7 +316,7 @@ const NewPriceList = (props) => {
 
     useEffect(() => {
         document.title = "Добавление продукции";
-    }, [])
+    }, [priceList])
 
     return (
         <div className="new-price-item">
@@ -283,7 +330,7 @@ const NewPriceList = (props) => {
                             uniqueId={"file"}
                             type="readAsArrayBuffer"
                             onChange={(result) => {
-                                parseExcelData(result);
+                                parseExcelData(result)
                             }}
                         />
                     </div>
@@ -310,12 +357,13 @@ const NewPriceList = (props) => {
                             );
                             setIsLoading(false);
                         }} value="Открыть .pdf" />}
-                        {/* {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
+                        {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
                             event.preventDefault();
-                            setIsLoading(true);
+                            // setIsLoading(true);
                             console.log(priceList)
-                            setIsLoading(false);
-                        }} value="Сохранить данные" />} */}
+                            saveImages();
+                            // setIsLoading(false);
+                        }} value="Сохранить данные" />}
                         {isLoading && <ImgLoader />}
                     </div>
                     {priceList.length > 0 && <div className="main-form__buttons">
@@ -474,6 +522,11 @@ const NewPriceList = (props) => {
                                                                 })
                                                                 setPriceList([...temp])
                                                             }}
+                                                            groupImg1={item.groupImg1}
+                                                            groupImg2={item.groupImg2}
+                                                            groupImg3={item.groupImg3}
+                                                            groupImg4={item.groupImg4}
+                                                            footerImg={item.footerImg}
                                                             proprietaryItem={item.proprietaryItemText}
                                                             handleLabelChange={(value, name) => {
                                                                 console.log(item[name])

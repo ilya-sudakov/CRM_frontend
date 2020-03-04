@@ -34,6 +34,13 @@ const FileUploader = (props) => {
                     setImgName('Некорректный формат файла!');
                 }
             }} />
+            <div className="file-uploader__remove" onClick={() => {
+                setImgName('Имя файла...');
+                props.onChange('');
+            }}>
+                <div className="file-uploader__line"></div>
+                <div className="file-uploader__line"></div>
+            </div>
         </div>
     );
 };

@@ -21,6 +21,23 @@ export function getPriceGroupById(id) {
     })
 }
 
+export function getPriceGroupImageByName(name) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/price_group/name/" + name,
+        method: "GET"
+    })
+}
+
+
+
+export function updatePriceGroupByName(name, body) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/price_group/name/" + name,
+        method: "PUT",
+        body: JSON.stringify(body)
+    })
+}
+
 export function addPriceGroup(newRequest) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/price_group/",

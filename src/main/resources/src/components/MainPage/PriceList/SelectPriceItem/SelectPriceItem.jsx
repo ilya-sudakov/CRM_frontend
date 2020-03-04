@@ -60,7 +60,7 @@ const SelectPriceItem = (props) => {
             setGroupImg1(props.groupImg1)
         }
         if (props.groupImg2 !== undefined) {
-            setGroupImg1(props.groupImg2)
+            setGroupImg2(props.groupImg2)
         }
         if (props.groupImg3 !== undefined) {
             setGroupImg3(props.groupImg3)
@@ -71,29 +71,10 @@ const SelectPriceItem = (props) => {
         if (props.footerImg !== undefined) {
             setFooterImg(props.footerImg)
         }
-        // if (props.newItem !== undefined) {
-        //     setNewItem(props.newItem)
-        // }
-        // if (props.uniqueItem !== undefined) {
-        //     setUniqueItem(props.uniqueItem)
-        // }
         if (props.proprietaryItem !== undefined) {
             setProprietaryItem(props.proprietaryItem)
         }
-        // getPriceListCoefficient()
-        //     .then(res => res.json())
-        //     .then(res => {
-        //         setCoefficients({
-        //             retailPrice: Number.parseFloat(res.retailPrice),
-        //             dealerPrice: Number.parseFloat(res.dealerPrice),
-        //             distributorPrice: Number.parseFloat(res.distributorPrice),
-        //             partnerPrice: Number.parseFloat(res.partnerPrice),
-        //             stopPrice: Number.parseFloat(res.stopPrice),
-        //             lessThan5000Price: Number.parseFloat(res.lessThan5000Price),
-        //             lessThan1500Price: Number.parseFloat(res.lessThan1500Price),
-        //         })
-        //     })
-    }, [props.defaultValue, props.options])
+    }, [props.defaultValue, props.options, props.groupImg1, props.groupImg2, props.groupImg3, props.groupImg4, props.footerImg])
 
     const clickOnForm = (e) => {
         const id = e.currentTarget.getAttribute("index");
@@ -230,7 +211,7 @@ const SelectPriceItem = (props) => {
                                 regex={/.+\.(jpeg|jpg|png|img)/}
                                 onChange={(result) => {
                                     setGroupImg1(result)
-                                    props.handleImgChange(result, 'img')
+                                    props.handleImgChange(result, 'groupImg1')
                                 }}
                             />}
                         </div>

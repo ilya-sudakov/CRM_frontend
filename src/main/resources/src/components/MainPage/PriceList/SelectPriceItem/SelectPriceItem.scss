@@ -39,9 +39,9 @@
       min-width: 0 !important;
     }
   }
-  .main-form__item {
+  & .main-form__item {
     margin-bottom: 0px;
-    margin-top: 0px;
+    margin-top: 10px;
 
     & .checkbox {
       margin-right: 25px;

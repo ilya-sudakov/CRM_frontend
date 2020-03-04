@@ -3,6 +3,7 @@
 .file-uploader {
   margin: 5px;
   padding: 5px 0px;
+  min-width: 280px;
   width: calc(90% - 20px);
   display: flex;
   font-size: 12px;
@@ -56,5 +57,41 @@
     opacity: 0;
     pointer-events: none;
     user-select: none;
+  }
+  .file-uploader__remove {
+    position: relative;
+    margin-left: 5px;
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    cursor: pointer;
+    .file-uploader__line {
+      position: absolute;
+      height: 2px;
+      width: 25px;
+      background-color: #444444;
+      transform-origin: 50% 0;
+      transition: 100ms ease-in-out;
+      &:nth-child(1) {
+        left: 5px;
+        top: 15px;
+        transform: rotate(45deg);
+      }
+      &:nth-child(2) {
+        left: 4px;
+        top: 15px;
+        transform: rotate(-45deg);
+      }
+    }
+    &:hover {
+      .file-uploader__line {
+        &:nth-child(1) {
+          transform: rotate(45deg) scale(1.25);
+        }
+        &:nth-child(2) {
+          transform: rotate(-45deg) scale(1.25);
+        }
+      }
+    }
   }
 }
