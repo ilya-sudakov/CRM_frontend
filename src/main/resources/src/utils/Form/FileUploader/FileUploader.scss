@@ -30,6 +30,7 @@
   .file-uploader__label {
     padding: 5px 10px;
     border: 1.5px solid $button__background--hover;
+    background-color: $secondary-text-color;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -86,10 +87,10 @@
     &:hover {
       .file-uploader__line {
         &:nth-child(1) {
-          transform: rotate(45deg) scale(1.25);
+          transform: rotate(45deg) scale(1.1);
         }
         &:nth-child(2) {
-          transform: rotate(-45deg) scale(1.25);
+          transform: rotate(-45deg) scale(1.1);
         }
       }
     }

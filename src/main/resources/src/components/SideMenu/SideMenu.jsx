@@ -27,20 +27,20 @@ const SideMenu = (props) => {
             name: "Главная",
             icon: homeImg
         },
+        // {
+        //     pathname: "/clients",
+        //     mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+        //     name: "Активные клиенты",
+        //    // addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+        //    // addButtonName: "Добавить клиента",
+        //     icon: clientImg
+        // },
         {
             pathname: "/clients",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            name: "Активные клиенты",
+            name: "Клиенты",
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             addButtonName: "Добавить клиента",
-            icon: clientImg
-        },
-        {
-            pathname: "/clients",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            name: "Потенциальные клиенты",
-            // addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            // addButtonName: "Добавить клиента",
             icon: clientImg
         },
         {

@@ -704,7 +704,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                                 },
                                                                                 {
                                                                                     text: product.name,
-                                                                                    margin: [5, optionalCols.length > 1 ? 3 : 1, 0, 0],
+                                                                                    margin: [5, optionalCols.length > 1 ? 2 : 1.5, 0, 0],
                                                                                     alignment: 'left',
                                                                                     bold: product.onSale,
                                                                                     color: '#111111'

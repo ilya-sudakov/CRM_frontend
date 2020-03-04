@@ -248,7 +248,7 @@ class MainPage extends React.Component {
                                     userData={this.props.userData}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
-                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP']}
+                                    allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_WORKSHOP', 'ROLE_MANAGER']}
                                 />
                                 <PrivateRoute
                                     exact path="/dispatcher/general-tasks/new"

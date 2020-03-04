@@ -89,7 +89,7 @@ const NewPriceList = (props) => {
             return getPriceGroupImageByName(item.number)
                 .then(res => {
                     // console.log(res);
-                    
+
                     return res.json()
                 })
                 .then(res => {
@@ -108,7 +108,9 @@ const NewPriceList = (props) => {
                 .catch(error => {
                     console.log(error);
                 })
-        })).then(() => setIsLoading(false));
+        })).then(() => {
+            setIsLoading(false);
+        });
     }
 
     const saveImages = () => {
@@ -123,7 +125,10 @@ const NewPriceList = (props) => {
                 imgFour: item.groupImg4,
                 imgFive: item.footerImg,
             })
-        })).then(() => setIsLoading(false))
+        })).then(() => {
+            setIsLoading(false);
+            alert('Данные были успешно сохранены!');
+        })
     }
 
     const parseExcelData = (result) => {
@@ -335,8 +340,8 @@ const NewPriceList = (props) => {
                         />
                     </div>
                     <div className="main-form__buttons">
-                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/price-list')} value="Вернуться назад" />
-                        {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
+                        {/* <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/')} value="Вернуться назад" /> */}
+                        {priceList.length > 0 && <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={(event) => {
                             event.preventDefault();
                             setIsLoading(true);
                             console.log(priceList);
