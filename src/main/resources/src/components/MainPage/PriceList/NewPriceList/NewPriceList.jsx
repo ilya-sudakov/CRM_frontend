@@ -264,8 +264,8 @@ const NewPriceList = (props) => {
                 }
             }
             // console.log(newData)
-            setPriceList(newData);
-            return loadImages(newData);
+            return setPriceList(newData);
+            // return loadImages(newData);
         }
     }
 
