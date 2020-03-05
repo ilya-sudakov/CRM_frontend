@@ -955,7 +955,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                     { text: 'Лиговский пр., 52, Санкт-Петербург, 191040\n', link: 'https://yandex.ru/maps/-/CKUrY0Ih', fontSize: 10, lineHeight: 1.1 },
                                     { text: 'osfix.ru\n', fontSize: 10, link: 'https://www.osfix.ru', lineHeight: 1.1 },
                                     { text: 'info@osfix.ru\n', fontSize: 10, lineHeight: 1.1 },
-                                    { text: '+7 (812) 449-10-09\n', link: 'tel:88124491009', fontSize: 10, lineHeight: 1.1 },
+                                    { text: '+7 (812) 449-10-09\n', link: 'tel:+78124491009', fontSize: 10, lineHeight: 1.1 },
                                 ],
                                 margin: [5, 0, 0, 0],
                                 alignment: 'left'
@@ -963,6 +963,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                             {
                                 image: await getDataUri(companyLogo),
                                 // width: 100,
+                                link: 'https://www.osfix.ru',
                                 fit: [100, 100],
                                 margin: [0, 13, 0, 0],
                                 alignment: 'right'

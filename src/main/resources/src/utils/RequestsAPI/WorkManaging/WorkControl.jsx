@@ -42,10 +42,11 @@ export function getWorkReportByEmployee(id, month) {
     })
 }
 
-export function addProductToRecordedWork(id, productId, productQuantity) {
+export function addProductToRecordedWork(id, productId, productQuantity, productName) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/work_control/product/" + id + '&' + productId + '&' + productQuantity,
-        method: "GET"
+        method: "POST",
+        body: JSON.stringify(productName)
     })
 }
 

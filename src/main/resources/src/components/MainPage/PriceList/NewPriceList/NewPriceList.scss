@@ -35,6 +35,9 @@
   }
   .main-form__info-panel {
     width: 50% !important;
+    & .main-form__button--inverted {
+      color: #555555 !important;
+    }
   }
   .main-form__item--header {
     background-color: #dddddd;

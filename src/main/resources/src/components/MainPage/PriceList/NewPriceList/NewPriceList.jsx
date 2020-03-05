@@ -112,7 +112,7 @@ const NewPriceList = (props) => {
             setIsLoading(false);
         });
     }
-
+    
     const saveImages = () => {
         setIsLoading(true);
         // console.log(priceList);
@@ -264,8 +264,8 @@ const NewPriceList = (props) => {
                 }
             }
             // console.log(newData)
-            return setPriceList(newData);
-            // return loadImages(newData);
+            setPriceList(newData);
+            return loadImages(newData);
         }
     }
 
@@ -362,14 +362,14 @@ const NewPriceList = (props) => {
                             );
                             setIsLoading(false);
                         }} value="Открыть .pdf" />}
-                        {/* {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
+                        {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
                             event.preventDefault();
                             // setIsLoading(true);
                             console.log(priceList)
                             saveImages();
                             // setIsLoading(false);
                         }} value="Сохранить данные" />}
-                        {isLoading && <ImgLoader />} */}
+                        {isLoading && <ImgLoader />}
                     </div>
                     {priceList.length > 0 && <div className="main-form__buttons">
                         <div className="new-price-item__checkbox-container">

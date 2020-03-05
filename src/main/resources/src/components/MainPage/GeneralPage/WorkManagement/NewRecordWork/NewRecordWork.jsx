@@ -104,7 +104,8 @@ const NewRecordWork = (props) => {
                     .then(res => {
                         // console.log(res);
                         const productsArr = item.product.map(product => {
-                            addProductToRecordedWork(res.id, product.id, product.quantity)
+                            // console.log(product);
+                            addProductToRecordedWork(res.id, product.id, product.quantity, { name: product.name })
                         })
                         Promise.all(productsArr)
                             .then(() => {

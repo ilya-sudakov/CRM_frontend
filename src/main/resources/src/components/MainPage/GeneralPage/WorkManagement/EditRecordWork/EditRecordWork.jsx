@@ -113,7 +113,9 @@ const EditRecordWork = (props) => {
                             Promise.all(oldProductsArr)
                                 .then(() => {
                                     const productsArr = item.product.map(product => {
-                                        addProductToRecordedWork(itemId, product.id, product.quantity)
+                                        addProductToRecordedWork(itemId, product.id, product.quantity, {
+                                            name: product.name
+                                        })
                                     })
                                     Promise.all(productsArr)
                                         .then(() => {
@@ -133,7 +135,9 @@ const EditRecordWork = (props) => {
                         .then(res => res.json())
                         .then((res) => {
                             const productsArr = item.product.map(product => {
-                                addProductToRecordedWork(res.id, product.id, product.quantity)
+                                addProductToRecordedWork(res.id, product.id, product.quantity, {
+                                    name: product.name
+                                })
                             })
                             Promise.all(productsArr)
                                 .then(() => {
