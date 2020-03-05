@@ -77,7 +77,7 @@ const SideMenu = (props) => {
         {
             pathname: "/price-list",
             name: "Каталог продукции",
-            mainRoles: ['ROLE_ADMIN'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             // addButtonRoles: ['ROLE_ADMIN'],
             // addButtonName: "Добавить продукцию",
             icon: priceListImg,
@@ -85,41 +85,41 @@ const SideMenu = (props) => {
         {
             pathname: "/lemz/",
             linkTo: "/lemz/workshop-lemz",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
             name: 'ЦехЛЭМЗ',
             icon: screwImg,
             iconClassName: 'sidemenu__img--bigger'
         },
         {
             pathname: "/lemz/workshop-lemz",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
-            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
             addButtonName: "Добавить план производства"
         },
         {
             pathname: "/lepsari/",
             linkTo: "/lepsari/workshop-lepsari",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
             name: 'ЦехЛепсари',
             icon: screwImg,
             iconClassName: 'sidemenu__img--bigger'
         },
         {
             pathname: "/lepsari/workshop-lepsari",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI'],
-            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
             addButtonName: "Добавить план производства"
         },
         {
             pathname: "/lemz/workshop-storage",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
-            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
             addButtonName: "Добавить деталь"
         },
         {
             pathname: "/lepsari/workshop-storage",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI'],
-            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
             addButtonName: "Добавить деталь"
         },
         {
@@ -189,7 +189,7 @@ const SideMenu = (props) => {
         {
             pathname: "/work-list",
             name: "Список работ",
-            mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER'],
+            mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
             addButtonName: "Добавить работу",
             icon: listImg

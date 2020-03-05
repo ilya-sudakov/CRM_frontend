@@ -146,15 +146,15 @@ class MainPage extends React.Component {
                                     component={NewPriceList}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
-                                    allowedRoles={["ROLE_ADMIN"]}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                                 />
-                                <PrivateRoute
+                                {/* <PrivateRoute
                                     exact path="/price-list/new"
                                     component={NewPriceList}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}
-                                />
+                                /> */}
                                 <PrivateRoute
                                     path="/price-list/view/"
                                     component={ViewPriceList}
