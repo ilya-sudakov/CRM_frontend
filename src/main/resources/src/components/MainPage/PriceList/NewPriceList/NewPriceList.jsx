@@ -362,7 +362,7 @@ const NewPriceList = (props) => {
                             );
                             setIsLoading(false);
                         }} value="Открыть .pdf" />}
-                        {priceList.length > 0 && <input className="main-form__submit" type="submit" onClick={(event) => {
+                        {(priceList.length > 0 && !isLoading) && <input className="main-form__submit" type="submit" onClick={(event) => {
                             event.preventDefault();
                             // setIsLoading(true);
                             console.log(priceList)
