@@ -165,7 +165,7 @@ const SelectWork = (props) => {
                             />
                             {/* Вставить InputProducts, только вместо фасовки сделать 
                                 единицу измерения(или просто кол-во оставить) */}
-                            {(selected[index].workType === 'Продукция' || selected[index].workType === undefined)
+                            {(selected[index].workType === 'Продукция' || selected[index].workType === undefined )
                                 ?
                                 <InputProducts
                                     inputName="Продукция"
