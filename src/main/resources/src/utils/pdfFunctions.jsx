@@ -499,16 +499,16 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         let groupImg3Data = '';
                         let groupImg4Data = '';
                         if (groupOfProducts.groupImg1 !== null && groupOfProducts.groupImg1 !== '') {
-                            groupImg1Data = await getDataUri(groupOfProducts.groupImg1);
+                            groupImg1Data = await getDataUri(groupOfProducts.groupImg1, "jpeg");
                         }
                         if (groupOfProducts.groupImg2 !== null && groupOfProducts.groupImg2 !== '') {
-                            groupImg2Data = await getDataUri(groupOfProducts.groupImg2);
+                            groupImg2Data = await getDataUri(groupOfProducts.groupImg2, "jpeg");
                         }
                         if (groupOfProducts.groupImg3 !== null && groupOfProducts.groupImg3 !== '') {
-                            groupImg3Data = await getDataUri(groupOfProducts.groupImg3);
+                            groupImg3Data = await getDataUri(groupOfProducts.groupImg3, "jpeg");
                         }
                         if (groupOfProducts.groupImg4 !== null && groupOfProducts.groupImg4 !== '') {
-                            groupImg4Data = await getDataUri(groupOfProducts.groupImg4);
+                            groupImg4Data = await getDataUri(groupOfProducts.groupImg4, "jpeg");
                         }
                         fullGroup.push({
                             unbreakable: groupOfProducts.products.length <= 20 ? true : false,
@@ -832,7 +832,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                 },
                                 groupOfProducts.footerImg !== ''
                                     ? {
-                                        image: await getDataUri(groupOfProducts.footerImg),
+                                        image: await getDataUri(groupOfProducts.footerImg, "jpeg"),
                                         fit: [512, 100],
                                         // width: 512,
                                         // height: 100
