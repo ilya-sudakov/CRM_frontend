@@ -12,7 +12,33 @@ const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
         curSort: 'date',
         date: 'desc'
-    })
+    });
+    const [requestStatuses, setRequestStatutes] = useState([
+        {
+            name: 'Проблема-материалы',
+            access: ['ROLE_ADMIN', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Завершено',
+            access: ['ROLE_ADMIN']
+        },
+        {
+            name: 'Отгружено',
+            access: ['ROLE_ADMIN', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Готово',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER']
+        },
+        {
+            name: 'В производстве',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Ожидание',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']
+        }
+    ]);
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -170,7 +196,7 @@ const TableView = (props) => {
             {sortRequests(props.data).map((request, request_id) => (
                 <div key={request_id} className={"tableview_requests_LEMZ__row " +
                     (
-                        request.status === "Проблема" && "tableview_requests_LEMZ__row--status_problem" ||
+                        request.status === "Проблема-материалы" && "tableview_requests_LEMZ__row--status_problem" ||
                         request.status === "Материалы" && "tableview_requests_LEMZ__row--status_materials" ||
                         request.status === "Ожидание" && "tableview_requests_LEMZ__row--status_waiting" ||
                         request.status === "В производстве" && "tableview_requests_LEMZ__row--status_in_production" ||
@@ -241,7 +267,7 @@ const TableView = (props) => {
                                     value={request.status}
                                     onChange={handleStatusChange}
                                 >
-                                    <option>Приоритет</option>
+                                    {/* <option>Приоритет</option>
                                     <option>Проблема</option>
                                     <option>Материалы</option>
                                     <option>Ожидание</option>
@@ -249,7 +275,15 @@ const TableView = (props) => {
                                     <option>Готово</option>
                                     <option>Частично готово</option>
                                     <option>Отгружено</option>
-                                    <option>Завершено</option>
+                                    <option>Завершено</option> */}
+                                    {requestStatuses.map(status => {
+                                        if (props.userHasAccess(status.access)) {
+                                            return <option>{status.name}</option>
+                                        }
+                                        else {
+                                            return <option style={{ display: `none` }}>{status.name}</option>
+                                        }
+                                    })}
                                 </select>
                             </div>
                         </div>

@@ -12,7 +12,34 @@ const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
         curSort: 'date',
         date: 'desc'
-    })
+    });
+    const [requestStatuses, setRequestStatutes] = useState([
+        {
+            name: 'Проблема-материалы',
+            access: ['ROLE_ADMIN', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Завершено',
+            access: ['ROLE_ADMIN']
+        },
+        {
+            name: 'Отгружено',
+            access: ['ROLE_ADMIN', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Готово',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER']
+        },
+        {
+            name: 'В производстве',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER']
+        },
+        {
+            name: 'Ожидание',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER']
+        }
+    ]);
+
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -192,7 +219,7 @@ const TableView = (props) => {
                             value={request.status}
                             onChange={handleStatusChange}
                         >
-                            <option value="Проблема">Проблема</option>
+                            {/* <option value="Проблема">Проблема</option>
                             <option value="Материалы">Материалы</option>
                             <option value="Ожидание">Ожидание</option>
                             <option value="В производстве">В производстве</option>
@@ -200,7 +227,15 @@ const TableView = (props) => {
                             <option value="Частично готово">Частично готово</option>
                             <option value="Завершено">Завершено</option>
                             <option value="Отгружено">Отгружено</option>
-                            <option value="Приоритет">Приоритет</option>
+                            <option value="Приоритет">Приоритет</option> */}
+                            {requestStatuses.map(status => {
+                                if (props.userHasAccess(status.access)) {
+                                    return <option>{status.name}</option>
+                                }
+                                else {
+                                    return <option style={{ display: `none` }}>{status.name}</option>
+                                }
+                            })}
                         </select>
                     </div>
                     <div className="tableview_requests__actions">

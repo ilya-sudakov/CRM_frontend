@@ -107,7 +107,7 @@ const Select = (props) => {
                     //         })
                     // })
                     let temp;
-                    if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'])) {
+                    if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER'])) {
                         temp = categoriesArr.map((item) => {
                             let category = {
                                 category: item.name

@@ -527,7 +527,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     text: groupOfProducts.name.toUpperCase(),
                                                     style: 'subheader',
                                                     fontSize: 11,
-                                                    groupId: groupOfProducts.id
+                                                    groupId: groupOfProducts.id,
+                                                    link: groupOfProducts.linkAddress
                                                 },
                                                 {
                                                     text: ' ',
@@ -948,7 +949,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                             },
                             {
                                 text: [
-                                    { text: 'ООО «ОСФИКС»\n', bold: true, fontSize: 10, margin: [0, 0, 0, 2] },
+                                    { text: 'ООО «ОСФИКС»\n', link: 'https://www.osfix.ru', bold: true, fontSize: 10, margin: [0, 0, 0, 2] },
                                     { text: 'Лиговский пр., 52, Санкт-Петербург, 191040\n', link: 'https://yandex.ru/maps/-/CKUrY0Ih', fontSize: 10, lineHeight: 1.1 },
                                     { text: 'osfix.ru\n', fontSize: 10, link: 'https://www.osfix.ru', lineHeight: 1.1 },
                                     { text: 'info@osfix.ru\n', fontSize: 10, lineHeight: 1.1 },
