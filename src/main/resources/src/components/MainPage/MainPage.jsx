@@ -90,7 +90,7 @@ class MainPage extends React.Component {
                                     allowedRoles={["ROLE_ADMIN"]}
                                 />
                                 <PrivateRoute
-                                    exact path="/clients"
+                                    path="/clients/category/"
                                     component={Clients}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}

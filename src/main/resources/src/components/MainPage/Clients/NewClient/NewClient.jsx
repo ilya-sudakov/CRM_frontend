@@ -29,26 +29,12 @@ const newClient = (props) => {
         legalEntity: false,
         contacts: false,
         site: false,
-        comment: false,
-        storageAddress: false,
-        WorkConditions: false,
-        price: false,
-        discount: false,
-        check: false,
-        workHistory: false
     });
     const [validInputs, setValidInputs] = useState({
         name: false,
         legalEntity: false,
         contacts: false,
         site: false,
-        comment: false,
-        storageAddress: false,
-        WorkConditions: false,
-        price: false,
-        discount: false,
-        check: false,
-        workHistory: false
     });
 
     const [showError, setShowError] = useState(false);
@@ -74,13 +60,6 @@ const newClient = (props) => {
             legalEntity: false,
             contacts: false,
             site: false,
-            comment: false,
-            storageAddress: false,
-            WorkConditions: false,
-            price: false,
-            discount: false,
-            check: false,
-            workHistory: false
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -197,36 +176,22 @@ const newClient = (props) => {
                     />
                     <InputText
                         inputName="Комментарий"
-                        required
                         name="comment"
-                        error={formErrors.comment}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
                     <InputText
                         inputName="Адрес склада"
-                        required
                         name="storageAddress"
-                        error={formErrors.storageAddress}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
                     <InputText
                         inputName="Условия работы"
                         name="WorkConditions"
-                        error={formErrors.WorkConditions}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
                     <InputText
                         inputName="Прайс"
                         name="price"
-                        error={formErrors.price}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
                     {/* <InputText
@@ -261,14 +226,10 @@ const newClient = (props) => {
                     </div>
                     <InputText
                         inputName="Акт сверки"
-                        required
                         name="check"
-                        error={formErrors.check}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
-                    <InputText
+                    {/* <InputText
                         inputName="История работы"
                         required
                         name="workHistory"
@@ -276,7 +237,7 @@ const newClient = (props) => {
                         errorsArr={formErrors}
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
-                    />
+                    /> */}
                     <div className="main-form__item">
                         <div className="main-form__input_name">Тип клиента*</div>
                         <div className="main-form__input_field">

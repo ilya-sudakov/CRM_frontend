@@ -16,6 +16,7 @@ import playListImg from '../../../../../../assets/sidemenu/play_list.svg';
 import './SideMenu.scss';
 
 const SideMenu = (props) => {
+    const [curPath, setCurPath] = useState('/');
     const [sidemenuItems, setSidemenuItems] = useState([
         {
             pathname: '/',
@@ -36,12 +37,29 @@ const SideMenu = (props) => {
         //     icon: clientImg
         // },
         {
-            pathname: "/clients",
+            pathname: "/clients/",
+            linkTo: curPath,
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             name: "Клиенты",
-            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            addButtonName: "Добавить клиента",
-            icon: clientImg
+            icon: clientImg,
+            dropdownMenu: [
+                {
+                    name: 'Создать клиента',
+                    link: '/clients/new'
+                },
+                {
+                    name: 'Категория2',
+                    link: '/clients/category/Категория2/active'
+                },
+                {
+                    name: 'Категория3',
+                    link: '/clients/category/Категория3/active'
+                },
+                {
+                    name: 'Категория4',
+                    link: '/clients/category/Категория4/active'
+                },
+            ]
         },
         {
             pathname: "/work-managment",
@@ -197,8 +215,13 @@ const SideMenu = (props) => {
     ])
 
     useEffect(() => {
-
-    }, [])
+        let temp = sidemenuItems;
+        temp.splice(1, 1, {
+            ...temp[1],
+            linkTo: props.location.pathname
+        });
+        setSidemenuItems([...temp]);
+    }, [props.location])
 
     return (
         <div className={props.hidden ? "sidemenu--hidden" : "sidemenu"}>
@@ -245,6 +268,13 @@ const SideMenu = (props) => {
                             ) && <Link to={item.pathname + '/new'} className="sidemenu__addButton">
                                     <img className="sidemenu__img" src={plusImg} />
                                 </Link>}
+                            {item.dropdownMenu && <div className="sidemenu__dropdown-menu">
+                                {item.dropdownMenu.map(dropdownMenuItem => {
+                                    return <Link className="sidemenu__item" to={dropdownMenuItem.link}>
+                                        <div className="sidemenu__link">{dropdownMenuItem.name}</div>
+                                    </Link>
+                                })}
+                            </div>}
                         </div>
                 })
             }

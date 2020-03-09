@@ -1,5 +1,86 @@
 @import "../../../variables.scss";
 
 .clients {
-  
+  .main-window__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: calc(100% - 25px) !important;
+    border-top-left-radius: 10px;
+    text-align: center;
+    z-index: 1;
+    margin: 0 !important;
+
+    .main-window__title {
+      flex: 0 1 20%;
+      font-size: 24px;
+      padding: 10px 0;
+      margin: 0;
+    }
+
+    .main-window__menu {
+      display: flex;
+      flex: 0 1 80%;
+      align-self: flex-end;
+
+      .main-window__item {
+        width: 100%;
+        margin-right: 2.5px;
+        font-size: 80%;
+        padding: 10px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        color: lighten($primary-text-color, 100%);
+        background-color: darken($table-primary__background, 10%);
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        transition: 0.2s ease-in-out;
+
+        &:last-child {
+          margin: 0;
+        }
+
+        &:hover {
+          color: lighten($primary-text-color, 10%);
+          background-color: darken($primary-background-color, 5%);
+        }
+
+        &--active {
+          color: lighten($primary-text-color, 50%);
+          background-color: $primary-background-color;
+        }
+      }
+    }
+  }
+
+  .searchbar {
+    border-top-right-radius: 0px;
+  }
+
+  .main-window__actions {
+    flex-direction: row !important;
+    flex: 0 1 15% !important;
+    flex-wrap: wrap;
+    .main-window__action {
+      padding: 5px;
+      margin-bottom: 0;
+      margin-right: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .main-window__img {
+        transition: 100ms ease-in-out;
+        filter: brightness(3);
+        transition: filter 0.5s;
+        transform: translate3d(-1px, -1px, 0);
+        border: solid 1px transparent;
+        border-width: 1px 0 0 1px;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
 }

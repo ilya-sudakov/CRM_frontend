@@ -42,6 +42,7 @@
     font-size: 95%;
     border-radius: 5px;
     white-space: nowrap;
+    // position: static;
 
     .sidemenu__img {
       width: 20px;
@@ -178,6 +179,44 @@
     white-space: normal;
   }
 
+  .sidemenu__dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 5px;
+    width: calc(100% - 20px);
+    top: calc(100% + 0px);
+    transform: scaleY(0);
+    transform-origin: 0 0%;
+    border-radius: 5px;
+    padding: 5px;
+    transition: 100ms ease-in-out;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    background-color: lighten($side_menu__background, 5%);
+    z-index: 999;
+    .sidemenu__item {
+      max-width: 100% !important;
+      width: 100%;
+      padding: 0 0px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .sidemenu__link {
+      padding-left: 10px;
+      width: calc(100%);
+    }
+  }
+
+  .sidemenu__item {
+    position: relative;
+  }
+
+  .sidemenu__item:focus-within .sidemenu__dropdown-menu {
+    transform: scaleY(1);
+  }
+
   &--hidden {
     background-color: $side_menu__background;
     width: 0;
@@ -206,6 +245,7 @@
 
     .sidemenu__item {
       transition: 0.2s ease-in-out;
+      // position: static;
 
       &:nth-of-type(n + 1) {
         // word-break: break-word;
@@ -217,6 +257,10 @@
       &--add {
         transition: 0.2s ease-in-out;
       }
+    }
+
+    & .sidemenu__dropdown-menu {
+      display: none;
     }
 
     .sidemenu__addButton {

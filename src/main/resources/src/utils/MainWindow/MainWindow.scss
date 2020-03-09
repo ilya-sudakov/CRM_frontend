@@ -160,11 +160,17 @@
     &:hover .main-window__action {
       background-color: $white !important;
       color: $primary-text-color;
+      .main-window__img {
+        filter: brightness(1);
+      }
 
       &:hover {
         border: 1px solid $white;
         background-color: $button__background--inverted !important;
         color: $secondary-text-color;
+        .main-window__img {
+          filter: brightness(3);
+        }
       }
     }
   }
@@ -268,6 +274,37 @@
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  .main-window__pagination {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin-left: auto;
+    // margin-right: auto;
+    .main-window__page-number {
+      border: 1px solid #666666;
+      border-radius: 5px;
+      margin-right: 5px;
+      padding: 5px 15px;
+      background-color: $secondary-text-color;
+      color: #666666;
+      transition: 200ms ease-in-out;
+      cursor: pointer;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        background-color: #cccccc;
+      }
+    }
+    .main-window__page-number--active {
+      background-color: #aaaaaa;
+      color: $secondary-text-color;
     }
   }
 

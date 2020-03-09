@@ -113,7 +113,7 @@ const SelectContacts = (props) => {
                                 <span>Телефон: </span> <span>{item.phoneNumber}</span>
                             </div>
                         </div>
-                        <div className="select-contacts__selected_form" >
+                        <div className="select-contacts__selected_form select-contacts__selected_form--hidden" >
                             <div className="select-contacts__item">
                                 <div className="select-contacts__input_name">Имя</div>
                                 <div className="select-contacts__input_field">

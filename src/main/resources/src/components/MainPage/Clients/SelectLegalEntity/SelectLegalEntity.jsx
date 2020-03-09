@@ -128,7 +128,7 @@ const SelectLegalEntity = (props) => {
                                 <span>Адрес: </span> <span>{item.legalAddress}</span>
                             </div>
                         </div>
-                        <div className="select-legal-entity__selected_form" >
+                        <div className="select-legal-entity__selected_form select-legal-entity__selected_form--hidden" >
                             <div className="select-legal-entity__item">
                                 <div className="select-legal-entity__input_name">Название</div>
                                 <div className="select-legal-entity__input_field">
