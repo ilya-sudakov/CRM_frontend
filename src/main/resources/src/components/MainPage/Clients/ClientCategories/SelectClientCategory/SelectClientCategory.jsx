@@ -3,8 +3,7 @@ import './SelectClientCategory.scss';
 import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getEmployees, getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx';
-import { getClientCategories } from '../../../../../utils/RequestsAPI/Clients/Categories';
+import { getClientCategories } from '../../../../../utils/RequestsAPI/Clients/Categories.jsx';
 
 const SelectClientCategory = (props) => {
     const [showWindow, setShowWindow] = useState(false);
@@ -19,10 +18,10 @@ const SelectClientCategory = (props) => {
     }
 
     useEffect(() => {
-        (categories.length === 0) && loadEmployees();
+        (categories.length === 0) && loadCategories();
     }, [])
 
-    const loadEmployees = () => {
+    const loadCategories = () => {
         getClientCategories()
             .then(res => res.json())
             .then(res => {
@@ -30,10 +29,10 @@ const SelectClientCategory = (props) => {
             })
     }
 
-    const clickEmployee = (employeeName, employeeId) => {
-        setId(employeeId);
-        setFullName(employeeName);
-        props.handleEmployeeChange(employeeId);
+    const clickCategory = (categoryId, categoryName) => {
+        setId(categoryId);
+        setFullName(categoryName);
+        props.handleCategoryChange(categoryId);
         setShowWindow(!showWindow);
     }
 
@@ -45,7 +44,7 @@ const SelectClientCategory = (props) => {
                     <button className="select-employee__button" onClick={(e) => {
                         e.preventDefault();
                         setShowWindow(!showWindow);
-                    }}>Выбрать сотрудника</button>
+                    }}>Выбрать категорию</button>
                     <div className="select-employee__searchbar">
                         <input
                             type="text"
@@ -53,7 +52,7 @@ const SelectClientCategory = (props) => {
                             // onChange={props.handleInputChange}
                             defaultValue={props.defaultValue ? props.defaultValue : fullName}
                             // onClick={!props.readOnly ? clickOnInput : null}
-                            placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
+                            placeholder="Выберите категорию клиента, нажав на кнопку 'Выбрать категорию'"
                             readOnly={props.readOnly}
                         />
                     </div>
@@ -71,7 +70,7 @@ const SelectClientCategory = (props) => {
                 content={
                     <React.Fragment>
                         <SearchBar
-                            title="Поиск по клиентам"
+                            title="Поиск по категориям"
                             setSearchQuery={setSearchQuery}
                             placeholder="Введите запрос для поиска..."
                         />
@@ -79,7 +78,7 @@ const SelectClientCategory = (props) => {
                             data={categories}
                             searchQuery={searchQuery}
                             userHasAccess={props.userHasAccess}
-                            selectEmployee={clickEmployee}
+                            selectCategory={clickCategory}
                             setCloseWindow={setCloseWindow}
                             closeWindow={closeWindow}
                             setShowWindow={setShowWindow}

@@ -8,6 +8,7 @@ import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
+import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -279,6 +280,28 @@ const newClient = (props) => {
                                         </select>
                                     </div>
                                 </div>
+                                <SelectClientCategory
+                                    inputName="Выбор категории клиента"
+                                    required
+                                    error={formErrors.category}
+                                    userHasAccess={props.userHasAccess}
+                                    windowName="select-category"
+                                    name="category"
+                                    handleCategoryChange={(value) => {
+                                        validateField("category", value);
+                                        setClientInputs({
+                                            ...clientInputs,
+                                            category: value
+                                        })
+                                        setFormErrors({
+                                            ...formErrors,
+                                            category: false
+                                        })
+                                    }}
+                                    errorsArr={formErrors}
+                                    setErrorsArr={setFormErrors}
+                                    readOnly
+                                />
                             </React.Fragment>
                     }
                     <div className="main-form__buttons">
