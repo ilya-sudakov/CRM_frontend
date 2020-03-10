@@ -28,7 +28,7 @@ const SelectLegalEntity = (props) => {
     }
 
     useEffect(() => {
-        if (props.defaultValue !== undefined) {
+        if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
             setSelected([...props.defaultValue]);
         }
         if (props.options !== undefined) {

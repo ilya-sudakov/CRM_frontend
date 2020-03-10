@@ -48,6 +48,18 @@ const newClient = lazy(
     () => import('./Clients/NewClient/NewClient.jsx')
 );
 
+const ClientCategories = lazy(
+    () => import('./Clients/ClientCategories/ClientCategories.jsx')
+)
+
+// const NewClientCategories = lazy(
+//     () => import('./Clients/ClientCategories/NewClientCategories/NewClientCategories.jsx')
+// )
+
+// const EditClientCategories = lazy(
+//     () => import('./Clients/ClientCategories/EditClientCategories/EditClientCategories.jsx')
+// )
+
 const Products = lazy(
     () => import('./Products/Products.jsx')
 );
@@ -298,7 +310,7 @@ const ViewPriceList = lazy(
 
 
 export {
-    Clients, newClient,
+    Clients, newClient, ClientCategories,
     Contracts,
     Requests, NewRequest, EditRequest, ViewRequest,
     GeneralPage, AdminWorkspace, Notifications, WorkManagement, NewRecordWork, EditRecordWork, WorkManagementPage,

@@ -14,6 +14,7 @@ import boxImg from '../../../../../../assets/sidemenu/box.svg';
 import screwImg from '../../../../../../assets/sidemenu/screw.svg';
 import playListImg from '../../../../../../assets/sidemenu/play_list.svg';
 import './SideMenu.scss';
+import { getClientCategories } from '../../utils/RequestsAPI/Clients/Categories.jsx';
 
 const SideMenu = (props) => {
     const [curPath, setCurPath] = useState('/');
@@ -38,26 +39,22 @@ const SideMenu = (props) => {
         // },
         {
             pathname: "/clients/",
-            linkTo: curPath,
+            linkTo: props.location.pathname,
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             name: "Клиенты",
             icon: clientImg,
             dropdownMenu: [
                 {
-                    name: 'Создать клиента',
-                    link: '/clients/new'
+                    name: 'ДПК доски',
+                    link: '/clients/category/' + 'ДПК доски' + '/active'
                 },
                 {
-                    name: 'Категория2',
-                    link: '/clients/category/Категория2/active'
-                },
-                {
-                    name: 'Категория3',
-                    link: '/clients/category/Категория3/active'
+                    name: 'НКВД доски',
+                    link: '/clients/category/' + 'НКВД доски' + '/active'
                 },
                 {
                     name: 'Категория4',
-                    link: '/clients/category/Категория4/active'
+                    link: '/clients/category/' + 'Категория4' + '/active'
                 },
             ]
         },
@@ -215,12 +212,41 @@ const SideMenu = (props) => {
     ])
 
     useEffect(() => {
-        let temp = sidemenuItems;
-        temp.splice(1, 1, {
-            ...temp[1],
-            linkTo: props.location.pathname
-        });
-        setSidemenuItems([...temp]);
+        getClientCategories()
+            .then(res => res.json())
+            .then(res => {
+                // console.log(res);
+                let temp = sidemenuItems;
+                temp.splice(1, 1, {
+                    ...temp[1],
+                    dropdownMenu: [
+                        {
+                            name: 'Создать клиента',
+                            link: '/clients/new'
+                        },
+                        {
+                            name: 'Управление категориями',
+                            link: '/clients/categories'
+                        },
+                        ...res.sort((a, b) => {
+                            if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
+                                return -1;
+                            }
+                            if (a.name.localeCompare(b.name, undefined, { numeric: true }) > 0) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map(item => {
+                            return {
+                                name: item.name,
+                                link: '/clients/category/' + item.name + '/active'
+                            }
+                        })
+                    ],
+                    linkTo: props.location.pathname
+                });
+                setSidemenuItems([...temp]);
+            })
     }, [props.location])
 
     return (
@@ -269,11 +295,13 @@ const SideMenu = (props) => {
                                     <img className="sidemenu__img" src={plusImg} />
                                 </Link>}
                             {item.dropdownMenu && <div className="sidemenu__dropdown-menu">
-                                {item.dropdownMenu.map(dropdownMenuItem => {
-                                    return <Link className="sidemenu__item" to={dropdownMenuItem.link}>
-                                        <div className="sidemenu__link">{dropdownMenuItem.name}</div>
-                                    </Link>
-                                })}
+                                {
+                                    item.dropdownMenu.map(dropdownMenuItem => {
+                                        return <Link className="sidemenu__item" to={dropdownMenuItem.link}>
+                                            <div className="sidemenu__link">{dropdownMenuItem.name}</div>
+                                        </Link>
+                                    })
+                                }
                             </div>}
                         </div>
                 })
