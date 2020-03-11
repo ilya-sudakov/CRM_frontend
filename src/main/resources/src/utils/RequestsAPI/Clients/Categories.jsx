@@ -14,6 +14,13 @@ export function getClientCategoryById(id) {
     });
 }
 
+export function getClientsByCategory(categoryName) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/category/" + categoryName,
+        method: "GET"
+    });
+}
+
 export function addClientCategory(newCategory) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/category",

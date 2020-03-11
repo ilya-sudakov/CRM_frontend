@@ -222,11 +222,13 @@ const SideMenu = (props) => {
                     dropdownMenu: [
                         {
                             name: 'Создать клиента',
-                            link: '/clients/new'
+                            link: '/clients/new',
+                            icon: plusImg,
                         },
                         {
                             name: 'Управление категориями',
-                            link: '/clients/categories'
+                            link: '/clients/categories',
+                            icon: contractImg
                         },
                         ...res.sort((a, b) => {
                             if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
@@ -298,7 +300,14 @@ const SideMenu = (props) => {
                                 {
                                     item.dropdownMenu.map(dropdownMenuItem => {
                                         return <Link className="sidemenu__item" to={dropdownMenuItem.link}>
-                                            <div className="sidemenu__link">{dropdownMenuItem.name}</div>
+                                            <div className="sidemenu__link">
+                                                {dropdownMenuItem.icon && <img
+                                                    className={dropdownMenuItem.iconClassName ? "sidemenu__img " + dropdownMenuItem.iconClassName : "sidemenu__img"}
+                                                    src={dropdownMenuItem.icon}
+                                                    alt=""
+                                                />}
+                                                {dropdownMenuItem.name}
+                                            </div>
                                         </Link>
                                     })
                                 }

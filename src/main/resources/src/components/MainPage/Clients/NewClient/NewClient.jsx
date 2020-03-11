@@ -4,6 +4,7 @@ import '../../../../utils/Form/Form.scss';
 import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
@@ -23,18 +24,22 @@ const newClient = (props) => {
         discount: '',
         check: '',
         workHistory: '',
-        clientType: 'Активные'
+        clientType: 'Активные',
+        categoryId: 0,
+        nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     });
     const [formErrors, setFormErrors] = useState({
         name: false,
         legalEntity: false,
         contacts: false,
+        categoryId: false,
         site: false,
     });
     const [validInputs, setValidInputs] = useState({
         name: false,
         legalEntity: false,
         contacts: false,
+        categoryId: false,
         site: false,
     });
 
@@ -89,7 +94,10 @@ const newClient = (props) => {
         event.preventDefault();
         setIsLoading(true);
         console.log(clientInputs);
-        formIsValid() && addClient(clientInputs)
+        formIsValid() && addClient({
+            ...clientInputs,
+            nextDateContact: clientInputs.nextContactDate.getTime()/1000
+        })
             .then(() => props.history.push("/clients"))
             .catch(error => {
                 setIsLoading(false);
@@ -210,6 +218,17 @@ const newClient = (props) => {
                                     defaultValue={clientInputs.storageAddress}
                                     handleInputChange={handleInputChange}
                                 />
+                                <InputDate
+                                    inputName="Дата след. контакта"
+                                    name="nextContactDate"
+                                    selected={Date.parse(clientInputs.nextContactDate)}
+                                    handleDateChange={(value) => {
+                                        setClientInputs({
+                                            ...clientInputs, 
+                                            nextContactDate: value
+                                        })
+                                    }}
+                                />
                                 <InputText
                                     inputName="Условия работы"
                                     name="WorkConditions"
@@ -222,16 +241,7 @@ const newClient = (props) => {
                                     defaultValue={clientInputs.price}
                                     handleInputChange={handleInputChange}
                                 />
-                                {/* <InputText
-                        inputName="Скидки"
-                        required
-                        name="discount"
-                        error={formErrors.discount}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    /> */}
-                                <div className="main-form__item">
+                                {/* <div className="main-form__item">
                                     <div className="main-form__input_name">Скидки</div>
                                     <div className="main-form__input_field main-form__input_field--vertical">
                                         <CheckBox
@@ -251,22 +261,13 @@ const newClient = (props) => {
                                             }}
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                                 <InputText
                                     inputName="Акт сверки"
                                     name="check"
                                     handleInputChange={handleInputChange}
                                     defaultValue={clientInputs.check}
                                 />
-                                {/* <InputText
-                        inputName="История работы"
-                        required
-                        name="workHistory"
-                        error={formErrors.workHistory}
-                        errorsArr={formErrors}
-                        setErrorsArr={setFormErrors}
-                        handleInputChange={handleInputChange}
-                    /> */}
                                 <div className="main-form__item">
                                     <div className="main-form__input_name">Тип клиента*</div>
                                     <div className="main-form__input_field">
@@ -286,16 +287,16 @@ const newClient = (props) => {
                                     error={formErrors.category}
                                     userHasAccess={props.userHasAccess}
                                     windowName="select-category"
-                                    name="category"
+                                    name="categoryId"
                                     handleCategoryChange={(value) => {
-                                        validateField("category", value);
+                                        validateField("categoryId", value);
                                         setClientInputs({
                                             ...clientInputs,
-                                            category: value
+                                            categoryId: value
                                         })
                                         setFormErrors({
                                             ...formErrors,
-                                            category: false
+                                            categoryId: false
                                         })
                                     }}
                                     errorsArr={formErrors}

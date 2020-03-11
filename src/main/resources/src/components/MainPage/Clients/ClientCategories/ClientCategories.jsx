@@ -93,7 +93,9 @@ const ClientCategories = (props) => {
                         className="main-window__list-item"
                         minHeight="20px"
                     />}
-                    {categories.sort((a, b) => {
+                    {categories.filter(item => {
+                        return (item.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    }).sort((a, b) => {
                         if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
                             return -1;
                         }
