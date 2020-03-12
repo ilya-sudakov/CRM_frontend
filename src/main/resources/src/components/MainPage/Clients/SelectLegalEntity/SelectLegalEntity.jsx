@@ -241,7 +241,7 @@ const SelectLegalEntity = (props) => {
                                     />
                                 </div>
                             </div>
-                            {isLoading ? <ImgLoader /> : <button className="select-legal-entity__button" onClick={(event) => {
+                            {isLoading ? <ImgLoader /> : !props.readOnly && <button className="select-legal-entity__button" onClick={(event) => {
                                 event.preventDefault();
                                 setIsLoading(true);
                                 //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН

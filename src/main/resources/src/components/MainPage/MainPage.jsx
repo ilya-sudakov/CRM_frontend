@@ -5,7 +5,7 @@ import Header from '../Header/Header.jsx';
 import {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, NewRecordWork, LoginHistory, EditRecordWork, WorkManagementPage, PriceList, NewPriceList, ViewPriceList, ClientCategories
+    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, NewRecordWork, LoginHistory, EditRecordWork, WorkManagementPage, PriceList, NewPriceList, ViewPriceList, ClientCategories, ViewClient
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -106,6 +106,13 @@ class MainPage extends React.Component {
                                 <PrivateRoute
                                     exact path="/clients/new"
                                     component={newClient}
+                                    userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
+                                    allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                                />
+                                <PrivateRoute
+                                    path="/clients/view/"
+                                    component={ViewClient}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}

@@ -4,6 +4,7 @@ import '../../../../utils/Form/Form.scss';
 import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
 import { addClientLegalEntity } from '../../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
 import { addClientContact } from '../../../../utils/RequestsAPI/Clients/Contacts.jsx';
+import { addClientWorkHistory } from '../../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
@@ -19,14 +20,14 @@ const newClient = (props) => {
         name: '',
         legalEntity: [],
         contacts: [],
+        workHistory: [],
         site: '',
         comment: '',
         storageAddress: '',
-        workConditions: '',
+        workCondition: '',
         price: '',
         discount: '',
         check: '',
-        workHistory: '',
         clientType: 'Активные',
         categoryId: 0,
         nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
@@ -107,7 +108,7 @@ const newClient = (props) => {
             price: clientInputs.price,
             site: clientInputs.site,
             storageAddress: clientInputs.storageAddress,
-            workConditions: clientInputs.workConditions,
+            workCondition: clientInputs.workCondition,
             check: clientInputs.check,
             nextDateContact: clientInputs.nextContactDate.getTime() / 1000,
             categoryId: clientInputs.categoryId
@@ -141,8 +142,19 @@ const newClient = (props) => {
                             })
                         }))
                             .then(() => {
-                                // props.history.push("/clients");
-                                props.history.goBack;
+                                Promise.all(clientInputs.workHistory.map(item => {
+                                    return addClientWorkHistory({
+                                        date: item.date,
+                                        action: item.action,
+                                        result: item.result,
+                                        comment: item.comment,
+                                        clientId: clientId
+                                    })
+                                }))
+                                    .then(() => {
+                                        // props.history.push("/clients");
+                                        props.history.goBack;
+                                    })
                             })
                     })
             })
@@ -209,7 +221,7 @@ const newClient = (props) => {
                                                     workHistory: value
                                                 })
                                             }}
-                                            // defaultValue={clientInputs.workHistory}
+                                            defaultValue={clientInputs.workHistory}
                                             userHasAccess={props.userHasAccess}
                                         />
                                     </div>
@@ -295,8 +307,8 @@ const newClient = (props) => {
                                 />
                                 <InputText
                                     inputName="Условия работы"
-                                    name="workConditions"
-                                    defaultValue={clientInputs.workConditions}
+                                    name="workCondition"
+                                    defaultValue={clientInputs.workCondition}
                                     handleInputChange={handleInputChange}
                                 />
                                 <InputText

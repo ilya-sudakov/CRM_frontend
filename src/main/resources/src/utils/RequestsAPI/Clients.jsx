@@ -7,6 +7,13 @@ export function getClients() {
     });
 }
 
+export function getClientById(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/client/" + id,
+        method: "GET"
+    });
+}
+
 export function addClient(newClient) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/client",

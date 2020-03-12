@@ -174,7 +174,7 @@ const Clients = (props) => {
                                     <img className="main-window__img" src={calendarSVG} />
                                 </div>
                                 <div className="main-window__action" onClick={() => {
-                                    props.history.push('/clients/category/' + curCategory + '/view/' + item.id)
+                                    props.history.push('/clients/view/' + item.id)
                                 }}>
                                     <img className="main-window__img" src={viewSVG} />
                                 </div>

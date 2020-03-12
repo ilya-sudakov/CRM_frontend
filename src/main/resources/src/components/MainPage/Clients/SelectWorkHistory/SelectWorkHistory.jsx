@@ -10,14 +10,7 @@ import { formatDateString } from '../../../../utils/functions.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const SelectWorkHistory = (props) => {
-    const [items, setItems] = useState([
-        {
-            date: '',
-            action: '',
-            result: '',
-            comment: ''
-        }
-    ]);
+    const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [creatingItem, setCreatingItem] = useState(false);
     const [newItem, setNewItem] = useState({
@@ -28,73 +21,51 @@ const SelectWorkHistory = (props) => {
     })
 
     useEffect(() => {
+        // setItems([
+        //     {
+        //         date: new Date(),
+        //         action: 'Создание записи',
+        //         result: 'Результат1',
+        //         comment: 'Комментарий'
+        //     },
+        //     {
+        //         date: new Date(),
+        //         action: 'Создание записи',
+        //         result: 'Результат2',
+        //         comment: 'Комментарий'
+        //     },
+        //     {
+        //         date: new Date(),
+        //         action: 'Создание записи',
+        //         result: 'Результат3',
+        //         comment: 'Комментарий'
+        //     },
+        //     {
+        //         date: new Date(),
+        //         action: 'Создание записи',
+        //         result: 'Результат4',
+        //         comment: 'Комментарий'
+        //     },
+        //     {
+        //         date: new Date(),
+        //         action: 'Создание записи',
+        //         result: 'Результат5',
+        //         comment: 'Комментарий'
+        //     },
+        //     {
+        //         date: new Date(),
+        //         action: 'Создание записи',
+        //         result: 'Результат6',
+        //         comment: 'Комментарий'
+        //     },
+        // ])
         if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
             setItems([...props.defaultValue]);
         }
-        setItems([
-            {
-                date: new Date(),
-                action: 'Создание записи',
-                result: 'Результат',
-                comment: 'Комментарий'
-            },
-            {
-                date: new Date(),
-                action: 'Создание записи',
-                result: 'Результат',
-                comment: 'Комментарий'
-            },
-            {
-                date: new Date(),
-                action: 'Создание записи',
-                result: 'Результат',
-                comment: 'Комментарий'
-            },
-            {
-                date: new Date(),
-                action: 'Создание записи',
-                result: 'Результат',
-                comment: 'Комментарий'
-            },
-            {
-                date: new Date(),
-                action: 'Создание записи',
-                result: 'Результат',
-                comment: 'Комментарий'
-            },
-            {
-                date: new Date(),
-                action: 'Создание записи',
-                result: 'Результат',
-                comment: 'Комментарий'
-            },
-        ])
     }, [props.defaultValue, props.options])
 
-    const handleNewWorkHistory = (e) => {
-        e.preventDefault();
-        setItems([
-            ...items,
-            {
-                date: '',
-                action: '',
-                result: '',
-                comment: ''
-            }
-        ]);
-        props.handleWorkHistoryChange([
-            ...items,
-            {
-                date: '',
-                action: '',
-                result: '',
-                comment: ''
-            }
-        ]);
-    }
-
     const deleteItem = (e) => {
-        const id = e.target.getAttribute("index");
+        const id = e.currentTarget.getAttribute("index");
         let temp = items;
         temp.splice(id, 1);
         setItems([...temp]);
@@ -122,13 +93,13 @@ const SelectWorkHistory = (props) => {
             }
             <div className="main-window">
                 <div className="main-window__list">
-                    <div className="main-window__list-item main-window__list-item--header">
+                    {items.length > 0 && <div className="main-window__list-item main-window__list-item--header">
                         <span>Дата</span>
                         <span>Действие</span>
                         <span>Результат</span>
                         <span>Комментарий</span>
                         <div className="main-window__actions">Действие</div>
-                    </div>
+                    </div>}
                     <div className={creatingItem ? "main-window__list-item main-window__list-item--input" : "main-window__list-item main-window__list-item--input main-window__list-item--hidden"}>
                         <span className="main-form__input_field">
                             <InputDate
@@ -169,15 +140,17 @@ const SelectWorkHistory = (props) => {
                                 ? <ImgLoader />
                                 : <React.Fragment>
                                     <div className="main-window__action" onClick={() => {
+                                        setIsLoading(true);
                                         setItems([
                                             ...items,
-                                            { ...newItem }]);
+                                            newItem
+                                        ]);
                                         props.handleWorkHistoryChange([
                                             ...items,
-                                            { ...newItem }
+                                            newItem
                                         ]);
-                                        setIsLoading(true);
-                                        // setCreatingItem(false);
+                                        setIsLoading(false);
+                                        setCreatingItem(false);
                                     }}>
                                         <img className="main-window__img" src={okSVG} />
                                     </div>
@@ -197,16 +170,14 @@ const SelectWorkHistory = (props) => {
                             return -1;
                         }
                         return 0;
-                    }).map(item => {
+                    }).map((item, index) => {
                         return <div className="main-window__list-item">
                             <span>{formatDateString(item.date)}</span>
                             <span>{item.action}</span>
                             <span>{item.result}</span>
                             <span>{item.comment}</span>
                             <div className="main-window__actions">
-                                {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => {
-
-                                }}>
+                                {!props.readOnly && props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" index={index} onClick={deleteItem}>
                                     <img className="main-window__img" src={deleteSVG} />
                                 </div>}
                             </div>
