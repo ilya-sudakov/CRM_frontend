@@ -299,12 +299,13 @@
       }
 
       &:hover {
-        background-color: #cccccc;
+        color: #eeeeee;
+        background-color: darken(#12abca, 5%);
       }
     }
     .main-window__page-number--active {
-      background-color: #aaaaaa;
-      color: $secondary-text-color;
+      color: #dddddd;
+      background-color: #12abca;
     }
   }
 

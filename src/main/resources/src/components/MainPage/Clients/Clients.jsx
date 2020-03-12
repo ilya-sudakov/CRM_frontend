@@ -10,6 +10,7 @@ import { getClients, deleteClient } from '../../../utils/RequestsAPI/Clients.jsx
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
+import { formatDateString } from '../../../utils/functions.jsx';
 
 const Clients = (props) => {
     const [clients, setClients] = useState([]);
@@ -19,6 +20,8 @@ const Clients = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [pagination, setPagination] = useState([1]);
     const [curPage, setCurPage] = useState(1);
+    const [curPagePotential, setCurPagePotential] = useState(1);
+    const [curPageActive, setCurPageActive] = useState(1);
     const [itemsCount, setItemsCount] = useState(0);
     const itemsPerPage = 20;
 
@@ -33,95 +36,77 @@ const Clients = (props) => {
     }
 
     const loadData = () => {
-        // getClients()
-        //     .then(res => res.json())
-        //     .then((clients) => {
-        //         setClients(clients);
-        //         setIsLoading(false);
-        //     })
-        const data = [
-            {
-                id: 1,
-                name: 'СБЕРБАНК РОССИИ',
-                legalEntity: '3',
-                INN: '7707083893',
-                KPP: '3',
-                OGRN: '3',
-                BIK: '3',
-                checkingAccount: '3',
-                legalAddress: '3',
-                factualAddress: '3',
-                contacts: '42849283-74928-374',
-                site: 'www.ffff.com',
-                comment: 'Комментарий',
-                storageAddress: '3',
-                WorkConditions: '3',
-                price: '3',
-                discount: '3',
-                check: '3',
-                firstName: 'Иван',
-                workHistory: '3',
-                clientType: 'Активные'
-            },
-            {
-                id: 2,
-                name: 'СБЕРБАНК РОССИИ',
-                legalEntity: '3',
-                INN: '7707083893',
-                KPP: '3',
-                OGRN: '3',
-                BIK: '3',
-                checkingAccount: '3',
-                legalAddress: '3',
-                factualAddress: '3',
-                firstName: 'Иван',
-                contacts: '42849283-74928-374',
-                site: 'www.ffff.com',
-                comment: 'Комментарий',
-                storageAddress: '3',
-                WorkConditions: '3',
-                price: '3',
-                discount: '3',
-                check: '3',
-                workHistory: '3',
-                clientType: 'Активные'
-            }
-        ];
-        setClients(data);
-        // setItemsCount(data.length);
-        // let temp = [];
-        // let i = 1;
-        // do {
-        //     temp.push(i);
-        //     i++;
-        // }
-        // while (i <= Math.floor(data.length / itemsPerPage));
-        // setPagination(temp);
-        if (curPage < 10) {
-            if (props.location.pathname.split('/clients/category/')[1].split('/')[1] === 'active') {
-                setItemsCount(40);
-                let temp = [];
-                let i = 1;
-                do {
-                    temp.push(i);
-                    i++;
+        // const data = [
+        //     {
+        //         id: 1,
+        //         name: 'СБЕРБАНК РОССИИ',
+        //         legalEntity: '3',
+        //         INN: '7707083893',
+        //         KPP: '3',
+        //         OGRN: '3',
+        //         BIK: '3',
+        //         checkingAccount: '3',
+        //         legalAddress: '3',
+        //         factualAddress: '3',
+        //         contacts: '42849283-74928-374',
+        //         site: 'www.ffff.com',
+        //         comment: 'Комментарий',
+        //         storageAddress: '3',
+        //         WorkConditions: '3',
+        //         price: '3',
+        //         discount: '3',
+        //         check: '3',
+        //         firstName: 'Иван',
+        //         workHistory: '3',
+        //         clientType: 'Активные',
+        //         nextDateContact: '12.12.2020'
+        //     },
+        //     {
+        //         id: 2,
+        //         name: 'СБЕРБАНК РОССИИ',
+        //         legalEntity: '3',
+        //         INN: '7707083893',
+        //         KPP: '3',
+        //         OGRN: '3',
+        //         BIK: '3',
+        //         checkingAccount: '3',
+        //         legalAddress: '3',
+        //         factualAddress: '3',
+        //         firstName: 'Иван',
+        //         contacts: '42849283-74928-374',
+        //         site: 'www.ffff.com',
+        //         comment: 'Комментарий',
+        //         storageAddress: '3',
+        //         WorkConditions: '3',
+        //         price: '3',
+        //         discount: '3',
+        //         check: '3',
+        //         workHistory: '3',
+        //         clientType: 'Активные',
+        //         nextDateContact: '25.01.2020'
+        //     }
+        // ];
+        // setClients(data);
+        getClients()
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                setClients(res);
+                if (curPage < 10) {
+                    // if (props.location.pathname.split('/clients/category/')[1].split('/')[1] === 'active') {
+                    setItemsCount(res.length);
+                    let temp = [];
+                    let i = 1;
+                    do {
+                        temp.push(i);
+                        i++;
+                    }
+                    while (i <= Math.floor(res.length / itemsPerPage) && i <= 10);
+                    setPagination(temp);
+                    // }
                 }
-                while (i <= Math.floor(40 / itemsPerPage) && i <= 10);
-                setPagination(temp);
-            }
-            else {
-                setItemsCount(700);
-                let temp = [];
-                let i = 1;
-                do {
-                    temp.push(i);
-                    i++;
-                }
-                while (i <= Math.floor(700 / itemsPerPage) && i <= 10);
-                setPagination(temp);
-            }
-        }
-        setIsLoading(false);
+                setIsLoading(false);
+            })
     }
 
     useEffect(() => {
@@ -163,18 +148,20 @@ const Clients = (props) => {
                         <span>Сайт</span>
                         <span>Контакты</span>
                         <span>Комментарий</span>
+                        <span>Дата след. контакта</span>
                         <div className="main-window__actions">Действие</div>
                     </div>
                     {isLoading && <TableDataLoading
                         className="main-window__list-item"
-                        minHeight="20px"
+                        minHeight="50px"
                     />}
                     {clients.map((item) => {
                         return <div className="main-window__list-item">
                             <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
                             <span><div className="main-window__mobile-text">Сайт: </div>{item.site}</span>
-                            <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.firstName + ', ' + item.contacts}</span>
+                            <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts.length > 0 ? (item.contacts[0].name + ', ' + item.contacts[0].phoneNumber) : 'Не указаны контакт. данные'}</span>
                             <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
+                            <span><div className="main-window__mobile-text">Дата след. контакта: </div>{formatDateString(item.nextDateContact)}</span>
                             <div className="main-window__actions">
                                 <div className="main-window__action" onClick={() => {
                                     props.history.push('/clients/category/' + curCategory + '/view/' + item.id)
@@ -204,29 +191,29 @@ const Clients = (props) => {
                             </div>
                         </div>
                     })}
-                    <div className="main-window__pagination">
-                        {pagination.map((item, index) => {
-                            return <div className={curPage == item ? "main-window__page-number main-window__page-number--active" : "main-window__page-number"} onClick={() => {
-                                setCurPage(item);
-                                if (Math.floor(itemsCount / itemsPerPage) > 10) {
-                                    if (pagination.indexOf(item) === 0 && item !== 1) {
-                                        let temp = [];
-                                        for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
-                                            temp.push(i);
-                                        }
-                                        return setPagination(temp)
+                </div>
+                <div className="main-window__pagination">
+                    {pagination.map((item, index) => {
+                        return <div className={curPage == item ? "main-window__page-number main-window__page-number--active" : "main-window__page-number"} onClick={() => {
+                            setCurPage(item);
+                            if (Math.floor(itemsCount / itemsPerPage) > 10) {
+                                if (pagination.indexOf(item) === 0 && item !== 1) {
+                                    let temp = [];
+                                    for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
+                                        temp.push(i);
                                     }
-                                    if (pagination.indexOf(item) === (pagination.length - 1) && item !== (Math.floor(itemsCount / itemsPerPage))) {
-                                        let temp = [];
-                                        for (let i = pagination[0] + 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] + 1; i++) {
-                                            temp.push(i);
-                                        }
-                                        return setPagination(temp)
-                                    }
+                                    return setPagination(temp)
                                 }
-                            }}>{item}</div>
-                        })}
-                    </div>
+                                if (pagination.indexOf(item) === (pagination.length - 1) && item !== (Math.floor(itemsCount / itemsPerPage))) {
+                                    let temp = [];
+                                    for (let i = pagination[0] + 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] + 1; i++) {
+                                        temp.push(i);
+                                    }
+                                    return setPagination(temp)
+                                }
+                            }
+                        }}>{item}</div>
+                    })}
                 </div>
             </div>
         </div>

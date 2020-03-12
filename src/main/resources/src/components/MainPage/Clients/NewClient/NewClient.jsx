@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './NewClient.scss';
 import '../../../../utils/Form/Form.scss';
 import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
+import { addClientLegalEntity } from '../../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
+import { addClientContact } from '../../../../utils/RequestsAPI/Clients/Contacts.jsx';
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
@@ -10,6 +12,7 @@ import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
+import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -19,7 +22,7 @@ const newClient = (props) => {
         site: '',
         comment: '',
         storageAddress: '',
-        WorkConditions: '',
+        workConditions: '',
         price: '',
         discount: '',
         check: '',
@@ -94,11 +97,55 @@ const newClient = (props) => {
         event.preventDefault();
         setIsLoading(true);
         console.log(clientInputs);
+        let clientId = 0;
         formIsValid() && addClient({
-            ...clientInputs,
-            nextDateContact: clientInputs.nextContactDate.getTime()/1000
+            clientType: clientInputs.clientType,
+            comment: clientInputs.comment,
+            // discount: clientInputs.clientType,
+            manager: props.userData.username,
+            name: clientInputs.name,
+            price: clientInputs.price,
+            site: clientInputs.site,
+            storageAddress: clientInputs.storageAddress,
+            workConditions: clientInputs.workConditions,
+            check: clientInputs.check,
+            nextDateContact: clientInputs.nextContactDate.getTime() / 1000,
+            categoryId: clientInputs.categoryId
         })
-            .then(() => props.history.push("/clients"))
+            .then(res => res.json())
+            .then(res => {
+                clientId = res.id;
+                Promise.all(clientInputs.legalEntity.map(item => {
+                    return addClientLegalEntity({
+                        name: item.name,
+                        inn: item.INN,
+                        kpp: item.KPP,
+                        ogrn: item.OGRN,
+                        bik: item.BIK,
+                        checkingAccount: item.checkingAccount,
+                        legalAddress: item.legalAddress,
+                        factualAddress: item.factualAddress,
+                        legalEntity: item.legalEntity,
+                        clientId: res.id
+                    })
+                }))
+                    .then(() => {
+                        Promise.all(clientInputs.contacts.map(item => {
+                            return addClientContact({
+                                name: item.name,
+                                lastName: item.lastName,
+                                email: item.email,
+                                position: item.position,
+                                phoneNumber: item.phoneNumber,
+                                clientId: clientId
+                            })
+                        }))
+                            .then(() => {
+                                // props.history.push("/clients");
+                                props.history.goBack;
+                            })
+                    })
+            })
             .catch(error => {
                 setIsLoading(false);
                 alert('Ошибка при добавлении записи');
@@ -150,6 +197,23 @@ const newClient = (props) => {
                     {
                         curTab === 'workHistory'
                             ? <React.Fragment>
+                                {/* Добавление истории работ */}
+                                <div className="main-form__item">
+                                    <div className="main-form__input_name">История работ*</div>
+                                    <div className="main-form__input_field">
+                                        <SelectWorkHistory
+                                            handleWorkHistoryChange={(value) => {
+                                                validateField("workHistory", value);
+                                                setClientInputs({
+                                                    ...clientInputs,
+                                                    workHistory: value
+                                                })
+                                            }}
+                                            defaultValue={clientInputs.workHistory}
+                                            userHasAccess={props.userHasAccess}
+                                        />
+                                    </div>
+                                </div>
                             </React.Fragment>
                             : <React.Fragment>
                                 <InputText
@@ -224,15 +288,15 @@ const newClient = (props) => {
                                     selected={Date.parse(clientInputs.nextContactDate)}
                                     handleDateChange={(value) => {
                                         setClientInputs({
-                                            ...clientInputs, 
+                                            ...clientInputs,
                                             nextContactDate: value
                                         })
                                     }}
                                 />
                                 <InputText
                                     inputName="Условия работы"
-                                    name="WorkConditions"
-                                    defaultValue={clientInputs.WorkConditions}
+                                    name="workConditions"
+                                    defaultValue={clientInputs.workConditions}
                                     handleInputChange={handleInputChange}
                                 />
                                 <InputText

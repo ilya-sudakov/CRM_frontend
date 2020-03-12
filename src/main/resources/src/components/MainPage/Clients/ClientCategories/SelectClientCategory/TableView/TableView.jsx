@@ -12,7 +12,7 @@ const TableView = (props) => {
     }, [props.closeWindow, props.data])
 
     return (
-        <div className="tableview-employees">
+        <div className="client-categories__list">
             <div className="main-window">
                 <div className="main-window__list">
                     <div className="main-window__list-item main-window__list-item--header">

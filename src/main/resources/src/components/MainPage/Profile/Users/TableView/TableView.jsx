@@ -56,7 +56,7 @@ const TableView = (props) => {
                 className="ttableview_users__row ttableview_users__row--even"
             />}
             {sortUsers(props.data).map((user, user_id) => (
-                <div key={user_id} className="tableview_users__row tableview_users__row--odd">
+                <div key={user_id} className="tableview_users__row tableview_users__row--even">
                     {/* <div className="tableview_users__col">{user.id}</div> */}
                     <div className="tableview_users__col">{user.username}</div>
                     <div className="tableview_users__col">{user.email}</div>

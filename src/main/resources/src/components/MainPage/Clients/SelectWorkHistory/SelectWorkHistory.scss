@@ -1,0 +1,194 @@
+@import "../../../../variables.scss";
+
+.select-work-history {
+  width: calc(100%);
+  position: relative;
+
+  .select-work-history__overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    // background-color: red;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  .input_products {
+    width: 100%;
+    margin-top: 10px;
+
+    // .input_products__input {
+    //   width: calc(100% - 10px);
+    // }
+    .input_products__input_name {
+      font-size: 85%;
+    }
+    .select {
+      width: calc(80% - 0px);
+      // width: 100%;
+      // flex: 0 1 calc(80% - 0px);
+      // font-size: 80%;
+    }
+    .select__input {
+      width: calc(100% - 20px);
+      min-width: 0 !important;
+    }
+  }
+
+  &__selected_item {
+    background-color: #dddddd;
+    border-radius: 5px;
+    padding: 0px 15px;
+    margin-top: 5px;
+    width: calc(100% - 60px);
+    position: relative;
+    transition: 0.2s ease-in-out;
+
+    &:first-child {
+      width: calc(100% - 30px);
+    }
+
+    &:hover {
+      background-color: darken(#dddddd, 10%);
+    }
+
+    .select-work-history__img {
+      position: absolute;
+      right: -35px;
+      cursor: pointer;
+      top: 25%;
+    }
+
+    .select-work-history__selected_header {
+      display: flex;
+      cursor: pointer;
+      padding: 10px 0px;
+
+      .select-work-history__selected_name {
+        &:nth-of-type(1) {
+          flex: 0 1 40%;
+        }
+        &:nth-of-type(2) {
+          flex: 0 1 30%;
+          text-align: center;
+        }
+        &:nth-of-type(3) {
+          flex: 0 1 30%;
+          text-align: center;
+        }
+        span:first-of-type {
+          font-size: 70%;
+        }
+      }
+    }
+
+    .select-work-history__selected_form {
+      transform-origin: 0 0;
+      min-height: 100px;
+      // height: fit-content;
+      height: 190px;
+      width: calc(100%);
+      padding-bottom: 10px;
+      transition: 0.2s ease-in-out;
+
+      &--hidden {
+        transform: scaleY(0);
+        min-height: 0;
+        height: 0;
+        transition: 0.2s ease-in-out;
+        padding: 0;
+      }
+
+      .select-work-history__item {
+        width: calc(100% - 10px);
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px;
+
+        .select-work-history__input_name {
+          color: #666666;
+          flex: 0 1 20%;
+          font-size: 80%;
+        }
+        .select-work-history__input_field {
+          flex: 0 1 80%;
+
+          input {
+            font-size: 70%;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .select-work-history__selected_form .select-work-history__button {
+    margin-top: 15px;
+  }
+
+  &__button {
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    font-size: 70%;
+    padding: 10px 10px;
+    border-radius: 5px;
+    background-color: $button__background--inverted;
+    color: #ffffff;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+
+  &__input {
+    border: 1px solid #bbbbbb;
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 2;
+
+    &:focus {
+      border: 1px solid $button__background--inverted;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .select-work-history__selected_form {
+      height: 275px;
+    }
+    .select-work-history__selected_form--hidden {
+      height: 0;
+    }
+    .select-work-history__selected_header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .select-work-history__item {
+      width: 100%;
+      flex-direction: column !important;
+    }
+    .select-work-history__input_name {
+      width: 100%;
+    }
+    .select-work-history__selected_name {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .select-work-history__input_field {
+      width: 100%;
+    }
+  }
+}
