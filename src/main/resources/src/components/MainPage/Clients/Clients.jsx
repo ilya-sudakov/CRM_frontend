@@ -11,6 +11,9 @@ import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDat
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import { formatDateString } from '../../../utils/functions.jsx';
+import { deleteClientLegalEntity } from '../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
+import { deleteClientContact } from '../../../utils/RequestsAPI/Clients/Contacts.jsx';
+import { deleteClientWorkHistory } from '../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
 
 const Clients = (props) => {
     const [clients, setClients] = useState([]);
@@ -25,13 +28,39 @@ const Clients = (props) => {
     const [itemsCount, setItemsCount] = useState(0);
     const itemsPerPage = 20;
 
-    const deleteItem = (event) => {
-        const id = event.target.dataset.id;
-        deleteClient(id)
-            .then(() => getClients())
-            .then(res => res.json())
-            .then((clients) => {
-                setClients(clients);
+    const deleteItem = (clientId, index) => {
+        // const id = event.target.dataset.id;
+        // deleteClient(id)
+        //     .then(() => getClients())
+        //     .then(res => res.json())
+        //     .then((clients) => {
+        //         setClients(clients);
+        //     })
+        Promise.all(clients[index].legalEntities.map(item => {
+            return deleteClientLegalEntity(item.id)
+        }))
+            .then(() => {
+                Promise.all(clients[index].contacts.map(item => {
+                    return deleteClientContact(item.id)
+                }))
+                    .then(() => {
+                        Promise.all(clients[index].histories.map(item => {
+                            return deleteClientWorkHistory(item.id)
+                        }))
+                            .then(() => {
+                                deleteClient(clientId)
+                                    .then(() => {
+                                        let temp = clients;
+                                        temp.splice(index, 1);
+                                        setClients([...temp]);
+                                        // console.log('deleted successfully');
+                                    })
+                            })
+                    })
+            })
+            .catch(error => {
+                alert('Ошибка при удалении');
+                console.log(error);
             })
     }
 
@@ -155,7 +184,7 @@ const Clients = (props) => {
                         className="main-window__list-item"
                         minHeight="50px"
                     />}
-                    {clients.map((item) => {
+                    {clients.map((item, index) => {
                         return <div className="main-window__list-item">
                             <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
                             <span><div className="main-window__mobile-text">Сайт: </div>{item.site}</span>
@@ -184,7 +213,7 @@ const Clients = (props) => {
                                     <img className="main-window__img" src={editSVG} />
                                 </div>
                                 {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => {
-                                    // props.history('/clients/category/' + curCategory + '/d/' + item.id)
+                                    deleteItem(item.id, index);
                                 }}>
                                     <img className="main-window__img" src={deleteSVG} />
                                 </div>}

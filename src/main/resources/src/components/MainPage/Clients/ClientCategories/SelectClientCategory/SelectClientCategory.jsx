@@ -41,10 +41,10 @@ const SelectClientCategory = (props) => {
             <div className="select-employee__input">
                 <div className="select-employee__input_name">{props.inputName + (props.required ? '*' : '')}</div>
                 <div className={"select-employee__input_field"}>
-                    <button className="select-employee__button" onClick={(e) => {
+                    {!props.readOnly && <button className="select-employee__button" onClick={(e) => {
                         e.preventDefault();
                         setShowWindow(!showWindow);
-                    }}>Выбрать категорию</button>
+                    }}>Выбрать категорию</button>}
                     <div className="select-employee__searchbar">
                         <input
                             type="text"

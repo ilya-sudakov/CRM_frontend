@@ -53,7 +53,7 @@ const ViewClient = (props) => {
                         clientType: res.clientType,
                         manager: res.manager,
                         nextContactDate: res.nextDateContact,
-                        legalEntities: res.legalEntities,
+                        legalEntity: res.legalEntities,
                         contacts: res.contacts,
                         workHistory: res.histories,
                     })
@@ -85,7 +85,7 @@ const ViewClient = (props) => {
                             ? <React.Fragment>
                                 {/* Добавление истории работ */}
                                 <div className="main-form__item">
-                                    <div className="main-form__input_name">История работ*</div>
+                                    <div className="main-form__input_name">История работ</div>
                                     <div className="main-form__input_field">
                                         <SelectWorkHistory
                                             handleWorkHistoryChange={(value) => {
@@ -173,19 +173,12 @@ const ViewClient = (props) => {
                                     defaultValue={clientInputs.check}
                                     readOnly
                                 />
-                                <div className="main-form__item">
-                                    <div className="main-form__input_name">Тип клиента*</div>
-                                    <div className="main-form__input_field">
-                                        <select
-                                            name="clientType"
-                                            defaultValue={clientInputs.clientType}
-                                            readOnly
-                                        >
-                                            <option value="Активные">Активные</option>
-                                            <option value="Потенциальные">Потенциальные</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <InputText
+                                    inputName="Тип клиента"
+                                    name="clientType"
+                                    defaultValue={clientInputs.clientType}
+                                    readOnly
+                                />
                                 <SelectClientCategory
                                     inputName="Выбор категории клиента"
                                     required

@@ -119,10 +119,10 @@ const newClient = (props) => {
                 Promise.all(clientInputs.legalEntity.map(item => {
                     return addClientLegalEntity({
                         name: item.name,
-                        inn: item.INN,
-                        kpp: item.KPP,
-                        ogrn: item.OGRN,
-                        bik: item.BIK,
+                        inn: item.inn,
+                        kpp: item.kpp,
+                        ogrn: item.ogrn,
+                        bik: item.bik,
                         checkingAccount: item.checkingAccount,
                         legalAddress: item.legalAddress,
                         factualAddress: item.factualAddress,

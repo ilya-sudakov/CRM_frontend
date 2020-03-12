@@ -8,10 +8,10 @@ const SelectLegalEntity = (props) => {
     const [selected, setSelected] = useState([
         {
             name: '',
-            INN: '7842143789',
-            KPP: '',
-            OGRN: '',
-            BIK: '',
+            inn: '7842143789',
+            kpp: '',
+            ogrn: '',
+            bik: '',
             checkingAccount: '',
             legalAddress: '',
             factualAddress: '',
@@ -56,10 +56,10 @@ const SelectLegalEntity = (props) => {
             ...selected,
             {
                 name: '',
-                INN: '7842143789',
-                KPP: '',
-                OGRN: '',
-                BIK: '',
+                inn: '7842143789',
+                kpp: '',
+                ogrn: '',
+                bik: '',
                 checkingAccount: '',
                 legalAddress: '',
                 factualAddress: ''
@@ -69,10 +69,10 @@ const SelectLegalEntity = (props) => {
             ...selected,
             {
                 name: '',
-                INN: '7842143789',
-                KPP: '',
-                OGRN: '',
-                BIK: '',
+                inn: '7842143789',
+                kpp: '',
+                ogrn: '',
+                bik: '',
                 checkingAccount: '',
                 legalAddress: '',
                 factualAddress: ''
@@ -119,7 +119,7 @@ const SelectLegalEntity = (props) => {
                     <div className="select-legal-entity__selected_item" >
                         <div className="select-legal-entity__selected_header" index={index} onClick={clickOnForm}>
                             <div className="select-legal-entity__selected_name">
-                                <span>ИНН: </span> <span>{item.INN}</span>
+                                <span>ИНН: </span> <span>{item.inn}</span>
                             </div>
                             <div className="select-legal-entity__selected_name">
                                 <span>Название: </span> <span>{item.name}</span>
@@ -148,11 +148,11 @@ const SelectLegalEntity = (props) => {
                                 <div className="select-legal-entity__input_field">
                                     <input
                                         type="text"
-                                        name="INN"
+                                        name="inn"
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        value={item.INN}
+                                        value={item.inn}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -162,11 +162,11 @@ const SelectLegalEntity = (props) => {
                                 <div className="select-legal-entity__input_field">
                                     <input
                                         type="text"
-                                        name="KPP"
+                                        name="kpp"
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        value={item.KPP}
+                                        value={item.kpp}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -176,11 +176,11 @@ const SelectLegalEntity = (props) => {
                                 <div className="select-legal-entity__input_field">
                                     <input
                                         type="text"
-                                        name="OGRN"
+                                        name="ogrn"
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        value={item.OGRN}
+                                        value={item.ogrn}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -190,11 +190,11 @@ const SelectLegalEntity = (props) => {
                                 <div className="select-legal-entity__input_field">
                                     <input
                                         type="text"
-                                        name="BIK"
+                                        name="bik"
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        value={item.BIK}
+                                        value={item.bik}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
@@ -245,7 +245,7 @@ const SelectLegalEntity = (props) => {
                                 event.preventDefault();
                                 setIsLoading(true);
                                 //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
-                                getInfoByINN({ query: item.INN, branch_type: 'MAIN' })
+                                getInfoByINN({ query: item.inn, branch_type: 'MAIN' })
                                     .then(res => res.json())
                                     .then(res => {
                                         console.log(res);
@@ -253,8 +253,8 @@ const SelectLegalEntity = (props) => {
                                             let newData = Object.assign({
                                                 ...item,
                                                 name: res.suggestions[0].data.name.short_with_opf,
-                                                KPP: res.suggestions[0].data.kpp,
-                                                OGRN: res.suggestions[0].data.ogrn,
+                                                kpp: res.suggestions[0].data.kpp,
+                                                ogrn: res.suggestions[0].data.ogrn,
                                                 legalAddress: res.suggestions[0].data.address.value,
                                                 legalEntity: res.suggestions[0].data.management.name
                                             })
@@ -274,7 +274,7 @@ const SelectLegalEntity = (props) => {
                                                     temp.splice(index, 1, {
                                                         ...item,
                                                         ...newData,
-                                                        BIK: res.suggestions.length > 0 ? res.suggestions[0].data.bic : '',
+                                                        bik: res.suggestions.length > 0 ? res.suggestions[0].data.bic : '',
                                                     })
                                                     setSelected([...temp]);
                                                     props.handleLegalEntityChange([...temp]);
