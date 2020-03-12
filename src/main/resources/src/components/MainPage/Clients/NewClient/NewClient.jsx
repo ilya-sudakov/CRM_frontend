@@ -209,7 +209,7 @@ const newClient = (props) => {
                                                     workHistory: value
                                                 })
                                             }}
-                                            defaultValue={clientInputs.workHistory}
+                                            // defaultValue={clientInputs.workHistory}
                                             userHasAccess={props.userHasAccess}
                                         />
                                     </div>
