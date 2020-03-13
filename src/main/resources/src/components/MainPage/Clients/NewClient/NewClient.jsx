@@ -30,6 +30,7 @@ const newClient = (props) => {
         check: '',
         clientType: 'Активные',
         categoryId: 0,
+        categoryName: '',
         nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     });
     const [formErrors, setFormErrors] = useState({
@@ -142,18 +143,28 @@ const newClient = (props) => {
                             })
                         }))
                             .then(() => {
-                                Promise.all(clientInputs.workHistory.map(item => {
-                                    return addClientWorkHistory({
-                                        date: item.date,
-                                        action: item.action,
-                                        result: item.result,
-                                        comment: item.comment,
-                                        clientId: clientId
-                                    })
-                                }))
+                                addClientWorkHistory({
+                                    date: new Date(),
+                                    action: 'Создание записи',
+                                    result: 'Запись успешно создана',
+                                    comment: '<Cообщение сгенерировано автоматически>',
+                                    clientId: clientId
+                                })
                                     .then(() => {
-                                        // props.history.push("/clients");
-                                        props.history.goBack;
+                                        Promise.all(clientInputs.workHistory.map(item => {
+                                            return addClientWorkHistory({
+                                                date: item.date,
+                                                action: item.action,
+                                                result: item.result,
+                                                comment: item.comment,
+                                                clientId: clientId
+                                            })
+                                        }))
+                                            .then(() => {
+                                                // props.history.push("/clients");
+                                                // props.history.goBack;
+                                                props.history.push('/clients/category/' + clientInputs.categoryName + '/active')
+                                            })
                                     })
                             })
                     })
@@ -364,17 +375,19 @@ const newClient = (props) => {
                                     userHasAccess={props.userHasAccess}
                                     windowName="select-category"
                                     name="categoryId"
-                                    handleCategoryChange={(value) => {
+                                    handleCategoryChange={(value, name) => {
                                         validateField("categoryId", value);
                                         setClientInputs({
                                             ...clientInputs,
-                                            categoryId: value
+                                            categoryId: value,
+                                            categoryName: name
                                         })
                                         setFormErrors({
                                             ...formErrors,
                                             categoryId: false
                                         })
                                     }}
+                                    defaultValue={clientInputs.categoryName}
                                     errorsArr={formErrors}
                                     setErrorsArr={setFormErrors}
                                 />

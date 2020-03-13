@@ -32,23 +32,23 @@ const SelectClientCategory = (props) => {
     const clickCategory = (categoryId, categoryName) => {
         setId(categoryId);
         setFullName(categoryName);
-        props.handleCategoryChange(categoryId);
+        props.handleCategoryChange(categoryId, categoryName);
         setShowWindow(!showWindow);
     }
 
     return (
-        <div className="select-employee">
-            <div className="select-employee__input">
-                <div className="select-employee__input_name">{props.inputName + (props.required ? '*' : '')}</div>
-                <div className={"select-employee__input_field"}>
-                    {!props.readOnly && <button className="select-employee__button" onClick={(e) => {
+        <div className="select-client-category">
+            <div className="select-client-category__input">
+                <div className="select-client-category__input_name">{props.inputName + (props.required ? '*' : '')}</div>
+                <div className={"select-client-category__input_field"}>
+                    {!props.readOnly && <button className="select-client-category__button" onClick={(e) => {
                         e.preventDefault();
                         setShowWindow(!showWindow);
                     }}>Выбрать категорию</button>}
-                    <div className="select-employee__searchbar">
+                    <div className="select-client-category__searchbar">
                         <input
                             type="text"
-                            className={props.error === true ? "select-employee__input select-employee__input--error" : "select-employee__input"}
+                            className={props.error === true ? "select-client-category__input select-client-category__input--error" : "select-client-category__input"}
                             // onChange={props.handleInputChange}
                             defaultValue={props.defaultValue ? props.defaultValue : fullName}
                             // onClick={!props.readOnly ? clickOnInput : null}
@@ -58,7 +58,7 @@ const SelectClientCategory = (props) => {
                     </div>
                 </div>
             </div>
-            {props.error === true && <div className="select-employee__error" onClick={
+            {props.error === true && <div className="select-client-category__error" onClick={
                 props.setErrorsArr ? (() => props.setErrorsArr({
                     ...props.errorsArr,
                     [props.name]: false

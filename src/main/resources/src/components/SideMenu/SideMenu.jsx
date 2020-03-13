@@ -30,8 +30,11 @@ const SideMenu = (props) => {
             icon: homeImg
         },
         {
-            pathname: "/clients/",
+            pathname: "/clients",
             linkTo: props.location.pathname,
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+            addButtonName: "Добавить клиента",
+            addButtonLinkTo: "/clients/new",
             mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             name: "Клиенты",
             icon: clientImg,
@@ -199,11 +202,13 @@ const SideMenu = (props) => {
                     dropdownMenu: [
                         {
                             name: 'Создать клиента',
+                            pathname: '/clients/new',
                             link: '/clients/new',
                             icon: plusImg,
                         },
                         {
                             name: 'Управление категориями',
+                            pathname: '/clients/categories',
                             link: '/clients/categories',
                             icon: contractImg
                         },
@@ -218,6 +223,7 @@ const SideMenu = (props) => {
                         }).map(item => {
                             return {
                                 name: item.name,
+                                pathname: '/clients/category/' + item.name + '/active',
                                 link: '/clients/category/' + item.name + '/active'
                             }
                         })
@@ -276,7 +282,13 @@ const SideMenu = (props) => {
                             {item.dropdownMenu && <div className="sidemenu__dropdown-menu">
                                 {
                                     item.dropdownMenu.map(dropdownMenuItem => {
-                                        return <Link className="sidemenu__item" to={dropdownMenuItem.link}>
+                                        return <Link className={
+                                            (props.location.pathname.includes(dropdownMenuItem.pathname) && (dropdownMenuItem.pathname !== "/"))
+                                                ? "sidemenu__item sidemenu__item--active"
+                                                : (props.location.pathname.length === 1 && props.location.pathname.includes(dropdownMenuItem.pathname))
+                                                    ? "sidemenu__item sidemenu__item--active"
+                                                    : "sidemenu__item"
+                                        } to={dropdownMenuItem.link}>
                                             <div className="sidemenu__link">
                                                 {dropdownMenuItem.icon && <img
                                                     className={dropdownMenuItem.iconClassName ? "sidemenu__img " + dropdownMenuItem.iconClassName : "sidemenu__img"}

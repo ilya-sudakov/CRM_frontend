@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Clients.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
+import '../../../utils/Form/Form.scss';
 import viewSVG from '../../../../../../../assets/tableview/view.svg';
 import editSVG from '../../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg';
@@ -14,6 +15,9 @@ import { formatDateString } from '../../../utils/functions.jsx';
 import { deleteClientLegalEntity } from '../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
 import { deleteClientContact } from '../../../utils/RequestsAPI/Clients/Contacts.jsx';
 import { deleteClientWorkHistory } from '../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
+import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
+import InputDate from '../../../utils/Form/InputDate/InputDate.jsx';
+import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx';
 
 const Clients = (props) => {
     const [clients, setClients] = useState([]);
@@ -26,16 +30,13 @@ const Clients = (props) => {
     const [curPagePotential, setCurPagePotential] = useState(1);
     const [curPageActive, setCurPageActive] = useState(1);
     const [itemsCount, setItemsCount] = useState(0);
+    const [curForm, setCurForm] = useState('nextContactDate');
+    const [showWindow, setShowWindow] = useState(false);
+    const [closeWindow, setCloseWindow] = useState(false);
+    const [selectedItem, setSelectedItem] = useState({});
     const itemsPerPage = 20;
 
     const deleteItem = (clientId, index) => {
-        // const id = event.target.dataset.id;
-        // deleteClient(id)
-        //     .then(() => getClients())
-        //     .then(res => res.json())
-        //     .then((clients) => {
-        //         setClients(clients);
-        //     })
         Promise.all(clients[index].legalEntities.map(item => {
             return deleteClientLegalEntity(item.id)
         }))
@@ -65,57 +66,6 @@ const Clients = (props) => {
     }
 
     const loadData = () => {
-        // const data = [
-        //     {
-        //         id: 1,
-        //         name: 'СБЕРБАНК РОССИИ',
-        //         legalEntity: '3',
-        //         INN: '7707083893',
-        //         KPP: '3',
-        //         OGRN: '3',
-        //         BIK: '3',
-        //         checkingAccount: '3',
-        //         legalAddress: '3',
-        //         factualAddress: '3',
-        //         contacts: '42849283-74928-374',
-        //         site: 'www.ffff.com',
-        //         comment: 'Комментарий',
-        //         storageAddress: '3',
-        //         WorkConditions: '3',
-        //         price: '3',
-        //         discount: '3',
-        //         check: '3',
-        //         firstName: 'Иван',
-        //         workHistory: '3',
-        //         clientType: 'Активные',
-        //         nextDateContact: '12.12.2020'
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'СБЕРБАНК РОССИИ',
-        //         legalEntity: '3',
-        //         INN: '7707083893',
-        //         KPP: '3',
-        //         OGRN: '3',
-        //         BIK: '3',
-        //         checkingAccount: '3',
-        //         legalAddress: '3',
-        //         factualAddress: '3',
-        //         firstName: 'Иван',
-        //         contacts: '42849283-74928-374',
-        //         site: 'www.ffff.com',
-        //         comment: 'Комментарий',
-        //         storageAddress: '3',
-        //         WorkConditions: '3',
-        //         price: '3',
-        //         discount: '3',
-        //         check: '3',
-        //         workHistory: '3',
-        //         clientType: 'Активные',
-        //         nextDateContact: '25.01.2020'
-        //     }
-        // ];
-        // setClients(data);
         getClients()
             .then(res => res.json())
             .then(res => {
@@ -168,6 +118,32 @@ const Clients = (props) => {
                     placeholder="Введите запрос для поиска..."
                     setSearchQuery={setSearchQuery}
                 />
+                <FormWindow
+                    title={curForm === 'nextContactDate' ? "Дата следующего контакта" : "Запись действия"}
+                    content={
+                        <React.Fragment>
+                            {curForm === 'nextContactDate'
+                                ? <EditNextContactDate
+                                    selectedItem={selectedItem}
+                                    showWindow={showWindow}
+                                    setShowWindow={setShowWindow}
+                                    setCloseWindow={setCloseWindow}
+                                    closeWindow={closeWindow}
+                                />
+                                : <EditWorkHistory
+                                    selectedItem={selectedItem}
+                                    showWindow={showWindow}
+                                    setShowWindow={setShowWindow}
+                                    setCloseWindow={setCloseWindow}
+                                    closeWindow={closeWindow}
+                                    userHasAccess={props.userHasAccess}
+                                />
+                            }
+                        </React.Fragment>
+                    }
+                    showWindow={showWindow}
+                    setShowWindow={setShowWindow}
+                />
                 <div className="main-window__info-panel">
                     <div className="main-window__amount_table">Всего: {itemsCount} записей</div>
                 </div>
@@ -187,18 +163,27 @@ const Clients = (props) => {
                     {clients.map((item, index) => {
                         return <div className="main-window__list-item">
                             <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
-                            <span><div className="main-window__mobile-text">Сайт: </div>{item.site}</span>
+                            <span><div className="main-window__mobile-text">Сайт: </div>
+                                {/* {item.site} */}
+                                <a className="main-window__link" href={item.site}>Перейти</a>
+                            </span>
                             <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts.length > 0 ? (item.contacts[0].name + ', ' + item.contacts[0].phoneNumber) : 'Не указаны контакт. данные'}</span>
                             <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
                             <span><div className="main-window__mobile-text">Дата след. контакта: </div>{formatDateString(item.nextDateContact)}</span>
                             <div className="main-window__actions">
                                 <div className="main-window__action" onClick={() => {
-
+                                    setCloseWindow(false);
+                                    setSelectedItem(item);
+                                    setShowWindow(true);
+                                    setCurForm('workHistory');
                                 }}>
                                     <img className="main-window__img" src={phoneSVG} />
                                 </div>
                                 <div className="main-window__action" onClick={() => {
-
+                                    setCloseWindow(false);
+                                    setSelectedItem(item);
+                                    setShowWindow(true);
+                                    setCurForm('nextContactDate');
                                 }}>
                                     <img className="main-window__img" src={calendarSVG} />
                                 </div>
@@ -249,3 +234,90 @@ const Clients = (props) => {
     );
 }
 export default Clients;
+
+
+const EditNextContactDate = (props) => {
+    const [date, setDate] = useState(new Date);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSubmit = () => {
+        //...API
+        console.log(new Date(date).getTime() / 1000);
+        props.setCloseWindow(!props.closeWindow);
+    }
+
+    useEffect(() => {
+        if (props.selectedItem.nextDateContact && props.setShowWindow && props.closeWindow === true) {
+            props.setShowWindow(false);
+        }
+        else {
+            setDate(props.selectedItem.nextDateContact);
+        }
+    }, [props.selectedItem, props.closeWindow])
+
+    return (
+        <div className="main-form">
+            <form className="main-form__form">
+                <InputDate
+                    inputName="Дата след. контакта"
+                    name="nextContactDate"
+                    selected={Date.parse(date)}
+                    handleDateChange={(value) => {
+                        setDate(value)
+                    }}
+                />
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => {
+                        props.setCloseWindow(!props.closeWindow);
+                    }} value="Закрыть" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить дату" />
+                    {isLoading && <ImgLoader />}
+                </div>
+            </form>
+        </div>
+    );
+};
+
+
+const EditWorkHistory = (props) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [workHistory, setWorkHistory] = useState([]);
+
+    const handleSubmit = () => {
+        //...API
+        // console.log(workHistory);
+        props.setCloseWindow(!props.closeWindow);
+    }
+
+    useEffect(() => {
+        if (props.selectedItem && props.setShowWindow && props.closeWindow === true) {
+            props.setShowWindow(false);
+        }
+        else {
+            setWorkHistory(props.selectedItem.histories);
+        }
+    }, [props.selectedItem, props.closeWindow])
+
+    return (
+        <div className="main-form">
+            <form className="main-form__form">
+                <div className="main-form__item">
+                    <SelectWorkHistory
+                        defaultValue={workHistory}
+                        userHasAccess={props.userHasAccess}
+                        handleWorkHistoryChange={(value) => {
+                            setWorkHistory(value);
+                        }}
+                    />
+                </div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => {
+                        props.setCloseWindow(!props.closeWindow);
+                    }} value="Закрыть" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Сохранить" />
+                    {isLoading && <ImgLoader />}
+                </div>
+            </form>
+        </div>
+    );
+};

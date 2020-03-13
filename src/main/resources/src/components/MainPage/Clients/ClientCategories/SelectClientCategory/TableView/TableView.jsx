@@ -24,7 +24,9 @@ const TableView = (props) => {
                         className="main-window__list-item"
                         minHeight="20px"
                     />}
-                    {props.data.sort((a, b) => {
+                    {props.data.filter(item => {
+                        return (item.name.toLowerCase().includes(props.searchQuery.toLowerCase()))
+                    }).sort((a, b) => {
                         if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
                             return -1;
                         }

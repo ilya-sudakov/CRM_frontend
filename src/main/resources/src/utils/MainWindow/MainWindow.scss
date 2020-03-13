@@ -14,7 +14,9 @@
   }
 
   .main-window__link {
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
+    color: darken($button__background--inverted, 5%);
+    text-decoration: underline;
   }
 
   .main-window__header {
@@ -176,7 +178,8 @@
   }
   .main-window__list-item span {
     flex: 0 1 20%;
-    text-align: center;
+    // text-align: center;
+    padding: 0px 5px;
     &:first-child {
       text-align: left;
     }
@@ -189,12 +192,13 @@
     color: #555555;
     font-size: 85%;
     &:hover {
-      color: $primary-text-color;
+      // color: $primary-text-color;
+      color: #555555;
       background-color: transparent;
       box-shadow: none;
     }
     span:first-of-type {
-      text-align: center;
+      // text-align: center;
     }
   }
   .main-window__list-options {

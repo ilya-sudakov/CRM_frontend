@@ -106,6 +106,12 @@
   @media (max-width: 768px) {
     .select-employee__input {
       flex-wrap: wrap;
+      flex-direction: column;
+
+      .select-employee__input_name {
+        width: 100%;
+        margin-bottom: 5px;
+      }
       .select-employee__input_field {
         width: 100%;
       }

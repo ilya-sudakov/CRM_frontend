@@ -82,6 +82,12 @@
   @media (max-width: 768px) {
     .input_text__input {
       flex-wrap: wrap;
+      flex-direction: column;
+
+      .input_text__input_name {
+        width: 100%;
+        margin-bottom: 5px;
+      }
 
       .input_text__input_field {
         width: 100%;

@@ -64,8 +64,12 @@
 
   .main-window__list-item {
     span {
+      &:nth-child(2) {
+        flex: 0 1 10%;
+        max-width: 100px;
+      }
       &:nth-child(3) {
-        flex: 0 1 12%;
+        flex: 0 1 15%;
       }
       &:nth-child(5) {
         flex: 0 1 10%;
@@ -102,6 +106,16 @@
       }
       &:last-child {
         margin-right: 0px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main-window__list-item {
+      & span {
+        &:nth-child(5) {
+          max-width: 100%;
+        }
       }
     }
   }

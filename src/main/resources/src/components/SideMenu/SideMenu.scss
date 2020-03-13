@@ -216,7 +216,11 @@
     position: relative;
   }
 
-  .sidemenu__item:focus-within .sidemenu__dropdown-menu {
+  // .sidemenu__item:focus-within .sidemenu__dropdown-menu {
+  //   transform: scaleY(1);
+  // }
+
+  .sidemenu__item:hover > .sidemenu__dropdown-menu {
     transform: scaleY(1);
   }
 

@@ -48,7 +48,7 @@
         padding: 5px 10px;
         border-radius: 5px;
         // transition: 0.2s ease-in-out;
-        
+
         &:focus {
           border: 1px solid $button__background--inverted;
         }
@@ -70,6 +70,11 @@
   @media (max-width: 768px) {
     .input_user__input {
       flex-wrap: wrap;
+      flex-direction: column;
+
+      .input_user__input_name {
+        width: 100%;
+      }
 
       .input_user__input_field {
         width: 100%;

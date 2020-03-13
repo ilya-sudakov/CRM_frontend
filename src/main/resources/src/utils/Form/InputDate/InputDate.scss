@@ -1,5 +1,5 @@
 @import "../../../variables.scss";
-@import '../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css';
+@import "../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css";
 
 .input_date {
   width: calc(100% - 20px);
@@ -44,7 +44,6 @@
 
       .react-datepicker-wrapper {
         width: 100%;
-        
 
         .react-datepicker {
           .react-datepicker__day--selected {
@@ -60,7 +59,7 @@
         padding: 5px 10px;
         border-radius: 5px;
         // transition: 0.2s ease-in-out;
-        
+
         &:focus {
           border: 1px solid $button__background--inverted;
         }
@@ -82,6 +81,12 @@
   @media (max-width: 768px) {
     .input_date__input {
       flex-wrap: wrap;
+      flex-direction: column;
+
+      .input_date__input_name {
+        width: 100%;
+        margin-bottom: 5px;
+      }
 
       .input_date__input_field {
         width: 100%;

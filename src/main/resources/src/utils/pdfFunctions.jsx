@@ -500,6 +500,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         let groupImg4Data = '';
                         if (groupOfProducts.groupImg1 !== null && groupOfProducts.groupImg1 !== '') {
                             groupImg1Data = await getDataUri(groupOfProducts.groupImg1, "jpeg");
+                            // console.log(groupOfProducts.groupImg1.length, groupImg1Data.length);
                         }
                         if (groupOfProducts.groupImg2 !== null && groupOfProducts.groupImg2 !== '') {
                             groupImg2Data = await getDataUri(groupOfProducts.groupImg2, "jpeg");

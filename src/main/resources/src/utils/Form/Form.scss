@@ -362,6 +362,12 @@
     }
     .main-form__item {
       flex-wrap: wrap;
+      flex-direction: column;
+
+      .main-form__input_name {
+        // flex: 0 1 100%;
+        width: 100%;
+      }
 
       .main-form__input_field {
         width: 100%;

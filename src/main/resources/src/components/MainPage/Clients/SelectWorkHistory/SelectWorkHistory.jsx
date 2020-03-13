@@ -163,19 +163,20 @@ const SelectWorkHistory = (props) => {
                         </div>
                     </div>
                     {items.sort((a, b) => {
-                        if (a.date < b.date) {
+                        console.log(new Date(a.date), new Date(b.date))
+                        if (new Date(a.date) < new Date(b.date)) {
                             return 1;
                         }
-                        if (a.date > b.date) {
+                        if (new Date(a.date) > new Date(b.date)) {
                             return -1;
                         }
                         return 0;
                     }).map((item, index) => {
                         return <div className="main-window__list-item">
-                            <span>{formatDateString(item.date)}</span>
-                            <span>{item.action}</span>
-                            <span>{item.result}</span>
-                            <span>{item.comment}</span>
+                            <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(item.date)}</span>
+                            <span><div className="main-window__mobile-text">Действие: </div>{item.action}</span>
+                            <span><div className="main-window__mobile-text">Результат: </div>{item.result}</span>
+                            <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
                             <div className="main-window__actions">
                                 {!props.readOnly && props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" index={index} onClick={deleteItem}>
                                     <img className="main-window__img" src={deleteSVG} />
