@@ -66,7 +66,7 @@ const Clients = (props) => {
     }
 
     const loadData = (category, type) => {
-        console.log(category, type);
+        // console.log(category, type);
         setIsLoading(true);
         getClientsByCategoryAndType({
             categoryName: category,

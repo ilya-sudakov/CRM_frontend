@@ -328,6 +328,9 @@ const EditClient = (props) => {
                         legalEntity: res.legalEntities,
                         contacts: res.contacts,
                         workHistory: res.histories,
+                        legalEntityNew: res.legalEntities,
+                        contactsNew: res.contacts,
+                        workHistoryNew: res.histories,
                         categoryId: res.category.id,
                         categoryName: res.category.name
                     })

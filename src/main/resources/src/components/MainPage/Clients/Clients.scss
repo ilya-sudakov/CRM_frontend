@@ -14,7 +14,8 @@
     .main-window__title {
       flex: 0 1 20%;
       font-size: 24px;
-      padding: 10px 0;
+      padding: 5px 0;
+      // padding-bottom: 5px;
       margin: 0;
     }
 
@@ -109,12 +110,33 @@
       }
     }
   }
-
   @media (max-width: 768px) {
+    .main-window__header {
+      flex-direction: column;
+      width: calc(100% - 10px) !important;
+      .main-window__title {
+        font-size: 125%;
+      }
+      .main-window__menu {
+        width: 100% !important;
+      }
+    }
     .main-window__list-item {
       & span {
         max-width: 100% !important;
       }
     }
+
+    .searchbar {
+      border-top-left-radius: 0px;
+    }
+  }
+
+  @media (max-width: 425px) {
+    // .main-window__header {
+    //   .main-window__title {
+    //     font-size: 80%;
+    //   }
+    // }
   }
 }
