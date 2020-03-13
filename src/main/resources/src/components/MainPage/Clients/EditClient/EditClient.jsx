@@ -485,7 +485,7 @@ const EditClient = (props) => {
                                         <select
                                             name="clientType"
                                             onChange={handleInputChange}
-                                            defaultValue={clientInputs.clientType}
+                                            value={clientInputs.clientType}
                                         >
                                             <option value="Активные">Активные</option>
                                             <option value="Потенциальные">Потенциальные</option>
