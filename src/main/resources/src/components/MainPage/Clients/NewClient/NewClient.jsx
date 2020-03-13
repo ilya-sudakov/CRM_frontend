@@ -377,7 +377,6 @@ const newClient = (props) => {
                                     }}
                                     errorsArr={formErrors}
                                     setErrorsArr={setFormErrors}
-                                    readOnly
                                 />
                             </React.Fragment>
                     }

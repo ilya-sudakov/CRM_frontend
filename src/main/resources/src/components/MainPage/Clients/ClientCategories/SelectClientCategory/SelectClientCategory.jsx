@@ -53,7 +53,7 @@ const SelectClientCategory = (props) => {
                             defaultValue={props.defaultValue ? props.defaultValue : fullName}
                             // onClick={!props.readOnly ? clickOnInput : null}
                             placeholder="Выберите категорию клиента, нажав на кнопку 'Выбрать категорию'"
-                            readOnly={props.readOnly}
+                            readOnly
                         />
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import './SelectPriceItem.scss';
 import { getPriceListCoefficient } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
+import { getDataUri } from '../../../../utils/functions.jsx';
 
 const SelectPriceItem = (props) => {
     // const [imgName, setImgName] = useState("Имя файла...");
@@ -209,9 +210,13 @@ const SelectPriceItem = (props) => {
                             {!props.readOnly && <FileUploader
                                 uniqueId={"file1" + props.uniqueId}
                                 regex={/.+\.(jpeg|jpg|png|img)/}
-                                onChange={(result) => {
-                                    setGroupImg1(result)
-                                    props.handleImgChange(result, 'groupImg1')
+                                onChange={async (result) => {
+                                    const downgraded = await getDataUri(result, "jpeg", 0.3);
+                                    // setGroupImg1(result)
+                                    // props.handleImgChange(result, 'groupImg1')
+                                    console.log(result.length, downgraded.length);
+                                    setGroupImg1(downgraded);
+                                    props.handleImgChange(downgraded, 'groupImg1');
                                 }}
                             />}
                         </div>
@@ -227,9 +232,10 @@ const SelectPriceItem = (props) => {
                             {!props.readOnly && <FileUploader
                                 uniqueId={"file2" + props.uniqueId}
                                 regex={/.+\.(jpeg|jpg|png|img)/}
-                                onChange={(result) => {
-                                    setGroupImg2(result)
-                                    props.handleImgChange(result, 'groupImg2')
+                                onChange={async (result) => {
+                                    const downgraded = await getDataUri(result, "jpeg", 0.3);
+                                    setGroupImg2(downgraded);
+                                    props.handleImgChange(downgraded, 'groupImg2');
                                 }}
                             />}
                         </div>
@@ -245,9 +251,10 @@ const SelectPriceItem = (props) => {
                             {!props.readOnly && <FileUploader
                                 uniqueId={"file3" + props.uniqueId}
                                 regex={/.+\.(jpeg|jpg|png|img)/}
-                                onChange={(result) => {
-                                    setGroupImg3(result)
-                                    props.handleImgChange(result, 'groupImg3')
+                                onChange={async (result) => {
+                                    const downgraded = await getDataUri(result, "jpeg", 0.3);
+                                    setGroupImg3(downgraded);
+                                    props.handleImgChange(downgraded, 'groupImg3');
                                 }}
                             />}
                         </div>
@@ -263,9 +270,10 @@ const SelectPriceItem = (props) => {
                             {!props.readOnly && <FileUploader
                                 uniqueId={"file4" + props.uniqueId}
                                 regex={/.+\.(jpeg|jpg|png|img)/}
-                                onChange={(result) => {
-                                    setGroupImg4(result)
-                                    props.handleImgChange(result, 'groupImg4')
+                                onChange={async (result) => {
+                                    const downgraded = await getDataUri(result, "jpeg", 0.3);
+                                    setGroupImg4(downgraded);
+                                    props.handleImgChange(downgraded, 'groupImg4');
                                 }}
                             />}
                         </div>
@@ -281,9 +289,10 @@ const SelectPriceItem = (props) => {
                             {!props.readOnly && <FileUploader
                                 uniqueId={"file5" + props.uniqueId}
                                 regex={/.+\.(jpeg|jpg|png|img)/}
-                                onChange={(result) => {
-                                    setFooterImg(result)
-                                    props.handleImgChange(result, 'footerImg')
+                                onChange={async (result) => {
+                                    const downgraded = await getDataUri(result, "jpeg", 0.3);
+                                    setFooterImg(downgraded);
+                                    props.handleImgChange(downgraded, 'footerImg');
                                 }}
                             />}
                         </div>

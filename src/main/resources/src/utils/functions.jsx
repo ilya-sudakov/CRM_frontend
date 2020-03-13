@@ -28,7 +28,7 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
     img.src = "url-to-image";
 }
 
-export function getDataUri(url, extension) {
+export function getDataUri(url, extension, quality) {
     return new Promise((resolve, reject) => {
         var img = new Image();
         // img.setAttribute("crossOrigin", "anonymous");
@@ -38,7 +38,7 @@ export function getDataUri(url, extension) {
             canvas.height = img.height;
             var ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0);
-            var dataURL = canvas.toDataURL(extension ? ("image" + extension) : "image/png");
+            var dataURL = canvas.toDataURL(extension ? ("image/" + extension) : "image/png", quality ? quality : 0.92);
             resolve(dataURL);
         };
         img.onerror = error => {

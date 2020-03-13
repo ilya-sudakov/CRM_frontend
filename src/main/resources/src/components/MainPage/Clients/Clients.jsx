@@ -193,12 +193,12 @@ const Clients = (props) => {
                             <span><div className="main-window__mobile-text">Дата след. контакта: </div>{formatDateString(item.nextDateContact)}</span>
                             <div className="main-window__actions">
                                 <div className="main-window__action" onClick={() => {
-                                    props.history.push('/clients/category/' + curCategory + '/view/' + item.id)
+
                                 }}>
                                     <img className="main-window__img" src={phoneSVG} />
                                 </div>
                                 <div className="main-window__action" onClick={() => {
-                                    // props.history.push('/clients/category/' + curCategory + '/view/' + item.id)
+
                                 }}>
                                     <img className="main-window__img" src={calendarSVG} />
                                 </div>
@@ -208,7 +208,7 @@ const Clients = (props) => {
                                     <img className="main-window__img" src={viewSVG} />
                                 </div>
                                 <div className="main-window__action" onClick={() => {
-                                    props.history.push('/clients/category/' + curCategory + '/edit/' + item.id)
+                                    props.history.push('/clients/edit/' + item.id)
                                 }}>
                                     <img className="main-window__img" src={editSVG} />
                                 </div>

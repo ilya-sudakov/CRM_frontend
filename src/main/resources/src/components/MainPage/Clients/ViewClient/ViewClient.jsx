@@ -56,6 +56,7 @@ const ViewClient = (props) => {
                         legalEntity: res.legalEntities,
                         contacts: res.contacts,
                         workHistory: res.histories,
+                        category: res.category
                     })
                 })
         }
@@ -179,12 +180,10 @@ const ViewClient = (props) => {
                                     defaultValue={clientInputs.clientType}
                                     readOnly
                                 />
-                                <SelectClientCategory
-                                    inputName="Выбор категории клиента"
-                                    required
-                                    userHasAccess={props.userHasAccess}
-                                    windowName="select-category"
-                                    name="categoryId"
+                                <InputText
+                                    inputName="Категория"
+                                    name="category"
+                                    defaultValue={clientInputs.category}
                                     readOnly
                                 />
                             </React.Fragment>
