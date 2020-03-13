@@ -29,14 +29,14 @@ const SideMenu = (props) => {
             name: "Главная",
             icon: homeImg
         },
-        // {
-        //     pathname: "/clients/",
-        //     linkTo: props.location.pathname,
-        //     mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-        //     name: "Клиенты",
-        //     icon: clientImg,
-        //     dropdownMenu: []
-        // },
+        {
+            pathname: "/clients/",
+            linkTo: props.location.pathname,
+            mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+            name: "Клиенты",
+            icon: clientImg,
+            dropdownMenu: []
+        },
         {
             pathname: "/work-managment",
             addButtonLinkTo: "/work-managment/record-time/new",
@@ -189,43 +189,43 @@ const SideMenu = (props) => {
     ])
 
     useEffect(() => {
-        // getClientCategories()
-        //     .then(res => res.json())
-        //     .then(res => {
-        //         // console.log(res);
-        //         let temp = sidemenuItems;
-        //         temp.splice(1, 1, {
-        //             ...temp[1],
-        //             dropdownMenu: [
-        //                 {
-        //                     name: 'Создать клиента',
-        //                     link: '/clients/new',
-        //                     icon: plusImg,
-        //                 },
-        //                 {
-        //                     name: 'Управление категориями',
-        //                     link: '/clients/categories',
-        //                     icon: contractImg
-        //                 },
-        //                 ...res.sort((a, b) => {
-        //                     if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
-        //                         return -1;
-        //                     }
-        //                     if (a.name.localeCompare(b.name, undefined, { numeric: true }) > 0) {
-        //                         return 1;
-        //                     }
-        //                     return 0;
-        //                 }).map(item => {
-        //                     return {
-        //                         name: item.name,
-        //                         link: '/clients/category/' + item.name + '/active'
-        //                     }
-        //                 })
-        //             ],
-        //             linkTo: props.location.pathname
-        //         });
-        //         setSidemenuItems([...temp]);
-        //     })
+        getClientCategories()
+            .then(res => res.json())
+            .then(res => {
+                // console.log(res);
+                let temp = sidemenuItems;
+                temp.splice(1, 1, {
+                    ...temp[1],
+                    dropdownMenu: [
+                        {
+                            name: 'Создать клиента',
+                            link: '/clients/new',
+                            icon: plusImg,
+                        },
+                        {
+                            name: 'Управление категориями',
+                            link: '/clients/categories',
+                            icon: contractImg
+                        },
+                        ...res.sort((a, b) => {
+                            if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
+                                return -1;
+                            }
+                            if (a.name.localeCompare(b.name, undefined, { numeric: true }) > 0) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map(item => {
+                            return {
+                                name: item.name,
+                                link: '/clients/category/' + item.name + '/active'
+                            }
+                        })
+                    ],
+                    linkTo: props.location.pathname
+                });
+                setSidemenuItems([...temp]);
+            })
     }, [props.location])
 
     return (

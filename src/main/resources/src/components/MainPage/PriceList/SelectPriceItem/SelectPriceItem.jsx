@@ -214,7 +214,7 @@ const SelectPriceItem = (props) => {
                                     const downgraded = await getDataUri(result, "jpeg", 0.3);
                                     // setGroupImg1(result)
                                     // props.handleImgChange(result, 'groupImg1')
-                                    console.log(result.length, downgraded.length);
+                                    // console.log(result.length, downgraded.length);
                                     setGroupImg1(downgraded);
                                     props.handleImgChange(downgraded, 'groupImg1');
                                 }}

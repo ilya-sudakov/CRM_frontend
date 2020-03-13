@@ -5,7 +5,7 @@ import { getProductById, editProduct } from '../../../../utils/RequestsAPI/Produ
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
-import { imgToBlobDownload } from '../../../../utils/functions.jsx'
+import { imgToBlobDownload, getDataUri } from '../../../../utils/functions.jsx'
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 
@@ -260,10 +260,11 @@ const EditProduct = (props) => {
                     <FileUploader
                         regex={/.+\.(jpeg|jpg|png|img)/}
                         uniqueId={0}
-                        onChange={(result) => {
+                        onChange={async (result) => {
+                            const downgraded = await getDataUri(result, "jpeg", 0.3);
                             setProductInputs({
                                 ...productInputs,
-                                photo: result
+                                photo: downgraded
                             })
                         }}
                     />
