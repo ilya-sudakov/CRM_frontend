@@ -52,6 +52,10 @@ const ViewClient = lazy(
     () => import('./Clients/ViewClient/ViewClient.jsx')
 )
 
+const EditClient = lazy(
+    () => import('./Clients/EditClient/EditClient.jsx')
+)
+
 const ClientCategories = lazy(
     () => import('./Clients/ClientCategories/ClientCategories.jsx')
 )
@@ -314,7 +318,7 @@ const ViewPriceList = lazy(
 
 
 export {
-    Clients, newClient, ViewClient, ClientCategories,
+    Clients, newClient, ViewClient, EditClient, ClientCategories,
     Contracts,
     Requests, NewRequest, EditRequest, ViewRequest,
     GeneralPage, AdminWorkspace, Notifications, WorkManagement, NewRecordWork, EditRecordWork, WorkManagementPage,

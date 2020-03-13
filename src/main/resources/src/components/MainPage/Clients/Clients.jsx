@@ -7,7 +7,7 @@ import editSVG from '../../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg';
 import phoneSVG from '../../../../../../../assets/tableview/phone.svg';
 import calendarSVG from '../../../../../../../assets/tableview/calendar.svg';
-import { getClients, deleteClient } from '../../../utils/RequestsAPI/Clients.jsx';
+import { getClients, deleteClient, getClientsByCategory, getClientsByCategoryAndType } from '../../../utils/RequestsAPI/Clients.jsx';
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
@@ -65,14 +65,18 @@ const Clients = (props) => {
             })
     }
 
-    const loadData = () => {
-        getClients()
+    const loadData = (category, type) => {
+        console.log(category, type);
+        setIsLoading(true);
+        getClientsByCategoryAndType({
+            categoryName: category,
+            clientType: type === 'active' ? 'Активные' : 'Потенциальные'
+        })
             .then(res => res.json())
             .then(res => {
                 console.log(res);
                 setClients(res);
                 if (curPage < 10) {
-                    // if (props.location.pathname.split('/clients/category/')[1].split('/')[1] === 'active') {
                     setItemsCount(res.length);
                     let temp = [];
                     let i = 1;
@@ -82,7 +86,6 @@ const Clients = (props) => {
                     }
                     while (i <= Math.floor(res.length / itemsPerPage) && i <= 10);
                     setPagination(temp);
-                    // }
                 }
                 setIsLoading(false);
             })
@@ -92,7 +95,8 @@ const Clients = (props) => {
         document.title = "Клиенты";
         setCurCategory(props.location.pathname.split('/clients/category/')[1].split('/')[0]);
         setCurClientType(props.location.pathname.split('/clients/category/')[1].split('/')[1]);
-        loadData();
+        loadData(props.location.pathname.split('/clients/category/')[1].split('/')[0],
+            props.location.pathname.split('/clients/category/')[1].split('/')[1]);
     }, [props.location, curPage])
 
     return (

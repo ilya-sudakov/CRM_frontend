@@ -25,6 +25,7 @@ const ViewClient = (props) => {
         check: '',
         clientType: 'Активные',
         categoryId: 0,
+        categoryName: '',
         nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     });
 
@@ -56,7 +57,8 @@ const ViewClient = (props) => {
                         legalEntity: res.legalEntities,
                         contacts: res.contacts,
                         workHistory: res.histories,
-                        category: res.category
+                        category: res.category,
+                        categoryName: res.category.name
                     })
                 })
         }
@@ -183,13 +185,13 @@ const ViewClient = (props) => {
                                 <InputText
                                     inputName="Категория"
                                     name="category"
-                                    defaultValue={clientInputs.category}
+                                    defaultValue={clientInputs.categoryName}
                                     readOnly
                                 />
                             </React.Fragment>
                     }
                     <div className="main-form__buttons">
-                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients/category/' + clientInputs.category + '/active')} value="Вернуться назад" />
+                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients/category/' + clientInputs.categoryName + '/' + (clientInputs.clientType === 'Активные' ? 'active' : 'potential'))} value="Вернуться назад" />
                         {isLoading && <ImgLoader />}
                     </div>
                 </form>

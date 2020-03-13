@@ -7,6 +7,22 @@ export function getClients() {
     });
 }
 
+export function getClientsByCategory(category) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/client/category/",
+        method: "POST",
+        body: JSON.stringify(category)
+    })
+}
+
+export function getClientsByCategoryAndType(category_type) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/client/category_type/",
+        method: "POST",
+        body: JSON.stringify(category_type)
+    })
+}
+
 export function getClientById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/client/" + id,
@@ -18,6 +34,14 @@ export function addClient(newClient) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/client",
         method: "POST",
+        body: JSON.stringify(newClient)
+    })
+}
+
+export function editClient(newClient, id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/client/" + id,
+        method: "PUT",
         body: JSON.stringify(newClient)
     })
 }
