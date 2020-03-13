@@ -15,6 +15,14 @@ export function getClientsByCategory(category) {
     })
 }
 
+export function editNextContactDateClient(date) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/client/date/",
+        method: "POST",
+        body: JSON.stringify(date)
+    })
+}
+
 export function getClientsByCategoryAndType(category_type) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/client/category_type/",

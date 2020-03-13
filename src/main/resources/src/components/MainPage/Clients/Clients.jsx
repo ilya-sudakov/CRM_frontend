@@ -7,7 +7,7 @@ import editSVG from '../../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg';
 import phoneSVG from '../../../../../../../assets/tableview/phone.svg';
 import calendarSVG from '../../../../../../../assets/tableview/calendar.svg';
-import { getClients, deleteClient, getClientsByCategory, getClientsByCategoryAndType } from '../../../utils/RequestsAPI/Clients.jsx';
+import { getClients, deleteClient, getClientsByCategory, getClientsByCategoryAndType, editNextContactDateClient } from '../../../utils/RequestsAPI/Clients.jsx';
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
@@ -133,6 +133,7 @@ const Clients = (props) => {
                                     setShowWindow={setShowWindow}
                                     setCloseWindow={setCloseWindow}
                                     closeWindow={closeWindow}
+                                    loadData={loadData}
                                 />
                                 : <EditWorkHistory
                                     selectedItem={selectedItem}
@@ -252,9 +253,14 @@ const EditNextContactDate = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = () => {
-        //...API
-        console.log(new Date(date).getTime() / 1000);
-        props.setCloseWindow(!props.closeWindow);
+        editNextContactDateClient({
+            nextDateContact: new Date(date).getTime() / 1000,
+            id: props.selectedItem.id
+        })
+            .then(() => {
+                props.loadData(props.selectedItem.category.name, (props.selectedItem.clientType === 'Активные' ? 'active' : 'potential'));
+                props.setCloseWindow(!props.closeWindow);
+            })
     }
 
     useEffect(() => {
