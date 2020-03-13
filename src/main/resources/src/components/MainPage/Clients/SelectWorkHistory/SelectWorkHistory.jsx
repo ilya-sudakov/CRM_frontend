@@ -163,7 +163,6 @@ const SelectWorkHistory = (props) => {
                         </div>
                     </div>
                     {items.sort((a, b) => {
-                        console.log(new Date(a.date), new Date(b.date))
                         if (new Date(a.date) < new Date(b.date)) {
                             return 1;
                         }
@@ -178,7 +177,7 @@ const SelectWorkHistory = (props) => {
                             <span><div className="main-window__mobile-text">Результат: </div>{item.result}</span>
                             <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
                             <div className="main-window__actions">
-                                {!props.readOnly && props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" index={index} onClick={deleteItem}>
+                                {!props.readOnly && props.userHasAccess(['ROLE_ADMIN']) && item.comment !== '<Cообщение сгенерировано автоматически>' && <div className="main-window__action" index={index} onClick={deleteItem}>
                                     <img className="main-window__img" src={deleteSVG} />
                                 </div>}
                             </div>

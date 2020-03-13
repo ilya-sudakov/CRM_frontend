@@ -94,7 +94,7 @@
       align-items: center;
       justify-content: center;
       .main-window__img {
-        transition: 100ms ease-in-out;
+        transition: 0ms ease-in-out;
         filter: brightness(3);
         transition: filter 0.5s;
         transform: translate3d(-1px, -1px, 0);
@@ -113,9 +113,7 @@
   @media (max-width: 768px) {
     .main-window__list-item {
       & span {
-        &:nth-child(5) {
-          max-width: 100%;
-        }
+        max-width: 100% !important;
       }
     }
   }

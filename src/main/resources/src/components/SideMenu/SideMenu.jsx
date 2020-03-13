@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import plusImg from '../../../../../../assets/sidemenu/plus.png';
+// import plusImg from '../../../../../../assets/sidemenu/plus.png';
+import plusImg from '../../../../../../assets/sidemenu/plus.svg';
 import homeImg from '../../../../../../assets/sidemenu/home.svg';
 import tasksImg from '../../../../../../assets/sidemenu/tasks.svg';
 import employeesImg from '../../../../../../assets/sidemenu/employee.svg';

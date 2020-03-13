@@ -15,6 +15,7 @@
 
   .main-window__link {
     // margin-bottom: 15px;
+    transition: 100ms ease-in-out;
     color: darken($button__background--inverted, 5%);
     text-decoration: underline;
   }
@@ -158,6 +159,10 @@
       color: $secondary-text-color;
       background-color: lighten($button__background--inverted, 5%);
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+
+      .main-window__link {
+        color: #ffffff;
+      }
     }
     &:hover .main-window__action {
       background-color: $white !important;

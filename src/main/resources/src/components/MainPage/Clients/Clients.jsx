@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { formatDateString } from '../../../utils/functions.jsx';
 import { deleteClientLegalEntity } from '../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
 import { deleteClientContact } from '../../../utils/RequestsAPI/Clients/Contacts.jsx';
-import { deleteClientWorkHistory } from '../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
+import { deleteClientWorkHistory, editClientWorkHistory, addClientWorkHistory } from '../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import InputDate from '../../../utils/Form/InputDate/InputDate.jsx';
 import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx';
@@ -160,51 +160,58 @@ const Clients = (props) => {
                         className="main-window__list-item"
                         minHeight="50px"
                     />}
-                    {clients.map((item, index) => {
-                        return <div className="main-window__list-item">
-                            <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
-                            <span><div className="main-window__mobile-text">Сайт: </div>
-                                {/* {item.site} */}
-                                <a className="main-window__link" href={item.site}>Перейти</a>
-                            </span>
-                            <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts.length > 0 ? (item.contacts[0].name + ', ' + item.contacts[0].phoneNumber) : 'Не указаны контакт. данные'}</span>
-                            <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
-                            <span><div className="main-window__mobile-text">Дата след. контакта: </div>{formatDateString(item.nextDateContact)}</span>
-                            <div className="main-window__actions">
-                                <div className="main-window__action" onClick={() => {
-                                    setCloseWindow(false);
-                                    setSelectedItem(item);
-                                    setShowWindow(true);
-                                    setCurForm('workHistory');
-                                }}>
-                                    <img className="main-window__img" src={phoneSVG} />
+                    {clients
+                        .filter(item => {
+                            return (
+                                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                item.site.toLowerCase().includes(searchQuery.toLowerCase())
+                            )
+                        })
+                        .map((item, index) => {
+                            return <div className="main-window__list-item">
+                                <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
+                                <span><div className="main-window__mobile-text">Сайт: </div>
+                                    {/* {item.site} */}
+                                    <a className="main-window__link" href={item.site}>Перейти</a>
+                                </span>
+                                <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts.length > 0 ? (item.contacts[0].name + ', ' + item.contacts[0].phoneNumber) : 'Не указаны контакт. данные'}</span>
+                                <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
+                                <span><div className="main-window__mobile-text">Дата след. контакта: </div>{formatDateString(item.nextDateContact)}</span>
+                                <div className="main-window__actions">
+                                    <div className="main-window__action" onClick={() => {
+                                        setCloseWindow(false);
+                                        setSelectedItem(item);
+                                        setShowWindow(true);
+                                        setCurForm('workHistory');
+                                    }}>
+                                        <img className="main-window__img" src={phoneSVG} />
+                                    </div>
+                                    <div className="main-window__action" onClick={() => {
+                                        setCloseWindow(false);
+                                        setSelectedItem(item);
+                                        setShowWindow(true);
+                                        setCurForm('nextContactDate');
+                                    }}>
+                                        <img className="main-window__img" src={calendarSVG} />
+                                    </div>
+                                    <div className="main-window__action" onClick={() => {
+                                        props.history.push('/clients/view/' + item.id)
+                                    }}>
+                                        <img className="main-window__img" src={viewSVG} />
+                                    </div>
+                                    <div className="main-window__action" onClick={() => {
+                                        props.history.push('/clients/edit/' + item.id)
+                                    }}>
+                                        <img className="main-window__img" src={editSVG} />
+                                    </div>
+                                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => {
+                                        deleteItem(item.id, index);
+                                    }}>
+                                        <img className="main-window__img" src={deleteSVG} />
+                                    </div>}
                                 </div>
-                                <div className="main-window__action" onClick={() => {
-                                    setCloseWindow(false);
-                                    setSelectedItem(item);
-                                    setShowWindow(true);
-                                    setCurForm('nextContactDate');
-                                }}>
-                                    <img className="main-window__img" src={calendarSVG} />
-                                </div>
-                                <div className="main-window__action" onClick={() => {
-                                    props.history.push('/clients/view/' + item.id)
-                                }}>
-                                    <img className="main-window__img" src={viewSVG} />
-                                </div>
-                                <div className="main-window__action" onClick={() => {
-                                    props.history.push('/clients/edit/' + item.id)
-                                }}>
-                                    <img className="main-window__img" src={editSVG} />
-                                </div>
-                                {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => {
-                                    deleteItem(item.id, index);
-                                }}>
-                                    <img className="main-window__img" src={deleteSVG} />
-                                </div>}
                             </div>
-                        </div>
-                    })}
+                        })}
                 </div>
                 <div className="main-window__pagination">
                     {pagination.map((item, index) => {
@@ -282,11 +289,57 @@ const EditNextContactDate = (props) => {
 const EditWorkHistory = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [workHistory, setWorkHistory] = useState([]);
+    const [workHistoryNew, setWorkHistoryNew] = useState([]);
+    const [clientId, setClientId] = useState(0);
 
     const handleSubmit = () => {
-        //...API
-        // console.log(workHistory);
-        props.setCloseWindow(!props.closeWindow);
+        //PUT if edited, POST if item is new
+        const itemsArr = workHistoryNew.map((selected) => {
+            let edited = false;
+            workHistory.map((item) => {
+                if (item.id === selected.id) {
+                    edited = true;
+                    return;
+                }
+            });
+            return (edited === true)
+                ? (
+                    editClientWorkHistory({
+                        date: selected.date,
+                        action: selected.action,
+                        result: selected.result,
+                        comment: selected.comment,
+                        clientId: clientId
+                    }, selected.id)
+                )
+                : (
+                    addClientWorkHistory({
+                        date: selected.date,
+                        action: selected.action,
+                        result: selected.result,
+                        comment: selected.comment,
+                        clientId: clientId
+                    })
+                )
+        })
+        Promise.all(itemsArr)
+            .then(() => {
+                //DELETE items removed by user
+                const itemsArr = workHistory.map((item) => {
+                    let deleted = true;
+                    workHistoryNew.map((selected) => {
+                        if (selected.id === item.id) {
+                            deleted = false;
+                            return;
+                        }
+                    })
+                    return (deleted === true && deleteClientWorkHistory(item.id));
+                })
+                Promise.all(itemsArr)
+                    .then(() => {
+                        props.setCloseWindow(!props.closeWindow);
+                    })
+            })
     }
 
     useEffect(() => {
@@ -294,7 +347,9 @@ const EditWorkHistory = (props) => {
             props.setShowWindow(false);
         }
         else {
+            setClientId(props.selectedItem.id);
             setWorkHistory(props.selectedItem.histories);
+            setWorkHistoryNew(props.selectedItem.histories);
         }
     }, [props.selectedItem, props.closeWindow])
 
@@ -306,7 +361,7 @@ const EditWorkHistory = (props) => {
                         defaultValue={workHistory}
                         userHasAccess={props.userHasAccess}
                         handleWorkHistoryChange={(value) => {
-                            setWorkHistory(value);
+                            setWorkHistoryNew(value);
                         }}
                     />
                 </div>
