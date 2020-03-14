@@ -10,8 +10,9 @@
 
     .main-window__list-item {
       transition: 200ms ease-in-out;
-      padding: 15px 15px;
+      padding: 10px 15px;
       border-radius: 0;
+      font-size: 80%;
 
       & span {
         padding: 0 5px;
