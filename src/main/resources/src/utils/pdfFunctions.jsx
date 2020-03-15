@@ -499,17 +499,17 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         let groupImg3Data = '';
                         let groupImg4Data = '';
                         if (groupOfProducts.groupImg1 !== null && groupOfProducts.groupImg1 !== '') {
-                            groupImg1Data = await getDataUri(groupOfProducts.groupImg1, "jpeg");
+                            groupImg1Data = await getDataUri(groupOfProducts.groupImg1, "jpeg", 0.3);
                             // console.log(groupOfProducts.groupImg1.length, groupImg1Data.length);
                         }
                         if (groupOfProducts.groupImg2 !== null && groupOfProducts.groupImg2 !== '') {
-                            groupImg2Data = await getDataUri(groupOfProducts.groupImg2, "jpeg");
+                            groupImg2Data = await getDataUri(groupOfProducts.groupImg2, "jpeg", 0.3);
                         }
                         if (groupOfProducts.groupImg3 !== null && groupOfProducts.groupImg3 !== '') {
-                            groupImg3Data = await getDataUri(groupOfProducts.groupImg3, "jpeg");
+                            groupImg3Data = await getDataUri(groupOfProducts.groupImg3, "jpeg", 0.3);
                         }
                         if (groupOfProducts.groupImg4 !== null && groupOfProducts.groupImg4 !== '') {
-                            groupImg4Data = await getDataUri(groupOfProducts.groupImg4, "jpeg");
+                            groupImg4Data = await getDataUri(groupOfProducts.groupImg4, "jpeg", 0.3);
                         }
                         fullGroup.push({
                             unbreakable: groupOfProducts.products.length <= 20 ? true : false,
@@ -527,21 +527,33 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                 {
                                                     text: groupOfProducts.name.toUpperCase(),
                                                     style: 'subheader',
-                                                    fontSize: 11,
+                                                    fontSize: 12,
                                                     groupId: groupOfProducts.id,
-                                                    link: groupOfProducts.linkAddress
+                                                    link: groupOfProducts.linkAddress,
+                                                    bold: true,
+                                                    // noWrap: true
                                                 },
                                                 {
                                                     text: ' ',
                                                     style: 'subheader'
                                                 },
+                                            ],
+                                            // width: 'auto'
+                                            width: 110
+                                        },
+                                        {
+                                            text: [
                                                 {
-                                                    text: '  ' + groupOfProducts.description,
+                                                    // text: '  ' + groupOfProducts.description,
+                                                    text: groupOfProducts.description,
                                                     style: 'regularText',
                                                     color: '#666666',
-                                                    fontSize: 8
+                                                    fontSize: 8,
+                                                    bold: true,
                                                 }
                                             ],
+                                            margin: [10, 1, 0, 0],
+                                            // width: 250
                                             width: '*'
                                         },
                                         {
@@ -566,6 +578,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     width: 100,
                                                 },
                                             ],
+                                            alignment: 'right',
+                                            // width: '*',
                                             width: 100,
                                         }
                                     ],
@@ -609,7 +623,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                 {
                                     columns: [
                                         {
-                                            unbreakable: groupOfProducts.products.length <= 20 ? true : false,
+                                            unbreakable: groupOfProducts.products.length <= 10 ? true : false,
                                             table: {
                                                 widths: [40, '*', '*', 35, 35, 35, ...optionalCols.map((item, index) => index < (optionalCols.length - 1) ? 35 : 35)],
                                                 body: [
@@ -619,7 +633,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                         { text: '', border: [false, false, false, false] },
                                                         { text: '', border: [false, false, false, false] },
                                                         {
-                                                            text: groupOfProducts.priceHeader ? groupOfProducts.priceHeader : 'Цена за штуку',
+                                                            text: groupOfProducts.priceHeader ? groupOfProducts.priceHeader + ', ₽' : 'Цена за штуку, ₽',
                                                             colSpan: (3 + optionalCols.length),
                                                             // bold: true,
                                                             italics: true
@@ -723,26 +737,26 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                                 color: product.onSale ? '#111111' : "#666666"
                                                             },
                                                             {
-                                                                text: (product.retailPrice !== '' && !Number.isNaN(product.retailPrice) && product.retailPrice !== 0) ? product.retailPrice + ' ₽' : ' ',
+                                                                text: (product.retailPrice !== '' && !Number.isNaN(product.retailPrice) && product.retailPrice !== 0) ? product.retailPrice : ' ',
                                                                 margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
                                                                 bold: product.onSale,
                                                                 color: product.onSale ? '#111111' : "#666666"
                                                             },
                                                             {
-                                                                text: (product.lessThan1500Price !== '' && !Number.isNaN(product.lessThan1500Price) && product.lessThan1500Price !== 0) ? product.lessThan1500Price + ' ₽' : ' ',
+                                                                text: (product.lessThan1500Price !== '' && !Number.isNaN(product.lessThan1500Price) && product.lessThan1500Price !== 0) ? product.lessThan1500Price : ' ',
                                                                 margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
                                                                 bold: product.onSale,
                                                                 color: product.onSale ? '#111111' : "#666666"
                                                             },
                                                             {
-                                                                text: (product.lessThan5000Price !== '' && !Number.isNaN(product.lessThan5000Price) && product.lessThan5000Price !== 0) ? product.lessThan5000Price + ' ₽' : ' ',
+                                                                text: (product.lessThan5000Price !== '' && !Number.isNaN(product.lessThan5000Price) && product.lessThan5000Price !== 0) ? product.lessThan5000Price : ' ',
                                                                 margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
                                                                 bold: product.onSale,
                                                                 color: product.onSale ? '#111111' : "#666666"
                                                             },
                                                             ...optionalCols.map(column => product[column.property] !== undefined
                                                                 ? {
-                                                                    text: (product[column.property] !== '' && !Number.isNaN(product[column.property]) && product[column.property] !== 0) ? product[column.property] + ' ₽' : ' ',
+                                                                    text: (product[column.property] !== '' && !Number.isNaN(product[column.property]) && product[column.property] !== 0) ? product[column.property] : ' ',
                                                                     margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
                                                                     bold: product.onSale,
                                                                     color: product.onSale ? '#111111' : "#666666"
@@ -809,7 +823,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     width: 100,
                                                     alignment: 'right'
                                                 },
-                                                groupOfProducts.proprietaryItemText
+                                                groupOfProducts.proprietaryItemText1
                                                     ? {
                                                         stack: [{
                                                             image: proprietaryItemImgData,
@@ -818,7 +832,25 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                             alignment: 'right'
                                                         },
                                                         {
-                                                            text: groupOfProducts.proprietaryItemText,
+                                                            text: groupOfProducts.proprietaryItemText1,
+                                                            margin: [0, 5, 0, 0],
+                                                            alignment: 'center',
+                                                            fontSize: 10
+                                                        }]
+                                                    }
+                                                    : {
+                                                        text: '  ',
+                                                    },
+                                                groupOfProducts.proprietaryItemText2
+                                                    ? {
+                                                        stack: [{
+                                                            image: proprietaryItemImgData,
+                                                            width: 80,
+                                                            margin: [0, 10, 5, 0],
+                                                            alignment: 'right'
+                                                        },
+                                                        {
+                                                            text: groupOfProducts.proprietaryItemText2,
                                                             margin: [0, 5, 0, 0],
                                                             alignment: 'center',
                                                             fontSize: 10
@@ -834,7 +866,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                 },
                                 groupOfProducts.footerImg !== ''
                                     ? {
-                                        image: await getDataUri(groupOfProducts.footerImg, "jpeg"),
+                                        image: await getDataUri(groupOfProducts.footerImg, "jpeg", 0.3),
                                         fit: [512, 100],
                                         // width: 512,
                                         // height: 100
@@ -865,7 +897,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                         ...sortedArr.map((item, index) => {
                             if (index === 0) {
                                 return {
-                                    unbreakable: item.stack[2].columns[0].table.body.length <= 5 ? true : false,
+                                    unbreakable: item.stack[2].columns[0].table.body.length <= 10 ? true : false,
+                                    // unbreakable: item.stack[2].columns[0].table.body.length <= 5 ? true : false,
                                     stack: [
                                         {
                                             image: tempImg,
@@ -952,7 +985,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                 text: [
                                     { text: 'ООО «ОСФИКС»\n', link: 'https://www.osfix.ru', bold: true, fontSize: 10, margin: [0, 0, 0, 2] },
                                     { text: 'Лиговский пр., 52, Санкт-Петербург, 191040\n', link: 'https://yandex.ru/maps/-/CKUrY0Ih', fontSize: 10, lineHeight: 1.1 },
-                                    { text: 'osfix.ru\n', fontSize: 10, link: 'https://www.osfix.ru', lineHeight: 1.1 },
+                                    { text: 'www.osfix.ru\n', fontSize: 10, link: 'https://www.osfix.ru', lineHeight: 1.1 },
                                     { text: 'info@osfix.ru\n', fontSize: 10, lineHeight: 1.1 },
                                     { text: '+7 (812) 449-10-09\n', link: 'tel:+78124491009', fontSize: 10, lineHeight: 1.1 },
                                 ],

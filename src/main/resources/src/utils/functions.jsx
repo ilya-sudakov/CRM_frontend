@@ -7,6 +7,17 @@ export const formatDateString = (dateString) => {
     );
 }
 
+export const formatDateStringWithTime = (dateString) => {
+    const testDate = new Date(dateString);
+    return (
+        ((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
+        + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
+        + '.' + testDate.getFullYear()
+        + ' ' + ((testDate.getHours() < 10) ? ('0' + testDate.getHours()) : testDate.getHours())
+        + ':' + testDate.getMinutes()
+    );
+}
+
 export const imgToBlobDownload = (imageSrc, imageName) => {
     var img = new Image();
     img.src = imageSrc;

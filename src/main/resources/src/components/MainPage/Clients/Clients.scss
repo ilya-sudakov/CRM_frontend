@@ -3,7 +3,8 @@
 .clients {
   .main-window__header {
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
+    flex-direction: column;
     align-items: center;
     width: calc(100% - 25px) !important;
     border-top-left-radius: 10px;
@@ -12,16 +13,19 @@
     margin: 0 !important;
 
     .main-window__title {
-      flex: 0 1 20%;
+      // flex: 0 1 20%;
+      width: 100%;
+      // font-size: 90%;
       font-size: 24px;
-      padding: 5px 0;
-      // padding-bottom: 5px;
+      padding: 10px 10px;
       margin: 0;
+      padding-top: 0;
     }
 
     .main-window__menu {
       display: flex;
-      flex: 0 1 80%;
+      // flex: 0 1 80%;
+      width: 100%;
       align-self: flex-end;
 
       .main-window__item {
@@ -56,7 +60,9 @@
   }
 
   .searchbar {
+    // border-top-right-radius: 0px;
     border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
   }
 
   .main-window__list {
@@ -68,6 +74,8 @@
       &:nth-child(2) {
         flex: 0 1 10%;
         max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       &:nth-child(3) {
         flex: 0 1 15%;

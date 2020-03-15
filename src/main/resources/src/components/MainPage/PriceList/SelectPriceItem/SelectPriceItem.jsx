@@ -298,27 +298,9 @@ const SelectPriceItem = (props) => {
                         </div>
                     </div>
                 </React.Fragment>}
-                <div className="main-form__item">
+                {/* <div className="main-form__item">
                     <div className="main-form__input_name">Ярлыки</div>
                     <div className="main-form__input_field">
-                        {/* <CheckBox
-                            text="Новинка"
-                            checked={newItem}
-                            name="newItem"
-                            onChange={(value, name) => {
-                                setNewItem(value);
-                                props.handleLabelChange(value, name);
-                            }}
-                        />
-                        <CheckBox
-                            text="Уникальная"
-                            checked={uniqueItem}
-                            name="uniqueItem"
-                            onChange={(value, name) => {
-                                setUniqueItem(value);
-                                props.handleLabelChange(value, name);
-                            }}
-                        /> */}
                         <CheckBox
                             text="Запатентована"
                             checked={proprietaryItem}
@@ -329,7 +311,7 @@ const SelectPriceItem = (props) => {
                             }}
                         />
                     </div>
-                </div>
+                </div> */}
                 {selected.map((item, index) => (
                     <div className="select-price-item__selected_item" >
                         <div className="select-price-item__selected_header" index={index} onClick={clickOnForm}>

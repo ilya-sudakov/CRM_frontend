@@ -112,7 +112,7 @@ const NewPriceList = (props) => {
             setIsLoading(false);
         });
     }
-    
+
     const saveImages = () => {
         setIsLoading(true);
         // console.log(priceList);
@@ -182,7 +182,8 @@ const NewPriceList = (props) => {
                         distributorName: item.distributorName,
                         partnerName: item.partnerName,
                         active: true,
-                        proprietaryItemText: item.proprietaryItemText
+                        proprietaryItemText1: item.proprietaryItemText1,
+                        proprietaryItemText2: item.proprietaryItemText2,
                     });
                     tempNumber = item.number.substring(0, 3);
                 } else {
@@ -247,7 +248,8 @@ const NewPriceList = (props) => {
                                 distributorName: item.distributorName,
                                 partnerName: item.partnerName,
                                 active: true,
-                                proprietaryItemText: item.proprietaryItemText
+                                proprietaryItemText1: item.proprietaryItemText1,
+                                proprietaryItemText2: item.proprietaryItemText2,
                             });
                             startId = index;
                             endId = index;

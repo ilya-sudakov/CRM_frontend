@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import '../../../../utils/MainWindow/MainWindow.scss';
 import '../../../../utils/Form/Form.scss';
 import deleteSVG from '../../../../../../../../assets/select/delete.svg';
-import okSVG from '../../../../../../../../assets/tableview/ok.svg';
+// import okSVG from '../../../../../../../../assets/tableview/ok.svg';
+import okSVG from '../../../../../../../../assets/tableview/calendar_check.svg';
 import cancelSVG from '../../../../../../../../assets/tableview/cancel.svg';
 import './SelectWorkHistory.scss';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
-import { formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString, formatDateStringWithTime } from '../../../../utils/functions.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const SelectWorkHistory = (props) => {
@@ -21,47 +22,15 @@ const SelectWorkHistory = (props) => {
     })
 
     useEffect(() => {
-        // setItems([
-        //     {
-        //         date: new Date(),
-        //         action: 'Создание записи',
-        //         result: 'Результат1',
-        //         comment: 'Комментарий'
-        //     },
-        //     {
-        //         date: new Date(),
-        //         action: 'Создание записи',
-        //         result: 'Результат2',
-        //         comment: 'Комментарий'
-        //     },
-        //     {
-        //         date: new Date(),
-        //         action: 'Создание записи',
-        //         result: 'Результат3',
-        //         comment: 'Комментарий'
-        //     },
-        //     {
-        //         date: new Date(),
-        //         action: 'Создание записи',
-        //         result: 'Результат4',
-        //         comment: 'Комментарий'
-        //     },
-        //     {
-        //         date: new Date(),
-        //         action: 'Создание записи',
-        //         result: 'Результат5',
-        //         comment: 'Комментарий'
-        //     },
-        //     {
-        //         date: new Date(),
-        //         action: 'Создание записи',
-        //         result: 'Результат6',
-        //         comment: 'Комментарий'
-        //     },
-        // ])
         if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
             setItems([...props.defaultValue]);
         }
+        setNewItem({
+            date: new Date(),
+            action: '',
+            result: '',
+            comment: ''
+        });
     }, [props.defaultValue, props.options])
 
     const deleteItem = (e) => {
@@ -86,7 +55,13 @@ const SelectWorkHistory = (props) => {
             {!props.readOnly &&
                 <button className="select-work-history__button" onClick={(event) => {
                     event.preventDefault();
-                    return setCreatingItem(true);
+                    setCreatingItem(true);
+                    return setNewItem({
+                        date: new Date(),
+                        action: '',
+                        result: '',
+                        comment: ''
+                    })
                 }}>
                     Добавить запись в историю
                 </button>
@@ -118,6 +93,7 @@ const SelectWorkHistory = (props) => {
                             <input
                                 type="text"
                                 name="action"
+                                value={newItem.action}
                                 onChange={handleInputChange}
                             />
                         </span>
@@ -125,6 +101,7 @@ const SelectWorkHistory = (props) => {
                             <input
                                 type="text"
                                 name="result"
+                                value={newItem.result}
                                 onChange={handleInputChange}
                             />
                         </span>
@@ -132,6 +109,7 @@ const SelectWorkHistory = (props) => {
                             <input
                                 type="text"
                                 name="comment"
+                                value={newItem.comment}
                                 onChange={handleInputChange}
                             />
                         </span>
@@ -172,7 +150,7 @@ const SelectWorkHistory = (props) => {
                         return 0;
                     }).map((item, index) => {
                         return <div className="main-window__list-item">
-                            <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(item.date)}</span>
+                            <span><div className="main-window__mobile-text">Дата: </div>{formatDateStringWithTime(item.date)}</span>
                             <span><div className="main-window__mobile-text">Действие: </div>{item.action}</span>
                             <span><div className="main-window__mobile-text">Результат: </div>{item.result}</span>
                             <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>

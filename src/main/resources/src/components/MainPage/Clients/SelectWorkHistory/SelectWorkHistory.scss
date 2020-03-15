@@ -17,10 +17,11 @@
       & span {
         padding: 0 5px;
         flex: 0 1 20% !important;
+        overflow: visible;
 
         &:nth-child(1) {
           flex: 0 1 10%;
-          max-width: 80px;
+          max-width: 100px;
         }
 
         &:nth-child(2) {

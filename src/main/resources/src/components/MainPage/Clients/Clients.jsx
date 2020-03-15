@@ -177,7 +177,7 @@ const Clients = (props) => {
                                 <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
                                 <span><div className="main-window__mobile-text">Сайт: </div>
                                     {/* {item.site} */}
-                                    <a className="main-window__link" href={item.site}>Перейти</a>
+                                    <a className="main-window__link" href={item.site.split('//').length > 1 ? item.site : 'https://' + item.site} target="_blank">{item.site.split('//').length > 1 ? item.site.split('//')[1] : item.site}</a>
                                 </span>
                                 <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts.length > 0 ? (item.contacts[0].name + ', ' + item.contacts[0].phoneNumber) : 'Не указаны контакт. данные'}</span>
                                 <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
