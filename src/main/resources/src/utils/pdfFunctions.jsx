@@ -833,8 +833,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     ? {
                                                         stack: [{
                                                             image: proprietaryItemImgData,
-                                                            width: 80,
-                                                            margin: [0, 10, 5, 0],
+                                                            width: 65,
+                                                            margin: [0, 10, 9, 0],
                                                             alignment: 'right'
                                                         },
                                                         {
@@ -851,8 +851,8 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                     ? {
                                                         stack: [{
                                                             image: proprietaryItemImgData,
-                                                            width: 80,
-                                                            margin: [0, 10, 5, 0],
+                                                            width: 65,
+                                                            margin: [0, 10, 9, 0],
                                                             alignment: 'right'
                                                         },
                                                         {
