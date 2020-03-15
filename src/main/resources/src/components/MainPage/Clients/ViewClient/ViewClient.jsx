@@ -145,6 +145,7 @@ const ViewClient = (props) => {
                                     name="comment"
                                     defaultValue={clientInputs.comment}
                                     readOnly
+                                    type="textarea"
                                 />
                                 <InputText
                                     inputName="Адрес склада"

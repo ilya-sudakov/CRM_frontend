@@ -446,6 +446,7 @@ const EditClient = (props) => {
                                     name="comment"
                                     defaultValue={clientInputs.comment}
                                     handleInputChange={handleInputChange}
+                                    type="textarea"
                                 />
                                 <InputText
                                     inputName="Адрес склада"
