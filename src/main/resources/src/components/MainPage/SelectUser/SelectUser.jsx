@@ -8,12 +8,23 @@ const SelectUser = (props) => {
     const [options, setOptions] = useState([]);
     const [selectedUser, setSelectedUser] = useState('');
     const [customUser, setCustomUser] = useState(false);
-    let myRef = React.createRef();
-
     const search = () => {
-        let searchFilter = options.filter(item =>
-            item.username.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+        let searchFilter = options.filter(item => {
+            const temp = props.filteredRoles
+                ? item.roles.reduce((prevRole, curRole) => {
+                    let check = false;
+                    props.filteredRoles.map(filteredRole => {
+                        // console.log(filteredRole, curRole.name);
+                        if (filteredRole === curRole.name) {
+                            check = true;
+                            return;
+                        }
+                    });
+                    return check;
+                }, false)
+                : true;
+            return (temp && item.username.toLowerCase().includes(searchQuery.toLowerCase()));
+        })
         return searchFilter;
     }
 
@@ -49,7 +60,7 @@ const SelectUser = (props) => {
         const id = event.target.getAttribute("id");
         clickOnInput();
         setSelectedUser(value);
-        props.onChange(value);
+        props.onChange(value, id);
     }
 
     const pressEscKey = useCallback((event) => {
@@ -94,7 +105,6 @@ const SelectUser = (props) => {
                 onClick={!props.readOnly ? clickOnInput : null}
                 value={!props.readOnly ? selectedUser : props.defaultValue}
                 placeholder={props.searchPlaceholder}
-                ref={myRef}
                 readOnly={props.readOnly || (options.length === 0)}
             />
             {options && <div className={"select_user__options select_user__options--hidden" + ((search().length == 0) ? " select_user__options--hidden" : '')}>

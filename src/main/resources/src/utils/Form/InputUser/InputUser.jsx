@@ -14,6 +14,7 @@ const InputUser = (props) => {
                         defaultValue={props.defaultValue}
                         readOnly={props.readOnly}
                         userData={props.userData}
+                        filteredRoles={props.filteredRoles}
                     />
                 </div>
             </div>

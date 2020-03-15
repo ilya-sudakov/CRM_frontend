@@ -3,6 +3,8 @@ import font from 'pdfmake/build/vfs_fonts.js';
 import pdfMake from 'pdfmake';
 import testImg from '../../../../../assets/priceList/no_img.png';
 import companyLogo from '../../../../../assets/priceList/osfix_logo.png';
+import listImg from '../../../../../assets/priceList/list.png';
+import companyLogoNoSlogan from '../../../../../assets/priceList/osfix_logo__no_slogan.png';
 import contactsImg from '../../../../../assets/priceList/contacts.png';
 import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
 import saleImg from '../../../../../assets/priceList/onSale.png';
@@ -456,15 +458,17 @@ export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
     return dd;
 }
 
-export async function getPriceListPdfText(categories, priceList, optionalCols, locationTypes, disclaimer) {
+export async function getPriceListPdfText(categories, priceList, optionalCols, locationTypes, disclaimer, titlePage) {
     let finalList = [];
     let dd;
     let linkButtonData = await getDataUri(linkButtonImg);
     const testImgData = await getDataUri(testImg);
     const saleImgData = await getDataUri(saleImg);
     const companyLogoData = await getDataUri(companyLogo);
+    const companyLogoNoSloganData = await getDataUri(companyLogoNoSlogan);
     const contactsImgData = await getDataUri(contactsImg);
     const proprietaryItemImgData = await getDataUri(proprietaryItemImg);
+    const listImgData = await getDataUri(listImg);
     const temp = categories.map(async category => {
         let fullGroup = [];
         return Promise.all(priceList.map(async groupOfProducts => {
@@ -795,6 +799,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                     ]
                                 },
                                 {
+                                    unbreakable: true,
                                     alignment: 'justify',
                                     width: '*',
                                     margin: [0, 0, 0, 10],
@@ -816,6 +821,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                             },
                                         },
                                         {
+                                            unbreakable: true,
                                             stack: [
                                                 {
                                                     image: linkButtonData,
@@ -970,45 +976,54 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 // defaultStyle: {
                 //     font: 'DejaVuSans'
                 // },
-                header: [
-                    {
-                        alignment: 'justify',
-                        width: '*',
-                        margin: [40, 40, 40, 0],
-                        columns: [
+                header: function (currentPage, pageCount) {
+                    if (currentPage !== 1) {
+                        return [
                             {
-                                image: contactsImgData,
-                                width: 10,
-                                alignment: 'left'
+                                alignment: 'justify',
+                                width: '*',
+                                margin: [40, 40, 40, 0],
+                                columns: [
+                                    {
+                                        image: contactsImgData,
+                                        width: 10,
+                                        alignment: 'left'
+                                    },
+                                    {
+                                        text: [
+                                            { text: 'ООО «ОСФИКС»\n', link: 'https://www.osfix.ru', bold: true, fontSize: 10, margin: [0, 0, 0, 2] },
+                                            { text: 'Лиговский пр., 52, Санкт-Петербург, 191040\n', link: 'https://yandex.ru/maps/-/CKUrY0Ih', fontSize: 10, lineHeight: 1.1 },
+                                            { text: 'www.osfix.ru\n', fontSize: 10, link: 'https://www.osfix.ru', lineHeight: 1.1 },
+                                            { text: 'info@osfix.ru\n', fontSize: 10, lineHeight: 1.1 },
+                                            { text: '+7 (812) 449-10-09\n', link: 'tel:+78124491009', fontSize: 10, lineHeight: 1.1 },
+                                        ],
+                                        margin: [5, 0, 0, 0],
+                                        alignment: 'left'
+                                    },
+                                    {
+                                        image: companyLogoData,
+                                        // width: 100,
+                                        link: 'https://www.osfix.ru',
+                                        fit: [100, 100],
+                                        margin: [0, 13, 0, 0],
+                                        alignment: 'right'
+                                    }
+                                ]
                             },
                             {
-                                text: [
-                                    { text: 'ООО «ОСФИКС»\n', link: 'https://www.osfix.ru', bold: true, fontSize: 10, margin: [0, 0, 0, 2] },
-                                    { text: 'Лиговский пр., 52, Санкт-Петербург, 191040\n', link: 'https://yandex.ru/maps/-/CKUrY0Ih', fontSize: 10, lineHeight: 1.1 },
-                                    { text: 'www.osfix.ru\n', fontSize: 10, link: 'https://www.osfix.ru', lineHeight: 1.1 },
-                                    { text: 'info@osfix.ru\n', fontSize: 10, lineHeight: 1.1 },
-                                    { text: '+7 (812) 449-10-09\n', link: 'tel:+78124491009', fontSize: 10, lineHeight: 1.1 },
-                                ],
-                                margin: [5, 0, 0, 0],
-                                alignment: 'left'
+                                canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 2, lineColor: '#e30434' }],
+                                alignment: 'justify',
+                                width: '*',
+                                margin: [40, 5, 40, 40],
                             },
-                            {
-                                image: companyLogoData,
-                                // width: 100,
-                                link: 'https://www.osfix.ru',
-                                fit: [100, 100],
-                                margin: [0, 13, 0, 0],
-                                alignment: 'right'
-                            }
                         ]
-                    },
-                    {
-                        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 2, lineColor: '#e30434' }],
-                        alignment: 'justify',
-                        width: '*',
-                        margin: [40, 5, 40, 40],
-                    },
-                ],
+                    }
+                    else return [
+                        {
+                            text: ''
+                        }
+                    ]
+                },
                 // pageMargins: function (currentPage, pageCount) {
                 //     if (currentPage === pageCount) {
                 //         return [40, 125, 40, 170]
@@ -1020,6 +1035,11 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 //     return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
                 // },
                 footer: function (currentPage, pageCount) {
+                    if (currentPage === 1) {
+                        return {
+                            text: ' ',
+                        }
+                    }
                     if (currentPage === pageCount) {
                         return [
                             {
@@ -1064,34 +1084,119 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 //     font: 'DejaVuSans'
                 // },
                 content: [
-                    finalList,
-                    // {
-                    //     text: disclaimer,
-                    //     margin: [0, 50, 0, 0],
-                    //     alignment: 'left',
-                    // }
-                    // {
-                    // margin: [0, 50, 0, 0],
-                    // alignment: 'center',
-                    // text: [
-                    //     {
-                    //         text: ' ',
-                    //         style: 'subheader',
-                    //     },
-                    //     {
-                    //         text: 'Дополнительная информация',
-                    //         italics: true,
-                    //         fontSize: 14,
-                    //         style: 'subheader'
-                    //     },
-                    //     {
-                    //         text: ' ',
-                    //         style: 'subheader',
-                    //     },
-                    // ]
-                    // },
                     {
-                        // margin: [0, 50, 0, 0],
+                        stack: [
+                            {
+                                alignment: 'right',
+                                stack: [
+                                    {
+                                        columns: [
+                                            { width: '*', text: '' },
+                                            {
+                                                width: 165,
+                                                table: {
+                                                    body: [
+                                                        [
+                                                            {
+                                                                border: [true, true, true, true],
+                                                                // style: 'regularText',
+                                                                fontSize: 14,
+                                                                borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
+                                                                text: titlePage.to,
+                                                                alignment: 'left',
+                                                                margin: [5, 5, 5, 5],
+                                                            },
+                                                        ]
+                                                    ],
+                                                },
+                                                alignment: 'right',
+                                                // margin: [0, 0, 0, 10],
+                                            }
+                                        ],
+                                        margin: [0, 0, 0, 5]
+                                    },
+                                    {
+                                        text: titlePage.date,
+                                        alignment: 'right'
+                                    },
+                                ],
+                                margin: [0, 0, 0, 50]
+                            },
+                            {
+                                stack: [
+                                    {
+                                        image: companyLogoNoSloganData,
+                                        link: 'https://www.osfix.ru',
+                                        fit: [200, 200],
+                                        margin: [0, 0, 0, 0],
+                                        alignment: 'center'
+                                    },
+                                    {
+                                        text: titlePage.slogan,
+                                        alignment: 'center',
+                                        margin: [0, 5, 0, 15],
+                                        fontSize: 18,
+                                    }
+                                ]
+                            },
+                            {
+                                columns: [
+                                    {
+                                        image: testImgData,
+                                        fit: [140, 120],
+                                        margin: [0, 0, 0, 5],
+                                        alignment: 'right'
+                                    },
+                                    {
+                                        image: testImgData,
+                                        fit: [140, 120],
+                                        margin: [0, 0, 0, 5],
+                                        alignment: 'center'
+                                    },
+                                    {
+                                        image: testImgData,
+                                        fit: [140, 120],
+                                        margin: [0, 0, 0, 5],
+                                        alignment: 'left'
+                                    },
+                                ],
+                                alignment: 'center',
+                                width: 125,
+                                margin: [0, 0, 0, 30]
+                            },
+                            {
+                                stack: [
+                                    ...titlePage.list.map(item => {
+                                        return [
+                                            {
+                                                margin: [0, 10, 0, 0],
+                                                alignment: 'left',
+                                                columns: [
+                                                    {
+                                                        image: listImgData,
+                                                        fit: [15, 15],
+                                                        margin: [0, 3, 0, 0],
+                                                        width: 15
+                                                    },
+                                                    {
+                                                        text: item,
+                                                        margin: [5, 0, 0, 0],
+                                                        fontSize: 16,
+                                                        alignment: 'center',
+                                                        width: 'auto'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    })
+                                ]
+                            }
+                        ],
+                        pageBreak: 'after',
+                        margin: [0, -50, 0, 0]
+                    },
+                    finalList,
+                    {
                         margin: [0, 10, 0, 0],
                         table: {
                             body: [
@@ -1101,11 +1206,6 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                         fontSize: 12,
                                         borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
                                         text: [
-                                            // {
-                                            //     text: 'Дополнительная информация:\n\n',
-                                            //     italics: true,
-                                            //     fontSize: 10,
-                                            // },
                                             {
                                                 text: disclaimer
                                             }

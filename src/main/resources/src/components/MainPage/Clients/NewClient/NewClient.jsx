@@ -14,12 +14,15 @@ import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
+import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
         name: '',
         legalEntity: [],
         contacts: [],
+        managerName: props.userData.username,
+        managerId: props.userData.id,
         workHistory: [],
         site: '',
         comment: '',
@@ -103,8 +106,7 @@ const newClient = (props) => {
         formIsValid() && addClient({
             clientType: clientInputs.clientType,
             comment: clientInputs.comment,
-            // discount: clientInputs.clientType,
-            manager: props.userData.username,
+            manager: clientInputs.managerName,
             name: clientInputs.name,
             price: clientInputs.price,
             site: clientInputs.site,
@@ -298,6 +300,7 @@ const newClient = (props) => {
                                     name="comment"
                                     defaultValue={clientInputs.comment}
                                     handleInputChange={handleInputChange}
+                                    type="textarea"
                                 />
                                 <InputText
                                     inputName="Адрес склада"
@@ -327,6 +330,24 @@ const newClient = (props) => {
                                     name="price"
                                     defaultValue={clientInputs.price}
                                     handleInputChange={handleInputChange}
+                                />
+                                <InputUser
+                                    inputName="Ответственный менеджер"
+                                    userData={props.userData}
+                                    filteredRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                                    required
+                                    name="manager"
+                                    handleUserChange={(value, id) => {
+                                        setClientInputs({
+                                            ...clientInputs,
+                                            managerId: Number.parseInt(id),
+                                            managerName: value,
+                                        })
+                                    }}
+                                    defaultValue={clientInputs.managerName}
+                                    searchPlaceholder="Введите имя менеджера для поиска..."
+                                // errorsArr={formErrors}
+                                // setErrorsArr={setFormErrors}
                                 />
                                 {/* <div className="main-form__item">
                                     <div className="main-form__input_name">Скидки</div>

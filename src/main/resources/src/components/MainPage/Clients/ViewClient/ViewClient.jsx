@@ -177,6 +177,12 @@ const ViewClient = (props) => {
                                     readOnly
                                 />
                                 <InputText
+                                    inputName="Отвественный менеджер"
+                                    name="manager"
+                                    defaultValue={clientInputs.manager}
+                                    readOnly
+                                />
+                                <InputText
                                     inputName="Тип клиента"
                                     name="clientType"
                                     defaultValue={clientInputs.clientType}

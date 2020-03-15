@@ -14,6 +14,7 @@ import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
+import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 
 const EditClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -24,6 +25,8 @@ const EditClient = (props) => {
         legalEntityNew: [],
         contactsNew: [],
         workHistoryNew: [],
+        managerName: props.userData.username,
+        managerId: props.userData.id,
         site: '',
         comment: '',
         storageAddress: '',
@@ -106,7 +109,7 @@ const EditClient = (props) => {
         formIsValid() && editClient({
             clientType: clientInputs.clientType,
             comment: clientInputs.comment,
-            manager: props.userData.username,
+            manager: clientInputs.managerName,
             name: clientInputs.name,
             price: clientInputs.price,
             site: clientInputs.site,
@@ -323,7 +326,7 @@ const EditClient = (props) => {
                         price: res.price,
                         check: res.check,
                         clientType: res.clientType,
-                        manager: res.manager,
+                        managerName: res.manager,
                         nextContactDate: res.nextDateContact,
                         legalEntity: res.legalEntities,
                         contacts: res.contacts,
@@ -478,6 +481,24 @@ const EditClient = (props) => {
                                     name="check"
                                     handleInputChange={handleInputChange}
                                     defaultValue={clientInputs.check}
+                                />
+                                <InputUser
+                                    inputName="Ответственный менеджер"
+                                    userData={props.userData}
+                                    filteredRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                                    required
+                                    name="manager"
+                                    handleUserChange={(value, id) => {
+                                        setClientInputs({
+                                            ...clientInputs,
+                                            managerId: Number.parseInt(id),
+                                            managerName: value,
+                                        })
+                                    }}
+                                    defaultValue={clientInputs.managerName}
+                                    searchPlaceholder="Введите имя менеджера для поиска..."
+                                // errorsArr={formErrors}
+                                // setErrorsArr={setFormErrors}
                                 />
                                 <div className="main-form__item">
                                     <div className="main-form__input_name">Тип клиента*</div>

@@ -29,7 +29,6 @@ const NewRequest = (props) => {
         codeWord: false,
         responsible: (props.userHasAccess(['ROLE_ADMIN']) ? false : true),
     })
-    const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -148,11 +147,6 @@ const NewRequest = (props) => {
                 responsible: true,
             });
         }
-        getUsers()
-            .then(res => res.json())
-            .then(res => {
-                setUsers(res);
-            })
     }, [])
 
     const handleDateChange = (date) => {
@@ -239,7 +233,6 @@ const NewRequest = (props) => {
                     required
                     error={requestErrors.responsible}
                     name="responsible"
-                    options={users}
                     handleUserChange={handleResponsibleChange}
                     defaultValue={requestInputs.responsible}
                     searchPlaceholder="Введите имя пользователя для поиска..."

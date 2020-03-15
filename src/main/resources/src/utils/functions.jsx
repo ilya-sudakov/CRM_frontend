@@ -14,7 +14,7 @@ export const formatDateStringWithTime = (dateString) => {
         + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)
         + '.' + testDate.getFullYear()
         + ' ' + ((testDate.getHours() < 10) ? ('0' + testDate.getHours()) : testDate.getHours())
-        + ':' + testDate.getMinutes()
+        + ':' + ((testDate.getMinutes() < 10) ? ('0' + testDate.getMinutes()) : testDate.getMinutes())
     );
 }
 

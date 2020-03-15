@@ -72,7 +72,7 @@ const SelectWorkHistory = (props) => {
                         <span>Дата</span>
                         <span>Действие</span>
                         <span>Результат</span>
-                        <span>Комментарий</span>
+                        <span>Планируемое действие/Комментарий</span>
                         <div className="main-window__actions">Действие</div>
                     </div>}
                     <div className={creatingItem ? "main-window__list-item main-window__list-item--input" : "main-window__list-item main-window__list-item--input main-window__list-item--hidden"}>

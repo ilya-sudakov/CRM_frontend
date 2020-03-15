@@ -7,13 +7,21 @@ const InputText = (props) => {
             <div className="input_text__input">
                 <div className="input_text__input_name">{props.inputName + (props.required ? '*' : '')}</div>
                 <div className={props.error === true ? "input_text__input_field input_text__input_field--error" : "input_text__input_field"}>
-                    <input type={props.type ? props.type : "text"}
-                        name={props.name}
-                        autoComplete="off"
-                        onChange={props.handleInputChange}
-                        value={props.defaultValue}
-                        readOnly={props.readOnly}
-                    />
+                    {props.type === 'textarea'
+                        ? <textarea
+                            name={props.name}
+                            autoComplete="off"
+                            onChange={props.handleInputChange}
+                            value={props.defaultValue}
+                            readOnly={props.readOnly}
+                        ></textarea>
+                        : <input type={props.type ? props.type : "text"}
+                            name={props.name}
+                            autoComplete="off"
+                            onChange={props.handleInputChange}
+                            value={props.defaultValue}
+                            readOnly={props.readOnly}
+                        />}
                 </div>
             </div>
             {props.error === true && <div className="input_text__error" onClick={

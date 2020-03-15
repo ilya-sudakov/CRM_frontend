@@ -14,6 +14,7 @@ import locationType1Img from '../../../../../../../../assets/priceList/Фаса�
 import locationType2Img from '../../../../../../../../assets/priceList/Терраса.png';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
 
 const NewPriceList = (props) => {
     const [locationTypes, setLocationTypes] = useState([
@@ -30,19 +31,19 @@ const NewPriceList = (props) => {
         {
             id: 1,
             property: 'partnerPrice',
-            name: 'Партнер',
+            name: 'Опт 1',
             active: false
         },
         {
             id: 2,
             property: 'dealerPrice',
-            name: 'Дилер',
+            name: 'Опт 2',
             active: false
         },
         {
             id: 3,
             property: 'distributorPrice',
-            name: 'Дистрибутор',
+            name: 'Опт 3',
             active: false
         }
     ])
@@ -77,6 +78,12 @@ const NewPriceList = (props) => {
     const [groupOfProductsList, setGroupOfProductsList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [disclaimer, setDisclaimer] = useState('');
+    const [titlePage, setTitlePage] = useState({
+        to: '',
+        date: formatDateString(new Date()),
+        slogan: '',
+        list: []
+    });
 
     const isExistingCategory = (category) => {
         return categories.find(item => item.name === category);
@@ -143,6 +150,12 @@ const NewPriceList = (props) => {
         }
         else {
             setDisclaimer(excelRows[excelRows.length - 1].id);
+            setTitlePage({
+                to: excelRows[0].titlePage,
+                date: excelRows[1].titlePage,
+                slogan: excelRows[2].titlePage,
+                list: excelRows[3].titlePage.split('/'),
+            })
             let newData = [];
             let tempNumber = '000';
             let groupData = null;
@@ -360,7 +373,8 @@ const NewPriceList = (props) => {
                                     return 0;
                                 }),
                                 locationTypes,
-                                disclaimer
+                                disclaimer,
+                                titlePage
                             );
                             setIsLoading(false);
                         }} value="Открыть .pdf" />}
