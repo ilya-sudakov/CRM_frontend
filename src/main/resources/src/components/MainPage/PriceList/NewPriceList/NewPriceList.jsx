@@ -12,9 +12,10 @@ import category3Img from '../../../../../../../../assets/priceList/крепеж�
 import categoryImg from '../../../../../../../../assets/priceList/default_category.png';
 import locationType1Img from '../../../../../../../../assets/priceList/Фасад.png';
 import locationType2Img from '../../../../../../../../assets/priceList/Терраса.png';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
-import { formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString, getDataUri } from '../../../../utils/functions.jsx';
 
 const NewPriceList = (props) => {
     const [locationTypes, setLocationTypes] = useState([
@@ -83,42 +84,56 @@ const NewPriceList = (props) => {
         date: formatDateString(new Date()),
         slogan: '',
         list: [],
-        active: true
+        active: true,
+        img1: '',
+        img2: '',
+        img3: ''
     });
 
     const isExistingCategory = (category) => {
         return categories.find(item => item.name === category);
     }
 
-    const loadImages = (data) => {
+    const loadImages = (data, titlePage1) => {
         setIsLoading(true);
         // console.log(priceList);
-        Promise.all(data.map((item, index) => {
-            return getPriceGroupImageByName(item.number)
-                .then(res => {
-                    // console.log(res);
-
-                    return res.json()
+        getPriceGroupImageByName('titlePage')
+            .then(res => res.json())
+            .then(res => {
+                setTitlePage({
+                    ...titlePage1,
+                    img1: res.imgOne,
+                    img2: res.imgTwo,
+                    img3: res.imgThree,
                 })
-                .then(res => {
-                    console.log(res, item.number);
-                    let temp = data;
-                    temp.splice(index, 1, {
-                        ...temp[index],
-                        groupImg1: res.imgOne,
-                        groupImg2: res.imgTwo,
-                        groupImg3: res.imgThree,
-                        groupImg4: res.imgFour,
-                        footerImg: res.imgFive,
-                    });
-                    setPriceList(temp)
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        })).then(() => {
-            setIsLoading(false);
-        });
+            })
+            .then(() => {
+                Promise.all(data.map((item, index) => {
+                    return getPriceGroupImageByName(item.number)
+                        .then(res => {
+                            // console.log(res);
+                            return res.json()
+                        })
+                        .then(res => {
+                            console.log(res, item.number);
+                            let temp = data;
+                            temp.splice(index, 1, {
+                                ...temp[index],
+                                groupImg1: res.imgOne,
+                                groupImg2: res.imgTwo,
+                                groupImg3: res.imgThree,
+                                groupImg4: res.imgFour,
+                                footerImg: res.imgFive,
+                            });
+                            setPriceList(temp)
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                })).then(() => {
+                    setIsLoading(false);
+                });
+            })
     }
 
     const saveImages = () => {
@@ -134,8 +149,16 @@ const NewPriceList = (props) => {
                 imgFive: item.footerImg,
             })
         })).then(() => {
-            setIsLoading(false);
-            alert('Данные были успешно сохранены!');
+            updatePriceGroupByName('titlePage', {
+                name: 'titlePage',
+                imgOne: priceList.img1,
+                imgTwo: priceList.img2,
+                imgThree: priceList.img3,
+            })
+                .then(() => {
+                    setIsLoading(false);
+                    alert('Данные были успешно сохранены!');
+                })
         })
     }
 
@@ -151,13 +174,15 @@ const NewPriceList = (props) => {
         }
         else {
             setDisclaimer(excelRows[excelRows.length - 1].id);
-            setTitlePage({
+            const titlePage1 = Object.assign({
+                // ...titlePage,
                 to: excelRows[0].titlePage,
                 date: excelRows[1].titlePage,
                 slogan: excelRows[2].titlePage,
                 list: excelRows[3].titlePage.split('/'),
                 active: true
-            })
+            });
+            setTitlePage(titlePage1)
             let newData = [];
             let tempNumber = '000';
             let groupData = null;
@@ -282,7 +307,7 @@ const NewPriceList = (props) => {
             }
             // console.log(newData)
             setPriceList(newData);
-            return loadImages(newData);
+            return loadImages(newData, titlePage1);
         }
     }
 
@@ -380,7 +405,7 @@ const NewPriceList = (props) => {
                             );
                             setIsLoading(false);
                         }} value="Открыть .pdf" />}
-                        {(priceList.length > 0 && !isLoading) && <input className="main-form__submit" type="submit" onClick={(event) => {
+                        {(priceList.length > 0) && <input className="main-form__submit" type="submit" onClick={(event) => {
                             event.preventDefault();
                             // setIsLoading(true);
                             console.log(priceList)
@@ -391,17 +416,6 @@ const NewPriceList = (props) => {
                     </div>
                     {priceList.length > 0 && <div className="main-form__buttons">
                         <div className="new-price-item__checkbox-container">
-                            <CheckBox
-                                text="Титульный лист"
-                                defaultChecked={true}
-                                name="titleList"
-                                onChange={(value) => {
-                                    setTitlePage({
-                                        ...titlePage,
-                                        active: value
-                                    })
-                                }}
-                            />
                             <CheckBox
                                 text="Выделить все категории"
                                 defaultChecked={true}
@@ -447,6 +461,97 @@ const NewPriceList = (props) => {
                                 >{item.name}</div>
                             })}
                         </div>
+                    </div>}
+                    {priceList.length > 0 && <div className="main-form__buttons main-form__buttons--vertical">
+                        <div className="main-form__item main-form__item--header">
+                            <div className="main-form__input_name">Титульная страница</div>
+                            <CheckBox
+                                defaultChecked={true}
+                                name="titleList"
+                                onChange={(value) => {
+                                    setTitlePage({
+                                        ...titlePage,
+                                        active: value
+                                    })
+                                }}
+                            />
+                        </div>
+                        {titlePage.active && <React.Fragment>
+                            <InputText
+                                inputName="to"
+                                name="to"
+                                defaultValue={titlePage.to}
+                                handleInputChange={(event) => {
+                                    setTitlePage({
+                                        ...titlePage,
+                                        to: event.target.value
+                                    })
+                                }}
+                            />
+                            <div className="main-form__item">
+                                <div className="main-form__input_name">Фотография 1</div>
+                                <div className="main-form__input_field">
+                                    {titlePage.img1 !== '' &&
+                                        <div className="main-form__product_img">
+                                            <img src={titlePage.img1} alt="" />
+                                        </div>
+                                    }
+                                    <FileUploader
+                                        uniqueId={"fileTitlePage" + 1}
+                                        regex={/.+\.(jpeg|jpg|png|img)/}
+                                        onChange={async (result) => {
+                                            const downgraded = await getDataUri(result, "jpeg", 0.3);
+                                            setTitlePage({
+                                                ...titlePage,
+                                                img1: downgraded
+                                            })
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="main-form__item">
+                                <div className="main-form__input_name">Фотография 2</div>
+                                <div className="main-form__input_field">
+                                    {titlePage.img2 !== '' &&
+                                        <div className="main-form__product_img">
+                                            <img src={titlePage.img2} alt="" />
+                                        </div>
+                                    }
+                                    <FileUploader
+                                        uniqueId={"fileTitlePage" + 2}
+                                        regex={/.+\.(jpeg|jpg|png|img)/}
+                                        onChange={async (result) => {
+                                            const downgraded = await getDataUri(result, "jpeg", 0.3);
+                                            setTitlePage({
+                                                ...titlePage,
+                                                img2: downgraded
+                                            })
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="main-form__item">
+                                <div className="main-form__input_name">Фотография 3</div>
+                                <div className="main-form__input_field">
+                                    {titlePage.img3 !== '' &&
+                                        <div className="main-form__product_img">
+                                            <img src={titlePage.img3} alt="" />
+                                        </div>
+                                    }
+                                    <FileUploader
+                                        uniqueId={"fileTitlePage" + 3}
+                                        regex={/.+\.(jpeg|jpg|png|img)/}
+                                        onChange={async (result) => {
+                                            const downgraded = await getDataUri(result, "jpeg", 0.3);
+                                            setTitlePage({
+                                                ...titlePage,
+                                                img3: downgraded
+                                            })
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </React.Fragment>}
                     </div>}
                     {
                         categories.sort((a, b) => {

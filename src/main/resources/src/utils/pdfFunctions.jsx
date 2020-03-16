@@ -469,6 +469,16 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
     const contactsImgData = await getDataUri(contactsImg);
     const proprietaryItemImgData = await getDataUri(proprietaryItemImg);
     const listImgData = await getDataUri(listImg);
+    let titlePageImg1Data, titlePageImg2Data, titlePageImg3Data;
+    if (titlePage.img1 !== null && titlePage.img1 !== '') {
+        titlePageImg1Data = await getDataUri(titlePage.img1, "jpeg", 0.3);
+    }
+    if (titlePage.img2 !== null && titlePage.img2 !== '') {
+        titlePageImg2Data = await getDataUri(titlePage.img2, "jpeg", 0.3);
+    }
+    if (titlePage.img3 !== null && titlePage.img3 !== '') {
+        titlePageImg3Data = await getDataUri(titlePage.img3, "jpeg", 0.3);
+    }
     const temp = categories.map(async category => {
         let fullGroup = [];
         return Promise.all(priceList.map(async groupOfProducts => {
@@ -1143,19 +1153,19 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                 {
                                     columns: [
                                         {
-                                            image: testImgData,
+                                            image: titlePageImg1Data !== undefined ? titlePageImg1Data : testImgData,
                                             fit: [150, 130],
                                             margin: [0, 0, 0, 5],
                                             alignment: 'right'
                                         },
                                         {
-                                            image: testImgData,
+                                            image: titlePageImg2Data !== undefined ? titlePageImg2Data : testImgData,
                                             fit: [150, 130],
                                             margin: [0, 0, 0, 5],
                                             alignment: 'center'
                                         },
                                         {
-                                            image: testImgData,
+                                            image: titlePageImg3Data !== undefined ? titlePageImg3Data : testImgData,
                                             fit: [150, 130],
                                             margin: [0, 0, 0, 5],
                                             alignment: 'left'

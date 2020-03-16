@@ -44,8 +44,13 @@
     border-radius: 5px;
     padding: 10px;
     font-size: 125%;
+    justify-content: flex-start !important;
+    margin-bottom: 10px !important;
     & .main-form__input_name {
       color: #000000 !important;
+    }
+    &:first-child {
+      width: 100%;
     }
   }
   .main-form__item .main-form__input_field {
@@ -69,12 +74,15 @@
     }
   }
   .main-form__buttons {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     .checkbox {
       width: 50%;
     }
     .checkbox__container {
       width: 100%;
+    }
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
