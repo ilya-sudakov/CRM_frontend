@@ -120,17 +120,17 @@ const NewPriceList = (props) => {
                     console.log(error);
                 })
         })).then(() => {
-            return getPriceGroupImageByName('titlePage')
-                .then(res => res.json())
-                .then(res => {
-                    setTitlePage({
-                        ...titlePage1,
-                        img1: res.imgOne,
-                        img2: res.imgTwo,
-                        img3: res.imgThree,
-                    })
-                    setIsLoading(false);
-                })
+            // return getPriceGroupImageByName('titlePage')
+            //     .then(res => res.json())
+            //     .then(res => {
+            //         setTitlePage({
+            //             ...titlePage1,
+            //             img1: res.imgOne,
+            //             img2: res.imgTwo,
+            //             img3: res.imgThree,
+            //         })
+            setIsLoading(false);
+            // })
         });
     }
 
