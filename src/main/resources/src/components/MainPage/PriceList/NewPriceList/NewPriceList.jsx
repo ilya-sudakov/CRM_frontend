@@ -97,43 +97,41 @@ const NewPriceList = (props) => {
     const loadImages = (data, titlePage1) => {
         setIsLoading(true);
         // console.log(priceList);
-        getPriceGroupImageByName('titlePage')
-            .then(res => res.json())
-            .then(res => {
-                setTitlePage({
-                    ...titlePage1,
-                    img1: res.imgOne,
-                    img2: res.imgTwo,
-                    img3: res.imgThree,
+        Promise.all(data.map((item, index) => {
+            return getPriceGroupImageByName(item.number)
+                .then(res => {
+                    // console.log(res);
+                    return res.json()
                 })
-            })
-            .then(() => {
-                Promise.all(data.map((item, index) => {
-                    return getPriceGroupImageByName(item.number)
-                        .then(res => {
-                            // console.log(res);
-                            return res.json()
-                        })
-                        .then(res => {
-                            console.log(res, item.number);
-                            let temp = data;
-                            temp.splice(index, 1, {
-                                ...temp[index],
-                                groupImg1: res.imgOne,
-                                groupImg2: res.imgTwo,
-                                groupImg3: res.imgThree,
-                                groupImg4: res.imgFour,
-                                footerImg: res.imgFive,
-                            });
-                            setPriceList(temp)
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        })
-                })).then(() => {
+                .then(res => {
+                    console.log(res, item.number);
+                    let temp = data;
+                    temp.splice(index, 1, {
+                        ...temp[index],
+                        groupImg1: res.imgOne,
+                        groupImg2: res.imgTwo,
+                        groupImg3: res.imgThree,
+                        groupImg4: res.imgFour,
+                        footerImg: res.imgFive,
+                    });
+                    setPriceList(temp)
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        })).then(() => {
+            return getPriceGroupImageByName('titlePage')
+                .then(res => res.json())
+                .then(res => {
+                    setTitlePage({
+                        ...titlePage1,
+                        img1: res.imgOne,
+                        img2: res.imgTwo,
+                        img3: res.imgThree,
+                    })
                     setIsLoading(false);
-                });
-            })
+                })
+        });
     }
 
     const saveImages = () => {
@@ -478,7 +476,7 @@ const NewPriceList = (props) => {
                         </div>
                         {titlePage.active && <React.Fragment>
                             <InputText
-                                inputName="to"
+                                inputName="Получатель"
                                 name="to"
                                 defaultValue={titlePage.to}
                                 handleInputChange={(event) => {
