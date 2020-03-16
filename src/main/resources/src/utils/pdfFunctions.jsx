@@ -977,7 +977,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 //     font: 'DejaVuSans'
                 // },
                 header: function (currentPage, pageCount) {
-                    if (currentPage !== 1) {
+                    if (currentPage !== 1 || !titlePage.active) {
                         return [
                             {
                                 alignment: 'justify',
@@ -1035,7 +1035,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 //     return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
                 // },
                 footer: function (currentPage, pageCount) {
-                    if (currentPage === 1) {
+                    if (currentPage === 1 && titlePage.active) {
                         return {
                             text: ' ',
                         }
@@ -1084,117 +1084,121 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                 //     font: 'DejaVuSans'
                 // },
                 content: [
-                    {
-                        stack: [
-                            {
-                                alignment: 'right',
-                                stack: [
-                                    {
-                                        columns: [
-                                            { width: '*', text: '' },
-                                            {
-                                                width: 165,
-                                                table: {
-                                                    body: [
-                                                        [
-                                                            {
-                                                                border: [true, true, true, true],
-                                                                // style: 'regularText',
-                                                                fontSize: 14,
-                                                                borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
-                                                                text: titlePage.to,
-                                                                alignment: 'left',
-                                                                margin: [5, 5, 5, 5],
-                                                            },
-                                                        ]
-                                                    ],
-                                                },
-                                                alignment: 'right',
-                                                // margin: [0, 0, 0, 10],
-                                            }
-                                        ],
-                                        margin: [0, 0, 0, 5]
-                                    },
-                                    {
-                                        text: titlePage.date,
-                                        alignment: 'right'
-                                    },
-                                ],
-                                margin: [0, 0, 0, 50]
-                            },
-                            {
-                                stack: [
-                                    {
-                                        image: companyLogoNoSloganData,
-                                        link: 'https://www.osfix.ru',
-                                        fit: [200, 200],
-                                        margin: [0, 0, 0, 0],
-                                        alignment: 'center'
-                                    },
-                                    {
-                                        text: titlePage.slogan,
-                                        alignment: 'center',
-                                        margin: [0, 5, 0, 15],
-                                        fontSize: 18,
-                                    }
-                                ]
-                            },
-                            {
-                                columns: [
-                                    {
-                                        image: testImgData,
-                                        fit: [140, 120],
-                                        margin: [0, 0, 0, 5],
-                                        alignment: 'right'
-                                    },
-                                    {
-                                        image: testImgData,
-                                        fit: [140, 120],
-                                        margin: [0, 0, 0, 5],
-                                        alignment: 'center'
-                                    },
-                                    {
-                                        image: testImgData,
-                                        fit: [140, 120],
-                                        margin: [0, 0, 0, 5],
-                                        alignment: 'left'
-                                    },
-                                ],
-                                alignment: 'center',
-                                width: 125,
-                                margin: [0, 0, 0, 30]
-                            },
-                            {
-                                stack: [
-                                    ...titlePage.list.map(item => {
-                                        return [
-                                            {
-                                                margin: [0, 10, 0, 0],
-                                                alignment: 'left',
-                                                columns: [
-                                                    {
-                                                        image: listImgData,
-                                                        fit: [15, 15],
-                                                        margin: [0, 3, 0, 0],
-                                                        width: 15
+                    titlePage.active
+                        ? {
+                            stack: [
+                                {
+                                    alignment: 'right',
+                                    stack: [
+                                        {
+                                            columns: [
+                                                { width: '*', text: '' },
+                                                {
+                                                    width: 165,
+                                                    table: {
+                                                        body: [
+                                                            [
+                                                                {
+                                                                    border: [true, true, true, true],
+                                                                    // style: 'regularText',
+                                                                    fontSize: 14,
+                                                                    borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
+                                                                    text: titlePage.to,
+                                                                    alignment: 'left',
+                                                                    margin: [5, 5, 5, 5],
+                                                                },
+                                                            ]
+                                                        ],
                                                     },
-                                                    {
-                                                        text: item,
-                                                        margin: [5, 0, 0, 0],
-                                                        fontSize: 16,
-                                                        alignment: 'center',
-                                                        width: 'auto'
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    })
-                                ]
-                            }
-                        ],
-                        pageBreak: 'after',
-                        margin: [0, -50, 0, 0]
-                    },
+                                                    alignment: 'right',
+                                                    // margin: [0, 0, 0, 10],
+                                                }
+                                            ],
+                                            margin: [0, 0, 0, 5]
+                                        },
+                                        {
+                                            text: titlePage.date,
+                                            alignment: 'right'
+                                        },
+                                    ],
+                                    margin: [0, 0, 0, 50]
+                                },
+                                {
+                                    stack: [
+                                        {
+                                            image: companyLogoNoSloganData,
+                                            link: 'https://www.osfix.ru',
+                                            fit: [200, 200],
+                                            margin: [0, 0, 0, 0],
+                                            alignment: 'center'
+                                        },
+                                        {
+                                            text: titlePage.slogan,
+                                            alignment: 'center',
+                                            margin: [0, 5, 0, 15],
+                                            fontSize: 18,
+                                        }
+                                    ]
+                                },
+                                {
+                                    columns: [
+                                        {
+                                            image: testImgData,
+                                            fit: [150, 130],
+                                            margin: [0, 0, 0, 5],
+                                            alignment: 'right'
+                                        },
+                                        {
+                                            image: testImgData,
+                                            fit: [150, 130],
+                                            margin: [0, 0, 0, 5],
+                                            alignment: 'center'
+                                        },
+                                        {
+                                            image: testImgData,
+                                            fit: [150, 130],
+                                            margin: [0, 0, 0, 5],
+                                            alignment: 'left'
+                                        },
+                                    ],
+                                    alignment: 'center',
+                                    width: 125,
+                                    margin: [0, 0, 0, 30]
+                                },
+                                {
+                                    stack: [
+                                        ...titlePage.list.map(item => {
+                                            return [
+                                                {
+                                                    margin: [0, 10, 0, 0],
+                                                    alignment: 'left',
+                                                    columns: [
+                                                        {
+                                                            image: listImgData,
+                                                            fit: [15, 15],
+                                                            margin: [0, 3, 0, 0],
+                                                            width: 15
+                                                        },
+                                                        {
+                                                            text: item,
+                                                            margin: [5, 0, 0, 0],
+                                                            fontSize: 16,
+                                                            alignment: 'center',
+                                                            width: 'auto'
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        })
+                                    ]
+                                }
+                            ],
+                            pageBreak: 'after',
+                            margin: [0, -50, 0, 0]
+                        }
+                        : {
+                            text: ''
+                        },
                     finalList,
                     {
                         margin: [0, 10, 0, 0],

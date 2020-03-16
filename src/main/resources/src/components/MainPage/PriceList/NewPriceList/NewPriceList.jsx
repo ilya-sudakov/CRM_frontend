@@ -82,7 +82,8 @@ const NewPriceList = (props) => {
         to: '',
         date: formatDateString(new Date()),
         slogan: '',
-        list: []
+        list: [],
+        active: true
     });
 
     const isExistingCategory = (category) => {
@@ -155,6 +156,7 @@ const NewPriceList = (props) => {
                 date: excelRows[1].titlePage,
                 slogan: excelRows[2].titlePage,
                 list: excelRows[3].titlePage.split('/'),
+                active: true
             })
             let newData = [];
             let tempNumber = '000';
@@ -389,6 +391,17 @@ const NewPriceList = (props) => {
                     </div>
                     {priceList.length > 0 && <div className="main-form__buttons">
                         <div className="new-price-item__checkbox-container">
+                            <CheckBox
+                                text="Титульный лист"
+                                defaultChecked={true}
+                                name="titleList"
+                                onChange={(value) => {
+                                    setTitlePage({
+                                        ...titlePage,
+                                        active: value
+                                    })
+                                }}
+                            />
                             <CheckBox
                                 text="Выделить все категории"
                                 defaultChecked={true}
