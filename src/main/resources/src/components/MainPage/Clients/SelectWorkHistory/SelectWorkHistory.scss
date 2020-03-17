@@ -95,7 +95,7 @@
     left: 5px;
     background-color: #4a5e5e;
     border-radius: 5px;
-    font-size: 80%;
+    font-size: 95%;
     position: absolute;
     // top: 45px;
     // right: 0;
@@ -105,7 +105,7 @@
     transition: 0.2s ease-in-out;
     transform-origin: 80% 0%;
     z-index: 999;
-    transform: scaleY(0);
+    // transform: scaleY(0);
   }
 
   .select-work-history__hint {
@@ -129,13 +129,13 @@
     }
   }
 
-  // .select-work-history__hints-wrapper--hidden {
-  //   transform: scaleY(0);
-  // }
-
-  .main-form__input_field:hover > .select-work-history__hints-wrapper {
-    transform: scaleY(1);
+  .select-work-history__hints-wrapper--hidden {
+    transform: scaleY(0);
   }
+
+  // .main-form__input_field:focus-within .select-work-history__hints-wrapper {
+  //   transform: scaleY(1);
+  // }
 
   .main-window__actions {
     flex-direction: row !important;

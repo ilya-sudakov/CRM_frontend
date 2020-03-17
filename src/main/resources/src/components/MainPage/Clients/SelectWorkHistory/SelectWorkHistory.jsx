@@ -98,7 +98,16 @@ const SelectWorkHistory = (props) => {
                                 }}
                             />
                         </span>
-                        <span className="main-form__input_field">
+                        <span
+                            className="main-form__input_field"
+                            onMouseEnter={(event) => {
+                                // console.log(event.target);
+                                setShowHints(true);
+                            }}
+                            onMouseLeave={(event) => {
+                                // console.log(event.target);
+                                setShowHints(false);
+                            }}>
                             <input
                                 type="text"
                                 name="action"
@@ -108,12 +117,15 @@ const SelectWorkHistory = (props) => {
                             />
                             {hints.filter(hint => {
                                 return (hint.toLowerCase().includes(newItem.action.toLowerCase()))
-                            }).length > 0 && <div className="select-work-history__hints-wrapper">
+                            }).length > 0 && <div
+                                className={showHints ? "select-work-history__hints-wrapper" : "select-work-history__hints-wrapper select-work-history__hints-wrapper--hidden"}
+                            >
                                     {hints.filter(hint => {
                                         return (hint.toLowerCase().includes(newItem.action.toLowerCase()))
                                     }).map(hint => {
                                         return <div
                                             className="select-work-history__hint"
+                                            name={hint}
                                             onClick={() => {
                                                 setNewItem({
                                                     ...newItem,
