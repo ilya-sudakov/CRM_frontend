@@ -13,13 +13,22 @@ import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 const SelectWorkHistory = (props) => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [showHints, setShowHints] = useState(false);
     const [creatingItem, setCreatingItem] = useState(false);
     const [newItem, setNewItem] = useState({
         date: new Date(),
         action: '',
         result: '',
         comment: ''
-    })
+    });
+    const [hints, setHints] = useState([
+        'Предложение сотрудничества',
+        'Отсылка материалов',
+        'Обсуждение условий',
+        'Техническая консультация',
+        'Текущая работа',
+        'Заявка'
+    ])
 
     useEffect(() => {
         if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
@@ -68,7 +77,7 @@ const SelectWorkHistory = (props) => {
             }
             <div className="main-window">
                 <div className="main-window__list">
-                    {items.length > 0 && <div className="main-window__list-item main-window__list-item--header">
+                    {(items.length > 0 || creatingItem) && <div className="main-window__list-item main-window__list-item--header">
                         <span>Дата</span>
                         <span>Действие</span>
                         <span>Результат</span>
@@ -94,14 +103,33 @@ const SelectWorkHistory = (props) => {
                                 type="text"
                                 name="action"
                                 value={newItem.action}
+                                autoComplete="off"
                                 onChange={handleInputChange}
                             />
+                            {hints.filter(hint => {
+                                return (hint.toLowerCase().includes(newItem.action.toLowerCase()))
+                            }).length > 0 && <div className="select-work-history__hints-wrapper">
+                                    {hints.filter(hint => {
+                                        return (hint.toLowerCase().includes(newItem.action.toLowerCase()))
+                                    }).map(hint => {
+                                        return <div
+                                            className="select-work-history__hint"
+                                            onClick={() => {
+                                                setNewItem({
+                                                    ...newItem,
+                                                    action: hint
+                                                })
+                                            }}
+                                        >{hint}</div>
+                                    })}
+                                </div>}
                         </span>
                         <span className="main-form__input_field">
                             <input
                                 type="text"
                                 name="result"
                                 value={newItem.result}
+                                autoComplete="off"
                                 onChange={handleInputChange}
                             />
                         </span>
@@ -110,6 +138,7 @@ const SelectWorkHistory = (props) => {
                                 type="text"
                                 name="comment"
                                 value={newItem.comment}
+                                autoComplete="off"
                                 onChange={handleInputChange}
                             />
                         </span>
@@ -163,7 +192,7 @@ const SelectWorkHistory = (props) => {
                     })}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

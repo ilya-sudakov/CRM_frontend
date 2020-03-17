@@ -120,23 +120,25 @@ const NewPriceList = (props) => {
                     console.log(error);
                 })
         })).then(() => {
-            // return getPriceGroupImageByName('titlePage')
-            //     .then(res => res.json())
-            //     .then(res => {
-            //         setTitlePage({
-            //             ...titlePage1,
-            //             img1: res.imgOne,
-            //             img2: res.imgTwo,
-            //             img3: res.imgThree,
-            //         })
-            setIsLoading(false);
-            // })
+            return getPriceGroupImageByName('titlePage')
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+                    
+                    setTitlePage({
+                        ...titlePage1,
+                        img1: res.imgOne,
+                        img2: res.imgTwo,
+                        img3: res.imgThree,
+                    })
+                    setIsLoading(false);
+                })
         });
     }
 
     const saveImages = () => {
         setIsLoading(true);
-        // console.log(priceList);
+        console.log(titlePage);
         Promise.all(priceList.map((item, index) => {
             return updatePriceGroupByName(item.number, {
                 name: item.number,
@@ -149,9 +151,9 @@ const NewPriceList = (props) => {
         })).then(() => {
             updatePriceGroupByName('titlePage', {
                 name: 'titlePage',
-                imgOne: priceList.img1,
-                imgTwo: priceList.img2,
-                imgThree: priceList.img3,
+                imgOne: titlePage.img1,
+                imgTwo: titlePage.img2,
+                imgThree: titlePage.img3,
             })
                 .then(() => {
                     setIsLoading(false);
