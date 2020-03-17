@@ -105,16 +105,18 @@ const NewPriceList = (props) => {
                 })
                 .then(res => {
                     console.log(res, item.number);
-                    let temp = data;
-                    temp.splice(index, 1, {
-                        ...temp[index],
-                        groupImg1: res.imgOne,
-                        groupImg2: res.imgTwo,
-                        groupImg3: res.imgThree,
-                        groupImg4: res.imgFour,
-                        footerImg: res.imgFive,
-                    });
-                    setPriceList(temp)
+                    if (res.id !== null) {
+                        let temp = data;
+                        temp.splice(index, 1, {
+                            ...temp[index],
+                            groupImg1: res.imgOne,
+                            groupImg2: res.imgTwo,
+                            groupImg3: res.imgThree,
+                            groupImg4: res.imgFour,
+                            footerImg: res.imgFive,
+                        });
+                        setPriceList(temp)
+                    }
                 })
                 .catch(error => {
                     console.log(error);
@@ -124,7 +126,7 @@ const NewPriceList = (props) => {
                 .then(res => res.json())
                 .then(res => {
                     console.log(res);
-                    
+
                     setTitlePage({
                         ...titlePage1,
                         img1: res.imgOne,

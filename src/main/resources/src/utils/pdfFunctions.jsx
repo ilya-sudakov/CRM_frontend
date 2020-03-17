@@ -880,7 +880,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                         }
                                     ]
                                 },
-                                groupOfProducts.footerImg !== ''
+                                (groupOfProducts.footerImg !== '' && groupOfProducts.footerImg !== null)
                                     ? {
                                         image: await getDataUri(groupOfProducts.footerImg, "jpeg", 0.3),
                                         fit: [512, 100],
