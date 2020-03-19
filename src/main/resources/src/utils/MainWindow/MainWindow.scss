@@ -170,7 +170,7 @@
       }
     }
     &:hover .main-window__action {
-      background-color: $white !important;
+      background-color: $white;
       color: $primary-text-color;
       .main-window__img {
         filter: brightness(1);
@@ -178,7 +178,7 @@
 
       &:hover {
         border: 1px solid $white;
-        background-color: $button__background--inverted !important;
+        background-color: $button__background--inverted;
         color: $secondary-text-color;
         .main-window__img {
           filter: brightness(3);

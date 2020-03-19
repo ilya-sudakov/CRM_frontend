@@ -75,13 +75,13 @@
         background-color: transparent !important;
         border: 0 !important;
         .main-window__img {
-          filter: brightness(3);
+          filter: brightness(3) !important;
         }
         &:hover {
-          background-color: transparent !important;
           transform: scale(1.15);
+          background-color: transparent !important;
           .main-window__img {
-            filter: brightness(3);
+            filter: brightness(3) !important;
           }
         }
       }
