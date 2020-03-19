@@ -312,57 +312,7 @@ const NewPriceList = (props) => {
             return loadImages(newData, titlePage1);
         }
     }
-
-    // const handleInputChange = e => {
-    //     let { name, value } = e.target;
-    //     validateField(name, value);
-    //     // setPriceListInputs({
-    //     //     ...priceListInputs,
-    //     //     [name]: value
-    //     // })
-    //     setFormErrors({
-    //         ...formErrors,
-    //         [name]: false
-    //     })
-    //     if (name === 'cost') {
-    //         value = parseFloat(value);
-    //         console.log(value, coefficients.dealerPrice);
-    //         let temp = Object.assign({
-    //             ...priceListInputs,
-    //             [name]: value,
-    //             retailPrice: priceListInputs.retailMarketPrice,
-    //             dealerPrice: (value + (priceListInputs.retailMarketPrice - value) * coefficients.dealerPrice).toFixed(2),
-    //             distributorPrice: (value + (priceListInputs.retailMarketPrice - value) * coefficients.distributorPrice).toFixed(2),
-    //             partnerPrice: (value + (priceListInputs.retailMarketPrice - value) * coefficients.partnerPrice).toFixed(2),
-    //             stopPrice: (value + (priceListInputs.retailMarketPrice - value) * coefficients.stopPrice).toFixed(2),
-    //             lessThan5000Price: (value + (priceListInputs.retailMarketPrice - value) * coefficients.lessThan5000Price).toFixed(2),
-    //             lessThan1500Price: (value + (priceListInputs.retailMarketPrice - value) * coefficients.lessThan1500Price).toFixed(2),
-    //         })
-    //         setPriceListInputs(temp);
-    //     }
-    //     else if (name === 'retailMarketPrice') {
-    //         value = parseFloat(value);
-    //         let temp = Object.assign({
-    //             ...priceListInputs,
-    //             [name]: value,
-    //             retailPrice: value,
-    //             dealerPrice: (priceListInputs.cost + (value - priceListInputs.cost) * coefficients.dealerPrice).toFixed(2),
-    //             distributorPrice: (priceListInputs.cost + (value - priceListInputs.cost) * coefficients.distributorPrice).toFixed(2),
-    //             partnerPrice: (priceListInputs.cost + (value - priceListInputs.cost) * coefficients.partnerPrice).toFixed(2),
-    //             stopPrice: (priceListInputs.cost + (value - priceListInputs.cost) * coefficients.stopPrice).toFixed(2),
-    //             lessThan5000Price: (priceListInputs.cost + (value - priceListInputs.cost) * coefficients.lessThan5000Price).toFixed(2),
-    //             lessThan1500Price: (priceListInputs.cost + (value - priceListInputs.cost) * coefficients.lessThan1500Price).toFixed(2),
-    //         })
-    //         setPriceListInputs(temp);
-    //     }
-    //     else {
-    //         setPriceListInputs({
-    //             ...priceListInputs,
-    //             [name]: value
-    //         })
-    //     }
-    // }
-
+    
     useEffect(() => {
         document.title = "Добавление продукции";
     }, [priceList])

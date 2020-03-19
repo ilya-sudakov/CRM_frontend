@@ -49,6 +49,11 @@
       // border-top-left-radius: 10px;
       // border-bottom-left-radius: 10px;
       z-index: 0;
+      transition: 100ms ease-in-out;
+
+      &:hover {
+        border-color: #888888;
+      }
 
       &:focus {
         border: 1px solid $button__background--inverted;
@@ -234,6 +239,11 @@
           position: relative;
           //   width: fit-content;
           align-items: center;
+          transition: 100ms ease-in-out;
+
+          &:hover {
+            border-color: #888888;
+          }
 
           &:focus {
             border: 1px solid $button__background--inverted;

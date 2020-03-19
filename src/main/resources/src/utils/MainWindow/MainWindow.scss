@@ -144,16 +144,21 @@
     transition: 100ms ease-in-out;
     background-color: $white;
     color: $primary-text-color;
-    border-radius: 5px;
     font-size: 90%;
-    //design test
+    border-radius: 0px;
     margin-top: 0;
     border-top: none;
     border-right: none;
     border-left: none;
     border-bottom: 1px solid #aaaaaa;
-    &:first-child {
+    &:nth-child(2) {
       margin-top: 0;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    &:last-child {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
     &:hover {
       color: $secondary-text-color;

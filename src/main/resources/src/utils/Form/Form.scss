@@ -166,6 +166,10 @@
         &:focus {
           border: 1px solid $button__background--inverted;
         }
+
+        &:hover {
+          border-color: #999999;
+        }
       }
 
       input::-webkit-outer-spin-button,
@@ -184,6 +188,15 @@
         border-radius: 5px;
         outline: none;
         background-color: $primary-background-color;
+        transition: 100ms ease-in-out;
+
+        &:hover {
+          border-color: #888888;
+        }
+
+        &:focus {
+          border: 1px solid $button__background--inverted;
+        }
       }
 
       .select {

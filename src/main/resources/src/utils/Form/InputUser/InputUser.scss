@@ -47,7 +47,11 @@
         width: calc(100% - 20px);
         padding: 5px 10px;
         border-radius: 5px;
-        // transition: 0.2s ease-in-out;
+        transition: 100ms ease-in-out;
+
+        &:hover {
+          border-color: #888888;
+        }
 
         &:focus {
           border: 1px solid $button__background--inverted;

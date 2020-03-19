@@ -69,6 +69,11 @@
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
       z-index: 0;
+      transition: 100ms ease-in-out;
+
+      &:hover {
+        border-color: #888888;
+      }
 
       &:focus {
         border: 1px solid $button__background--inverted;
