@@ -325,13 +325,14 @@ export const getEmployeesListPdfText = (employees, workshops) => {
             ],
         });
         let employeeInfo = [];
-        employees.map(item => {
-            if (item.workshop === workshop) {
+        employees.map(employee => {
+            // if (employee.workshop === workshop) {
+            if ((workshop === employee.workshop && employee.relevance !== 'Уволен') || (workshop === 'Уволенные' && employee.relevance === 'Уволен')) {
                 employeeInfo.push([
-                    (item.lastName + ' ' + item.name + ' ' + item.middleName),
-                    formatDateString(item.yearOfBirth),
-                    item.citizenship,
-                    item.position,
+                    (employee.lastName + ' ' + employee.name + ' ' + employee.middleName),
+                    formatDateString(employee.yearOfBirth),
+                    employee.citizenship,
+                    employee.position,
                     ''
                 ]);
             }

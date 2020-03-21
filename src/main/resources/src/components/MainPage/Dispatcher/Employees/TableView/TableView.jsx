@@ -147,7 +147,7 @@ const TableView = (props) => {
                         <div className="tableview_employees__col"></div>
                         <div className="tableview_employees__actions">
                             <div className="tableview_employees__action" onClick={() => {
-                                let dd = getEmployeesByWorkshopListPdfText(props.data.filter(employee => (employee.workshop === item)), item);
+                                let dd = getEmployeesByWorkshopListPdfText(props.data.filter(employee => ((item === employee.workshop && employee.relevance !== 'Уволен') || (item === 'Уволенные' && employee.relevance === 'Уволен'))), item);
                                 pdfMake.createPdf(dd).print();
                             }}>Печать</div>
                         </div>

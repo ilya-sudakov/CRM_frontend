@@ -211,7 +211,7 @@ const GeneralPage = (props) => {
                     {/* <div className="main-window__date">{'Дата: ' + formatDateString(date)}</div> */}
                     <div className="main-window__control-panel">
                         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER']) && <Link className="main-window__button" to="work-managment/record-time/new">Учесть рабочее время</Link>}
-                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <ManagerWorkspace />}
+                        {/* {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <ManagerWorkspace />} */}
                         {/* {props.userHasAccess(['ROLE_ADMIN']) &&  */}
                         <div className="main-window__button" onClick={exportCSVFile}>
                             <img className="main-window__img" src={DownloadIcon} alt="" />

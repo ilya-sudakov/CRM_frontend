@@ -46,9 +46,9 @@ const Header = (props) => {
                         Меню
                     </div> */}
                 </div>
-                <Link className="header__link" to="/">
+                {/* <Link className="header__link" to="/">
                     <img className="header__logo" src={logoSVG} alt="" />
-                </Link>
+                </Link> */}
                 {/* <div className="header__name">
                     Компания
                 </div> */}

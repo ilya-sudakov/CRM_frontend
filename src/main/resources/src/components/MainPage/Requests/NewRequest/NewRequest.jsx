@@ -14,7 +14,7 @@ const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: new Date(),
         codeWord: "",
-        responsible: "",
+        responsible: props.userData.username,
         status: "Ожидание"
     })
     const [requestErrors, setRequestErrors] = useState({
@@ -89,7 +89,7 @@ const NewRequest = (props) => {
         event.preventDefault();
         setIsLoading(true);
         let id = 0;
-        // console.log(requestInputs);
+        console.log(requestInputs);
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {
