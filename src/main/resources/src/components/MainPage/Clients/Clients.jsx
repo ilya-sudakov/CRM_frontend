@@ -183,7 +183,7 @@ const Clients = (props) => {
                                 <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
                                 <span><div className="main-window__mobile-text">Дата след. контакта: </div>{formatDateString(item.nextDateContact)}</span>
                                 <div className="main-window__actions">
-                                    <div className="main-window__action" onClick={() => {
+                                    <div className="main-window__action" title="Совершить действие" onClick={() => {
                                         setCloseWindow(false);
                                         setSelectedItem(item);
                                         setShowWindow(true);
@@ -191,7 +191,7 @@ const Clients = (props) => {
                                     }}>
                                         <img className="main-window__img" src={phoneSVG} />
                                     </div>
-                                    <div className="main-window__action" onClick={() => {
+                                    <div className="main-window__action" title="Дата следующего контакта" onClick={() => {
                                         setCloseWindow(false);
                                         setSelectedItem(item);
                                         setShowWindow(true);
@@ -199,17 +199,17 @@ const Clients = (props) => {
                                     }}>
                                         <img className="main-window__img" src={calendarSVG} />
                                     </div>
-                                    <div className="main-window__action" onClick={() => {
+                                    <div className="main-window__action" title="Просмотр клиента" onClick={() => {
                                         props.history.push('/clients/view/' + item.id)
                                     }}>
                                         <img className="main-window__img" src={viewSVG} />
                                     </div>
-                                    <div className="main-window__action" onClick={() => {
+                                    <div className="main-window__action" title="Редактирование клиента" onClick={() => {
                                         props.history.push('/clients/edit/' + item.id)
                                     }}>
                                         <img className="main-window__img" src={editSVG} />
                                     </div>
-                                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => {
+                                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" title="Удаление клиента" onClick={() => {
                                         deleteItem(item.id, index);
                                     }}>
                                         <img className="main-window__img" src={deleteSVG} />

@@ -1,17 +1,17 @@
 @import "../../../variables.scss";
 
 .searchbar {
-  width: calc(100% - 25px);
+  width: calc(100% - 0px);
   border-radius: 10px;
   padding: 10px 0;
-  // background-color: $table-primary__background;
-  background-color: $primary-background-color;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-  margin-bottom: 15px;
+  // background-color: $side_menu__background;
+  // background-color: $primary-background-color;
+  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+  // margin-bottom: 15px;
 
   .searchbar__title {
     padding-left: 25px;
-    font-size: 135%;
+    font-size: 110%;
     margin-bottom: 5px;
   }
 
@@ -21,7 +21,7 @@
     justify-content: space-between;
     // align-items: center;
     align-items: stretch;
-    padding: 0 25px;
+    padding: 0 15px;
     position: relative;
 
     .searchbar__img {
@@ -29,23 +29,28 @@
       filter: brightness(1);
       margin-right: 5px;
       position: absolute;
-      left: 35px;
+      left: 25px;
     }
 
     .searchbar__input {
       // margin-left: 10px;
       // flex: 0 1 calc(80% - 25px);
-      flex: 0 1 100%;
+      flex: 0 1 calc(100% - 15px);
 
       input[type="text"] {
         border: 1px solid #bbbbbb;
-        width: calc(100% - 20px - 35px);
+        // width: calc(100% - 20px - 35px);
+        width: calc(100% - 20px - 25px);
         padding: 5px 10px;
         padding-left: 35px;
         border-radius: 5px;
         transition: 200ms ease-in-out;
-        // border-top-right-radius: 0;
-        // border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &:hover {
+          border-color: #999999;
+        }
 
         &:focus {
           border: 1px solid $button__background--inverted;
@@ -66,8 +71,8 @@
       transition: 0.2s ease-in-out;
       cursor: pointer;
       //для кнопки внутри searchbar input
-      // border-top-left-radius: 0;
-      // border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
@@ -107,7 +112,7 @@
     .searchbar__input {
       font-size: 80%;
       & input {
-        width: calc(100% - 20px - 10px) !important;
+        width: calc(100% - 20px - 0px) !important;
         line-height: 1.5rem;
         font-size: 80%;
         padding-left: 10px !important;

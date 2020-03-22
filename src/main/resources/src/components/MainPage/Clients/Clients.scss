@@ -63,6 +63,8 @@
     // border-top-right-radius: 0px;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
+    background-color: $secondary-text-color;
+    width: calc(100% - 25px);
   }
 
   .main-window__list {

@@ -29,6 +29,16 @@
         }
       }
 
+      &:hover .main-window__action {
+        background-color: transparent;
+        .main-window__img {
+          filter: brightness(3);
+        }
+        &:hover {
+          border: 0;
+        }
+      }
+
       .main-form__input_field {
         justify-content: flex-start !important;
         width: 100% !important;
@@ -64,7 +74,7 @@
         max-width: 90px;
       }
       .main-window__action {
-        background-color: #ffffff;
+        // background-color: #ffffff !important;
         .main-window__img {
           filter: brightness(1);
         }
@@ -72,6 +82,14 @@
       &:hover {
         background-color: transparent;
         box-shadow: none;
+        .main-window__action {
+          .main-window__img {
+            filter: brightness(1) !important;
+            &:hover {
+              filter: brightness(1) !important;
+            }
+          }
+        }
       }
 
       // input {
@@ -139,18 +157,20 @@
 
   .main-window__actions {
     flex-direction: row !important;
-    flex: 0 1 15% !important;
-    flex-wrap: wrap;
+    flex: 0 1 10% !important;
+    // flex-wrap: wrap;
     .main-window__action {
-      padding: 5px 10px;
+      // padding: 5px 10px;
       margin-bottom: 0;
       margin-right: 5px;
       display: flex;
       align-items: center;
+      background-color: transparent;
+      border: 0;
       justify-content: center;
       .main-window__img {
         transition: 100ms ease-in-out;
-        filter: brightness(3);
+        filter: brightness(1);
         transition: filter 0.5s;
         transform: translate3d(-1px, -1px, 0);
         border: solid 1px transparent;
@@ -158,6 +178,8 @@
       }
       &:last-child {
         margin-right: 0px;
+      }
+      &:hover {
       }
     }
   }
