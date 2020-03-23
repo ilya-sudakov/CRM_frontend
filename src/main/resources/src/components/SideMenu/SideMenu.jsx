@@ -13,6 +13,7 @@ import contractImg from '../../../../../../assets/sidemenu/contract.svg';
 import listImg from '../../../../../../assets/sidemenu/list.svg';
 import boxImg from '../../../../../../assets/sidemenu/box.svg';
 import screwImg from '../../../../../../assets/sidemenu/screw.svg';
+import feedbackImg from '../../../../../../assets/sidemenu/feedback.svg';
 import playListImg from '../../../../../../assets/sidemenu/play_list.svg';
 import './SideMenu.scss';
 import { getClientCategories } from '../../utils/RequestsAPI/Clients/Categories.jsx';
@@ -190,6 +191,14 @@ const SideMenu = (props) => {
             addButtonName: "Добавить работу",
             icon: listImg
         },
+        // {
+        //     pathname: "/feedback",
+        //     name: "Обратная связь",
+        //     mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
+        //     addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
+        //     addButtonName: "Написать сообщение",
+        //     icon: feedbackImg
+        // },
     ])
 
     useEffect(() => {

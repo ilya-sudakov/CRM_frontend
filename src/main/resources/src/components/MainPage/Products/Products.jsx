@@ -54,25 +54,27 @@ const Products = (props) => {
                 //Загрузка по местоположению
                 if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER'])) {
                     // console.log(categoriesArr);
-                    categoriesArr.map(item => {
+                    Promise.all(categoriesArr.map(item => {
                         return getProductsByCategory({ category: item.name }) //Продукция по категории
                             .then(res => res.json())
                             .then(res => {
                                 res.map(item => productsArr.push(item));
                                 setProducts([...productsArr]);
-                                const tempNew = productsArr.map((item, index) => {
-                                    getProductById(item.id)
-                                        .then(res => res.json())
-                                        .then(res => {
-                                            // console.log(res);
-                                            productsArr.splice(index, 1, res);
-                                            setProducts([...productsArr]);
-                                        })
-                                })
-                                Promise.all(tempNew)
-                                    .then(() => console.log('all images downloaded'))
                             })
-                    })
+                    }))
+                        .then(() => {
+                            const tempNew = productsArr.map((item, index) => {
+                                getProductById(item.id)
+                                    .then(res => res.json())
+                                    .then(res => {
+                                        // console.log(res);
+                                        productsArr.splice(index, 1, res);
+                                        setProducts([...productsArr]);
+                                    })
+                            })
+                            Promise.all(tempNew)
+                                .then(() => console.log('all images downloaded'))
+                        })
                 }
                 else if (props.userHasAccess(['ROLE_LEMZ'])) {
                     getProductsByLocation({
