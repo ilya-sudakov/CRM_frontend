@@ -23,11 +23,12 @@ export function editNextContactDateClient(date) {
     })
 }
 
-export function getClientsByCategoryAndType(category_type) {
+export function getClientsByCategoryAndType(category_type, signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/client/category_type/",
         method: "POST",
-        body: JSON.stringify(category_type)
+        body: JSON.stringify(category_type),
+        signal: signal
     })
 }
 

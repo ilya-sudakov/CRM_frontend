@@ -65,7 +65,7 @@ const Clients = (props) => {
             })
     }
 
-    const loadData = (category, type) => {
+    const loadData = (category, type, signal) => {
         // console.log(category, type);
         setIsLoading(true);
         getClientsByCategoryAndType({
@@ -75,7 +75,7 @@ const Clients = (props) => {
                 : type === 'potential'
                     ? 'Потенциальные'
                     : 'В разработке'
-        })
+        }, signal)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
@@ -112,10 +112,14 @@ const Clients = (props) => {
 
     useEffect(() => {
         document.title = "Клиенты";
+        const abortController = new AbortController();
         setCurCategory(props.location.pathname.split('/clients/category/')[1].split('/')[0]);
         setCurClientType(props.location.pathname.split('/clients/category/')[1].split('/')[1]);
         loadData(props.location.pathname.split('/clients/category/')[1].split('/')[0],
-            props.location.pathname.split('/clients/category/')[1].split('/')[1]);
+            props.location.pathname.split('/clients/category/')[1].split('/')[1], abortController.signal);
+        return function cancel() {
+            abortController.abort()
+        }
     }, [props.location, curPage]);
 
     return (

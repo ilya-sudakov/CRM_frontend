@@ -7,26 +7,29 @@ export function getProducts() {
     })
 }
 
-export function getProductById(id) {
+export function getProductById(id, signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product/" + id,
-        method: "GET"
+        method: "GET", 
+        signal: signal
     })
 }
 
-export function getProductsByCategory(category) {
+export function getProductsByCategory(category, signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product/category/",
         method: "POST",
-        body: JSON.stringify(category)
+        body: JSON.stringify(category),
+        signal: signal
     })
 }
 
-export function getProductsByLocation(workshop) {
+export function getProductsByLocation(workshop, signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product/location/",
         method: "POST",
-        body: JSON.stringify(workshop)
+        body: JSON.stringify(workshop), 
+        signal: signal
     })
 }
 

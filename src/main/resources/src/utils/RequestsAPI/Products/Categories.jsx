@@ -7,10 +7,11 @@ export function getCategories() {
     })
 }
 
-export function getCategoriesNames() {
+export function getCategoriesNames(signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/product_category/name/",
-        method: "GET"
+        method: "GET", 
+        signal: signal
     })
 }
 

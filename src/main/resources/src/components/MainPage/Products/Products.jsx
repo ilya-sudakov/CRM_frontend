@@ -17,7 +17,11 @@ const Products = (props) => {
 
     useEffect(() => {
         document.title = "Продукция";
-        loadCategories();
+        const abortController = new AbortController();
+        loadCategories(abortController.signal);
+        return function cancel() {
+            abortController.abort()
+        }
     }, [])
 
     const deleteItem = (event) => {
@@ -32,8 +36,8 @@ const Products = (props) => {
             .then(() => loadCategories())
     }
 
-    const loadCategories = () => {
-        getCategoriesNames() //Только категории
+    const loadCategories = (signal) => {
+        getCategoriesNames(signal) //Только категории
             .then(res => res.json())
             .then(res => {
                 const categoriesArr = res;
@@ -55,7 +59,7 @@ const Products = (props) => {
                 if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER'])) {
                     // console.log(categoriesArr);
                     Promise.all(categoriesArr.map(item => {
-                        return getProductsByCategory({ category: item.category }) //Продукция по категории
+                        return getProductsByCategory({ category: item.category }, signal) //Продукция по категории
                             .then(res => res.json())
                             .then(res => {
                                 res.map(item => productsArr.push(item));
@@ -64,7 +68,7 @@ const Products = (props) => {
                     }))
                         .then(() => {
                             const tempNew = productsArr.map((item, index) => {
-                                getProductById(item.id)
+                                getProductById(item.id, signal)
                                     .then(res => res.json())
                                     .then(res => {
                                         // console.log(res);
@@ -79,13 +83,13 @@ const Products = (props) => {
                 else if (props.userHasAccess(['ROLE_LEMZ'])) {
                     getProductsByLocation({
                         productionLocation: 'ЦехЛЭМЗ'
-                    })
+                    }, signal)
                         .then(res => res.json())
                         .then(res => {
                             res.map(item => productsArr.push(item));
                             setProducts([...productsArr]);
                             const tempNew = productsArr.map((item, index) => {
-                                getProductById(item.id)
+                                getProductById(item.id, signal)
                                     .then(res => res.json())
                                     .then(res => {
                                         // console.log(res);
@@ -100,13 +104,13 @@ const Products = (props) => {
                 else if (props.userHasAccess(['ROLE_LEPSARI'])) {
                     getProductsByLocation({
                         productionLocation: 'ЦехЛепсари'
-                    })
+                    }, signal)
                         .then(res => res.json())
                         .then(res => {
                             res.map(item => productsArr.push(item));
                             setProducts([...productsArr]);
                             const tempNew = productsArr.map((item, index) => {
-                                getProductById(item.id)
+                                getProductById(item.id, signal)
                                     .then(res => res.json())
                                     .then(res => {
                                         // console.log(res);
@@ -121,13 +125,13 @@ const Products = (props) => {
                 else if (props.userHasAccess(['ROLE_LIGOVSKIY'])) {
                     getProductsByLocation({
                         productionLocation: 'ЦехЛиговский'
-                    })
+                    }, signal)
                         .then(res => res.json())
                         .then(res => {
                             res.map(item => productsArr.push(item));
                             setProducts([...productsArr]);
                             const tempNew = productsArr.map((item, index) => {
-                                getProductById(item.id)
+                                getProductById(item.id, signal)
                                     .then(res => res.json())
                                     .then(res => {
                                         // console.log(res);
