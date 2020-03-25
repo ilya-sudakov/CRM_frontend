@@ -205,13 +205,24 @@ const Clients = (props) => {
                             )
                         })
                         .sort((a, b) => {
-                            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                            if (sortOrder.curSort === 'nextDateContact') {
+                                if (new Date(a[sortOrder.curSort]) < new Date(b[sortOrder.curSort])) {
+                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                }
+                                if (new Date(a[sortOrder.curSort]) > new Date(b[sortOrder.curSort])) {
+                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                }
+                                return 0;
                             }
-                            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                            else {
+                                if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                }
+                                if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                }
+                                return 0;
                             }
-                            return 0;
                         })
                         .map((item, index) => {
                             return <div className="main-window__list-item">
