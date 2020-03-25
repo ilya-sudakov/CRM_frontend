@@ -72,22 +72,22 @@
   }
 
   .main-window__list-item {
-    &:hover {
-      .main-window__action {
-        background-color: transparent !important;
-        border: 0 !important;
-        .main-window__img {
-          filter: brightness(3) !important;
-        }
-        &:hover {
-          transform: scale(1.15);
-          background-color: transparent !important;
-          .main-window__img {
-            filter: brightness(3) !important;
-          }
-        }
-      }
-    }
+    // &:hover {
+    //   .main-window__action {
+    //     background-color: transparent !important;
+    //     border: 0 !important;
+    //     .main-window__img {
+    //       filter: brightness(3) !important;
+    //     }
+    //     &:hover {
+    //       transform: scale(1.15);
+    //       background-color: transparent !important;
+    //       .main-window__img {
+    //         filter: brightness(3) !important;
+    //       }
+    //     }
+    //   }
+    // }
     span {
       &:nth-child(2) {
         flex: 0 1 10%;
@@ -114,24 +114,24 @@
     flex: 0 1 15% !important;
     flex-wrap: wrap;
     .main-window__action {
-      padding: 5px;
-      margin-bottom: 0;
-      margin-right: 5px;
-      display: flex;
-      align-items: center;
-      //---
-      justify-content: center;
-      background-color: transparent;
-      border: 0;
+      // padding: 5px;
+      // margin-bottom: 0;
+      // margin-right: 5px;
+      // display: flex;
+      // align-items: center;
+      // //---
+      // justify-content: center;
+      // background-color: transparent;
+      // border: 0;
       .main-window__img {
         width: 22px;
-        padding: 0;
-        transition: 0ms ease-in-out;
-        // filter: brightness(3);
-        transition: filter 0.5s;
-        transform: translate3d(-1px, -1px, 0);
-        border: solid 1px transparent;
-        border-width: 1px 0 0 1px;
+        //   padding: 0;
+        //   transition: 0ms ease-in-out;
+        //   // filter: brightness(3);
+        //   transition: filter 0.5s;
+        //   transform: translate3d(-1px, -1px, 0);
+        //   border: solid 1px transparent;
+        //   border-width: 1px 0 0 1px;
       }
       &:first-child {
         // padding: 5px 15px;

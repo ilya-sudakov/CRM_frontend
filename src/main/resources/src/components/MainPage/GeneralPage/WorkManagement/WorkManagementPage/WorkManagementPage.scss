@@ -95,6 +95,10 @@
     }
   }
 
+  .main-window__actions {
+    flex-direction: row !important;
+  }
+
   @media (max-width: 768px) {
     .main-window__info-panel {
       flex-direction: column !important;

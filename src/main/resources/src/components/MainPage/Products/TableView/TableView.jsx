@@ -117,7 +117,7 @@ const TableView = (props) => {
                     >
                         {/* <div className="tableview_products__col">{category.id}</div> */}
                         <div className="tableview_products__col"></div>
-                        <div className="tableview_products__col">{category.name}</div>
+                        <div className="tableview_products__col">{category.category}</div>
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col"></div>
@@ -142,7 +142,7 @@ const TableView = (props) => {
                             className="tableview_products__row tableview_products__row--even"
                         />}
                         {sortProducts(props.products).map((product, product_id) => (
-                            (product.category === category.name) && <div key={product_id} className={"tableview_products__row tableview_products__row--odd"}>
+                            (product.category === category.category) && <div key={product_id} className={"tableview_products__row tableview_products__row--odd"}>
                                 {/* <div className="tableview_products__col">{product.id}</div> */}
                                 <div className="tableview_products__col">
                                     <ImgLoader

@@ -70,7 +70,11 @@ const Clients = (props) => {
         setIsLoading(true);
         getClientsByCategoryAndType({
             categoryName: category,
-            clientType: type === 'active' ? 'Активные' : 'Потенциальные'
+            clientType: type === 'active'
+                ? 'Активные'
+                : type === 'potential'
+                    ? 'Потенциальные'
+                    : 'В разработке'
         })
             .then(res => res.json())
             .then(res => {
@@ -114,6 +118,11 @@ const Clients = (props) => {
                             ? "main-window__item--active main-window__item"
                             : "main-window__item"}>
                             Потенциальные
+                        </Link>
+                        <Link to={'/clients/category/' + curCategory + '/in-progress'} className={props.location.pathname.includes('in-progress') === true
+                            ? "main-window__item--active main-window__item"
+                            : "main-window__item"}>
+                            В разработке
                         </Link>
                     </div>
                 </div>

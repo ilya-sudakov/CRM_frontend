@@ -386,6 +386,7 @@ const newClient = (props) => {
                                         >
                                             <option value="Активные">Активные</option>
                                             <option value="Потенциальные">Потенциальные</option>
+                                            <option value="В разработке">В разработке</option>
                                         </select>
                                     </div>
                                 </div>

@@ -55,7 +55,7 @@ const Products = (props) => {
                 if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER'])) {
                     // console.log(categoriesArr);
                     Promise.all(categoriesArr.map(item => {
-                        return getProductsByCategory({ category: item.name }) //Продукция по категории
+                        return getProductsByCategory({ category: item.category }) //Продукция по категории
                             .then(res => res.json())
                             .then(res => {
                                 res.map(item => productsArr.push(item));

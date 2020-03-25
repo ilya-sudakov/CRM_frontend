@@ -110,7 +110,7 @@ const Select = (props) => {
                     if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER'])) {
                         temp = categoriesArr.map((item) => {
                             let category = {
-                                category: item.name
+                                category: item.category
                             };
                             return getProductsByCategory(category) //Продукция по категории
                                 .then(res => res.json())

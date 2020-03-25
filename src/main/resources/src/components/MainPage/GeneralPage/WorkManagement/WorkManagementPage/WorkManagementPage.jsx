@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import './WorkManagementPage.scss';
 import '../../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
+import viewSVG from '../../../../../../../../../assets/tableview/view.svg';
+import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg';
+import editSVG from '../../../../../../../../../assets/tableview/edit.svg';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import DownloadIcon from '../../../../../../../../../assets/download.png';
 import { formatDateString } from '../../../../../utils/functions.jsx';
@@ -212,7 +215,10 @@ const WorkManagementPage = (props) => {
                             <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
                             <div className="main-window__actions">
                                 {/* <div className="main-window__mobile-text">Действия: </div> */}
-                                <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action">Редактировать</Link>
+                                <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
+                                    <img className="main-window__img" src={editSVG} />
+                                    {/* Редактировать */}
+                                </Link>
                                 <div className="main-window__action" onClick={() => {
                                     const deletedProducts = workItem.workControlProduct.map(product => {
                                         return deleteProductFromRecordedWork(workItem.id, product.product.id)
@@ -224,7 +230,10 @@ const WorkManagementPage = (props) => {
                                                     loadWorks()
                                                 })
                                         })
-                                }}>Удалить</div>
+                                }} title="Удалить">
+                                    <img className="main-window__img" src={deleteSVG} />
+                                    {/* Удалить */}
+                                </div>
                             </div>
                         </div>
                     )

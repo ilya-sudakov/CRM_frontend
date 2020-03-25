@@ -20,7 +20,7 @@ const TableViewCategory = (props) => {
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
         return data.filter(item => (
-            item.name.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query) ||
             item.id.toString().includes(query)
         ))
     }
@@ -54,12 +54,12 @@ const TableViewCategory = (props) => {
             {sortProducts(props.data).map((category, category_id) => (
                 <div key={category_id} className="tableview-category__row tableview-category__row--even">
                     {/* <div className="tableview-category__col">{category.id}</div> */}
-                    <div className="tableview-category__col">{category.name}</div>
+                    <div className="tableview-category__col">{category.category}</div>
                     <div className="tableview-category__actions">
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/category/edit/" + category.id} className="tableview-category__action">Редактировать</Link>}
                         {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && <div data-id={category.id} className="tableview-category__action" onClick={props.deleteItem}>Удалить</div>}
                         {props.selectCategory && <div data-id={category.id} className="tableview-category__action" onClick={() => {
-                            props.selectCategory(category.name);
+                            props.selectCategory(category.category);
                             props.setCloseWindow(!props.closeWindow);
                         }}>Выбрать</div>}
                     </div>

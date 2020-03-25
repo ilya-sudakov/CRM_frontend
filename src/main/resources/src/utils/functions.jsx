@@ -16,7 +16,15 @@ export const formatDateStringWithTime = (dateString) => {
         + ' ' + ((testDate.getHours() < 10) ? ('0' + testDate.getHours()) : testDate.getHours())
         + ':' + ((testDate.getMinutes() < 10) ? ('0' + testDate.getMinutes()) : testDate.getMinutes())
     );
-}
+};
+
+export const formatDateStringToTime = (dateString) => {
+    const testDate = new Date(dateString);
+    return (
+        ((testDate.getHours() < 10) ? ('0' + testDate.getHours()) : testDate.getHours())
+        + ':' + (((testDate.getMinutes()) < 10) ? ('0' + (testDate.getMinutes())) : testDate.getMinutes())
+    );
+};
 
 export const imgToBlobDownload = (imageSrc, imageName) => {
     var img = new Image();

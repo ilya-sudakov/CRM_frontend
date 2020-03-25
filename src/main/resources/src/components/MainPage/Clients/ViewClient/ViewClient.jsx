@@ -198,7 +198,7 @@ const ViewClient = (props) => {
                             </React.Fragment>
                     }
                     <div className="main-form__buttons">
-                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients/category/' + clientInputs.categoryName + '/' + (clientInputs.clientType === 'Активные' ? 'active' : 'potential'))} value="Вернуться назад" />
+                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients/category/' + clientInputs.categoryName + '/' + (clientInputs.clientType === 'Активные' ? 'active' : clientInputs.clientType === 'Потенциальные' ? 'potential' : 'in-progress'))} value="Вернуться назад" />
                         {isLoading && <ImgLoader />}
                     </div>
                 </form>

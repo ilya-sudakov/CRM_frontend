@@ -191,14 +191,14 @@ const SideMenu = (props) => {
             addButtonName: "Добавить работу",
             icon: listImg
         },
-        // {
-        //     pathname: "/feedback",
-        //     name: "Обратная связь",
-        //     mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
-        //     addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
-        //     addButtonName: "Написать сообщение",
-        //     icon: feedbackImg
-        // },
+        {
+            pathname: "/feedback",
+            name: "Обратная связь",
+            mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
+            addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
+            addButtonName: "Оставить сообщение",
+            icon: feedbackImg
+        },
     ])
 
     useEffect(() => {
