@@ -19,4 +19,14 @@
       color: #555555;
     }
   }
+
+  @media (max-width: 768px) {
+    .main-window__info-panel {
+      flex-direction: column;
+
+      .main-window__amount_table {
+        margin-top: 5px;
+      }
+    }
+  }
 }

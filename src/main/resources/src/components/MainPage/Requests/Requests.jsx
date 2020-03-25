@@ -154,7 +154,7 @@ const Requests = (props) => {
                         let check = false;
                         clients.map(client => {
                             if (
-                                client.active && (client.name === item.codeWord)
+                                client.active && (client.name === item.codeWord) || item.status === 'Завершено'
                             ) {
                                 check = true;
                                 return;
