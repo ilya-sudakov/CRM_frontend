@@ -44,11 +44,11 @@ const WorkManagementPage = (props) => {
         start: new Date(),
         end: new Date()
     });
+    const [isLoading, setIsLoading] = useState(false);
     const [sortOrder, setSortOrder] = useState({
         curSort: 'lastName',
         date: 'desc'
     })
-    const [isLoading, setIsLoading] = useState(false);
     const changeSortOrder = (event) => {
         const name = event.target.value.split(' ')[0];
         const order = event.target.value.split(' ')[1];

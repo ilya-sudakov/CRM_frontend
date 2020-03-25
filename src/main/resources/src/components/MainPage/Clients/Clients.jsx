@@ -95,13 +95,28 @@ const Clients = (props) => {
             })
     }
 
+    const [sortOrder, setSortOrder] = useState({
+        curSort: 'name',
+        name: 'asc',
+        nextDateContact: 'desc'
+    });
+
+    const changeSortOrder = (event) => {
+        const name = event.target.value.split(' ')[0];
+        const order = event.target.value.split(' ')[1];
+        setSortOrder({
+            curSort: name,
+            [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
+        })
+    };
+
     useEffect(() => {
         document.title = "Клиенты";
         setCurCategory(props.location.pathname.split('/clients/category/')[1].split('/')[0]);
         setCurClientType(props.location.pathname.split('/clients/category/')[1].split('/')[1]);
         loadData(props.location.pathname.split('/clients/category/')[1].split('/')[0],
             props.location.pathname.split('/clients/category/')[1].split('/')[1]);
-    }, [props.location, curPage])
+    }, [props.location, curPage]);
 
     return (
         <div className="clients">
@@ -161,6 +176,14 @@ const Clients = (props) => {
                 <div className="main-window__info-panel">
                     <div className="main-window__amount_table">Всего: {itemsCount} записей</div>
                 </div>
+                <div className="main-window__sort-panel">
+                    <span>Сортировка: </span>
+                    <select onChange={changeSortOrder}>
+                        <option value="name desc">По алфавиту (А-Я)</option>
+                        <option value="name asc">По алфавиту (Я-А)</option>
+                        <option value="nextDateContact desc">По дате след. контакта</option>
+                    </select>
+                </div>
                 <div className="main-window__list">
                     <div className="main-window__list-item main-window__list-item--header">
                         <span>Название</span>
@@ -180,6 +203,15 @@ const Clients = (props) => {
                                 item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                 item.site.toLowerCase().includes(searchQuery.toLowerCase())
                             )
+                        })
+                        .sort((a, b) => {
+                            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                            }
+                            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                            }
+                            return 0;
                         })
                         .map((item, index) => {
                             return <div className="main-window__list-item">

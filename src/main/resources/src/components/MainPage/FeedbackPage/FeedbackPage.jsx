@@ -23,7 +23,7 @@ const FeedbackPage = (props) => {
         {
             className: 'completed',
             name: 'Завершенные',
-            visible: true,
+            visible: false,
         },
         {
             className: 'urgent',

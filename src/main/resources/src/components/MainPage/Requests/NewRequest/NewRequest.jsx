@@ -27,7 +27,8 @@ const NewRequest = (props) => {
         date: true,
         requestProducts: false,
         codeWord: false,
-        responsible: (props.userHasAccess(['ROLE_ADMIN']) ? false : true),
+        // responsible: (props.userHasAccess(['ROLE_ADMIN']) ? false : true),
+        responsible: true,
     })
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
