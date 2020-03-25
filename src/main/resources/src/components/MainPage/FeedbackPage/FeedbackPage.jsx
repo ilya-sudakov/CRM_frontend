@@ -51,7 +51,7 @@ const FeedbackPage = (props) => {
             <div className="main-window">
                 <div className="main-window__title">Обратная связь</div>
                 <SearchBar
-                    title="Поиск по сообщениям"
+                    title="Поиск по обсуждениям"
                     placeholder="Введите запрос для поиска..."
                     setSearchQuery={setSearchQuery}
                 />

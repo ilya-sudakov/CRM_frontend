@@ -106,6 +106,10 @@
     }
   }
 
+  .main-window__list-item:not(:first-child) span:nth-child(4) {
+    font-size: 90%;
+  }
+
   .main-window__pagination {
     padding: 0 15px;
   }
