@@ -5,8 +5,8 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import FeedbackChat from '../FeedbackChat/FeedbackChat.jsx';
-import { getFeedbackById } from '../../../../utils/RequestsAPI/Feedback/feedback';
-import { addMessage } from '../../../../utils/RequestsAPI/Feedback/messages';
+import { getFeedbackById, editFeedback } from '../../../../utils/RequestsAPI/Feedback/feedback';
+import { addMessage, getMessagesByDiscussionId } from '../../../../utils/RequestsAPI/Feedback/messages';
 
 const ViewFeedback = (props) => {
     const [formInputs, setFormInputs] = useState({
@@ -30,57 +30,6 @@ const ViewFeedback = (props) => {
     const [feedbackId, setFeedbackId] = useState(0)
 
     useEffect(() => {
-        // const data = {
-        //     date: new Date(),
-        //     subject: 'Тема  ылвоар ылвоа ылвоа',
-        //     text: 'ыл во арлвыоп лвплыопрдыапр ыдшгпрукшщгрущш гмрвдш м выщшмрвыа шпгвщ шгв пщшврг щшвг щвшм выщшрмвыщшмивщшир ',
-        //     author: props.userData.username,
-        //     status: 'В процессе',
-        //     messages: [
-        //         {
-        //             id: 1,
-        //             date: new Date(1485134558 * 1000),
-        //             author: 'Аркадий',
-        //             text: 'у менеджеров не наполняется база. некоторые фирмы проходят, некоторые нет. по нескольку раз заполняюты'
-        //         },
-        //         {
-        //             id: 2,
-        //             date: new Date(),
-        //             author: 'Аркадий',
-        //             text: 'Необходимо быстро исправить'
-        //         },
-        //         {
-        //             id: 2,
-        //             date: new Date(),
-        //             author: 'Аркадий',
-        //             text: 'Необходимо быстро исlkправить'
-        //         },
-        //         {
-        //             id: 2,
-        //             date: new Date(1525134558 * 1000),
-        //             author: 'Аркадий',
-        //             text: 'Необходимо быстро испраlskd fdslkfвить'
-        //         },
-        //         {
-        //             id: 2,
-        //             date: new Date(),
-        //             author: 'Аркадий',
-        //             text: 'Необходимо быстро исправ 20838 492834 u9ить'
-        //         },
-        //         {
-        //             id: 2,
-        //             date: new Date(),
-        //             author: 'Аркадий',
-        //             text: 'Необходимо быстро исправить lkjf kjfgkjdfgkjdfhgkjdh fkjgh dfjg aksjh lasjdk flasjkdfh lksadjfhl kasjd fhlkasjdfh ljkadh flsadjfh lasjdkfh sladjkfh aslkdjfh asldjkfh asldkjfh askdjfhaslk d'
-        //         },
-        //         {
-        //             id: 3,
-        //             date: new Date(),
-        //             author: 'Евгений',
-        //             text: 'Добрый вечер, конечно сделаем'
-        //         }
-        //     ]
-        // }
         document.title = "Просмотр обсуждения";
         const id = props.history.location.pathname.split("/feedback/view/")[1];
         setFeedbackId(id);
@@ -125,19 +74,39 @@ const ViewFeedback = (props) => {
 
     const loadData = (id) => {
         setIsLoading(true);
+        let temp;
         getFeedbackById(id)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                setFormInputs({
+                temp = Object.assign({
+                    ...formInputs,
                     date: res.date,
                     subject: res.subject,
                     text: res.text,
                     author: res.author,
-                    status: res.status,
-                    messages: res.messages ? res.messages : []
+                    status: res.status
                 });
-                setIsLoading(false);
+                // setFormInputs({
+                //     ...formInputs,
+                //     date: res.date,
+                //     subject: res.subject,
+                //     text: res.text,
+                //     author: res.author,
+                //     status: res.status
+                // });
+            })
+            .then(() => {
+                getMessagesByDiscussionId(id)
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res);
+                        setFormInputs({
+                            ...temp,
+                            messages: res ? res : []
+                        })
+                        setIsLoading(false);
+                    })
             })
     }
 
@@ -156,29 +125,34 @@ const ViewFeedback = (props) => {
                         defaultValue={formInputs.author}
                         readOnly
                     />
-                    {props.userHasAccess(['ROLE_ADMIN'])
-                        ? <div className="main-form__item">
-                            <div className="main-form__input_name">Статус</div>
-                            <div className="main-form__input_field">
-                                <select
-                                    name="status"
-                                    onChange={() => {
-
-                                    }}
-                                    value={formInputs.status}
-                                >
-                                    <option value="in-progress">В процессе</option>
-                                    <option value="completed">Завершено</option>
-                                    <option value="urgent">Срочно</option>
-                                </select>
-                            </div>
+                    <div className="main-form__item">
+                        <div className="main-form__input_name">Статус</div>
+                        <div className="main-form__input_field">
+                            <select
+                                name="status"
+                                onChange={(event) => {
+                                    const value = event.target.value;
+                                    setFormInputs({
+                                        ...formInputs,
+                                        status: value
+                                    })
+                                    editFeedback({
+                                        date: new Date(formInputs.date).getTime() / 1000,
+                                        subject: formInputs.subject,
+                                        text: formInputs.text,
+                                        author: formInputs.author,
+                                        status: value,
+                                    }, feedbackId)
+                                }}
+                                value={formInputs.status}
+                                disabled={props.userHasAccess(['ROLE_ADMIN']) ? false : "disabled"}
+                            >
+                                <option value="in-progress">В процессе</option>
+                                <option value="completed">Завершено</option>
+                                <option value="urgent">Срочно</option>
+                            </select>
                         </div>
-                        : <InputText
-                            inputName="Статус"
-                            defaultValue={formInputs.status}
-                            readOnly
-                        />
-                    }
+                    </div>
                     <InputText
                         inputName="Тема"
                         defaultValue={formInputs.subject}

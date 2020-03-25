@@ -7,6 +7,13 @@ export function getMessages() {
     });
 }
 
+export function getMessagesByDiscussionId(id) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/feedback/discussion/" + id,
+        method: "GET"
+    });
+}
+
 export function getMessageById(id) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/feedback/message/" + id,

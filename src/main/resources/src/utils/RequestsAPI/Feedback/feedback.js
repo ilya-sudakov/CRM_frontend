@@ -29,9 +29,9 @@ export function addFeedback(newFeedback) {
     });
 }
 
-export function editFeedback(newFeedback) {
+export function editFeedback(newFeedback, id) {
     return request({
-        url: process.env.API_BASE_URL + "/api/v1/feedback/",
+        url: process.env.API_BASE_URL + "/api/v1/feedback/" + id,
         method: "PUT",
         body: JSON.stringify(newFeedback)
     });

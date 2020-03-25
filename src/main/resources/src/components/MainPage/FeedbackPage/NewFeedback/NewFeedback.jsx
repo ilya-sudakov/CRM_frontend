@@ -50,11 +50,38 @@ const NewFeedback = (props) => {
         }
     }
 
+    const formIsValid = () => {
+        let check = true;
+        let newErrors = Object.assign({
+            subject: false,
+            text: false,
+        });
+        for (let item in validInputs) {
+            if (validInputs[item] === false) {
+                check = false;
+                newErrors = Object.assign({
+                    ...newErrors,
+                    [item]: true
+                })
+            }
+        }
+        setFormErrors(newErrors);
+        if (check === true) {
+            return true;
+        }
+        else {
+            // alert("Форма не заполнена");
+            setIsLoading(false);
+            setShowError(true);
+            return false;
+        };
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
         console.log(formInputs);
-        addFeedback(formInputs)
+        formIsValid() && addFeedback(formInputs)
             .then(() => {
                 props.history.push('/feedback')
                 setIsLoading(false);

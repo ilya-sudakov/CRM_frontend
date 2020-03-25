@@ -46,11 +46,13 @@ const FeedbackChat = (props) => {
                         const value = event.target.value;
                         setNewMessage(value);
                     }}
+                    value={newMessage}
                 />
                 <button className="feedback-chat__button" onClick={(event) => {
                     event.preventDefault();
-                    console.log(newMessage);
+                    // console.log(newMessage);
                     props.handleSubmit(newMessage);
+                    setNewMessage('');
                 }}>
                     <span>Отправить</span>
                     <img className="feedback-chat__img" src={sendSVG} alt="" />

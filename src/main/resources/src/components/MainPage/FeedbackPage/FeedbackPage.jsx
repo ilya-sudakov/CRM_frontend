@@ -9,6 +9,7 @@ import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDat
 import { Link } from 'react-router-dom';
 import { formatDateString } from '../../../utils/functions.jsx';
 import { getFeedback, deleteFeedbackById } from '../../../utils/RequestsAPI/Feedback/feedback.js';
+import { getMessagesByDiscussionId, deleteMessage } from '../../../utils/RequestsAPI/Feedback/messages.js';
 
 const FeedbackPage = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -33,32 +34,6 @@ const FeedbackPage = (props) => {
     ])
 
     useEffect(() => {
-        // const data = [
-        //     {
-        //         id: 1,
-        //         date: new Date(),
-        //         author: 'Менеджер',
-        //         status: 'in-progress',
-        //         subject: 'Тема обсуждения1: баг системы обновления ',
-        //         text: ' kjdf sdkjfsldj fsdkf sdkjfh ksdhf sdjkfh dskfh dskfh '
-        //     },
-        //     {
-        //         id: 2,
-        //         date: new Date(),
-        //         author: 'Руководитель',
-        //         status: 'urgent',
-        //         subject: 'Тема обсуждения2',
-        //         text: ' kjdf sdkjfsldj fsdkf sdkjfh ksdhf sdjkfh dskfh dskjfh dskfh '
-        //     },
-        //     {
-        //         id: 2,
-        //         date: new Date(),
-        //         author: 'Руководитель',
-        //         status: 'completed',
-        //         subject: 'Тема обсуждения3',
-        //         text: ' kjdf sdkjfsldj fsd sdjkfh dskfh dskjfh dskfh '
-        //     }
-        // ];
         loadData();
     }, [])
 
@@ -127,6 +102,15 @@ const FeedbackPage = (props) => {
                                 return check;
                             }
                         })
+                        .sort((a, b) => {
+                            if (a.date < b.date) {
+                                return -1;
+                            }
+                            if (a.date > b.date) {
+                                return 1;
+                            }
+                            return 0;
+                        })
                         .map((item, index) => {
                             return <Link className={"main-window__list-item" + " main-window__list-item--" + item.status} to={'/feedback/view/' + item.id}>
                                 <div className="main-window__list-col">
@@ -141,9 +125,19 @@ const FeedbackPage = (props) => {
                                     </div>
                                     {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" title="Удаление чата" onClick={(event) => {
                                         event.preventDefault();
-                                        deleteFeedbackById(item.id)
-                                            .then(() => {
-                                                return loadData();
+                                        let temp = [];
+                                        getMessagesByDiscussionId(item.id)
+                                            .then(res => res.json())
+                                            .then(res => {
+                                                Promise.all(res.map(message => {
+                                                    return deleteMessage(message.id)
+                                                }))
+                                                    .then(() => {
+                                                        deleteFeedbackById(item.id)
+                                                            .then(() => {
+                                                                return loadData();
+                                                            })
+                                                    })
                                             })
                                     }}>
                                         <img className="main-window__img" src={deleteSVG} />

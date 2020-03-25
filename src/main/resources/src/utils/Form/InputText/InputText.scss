@@ -83,7 +83,8 @@
 
       &--error {
         input[type="text"],
-        input[type="password"] {
+        input[type="password"], 
+        textarea {
           border: 1px solid #f73434 !important;
         }
       }
