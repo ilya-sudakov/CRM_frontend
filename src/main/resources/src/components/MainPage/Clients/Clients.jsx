@@ -106,7 +106,8 @@ const Clients = (props) => {
         const order = event.target.value.split(' ')[1];
         setSortOrder({
             curSort: name,
-            [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
+            // [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
+            [name]: [order]
         })
     };
 
