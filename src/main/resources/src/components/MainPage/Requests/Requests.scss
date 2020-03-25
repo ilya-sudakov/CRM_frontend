@@ -1,5 +1,21 @@
 @import "../../../variables.scss";
 
 .requests {
-  
+  .requests__clients-sort {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    // width: 100%;
+    margin-right: auto;
+    font-size: 80%;
+
+    .main-window__button {
+      padding: 5px 10px;
+    }
+    .main-window__button--inverted {
+      color: #555555;
+    }
+  }
 }

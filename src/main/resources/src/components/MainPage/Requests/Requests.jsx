@@ -13,6 +13,7 @@ const Requests = (props) => {
     const [showWindow, setShowWindow] = useState(false);
     const [toWorkshop, setToWorkshop] = useState('lemz');
     const [requestId, setRequestId] = useState(0);
+    const [clients, setClients] = useState([]);
 
     const deleteItem = (event) => {
         const id = event.target.dataset.id;
@@ -35,12 +36,27 @@ const Requests = (props) => {
         loadRequests()
     }, [])
 
+    const getClientsFromRequests = (reqs) => {
+        const temp = clients;
+        reqs.map(request => {
+            if (request.status !== 'Завершено' && !temp.find(item => request.codeWord === item.name)) {
+                temp.push({
+                    name: request.codeWord,
+                    active: true
+                })
+            }
+        })
+        // console.log(temp);
+        setClients([...temp]);
+    }
+
     const loadRequests = () => {
         getRequests()
             .then(res => res.json())
             .then(requests => {
                 // console.log(requests);
                 setRequests(requests);
+                getClientsFromRequests(requests);
             })
     }
 
@@ -108,10 +124,44 @@ const Requests = (props) => {
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
+                    <div className="requests__clients-sort">
+                        {clients.sort((a, b) => {
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((client, index) => {
+                            return <div
+                                className={(client.active ? "main-window__button" : "main-window__button main-window__button--inverted") + " main-window__list-item--" + status.className}
+                                onClick={() => {
+                                    let temp = clients;
+                                    temp.splice(index, 1, {
+                                        ...client,
+                                        active: !client.active
+                                    });
+                                    setClients([...temp]);
+                                }}
+                            >{client.name}</div>
+                        })}
+                    </div>
                     <div className="main-window__amount_table">Всего: {requests.length} записей</div>
                 </div>
                 <TableView
-                    data={requests}
+                    data={requests.filter(item => {
+                        let check = false;
+                        clients.map(client => {
+                            if (
+                                client.active && (client.name === item.codeWord)
+                            ) {
+                                check = true;
+                                return;
+                            }
+                        })
+                        return check;
+                    })}
                     loadData={loadRequests}
                     deleteItem={deleteItem}
                     transferRequest={transferRequest}
