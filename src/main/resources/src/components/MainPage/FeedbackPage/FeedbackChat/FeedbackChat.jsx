@@ -15,6 +15,7 @@ const FeedbackChat = (props) => {
     return (
         <div className="feedback-chat">
             <div className="feedback-chat__title">Обсуждение</div>
+            <div>{'Всего сообщений: ' + props.messages.length}</div>
             <div className="feedback-chat__list">
                 {props.messages.length === 0 && <div>Нет сообщений...</div>}
                 {props.messages.sort((a, b) => {
@@ -37,6 +38,7 @@ const FeedbackChat = (props) => {
                         <div className="feedback-chat__text">{message.text}</div>
                     </div>
                 })}
+                {/* <div className="feedback-chat__divider"><span>Новые сообщения</span></div> */}
             </div>
             <div className="feedback-chat__input">
                 <input

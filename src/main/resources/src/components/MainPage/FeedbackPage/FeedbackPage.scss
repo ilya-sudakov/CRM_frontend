@@ -100,6 +100,19 @@
       background-color: var(--completed);
     }
   }
+  .feedback-page__info-message {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    // top: 25px;
+    top: calc(50% - 11px);
+    right: 125px;
+    background-color: $button__background--inverted;
+    color: #ffffff;
+    border-radius: 25px;
+    padding: 2.5px 12.5px;
+    width: fit-content;
+  }
   .main-window__actions {
     flex-direction: row !important;
     .main-window__img {
@@ -124,6 +137,12 @@
     .main-window__list {
       .main-window__list-item {
         padding-left: 20px;
+        .feedback-page__info-message {
+          position: relative;
+          // width: 25px;
+          top: 0;
+          left: 0;
+        }
         &::before {
           top: calc(50% - 10px);
         }

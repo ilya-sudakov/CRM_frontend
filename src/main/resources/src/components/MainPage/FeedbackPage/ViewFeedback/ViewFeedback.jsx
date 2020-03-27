@@ -7,6 +7,7 @@ import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import FeedbackChat from '../FeedbackChat/FeedbackChat.jsx';
 import { getFeedbackById, editFeedback } from '../../../../utils/RequestsAPI/Feedback/feedback';
 import { addMessage, getMessagesByDiscussionId } from '../../../../utils/RequestsAPI/Feedback/messages';
+import { formatDateStringWithTime } from '../../../../utils/functions.jsx';
 
 const ViewFeedback = (props) => {
     const [formInputs, setFormInputs] = useState({
@@ -115,10 +116,15 @@ const ViewFeedback = (props) => {
             <div className="main-form">
                 <div className="main-form__title">Просмотр обсуждения</div>
                 <form className="main-form__form">
-                    <InputDate
+                    {/* <InputDate
                         inputName="Дата"
                         readOnly
                         selected={Date.parse(formInputs.date)}
+                    /> */}
+                    <InputText
+                        inputName="Дата"
+                        defaultValue={formatDateStringWithTime(formInputs.date)}
+                        readOnly
                     />
                     <InputText
                         inputName="Автор"

@@ -12,14 +12,14 @@
             flex: 0 1 35%;
           }
         }
-        &:hover {
-          .main-window__img {
-            filter: brightness(1);
-            &:hover {
-              filter: brightness(3);
-            }
-          }
-        }
+        // &:hover {
+        //   .main-window__img {
+        //     filter: brightness(1);
+        //     &:hover {
+        //       filter: brightness(3);
+        //     }
+        //   }
+        // }
       }
     }
     .main-window__actions {
@@ -34,12 +34,12 @@
         align-items: center;
         justify-content: center;
         .main-window__img {
-          transition: 100ms ease-in-out;
-          filter: brightness(3);
-          transition: filter 0.5s;
-          transform: translate3d(-1px, -1px, 0);
-          border: solid 1px transparent;
-          border-width: 1px 0 0 1px;
+          transition: transform 100ms ease-in-out;
+          // filter: brightness(3);
+          // transition: filter 0.5s;
+          // transform: translate3d(-1px, -1px, 0);
+          // border: solid 1px transparent;
+          // border-width: 1px 0 0 1px;
         }
         &:last-child {
           margin-right: 0px;

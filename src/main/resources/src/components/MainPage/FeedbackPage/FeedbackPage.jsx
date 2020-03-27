@@ -114,10 +114,10 @@ const FeedbackPage = (props) => {
                         .map((item, index) => {
                             return <Link className={"main-window__list-item" + " main-window__list-item--" + item.status} to={'/feedback/view/' + item.id}>
                                 <div className="main-window__list-col">
+                                    {/* <div className="feedback-page__info-message"><div className="main-window__mobile-text">Новые сообщения: </div>{2}</div> */}
                                     <span><div className="main-window__mobile-text">Тема: </div>{item.subject}</span>
                                     <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(item.date)}</span>
                                     <span><div className="main-window__mobile-text">Пользователь: </div>{item.author}</span>
-                                    {/* <span><div className="main-window__mobile-text">Сообщение: </div>{item.text}</span> */}
                                 </div>
                                 <div className="main-window__actions">
                                     <div className="main-window__action" title="Просмотр чата">

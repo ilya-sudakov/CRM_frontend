@@ -128,6 +128,36 @@
     }
   }
 
+  .feedback-chat__divider {
+    display: flex;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    justify-content: center;
+    margin: 5px 0;
+    &:before {
+      border-top: 1.5px solid $button__background--inverted;
+      content: "";
+      margin: 0 auto; /* this centers the line to the full width specified */
+      position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+      top: 50%;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 95%;
+      z-index: -1;
+    }
+    span {
+      /* to hide the lines from behind the text, you have to set the background color the same as the container */
+      // background: #fff;b
+      background: #fafafa;
+      padding: 0 15px;
+      font-size: 90%;
+      color: $button__background--inverted;
+    }
+  }
+
   .feedback-chat__img {
     width: 25px;
   }

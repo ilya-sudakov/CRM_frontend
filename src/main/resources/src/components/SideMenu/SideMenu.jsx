@@ -233,7 +233,7 @@ const SideMenu = (props) => {
                         }).map(item => {
                             return {
                                 name: item.name,
-                                pathname: '/clients/category/' + item.name + '/active',
+                                pathname: '/clients/category/' + item.name + '/',
                                 link: '/clients/category/' + item.name + '/active'
                             }
                         })

@@ -301,15 +301,18 @@
 
   .main-window__pagination {
     margin: 10px 0;
+    margin-top: 5px;
     display: flex;
     flex-direction: row;
     width: fit-content;
     margin-left: auto;
+    flex-wrap: wrap;
     // margin-right: auto;
     .main-window__page-number {
       border: 1px solid #666666;
       border-radius: 5px;
       margin-right: 5px;
+      margin-top: 5px;
       padding: 5px 15px;
       background-color: $secondary-text-color;
       color: #666666;

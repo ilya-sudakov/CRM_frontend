@@ -38,7 +38,7 @@ const ClientCategories = (props) => {
                 loadData();
             })
             .catch(error => {
-                alert('Ошибка при удалении записи!');
+                alert('Ошибка при удалении записи! Убедитесь что в категории нет клиентов');
                 console.log(error);
             })
     }
@@ -116,7 +116,7 @@ const ClientCategories = (props) => {
                                     <img className="main-window__img" src={editSVG} />
                                 </div>
                                 {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" onClick={() => {
-                                    deleteItem(item.id)
+                                    deleteItem(item.id);
                                 }}>
                                     <img className="main-window__img" src={deleteSVG} />
                                 </div>}
