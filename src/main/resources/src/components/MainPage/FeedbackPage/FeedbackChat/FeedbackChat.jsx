@@ -6,10 +6,15 @@ import { formatDateString, formatDateStringWithTime, formatDateStringToTime } fr
 
 const FeedbackChat = (props) => {
     const [newMessage, setNewMessage] = useState('');
+    const [showNewMessages, setShowNewMessages] = useState(false);
 
     useEffect(() => {
         let list = document.getElementsByClassName('feedback-chat__list')[0];
         list.scrollTop = list.scrollHeight;
+        //Отмечаем все непрочитанные сообщения - прочитанными
+        props.messages.length > 0 && setTimeout(() => {
+            setShowNewMessages(false);
+        }, 10000);
     }, [props.messages])
 
     return (
@@ -27,6 +32,22 @@ const FeedbackChat = (props) => {
                     }
                     return 0;
                 }).map((message, index) => {
+                    //if (index === props.messages.length - 10) {
+                    //    return <React.Fragment>
+                    //        <div className={showNewMessages ? "feedback-chat__divider" : "feedback-chat__divider feedback-chat__divider--hidden"}><span>Новые сообщения</span></div>
+                    //        <div className="feedback-chat__message">
+                    //           {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div data-letters={message.author[0] + message.author[1]}></div>}
+                    //           {/* {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <img className="feedback-chat__img" src={sendSVG} alt="" />} */}
+                    //         {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div className="feedback-chat__author">{message.author}</div>}
+                    //     <div className="feedback-chat__date">{
+                    //          ((new Date().getDate() + '.' + (new Date().getMonth() + 1)) === (new Date(message.date).getDate() + '.' + (new Date(message.date).getMonth() + 1)))
+                    //              ? formatDateStringToTime(message.date)
+                    //            : formatDateStringWithTime(message.date)}</div>
+                    //  <div className="feedback-chat__text">{message.text}</div>
+                    // </div>
+                    // </React.Fragment>
+                    //}
+                    //else 
                     return <div className="feedback-chat__message">
                         {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div data-letters={message.author[0] + message.author[1]}></div>}
                         {/* {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <img className="feedback-chat__img" src={sendSVG} alt="" />} */}
@@ -37,8 +58,8 @@ const FeedbackChat = (props) => {
                                 : formatDateStringWithTime(message.date)}</div>
                         <div className="feedback-chat__text">{message.text}</div>
                     </div>
+                    {/* <div className="feedback-chat__divider"><span>Новые сообщения</span></div> */ }
                 })}
-                {/* <div className="feedback-chat__divider"><span>Новые сообщения</span></div> */}
             </div>
             <div className="feedback-chat__input">
                 <input
