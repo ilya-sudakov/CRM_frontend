@@ -224,7 +224,7 @@ const EditRecordWork = (props) => {
                             let productsArr = [];
                             const temp = categoriesArr.map((item) => {
                                 let category = {
-                                    category: item.name
+                                    category: item.category
                                 };
                                 return getProductsByCategory(category) //Продукция по категории
                                     .then(res => res.json())
