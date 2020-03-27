@@ -38,14 +38,12 @@ const newClient = (props) => {
     });
     const [formErrors, setFormErrors] = useState({
         name: false,
-        legalEntity: false,
         contacts: false,
         categoryId: false,
         site: false,
     });
     const [validInputs, setValidInputs] = useState({
         name: false,
-        legalEntity: false,
         contacts: false,
         categoryId: false,
         site: false,
@@ -72,7 +70,6 @@ const newClient = (props) => {
         let check = true;
         let newErrors = Object.assign({
             name: false,
-            legalEntity: false,
             contacts: false,
             site: false,
         });
@@ -257,7 +254,7 @@ const newClient = (props) => {
                                     <div className="main-form__input_field">
                                         <SelectLegalEntity
                                             handleLegalEntityChange={(value) => {
-                                                validateField("legalEntity", value);
+                                                // validateField("legalEntity", value);
                                                 setClientInputs({
                                                     ...clientInputs,
                                                     legalEntity: value

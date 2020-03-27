@@ -8,7 +8,7 @@ const SelectLegalEntity = (props) => {
     const [selected, setSelected] = useState([
         {
             name: '',
-            inn: '7842143789',
+            inn: '',
             kpp: '',
             ogrn: '',
             bik: '',
