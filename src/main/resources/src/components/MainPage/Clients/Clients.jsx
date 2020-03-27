@@ -206,7 +206,8 @@ const Clients = (props) => {
                         .filter(item => {
                             return (
                                 item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                item.site.toLowerCase().includes(searchQuery.toLowerCase())
+                                item.site.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                item.comment.toLowerCase().includes(searchQuery.toLowerCase())
                             )
                         })
                         .sort((a, b) => {
