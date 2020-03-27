@@ -34,7 +34,9 @@ const SelectEmployee = (props) => {
                             : props.userHasAccess(['ROLE_LIGOVSKIY'])
                                 ? 'ЦехЛиговский'
                                 : props.userHasAccess(['ROLE_ENGINEER'])
-                                && 'Офис'
+                                    ? 'Офис'
+                                    : props.userHasAccess(['ROLE_MANAGER'])
+                                        && 'Офис'
         })
         if (workshop.workshop === 'Админ' || workshop.workshop === 'Диспетчер') {
             getEmployees()
