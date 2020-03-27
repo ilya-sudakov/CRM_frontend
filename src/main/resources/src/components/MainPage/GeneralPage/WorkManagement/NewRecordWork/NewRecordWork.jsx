@@ -150,8 +150,9 @@ const NewRecordWork = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
+        const abortController = new AbortController();
         //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
-        getCategoriesNames() //Только категории
+        getCategoriesNames(abortController.signal) //Только категории
             .then(res => res.json())
             .then(res => {
                 const categoriesArr = res;
@@ -159,9 +160,9 @@ const NewRecordWork = (props) => {
                 let productsArr = [];
                 const temp = categoriesArr.map((item) => {
                     let category = {
-                        category: item.name
+                        category: item.category
                     };
-                    return getProductsByCategory(category) //Продукция по категории
+                    return getProductsByCategory(category, abortController.signal) //Продукция по категории
                         .then(res => res.json())
                         .then(res => {
                             res.map(item => productsArr.push(item));
@@ -172,7 +173,7 @@ const NewRecordWork = (props) => {
                     .then(() => {
                         //Загружаем картинки по отдельности для каждой продукции
                         const temp = productsArr.map((item, index) => {
-                            getProductById(item.id)
+                            getProductById(item.id, abortController.signal)
                                 .then(res => res.json())
                                 .then(res => {
                                     // console.log(res);
@@ -186,6 +187,9 @@ const NewRecordWork = (props) => {
                             })
                     })
             })
+        return function cancel() {
+            abortController.abort()
+        }
     }, [])
 
     return (
