@@ -19,7 +19,7 @@ const SelectWorkHours = (props) => {
             </div>
             <div className="select-work-hours__list">
                 {props.workArray.map((item, index) => {
-                    console.log(item);
+                    {/* console.log(item); */ }
                     return <div className="select-work-hours__list-item">
                         <div className="select-work-hours__circle"></div>
                         <span className="select-work-hours__work-name">{item.workName}</span>
@@ -39,13 +39,24 @@ const SelectWorkHours = (props) => {
                                 placeholder="Введите часы..."
                                 value={item.hours}
                                 onChange={(event) => {
-                                    let value = event.target.value > 12 ? 12 : event.target.value;
+                                    let value;
+                                    if (event.target.value > 12) {
+                                        value = 12;
+                                    }
+                                    else {
+                                        if (event.target.value === '') {
+                                            value = 0;
+                                        }
+                                        else {
+                                            value = Number.parseInt(event.target.value);
+                                        }
+                                    }
                                     let temp = props.workArray;
                                     temp.splice(index, 1, {
                                         ...item,
                                         hours: value
                                     });
-                                    console.log(temp);
+                                    // console.log(temp);
                                     props.onChange([...temp]);
                                 }}
                             />
