@@ -128,18 +128,15 @@ const SelectWork = (props) => {
             }
             <div className="select-work__selected">
                 {selected.map((item, index) => (
-                    <div className="select-work__selected_item" >
-                        <div className="select-work__selected_header" index={index} onClick={clickOnForm}>
+                    <div className="select-work__selected_item" key={index}>
+                        {/* <div className="select-work__selected_header" index={index} onClick={clickOnForm}>
                             <div className="select-work__selected_name">
                                 <span>Работа: </span> {item.workName}
                             </div>
                             <div className="select-work__selected_name">
                                 <span>Продукция: </span> {(item.product.length > 0) && item.product.reduce((sum, item) => sum + item.name + ', ', '')}
                             </div>
-                            <div className="select-work__selected_name">
-                                <span>Кол-во часов: </span> {item.hours}
-                            </div>
-                        </div>
+                        </div> */}
                         <div className="select-work__selected_form" >
                             <SelectWorkItem
                                 inputName="Выбор работы"
@@ -165,7 +162,7 @@ const SelectWork = (props) => {
                             />
                             {/* Вставить InputProducts, только вместо фасовки сделать 
                                 единицу измерения(или просто кол-во оставить) */}
-                            {(selected[index].workType === 'Продукция' || selected[index].workType === undefined )
+                            {(selected[index].workType === 'Продукция' || selected[index].workType === undefined)
                                 ?
                                 <InputProducts
                                     inputName="Продукция"
@@ -217,7 +214,7 @@ const SelectWork = (props) => {
                                     />
                                 </div>
                             </div> */}
-                            <div className="select-work__item">
+                            {!props.noTime && <div className="select-work__item">
                                 <div className="select-work__input_name">Часы</div>
                                 <div className="select-work__input_field">
                                     <input
@@ -230,9 +227,9 @@ const SelectWork = (props) => {
                                         readOnly={props.readOnly}
                                     />
                                 </div>
-                            </div>
+                            </div>}
                         </div>
-                        {!props.readOnly && (index !== 0) &&
+                        {!props.readOnly && (selected.length > 1) &&
                             <img index={index} onClick={deletePart} className="select-work__img" src={deleteSVG} />
                         }
                     </div>

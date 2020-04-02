@@ -396,7 +396,7 @@ const EditClient = (props) => {
                                 />
                                 {/* Добавление юридических лиц */}
                                 <div className="main-form__item">
-                                    <div className="main-form__input_name">Юридическое лицо*</div>
+                                    <div className="main-form__input_name">Юридическое лицо</div>
                                     <div className="main-form__input_field">
                                         <SelectLegalEntity
                                             handleLegalEntityChange={(value) => {
@@ -537,6 +537,7 @@ const EditClient = (props) => {
                                 />
                             </React.Fragment>
                     }
+                    <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients/category/' + clientInputs.categoryName + '/' + (clientInputs.clientType === 'Активные' ? 'active' : clientInputs.clientType === 'Потенциальные' ? 'potential' : 'in-progress'))} value="Вернуться назад" />
                         <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />

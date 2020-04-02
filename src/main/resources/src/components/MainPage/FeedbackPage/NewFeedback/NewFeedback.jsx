@@ -119,6 +119,7 @@ const NewFeedback = (props) => {
                         setErrorsArr={setFormErrors}
                         handleInputChange={handleInputChange}
                     />
+                    <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/feedback')} value="Вернуться назад" />
                         <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить обсуждение" />
