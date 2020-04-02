@@ -36,6 +36,7 @@ const NewRecordWork = (props) => {
     const [products, setProducts] = useState([]);
     const [totalHours, setTotalHours] = useState(0);
     const [curPage, setCurPage] = useState(0);
+    const [wrapperHeight, setWrapperHeight] = useState('0px');
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -158,6 +159,7 @@ const NewRecordWork = (props) => {
     useEffect(() => {
         document.title = "Создание заявки";
         const abortController = new AbortController();
+        setWrapperHeight(document.getElementsByClassName('main-form__wrapper')[0]?.scrollHeight + 'px');
         //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
         products.length === 0 && getCategoriesNames(abortController.signal) //Только категории
             .then(res => res.json())
@@ -208,7 +210,7 @@ const NewRecordWork = (props) => {
                     showError={showError}
                     setShowError={setShowError}
                 />
-                <form className="main-form__form" style={{ minHeight: `calc(${curPage !== 1 ? (document.getElementsByClassName('main-form__wrapper')[0]?.scrollHeight + 'px') : (document.getElementsByClassName('select-work-hours')[0]?.scrollHeight + 'px + var(--buttons-height)')})` }}>
+                <form className="main-form__form" style={{ minHeight: `calc(${curPage !== 1 ? (wrapperHeight) : (document.getElementsByClassName('select-work-hours')[0]?.scrollHeight + 'px + var(--buttons-height)')})` }}>
                     <div className="main-form__wrapper" style={{
                         left: `calc(-100% * ${curPage} + (20px + 15px * ${curPage}))`,
                     }}>
@@ -335,7 +337,7 @@ const NewRecordWork = (props) => {
                     </div>
                 </form>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -76,17 +76,21 @@
       background-color: #dedede;
       border-radius: 5px;
       padding: 10px 10px;
+      width: 200%;
 
-      &:hover, &:focus-within {
+      &:hover,
+      &:focus-within {
         transform: scale(1.05);
         &::before {
           border-color: $button__background--inverted;
-          left: -42px;
+          left: -38px;
         }
 
         .select-work-hours__circle {
-          left: -45.5px;
-          // background-color: red;
+          top: 1px;
+          left: -46px;
+          width: 35px;
+          height: 35px;
         }
       }
 
@@ -100,8 +104,9 @@
         // font-size: 90%;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
         align-items: center;
+        // justify-content: space-between;
+        justify-content: flex-end;
 
         span {
           font-size: 90%;
@@ -179,6 +184,7 @@
         border-radius: 999px;
         background-color: #fafafa;
         z-index: 0;
+        transition: 200ms ease-in-out;
       }
 
       &:before {
@@ -215,6 +221,22 @@
 
       .select-work-hours__timeline {
         padding-left: 0;
+      }
+
+      .select-work-hours__list-item {
+        width: 100%;
+
+        &:hover,
+        &:focus-within {
+          &::before {
+            left: -42px;
+          }
+
+          .select-work-hours__circle {
+            top: 1px;
+            left: -50px;
+          }
+        }
       }
     }
   }
