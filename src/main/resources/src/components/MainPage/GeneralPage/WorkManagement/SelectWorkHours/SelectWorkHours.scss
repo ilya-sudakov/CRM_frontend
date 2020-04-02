@@ -77,7 +77,7 @@
       border-radius: 5px;
       padding: 10px 10px;
 
-      &:hover {
+      &:hover, &:focus-within {
         transform: scale(1.05);
         &::before {
           border-color: $button__background--inverted;

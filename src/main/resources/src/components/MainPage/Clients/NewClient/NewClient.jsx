@@ -15,6 +15,7 @@ import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
+import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -51,6 +52,7 @@ const newClient = (props) => {
 
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [users, setUsers] = useState([]);
     const [curTab, setCurTab] = useState('clientData');
 
     const validateField = (fieldName, value) => {
@@ -190,7 +192,36 @@ const newClient = (props) => {
 
     useEffect(() => {
         document.title = "Добавление клиента";
-    })
+        users.length === 0 && getUsers()
+            .then(res => res.json())
+            .then(res => {
+                const filteredRoles = ['ROLE_ADMIN', 'ROLE_MANAGER'];
+                let newUsers = res;
+                setUsers([
+                    ...newUsers
+                        .filter(item => {
+                            const temp = filteredRoles
+                                ? item.roles.reduce((prevRole, curRole) => {
+                                    let check = false;
+                                    filteredRoles.map(filteredRole => {
+                                        if (filteredRole === curRole.name) {
+                                            check = true;
+                                            return;
+                                        }
+                                    });
+                                    return check;
+                                }, false)
+                                : true;
+                            return temp;
+                        }).map(item => {
+                            return {
+                                ...item,
+                                active: true
+                            }
+                        })
+                ]);
+            })
+    }, [users])
 
     return (
         <div className="new_client">
@@ -343,9 +374,43 @@ const newClient = (props) => {
                                     }}
                                     defaultValue={clientInputs.managerName}
                                     searchPlaceholder="Введите имя менеджера для поиска..."
-                                // errorsArr={formErrors}
-                                // setErrorsArr={setFormErrors}
                                 />
+                                {/* Видимость для менеджеров */}
+                                {/* <div className="main-form__item">
+                                    <div className="main-form__input_name">Видимость</div>
+                                    <div className="main-form__input_field main-form__input_field--vertical">
+                                        <CheckBox
+                                            text="Видно всем"
+                                            uniqueId='visible-all'
+                                            defaultChecked={true}
+                                            disabled={!props.userHasAccess(["ROLE_ADMIN"])}
+                                            onChange={(value) => {
+                                                setUsers([...users.map(user => {
+                                                    return {
+                                                        ...user,
+                                                        active: value
+                                                    };
+                                                })]);
+                                            }}
+                                        />
+                                        {users.map((user, userIndex) => {
+                                            return <CheckBox
+                                                text={user.username}
+                                                uniqueId={userIndex}
+                                                defaultChecked={true}
+                                                checked={user.active}
+                                                onChange={(value) => {
+                                                    let temp = users;
+                                                    temp.splice(userIndex, 1, {
+                                                        ...user,
+                                                        active: value
+                                                    })
+                                                    setUsers([...temp]);
+                                                }}
+                                            />
+                                        })}
+                                    </div>
+                                </div> */}
                                 {/* <div className="main-form__item">
                                     <div className="main-form__input_name">Скидки</div>
                                     <div className="main-form__input_field main-form__input_field--vertical">

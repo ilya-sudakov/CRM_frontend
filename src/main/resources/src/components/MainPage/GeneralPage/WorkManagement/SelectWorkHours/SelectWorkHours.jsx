@@ -28,7 +28,7 @@ const SelectWorkHours = (props) => {
                                 {/* console.log(product); */ }
                                 return <li>
                                     <span>{product.name}</span>
-                                    <div>{product.quantity} шт.</div>
+                                    <div>({product.quantity} шт.)</div>
                                 </li>
                             })}
                         </ul>
@@ -51,6 +51,7 @@ const SelectWorkHours = (props) => {
                                             value = Number.parseInt(event.target.value);
                                         }
                                     }
+                                    // console.log(value);
                                     let temp = props.workArray;
                                     temp.splice(index, 1, {
                                         ...item,
