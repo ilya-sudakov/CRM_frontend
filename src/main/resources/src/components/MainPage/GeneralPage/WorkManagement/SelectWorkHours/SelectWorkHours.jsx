@@ -21,6 +21,7 @@ const SelectWorkHours = (props) => {
                 {props.workArray.map((item, index) => {
                     console.log(item);
                     return <div className="select-work-hours__list-item">
+                        <div className="select-work-hours__circle"></div>
                         <span className="select-work-hours__work-name">{item.workName}</span>
                         <ul className="select-work-hours__products">
                             {item.product.map(product => {

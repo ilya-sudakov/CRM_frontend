@@ -77,6 +77,10 @@
       border-radius: 5px;
       padding: 10px 10px;
 
+      &:hover {
+        // transform: scale(1.01);
+      }
+
       .select-work-hours__work-name {
         font-weight: bold;
         padding-bottom: 0;
@@ -94,7 +98,7 @@
           font-size: 90%;
           // width: calc(50%);
           color: #444444;
-          // padding-right: 10px;
+          padding-right: 10px;
         }
 
         input[type="number"] {
@@ -107,7 +111,7 @@
           -moz-appearance: textfield;
           height: 1.25rem;
           width: calc(60%);
-          max-width: 8em;
+          max-width: 5em;
           font-size: 90%;
 
           &:hover {
@@ -148,23 +152,37 @@
         }
       }
 
-      &:hover {
-        // transform: scale(1.05);
-      }
-
       &:last-child {
         margin-bottom: 0;
+      }
+
+      .select-work-hours__circle {
+        content: "";
+        position: absolute;
+        // top: 3px;
+        // left: -52px;
+        // width: 30px;
+        // height: 30px;
+        top: 4.5px;
+        left: -50.5px;
+        width: 27px;
+        height: 27px;
+        border-radius: 999px;
+        background-color: #fafafa;
+        z-index: 0;
       }
 
       &:before {
         content: "";
         position: absolute;
         top: 8px;
-        left: -48px;
-        width: 12px;
-        height: 12px;
+        left: -47px;
+        width: 10px;
+        height: 10px;
         border-radius: 999px;
         border: 5px solid #666666;
+        background-color: #fafafa;
+        z-index: 1;
       }
 
       &:after {
