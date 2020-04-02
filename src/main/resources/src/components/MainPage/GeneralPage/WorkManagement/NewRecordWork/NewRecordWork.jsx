@@ -159,7 +159,7 @@ const NewRecordWork = (props) => {
         document.title = "Создание заявки";
         const abortController = new AbortController();
         //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
-        getCategoriesNames(abortController.signal) //Только категории
+        products.length === 0 && getCategoriesNames(abortController.signal) //Только категории
             .then(res => res.json())
             .then(res => {
                 const categoriesArr = res;
