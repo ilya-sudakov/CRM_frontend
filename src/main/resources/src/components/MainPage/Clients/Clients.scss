@@ -10,6 +10,7 @@
     color: #eeeeee;
     border-radius: 5px;
     padding: 0px 2.5px;
+    font-size: 90%;
 
     div {
       &:nth-child(1) {
@@ -164,6 +165,13 @@
   }
 
   @media (max-width: 425px) {
+    &__reminder {
+      padding: 0;
+
+      div:first-child {
+        font-size: 22px;
+      }
+    }
     .main-window__header {
       .main-window__menu {
         font-size: 85%;
