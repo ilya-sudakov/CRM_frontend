@@ -6,7 +6,7 @@ import './LEMZ.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';
-import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage } from '../lazyImports.jsx';
+import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage, WorkshopOrdersLEMZ, NewWorkshopOrderLEMZ } from '../lazyImports.jsx';
 
 const LEMZ = (props) => {
     return (
@@ -79,7 +79,6 @@ const LEMZ = (props) => {
                                 userHasAccess={props.userHasAccess}
                                 allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
                             />
-
                             <PrivateRoute
                                 exact path="/lemz/workshop-storage/new"
                                 component={NewStorage}
@@ -93,6 +92,26 @@ const LEMZ = (props) => {
                                 userHasAccess={props.userHasAccess}
                                 userData={props.userData}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                            />
+                            <PrivateRoute
+                                exact path="/lemz/workshop-orders"
+                                component={WorkshopOrdersLEMZ}
+                                userHasAccess={props.userHasAccess}
+                                // transferState={props.transferState}
+                                // transferData={props.transferData}
+                                // setTransferState={props.setTransferState}
+                                // setTransferData={props.setTransferData}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                            />
+                            <PrivateRoute
+                                exact path="/lemz/workshop-orders/new"
+                                component={NewWorkshopOrderLEMZ}
+                                userHasAccess={props.userHasAccess}
+                                // transferState={props.transferState}
+                                // transferData={props.transferData}
+                                // setTransferState={props.setTransferState}
+                                // setTransferData={props.setTransferData}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
                             />
                             <Route component={PageNotFound} />
                         </Switch>
