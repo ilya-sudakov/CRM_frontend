@@ -328,6 +328,10 @@ const ViewFeedback = lazy(
     () => import('./FeedbackPage/ViewFeedback/ViewFeedback.jsx')
 )
 
+const EtceteraPage = lazy(
+    () => import('./EtceteraPage/EtceteraPage.jsx')
+)
+
 export {
     Clients, newClient, ViewClient, EditClient, ClientCategories,
     Contracts,
@@ -349,5 +353,6 @@ export {
     WorkshopLepsari, NewRequestLepsari, ViewRequestLepsari, EditRequestLepsari, StorageLepsari, NewStorageLepsari, EditStorageLepsari,
     LEMZ, Lepsari,
     PriceList, NewPriceList, ViewPriceList,
-    FeedbackPage, NewFeedback, ViewFeedback
+    FeedbackPage, NewFeedback, ViewFeedback,
+    EtceteraPage
 };

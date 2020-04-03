@@ -243,11 +243,12 @@ const NewRecordWork = (props) => {
                                 userHasAccess={props.userHasAccess}
                                 windowName="select-employee"
                                 name="employee"
-                                handleEmployeeChange={(value) => {
+                                handleEmployeeChange={(value, name) => {
                                     validateField("employee", value);
                                     setWorkTimeInputs({
                                         ...worktimeInputs,
-                                        employeeId: value
+                                        employeeId: value,
+                                        employeeName: name
                                     })
                                     setWorkTimeErrors({
                                         ...workTimeErrors,
@@ -307,6 +308,7 @@ const NewRecordWork = (props) => {
                             <SelectWorkHours
                                 workArray={worktimeInputs.works}
                                 date={worktimeInputs.date}
+                                employee={worktimeInputs.employeeName}
                                 onChange={(value) => {
                                     validateField("works", value);
                                     setWorkTimeInputs({

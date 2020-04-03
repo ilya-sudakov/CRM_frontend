@@ -1,0 +1,12 @@
+@import "../../../variables.scss";
+
+.etcetera-page {
+  padding: 0 25px;
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+  }
+}

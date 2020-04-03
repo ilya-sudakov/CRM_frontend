@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
 import { formatDateString } from '../../../../../../utils/functions.jsx';
+import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -65,8 +66,9 @@ const TableView = (props) => {
                 <div className="tableview-employees__col">Актуальность</div>
                 <div className="tableview-employees__col">Действия</div>
             </div>
+            {props.data.length === 0 && <TableDataLoading className="tableview-employees__row--even" minHeight="50px" />}
             {sortEmployees(props.data).map((employee, employee_id) => (
-                employee.relevance !== 'Уволен' && <div key={employee_id} className={"tableview-employees__row " + (employee.id % 2 === 0 ? "tableview-employees__row--even" : "tableview-employees__row--odd")}>
+                employee.relevance !== 'Уволен' && <div key={employee_id} className="tableview-employees__row tableview-employees__row--even">
                     <div className="tableview-employees__col">{employee.lastName + ' ' + employee.name + ' ' + employee.middleName}</div>
                     <div className="tableview-employees__col">{formatDateString(employee.yearOfBirth)}</div>
                     <div className="tableview-employees__col">{employee.citizenship}</div>

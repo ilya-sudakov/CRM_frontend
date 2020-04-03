@@ -12,6 +12,7 @@
   &__title {
     margin-bottom: 15px;
     font-size: 24px;
+    // display: none;
   }
 
   .checkbox__container {
@@ -71,10 +72,10 @@
     align-items: center;
     min-width: 300px;
     border-radius: 5px;
-    background-color: $primary-background-color;
+    // background-color: $primary-background-color;
     background-color: rgba(250, 250, 250, 1);
     // width: calc(100% - 80px);
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     // padding: 10px 25px;
     // padding-top: 35px;
     width: calc(100% - 80px);

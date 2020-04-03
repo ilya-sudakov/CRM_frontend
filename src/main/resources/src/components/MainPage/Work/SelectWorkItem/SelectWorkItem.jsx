@@ -14,7 +14,7 @@ const SelectWorkItem = (props) => {
     const [fullName, setFullName] = useState('');
 
     useEffect(() => {
-        loadWorks();
+        works.length === 0 && loadWorks();
     }, [])
 
     const loadWorks = () => {

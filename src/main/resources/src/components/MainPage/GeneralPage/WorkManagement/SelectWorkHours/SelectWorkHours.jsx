@@ -10,6 +10,12 @@ const SelectWorkHours = (props) => {
 
     return (
         <div className="select-work-hours">
+            {/* <div className="select-work-hours__panel">
+                <div>Данные работника</div>
+                <div>{props.employee?.split(' ')[0]}</div>
+                <div>{props.employee?.split(' ')[1]}</div>
+                <div>{props.employee?.split(' ')[2]}</div>
+            </div> */}
             <div className="select-work-hours__timeline">
                 <div className="select-work-hours__wrapper">
                     <div className="select-work-hours__info">{formatDateString(props.date)}</div>

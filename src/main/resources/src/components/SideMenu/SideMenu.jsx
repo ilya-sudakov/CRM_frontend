@@ -14,6 +14,7 @@ import listImg from '../../../../../../assets/sidemenu/list.svg';
 import boxImg from '../../../../../../assets/sidemenu/box.svg';
 import screwImg from '../../../../../../assets/sidemenu/screw.svg';
 import feedbackImg from '../../../../../../assets/sidemenu/feedback.svg';
+import moreImg from '../../../../../../assets/sidemenu/more.svg';
 import playListImg from '../../../../../../assets/sidemenu/play_list.svg';
 import './SideMenu.scss';
 import { getClientCategories } from '../../utils/RequestsAPI/Clients/Categories.jsx';
@@ -198,6 +199,12 @@ const SideMenu = (props) => {
             addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
             addButtonName: "Оставить сообщение",
             icon: feedbackImg
+        },
+        {
+            pathname: "/etcetera",
+            name: "Разное",
+            mainRoles: ['ROLE_ADMIN'],
+            icon: moreImg
         },
     ])
 

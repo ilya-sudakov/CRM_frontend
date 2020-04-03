@@ -239,7 +239,18 @@ const Clients = (props) => {
                                 </span>
                                 <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts.length > 0 ? (item.contacts[0].name + ', ' + item.contacts[0].phoneNumber) : 'Не указаны контакт. данные'}</span>
                                 <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
-                                <span><div className="main-window__mobile-text">Дата след. контакта: </div>{formatDateString(item.nextDateContact)}</span>
+                                <span><div className="main-window__mobile-text">Дата след. контакта: </div>
+                                    {/* {formatDateString(item.nextDateContact)} */}
+                                    {
+                                        (new Date(item.nextDateContact) < new Date())
+                                            ? <div className="clients__reminder">
+                                                <div>!</div>
+                                                <div>{formatDateString(item.nextDateContact)}</div>
+                                            </div>
+                                            : formatDateString(item.nextDateContact)
+                                    }
+
+                                </span>
                                 <div className="main-window__actions">
                                     <div className="main-window__action" title="Совершить действие" onClick={() => {
                                         setCloseWindow(false);

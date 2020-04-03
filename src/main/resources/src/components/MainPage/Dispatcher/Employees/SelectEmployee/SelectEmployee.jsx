@@ -54,7 +54,7 @@ const SelectEmployee = (props) => {
     const clickEmployee = (employeeName, employeeId) => {
         setId(employeeId);
         setFullName(employeeName);
-        props.handleEmployeeChange(employeeId);
+        props.handleEmployeeChange(employeeId, employeeName);
         setShowWindow(!showWindow);
     }
 

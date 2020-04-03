@@ -31,6 +31,14 @@ const LEMZ = (props) => {
                                 <img className="main-window__img" src={plusImg} alt="" />
                             </Link>
                         </Link>
+                        {/* <Link to="/lemz/workshop-orders" className={props.location.pathname.includes('/lemz/workshop-orders') === true
+                            ? "main-window__item--active main-window__item"
+                            : "main-window__item"}>
+                            Комплектация
+                            <Link to="/lemz/workshop-orders/new" className="main-window__addButton">
+                                <img className="main-window__img" src={plusImg} alt="" />
+                            </Link>
+                        </Link> */}
                     </div>
                 </div>
                 <div className="main-window__content">

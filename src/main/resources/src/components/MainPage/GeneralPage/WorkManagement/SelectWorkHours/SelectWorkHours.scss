@@ -7,7 +7,42 @@
   padding: 25px 0;
   min-height: 250px;
   padding-left: 50px;
+  position: relative;
   //   align-items: stretch;
+
+  &__panel {
+    background-color: $secondary-text-color;
+    color: $primary-text-color;
+    border: 1px solid $button__background--inverted;
+    border-radius: 5px;
+    padding: 25px 15px;
+    cursor: pointer;
+    font-size: 100%;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    right: 100px;
+    width: 100%;
+    max-width: 250px;
+
+    div {
+      font-size: 90%;
+    }
+
+    div:nth-child(1) {
+      text-align: left;
+      font-weight: bold;
+      font-size: 100%;
+      width: 100%;
+    }
+
+    div:nth-child(2) {
+    }
+  }
 
   &__timeline {
     position: relative;
@@ -40,7 +75,6 @@
       align-items: center;
       border: 1px solid transparent;
       width: 100px;
-
       margin-right: 5px;
     }
 
@@ -81,6 +115,10 @@
       &:hover,
       &:focus-within {
         transform: scale(1.05);
+
+        .select-work-hours__work-name {
+          color: #222222;
+        }
         &::before {
           border-color: $button__background--inverted;
           left: -38px;
@@ -96,7 +134,9 @@
 
       .select-work-hours__work-name {
         font-weight: bold;
+        color: #444444;
         padding-bottom: 0;
+        transition: 200ms ease-in-out;
       }
 
       .select-work-hours__input {
