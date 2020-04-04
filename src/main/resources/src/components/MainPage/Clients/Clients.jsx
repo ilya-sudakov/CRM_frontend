@@ -237,13 +237,13 @@ const Clients = (props) => {
                                     {/* {item.site} */}
                                     <a className="main-window__link" title={item.site} href={item.site.split('//').length > 1 ? item.site : 'http://' + item.site} target="_blank">{item.site.split('//').length > 1 ? item.site.split('//')[1] : item.site}</a>
                                 </span>
-                                <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts.length > 0 ? (item.contacts[0].name + ', ' + item.contacts[0].phoneNumber) : 'Не указаны контакт. данные'}</span>
+                                <span><div className="main-window__mobile-text">Контактное лицо: </div>{item.contacts.length > 0 ? ((item.contacts[0].name !== '' ? (item.contacts[0].name + ', ') : '') + item.contacts[0].phoneNumber) : 'Не указаны контакт. данные'}</span>
                                 <span><div className="main-window__mobile-text">Комментарий: </div>{item.comment}</span>
                                 <span><div className="main-window__mobile-text">Дата след. контакта: </div>
                                     {/* {formatDateString(item.nextDateContact)} */}
                                     {
                                         (new Date(item.nextDateContact) < new Date())
-                                            ? <div className="clients__reminder">
+                                            ? <div className="main-window__reminder">
                                                 <div>!</div>
                                                 <div>{formatDateString(item.nextDateContact)}</div>
                                             </div>

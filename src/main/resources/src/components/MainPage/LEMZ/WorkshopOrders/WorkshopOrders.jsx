@@ -3,8 +3,10 @@ import './WorkshopOrders.scss';
 import '../../../../utils/MainWindow/MainWindow.scss';
 import editSVG from '../../../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg';
+import viewSVG from '../../../../../../../../assets/tableview/view.svg';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';
+import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const WorkshopOrders = (props) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -25,41 +27,48 @@ const WorkshopOrders = (props) => {
             className: 'ordered',
             name: 'Заказано',
             visible: true,
+        },
+        {
+            className: 'problem',
+            name: 'Проблема',
+            visible: true,
         }
     ])
 
     useState(() => {
         const data = [
             {
-                date: new Date(),
+                id: 1,
+                deliverBy: new Date(1785986548000),
                 products: [
                     {
                         name: 'Продукт1',
+                        quantity: '15000'
+                    },
+                    {
+                        name: 'Продукт2',
                         quantity: '12000'
                     },
                     {
-                        name: 'Продукт1',
-                        quantity: '12000'
-                    },
-                    {
-                        name: 'Продукт1',
-                        quantity: '12000'
+                        name: 'Продукт3',
+                        quantity: '8000'
                     }
                 ],
                 name: 'Обновление оборудования',
                 assembly: 'Коробочка',
-                status: 'sent'
+                status: 'problem'
             },
             {
-                date: new Date(),
+                id: 2,
+                deliverBy: new Date(1385986548000),
                 products: [
                     {
                         name: 'Продукт1',
-                        quantity: '12000'
+                        quantity: '500'
                     }
                 ],
                 name: 'Обновление оборудования',
-                assembly: 'Коробочка',
+                assembly: 'Пакетик',
                 status: 'ordered'
             }
         ];
@@ -96,18 +105,22 @@ const WorkshopOrders = (props) => {
                 </div>
                 <div className="main-window__list">
                     <div className="main-window__list-item main-window__list-item--header">
-                        <span>Дата</span>
+                        <span>План. дата поставки</span>
                         <span>Продукция</span>
                         <span>Название</span>
                         <span>Комплектация</span>
                         <span>Статус</span>
                         <div className="main-window__actions">Действие</div>
                     </div>
+                    {isLoading && <TableDataLoading
+                        className="main-window__list-item"
+                        minHeight="50px"
+                    />}
                     {orders
                         .filter(item => {
                             if (
                                 item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                formatDateString(item.date).toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                formatDateString(item.deliverBy).toLowerCase().includes(searchQuery.toLowerCase()) ||
                                 item.assembly.toLowerCase().includes(searchQuery.toLowerCase())
                             ) {
                                 let check = false;
@@ -123,24 +136,34 @@ const WorkshopOrders = (props) => {
                             }
                         })
                         .sort((a, b) => {
-                            if (a.date < b.date) {
+                            if (a.deliverBy < b.deliverBy) {
                                 return -1;
                             }
-                            if (a.date > b.date) {
+                            if (a.deliverBy > b.deliverBy) {
                                 return 1;
                             }
                             return 0;
                         })
                         .map((order, orderIndex) => {
                             return <div className={"main-window__list-item main-window__list-item--" + order.status}>
-                                <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(order.date)}</span>
-                                {/* <span><div className="main-window__mobile-text">Продукция: </div>{order.name}</span> */}
+                                <span><div className="main-window__mobile-text">Ожидаемая дата поставки: </div>
+                                    {/* {formatDateString(order.date)} */}
+                                    {
+                                        (new Date(order.deliverBy) < new Date() && order.status !== 'completed')
+                                            ? <div className="main-window__reminder">
+                                                <div>!</div>
+                                                <div>{formatDateString(order.deliverBy)}</div>
+                                            </div>
+                                            : formatDateString(order.deliverBy)
+                                    }
+                                </span>
                                 <span><div className="main-window__mobile-text">Продукция: </div>
                                     <div className="main-window__list-col">
                                         {order.products.map(product => {
-                                            return <div>
-                                                {product.name} ({product.quantity} шт.)
-                                        </div>
+                                            return <div className="workshop-orders__products">
+                                                <div>{product.name}</div>
+                                                <div> ({product.quantity} шт.)</div>
+                                            </div>
                                         })}
                                     </div>
                                 </span>
@@ -148,6 +171,11 @@ const WorkshopOrders = (props) => {
                                 <span><div className="main-window__mobile-text">Комплектация: </div>{order.assembly}</span>
                                 <span><div className="main-window__mobile-text">Статус: </div>{statuses.find(item => item.className === order.status)?.name}</span>
                                 <div className="main-window__actions">
+                                    <div className="main-window__action" title="Просмотр заказа" onClick={() => {
+                                        props.history.push('/lemz/workshop-orders/view/' + order.id)
+                                    }}>
+                                        <img className="main-window__img" src={viewSVG} />
+                                    </div>
                                     <div className="main-window__action" title="Редактирование заказа" onClick={() => {
                                         props.history.push('/lemz/workshop-orders/edit/' + order.id)
                                     }}>

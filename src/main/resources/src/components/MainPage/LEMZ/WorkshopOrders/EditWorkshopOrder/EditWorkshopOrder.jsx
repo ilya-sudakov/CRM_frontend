@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './NewWorkshopOrder.scss';
+import './EditWorkshopOrder.scss';
 import '../../../../../utils/Form/Form.scss';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
@@ -7,7 +7,7 @@ import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
 
-const NewWorkshopOrder = (props) => {
+const EditWorkshopOrder = (props) => {
     const [formInputs, setFormInputs] = useState({
         name: '',
         status: 'ordered',
@@ -31,6 +31,7 @@ const NewWorkshopOrder = (props) => {
         date: true,
         deliverBy: true
     });
+    const [orderId, setOrderId] = useState(0);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -114,7 +115,14 @@ const NewWorkshopOrder = (props) => {
     }
 
     useEffect(() => {
-        document.title = "Создание заказа ЛЭМЗ"
+        document.title = "Редактирование заказа ЛЭМЗ";
+        const id = props.history.location.pathname.split("/lemz/workshop-orders/edit/")[1];
+        if (isNaN(Number.parseInt(id))) {
+            alert('Неправильный индекс заказа!');
+            props.history.push("/lemz/workshop-orders");
+        } else {
+            setOrderId(id);
+        }
     }, [])
 
     const [showError, setShowError] = useState(false);
@@ -123,7 +131,7 @@ const NewWorkshopOrder = (props) => {
     return (
         <div className="new-workshop-order">
             <div className="main-form">
-                <div className="main-form__title">Создание заказа</div>
+                <div className="main-form__title">Редактирование заказа</div>
                 <div className="main-form__form">
                     <ErrorMessage
                         message="Не заполнены все обязательные поля!"
@@ -154,6 +162,7 @@ const NewWorkshopOrder = (props) => {
                         inputName="Наименование"
                         required
                         error={formErrors.name}
+                        defaultValue={formInputs.name}
                         name="name"
                         handleInputChange={handleInputChange}
                         errorsArr={formErrors}
@@ -162,6 +171,7 @@ const NewWorkshopOrder = (props) => {
                     <InputText
                         inputName="Комплектация"
                         name="assembly"
+                        defaultValue={formInputs.assembly}
                         handleInputChange={handleInputChange}
                     />
                     <InputDate
@@ -222,7 +232,7 @@ const NewWorkshopOrder = (props) => {
                     <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lemz/workshop-orders')} value="Вернуться назад" />
-                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить заказ" />
+                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать заказ" />
                         {isLoading && <ImgLoader />}
                     </div>
                 </div>
@@ -231,4 +241,4 @@ const NewWorkshopOrder = (props) => {
     );
 };
 
-export default NewWorkshopOrder;
+export default EditWorkshopOrder;

@@ -12,8 +12,8 @@ const Rigging = (props) => {
     return (
         <div className="rigging">
             <div className="main-window">
+                <div className="main-window__title">Оснастка</div>
                 <div className="main-window__header">
-                    <div className="main-window__title">Оснастка</div>
                     <div className="main-window__menu">
                         <Link to="/dispatcher/rigging/stamp" className={props.location.pathname.includes('stamp') === true
                             ? "main-window__item--active main-window__item"

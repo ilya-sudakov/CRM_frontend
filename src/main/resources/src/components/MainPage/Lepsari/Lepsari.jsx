@@ -10,7 +10,7 @@ import { WorkshopLepsari, NewRequestLepsari, EditRequestLepsari, ViewRequestLeps
 
 const Lepsari = (props) => {
     return (
-        <div className="requests">
+        <div className="requests-lepsari">
             <div className="main-window">
                 <div className="main-window__header">
                     <div className="main-window__title">Цех Лепсари</div>

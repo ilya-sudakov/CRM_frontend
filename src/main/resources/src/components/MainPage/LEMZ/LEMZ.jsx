@@ -6,7 +6,7 @@ import './LEMZ.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';
-import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage, WorkshopOrdersLEMZ, NewWorkshopOrderLEMZ } from '../lazyImports.jsx';
+import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ, NewStorage, EditStorage, WorkshopOrdersLEMZ, NewWorkshopOrderLEMZ, ViewWorkshopOrderLEMZ, EditWorkshopOrderLEMZ } from '../lazyImports.jsx';
 
 const LEMZ = (props) => {
     return (
@@ -31,14 +31,14 @@ const LEMZ = (props) => {
                                 <img className="main-window__img" src={plusImg} alt="" />
                             </Link>
                         </Link>
-                        {/* <Link to="/lemz/workshop-orders" className={props.location.pathname.includes('/lemz/workshop-orders') === true
+                        <Link to="/lemz/workshop-orders" className={props.location.pathname.includes('/lemz/workshop-orders') === true
                             ? "main-window__item--active main-window__item"
                             : "main-window__item"}>
                             Комплектация
                             <Link to="/lemz/workshop-orders/new" className="main-window__addButton">
                                 <img className="main-window__img" src={plusImg} alt="" />
                             </Link>
-                        </Link> */}
+                        </Link>
                     </div>
                 </div>
                 <div className="main-window__content">
@@ -112,6 +112,26 @@ const LEMZ = (props) => {
                                 // setTransferState={props.setTransferState}
                                 // setTransferData={props.setTransferData}
                                 allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                            />
+                            <PrivateRoute
+                                path="/lemz/workshop-orders/view/"
+                                component={ViewWorkshopOrderLEMZ}
+                                userHasAccess={props.userHasAccess}
+                                // transferState={props.transferState}
+                                // transferData={props.transferData}
+                                // setTransferState={props.setTransferState}
+                                // setTransferData={props.setTransferData}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                            />
+                            <PrivateRoute
+                                path="/lemz/workshop-orders/edit/"
+                                component={EditWorkshopOrderLEMZ}
+                                userHasAccess={props.userHasAccess}
+                                // transferState={props.transferState}
+                                // transferData={props.transferData}
+                                // setTransferState={props.setTransferState}
+                                // setTransferData={props.setTransferData}
+                                allowedRoles={['ROLE_ADMIN']}
                             />
                             <Route component={PageNotFound} />
                         </Switch>

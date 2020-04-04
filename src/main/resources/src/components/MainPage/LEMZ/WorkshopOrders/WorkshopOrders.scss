@@ -4,6 +4,7 @@
   --ordered: #3ecaca;
   --completed: #399639;
   --sent: #bdbd41;
+  --problem: #c23737;
 
   .workshop-orders__status-wrapper {
     // width: 100%;
@@ -45,6 +46,10 @@
       background-color: var(--completed);
     }
 
+    .main-window__list-item--problem::before {
+      background-color: var(--problem);
+    }
+
     .main-window__button--inverted {
       color: #555555;
     }
@@ -70,8 +75,21 @@
           display: flex;
           flex-direction: column;
 
-          div {
+          .workshop-orders__products {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             margin-bottom: 5px;
+
+            div {
+              &:nth-child(1) {
+                margin-right: 10px;
+              }
+              &:nth-child(2) {
+                font-size: 90%;
+                font-style: italic;
+              }
+            }
 
             &:last-child {
               margin-bottom: 0;
@@ -111,17 +129,35 @@
       .main-window__list-item--completed:not(.main-window__list-item--header)::before {
         background-color: var(--completed);
       }
+      .main-window__list-item--problem:not(.main-window__list-item--header)::before {
+        background-color: var(--problem);
+      }
     }
   }
 
   @media (max-width: 768px) {
+    .main-window__info-panel {
+      flex-direction: column;
+
+      .main-window__amount_table {
+        width: 100%;
+        text-align: right;
+      }
+    }
     .main-window__list {
       .main-window__list-item {
         span {
           &:nth-child(1) {
             max-width: 100% !important;
           }
+          &:nth-child(5) {
+            max-width: 100% !important;
+          }
         }
+      }
+
+      .main-window__list-item:not(.main-window__list-item--header)::before {
+        top: 50%;
       }
     }
   }

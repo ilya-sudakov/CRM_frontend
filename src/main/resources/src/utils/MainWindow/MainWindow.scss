@@ -86,7 +86,7 @@
     margin-left: 10px;
   }
 
-  .main-window__info-panel {
+  &__info-panel {
     width: calc(100% - 50px);
     display: flex;
     flex-direction: row;
@@ -95,11 +95,34 @@
     margin-bottom: 10px;
   }
 
-  .main-window__amount_table {
+  &__amount_table {
     font-size: 75%;
+    white-space: nowrap;
   }
 
-  .main-window__button {
+  &__reminder {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #c23e3e;
+    color: #eeeeee;
+    border-radius: 5px;
+    padding: 0px 2.5px;
+    font-size: 90%;
+
+    div {
+      &:nth-child(1) {
+        font-size: 26px;
+      }
+      &:nth-child(2) {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
+  &__button {
     background-color: $button__background--inverted;
     color: $secondary-text-color;
     border-radius: 5px;
@@ -121,7 +144,7 @@
     }
   }
 
-  .main-window__button--inverted {
+  &__button--inverted {
     background-color: $secondary-text-color;
     color: $primary-text-color;
     border: 1px solid $button__background--inverted;
@@ -131,11 +154,11 @@
     }
   }
 
-  .main-window__list {
+  &__list {
     width: calc(100% - 30px);
     // padding: 0 15px;
   }
-  .main-window__list-item {
+  &__list-item {
     padding: 5px 10px;
     border: 1px solid $button__background--inverted;
     margin-top: 5px;
@@ -336,6 +359,14 @@
   }
 
   @media (max-width: 768px) {
+    &__reminder {
+      padding: 0;
+
+      div:first-child {
+        font-size: 22px;
+      }
+    }
+
     .main-window__list-item--header {
       display: none;
     }
