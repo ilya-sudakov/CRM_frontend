@@ -6,7 +6,7 @@ import './Lepsari.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';
-import { WorkshopLepsari, NewRequestLepsari, EditRequestLepsari, ViewRequestLepsari, StorageLepsari, NewStorageLepsari, EditStorageLepsari } from '../lazyImports.jsx';
+import { WorkshopLepsari, NewRequestLepsari, EditRequestLepsari, ViewRequestLepsari, StorageLepsari, NewStorageLepsari, EditStorageLepsari, EditWorkshopOrderLepsari, ViewWorkshopOrderLepsari, NewWorkshopOrderLepsari, WorkshopOrdersLepsari } from '../lazyImports.jsx';
 
 const Lepsari = (props) => {
     return (
@@ -28,6 +28,14 @@ const Lepsari = (props) => {
                             : "main-window__item"}>
                             Склад
                             <Link to="/lepsari/workshop-storage/new" className="main-window__addButton">
+                                <img className="main-window__img" src={plusImg} alt="" />
+                            </Link>
+                        </Link>
+                        <Link to="/lepsari/workshop-orders" className={props.location.pathname.includes('/lepsari/workshop-orders') === true
+                            ? "main-window__item--active main-window__item"
+                            : "main-window__item"}>
+                            Комплектация (Тест UI)
+                            <Link to="/lepsari/workshop-orders/new" className="main-window__addButton">
                                 <img className="main-window__img" src={plusImg} alt="" />
                             </Link>
                         </Link>
@@ -84,6 +92,48 @@ const Lepsari = (props) => {
                                 userHasAccess={props.userHasAccess}
                                 userData={props.userData}
                                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
+                            />
+                            <PrivateRoute
+                                exact path="/lepsari/workshop-orders"
+                                component={WorkshopOrdersLepsari}
+                                userHasAccess={props.userHasAccess}
+                                // transferState={props.transferState}
+                                // transferData={props.transferData}
+                                // setTransferState={props.setTransferState}
+                                // setTransferData={props.setTransferData}
+                                // allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEPSARI"]}
+                                allowedRoles={['ROLE_ADMIN']}
+                            />
+                            <PrivateRoute
+                                exact path="/lepsari/workshop-orders/new"
+                                component={NewWorkshopOrderLepsari}
+                                userHasAccess={props.userHasAccess}
+                                // transferState={props.transferState}
+                                // transferData={props.transferData}
+                                // setTransferState={props.setTransferState}
+                                // setTransferData={props.setTransferData}
+                                // allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEPSARI"]}
+                                allowedRoles={['ROLE_ADMIN']}
+                            />
+                            <PrivateRoute
+                                path="/lepsari/workshop-orders/view/"
+                                component={ViewWorkshopOrderLepsari}
+                                userHasAccess={props.userHasAccess}
+                                // transferState={props.transferState}
+                                // transferData={props.transferData}
+                                // setTransferState={props.setTransferState}
+                                // setTransferData={props.setTransferData}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEPSARI"]}
+                            />
+                            <PrivateRoute
+                                path="/lepsari/workshop-orders/edit/"
+                                component={EditWorkshopOrderLepsari}
+                                userHasAccess={props.userHasAccess}
+                                // transferState={props.transferState}
+                                // transferData={props.transferData}
+                                // setTransferState={props.setTransferState}
+                                // setTransferData={props.setTransferData}
+                                allowedRoles={['ROLE_ADMIN']}
                             />
                             <Route component={PageNotFound} />
                         </Switch>

@@ -23,11 +23,11 @@ const ViewWorkshopOrder = (props) => {
     const [orderId, setOrderId] = useState(0);
 
     useEffect(() => {
-        document.title = "Просмотр заказа ЛЭМЗ";
-        const id = props.history.location.pathname.split("/lemz/workshop-orders/view/")[1];
+        document.title = "Просмотр заказа Лепсари";
+        const id = props.history.location.pathname.split("/lepsari/workshop-orders/view/")[1];
         if (isNaN(Number.parseInt(id))) {
             alert('Неправильный индекс заказа!');
-            props.history.push("/lemz/workshop-orders");
+            props.history.push("/lepsari/workshop-orders");
         } else {
             setOrderId(id);
         }
@@ -88,7 +88,7 @@ const ViewWorkshopOrder = (props) => {
                     </div>
                     <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                     <div className="main-form__buttons">
-                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lemz/workshop-orders')} value="Вернуться назад" />
+                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lepsari/workshop-orders')} value="Вернуться назад" />
                     </div>
                 </div>
             </div>

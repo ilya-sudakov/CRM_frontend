@@ -34,7 +34,7 @@ const LEMZ = (props) => {
                         <Link to="/lemz/workshop-orders" className={props.location.pathname.includes('/lemz/workshop-orders') === true
                             ? "main-window__item--active main-window__item"
                             : "main-window__item"}>
-                            Комплектация
+                            Комплектация (Тест UI)
                             <Link to="/lemz/workshop-orders/new" className="main-window__addButton">
                                 <img className="main-window__img" src={plusImg} alt="" />
                             </Link>
@@ -77,14 +77,16 @@ const LEMZ = (props) => {
                                 exact path="/lemz/workshop-storage"
                                 component={Storage}
                                 userHasAccess={props.userHasAccess}
-                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                                // allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                                allowedRoles={['ROLE_ADMIN']}
                             />
                             <PrivateRoute
                                 exact path="/lemz/workshop-storage/new"
                                 component={NewStorage}
                                 userHasAccess={props.userHasAccess}
                                 userData={props.userData}
-                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                                // allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                                allowedRoles={["ROLE_ADMIN"]}
                             />
                             <PrivateRoute
                                 path="/lemz/workshop-storage/edit/"
