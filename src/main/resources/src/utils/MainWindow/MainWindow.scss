@@ -330,8 +330,8 @@
     flex-direction: row;
     width: fit-content;
     margin-left: auto;
-    flex-wrap: wrap;
     // margin-right: auto;
+    flex-wrap: wrap;
     .main-window__page-number {
       border: 1px solid #666666;
       border-radius: 5px;
@@ -342,6 +342,9 @@
       color: #666666;
       transition: 200ms ease-in-out;
       cursor: pointer;
+      min-width: 50px;
+      box-sizing: border-box;
+      text-align: center;
 
       &:last-child {
         margin-right: 0;
