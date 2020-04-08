@@ -77,16 +77,14 @@ const LEMZ = (props) => {
                                 exact path="/lemz/workshop-storage"
                                 component={Storage}
                                 userHasAccess={props.userHasAccess}
-                                // allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
-                                allowedRoles={['ROLE_ADMIN']}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
                             />
                             <PrivateRoute
                                 exact path="/lemz/workshop-storage/new"
                                 component={NewStorage}
                                 userHasAccess={props.userHasAccess}
                                 userData={props.userData}
-                                // allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
-                                allowedRoles={["ROLE_ADMIN"]}
+                                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
                             />
                             <PrivateRoute
                                 path="/lemz/workshop-storage/edit/"
@@ -103,7 +101,8 @@ const LEMZ = (props) => {
                                 // transferData={props.transferData}
                                 // setTransferState={props.setTransferState}
                                 // setTransferData={props.setTransferData}
-                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                                // allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                                allowedRoles={['ROLE_ADMIN']}
                             />
                             <PrivateRoute
                                 exact path="/lemz/workshop-orders/new"
@@ -113,7 +112,8 @@ const LEMZ = (props) => {
                                 // transferData={props.transferData}
                                 // setTransferState={props.setTransferState}
                                 // setTransferData={props.setTransferData}
-                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                                // allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
+                                allowedRoles={['ROLE_ADMIN']}
                             />
                             <PrivateRoute
                                 path="/lemz/workshop-orders/view/"

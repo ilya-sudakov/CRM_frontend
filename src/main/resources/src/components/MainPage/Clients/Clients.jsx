@@ -75,20 +75,22 @@ const Clients = (props) => {
                 : type === 'potential'
                     ? 'Потенциальные'
                     : 'В разработке'
-        }, signal)
+        }, curPage, sortOrder, signal)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                setClients(res);
+                setClients(res.content);
+                // console.log(Math.ceil(res.totalElements / itemsPerPage));
                 if (curPage < 10) {
-                    setItemsCount(res.length);
+                    // setItemsCount(res.length);
+                    setItemsCount(res.totalElements);
                     let temp = [];
                     let i = 1;
                     do {
                         temp.push(i);
                         i++;
                     }
-                    while (i <= Math.floor(res.length / itemsPerPage) && i <= 10);
+                    while (i <= Math.ceil(res.totalElements / itemsPerPage) && i <= 10);
                     setPagination(temp);
                 }
                 setIsLoading(false);
@@ -98,7 +100,7 @@ const Clients = (props) => {
     const [sortOrder, setSortOrder] = useState({
         curSort: 'name',
         name: 'asc',
-        nextDateContact: 'desc'
+        nextDateContact: 'asc'
     });
 
     const changeSortOrder = (event) => {
@@ -107,8 +109,10 @@ const Clients = (props) => {
         setSortOrder({
             curSort: name,
             // [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
-            [name]: [order]
-        })
+            [name]: order
+        });
+        // loadData(props.location.pathname.split('/clients/category/')[1].split('/')[0],
+        //     props.location.pathname.split('/clients/category/')[1].split('/')[1]);
     };
 
     useEffect(() => {
@@ -121,7 +125,7 @@ const Clients = (props) => {
         return function cancel() {
             abortController.abort()
         }
-    }, [props.location, curPage]);
+    }, [props.location, curPage, sortOrder]);
 
     return (
         <div className="clients">
@@ -184,9 +188,9 @@ const Clients = (props) => {
                 <div className="main-window__sort-panel">
                     <span>Сортировка: </span>
                     <select onChange={changeSortOrder}>
-                        <option value="name desc">По алфавиту (А-Я)</option>
-                        <option value="name asc">По алфавиту (Я-А)</option>
-                        <option value="nextDateContact desc">По дате след. контакта</option>
+                        <option value="name asc">По алфавиту (А-Я)</option>
+                        <option value="name desc">По алфавиту (Я-А)</option>
+                        <option value="nextDateContact asc">По дате след. контакта</option>
                     </select>
                 </div>
                 <div className="main-window__list">
@@ -209,26 +213,6 @@ const Clients = (props) => {
                                 item.site.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                 item.comment.toLowerCase().includes(searchQuery.toLowerCase())
                             )
-                        })
-                        .sort((a, b) => {
-                            if (sortOrder.curSort === 'nextDateContact') {
-                                if (new Date(a[sortOrder.curSort]) < new Date(b[sortOrder.curSort])) {
-                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-                                }
-                                if (new Date(a[sortOrder.curSort]) > new Date(b[sortOrder.curSort])) {
-                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-                                }
-                                return 0;
-                            }
-                            else {
-                                if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-                                }
-                                if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-                                }
-                                return 0;
-                            }
                         })
                         .map((item, index) => {
                             return <div className="main-window__list-item">
@@ -288,6 +272,27 @@ const Clients = (props) => {
                         })}
                 </div>
                 <div className="main-window__pagination">
+                    <div className="main-window__page-number" onClick={() => {
+                        if (curPage > 1) {
+                            setCurPage(curPage - 1);
+                            if (Math.floor(itemsCount / itemsPerPage) > 10) {
+                                if (pagination.indexOf(curPage - 1) === 0 && (curPage - 1) !== 1) {
+                                    let temp = [];
+                                    for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
+                                        temp.push(i);
+                                    }
+                                    return setPagination(temp)
+                                }
+                                if (pagination.indexOf(curPage - 1) === (pagination.length - 1) && (curPage - 1) !== (Math.floor(itemsCount / itemsPerPage))) {
+                                    let temp = [];
+                                    for (let i = pagination[0] + 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] + 1; i++) {
+                                        temp.push(i);
+                                    }
+                                    return setPagination(temp)
+                                }
+                            }
+                        }
+                    }}>Пред</div>
                     {pagination.map((item, index) => {
                         return <div className={curPage == item ? "main-window__page-number main-window__page-number--active" : "main-window__page-number"} onClick={() => {
                             setCurPage(item);
@@ -309,6 +314,27 @@ const Clients = (props) => {
                             }
                         }}>{item}</div>
                     })}
+                    <div className="main-window__page-number" onClick={() => {
+                        if (curPage <= Math.floor(itemsCount / itemsPerPage)) {
+                            setCurPage(curPage + 1);
+                            if (Math.floor(itemsCount / itemsPerPage) > 10) {
+                                if (pagination.indexOf(curPage - 1) === 0 && (curPage - 1) !== 1) {
+                                    let temp = [];
+                                    for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
+                                        temp.push(i);
+                                    }
+                                    return setPagination(temp)
+                                }
+                                if (pagination.indexOf(curPage - 1) === (pagination.length - 1) && (curPage - 1) !== (Math.floor(itemsCount / itemsPerPage))) {
+                                    let temp = [];
+                                    for (let i = pagination[0] + 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] + 1; i++) {
+                                        temp.push(i);
+                                    }
+                                    return setPagination(temp)
+                                }
+                            }
+                        }
+                    }}>След</div>
                 </div>
             </div>
         </div>

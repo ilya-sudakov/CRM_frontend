@@ -30,6 +30,11 @@ const FeedbackPage = (props) => {
             className: 'urgent',
             name: 'Срочно',
             visible: true,
+        },
+        {
+            className: 'testing',
+            name: 'Тестирование',
+            visible: true,
         }
     ])
 

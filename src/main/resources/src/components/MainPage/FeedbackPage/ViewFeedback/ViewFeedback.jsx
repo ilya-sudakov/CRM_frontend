@@ -156,6 +156,7 @@ const ViewFeedback = (props) => {
                                 <option value="in-progress">В процессе</option>
                                 <option value="completed">Завершено</option>
                                 <option value="urgent">Срочно</option>
+                                <option value="testing">Тестирование</option>
                             </select>
                         </div>
                     </div>

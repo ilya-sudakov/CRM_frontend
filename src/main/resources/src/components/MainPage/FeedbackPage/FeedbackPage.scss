@@ -4,6 +4,7 @@
   --urgent: #ca3e3e;
   --completed: #399639;
   --in-progress: #bdbd41;
+  --testing: #41b9bd;
   .feedback-page__status-wrapper {
     // width: 100%;
     display: flex;
@@ -46,6 +47,9 @@
     }
     .main-window__list-item--completed::before {
       background-color: var(--completed);
+    }
+    .main-window__list-item--testing::before {
+      background-color: var(--testing);
     }
   }
   .main-window__list {
@@ -98,6 +102,9 @@
     }
     .main-window__list-item--completed:not(.main-window__list-item--header)::before {
       background-color: var(--completed);
+    }
+    .main-window__list-item--testing:not(.main-window__list-item--header)::before {
+      background-color: var(--testing);
     }
   }
   .feedback-page__info-message {
