@@ -1,7 +1,6 @@
 @import "../../../variables.scss";
 
 .clients {
-
   .main-window__header {
     display: flex;
     // flex-direction: row;
@@ -72,6 +71,7 @@
   .main-window__list {
     .main-window__list-item {
       span {
+        align-items: center;
         &:nth-child(2) {
           flex: 0 1 10%;
           max-width: 100px;
@@ -89,15 +89,15 @@
     }
   }
 
-  .main-window__list-item:not(:first-child) span:nth-child(2) {
+  .main-window__list-item:not(:first-child) span:nth-child(2) span {
     font-size: 85%;
   }
 
-  .main-window__list-item:not(:first-child) span:nth-child(3) {
+  .main-window__list-item:not(:first-child) span:nth-child(3) span {
     font-size: 90%;
   }
 
-  .main-window__list-item:not(:first-child) span:nth-child(4) {
+  .main-window__list-item:not(:first-child) span:nth-child(4) span {
     font-size: 90%;
   }
 

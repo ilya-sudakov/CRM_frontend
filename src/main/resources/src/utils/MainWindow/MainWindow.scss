@@ -360,6 +360,12 @@
       background-color: #12abca;
     }
 
+    .main-window__page-number--skip {
+      // color: #222222;
+      color: #1c5c69;
+      padding: 5px 25px;
+    }
+
     span {
       border-radius: 5px;
       margin-right: 5px;
@@ -412,6 +418,23 @@
       font-size: 90%;
       margin-bottom: 0;
       margin-right: 5px;
+    }
+
+    .main-window__pagination {
+      .main-window__page-number {
+        padding: 5px 10px;
+        min-width: 40px;
+        margin-right: 2.5px;
+      }
+      span {
+        padding: 5px 10px;
+        margin-right: 2.5px;
+      }
+      .main-window__page-number--skip {
+        // display: block;
+        width: 100%;
+        margin: 10px 0;
+      }
     }
   }
 }

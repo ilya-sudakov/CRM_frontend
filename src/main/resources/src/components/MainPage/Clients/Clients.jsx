@@ -81,7 +81,7 @@ const Clients = (props) => {
                 console.log(res);
                 setClients(res.content);
                 // console.log(Math.ceil(res.totalElements / itemsPerPage));
-                if (curPage < 10) {
+                if (curPage < 5) {
                     // setItemsCount(res.length);
                     setItemsCount(res.totalElements);
                     let temp = [];
@@ -90,7 +90,7 @@ const Clients = (props) => {
                         temp.push(i);
                         i++;
                     }
-                    while (i <= Math.ceil(res.totalElements / itemsPerPage) && i <= 10);
+                    while (i <= Math.ceil(res.totalElements / itemsPerPage) && i <= 5);
                     setPagination(temp);
                 }
                 setIsLoading(false);
@@ -276,11 +276,11 @@ const Clients = (props) => {
                         })}
                 </div>
                 <div className="main-window__pagination">
-                    <div className="main-window__page-number" onClick={() => {
+                    <div className="main-window__page-number main-window__page-number--skip" onClick={() => {
                         if (curPage > 1) {
                             const item = curPage - 1;
                             setCurPage(item);
-                            if (Math.floor(itemsCount / itemsPerPage) > 10) {
+                            if (Math.floor(itemsCount / itemsPerPage) > 5) {
                                 if (pagination.indexOf(item) === 0 && item !== 1) {
                                     let temp = [];
                                     for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
@@ -298,11 +298,11 @@ const Clients = (props) => {
                             }
                         }
                     }}>Пред</div>
-                    {curPage >= 10 && <React.Fragment>
+                    {curPage >= 5 && <React.Fragment>
                         <div className="main-window__page-number" onClick={() => {
                             const item = 1;
                             setCurPage(item);
-                            if (Math.floor(itemsCount / itemsPerPage) > 10) {
+                            if (Math.floor(itemsCount / itemsPerPage) > 5) {
                                 if (pagination.indexOf(item) === 0 && item !== 1) {
                                     let temp = [];
                                     for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
@@ -324,7 +324,7 @@ const Clients = (props) => {
                     {pagination.map((item, index) => {
                         return <div className={curPage == item ? "main-window__page-number main-window__page-number--active" : "main-window__page-number"} onClick={() => {
                             setCurPage(item);
-                            if (Math.floor(itemsCount / itemsPerPage) > 10) {
+                            if (Math.floor(itemsCount / itemsPerPage) > 5) {
                                 if (pagination.indexOf(item) === 0 && item !== 1) {
                                     let temp = [];
                                     for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
@@ -344,7 +344,7 @@ const Clients = (props) => {
                     })}
                     {(curPage <= (
                         Math.ceil(itemsCount / itemsPerPage) - 2)
-                        && Math.ceil(itemsCount / itemsPerPage) > 10
+                        && Math.ceil(itemsCount / itemsPerPage) > 5
                         && pagination.find(item => item === Math.ceil(itemsCount / itemsPerPage)) === undefined
                     ) && <React.Fragment>
                             <span>...</span>
@@ -353,20 +353,20 @@ const Clients = (props) => {
                                 const item = Math.ceil(itemsCount / itemsPerPage);
                                 setCurPage(item);
                                 console.log(item);
-                                if (Math.ceil(itemsCount / itemsPerPage) > 10) {
+                                if (Math.ceil(itemsCount / itemsPerPage) > 5) {
                                     let temp = [];
-                                    for (let i = item - 10; i <= Math.ceil(itemsCount / itemsPerPage); i++) {
+                                    for (let i = item - 5; i <= Math.ceil(itemsCount / itemsPerPage); i++) {
                                         temp.push(i);
                                     }
                                     return setPagination(temp)
                                 }
                             }}>{Math.ceil(itemsCount / itemsPerPage)}</div>
                         </React.Fragment>}
-                    <div className="main-window__page-number" onClick={() => {
+                    <div className="main-window__page-number main-window__page-number--skip" onClick={() => {
                         if (curPage < Math.ceil(itemsCount / itemsPerPage)) {
                             const item = curPage + 1;
                             setCurPage(item);
-                            if (Math.ceil(itemsCount / itemsPerPage) >= 10) {
+                            if (Math.ceil(itemsCount / itemsPerPage) >= 5) {
                                 if (pagination.indexOf(item) === 0 && item !== 1) {
                                     let temp = [];
                                     for (let i = pagination[0] - 1; i <= Math.ceil(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
