@@ -274,16 +274,17 @@ const Clients = (props) => {
                 <div className="main-window__pagination">
                     <div className="main-window__page-number" onClick={() => {
                         if (curPage > 1) {
-                            setCurPage(curPage - 1);
+                            const item = curPage - 1;
+                            setCurPage(item);
                             if (Math.floor(itemsCount / itemsPerPage) > 10) {
-                                if (pagination.indexOf(curPage - 1) === 0 && (curPage - 1) !== 1) {
+                                if (pagination.indexOf(item) === 0 && item !== 1) {
                                     let temp = [];
                                     for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
                                         temp.push(i);
                                     }
                                     return setPagination(temp)
                                 }
-                                if (pagination.indexOf(curPage - 1) === (pagination.length - 1) && (curPage - 1) !== (Math.floor(itemsCount / itemsPerPage))) {
+                                if (pagination.indexOf(item) === (pagination.length - 1) && item !== (Math.floor(itemsCount / itemsPerPage))) {
                                     let temp = [];
                                     for (let i = pagination[0] + 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] + 1; i++) {
                                         temp.push(i);
@@ -293,6 +294,29 @@ const Clients = (props) => {
                             }
                         }
                     }}>Пред</div>
+                    {curPage >= 10 && <React.Fragment>
+                        <div className="main-window__page-number" onClick={() => {
+                            const item = 1;
+                            setCurPage(item);
+                            if (Math.floor(itemsCount / itemsPerPage) > 10) {
+                                if (pagination.indexOf(item) === 0 && item !== 1) {
+                                    let temp = [];
+                                    for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
+                                        temp.push(i);
+                                    }
+                                    return setPagination(temp)
+                                }
+                                if (pagination.indexOf(item) === (pagination.length - 1) && item !== (Math.floor(itemsCount / itemsPerPage))) {
+                                    let temp = [];
+                                    for (let i = pagination[0] + 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] + 1; i++) {
+                                        temp.push(i);
+                                    }
+                                    return setPagination(temp)
+                                }
+                            }
+                        }}>1</div>
+                        <span>...</span>
+                    </React.Fragment>}
                     {pagination.map((item, index) => {
                         return <div className={curPage == item ? "main-window__page-number main-window__page-number--active" : "main-window__page-number"} onClick={() => {
                             setCurPage(item);
@@ -314,20 +338,36 @@ const Clients = (props) => {
                             }
                         }}>{item}</div>
                     })}
+                    {(curPage <= (Math.ceil(itemsCount / itemsPerPage) - 2) && Math.ceil(itemsCount / itemsPerPage) > 10) && <React.Fragment>
+                        <span>...</span>
+                        <div className="main-window__page-number" onClick={() => {
+                            const item = Math.ceil(itemsCount / itemsPerPage);
+                            setCurPage(item);
+                            console.log(item);
+                            if (Math.ceil(itemsCount / itemsPerPage) > 10) {
+                                let temp = [];
+                                for (let i = item - 10; i <= Math.ceil(itemsCount / itemsPerPage); i++) {
+                                    temp.push(i);
+                                }
+                                return setPagination(temp)
+                            }
+                        }}>{Math.ceil(itemsCount / itemsPerPage)}</div>
+                    </React.Fragment>}
                     <div className="main-window__page-number" onClick={() => {
-                        if (curPage <= Math.floor(itemsCount / itemsPerPage)) {
-                            setCurPage(curPage + 1);
-                            if (Math.floor(itemsCount / itemsPerPage) > 10) {
-                                if (pagination.indexOf(curPage - 1) === 0 && (curPage - 1) !== 1) {
+                        if (curPage < Math.ceil(itemsCount / itemsPerPage)) {
+                            const item = curPage + 1;
+                            setCurPage(item);
+                            if (Math.ceil(itemsCount / itemsPerPage) >= 10) {
+                                if (pagination.indexOf(item) === 0 && item !== 1) {
                                     let temp = [];
-                                    for (let i = pagination[0] - 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
+                                    for (let i = pagination[0] - 1; i <= Math.ceil(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] - 1; i++) {
                                         temp.push(i);
                                     }
                                     return setPagination(temp)
                                 }
-                                if (pagination.indexOf(curPage - 1) === (pagination.length - 1) && (curPage - 1) !== (Math.floor(itemsCount / itemsPerPage))) {
+                                if (pagination.indexOf(item) === (pagination.length - 1) && item !== (Math.ceil(itemsCount / itemsPerPage))) {
                                     let temp = [];
-                                    for (let i = pagination[0] + 1; i <= Math.floor(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] + 1; i++) {
+                                    for (let i = pagination[0] + 1; i <= Math.ceil(itemsCount / itemsPerPage) && i <= pagination[pagination.length - 1] + 1; i++) {
                                         temp.push(i);
                                     }
                                     return setPagination(temp)
