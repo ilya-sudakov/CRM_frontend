@@ -7,9 +7,10 @@ import viewSVG from '../../../../../../../../assets/tableview/view.svg';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
+import { getOrdersByName, deleteProductFromOrder, deleteOrder } from '../../../../utils/RequestsAPI/Workshop/Orders.jsx';
 
 const WorkshopOrders = (props) => {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [orders, setOrders] = useState([]);
     const [statuses, setStatuses] = useState([
@@ -33,49 +34,43 @@ const WorkshopOrders = (props) => {
             name: 'Проблема',
             visible: true,
         }
-    ])
+    ]);
+
+    const loadData = (signal) => {
+        setIsLoading(true);
+        return getOrdersByName({
+            name: 'ЦехЛепсари'
+        }, signal)
+            .then(res => res.json())
+            .then(res => {
+                // console.log(res);
+                setOrders(res);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.log(error);
+                setIsLoading(false);
+            })
+    };
+
+    const deleteItem = (orderIndex) => {
+        Promise.all(orders[orderIndex].products.map(product => {
+            return deleteProductFromOrder(product.id);
+        }))
+            .then(() => {
+                return deleteOrder(orders[orderIndex].id)
+                    .then(() => {
+                        return loadData();
+                    })
+            })
+    }
 
     useState(() => {
         document.title = "Комплектация ЦехЛепсари";
-        const data = [
-            {
-                id: 1,
-                deliverBy: new Date(1785986548000),
-                products: [
-                    {
-                        name: 'Продукт1',
-                        quantity: '15000'
-                    },
-                    {
-                        name: 'Продукт2',
-                        quantity: '12000'
-                    },
-                    {
-                        name: 'Продукт3',
-                        quantity: '8000'
-                    }
-                ],
-                name: 'Обновление оборудования',
-                assembly: 'Коробочка',
-                status: 'problem'
-            },
-            {
-                id: 2,
-                deliverBy: new Date(1385986548000),
-                products: [
-                    {
-                        name: 'Продукт1',
-                        quantity: '500'
-                    }
-                ],
-                name: 'Обновление оборудования',
-                assembly: 'Пакетик',
-                status: 'ordered'
-            }
-        ];
-        setOrders(data);
+        const abortController = new AbortController();
+        loadData(abortController.signal);
         setIsLoading(false);
-    }, [])
+    }, []);
 
     return (
         <div className="workshop-orders">
@@ -183,7 +178,7 @@ const WorkshopOrders = (props) => {
                                         <img className="main-window__img" src={editSVG} />
                                     </div>
                                     {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" title="Удаление заказа" onClick={() => {
-                                        // deleteItem(order.id, orderIndex);
+                                        deleteItem(orderIndex);
                                     }}>
                                         <img className="main-window__img" src={deleteSVG} />
                                     </div>}

@@ -6,16 +6,14 @@ import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
+import { getOrderById, editOrder, editProductInOrder, addProductToOrder, deleteProductFromOrder } from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx';
 
 const EditWorkshopOrder = (props) => {
     const [formInputs, setFormInputs] = useState({
         name: '',
         status: 'ordered',
         deliverBy: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
-        products: [{
-            name: '',
-            quantity: ''
-        }],
+        products: [],
         assembly: '',
         date: new Date(),
     });
@@ -26,7 +24,7 @@ const EditWorkshopOrder = (props) => {
         deliverBy: false
     });
     const [validInputs, setValidInputs] = useState({
-        name: false,
+        name: true,
         // products: false,
         date: true,
         deliverBy: true
@@ -96,9 +94,54 @@ const EditWorkshopOrder = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setIsLoading(true);
-        console.log(formInputs);
-        formIsValid();
-        setIsLoading(false);
+        // console.log(formInputs); 
+        formIsValid() && editOrder({
+            ...formInputs,
+            date: new Date(formInputs.date).getTime() / 1000,
+            deliverBy: new Date(formInputs.deliverBy).getTime() / 1000
+        }, formInputs.id)
+            .then(() => {
+                //PUT if edited, POST if product is new
+                Promise.all(formInputs.productsNew.map((selected) => {
+                    let edited = false;
+                    formInputs.products.map((item) => {
+                        if (item.id === selected.id) {
+                            edited = true;
+                            return;
+                        }
+                    });
+                    return (edited === true)
+                        ? (
+                            editProductInOrder({
+                                ...selected,
+                                equipmentId: formInputs.id
+                            }, selected.id)
+                        )
+                        : (
+                            addProductToOrder({
+                                equipmentId: formInputs.id,
+                                ...selected
+                            })
+                        )
+                }))
+                    .then(() => {
+                        //DELETE products removed by user
+                        Promise.all(formInputs.products.map((item) => {
+                            let deleted = true;
+                            formInputs.productsNew.map((selected) => {
+                                if (selected.id === item.id) {
+                                    deleted = false;
+                                    return;
+                                }
+                            })
+                            return (deleted === true && deleteProductFromOrder(item.id));
+                        }))
+                            .then(() => {
+                                setIsLoading(false);
+                                props.history.push("/lemz/workshop-orders")
+                            })
+                    })
+            })
     }
 
     const handleInputChange = e => {
@@ -122,6 +165,12 @@ const EditWorkshopOrder = (props) => {
             props.history.push("/lemz/workshop-orders");
         } else {
             setOrderId(id);
+            getOrderById(id)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+                    setFormInputs(res);
+                })
         }
     }, [])
 
@@ -203,7 +252,7 @@ const EditWorkshopOrder = (props) => {
                             validateField("products", value);
                             setFormInputs({
                                 ...formInputs,
-                                products: value
+                                productsNew: value
                             })
                             setFormErrors({
                                 ...formErrors,

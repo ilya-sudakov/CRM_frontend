@@ -6,6 +6,7 @@ import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
+import { getOrderById } from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx';
 
 const ViewWorkshopOrder = (props) => {
     const [formInputs, setFormInputs] = useState({
@@ -30,6 +31,12 @@ const ViewWorkshopOrder = (props) => {
             props.history.push("/lemz/workshop-orders");
         } else {
             setOrderId(id);
+            getOrderById(id)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+                    setFormInputs(res);
+                })
         }
     }, [])
 

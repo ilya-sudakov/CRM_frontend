@@ -6,16 +6,14 @@ import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
+import { getOrderById } from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx';
 
 const ViewWorkshopOrder = (props) => {
     const [formInputs, setFormInputs] = useState({
         name: '',
         status: 'ordered',
         deliverBy: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
-        products: [{
-            name: '',
-            quantity: ''
-        }],
+        products: [],
         assembly: '',
         date: new Date(),
     });
@@ -30,6 +28,12 @@ const ViewWorkshopOrder = (props) => {
             props.history.push("/lepsari/workshop-orders");
         } else {
             setOrderId(id);
+            getOrderById(id)
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+                    setFormInputs(res);
+                })
         }
     }, [])
 

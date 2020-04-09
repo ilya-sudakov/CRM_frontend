@@ -6,6 +6,7 @@ import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
+import { addOrder, addProductToOrder } from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx';
 
 const NewWorkshopOrder = (props) => {
     const [formInputs, setFormInputs] = useState({
@@ -18,6 +19,7 @@ const NewWorkshopOrder = (props) => {
         }],
         assembly: '',
         date: new Date(),
+        factoryName: 'ЦехЛЭМЗ'
     });
     const [formErrors, setFormErrors] = useState({
         name: false,
@@ -96,8 +98,27 @@ const NewWorkshopOrder = (props) => {
         event.preventDefault();
         setIsLoading(true);
         console.log(formInputs);
-        formIsValid();
-        setIsLoading(false);
+        let orderId = 0;
+        formIsValid() && addOrder({
+            ...formInputs,
+            date: formInputs.date.getTime() / 1000,
+            deliverBy: formInputs.deliverBy.getTime() / 1000
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res.id);
+                orderId = res.id;
+                Promise.all(formInputs.products.map(product => {
+                    return addProductToOrder({
+                        ...product,
+                        equipmentId: orderId
+                    })
+                }))
+                    .then(() => {
+                        setIsLoading(false);
+                        props.history.push('/lemz/workshop-orders');
+                    })
+            })
     }
 
     const handleInputChange = e => {
