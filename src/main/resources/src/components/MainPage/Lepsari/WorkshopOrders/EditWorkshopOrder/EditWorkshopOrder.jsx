@@ -13,10 +13,8 @@ const EditWorkshopOrder = (props) => {
         name: '',
         status: 'ordered',
         deliverBy: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
-        products: [{
-            name: '',
-            quantity: ''
-        }],
+        products: [],
+        productsNew: [],
         assembly: '',
         date: new Date(),
     });
@@ -172,7 +170,10 @@ const EditWorkshopOrder = (props) => {
                 .then(res => res.json())
                 .then(res => {
                     console.log(res);
-                    setFormInputs(res);
+                    setFormInputs({
+                        ...formInputs,
+                        ...res
+                    });
                 })
         }
     }, [])

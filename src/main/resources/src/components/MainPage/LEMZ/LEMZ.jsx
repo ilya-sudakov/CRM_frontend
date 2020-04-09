@@ -34,7 +34,7 @@ const LEMZ = (props) => {
                         <Link to="/lemz/workshop-orders" className={props.location.pathname.includes('/lemz/workshop-orders') === true
                             ? "main-window__item--active main-window__item"
                             : "main-window__item"}>
-                            Комплектация (Тест UI)
+                            Комплектация
                             <Link to="/lemz/workshop-orders/new" className="main-window__addButton">
                                 <img className="main-window__img" src={plusImg} alt="" />
                             </Link>
@@ -101,8 +101,7 @@ const LEMZ = (props) => {
                                 // transferData={props.transferData}
                                 // setTransferState={props.setTransferState}
                                 // setTransferData={props.setTransferData}
-                                // allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
-                                allowedRoles={['ROLE_ADMIN']}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
                             />
                             <PrivateRoute
                                 exact path="/lemz/workshop-orders/new"
@@ -112,8 +111,7 @@ const LEMZ = (props) => {
                                 // transferData={props.transferData}
                                 // setTransferState={props.setTransferState}
                                 // setTransferData={props.setTransferData}
-                                // allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
-                                allowedRoles={['ROLE_ADMIN']}
+                                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', "ROLE_LEMZ"]}
                             />
                             <PrivateRoute
                                 path="/lemz/workshop-orders/view/"
