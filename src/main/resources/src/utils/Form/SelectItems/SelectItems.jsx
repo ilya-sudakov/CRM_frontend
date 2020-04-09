@@ -7,7 +7,7 @@ const SelectItems = (props) => {
 
     useEffect(() => {
         props.defaultValue && setItems([...props.defaultValue]);
-        console.log(props.defaultValue);
+        // console.log(props.defaultValue);
     }, [props.defaultValue]);
 
     const handleInputChange = (event) => {

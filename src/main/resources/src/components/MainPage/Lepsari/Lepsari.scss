@@ -96,7 +96,7 @@
     }
   }
 
-  @media (max-width: 620px) {
+  @media (max-width: 768px) {
     .main-window__header {
       .main-window__title {
         display: none;
@@ -111,6 +111,12 @@
             margin: 0;
           }
         }
+      }
+    }
+
+    .main-window__content {
+      .searchbar {
+        width: calc(100%) !important;
       }
     }
   }
