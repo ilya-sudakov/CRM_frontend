@@ -137,6 +137,10 @@
     align-items: center;
     border: 1px solid transparent;
     outline: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 
     &:hover {
       background-color: lighten($button__background--inverted, 5%);
@@ -435,7 +439,7 @@
         margin-right: 2.5px;
       }
       span {
-        padding: 5px 10px;
+        padding: 5px 5px;
         margin-right: 2.5px;
       }
       .main-window__page-number--skip {

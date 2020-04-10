@@ -46,7 +46,7 @@ const ViewWorkshopOrder = (props) => {
                 <div className="main-form__title">Просмотр заказа</div>
                 <div className="main-form__form">
                     <InputDate
-                        inputName="Дата"
+                        inputName="Дата создания"
                         name="date"
                         selected={Date.parse(formInputs.date)}
                         readOnly

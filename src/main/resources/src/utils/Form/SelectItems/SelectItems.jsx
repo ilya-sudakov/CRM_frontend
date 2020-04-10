@@ -57,11 +57,29 @@ const SelectItems = (props) => {
                             return <div className="select-items__list-item">
                                 <div>
                                     <span>Название</span>
-                                    <input readOnly={props.readOnly} type="text" name="name" data-id={index} onChange={handleInputChange} value={item.name} placeholder="Введите название..." />
+                                    <input
+                                        readOnly={props.readOnly}
+                                        type="text"
+                                        name="name"
+                                        data-id={index}
+                                        onChange={handleInputChange}
+                                        value={item.name}
+                                        placeholder="Введите название..."
+                                        autoComplete="off"
+                                    />
                                 </div>
                                 <div>
                                     <span>Кол-во</span>
-                                    <input readOnly={props.readOnly} type="text" name="quantity" data-id={index} onChange={handleInputChange} value={item.quantity} placeholder="Введите кол-во..." />
+                                    <input
+                                        readOnly={props.readOnly}
+                                        type="number"
+                                        name="quantity"
+                                        data-id={index}
+                                        onChange={handleInputChange}
+                                        value={item.quantity}
+                                        placeholder="Введите кол-во..."
+                                        autoComplete="off"
+                                    />
                                 </div>
                                 {!props.readOnly && <img src={deleteSVG} className="select-items__img" onClick={deleteItem} data-id={index} title="Удалить элемент" />}
                                 {/* {items.length > 1 && <img src={deleteSVG} className="select-items__img" onClick={deleteItem} data-id={index} title="Удалить элемент" />} */}

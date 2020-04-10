@@ -60,6 +60,7 @@ const SelectWork = (props) => {
             ...selected,
             {
                 product: [],
+                draft: [],
                 workName: '',
                 workType: '',
                 workId: null,
@@ -70,6 +71,7 @@ const SelectWork = (props) => {
             ...selected,
             {
                 product: [],
+                draft: [],
                 workName: '',
                 workId: null,
                 workType: '',

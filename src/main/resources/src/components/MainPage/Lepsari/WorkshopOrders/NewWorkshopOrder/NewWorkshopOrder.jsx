@@ -151,7 +151,7 @@ const NewWorkshopOrder = (props) => {
                         setShowError={setShowError}
                     />
                     <InputDate
-                        inputName="Дата"
+                        inputName="Дата создания"
                         required
                         error={formErrors.date}
                         name="date"

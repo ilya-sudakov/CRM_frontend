@@ -116,164 +116,155 @@ const EditClient = (props) => {
             nextDateContact: new Date(clientInputs.nextContactDate).getTime() / 1000,
             categoryId: clientInputs.categoryId
         }, clientId)
-            .then(() => {
-                addClientWorkHistory({
-                    date: new Date(),
-                    action: 'Редактирование записи',
-                    result: 'Запись успешно отредактирована',
-                    comment: '<Cообщение сгенерировано автоматически>',
-                    clientId: clientId
+            .then(res => {
+                //PUT if edited, POST if item is new
+                const itemsArr = clientInputs.workHistoryNew.map((selected) => {
+                    let edited = false;
+                    clientInputs.workHistory.map((item) => {
+                        if (item.id === selected.id) {
+                            edited = true;
+                            return;
+                        }
+                    });
+                    return (edited === true)
+                        ? (
+                            editClientWorkHistory({
+                                date: selected.date,
+                                action: selected.action,
+                                result: selected.result,
+                                comment: selected.comment,
+                                clientId: clientId
+                            }, selected.id)
+                        )
+                        : (
+                            addClientWorkHistory({
+                                date: selected.date,
+                                action: selected.action,
+                                result: selected.result,
+                                comment: selected.comment,
+                                clientId: clientId
+                            })
+                        )
                 })
-                    .then(res => {
-                        //PUT if edited, POST if item is new
-                        const itemsArr = clientInputs.workHistoryNew.map((selected) => {
-                            let edited = false;
-                            clientInputs.workHistory.map((item) => {
-                                if (item.id === selected.id) {
-                                    edited = true;
+                Promise.all(itemsArr)
+                    .then(() => {
+                        //DELETE items removed by user
+                        const itemsArr = clientInputs.workHistory.map((item) => {
+                            let deleted = true;
+                            clientInputs.workHistoryNew.map((selected) => {
+                                if (selected.id === item.id) {
+                                    deleted = false;
                                     return;
                                 }
-                            });
-                            return (edited === true)
-                                ? (
-                                    editClientWorkHistory({
-                                        date: selected.date,
-                                        action: selected.action,
-                                        result: selected.result,
-                                        comment: selected.comment,
-                                        clientId: clientId
-                                    }, selected.id)
-                                )
-                                : (
-                                    addClientWorkHistory({
-                                        date: selected.date,
-                                        action: selected.action,
-                                        result: selected.result,
-                                        comment: selected.comment,
-                                        clientId: clientId
-                                    })
-                                )
+                            })
+                            return (deleted === true && deleteClientWorkHistory(item.id));
                         })
                         Promise.all(itemsArr)
                             .then(() => {
-                                //DELETE items removed by user
-                                const itemsArr = clientInputs.workHistory.map((item) => {
-                                    let deleted = true;
-                                    clientInputs.workHistoryNew.map((selected) => {
-                                        if (selected.id === item.id) {
-                                            deleted = false;
+                                //--- сделано WorkHistory
+                                //PUT if edited, POST if item is new
+                                const itemsArr = clientInputs.legalEntityNew.map((selected) => {
+                                    let edited = false;
+                                    clientInputs.legalEntity.map((item) => {
+                                        if (item.id === selected.id) {
+                                            edited = true;
                                             return;
                                         }
-                                    })
-                                    return (deleted === true && deleteClientWorkHistory(item.id));
+                                    });
+                                    return (edited === true)
+                                        ? (
+                                            editClientLegalEntity({
+                                                name: selected.name,
+                                                inn: selected.inn,
+                                                kpp: selected.kpp,
+                                                ogrn: selected.ogrn,
+                                                bik: selected.bik,
+                                                checkingAccount: selected.checkingAccount,
+                                                legalAddress: selected.legalAddress,
+                                                factualAddress: selected.factualAddress,
+                                                legalEntity: selected.legalEntity,
+                                                clientId: clientId
+                                            }, selected.id)
+                                        )
+                                        : (
+                                            addClientLegalEntity({
+                                                name: selected.name,
+                                                inn: selected.inn,
+                                                kpp: selected.kpp,
+                                                ogrn: selected.ogrn,
+                                                bik: selected.bik,
+                                                checkingAccount: selected.checkingAccount,
+                                                legalAddress: selected.legalAddress,
+                                                factualAddress: selected.factualAddress,
+                                                legalEntity: selected.legalEntity,
+                                                clientId: clientId
+                                            })
+                                        )
                                 })
                                 Promise.all(itemsArr)
                                     .then(() => {
-                                        //--- сделано WorkHistory
-                                        //PUT if edited, POST if item is new
-                                        const itemsArr = clientInputs.legalEntityNew.map((selected) => {
-                                            let edited = false;
-                                            clientInputs.legalEntity.map((item) => {
-                                                if (item.id === selected.id) {
-                                                    edited = true;
+                                        //DELETE items removed by user
+                                        const itemsArr = clientInputs.legalEntity.map((item) => {
+                                            let deleted = true;
+                                            clientInputs.legalEntityNew.map((selected) => {
+                                                if (selected.id === item.id) {
+                                                    deleted = false;
                                                     return;
                                                 }
-                                            });
-                                            return (edited === true)
-                                                ? (
-                                                    editClientLegalEntity({
-                                                        name: selected.name,
-                                                        inn: selected.inn,
-                                                        kpp: selected.kpp,
-                                                        ogrn: selected.ogrn,
-                                                        bik: selected.bik,
-                                                        checkingAccount: selected.checkingAccount,
-                                                        legalAddress: selected.legalAddress,
-                                                        factualAddress: selected.factualAddress,
-                                                        legalEntity: selected.legalEntity,
-                                                        clientId: clientId
-                                                    }, selected.id)
-                                                )
-                                                : (
-                                                    addClientLegalEntity({
-                                                        name: selected.name,
-                                                        inn: selected.inn,
-                                                        kpp: selected.kpp,
-                                                        ogrn: selected.ogrn,
-                                                        bik: selected.bik,
-                                                        checkingAccount: selected.checkingAccount,
-                                                        legalAddress: selected.legalAddress,
-                                                        factualAddress: selected.factualAddress,
-                                                        legalEntity: selected.legalEntity,
-                                                        clientId: clientId
-                                                    })
-                                                )
+                                            })
+                                            return (deleted === true && deleteClientLegalEntity(item.id));
                                         })
                                         Promise.all(itemsArr)
                                             .then(() => {
-                                                //DELETE items removed by user
-                                                const itemsArr = clientInputs.legalEntity.map((item) => {
-                                                    let deleted = true;
-                                                    clientInputs.legalEntityNew.map((selected) => {
-                                                        if (selected.id === item.id) {
-                                                            deleted = false;
+                                                //--- сделано LegalEntity
+                                                //PUT if edited, POST if item is new
+                                                const itemsArr = clientInputs.contactsNew.map((selected) => {
+                                                    let edited = false;
+                                                    clientInputs.contacts.map((item) => {
+                                                        if (item.id === selected.id) {
+                                                            edited = true;
                                                             return;
                                                         }
-                                                    })
-                                                    return (deleted === true && deleteClientLegalEntity(item.id));
+                                                    });
+                                                    return (edited === true)
+                                                        ? (
+                                                            editClientContact({
+                                                                name: selected.name,
+                                                                lastName: selected.lastName,
+                                                                email: selected.email,
+                                                                position: selected.position,
+                                                                phoneNumber: selected.phoneNumber,
+                                                                clientId: clientId
+                                                            }, selected.id)
+                                                        )
+                                                        : (
+                                                            addClientContact({
+                                                                name: selected.name,
+                                                                lastName: selected.lastName,
+                                                                email: selected.email,
+                                                                position: selected.position,
+                                                                phoneNumber: selected.phoneNumber,
+                                                                clientId: clientId
+                                                            })
+                                                        )
                                                 })
                                                 Promise.all(itemsArr)
                                                     .then(() => {
-                                                        //--- сделано LegalEntity
-                                                        //PUT if edited, POST if item is new
-                                                        const itemsArr = clientInputs.contactsNew.map((selected) => {
-                                                            let edited = false;
-                                                            clientInputs.contacts.map((item) => {
-                                                                if (item.id === selected.id) {
-                                                                    edited = true;
+                                                        //DELETE items removed by user
+                                                        const itemsArr = clientInputs.contacts.map((item) => {
+                                                            let deleted = true;
+                                                            clientInputs.contactsNew.map((selected) => {
+                                                                if (selected.id === item.id) {
+                                                                    deleted = false;
                                                                     return;
                                                                 }
-                                                            });
-                                                            return (edited === true)
-                                                                ? (
-                                                                    editClientContact({
-                                                                        name: selected.name,
-                                                                        lastName: selected.lastName,
-                                                                        email: selected.email,
-                                                                        position: selected.position,
-                                                                        phoneNumber: selected.phoneNumber,
-                                                                        clientId: clientId
-                                                                    }, selected.id)
-                                                                )
-                                                                : (
-                                                                    addClientContact({
-                                                                        name: selected.name,
-                                                                        lastName: selected.lastName,
-                                                                        email: selected.email,
-                                                                        position: selected.position,
-                                                                        phoneNumber: selected.phoneNumber,
-                                                                        clientId: clientId
-                                                                    })
-                                                                )
+                                                            })
+                                                            return (deleted === true && deleteClientContact(item.id));
                                                         })
                                                         Promise.all(itemsArr)
                                                             .then(() => {
-                                                                //DELETE items removed by user
-                                                                const itemsArr = clientInputs.contacts.map((item) => {
-                                                                    let deleted = true;
-                                                                    clientInputs.contactsNew.map((selected) => {
-                                                                        if (selected.id === item.id) {
-                                                                            deleted = false;
-                                                                            return;
-                                                                        }
-                                                                    })
-                                                                    return (deleted === true && deleteClientContact(item.id));
-                                                                })
-                                                                Promise.all(itemsArr)
-                                                                    .then(() => {
-                                                                        setIsLoading(false);
-                                                                        props.history.push('/clients/category/' + clientInputs.categoryName + '/active')
-                                                                    })
+                                                                setIsLoading(false);
+                                                                props.history.push('/clients/category/' + clientInputs.categoryName + '/active')
                                                             })
                                                     })
                                             })

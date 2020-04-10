@@ -37,6 +37,13 @@ const SelectWorkHours = (props) => {
                                     <div>({product.quantity} шт.)</div>
                                 </li>
                             })}
+                            {item.draft.map(draft => {
+                                {/* console.log(product); */ }
+                                return <li>
+                                    <span>{draft.name}</span>
+                                    <div>({draft.quantity} шт.)</div>
+                                </li>
+                            })}
                         </ul>
                         <div className="select-work-hours__input">
                             <span>Часы* </span>

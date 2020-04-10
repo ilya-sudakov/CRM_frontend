@@ -5,6 +5,14 @@
   position: relative;
   // display: flex;
 
+  &__buttons {
+    flex-direction: row;
+
+    .select-draft__search_button {
+      margin-right: 5px;
+    }
+  }
+
   .select-draft__overlay {
     width: 100vw;
     height: 100vh;
@@ -176,7 +184,7 @@
         width: 50%;
         margin-right: 30px;
         position: relative;
-        font-size: 90%;
+        font-size: 100%;
         //   width: fit-content;
         align-items: center;
         color: $primary-text-color;

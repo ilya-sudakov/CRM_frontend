@@ -113,6 +113,8 @@ const SelectDraft = (props) => {
                                         })
                                     })
                                     setDrafts([...newDrafts]);
+                                    console.log(newDrafts);
+
                                 })
                         })
                 })
@@ -215,12 +217,35 @@ const SelectDraft = (props) => {
         <div className="select-draft">
             <div className={props.id ? "select-draft__overlay select-draft__overlay" + props.id + " select-draft__overlay--hidden" : "select-draft__overlay select-draft__overlay--hidden"} onClick={clickOverlay}></div>
             {(!props.readOnly && !props.workshop) && <div className="select-draft__searchbar">
-                <button className="select-draft__search_button" onClick={(e) => {
-                    e.preventDefault();
-                    setShowWindow(!showWindow);
-                }}>
-                    Добавить чертеж
-                </button>
+                <div className="select-draft__buttons">
+                    <button className="select-draft__search_button" onClick={(e) => {
+                        e.preventDefault();
+                        setShowWindow(!showWindow);
+                    }}>
+                        Добавить чертеж
+                    </button>
+                    <button className="select-draft__search_button" onClick={(e) => {
+                        e.preventDefault();
+                        setSelected([
+                            ...selected,
+                            {
+                                type: "new",
+                                name: "",
+                                quantity: 0
+                            }
+                        ])
+                        props.onChange([
+                            ...selected,
+                            {
+                                type: "new",
+                                name: "",
+                                quantity: 0
+                            }
+                        ]);
+                    }}>
+                        Создать новый чертеж
+                    </button>
+                </div>
                 <input
                     type="text"
                     className={props.error === true ? "select-draft__input select-draft__input--error" : "select-draft__input"}
@@ -277,13 +302,21 @@ const SelectDraft = (props) => {
                 {selected.map((item, index) => (
                     <div className="select-draft__selected_row">
                         <div className="select-draft__selected_item">
-                            <div className="select-draft__selected_name">{(
-                                item.type === 'stamp'
-                                    ? 'Штамп'
-                                    : item.type === 'machine'
-                                        ? 'Станок'
-                                        : item.type === 'press-form'
-                                        && 'Пресс-форма') + ' | ' + item.name}</div>
+                            <input
+                                type="text"
+                                className="select-draft__selected_name"
+                                name_id={index}
+                                name="name"
+                                autoComplete="off"
+                                value={(
+                                    item.type === 'stamp'
+                                        ? 'Штамп | '
+                                        : item.type === 'machine'
+                                            ? 'Станок | '
+                                            : item.type === 'press-form'
+                                                ? 'Пресс-форма | '
+                                                : '') + item.name}
+                                onChange={item.type === 'new' ? handleParamChange : null} />
                             {(!props.readOnly && !props.workshop) && <img id={index} className="select-draft__img" src={deleteSVG} alt="" onClick={clickOnSelected} />}
                         </div>
                         <div className="select-draft__selected_quantity">

@@ -18,7 +18,7 @@ const NewRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
         date: new Date(),
         employee: null,
-        works: []
+        works: [],
     })
     const [workTimeErrors, setWorkTimeErrors] = useState({
         date: false,
