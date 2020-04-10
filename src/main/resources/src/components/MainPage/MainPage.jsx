@@ -14,7 +14,7 @@ import PageLoading from './PageLoading/PageLoading.jsx';
 
 class MainPage extends React.Component {
     state = {
-        sidemenu_hidden: false,
+        sidemenu_hidden: true,
         transferState: false,
         transferData: null
     }
@@ -34,6 +34,11 @@ class MainPage extends React.Component {
 
     componentDidMount() {
         // console.log(this.state.transferState, this.state.transferData);
+        if ((window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth) > 1220) {
+            this.setSideMenu(false);
+        }
     }
 
     render() {
