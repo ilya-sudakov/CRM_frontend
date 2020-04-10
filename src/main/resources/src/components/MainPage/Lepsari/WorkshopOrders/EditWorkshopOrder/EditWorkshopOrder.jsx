@@ -172,6 +172,7 @@ const EditWorkshopOrder = (props) => {
                     console.log(res);
                     setFormInputs({
                         ...formInputs,
+                        productsNew: res.products,
                         ...res
                     });
                 })
