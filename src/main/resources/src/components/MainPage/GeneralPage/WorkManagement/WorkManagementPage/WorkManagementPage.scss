@@ -20,11 +20,15 @@
     display: none;
   }
 
-  .main-window__list {
+  .main-window__list,
+  .main-window__list-options {
     .main-window__list-item {
       span {
-        &:nth-child(2) {
+        &:nth-child(3) {
           max-width: 50px;
+        }
+        &:nth-child(5) {
+          max-width: 100px;
         }
       }
     }
@@ -110,6 +114,12 @@
   }
 
   @media (max-width: 768px) {
+    .main-window__list-item {
+      span {
+        // width: 100%;
+        max-width: 100% !important;
+      }
+    }
     .main-window__info-panel {
       flex-direction: column !important;
     }

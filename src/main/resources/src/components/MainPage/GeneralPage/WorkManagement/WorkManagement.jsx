@@ -49,7 +49,7 @@ const WorkManagement = (props) => {
             <div className="work-management__title">
                 <div className="work-management__date">{formatDateString(new Date().setDate(new Date().getDate() - 1))}</div>
                 <span>{
-                    'Учет рабочего времени - ' + (
+                    (
                         props.userHasAccess(['ROLE_ADMIN'])
                             ? 'Сводка дня'
                             : (props.userHasAccess(['ROLE_DISPATCHER']) || props.userHasAccess(['ROLE_MANAGER']))
@@ -65,7 +65,7 @@ const WorkManagement = (props) => {
                 }</span>
                 <div className="work-management__button work-management__button--inverted" onClick={() => {
                     props.history.push("/work-managment");
-                }}>Перейти</div>
+                }}>Открыть</div>
             </div>
             <div className="work-management__content">
                 <div className="work-management__search-bar">

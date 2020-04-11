@@ -68,7 +68,7 @@ const WorkManagementPage = (props) => {
         )
             .then(res => res.json())
             .then(res => {
-                // console.log(res);
+                console.log(res);
                 setWorkItems(res);
                 setIsLoading(false);
             })
@@ -157,6 +157,7 @@ const WorkManagementPage = (props) => {
                 </div>
                 <div className="main-window__list">
                     <div className="main-window__list-item main-window__list-item--header">
+                        <span>Должность</span>
                         <span>ФИО</span>
                         <span>Часы</span>
                         <span>Подразделение</span>
@@ -217,37 +218,43 @@ const WorkManagementPage = (props) => {
                             }
                         }
                     }).map(workItem =>
-                        <div className="main-window__list-item">
-                            <span>
-                                <div className="main-window__mobile-text">ФИО: </div>
-                                <div className="main-window__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
-                            </span>
-                            <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span>
-                            <span><div className="main-window__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span>
-                            <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
-                            <div className="main-window__actions">
-                                {/* <div className="main-window__mobile-text">Действия: </div> */}
-                                <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
-                                    <img className="main-window__img" src={editSVG} />
-                                    {/* Редактировать */}
-                                </Link>
-                                <div className="main-window__action" onClick={() => {
-                                    const deletedProducts = workItem.workControlProduct.map(product => {
-                                        return deleteProductFromRecordedWork(workItem.id, product.product.id)
-                                    })
-                                    Promise.all(deletedProducts)
-                                        .then(() => {
-                                            deleteRecordedWork(workItem.id)
-                                                .then(() => {
-                                                    loadWorks()
-                                                })
+                        <React.Fragment>
+                            <div className="main-window__list-item">
+                                <span><div className="main-window__mobile-text">Должность: </div>{workItem.employee.position}</span>
+                                <span>
+                                    <div className="main-window__mobile-text">ФИО: </div>
+                                    <div className="main-window__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
+                                </span>
+                                <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span>
+                                <span><div className="main-window__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span>
+                                <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
+                                <div className="main-window__actions">
+                                    {/* <div className="main-window__mobile-text">Действия: </div> */}
+                                    <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
+                                        <img className="main-window__img" src={editSVG} />
+                                        {/* Редактировать */}
+                                    </Link>
+                                    <div className="main-window__action" onClick={() => {
+                                        const deletedProducts = workItem.workControlProduct.map(product => {
+                                            return deleteProductFromRecordedWork(workItem.id, product.product.id)
                                         })
-                                }} title="Удалить">
-                                    <img className="main-window__img" src={deleteSVG} />
-                                    {/* Удалить */}
+                                        Promise.all(deletedProducts)
+                                            .then(() => {
+                                                deleteRecordedWork(workItem.id)
+                                                    .then(() => {
+                                                        loadWorks()
+                                                    })
+                                            })
+                                    }} title="Удалить">
+                                        <img className="main-window__img" src={deleteSVG} />
+                                        {/* Удалить */}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            {/* <div className="main-window__list-options">
+                                <span><div className="main-window__mobile-text">Тип работы: </div>{workItem.workList.work}</span>
+                            </div> */}
+                        </React.Fragment>
                     )
                     }
                 </div>
