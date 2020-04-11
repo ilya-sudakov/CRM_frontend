@@ -18,17 +18,16 @@ import { deleteClientWorkHistory, editClientWorkHistory, addClientWorkHistory } 
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import InputDate from '../../../utils/Form/InputDate/InputDate.jsx';
 import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx';
+import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx';
 
 const Clients = (props) => {
     const [clients, setClients] = useState([]);
     const [curCategory, setCurCategory] = useState('');
     const [curClientType, setCurClientType] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [pagination, setPagination] = useState([1]);
     const [curPage, setCurPage] = useState(1);
-    const [curPagePotential, setCurPagePotential] = useState(1);
-    const [curPageActive, setCurPageActive] = useState(1);
     const [itemsCount, setItemsCount] = useState(0);
     const [curForm, setCurForm] = useState('nextContactDate');
     const [showWindow, setShowWindow] = useState(false);
@@ -118,17 +117,18 @@ const Clients = (props) => {
     useEffect(() => {
         document.title = "Клиенты";
         const abortController = new AbortController();
+        console.log(curPage);
         const curCategoryTemp = props.location.pathname.split('/clients/category/')[1].split('/')[0];
         const curClientTypeTemp = props.location.pathname.split('/clients/category/')[1].split('/')[1];
         if (curCategoryTemp !== curCategory || curClientTypeTemp !== curClientType) {
             setCurPage(1);
-        }
+        };
         setCurCategory(curCategoryTemp);
         setCurClientType(curClientTypeTemp);
         loadData(curCategoryTemp, curClientTypeTemp, abortController.signal);
         return function cancel() {
-            abortController.abort()
-        }
+            abortController.abort();
+        };
     }, [props.location, curPage, sortOrder]);
 
     return (
@@ -198,6 +198,9 @@ const Clients = (props) => {
                     </select>
                 </div>
                 <div className="main-window__list">
+                    <TableLoading
+                        isLoading={isLoading}
+                    />
                     <div className="main-window__list-item main-window__list-item--header">
                         <span>Название</span>
                         <span>Сайт</span>
@@ -206,10 +209,10 @@ const Clients = (props) => {
                         <span>Дата след. контакта</span>
                         <div className="main-window__actions">Действие</div>
                     </div>
-                    {isLoading && <TableDataLoading
+                    {/* {isLoading && <TableDataLoading
                         className="main-window__list-item"
                         minHeight="50px"
-                    />}
+                    />} */}
                     {clients
                         .filter(item => {
                             return (
