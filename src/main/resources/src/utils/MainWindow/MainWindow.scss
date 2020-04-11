@@ -337,7 +337,7 @@
     // margin-right: auto;
     flex-wrap: wrap;
     justify-content: flex-end;
-    width: calc(100% - 35px);
+    width: calc(100% - 30px);
     .main-window__page-number {
       border: 1px solid #666666;
       border-radius: 5px;
@@ -449,6 +449,17 @@
       //   width: 100%;
       //   margin: 10px 0;
       // }
+      .main-window__page-number--active {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        // min-width: 100px;
+
+        .main-window__mobile-text {
+          margin-left: 2.5px;
+          margin-right: 0;
+        }
+      }
       .main-window__page-number:not(.main-window__page-number--active):not(.main-window__page-number--skip),
       span {
         display: none;

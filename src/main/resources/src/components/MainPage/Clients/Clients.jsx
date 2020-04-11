@@ -340,7 +340,7 @@ const Clients = (props) => {
                                     return setPagination(temp)
                                 }
                             }
-                        }}>{item}</div>
+                        }}>{item}<div className="main-window__mobile-text">из {Math.ceil(itemsCount / itemsPerPage)}</div></div>
                     })}
                     {(curPage <= (
                         Math.ceil(itemsCount / itemsPerPage) - 2)
