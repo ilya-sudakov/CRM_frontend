@@ -56,22 +56,22 @@
         margin-top: 20px;
         align-items: center;
         .feedback-chat__author {
-          color: #555555;
           font-size: 100%;
           // &:first-of-type {
           //   margin-top: 0;
           // }
           margin-right: 10px;
           line-height: 1rem;
+          color: darken($button__background--inverted, 10%);
         }
         .feedback-chat__date {
           // position: absolute;
           // top: 0;
           // right: 10px;
           // color: #555555;
-          color: darken($button__background--inverted, 10%);
           font-size: 80%;
           line-height: 1rem;
+          color: #555555;
         }
       }
 
