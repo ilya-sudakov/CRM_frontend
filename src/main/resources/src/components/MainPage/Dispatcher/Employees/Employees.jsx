@@ -87,7 +87,9 @@ const Employees = (props) => {
                         <img className="main-window__img" src={PrintIcon} alt="" />
                         <span>Печать списка</span>
                     </div>}
-                    <div className="main-window__amount_table">Всего: {employees.length} записей</div>
+                    <div className="main-window__amount_table">Всего: {employees.filter(employee => {
+                        return (employee.relevance !== 'Уволен' && employee.workshop !== 'Уволенные')
+                    }).length} записей</div>
                 </div>
                 <TableView
                     data={employees}
