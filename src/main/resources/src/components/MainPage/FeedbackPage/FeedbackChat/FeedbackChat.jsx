@@ -51,11 +51,14 @@ const FeedbackChat = (props) => {
                     return <div className="feedback-chat__message">
                         {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div data-letters={message.author[0] + message.author[1]}></div>}
                         {/* {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <img className="feedback-chat__img" src={sendSVG} alt="" />} */}
-                        {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div className="feedback-chat__author">{message.author}</div>}
-                        <div className="feedback-chat__date">{
-                            ((new Date().getDate() + '.' + (new Date().getMonth() + 1)) === (new Date(message.date).getDate() + '.' + (new Date(message.date).getMonth() + 1)))
-                                ? formatDateStringToTime(message.date)
-                                : formatDateStringWithTime(message.date)}</div>
+                        <div className="feedback-chat__header">
+                            {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div className="feedback-chat__author">{message.author}</div>}
+                            <div className="feedback-chat__date">{
+                                ((new Date().getDate() + '.' + (new Date().getMonth() + 1)) === (new Date(message.date).getDate() + '.' + (new Date(message.date).getMonth() + 1)))
+                                    ? formatDateStringToTime(message.date)
+                                    : formatDateStringWithTime(message.date)}
+                            </div>
+                        </div>
                         <div className="feedback-chat__text">{message.text}</div>
                     </div>
                     {/* <div className="feedback-chat__divider"><span>Новые сообщения</span></div> */ }

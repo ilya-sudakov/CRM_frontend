@@ -160,6 +160,7 @@
 
   &__list {
     width: calc(100% - 30px);
+    position: relative;
     // padding: 0 15px;
   }
   &__list-item {
