@@ -104,6 +104,21 @@
 
   .main-window__pagination {
     padding: 0 15px;
+    .main-window__sort-panel {
+      justify-content: center;
+      width: fit-content;
+      margin-right: auto;
+      align-items: center;
+      margin-bottom: 0;
+
+      span {
+        margin-top: 0;
+      }
+
+      select {
+        min-width: 50px;
+      }
+    }
   }
 
   .main-window__actions {
@@ -141,6 +156,16 @@
 
     .searchbar {
       border-top-left-radius: 0px;
+    }
+
+    .main-window__pagination {
+      // flex
+      .main-window__sort-panel {
+        width: 100%;
+        span {
+          display: flex;
+        }
+      }
     }
   }
 

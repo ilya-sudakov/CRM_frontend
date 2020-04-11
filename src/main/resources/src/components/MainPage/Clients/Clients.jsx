@@ -36,7 +36,7 @@ const Clients = (props) => {
     const [showWindow, setShowWindow] = useState(false);
     const [closeWindow, setCloseWindow] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
-    const itemsPerPage = 15;
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
     const deleteItem = (clientId, index) => {
         Promise.all(clients[index].legalEntities.map(item => {
@@ -160,7 +160,7 @@ const Clients = (props) => {
         return function cancel() {
             abortController.abort();
         };
-    }, [props.location, curPage, sortOrder]);
+    }, [props.location, curPage, sortOrder, itemsPerPage]);
 
     return (
         <div className="clients">
@@ -310,6 +310,17 @@ const Clients = (props) => {
                         })}
                 </div>
                 <div className="main-window__pagination">
+                    <div className="main-window__sort-panel">
+                        <span>Кол-во элем. на странице: </span>
+                        <select value={itemsPerPage} onChange={event => {
+                            const value = event.target.value;
+                            setItemsPerPage(value);
+                        }}>
+                            <option>20</option>
+                            <option>15</option>
+                            <option>10</option>
+                        </select>
+                    </div>
                     <div className="main-window__page-number main-window__page-number--skip" onClick={() => {
                         if (curPage > 1) {
                             const item = curPage - 1;
