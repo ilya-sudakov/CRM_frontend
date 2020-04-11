@@ -19,6 +19,16 @@
   .work-management-page__mobile-text {
     display: none;
   }
+
+  .main-window__list {
+    .main-window__list-item {
+      span {
+        &:nth-child(2) {
+          max-width: 50px;
+        }
+      }
+    }
+  }
   .main-window__info-panel {
     justify-content: space-between !important;
     align-items: center;

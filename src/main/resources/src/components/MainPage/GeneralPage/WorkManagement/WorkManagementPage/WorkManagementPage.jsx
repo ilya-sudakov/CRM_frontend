@@ -40,14 +40,14 @@ const WorkManagementPage = (props) => {
     const [dates, setDates] = useState({
         // start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
         // end: new Date()
-        // start: new Date(new Date().setDate((new Date()).getDate() - 1)),
-        start: new Date(),
+        start: new Date(new Date().setDate((new Date()).getDate() - 1)),
+        // start: new Date(),
         end: new Date()
     });
     const [isLoading, setIsLoading] = useState(false);
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'lastName',
-        date: 'desc'
+        curSort: 'date',
+        date: 'asc'
     })
     const changeSortOrder = (event) => {
         const name = event.target.value.split(' ')[0];
@@ -83,7 +83,7 @@ const WorkManagementPage = (props) => {
             <div className="main-window">
                 <div className="main-window__title">
                     <div className="main-window__title">
-                        <span>Учет рабочего времени</span>
+                        <span>Отчет производства</span>
                         {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => { exportCSVFile() }}>
                             <img className="main-window__img" src={DownloadIcon} alt="" />
                             <span>Скачать Excel</span>
@@ -149,6 +149,7 @@ const WorkManagementPage = (props) => {
                 <div className="main-window__sort-panel">
                     <span>Сортировка: </span>
                     <select onChange={changeSortOrder}>
+                        <option value="date asc">По дате</option>
                         <option value="lastName desc">По алфавиту (А-Я)</option>
                         <option value="lastName asc">По алфавиту (Я-А)</option>
                         <option value="hours desc">По часам</option>
@@ -196,13 +197,24 @@ const WorkManagementPage = (props) => {
                             }
                             return 0;
                         } else {
-                            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                            if (sortOrder.curSort === 'date') {
+                                if (new Date(a.year, (a.month - 1), a.day) < new Date(b.year, (b.month - 1), b.day)) {
+                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                }
+                                if (new Date(b.year, (b.month - 1), b.day) > new Date(b.year, (b.month - 1), b.day)) {
+                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                }
+                                return 0;
                             }
-                            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                            else {
+                                if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                }
+                                if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                }
+                                return 0;
                             }
-                            return 0;
                         }
                     }).map(workItem =>
                         <div className="main-window__list-item">

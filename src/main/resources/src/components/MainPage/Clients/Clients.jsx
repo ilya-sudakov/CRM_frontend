@@ -29,11 +29,14 @@ const Clients = (props) => {
     const [pagination, setPagination] = useState([1]);
     const [curPage, setCurPage] = useState(1);
     const [itemsCount, setItemsCount] = useState(0);
+    const [itemsActiveCount, setItemsActiveCount] = useState(0);
+    const [itemsPotentialCount, setItemsPotentialCount] = useState(0);
+    const [itemsProgressCount, setItemsProgressCount] = useState(0);
     const [curForm, setCurForm] = useState('nextContactDate');
     const [showWindow, setShowWindow] = useState(false);
     const [closeWindow, setCloseWindow] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
-    const itemsPerPage = 20;
+    const itemsPerPage = 15;
 
     const deleteItem = (clientId, index) => {
         Promise.all(clients[index].legalEntities.map(item => {
@@ -62,6 +65,33 @@ const Clients = (props) => {
                 alert('Ошибка при удалении');
                 console.log(error);
             })
+    };
+
+    const loadClientsTotalByType = (category) => {
+        return getClientsByCategoryAndType({
+            categoryName: category,
+            clientType: 'Активные'
+        }, 1, 1, sortOrder)
+            .then(res => res.json())
+            .then(res => {
+                setItemsActiveCount(res.totalElements);
+                return getClientsByCategoryAndType({
+                    categoryName: category,
+                    clientType: 'Потенциальные'
+                }, 1, 1, sortOrder)
+                    .then(res => res.json())
+                    .then(res => {
+                        setItemsPotentialCount(res.totalElements);
+                        return getClientsByCategoryAndType({
+                            categoryName: category,
+                            clientType: 'В разработке'
+                        }, 1, 1, sortOrder)
+                            .then(res => res.json())
+                            .then(res => {
+                                setItemsProgressCount(res.totalElements);
+                            })
+                    })
+            })
     }
 
     const loadData = (category, type, signal) => {
@@ -74,7 +104,7 @@ const Clients = (props) => {
                 : type === 'potential'
                     ? 'Потенциальные'
                     : 'В разработке'
-        }, curPage, sortOrder, signal)
+        }, curPage, itemsPerPage, sortOrder, signal)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
@@ -117,7 +147,7 @@ const Clients = (props) => {
     useEffect(() => {
         document.title = "Клиенты";
         const abortController = new AbortController();
-        console.log(curPage);
+        // console.log(curPage);
         const curCategoryTemp = props.location.pathname.split('/clients/category/')[1].split('/')[0];
         const curClientTypeTemp = props.location.pathname.split('/clients/category/')[1].split('/')[1];
         if (curCategoryTemp !== curCategory || curClientTypeTemp !== curClientType) {
@@ -125,6 +155,7 @@ const Clients = (props) => {
         };
         setCurCategory(curCategoryTemp);
         setCurClientType(curClientTypeTemp);
+        loadClientsTotalByType(curCategoryTemp);
         loadData(curCategoryTemp, curClientTypeTemp, abortController.signal);
         return function cancel() {
             abortController.abort();
@@ -140,17 +171,17 @@ const Clients = (props) => {
                         <Link to={'/clients/category/' + curCategory + '/active'} className={props.location.pathname.includes('active') === true
                             ? "main-window__item--active main-window__item"
                             : "main-window__item"}>
-                            Активные
+                            Активные ({itemsActiveCount})
                         </Link>
                         <Link to={'/clients/category/' + curCategory + '/potential'} className={props.location.pathname.includes('potential') === true
                             ? "main-window__item--active main-window__item"
                             : "main-window__item"}>
-                            Потенциальные
+                            Потенциальные ({itemsPotentialCount})
                         </Link>
                         <Link to={'/clients/category/' + curCategory + '/in-progress'} className={props.location.pathname.includes('in-progress') === true
                             ? "main-window__item--active main-window__item"
                             : "main-window__item"}>
-                            В разработке
+                            В разработке ({itemsProgressCount})
                         </Link>
                     </div>
                 </div>

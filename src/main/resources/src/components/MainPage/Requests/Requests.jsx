@@ -42,7 +42,7 @@ const Requests = (props) => {
             if (request.status !== 'Завершено' && !temp.find(item => request.codeWord === item.name)) {
                 temp.push({
                     name: request.codeWord,
-                    active: true
+                    active: false
                 })
             }
         })
@@ -138,6 +138,12 @@ const Requests = (props) => {
                                 className={(client.active ? "main-window__button" : "main-window__button main-window__button--inverted") + " main-window__list-item--" + status.className}
                                 onClick={() => {
                                     let temp = clients;
+                                    temp = temp.map(item => {
+                                        return {
+                                            ...item,
+                                            active: false
+                                        }
+                                    });
                                     temp.splice(index, 1, {
                                         ...client,
                                         active: !client.active
@@ -152,9 +158,15 @@ const Requests = (props) => {
                 <TableView
                     data={requests.filter(item => {
                         let check = false;
+                        let noActiveClients = true;
+                        clients.map(client => {
+                            if (client.active) {
+                                noActiveClients = false;
+                            }
+                        });
                         clients.map(client => {
                             if (
-                                client.active && (client.name === item.codeWord) || item.status === 'Завершено'
+                                noActiveClients || (client.active && (client.name === item.codeWord)) || item.status === 'Завершено'
                             ) {
                                 check = true;
                                 return;

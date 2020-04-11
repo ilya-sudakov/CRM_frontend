@@ -35,7 +35,7 @@ const WorkManagement = (props) => {
 
     useEffect(() => {
         setIsLoading(true);
-        getRecordedWorkByDay((new Date()).getMonth() + 1, (new Date()).getDate())
+        getRecordedWorkByDay((new Date()).getMonth() + 1, (new Date()).getDate() - 1)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);
@@ -47,7 +47,7 @@ const WorkManagement = (props) => {
     return (
         <div className="work-management">
             <div className="work-management__title">
-                <div className="work-management__date">{formatDateString(new Date())}</div>
+                <div className="work-management__date">{formatDateString(new Date().setDate(new Date().getDate() - 1))}</div>
                 <span>{
                     'Учет рабочего времени - ' + (
                         props.userHasAccess(['ROLE_ADMIN'])

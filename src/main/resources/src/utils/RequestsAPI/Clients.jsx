@@ -23,11 +23,12 @@ export function editNextContactDateClient(date) {
     })
 }
 
-export function getClientsByCategoryAndType(category_type, curPage, sortOrder, signal) {
+export function getClientsByCategoryAndType(category_type, curPage, itemsPerPage, sortOrder, signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/client/category_type/" + "?"
-            + "page=" + (curPage - 1) 
-            + "&" + "sort=" + sortOrder.curSort + ',' + sortOrder[sortOrder.curSort],
+            + "page=" + (curPage - 1)
+            + "&" + "sort=" + sortOrder.curSort + ',' + sortOrder[sortOrder.curSort]
+            + "&" + "size=" + itemsPerPage,
         method: "POST",
         body: JSON.stringify(category_type),
         signal: signal
