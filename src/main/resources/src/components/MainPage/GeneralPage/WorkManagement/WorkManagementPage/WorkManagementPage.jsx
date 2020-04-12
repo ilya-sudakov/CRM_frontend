@@ -68,14 +68,20 @@ const WorkManagementPage = (props) => {
         )
             .then(res => res.json())
             .then(res => {
-                console.log(res);
-                setWorkItems(res);
+                // console.log(res);
+                setWorkItems([...res.map(item => {
+                    return {
+                        ...item,
+                        openWorks: false
+                    }
+                })]);
                 setIsLoading(false);
             })
     }
 
     useEffect(() => {
         loadWorks();
+        console.log(workItems);
     }, [])
 
     return (
@@ -217,9 +223,16 @@ const WorkManagementPage = (props) => {
                                 return 0;
                             }
                         }
-                    }).map(workItem =>
+                    }).map((workItem, workItemIndex) =>
                         <React.Fragment>
-                            <div className="main-window__list-item">
+                            <div className="main-window__list-item" onClick={() => {
+                                let temp = workItems;
+                                temp.splice(workItemIndex, 1, {
+                                    ...workItem,
+                                    openWorks: !workItem.openWorks
+                                });
+                                setWorkItems([...temp]);
+                            }}>
                                 <span><div className="main-window__mobile-text">Должность: </div>{workItem.employee.position}</span>
                                 <span>
                                     <div className="main-window__mobile-text">ФИО: </div>
@@ -251,9 +264,9 @@ const WorkManagementPage = (props) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="main-window__list-options">
+                            <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
                                 <span><div className="main-window__mobile-text">Тип работы: </div>{workItem.workList.work}</span>
-                            </div> */}
+                            </div>
                         </React.Fragment>
                     )
                     }

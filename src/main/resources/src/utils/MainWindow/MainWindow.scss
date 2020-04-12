@@ -248,7 +248,7 @@
     // height: 1px;
     min-height: 25px;
     // height: ;
-    overflow-y: hidden;
+    // overflow-y: hidden;
     // background-color: #dddddd;
     // background-color: darken(#ffffff, 4%);
     // border: 1px solid $button__background--inverted;
@@ -264,7 +264,7 @@
     padding: 0;
     transform: scaleY(0);
     min-height: 0;
-    // height: 0;
+    height: 0;
     margin-bottom: 0;
   }
   .main-window__list-options .main-window__list-item {

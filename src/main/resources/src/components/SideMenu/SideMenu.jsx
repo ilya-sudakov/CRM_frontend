@@ -86,7 +86,27 @@ const SideMenu = (props) => {
             mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
             name: 'ЦехЛЭМЗ',
             icon: screwImg,
-            iconClassName: 'sidemenu__img--bigger'
+            iconClassName: 'sidemenu__img--bigger',
+            dropdownMenu: [
+                {
+                    name: 'Очередь производства',
+                    pathname: '/lemz/workshop-lemz',
+                    link: '/lemz/workshop-lemz',
+                    icon: listImg,
+                },
+                {
+                    name: 'Склад',
+                    pathname: '/lemz/workshop-storage',
+                    link: '/lemz/workshop-storage',
+                    icon: boxImg,
+                },
+                {
+                    name: 'Комплектация цеха',
+                    pathname: '/lemz/workshop-orders',
+                    link: '/lemz/workshop-orders',
+                    icon: screwImg,
+                }
+            ]
         },
         {
             pathname: "/lemz/workshop-lemz",
@@ -100,7 +120,27 @@ const SideMenu = (props) => {
             mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
             name: 'ЦехЛепсари',
             icon: screwImg,
-            iconClassName: 'sidemenu__img--bigger'
+            iconClassName: 'sidemenu__img--bigger',
+            dropdownMenu: [
+                {
+                    name: 'Очередь производства',
+                    pathname: '/lepsari/workshop-lepsari',
+                    link: '/lepsari/workshop-lepsari',
+                    icon: listImg,
+                },
+                {
+                    name: 'Склад',
+                    pathname: '/lepsari/workshop-storage',
+                    link: '/lepsari/workshop-storage',
+                    icon: boxImg,
+                },
+                {
+                    name: 'Комплектация цеха',
+                    pathname: '/lepsari/workshop-orders',
+                    link: '/lepsari/workshop-orders',
+                    icon: screwImg,
+                }
+            ]
         },
         {
             pathname: "/lepsari/workshop-lepsari",
@@ -252,7 +292,7 @@ const SideMenu = (props) => {
     }, [props.location])
 
     return (
-        <div className={props.hidden ? "sidemenu--hidden" : "sidemenu"}>
+        <div className={props.hidden ? "sidemenu sidemenu--hidden" : "sidemenu"}>
             <div className="sidemenu__add-buttons">
                 {
                     sidemenuItems.map((item) => {

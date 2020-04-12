@@ -7,20 +7,21 @@
   // top: 60px;
   position: relative;
   font-size: 82%;
-  width: 250px;
+  width: 210px;
   // max-height: calc(100vh - 70px - 1px);
   max-height: calc(100vh - 70px + 5px);
   border-right: 1px solid #444444;
   background-color: $side_menu__background;
   padding: 5px 10px 0px 10px;
+  transform-origin: left;
   display: flex;
   flex-direction: column;
   align-items: center;
   transition: 0.2s ease-in-out;
   color: $primary-text-color;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 1;
+  // overflow-y: auto;
+  // overflow-x: hidden;
+  z-index: 999;
 
   .sidemenu__add-buttons {
     display: flex;
@@ -166,6 +167,7 @@
       transform: translate3d(-1px, -1px, 0);
       border: solid 1px transparent;
       border-width: 1px 0 0 1px;
+      transition: transform 100ms ease-in-out;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
@@ -198,8 +200,8 @@
     position: absolute;
     top: calc(100% + 0px);
     left: 0px;
-    // left: 100%;
-    // top: 0;
+    left: 100%;
+    top: 0;
     width: calc(100% - 10px);
     transform: scaleY(0);
     transform-origin: 0 0%;
@@ -208,7 +210,7 @@
     transition: 100ms ease-in-out;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     background-color: lighten($side_menu__background, 5%);
-    z-index: 999;
+    z-index: 9999;
     .sidemenu__item {
       max-width: 100% !important;
       width: 100%;
@@ -245,19 +247,14 @@
     background-color: $side_menu__background;
     width: 0;
     border: 0;
-    // left: -500px;
-    font-size: 80%;
     transition: 0.2s ease-in-out;
     padding: 0px 0px 0px 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    // z-index: 99;
+    transform: scaleX(0);
 
     .sidemenu__add-buttons {
       display: flex;
       flex-direction: column;
-      min-height: 40px;
+      // min-height: 40px;
       width: 0;
       // justify-content: center;
       align-items: center;
@@ -276,6 +273,10 @@
         min-width: 200px;
         max-width: 200px;
         white-space: normal;
+      }
+
+      &--active {
+        transform: scaleX(0);
       }
 
       &--add {
@@ -299,12 +300,16 @@
       height: 100%;
       z-index: 99;
       width: 205px;
+      overflow-y: auto;
+      overflow-x: hidden;
 
       &--hidden {
-        position: fixed;
         left: -200px;
-        height: 100%;
-        z-index: 1;
+      }
+
+      .sidemenu__dropdown-menu {
+        top: calc(100% + 0px);
+        left: 0px;
       }
     }
   }
