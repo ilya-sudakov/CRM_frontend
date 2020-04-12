@@ -5,6 +5,7 @@ import { Notifications, WorkManagement } from '../../lazyImports.jsx';
 import Chart from 'chart.js';
 import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { formatDateStringNoYear } from '../../../../utils/functions.jsx';
+import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx';
 
 const AdminWorkspace = (props) => {
     const loadCanvas = (className) => {
@@ -29,6 +30,7 @@ const AdminWorkspace = (props) => {
 
     const [weekOffset, setWeekOffset] = useState(0);
     const [graph, setGraph] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [canvasLoaded, setCanvasLoaded] = useState(false);
     const [workshops, setWorkshops] = useState([
         {
@@ -73,6 +75,7 @@ const AdminWorkspace = (props) => {
                 data: []
             })
         });
+        setIsLoading(true);
         getRecordedWorkByDateRange(week[0].getDate(), week[0].getMonth() + 1, week[5].getDate(), week[5].getMonth() + 1)
             .then(res => res.json())
             .then(res => {
@@ -134,6 +137,7 @@ const AdminWorkspace = (props) => {
                         }
                     };
                     setTimeout(() => {
+                        setIsLoading(false);
                         canvasLoaded && graph.destroy();
                         setGraph(createGraph(options));
                     }, 150)
@@ -150,6 +154,9 @@ const AdminWorkspace = (props) => {
                 userHasAccess={props.userHasAccess}
             />} */}
             {props.userHasAccess(['ROLE_ADMIN']) && <div className="admin-workspace__chart-wrapper">
+                <TableLoading
+                    isLoading={isLoading}
+                />
                 <div className="admin-workspace__header">
                     <button className="admin-workspace__button" onClick={(event) => {
                         event.preventDefault();
