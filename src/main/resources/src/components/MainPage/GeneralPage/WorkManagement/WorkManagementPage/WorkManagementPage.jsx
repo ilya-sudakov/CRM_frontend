@@ -183,7 +183,7 @@ const WorkManagementPage = (props) => {
                                     <span>Должность</span>
                                     <span>ФИО</span>
                                     <span>Часы</span>
-                                    <span>Подразделение</span>
+                                    {/* <span>Подразделение</span> */}
                                     <span>Дата</span>
                                     <div className="main-window__actions">Действие</div>
                                 </div>
@@ -255,7 +255,7 @@ const WorkManagementPage = (props) => {
                                                 <div className="main-window__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
                                             </span>
                                             <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span>
-                                            <span><div className="main-window__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span>
+                                            {/* <span><div className="main-window__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span> */}
                                             <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
                                             <div className="main-window__actions">
                                                 <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
@@ -278,7 +278,7 @@ const WorkManagementPage = (props) => {
                                             </div>
                                         </div>
                                         <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
-                                            <span><div className="main-window__mobile-text">Тип работы: </div>{workItem.workList.work} : {workItem.hours} часов</span>
+                                            <span><div className="main-window__mobile-text">Тип работы: </div>{workItem.workList.work}: {workItem.hours} часов</span>
                                             {workItem.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
                                                 <span>Название</span>
                                                 <span>Кол-во</span>

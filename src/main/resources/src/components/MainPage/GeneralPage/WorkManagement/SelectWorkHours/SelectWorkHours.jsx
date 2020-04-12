@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SelectWorkHours.scss';
 import { formatDateString } from '../../../../../utils/functions.jsx';
 
 const SelectWorkHours = (props) => {
+    // const [workArray, setWorkArray] = useState([]);
 
     useEffect(() => {
+        // props.workArray && setWorkArray(props.workArray);
+        // console.log(props.workArray);
 
     }, [props.workArray])
 
@@ -19,7 +22,7 @@ const SelectWorkHours = (props) => {
             <div className="select-work-hours__timeline">
                 <div className="select-work-hours__wrapper">
                     <div className="select-work-hours__info">{formatDateString(props.date)}</div>
-                    <div className="select-work-hours__info select-work-hours__info--inverted">Всего часов: {props.workArray.reduce((sum, cur) => sum + Number.parseInt(cur.hours), 0)}</div>
+                    <div className="select-work-hours__info select-work-hours__info--inverted">Всего часов: {props.workArray.reduce((sum, cur) => sum + Number.parseFloat(cur.hours), 0)}</div>
                 </div>
                 <div className="select-work-hours__line"></div>
             </div>
@@ -50,6 +53,7 @@ const SelectWorkHours = (props) => {
                             <input
                                 type="number"
                                 placeholder="Введите часы..."
+                                defaultValue={0}
                                 value={item.hours}
                                 onChange={(event) => {
                                     let value;
@@ -61,8 +65,19 @@ const SelectWorkHours = (props) => {
                                             value = 0;
                                         }
                                         else {
-                                            value = Number.parseInt(event.target.value);
+                                            value = Number.parseFloat(event.target.value);
                                         }
+                                    }
+                                    let curSum = props.workArray.reduce((sum, cur, curIndex) => {
+                                        if (index === curIndex) {
+                                            return sum;
+                                        } else {
+                                            return sum + Number.parseFloat(cur.hours);
+                                        }
+                                    }, 0);
+                                    console.log(value, curSum, curSum + value);
+                                    if ((curSum + value) > 12) {
+                                        value = 12 - curSum;
                                     }
                                     // console.log(value);
                                     let temp = props.workArray;

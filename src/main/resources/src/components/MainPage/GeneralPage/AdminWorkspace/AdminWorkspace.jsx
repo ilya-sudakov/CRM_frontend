@@ -63,6 +63,7 @@ const AdminWorkspace = (props) => {
                 },
                 options: {
                     responsive: true,
+                    // maintainAspectRatio: false,
                     animation: {
                         easing: 'easeInOutCirc'
                     },

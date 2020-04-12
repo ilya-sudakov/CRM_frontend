@@ -180,6 +180,8 @@
     .main-window__list-options {
       .main-window__list-item {
         margin-left: 0px;
+        width: calc(90% - 10px);
+        margin-right: 0;
       }
     }
   }
