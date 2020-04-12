@@ -14,6 +14,11 @@ const AdminWorkspace = (props) => {
         console.log(div);
     };
 
+    const createGraph = (options) => {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, options);
+    }
+
     const lemz = "#e76565";
     const lepsari = "#399639";
     const ligovskiy = "#28868a";
@@ -46,44 +51,46 @@ const AdminWorkspace = (props) => {
     ];
 
     useEffect(() => {
-        loadCanvas("admin-workspace__chart-wrapper");
-        const ctx = document.getElementById('myChart').getContext('2d');
-        new Chart(ctx, {
-            type: (window.innerWidth
-                || document.documentElement.clientWidth
-                || document.body.clientWidth) > 500 ? 'bar' : 'horizontalBar',
-            data: {
-                labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                datasets: [...testData],
-            },
-            options: {
-                responsive: true,
-                animation: {
-                    easing: 'easeInOutCirc'
+        if (props.userHasAccess(['ROLE_ADMIN'])) {
+            loadCanvas("admin-workspace__chart-wrapper");
+            const options = {
+                type: (window.innerWidth
+                    || document.documentElement.clientWidth
+                    || document.body.clientWidth) > 500 ? 'bar' : 'horizontalBar',
+                data: {
+                    labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                    datasets: [...testData],
                 },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        },
-                        stacked: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Часы',
-                            fontStyle: 'italic'
-                        }
-                    }],
-                    xAxes: [{
-                        stacked: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Дни недели',
-                            fontStyle: 'italic'
-                        }
-                    }],
+                options: {
+                    responsive: true,
+                    animation: {
+                        easing: 'easeInOutCirc'
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            stacked: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Часы',
+                                fontStyle: 'italic'
+                            }
+                        }],
+                        xAxes: [{
+                            stacked: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Дни недели',
+                                fontStyle: 'italic'
+                            }
+                        }],
+                    }
                 }
-            }
-        });
+            };
+            createGraph(options);
+        }
     }, []);
 
     return (

@@ -173,103 +173,114 @@ const WorkManagementPage = (props) => {
                     {isLoading && <TableDataLoading
                         className="main-window__list-item"
                     />}
-                    {workItems.filter(item => {
+                    {workshops.map(workshop => {
                         if (
-                            item.employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            item.employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            item.employee.middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            item.employee.workshop.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery)
+                            workshop.active
+                            && workItems.find(item => item.employee.workshop === workshop.name) !== undefined
+                            && props.userHasAccess(workshop.visibility)
                         ) {
-                            let check = false;
-                            workshops.map(workshop => {
-                                if (
-                                    workshop.active && (workshop.name === item.employee.workshop) &&
-                                    props.userHasAccess(workshop.visibility)
-                                ) {
-                                    check = true;
-                                    return;
-                                }
-                            })
-                            return check;
-                        }
-                    }
-                    ).sort((a, b) => {
-                        if (sortOrder.curSort === 'lastName') {
-                            if (a.employee[sortOrder.curSort] < b.employee[sortOrder.curSort]) {
-                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-                            }
-                            if (a.employee[sortOrder.curSort] > b.employee[sortOrder.curSort]) {
-                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-                            }
-                            return 0;
-                        } else {
-                            if (sortOrder.curSort === 'date') {
-                                if (new Date(a.year, (a.month - 1), a.day) < new Date(b.year, (b.month - 1), b.day)) {
-                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-                                }
-                                if (new Date(b.year, (b.month - 1), b.day) > new Date(b.year, (b.month - 1), b.day)) {
-                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-                                }
-                                return 0;
-                            }
-                            else {
-                                if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-                                }
-                                if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-                                }
-                                return 0;
-                            }
-                        }
-                    }).map((workItem, workItemIndex) =>
-                        <React.Fragment>
-                            <div className="main-window__list-item" onClick={() => {
-                                let temp = workItems;
-                                temp.splice(workItemIndex, 1, {
-                                    ...workItem,
-                                    openWorks: !workItem.openWorks
-                                });
-                                setWorkItems([...temp]);
-                            }}>
-                                <span><div className="main-window__mobile-text">Должность: </div>{workItem.employee.position}</span>
-                                <span>
-                                    <div className="main-window__mobile-text">ФИО: </div>
-                                    <div className="main-window__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
-                                </span>
-                                <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span>
-                                <span><div className="main-window__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span>
-                                <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
-                                <div className="main-window__actions">
-                                    {/* <div className="main-window__mobile-text">Действия: </div> */}
-                                    <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
-                                        <img className="main-window__img" src={editSVG} />
-                                        {/* Редактировать */}
-                                    </Link>
-                                    <div className="main-window__action" onClick={() => {
-                                        const deletedProducts = workItem.workControlProduct.map(product => {
-                                            return deleteProductFromRecordedWork(workItem.id, product.product.id)
-                                        })
-                                        Promise.all(deletedProducts)
-                                            .then(() => {
-                                                deleteRecordedWork(workItem.id)
-                                                    .then(() => {
-                                                        loadWorks()
-                                                    })
-                                            })
-                                    }} title="Удалить">
-                                        <img className="main-window__img" src={deleteSVG} />
-                                        {/* Удалить */}
-                                    </div>
+                            return <React.Fragment>
+                                <div className="main-window__list-item main-window__list-item--divider">
+                                    <span>{workshop.name}</span>
                                 </div>
-                            </div>
-                            <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
+                                {workItems.filter(item => {
+                                    if (
+                                        workshop.name === item.employee.workshop &&
+                                        (item.employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            item.employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            item.employee.middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            item.employee.workshop.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery))
+                                    ) {
+                                        let check = false;
+                                        workshops.map(workshop => {
+                                            if (
+                                                workshop.active && (workshop.name === item.employee.workshop) &&
+                                                props.userHasAccess(workshop.visibility)
+                                            ) {
+                                                check = true;
+                                                return;
+                                            }
+                                        })
+                                        return check;
+                                    }
+                                }
+                                ).sort((a, b) => {
+                                    if (sortOrder.curSort === 'lastName') {
+                                        if (a.employee[sortOrder.curSort] < b.employee[sortOrder.curSort]) {
+                                            return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                        }
+                                        if (a.employee[sortOrder.curSort] > b.employee[sortOrder.curSort]) {
+                                            return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                        }
+                                        return 0;
+                                    } else {
+                                        if (sortOrder.curSort === 'date') {
+                                            if (new Date(a.year, (a.month - 1), a.day) < new Date(b.year, (b.month - 1), b.day)) {
+                                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                            }
+                                            if (new Date(b.year, (b.month - 1), b.day) > new Date(b.year, (b.month - 1), b.day)) {
+                                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                            }
+                                            return 0;
+                                        }
+                                        else {
+                                            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+                                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                            }
+                                            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+                                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                            }
+                                            return 0;
+                                        }
+                                    }
+                                }).map((workItem, workItemIndex) =>
+                                    <React.Fragment>
+                                        <div className="main-window__list-item" onClick={() => {
+                                            let temp = workItems;
+                                            temp.splice(workItemIndex, 1, {
+                                                ...workItem,
+                                                openWorks: !workItem.openWorks
+                                            });
+                                            setWorkItems([...temp]);
+                                        }}>
+                                            <span><div className="main-window__mobile-text">Должность: </div>{workItem.employee.position}</span>
+                                            <span>
+                                                <div className="main-window__mobile-text">ФИО: </div>
+                                                <div className="main-window__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
+                                            </span>
+                                            <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span>
+                                            <span><div className="main-window__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span>
+                                            <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
+                                            <div className="main-window__actions">
+                                                <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
+                                                    <img className="main-window__img" src={editSVG} />
+                                                </Link>
+                                                <div className="main-window__action" onClick={() => {
+                                                    const deletedProducts = workItem.workControlProduct.map(product => {
+                                                        return deleteProductFromRecordedWork(workItem.id, product.product.id)
+                                                    })
+                                                    Promise.all(deletedProducts)
+                                                        .then(() => {
+                                                            deleteRecordedWork(workItem.id)
+                                                                .then(() => {
+                                                                    loadWorks()
+                                                                })
+                                                        })
+                                                }} title="Удалить">
+                                                    <img className="main-window__img" src={deleteSVG} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
                                 <span><div className="main-window__mobile-text">Тип работы: </div>{workItem.workList.work}</span>
-                            </div>
-                        </React.Fragment>
-                    )
-                    }
+                            </div> */}
+                                    </React.Fragment>
+                                )
+                                }
+                            </React.Fragment>
+                        }
+                    })}
                 </div>
             </div>
         </div>
