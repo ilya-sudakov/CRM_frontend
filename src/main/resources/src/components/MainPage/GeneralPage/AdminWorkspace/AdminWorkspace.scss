@@ -8,6 +8,24 @@
   flex-wrap: wrap;
   // align-items: center;
   // justify-content: center;
+  &__button {
+    border: 0;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 80%;
+    background-color: $button__background--inverted;
+    color: $secondary-text-color;
+    transition: 0.2s ease-in-out;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
 
   &__chart-wrapper {
     display: flex;
@@ -21,9 +39,17 @@
     border-radius: 5px;
     padding: 10px 15px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    .admin-workspace__title {
-      font-size: 20px;
-      text-align: center;
+    .admin-workspace__header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 100%;
+      .admin-workspace__title {
+        font-size: 20px;
+        text-align: center;
+        // margin: 0 10px;
+        transition: 100ms ease-in-out;
+      }
     }
     .admin-workspace__chart {
       height: 100%;

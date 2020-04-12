@@ -13,12 +13,13 @@ const AdminWorkspace = (props) => {
         canvas.className = "admin-workspace__chart";
         canvas.id = "myChart";
         div.appendChild(canvas);
-        console.log(div);
+        setCanvasLoaded(true);
+        // console.log(div);
     };
 
     const createGraph = (options) => {
         const ctx = document.getElementById('myChart').getContext('2d');
-        new Chart(ctx, options);
+        return new Chart(ctx, options);
     };
 
     const lemz = "#1b4e6b";
@@ -26,6 +27,9 @@ const AdminWorkspace = (props) => {
     const ligovskiy = "#c068a8";
     const office = "#ec7176";
 
+    const [weekOffset, setWeekOffset] = useState(0);
+    const [graph, setGraph] = useState(null);
+    const [canvasLoaded, setCanvasLoaded] = useState(false);
     const [workshops, setWorkshops] = useState([
         {
             label: 'ЦехЛЭМЗ',
@@ -57,11 +61,18 @@ const AdminWorkspace = (props) => {
         //мб сделать за пред неделю
         const curDay = new Date();
         let week = [];
-        let first = curDay.getDate() - curDay.getDay() + (curDay.getDay() === 0 ? -6 : 1);
+        let first = curDay.getDate() - curDay.getDay() + (curDay.getDay() === 0 ? -6 : 1) - (7 * weekOffset);
         for (let i = 0; i <= 6; i++) {
             let day = new Date(curDay.setDate(first + i));
             week.push(day);
         };
+        workshops.map((workshop, index) => {
+            let temp = workshops;
+            temp.splice(index, 1, {
+                ...workshop,
+                data: []
+            })
+        });
         getRecordedWorkByDateRange(week[0].getDate(), week[0].getMonth() + 1, week[5].getDate(), week[5].getMonth() + 1)
             .then(res => res.json())
             .then(res => {
@@ -82,9 +93,9 @@ const AdminWorkspace = (props) => {
                         })
                     })
                 })
-                // console.log(workshops);
+                console.log(workshops);
                 if (props.userHasAccess(['ROLE_ADMIN'])) {
-                    loadCanvas("admin-workspace__chart-wrapper");
+                    !canvasLoaded && loadCanvas("admin-workspace__chart-wrapper");
                     const options = {
                         type: (window.innerWidth
                             || document.documentElement.clientWidth
@@ -123,11 +134,12 @@ const AdminWorkspace = (props) => {
                         }
                     };
                     setTimeout(() => {
-                        createGraph(options);
+                        canvasLoaded && graph.destroy();
+                        setGraph(createGraph(options));
                     }, 150)
                 }
             })
-    }, []);
+    }, [weekOffset, workshops]);
 
     return (
         <div className="admin-workspace">
@@ -138,7 +150,17 @@ const AdminWorkspace = (props) => {
                 userHasAccess={props.userHasAccess}
             />} */}
             {props.userHasAccess(['ROLE_ADMIN']) && <div className="admin-workspace__chart-wrapper">
-                <div className="admin-workspace__title">Сводка за неделю</div>
+                <div className="admin-workspace__header">
+                    <button className="admin-workspace__button" onClick={(event) => {
+                        event.preventDefault();
+                        setWeekOffset(weekOffset + 1);
+                    }}>Пред. неделя</button>
+                    <div className="admin-workspace__title">Сводка за неделю</div>
+                    <button className="admin-workspace__button" onClick={(event) => {
+                        event.preventDefault();
+                        setWeekOffset(0);
+                    }}>Тек. неделя</button>
+                </div>
             </div>}
             {/* <canvas id="myChart" className="admin-workspace__chart"></canvas> */}
         </div>
