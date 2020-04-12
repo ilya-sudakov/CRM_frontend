@@ -191,6 +191,7 @@ const EditRecordWork = (props) => {
                         works: [{
                             workName: res.workList.work,
                             workId: res.workList.id,
+                            workType: res.workList.typeOfWork,
                             hours: res.hours,
                             product: [
                                 ...res.workControlProduct.map(item => Object.assign({

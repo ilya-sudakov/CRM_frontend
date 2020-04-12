@@ -29,6 +29,7 @@ const SelectWork = (props) => {
     useEffect(() => {
         if (props.defaultValue !== undefined) {
             setSelected([...props.defaultValue]);
+            // console.log(props.defaultValue);
             const total = props.defaultValue.reduce((sum, cur) => sum + Number.parseInt(cur.hours), 0);
             if (isNaN(total)) {
                 props.setTotalHours(0);
@@ -164,7 +165,7 @@ const SelectWork = (props) => {
                             />
                             {/* Вставить InputProducts, только вместо фасовки сделать 
                                 единицу измерения(или просто кол-во оставить) */}
-                            {(selected[index].workType === 'Продукция' || selected[index].workType === undefined)
+                            {(selected[index].workType === 'Продукция' || selected[index].workType === undefined || selected[index].typeOfWork === 'Продукция')
                                 ?
                                 <InputProducts
                                     inputName="Продукция"

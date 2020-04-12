@@ -53,7 +53,7 @@ const SelectWorkHours = (props) => {
                             <input
                                 type="number"
                                 placeholder="Введите часы..."
-                                defaultValue={0}
+                                // defaultValue={0}
                                 value={item.hours}
                                 onChange={(event) => {
                                     let value;
@@ -75,7 +75,7 @@ const SelectWorkHours = (props) => {
                                             return sum + Number.parseFloat(cur.hours);
                                         }
                                     }, 0);
-                                    console.log(value, curSum, curSum + value);
+                                    // console.log(value, curSum, curSum + value);
                                     if ((curSum + value) > 12) {
                                         value = 12 - curSum;
                                     }
