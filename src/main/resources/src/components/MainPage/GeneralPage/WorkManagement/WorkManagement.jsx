@@ -47,7 +47,7 @@ const WorkManagement = (props) => {
     return (
         <div className="work-management">
             <div className="work-management__title">
-                <div className="work-management__date">{formatDateString(new Date().setDate(new Date().getDate() - 1))}</div>
+                <div className="work-management__date">{formatDateString(new Date(new Date().setDate(new Date().getDate() - 1)))}</div>
                 <span>{
                     (
                         props.userHasAccess(['ROLE_ADMIN'])

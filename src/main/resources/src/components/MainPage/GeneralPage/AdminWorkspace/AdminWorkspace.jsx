@@ -92,7 +92,7 @@ const AdminWorkspace = (props) => {
             };
             setTimeout(() => {
                 createGraph(options);
-            }, 100)
+            }, 150)
         }
     }, []);
 
