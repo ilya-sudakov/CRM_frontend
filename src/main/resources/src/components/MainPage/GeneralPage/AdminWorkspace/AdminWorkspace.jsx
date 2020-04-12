@@ -19,10 +19,10 @@ const AdminWorkspace = (props) => {
         new Chart(ctx, options);
     }
 
-    const lemz = "#e76565";
-    const lepsari = "#399639";
-    const ligovskiy = "#28868a";
-    const office = "#bdbd41";
+    const lemz = "#1b4e6b";
+    const lepsari = "#5c63a2";
+    const ligovskiy = "#c068a8";
+    const office = "#ec7176";
     const testData = [
         {
             label: 'ЦехЛЭМЗ',
