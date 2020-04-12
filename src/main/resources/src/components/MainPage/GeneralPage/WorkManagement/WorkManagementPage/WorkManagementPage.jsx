@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import './WorkManagementPage.scss';
 import '../../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import viewSVG from '../../../../../../../../../assets/tableview/view.svg';
+// import viewSVG from '../../../../../../../../../assets/tableview/view.svg';
 import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg';
 import editSVG from '../../../../../../../../../assets/tableview/edit.svg';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import DownloadIcon from '../../../../../../../../../assets/download.png';
+// import DownloadIcon from '../../../../../../../../../assets/download.png';
 import { formatDateString } from '../../../../../utils/functions.jsx';
 import { getRecordedWorkByDateRange, deleteRecordedWork, deleteProductFromRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
-import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
+// import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
+import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoading.jsx';
 
 const WorkManagementPage = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -162,9 +163,12 @@ const WorkManagementPage = (props) => {
                     </select>
                 </div>
                 <div className="main-window__list">
-                    {isLoading && <TableDataLoading
+                    {/* {isLoading && <TableDataLoading
                         className="main-window__list-item"
-                    />}
+                    />} */}
+                    <TableLoading
+                        isLoading={isLoading}
+                    />
                     {workshops.map(workshop => {
                         if (
                             workshop.active

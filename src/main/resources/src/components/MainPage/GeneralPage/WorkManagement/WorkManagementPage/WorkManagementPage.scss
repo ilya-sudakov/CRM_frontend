@@ -176,5 +176,11 @@
     .main-window__button {
       margin-bottom: 5px;
     }
+
+    .main-window__list-options {
+      .main-window__list-item {
+        margin-left: 0px;
+      }
+    }
   }
 }
