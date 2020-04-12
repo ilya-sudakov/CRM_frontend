@@ -68,7 +68,7 @@ const WorkManagementPage = (props) => {
         )
             .then(res => res.json())
             .then(res => {
-                // console.log(res);
+                console.log(res);
                 setWorkItems([...res.map(item => {
                     return {
                         ...item,
@@ -162,14 +162,6 @@ const WorkManagementPage = (props) => {
                     </select>
                 </div>
                 <div className="main-window__list">
-                    <div className="main-window__list-item main-window__list-item--header">
-                        <span>Должность</span>
-                        <span>ФИО</span>
-                        <span>Часы</span>
-                        <span>Подразделение</span>
-                        <span>Дата</span>
-                        <div className="main-window__actions">Действие</div>
-                    </div>
                     {isLoading && <TableDataLoading
                         className="main-window__list-item"
                     />}
@@ -182,6 +174,14 @@ const WorkManagementPage = (props) => {
                             return <React.Fragment>
                                 <div className="main-window__list-item main-window__list-item--divider">
                                     <span>{workshop.name}</span>
+                                </div>
+                                <div className="main-window__list-item main-window__list-item--header">
+                                    <span>Должность</span>
+                                    <span>ФИО</span>
+                                    <span>Часы</span>
+                                    <span>Подразделение</span>
+                                    <span>Дата</span>
+                                    <div className="main-window__actions">Действие</div>
                                 </div>
                                 {workItems.filter(item => {
                                     if (
@@ -238,7 +238,8 @@ const WorkManagementPage = (props) => {
                                     <React.Fragment>
                                         <div className="main-window__list-item" onClick={() => {
                                             let temp = workItems;
-                                            temp.splice(workItemIndex, 1, {
+                                            let indexTemp = temp.indexOf(temp.find(item => item.id === workItem.id));
+                                            temp.splice(indexTemp, 1, {
                                                 ...workItem,
                                                 openWorks: !workItem.openWorks
                                             });
@@ -272,9 +273,21 @@ const WorkManagementPage = (props) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        {/* <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
-                                <span><div className="main-window__mobile-text">Тип работы: </div>{workItem.workList.work}</span>
-                            </div> */}
+                                        <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
+                                            <span><div className="main-window__mobile-text">Тип работы: </div>{workItem.workList.work} : {workItem.hours} часов</span>
+                                            {workItem.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
+                                                <span>Название</span>
+                                                <span>Кол-во</span>
+                                                {/* <span>Часы</span> */}
+                                            </div>}
+                                            {workItem.workControlProduct.map(item => {
+                                                return <div className="main-window__list-item">
+                                                    <span><div className="main-window__mobile-text">Название: </div>{item.product.name}</span>
+                                                    <span><div className="main-window__mobile-text">Кол-во: </div>{item.quantity}</span>
+                                                    {/* <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span> */}
+                                                </div>
+                                            })}
+                                        </div>
                                     </React.Fragment>
                                 )
                                 }

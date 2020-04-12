@@ -256,10 +256,16 @@
     // border-top-color: transparent;
     border-bottom-left-radius: 2.5px;
     border-bottom-right-radius: 2.5px;
-    padding: 5px 10px;
+    background-color: #dddddd;
+    padding: 20px 10px;
     // margin-bottom: 10px;
     transition: 0.2s ease-in-out;
     box-shadow: inset 4px 3px 19px 1px rgba(0, 0, 0, 0.75);
+
+    &:hover {
+      background-color: #dddddd;
+      color: $primary-text-color;
+    }
   }
   .main-window__list-options--hidden {
     padding: 0;
@@ -269,17 +275,17 @@
     margin-bottom: 0;
   }
   .main-window__list-options .main-window__list-item {
-    border: 1px solid transparent;
-    background-color: transparent;
-    border-radius: 0;
-    margin: 0;
+    // border: 1px solid transparent;
+    // background-color: transparent;
+    // border-radius: 0;
+    // margin: 0;
     padding: 15px 10px;
     cursor: auto;
     &:hover {
       // background-color: transparent;
-      background-color: darken(#eeeeee, 5%);
-      color: $primary-text-color;
-      box-shadow: none;
+      // background-color: darken(#eeeeee, 5%);
+      // color: $primary-text-color;
+      // box-shadow: none;
     }
   }
   .main-window__sort-panel {

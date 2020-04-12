@@ -20,9 +20,9 @@
     display: none;
   }
 
-  .main-window__list,
-  .main-window__list-options {
+  .main-window__list {
     .main-window__list-item {
+      cursor: pointer;
       span {
         &:nth-child(3) {
           max-width: 50px;
@@ -95,6 +95,40 @@
       width: fit-content;
     }
   }
+
+  .main-window__list-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    span,
+    .main-window__list-item {
+      width: 90%;
+    }
+
+    .main-window__list-item {
+      width: 50%;
+      margin-left: 25px;
+      min-width: 250px;
+      max-width: 500px;
+      margin-right: auto;
+      // background-color: transparent !important;
+
+      span {
+        &:nth-child(1) {
+          flex: 0 1 100%;
+        }
+        &:nth-child(2) {
+          max-width: 100px;
+        }
+      }
+    }
+
+    > span {
+      font-size: 16px;
+    }
+  }
+
   .input_date__input_name {
     margin-right: 5px;
   }
