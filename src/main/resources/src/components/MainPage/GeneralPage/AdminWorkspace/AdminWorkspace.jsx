@@ -27,6 +27,9 @@ const AdminWorkspace = (props) => {
     const lepsari = "#5c63a2";
     const ligovskiy = "#c068a8";
     const office = "#ec7176";
+    const weekdays = [
+        'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'
+    ]
 
     const [weekOffset, setWeekOffset] = useState(0);
     const [graph, setGraph] = useState(null);
@@ -104,7 +107,7 @@ const AdminWorkspace = (props) => {
                             || document.documentElement.clientWidth
                             || document.body.clientWidth) > 500 ? 'bar' : 'horizontalBar',
                         data: {
-                            labels: [...week.map(day => formatDateStringNoYear(day))],
+                            labels: [...week.map((day, index) => weekdays[index] + ' ' + formatDateStringNoYear(day))],
                             datasets: [...workshops],
                         },
                         options: {

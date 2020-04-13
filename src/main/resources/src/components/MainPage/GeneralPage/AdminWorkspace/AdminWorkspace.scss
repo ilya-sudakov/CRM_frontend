@@ -40,11 +40,14 @@
     padding: 10px 15px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     position: relative;
+    min-height: 250px;
     .admin-workspace__header {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
+      align-items: center;
       width: 100%;
+      margin-bottom: auto;
       .admin-workspace__title {
         font-size: 20px;
         text-align: center;
@@ -67,6 +70,20 @@
       .admin-workspace__chart {
         // min-height: 200px;
         max-height: 300px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .admin-workspace__chart-wrapper {
+      .admin-workspace__header {
+        font-size: 80%;
+        .admin-workspace__title {
+          font-size: 16px;
+        }
+        .admin-workspace__button {
+          padding: 10px 2.5px;
+        }
       }
     }
   }
