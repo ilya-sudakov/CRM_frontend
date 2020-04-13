@@ -183,4 +183,15 @@
       width: fit-content;
     }
   }
+
+  @media (max-width: 768px) {
+    .authorization__panel {
+      max-width: 250px;
+      padding: 10px 15px;
+
+      .authorization__submit {
+        max-width: 200px;
+      }
+    }
+  }
 }

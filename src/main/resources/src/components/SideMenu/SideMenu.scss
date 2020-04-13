@@ -293,7 +293,22 @@
     }
   }
 
+  @media (max-width: 768px) {
+  }
+
   @media (max-width: 1220px) {
+    .sidemenu__add-buttons {
+      min-height: 30px;
+      // max-height: 30px;
+      .sidemenu__item--add:not(.sidemenu__item--hidden) {
+        padding: 5px 10px;
+      }
+    }
+    .sidemenu__item {
+      .sidemenu__link {
+        padding: 5px 5px;
+      }
+    }
     & {
       position: fixed;
       left: 0;

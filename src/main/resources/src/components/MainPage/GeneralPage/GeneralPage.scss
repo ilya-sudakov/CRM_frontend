@@ -10,6 +10,12 @@
       justify-content: flex-start;
       align-items: flex-start;
     }
+
+    .main-window__button {
+      &:last-child {
+        margin-right: 0;
+      }
+    }
     .main-window__control-panel {
       display: flex;
       flex-direction: row;
