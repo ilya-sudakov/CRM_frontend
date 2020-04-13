@@ -60,14 +60,14 @@ const AdminWorkspace = (props) => {
     ]);
 
     useEffect(() => {
-        //мб сделать за пред неделю
-        const curDay = new Date();
+        const curDay = new Date(new Date().setDate(new Date().getDate() + (- 7 * weekOffset)));
         let week = [];
-        let first = curDay.getDate() - curDay.getDay() + (curDay.getDay() === 0 ? -6 : 1) - (7 * weekOffset);
-        for (let i = 0; i <= 6; i++) {
-            let day = new Date(curDay.setDate(first + i));
-            week.push(day);
-        };
+        for (let i = 1; i <= 7; i++) {
+            let first = curDay.getDate() - curDay.getDay() + i
+            let day = new Date(curDay.setDate(first))
+            week.push(day)
+        }
+        // console.log(week);
         workshops.map((workshop, index) => {
             let temp = workshops;
             temp.splice(index, 1, {
@@ -109,7 +109,9 @@ const AdminWorkspace = (props) => {
                         },
                         options: {
                             responsive: true,
-                            // maintainAspectRatio: false,
+                            maintainAspectRatio: (window.innerWidth
+                                || document.documentElement.clientWidth
+                                || document.body.clientWidth) > 500 ? true : false,
                             animation: {
                                 easing: 'easeInOutCirc'
                             },
