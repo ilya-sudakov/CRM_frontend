@@ -463,7 +463,7 @@
     .main-window__list-options span {
       flex: 0 1 100%;
       width: 100%;
-      text-align: right;
+      text-align: right !important;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
