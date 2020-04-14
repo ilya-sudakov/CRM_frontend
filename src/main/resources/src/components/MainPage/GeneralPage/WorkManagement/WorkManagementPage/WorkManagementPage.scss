@@ -249,14 +249,18 @@
 
       span {
         margin-left: 0;
+        width: 100%;
         &::before {
           display: none;
         }
         &::after {
           display: none;
         }
+        div:nth-child(2) {
+          text-align: center;
+        }
         .main-window__mobile-text:last-child {
-          min-width: 70px;
+          min-width: 50px;
           text-align: right;
         }
       }
