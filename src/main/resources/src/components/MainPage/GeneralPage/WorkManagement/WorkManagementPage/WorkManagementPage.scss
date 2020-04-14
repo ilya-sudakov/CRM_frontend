@@ -101,6 +101,10 @@
     flex-direction: column;
     align-items: center;
 
+    span {
+      color: #222222;
+    }
+
     span,
     .main-window__list-item {
       width: 90%;
@@ -115,6 +119,7 @@
       // background-color: transparent !important;
 
       span {
+        color: $primary-text-color;
         &:nth-child(1) {
           flex: 0 1 100%;
         }
