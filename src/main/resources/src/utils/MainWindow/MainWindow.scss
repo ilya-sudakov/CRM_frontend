@@ -138,6 +138,7 @@
     justify-content: center;
     align-items: center;
     border: 1px solid transparent;
+    text-align: center;
     outline: none;
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -445,6 +446,14 @@
 
     &__amount_table {
       margin-top: 5px;
+    }
+
+    .main-window__header {
+      flex-direction: column;
+      margin-bottom: 0;
+      .main-window__title {
+        margin-bottom: 5px;
+      }
     }
 
     .main-window__list-item--header {
