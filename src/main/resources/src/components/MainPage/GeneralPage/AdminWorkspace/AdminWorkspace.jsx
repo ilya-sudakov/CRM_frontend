@@ -79,7 +79,7 @@ const AdminWorkspace = (props) => {
             })
         });
         setIsLoading(true);
-        getRecordedWorkByDateRange(week[0].getDate(), week[0].getMonth() + 1, week[5].getDate(), week[5].getMonth() + 1)
+        getRecordedWorkByDateRange(week[0].getDate(), week[0].getMonth() + 1, week[6].getDate(), week[6].getMonth() + 1)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);

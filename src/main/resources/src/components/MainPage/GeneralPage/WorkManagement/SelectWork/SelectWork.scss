@@ -59,8 +59,8 @@
       margin-top: 5px;
     }
 
-    &:hover {
-      background-color: darken(#dddddd, 10%);
+    &:focus-within, &:hover {
+      background-color: darken(#dddddd, 5%);
     }
 
     .select-work__img {
@@ -156,6 +156,19 @@
   @media (max-width: 768px) {
     & {
       width: 100% !important;
+    }
+    .select-work__selected_form {
+      .select-work__item {
+        flex-direction: column;
+        .select-work__input_name {
+          // flex: 0 1 100%;
+          width: 100%;
+          margin-bottom: 5px;
+        }
+        .select-work__input_field {
+          width: 100%;
+        }
+      }
     }
   }
 }
