@@ -100,7 +100,7 @@
     content: "";
     width: 2px;
     background-color: $button__background--inverted;
-    height: 20px;
+    height: 15px;
     position: absolute;
     top: 0;
     left: 10px;
@@ -119,11 +119,14 @@
       text-decoration: underline;
       &::before {
         content: "";
-        width: 12px;
-        background-color: $button__background--inverted;
-        height: 2.5px;
+        width: 20px;
+        // background-color: $button__background--inverted;
+        height: 20px;
+        border: 2px solid $button__background--inverted;
+        border-color: transparent transparent transparent $button__background--inverted;
+        transform: rotate(-45deg);
         position: absolute;
-        top: 20px;
+        top: 0px;
         left: 10px;
         border-radius: 999px;
       }
