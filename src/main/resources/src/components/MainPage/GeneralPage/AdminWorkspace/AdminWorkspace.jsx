@@ -118,6 +118,9 @@ const AdminWorkspace = (props) => {
                             animation: {
                                 easing: 'easeInOutCirc'
                             },
+                            tooltips: {
+                              mode: 'index'  
+                            },
                             scales: {
                                 yAxes: [{
                                     ticks: {
