@@ -96,20 +96,68 @@
     }
   }
 
+  .main-window__line {
+    content: "";
+    width: 2px;
+    background-color: $button__background--inverted;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    border-radius: 999px;
+  }
+
   .main-window__list-options {
     display: flex;
     flex-direction: column;
     align-items: center;
-    // box-shadow: none;
+    // box-shadow: none !important;
     // border: 1px solid black;
 
-    span {
+    > span {
       color: #222222;
+      text-decoration: underline;
+      &::before {
+        content: "";
+        width: 12px;
+        background-color: $button__background--inverted;
+        height: 2.5px;
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        border-radius: 999px;
+      }
+      &::after {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        content: attr(data-hours);
+        width: 25px;
+        padding: 0 10px;
+        width: fit-content;
+        border: 2px solid $button__background--inverted;
+        background-color: $button__background--inverted;
+        color: $secondary-text-color;
+        // border-color: $button__background--inverted;
+        height: 25px;
+        font-size: 90%;
+        position: absolute;
+        top: 7px;
+        left: 20px;
+        border-radius: 999px;
+      }
     }
 
     span,
     .main-window__list-item {
-      width: 90%;
+      // width: 90%;
+      width: calc(100% - 200px);
+      margin-left: 200px;
+
+      span {
+        margin-left: 0;
+      }
     }
 
     .main-window__list-item {
@@ -189,6 +237,25 @@
         margin-left: 0px;
         width: calc(90% - 10px);
         margin-right: 0;
+        margin-left: 0;
+      }
+
+      .main-window__line {
+        display: none;
+      }
+
+      span {
+        margin-left: 0;
+        &::before {
+          display: none;
+        }
+        &::after {
+          display: none;
+        }
+        .main-window__mobile-text:last-child {
+          min-width: 70px;
+          text-align: right;
+        }
       }
     }
   }

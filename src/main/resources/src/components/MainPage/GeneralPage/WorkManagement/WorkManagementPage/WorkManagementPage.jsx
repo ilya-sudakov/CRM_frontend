@@ -278,7 +278,8 @@ const WorkManagementPage = (props) => {
                                             </div>
                                         </div>
                                         <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
-                                            <span><div className="main-window__mobile-text">Тип работы: </div>{workItem.workList.work}: {workItem.hours} часов</span>
+                                            <div className="main-window__line"></div>
+                                            <span data-hours={workItem.hours + " часов"}><div className="main-window__mobile-text">Тип работы: </div><div>{workItem.workList.work}</div><div className="main-window__mobile-text">{workItem.hours} часов</div></span>
                                             {workItem.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
                                                 <span>Название</span>
                                                 <span>Кол-во</span>
