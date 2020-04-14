@@ -208,7 +208,8 @@
           width: 100%;
           height: fit-content;
           padding: 10px 5px;
-          text-decoration: underline;
+          // text-decoration: underline;
+          border: none !important;
         }
 
         &:hover {

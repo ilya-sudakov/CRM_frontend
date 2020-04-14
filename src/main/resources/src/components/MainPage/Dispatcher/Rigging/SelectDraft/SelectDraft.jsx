@@ -19,11 +19,22 @@ const SelectDraft = (props) => {
 
     const search = () => {
         // console.log(drafts);
-        let searchArr = searchQuery.split(" ");
+        let re = /[.,\s]/gi;
+        const query = searchQuery.toLowerCase();
+        // return data.filter(item => (
+        //     item.id.toString().includes(query) ||
+        //     item.comment.toLowerCase().includes(query) ||
+        //     item.name.toLowerCase().includes(query) ||
+        //     item.number.toLowerCase().replace(re, '').includes(query.replace(re, ''))
+        // ))
+        let searchArr = query.split(" ");
         return (props.drafts ? props.drafts : drafts).filter(item => {
             let check = true;
             searchArr.map(searchWord => {
-                if (item.name.toLowerCase().includes(searchWord.toLowerCase()) === false)
+                if (
+                    item.name.toLowerCase().includes(searchWord.toLowerCase()) === false
+                    && item.number.toLowerCase().replace(re, '').includes(query.replace(re, '')) === false
+                )
                     check = false;
             })
             if (check === true) {
@@ -293,7 +304,7 @@ const SelectDraft = (props) => {
             {props.options && <div className={props.id ? "select-draft__options select-draft__options" + props.id + " select-draft__options--hidden" : "select-draft__options select-draft__options--hidden"}>
                 {search().map((item, index) => (
                     <div id={item.id} type={item.type} optionId={index} name={item.name} className="select-draft__option_item" onClick={clickOnOption}>
-                        <div>{'№' + item.number + ', ' + item.name}</div>
+                        <div>{item.number + ', ' + item.name}</div>
                     </div>
                 ))}
             </div>}
