@@ -100,7 +100,8 @@
     content: "";
     width: 2px;
     background-color: $button__background--inverted;
-    height: calc(100% - 30px);
+    // height: calc(100% - 30px);
+    height: calc(100% - 24px);
     // height: 15px;
     position: absolute;
     top: 0;
@@ -121,15 +122,21 @@
       &::before {
         content: "";
         width: 20px;
-        // background-color: $button__background--inverted;
         height: 20px;
         border: 2px solid $button__background--inverted;
         border-color: transparent transparent transparent $button__background--inverted;
-        transform: rotate(-45deg);
         position: absolute;
         top: 0px;
         left: 10px;
         border-radius: 999px;
+        // transform: rotate(-45deg);
+        //line
+        background-color: $button__background--inverted;
+        border: 0;
+        border-radius: 0;
+        width: 10px;
+        height: 2px;
+        top: 20px;
       }
       &::after {
         display: flex;
@@ -174,12 +181,20 @@
         height: 20px;
         border: 2px solid $button__background--inverted;
         border-color: transparent transparent transparent $button__background--inverted;
-        transform: rotate(-45deg);
         position: absolute;
         top: 0px;
         left: -12px;
         border-radius: 999px;
+        // transform: rotate(-45deg);
+        //line
+        background-color: $button__background--inverted;
+        border: 0;
+        border-radius: 0;
+        width: 12px;
+        height: 2px;
+        top: 20px;
       }
+      //cover excess line if rounded corners
       &:last-child {
         &::after {
           content: "";
@@ -195,6 +210,9 @@
           left: -19.5px;
           border-radius: 999px;
           // z-index: 9;
+          //line
+          top: 21px;
+          left: -17px;
         }
       }
     }
