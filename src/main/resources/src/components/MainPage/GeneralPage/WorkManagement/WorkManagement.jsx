@@ -5,6 +5,7 @@ import searchImg from '../../../../../../../../assets/searchbar/search.svg';
 import { getRecordedWorks, getRecordedWorkByMonth, getRecordedWorkByDay } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 
 const WorkManagement = (props) => {
     const [recordedWork, setRecordedWork] = useState([]);
@@ -51,7 +52,10 @@ const WorkManagement = (props) => {
     return (
         <div className="work-management">
             <div className="work-management__title">
-                <div className="work-management__date">{formatDateString(new Date(new Date().setDate(new Date().getDate() - 1)))}</div>
+                <div className="work-management__date">
+                    {formatDateString(new Date(new Date().setDate(new Date().getDate() - 1)))}
+                    {/* <InputDate selected={new Date(new Date().setDate(new Date().getDate() - 1))} /> */}
+                </div>
                 <span>{
                     (
                         props.userHasAccess(['ROLE_ADMIN'])
@@ -112,13 +116,23 @@ const WorkManagement = (props) => {
                                     })
                                     return check;
                                 }
-                            }).map((item) => (
-                                <Link className="work-management__item" to={'/work-managment/record-time/edit/' + item.id}>
-                                    <div>{item.employee.lastName + ' ' + item.employee.name + ' ' + item.employee.middleName}</div>
-                                    <div>Время работы: {item.hours} часов</div>
-                                    <div>{item.employee.workshop}</div>
-                                </Link>
-                            ))}
+                            })
+                                .sort((a, b) => {
+                                    if (a.employee.lastName < b.employee.lastName) {
+                                        return -1;
+                                    }
+                                    if (a.employee.lastName > b.employee.lastName) {
+                                        return 1;
+                                    }
+                                    return 0;
+                                })
+                                .map((item) => (
+                                    <Link className="work-management__item" to={'/work-managment/record-time/edit/' + item.id}>
+                                        <div>{item.employee.lastName + ' ' + item.employee.name + ' ' + item.employee.middleName}</div>
+                                        <div>Время работы: {item.hours} часов</div>
+                                        <div>{item.employee.workshop}</div>
+                                    </Link>
+                                ))}
                         </div>
                 }
             </div>

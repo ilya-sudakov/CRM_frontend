@@ -19,18 +19,11 @@ const SelectWork = (props) => {
     const [options, setOptions] = useState([]);
     const [curItemsType, setCurItemsType] = useState('');
 
-    const clickOverlay = (event) => {
-        const overlay = document.getElementsByClassName("select-work__overlay")[0];
-        if (!overlay.classList.contains("select-work__overlay--hidden")) {
-            overlay.classList.add("select-work__overlay--hidden");
-        }
-    }
-
     useEffect(() => {
         if (props.defaultValue !== undefined) {
             setSelected([...props.defaultValue]);
             // console.log(props.defaultValue);
-            const total = props.defaultValue.reduce((sum, cur) => sum + Number.parseInt(cur.hours), 0);
+            const total = props.defaultValue.reduce((sum, cur) => sum + Number.parseFloat(cur.hours), 0);
             if (isNaN(total)) {
                 props.setTotalHours(0);
             }
@@ -40,18 +33,7 @@ const SelectWork = (props) => {
             setOptions([...props.options])
         }
 
-    }, [props.defaultValue, props.options, props.products])
-
-    const clickOnForm = (e) => {
-        const id = e.currentTarget.getAttribute("index");
-        const form = document.getElementsByClassName("select-work__selected_form")[id];
-        if (form.classList.contains("select-work__selected_form--hidden")) {
-            e.target.type !== 'text' && !e.target.classList.contains("select-work__img") && form.classList.remove("select-work__selected_form--hidden");
-        }
-        else {
-            e.target.type !== 'text' && !e.target.classList.contains("select-work__img") && form.classList.add("select-work__selected_form--hidden");
-        }
-    }
+    }, [props.defaultValue, props.options, props.products]);
 
     const handleNewPart = (e) => {
         e.preventDefault();
@@ -90,7 +72,7 @@ const SelectWork = (props) => {
         let temp = selected;
         temp.splice(id, 1);
         setSelected([...temp]);
-        const total = temp.reduce((sum, cur) => sum + Number.parseInt(cur.hours), 0);
+        const total = temp.reduce((sum, cur) => sum + Number.parseFloat(cur.hours), 0);
         if (isNaN(total)) {
             props.setTotalHours(0);
         }
@@ -102,8 +84,29 @@ const SelectWork = (props) => {
         const id = event.target.getAttribute("index");
         const name = event.target.getAttribute("name");
         let value = event.target.value;
-        if (name === 'hours' && value > 12) {
-            value = 12;
+        let curSum = selected.reduce((sum, cur, curIndex) => {
+            if (id === curIndex) {
+                return sum;
+            } else {
+                return sum + Number.parseFloat(cur.hours);
+            }
+        }, 0);
+        if (name === 'hours') {
+            if (event.target.value > 12) {
+                value = 12;
+            }
+            else {
+                if (event.target.value === '') {
+                    value = 0;
+                }
+                else {
+                    value = Number.parseFloat(event.target.value);
+                }
+            }
+            // console.log(value, curSum, curSum + value);
+            if ((curSum + value) > 12) {
+                value = 12 - curSum;
+            }
         }
         let temp = selected;
         let originalItem = selected[id];
@@ -112,10 +115,12 @@ const SelectWork = (props) => {
             [name]: value
         })
         if (name === 'hours') {
-            const total = temp.reduce((sum, cur) => sum + Number.parseInt(cur.hours), 0);
-            if (isNaN(total))
+            if (isNaN(curSum)) {
                 props.setTotalHours(0);
-            else props.setTotalHours(total);
+            }
+            else {
+                props.setTotalHours(curSum + value);
+            }
         }
         setSelected([...temp]);
         props.handleWorkChange([...temp])
@@ -123,7 +128,6 @@ const SelectWork = (props) => {
 
     return (
         <div className="select-work">
-            <div className="select-work__overlay select-work__overlay--hidden" onClick={clickOverlay}></div>
             {!props.readOnly &&
                 <button className="select-work__button" onClick={handleNewPart}>
                     Добавить работу
@@ -229,7 +233,7 @@ const SelectWork = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        defaultValue={item.hours}
+                                        value={item.hours}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
