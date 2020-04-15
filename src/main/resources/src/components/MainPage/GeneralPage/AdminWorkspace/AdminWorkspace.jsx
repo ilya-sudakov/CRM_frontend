@@ -63,6 +63,7 @@ const AdminWorkspace = (props) => {
     ]);
 
     useEffect(() => {
+        let abortController = new AbortController();
         const curDay = new Date(new Date().setDate(new Date().getDate() + (- 7 * weekOffset)));
         let week = [];
         for (let i = 1; i <= 7; i++) {
@@ -79,7 +80,8 @@ const AdminWorkspace = (props) => {
             })
         });
         setIsLoading(true);
-        getRecordedWorkByDateRange(week[0].getDate(), week[0].getMonth() + 1, week[6].getDate(), week[6].getMonth() + 1)
+        getRecordedWorkByDateRange(week[0].getDate(), week[0].getMonth() + 1, week[6].getDate(), week[6].getMonth() + 1,
+            abortController.signal)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);
@@ -119,7 +121,7 @@ const AdminWorkspace = (props) => {
                                 easing: 'easeInOutCirc'
                             },
                             tooltips: {
-                              mode: 'index'  
+                                mode: 'index'
                             },
                             scales: {
                                 yAxes: [{
