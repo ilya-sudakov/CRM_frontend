@@ -10,7 +10,11 @@ const Work = (props) => {
 
     useEffect(() => {
         document.title = "Работы";
-        loadWork();
+        let abortController = new AbortController();
+        loadWork(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
     const deleteItem = (event) => {
@@ -19,8 +23,8 @@ const Work = (props) => {
             .then(() => loadWork())
     }
 
-    const loadWork = () => {
-        getWork()
+    const loadWork = (signal) => {
+        getWork(signal)
             .then(response => response.json())
             .then(response => {
                 console.log(response);

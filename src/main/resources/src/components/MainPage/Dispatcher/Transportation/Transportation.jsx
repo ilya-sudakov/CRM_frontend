@@ -67,11 +67,15 @@ const Transportation = (props) => {
 
     useEffect(() => {
         document.title = "Реестр транспортировок";
-        loadTransportation();
+        let abortController = new AbortController();
+        loadTransportation(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadTransportation = () => {
-        getTransportations()
+    const loadTransportation = (signal) => {
+        getTransportations(signal)
             .then(res => res.json())
             .then(res => {
                 setTransportation(res);

@@ -23,10 +23,14 @@ const Employees = (props) => {
 
     useEffect(() => {
         document.title = "Сотрудники";
-        loadEmployees();
+        let abortController = new AbortController();
+        loadEmployees(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, []);
 
-    const loadEmployees = () => {
+    const loadEmployees = (signal) => {
         setIsLoading(true);
         //Динамический
         let emplArr = [];
@@ -34,7 +38,7 @@ const Employees = (props) => {
             let workshop = {
                 workshop: item
             };
-            return getEmployeesByWorkshop(workshop)
+            return getEmployeesByWorkshop(workshop, signal)
                 .then(res => res.json())
                 .then(res => {
                     res.map(item => emplArr.push(item));

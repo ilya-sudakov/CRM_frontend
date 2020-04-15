@@ -1,9 +1,10 @@
 import { request } from '../utilsAPI.jsx';
 
-export function getMainTasks() {
+export function getMainTasks(signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/mainTask/",
-        method: "GET"
+        method: "GET",
+        signal: signal
     })
 }
 

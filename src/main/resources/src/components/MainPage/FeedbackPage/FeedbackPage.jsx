@@ -39,11 +39,15 @@ const FeedbackPage = (props) => {
     ])
 
     useEffect(() => {
-        loadData();
+        let abortController = new AbortController();
+        loadData(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadData = () => {
-        getFeedback()
+    const loadData = (signal) => {
+        getFeedback(signal)
             .then(res => res.json())
             .then(res => {
                 setMessages(res);

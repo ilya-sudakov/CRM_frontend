@@ -8,8 +8,6 @@
   height: 100%;
   min-height: 250px;
   max-width: 600px;
-  max-height: 450px;
-  overflow-y: auto;
   margin-right: 15px;
   background-color: $primary-background-color;
 
@@ -136,8 +134,11 @@
   .work-management__list {
     display: flex;
     flex-direction: column;
-    width: 95%;
+    width: calc(100% - 20px);
+    padding: 0 10px;
     margin: 0 auto;
+    overflow-y: auto;
+    max-height: 220px;
   }
   .work-management__item {
     padding: 5px 10px;

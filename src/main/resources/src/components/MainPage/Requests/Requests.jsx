@@ -33,7 +33,11 @@ const Requests = (props) => {
 
     useEffect(() => {
         document.title = "Заявки";
-        loadRequests()
+        let abortController = new AbortController();
+        loadRequests(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
     const getClientsFromRequests = (reqs) => {
@@ -50,8 +54,8 @@ const Requests = (props) => {
         setClients([...temp]);
     }
 
-    const loadRequests = () => {
-        getRequests()
+    const loadRequests = (signal) => {
+        getRequests(signal)
             .then(res => res.json())
             .then(requests => {
                 // console.log(requests);

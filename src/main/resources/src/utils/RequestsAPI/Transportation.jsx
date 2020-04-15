@@ -1,9 +1,10 @@
 import { request } from '../utilsAPI.jsx';
 
-export function getTransportations() {
+export function getTransportations(signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/shipping/",
-        method: "GET"
+        method: "GET",
+        signal: signal
     })
 }
 

@@ -10,11 +10,15 @@ const GeneralTasks = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     useEffect(() => {
         document.title = "Основные задачи";
-        loadTasks();
+        let abortController = new AbortController();
+        loadTasks(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadTasks = () => {
-        getMainTasks()
+    const loadTasks = (signal) => {
+        getMainTasks(signal)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);

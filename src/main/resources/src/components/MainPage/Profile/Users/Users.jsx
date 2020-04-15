@@ -11,7 +11,11 @@ const Users = (props) => {
 
     useEffect(() => {
         document.title = "Управление пользователями";
-        loadUsers();
+        let abortController = new AbortController();
+        loadUsers(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
     const deleteItem = (event) => {
@@ -20,8 +24,8 @@ const Users = (props) => {
             .then(() => loadUsers())
     }
 
-    const loadUsers = () => {
-        getUsers()
+    const loadUsers = (signal) => {
+        getUsers(signal)
             .then(res => res.json())
             .then(response => {
                 setUsers(response);

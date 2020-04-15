@@ -85,6 +85,9 @@ const WorkManagementPage = (props) => {
         let abortController = new AbortController();
         loadWorks(abortController.signal);
         console.log(workItems);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
     return (
@@ -281,7 +284,9 @@ const WorkManagementPage = (props) => {
                                         </div>
                                         <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
                                             <div className="main-window__line"></div>
-                                            <span data-hours={workItem.hours + " часов"}><div className="main-window__mobile-text">Тип работы: </div><div>{workItem.workList.work}</div><div className="main-window__mobile-text">{workItem.hours} часов</div></span>
+                                            <span data-hours={workItem.hours + " часов"}>
+                                                {/* <div className="main-window__mobile-text">Тип работы: </div> */}
+                                                <div>{workItem.workList.work}</div><div className="main-window__mobile-text">{workItem.hours} часов</div></span>
                                             {workItem.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
                                                 <span>Название</span>
                                                 <span>Кол-во</span>

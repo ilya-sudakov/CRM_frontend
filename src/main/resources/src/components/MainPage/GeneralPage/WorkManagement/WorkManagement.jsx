@@ -43,6 +43,9 @@ const WorkManagement = (props) => {
                 setRecordedWork(res);
                 setIsLoading(false);
             })
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
     return (

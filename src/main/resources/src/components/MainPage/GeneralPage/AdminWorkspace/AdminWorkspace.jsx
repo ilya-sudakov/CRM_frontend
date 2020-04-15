@@ -153,6 +153,9 @@ const AdminWorkspace = (props) => {
                     }, 150)
                 }
             })
+        return function cancel() {
+            abortController.abort();
+        };
     }, [weekOffset, workshops]);
 
     return (
