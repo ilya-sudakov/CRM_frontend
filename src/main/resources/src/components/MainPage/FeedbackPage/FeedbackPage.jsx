@@ -17,6 +17,11 @@ const FeedbackPage = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [statuses, setStatuses] = useState([
         {
+            className: 'waiting',
+            name: 'Ожидание ответа',
+            visible: true,
+        },
+        {
             className: 'in-progress',
             name: 'В процессе',
             visible: true,
