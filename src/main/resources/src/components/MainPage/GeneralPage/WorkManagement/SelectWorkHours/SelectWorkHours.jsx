@@ -77,7 +77,7 @@ const SelectWorkHours = (props) => {
                                     }, 0);
                                     // console.log(value, curSum, curSum + value);
                                     if ((curSum + value) > 12) {
-                                        value = 12 - curSum;
+                                        value = Math.ceil((12 - curSum)) / 100;
                                     }
                                     // console.log(value);
                                     let temp = props.workArray;

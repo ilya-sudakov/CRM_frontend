@@ -166,6 +166,7 @@
 
     .main-window__list-item:not(.main-window__list-item--header) {
       position: relative;
+      font-size: 80%;
       &::before {
         content: "";
         width: 20px;
