@@ -54,7 +54,7 @@ const SelectWorkHours = (props) => {
                                 type="number"
                                 placeholder="Введите часы..."
                                 // defaultValue={0}
-                                value={item.hours}
+                                value={(item.hours).toString()}
                                 onChange={(event) => {
                                     let value;
                                     if (event.target.value > 12) {

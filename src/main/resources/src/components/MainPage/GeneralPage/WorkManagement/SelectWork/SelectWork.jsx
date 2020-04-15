@@ -84,15 +84,15 @@ const SelectWork = (props) => {
         const id = event.target.getAttribute("index");
         const name = event.target.getAttribute("name");
         let value = event.target.value;
-        let curSum = selected.reduce((sum, cur, curIndex) => {
-            if (id === curIndex) {
+        const curSum = selected.reduce((sum, cur, curIndex) => {
+            if (Number.parseInt(id) === curIndex) {
                 return sum;
             } else {
                 return sum + Number.parseFloat(cur.hours);
             }
         }, 0);
         if (name === 'hours') {
-            if (event.target.value > 12) {
+            if (Number.parseFloat(event.target.value) > 12) {
                 value = 12;
             }
             else {
@@ -103,7 +103,6 @@ const SelectWork = (props) => {
                     value = Number.parseFloat(event.target.value);
                 }
             }
-            // console.log(value, curSum, curSum + value);
             if ((curSum + value) > 12) {
                 value = 12 - curSum;
             }
@@ -233,7 +232,7 @@ const SelectWork = (props) => {
                                         index={index}
                                         autoComplete="off"
                                         onChange={handleInputChange}
-                                        value={item.hours}
+                                        value={(item.hours).toString()}
                                         readOnly={props.readOnly}
                                     />
                                 </div>
