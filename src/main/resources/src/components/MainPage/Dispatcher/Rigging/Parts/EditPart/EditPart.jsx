@@ -1,38 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import './EditPart.scss';
-import { editPart, getPartById } from '../../../../../../utils/utilsAPI.jsx';
+import '../../../../../../utils/Form/Form.scss';
+import { getPartById, editPart, editPartsOfPart, addPartsToPart, deletePartsFromPart } from '../../../../../../utils/RequestsAPI/Rigging/Parts.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import SelectParts from '../../SelectParts/SelectParts.jsx';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
 
 const EditPart = (props) => {
     const [partInputs, setPartInputs] = useState({
-        number: '',
         name: '',
-        dimensions: '',
-        processing: ''
+        number: '',
+        comment: '',
+        parts: [],
+        lastEdited: new Date()
     })
-    const [partId, setPartId] = useState(1);
-
-    const [partErrors, setPartErrors] = useState({
-        number: false,
+    const [partId, setPartId] = useState(0);
+    const [riggingErrors, setRiggingErrors] = useState({
         name: false,
-        dimensions: false,
-        processing: false
+        number: false,
+        // comment: false,
+        parts: false,
     })
     const [validInputs, setValidInputs] = useState({
-        number: true,
         name: true,
-        dimensions: true,
-        processing: true
+        number: true,
+        // comment: true,
+        parts: true,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            default:
+            case 'parts':
                 setValidInputs({
                     ...validInputs,
-                    [fieldName]: (value !== "")
+                    parts: (value.length > 0)
                 });
+                break;
+            default:
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -40,10 +53,10 @@ const EditPart = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            number: false,
             name: false,
-            dimensions: false,
-            processing: false
+            number: false,
+            // comment: false,
+            parts: false,
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -55,12 +68,13 @@ const EditPart = (props) => {
                 })
             }
         }
-        setPartErrors(newErrors);
+        setRiggingErrors(newErrors);
         if (check === true) {
             return true;
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -68,8 +82,57 @@ const EditPart = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        formIsValid() && editPart(partInputs, partId)
-            .then(() => props.history.push("/dispatcher/rigging/parts"))
+        setIsLoading(true);
+        // console.log(partInputs);
+        formIsValid() && editPart({ ...partInputs, lastEdited: new Date() }, partId)
+            .then(() => {
+                //PUT if edited, POST if part is new
+                const partsArr = partInputs.parts.map((selected) => {
+                    let edited = false;
+                    partInputs.detailParts.map((item) => {
+                        if (item.id === selected.id) {
+                            edited = true;
+                            return;
+                        }
+                    });
+                    return (edited === true)
+                        ? (
+                            editPartsOfPart({
+                                ...selected,
+                                riggingId: partId
+                            }, selected.id)
+                        )
+                        : (
+                            addPartsToPart({
+                                ...selected,
+                                riggingId: partId
+                            })
+                        )
+                })
+                Promise.all(partsArr)
+                    .then(() => {
+                        //DELETE parts removed by user
+                        const partsArr = partInputs.detailParts.map((item) => {
+                            let deleted = true;
+                            partInputs.parts.map((selected) => {
+                                if (selected.id === item.id) {
+                                    deleted = false;
+                                    return;
+                                }
+                            })
+                            return (deleted === true && deletePartsFromPart(item.id))
+                        })
+                        Promise.all(partsArr)
+                            .then(() => {
+                                props.history.push("/dispatcher/rigging/parts");
+                            })
+                    })
+            })
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {
@@ -79,8 +142,8 @@ const EditPart = (props) => {
             ...partInputs,
             [name]: value
         })
-        setPartErrors({
-            ...partErrors,
+        setRiggingErrors({
+            ...riggingErrors,
             [name]: false
         })
     }
@@ -88,32 +151,41 @@ const EditPart = (props) => {
     useEffect(() => {
         document.title = "Редактирование запчасти";
         const id = props.history.location.pathname.split("/dispatcher/rigging/parts/edit/")[1];
+        setPartId(id);
         if (isNaN(Number.parseInt(id))) {
             alert('Неправильный индекс запчасти!');
             props.history.push("/dispatcher/rigging/parts");
         } else {
-            setPartId(id);
             getPartById(id)
                 .then(res => res.json())
-                .then(oldRequest => {
+                .then(res => {
                     setPartInputs({
-                        name: oldRequest.name,
-                        number: oldRequest.number,
-                        dimensions: oldRequest.dimensions,
-                        processing: oldRequest.processing
+                        ...res,
+                        parts: res.detailParts
                     });
                 })
                 .catch(error => {
                     console.log(error);
-                    alert('Неправильный индекс запчасти!');
-                    props.history.push("/dispatcher/rigging/parts");
                 })
         }
     }, [])
+
+    const handlePartsChange = (newParts) => {
+        validateField("parts", newParts);
+        setPartInputs({
+            ...partInputs,
+            parts: newParts
+        })
+        setRiggingErrors({
+            ...riggingErrors,
+            parts: false
+        })
+    }
+
     return (
-        <div className="edit_part">
-            <div className="edit_part__title">Редактирование запчасти</div>
-            <form className="edit_part__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование запчасти</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -122,45 +194,52 @@ const EditPart = (props) => {
                 <InputText
                     inputName="Название"
                     required
-                    error={partErrors.name}
+                    error={riggingErrors.name}
                     name="name"
                     defaultValue={partInputs.name}
                     handleInputChange={handleInputChange}
-                    errorsArr={partErrors}
-                    setErrorsArr={setPartErrors}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
                 />
                 <InputText
                     inputName="Артикул"
                     required
-                    error={partErrors.number}
+                    error={riggingErrors.number}
                     name="number"
                     defaultValue={partInputs.number}
                     handleInputChange={handleInputChange}
-                    errorsArr={partErrors}
-                    setErrorsArr={setPartErrors}
+                    errorsArr={riggingErrors}
+                    setErrorsArr={setRiggingErrors}
                 />
                 <InputText
-                    inputName="Размеры"
-                    required
-                    error={partErrors.dimensions}
-                    name="dimensions"
-                    defaultValue={partInputs.dimensions}
+                    inputName="Комментарий"
+                    // required
+                    // error={riggingErrors.comment}
+                    name="comment"
+                    defaultValue={partInputs.comment}
                     handleInputChange={handleInputChange}
-                    errorsArr={partErrors}
-                    setErrorsArr={setPartErrors}
                 />
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
+                        <SelectParts
+                            handlePartsChange={handlePartsChange}
+                            defaultValue={partInputs.detailParts}
+                        />
+                    </div>
+                </div>
                 <InputText
-                    inputName="Обработка"
-                    required
-                    error={partErrors.processing}
-                    name="processing"
-                    defaultValue={partInputs.processing}
-                    handleInputChange={handleInputChange}
-                    errorsArr={partErrors}
-                    setErrorsArr={setPartErrors}
+                    inputName="Дата последнего изменения"
+                    name="lastEdited"
+                    readOnly
+                    defaultValue={formatDateString(partInputs.lastEdited)}
                 />
-                <div className="edit_part__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_part__submit" type="submit" onClick={handleSubmit} value="Изменить запчасть" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/parts')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить запчасть" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

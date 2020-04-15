@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './EditRequest.scss';
-import { getRequestById, editRequest, getProducts, addProductsToRequest, getUsers, editProductsToRequest, deleteProductsToRequest } from '../../../../utils/utilsAPI.jsx';
+import '../../../../utils/Form/Form.scss';
+import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx';
+import { getRequestById, editRequest, addProductsToRequest, editProductsToRequest, deleteProductsToRequest } from '../../../../utils/RequestsAPI/Requests.jsx';
+import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditRequest = (props) => {
     const [requestId, setRequestId] = useState(1);
@@ -33,6 +37,7 @@ const EditRequest = (props) => {
         responsible: true,
     });
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -49,10 +54,12 @@ const EditRequest = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -81,6 +88,7 @@ const EditRequest = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -88,6 +96,8 @@ const EditRequest = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
+        // console.log(selectedProducts);
         formIsValid() && editRequest(requestInputs, requestId)
             .then(() => {
                 //PUT if edited, POST if product is new
@@ -105,6 +115,7 @@ const EditRequest = (props) => {
                                 requestId: requestId,
                                 quantity: selected.quantity,
                                 packaging: selected.packaging,
+                                status: selected.status,
                                 name: selected.name
                             }, selected.id)
                         )
@@ -113,6 +124,7 @@ const EditRequest = (props) => {
                                 requestId: requestId,
                                 quantity: selected.quantity,
                                 packaging: selected.packaging,
+                                status: selected.status,
                                 name: selected.name
                             })
                         )
@@ -137,6 +149,7 @@ const EditRequest = (props) => {
                     })
             })
             .catch(error => {
+                setIsLoading(false);
                 alert('Ошибка при добавлении записи')
                 console.log(error);
             })
@@ -229,9 +242,9 @@ const EditRequest = (props) => {
     }, [])
 
     return (
-        <div className="edit_request">
-            <div className="edit_request__title">Редактирование заявки</div>
-            <form className="edit_request__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование заявки</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -249,6 +262,7 @@ const EditRequest = (props) => {
                 />
                 <InputProducts
                     inputName="Продукция"
+                    userHasAccess={props.userHasAccess}
                     required
                     options={products}
                     onChange={handleProductsChange}
@@ -270,6 +284,8 @@ const EditRequest = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+
+                    userData={props.userData}
                     required
                     error={requestErrors.responsible}
                     name="responsible"
@@ -280,9 +296,9 @@ const EditRequest = (props) => {
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="edit_request__item">
-                    <div className="edit_request__input_name">Статус*</div>
-                    <div className="edit_request__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Статус*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="status"
                             onChange={handleInputChange}
@@ -293,14 +309,19 @@ const EditRequest = (props) => {
                             <option value="Ожидание">Ожидание</option>
                             <option value="В производстве">В производстве</option>
                             <option value="Готово">Готово</option>
+                            <option value="Частично готово">Частично готово</option>
                             <option value="Завершено">Завершено</option>
                             <option value="Отгружено">Отгружено</option>
                             <option value="Приоритет">Приоритет</option>
                         </select>
                     </div>
                 </div>
-                <div className="edit_request__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_request__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <div className="main-form__submit main-form__submit--inverted" onClick={() => props.history.push("/requests")}>Вернуться назад</div>
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

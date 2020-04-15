@@ -6,55 +6,129 @@
   flex-direction: column;
   align-items: center;
   padding-top: 25px;
-  background-color: $secondary-background-color;
+  // background-color: $secondary-background-color;
+  // background-color: #00d4d4;
+  // background-color: #a0d4d4;
+  // background-color: #5cbdbd;
   height: calc(100vh - 25px);
+  background: rgb(98, 171, 196);
+  background: linear-gradient(228deg, rgba(132, 202, 226, 1) 30%, rgba(0, 163, 162, 1) 100%);
+  //   background: rgb(186,207,214);
+  // background: linear-gradient(228deg, rgba(186,207,214,1) 33%, rgba(0,163,162,1) 78%);
 
   &__title {
     // margin-top: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     margin-top: 5vh;
     margin-bottom: 10px;
     font-size: 150%;
+    color: $secondary-text-color;
+  }
+  .authorization__img {
+    width: 50px;
+    margin-right: 5px;
+    filter: brightness(3);
+  }
+
+  .authorization__img--logo {
+    min-width: 150px;
+    width: 25%;
+    margin-bottom: 25px;
+    filter: none;
+  }
+
+  .authorization__img--mirrored {
+    transform: scaleX(-1);
   }
 
   &__panel {
     min-width: 250px;
     max-width: 500px;
     // border: 1px solid black;
-    border-radius: 10px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: $primary-background-color;
+    background-color: rgba(255, 255, 255, 0.5);
 
     .authorization__field_name {
       align-self: flex-start;
       font-size: 80%;
-      margin-bottom: 5px;
+      // margin-bottom: 5px;
       padding-left: 10px;
     }
 
     .authorization__field_input {
       width: 100%;
-      margin: 10px 0;
+      margin: 5px 0;
+      position: relative;
+      --padding-left: 35px;
 
       input[type="text"],
       input[type="password"] {
         border: 1px solid #bbbbbb;
-        width: calc(100% - 20px);
+        width: calc(100% - 10px - var(--padding-left));
         padding: 10px 10px;
-        border-radius: 10px;
+        border-radius: 5px;
+        padding-left: var(--padding-left);
+        background-color: #efefef;
 
         &:focus {
           border: 1px solid $button__background--inverted;
         }
       }
+      & .authorization__line {
+        width: 25px;
+        height: 2px;
+        // background-color: red;
+        background-color: #000000;
+        border-radius: 999px;
+        position: absolute;
+        right: 5px;
+        top: 19px;
+        transform-origin: 50% 100%;
+        transform: scaleX(1);
+        transform: rotate(-45deg);
+        cursor: pointer;
+        transition: 0.1s ease-in-out;
+      }
+      & .authorization__line--hidden {
+        transform: scaleX(0);
+        height: 0;
+        // transform: rotate(0);
+        transition: 0.1s ease-in-out;
+      }
+    }
+    .authorization__field_input .authorization__img {
+      position: absolute;
+      // width: 30px;
+      width: 25px;
+      top: 0.5rem;
+      left: 5px;
+      // right: 0;
+      margin-right: 0;
+      filter: brightness(70%);
+      &.authorization__img--password {
+        width: 20px;
+        left: 7px;
+        // margin-left: 8px;
+        // top: 0.5rem;
+      }
+      &.authorization__img--eye {
+        left: auto;
+        right: 5px;
+        cursor: pointer;
+      }
     }
 
     .authorization__link {
       font-size: 85%;
-      width: 65%;
+      width: 80%;
       text-align: center;
 
       a {
@@ -67,27 +141,56 @@
     .authorization__submit {
       width: 80%;
       display: flex;
+      max-width: 300px;
       justify-content: center;
       margin: 10px 0;
-      // cursor: pointer;
+      width: 100%;
+      align-items: center;
+      color: $secondary-text-color;
+      background-color: $button__background--inverted;
+      // margin: 0;
+      // padding: 0;
+      border: 0;
+      padding: 15px 10px;
+      border-radius: 5px;
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.24);
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
 
-      input[type="submit"] {
-        width: 100%;
-        color: $secondary-text-color;
-        background-color: $button__background--inverted;
-        // margin: 0;
-        // padding: 0;
-        border: 0;
-        padding: 15px 10px;
-        border-radius: 10px;
-        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.24);
-        transition: 0.2s ease-in-out;
-        cursor: pointer;
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+    }
+    .authorization__submit .authorization__img {
+      width: 25px;
+      margin-left: 5px;
+    }
+  }
+  & .checkbox {
+    width: calc(100% - 35px);
+    margin: 5px auto 10px 0px;
+    &__container {
+      padding-left: 35px;
+      width: 100% !important;
 
-        &:hover {
-          background-color: lighten($button__background--inverted, 5%);
-          box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-        }
+      & input:checked ~ .checkbox__checkmark {
+        background-color: $button__background--inverted !important;
+      }
+    }
+    &__text {
+      font-size: 80%;
+      width: fit-content;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .authorization__panel {
+      max-width: 250px;
+      padding: 10px 15px;
+
+      .authorization__submit {
+        max-width: 200px;
       }
     }
   }

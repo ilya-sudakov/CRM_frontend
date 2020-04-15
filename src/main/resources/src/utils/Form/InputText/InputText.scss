@@ -15,7 +15,7 @@
     // top: 2rem;
     background-color: #f73434;
     color: #ffffff;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px 10px;
     transition: 0.2s ease-in-out;
     cursor: pointer;
@@ -31,7 +31,8 @@
     .input_text__input_name {
       color: lighten($primary-text-color, 40%);
       //   margin-bottom: 5px;
-      flex: 0 1 20%;
+      padding-right: 5px;
+      flex: 0 1 calc(20% - 5px);
     }
 
     .input_text__input_field {
@@ -39,16 +40,25 @@
       justify-content: center;
       width: calc(90% - 20px);
       position: relative;
-      height: 2rem;
+      min-height: 2rem;
 
       input[type="text"],
       input[type="password"],
-      input[type="number"] {
+      input[type="number"],
+      textarea {
         border: 1px solid #bbbbbb;
         width: calc(100% - 20px);
         padding: 5px 10px;
-        border-radius: 10px;
-        transition: 0.2s ease-in-out;
+        border-radius: 5px;
+        transition: 100ms ease-in-out;
+
+        &:hover {
+          border-color: #888888;
+        }
+
+        &:focus {
+          border: 1px solid $button__background--inverted;
+        }
       }
 
       /* Chrome, Safari, Edge, Opera */
@@ -58,6 +68,14 @@
         margin: 0;
       }
 
+      & textarea {
+        min-width: calc(100% - 20px);
+        outline: none;
+        min-height: 80px;
+        max-height: 150px;
+        resize: vertical;
+      }
+
       /* Firefox */
       input[type="number"] {
         -moz-appearance: textfield;
@@ -65,13 +83,10 @@
 
       &--error {
         input[type="text"],
-        input[type="password"] {
+        input[type="password"], 
+        textarea {
           border: 1px solid #f73434 !important;
         }
-      }
-
-      &:focus {
-        border: 1px solid $button__background--inverted;
       }
     }
   }
@@ -79,6 +94,12 @@
   @media (max-width: 768px) {
     .input_text__input {
       flex-wrap: wrap;
+      flex-direction: column;
+
+      .input_text__input_name {
+        width: 100%;
+        margin-bottom: 5px;
+      }
 
       .input_text__input_field {
         width: 100%;

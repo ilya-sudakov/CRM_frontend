@@ -1,0 +1,9 @@
+@import "../../../../../../variables.scss";
+
+.select-drafts__list {
+  .main-window__list {
+    .main-window__list-item span{
+        flex: 0 1 25%;
+    }
+  }
+}

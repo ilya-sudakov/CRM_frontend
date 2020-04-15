@@ -1,0 +1,105 @@
+@import "../../../../variables.scss";
+
+.select-work-item {
+  width: calc(100% - 0px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // margin-bottom: 25px;
+  .select-work-item__input {
+    display: flex;
+    width: calc(100% - 0px);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .select-work-item__input_name {
+      color: lighten($primary-text-color, 40%);
+      font-size: 80%;
+      flex: 0 1 20%;
+    }
+    .select-work-item__input_field {
+      width: calc(80% - 0px);
+    }
+  }
+
+  .select-work-item__error {
+    width: 80%;
+    align-self: flex-end;
+    margin-top: 1px;
+    font-size: 0.75rem;
+    // position: absolute;
+    // top: 2rem;
+    background-color: #f73434;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  .select-work-item__searchbar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: calc(100% - 0px);
+    margin-top: 5px;
+    .select-work-item__input {
+      border: 1px solid #bbbbbb;
+      flex: 0 1 100%;
+      padding: 5px 10px;
+      border-radius: 5px;
+      // border-top-left-radius: 5px !important;
+      // border-bottom-left-radius: 5px !important;
+      z-index: 0;
+      min-width: 0 !important;
+
+      &:focus {
+        border: 1px solid $button__background--inverted;
+      }
+
+      &--error {
+        border: 1px solid #f73434 !important;
+      }
+    }
+  }
+
+  &__button {
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    font-size: 70%;
+    padding: 10px 10px;
+    border-radius: 5px;
+    background-color: $button__background--inverted;
+    color: #ffffff;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+
+  .tableview-work {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .select-work-item__input {
+      flex-wrap: wrap;
+      flex-direction: column;
+
+      .select-work-item__input_name {
+        width: 100%;
+        margin-bottom: 5px;
+      }
+      .select-work-item__input_field {
+        width: 100%;
+      }
+    }
+  }
+}

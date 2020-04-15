@@ -1,0 +1,205 @@
+@import "../../../../variables.scss";
+
+.feedback-chat {
+  width: calc(100% - 25px);
+  padding: 15px 10px;
+  .feedback-chat__title {
+    font-size: 24px;
+  }
+  .feedback-chat__list {
+    // padding: 25px 0;
+    margin-top: 5px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    padding-left: 3em;
+    max-height: 500px;
+    overflow-y: auto;
+
+    .feedback-chat__message {
+      position: relative;
+
+      &:first-of-type .feedback-chat__author {
+        margin-top: 0;
+      }
+      .feedback-chat__img {
+        position: absolute;
+        top: 0;
+        left: -35px;
+        width: 30px;
+        max-height: 40px;
+      }
+
+      [data-letters]:before {
+        content: attr(data-letters);
+        display: inline-block;
+        font-size: 1em;
+        width: 2.5em;
+        height: 2.5em;
+        line-height: 2.5em;
+        text-align: center;
+        border-radius: 50%;
+        // background: plum;
+        background-color: $button__background--inverted;
+        vertical-align: middle;
+        margin-right: 1em;
+        color: white;
+        position: absolute;
+        top: 5px;
+        left: -3em;
+        // width: 30px;
+        // max-height: 40px;
+      }
+
+      .feedback-chat__header {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 20px;
+        align-items: center;
+        .feedback-chat__author {
+          font-size: 100%;
+          // &:first-of-type {
+          //   margin-top: 0;
+          // }
+          margin-right: 10px;
+          line-height: 1rem;
+          color: darken($button__background--inverted, 10%);
+        }
+        .feedback-chat__date {
+          // position: absolute;
+          // top: 0;
+          // right: 10px;
+          // color: #555555;
+          font-size: 80%;
+          line-height: 1rem;
+          color: #555555;
+          margin-top: 0.5px;
+        }
+      }
+
+      .feedback-chat__text {
+        margin-top: 5px;
+        font-size: 90%;
+        padding-right: 150px;
+      }
+    }
+  }
+  .feedback-chat__input {
+    width: 100%;
+    display: flex;
+    // align-items: stretch;
+    // justify-content: stretch;
+
+    input[type="text"] {
+      flex: 0 1 100%;
+      padding: 10px 15px;
+      border: 1px solid #bbbbbb;
+      border-radius: 5px;
+      outline: none;
+      height: 1.25rem;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+
+      &:hover {
+        border-color: #999999;
+      }
+
+      &:focus {
+        border: 1px solid $button__background--inverted;
+      }
+    }
+
+    .feedback-chat__button {
+      flex: 0 1 20%;
+      max-width: 150px;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      border-radius: 5px;
+      // padding: 10px 10px;
+      cursor: pointer;
+      font-size: 80%;
+      transition: 0.2s ease-in-out;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid transparent;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+
+      .feedback-chat__img {
+        margin-left: 5px;
+        filter: brightness(3);
+      }
+    }
+  }
+
+  .feedback-chat__divider {
+    display: flex;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    justify-content: center;
+    margin: 5px 0;
+    transform: scale(1);
+    transition: 200ms ease-in-out;
+    height: 20px;
+    &:before {
+      border-top: 1.5px solid $button__background--inverted;
+      content: "";
+      margin: 0 auto; /* this centers the line to the full width specified */
+      position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+      top: 50%;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 95%;
+      z-index: -1;
+    }
+    span {
+      /* to hide the lines from behind the text, you have to set the background color the same as the container */
+      // background: #fff;b
+      background: #fafafa;
+      padding: 0 15px;
+      font-size: 90%;
+      color: $button__background--inverted;
+    }
+  }
+  .feedback-chat__divider--hidden {
+    transform: scaleY(0);
+    height: 0;
+  }
+
+  .feedback-chat__img {
+    width: 25px;
+  }
+
+  @media (max-width: 768px) {
+    .feedback-chat__list {
+      .feedback-chat__message {
+        .feedback-chat__img {
+          position: relative;
+        }
+        .feedback-chat__date {
+          position: relative;
+          // padding-left: 10px;
+        }
+        .feedback-chat__text {
+          padding-right: 0;
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    .feedback-chat__button {
+      span {
+        display: none;
+      }
+    }
+  }
+}

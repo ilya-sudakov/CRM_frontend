@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Users.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx'
-import { getUsers, deleteUser } from '../../../../utils/utilsAPI.jsx';
+import { getUsers, deleteUser } from '../../../../utils/RequestsAPI/Users.jsx';
 
 const Users = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -31,22 +32,26 @@ const Users = (props) => {
     }
 
     return (
-        <div className="users_manage">
-            <div className="users_manage__title">Управление пользователями</div>
-            <SearchBar
-                title="Поиск пользователя"
-                placeholder="Введите имя пользователя для поиска..."
-                setSearchQuery={setSearchQuery}
-            />
-            <div className="users_manage__amount_table">Всего: {users.length} записей</div>
-            <TableView
-                data={users}
-                searchQuery={searchQuery}
-                deleteItem={deleteItem}
-                userHasAccess={props.userHasAccess}
-            />
+        <div className="users-manage">
+            <div className="main-window">
+                <div className="main-window__title">Управление пользователями</div>
+                <SearchBar
+                    title="Поиск пользователя"
+                    placeholder="Введите имя пользователя для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__amount_table">Всего: {users.length} записей</div>
+                </div>
+                <TableView
+                    data={users}
+                    searchQuery={searchQuery}
+                    deleteItem={deleteItem}
+                    userHasAccess={props.userHasAccess}
+                />
+            </div>
         </div>
-    )
+    );
 };
 
 export default Users;

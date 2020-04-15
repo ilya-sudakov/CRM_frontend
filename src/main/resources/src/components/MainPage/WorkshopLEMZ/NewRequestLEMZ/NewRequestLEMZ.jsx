@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts, addRequestLEMZ, getUsers, addProductsToRequestLEMZ } from '../../../../utils/utilsAPI.jsx';
-import Select from '../../Select/Select.jsx';
+import { addRequestLEMZ, addProductsToRequestLEMZ } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
 import './NewRequestLEMZ.scss';
+import '../../../../utils/Form/Form.scss';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewRequestLEMZ = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: new Date(),
         codeWord: "",
         responsible: "",
-        status: "Проблема",
-        shippingDate: new Date(),
+        status: "Ожидание",
+        shippingDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
         comment: ''
     })
     const [requestErrors, setRequestErrors] = useState({
@@ -28,12 +29,11 @@ const NewRequestLEMZ = (props) => {
         date: true,
         requestProducts: false,
         codeWord: false,
-        responsible: false,
+        responsible: (props.userHasAccess(['ROLE_ADMIN']) ? false : true),
         shippingDate: true
     })
-    const [products, setProducts] = useState([]);
-    const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -56,10 +56,12 @@ const NewRequestLEMZ = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -88,6 +90,7 @@ const NewRequestLEMZ = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -95,6 +98,7 @@ const NewRequestLEMZ = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         let id = 0;
         // console.log(requestInputs);
         formIsValid() && addRequestLEMZ(requestInputs)
@@ -108,13 +112,15 @@ const NewRequestLEMZ = (props) => {
                         requestId: id,
                         quantity: item.quantity,
                         packaging: item.packaging,
+                        status: item.status,
                         name: item.name
                     })
                 })
                 Promise.all(productsArr)
-                    .then(() => props.history.push("/workshop-lemz"))
+                    .then(() => props.history.push("/lemz/workshop-lemz"))
             })
             .catch(error => {
+                setIsLoading(false);
                 console.log(error);
             })
     }
@@ -134,16 +140,28 @@ const NewRequestLEMZ = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки ЛЭМЗ";
-        getProducts()
-            .then(res => res.json())
-            .then(response => {
-                setProducts(response);
-            })
-            .then(() => getUsers())
-            .then(res => res.json())
-            .then(res => {
-                setUsers(res);
-            })
+        // console.log(props.transferState, props.transferData);
+        //Если есть перенос данных, то добавляем их в state
+        if (props.transferState === true && props.transferData !== null) {
+            props.setTransferState(false);
+            setRequestInputs({
+                date: props.transferData.date,
+                requestProducts: props.transferData.requestProducts ? props.transferData.requestProducts : props.transferData.lemzProducts,
+                quantity: props.transferData.quantity,
+                codeWord: props.transferData.codeWord,
+                responsible: props.transferData.responsible,
+                status: props.transferData.status,
+                shippingDate: new Date(new Date(props.transferData.date).setDate(new Date(props.transferData.date).getDate() + 7)),
+                comment: props.transferData.comment ? props.transferData.comment : '',
+            });
+            setValidInputs({
+                date: true,
+                requestProducts: true,
+                codeWord: true,
+                responsible: true,
+                shippingDate: true
+            });
+        }
     }, [])
 
     const handleDateChange = (date) => {
@@ -197,9 +215,9 @@ const NewRequestLEMZ = (props) => {
     }
 
     return (
-        <div className="new_request_lemz">
-            <div className="new_request_lemz__title">Новая заявка ЛЭМЗ</div>
-            <form className="new_request_lemz__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая заявка ЛЭМЗ</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -210,45 +228,66 @@ const NewRequestLEMZ = (props) => {
                     required
                     error={requestErrors.date}
                     name="date"
-                    selected={requestInputs.date}
+                    selected={Date.parse(requestInputs.date)}
                     handleDateChange={handleDateChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <InputProducts
-                    inputName="Продукция"
-                    required
-                    options={products}
-                    name="requestProducts"
-                    onChange={handleProductsChange}
-                    error={requestErrors.requestProducts}
-                    searchPlaceholder="Введите название продукта для поиска..."
-                    errorsArr={requestErrors}
-                    setErrorsArr={setRequestErrors}
-                />
+                {props.transferState
+                    ? <InputProducts
+                        inputName="Продукция"
+                        userHasAccess={props.userHasAccess}
+                        required
+                        options
+                        name="requestProducts"
+                        onChange={handleProductsChange}
+                        products={[]}
+                        categories={[]}
+                        defaultValue={requestInputs.requestProducts}
+                        error={requestErrors.requestProducts}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        errorsArr={requestErrors}
+                        setErrorsArr={setRequestErrors}
+                    />
+                    : <InputProducts
+                        inputName="Продукция"
+                        userHasAccess={props.userHasAccess}
+                        required
+                        options
+                        name="requestProducts"
+                        onChange={handleProductsChange}
+                        defaultValue={requestInputs.requestProducts}
+                        error={requestErrors.requestProducts}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        errorsArr={requestErrors}
+                        setErrorsArr={setRequestErrors}
+                    />
+                }
                 <InputText
                     inputName="Кодовое слово"
                     required
                     error={requestErrors.codeWord}
                     name="codeWord"
                     handleInputChange={handleInputChange}
+                    defaultValue={requestInputs.codeWord}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
                 <InputUser
                     inputName="Ответственный"
+                    userData={props.userData}
                     required
                     error={requestErrors.responsible}
+                    defaultValue={requestInputs.responsible}
                     name="responsible"
-                    options={users}
                     handleUserChange={handleResponsibleChange}
                     searchPlaceholder="Введите имя пользователя для поиска..."
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request_lemz__item">
-                    <div className="new_request_lemz__input_name">Статус*</div>
-                    <div className="new_request_lemz__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Статус*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="status"
                             onChange={handleInputChange}
@@ -259,6 +298,7 @@ const NewRequestLEMZ = (props) => {
                             <option value="Ожидание">Ожидание</option>
                             <option value="В производстве">В производстве</option>
                             <option value="Готово">Готово</option>
+                            <option value="Частично готово">Частично готово</option>
                             <option value="Завершено">Завершено</option>
                             <option value="Отгружено">Отгружено</option>
                             <option value="Приоритет">Приоритет</option>
@@ -276,12 +316,17 @@ const NewRequestLEMZ = (props) => {
                 <InputText
                     inputName="Комментарий"
                     name="comment"
+                    defaultValue={requestInputs.comment}
                     handleInputChange={handleInputChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request_lemz__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_request_lemz__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lemz/workshop-lemz')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

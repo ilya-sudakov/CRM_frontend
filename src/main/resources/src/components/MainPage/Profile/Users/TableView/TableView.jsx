@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
+import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'id',
+        curSort: 'username',
         id: 'desc'
     })
+    const [isLoading, setIsLoading] = useState(true);
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -33,33 +35,41 @@ const TableView = (props) => {
         })
     }
 
+    useEffect(() => {
+        props.data.length > 0 && setIsLoading(false)
+    }, [props.data])
+
     return (
         <div className="tableview_users">
             <div className="tableview_users__row tableview_users__row--header">
-                <div className="tableview_users__col">
+                {/* <div className="tableview_users__col">
                     <span>ID</span>
                     <img name="id" className="tableview_users__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_users__col">Имя пользователя</div>
-                {/* <div className="tableview_users__col">Пароль</div> */}
                 <div className="tableview_users__col">Эл. почта</div>
                 <div className="tableview_users__col">Роль</div>
                 <div className="tableview_users__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="ttableview_users__row ttableview_users__row--even"
+            />}
             {sortUsers(props.data).map((user, user_id) => (
-                <div key={user_id} className={"tableview_users__row " + (user.id % 2 === 0 ? "tableview_users__row--even" : "tableview_users__row--odd")}>
-                    <div className="tableview_users__col">{user.id}</div>
+                <div key={user_id} className="tableview_users__row tableview_users__row--even">
+                    {/* <div className="tableview_users__col">{user.id}</div> */}
                     <div className="tableview_users__col">{user.username}</div>
-                    {/* <div className="tableview_users__col">{user.password}</div> */}
                     <div className="tableview_users__col">{user.email}</div>
                     <div className="tableview_users__col">{user.roles.map((item) => {
                         return (item.name === "ROLE_ADMIN" ? "Руководитель "
                             : item.name === "ROLE_MANAGER" ? "Менеджер1 "
-                                : item.name === "ROLE_WORKSHOP" ? "Цех "
-                                    : item.name === "ROLE_USER" ? "Пользователь "
-                                        : item.name === "ROLE_DISPATCHER" ? "Диспетчер "
-                                            : item.name === "ROLE_ENGINEER" ? "Инженер "
-                                                : null)
+                                : item.name === "ROLE_USER" ? "Пользователь "
+                                    : item.name === "ROLE_DISPATCHER" ? "Диспетчер "
+                                        : item.name === "ROLE_ENGINEER" ? "Инженер "
+                                            : item.name === "ROLE_LEMZ" ? "Цех ЛЭМЗ "
+                                                : item.name === "ROLE_LEPSARI" ? "Цех Лепсари "
+                                                    : item.name === "ROLE_LIGOVSKIY" ? "Цех Лиговский "
+                                                        : null)
                     })}</div>
                     <div className="tableview_users__actions">
                         {/* <div data-id={user.id} className="tableview_users__action" >Просмотр</div> */}

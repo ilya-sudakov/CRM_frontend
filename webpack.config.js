@@ -23,7 +23,7 @@ module.exports = {
                     loader: "babel-loader",
                     options: {
                         presets: ["@babel/preset-react", "@babel/preset-env"],
-                        plugins: ["@babel/plugin-proposal-class-properties"]
+                        plugins: ["@babel/plugin-proposal-class-properties", "@babel/plugin-transform-runtime"]
                     }
                 }]
             },
@@ -32,7 +32,7 @@ module.exports = {
                 // MiniCssExtractPlugin.loader для production
                 use: [process.env.NODE_ENV === 'production'
                     ? MiniCssExtractPlugin.loader
-                    : "style-loader", 
+                    : "style-loader",
                     "css-loader", "sass-loader"
                 ],
             },
@@ -62,7 +62,8 @@ module.exports = {
             inject: false,
             hash: true,
             template: "./src/main/resources/templates/index.html",
-            filename: "index.html"
+            filename: "index.html",
+            favicon: "./assets/favicon.ico"
         }),
         new Dotenv({
             path: "./.env",

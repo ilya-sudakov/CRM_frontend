@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './EditStamp.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { getStampById, editStamp, editPartsOfStamp, addPartsToStamp, deletePartsFromStamp } from '../../../../../../utils/utilsAPI.jsx';
+import { getStampById, editStamp, editPartsOfStamp, addPartsToStamp, deletePartsFromStamp } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
 
 const EditStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
     const [stampId, setStampId] = useState(0);
     const [riggingErrors, setRiggingErrors] = useState({
@@ -26,6 +30,7 @@ const EditStamp = (props) => {
         parts: true,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -35,10 +40,12 @@ const EditStamp = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -67,6 +74,7 @@ const EditStamp = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -74,8 +82,9 @@ const EditStamp = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(stampInputs.parts);
-        formIsValid() && editStamp(stampInputs, stampId)
+        formIsValid() && editStamp({ ...stampInputs, lastEdited: new Date() }, stampId)
             .then(() => {
                 //PUT if edited, POST if part is new
                 const partsArr = stampInputs.parts.map((selected) => {
@@ -118,6 +127,11 @@ const EditStamp = (props) => {
                                 props.history.push("/dispatcher/rigging/stamp");
                             })
                     })
+            })
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 
@@ -169,9 +183,9 @@ const EditStamp = (props) => {
     }, [])
 
     return (
-        <div className="edit_stamp">
-            <div className="edit_stamp__title">Редактирование штампа</div>
-            <form className="edit_stamp__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование штампа</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -205,9 +219,9 @@ const EditStamp = (props) => {
                     defaultValue={stampInputs.comment}
                     handleInputChange={handleInputChange}
                 />
-                <div className="edit_stamp__item">
-                    <div className="edit_stamp__input_name">Детали*</div>
-                    <div className="edit_stamp__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
                         {/* <input type="text" name="name" autoComplete="off" onChange={handleInputChange} /> */}
                         <SelectParts
                             handlePartsChange={handlePartsChange}
@@ -216,8 +230,18 @@ const EditStamp = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_stamp__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_stamp__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                <InputText
+                    inputName="Дата последнего изменения"
+                    name="lastEdited"
+                    readOnly
+                    defaultValue={formatDateString(stampInputs.lastEdited)}
+                />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/stamp')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     )

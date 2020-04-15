@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './NewEmployee.scss';
-import { addEmployee } from '../../../../../utils/utilsAPI.jsx';
+import '../../../../../utils/Form/Form.scss';
+import { addEmployee } from '../../../../../utils/RequestsAPI/Employees.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx';
 
 const NewEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -43,6 +46,7 @@ const NewEmployee = (props) => {
         relevance: true
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'yearOfBirth':
@@ -52,10 +56,12 @@ const NewEmployee = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -90,6 +96,7 @@ const NewEmployee = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -97,8 +104,15 @@ const NewEmployee = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
+        // console.log(employeeInputs);
         formIsValid() && addEmployee(employeeInputs)
             .then(() => props.history.push("/dispatcher/employees"))
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {
@@ -111,31 +125,6 @@ const NewEmployee = (props) => {
         setEmployeeErrors({
             ...employeeErrors,
             [name]: false
-        })
-    }
-
-    // const [imgName, setImgName] = useState([]);
-    const [imgName, setImgName] = useState('');
-    const handleFileInputChange = (event) => {
-        let regex = /.+\.(jpeg|jpg|png|img)/;
-        let file = Array.from(event.target.files);
-        file.map((photo, index) => {
-            if (photo.name.match(regex) !== null && index === 0) {
-                // let prevNames = imgName;
-                // prevNames.push(photo.name);
-                // setImgName(prevNames);
-                setImgName(photo.name)
-                let reader = new FileReader();
-                reader.onloadend = (() => {
-                    // let prevScans = employeeInputs.passportScan1;
-                    // prevScans.push(reader.result);
-                    setEmployeeInputs({
-                        ...employeeInputs,
-                        passportScan1: reader.result
-                    })
-                });
-                reader.readAsDataURL(photo);
-            }
         })
     }
 
@@ -156,9 +145,9 @@ const NewEmployee = (props) => {
         document.title = "Добавление сотрудника";
     }, [])
     return (
-        <div className="new_employee">
-            <div className="new_employee__title">Новый сотрудник</div>
-            <form className="new_employee__form">
+        <div className="main-form">
+            <div className="main-form__title">Новый сотрудник</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -167,9 +156,9 @@ const NewEmployee = (props) => {
                 <InputText
                     inputName="Имя"
                     required
-                    error={employeeErrors.name}
                     name="name"
                     handleInputChange={handleInputChange}
+                    error={employeeErrors.name}
                     errorsArr={employeeErrors}
                     setErrorsArr={setEmployeeErrors}
                 />
@@ -210,9 +199,9 @@ const NewEmployee = (props) => {
                     errorsArr={employeeErrors}
                     setErrorsArr={setEmployeeErrors}
                 />
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Цех*</div>
-                    <div className="new_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Цех*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="workshop"
                             onChange={handleInputChange}
@@ -221,6 +210,8 @@ const NewEmployee = (props) => {
                             <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
                             <option value="ЦехЛепсари">ЦехЛепсари</option>
                             <option value="ЦехЛиговский">ЦехЛиговский</option>
+                            <option value="Офис">Офис</option>
+                            <option value="Уволенные">Уволенные</option>
                         </select>
                     </div>
                 </div>
@@ -233,34 +224,27 @@ const NewEmployee = (props) => {
                     errorsArr={employeeErrors}
                     setErrorsArr={setEmployeeErrors}
                 />
-                {employeeInputs.passportScan1 !== '' && <div className="new_employee__item">
-                    <div className="new_employee__input_name">Паспорт</div>
-                    <div className="new_employee__passport_img">
+                {employeeInputs.passportScan1 !== '' && <div className="main-form__item">
+                    <div className="main-form__input_name">Паспорт</div>
+                    <div className="main-form__passport_img">
                         {/* {employeeInputs.passportScan.map((photo) => (
                             <img src={photo} alt=""/>
                         ))} */}
                         <img src={employeeInputs.passportScan1} alt="" />
                     </div>
                 </div>}
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Паспорт*</div>
-                    <div className="new_employee__file_upload">
-                        <div className="new_employee__file_name">
-                            {/* {imgName.map((photo) => {
-                                return (
-                                    <div>
-                                        {photo}
-                                    </div>
-                                )
-                            })} */}
-                            {imgName}
-                        </div>
-                        <label className="new_employee__label" htmlFor="file">
-                            Загрузить файл
-                                {/* <img className="logo" src={fileUploadImg} alt="" /> */}
-                        </label>
-                        <input type="file" name="passportScan1" id="file" onChange={handleFileInputChange} />
-                    </div>
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Паспорт*</div>
+                    <FileUploader
+                        regex={/.+\.(jpeg|jpg|png|img)/}
+                        uniqueId={0}
+                        onChange={(result) => {
+                            setEmployeeInputs({
+                                ...employeeInputs,
+                                passportScan1: result
+                            })
+                        }}
+                    />
                 </div>
                 <InputText
                     inputName="Комментарий"
@@ -271,9 +255,9 @@ const NewEmployee = (props) => {
                     errorsArr={employeeErrors}
                     setErrorsArr={setEmployeeErrors}
                 />
-                <div className="new_employee__item">
-                    <div className="new_employee__input_name">Актуальность*</div>
-                    <div className="new_employee__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Актуальность*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="relevance"
                             onChange={handleInputChange}
@@ -284,8 +268,12 @@ const NewEmployee = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="new_employee__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_employee__submit" type="submit" onClick={handleSubmit} value="Добавить сотрудника" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/employees')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить сотрудника" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

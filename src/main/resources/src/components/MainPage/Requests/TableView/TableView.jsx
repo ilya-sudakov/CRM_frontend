@@ -2,13 +2,44 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
-import { editRequestStatus } from '../../../../utils/utilsAPI.jsx';
+import { editRequestStatus } from '../../../../utils/RequestsAPI/Requests.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
+    const [curPage, setCurPage] = useState('Открытые');
+    const [isLoading, setIsLoading] = useState(true);
     const [sortOrder, setSortOrder] = useState({
         curSort: 'date',
         date: 'desc'
-    })
+    });
+    const [requestStatuses, setRequestStatutes] = useState([
+        {
+            name: 'Проблема-материалы',
+            access: ['ROLE_ADMIN', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Завершено',
+            access: ['ROLE_ADMIN']
+        },
+        {
+            name: 'Отгружено',
+            access: ['ROLE_ADMIN', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Готово',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER']
+        },
+        {
+            name: 'В производстве',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER']
+        },
+        {
+            name: 'Ожидание',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER']
+        }
+    ]);
+
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -20,7 +51,14 @@ const TableView = (props) => {
 
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
+        //Временно
         return data.filter(item => {
+            if (curPage === 'Открытые') {
+                if (item.status !== 'Завершено') return true;
+            } else {
+                if (item.status === 'Завершено') return true;
+            }
+        }).filter(item => {
             return (
                 (item.requestProducts.length !== 0 && item.requestProducts[0].name !== null)
                     ? (
@@ -29,11 +67,27 @@ const TableView = (props) => {
                         formatDateString(item.date).includes(query) ||
                         item.codeWord.toLowerCase().includes(query) ||
                         item.status.toLowerCase().includes(query) ||
-                        item.responsible.toLowerCase().includes(query)
+                        item.responsible.toLowerCase().includes(query) ||
+                        formatDateString(item.shippingDate).includes(query)
                     )
                     : item.status.toLowerCase().includes(query)
             )
         })
+        // return data.filter(item => {
+        //     return (
+        //         (item.lemzProducts.length !== 0 && item.lemzProducts[0].name !== null)
+        //             ? (
+        //                 item.lemzProducts[0].name.toLowerCase().includes(query) ||
+        //                 item.id.toString().includes(query) ||
+        //                 formatDateString(item.date).includes(query) ||
+        //                 item.codeWord.toLowerCase().includes(query) ||
+        //                 item.status.toLowerCase().includes(query) ||
+        //                 item.responsible.toLowerCase().includes(query) ||
+        //                 formatDateString(item.shippingDate).includes(query)
+        //             )
+        //             : item.status.toLowerCase().includes(query)
+        //     )
+        // })
     }
 
     const handleStatusChange = (event) => {
@@ -43,7 +97,7 @@ const TableView = (props) => {
             status: status
         }, id)
             .then(() => {
-                window.location.reload();
+                props.loadData()
             })
             .catch(error => {
                 console.log(error);
@@ -53,88 +107,58 @@ const TableView = (props) => {
     const sortRequests = (data) => {
         return searchQuery(data).sort((a, b) => {
 
-            if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
+            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
-            else if (a.status === "Отгружено") {
-                return 1;
-            }
-            else if (b.status === "Отгружено") {
-                return -1
-            }
-
-
-            if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
+            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
             }
-            else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return 1;
-            }
             return 0;
-        })
-        // let shipped = new Array();
-        // let inProgress = new Array();
-        // searchQuery(data)
-        //     .sort((a, b) => {
+        });
+        // return searchQuery(data).sort((a, b) => {
 
-        //         if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
-        //             return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-        //         }
-        //         else if (a.status === "Отгружено") {
-        //             return 1;
-        //         }
-        //         else if (b.status === "Отгружено") {
-        //             return -1
-        //         }
-
-
-        //         if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Отгружено" || b.status === "Отгружено") === false) {
-        //             return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-        //         }
-        //         else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        //             return 1;
-        //         }
-        //         return 0;
-        //     })
-        //     .filter(item => {
-        //         if (item.status === "Отгружено") {
-        //             shipped.push(item);
-        //         }
-        //         else {
-        //             inProgress.push(item);
-        //         }
-        //     })
-        // inProgress.sort((a, b) => {
-        //     if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        //     if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Завершено" || b.status === "Завершено") === false) {
         //         return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
         //     }
+        //     else if (a.status === "Завершено") {
+        //         return 1;
+        //     }
+        //     else if (b.status === "Завершено") {
+        //         return -1
+        //     }
 
 
-        //     if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        //     if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Завершено" || b.status === "Завершено") === false) {
         //         return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
         //     }
+        //     else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        //         return 1;
+        //     }
         //     return 0;
-        // })
-        // inProgress.push(...shipped);
-        // return inProgress;
+        // });
     }
 
-    const formatDateString = (dateString) => {
-        const newDate = dateString.split("T")[0];
-        return (
-            newDate.split("-")[2] + "." +
-            newDate.split("-")[1] + "." +
-            newDate.split("-")[0]
-        );
-    }
+    useEffect(() => {
+        props.data && setIsLoading(false);
+    }, [props.data])
 
     return (
         <div className="tableview_requests">
+            <div className="tableview_requests__menu">
+                <div className={curPage === 'Открытые'
+                    ? "tableview_requests__item--active tableview_requests__item"
+                    : "tableview_requests__item"}
+                    onClick={() => setCurPage('Открытые')}>Открытые</div>
+                <div className={curPage === 'Завершено'
+                    ? "tableview_requests__item--active tableview_requests__item"
+                    : "tableview_requests__item"}
+                    onClick={() => setCurPage('Завершено')}>Завершено</div>
+            </div>
             <div className="tableview_requests__row tableview_requests__row--header">
-                <div className="tableview_requests__col">
+                {/* <div className="tableview_requests__col">
                     <span>ID</span>
                     <img name="id" className="tableview_requests__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_requests__col">
                     <span>Дата</span>
                     <img name="date" className="tableview_requests__img" onClick={changeSortOrder} src={sortIcon} />
@@ -147,6 +171,10 @@ const TableView = (props) => {
                 <div className="tableview_requests__col">Статус</div>
                 <div className="tableview_requests__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_requests__row tableview_requests__row--even"
+            />}
             {sortRequests(props.data).map((request, request_id) => (
                 <div key={request_id} className={"tableview_requests__row " +
                     (
@@ -155,15 +183,24 @@ const TableView = (props) => {
                         request.status === "Ожидание" && "tableview_requests__row--status_waiting" ||
                         request.status === "В производстве" && "tableview_requests__row--status_in_production" ||
                         request.status === "Готово" && "tableview_requests__row--status_ready" ||
+                        request.status === "Частично готово" && "tableview_requests__row--status_ready" ||
                         request.status === "Отгружено" && "tableview_requests__row--status_shipped" ||
                         request.status === "Приоритет" && "tableview_requests__row--status_priority" ||
                         request.status === "Завершено" && "tableview_requests__row--status_completed"
                     )
                 }>
-                    <div className="tableview_requests__col">{request.id}</div>
+                    {/* <div className="tableview_requests__col">{request.id}</div> */}
                     <div className="tableview_requests__col">{formatDateString(request.date)}</div>
                     <div className="tableview_requests__col">
-                        {request.requestProducts.map((item, index) => {
+                        {request.requestProducts.sort((a, b) => {
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((item, index) => {
                             return (
                                 <div className="tableview_requests__sub_row" style={{ height: `calc(${100 / request.requestProducts.length}%)` }}>
                                     <div className="tableview_requests__sub_col">{item.name}</div>
@@ -173,15 +210,6 @@ const TableView = (props) => {
                             )
                         })}
                     </div>
-                    {/* Корректный вывод но с ограничением по количеству символов в строке */}
-                    {/* <div className="tableview_requests__col">
-                        <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.products}</div></div>
-                        <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.products}</div></div>
-                    </div>
-                    <div className="tableview_requests__col">
-                        <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.quantity}</div></div>
-                        <div className="tableview_requests__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests__subtext">{request.quantity}</div></div>
-                    </div> */}
                     <div className="tableview_requests__col">{request.codeWord}</div>
                     <div className="tableview_requests__col">{request.responsible}</div>
                     <div className="tableview_requests__col">
@@ -191,30 +219,31 @@ const TableView = (props) => {
                             value={request.status}
                             onChange={handleStatusChange}
                         >
-                            <option value="Проблема">Проблема</option>
+                            {/* <option value="Проблема">Проблема</option>
                             <option value="Материалы">Материалы</option>
                             <option value="Ожидание">Ожидание</option>
                             <option value="В производстве">В производстве</option>
                             <option value="Готово">Готово</option>
+                            <option value="Частично готово">Частично готово</option>
                             <option value="Завершено">Завершено</option>
                             <option value="Отгружено">Отгружено</option>
-                            <option value="Приоритет">Приоритет</option>
+                            <option value="Приоритет">Приоритет</option> */}
+                            {requestStatuses.map(status => {
+                                if (props.userHasAccess(status.access)) {
+                                    return <option>{status.name}</option>
+                                }
+                                else {
+                                    return <option style={{ display: `none` }}>{status.name}</option>
+                                }
+                            })}
                         </select>
-                        {/* <select
-                            id={request.id}
-                            className="tableview_requests__status_select--color"
-                            defaultValue="Привет"
-                            // onChange={handleStatusChange}
-                        >
-                            <option value="red">Брак</option>
-                            <option value="green">Завершено</option>
-                            <option value="grey">В работе</option>
-                        </select> */}
                     </div>
                     <div className="tableview_requests__actions">
                         <Link to={"/requests/view/" + request.id} className="tableview_requests__action" >Просмотр</Link>
                         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/requests/edit/" + request.id} className="tableview_requests__action">Редактировать</Link>}
                         {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests__action" onClick={props.deleteItem}>Удалить</div>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests__action" onClick={() => props.transferRequest(request.id)}>Перенести</div>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests__action" onClick={() => props.copyRequest(request.id)}>Копировать</div>}
                     </div>
                 </div>
             ))}

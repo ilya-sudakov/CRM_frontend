@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { addRequest, getProducts, addProductsToRequest, getUsers } from '../../../../utils/utilsAPI.jsx';
+import { addRequest, addProductsToRequest } from '../../../../utils/RequestsAPI/Requests.jsx';
 import './NewRequest.scss';
+import '../../../../utils/Form/Form.scss';
+import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
         date: new Date(),
         codeWord: "",
-        responsible: "",
-        status: "Материалы"
+        responsible: props.userData.username,
+        status: "Ожидание"
     })
     const [requestErrors, setRequestErrors] = useState({
         date: false,
@@ -24,11 +27,11 @@ const NewRequest = (props) => {
         date: true,
         requestProducts: false,
         codeWord: false,
-        responsible: false,
+        // responsible: (props.userHasAccess(['ROLE_ADMIN']) ? false : true),
+        responsible: true,
     })
-    const [products, setProducts] = useState([]);
-    const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -45,10 +48,12 @@ const NewRequest = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -76,14 +81,16 @@ const NewRequest = (props) => {
         }
         else {
             setShowError(true);
+            setIsLoading(false);
             return false;
         };
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         let id = 0;
-        // console.log(requestInputs);
+        console.log(requestInputs);
         formIsValid() && addRequest(requestInputs)
             .then(res => res.json())
             .then(res => {
@@ -103,6 +110,7 @@ const NewRequest = (props) => {
             })
             .catch(error => {
                 alert('Ошибка при добавлении записи');
+                setIsLoading(false);
                 // setShowError(true);
                 console.log(error);
             })
@@ -123,16 +131,23 @@ const NewRequest = (props) => {
 
     useEffect(() => {
         document.title = "Создание заявки";
-        getProducts()
-            .then(res => res.json())
-            .then(response => {
-                setProducts(response);
-            })
-            .then(() => getUsers())
-            .then(res => res.json())
-            .then(res => {
-                setUsers(res);
-            })
+        if (props.transferState === true && props.transferData !== null) {
+            props.setTransferState(false);
+            setRequestInputs({
+                date: props.transferData.date,
+                requestProducts: props.transferData.requestProducts,
+                quantity: props.transferData.quantity,
+                codeWord: props.transferData.codeWord,
+                responsible: props.transferData.responsible,
+                status: props.transferData.status,
+            });
+            setValidInputs({
+                date: true,
+                requestProducts: true,
+                codeWord: true,
+                responsible: true,
+            });
+        }
     }, [])
 
     const handleDateChange = (date) => {
@@ -173,9 +188,9 @@ const NewRequest = (props) => {
     }
 
     return (
-        <div className="new_request">
-            <div className="new_request__title">Новая заявка</div>
-            <form className="new_request__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая заявка</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -186,15 +201,17 @@ const NewRequest = (props) => {
                     required
                     error={requestErrors.date}
                     name="date"
-                    selected={requestInputs.date}
+                    selected={Date.parse(requestInputs.date)}
                     handleDateChange={handleDateChange}
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
                 <InputProducts
                     inputName="Продукция"
+                    userHasAccess={props.userHasAccess}
+                    defaultValue={requestInputs.requestProducts}
                     required
-                    options={products}
+                    options
                     onChange={handleProductsChange}
                     searchPlaceholder="Введите название продукта для поиска..."
                     error={requestErrors.requestProducts}
@@ -205,6 +222,7 @@ const NewRequest = (props) => {
                     inputName="Кодовое слово"
                     required
                     error={requestErrors.codeWord}
+                    defaultValue={requestInputs.codeWord}
                     name="codeWord"
                     handleInputChange={handleInputChange}
                     errorsArr={requestErrors}
@@ -212,17 +230,22 @@ const NewRequest = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+                    userData={props.userData}
                     required
                     error={requestErrors.responsible}
                     name="responsible"
-                    options={users}
                     handleUserChange={handleResponsibleChange}
+                    defaultValue={requestInputs.responsible}
                     searchPlaceholder="Введите имя пользователя для поиска..."
                     errorsArr={requestErrors}
                     setErrorsArr={setRequestErrors}
                 />
-                <div className="new_request__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_request__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <div className="main-form__submit main-form__submit--inverted" onClick={() => props.history.push("/requests")}>Вернуться назад</div>
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

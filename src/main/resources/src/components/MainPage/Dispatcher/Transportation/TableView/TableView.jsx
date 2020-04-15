@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png';
+import { formatDateString } from '../../../../../utils/functions.jsx';
 import './TableView.scss';
+import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'id',
-        date: 'desc'
+        curSort: 'date',
+        date: 'asc'
     })
+    const [isLoading, setIsLoading] = useState(true);
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -29,6 +32,10 @@ const TableView = (props) => {
         ))
     }
 
+    useEffect(() => {
+        props.data.length > 0 && setIsLoading(false);
+    }, [props.data])
+
     const sortTransportations = (data) => {
         return searchQuery(data).sort((a, b) => {
             if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
@@ -41,37 +48,34 @@ const TableView = (props) => {
         })
     }
 
-    const formatDateString = (dateString) => {
-        const newDate = dateString.split("T")[0];
-        return (
-            newDate.split("-")[2] + "." +
-            newDate.split("-")[1] + "." +
-            newDate.split("-")[0]
-        );
-    }
-
     return (
         <div className="tableview_transportation">
             <div className="tableview_transportation__row tableview_transportation__row--header">
-                <div className="tableview_transportation__col">
+                {/* <div className="tableview_transportation__col">
                     <span>ID</span>
                     <img name="id" className="tableview_transportation__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_transportation__col">
                     <span>Дата</span>
                     <img name="date" className="tableview_transportation__img" onClick={changeSortOrder} src={sortIcon} />
                 </div>
                 <div className="tableview_transportation__col">Товар</div>
+                <div className="tableview_transportation__col">Кол-во</div>
                 <div className="tableview_transportation__col">Откуда</div>
                 <div className="tableview_transportation__col">Куда</div>
                 <div className="tableview_transportation__col">Водитель</div>
                 <div className="tableview_transportation__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_transportation__row tableview_transportation__row--even"
+            />}
             {sortTransportations(props.data).map((transportation, transportation_id) => (
-                <div key={transportation_id} className={"tableview_transportation__row " + (transportation.id % 2 === 0 ? "tableview_transportation__row--even" : "tableview_transportation__row--odd")}>
-                    <div className="tableview_transportation__col">{transportation.id}</div>
+                <div key={transportation_id} className="tableview_transportation__row tableview_transportation__row--even" >
+                    {/* <div className="tableview_transportation__col">{transportation.id}</div> */}
                     <div className="tableview_transportation__col">{formatDateString(transportation.date)}</div>
                     <div className="tableview_transportation__col">{transportation.cargo}</div>
+                    <div className="tableview_transportation__col">{transportation.quantity}</div>
                     <div className="tableview_transportation__col">{transportation.sender}</div>
                     <div className="tableview_transportation__col">{transportation.recipient}</div>
                     <div className="tableview_transportation__col">{transportation.driver}</div>

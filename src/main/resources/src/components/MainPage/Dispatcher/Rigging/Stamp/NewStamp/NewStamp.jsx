@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './NewStamp.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { addPartsToStamp, addStamp } from '../../../../../../utils/utilsAPI.jsx';
+import { addPartsToStamp, addStamp } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -25,6 +27,7 @@ const NewStamp = (props) => {
         parts: false,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -35,10 +38,12 @@ const NewStamp = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -67,6 +72,7 @@ const NewStamp = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -88,6 +94,11 @@ const NewStamp = (props) => {
                 })
                 Promise.all(stamps)
                     .then(() => props.history.push("/dispatcher/rigging/stamp"))
+            })
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 
@@ -121,9 +132,9 @@ const NewStamp = (props) => {
     }, [])
 
     return (
-        <div className="new_stamp">
-            <div className="new_stamp__title">Новый штамп</div>
-            <form className="new_stamp__form">
+        <div className="main-form">
+            <div className="main-form__title">Новый штамп</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -154,16 +165,20 @@ const NewStamp = (props) => {
                     name="comment"
                     handleInputChange={handleInputChange}
                 />
-                <div className="new_stamp__item">
-                    <div className="new_stamp__input_name">Детали*</div>
-                    <div className="new_stamp__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
                         />
                     </div>
                 </div>
-                <div className="new_stamp__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_stamp__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/stamp')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     )

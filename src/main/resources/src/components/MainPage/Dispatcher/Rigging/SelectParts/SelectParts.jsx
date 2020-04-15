@@ -66,7 +66,7 @@ const SelectParts = (props) => {
                 erosion: '',
                 controll: ''
             }
-        ])
+        ]);
     }
 
     const deletePart = (e) => {
@@ -113,7 +113,7 @@ const SelectParts = (props) => {
                                 <span>Комментарий: </span> {item.comment}
                             </div>
                         </div>
-                        <div className="select_parts__selected_form select_parts__selected_form--hidden" >
+                        <div className={(props.readOnly || props.defaultValue) ? "select_parts__selected_form select_parts__selected_form--hidden" : "select_parts__selected_form"} >
                             <div className="select_parts__item">
                                 <div className="select_parts__input_name">Название</div>
                                 <div className="select_parts__input_field">

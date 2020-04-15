@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './EditUser.scss';
-import { getUserById, editUser } from '../../../../../utils/utilsAPI.jsx';
+import '../../../../../utils/Form/Form.scss';
+import { getUserById, editUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditUser = (props) => {
     const [userId, setUserId] = useState(1);
@@ -24,14 +26,17 @@ const EditUser = (props) => {
         role: true,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -59,6 +64,7 @@ const EditUser = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -66,10 +72,16 @@ const EditUser = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && editUser(userInputs, userId)
             .then(() => {
                 props.history.push("/profile/users");
                 document.location.reload(true);
+            })
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 
@@ -111,9 +123,9 @@ const EditUser = (props) => {
     }, [])
 
     return (
-        <div className="edit_user">
-            <div className="edit_user__title">Редактирование пользователя</div>
-            <form className="edit_user__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование пользователя</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -148,8 +160,12 @@ const EditUser = (props) => {
                     errorsArr={userErrors}
                     setErrorsArr={setUserErrors}
                 />
-                <div className="edit_user__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_user__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/profile/users')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );
