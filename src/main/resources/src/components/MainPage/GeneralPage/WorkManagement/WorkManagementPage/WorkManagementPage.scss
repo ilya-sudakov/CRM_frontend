@@ -1,0 +1,269 @@
+@import "../../../../../variables.scss";
+
+.work-management-page {
+  .main-window__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // flex-wrap: wrap;
+    .main-window__button {
+      font-size: 60%;
+    }
+
+    .main-window__img {
+      margin-right: 5px;
+      // filter: brightness(5);
+      filter: invert(1);
+    }
+  }
+  .work-management-page__mobile-text {
+    display: none;
+  }
+
+  .main-window__list {
+    .main-window__list-item {
+      cursor: pointer;
+      span {
+        &:nth-child(3) {
+          max-width: 50px;
+        }
+        &:nth-child(5) {
+          max-width: 100px;
+        }
+      }
+    }
+  }
+  .main-window__info-panel {
+    justify-content: space-between !important;
+    align-items: center;
+    .work-management-page__date-pick {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 80%;
+
+      .main-window__button {
+        // align-items: ;
+      }
+    }
+    .work-management-page__workshop-pick {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 90%;
+      flex-wrap: wrap;
+
+      .main-window__button {
+        font-size: 75%;
+        padding: 5px 10px;
+        margin-top: 5px;
+      }
+      .main-window__button--inverted {
+        color: #666666;
+      }
+
+      .main-window__button:last-child {
+        margin: 0;
+        margin-left: 15px;
+        margin-top: 5px;
+        // max-width: 70px;
+        // text-align: center;
+      }
+    }
+  }
+  .main-window__sort-panel {
+    display: flex;
+    width: calc(100% - 50px);
+    margin-bottom: 5px;
+    font-size: 80%;
+    color: #666666;
+    align-items: center;
+    & span {
+      margin-right: 5px;
+    }
+    & select {
+      outline: none;
+      border-radius: 5px;
+      min-width: 100px;
+      padding: 2.5px 5px;
+    }
+  }
+  .input_date {
+    margin-bottom: 0;
+    margin-right: 10px;
+    & .input_date__input_field input[type="text"] {
+      width: fit-content;
+    }
+  }
+
+  .main-window__line {
+    content: "";
+    width: 2px;
+    background-color: $button__background--inverted;
+    height: 15px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    border-radius: 999px;
+  }
+
+  .main-window__list-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // box-shadow: none !important;
+    // border: 1px solid black;
+
+    > span {
+      color: #222222;
+      text-decoration: underline;
+      &::before {
+        content: "";
+        width: 20px;
+        // background-color: $button__background--inverted;
+        height: 20px;
+        border: 2px solid $button__background--inverted;
+        border-color: transparent transparent transparent $button__background--inverted;
+        transform: rotate(-45deg);
+        position: absolute;
+        top: 0px;
+        left: 10px;
+        border-radius: 999px;
+      }
+      &::after {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        content: attr(data-hours);
+        width: 25px;
+        padding: 0 10px;
+        width: fit-content;
+        border: 2px solid $button__background--inverted;
+        background-color: $button__background--inverted;
+        color: $secondary-text-color;
+        // border-color: $button__background--inverted;
+        height: 25px;
+        font-size: 90%;
+        position: absolute;
+        top: 7px;
+        left: 20px;
+        border-radius: 999px;
+      }
+    }
+
+    span,
+    .main-window__list-item {
+      // width: 90%;
+      width: calc(100% - 200px);
+      margin-left: 20px;
+
+      span {
+        margin-left: 0;
+      }
+    }
+
+    .main-window__list-item {
+      width: 50%;
+      margin-left: 25px;
+      min-width: 250px;
+      max-width: 500px;
+      margin-right: auto;
+      // background-color: transparent !important;
+
+      span {
+        color: $primary-text-color;
+        &:nth-child(1) {
+          flex: 0 1 100%;
+        }
+        &:nth-child(2) {
+          max-width: 100px;
+        }
+      }
+    }
+
+    > span {
+      font-size: 16px;
+    }
+  }
+
+  .input_date__input_name {
+    margin-right: 5px;
+  }
+  .react-datepicker-wrapper {
+    width: 100%;
+
+    .react-datepicker {
+      width: 100%;
+      .react-datepicker__day--selected {
+        background-color: $button__background--inverted !important;
+      }
+    }
+  }
+
+  .main-window__actions {
+    flex-direction: row !important;
+  }
+
+  @media (max-width: 768px) {
+    .main-window__list-item {
+      span {
+        // width: 100%;
+        max-width: 100% !important;
+      }
+    }
+    .main-window__info-panel {
+      flex-direction: column !important;
+    }
+    .work-management-page__date-pick {
+      margin-bottom: 5px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      & .input_date,
+      & .input_date input {
+        width: calc(100% - 20px) !important;
+      }
+      & .main-window__button {
+        margin-top: 5px;
+      }
+    }
+    .work-management-page__workshop-pick {
+      flex-wrap: wrap;
+    }
+    .main-window__button {
+      margin-bottom: 5px;
+    }
+
+    .main-window__list-options {
+      .main-window__list-item {
+        margin-left: 0px;
+        width: calc(90% - 10px);
+        margin-right: 0;
+        margin-left: 0;
+      }
+
+      .main-window__line {
+        display: none;
+      }
+
+      span {
+        margin-left: 0;
+        width: 100%;
+        &::before {
+          display: none;
+        }
+        &::after {
+          display: none;
+        }
+        div:nth-child(2) {
+          text-align: center;
+        }
+        .main-window__mobile-text:last-child {
+          min-width: 50px;
+          text-align: right;
+        }
+      }
+    }
+  }
+}

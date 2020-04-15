@@ -47,7 +47,7 @@
 
   .tableview__color_picker {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    border-radius: 5px;
+    border-radius: 2.5px;
     font-weight: normal;
     position: absolute;
     top: calc(100% - 1.5rem);
@@ -67,12 +67,12 @@
       cursor: pointer;
 
       &:first-child {
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-top-left-radius: 2.5px;
+        border-top-right-radius: 2.5px;
       }
       &:last-child {
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 2.5px;
+        border-bottom-right-radius: 2.5px;
       }
       &--completed {
         background-color: #6caa2b;

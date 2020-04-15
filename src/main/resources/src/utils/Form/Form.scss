@@ -1,0 +1,421 @@
+@import "../../variables.scss";
+@import "../../../../../../node_modules/react-datepicker/dist/react-datepicker.css";
+
+.main-form {
+  width: 100%;
+  padding: 25px 0;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    margin-bottom: 15px;
+    font-size: 24px;
+    // display: none;
+    padding: 0 5px;
+    text-align: center;
+  }
+
+  .checkbox__container {
+    width: 100% !important;
+  }
+
+  .main-form__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: calc(100% - 30px) !important;
+    border-top-left-radius: 10px;
+    text-align: center;
+    z-index: 1;
+    margin: 0 !important;
+
+    .main-form__menu-item {
+      width: 100%;
+      margin-right: 2.5px;
+      font-size: 80%;
+      padding: 10px 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      color: lighten($primary-text-color, 100%);
+      background-color: darken($table-primary__background, 10%);
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      &:hover {
+        color: lighten($primary-text-color, 10%);
+        background-color: darken($primary-background-color, 5%);
+      }
+
+      &--active {
+        color: lighten($primary-text-color, 50%);
+        background-color: $primary-background-color;
+      }
+    }
+  }
+
+  .main-form__header + .main-form__form {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 300px;
+    border-radius: 5px;
+    // background-color: $primary-background-color;
+    background-color: rgba(250, 250, 250, 1);
+    // width: calc(100% - 80px);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    // padding: 10px 25px;
+    // padding-top: 35px;
+    width: calc(100% - 80px);
+    padding: 10px 25px;
+    padding-top: 35px;
+
+    .main-form__item {
+      width: calc(100% - 20px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      // transition: 200ms ease-in-out;
+      // transform-origin: 0 0;
+
+      // &:first-child {
+      //   margin-top: 15px;
+      // }
+      .main-form__input_name {
+        color: lighten($primary-text-color, 40%);
+        margin-bottom: 5px;
+        padding-right: 10px;
+        flex: 0 1 calc(20% - 10px);
+      }
+
+      .main-form__input_field,
+      .main-form__product_img {
+        display: flex;
+        justify-content: center;
+        width: calc(90% - 20px);
+        // margin-bottom: 15px;
+
+        .react-datepicker-wrapper {
+          width: 100%;
+
+          .react-datepicker {
+            .react-datepicker__day--selected {
+              background-color: $button__background--inverted !important;
+            }
+          }
+        }
+      }
+
+      .main-form__input_field--vertical {
+        flex-direction: column;
+      }
+
+      .main-form__product_img {
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: flex-start;
+        img {
+          // width: 100%;
+          max-width: 500px;
+          max-height: 500px;
+          border-radius: 5px;
+        }
+        .main-form__submit {
+          font-size: 80%;
+          margin-top: 10px;
+          padding: 10px 15px;
+        }
+      }
+
+      .main-form__passport_img {
+        justify-content: flex-start;
+        width: calc(90% - 20px);
+        img {
+          // width: 100%;
+          max-width: 500px;
+          max-height: 500px;
+          border-radius: 10px;
+        }
+      }
+      input[type="text"],
+      input[type="password"],
+      input[type="number"],
+      textarea {
+        border: 1px solid #bbbbbb;
+        width: calc(100% - 20px);
+        max-width: calc(100% - 20px);
+        min-width: calc(100% - 20px);
+        padding: 5px 10px;
+        border-radius: 5px;
+        outline: none;
+        height: 1.25rem;
+
+        &:focus {
+          border: 1px solid $button__background--inverted;
+        }
+
+        &:hover {
+          border-color: #999999;
+        }
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+
+      select {
+        border: 1px solid #bbbbbb;
+        width: 100%;
+        padding: 5px 10px;
+        border-radius: 5px;
+        outline: none;
+        background-color: $primary-background-color;
+        transition: 100ms ease-in-out;
+
+        &:hover {
+          border-color: #888888;
+        }
+
+        &:focus {
+          border: 1px solid $button__background--inverted;
+        }
+      }
+
+      .select {
+        width: calc(90% - 20px);
+      }
+    }
+
+    .main-form__item--hidden {
+      transform: scaleY(0);
+      height: 0;
+      margin: 0;
+    }
+
+    .main-form__info-panel {
+      width: calc(100% - 50px);
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      & span {
+        font-size: 90%;
+        margin-right: 10px;
+      }
+    }
+
+    .main-form__button {
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      border-radius: 5px;
+      padding: 10px 10px;
+      cursor: pointer;
+      font-size: 90%;
+      margin-right: 10px;
+      transition: 0.2s ease-in-out;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 5px;
+      border: 1px solid transparent;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+    }
+
+    .main-form__button--inverted {
+      background-color: $secondary-text-color;
+      color: $primary-text-color;
+      border: 1px solid $button__background--inverted;
+
+      &:hover {
+        color: $secondary-text-color;
+      }
+    }
+
+    .main-form__file_upload {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      padding: 5px 0px;
+      width: calc(90% - 20px);
+      display: flex;
+      font-size: 12px;
+      // justify-content: space-between;
+      align-items: center;
+      text-align: center;
+
+      .main-form__file_name {
+        display: inline-block;
+        margin-right: 10px;
+        padding-bottom: 5px;
+        overflow-x: hidden;
+        // width: 20%;
+        min-width: 20%;
+        border-bottom: 1.5px solid $secondary-background-color;
+      }
+
+      .main-form__label {
+        padding: 5px 10px;
+        border: 1.5px solid $button__background--hover;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+
+        &:hover {
+          background-color: $button__background--hover;
+          color: $secondary-text-color;
+        }
+
+        .logo {
+          margin-left: 5px;
+        }
+      }
+
+      input[type="file"] {
+        outline: 0;
+        display: none;
+        opacity: 0;
+        pointer-events: none;
+        user-select: none;
+      }
+    }
+
+    .main-form__input_hint {
+      text-align: left;
+      width: calc(100% - 20px);
+      font-size: 80%;
+      margin-bottom: 10px;
+      padding: 0 10px;
+      color: lighten($primary-text-color, 60%);
+    }
+
+    .main-form__submit {
+      border: 0;
+      cursor: pointer;
+      padding: 15px 25px;
+      border-radius: 5px;
+      font-size: 80%;
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      transition: 0.2s ease-in-out;
+      margin-right: 10px;
+      outline: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid transparent;
+
+      &:hover {
+        background-color: lighten($button__background--inverted, 5%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      }
+      & .main-form__img {
+        width: 25px;
+        margin-right: 5px;
+      }
+    }
+    .main-form__submit--inverted {
+      background-color: $secondary-text-color;
+      color: $primary-text-color;
+      border: 1px solid $button__background--inverted;
+
+      &:hover {
+        color: $secondary-text-color;
+      }
+    }
+  }
+
+  .main-form__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 25px);
+  }
+  .main-form__buttons--vertical {
+    flex-direction: column;
+    .main-form__submit {
+      margin: 0px;
+      margin-bottom: 10px;
+    }
+  }
+  @media (max-width: 768px) {
+    .main-form__header {
+      width: calc(100% - 20px) !important;
+    }
+    .main-form__form {
+      padding: 0px;
+      padding-top: 25px;
+      width: calc(100% - 20px) !important;
+      // min-width: 250px;
+      .main-form__buttons {
+        flex-direction: column;
+        .main-form__submit {
+          margin-bottom: 10px;
+        }
+      }
+    }
+    .main-form__item {
+      flex-wrap: wrap;
+      flex-direction: column;
+
+      .main-form__input_name {
+        // flex: 0 1 100%;
+        width: 100%;
+      }
+
+      .main-form__input_field {
+        width: 100%;
+      }
+
+      .main-form__product_img {
+        width: 100%;
+        img {
+          max-width: 100%;
+          max-height: fit-content;
+        }
+      }
+
+      .main-form__file_upload {
+        width: 100%;
+        .main-form__file_name {
+          width: 80%;
+        }
+      }
+    }
+  }
+}

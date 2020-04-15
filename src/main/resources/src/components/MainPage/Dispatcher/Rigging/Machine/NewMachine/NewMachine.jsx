@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './NewMachine.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { addMachine, addPartsToMachine } from '../../../../../../utils/utilsAPI.jsx';
+import { addMachine, addPartsToMachine } from '../../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewMachine = (props) => {
     const [machineInputs, setMachineInputs] = useState({
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
     const [riggingErrors, setRiggingErrors] = useState({
         name: false,
@@ -25,6 +28,7 @@ const NewMachine = (props) => {
         parts: false,
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'parts':
@@ -34,10 +38,12 @@ const NewMachine = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -66,6 +72,7 @@ const NewMachine = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -73,6 +80,7 @@ const NewMachine = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(machineInputs);
         let machineId = 1;
         formIsValid() && addMachine(machineInputs)
@@ -88,6 +96,11 @@ const NewMachine = (props) => {
                 })
                 Promise.all(parts)
                     .then(() => props.history.push("/dispatcher/rigging/machine"))
+            })
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
             })
     }
 
@@ -121,9 +134,9 @@ const NewMachine = (props) => {
     }, [])
 
     return (
-        <div className="new_machine">
-            <div className="new_machine__title">Новый станок</div>
-            <form className="new_machine__form">
+        <div className="main-form">
+            <div className="main-form__title">Новый станок</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -154,16 +167,20 @@ const NewMachine = (props) => {
                     name="comment"
                     handleInputChange={handleInputChange}
                 />
-                <div className="new_machine__item">
-                    <div className="new_machine__input_name">Детали*</div>
-                    <div className="new_machine__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали*</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             handlePartsChange={handlePartsChange}
                         />
                     </div>
                 </div>
-                <div className="new_machine__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_machine__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/machine')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     )

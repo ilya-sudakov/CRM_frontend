@@ -27,7 +27,7 @@
     // top: 2rem;
     background-color: #f73434;
     color: #ffffff;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px 10px;
     transition: 0.2s ease-in-out;
 
@@ -38,16 +38,22 @@
 
   &__searchbar {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     position: relative;
     .select__input {
       border: 1px solid #bbbbbb;
       width: 100%;
       padding: 5px 10px;
+      border-radius: 5px;
       // border-radius: 10px;
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
+      // border-top-left-radius: 10px;
+      // border-bottom-left-radius: 10px;
       z-index: 0;
+      transition: 100ms ease-in-out;
+
+      &:hover {
+        border-color: #888888;
+      }
 
       &:focus {
         border: 1px solid $button__background--inverted;
@@ -60,129 +66,39 @@
 
     .select__search_button {
       border: 0;
-      flex: 0 1 15%;
+      // flex: 0 1 15%;
+      border-radius: 5px;
+      width: fit-content;
       background-color: $button__background--inverted;
       color: $secondary-text-color;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
+      // border-top-right-radius: 10px;
+      // border-bottom-right-radius: 10px;
       outline: none;
       cursor: pointer;
-      padding: 5px 10px;
+      padding: 10px 15px;
       font-size: 80%;
       transition: 0.2s ease-in-out;
+      margin-bottom: 5px;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
       }
     }
-
-    .select__window {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(#000000, 0.3);
-      top: 0;
-      left: 0;
-      z-index: 999;
-
-      &--hidden {
-        display: none;
-      }
-
-      &_content {
-        width: 80%;
-        height: 80%;
-        background-color: #eeeeee;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-        border-radius: 10px;
-        border: 1px solid #999999;
-        padding: 15px;
-        overflow-y: auto;
-
-        .tableview_products {
-          width: 100%;
-        }
-
-        .select__window_title {
-          text-align: center;
-          padding: 10px 0px;
-          font-size: 125%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-bottom: 10px;
-          position: relative;
-        }
-
-        .select__window_exit {
-          position: absolute;
-          width: 45px;
-          height: 45px;
-          right: 0;
-          border-radius: 10px;
-          transition: 0.2s ease-in-out;
-          cursor: pointer;
-
-          &:hover {
-            background-color: #cccccc;
-          }
-          .select__window_bar {
-            height: 2px;
-            width: 25px;
-            content: "";
-            background-color: #000000;
-            position: absolute;
-            right: 9px;
-            bottom: 21px;
-
-            &:first-of-type {
-              transform: rotate(45deg);
-            }
-            &:last-of-type {
-              transform: rotate(-45deg);
-            }
-          }
-        }
-
-        .searchbar {
-          width: 100%;
-        }
-
-        .select__window_button {
-          background-color: $button__background--inverted;
-          color: $secondary-text-color;
-          font-size: 60%;
-          padding: 10px 15px;
-          margin-left: 10px;
-          border-radius: 10px;
-          transition: 0.2s ease-in-out;
-          right: 50px;
-          position: absolute;
-
-          &:hover {
-            background-color: lighten($button__background--inverted, 5%);
-          }
-        }
-      }
+    .tableview_products {
+      width: 100%;
     }
   }
 
   &__options {
     position: absolute;
-    // width: calc(100% - 20px);
-    // left: 10px;
-    width: calc(85% + 15px);
-    padding: 5px 0;
+    // width: calc(85% + 15px);
+    width: 100%;
     max-height: 200px;
     overflow-y: auto;
-    border-radius: 10px;
-    background-color: $light20-grey;
+    border-radius: 2.5px;
+    background-color: $secondary-text-color;
     display: flex;
     flex-direction: column;
-    border: 1px solid #aeaeae;
     font-size: 80%;
     z-index: 2;
     transform: scaleX(1);
@@ -194,24 +110,35 @@
       transform: scaleY(0);
       // display: none;
     }
+    .select__img {
+      max-width: 50px;
+      border-radius: 2.5px;
+      margin-right: 10px;
+    }
 
     .select__option_item {
       padding: 5px 10px;
-      margin: 0 5px;
-      margin-bottom: 5px;
-      border-radius: 10px;
-      border: 1px solid $button__background--inverted;
       cursor: pointer;
       background-color: #ffffff;
-      transition: 0.2s ease-in-out;
+      transition: 0.1s ease-in-out;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
 
       &:hover {
         color: $secondary-text-color;
         background-color: $button__background--inverted;
       }
 
+      &:first-child {
+        border-top-left-radius: 2.5px;
+        border-top-right-radius: 2.5px;
+      }
+
       &:last-child {
-        margin-bottom: 0;
+        // margin-bottom: 0;
+        border-bottom-left-radius: 2.5px;
+        border-bottom-right-radius: 2.5px;
       }
     }
   }
@@ -241,7 +168,7 @@
       justify-content: space-between;
       align-items: center;
       // flex-wrap: wrap;
-      margin-top: 10px;
+      margin-top: 5px;
 
       &:first-of-type {
         margin-top: 5px;
@@ -249,15 +176,17 @@
 
       .select__selected_item {
         display: flex;
-        padding: 5px 10px;
-        border-radius: 10px;
+        padding: 0px 0px;
+        border-radius: 2.5px;
         width: 50%;
         margin-right: 30px;
         position: relative;
         font-size: 90%;
         //   width: fit-content;
         align-items: center;
+        color: $primary-text-color;
         border: 1px solid $button__background--inverted;
+        transition: 0.2s ease-in-out;
         cursor: pointer;
         background-color: #ffffff;
 
@@ -269,6 +198,18 @@
           position: absolute;
           left: calc(100% + 10px);
           width: 30px;
+          border-radius: 105px;
+        }
+
+        .select__selected_name {
+          width: 100%;
+          height: fit-content;
+          padding: 10px 5px;
+          text-decoration: underline;
+        }
+
+        &:hover {
+          // text-decoration: underline;
         }
       }
 
@@ -289,8 +230,8 @@
           width: 50% !important;
           min-width: 50% !important;
           display: flex;
-          padding: 5px 10px;
-          border-radius: 10px;
+          padding: 10px 10px;
+          border-radius: 2.5px;
           min-height: 1rem;
           height: calc(1rem + 0px);
           // height: fit-content;
@@ -298,11 +239,35 @@
           position: relative;
           //   width: fit-content;
           align-items: center;
+          transition: 100ms ease-in-out;
+
+          &:hover {
+            border-color: #888888;
+          }
 
           &:focus {
             border: 1px solid $button__background--inverted;
           }
         }
+      }
+    }
+
+    .select__selected_item--completed {
+      background-color: #5ea76e;
+      &:hover {
+        background-color: darken(#5ea76e, 5%);
+      }
+    }
+    .select__selected_item--defect {
+      background-color: #c48681;
+      &:hover {
+        background-color: darken(#c48681, 5%);
+      }
+    }
+    .select__selected_item--production {
+      background-color: #87a8b6;
+      &:hover {
+        background-color: darken(#87a8b6, 5%);
       }
     }
   }
@@ -313,13 +278,15 @@
       &__selected {
         &_row {
           flex-direction: column;
+          margin-left: -25px;
           .select__selected_item,
           .select__selected_packaging,
           .select__selected_quantity {
             margin-right: 0;
-            width: calc(100% - 50px) !important;
+            margin-bottom: 5px;
+            width: calc(100% - 80px) !important;
             input {
-              width: 100% !important;
+              width: 100%;
             }
           }
         }

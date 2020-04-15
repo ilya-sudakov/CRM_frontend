@@ -1,0 +1,283 @@
+@import "../../../../../variables.scss";
+
+.select-work-hours {
+  width: calc(100% - 50px);
+  display: flex;
+  flex-direction: row;
+  padding: 25px 0;
+  min-height: 250px;
+  padding-left: 50px;
+  position: relative;
+  //   align-items: stretch;
+
+  &__panel {
+    background-color: $secondary-text-color;
+    color: $primary-text-color;
+    border: 1px solid $button__background--inverted;
+    border-radius: 5px;
+    padding: 25px 15px;
+    cursor: pointer;
+    font-size: 100%;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    right: 100px;
+    width: 100%;
+    max-width: 250px;
+
+    div {
+      font-size: 90%;
+    }
+
+    div:nth-child(1) {
+      text-align: left;
+      font-weight: bold;
+      font-size: 100%;
+      width: 100%;
+    }
+
+    div:nth-child(2) {
+    }
+  }
+
+  &__timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-left: 80px;
+    min-height: 100%;
+
+    .select-work-hours__wrapper {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .select-work-hours__wrapper--vertical {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .select-work-hours__info {
+      background-color: $button__background--inverted;
+      color: $secondary-text-color;
+      border-radius: 5px;
+      padding: 10px 10px;
+      cursor: pointer;
+      font-size: 80%;
+      transition: 0.2s ease-in-out;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid transparent;
+      width: 110px;
+      margin-right: 5px;
+    }
+
+    .select-work-hours__info--inverted {
+      background-color: $secondary-text-color;
+      color: $primary-text-color;
+      border: 1px solid $button__background--inverted;
+    }
+
+    .select-work-hours__line {
+      background-color: #dedede;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      width: 10px;
+      height: 100%;
+      min-height: 150px;
+      margin-left: 60px;
+    }
+  }
+
+  &__list {
+    padding-top: 80px;
+    margin-left: -172px;
+
+    .select-work-hours__list-item {
+      font-size: 90%;
+      margin-bottom: 15px;
+      position: relative;
+      transition: 200ms ease-in-out;
+      display: flex;
+      flex-direction: column;
+      //   align-items: flex-start;
+      background-color: #dedede;
+      border-radius: 5px;
+      padding: 10px 10px;
+      width: 200%;
+
+      &:hover,
+      &:focus-within {
+        transform: scale(1.05);
+
+        .select-work-hours__work-name {
+          color: #222222;
+        }
+        &::before {
+          border-color: $button__background--inverted;
+          left: -38px;
+        }
+
+        .select-work-hours__circle {
+          top: 1px;
+          left: -46px;
+          width: 35px;
+          height: 35px;
+        }
+      }
+
+      .select-work-hours__work-name {
+        font-weight: bold;
+        color: #444444;
+        padding-bottom: 0;
+        transition: 200ms ease-in-out;
+      }
+
+      .select-work-hours__input {
+        margin-top: 5px;
+        // font-size: 90%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        // justify-content: space-between;
+        justify-content: flex-end;
+
+        span {
+          font-size: 90%;
+          // width: calc(50%);
+          color: #444444;
+          padding-right: 10px;
+        }
+
+        input[type="number"] {
+          border: 1px solid #bbbbbb;
+          //   max-width: calc(100% - 20px);
+          //   min-width: calc(100% - 20px);
+          padding: 2.5px 10px;
+          border-radius: 5px;
+          outline: none;
+          -moz-appearance: textfield;
+          height: 1.25rem;
+          width: calc(60%);
+          max-width: 5em;
+          font-size: 90%;
+
+          &:hover {
+            border-color: #999999;
+          }
+
+          &:focus {
+            border: 1px solid $button__background--inverted;
+          }
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+
+      .select-work-hours__products {
+        list-style-type: disc;
+        list-style-position: inside;
+        margin: 5px 0;
+        padding: 0 5px;
+        font-size: 90%;
+
+        li {
+          margin-bottom: 5px;
+          div {
+            // text-align: right;
+            // padding-right: 10px;
+            padding-left: 20px;
+            font-style: italic;
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .select-work-hours__circle {
+        content: "";
+        position: absolute;
+        // top: 3px;
+        // left: -52px;
+        // width: 30px;
+        // height: 30px;
+        top: 4.5px;
+        left: -50.5px;
+        width: 27px;
+        height: 27px;
+        border-radius: 999px;
+        background-color: #fafafa;
+        z-index: 0;
+        transition: 200ms ease-in-out;
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: -47px;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        border: 5px solid #777777;
+        background-color: #fafafa;
+        z-index: 1;
+        transition: 200ms ease-in-out;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 10px;
+        left: -10px;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid #dedede;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      padding-left: 0;
+
+      .select-work-hours__timeline {
+        padding-left: 0;
+      }
+
+      .select-work-hours__list-item {
+        width: 90%;
+
+        &:hover,
+        &:focus-within {
+          &::before {
+            left: -42px;
+          }
+
+          .select-work-hours__circle {
+            top: 1px;
+            left: -50px;
+          }
+        }
+      }
+    }
+  }
+}

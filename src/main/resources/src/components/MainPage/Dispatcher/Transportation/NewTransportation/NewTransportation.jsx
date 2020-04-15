@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './NewTransportation.scss';
-import { addTransportation } from '../../../../../utils/utilsAPI.jsx';
+import '../../../../../utils/Form/Form.scss';
+import { addTransportation } from '../../../../../utils/RequestsAPI/Transportation.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewTransportation = (props) => {
     const [transportationInputs, setTransportationInputs] = useState({
         date: new Date(),
         cargo: '',
+        quantity: '',
         sender: 'ЦехЛЭМЗ',
         recipient: 'ЦехЛЭМЗ',
         driver: ''
@@ -28,6 +31,7 @@ const NewTransportation = (props) => {
         driver: false
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const validateField = (fieldName, value) => {
         switch (fieldName) {
             case 'date':
@@ -37,10 +41,12 @@ const NewTransportation = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -70,6 +76,7 @@ const NewTransportation = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -77,8 +84,14 @@ const NewTransportation = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && addTransportation(transportationInputs)
             .then(() => props.history.push("/dispatcher/transportation"))
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {
@@ -112,9 +125,9 @@ const NewTransportation = (props) => {
     }, [])
 
     return (
-        <div className="new_transportation">
-            <div className="new_transportation__title">Новая запись транспортировки</div>
-            <form className="new_transportation__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая запись транспортировки</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -139,9 +152,14 @@ const NewTransportation = (props) => {
                     errorsArr={transportationErrors}
                     setErrorsArr={setTransportationErrors}
                 />
-                <div className="new_transportation__item">
-                    <div className="new_transportation__input_name">Откуда*</div>
-                    <div className="new_transportation__input_field">
+                <InputText
+                    inputName="Кол-во"
+                    name="quantity"
+                    handleInputChange={handleInputChange}
+                />
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Откуда*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="sender"
                             onChange={handleInputChange}
@@ -153,9 +171,9 @@ const NewTransportation = (props) => {
                         </select>
                     </div>
                 </div>
-                <div className="new_transportation__item">
-                    <div className="new_transportation__input_name">Куда*</div>
-                    <div className="new_transportation__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Куда*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="recipient"
                             onChange={handleInputChange}
@@ -176,8 +194,12 @@ const NewTransportation = (props) => {
                     errorsArr={transportationErrors}
                     setErrorsArr={setTransportationErrors}
                 />
-                <div className="new_transportation__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_transportation__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/transportation')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

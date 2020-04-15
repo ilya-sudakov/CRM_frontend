@@ -3,8 +3,8 @@
 .tableview_general_tasks {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 50px);
-  font-size: 80%;
+  width: calc(100% - 25px);
+  font-size: 100%;
   min-width: 950px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
@@ -24,11 +24,12 @@
   }
 
   &__row--header {
-    font-size: 100%!important;
+    font-size: 80% !important;
     position: sticky; //test
     top: calc(-6px); //test
     word-break: break-all;
     .tableview_general_tasks__col {
+      border: 1px solid $table-border__header;
       &:last-child {
         max-width: 125px;
       }
@@ -39,10 +40,10 @@
     display: flex;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid $table-border;
     text-align: center;
     transition: 0.2s ease-in-out;
-    font-size: 80%;
+    font-size: 75%;
 
     .tableview_general_tasks__col {
       display: flex;
@@ -50,46 +51,57 @@
       align-items: center;
       padding: 15px 5px;
       // flex: 0 1 12.5%;
-      border-right: 1px solid #cccccc; //border between columns
+      border-right: 1px solid $table-border; //border between columns
       // min-width: 100px;
       // max-width: 150px;
       &:nth-child(1) {
-        flex: 0 1 5%;
-        max-width: 40px;
-      }
-
-      &:nth-child(2) {
         flex: 0 1 12.5%;
         min-width: 90px;
         padding: 2.5px;
       }
 
-      &:nth-child(3) {
+      //Описание
+      &:nth-child(2) {
         // flex: 0 1 35%;
-        flex: 0 1 30%;
+        flex: 0 1 40%;
       }
 
-      &:nth-child(4) {
+      &:nth-child(3) {
         // flex: 0 1 12.5%;
         flex: 0 1 12.5%;
       }
 
-      &:nth-child(5) {
+      &:nth-child(4) {
         // flex: 0 1 5%;
         flex: 0 1 12.5%;
       }
 
-      &:nth-child(6) {
+      &:nth-child(5) {
         flex: 0 1 15%;
       }
+
+      &:nth-child(6) {
+        width: 10%;
+        max-width: 100px;
+        padding: 5px 5pxpx;
+        flex-direction: column;
+      }
       &:last-child {
-        flex: 0 1 10%;
+        flex: 0 1 12%;
         border-right: none;
       }
     }
 
+    .tableview_general_tasks__status_select {
+      width: 100%;
+      padding: 5px 0px;
+      font-size: 90%;
+      border-radius: 5px;
+      outline: 0;
+    }
+
     .tableview_general_tasks__actions {
-      flex: 0 1 10%;
+      flex: 0 1 12%;
       display: flex;
       padding: 10px 5px;
       flex-direction: column;
@@ -109,6 +121,7 @@
         transition: 0.2s ease-in-out;
         word-wrap: break-word;
         word-break: break-all;
+        border: 1px solid #ddd;
 
         &:last-child {
           margin: 0;
@@ -150,6 +163,62 @@
 
     &:hover {
       background-color: #dbdbdb;
+    }
+  }
+
+  .tableview_general_tasks__row--status_problem {
+    background-color: #c48681;
+    &:hover {
+      background-color: darken(#c48681, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_materials {
+    background-color: #d4b77e;
+    &:hover {
+      background-color: darken(#d4b77e, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_waiting {
+    background-color: #9ec2b6;
+    &:hover {
+      background-color: darken(#9ec2b6, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_in_production {
+    background-color: #7dbfdb;
+    &:hover {
+      background-color: darken(#7dbfdb, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_ready {
+    background-color: #5ea76e;
+    &:hover {
+      background-color: darken(#5ea76e, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_shipped {
+    background-color: #95ad7c;
+    &:hover {
+      background-color: darken(#95ad7c, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_completed {
+    background-color: #bed6c3;
+    &:hover {
+      background-color: darken(#bed6c3, 5%);
+    }
+  }
+
+  .tableview_general_tasks__row--status_priority {
+    background-color: #e65252;
+    &:hover {
+      background-color: darken(#e65252, 5%);
     }
   }
 }

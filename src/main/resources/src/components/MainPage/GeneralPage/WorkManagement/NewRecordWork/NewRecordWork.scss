@@ -1,0 +1,43 @@
+@import "../../../../../variables.scss";
+
+.record-work {
+  --page-items: 2;
+  --min-height: 400px;
+  --item-height: 160px;
+  --buttons-height: 70px;
+  .main-form__form {
+    overflow-x: hidden;
+    min-height: 200px;
+    position: relative;
+    overflow-y: hidden;
+    transition: 200ms ease-in-out;
+    .main-form__wrapper {
+      position: absolute;
+      left: 20px;
+      top: 25px;
+      width: calc(100% * var(--page-items) - 35px);
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      justify-self: flex-start;
+      align-self: start;
+      transition: 200ms ease-in-out;
+
+      .main-form__wrapper-item {
+        width: calc(100% / var(--page-items));
+
+        .main-form__buttons {
+          width: 100%;
+          // margin-bottom: 25px;
+          // margin-top: auto;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    --min-height: 725px;
+    --item-height: 180px;
+    --buttons-height: 150px;
+  }
+}

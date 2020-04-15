@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import './EditProduct.scss';
-import { getProductById, editProduct } from '../../../../utils/utilsAPI.jsx';
+import '../../../../utils/Form/Form.scss';
+import { getProductById, editProduct } from '../../../../utils/RequestsAPI/Products.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import SelectCategory from '../SelectCategory/SelectCategory.jsx';
+import { imgToBlobDownload, getDataUri } from '../../../../utils/functions.jsx'
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 
 const EditProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
         name: "",
         item: "",
         weight: "",
+        productionLocation: "ЦехЛЭМЗ",
         group: "",
         unit: "шт.",
+        vendor: "",
         photo: "",
-        typeOfProduct: "FIRST",
+        category: "",
         packaging: "",
         comment: ""
     });
     const [productErrors, setProductErrors] = useState({
         name: false,
-        typeOfProduct: false,
+        category: false,
         comment: false,
+        // productionLocation: false,
         packaging: false,
         photo: false,
         unit: false,
@@ -27,30 +35,26 @@ const EditProduct = (props) => {
     })
     const [validInputs, setValidInputs] = useState({
         name: true,
-        typeOfProduct: true,
+        category: true,
         // comment: false,
         packaging: true,
+        productionLocation: true,
         // photo: false,
         unit: true,
         weight: true
     })
-    const [imgName, setImgName] = useState("Имя файла...");
-    const [imgBASE64, setImgBASE64] = useState('');
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
-            case 'typeOfProduct':
-                setValidInputs({
-                    ...validInputs,
-                    typeOfProduct: (value !== null)
-                });
-                break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -59,7 +63,7 @@ const EditProduct = (props) => {
         let check = true;
         let newErrors = Object.assign({
             name: false,
-            typeOfProduct: false,
+            category: false,
             packaging: false,
             unit: false,
             weight: false
@@ -79,6 +83,7 @@ const EditProduct = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -86,10 +91,13 @@ const EditProduct = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
+        // console.log(productInputs);        
         const id = props.history.location.pathname.split("/products/edit/")[1];
         formIsValid() && editProduct(productInputs, id)
             .then(() => props.history.push("/products"))
             .catch(error => {
+                setIsLoading(false);
                 alert('Ошибка при добавлении записи');
             })
     }
@@ -107,26 +115,16 @@ const EditProduct = (props) => {
         })
     }
 
-    const handleFileInputChange = (event) => {
-        let regex = /.+\.(jpeg|jpg|png|img)/;
-        let file = event.target.files[0];
-        if (file.name.match(regex) !== null) {
-            setImgName(file.name);
-            let reader = new FileReader();
-            reader.onloadend = (() => {
-                // setImgBASE64(reader.result.split("base64,")[1]);
-                setImgBASE64(reader.result);
-                setProductInputs({
-                    ...productInputs,
-                    // photo: reader.result.split("base64,")[1]
-                    photo: reader.result
-                })
-            });
-            reader.readAsDataURL(file);
-        }
-        else {
-            setImgName('Некорректный формат файла!');
-        }
+    const handleCategoryChange = (value) => {
+        validateField('category', value);
+        setProductInputs({
+            ...productInputs,
+            category: value
+        })
+        setProductErrors({
+            ...productErrors,
+            category: false
+        })
     }
 
     useEffect(() => {
@@ -144,8 +142,10 @@ const EditProduct = (props) => {
                         weight: oldProduct.weight,
                         unit: oldProduct.unit,
                         packaging: oldProduct.packaging,
+                        vendor: oldProduct.vendor,
+                        productionLocation: oldProduct.productionLocation,
+                        category: oldProduct.category,
                         comment: oldProduct.comment,
-                        typeOfProduct: oldProduct.typeOfProduct,
                         photo: oldProduct.photo
                     });
                 })
@@ -157,18 +157,19 @@ const EditProduct = (props) => {
         }
     }, [])
     return (
-        <div className="edit_product">
-            <div className="edit_product__title">Редактирование продукта</div>
-            <form className="edit_product__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование продукта</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
                     setShowError={setShowError}
                 />
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Фотография</div>
-                    <div className="edit_product__product_img">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография</div>
+                    <div className="main-form__product_img">
                         <img src={productInputs.photo} alt="" />
+                        <div className="main-form__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
                     </div>
                 </div>
                 <InputText
@@ -181,21 +182,17 @@ const EditProduct = (props) => {
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
                 />
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Группа продукции*</div>
-                    <div className="edit_product__input_field">
-                        <select
-                            name="typeOfProduct"
-                            onChange={handleInputChange}
-                            defaultValue={productInputs.typeOfProduct}
-                            autoComplete="off"
-                        >
-                            <option value="FIRST">Первая группа</option>
-                            <option value="SECOND">Вторая группа</option>
-                            <option value="THIRD">Третья группа</option>
-                        </select>
-                    </div>
-                </div>
+                <SelectCategory
+                    inputName="Категория"
+                    required
+                    error={productErrors.category}
+                    defaultValue={productInputs.category}
+                    name="category"
+                    handleCategoryChange={handleCategoryChange}
+                    errorsArr={productErrors}
+                    setErrorsArr={setProductErrors}
+                    readOnly
+                />
                 <InputText
                     inputName="Вес изделия"
                     required
@@ -207,9 +204,16 @@ const EditProduct = (props) => {
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
                 />
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Единица измерения*</div>
-                    <div className="edit_product__input_field">
+                <InputText
+                    inputName="Артикул"
+                    defaultValue={productInputs.vendor}
+                    name="vendor"
+                    type="text"
+                    handleInputChange={handleInputChange}
+                />
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Единица измерения*</div>
+                    <div className="main-form__input_field">
                         <select
                             name="unit"
                             onChange={handleInputChange}
@@ -236,24 +240,41 @@ const EditProduct = (props) => {
                     name="comment"
                     defaultValue={productInputs.comment}
                     handleInputChange={handleInputChange}
-                    errorsArr={productErrors}
-                    setErrorsArr={setProductErrors}
                 />
-                <div className="edit_product__item">
-                    <div className="edit_product__input_name">Фотография</div>
-                    <div className="edit_product__file_upload">
-                        <div className="edit_product__file_name">
-                            {imgName}
-                        </div>
-                        <label className="edit_product__label" htmlFor="file">
-                            Загрузить файл
-                                {/* <img className="logo" src={fileUploadImg} alt="" /> */}
-                        </label>
-                        <input type="file" name="file" id="file" onChange={handleFileInputChange} />
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Место производства*</div>
+                    <div className="main-form__input_field">
+                        <select
+                            name="productionLocation"
+                            onChange={handleInputChange}
+                            value={productInputs.productionLocation}
+                        >
+                            <option>ЦехЛЭМЗ</option>
+                            <option>ЦехЛиговский</option>
+                            <option>ЦехЛепсари</option>
+                        </select>
                     </div>
                 </div>
-                <div className="edit_product__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_product__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фотография</div>
+                    <FileUploader
+                        regex={/.+\.(jpeg|jpg|png|img)/}
+                        uniqueId={0}
+                        onChange={async (result) => {
+                            const downgraded = await getDataUri(result, "jpeg", 0.3);
+                            setProductInputs({
+                                ...productInputs,
+                                photo: downgraded
+                            })
+                        }}
+                    />
+                </div>
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/products')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

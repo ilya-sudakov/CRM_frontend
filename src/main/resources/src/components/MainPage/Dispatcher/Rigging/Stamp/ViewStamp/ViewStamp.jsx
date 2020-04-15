@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './ViewStamp.scss';
+import '../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
-import { getStampById } from '../../../../../../utils/utilsAPI.jsx';
+import { getStampById } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
 
 const ViewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
         name: '',
         number: '',
         comment: '',
-        parts: []
+        parts: [],
+        lastEdited: new Date()
     })
 
     const handleSubmit = (event) => {
@@ -35,12 +38,12 @@ const ViewStamp = (props) => {
     }, [])
 
     return (
-        <div className="view_stamp">
-            <div className="view_stamp__title">Просмотр штампа</div>
-            <form className="view_stamp__form">
-                <div className="view_stamp__item">
-                    <div className="view_stamp__input_name">Название</div>
-                    <div className="view_stamp__input_field">
+        <div className="main-form">
+            <div className="main-form__title">Просмотр штампа</div>
+            <form className="main-form__form">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Название</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="name"
                             autoComplete="off"
@@ -49,9 +52,9 @@ const ViewStamp = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_stamp__item">
-                    <div className="view_stamp__input_name">Артикул</div>
-                    <div className="view_stamp__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Артикул</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="number"
                             autoComplete="off"
@@ -60,9 +63,9 @@ const ViewStamp = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_stamp__item">
-                    <div className="view_stamp__input_name">Комментарий</div>
-                    <div className="view_stamp__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Комментарий</div>
+                    <div className="main-form__input_field">
                         <input type="text"
                             name="comment"
                             autoComplete="off"
@@ -71,16 +74,29 @@ const ViewStamp = (props) => {
                         />
                     </div>
                 </div>
-                <div className="view_stamp__item">
-                    <div className="view_stamp__input_name">Детали</div>
-                    <div className="view_stamp__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Детали</div>
+                    <div className="main-form__input_field">
                         <SelectParts
                             readOnly
                             defaultValue={stampInputs.stampParts}
                         />
                     </div>
                 </div>
-                <input className="view_stamp__submit" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Дата последнего изменения</div>
+                    <div className="main-form__input_field">
+                        <input type="text"
+                            name="lastEdited"
+                            autoComplete="off"
+                            readOnly
+                            defaultValue={formatDateString(stampInputs.lastEdited)}
+                        />
+                    </div>
+                </div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={handleSubmit} value="Вернуться назад" />
+                </div>
             </form>
         </div>
     )

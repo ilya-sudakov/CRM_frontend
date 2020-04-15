@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import './Stamp.scss';
+import '../../../../../utils/MainWindow/MainWindow.scss';
 import TableView from '../TableView/TableView.jsx';
-import { getStamp, getStampById, deletePartsFromStamp, deleteStamp } from '../../../../../utils/utilsAPI.jsx';
+import { getStamp, getStampById, deletePartsFromStamp, deleteStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 
 const Stamp = (props) => {
     const [stamps, setStamps] = useState([]);
@@ -21,7 +22,7 @@ const Stamp = (props) => {
                 setStamps(res);
             })
             .catch(error => {
-                console.log(error);                
+                console.log(error);
             })
     }
 
@@ -43,18 +44,23 @@ const Stamp = (props) => {
 
     return (
         <div className="stamp">
-            <SearchBar
-                title='Поиск штампа'
-                setSearchQuery={setSearchQuery}
-                placeholder='Введите здесь запрос для поиска...'
-            />
-            <div className="stamp__amount_table">Всего: {stamps.length} записей</div>
-            <TableView
-                data={stamps}
-                searchQuery={searchQuery}
-                userHasAccess={props.userHasAccess}
-                deleteItem={deleteItem}
-            />
+            <div className="main-window">
+                <SearchBar
+                    title='Поиск штампа'
+                    setSearchQuery={setSearchQuery}
+                    placeholder='Введите здесь запрос для поиска...'
+                />
+                <div className="main-window__info-panel">
+                    <div className="main-window__amount_table">Всего: {stamps.length} записей</div>
+                </div>
+                <TableView
+                    data={stamps}
+                    searchQuery={searchQuery}
+                    userHasAccess={props.userHasAccess}
+                    loadData={loadStamps}
+                    deleteItem={deleteItem}
+                />
+            </div>
         </div>
     )
 }

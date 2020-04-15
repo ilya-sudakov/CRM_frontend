@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './EditPartInRigging.scss';
-import { getPartFromStamp, editPartFromStamp, getPartFromMachine, editPartFromMachine, editPartFromPressForm, getPartFromPressForm } from '../../../../../utils/utilsAPI.jsx';
-
+import '../../../../../utils/Form/Form.scss';
+import { getPartFromStamp, editPartFromStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import { editPartFromPressForm, getPartFromPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx';
+import { getPartFromMachine, editPartFromMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import { editPartFromPart, getPartFromPart } from '../../../../../utils/RequestsAPI/Rigging/Parts.jsx';
 const EditPartInRigging = (props) => {
     const [partInputs, setPartInputs] = useState({
         number: '',
@@ -19,6 +23,7 @@ const EditPartInRigging = (props) => {
     const [nameValid, setNameValid] = useState(true);
     const [partId, setPartId] = useState(0);
     const [rigId, setRigId] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -40,6 +45,7 @@ const EditPartInRigging = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && (
             props.location.pathname.includes("/dispatcher/rigging/stamp") && editPartFromStamp({
                 ...partInputs,
@@ -52,14 +58,24 @@ const EditPartInRigging = (props) => {
             props.location.pathname.includes("/dispatcher/rigging/press-form") && editPartFromPressForm({
                 ...partInputs,
                 riggingId: rigId
+            }, partId) ||
+            props.location.pathname.includes("/dispatcher/rigging/parts") && editPartFromPart({
+                ...partInputs,
+                riggingId: rigId
             }, partId)
         )
 
             .then(() => props.history.push("/dispatcher/rigging/" + (
                 props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
                 props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+                props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
             )))
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {
@@ -76,7 +92,8 @@ const EditPartInRigging = (props) => {
         let rigId = props.history.location.pathname.split("/dispatcher/rigging/" + (
             props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
             props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
-            props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form"
+            props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+            props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
         ) + "/edit-part/")[1];
         const partId = rigId.split("/")[1];
         rigId = rigId.split("/")[0];
@@ -88,7 +105,8 @@ const EditPartInRigging = (props) => {
             (
                 props.location.pathname.includes("/dispatcher/rigging/stamp") && getPartFromStamp(partId) ||
                 props.location.pathname.includes("/dispatcher/rigging/machine") && getPartFromMachine(partId) ||
-                props.location.pathname.includes("/dispatcher/rigging/press-form") && getPartFromPressForm(partId)
+                props.location.pathname.includes("/dispatcher/rigging/press-form") && getPartFromPressForm(partId) ||
+                props.location.pathname.includes("/dispatcher/rigging/parts") && getPartFromPart(partId)
             )
                 .then(res => res.json())
                 .then(res => {
@@ -98,12 +116,12 @@ const EditPartInRigging = (props) => {
     }, [])
 
     return (
-        <div className="edit_part_in_rigging">
-            <div className="edit_part_in_rigging__title">Редактирование детали</div>
-            <form className="edit_part_in_rigging__form">
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Название*</div>
-                    <div className="edit_part_in_rigging__input_field">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование детали</div>
+            <form className="main-form__form">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Название*</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="name"
@@ -113,9 +131,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Артикул*</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Артикул*</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="number"
@@ -125,9 +143,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Кол-во</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Кол-во</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="amount"
@@ -137,9 +155,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Местоположение</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Местоположение</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="location"
@@ -149,9 +167,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Комментарий*</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Комментарий*</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="comment"
@@ -161,9 +179,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Распил/Габариты</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Распил/Габариты</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="cuttingDimensions"
@@ -173,9 +191,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Фрезеровка/Точение</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Фрезеровка/Точение</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="milling"
@@ -185,9 +203,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Закалка</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Закалка</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="harding"
@@ -197,9 +215,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Шлифовка</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Шлифовка</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="grinding"
@@ -209,9 +227,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Эрозия</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Эрозия</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="erosion"
@@ -221,9 +239,9 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__item">
-                    <div className="edit_part_in_rigging__input_name">Проверка</div>
-                    <div className="edit_part_in_rigging__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Проверка</div>
+                    <div className="main-form__input_field">
                         <input
                             type="text"
                             name="controll"
@@ -233,8 +251,17 @@ const EditPartInRigging = (props) => {
                         />
                     </div>
                 </div>
-                <div className="edit_part_in_rigging__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_part_in_rigging__submit" type="submit" onClick={handleSubmit} value="Редактировать деталь" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push("/dispatcher/rigging/" + (
+                        props.location.pathname.includes("/dispatcher/rigging/stamp") && "stamp" ||
+                        props.location.pathname.includes("/dispatcher/rigging/machine") && "machine" ||
+                        props.location.pathname.includes("/dispatcher/rigging/press-form") && "press-form" ||
+                        props.location.pathname.includes("/dispatcher/rigging/parts") && "parts"
+                    ))} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать деталь" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     )

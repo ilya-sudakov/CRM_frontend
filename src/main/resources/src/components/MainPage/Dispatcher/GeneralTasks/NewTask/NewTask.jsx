@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './NewTask.scss';
-import { addMainTask, getUsers } from '../../../../../utils/utilsAPI.jsx';
+import '../../../../../utils/Form/Form.scss';
+import { addMainTask } from '../../../../../utils/RequestsAPI/MainTasks.jsx';
+import { getUsers } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const NewTask = (props) => {
     const [taskInputs, setTaskInputs] = useState({
@@ -13,6 +16,7 @@ const NewTask = (props) => {
         responsible: '',
         dateControl: new Date(),
         status: '',
+        condition: 'В процессе'
         // visibility: 'all'
     })
     const [taskErrors, setTaskErrors] = useState({
@@ -20,17 +24,18 @@ const NewTask = (props) => {
         description: false,
         responsible: false,
         dateControl: false,
-        status: false
+        // status: false
     })
     const [validInputs, setValidInputs] = useState({
         dateCreated: true,
         description: false,
-        responsible: false,
+        responsible: (props.userHasAccess(['ROLE_ADMIN']) ? false : true),
         dateControl: true,
-        status: false
+        // status: false
     })
     const [users, setUsers] = useState([]);
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -47,10 +52,12 @@ const NewTask = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -58,16 +65,10 @@ const NewTask = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            name: false,
-            lastName: false,
-            middleName: false,
-            yearOfBirth: false,
-            citizenship: false,
-            position: false,
-            workshop: false,
-            // passportScan1: false,
-            // comment: false,
-            relevance: false
+            dateCreated: false,
+            description: false,
+            responsible: false,
+            dateControl: false,
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -85,6 +86,7 @@ const NewTask = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -92,9 +94,15 @@ const NewTask = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         // console.log(taskInputs);
         formIsValid() && addMainTask(taskInputs)
             .then(() => props.history.push("/dispatcher/general-tasks"))
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {
@@ -132,9 +140,9 @@ const NewTask = (props) => {
     }, [])
 
     return (
-        <div className="new_general_task">
-            <div className="new_general_task__title">Новая задача</div>
-            <form className="new_general_task__form">
+        <div className="main-form">
+            <div className="main-form__title">Новая задача</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -171,6 +179,7 @@ const NewTask = (props) => {
                 />
                 <InputUser
                     inputName="Ответственный"
+                    userData={props.userData}
                     required
                     error={taskErrors.responsible}
                     name="responsible"
@@ -202,28 +211,15 @@ const NewTask = (props) => {
                 />
                 <InputText
                     inputName="Состояние"
-                    required
-                    error={taskErrors.status}
                     name="status"
                     handleInputChange={handleInputChange}
-                    errorsArr={taskErrors}
-                    setErrorsArr={setTaskErrors}
                 />
-                {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="new_general_task__item">
-                    <div className="new_general_task__input_name">Видимость*</div>
-                    <div className="new_general_task__input_field">
-                        <select
-                            name="visibility"
-                            onChange={handleInputChange}
-                            defaultValue={taskInputs.visibility}
-                        >
-                            <option value="all">Всем</option>
-                            <option value="adminOnly">Только руководитель</option>
-                        </select>
-                    </div>
-                </div>} */}
-                <div className="new_general_task__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="new_general_task__submit" type="submit" onClick={handleSubmit} value="Добавить задачу" />
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/general-tasks')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить задачу" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

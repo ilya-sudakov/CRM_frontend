@@ -3,8 +3,8 @@
 .tableview_stamps {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 50px);
-  font-size: 80%;
+  width: calc(100% - 25px);
+  font-size: 100%;
   min-width: 950px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
@@ -28,10 +28,10 @@
     display: flex;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid $table_border;
     text-align: center;
     transition: 0.2s ease-in-out;
-    font-size: 80%;
+    font-size: 70%;
     font-weight: bold;
     cursor: pointer;
 
@@ -42,7 +42,7 @@
       padding: 15px 5px;
       // width: 100%;
       // flex: 0 1 12.5%;
-      border-right: 1px solid #cccccc; //border between columns
+      border-right: 1px solid $table_border; //border between columns
       // min-width: 100px;
       // max-width: 150px;
 
@@ -53,23 +53,24 @@
 
       //Артикул
       &:nth-child(2) {
-        flex: 0 1 5%;
-        min-width: 90px;
+        flex: 0 1 8%;
+        word-break: break-all;
         padding: 2.5px !important;
       }
 
       //Название
       &:nth-child(3) {
         // flex: 0 1 35%;
-        flex: 0 1 10%;
+        flex: 0 1 12%;
         padding: 0;
+        word-break: break-all;
       }
 
       //Кол-во
       &:nth-child(4) {
         // flex: 0 1 12.5%;
         flex: 0 1 5%;
-        max-width: 40px;
+        max-width: 30px;
       }
 
       //Местоположение
@@ -100,13 +101,15 @@
         flex: 0 1 10%;
         word-break: break-all;
       }
+      //Шлифовка
       &:nth-child(10) {
         // flex: 0 1 5%;
         flex: 0 1 10%;
       }
+      //Эрозия
       &:nth-child(11) {
         // flex: 0 1 5%;
-        flex: 0 1 5%;
+        flex: 0 1 7%;
       }
       &:nth-child(12) {
         // flex: 0 1 5%;
@@ -149,7 +152,7 @@
 
         &:hover {
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-          background-color: lighten($button__background--inverted, 5%);
+          background-color: darken($button__background--inverted, 5%);
         }
       }
     }
@@ -189,29 +192,32 @@
   .tableview_stamps__row--completed {
     background-color: #6caa2b;
     &:hover {
-      background-color: lighten(#6caa2b, 10%);
+      background-color: darken(#6caa2b, 10%);
     }
   }
   .tableview_stamps__row--defect {
     background-color: #e25c52;
     &:hover {
-      background-color: lighten(#e25c52, 10%);
+      background-color: darken(#e25c52, 10%);
     }
   }
   .tableview_stamps__row--production {
     background-color: #e0e0e0;
     &:hover {
-      background-color: lighten(#e0e0e0, 10%);
+      background-color: darken(#e0e0e0, 10%);
     }
   }
 
   &__row--header {
-    font-size: 90%;
+    font-size: 80%;
     position: sticky; //test
+    position: -webkit-sticky;
     top: calc(-6px); //test
+    z-index: 99;
     cursor: default;
     font-weight: normal;
     .tableview_stamps__col {
+      border: 1px solid $table-border__header;
       &:last-child {
         max-width: 125px;
       }
@@ -225,6 +231,7 @@
     // transition: 0.2s ease-in-out;
     // transition: none;
     max-height: max-content;
+    font-size: 80%;
     // height: 100%;
 
     &--hidden {
@@ -235,8 +242,8 @@
     }
     &:last-of-type {
       .tableview_stamps__row {
-        border-bottom-left-radius: 10px !important;
-        border-bottom-right-radius: 10px !important;
+        border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
       }
     }
 

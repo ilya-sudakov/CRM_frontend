@@ -3,15 +3,15 @@
 .tableview_employees {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 50px);
-  font-size: 80%;
+  width: calc(100% - 25px);
+  font-size: 100%;
   min-width: 950px;
   border-radius: 10px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
 
   &__img {
     width: 15px;
-    margin-left: 5px;
+    // margin-left: 5px;
     cursor: pointer;
   }
 
@@ -24,25 +24,31 @@
   }
 
   &__row--header {
-    font-size: 100%!important;
+    font-size: 80% !important;
     position: sticky; //test
     top: calc(-6px); //test
     word-break: break-all;
+    cursor: auto !important;
+    font-weight: normal !important;
     .tableview_employees__col {
+      border-right: 1px solid #cccccc; //border between columns
       &:last-child {
         max-width: 125px;
       }
     }
   }
 
-  &__row {
+  &__row,
+  &__employees {
     display: flex;
     // background-color: $table-primary__background;
     background-color: $primary-background-color;
     border-bottom: 1px solid #cccccc;
     text-align: center;
     transition: 0.2s ease-in-out;
-    font-size: 80%;
+    font-size: 90%;
+    cursor: pointer;
+    font-weight: bold;
 
     .tableview_employees__col {
       display: flex;
@@ -50,34 +56,41 @@
       align-items: center;
       padding: 15px 5px;
       // flex: 0 1 12.5%;
-      border-right: 1px solid #cccccc; //border between columns
+      // border-right: 1px solid #cccccc; //border between columns
       // min-width: 100px;
       // max-width: 150px;
       &:nth-child(1) {
         flex: 0 1 20%;
       }
 
+      //Дата рождения
       &:nth-child(2) {
         flex: 0 1 12.5%;
-        max-width: 80px;
+        max-width: 125px;
         word-break: normal;
+        span {
+          width: calc(100% - 30px);
+        }
       }
 
       &:nth-child(3) {
         flex: 0 1 10%;
       }
 
+      //Подразделение
       &:nth-child(4) {
-        flex: 0 1 10%;
+        flex: 0 1 15%;
       }
 
+      //Должность
       &:nth-child(5) {
         // flex: 0 1 5%;
-        flex: 0 1 10%;
+        flex: 0 1 20%;
       }
 
+      //Комментарий
       &:nth-child(6) {
-        flex: 0 1 25%;
+        flex: 0 1 20%;
       }
       &:nth-child(7) {
         flex: 0 1 10%;
@@ -98,7 +111,8 @@
       max-width: 125px;
 
       .tableview_employees__action {
-        font-size: 90%;
+        font-size: 80% !important;
+        font-weight: normal;
         width: 75%;
         border-radius: 5px;
         margin-bottom: 5px;
@@ -137,11 +151,65 @@
     }
   }
 
+  .tableview_employees__employees {
+    flex-direction: column;
+    transform-origin: 0 0;
+    // transform: scaleY(1);
+    // transition: 0.2s ease-in-out;
+    // transition: none;
+    max-height: max-content;
+    font-size: 95%;
+    // height: 100%;
+
+    &--hidden {
+      // transform: scaleY(0);
+      max-height: 0;
+      display: none;
+      //
+    }
+
+    .tableview_employees__row {
+      font-size: 90%;
+      cursor: auto;
+      font-weight: normal;
+
+      .tableview_employees__col {
+        padding: 5px 5px;
+        border-right: 1px solid #cccccc; //border between columns
+
+        // &:nth-child(3) {
+        //   padding: 0;
+        // }
+
+        .tableview__color_name {
+          text-decoration: none;
+        }
+
+        .tableview__color_option {
+          font-size: 110%;
+        }
+      }
+
+      .tableview_employees__action {
+        font-size: 95%;
+      }
+
+      &:first-of-type {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+      }
+      &:last-of-type {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+  }
+
   .tableview_employees__row--even {
-    background-color: #f8f8f8;
+    background-color: #fbfbfb;
 
     &:hover {
-      background-color: #f0f0f0;
+      background-color: darken(#fbfbfb, 5%);
     }
   }
 

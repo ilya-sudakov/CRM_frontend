@@ -1,0 +1,92 @@
+@import "../../../../variables.scss";
+
+.admin-workspace {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  // align-items: center;
+  // justify-content: center;
+  &__button {
+    border: 0;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 80%;
+    background-color: $button__background--inverted;
+    color: $secondary-text-color;
+    transition: 0.2s ease-in-out;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+
+  &__chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 30px);
+    max-width: 570px;
+    // max-height: 230px;
+    background-color: $secondary-text-color;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    position: relative;
+    min-height: 250px;
+    max-height: 320px;
+    .admin-workspace__header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin-bottom: auto;
+      .admin-workspace__title {
+        font-size: 20px;
+        text-align: center;
+        // margin: 0 10px;
+        transition: 100ms ease-in-out;
+      }
+    }
+    .admin-workspace__chart {
+      height: 100%;
+      // min-height: 225px;
+      max-height: 300px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .admin-workspace__chart-wrapper {
+      width: calc(100% - 10px);
+      padding: 5px 5px;
+      // min-height: 500px;
+      max-height: 380px;
+      .admin-workspace__chart {
+        // min-height: 200px;
+        max-height: 300px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .admin-workspace__chart-wrapper {
+      .admin-workspace__header {
+        font-size: 80%;
+        .admin-workspace__title {
+          font-size: 16px;
+        }
+        .admin-workspace__button {
+          padding: 10px 2.5px;
+        }
+      }
+    }
+  }
+}

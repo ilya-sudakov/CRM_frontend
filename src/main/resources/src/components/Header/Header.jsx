@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import profileSVG from '../../../../../../assets/header/profile.svg';
+import profileSVG from '../../../../../../assets/header/profile1.svg';
+import exitSVG from '../../../../../../assets/header/exit.svg';
+import employeeSVG from '../../../../../../assets/header/employee.svg';
+import logoSVG from '../../../../../../assets/header/logo.png';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 
@@ -39,13 +42,13 @@ const Header = (props) => {
                         <div className="line"></div>
                         <div className="line"></div>
                     </div>
-                    <div className="header__name">
+                    {/* <div className="header__name">
                         Меню
-                    </div>
+                    </div> */}
                 </div>
-                {/* <div className="header__logo">
-                    Лого
-                </div> */}
+                {/* <Link className="header__link" to="/">
+                    <img className="header__logo" src={logoSVG} alt="" />
+                </Link> */}
                 {/* <div className="header__name">
                     Компания
                 </div> */}
@@ -53,26 +56,36 @@ const Header = (props) => {
             <div className="header__menu">
                 <div className="header__item header__item--user">
                     <div className="header__profile_data" onClick={props.userHasAccess(["ROLE_ADMIN"]) ? clickProfileMenu : null}>
-                        <img className="header__userimg" src={profileSVG} alt="" />
-                        <div>
+                        {/* <div> */}
                             <div className="header__username">{props.userData.username}</div>
-                            <div className="header__email">{
-                                props.userData.roles[0] && (props.userData.roles[0].name === "ROLE_ADMIN" ? 'Администратор' :
+                            {/* <div className="header__email">{
+                                props.userData.roles[0] && (props.userData.roles[0].name === "ROLE_ADMIN" ? 'Руководитель' :
                                     props.userData.roles[0].name === "ROLE_MANAGER" ? 'Менеджер' :
                                         props.userData.roles[0].name === "ROLE_DISPATCHER" ? 'Диспетчер' :
                                             props.userData.roles[0].name === "ROLE_ENGINEER" ? 'Инженер' :
                                                 props.userData.roles[0].name === "ROLE_WORKSHOP" ? 'Цех' :
                                                     null)
-                            }</div>
-                        </div>
+                            }</div> */}
+                        {/* </div> */}
+                        <img className="header__userimg" src={profileSVG} alt="" />
                     </div>
                     {props.userHasAccess(["ROLE_ADMIN"]) && <div className="header__profile_menu header__profile_menu--hidden">
-                        <Link to="/profile/users" className="header__profile_item" onClick={clickProfileMenu}>Управление пользователями</Link>
-                        {/* <Link to="/profile/users" className="header__profile_item">Тест</Link> */}
+                        {/* <div className="header__profile_item" onClick={clickProfileMenu}>
+                            <span>{props.userData.username}</span>
+                        </div> */}
+                        <Link to="/profile/users" className="header__profile_item" onClick={clickProfileMenu}>
+                            <img className="header__img" src={employeeSVG} alt="" />
+                            <span>Управление пользователями</span>
+                        </Link>
+                        <Link to="/profile/login-history" className="header__profile_item" onClick={clickProfileMenu}>
+                            <img className="header__img" src={exitSVG} alt="" />
+                            <span>История входов</span>
+                        </Link>
                     </div>}
                 </div>
-                <Link className="header__item header__item--button" to="/login">
-                    Выйти
+                <Link className="header__item" to="/login">
+                    {/* Выйти */}
+                    <img className="header__img" src={exitSVG} alt="" />
                 </Link>
             </div>
         </div>

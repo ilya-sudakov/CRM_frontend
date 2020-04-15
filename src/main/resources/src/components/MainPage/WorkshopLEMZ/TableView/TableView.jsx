@@ -2,13 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png';
 import './TableView.scss';
-import { editRequestStatus, editRequestLEMZStatus } from '../../../../utils/utilsAPI.jsx';
+import { editRequestLEMZStatus, editProductStatusToRequestLEMZ } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 
 const TableView = (props) => {
+    const [curPage, setCurPage] = useState('Открытые');
+    const [isLoading, setIsLoading] = useState(true);
     const [sortOrder, setSortOrder] = useState({
         curSort: 'date',
         date: 'desc'
-    })
+    });
+    const [requestStatuses, setRequestStatutes] = useState([
+        {
+            name: 'Проблема-материалы',
+            access: ['ROLE_ADMIN', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Завершено',
+            access: ['ROLE_ADMIN']
+        },
+        {
+            name: 'Отгружено',
+            access: ['ROLE_ADMIN', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Готово',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER']
+        },
+        {
+            name: 'В производстве',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']
+        },
+        {
+            name: 'Ожидание',
+            access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']
+        }
+    ]);
 
     const changeSortOrder = (event) => {
         const name = event.target.getAttribute("name");
@@ -20,7 +50,14 @@ const TableView = (props) => {
 
     const searchQuery = (data) => {
         const query = props.searchQuery.toLowerCase();
+        //Временно
         return data.filter(item => {
+            if (curPage === 'Открытые') {
+                if (item.status !== 'Завершено') return true;
+            } else {
+                if (item.status === 'Завершено') return true;
+            }
+        }).filter(item => {
             return (
                 (item.lemzProducts.length !== 0 && item.lemzProducts[0].name !== null)
                     ? (
@@ -35,6 +72,21 @@ const TableView = (props) => {
                     : item.status.toLowerCase().includes(query)
             )
         })
+        // return data.filter(item => {
+        //     return (
+        //         (item.lemzProducts.length !== 0 && item.lemzProducts[0].name !== null)
+        //             ? (
+        //                 item.lemzProducts[0].name.toLowerCase().includes(query) ||
+        //                 item.id.toString().includes(query) ||
+        //                 formatDateString(item.date).includes(query) ||
+        //                 item.codeWord.toLowerCase().includes(query) ||
+        //                 item.status.toLowerCase().includes(query) ||
+        //                 item.responsible.toLowerCase().includes(query) ||
+        //                 formatDateString(item.shippingDate).includes(query)
+        //             )
+        //             : item.status.toLowerCase().includes(query)
+        //     )
+        // })
     }
 
     const handleStatusChange = (event) => {
@@ -44,7 +96,21 @@ const TableView = (props) => {
             status: status
         }, id)
             .then(() => {
-                window.location.reload(); //на данный момент так
+                props.loadData();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    const handleProductStatusChange = (event) => {
+        const status = event.target.value;
+        const id = event.target.getAttribute("id");
+        editProductStatusToRequestLEMZ({
+            status: status
+        }, id)
+            .then(() => {
+                props.loadData();
             })
             .catch(error => {
                 console.log(error);
@@ -54,43 +120,58 @@ const TableView = (props) => {
     const sortRequests = (data) => {
         return searchQuery(data).sort((a, b) => {
 
-            if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Завершено" || b.status === "Завершено") === false) {
+            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
             }
-            else if (a.status === "Завершено") {
-                return 1;
-            }
-            else if (b.status === "Завершено") {
-                return -1
-            }
-
-
-            if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Завершено" || b.status === "Завершено") === false) {
+            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
                 return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
             }
-            else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return 1;
-            }
             return 0;
-        })
+        });
+        // return searchQuery(data).sort((a, b) => {
+
+        //     if ((a[sortOrder.curSort] < b[sortOrder.curSort]) & (a.status === "Завершено" || b.status === "Завершено") === false) {
+        //         return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+        //     }
+        //     else if (a.status === "Завершено") {
+        //         return 1;
+        //     }
+        //     else if (b.status === "Завершено") {
+        //         return -1
+        //     }
+
+
+        //     if (a[sortOrder.curSort] > b[sortOrder.curSort] & (a.status === "Завершено" || b.status === "Завершено") === false) {
+        //         return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+        //     }
+        //     else if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        //         return 1;
+        //     }
+        //     return 0;
+        // });
     }
 
-    const formatDateString = (dateString) => {
-        const newDate = dateString.split("T")[0];
-        return (
-            newDate.split("-")[2] + "." +
-            newDate.split("-")[1] + "." +
-            newDate.split("-")[0]
-        );
-    }
+    useEffect(() => {
+        props.data.length > 0 && setIsLoading(false);
+    }, [props.data])
 
     return (
         <div className="tableview_requests_LEMZ">
+            <div className="tableview_requests_LEMZ__menu">
+                <div className={curPage === 'Открытые'
+                    ? "tableview_requests_LEMZ__item--active tableview_requests_LEMZ__item"
+                    : "tableview_requests_LEMZ__item"}
+                    onClick={() => setCurPage('Открытые')}>Открытые</div>
+                <div className={curPage === 'Завершено'
+                    ? "tableview_requests_LEMZ__item--active tableview_requests_LEMZ__item"
+                    : "tableview_requests_LEMZ__item"}
+                    onClick={() => setCurPage('Завершено')}>Завершено</div>
+            </div>
             <div className="tableview_requests_LEMZ__row tableview_requests_LEMZ__row--header">
-                <div className="tableview_requests_LEMZ__col">
+                {/* <div className="tableview_requests_LEMZ__col">
                     <span>ID</span>
                     <img name="id" className="tableview_requests_LEMZ__img" onClick={changeSortOrder} src={sortIcon} />
-                </div>
+                </div> */}
                 <div className="tableview_requests_LEMZ__col">
                     <span>Дата</span>
                     <img name="date" className="tableview_requests_LEMZ__img" onClick={changeSortOrder} src={sortIcon} />
@@ -101,29 +182,57 @@ const TableView = (props) => {
                 <div className="tableview_requests_LEMZ__col">Кодовое слово</div>
                 <div className="tableview_requests_LEMZ__col">Ответственный</div>
                 <div className="tableview_requests_LEMZ__col">Статус</div>
-                <div className="tableview_requests_LEMZ__col">Дата отгрузки</div>
+                <div className="tableview_requests_LEMZ__col">
+                    <span>Дата отгрузки</span>
+                    <img name="shippingDate" className="tableview_requests_LEMZ__img" onClick={changeSortOrder} src={sortIcon} alt="" />
+                </div>
                 <div className="tableview_requests_LEMZ__col">Комментарий</div>
                 <div className="tableview_requests_LEMZ__col">Действия</div>
             </div>
+            {isLoading && <TableDataLoading
+                minHeight='50px'
+                className="tableview_requests_LEMZ__row tableview_requests_LEMZ__row--even"
+            />}
             {sortRequests(props.data).map((request, request_id) => (
                 <div key={request_id} className={"tableview_requests_LEMZ__row " +
                     (
-                        request.status === "Проблема" && "tableview_requests_LEMZ__row--status_problem" ||
+                        request.status === "Проблема-материалы" && "tableview_requests_LEMZ__row--status_problem" ||
                         request.status === "Материалы" && "tableview_requests_LEMZ__row--status_materials" ||
                         request.status === "Ожидание" && "tableview_requests_LEMZ__row--status_waiting" ||
                         request.status === "В производстве" && "tableview_requests_LEMZ__row--status_in_production" ||
                         request.status === "Готово" && "tableview_requests_LEMZ__row--status_ready" ||
+                        request.status === "Частично готово" && "tableview_requests_LEMZ__row--status_ready" ||
                         request.status === "Отгружено" && "tableview_requests_LEMZ__row--status_shipped" ||
                         request.status === "Приоритет" && "tableview_requests_LEMZ__row--status_priority" ||
                         request.status === "Завершено" && "tableview_requests_LEMZ__row--status_completed"
                     )
-                }>
-                    <div className="tableview_requests_LEMZ__col">{request.id}</div>
+                } style={{ 'min-height': `calc((2rem * (${request.lemzProducts.length + 1})))` }}>
+                    {/* <div className="tableview_requests_LEMZ__col">{request.id}</div> */}
                     <div className="tableview_requests_LEMZ__col">{formatDateString(request.date)}</div>
                     <div className="tableview_requests_LEMZ__col">
-                        {request.lemzProducts.map((item, index) => {
+                        <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / (request.lemzProducts.length)}%)` }}>
+                            <div className="tableview_requests_LEMZ__sub_col">{request.codeWord + ' - ' + request.lemzProducts[0].name}</div>
+                            <div className="tableview_requests_LEMZ__sub_col"></div>
+                            <div className="tableview_requests_LEMZ__sub_col"></div>
+                        </div>
+                        {request.lemzProducts.sort((a, b) => {
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            if (a.name === b.name && a.id < b.id) {
+                                return -1;
+                            }
+                            if (a.name === b.name && a.id > b.id) {
+                                return 1;
+                            }
+                            return 0;
+                        }).map((item, index) => {
                             return (
-                                <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / request.lemzProducts.length}%)` }}>
+                                <div className={"tableview_requests_LEMZ__sub_row tableview_requests_LEMZ__row--status-product--" +
+                                    ((item.status ? item.status : "production"))} style={{ height: `calc(${100 / request.lemzProducts.length}%)` }}>
                                     <div className="tableview_requests_LEMZ__sub_col">{item.name}</div>
                                     <div className="tableview_requests_LEMZ__sub_col">{item.packaging}</div>
                                     <div className="tableview_requests_LEMZ__sub_col">{item.quantity}</div>
@@ -131,19 +240,10 @@ const TableView = (props) => {
                             )
                         })}
                     </div>
-                    {/* Корректный вывод но с ограничением по количеству символов в строке */}
-                    {/* <div className="tableview_requests_LEMZ__col">
-                        <div className="tableview_requests_LEMZ__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_LEMZ__subtext">{request.products}</div></div>
-                        <div className="tableview_requests_LEMZ__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_LEMZ__subtext">{request.products}</div></div>
-                    </div>
-                    <div className="tableview_requests_LEMZ__col">
-                        <div className="tableview_requests_LEMZ__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_LEMZ__subtext">{request.quantity}</div></div>
-                        <div className="tableview_requests_LEMZ__subrow" style={{height: `${100/2}%`}}><div className="tableview_requests_LEMZ__subtext">{request.quantity}</div></div>
-                    </div> */}
                     <div className="tableview_requests_LEMZ__col">{request.codeWord}</div>
                     <div className="tableview_requests_LEMZ__col">{request.responsible}</div>
-                    <div className="tableview_requests_LEMZ__col">
-                        <select
+                    <div className="tableview_requests_LEMZ__col" >
+                        {/* <select
                             id={request.id}
                             className="tableview_requests_LEMZ__status_select"
                             defaultValue={request.status}
@@ -156,15 +256,63 @@ const TableView = (props) => {
                             <option>В производстве</option>
                             <option>Готово</option>
                             <option>Отгружено</option>
+                            <option>Частично готово</option>
                             <option>Завершено</option>
-                        </select>
+                        </select> */}
+                        <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / (request.lemzProducts.length)}%)` }}>
+                            <div className="tableview_requests_LEMZ__sub_col">
+                                <select
+                                    id={request.id}
+                                    className="tableview_requests_LEMZ__status_select"
+                                    value={request.status}
+                                    onChange={handleStatusChange}
+                                >
+                                    {/* <option>Приоритет</option>
+                                    <option>Проблема</option>
+                                    <option>Материалы</option>
+                                    <option>Ожидание</option>
+                                    <option>В производстве</option>
+                                    <option>Готово</option>
+                                    <option>Частично готово</option>
+                                    <option>Отгружено</option>
+                                    <option>Завершено</option> */}
+                                    {requestStatuses.map(status => {
+                                        if (props.userHasAccess(status.access)) {
+                                            return <option>{status.name}</option>
+                                        }
+                                        else {
+                                            return <option style={{ display: `none` }}>{status.name}</option>
+                                        }
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                        {request.lemzProducts.map((item, index) => {
+                            return (
+                                <div className="tableview_requests_LEMZ__sub_row" style={{ height: `calc(${100 / request.lemzProducts.length}%)` }}>
+                                    <div className="tableview_requests_LEMZ__sub_col">
+                                        <select
+                                            id={item.id}
+                                            className="tableview_requests_LEMZ__status_select"
+                                            value={item.status}
+                                            onChange={handleProductStatusChange}
+                                        >
+                                            <option value="production">В работе</option>
+                                            <option value="completed">Завершено</option>
+                                            <option value="defect">Брак</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
                     <div className="tableview_requests_LEMZ__col">{request.shippingDate && formatDateString(request.shippingDate)}</div>
                     <div className="tableview_requests_LEMZ__col">{request.comment}</div>
                     <div className="tableview_requests_LEMZ__actions">
-                        <Link to={"/workshop-lemz/view/" + request.id} className="tableview_requests_LEMZ__action" >Просмотр</Link>
-                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/workshop-lemz/edit/" + request.id} className="tableview_requests_LEMZ__action">Редактировать</Link>}
+                        <Link to={"/lemz/workshop-lemz/view/" + request.id} className="tableview_requests_LEMZ__action" >Просмотр</Link>
+                        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', "ROLE_WORKSHOP"]) && <Link to={"/lemz/workshop-lemz/edit/" + request.id} className="tableview_requests_LEMZ__action">Редактировать</Link>}
                         {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_LEMZ__action" onClick={props.deleteItem}>Удалить</div>}
+                        {props.userHasAccess(['ROLE_ADMIN']) && <div data-id={request.id} className="tableview_requests_LEMZ__action" onClick={() => props.copyRequest(request.id)}>Копировать</div>}
                     </div>
                 </div>
             ))}

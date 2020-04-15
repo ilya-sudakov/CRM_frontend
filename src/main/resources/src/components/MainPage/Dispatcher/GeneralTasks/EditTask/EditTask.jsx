@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './EditTask.scss';
-import { getMainTaskById, editMainTask, getUsers } from '../../../../../utils/utilsAPI.jsx';
-import SelectUser from '../../../SelectUser/SelectUser.jsx';
+import '../../../../../utils/Form/Form.scss';
+import { getMainTaskById, editMainTask } from '../../../../../utils/RequestsAPI/MainTasks.jsx';
+import { getUsers } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 
 const EditTask = (props) => {
     const [taskId, setTaskId] = useState(1);
@@ -16,6 +18,7 @@ const EditTask = (props) => {
         responsible: '',
         dateControl: new Date(),
         status: '',
+        condition: 'Материалы'
         // visibility: 'all'
     })
     const [taskErrors, setTaskErrors] = useState({
@@ -23,16 +26,17 @@ const EditTask = (props) => {
         description: false,
         responsible: false,
         dateControl: false,
-        status: false
+        // status: false
     })
     const [validInputs, setValidInputs] = useState({
         dateCreated: true,
         description: true,
         responsible: true,
         dateControl: true,
-        status: true
+        // status: true
     })
     const [showError, setShowError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -49,10 +53,12 @@ const EditTask = (props) => {
                 });
                 break;
             default:
-                setValidInputs({
-                    ...validInputs,
-                    [fieldName]: (value !== "")
-                });
+                if (validInputs[fieldName] !== undefined) {
+                    setValidInputs({
+                        ...validInputs,
+                        [fieldName]: (value !== "")
+                    })
+                }
                 break;
         }
     }
@@ -60,16 +66,11 @@ const EditTask = (props) => {
     const formIsValid = () => {
         let check = true;
         let newErrors = Object.assign({
-            name: false,
-            lastName: false,
-            middleName: false,
-            yearOfBirth: false,
-            citizenship: false,
-            position: false,
-            workshop: false,
-            // passportScan1: false,
-            // comment: false,
-            relevance: false
+            dateCreated: false,
+            description: false,
+            responsible: false,
+            dateControl: false,
+            // status: false
         });
         for (let item in validInputs) {
             // console.log(item, validInputs[item]);            
@@ -87,6 +88,7 @@ const EditTask = (props) => {
         }
         else {
             // alert("Форма не заполнена");
+            setIsLoading(false);
             setShowError(true);
             return false;
         };
@@ -94,8 +96,14 @@ const EditTask = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
         formIsValid() && editMainTask(taskInputs, taskId)
             .then(() => props.history.push("/dispatcher/general-tasks"))
+            .catch(error => {
+                setIsLoading(false);
+                alert('Ошибка при добавлении записи');
+                console.log(error);
+            })
     }
 
     const handleInputChange = e => {
@@ -134,11 +142,13 @@ const EditTask = (props) => {
             getMainTaskById(id)
                 .then(res => res.json())
                 .then(oldRequest => {
+                    // console.log(oldRequest);
                     setTaskInputs({
                         dateCreated: oldRequest.dateCreated,
                         description: oldRequest.description,
                         responsible: oldRequest.responsible,
                         dateControl: oldRequest.dateControl,
+                        condition: oldRequest.condition,
                         status: oldRequest.status
                     });
                 })
@@ -157,9 +167,9 @@ const EditTask = (props) => {
         }
     }, [])
     return (
-        <div className="edit_general_task">
-            <div className="edit_general_task__title">Редактирование задачи</div>
-            <form className="edit_general_task__form">
+        <div className="main-form">
+            <div className="main-form__title">Редактирование задачи</div>
+            <form className="main-form__form">
                 <ErrorMessage
                     message="Не заполнены все обязательные поля!"
                     showError={showError}
@@ -172,6 +182,7 @@ const EditTask = (props) => {
                     name="dateCreated"
                     selected={Date.parse(taskInputs.dateCreated)}
                     errorsArr={taskErrors}
+                    readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
                     setErrorsArr={setTaskErrors}
                     handleDateChange={(dateCreated) => {
                         validateField("dateCreated", dateCreated);
@@ -191,15 +202,19 @@ const EditTask = (props) => {
                     error={taskErrors.description}
                     name="description"
                     handleInputChange={handleInputChange}
+                    readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
                     errorsArr={taskErrors}
                     setErrorsArr={setTaskErrors}
                     defaultValue={taskInputs.description}
                 />
                 <InputUser
                     inputName="Ответственный"
+
+                    userData={props.userData}
                     required
                     error={taskErrors.responsible}
                     defaultValue={taskInputs.responsible}
+                    readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
                     name="responsible"
                     options={users}
                     handleUserChange={handleResponsibleChange}
@@ -213,6 +228,7 @@ const EditTask = (props) => {
                     error={taskErrors.dateControl}
                     name="dateControl"
                     selected={Date.parse(taskInputs.dateControl)}
+                    readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
                     errorsArr={taskErrors}
                     setErrorsArr={setTaskErrors}
                     handleDateChange={(dateControl) => {
@@ -229,29 +245,32 @@ const EditTask = (props) => {
                 />
                 <InputText
                     inputName="Состояние"
-                    required
-                    error={taskErrors.status}
                     name="status"
-                    errorsArr={taskErrors}
-                    setErrorsArr={setTaskErrors}
                     handleInputChange={handleInputChange}
                     defaultValue={taskInputs.status}
                 />
-                {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="edit_general_task__item">
-                    <div className="edit_general_task__input_name">Видимость*</div>
-                    <div className="edit_general_task__input_field">
+                <div className="main-form__item">
+                    <div className="main-form__input_name">Статус*</div>
+                    <div className="main-form__input_field">
                         <select
-                            name="visibility"
+                            name="condition"
                             onChange={handleInputChange}
-                            defaultValue={taskInputs.visibility}
+                            defaultValue={taskInputs.condition}
                         >
-                            <option value="all">Всем</option>
-                            <option value="adminOnly">Только руководитель</option>
+                            <option>Выполнено</option>
+                            <option>Отложено</option>
+                            <option>Материалы</option>
+                            <option>В процессе</option>
+                            <option>Проблема</option>
                         </select>
                     </div>
-                </div>} */}
-                <div className="edit_general_task__input_hint">* - поля, обязательные для заполнения</div>
-                <input className="edit_general_task__submit" type="submit" onClick={handleSubmit} value="Редактировать задачу" />
+                </div>
+                <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
+                <div className="main-form__buttons">
+                    <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/general-tasks')} value="Вернуться назад" />
+                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать задачу" />
+                    {isLoading && <ImgLoader />}
+                </div>
             </form>
         </div>
     );

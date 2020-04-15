@@ -1,23 +1,12 @@
 @import "../../../variables.scss";
 
 .contracts {
-  width: 100%;
-  padding: 25px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  &__title {
-    margin-bottom: 20px;
-    font-size: 24px;
-  }
-
-  &__table {
-    width: calc(100% - 50px);
+  .main-window__table {
+    width: calc(100% - 25px);
     border: 1px solid #ccc;
     border-collapse: collapse;
 
-    .contracts__action {
+    .main-window__action {
       cursor: pointer;
       text-decoration: underline;
     }
@@ -40,24 +29,24 @@
     }
   }
 
-  .contracts__table--even {
+  .main-window__table--even {
     background-color: #ebebeb;
   }
 
-  .contracts__table--odd {
+  .main-window__table--odd {
     background-color: #f8f8f8;
   }
 
   @media screen and (max-width: 1220px) {
-    &__table {
+    .main-window__table {
       border: 0;
     }
 
-    &__table caption {
+    .main-window__table caption {
       font-size: 1.3em;
     }
 
-    &__table thead {
+    .main-window__table thead {
       border: none;
       clip: rect(0 0 0 0);
       height: 1px;
@@ -68,44 +57,66 @@
       width: 1px;
     }
 
-    &__table tr {
+    .main-window__table tr {
       border-bottom: 3px solid #ddd;
       display: block;
       margin-bottom: 0.625em;
     }
 
-    &__table td {
+    .main-window__table td {
       border-bottom: 1px solid #ddd;
       display: block;
       font-size: 0.8em;
       text-align: right;
     }
 
-    &__table td::before {
+    .main-window__table td::before {
       float: left;
       font-weight: bold;
       text-transform: uppercase;
     }
 
-    &__table td:nth-of-type(1):before { content: "ID"; }
-    &__table td:nth-of-type(2):before { content: "№"; }
-    &__table td:nth-of-type(3):before { content: "Дата"; }
-    &__table td:nth-of-type(4):before { content: "Шаблон"; }
-    &__table td:nth-of-type(5):before { content: "Клиент"; }
-    &__table td:nth-of-type(6):before { content: "Цена"; }
-    &__table td:nth-of-type(7):before { content: "Осталось"; }
-    &__table td:nth-of-type(8):before { content: "Дедлайн"; }
-    &__table td:nth-of-type(9):before { content: "Доставка"; }
-    &__table td:nth-of-type(10):before { content: "Статус"; }
-    &__table td:nth-of-type(11):before { content: "Заявка"; }
+    .main-window__table td:nth-of-type(1):before {
+      content: "ID";
+    }
+    .main-window__table td:nth-of-type(2):before {
+      content: "№";
+    }
+    .main-window__table td:nth-of-type(3):before {
+      content: "Дата";
+    }
+    .main-window__table td:nth-of-type(4):before {
+      content: "Шаблон";
+    }
+    .main-window__table td:nth-of-type(5):before {
+      content: "Клиент";
+    }
+    .main-window__table td:nth-of-type(6):before {
+      content: "Цена";
+    }
+    .main-window__table td:nth-of-type(7):before {
+      content: "Осталось";
+    }
+    .main-window__table td:nth-of-type(8):before {
+      content: "Дедлайн";
+    }
+    .main-window__table td:nth-of-type(9):before {
+      content: "Доставка";
+    }
+    .main-window__table td:nth-of-type(10):before {
+      content: "Статус";
+    }
+    .main-window__table td:nth-of-type(11):before {
+      content: "Заявка";
+    }
     // &__table td:nth-of-type(12):before { content: "Действия"; }
-    
-    &__table td:last-child {
+
+    .main-window__table td:last-child {
       display: flex;
       justify-content: center;
       border-bottom: 0;
 
-      .contracts__action {
+      .main-window__action {
         padding: 5px 10px;
       }
     }
