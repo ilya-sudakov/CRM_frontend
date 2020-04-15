@@ -34,8 +34,9 @@ const WorkManagement = (props) => {
     ]);
 
     useEffect(() => {
+        let abortController = new AbortController();
         setIsLoading(true);
-        getRecordedWorkByDay((new Date()).getMonth() + 1, (new Date()).getDate() - 1)
+        getRecordedWorkByDay((new Date()).getMonth() + 1, (new Date()).getDate() - 1, abortController.signal)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);

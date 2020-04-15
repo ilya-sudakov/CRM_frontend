@@ -59,13 +59,14 @@ const WorkManagementPage = (props) => {
         })
     }
 
-    const loadWorks = () => {
+    const loadWorks = (signal) => {
         setIsLoading(true);
         getRecordedWorkByDateRange(
-            (dates.start.getDate()),
-            (dates.start.getMonth() + 1),
-            (dates.end.getDate()),
-            (dates.end.getMonth() + 1)
+            dates.start.getDate(),
+            dates.start.getMonth() + 1,
+            dates.end.getDate(),
+            dates.end.getMonth() + 1,
+            signal
         )
             .then(res => res.json())
             .then(res => {
@@ -81,7 +82,8 @@ const WorkManagementPage = (props) => {
     }
 
     useEffect(() => {
-        loadWorks();
+        let abortController = new AbortController();
+        loadWorks(abortController.signal);
         console.log(workItems);
     }, [])
 
