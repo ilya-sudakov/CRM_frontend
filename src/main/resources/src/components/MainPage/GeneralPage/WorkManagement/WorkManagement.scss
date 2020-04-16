@@ -73,61 +73,11 @@
     width: 20px;
   }
 
-  .work-management__search-bar {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    width: 100%;
-    margin-bottom: 10px;
-    justify-content: space-between;
-    .work-management__input {
-      border: 1px solid #bbbbbb;
-      flex: 0 1 calc(70% - 0px);
-      padding: 5px 10px;
-      padding-left: 35px;
-      border-radius: 5px;
-      // border-radius: 0px;
-      // border-top-left-radius: 5px;
-      // border-bottom-left-radius: 5px;
-      z-index: 0;
-      min-width: 0;
+  .searchbar {
+    padding-top: 0;
 
-      &:focus {
-        border: 1px solid $button__background--inverted;
-      }
-
-      &--error {
-        border: 1px solid #f73434;
-      }
-    }
-
-    .work-management__search-button {
-      border: 0;
-      flex: 0 1 20%;
-      background-color: $button__background--inverted;
-      color: $secondary-text-color;
-      border-radius: 5px;
-      // border-top-right-radius: 5px;
-      // border-bottom-right-radius: 5px;
-      outline: none;
-      cursor: pointer;
-      padding: 5px 10px;
-      font-size: 80%;
-      transition: 0.2s ease-in-out;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      &:hover {
-        background-color: lighten($button__background--inverted, 5%);
-      }
-    }
-    .work-management__search-button .work-management__img {
-      filter: brightness(1);
-      // margin-right: 5px;
-      margin-right: 5px;
-      position: absolute;
-      left: 10px;
+    .searchbar__title {
+      margin-bottom: 0;
     }
   }
 

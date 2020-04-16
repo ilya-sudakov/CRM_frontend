@@ -6,6 +6,7 @@ import { getRecordedWorks, getRecordedWorkByMonth, getRecordedWorkByDay } from '
 import { formatDateString } from '../../../../utils/functions.jsx';
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
 
 const WorkManagement = (props) => {
     const [recordedWork, setRecordedWork] = useState([]);
@@ -76,24 +77,11 @@ const WorkManagement = (props) => {
                 }}>Открыть</div>
             </div>
             <div className="work-management__content">
-                <div className="work-management__search-bar">
-                    <input
-                        type="text"
-                        className="work-management__input"
-                        placeholder="Введите данные работника для поиска..."
-                        onKeyPress={(event) => {
-                            // event.preventDefault();
-                            event.key === 'Enter' && setSearchQuery(event.target.value);
-                        }}
-                    />
-                    <button className="work-management__search-button" onClick={(event) => {
-                        event.preventDefault();
-                        setSearchQuery(document.getElementsByClassName('work-management__input')[0].value);
-                    }}>
-                        <img className="work-management__img" src={searchImg} alt="" />
-                        <span>Поиск</span>
-                    </button>
-                </div>
+                <SearchBar
+                    title=""
+                    placeholder="Введите данные работника для поиска..."
+                    setSearchQuery={setSearchQuery}
+                />
                 {
                     (recordedWork.length === 0)
                         ? (isLoading
