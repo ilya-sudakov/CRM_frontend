@@ -7,7 +7,7 @@ import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'id',
+        curSort: 'name',
         date: 'desc'
     })
 
