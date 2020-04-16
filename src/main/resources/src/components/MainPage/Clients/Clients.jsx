@@ -103,6 +103,7 @@ const Clients = (props) => {
 
     const loadData = (category, type, signal) => {
         // console.log(category, type);
+        setSearchQuery('');
         setIsLoading(true);
         getClientsByCategoryAndType({
             categoryName: category,
@@ -162,8 +163,10 @@ const Clients = (props) => {
         };
         setCurCategory(curCategoryTemp);
         setCurClientType(curClientTypeTemp);
-        loadClientsTotalByType(curCategoryTemp);
-        loadData(curCategoryTemp, curClientTypeTemp, abortController.signal);
+        if (searchQuery === '') {
+            loadClientsTotalByType(curCategoryTemp);
+            loadData(curCategoryTemp, curClientTypeTemp, abortController.signal);
+        }
         return function cancel() {
             abortController.abort();
         };
@@ -196,9 +199,10 @@ const Clients = (props) => {
                     title="Поиск по клиентам"
                     placeholder="Введите запрос для поиска..."
                     setSearchQuery={setSearchQuery}
+                    searchQuery={searchQuery}
                     onButtonClick={(query) => {
                         setIsLoading(true);
-                        console.log(query);
+                        // console.log(query);
                         if (query === '') {
                             loadData(curCategory, curClientType);
                         }
@@ -283,6 +287,28 @@ const Clients = (props) => {
                         //        item.comment.toLowerCase().includes(searchQuery.toLowerCase())
                         //    )
                         //})
+                        .sort((a, b) => {
+                            if (searchQuery !== '') {
+                                if (sortOrder.curSort === 'nextDateContact') {
+                                    if (new Date(a[sortOrder.curSort]) < new Date(b[sortOrder.curSort])) {
+                                        return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                    }
+                                    if (new Date(a[sortOrder.curSort]) > new Date(b[sortOrder.curSort])) {
+                                        return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                    }
+                                    return 0;
+                                }
+                                else {
+                                    if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+                                        return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                    }
+                                    if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+                                        return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                    }
+                                    return 0;
+                                }
+                            }
+                        })
                         .map((item, index) => {
                             return <div className="main-window__list-item">
                                 <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
@@ -422,7 +448,7 @@ const Clients = (props) => {
                         Math.ceil(itemsCount / itemsPerPage) - 2)
                         && Math.ceil(itemsCount / itemsPerPage) > 5
                         && pagination.find(item => item === Math.ceil(itemsCount / itemsPerPage)) === undefined
-                    ) && <React.Fragment>
+                    ) && searchQuery === '' && <React.Fragment>
                             <span>...</span>
                             {/* {console.log(pagination.find(item => item === Math.ceil(itemsCount / itemsPerPage)))} */}
                             <div className="main-window__page-number" onClick={() => {

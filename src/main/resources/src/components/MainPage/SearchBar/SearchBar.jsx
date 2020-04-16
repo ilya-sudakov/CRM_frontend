@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import searchImg from '../../../../../../../assets/searchbar/search.svg';
 import './SearchBar.scss';
 
@@ -24,6 +24,10 @@ const SearchBar = (props) => {
             props.onButtonClick && props.onButtonClick(emptyField);
         }
     }
+
+    useEffect(() => {
+        console.log(props.searchQuery);
+    }, [props.searchQuery])
 
     return (
         <div className="searchbar">
