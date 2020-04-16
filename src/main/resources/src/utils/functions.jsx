@@ -11,7 +11,8 @@ export const formatDateString = (dateString) => {
 
 export const formatDateStringNoYear = (dateString) => {
     // console.log(dateString);
-    const testDate = new Date(Date.parse(dateString));
+    const temp = new Date(dateString);
+    const testDate = new Date(temp.getFullYear() + '/' + (temp.getMonth() + 1) + '/' + temp.getDate());
     return (
         ((testDate.getDate() < 10) ? ('0' + testDate.getDate()) : testDate.getDate())
         + '.' + (((testDate.getMonth() + 1) < 10) ? ('0' + (testDate.getMonth() + 1)) : testDate.getMonth() + 1)

@@ -88,7 +88,7 @@ const SelectWork = (props) => {
             if (Number.parseInt(id) === curIndex) {
                 return sum;
             } else {
-                return sum + Number.parseFloat(cur.hours);
+                return Math.floor((sum + Number.parseFloat(cur.hours)) * 10) / 10;
             }
         }, 0);
         if (name === 'hours') {
@@ -104,7 +104,7 @@ const SelectWork = (props) => {
                 }
             }
             if ((curSum + value) > 12) {
-                value = 12 - curSum;
+                value = Math.floor((12 - curSum) * 10) / 10;
             }
         }
         let temp = selected;

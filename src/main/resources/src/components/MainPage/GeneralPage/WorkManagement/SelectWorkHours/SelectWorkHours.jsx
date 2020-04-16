@@ -22,7 +22,7 @@ const SelectWorkHours = (props) => {
             <div className="select-work-hours__timeline">
                 <div className="select-work-hours__wrapper">
                     <div className="select-work-hours__info">{formatDateString(props.date)}</div>
-                    <div className="select-work-hours__info select-work-hours__info--inverted">Всего часов: {props.workArray.reduce((sum, cur) => sum + Number.parseFloat(cur.hours), 0)}</div>
+                    <div className="select-work-hours__info select-work-hours__info--inverted">Всего часов: {Math.floor(props.workArray.reduce((sum, cur) => sum + Number.parseFloat(cur.hours), 0) * 10) / 10}</div>
                 </div>
                 <div className="select-work-hours__line"></div>
             </div>
@@ -77,7 +77,7 @@ const SelectWorkHours = (props) => {
                                     }, 0);
                                     // console.log(value, curSum, curSum + value);
                                     if ((curSum + value) > 12) {
-                                        value = Math.ceil((12 - curSum) * 100) / 100;
+                                        value = Math.floor((12 - curSum) * 10) / 10;
                                     }
                                     // console.log(value);
                                     let temp = props.workArray;

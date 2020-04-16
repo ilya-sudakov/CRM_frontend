@@ -91,7 +91,7 @@ const AdminWorkspace = (props) => {
                         let oldData = workshop.data;
                         oldData.push(res.reduce((sum, cur) => {
                             if (workshop.label === cur.employee.workshop && new Date(day).getDate() === new Date(cur.year, cur.month + 1, cur.day).getDate()) {
-                                return sum + cur.hours;
+                                return Math.ceil((sum + cur.hours) * 10) / 10;
                             }
                             else return sum;
                         }, 0))
