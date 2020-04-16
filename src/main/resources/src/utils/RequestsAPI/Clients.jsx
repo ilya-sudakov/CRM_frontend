@@ -7,6 +7,14 @@ export function getClients() {
     });
 }
 
+export function searchClients(query) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/client/search/",
+        method: "POST",
+        body: JSON.stringify(query)
+    });
+}
+
 export function getClientsByCategory(category) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/client/category/",
@@ -33,6 +41,15 @@ export function getClientsByCategoryAndType(category_type, curPage, itemsPerPage
         body: JSON.stringify(category_type),
         signal: signal
     })
+}
+
+export function searchClientsByCategoryAndType(query, signal) {
+    return request({
+        url: process.env.API_BASE_URL + "/api/v1/client/category_type/search/",
+        method: "POST",
+        body: JSON.stringify(query),
+        signal: signal
+    });
 }
 
 export function getClientById(id) {

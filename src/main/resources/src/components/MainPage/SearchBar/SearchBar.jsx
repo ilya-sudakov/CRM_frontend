@@ -7,11 +7,21 @@ const SearchBar = (props) => {
 
     const handleSearch = () => {
         props.setSearchQuery(query);
+        props.onButtonClick && props.onButtonClick(query);
     }
 
     const handleEnterPress = (e) => {
         if (e.key === 'Enter') {
             handleSearch();
+        }
+    }
+
+    const clearQuery = () => {
+        const emptyField = '';
+        if (query !== '') {
+            setQuery(emptyField);
+            props.setSearchQuery(emptyField);
+            props.onButtonClick && props.onButtonClick(emptyField);
         }
     }
 
@@ -24,7 +34,12 @@ const SearchBar = (props) => {
                         placeholder={props.placeholder}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={handleEnterPress}
+                        value={query}
                     ></input>
+                    <div className={query !== '' ? "searchbar__exit" : "searchbar__exit searchbar__exit--hidden"} onClick={clearQuery}>
+                        <div className="searchbar__bar" onClick={clearQuery}></div>
+                        <div className="searchbar__bar" onClick={clearQuery}></div>
+                    </div>
                 </div>
                 <div className="searchbar__searchbutton" onClick={handleSearch}>
                     <img className="searchbar__img" src={searchImg} />

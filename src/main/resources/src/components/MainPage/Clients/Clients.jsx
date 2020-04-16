@@ -7,7 +7,14 @@ import editSVG from '../../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg';
 import phoneSVG from '../../../../../../../assets/tableview/phone.svg';
 import calendarSVG from '../../../../../../../assets/tableview/calendar.svg';
-import { getClients, deleteClient, getClientsByCategory, getClientsByCategoryAndType, editNextContactDateClient } from '../../../utils/RequestsAPI/Clients.jsx';
+import {
+    getClients,
+    deleteClient,
+    getClientsByCategory,
+    getClientsByCategoryAndType,
+    editNextContactDateClient,
+    searchClients
+} from '../../../utils/RequestsAPI/Clients.jsx';
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
@@ -189,6 +196,30 @@ const Clients = (props) => {
                     title="Поиск по клиентам"
                     placeholder="Введите запрос для поиска..."
                     setSearchQuery={setSearchQuery}
+                    onButtonClick={(query) => {
+                        setIsLoading(true);
+                        console.log(query);
+                        if (query === '') {
+                            loadData(curCategory, curClientType);
+                        }
+                        else {
+                            searchClients({
+                                name: query
+                            })
+                                .then(res => res.json())
+                                .then(res => {
+                                    // console.log(res);
+                                    setClients(res);
+                                    setItemsCount(res.length);
+                                    setPagination([1]);
+                                    setIsLoading(false);
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                    setIsLoading(false);
+                                })
+                        }
+                    }}
                 />
                 <FormWindow
                     title={curForm === 'nextContactDate' ? "Дата следующего контакта" : "Запись действия"}
@@ -245,13 +276,13 @@ const Clients = (props) => {
                         minHeight="50px"
                     />} */}
                     {clients
-                        .filter(item => {
-                            return (
-                                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                item.site.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                item.comment.toLowerCase().includes(searchQuery.toLowerCase())
-                            )
-                        })
+                        //.filter(item => {
+                        //    return (
+                        //        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        //        item.site.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        //        item.comment.toLowerCase().includes(searchQuery.toLowerCase())
+                        //    )
+                        //})
                         .map((item, index) => {
                             return <div className="main-window__list-item">
                                 <span><div className="main-window__mobile-text">Название: </div>{item.name}</span>
