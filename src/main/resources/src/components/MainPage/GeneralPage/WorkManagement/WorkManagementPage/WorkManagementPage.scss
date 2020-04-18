@@ -245,6 +245,11 @@
     .main-window__list-item:not(.main-window__list-item--header) {
       position: relative;
       font-size: 80%;
+      &:hover {
+        span {
+          color: $secondary-text-color;
+        }
+      }
       &::before {
         content: "";
         width: 35px;
@@ -296,14 +301,9 @@
       padding: 8px 5px !important;
       // background-color: transparent !important;
 
-      &:hover {
-        span {
-          color: $secondary-text-color;
-        }
-      }
-
       span {
         color: $primary-text-color;
+        transition: 200ms ease-in-out;
 
         &:nth-child(1) {
           flex: 0 1 100%;
