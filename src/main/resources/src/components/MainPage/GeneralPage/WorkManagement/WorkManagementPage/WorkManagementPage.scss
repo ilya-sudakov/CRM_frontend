@@ -132,7 +132,7 @@
       // border-radius: 999px;
       //line
       // top: 22px;
-      bottom: 24.5px;
+      bottom: 20px;
       left: 5px;
     }
 
@@ -242,7 +242,7 @@
         border-radius: 0;
         width: 50px;
         height: 2px;
-        top: 20px;
+        top: 15px;
       }
       //cover excess line if rounded corners
       &:last-child {
@@ -259,7 +259,7 @@
           // left: -19.5px;
           // border-radius: 999px;
           //line
-          top: 22px;
+          top: 17px;
           left: -55px;
         }
       }
@@ -272,6 +272,7 @@
       min-width: 250px;
       max-width: 500px;
       margin-right: auto;
+      padding: 8px 5px !important;
       // background-color: transparent !important;
 
       span {
