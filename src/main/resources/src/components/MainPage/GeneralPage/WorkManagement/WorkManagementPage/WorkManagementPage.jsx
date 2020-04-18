@@ -277,19 +277,20 @@ const WorkManagementPage = (props) => {
                                 })
                                     .sort((a, b) => {
                                         if (sortOrder.curSort === 'lastName') {
-                                            if (a.employee[sortOrder.curSort] < b.employee[sortOrder.curSort]) {
+                                            {/* console.log(employees[a[0]][sortOrder.curSort]); */}
+                                            if (employees[a[0]][sortOrder.curSort] < employees[b[0]][sortOrder.curSort]) {
                                                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
                                             }
-                                            if (a.employee[sortOrder.curSort] > b.employee[sortOrder.curSort]) {
+                                            if (employees[a[0]][sortOrder.curSort] > employees[b[0]][sortOrder.curSort]) {
                                                 return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
                                             }
                                             return 0;
                                         } else {
                                             if (sortOrder.curSort === 'date') {
-                                                if (new Date(a.year, (a.month - 1), a.day) < new Date(b.year, (b.month - 1), b.day)) {
+                                                if (new Date(Object.entries(a[1])[0][0]) < new Date(Object.entries(b[1])[0][0])) {
                                                     return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
                                                 }
-                                                if (new Date(b.year, (b.month - 1), b.day) > new Date(b.year, (b.month - 1), b.day)) {
+                                                if (new Date(Object.entries(a[1])[0][0]) > new Date(Object.entries(b[1])[0][0])) {
                                                     return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
                                                 }
                                                 return 0;
