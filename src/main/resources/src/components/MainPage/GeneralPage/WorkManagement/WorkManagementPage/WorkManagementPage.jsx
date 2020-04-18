@@ -400,12 +400,25 @@ const WorkManagementPage = (props) => {
                                                                     </div>
                                                                 </span>
                                                                 {
-                                                                    work.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
+                                                                    work.workControlProduct.length > 0
+                                                                    && <div className="main-window__list-item main-window__list-item--header">
                                                                         <span>Название</span>
                                                                         <span>Кол-во</span>
                                                                         {/* <span>Часы</span> */}
                                                                     </div>
                                                                 }
+                                                                {work.workControlProduct.length === 0 && work.workList.typeOfWork === 'Продукция' && <React.Fragment>
+                                                                    <div className="main-window__list-item main-window__list-item--header">
+                                                                    </div>
+                                                                    <div className="main-window__list-item">
+                                                                        <span>
+                                                                            <div className="main-window__reminder">
+                                                                                <div>!</div>
+                                                                                <div>Нет продукции</div>
+                                                                            </div>
+                                                                        </span>
+                                                                    </div>
+                                                                </React.Fragment>}
                                                                 {
                                                                     work.workControlProduct.map(item => {
                                                                         return <div className="main-window__list-item">

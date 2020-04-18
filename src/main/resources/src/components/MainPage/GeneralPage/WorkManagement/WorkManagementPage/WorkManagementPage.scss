@@ -116,10 +116,27 @@
     // box-shadow: none !important;
     // border: 1px solid black;
     position: relative;
-    padding-bottom: 35px !important;
+    padding-bottom: 15px !important;
 
     &--hidden {
       padding-bottom: 0px !important;
+    }
+
+    .main-window__reminder {
+      // margin: 0 auto;
+      // max-width: fit-content;
+      justify-content: center;
+      padding: 1px 10px;
+      div {
+        // width: 100%;
+        &:nth-child(1) {
+          font-size: 14px;
+          margin-right: 5px;
+        }
+        &:nth-child(2) {
+          width: fit-content;
+        }
+      }
     }
 
     &::after {
@@ -136,7 +153,7 @@
       // border-radius: 999px;
       //line
       // top: 22px;
-      bottom: 25px;
+      bottom: 5px;
       left: 5px;
     }
 
@@ -256,7 +273,7 @@
           // background-color: $button__background--inverted;
           background-color: #dddddd;
           // background-color: red;
-          height: 10px;
+          height: 20.5px;
           font-size: 90%;
           position: absolute;
           // top: 16px;
@@ -279,8 +296,15 @@
       padding: 8px 5px !important;
       // background-color: transparent !important;
 
+      &:hover {
+        span {
+          color: $secondary-text-color;
+        }
+      }
+
       span {
         color: $primary-text-color;
+
         &:nth-child(1) {
           flex: 0 1 100%;
         }
