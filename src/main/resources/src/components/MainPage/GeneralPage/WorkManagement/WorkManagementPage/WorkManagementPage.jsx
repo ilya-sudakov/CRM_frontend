@@ -259,7 +259,7 @@ const WorkManagementPage = (props) => {
                                             employees[item[0]].name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                             employees[item[0]].middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                             employees[item[0]].workshop.toLowerCase().includes(searchQuery.toLowerCase())
-                                            //formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery)
+                                            //formatDateString(new Date(temp)).includes(searchQuery)
                                         )
                                     ) {
                                         let check = false;
@@ -308,7 +308,7 @@ const WorkManagementPage = (props) => {
                                     .map((workItem, workItemIndex) => {
                                         return Object.entries(workItem[1]).map(tempItem => {
                                             return <React.Fragment>
-                                                {console.log(employeesMap)}
+                                                {/* {console.log(employeesMap)} */}
                                                 <div className="main-window__list-item" onClick={() => {
                                                     let temp = employeesMap;
                                                     let newDates = [
@@ -329,7 +329,7 @@ const WorkManagementPage = (props) => {
                                                             [new Date(tempItem[0])]: newDates
                                                         }
                                                     }
-                                                    console.log(temp);
+                                                    // console.log(temp);
                                                     setEmployeesMap(temp);
                                                 }}>
                                                     <span><div className="main-window__mobile-text">Должность: </div>{employees[workItem[0]].position}</span>
@@ -375,13 +375,16 @@ const WorkManagementPage = (props) => {
                                                 </div>
                                                 <div className={tempItem[1][0].openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
                                                     <div className="main-window__line"></div>
-                                                    {/* {Object.entries(workItem[1]).map(workByDate => { */}
                                                     {tempItem[1].map((work, workIndex) => {
                                                         if (workIndex !== 0) {
                                                             return <React.Fragment>
                                                                 <span data-hours={(Math.floor(work.hours * 100) / 100) + " часов"}>
                                                                     {/* <div className="main-window__mobile-text">Тип работы: </div> */}
-                                                                    <div>{work.workList.work}</div><div className="main-window__mobile-text">{(Math.floor(work.hours * 100) / 100)} часов</div></span>
+                                                                    <div>{work.workList.work}</div><div className="main-window__mobile-text">{(Math.floor(work.hours * 100) / 100)} часов</div>
+                                                                    <Link to={"work-managment/record-time/edit/" + work.id} className="main-window__action" title="Редактировать">
+                                                                        <img className="main-window__img" src={editSVG} />
+                                                                    </Link>
+                                                                </span>
                                                                 {
                                                                     work.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
                                                                         <span>Название</span>
@@ -401,7 +404,6 @@ const WorkManagementPage = (props) => {
                                                             </React.Fragment>
                                                         }
                                                     })}
-                                                    {/* })} */}
                                                 </div>
                                             </React.Fragment>
                                         })

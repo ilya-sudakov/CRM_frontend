@@ -136,6 +136,14 @@
       left: 5px;
     }
 
+    &:hover {
+      .main-window__action {
+        .main-window__img {
+          filter: brightness(1) !important;
+        }
+      }
+    }
+
     > span:not(:first-of-type) {
       margin-top: 25px;
     }
@@ -151,6 +159,16 @@
       color: #222222;
       position: relative;
       text-decoration: underline;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .main-window__action {
+        margin-left: 5px;
+        padding: 0px 2px !important;
+        width: fit-content;
+      }
+
       &::before {
         content: "";
         width: 20px;
