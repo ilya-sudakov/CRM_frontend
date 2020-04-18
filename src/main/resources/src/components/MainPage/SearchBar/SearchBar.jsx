@@ -26,7 +26,7 @@ const SearchBar = (props) => {
     }
 
     useEffect(() => {
-        console.log(props.searchQuery);
+        // console.log(props.searchQuery);
     }, [props.searchQuery])
 
     return (

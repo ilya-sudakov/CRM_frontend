@@ -118,7 +118,7 @@ const Clients = (props) => {
                 console.log(res);
                 setClients(res.content);
                 // console.log(Math.ceil(res.totalElements / itemsPerPage));
-                if (curPage < 5) {
+                if (curPage < 5 && searchQuery === '') {
                     // setItemsCount(res.length);
                     setItemsCount(res.totalElements);
                     let temp = [];
@@ -400,7 +400,7 @@ const Clients = (props) => {
                             }
                         }
                     }}>Пред</div>
-                    {curPage >= 5 && <React.Fragment>
+                    {curPage >= 5 && searchQuery === '' && <React.Fragment>
                         <div className="main-window__page-number" onClick={() => {
                             const item = 1;
                             setCurPage(item);

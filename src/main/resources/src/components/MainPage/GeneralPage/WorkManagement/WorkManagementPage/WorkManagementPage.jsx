@@ -16,6 +16,8 @@ import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoadi
 const WorkManagementPage = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [workItems, setWorkItems] = useState([]);
+    const [employeesMap, setEmployeesMap] = useState({});
+    const [employees, setEmployees] = useState({});
     const [workshops, setWorkshops] = useState([
         {
             name: 'ЦехЛЭМЗ',
@@ -77,8 +79,64 @@ const WorkManagementPage = (props) => {
                         openWorks: false
                     }
                 })]);
+                combineWorksForSamePeople([...res.map(item => {
+                    return {
+                        ...item,
+                        openWorks: false
+                    }
+                })]);
+                getAllEmployees([...res.map(item => {
+                    return {
+                        ...item,
+                        openWorks: false
+                    }
+                })]);
                 setIsLoading(false);
             })
+    };
+
+    const getAllEmployees = (works) => {
+        let newEmployees = {};
+        works.map(work => {
+            if (newEmployees[work.employee.id] === undefined) {
+                return newEmployees = Object.assign({
+                    ...newEmployees,
+                    [work.employee.id]: work.employee
+                });
+            }
+        });
+        // console.log(newEmployees);
+        setEmployees(newEmployees);
+    }
+
+    const combineWorksForSamePeople = (works) => {
+        // let newEmployeesWorkMap = [];
+        let newEmployeesMap = {};
+        Promise.all(works.map(work => {
+            if (newEmployeesMap[work.employee.id] !== undefined && newEmployeesMap[work.employee.id][new Date(work.year, work.month - 1, work.day)] !== undefined) {
+                return newEmployeesMap = Object.assign({
+                    ...newEmployeesMap,
+                    [work.employee.id]: {
+                        ...newEmployeesMap[work.employee.id],
+                        [new Date(work.year, work.month - 1, work.day)]: [...newEmployeesMap[work.employee.id][new Date(work.year, work.month - 1, work.day)], work]
+                    }
+                });
+            }
+            else {
+                return newEmployeesMap = Object.assign({
+                    ...newEmployeesMap,
+                    [work.employee.id]: {
+                        ...newEmployeesMap[work.employee.id],
+                        [new Date(work.year, work.month - 1, work.day)]: [{ openWorks: false }, work]
+                    }
+                });
+            }
+        }))
+            .then(() => {
+                // console.log(newEmployeesMap);
+                setEmployeesMap(newEmployeesMap);
+            })
+
     }
 
     useEffect(() => {
@@ -88,7 +146,7 @@ const WorkManagementPage = (props) => {
         return function cancel() {
             abortController.abort();
         };
-    }, [])
+    }, []);
 
     return (
         <div className="work-management-page">
@@ -177,6 +235,7 @@ const WorkManagementPage = (props) => {
                     {workshops.map(workshop => {
                         if (
                             workshop.active
+                            //&& employees.entries().find(item => item.workshop === workshop.name) !== undefined
                             && workItems.find(item => item.employee.workshop === workshop.name) !== undefined
                             && props.userHasAccess(workshop.visibility)
                         ) {
@@ -192,19 +251,21 @@ const WorkManagementPage = (props) => {
                                     <span>Дата</span>
                                     <div className="main-window__actions">Действие</div>
                                 </div>
-                                {workItems.filter(item => {
+                                {Object.entries(employeesMap).filter(item => {
+                                    {/* console.log(item[1]) */ }
                                     if (
-                                        workshop.name === item.employee.workshop &&
-                                        (item.employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                            item.employee.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                            item.employee.middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                            item.employee.workshop.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                                            formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery))
+                                        workshop.name === employees[item[0]].workshop &&
+                                        (employees[item[0]].lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            employees[item[0]].name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            employees[item[0]].middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                            employees[item[0]].workshop.toLowerCase().includes(searchQuery.toLowerCase())
+                                            //formatDateString(new Date(item.year, (item.month - 1), item.day)).includes(searchQuery)
+                                        )
                                     ) {
                                         let check = false;
                                         workshops.map(workshop => {
                                             if (
-                                                workshop.active && (workshop.name === item.employee.workshop) &&
+                                                workshop.active && (workshop.name === employees[item[0]].workshop) &&
                                                 props.userHasAccess(workshop.visibility)
                                             ) {
                                                 check = true;
@@ -213,102 +274,121 @@ const WorkManagementPage = (props) => {
                                         })
                                         return check;
                                     }
-                                }
-                                ).sort((a, b) => {
-                                    if (sortOrder.curSort === 'lastName') {
-                                        if (a.employee[sortOrder.curSort] < b.employee[sortOrder.curSort]) {
-                                            return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
-                                        }
-                                        if (a.employee[sortOrder.curSort] > b.employee[sortOrder.curSort]) {
-                                            return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
-                                        }
-                                        return 0;
-                                    } else {
-                                        if (sortOrder.curSort === 'date') {
-                                            if (new Date(a.year, (a.month - 1), a.day) < new Date(b.year, (b.month - 1), b.day)) {
+                                })
+                                    .sort((a, b) => {
+                                        if (sortOrder.curSort === 'lastName') {
+                                            if (a.employee[sortOrder.curSort] < b.employee[sortOrder.curSort]) {
                                                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
                                             }
-                                            if (new Date(b.year, (b.month - 1), b.day) > new Date(b.year, (b.month - 1), b.day)) {
+                                            if (a.employee[sortOrder.curSort] > b.employee[sortOrder.curSort]) {
                                                 return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
                                             }
                                             return 0;
-                                        }
-                                        else {
-                                            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                                                return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                        } else {
+                                            if (sortOrder.curSort === 'date') {
+                                                if (new Date(a.year, (a.month - 1), a.day) < new Date(b.year, (b.month - 1), b.day)) {
+                                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                                }
+                                                if (new Date(b.year, (b.month - 1), b.day) > new Date(b.year, (b.month - 1), b.day)) {
+                                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                                }
+                                                return 0;
                                             }
-                                            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                                                return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                            else {
+                                                if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+                                                    return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
+                                                }
+                                                if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+                                                    return (sortOrder[sortOrder.curSort] === "desc" ? -1 : 1);
+                                                }
+                                                return 0;
                                             }
-                                            return 0;
                                         }
-                                    }
-                                }).map((workItem, workItemIndex) =>
-                                    <React.Fragment>
-                                        <div className="main-window__list-item" onClick={() => {
-                                            let temp = workItems;
-                                            let indexTemp = temp.indexOf(temp.find(item => item.id === workItem.id));
-                                            temp.splice(indexTemp, 1, {
-                                                ...workItem,
-                                                openWorks: !workItem.openWorks
-                                            });
-                                            setWorkItems([...temp]);
-                                        }}>
-                                            <span><div className="main-window__mobile-text">Должность: </div>{workItem.employee.position}</span>
-                                            <span>
-                                                <div className="main-window__mobile-text">ФИО: </div>
-                                                <div className="main-window__text">{workItem.employee.lastName + ' ' + workItem.employee.name + ' ' + workItem.employee.middleName}</div>
-                                            </span>
-                                            <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span>
-                                            {/* <span><div className="main-window__mobile-text">Подразделение: </div>{workItem.employee.workshop}</span> */}
-                                            <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(workItem.year, (workItem.month - 1), workItem.day))}</span>
-                                            <div className="main-window__actions">
-                                                <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
-                                                    <img className="main-window__img" src={editSVG} />
-                                                </Link>
-                                                <div className="main-window__action" onClick={() => {
-                                                    const deletedProducts = workItem.workControlProduct.map(product => {
-                                                        return deleteProductFromRecordedWork(workItem.id, product.product.id)
-                                                    })
-                                                    Promise.all(deletedProducts)
-                                                        .then(() => {
-                                                            deleteRecordedWork(workItem.id)
+                                    })
+                                    .map((workItem, workItemIndex) => {
+                                        return Object.entries(workItem[1]).map(tempItem => {
+                                            return <React.Fragment>
+                                                {console.log(employeesMap)}
+                                                <div className="main-window__list-item" onClick={() => {
+                                                    let temp = employeesMap;
+                                                    // temp[tempItem[0]]
+                                                }}>
+                                                    <span><div className="main-window__mobile-text">Должность: </div>{employees[workItem[0]].position}</span>
+                                                    <span>
+                                                        <div className="main-window__mobile-text">ФИО: </div>
+                                                        <div className="main-window__text">{employees[workItem[0]].lastName + ' ' + employees[workItem[0]].name + ' ' + employees[workItem[0]].middleName}</div>
+                                                    </span>
+                                                    <span><div className="main-window__mobile-text">Часы: </div>{Math.floor(tempItem[1].reduce(((sum, cur) => {
+                                                        {/* console.log(cur.openWorks) */ }
+                                                        if (cur.hours !== undefined) {
+                                                            return sum + cur.hours;
+                                                        }
+                                                        else {
+                                                            return sum;
+                                                        }
+                                                    }), 0) * 100) / 100}</span>
+                                                    {/* <span><div className="main-window__mobile-text">Подразделение: </div>{employees[workItem[0]].workshop}</span> */}
+                                                    <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(tempItem[0]))}</span>
+                                                    <div className="main-window__actions">
+                                                        <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
+                                                            <img className="main-window__img" src={editSVG} />
+                                                        </Link>
+                                                        <div className="main-window__action" onClick={() => {
+                                                            const deletedProducts = workItem.workControlProduct.map(product => {
+                                                                return deleteProductFromRecordedWork(workItem.id, product.product.id)
+                                                            })
+                                                            Promise.all(deletedProducts)
                                                                 .then(() => {
-                                                                    loadWorks()
+                                                                    deleteRecordedWork(workItem.id)
+                                                                        .then(() => {
+                                                                            loadWorks()
+                                                                        })
                                                                 })
-                                                        })
-                                                }} title="Удалить">
-                                                    <img className="main-window__img" src={deleteSVG} />
+                                                        }} title="Удалить">
+                                                            <img className="main-window__img" src={deleteSVG} />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className={workItem.openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
-                                            <div className="main-window__line"></div>
-                                            <span data-hours={workItem.hours + " часов"}>
-                                                {/* <div className="main-window__mobile-text">Тип работы: </div> */}
-                                                <div>{workItem.workList.work}</div><div className="main-window__mobile-text">{workItem.hours} часов</div></span>
-                                            {workItem.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
-                                                <span>Название</span>
-                                                <span>Кол-во</span>
-                                                {/* <span>Часы</span> */}
-                                            </div>}
-                                            {workItem.workControlProduct.map(item => {
-                                                return <div className="main-window__list-item">
-                                                    <span><div className="main-window__mobile-text">Название: </div>{item.product.name}</span>
-                                                    <span><div className="main-window__mobile-text">Кол-во: </div>{item.quantity}</span>
-                                                    {/* <span><div className="main-window__mobile-text">Часы: </div>{workItem.hours}</span> */}
+                                                <div className={tempItem[1][0].openWorks ? "main-window__list-options" : "main-window__list-options main-window__list-options--hidden"}>
+                                                    <div className="main-window__line"></div>
+                                                    {/* {Object.entries(workItem[1]).map(workByDate => { */}
+                                                    {tempItem[1].map((work, workIndex) => {
+                                                        if (workIndex !== 0) {
+                                                            return <React.Fragment>
+                                                                <span data-hours={(Math.floor(work.hours * 100) / 100) + " часов"}>
+                                                                    {/* <div className="main-window__mobile-text">Тип работы: </div> */}
+                                                                    <div>{work.workList.work}</div><div className="main-window__mobile-text">{(Math.floor(work.hours * 100) / 100)} часов</div></span>
+                                                                {
+                                                                    work.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
+                                                                        <span>Название</span>
+                                                                        <span>Кол-во</span>
+                                                                        {/* <span>Часы</span> */}
+                                                                    </div>
+                                                                }
+                                                                {
+                                                                    work.workControlProduct.map(item => {
+                                                                        return <div className="main-window__list-item">
+                                                                            <span><div className="main-window__mobile-text">Название: </div>{item.product.name}</span>
+                                                                            <span><div className="main-window__mobile-text">Кол-во: </div>{item.quantity}</span>
+                                                                            {/* <span><div className="main-window__mobile-text">Часы: </div>{work.hours}</span> */}
+                                                                        </div>
+                                                                    })
+                                                                }
+                                                            </React.Fragment>
+                                                        }
+                                                    })}
+                                                    {/* })} */}
                                                 </div>
-                                            })}
-                                        </div>
-                                    </React.Fragment>
-                                )
+                                            </React.Fragment>
+                                        })
+                                    })
                                 }
                             </React.Fragment>
                         }
                     })}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
