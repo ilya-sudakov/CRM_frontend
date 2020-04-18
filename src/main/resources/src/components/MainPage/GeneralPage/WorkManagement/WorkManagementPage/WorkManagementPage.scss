@@ -118,6 +118,10 @@
     position: relative;
     padding-bottom: 35px !important;
 
+    &--hidden {
+      padding-bottom: 0px !important;
+    }
+
     &::after {
       content: "";
       width: 10px;
@@ -132,7 +136,7 @@
       // border-radius: 999px;
       //line
       // top: 22px;
-      bottom: 20px;
+      bottom: 25px;
       left: 5px;
     }
 
