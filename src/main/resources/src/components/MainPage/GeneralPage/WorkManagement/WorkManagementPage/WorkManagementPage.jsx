@@ -73,12 +73,6 @@ const WorkManagementPage = (props) => {
             .then(res => res.json())
             .then(res => {
                 console.log(res);
-                setWorkItems([...res.map(item => {
-                    return {
-                        ...item,
-                        openWorks: false
-                    }
-                })]);
                 combineWorksForSamePeople([...res.map(item => {
                     return {
                         ...item,
@@ -86,6 +80,12 @@ const WorkManagementPage = (props) => {
                     }
                 })]);
                 getAllEmployees([...res.map(item => {
+                    return {
+                        ...item,
+                        openWorks: false
+                    }
+                })]);
+                setWorkItems([...res.map(item => {
                     return {
                         ...item,
                         openWorks: false
@@ -254,7 +254,7 @@ const WorkManagementPage = (props) => {
                                 {Object.entries(employeesMap).filter(item => {
                                     {/* console.log(item[1]) */ }
                                     if (
-                                        workshop.name === employees[item[0]].workshop &&
+                                        workshop.name === employees[item[0]]?.workshop &&
                                         (employees[item[0]].lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                             employees[item[0]].name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                                             employees[item[0]].middleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -349,21 +349,26 @@ const WorkManagementPage = (props) => {
                                                     {/* <span><div className="main-window__mobile-text">Подразделение: </div>{employees[workItem[0]].workshop}</span> */}
                                                     <span><div className="main-window__mobile-text">Дата: </div>{formatDateString(new Date(tempItem[0]))}</span>
                                                     <div className="main-window__actions">
-                                                        <Link to={"work-managment/record-time/edit/" + workItem.id} className="main-window__action" title="Редактировать">
+                                                        {/* <Link to={"work-managment/record-time/edit/" + tempItem[1].id} className="main-window__action" title="Редактировать">
                                                             <img className="main-window__img" src={editSVG} />
-                                                        </Link>
+                                                        </Link> */}
                                                         <div className="main-window__action" onClick={() => {
-                                                            const deletedProducts = workItem.workControlProduct.map(product => {
-                                                                return deleteProductFromRecordedWork(workItem.id, product.product.id)
-                                                            })
-                                                            Promise.all(deletedProducts)
-                                                                .then(() => {
-                                                                    deleteRecordedWork(workItem.id)
+                                                            // console.log(tempItem[1]);
+                                                            Promise.all(tempItem[1].map((itemDelete, itemDeleteIndex) => {
+                                                                if (itemDeleteIndex > 0) {
+                                                                    return Promise.all(itemDelete.workControlProduct.map(product => {
+                                                                        return deleteProductFromRecordedWork(itemDelete.id, product.product.id)
+                                                                    }))
                                                                         .then(() => {
-                                                                            loadWorks()
+                                                                            return deleteRecordedWork(itemDelete.id)
                                                                         })
+                                                                }
+                                                            }))
+                                                                .then(() => {
+                                                                    return loadWorks();
                                                                 })
-                                                        }} title="Удалить">
+                                                        }}
+                                                            title="Удалить">
                                                             <img className="main-window__img" src={deleteSVG} />
                                                         </div>
                                                     </div>
