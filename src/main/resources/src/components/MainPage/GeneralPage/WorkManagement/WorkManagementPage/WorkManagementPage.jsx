@@ -311,7 +311,26 @@ const WorkManagementPage = (props) => {
                                                 {console.log(employeesMap)}
                                                 <div className="main-window__list-item" onClick={() => {
                                                     let temp = employeesMap;
-                                                    // temp[tempItem[0]]
+                                                    let newDates = [
+                                                        Object.assign({ openWorks: !employeesMap[workItem[0]][new Date(tempItem[0])][0].openWorks }),
+                                                        ...employeesMap[workItem[0]][new Date(tempItem[0])].filter((item, index) => {
+                                                            if (index > 0) {
+                                                                return true;
+                                                            } else {
+                                                                return false;
+                                                            }
+                                                        })
+                                                    ]
+                                                    // temp = employeesMap[workItem[0]][new Date(tempItem[0])][0].openWorks
+                                                    temp = {
+                                                        ...temp,
+                                                        [workItem[0]]: {
+                                                            ...employeesMap[workItem[0]],
+                                                            [new Date(tempItem[0])]: newDates
+                                                        }
+                                                    }
+                                                    console.log(temp);
+                                                    setEmployeesMap(temp);
                                                 }}>
                                                     <span><div className="main-window__mobile-text">Должность: </div>{employees[workItem[0]].position}</span>
                                                     <span>
