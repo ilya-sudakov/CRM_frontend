@@ -384,6 +384,20 @@ const WorkManagementPage = (props) => {
                                                                     <Link to={"work-managment/record-time/edit/" + work.id} className="main-window__action" title="Редактировать">
                                                                         <img className="main-window__img" src={editSVG} />
                                                                     </Link>
+                                                                    <div className="main-window__action" onClick={() => {
+                                                                        // console.log(tempItem[1]);
+                                                                        return Promise.all(work.workControlProduct.map(product => {
+                                                                            return deleteProductFromRecordedWork(work.id, product.product.id)
+                                                                        }))
+                                                                            .then(() => {
+                                                                                return deleteRecordedWork(work.id);
+                                                                            })
+                                                                            .then(() => {
+                                                                                return loadWorks();
+                                                                            })
+                                                                    }} title="Удалить">
+                                                                        <img className="main-window__img" src={deleteSVG} />
+                                                                    </div>
                                                                 </span>
                                                                 {
                                                                     work.workControlProduct.length > 0 && <div className="main-window__list-item main-window__list-item--header">
