@@ -39,6 +39,14 @@ export const formatDateStringToTime = (dateString) => {
     );
 };
 
+export const numberToString = (n, text_forms) => {
+    n = Math.abs(n) % 100; var n1 = n % 10;
+    if (n > 10 && n < 20) { return text_forms[2]; }
+    if (n1 > 1 && n1 < 5) { return text_forms[1]; }
+    if (n1 == 1) { return text_forms[0]; }
+    return text_forms[2];
+};
+
 export const imgToBlobDownload = (imageSrc, imageName) => {
     var img = new Image();
     img.src = imageSrc;
@@ -58,7 +66,7 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
     }, "image/jpeg", 1);
     img.crossOrigin = "";              // if from different origin
     img.src = "url-to-image";
-}
+};
 
 export function getDataUri(url, extension, quality) {
     return new Promise((resolve, reject) => {
@@ -78,4 +86,4 @@ export function getDataUri(url, extension, quality) {
         };
         img.src = url;
     });
-}
+};

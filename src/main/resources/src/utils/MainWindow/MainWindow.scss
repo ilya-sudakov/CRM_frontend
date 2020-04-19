@@ -88,6 +88,14 @@
     margin-left: 10px;
   }
 
+  &__control-panel {
+    width: calc(100% - 50px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
   &__info-panel {
     width: calc(100% - 50px);
     display: flex;

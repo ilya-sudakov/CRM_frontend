@@ -8,7 +8,7 @@ import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg';
 import editSVG from '../../../../../../../../../assets/tableview/edit.svg';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 // import DownloadIcon from '../../../../../../../../../assets/download.png';
-import { formatDateString } from '../../../../../utils/functions.jsx';
+import { formatDateString, numberToString } from '../../../../../utils/functions.jsx';
 import { getRecordedWorkByDateRange, deleteRecordedWork, deleteProductFromRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 // import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoading.jsx';
@@ -277,7 +277,7 @@ const WorkManagementPage = (props) => {
                                 })
                                     .sort((a, b) => {
                                         if (sortOrder.curSort === 'lastName') {
-                                            {/* console.log(employees[a[0]][sortOrder.curSort]); */}
+                                            {/* console.log(employees[a[0]][sortOrder.curSort]); */ }
                                             if (employees[a[0]][sortOrder.curSort] < employees[b[0]][sortOrder.curSort]) {
                                                 return (sortOrder[sortOrder.curSort] === "desc" ? 1 : -1);
                                             }
@@ -379,9 +379,9 @@ const WorkManagementPage = (props) => {
                                                     {tempItem[1].map((work, workIndex) => {
                                                         if (workIndex !== 0) {
                                                             return <React.Fragment>
-                                                                <span data-hours={(Math.floor(work.hours * 100) / 100) + " часов"}>
+                                                                <span data-hours={(Math.floor(work.hours * 100) / 100) + " " + numberToString(Number.parseInt(Math.floor(work.hours * 100) / 100), ['час', 'часа', 'часов'])}>
                                                                     {/* <div className="main-window__mobile-text">Тип работы: </div> */}
-                                                                    <div>{work.workList.work}</div><div className="main-window__mobile-text">{(Math.floor(work.hours * 100) / 100)} часов</div>
+                                                                    <div>{work.workList.work}</div><div className="main-window__mobile-text">{(Math.floor(work.hours * 100) / 100) + " " + numberToString(Number.parseInt(Math.floor(work.hours * 100) / 100), ['час', 'часа', 'часов'])}</div>
                                                                     <Link to={"work-managment/record-time/edit/" + work.id} className="main-window__action" title="Редактировать">
                                                                         <img className="main-window__img" src={editSVG} />
                                                                     </Link>

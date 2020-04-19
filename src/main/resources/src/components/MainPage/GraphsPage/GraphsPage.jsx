@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import './AdminWorkspace.scss';
-// import XLSX from 'xlsx';
-import { Notifications, WorkManagement } from '../../lazyImports.jsx';
+import './GraphsPage.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
+import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx';
 import Chart from 'chart.js';
-import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
-import { formatDateStringNoYear } from '../../../../utils/functions.jsx';
-import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx';
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
+import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { formatDateStringNoYear } from '../../../utils/functions.jsx';
+import { createGraph, loadCanvas } from '../../../utils/graphs.js';
 
-const AdminWorkspace = (props) => {
+const GraphsPage = (props) => {
     const lemz = "#1b4e6b";
     const lepsari = "#5c63a2";
     const ligovskiy = "#c068a8";
     const office = "#ec7176";
-    const weekdays = [
-        'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'
-    ]
-
+    const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
     const [weekOffset, setWeekOffset] = useState(0);
     const [graph, setGraph] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [canvasLoaded, setCanvasLoaded] = useState(false);
+    const [curGraph, setCurGraph] = useState('workControlWeeky');
     const [workshops, setWorkshops] = useState([
         {
             label: 'ЦехЛЭМЗ',
@@ -48,26 +45,9 @@ const AdminWorkspace = (props) => {
         }
     ]);
 
-    useEffect(() => {
-        let abortController = new AbortController();
-        const curDay = new Date(new Date().setDate(new Date().getDate() + (- 7 * weekOffset)));
-        let week = [];
-        for (let i = 1; i <= 7; i++) {
-            let first = curDay.getDate() - curDay.getDay() + i
-            let day = new Date(curDay.setDate(first))
-            week.push(day)
-        }
-        // console.log(week);
-        workshops.map((workshop, index) => {
-            let temp = workshops;
-            temp.splice(index, 1, {
-                ...workshop,
-                data: []
-            })
-        });
-        setIsLoading(true);
+    const loadWorkControl = (week, signal) => {
         getRecordedWorkByDateRange(week[0].getDate(), week[0].getMonth() + 1, week[6].getDate(), week[6].getMonth() + 1,
-            abortController.signal)
+            signal)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);
@@ -89,7 +69,7 @@ const AdminWorkspace = (props) => {
                 })
                 console.log(workshops);
                 if (props.userHasAccess(['ROLE_ADMIN'])) {
-                    !canvasLoaded && loadCanvas("admin-workspace__chart-wrapper");
+                    !canvasLoaded && loadCanvas("graphs-page__chart-wrapper");
                     setCanvasLoaded(true);
                     const options = {
                         type: (window.innerWidth
@@ -140,37 +120,125 @@ const AdminWorkspace = (props) => {
                     }, 150)
                 }
             })
+    }
+
+    const loadProductAnalysis = (signal) => {
+        !canvasLoaded && loadCanvas("graphs-page__chart-wrapper");
+        setCanvasLoaded(true);
+        const options = {
+            type: (window.innerWidth
+                || document.documentElement.clientWidth
+                || document.body.clientWidth) > 500 ? 'bar' : 'horizontalBar',
+            data: {
+                labels: [...week.map((day, index) => weekdays[index] + ' ' + formatDateStringNoYear(day))],
+                datasets: [...workshops],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: (window.innerWidth
+                    || document.documentElement.clientWidth
+                    || document.body.clientWidth) > 500 ? true : false,
+                animation: {
+                    easing: 'easeInOutCirc'
+                },
+                tooltips: {
+                    mode: 'index'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        stacked: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Часы',
+                            fontStyle: 'italic'
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Дни недели',
+                            fontStyle: 'italic'
+                        }
+                    }],
+                }
+            }
+        };
+        setTimeout(() => {
+            setIsLoading(false);
+            canvasLoaded && graph.destroy();
+            setGraph(createGraph(options));
+        }, 150)
+    }
+
+
+    useEffect(() => {
+        let abortController = new AbortController();
+        const curDay = new Date(new Date().setDate(new Date().getDate() + (- 7 * weekOffset)));
+        let week = [];
+        for (let i = 1; i <= 7; i++) {
+            let first = curDay.getDate() - curDay.getDay() + i
+            let day = new Date(curDay.setDate(first))
+            week.push(day)
+        }
+        workshops.map((workshop, index) => {
+            let temp = workshops;
+            temp.splice(index, 1, {
+                ...workshop,
+                data: []
+            })
+        });
+        setIsLoading(true);
+        switch (curGraph) {
+            case 'workControlWeeky':
+                loadWorkControl(week, abortController.signal);
+                break;
+            case 'productAnalysis':
+                loadProductAnalysis(abortController.signal);
+                break;
+        }
         return function cancel() {
             abortController.abort();
         };
-    }, [weekOffset, workshops]);
+    }, [weekOffset, workshops, curGraph]);
 
     return (
-        <div className="admin-workspace">
-            <WorkManagement
-                userHasAccess={props.userHasAccess}
-            />
-            {/* {props.userHasAccess(['ROLE_ADMIN']) && <Notifications
-                userHasAccess={props.userHasAccess}
-            />} */}
-            {props.userHasAccess(['ROLE_ADMIN']) && <div className="admin-workspace__chart-wrapper">
-                <TableLoading
-                    isLoading={isLoading}
-                />
-                <div className="admin-workspace__header">
-                    <button className="admin-workspace__button" onClick={(event) => {
+        <div className="graphs-page">
+            <div className="main-window">
+                <div className="main-window__title">Графики</div>
+                <div className="main-window__sort-panel">
+                    <span>Выбрать график: </span>
+                    <select onChange={(event) => {
+                        setCurGraph(event.target.value);
+                    }}>
+                        <option value="workControlWeeky">Сводка за неделю</option>
+                        {/* <option value="productAnalysis">Анализ продукции</option> */}
+                    </select>
+                </div>
+                <div className="graphs-page__chart-wrapper">
+                    <TableLoading
+                        isLoading={isLoading}
+                    />
+                    <div className="graphs-page__header">
+                        <div className="graphs-page__title">Сводка за неделю</div>
+                    </div>
+                </div>
+                <div className="main-window__control-panel">
+                    <button className="main-window__button" onClick={(event) => {
                         event.preventDefault();
                         setWeekOffset(weekOffset + 1);
                     }}>Пред. неделя</button>
-                    <div className="admin-workspace__title">Сводка за неделю</div>
-                    <button className="admin-workspace__button" onClick={(event) => {
+                    <button className="main-window__button" onClick={(event) => {
                         event.preventDefault();
                         setWeekOffset(0);
                     }}>Тек. неделя</button>
                 </div>
-            </div>}
+            </div>
         </div>
     );
 };
 
-export default AdminWorkspace;
+export default GraphsPage;

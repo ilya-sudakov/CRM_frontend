@@ -13,10 +13,10 @@ const EtceteraPage = (props) => {
             linkTo: '/work-managment',
             name: 'Учет времени'
         },
-        // {
-        //     linkTo: '/work-managment',
-        //     name: 'Учет времени'
-        // }
+        {
+            linkTo: '/graphs',
+            name: 'Графики'
+        },
     ]);
 
     return (
