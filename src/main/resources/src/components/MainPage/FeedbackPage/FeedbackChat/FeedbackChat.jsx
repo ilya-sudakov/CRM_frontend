@@ -49,7 +49,7 @@ const FeedbackChat = (props) => {
                     //}
                     //else 
                     return <div className="feedback-chat__message">
-                        {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div data-letters={message.author[0] + message.author[1]}></div>}
+                        {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div data-letters={message.author[0] + message.author[1] + message.author[2]}></div>}
                         {/* {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <img className="feedback-chat__img" src={sendSVG} alt="" />} */}
                         <div className="feedback-chat__header">
                             {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <div className="feedback-chat__author">{message.author}</div>}

@@ -12,7 +12,8 @@ const GraphsPage = (props) => {
     const lepsari = "#5c63a2";
     const ligovskiy = "#c068a8";
     const office = "#ec7176";
-    const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+    const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+    const [curWeek, setCurWeek] = useState([]);
     const [weekOffset, setWeekOffset] = useState(0);
     const [graph, setGraph] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -191,6 +192,9 @@ const GraphsPage = (props) => {
                 data: []
             })
         });
+        setCurWeek(week);
+        console.log(week);
+
         setIsLoading(true);
         switch (curGraph) {
             case 'workControlWeeky':
@@ -223,7 +227,7 @@ const GraphsPage = (props) => {
                         isLoading={isLoading}
                     />
                     <div className="graphs-page__header">
-                        <div className="graphs-page__title">Сводка за неделю</div>
+                        <div className="graphs-page__title">{curWeek.length > 0 && ('Отчет (' + formatDateStringNoYear(curWeek[0]) + ' - ' + formatDateStringNoYear(curWeek[6]) + ')')}</div>
                     </div>
                 </div>
                 <div className="main-window__control-panel">
