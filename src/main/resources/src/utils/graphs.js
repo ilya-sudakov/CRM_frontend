@@ -1,7 +1,7 @@
-export const loadCanvas = (className) => {
+export const loadCanvas = (className, canvasClassName) => {
     let canvas = document.createElement('canvas');
     let div = document.getElementsByClassName(className)[0];
-    canvas.className = "graphs-page__chart";
+    canvas.className = canvasClassName ?? "graphs-page__chart";
     canvas.id = "myChart";
     div.appendChild(canvas);
 };

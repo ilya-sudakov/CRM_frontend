@@ -7,6 +7,7 @@ import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkMa
 import { formatDateStringNoYear } from '../../../../utils/functions.jsx';
 import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx';
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const AdminWorkspace = (props) => {
     const lemz = "#1b4e6b";
@@ -89,7 +90,7 @@ const AdminWorkspace = (props) => {
                 })
                 console.log(workshops);
                 if (props.userHasAccess(['ROLE_ADMIN'])) {
-                    !canvasLoaded && loadCanvas("admin-workspace__chart-wrapper");
+                    !canvasLoaded && loadCanvas("admin-workspace__chart-wrapper", "admin-workspace__chart");
                     setCanvasLoaded(true);
                     const options = {
                         type: (window.innerWidth
@@ -158,15 +159,33 @@ const AdminWorkspace = (props) => {
                     isLoading={isLoading}
                 />
                 <div className="admin-workspace__header">
-                    <button className="admin-workspace__button" onClick={(event) => {
+                    {/* <button className="admin-workspace__button" onClick={(event) => {
                         event.preventDefault();
                         setWeekOffset(weekOffset + 1);
                     }}>Пред. неделя</button>
+                     */}
+                    <Button
+                        text="Пред. неделя"
+                        className="admin-workspace__button"
+                        isLoading={weekOffset === 0 ? false : isLoading}
+                        onClick={(event) => {
+                            setWeekOffset(weekOffset + 1);
+                        }}
+                    />
                     <div className="admin-workspace__title">Сводка за неделю</div>
-                    <button className="admin-workspace__button" onClick={(event) => {
+                    {/* <button className="admin-workspace__button" onClick={(event) => {
                         event.preventDefault();
                         setWeekOffset(0);
-                    }}>Тек. неделя</button>
+                    }}>Тек. неделя</button> */}
+
+                    <Button
+                        text="Тек. неделя"
+                        className="admin-workspace__button"
+                        isLoading={weekOffset !== 0 ? false : isLoading}
+                        onClick={(event) => {
+                            setWeekOffset(0);
+                        }}
+                    />
                 </div>
             </div>}
         </div>

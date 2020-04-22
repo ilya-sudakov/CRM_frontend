@@ -71,7 +71,7 @@ const GraphsPage = (props) => {
                 })
                 console.log(workshops);
                 if (props.userHasAccess(['ROLE_ADMIN'])) {
-                    !canvasLoaded && loadCanvas("graphs-page__chart-wrapper");
+                    !canvasLoaded && loadCanvas("graphs-page__chart-wrapper", "graphs-page__chart");
                     setCanvasLoaded(true);
                     const options = {
                         type: (window.innerWidth
