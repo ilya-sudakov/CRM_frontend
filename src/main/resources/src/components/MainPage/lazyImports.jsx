@@ -376,6 +376,10 @@ const NewPackaging = lazy(
     () => import('./PackagingPage/NewPackaging/NewPackaging.jsx')
 )
 
+const EditPackaging = lazy(
+    () => import('./PackagingPage/EditPackaging/EditPackaging.jsx')
+)
+
 export {
     Clients, newClient, ViewClient, EditClient, ClientCategories,
     Contracts,
@@ -402,5 +406,5 @@ export {
     FeedbackPage, NewFeedback, ViewFeedback,
     EtceteraPage,
     GraphsPage,
-    PackagingPage, NewPackaging,
+    PackagingPage, NewPackaging, EditPackaging
 };

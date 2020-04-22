@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './NewPackaging.scss';
+import './EditPackaging.scss';
 import '../../../../utils/Form/Form.scss';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import Button from '../../../../utils/Form/Button/Button.jsx';
-import { addPackaging } from '../../../../utils/RequestsAPI/Products/packaging.js';
+import { getPackagingById, editPackaging } from '../../../../utils/RequestsAPI/Products/packaging.js';
 
-const NewPackaging = (props) => {
+const EditPackaging = (props) => {
     const [formInputs, setFormInputs] = useState({
         name: '',
         quantity: 0,
@@ -19,15 +19,13 @@ const NewPackaging = (props) => {
         size: false
     });
     const [validInputs, setValidInputs] = useState({
-        name: false,
-        quantity: false,
-        size: false
+        name: true,
+        quantity: true,
+        size: true
     });
 
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
-
 
     const validateField = (fieldName, value) => {
         switch (fieldName) {
@@ -75,14 +73,14 @@ const NewPackaging = (props) => {
         // event.preventDefault();
         setIsLoading(true);
         console.log(formInputs);
-        formIsValid() && addPackaging(formInputs)
+        formIsValid() && editPackaging(formInputs)
             .then(() => {
 
             })
             .then(() => props.history.push("/packaging"))
             .catch(error => {
                 setIsLoading(false);
-                alert('Ошибка при добавлении записи');
+                alert('Ошибка при изменении записи');
             })
     }
 
@@ -100,13 +98,34 @@ const NewPackaging = (props) => {
     }
 
     useEffect(() => {
-        document.title = "Создание упаковки";
+        document.title = "Редактирование упаковки";
+        const id = props.history.location.pathname.split("/packaging/edit/")[1];
+        if (isNaN(Number.parseInt(id))) {
+            alert('Неправильный индекс записи!');
+            props.history.push("/packaging");
+        } else {
+            getPackagingById(id)
+                .then(res => res.json())
+                .then(oldPackaging => {
+                    setFormInputs({
+                        name: oldPackaging.name,
+                        comment: oldPackaging.comment,
+                        quantity: oldPackaging.quantity,
+                        size: oldPackaging.size,
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert('Неправильный индекс заявки!');
+                    props.history.push("/packaging");
+                })
+        }
     }, [])
 
     return (
         <div className="new-packaging">
             <div className="main-form">
-                <div className="main-form__title">Создание упаковки</div>
+                <div className="main-form__title">Редактирование упаковки</div>
                 <form className="main-form__form">
                     <ErrorMessage
                         message="Не заполнены все обязательные поля!"
@@ -117,6 +136,7 @@ const NewPackaging = (props) => {
                         inputName="Наименование"
                         required
                         error={formErrors.name}
+                        defaultValue={formInputs.name}
                         name="name"
                         handleInputChange={handleInputChange}
                         errorsArr={formErrors}
@@ -125,6 +145,7 @@ const NewPackaging = (props) => {
                     <InputText
                         inputName="Кол-во штук"
                         required
+                        defaultValue={formInputs.quantity}
                         type="number"
                         error={formErrors.quantity}
                         name="quantity"
@@ -135,6 +156,7 @@ const NewPackaging = (props) => {
                     <InputText
                         inputName="Размер"
                         required
+                        defaultValue={formInputs.size}
                         error={formErrors.size}
                         name="size"
                         handleInputChange={handleInputChange}
@@ -142,6 +164,7 @@ const NewPackaging = (props) => {
                         setErrorsArr={setFormErrors}
                     />
                     <InputText
+                        defaultValue={formInputs.comment}
                         inputName="Комментарий"
                         name="comment"
                         handleInputChange={handleInputChange}
@@ -150,7 +173,7 @@ const NewPackaging = (props) => {
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/packaging')} value="Вернуться назад" />
                         <Button
-                            text="Добавить упаковку"
+                            text="Редактировать упаковку"
                             isLoading={isLoading}
                             className="main-form__submit"
                             onClick={handleSubmit}
@@ -162,4 +185,4 @@ const NewPackaging = (props) => {
     );
 };
 
-export default NewPackaging;
+export default EditPackaging;

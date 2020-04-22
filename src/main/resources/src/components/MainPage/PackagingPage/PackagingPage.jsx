@@ -5,6 +5,7 @@ import SearchBar from '../SearchBar/SearchBar.jsx';
 import editSVG from '../../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg';
 import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx';
+import { getPackaging, deletePackaging } from '../../../utils/RequestsAPI/Products/packaging.js';
 
 const PackagingPage = (props) => {
     const [packages, setPackages] = useState([]);
@@ -28,43 +29,30 @@ const PackagingPage = (props) => {
 
     useEffect(() => {
         setIsLoading(true);
-        loadData();
+        const abortController = new AbortController();
+        loadData(abortController.signal);
         setIsLoading(false);
+        return function cancel() {
+            abortController.abort();
+        };
     }, []);
 
-    const loadData = () => {
-        const data = [
-            {
-                id: 1,
-                name: 'Уfпаковка',
-                quantity: 10000,
-                comment: 'Комментарий',
-                size: '2x6'
-            },
-            {
-                id: 2,
-                name: 'Упzаковка',
-                quantity: 15000,
-                comment: 'Коммеxcvxнтарий',
-                size: '2x6'
-            },
-            {
-                id: 3,
-                name: 'Упаковhyка',
-                quantity: 5000,
-                comment: 'Коммеdsfнтарий',
-                size: '2x6'
-            },
-            {
-                id: 1,
-                name: '1Упаковка',
-                quantity: 1000,
-                comment: 'Комментарий',
-                size: '2x6'
-            },
-        ]
-        setPackages(data);
+    const loadData = (signal) => {
+        getPackaging(signal)
+            .then(res => res.json())
+            .then(res => {
+                setPackages(res);
+            })
     };
+
+    const deleteItem = (index) => {
+        const id = packages[index].id;
+        deletePackaging(id)
+            .catch(error => {
+                console.log(error);
+                alert('Ошибка при удалении');
+            })
+    }
 
     return (
         <div className="packaging-page">
@@ -122,12 +110,12 @@ const PackagingPage = (props) => {
                                 <div className="main-window__actions">
                                     <div className="main-window__mobile-text">Действия</div>
                                     <div className="main-window__action" title="Редактирование упаковки" onClick={() => {
-                                        props.history.push('/packages/edit/' + packageItem.id)
+                                        props.history.push('/packaging/edit/' + packageItem.id)
                                     }}>
                                         <img className="main-window__img" src={editSVG} />
                                     </div>
                                     {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" title="Удаление упаковки" onClick={() => {
-                                        // deleteItem(packageItem.id);
+                                        deleteItem(packageIndex);
                                     }}>
                                         <img className="main-window__img" src={deleteSVG} />
                                     </div>}

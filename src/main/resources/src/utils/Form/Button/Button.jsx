@@ -13,7 +13,7 @@ const Button = (props) => {
     return (
         <button className={className + (props.className ? (" " + props.className) : '')} onClick={(event) => {
             event.preventDefault();
-            console.log(event);
+            // console.log(event);
             if (!props.isLoading) {
                 props.onClick();
             }
