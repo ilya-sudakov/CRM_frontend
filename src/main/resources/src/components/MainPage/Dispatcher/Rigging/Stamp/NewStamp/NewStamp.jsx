@@ -6,6 +6,7 @@ import { addPartsToStamp, addStamp } from '../../../../../../utils/RequestsAPI/R
 import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../../../utils/Form/Button/Button.jsx';
 
 const NewStamp = (props) => {
     const [stampInputs, setStampInputs] = useState({
@@ -79,7 +80,7 @@ const NewStamp = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         let stampId = 1;
         formIsValid() && addStamp(stampInputs)
             .then(res => res.json())
@@ -176,8 +177,14 @@ const NewStamp = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/stamp')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить запись" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Добавить запись"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

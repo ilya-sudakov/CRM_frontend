@@ -112,11 +112,10 @@ const NewRecordWork = (props) => {
                         .then(res => res.json())
                         .then(res => {
                             // console.log(res);
-                            const productsArr = item.product.map(product => {
+                            Promise.all(item.product.map(product => {
                                 // console.log(product);
-                                addProductToRecordedWork(res.id, product.id, product.quantity, { name: product.name })
-                            })
-                            Promise.all(productsArr)
+                                return addProductToRecordedWork(res.id, product.id, product.quantity, { name: product.name })
+                            }))
                                 .then(() => {
                                     props.history.push("/work-managment");
                                 })

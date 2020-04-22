@@ -7,6 +7,7 @@ import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage
 import ImgLoader from '../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectParts from '../../SelectParts/SelectParts.jsx';
 import { formatDateString } from '../../../../../../utils/functions.jsx';
+import Button from '../../../../../../utils/Form/Button/Button.jsx';
 
 const EditPart = (props) => {
     const [partInputs, setPartInputs] = useState({
@@ -81,7 +82,7 @@ const EditPart = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         // console.log(partInputs);
         formIsValid() && editPart({ ...partInputs, lastEdited: new Date() }, partId)
@@ -237,8 +238,14 @@ const EditPart = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/rigging/parts')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить запчасть" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить запчасть" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Редактировать запись"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

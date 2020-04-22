@@ -8,6 +8,7 @@ import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const EditTask = (props) => {
     const [taskId, setTaskId] = useState(1);
@@ -95,7 +96,7 @@ const EditTask = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         formIsValid() && editMainTask(taskInputs, taskId)
             .then(() => props.history.push("/dispatcher/general-tasks"))
@@ -268,8 +269,14 @@ const EditTask = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/general-tasks')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать задачу" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать задачу" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Редактировать задачу"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

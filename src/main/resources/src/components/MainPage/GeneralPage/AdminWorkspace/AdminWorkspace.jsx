@@ -177,7 +177,6 @@ const AdminWorkspace = (props) => {
                         event.preventDefault();
                         setWeekOffset(0);
                     }}>Тек. неделя</button> */}
-
                     <Button
                         text="Тек. неделя"
                         className="admin-workspace__button"

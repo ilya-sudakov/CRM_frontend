@@ -16,6 +16,7 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 import { formatDateString, getDataUri } from '../../../../utils/functions.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const NewPriceList = (props) => {
     const [locationTypes, setLocationTypes] = useState([
@@ -312,7 +313,7 @@ const NewPriceList = (props) => {
             return loadImages(newData, titlePage1);
         }
     }
-    
+
     useEffect(() => {
         document.title = "Добавление продукции";
     }, [priceList])
@@ -357,14 +358,24 @@ const NewPriceList = (props) => {
                             );
                             setIsLoading(false);
                         }} value="Открыть .pdf" />}
-                        {(priceList.length > 0) && <input className="main-form__submit" type="submit" onClick={(event) => {
+                        {/* {(priceList.length > 0) && <input className="main-form__submit" type="submit" onClick={(event) => {
                             event.preventDefault();
                             // setIsLoading(true);
                             console.log(priceList)
                             saveImages();
                             // setIsLoading(false);
                         }} value="Сохранить данные" />}
-                        {isLoading && <ImgLoader />}
+                        {isLoading && <ImgLoader />} */}
+                        {priceList.length > 0 && <Button
+                            text="Сохранить данные"
+                            isLoading={isLoading}
+                            className="main-form__submit"
+                            onClick={() => {
+                                // setIsLoading(true);
+                                console.log(priceList)
+                                saveImages();
+                            }}
+                        />}
                     </div>
                     {priceList.length > 0 && <div className="main-form__buttons">
                         <div className="new-price-item__checkbox-container">

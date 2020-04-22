@@ -9,6 +9,7 @@ import { getTransportations, deleteTransportation } from '../../../../utils/Requ
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import { getTransportationListPdfText } from '../../../../utils/pdfFunctions.jsx';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const Transportation = (props) => {
     const [transportation, setTransportation] = useState([]);
@@ -171,10 +172,17 @@ const Transportation = (props) => {
                             />
                         </div>
                     </div>
-                    {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printTransportationList}>
+                    {/* {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printTransportationList}>
                         <img className="main-window__img" src={PrintIcon} alt="" />
                         <span>Печать списка</span>
-                    </div>}
+                    </div>} */}
+                    <Button
+                        text="Печать списка"
+                        imgSrc={PrintIcon}
+                        isLoading={isLoading}
+                        className="main-window__button"
+                        onClick={printTransportationList}
+                    />
                     <div className="main-window__amount_table">Всего: {transportation.length} записей</div>
                 </div>
                 <TableView

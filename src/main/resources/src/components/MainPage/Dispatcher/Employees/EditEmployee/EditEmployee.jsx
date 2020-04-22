@@ -7,6 +7,7 @@ import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const EditEmployee = (props) => {
     const [employeeInputs, setEmployeeInputs] = useState({
@@ -106,7 +107,7 @@ const EditEmployee = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         formIsValid() && editEmployee(employeeInputs, employeeId)
             .then(() => props.history.push("/dispatcher/employees"))
@@ -308,8 +309,14 @@ const EditEmployee = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/dispatcher/employees')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить сотрудника" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить сотрудника" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Редактировать запись"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>
