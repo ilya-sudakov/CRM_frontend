@@ -158,6 +158,7 @@ const GeneralPage = (props) => {
                             })
                             dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [employeeInfo[0]], { origin: ('A' + (globalIndex++)) });
                         })
+
                         Promise.all(allEmployees)
                             .then(() => {
                                 // console.log([employeeInfo[0]]);

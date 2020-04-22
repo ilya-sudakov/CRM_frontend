@@ -261,7 +261,7 @@
     // height: 1px;
     min-height: 25px;
     // height: ;
-    // overflow-y: hidden;
+    overflow-y: hidden;
     // background-color: #dddddd;
     // background-color: darken(#ffffff, 4%);
     // border: 1px solid $button__background--inverted;
@@ -272,7 +272,7 @@
     // background-color: transparent;
     padding: 10px 10px;
     // margin-bottom: 10px;
-    transition: 0.2s ease-in-out;
+    transition: 100ms ease-in-out;
     // box-shadow: none;
     // border: none;
     box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.6);

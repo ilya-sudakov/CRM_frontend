@@ -234,14 +234,14 @@ const GraphsPage = (props) => {
                 <div className="main-window__control-panel">
                     <Button
                         text="Пред. неделя"
-                        isLoading={isLoading}
+                        isLoading={weekOffset === 0 ? false : isLoading}
                         onClick={(event) => {
                             setWeekOffset(weekOffset + 1);
                         }}
                     />
                     <Button
                         text="Тек. неделя"
-                        isLoading={isLoading}
+                        isLoading={weekOffset !== 0 ? false : isLoading}
                         onClick={() => {
                             setWeekOffset(0);
                         }}
