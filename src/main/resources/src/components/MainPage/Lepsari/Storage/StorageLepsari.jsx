@@ -11,11 +11,15 @@ const StorageLepsari = (props) => {
 
     useEffect(() => {
         document.title = "Склад";
-        loadStorage();
+        const abortController = new AbortController();
+        loadStorage(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadStorage = () => {
-        getStorage()
+    const loadStorage = (signal) => {
+        getStorage(signal)
             .then(res => res.json())
             .then(res => {
                 setStorage(res);

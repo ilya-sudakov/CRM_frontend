@@ -11,11 +11,15 @@ const Stamp = (props) => {
 
     useEffect(() => {
         document.title = "Штампы";
-        loadStamps();
+        const abortController = new AbortController();
+        loadStamps(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadStamps = () => {
-        getStamp()
+    const loadStamps = (signal) => {
+        getStamp(signal)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);                

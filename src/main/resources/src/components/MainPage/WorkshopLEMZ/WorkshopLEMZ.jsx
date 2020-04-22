@@ -51,12 +51,16 @@ const WorkshopLEMZ = (props) => {
 
     useEffect(() => {
         document.title = "Заявки - ЛЭМЗ";
-        loadRequestsLEMZ()
+        const abortController = new AbortController();
+        loadRequestsLEMZ(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadRequestsLEMZ = () => {
+    const loadRequestsLEMZ = (signal) => {
         setIsLoading(true);
-        getRequestsLEMZ()
+        getRequestsLEMZ(signal)
             .then(res => res.json())
             .then(requests => {
                 setRequestsLEMZ(requests);

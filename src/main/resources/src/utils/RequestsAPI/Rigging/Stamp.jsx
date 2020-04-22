@@ -1,9 +1,10 @@
 import { request } from '../../utilsAPI.jsx';
 
-export function getStamp() {
+export function getStamp(signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/stamp/",
-        method: "GET"
+        method: "GET",
+        signal: signal
     })
 }
 

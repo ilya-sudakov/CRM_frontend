@@ -50,7 +50,11 @@ const WorkshopLepsari = (props) => {
 
     useEffect(() => {
         document.title = "Заявки - Лепсари";
-        loadRequestLepsari();
+        const abortController = new AbortController();
+        loadRequestLepsari(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
     const printRequestsList = () => {
@@ -58,9 +62,9 @@ const WorkshopLepsari = (props) => {
         pdfMake.createPdf(dd).print();
     }
 
-    const loadRequestLepsari = () => {
+    const loadRequestLepsari = (signal) => {
         setIsLoading(true);
-        getRequestsLepsari()
+        getRequestsLepsari(signal)
             .then(res => res.json())
             .then(requests => {
                 // console.log(requests);                
