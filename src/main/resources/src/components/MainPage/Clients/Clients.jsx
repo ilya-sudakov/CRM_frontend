@@ -5,6 +5,8 @@ import '../../../utils/Form/Form.scss';
 import viewSVG from '../../../../../../../assets/tableview/view.svg';
 import editSVG from '../../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg';
+import starSVG from '../../../../../../../assets/tableview/star.svg';
+import starBorderedSVG from '../../../../../../../assets/tableview/star_border.svg';
 import phoneSVG from '../../../../../../../assets/tableview/phone.svg';
 import calendarSVG from '../../../../../../../assets/tableview/calendar.svg';
 import {
@@ -13,7 +15,8 @@ import {
     getClientsByCategory,
     getClientsByCategoryAndType,
     editNextContactDateClient,
-    searchClients
+    searchClients,
+    editClient
 } from '../../../utils/RequestsAPI/Clients.jsx';
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
@@ -331,6 +334,24 @@ const Clients = (props) => {
 
                                 </span>
                                 <div className="main-window__actions">
+                                    {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__action" title="Добавить в избранных клиентов" onClick={() => {
+                                        let temp = clients;
+                                        let newClient = Object.assign({
+                                            ...item,
+                                            favorite: !item.favorite
+                                        });
+                                        temp.splice(index, 1, newClient);
+                                        editClient(newClient)
+                                            .then(() => {
+                                                // loadData()
+                                                setClients([...temp]);
+                                            })
+                                            .catch(error => {
+                                                console.log(error);
+                                            })
+                                    }}>
+                                        <img className="main-window__img" src={item.favorite ? starSVG : starBorderedSVG} />
+                                    </div>} */}
                                     <div className="main-window__action" title="Совершить действие" onClick={() => {
                                         setCloseWindow(false);
                                         setSelectedItem(item);
