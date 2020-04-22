@@ -336,7 +336,7 @@ const NewPriceList = (props) => {
                     </div>
                     <div className="main-form__buttons">
                         {/* <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/')} value="Вернуться назад" /> */}
-                        {priceList.length > 0 && <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={(event) => {
+                        {/* {priceList.length > 0 && <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={(event) => {
                             event.preventDefault();
                             setIsLoading(true);
                             console.log(priceList);
@@ -357,15 +357,34 @@ const NewPriceList = (props) => {
                                 titlePage
                             );
                             setIsLoading(false);
-                        }} value="Открыть .pdf" />}
-                        {/* {(priceList.length > 0) && <input className="main-form__submit" type="submit" onClick={(event) => {
-                            event.preventDefault();
-                            // setIsLoading(true);
-                            console.log(priceList)
-                            saveImages();
-                            // setIsLoading(false);
-                        }} value="Сохранить данные" />}
-                        {isLoading && <ImgLoader />} */}
+                        }} value="Открыть .pdf" />} */}
+                        {priceList.length > 0 && <Button
+                            text="Открыть .pdf"
+                            isLoading={isLoading}
+                            className="main-form__submit main-form__submit--inverted"
+                            inverted
+                            onClick={() => {
+                                setIsLoading(true);
+                                console.log(priceList);
+                                getPriceListPdfText(
+                                    categories,
+                                    priceList.filter(item => item.active),
+                                    optionalCols.filter(item => item.active && item).sort((a, b) => {
+                                        if (a.id < b.id) {
+                                            return -1;
+                                        }
+                                        if (a.id > b.id) {
+                                            return 1;
+                                        }
+                                        return 0;
+                                    }),
+                                    locationTypes,
+                                    disclaimer,
+                                    titlePage
+                                )
+                                    .then(() => { setIsLoading(false); })
+                            }}
+                        />}
                         {priceList.length > 0 && <Button
                             text="Сохранить данные"
                             isLoading={isLoading}
