@@ -18,11 +18,9 @@ const Button = (props) => {
                 props.onClick();
             }
         }}>
-            {props.imgSrc && <img className="button__img" src={props.imgSrc} alt="" />}
-            <span className="button__text">{props.text ?? 'Нажмите'}</span>
-            {props.isLoading && <div className="button__cover">
-                <div class="button__circle"></div>
-            </div>}
+            {props.imgSrc && <img className={props.isLoading ? "button__img button__img--hidden" : "button__img"} src={props.imgSrc} alt="" />}
+            <span className={props.isLoading ? "button__text button__text--hidden" : "button__text"}>{props.text ?? 'Нажмите'}</span>
+            {props.isLoading && <div class="button__circle"></div>}
         </button>
     );
 };
