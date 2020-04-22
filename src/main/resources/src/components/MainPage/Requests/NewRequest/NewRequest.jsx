@@ -9,6 +9,7 @@ import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const NewRequest = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -87,7 +88,7 @@ const NewRequest = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         let id = 0;
         console.log(requestInputs);
@@ -243,8 +244,14 @@ const NewRequest = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <div className="main-form__submit main-form__submit--inverted" onClick={() => props.history.push("/requests")}>Вернуться назад</div>
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Оформить заявку" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Оформить заявку"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

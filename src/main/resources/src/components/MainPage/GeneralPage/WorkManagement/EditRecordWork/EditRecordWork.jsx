@@ -10,6 +10,7 @@ import { getProductById, getProductsByCategory } from '../../../../../utils/Requ
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import { getRecordedWorkById, editRecordedWork, deleteProductFromRecordedWork, addProductToRecordedWork, addRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const EditRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -87,7 +88,7 @@ const EditRecordWork = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         // console.log(worktimeInputs);
         const editedInputs = worktimeInputs.works.map((item, index) => {
@@ -342,8 +343,14 @@ const EditRecordWork = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/work-managment')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Редактировать запись"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

@@ -16,6 +16,7 @@ import SelectClientCategory from '../ClientCategories/SelectClientCategory/Selec
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const newClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -98,7 +99,7 @@ const newClient = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         console.log(clientInputs);
         let clientId = 0;
@@ -480,8 +481,14 @@ const newClient = (props) => {
                     <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients/categories')} value="Вернуться назад" />
-                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить клиента" />
-                        {isLoading && <ImgLoader />}
+                        {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить клиента" /> */}
+                        <Button
+                            text="Добавить клиента"
+                            isLoading={isLoading}
+                            className="main-form__submit"
+                            onClick={handleSubmit}
+                        />
+                        {/* {isLoading && <ImgLoader />} */}
                     </div>
                 </form>
             </div>

@@ -12,6 +12,7 @@ import { formatDateString, numberToString } from '../../../../../utils/functions
 import { getRecordedWorkByDateRange, deleteRecordedWork, deleteProductFromRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 // import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoading.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const WorkManagementPage = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -191,10 +192,16 @@ const WorkManagementPage = (props) => {
                                 }}
                             />
                         </div>
-                        <div
+                        {/* <div
                             className="main-window__button"
                             onClick={() => loadWorks()}
-                        >Применить фильтр</div>
+                        >Применить фильтр</div> */}
+                        <Button
+                            text="Применить фильтр"
+                            isLoading={isLoading}
+                            className="main-window__button"
+                            onClick={loadWorks}
+                        />
                     </div>
                     <div className="work-management-page__workshop-pick">
                         {workshops.map((item, index) => {

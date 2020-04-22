@@ -10,6 +10,7 @@ import { getRecordedWorkByMonth, getWorkReportByEmployee } from '../../../utils/
 import { getEmployeesByWorkshop } from '../../../utils/RequestsAPI/Employees.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import ManagerWorkspace from './ManagerWorkspace/ManagerWorkspace.jsx';
+import Button from '../../../utils/Form/Button/Button.jsx';
 
 const GeneralPage = (props) => {
     const [date, setDate] = useState(new Date());
@@ -23,7 +24,7 @@ const GeneralPage = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const exportCSVFile = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         const dates = [[''], ['']];
         for (let i = 1; i < new Date((new Date()).getFullYear(), (new Date()).getMonth() + 1, 0).getDate() + 1; i++)
@@ -211,14 +212,14 @@ const GeneralPage = (props) => {
                     {/* <div className="main-window__date">{'Дата: ' + formatDateString(date)}</div> */}
                     <div className="main-window__control-panel">
                         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER', 'ROLE_LEPSARI', 'ROLE_LIGOVSKIY', 'ROLE_ENGINEER']) && <Link className="main-window__button" to="/work-managment/record-time/new">Учесть рабочее время</Link>}
-                        {/* {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <ManagerWorkspace />} */}
-                        {/* {props.userHasAccess(['ROLE_ADMIN']) &&  */}
-                        <div className="main-window__button" onClick={exportCSVFile}>
-                            <img className="main-window__img" src={DownloadIcon} alt="" />
-                            <span>Скачать Табель</span>
-                        </div>
-                        {/* } */}
-                        {props.userHasAccess(['ROLE_ADMIN']) && isLoading && <ImgLoader />}
+                        <Button
+                            text="Скачать Табель"
+                            imgSrc={DownloadIcon}
+                            className="main-window__button"
+                            isLoading={isLoading}
+                            onClick={exportCSVFile}
+                        />
+                        {/* {props.userHasAccess(['ROLE_ADMIN']) && isLoading && <ImgLoader />} */}
                         {props.userHasAccess(['ROLE_ADMIN']) && <Link className="main-window__button" to="/graphs">Графики</Link>}
                     </div>
                     {

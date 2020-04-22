@@ -6,6 +6,7 @@ import Chart from 'chart.js';
 import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { formatDateStringNoYear } from '../../../utils/functions.jsx';
 import { createGraph, loadCanvas } from '../../../utils/graphs.js';
+import Button from '../../../utils/Form/Button/Button.jsx';
 
 const GraphsPage = (props) => {
     const lemz = "#1b4e6b";
@@ -231,14 +232,20 @@ const GraphsPage = (props) => {
                     </div>
                 </div>
                 <div className="main-window__control-panel">
-                    <button className="main-window__button" onClick={(event) => {
-                        event.preventDefault();
-                        setWeekOffset(weekOffset + 1);
-                    }}>Пред. неделя</button>
-                    <button className="main-window__button" onClick={(event) => {
-                        event.preventDefault();
-                        setWeekOffset(0);
-                    }}>Тек. неделя</button>
+                    <Button
+                        text="Пред. неделя"
+                        isLoading={isLoading}
+                        onClick={(event) => {
+                            setWeekOffset(weekOffset + 1);
+                        }}
+                    />
+                    <Button
+                        text="Тек. неделя"
+                        isLoading={isLoading}
+                        onClick={() => {
+                            setWeekOffset(0);
+                        }}
+                    />
                 </div>
             </div>
         </div>

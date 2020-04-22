@@ -15,6 +15,7 @@ import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const EditClient = (props) => {
     const [clientInputs, setClientInputs] = useState({
@@ -100,7 +101,7 @@ const EditClient = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         console.log(clientInputs);
         formIsValid() && editClient({
@@ -531,8 +532,14 @@ const EditClient = (props) => {
                     <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients/category/' + clientInputs.categoryName + '/' + (clientInputs.clientType === 'Активные' ? 'active' : clientInputs.clientType === 'Потенциальные' ? 'potential' : 'in-progress'))} value="Вернуться назад" />
-                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
-                        {isLoading && <ImgLoader />}
+                        {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
+                        {isLoading && <ImgLoader />} */}
+                        <Button
+                            text="Редактировать запись"
+                            isLoading={isLoading}
+                            className="main-form__submit"
+                            onClick={handleSubmit}
+                        />
                     </div>
                 </form>
             </div>

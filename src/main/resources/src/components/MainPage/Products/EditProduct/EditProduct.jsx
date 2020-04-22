@@ -8,6 +8,7 @@ import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 import { imgToBlobDownload, getDataUri } from '../../../../utils/functions.jsx'
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const EditProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -90,7 +91,7 @@ const EditProduct = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         // console.log(productInputs);        
         const id = props.history.location.pathname.split("/products/edit/")[1];
@@ -272,8 +273,14 @@ const EditProduct = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/products')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Изменить данные"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

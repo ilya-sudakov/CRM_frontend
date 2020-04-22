@@ -8,6 +8,7 @@ import pdfMake from 'pdfmake';
 import { getEmployeesListPdfText } from '../../../../utils/pdfFunctions.jsx';
 import { getEmployees, deleteEmployee, getEmployeesByWorkshop } from '../../../../utils/RequestsAPI/Employees.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const Employees = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -87,10 +88,17 @@ const Employees = (props) => {
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
-                    {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printEmployeesList}>
+                    {/* {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printEmployeesList}>
                         <img className="main-window__img" src={PrintIcon} alt="" />
                         <span>Печать списка</span>
-                    </div>}
+                    </div>} */}
+                    <Button
+                        text="Печать списка"
+                        isLoading={isLoading}
+                        imgSrc={PrintIcon}
+                        className="main-window__button"
+                        onClick={printEmployeesList}
+                    />
                     <div className="main-window__amount_table">Всего: {employees.filter(employee => {
                         return (employee.relevance !== 'Уволен' && employee.workshop !== 'Уволенные')
                     }).length} записей</div>
