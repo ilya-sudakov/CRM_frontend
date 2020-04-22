@@ -43,18 +43,6 @@ const Products = (props) => {
                 const categoriesArr = res;
                 setCategories([...res]);
                 let productsArr = [];
-                //Загрузка по категориям
-                // const temp = categoriesArr.map((item) => {
-                //     let category = {
-                //         category: item.name
-                //     };
-                //     return getProductsByCategory(category) //Продукция по категории
-                //         .then(res => res.json())
-                //         .then(res => {
-                //             res.map(item => productsArr.push(item));
-                //             setProducts([...productsArr]);
-                //         })
-                // })
                 //Загрузка по местоположению
                 if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER', 'ROLE_MANAGER'])) {
                     // console.log(categoriesArr);
@@ -143,21 +131,6 @@ const Products = (props) => {
                                 .then(() => console.log('all images downloaded'))
                         })
                 }
-                // Promise.all(temp)
-                //     .then(() => {
-                //         //Загружаем картинки по отдельности для каждой продукции
-                //         const tempNew = productsArr.map((item, index) => {
-                //             getProductById(item.id)
-                //                 .then(res => res.json())
-                //                 .then(res => {
-                //                     // console.log(res);
-                //                     productsArr.splice(index, 1, res);
-                //                     setProducts([...productsArr]);
-                //                 })
-                //         })
-                //         Promise.all(tempNew)
-                //             .then(() => console.log('all images downloaded'))
-                //     })
             })
     }
 
@@ -167,6 +140,7 @@ const Products = (props) => {
                 <div className="main-window__header">
                     <div className="main-window__title">Продукция</div>
                     {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_ENGINEER']) && <div className="main-window__button" onClick={() => setShowWindow(!showWindow)}>Категории</div>}
+                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => props.history.push('/packaging')}>Упаковки - UI</div>}
                 </div>
                 <FormWindow
                     title="Категории продукции"

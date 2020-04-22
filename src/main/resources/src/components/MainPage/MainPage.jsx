@@ -5,7 +5,7 @@ import Header from '../Header/Header.jsx';
 import {
     Clients, Contracts, Requests, NewRequest, GeneralPage, newClient, Products,
     NewProduct, EditRequest, ViewRequest, Users, EditUser, NewUser, ViewProduct, EditProduct, Rigging, Transportation, EditTransportation, NewTransportation,
-    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, NewRecordWork, LoginHistory, EditRecordWork, WorkManagementPage, PriceList, NewPriceList, ViewPriceList, ClientCategories, ViewClient, EditClient, FeedbackPage, NewFeedback, ViewFeedback, EtceteraPage, GraphsPage
+    GeneralTasks, NewTask, EditTask, Employees, NewEmployee, EditEmployee, ViewEmployee, Work, NewWork, EditWork, NewCategory, EditCategory, LEMZ, Lepsari, NewRecordWork, LoginHistory, EditRecordWork, WorkManagementPage, PriceList, NewPriceList, ViewPriceList, ClientCategories, ViewClient, EditClient, FeedbackPage, NewFeedback, ViewFeedback, EtceteraPage, GraphsPage, PackagingPage, NewPackaging
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -405,6 +405,20 @@ class MainPage extends React.Component {
                                 <PrivateRoute
                                     exact path="/graphs"
                                     component={GraphsPage}
+                                    userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
+                                    allowedRoles={["ROLE_ADMIN"]}
+                                />
+                                <PrivateRoute
+                                    exact path="/packaging"
+                                    component={PackagingPage}
+                                    userHasAccess={this.props.userHasAccess}
+                                    userData={this.props.userData}
+                                    allowedRoles={["ROLE_ADMIN"]}
+                                />
+                                <PrivateRoute
+                                    exact path="/packaging/new"
+                                    component={NewPackaging}
                                     userHasAccess={this.props.userHasAccess}
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}

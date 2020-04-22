@@ -1,0 +1,13 @@
+@import '../../../variables.scss';
+
+.packaging-page {
+    .main-window__list {
+        &-item {
+
+        }
+
+        .main-window__actions {
+            flex-direction: row;
+        }
+    }
+}

@@ -246,6 +246,12 @@ const SideMenu = (props) => {
             mainRoles: ['ROLE_ADMIN'],
             icon: moreImg
         },
+        {
+            pathname: "/packaging",
+            mainRoles: ['ROLE_ADMIN'],
+            addButtonRoles: ['ROLE_ADMIN'],
+            addButtonName: "Создать упаковку"
+        },
     ])
 
     useEffect(() => {

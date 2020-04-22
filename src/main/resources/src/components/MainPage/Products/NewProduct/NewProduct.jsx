@@ -30,7 +30,7 @@ const NewProduct = (props) => {
         photo: false,
         unit: false,
         weight: false
-    })
+    });
     const [validInputs, setValidInputs] = useState({
         name: false,
         category: false,
@@ -39,7 +39,7 @@ const NewProduct = (props) => {
         photo: true,
         unit: true,
         weight: false
-    })
+    });
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 

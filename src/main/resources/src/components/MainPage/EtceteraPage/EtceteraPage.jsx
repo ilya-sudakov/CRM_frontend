@@ -17,6 +17,10 @@ const EtceteraPage = (props) => {
             linkTo: '/graphs',
             name: 'Графики'
         },
+        {
+            linkTo: '/packaging',
+            name: 'Упаковка - UI'
+        },
     ]);
 
     return (
@@ -27,7 +31,7 @@ const EtceteraPage = (props) => {
                     {menuItems.map(item => {
                         return <Link to={item.linkTo} className="main-window__button">
                             {item.name}
-                    </Link>
+                        </Link>
                     })}
                 </div>
             </div>
