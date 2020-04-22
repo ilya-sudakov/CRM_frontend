@@ -29,6 +29,7 @@ import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
 import InputDate from '../../../utils/Form/InputDate/InputDate.jsx';
 import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx';
 import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx';
+import Button from '../../../utils/Form/Button/Button.jsx';
 
 const Clients = (props) => {
     const [clients, setClients] = useState([]);
@@ -520,11 +521,13 @@ const EditNextContactDate = (props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = () => {
+        setIsLoading(true);
         editNextContactDateClient({
             nextDateContact: new Date(date).getTime() / 1000,
             id: props.selectedItem.id
         })
             .then(() => {
+                setIsLoading(false);
                 props.loadData(props.selectedItem.category.name, (props.selectedItem.clientType === 'Активные' ? 'active' : 'potential'));
                 props.setCloseWindow(!props.closeWindow);
             })
@@ -554,8 +557,14 @@ const EditNextContactDate = (props) => {
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => {
                         props.setCloseWindow(!props.closeWindow);
                     }} value="Закрыть" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить дату" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить дату" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Изменить дату"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>
@@ -570,6 +579,7 @@ const EditWorkHistory = (props) => {
     const [clientId, setClientId] = useState(0);
 
     const handleSubmit = () => {
+        setIsLoading(true);
         //PUT if edited, POST if item is new
         const itemsArr = workHistoryNew.map((selected) => {
             let edited = false;
@@ -614,6 +624,7 @@ const EditWorkHistory = (props) => {
                 })
                 Promise.all(itemsArr)
                     .then(() => {
+                        setIsLoading(false);
                         props.setCloseWindow(!props.closeWindow);
                     })
             })
@@ -646,8 +657,14 @@ const EditWorkHistory = (props) => {
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => {
                         props.setCloseWindow(!props.closeWindow);
                     }} value="Закрыть" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Сохранить" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Сохранить" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Сохранить"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>
