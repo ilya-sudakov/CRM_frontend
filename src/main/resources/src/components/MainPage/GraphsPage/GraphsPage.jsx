@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './GraphsPage.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
 import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx';
-import Chart from 'chart.js';
+// import Chart from 'chart.js';
 import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { formatDateStringNoYear } from '../../../utils/functions.jsx';
 import { createGraph, loadCanvas } from '../../../utils/graphs.js';

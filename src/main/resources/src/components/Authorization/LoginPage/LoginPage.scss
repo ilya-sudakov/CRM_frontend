@@ -138,6 +138,10 @@
       }
     }
 
+    .button__img {
+      filter: brightness(3);
+    }
+
     .authorization__submit {
       width: 80%;
       display: flex;
