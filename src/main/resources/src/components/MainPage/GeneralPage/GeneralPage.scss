@@ -30,6 +30,11 @@
         margin-top: 5px;
         line-height: 2rem;
       }
+      .button {
+        .button__img {
+          filter: brightness(3);
+        }
+      }
     }
     // .img-loader {
     //   position: absolute;

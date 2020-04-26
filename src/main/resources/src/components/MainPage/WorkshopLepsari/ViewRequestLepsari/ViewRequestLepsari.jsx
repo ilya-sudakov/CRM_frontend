@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import pdfMake from 'pdfmake';
 import PrintIcon from '../../../../../../../../assets/print.png';
-import DownloadIcon from '../../../../../../../../assets/download.png';
+import DownloadIcon from '../../../../../../../../assets/download.svg';
 import './ViewRequestLepsari.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestLepsariById } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'

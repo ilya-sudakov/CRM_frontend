@@ -7,7 +7,7 @@ import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg';
 import editSVG from '../../../../../../../../../assets/tableview/edit.svg';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-// import DownloadIcon from '../../../../../../../../../assets/download.png';
+// import DownloadIcon from '../../../../../../../../../assets/download.svg';
 import { formatDateString, numberToString } from '../../../../../utils/functions.jsx';
 import { getRecordedWorkByDateRange, deleteRecordedWork, deleteProductFromRecordedWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 // import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';

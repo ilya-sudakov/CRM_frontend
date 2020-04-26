@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import pdfMake from 'pdfmake';
 import DatePicker from 'react-datepicker';
 import PrintIcon from '../../../../../../../../assets/print.png';
-import DownloadIcon from '../../../../../../../../assets/download.png';
+import DownloadIcon from '../../../../../../../../assets/download.svg';
 import './ViewRequest.scss';
 import '../../../../utils/Form/Form.scss';
 import { getRequestById } from '../../../../utils/RequestsAPI/Requests.jsx';

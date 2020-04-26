@@ -5,7 +5,7 @@ import { AdminWorkspace } from '../lazyImports.jsx';
 import { Link } from 'react-router-dom';
 import './GeneralPage.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
-import DownloadIcon from '../../../../../../../assets/download.png';
+import DownloadIcon from '../../../../../../../assets/download.svg';
 import { getRecordedWorkByMonth, getWorkReportByEmployee } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { getEmployeesByWorkshop } from '../../../utils/RequestsAPI/Employees.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
