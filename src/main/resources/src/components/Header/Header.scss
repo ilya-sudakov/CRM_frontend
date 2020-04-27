@@ -3,7 +3,7 @@
 .header {
   height: 60px;
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15), 0 0px 1px rgba(0, 0, 0, 0.15);
-  // border-bottom: 1px solid #bbbbbb;
+  // border-bottom: 1px solid #000000;
   padding: 0 25px;
   display: flex;
   justify-content: space-between;
@@ -12,7 +12,7 @@
   position: -webkit-sticky;
   z-index: 999;
   //dark-theme
-  // background-color: darken($side_menu__background, 5%);
+  background-color: lighten($side_menu__background, 0%);
 
   .header__img {
     width: 35px;
@@ -75,7 +75,7 @@
       padding: 15px 10px;
       background-color: darken($primary-background-color, 10%);
       //dark-theme
-      // background-color: lighten($side_menu__background, 10%);
+      background-color: lighten($side_menu__background, 10%);
     }
 
     .header__name {
@@ -95,9 +95,10 @@
         width: 30px;
         border-radius: 5px;
         background-color: $primary-text-color;
-        // background-color: #dddddd;
         transform-origin: 3px 0px;
         transition: 0.2s ease-in-out;
+        //dark-theme
+        background-color: #eeeeee;
 
         &:first-child {
           transform-origin: 0 0;
@@ -130,7 +131,7 @@
 
         .header__img {
           //dark-theme
-          // filter: brightness(2);
+          filter: brightness(2);
         }
       }
 
@@ -149,13 +150,13 @@
         transition: 0.2s ease-in-out;
         z-index: 2;
         //dark-theme
-        // background-color: darken($side_menu__background, 5%);
-        // color: #dddddd;
+        background-color: lighten($side_menu__background, 0%);
+        color: #ffffff;
 
         &:hover {
           background-color: darken($primary-background-color, 7.5%);
           //dark-theme
-          // background-color: darken($side_menu__background, 10%);
+          background-color: darken($side_menu__background, 5%);
         }
 
         .header__profile_data {
@@ -170,7 +171,7 @@
             width: 40px;
             margin-left: 5px;
             //dark-theme
-            // filter: brightness(2);
+            filter: brightness(2);
           }
 
           .header__email {
