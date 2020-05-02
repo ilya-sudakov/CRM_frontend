@@ -5,7 +5,6 @@ import { getClientById } from '../../../../utils/RequestsAPI/Clients.jsx';
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
@@ -199,7 +198,6 @@ const ViewClient = (props) => {
                     }
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/clients/category/' + clientInputs.categoryName + '/' + (clientInputs.clientType === 'Активные' ? 'active' : clientInputs.clientType === 'Потенциальные' ? 'potential' : 'in-progress'))} value="Вернуться назад" />
-                        {isLoading && <ImgLoader />}
                     </div>
                 </form>
             </div>

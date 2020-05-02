@@ -104,7 +104,7 @@ const TableView = (props) => {
                 <div className="tableview_products__col"></div>
                 <div className="tableview_products__col">Название</div>
                 <div className="tableview_products__col"></div>
-                <div className="tableview_products__col"></div>
+                {/* <div className="tableview_products__col"></div> */}
                 <div className="tableview_products__col"></div>
                 <div className="tableview_products__col"></div>
                 <div className="tableview_products__col">Действия</div>
@@ -120,7 +120,7 @@ const TableView = (props) => {
                         <div className="tableview_products__col">{category.category}</div>
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__col"></div>
-                        <div className="tableview_products__col"></div>
+                        {/* <div className="tableview_products__col"></div> */}
                         <div className="tableview_products__col"></div>
                         <div className="tableview_products__actions">
                             {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && <Link to={"/products/category/edit/" + category.id} className="tableview_products__action">Редактировать</Link>}
@@ -132,7 +132,7 @@ const TableView = (props) => {
                             <div className="tableview_products__col">Фото</div>
                             <div className="tableview_products__col">Название</div>
                             <div className="tableview_products__col">Вес</div>
-                            <div className="tableview_products__col">Упаковка</div>
+                            {/* <div className="tableview_products__col">Упаковка</div> */}
                             <div className="tableview_products__col">Место производства</div>
                             <div className="tableview_products__col">Комментарий</div>
                             <div className="tableview_products__col">Действия</div>
@@ -153,7 +153,7 @@ const TableView = (props) => {
                                 </div>
                                 <div className="tableview_products__col">{product.name}</div>
                                 <div className="tableview_products__col">{product.weight}</div>
-                                <div className="tableview_products__col">{product.packaging}</div>
+                                {/* <div className="tableview_products__col">{product.packaging}</div> */}
                                 <div className="tableview_products__col">{product.productionLocation}</div>
                                 <div className="tableview_products__col">{product.comment}</div>
                                 <div className="tableview_products__actions">

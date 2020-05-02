@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import "./Clients.scss";
-import "../../../utils/MainWindow/MainWindow.scss";
-import "../../../utils/Form/Form.scss";
-import viewSVG from "../../../../../../../assets/tableview/view.svg";
-import editSVG from "../../../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../../../assets/tableview/delete.svg";
-import starSVG from "../../../../../../../assets/tableview/star.svg";
-import starBorderedSVG from "../../../../../../../assets/tableview/star_border.svg";
-import phoneSVG from "../../../../../../../assets/tableview/phone.svg";
-import calendarSVG from "../../../../../../../assets/tableview/calendar.svg";
+import React, { useState, useEffect } from 'react'
+import './Clients.scss'
+import '../../../utils/MainWindow/MainWindow.scss'
+import '../../../utils/Form/Form.scss'
+import viewSVG from '../../../../../../../assets/tableview/view.svg'
+import editSVG from '../../../../../../../assets/tableview/edit.svg'
+import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
+import starSVG from '../../../../../../../assets/tableview/star.svg'
+import starBorderedSVG from '../../../../../../../assets/tableview/star_border.svg'
+import phoneSVG from '../../../../../../../assets/tableview/phone.svg'
+import calendarSVG from '../../../../../../../assets/tableview/calendar.svg'
 import {
   getClients,
   deleteClient,
@@ -17,198 +17,198 @@ import {
   editNextContactDateClient,
   searchClients,
   editClient,
-} from "../../../utils/RequestsAPI/Clients.jsx";
-import TableDataLoading from "../../../utils/TableView/TableDataLoading/TableDataLoading.jsx";
-import SearchBar from "../SearchBar/SearchBar.jsx";
-import { Link } from "react-router-dom";
-import { formatDateString } from "../../../utils/functions.jsx";
-import { deleteClientLegalEntity } from "../../../utils/RequestsAPI/Clients/LegalEntity.jsx";
-import { deleteClientContact } from "../../../utils/RequestsAPI/Clients/Contacts.jsx";
+} from '../../../utils/RequestsAPI/Clients.jsx'
+import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import SearchBar from '../SearchBar/SearchBar.jsx'
+import { Link } from 'react-router-dom'
+import { formatDateString } from '../../../utils/functions.jsx'
+import { deleteClientLegalEntity } from '../../../utils/RequestsAPI/Clients/LegalEntity.jsx'
+import { deleteClientContact } from '../../../utils/RequestsAPI/Clients/Contacts.jsx'
 import {
   deleteClientWorkHistory,
   editClientWorkHistory,
   addClientWorkHistory,
-} from "../../../utils/RequestsAPI/Clients/WorkHistory.jsx";
-import FormWindow from "../../../utils/Form/FormWindow/FormWindow.jsx";
-import InputDate from "../../../utils/Form/InputDate/InputDate.jsx";
-import SelectWorkHistory from "./SelectWorkHistory/SelectWorkHistory.jsx";
-import TableLoading from "../../../utils/TableView/TableLoading/TableLoading.jsx";
-import Button from "../../../utils/Form/Button/Button.jsx";
+} from '../../../utils/RequestsAPI/Clients/WorkHistory.jsx'
+import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
+import InputDate from '../../../utils/Form/InputDate/InputDate.jsx'
+import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx'
+import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx'
+import Button from '../../../utils/Form/Button/Button.jsx'
 
 const Clients = (props) => {
-  const [clients, setClients] = useState([]);
-  const [curCategory, setCurCategory] = useState("");
-  const [curClientType, setCurClientType] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [pagination, setPagination] = useState([1]);
-  const [curPage, setCurPage] = useState(1);
-  const [itemsCount, setItemsCount] = useState(0);
-  const [itemsActiveCount, setItemsActiveCount] = useState(0);
-  const [itemsPotentialCount, setItemsPotentialCount] = useState(0);
-  const [itemsProgressCount, setItemsProgressCount] = useState(0);
-  const [curForm, setCurForm] = useState("nextContactDate");
-  const [showWindow, setShowWindow] = useState(false);
-  const [closeWindow, setCloseWindow] = useState(false);
-  const [selectedItem, setSelectedItem] = useState({});
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [clients, setClients] = useState([])
+  const [curCategory, setCurCategory] = useState('')
+  const [curClientType, setCurClientType] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [pagination, setPagination] = useState([1])
+  const [curPage, setCurPage] = useState(1)
+  const [itemsCount, setItemsCount] = useState(0)
+  const [itemsActiveCount, setItemsActiveCount] = useState(0)
+  const [itemsPotentialCount, setItemsPotentialCount] = useState(0)
+  const [itemsProgressCount, setItemsProgressCount] = useState(0)
+  const [curForm, setCurForm] = useState('nextContactDate')
+  const [showWindow, setShowWindow] = useState(false)
+  const [closeWindow, setCloseWindow] = useState(false)
+  const [selectedItem, setSelectedItem] = useState({})
+  const [itemsPerPage, setItemsPerPage] = useState(10)
   const [sortOrder, setSortOrder] = useState({
-    curSort: "name",
-    name: "asc",
-    nextDateContact: "asc",
-  });
+    curSort: 'name',
+    name: 'asc',
+    nextDateContact: 'asc',
+  })
 
   const deleteItem = (clientId, index) => {
     Promise.all(
       clients[index].legalEntities.map((item) => {
-        return deleteClientLegalEntity(item.id);
-      })
+        return deleteClientLegalEntity(item.id)
+      }),
     )
       .then(() => {
         Promise.all(
           clients[index].contacts.map((item) => {
-            return deleteClientContact(item.id);
-          })
+            return deleteClientContact(item.id)
+          }),
         ).then(() => {
           Promise.all(
             clients[index].histories.map((item) => {
-              return deleteClientWorkHistory(item.id);
-            })
+              return deleteClientWorkHistory(item.id)
+            }),
           ).then(() => {
             deleteClient(clientId).then(() => {
-              let temp = clients;
-              temp.splice(index, 1);
-              setClients([...temp]);
+              let temp = clients
+              temp.splice(index, 1)
+              setClients([...temp])
               // console.log('deleted successfully');
-            });
-          });
-        });
+            })
+          })
+        })
       })
       .catch((error) => {
-        alert("Ошибка при удалении");
-        console.log(error);
-      });
-  };
+        alert('Ошибка при удалении')
+        console.log(error)
+      })
+  }
 
   const loadClientsTotalByType = (category) => {
     return getClientsByCategoryAndType(
       {
         categoryName: category,
-        clientType: "Активные",
+        clientType: 'Активные',
       },
       1,
       1,
-      sortOrder
+      sortOrder,
     )
       .then((res) => res.json())
       .then((res) => {
-        setItemsActiveCount(res.totalElements);
+        setItemsActiveCount(res.totalElements)
         return getClientsByCategoryAndType(
           {
             categoryName: category,
-            clientType: "Потенциальные",
+            clientType: 'Потенциальные',
           },
           1,
           1,
-          sortOrder
+          sortOrder,
         )
           .then((res) => res.json())
           .then((res) => {
-            setItemsPotentialCount(res.totalElements);
+            setItemsPotentialCount(res.totalElements)
             return getClientsByCategoryAndType(
               {
                 categoryName: category,
-                clientType: "В разработке",
+                clientType: 'В разработке',
               },
               1,
               1,
-              sortOrder
+              sortOrder,
             )
               .then((res) => res.json())
               .then((res) => {
-                setItemsProgressCount(res.totalElements);
-              });
-          });
-      });
-  };
+                setItemsProgressCount(res.totalElements)
+              })
+          })
+      })
+  }
 
   const loadData = (category, type, signal) => {
     // console.log(category, type);
-    setSearchQuery("");
-    setIsLoading(true);
+    setSearchQuery('')
+    setIsLoading(true)
     getClientsByCategoryAndType(
       {
         categoryName: category,
         clientType:
-          type === "active"
-            ? "Активные"
-            : type === "potential"
-            ? "Потенциальные"
-            : "В разработке",
+          type === 'active'
+            ? 'Активные'
+            : type === 'potential'
+            ? 'Потенциальные'
+            : 'В разработке',
       },
       curPage,
       itemsPerPage,
       sortOrder,
-      signal
+      signal,
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        setClients(res.content);
+        console.log(res)
+        setClients(res.content)
         // console.log(Math.ceil(res.totalElements / itemsPerPage));
-        if (curPage < 5 && searchQuery === "") {
+        if (curPage < 5 && searchQuery === '') {
           // setItemsCount(res.length);
-          setItemsCount(res.totalElements);
-          let temp = [];
-          let i = 1;
+          setItemsCount(res.totalElements)
+          let temp = []
+          let i = 1
           do {
-            temp.push(i);
-            i++;
-          } while (i <= Math.ceil(res.totalElements / itemsPerPage) && i <= 5);
-          setPagination(temp);
+            temp.push(i)
+            i++
+          } while (i <= Math.ceil(res.totalElements / itemsPerPage) && i <= 5)
+          setPagination(temp)
         }
-        setIsLoading(false);
-      });
-  };
+        setIsLoading(false)
+      })
+  }
 
   const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
     setSortOrder({
       curSort: name,
       // [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
       [name]: order,
-    });
+    })
     // loadData(props.location.pathname.split('/clients/category/')[1].split('/')[0],
     //     props.location.pathname.split('/clients/category/')[1].split('/')[1]);
-  };
+  }
 
   useEffect(() => {
-    document.title = "Клиенты";
-    const abortController = new AbortController();
+    document.title = 'Клиенты'
+    const abortController = new AbortController()
     // console.log(curPage);
     const curCategoryTemp = props.location.pathname
-      .split("/clients/category/")[1]
-      .split("/")[0];
+      .split('/clients/category/')[1]
+      .split('/')[0]
     const curClientTypeTemp = props.location.pathname
-      .split("/clients/category/")[1]
-      .split("/")[1];
+      .split('/clients/category/')[1]
+      .split('/')[1]
     if (
       curCategoryTemp !== curCategory ||
       curClientTypeTemp !== curClientType
     ) {
-      setCurPage(1);
+      setCurPage(1)
     }
-    setCurCategory(curCategoryTemp);
-    setCurClientType(curClientTypeTemp);
-    if (searchQuery === "") {
-      loadClientsTotalByType(curCategoryTemp);
-      loadData(curCategoryTemp, curClientTypeTemp, abortController.signal);
+    setCurCategory(curCategoryTemp)
+    setCurClientType(curClientTypeTemp)
+    if (searchQuery === '') {
+      loadClientsTotalByType(curCategoryTemp)
+      loadData(curCategoryTemp, curClientTypeTemp, abortController.signal)
     }
     return function cancel() {
-      abortController.abort();
-    };
-  }, [props.location, curPage, sortOrder, itemsPerPage]);
+      abortController.abort()
+    }
+  }, [props.location, curPage, sortOrder, itemsPerPage])
 
   return (
     <div className="clients">
@@ -217,31 +217,31 @@ const Clients = (props) => {
           <div className="main-window__title">{curCategory}</div>
           <div className="main-window__menu">
             <Link
-              to={"/clients/category/" + curCategory + "/active"}
+              to={'/clients/category/' + curCategory + '/active'}
               className={
-                props.location.pathname.includes("active") === true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
+                props.location.pathname.includes('active') === true
+                  ? 'main-window__item--active main-window__item'
+                  : 'main-window__item'
               }
             >
               Активные ({itemsActiveCount})
             </Link>
             <Link
-              to={"/clients/category/" + curCategory + "/potential"}
+              to={'/clients/category/' + curCategory + '/potential'}
               className={
-                props.location.pathname.includes("potential") === true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
+                props.location.pathname.includes('potential') === true
+                  ? 'main-window__item--active main-window__item'
+                  : 'main-window__item'
               }
             >
               Потенциальные ({itemsPotentialCount})
             </Link>
             <Link
-              to={"/clients/category/" + curCategory + "/in-progress"}
+              to={'/clients/category/' + curCategory + '/in-progress'}
               className={
-                props.location.pathname.includes("in-progress") === true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
+                props.location.pathname.includes('in-progress') === true
+                  ? 'main-window__item--active main-window__item'
+                  : 'main-window__item'
               }
             >
               В разработке ({itemsProgressCount})
@@ -254,10 +254,10 @@ const Clients = (props) => {
           setSearchQuery={setSearchQuery}
           searchQuery={searchQuery}
           onButtonClick={(query) => {
-            setIsLoading(true);
+            setIsLoading(true)
             // console.log(query);
-            if (query === "") {
-              loadData(curCategory, curClientType);
+            if (query === '') {
+              loadData(curCategory, curClientType)
             } else {
               searchClients({
                 name: query,
@@ -265,27 +265,27 @@ const Clients = (props) => {
                 .then((res) => res.json())
                 .then((res) => {
                   // console.log(res);
-                  setClients(res);
-                  setItemsCount(res.length);
-                  setPagination([1]);
-                  setIsLoading(false);
+                  setClients(res)
+                  setItemsCount(res.length)
+                  setPagination([1])
+                  setIsLoading(false)
                 })
                 .catch((error) => {
-                  console.log(error);
-                  setIsLoading(false);
-                });
+                  console.log(error)
+                  setIsLoading(false)
+                })
             }
           }}
         />
         <FormWindow
           title={
-            curForm === "nextContactDate"
-              ? "Дата следующего контакта"
-              : "Запись действия"
+            curForm === 'nextContactDate'
+              ? 'Дата следующего контакта'
+              : 'Запись действия'
           }
           content={
             <React.Fragment>
-              {curForm === "nextContactDate" ? (
+              {curForm === 'nextContactDate' ? (
                 <EditNextContactDate
                   selectedItem={selectedItem}
                   showWindow={showWindow}
@@ -345,29 +345,29 @@ const Clients = (props) => {
             //    )
             //})
             .sort((a, b) => {
-              if (searchQuery !== "") {
-                if (sortOrder.curSort === "nextDateContact") {
+              if (searchQuery !== '') {
+                if (sortOrder.curSort === 'nextDateContact') {
                   if (
                     new Date(a[sortOrder.curSort]) <
                     new Date(b[sortOrder.curSort])
                   ) {
-                    return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
+                    return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
                   }
                   if (
                     new Date(a[sortOrder.curSort]) >
                     new Date(b[sortOrder.curSort])
                   ) {
-                    return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
+                    return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
                   }
-                  return 0;
+                  return 0
                 } else {
                   if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                    return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
+                    return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
                   }
                   if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                    return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
+                    return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
                   }
-                  return 0;
+                  return 0
                 }
               }
             })
@@ -385,36 +385,36 @@ const Clients = (props) => {
                       className="main-window__link"
                       title={item.site}
                       href={
-                        item.site.split("//").length > 1
+                        item.site.split('//').length > 1
                           ? item.site
-                          : "http://" + item.site
+                          : 'http://' + item.site
                       }
                       target="_blank"
                     >
-                      {item.site.split("//").length > 1
-                        ? item.site.split("//")[1]
+                      {item.site.split('//').length > 1
+                        ? item.site.split('//')[1]
                         : item.site}
                     </a>
                   </span>
                   <span>
                     <div className="main-window__mobile-text">
-                      Контактное лицо:{" "}
+                      Контактное лицо:{' '}
                     </div>
                     {item.contacts?.length > 0
-                      ? (item.contacts[0].name !== ""
-                          ? item.contacts[0].name + ", "
-                          : "") + item.contacts[0].phoneNumber
-                      : "Не указаны контакт. данные"}
+                      ? (item.contacts[0].name !== ''
+                          ? item.contacts[0].name + ', '
+                          : '') + item.contacts[0].phoneNumber
+                      : 'Не указаны контакт. данные'}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">
-                      Комментарий:{" "}
+                      Комментарий:{' '}
                     </div>
                     {item.comment}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">
-                      Дата след. контакта:{" "}
+                      Дата след. контакта:{' '}
                     </div>
                     {/* {formatDateString(item.nextDateContact)} */}
                     {new Date(item.nextDateContact) < new Date() ? (
@@ -427,12 +427,12 @@ const Clients = (props) => {
                     )}
                   </span>
                   <div className="main-window__actions">
-                    {props.userHasAccess(["ROLE_ADMIN"]) && (
+                    {props.userHasAccess(['ROLE_ADMIN']) && (
                       <div
                         className="main-window__action"
                         title="Добавить в избранных клиентов"
                         onClick={() => {
-                          let temp = clients;
+                          let temp = clients
                           //   console.log(item);
                           let newClient = Object.assign({
                             categoryId: item.category.id,
@@ -448,19 +448,19 @@ const Clients = (props) => {
                             storageAddress: item.storageAddress,
                             workCondition: item.workCondition,
                             favorite: !item.favorite,
-                          });
+                          })
                           editClient(newClient, item.id)
                             .then(() => {
                               temp.splice(index, 1, {
-                                  ...item,
-                                  favorite: !item.favorite
-                              });
+                                ...item,
+                                favorite: !item.favorite,
+                              })
                               //   loadData(item.categoryName, item.clientType);
-                              setClients([...temp]);
+                              setClients([...temp])
                             })
                             .catch((error) => {
-                              console.log(error);
-                            });
+                              console.log(error)
+                            })
                         }}
                       >
                         <img
@@ -473,10 +473,10 @@ const Clients = (props) => {
                       className="main-window__action"
                       title="Совершить действие"
                       onClick={() => {
-                        setCloseWindow(false);
-                        setSelectedItem(item);
-                        setShowWindow(true);
-                        setCurForm("workHistory");
+                        setCloseWindow(false)
+                        setSelectedItem(item)
+                        setShowWindow(true)
+                        setCurForm('workHistory')
                       }}
                     >
                       <img className="main-window__img" src={phoneSVG} />
@@ -485,10 +485,10 @@ const Clients = (props) => {
                       className="main-window__action"
                       title="Дата следующего контакта"
                       onClick={() => {
-                        setCloseWindow(false);
-                        setSelectedItem(item);
-                        setShowWindow(true);
-                        setCurForm("nextContactDate");
+                        setCloseWindow(false)
+                        setSelectedItem(item)
+                        setShowWindow(true)
+                        setCurForm('nextContactDate')
                       }}
                     >
                       <img className="main-window__img" src={calendarSVG} />
@@ -497,7 +497,7 @@ const Clients = (props) => {
                       className="main-window__action"
                       title="Просмотр клиента"
                       onClick={() => {
-                        props.history.push("/clients/view/" + item.id);
+                        props.history.push('/clients/view/' + item.id)
                       }}
                     >
                       <img className="main-window__img" src={viewSVG} />
@@ -506,17 +506,17 @@ const Clients = (props) => {
                       className="main-window__action"
                       title="Редактирование клиента"
                       onClick={() => {
-                        props.history.push("/clients/edit/" + item.id);
+                        props.history.push('/clients/edit/' + item.id)
                       }}
                     >
                       <img className="main-window__img" src={editSVG} />
                     </div>
-                    {props.userHasAccess(["ROLE_ADMIN"]) && (
+                    {props.userHasAccess(['ROLE_ADMIN']) && (
                       <div
                         className="main-window__action"
                         title="Удаление клиента"
                         onClick={() => {
-                          deleteItem(item.id, index);
+                          deleteItem(item.id, index)
                         }}
                       >
                         <img className="main-window__img" src={deleteSVG} />
@@ -524,7 +524,7 @@ const Clients = (props) => {
                     )}
                   </div>
                 </div>
-              );
+              )
             })}
         </div>
         <div className="main-window__pagination">
@@ -533,8 +533,8 @@ const Clients = (props) => {
             <select
               value={itemsPerPage}
               onChange={(event) => {
-                const value = event.target.value;
-                setItemsPerPage(value);
+                const value = event.target.value
+                setItemsPerPage(value)
               }}
             >
               <option>20</option>
@@ -546,35 +546,35 @@ const Clients = (props) => {
             className="main-window__page-number main-window__page-number--skip"
             onClick={() => {
               if (curPage > 1) {
-                const item = curPage - 1;
-                setCurPage(item);
+                const item = curPage - 1
+                setCurPage(item)
                 if (Math.floor(itemsCount / itemsPerPage) > 5) {
                   if (pagination.indexOf(item) === 0 && item !== 1) {
-                    let temp = [];
+                    let temp = []
                     for (
                       let i = pagination[0] - 1;
                       i <= Math.floor(itemsCount / itemsPerPage) &&
                       i <= pagination[pagination.length - 1] - 1;
                       i++
                     ) {
-                      temp.push(i);
+                      temp.push(i)
                     }
-                    return setPagination(temp);
+                    return setPagination(temp)
                   }
                   if (
                     pagination.indexOf(item) === pagination.length - 1 &&
                     item !== Math.floor(itemsCount / itemsPerPage)
                   ) {
-                    let temp = [];
+                    let temp = []
                     for (
                       let i = pagination[0] + 1;
                       i <= Math.floor(itemsCount / itemsPerPage) &&
                       i <= pagination[pagination.length - 1] + 1;
                       i++
                     ) {
-                      temp.push(i);
+                      temp.push(i)
                     }
-                    return setPagination(temp);
+                    return setPagination(temp)
                   }
                 }
               }
@@ -582,40 +582,40 @@ const Clients = (props) => {
           >
             Пред
           </div>
-          {curPage >= 5 && searchQuery === "" && (
+          {curPage >= 5 && searchQuery === '' && (
             <React.Fragment>
               <div
                 className="main-window__page-number"
                 onClick={() => {
-                  const item = 1;
-                  setCurPage(item);
+                  const item = 1
+                  setCurPage(item)
                   if (Math.floor(itemsCount / itemsPerPage) > 5) {
                     if (pagination.indexOf(item) === 0 && item !== 1) {
-                      let temp = [];
+                      let temp = []
                       for (
                         let i = pagination[0] - 1;
                         i <= Math.floor(itemsCount / itemsPerPage) &&
                         i <= pagination[pagination.length - 1] - 1;
                         i++
                       ) {
-                        temp.push(i);
+                        temp.push(i)
                       }
-                      return setPagination(temp);
+                      return setPagination(temp)
                     }
                     if (
                       pagination.indexOf(item) === pagination.length - 1 &&
                       item !== Math.floor(itemsCount / itemsPerPage)
                     ) {
-                      let temp = [];
+                      let temp = []
                       for (
                         let i = pagination[0] + 1;
                         i <= Math.floor(itemsCount / itemsPerPage) &&
                         i <= pagination[pagination.length - 1] + 1;
                         i++
                       ) {
-                        temp.push(i);
+                        temp.push(i)
                       }
-                      return setPagination(temp);
+                      return setPagination(temp)
                     }
                   }
                 }}
@@ -630,38 +630,38 @@ const Clients = (props) => {
               <div
                 className={
                   curPage == item
-                    ? "main-window__page-number main-window__page-number--active"
-                    : "main-window__page-number"
+                    ? 'main-window__page-number main-window__page-number--active'
+                    : 'main-window__page-number'
                 }
                 onClick={() => {
-                  setCurPage(item);
+                  setCurPage(item)
                   if (Math.floor(itemsCount / itemsPerPage) > 5) {
                     if (pagination.indexOf(item) === 0 && item !== 1) {
-                      let temp = [];
+                      let temp = []
                       for (
                         let i = pagination[0] - 1;
                         i <= Math.floor(itemsCount / itemsPerPage) &&
                         i <= pagination[pagination.length - 1] - 1;
                         i++
                       ) {
-                        temp.push(i);
+                        temp.push(i)
                       }
-                      return setPagination(temp);
+                      return setPagination(temp)
                     }
                     if (
                       pagination.indexOf(item) === pagination.length - 1 &&
                       item !== Math.ceil(itemsCount / itemsPerPage)
                     ) {
-                      let temp = [];
+                      let temp = []
                       for (
                         let i = pagination[0] + 1;
                         i <= Math.ceil(itemsCount / itemsPerPage) &&
                         i <= pagination[pagination.length - 1] + 1;
                         i++
                       ) {
-                        temp.push(i);
+                        temp.push(i)
                       }
-                      return setPagination(temp);
+                      return setPagination(temp)
                     }
                   }
                 }}
@@ -671,33 +671,33 @@ const Clients = (props) => {
                   из {Math.ceil(itemsCount / itemsPerPage)}
                 </div>
               </div>
-            );
+            )
           })}
           {curPage <= Math.ceil(itemsCount / itemsPerPage) - 2 &&
             Math.ceil(itemsCount / itemsPerPage) > 5 &&
             pagination.find(
-              (item) => item === Math.ceil(itemsCount / itemsPerPage)
+              (item) => item === Math.ceil(itemsCount / itemsPerPage),
             ) === undefined &&
-            searchQuery === "" && (
+            searchQuery === '' && (
               <React.Fragment>
                 <span>...</span>
                 {/* {console.log(pagination.find(item => item === Math.ceil(itemsCount / itemsPerPage)))} */}
                 <div
                   className="main-window__page-number"
                   onClick={() => {
-                    const item = Math.ceil(itemsCount / itemsPerPage);
-                    setCurPage(item);
-                    console.log(item);
+                    const item = Math.ceil(itemsCount / itemsPerPage)
+                    setCurPage(item)
+                    console.log(item)
                     if (Math.ceil(itemsCount / itemsPerPage) > 5) {
-                      let temp = [];
+                      let temp = []
                       for (
                         let i = item - 5;
                         i <= Math.ceil(itemsCount / itemsPerPage);
                         i++
                       ) {
-                        temp.push(i);
+                        temp.push(i)
                       }
-                      return setPagination(temp);
+                      return setPagination(temp)
                     }
                   }}
                 >
@@ -709,35 +709,35 @@ const Clients = (props) => {
             className="main-window__page-number main-window__page-number--skip"
             onClick={() => {
               if (curPage < Math.ceil(itemsCount / itemsPerPage)) {
-                const item = curPage + 1;
-                setCurPage(item);
+                const item = curPage + 1
+                setCurPage(item)
                 if (Math.ceil(itemsCount / itemsPerPage) >= 5) {
                   if (pagination.indexOf(item) === 0 && item !== 1) {
-                    let temp = [];
+                    let temp = []
                     for (
                       let i = pagination[0] - 1;
                       i <= Math.ceil(itemsCount / itemsPerPage) &&
                       i <= pagination[pagination.length - 1] - 1;
                       i++
                     ) {
-                      temp.push(i);
+                      temp.push(i)
                     }
-                    return setPagination(temp);
+                    return setPagination(temp)
                   }
                   if (
                     pagination.indexOf(item) === pagination.length - 1 &&
                     item !== Math.ceil(itemsCount / itemsPerPage)
                   ) {
-                    let temp = [];
+                    let temp = []
                     for (
                       let i = pagination[0] + 1;
                       i <= Math.ceil(itemsCount / itemsPerPage) &&
                       i <= pagination[pagination.length - 1] + 1;
                       i++
                     ) {
-                      temp.push(i);
+                      temp.push(i)
                     }
-                    return setPagination(temp);
+                    return setPagination(temp)
                   }
                 }
               }
@@ -748,28 +748,28 @@ const Clients = (props) => {
         </div>
       </div>
     </div>
-  );
-};
-export default Clients;
+  )
+}
+export default Clients
 
 const EditNextContactDate = (props) => {
-  const [date, setDate] = useState(new Date());
-  const [isLoading, setIsLoading] = useState(false);
+  const [date, setDate] = useState(new Date())
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = () => {
-    setIsLoading(true);
+    setIsLoading(true)
     editNextContactDateClient({
       nextDateContact: new Date(date).getTime() / 1000,
       id: props.selectedItem.id,
     }).then(() => {
-      setIsLoading(false);
+      setIsLoading(false)
       props.loadData(
         props.selectedItem.category.name,
-        props.selectedItem.clientType === "Активные" ? "active" : "potential"
-      );
-      props.setCloseWindow(!props.closeWindow);
-    });
-  };
+        props.selectedItem.clientType === 'Активные' ? 'active' : 'potential',
+      )
+      props.setCloseWindow(!props.closeWindow)
+    })
+  }
 
   useEffect(() => {
     if (
@@ -777,11 +777,11 @@ const EditNextContactDate = (props) => {
       props.setShowWindow &&
       props.closeWindow === true
     ) {
-      props.setShowWindow(false);
+      props.setShowWindow(false)
     } else {
-      setDate(props.selectedItem.nextDateContact);
+      setDate(props.selectedItem.nextDateContact)
     }
-  }, [props.selectedItem, props.closeWindow]);
+  }, [props.selectedItem, props.closeWindow])
 
   return (
     <div className="main-form">
@@ -791,7 +791,7 @@ const EditNextContactDate = (props) => {
           name="nextContactDate"
           selected={Date.parse(date)}
           handleDateChange={(value) => {
-            setDate(value);
+            setDate(value)
           }}
         />
         <div className="main-form__buttons">
@@ -799,12 +799,10 @@ const EditNextContactDate = (props) => {
             className="main-form__submit main-form__submit--inverted"
             type="submit"
             onClick={() => {
-              props.setCloseWindow(!props.closeWindow);
+              props.setCloseWindow(!props.closeWindow)
             }}
             value="Закрыть"
           />
-          {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить дату" />
-                    {isLoading && <ImgLoader />} */}
           <Button
             text="Изменить дату"
             isLoading={isLoading}
@@ -814,26 +812,26 @@ const EditNextContactDate = (props) => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
 const EditWorkHistory = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [workHistory, setWorkHistory] = useState([]);
-  const [workHistoryNew, setWorkHistoryNew] = useState([]);
-  const [clientId, setClientId] = useState(0);
+  const [isLoading, setIsLoading] = useState(false)
+  const [workHistory, setWorkHistory] = useState([])
+  const [workHistoryNew, setWorkHistoryNew] = useState([])
+  const [clientId, setClientId] = useState(0)
 
   const handleSubmit = () => {
-    setIsLoading(true);
+    setIsLoading(true)
     //PUT if edited, POST if item is new
     const itemsArr = workHistoryNew.map((selected) => {
-      let edited = false;
+      let edited = false
       workHistory.map((item) => {
         if (item.id === selected.id) {
-          edited = true;
-          return;
+          edited = true
+          return
         }
-      });
+      })
       return edited === true
         ? editClientWorkHistory(
             {
@@ -843,7 +841,7 @@ const EditWorkHistory = (props) => {
               comment: selected.comment,
               clientId: clientId,
             },
-            selected.id
+            selected.id,
           )
         : addClientWorkHistory({
             date: selected.date,
@@ -851,26 +849,26 @@ const EditWorkHistory = (props) => {
             result: selected.result,
             comment: selected.comment,
             clientId: clientId,
-          });
-    });
+          })
+    })
     Promise.all(itemsArr).then(() => {
       //DELETE items removed by user
       const itemsArr = workHistory.map((item) => {
-        let deleted = true;
+        let deleted = true
         workHistoryNew.map((selected) => {
           if (selected.id === item.id) {
-            deleted = false;
-            return;
+            deleted = false
+            return
           }
-        });
-        return deleted === true && deleteClientWorkHistory(item.id);
-      });
+        })
+        return deleted === true && deleteClientWorkHistory(item.id)
+      })
       Promise.all(itemsArr).then(() => {
-        setIsLoading(false);
-        props.setCloseWindow(!props.closeWindow);
-      });
-    });
-  };
+        setIsLoading(false)
+        props.setCloseWindow(!props.closeWindow)
+      })
+    })
+  }
 
   useEffect(() => {
     if (
@@ -878,13 +876,13 @@ const EditWorkHistory = (props) => {
       props.setShowWindow &&
       props.closeWindow === true
     ) {
-      props.setShowWindow(false);
+      props.setShowWindow(false)
     } else {
-      setClientId(props.selectedItem.id);
-      setWorkHistory(props.selectedItem.histories);
-      setWorkHistoryNew(props.selectedItem.histories);
+      setClientId(props.selectedItem.id)
+      setWorkHistory(props.selectedItem.histories)
+      setWorkHistoryNew(props.selectedItem.histories)
     }
-  }, [props.selectedItem, props.closeWindow]);
+  }, [props.selectedItem, props.closeWindow])
 
   return (
     <div className="main-form">
@@ -894,7 +892,7 @@ const EditWorkHistory = (props) => {
             defaultValue={workHistory}
             userHasAccess={props.userHasAccess}
             handleWorkHistoryChange={(value) => {
-              setWorkHistoryNew(value);
+              setWorkHistoryNew(value)
             }}
           />
         </div>
@@ -903,12 +901,10 @@ const EditWorkHistory = (props) => {
             className="main-form__submit main-form__submit--inverted"
             type="submit"
             onClick={() => {
-              props.setCloseWindow(!props.closeWindow);
+              props.setCloseWindow(!props.closeWindow)
             }}
             value="Закрыть"
           />
-          {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Сохранить" />
-                    {isLoading && <ImgLoader />} */}
           <Button
             text="Сохранить"
             isLoading={isLoading}
@@ -918,5 +914,5 @@ const EditWorkHistory = (props) => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}

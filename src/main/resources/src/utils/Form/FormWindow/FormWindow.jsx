@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom'
 import './FormWindow.scss'
 
 const FormWindow = (props) => {
-  const [windowChange, setWindowChange] = useState(false)
   useEffect(() => {
     // console.log(props.showWindow);
-  }, [props.showWindow, props.setShowWindow, windowChange])
+  }, [props.showWindow, props.setShowWindow])
 
   const clickOnSelectWindow = (e) => {
     e.preventDefault()

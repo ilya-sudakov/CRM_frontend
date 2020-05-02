@@ -210,6 +210,10 @@
       .main-window__link {
         color: #ffffff;
       }
+
+      .main-window__actions .main-window__action{
+        color: $secondary-text-color;
+      }
     }
     &:hover .main-window__action {
       // background-color: $white;
@@ -336,7 +340,7 @@
     transition: all 100ms ease-in-out;
     color: $primary-text-color;
     // color: $secondary-text-color;
-    font-size: 80%;
+    font-size: 90%;
     cursor: pointer;
     //---
     padding: 5px;
@@ -348,6 +352,7 @@
     background-color: transparent;
     border: 0;
     transform: scale(1);
+    // color: $button__background--inverted;
     &:last-child {
       margin-bottom: 0;
       margin-right: 0;

@@ -28,7 +28,7 @@
         outline: none;
         cursor: pointer;
         padding: 10px 15px;
-        font-size: 80%;
+        font-size: 70%;
         transition: 0.2s ease-in-out;
         margin-bottom: 5px;
 
@@ -41,7 +41,8 @@
         align-self: flex-end;
         // width: calc(80%);
         width: calc(100% - 20px);
-        margin-top: 1px;
+        // max-width: 150px;
+        margin-top: -4px;
         font-size: 0.75rem;
         // position: absolute;
         // top: 2rem;
@@ -110,6 +111,34 @@
 
             &:focus {
                 border: 1px solid $button__background--inverted;
+            }
+        }
+    }
+
+    > .main-window {
+        background-color: #dddddd;
+        border-radius: 5px;
+        align-self: flex-end;
+        width: calc(80% + 18px);
+    }
+
+    @media (max-width: 768px) {
+        & {
+            &__input {
+                flex-direction: column;
+                align-items: flex-start;
+
+                .select-packaging__input_name {
+                    margin-bottom: 5px;
+                }
+
+                .select-packaging__input-field {
+                    width: 100%;
+                }
+            }
+
+            > .main-window {
+                width: calc(100%);
             }
         }
     }

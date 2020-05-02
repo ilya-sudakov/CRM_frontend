@@ -7,11 +7,14 @@ import {
 } from '../../../../utils/RequestsAPI/Products/packaging.js'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
 import '../../../../utils/MainWindow/MainWindow.scss'
+import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
+import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx'
 
 const SelectPackaging = (props) => {
   const [selected, setSelected] = useState([])
   const [packages, setPackages] = useState([])
   const [showWindow, setShowWindow] = useState(false)
+  const [closeWindow, setCloseWindow] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -32,11 +35,11 @@ const SelectPackaging = (props) => {
 
   useEffect(() => {
     const abortController = new AbortController()
-    loadData(abortController.signal)
+    packages.length === 0 && loadData(abortController.signal)
     if (props.defaultValue) {
       setSelected(props.defaultValue)
     }
-  }, [])
+  }, [selected])
 
   return (
     <div className="select-packaging">
@@ -49,7 +52,22 @@ const SelectPackaging = (props) => {
               setSearchQuery={setSearchQuery}
               placeholder="Введите название упаковки для поиска..."
             />
-            <TableView packages={packages} />
+            <TableView
+              packages={packages}
+              searchQuery={searchQuery}
+              isLoading={isLoading}
+              onSelect={(item) => {
+                let temp = selected
+                temp.push(item)
+                setSelected([...temp])
+                props.onChange([...temp])
+                setShowWindow(!showWindow)
+              }}
+              showWindow={showWindow}
+              setShowWindow={setShowWindow}
+              closeWindow={closeWindow}
+              setCloseWindow={setCloseWindow}
+            />
           </React.Fragment>
         }
         showWindow={showWindow}
@@ -59,58 +77,164 @@ const SelectPackaging = (props) => {
         <div className="select-packaging__input_name">
           {'Упаковка' + (props.required ? '*' : '')}
         </div>
-        <div className="select-packaging__input-field">
-          {!props.readOnly && (
-            <button
-              onClick={(event) => {
-                event.preventDefault()
-                setShowWindow(!showWindow)
-              }}
-              className="select-packaging__button"
-            >
-              Добавить упаковку
-            </button>
-          )}
-        </div>
+        {!props.readOnly && (
+          <div className="select-packaging__input-field">
+            {!props.readOnly && (
+              <button
+                onClick={(event) => {
+                  event.preventDefault()
+                  setShowWindow(!showWindow)
+                }}
+                className="select-packaging__button"
+              >
+                Добавить упаковку
+              </button>
+            )}
+            {props.error === true && (
+              <div
+                className="select-packaging__error"
+                onClick={
+                  props.setErrorsArr
+                    ? () =>
+                        props.setErrorsArr({
+                          ...props.errorsArr,
+                          [props.errorName]: false,
+                        })
+                    : null
+                }
+              >
+                Поле не заполнено!
+              </div>
+            )}
+          </div>
+        )}
       </div>
+      {selected.length > 0 && (
+        <div className="main-window">
+          <div className="main-window__list">
+            <div className="main-window__list-item main-window__list-item--header">
+              <span>Название</span>
+              <span>Количество</span>
+              <span>Комментарий</span>
+              <span>Размер</span>
+              {!props.readOnly && (
+                <div className="main-window__actions">Действие</div>
+              )}
+            </div>
+            {selected.map((item, index) => {
+              return (
+                <div className="main-window__list-item">
+                  <span>
+                    <div className="main-window__mobile-text">Название:</div>
+                    {item.name}
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">Количество:</div>
+                    {item.quantity}
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">Комментарий:</div>
+                    {item.comment}
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">Размер:</div>
+                    {item.size}
+                  </span>
+                  {!props.readOnly && (
+                    <div className="main-window__actions">
+                      <div
+                        className="main-window__action"
+                        title="Удалить из списка"
+                        onClick={(event) => {
+                          event.preventDefault()
+                          let temp = selected
+                          temp.splice(index, 1)
+                          setSelected([...temp])
+                          props.onChange([...temp])
+                        }}
+                      >
+                        {/* Удалить */}
+                        <img className="main-window__img" src={deleteSVG} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
 
 const TableView = (props) => {
-  useEffect(() => {}, [props.packages])
+  const [selectedItem, setSelectedItem] = useState({})
+
+  useEffect(() => {
+    props.setShowWindow && props.setShowWindow(false)
+  }, [props.closeWindow])
 
   return (
     <div className="main-window">
       <div className="main-window__list">
+        <TableLoading isLoading={props.isLoading} />
         <div className="main-window__list-item main-window__list-item--header">
           <span>Название</span>
           <span>Количество</span>
           <span>Комментарий</span>
           <span>Размер</span>
+          <div className="main-window__actions">Действие</div>
         </div>
-        {props.packages.map((item) => {
-          return (
-            <div className="main-window__list-item">
-              <span>
-                <div className="main-window__mobile-text">Название</div>
-                {item.name}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Количество</div>
-                {item.quantity}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Комментарий</div>
-                {item.comment}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Размер</div>
-                {item.size}
-              </span>
-            </div>
-          )
-        })}
+        {props.packages
+          .filter((item) => {
+            return (
+              item.name
+                .toLowerCase()
+                .includes(props.searchQuery.toLowerCase()) ||
+              item.comment
+                .toLowerCase()
+                .includes(props.searchQuery.toLowerCase())
+            )
+          })
+          .map((item) => {
+            return (
+              <div className="main-window__list-item">
+                <span>
+                  <div className="main-window__mobile-text">Название:</div>
+                  {item.name}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Количество:</div>
+                  {item.quantity}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Комментарий:</div>
+                  {item.comment}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Размер:</div>
+                  {item.size}
+                </span>
+                <div className="main-window__actions">
+                  <div
+                    className="main-window__action"
+                    onClick={(event) => {
+                      event.preventDefault()
+                      props.onSelect(item)
+                      setSelectedItem({
+                        ...item,
+                      })
+                      props.setCloseWindow(!props.closeWindow)
+                      props.setShowWindow(false)
+                    }}
+                  >
+                    Выбрать
+                  </div>
+                </div>
+              </div>
+            )
+          })}
       </div>
     </div>
   )
