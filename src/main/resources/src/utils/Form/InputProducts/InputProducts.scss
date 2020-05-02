@@ -83,6 +83,10 @@
     .input_products__input {
       flex-wrap: wrap;
 
+      .input_products__input_name {
+        margin-bottom: 5px;
+      }
+
       .input_products__input_field {
         width: 100%;
       }

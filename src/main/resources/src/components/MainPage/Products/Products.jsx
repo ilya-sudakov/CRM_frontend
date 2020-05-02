@@ -140,7 +140,7 @@ const Products = (props) => {
                 <div className="main-window__header">
                     <div className="main-window__title">Продукция</div>
                     {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_ENGINEER']) && <div className="main-window__button" onClick={() => setShowWindow(!showWindow)}>Категории</div>}
-                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => props.history.push('/packaging')}>Упаковки - UI</div>}
+                    {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => props.history.push('/packaging')}>Упаковки</div>}
                 </div>
                 <FormWindow
                     title="Категории продукции"

@@ -19,7 +19,7 @@ const EtceteraPage = (props) => {
         },
         {
             linkTo: '/packaging',
-            name: 'Упаковка - UI'
+            name: 'Упаковка'
         },
     ]);
 

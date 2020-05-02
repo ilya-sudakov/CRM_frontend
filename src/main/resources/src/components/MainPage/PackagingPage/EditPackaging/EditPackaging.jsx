@@ -23,7 +23,7 @@ const EditPackaging = (props) => {
         quantity: true,
         size: true
     });
-
+    const [packagingId, setPackagingId] = useState(0);
     const [showError, setShowError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -73,7 +73,7 @@ const EditPackaging = (props) => {
         // event.preventDefault();
         setIsLoading(true);
         console.log(formInputs);
-        formIsValid() && editPackaging(formInputs)
+        formIsValid() && editPackaging(packagingId, formInputs)
             .then(() => {
 
             })
@@ -104,6 +104,7 @@ const EditPackaging = (props) => {
             alert('Неправильный индекс записи!');
             props.history.push("/packaging");
         } else {
+            setPackagingId(id);
             getPackagingById(id)
                 .then(res => res.json())
                 .then(oldPackaging => {

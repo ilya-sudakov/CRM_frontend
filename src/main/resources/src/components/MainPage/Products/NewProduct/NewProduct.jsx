@@ -9,6 +9,7 @@ import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 import { getDataUri } from '../../../../utils/functions.jsx';
 import Button from '../../../../utils/Form/Button/Button.jsx';
+import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
 
 const NewProduct = (props) => {
     const [productInputs, setProductInputs] = useState({
@@ -203,7 +204,7 @@ const NewProduct = (props) => {
                         </select>
                     </div>
                 </div>
-                <InputText
+                {/* <InputText
                     inputName="Упаковка"
                     required
                     error={productErrors.packaging}
@@ -211,6 +212,10 @@ const NewProduct = (props) => {
                     handleInputChange={handleInputChange}
                     errorsArr={productErrors}
                     setErrorsArr={setProductErrors}
+                /> */}
+                <SelectPackaging 
+                    required
+                    id={0}
                 />
                 <InputText
                     inputName="Комментарий"
