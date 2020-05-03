@@ -12,6 +12,11 @@ import { imgToBlobDownload, getDataUri } from '../../../../utils/functions.jsx'
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx'
+import {
+  deletePackagingFromProduct,
+  addPackagingToProduct,
+} from '../../../../utils/RequestsAPI/Products/packaging.js'
 
 const EditProduct = (props) => {
   const [productInputs, setProductInputs] = useState({
@@ -24,7 +29,7 @@ const EditProduct = (props) => {
     vendor: '',
     photo: '',
     category: '',
-    packaging: '',
+    packages: [],
     comment: '',
   })
   const [productErrors, setProductErrors] = useState({
@@ -32,7 +37,7 @@ const EditProduct = (props) => {
     category: false,
     comment: false,
     // productionLocation: false,
-    packaging: false,
+    packages: false,
     photo: false,
     unit: false,
     weight: false,
@@ -41,7 +46,7 @@ const EditProduct = (props) => {
     name: true,
     category: true,
     // comment: false,
-    packaging: true,
+    packages: true,
     productionLocation: true,
     // photo: false,
     unit: true,
@@ -68,7 +73,7 @@ const EditProduct = (props) => {
     let newErrors = Object.assign({
       name: false,
       category: false,
-      packaging: false,
+      packages: false,
       unit: false,
       weight: false,
     })
@@ -99,6 +104,21 @@ const EditProduct = (props) => {
     const id = props.history.location.pathname.split('/products/edit/')[1]
     formIsValid() &&
       editProduct(productInputs, id)
+        .then(() => {
+          return deletePackagingFromProduct(id)
+        })
+        .then(() => {
+          return addPackagingToProduct(
+            {
+              packings: [
+                ...productInputs.packages.map((item) => {
+                  return item.id
+                }),
+              ],
+            },
+            id,
+          )
+        })
         .then(() => props.history.push('/products'))
         .catch((error) => {
           setIsLoading(false)
@@ -141,11 +161,12 @@ const EditProduct = (props) => {
       getProductById(id)
         .then((res) => res.json())
         .then((oldProduct) => {
+          // console.log(oldProduct)
           setProductInputs({
             name: oldProduct.name,
             weight: oldProduct.weight,
             unit: oldProduct.unit,
-            packaging: oldProduct.packaging,
+            packages: oldProduct.packings,
             vendor: oldProduct.vendor,
             productionLocation: oldProduct.productionLocation,
             category: oldProduct.category,
@@ -250,15 +271,30 @@ const EditProduct = (props) => {
             </select>
           </div>
         </div> */}
-        <InputText
+        {/* <InputText
           inputName="Упаковка"
           required
-          defaultValue={productInputs.packaging}
-          error={productErrors.packaging}
-          name="packaging"
+          defaultValue={productInputs.packages}
+          error={productErrors.packages}
+          name="packages"
           handleInputChange={handleInputChange}
           errorsArr={productErrors}
           setErrorsArr={setProductErrors}
+        /> */}
+        <SelectPackaging
+          required
+          onChange={(packages) => {
+            validateField('packages', packages)
+            setProductInputs({
+              ...productInputs,
+              packages: packages,
+            })
+          }}
+          defaultValue={productInputs.packages}
+          errorName="packages"
+          errorsArr={productErrors}
+          setErrorsArr={setProductErrors}
+          error={productErrors.packages}
         />
         <InputText
           inputName="Комментарий"

@@ -37,8 +37,6 @@ const TableView = (props) => {
         item.name.toLowerCase().includes(query) ||
         item.id.toString().includes(query) ||
         item.weight.toString().includes(query) ||
-        (item.packaging !== null &&
-          item.packaging.toLowerCase().includes(query)) ||
         (item.comment !== null && item.comment.toLowerCase().includes(query))
       )
     })

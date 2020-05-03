@@ -120,6 +120,10 @@
         border-radius: 5px;
         align-self: flex-end;
         width: calc(80% + 18px);
+
+        .main-window__reminder {
+            width: fit-content;
+        }
     }
 
     @media (max-width: 768px) {

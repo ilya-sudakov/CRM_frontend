@@ -49,3 +49,14 @@ export function addPackagingToProduct(newPackaging, id) {
     body: JSON.stringify(newPackaging),
   })
 }
+
+export function deletePackagingFromProduct(productId) {
+  const newPackaging = {
+    packings: [],
+  }
+  return request({
+    url: process.env.API_BASE_URL + '/api/v1/product/add/' + productId,
+    method: 'POST',
+    body: JSON.stringify(newPackaging),
+  })
+}

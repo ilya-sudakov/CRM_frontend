@@ -103,17 +103,19 @@ const NewProduct = (props) => {
   const handleSubmit = (event) => {
     // event.preventDefault();
     setIsLoading(true)
-    console.log(productInputs)
+    // console.log(productInputs)
     formIsValid() &&
       addProduct(productInputs)
         .then((res) => res.json())
         .then((res) => {
-          let temp = productInputs.packages.map((item) => {
-            return item.id
-          })
+          // let temp =
           return addPackagingToProduct(
             {
-              temp,
+              packings: [
+                ...productInputs.packages.map((item) => {
+                  return item.id
+                }),
+              ],
             },
             res.id,
           )

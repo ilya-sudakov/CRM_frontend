@@ -20,12 +20,12 @@ const SelectPackaging = (props) => {
 
   const loadData = (signal) => {
     setIsLoading(true)
-    getPackaging(signal)
+    return getPackaging(signal)
       .then((res) => res.json())
       .then((res) => {
         console.log(res)
         setPackages(res)
-        setIsLoading(false)
+        return setIsLoading(false)
       })
       .catch((error) => {
         console.log(error)
@@ -39,7 +39,7 @@ const SelectPackaging = (props) => {
     if (props.defaultValue) {
       setSelected(props.defaultValue)
     }
-  }, [selected])
+  }, [selected, props.defaultValue])
 
   return (
     <div className="select-packaging">
@@ -109,6 +109,18 @@ const SelectPackaging = (props) => {
           </div>
         )}
       </div>
+      {/* {selected.length === 0 && props.required && (
+        <div className="main-window">
+          <div className="main-window__list">
+            <span>
+              <div className="main-window__reminder">
+                <div>!</div>
+                <div>Не выбрана упаковка</div>
+              </div>
+            </span>
+          </div>
+        </div>
+      )} */}
       {selected.length > 0 && (
         <div className="main-window">
           <div className="main-window__list">

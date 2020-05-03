@@ -1,5 +1,25 @@
 @import "../../../../variables.scss";
 
-.view_product {
-  
+.view-product {
+    .select-packaging {
+        flex-direction: row;
+        .select-packaging__input {
+            width: calc(20% - 10px);
+        }
+        //   .main-window {
+        //       padding-top: 0;
+        //   }
+    }
+
+    @media (max-width: 768px) {
+        .select-packaging {
+            flex-direction: column;
+            .select-packaging__input {
+                width: 100%;
+            }
+            //   .main-window {
+            //       padding-top: 0;
+            //   }
+        }
+    }
 }
