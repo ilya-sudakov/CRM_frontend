@@ -15,6 +15,7 @@ import {
   deleteCategory,
   getCategoriesNames,
 } from '../../../utils/RequestsAPI/Products/Categories.jsx'
+import { deletePackagingFromProduct } from '../../../utils/RequestsAPI/Products/packaging.js'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx'
 
@@ -36,7 +37,9 @@ const Products = (props) => {
 
   const deleteItem = (event) => {
     const id = event.target.dataset.id
-    deleteProduct(id).then(() => loadCategories())
+    return deletePackagingFromProduct(id).then(() => {
+      return deleteProduct(id).then(() => loadCategories())
+    })
   }
 
   const deleteItemCategory = (event) => {
@@ -81,7 +84,7 @@ const Products = (props) => {
                 })
             })
             Promise.all(tempNew).then(() => {
-            //   console.log(productsArr);
+              //   console.log(productsArr);
               return console.log('all images downloaded')
             })
           })

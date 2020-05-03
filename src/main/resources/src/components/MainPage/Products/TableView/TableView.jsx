@@ -254,11 +254,11 @@ const TableView = (props) => {
                                 <div
                                   className="main-window__action"
                                   title="Удаление продукции"
-                                  data-id={product.id}
                                   onClick={props.deleteItem}
                                 >
                                   <img
                                     className="main-window__img"
+                                    data-id={product.id}
                                     src={deleteSVG}
                                   />
                                 </div>

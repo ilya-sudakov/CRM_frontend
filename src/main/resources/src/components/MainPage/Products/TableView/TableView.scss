@@ -120,6 +120,9 @@
 
 @media (max-width: 768px) {
   .main-window__list {
+    span:first-child {
+      padding: 5px 10px !important;
+    }
     .main-window__list-options {
       .main-window__list {
         .main-window__list-item {
