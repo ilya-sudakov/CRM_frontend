@@ -16,16 +16,17 @@ import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
     curSort: 'name',
-    id: 'desc',
+    name: 'asc',
   })
   const [isLoading, setIsLoading] = useState(true)
   const [productsVisible, setProductsVisible] = useState([])
 
   const changeSortOrder = (event) => {
-    const name = event.target.getAttribute('name')
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
     setSortOrder({
       curSort: name,
-      [name]: sortOrder[name] === 'desc' ? 'asc' : 'desc',
+      [name]: order,
     })
   }
 
@@ -96,6 +97,14 @@ const TableView = (props) => {
   return (
     <div className="tableview_products">
       <div className="main-window">
+        <div className="main-window__sort-panel">
+          <span>Сортировка: </span>
+          <select onChange={changeSortOrder}>
+            <option value="name asc">По алфавиту (А-Я)</option>
+            <option value="name desc">По алфавиту (Я-А)</option>
+            <option value="weight desc">По весу</option>
+          </select>
+        </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Категории</span>
@@ -116,7 +125,7 @@ const TableView = (props) => {
                     props.products.filter(
                       (product) => product.category === category.category,
                     ).length +
-                    ' продукции)'}
+                    ' записи)'}
                 </span>
                 <div className="main-window__actions">
                   {props.userHasAccess &&

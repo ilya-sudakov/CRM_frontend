@@ -20,7 +20,7 @@ const EditProduct = (props) => {
     weight: '',
     productionLocation: 'ЦехЛЭМЗ',
     group: '',
-    unit: 'шт.',
+    unit: 0,
     vendor: '',
     photo: '',
     category: '',
@@ -236,7 +236,7 @@ const EditProduct = (props) => {
           type="text"
           handleInputChange={handleInputChange}
         />
-        <div className="main-form__item">
+        {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения*</div>
           <div className="main-form__input_field">
             <select
@@ -249,7 +249,7 @@ const EditProduct = (props) => {
               <option value="упак.">Упаковок</option>
             </select>
           </div>
-        </div>
+        </div> */}
         <InputText
           inputName="Упаковка"
           required

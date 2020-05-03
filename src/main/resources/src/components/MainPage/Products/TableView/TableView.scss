@@ -8,9 +8,13 @@
   // min-width: 950px;
   // border-radius: 10px;
   // box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+  .main-window {
+    padding-top: 0;
+  }
 
   .main-window__list {
     width: 100%;
+    margin-top: 10px;
     .main-window__list-item {
       span {
         &:nth-child(1) {
@@ -26,7 +30,7 @@
 
     .main-window__list-item:not(.main-window__list-item--header) span {
       font-weight: bold;
-      padding: 20px 25px;
+      padding: 20px 10px;
       cursor: pointer;
 
       .main-window__mobile-text {
@@ -37,6 +41,7 @@
     .main-window__list-options {
       flex-direction: column;
       .main-window__list {
+        width: calc(100% - 15px);
         .main-window__list-item {
           padding: 5px 10px;
           span {

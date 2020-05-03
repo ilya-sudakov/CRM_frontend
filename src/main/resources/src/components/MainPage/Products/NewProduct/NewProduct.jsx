@@ -19,7 +19,7 @@ const NewProduct = (props) => {
     vendor: null,
     packages: [],
     photo: '',
-    unit: 'шт.',
+    unit: 0,
     productionLocation: 'ЦехЛЭМЗ',
     weight: null,
   })
@@ -111,7 +111,6 @@ const NewProduct = (props) => {
           let temp = productInputs.packages.map((item) => {
             return item.id
           })
-          console.log(temp)
           return addPackagingToProduct(
             {
               temp,
@@ -209,7 +208,7 @@ const NewProduct = (props) => {
           errorsArr={productErrors}
           setErrorsArr={setProductErrors}
         />
-        <div className="main-form__item">
+        {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения*</div>
           <div className="main-form__input_field">
             <select name="unit" onChange={handleInputChange}>
@@ -218,7 +217,7 @@ const NewProduct = (props) => {
               <option value="упак.">Упаковок</option>
             </select>
           </div>
-        </div>
+        </div> */}
         {/* <InputText
                     inputName="Упаковка"
                     required

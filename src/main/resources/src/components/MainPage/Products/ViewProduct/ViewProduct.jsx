@@ -117,7 +117,7 @@ const ViewProduct = (props) => {
             />
           </div>
         </div>
-        <div className="main-form__item">
+        {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения</div>
           <div className="main-form__input_field">
             <input
@@ -127,7 +127,7 @@ const ViewProduct = (props) => {
               readOnly
             />
           </div>
-        </div>
+        </div> */}
         <div className="main-form__item">
           <div className="main-form__input_name">Артикул</div>
           <div className="main-form__input_field">

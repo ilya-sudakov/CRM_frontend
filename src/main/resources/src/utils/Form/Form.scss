@@ -167,12 +167,12 @@
         outline: none;
         height: 1.25rem;
 
-        &:focus {
-          border: 1px solid $button__background--inverted;
-        }
-
         &:hover {
           border-color: #999999;
+        }
+
+        &:focus {
+          border: 1px solid $button__background--inverted;
         }
       }
 

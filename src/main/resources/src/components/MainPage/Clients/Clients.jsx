@@ -176,7 +176,6 @@ const Clients = (props) => {
     const order = event.target.value.split(' ')[1]
     setSortOrder({
       curSort: name,
-      // [name]: (sortOrder[name] === "desc" ? "asc" : "desc")
       [name]: order,
     })
     // loadData(props.location.pathname.split('/clients/category/')[1].split('/')[0],
