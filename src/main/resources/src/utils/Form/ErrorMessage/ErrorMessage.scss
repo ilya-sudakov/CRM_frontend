@@ -11,11 +11,13 @@
   top: 0;
   left: 0;
   z-index: 999;
-  transition: 0.1s ease-in-out;
+  transition: 200ms ease-in-out;
 
   &--hidden {
     // display: none;
-    top: -9999px;
+    // top: -9999px;
+    visibility: hidden;
+    background-color: rgba(#000000, 0);
   }
 
   &__content {
@@ -29,6 +31,14 @@
     padding-bottom: 50px;
     overflow-y: auto;
     position: relative;
+    transform: scale(1);
+    transition: 100ms ease-in-out;
+
+    &--hidden {
+      // display: none;
+      // top: -9999px;
+      transform: scale(0);
+    }
 
     .tableview_products {
       width: 100%;

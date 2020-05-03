@@ -1,4 +1,4 @@
-@import '../../../variables.scss';
+@import "../../../variables.scss";
 
 .form-window {
   display: flex;
@@ -11,9 +11,14 @@
   top: 0;
   left: 0;
   z-index: 999;
+  transition: 200ms ease-in-out;
+  transform: scale(1);
 
   &--hidden {
-    display: none;
+    // display: none;
+    background-color: rgba(#000000, 0);
+    transform: scale(1);
+    visibility: hidden;
   }
 
   &__content {
@@ -25,9 +30,16 @@
     border: 1px solid #999999;
     padding: 15px;
     overflow-y: auto;
+    transition: transform 200ms ease-in-out;
+    transform: scale(1);
 
     .tableview__products {
       width: 100%;
+    }
+    &--hidden {
+      // display: none;
+      overflow: hidden;
+      transform: scale(0);
     }
 
     .form-window__title {

@@ -27,7 +27,13 @@ const FormWindow = (props) => {
       }
       onClick={clickOnSelectWindow}
     >
-      <div className="form-window__content">
+      <div
+        className={
+          props.showWindow
+            ? 'form-window__content'
+            : 'form-window__content form-window__content--hidden'
+        }
+      >
         <div className="form-window__title">
           {props.title}
           {props.headerButton && (
