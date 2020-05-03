@@ -48,6 +48,7 @@
         transition: 200ms ease-in-out;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+        min-width: fit-content !important;
 
         &:hover {
           border-color: #999999;

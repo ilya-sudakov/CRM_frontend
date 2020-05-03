@@ -140,6 +140,17 @@
               }
             }
           }
+          .main-window__actions {
+            .main-window__action--row {
+              .main-window__action {
+                padding: 10px;
+
+                &:hover {
+                  padding: 15px !important;
+                }
+              }
+            }
+          }
         }
       }
     }
