@@ -41,6 +41,11 @@
     &:hover {
       color: $secondary-text-color;
     }
+
+    .button__circle {
+      border: 4px rgba(100, 100, 100, 0.5) solid !important;
+      border-top: 4px #666666 solid !important;
+    }
   }
 
   &__text {
@@ -66,8 +71,8 @@
     height: 15px;
     width: 15px;
     // margin: -25px 0 0 -25px;
-    border: 4px rgba(201, 201, 201, 0.5) solid;
-    border-top: 4px #cccccc solid;
+    border: 4px rgba(255, 255, 255, 0.5) solid;
+    border-top: 4px #eeeeee solid;
     border-radius: 999px;
     -webkit-animation: spin2 1s infinite linear;
     animation: spin2 1s infinite linear;
