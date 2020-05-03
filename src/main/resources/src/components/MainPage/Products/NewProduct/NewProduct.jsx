@@ -112,7 +112,7 @@ const NewProduct = (props) => {
             productInputs.packages.map((item) => {
               return addPackagingToProduct(
                 {
-                  productId: res.id,
+                  packingId: item.id,
                 },
                 res.id,
               )

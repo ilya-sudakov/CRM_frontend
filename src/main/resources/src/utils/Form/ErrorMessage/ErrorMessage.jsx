@@ -1,21 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './ErrorMessage.scss';
 
 const ErrorMessage = (props) => {
     const clickOnErrorWindow = (e) => {
         e.preventDefault();
-        let productsWindow = document.getElementsByClassName("window_error")[0];
         if (
             !(e.target.classList[0] === "window_error") &&
             !(e.target.classList.contains("window_error__exit")) &&
             !(e.target.classList.contains("window_error__bar")) &&
             !(e.target.classList.contains("window_error__button"))
         ) {
-            productsWindow.classList.remove("window_error--hidden");
+            props.setShowError(true);
         }
         else {
-            productsWindow.classList.add("window_error--hidden");
             props.setShowError(false);
         }
     }

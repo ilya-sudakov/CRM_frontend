@@ -211,7 +211,7 @@
         color: #ffffff;
       }
 
-      .main-window__actions .main-window__action{
+      .main-window__actions .main-window__action {
         color: $secondary-text-color;
       }
     }
@@ -284,6 +284,11 @@
     &:hover {
       background-color: #dddddd;
       color: $primary-text-color;
+      .main-window__action {
+        .main-window__img {
+          filter: brightness(1);
+        }
+      }
     }
   }
   .main-window__list-options--hidden {
@@ -305,6 +310,11 @@
       // background-color: darken(#eeeeee, 5%);
       // color: $primary-text-color;
       // box-shadow: none;
+      .main-window__action {
+        .main-window__img {
+          filter: brightness(3);
+        }
+      }
     }
   }
   .main-window__sort-panel {

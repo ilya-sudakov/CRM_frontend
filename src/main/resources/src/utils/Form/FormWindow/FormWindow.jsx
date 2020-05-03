@@ -9,20 +9,6 @@ const FormWindow = (props) => {
 
   const clickOnSelectWindow = (e) => {
     e.preventDefault()
-    // let productsWindow = document.getElementsByClassName(
-    //   props.windowName ? 'form-window-' + props.windowName : 'form-window',
-    // )[props.id ? props.id : 0]
-    // if (
-    //   !(e.target.classList[0] === 'form-window') &&
-    //   !e.target.classList.contains('form-window__exit') &&
-    //   !e.target.classList.contains('form-window__bar')
-    // ) {
-    //   productsWindow.classList.remove('form-window--hidden')
-    //   props.setShowWindow(true)
-    // } else {
-    //   productsWindow.classList.add('form-window--hidden')
-    //   props.setShowWindow(false)
-    // }
     if (
       !(e.target.classList[0] === 'form-window') &&
       !e.target.classList.contains('form-window__exit') &&
@@ -36,17 +22,6 @@ const FormWindow = (props) => {
 
   return (
     <div
-      // className={
-      //   props.showWindow
-      //     ? props.windowName
-      //       ? 'form-window form-window-' + props.windowName
-      //       : 'form-window'
-      //     : props.windowName
-      //     ? 'form-window-' +
-      //       props.windowName +
-      //       ' form-window form-window--hidden'
-      //     : 'form-window form-window--hidden'
-      // }
       className={
         props.showWindow ? 'form-window' : 'form-window form-window--hidden'
       }
