@@ -107,4 +107,12 @@
   .main-form {
     padding-bottom: 0;
   }
+
+  @media (max-width: 768px) {
+    &__content {
+      padding: 5px;
+      width: calc(100% - 30px);
+      height: calc(100% - 50px);
+    }
+  }
 }
