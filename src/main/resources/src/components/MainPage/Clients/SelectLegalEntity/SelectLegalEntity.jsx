@@ -131,7 +131,13 @@ const SelectLegalEntity = (props) => {
       )}
       <div className="select-legal-entity__selected">
         {selected.map((item, index) => (
-          <div className="select-legal-entity__selected_item">
+          <div
+            className={
+              !props.readOnly && selected.length > 1
+                ? 'select-legal-entity__selected_item select-legal-entity__selected_item--minimized'
+                : 'select-legal-entity__selected_item'
+            }
+          >
             <div
               className="select-legal-entity__selected_header"
               index={index}
@@ -322,7 +328,7 @@ const SelectLegalEntity = (props) => {
                 />
               )}
             </div>
-            {!props.readOnly && index !== 0 && (
+            {!props.readOnly && selected.length > 1 && (
               <img
                 index={index}
                 onClick={deleteLegalEntity}

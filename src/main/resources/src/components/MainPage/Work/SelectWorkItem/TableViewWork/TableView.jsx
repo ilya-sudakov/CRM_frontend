@@ -54,8 +54,14 @@ const TableView = (props) => {
           </div>
           {sortProducts(props.data).map((work, work_id) => (
             <div key={work_id} className="main-window__list-item">
-              <span>{work.work}</span>
-              <span>{work.typeOfWork}</span>
+              <span>
+                <div className="main-window__mobile-text">Название:</div>
+                {work.work}
+              </span>
+              <span>
+                <div className="main-window__mobile-text">Тип:</div>
+                {work.typeOfWork}
+              </span>
               <div className="main-window__actions">
                 <div
                   data-id={work.id}

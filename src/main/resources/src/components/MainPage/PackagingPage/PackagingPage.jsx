@@ -115,23 +115,22 @@ const PackagingPage = (props) => {
               return (
                 <div className="main-window__list-item">
                   <span>
-                    <div className="main-window__mobile-text">Название</div>
+                    <div className="main-window__mobile-text">Название:</div>
                     {packageItem.name}
                   </span>
                   <span>
-                    <div className="main-window__mobile-text">Кол-во</div>
+                    <div className="main-window__mobile-text">Кол-во:</div>
                     {packageItem.quantity}
                   </span>
                   <span>
-                    <div className="main-window__mobile-text">Размер</div>
+                    <div className="main-window__mobile-text">Размер:</div>
                     {packageItem.size}
                   </span>
                   <span>
-                    <div className="main-window__mobile-text">Комментарий</div>
+                    <div className="main-window__mobile-text">Комментарий:</div>
                     {packageItem.comment}
                   </span>
                   <div className="main-window__actions">
-                    <div className="main-window__mobile-text">Действия</div>
                     <div
                       className="main-window__action"
                       title="Редактирование упаковки"
