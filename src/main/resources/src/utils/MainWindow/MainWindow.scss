@@ -332,11 +332,13 @@
       border-radius: 5px;
       min-width: 100px;
       padding: 2.5px 5px;
+      width: fit-content !important;
     }
   }
   .main-window__actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     // flex-direction: row;
     justify-content: center;
     min-width: 110px;

@@ -12,6 +12,7 @@ import '../../../../utils/MainWindow/MainWindow.scss'
 import viewSVG from '../../../../../../../../assets/tableview/view.svg'
 import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
+import { numberToString } from '../../../../utils/functions.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -123,7 +124,14 @@ const TableView = (props) => {
                     props.products.filter(
                       (product) => product.category === category.category,
                     ).length +
-                    ' записи)'}
+                    ' ' +
+                    numberToString(
+                      props.products.filter(
+                        (product) => product.category === category.category,
+                      ).length,
+                      ['запись', 'записи', 'записей'],
+                    ) +
+                    ')'}
                 </span>
                 <div className="main-window__actions">
                   {props.userHasAccess &&
