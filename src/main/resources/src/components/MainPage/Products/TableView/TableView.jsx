@@ -80,11 +80,6 @@ const TableView = (props) => {
     return check
   }
 
-  const handleClickCategory = (event) => {
-    let id = event.currentTarget.getAttribute('id')
-    setProductsVisible([...checkProduct(id)])
-  }
-
   useEffect(() => {
     let temp = []
     props.categories.map((element, index) =>
@@ -103,7 +98,7 @@ const TableView = (props) => {
       <div className="main-window">
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
-            <span>Название</span>
+            <span>Категории</span>
             <div className="main-window__actions">Действия</div>
           </div>
           {props.categories.map((category, category_id) => (
@@ -116,13 +111,19 @@ const TableView = (props) => {
               >
                 <span>
                   <div className="main-window__mobile-text">Категория:</div>
-                  {category.category}
+                  {category.category +
+                    ' (' +
+                    props.products.filter(
+                      (product) => product.category === category.category,
+                    ).length +
+                    ' продукции)'}
                 </span>
                 <div className="main-window__actions">
                   {props.userHasAccess &&
                     props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
                       <div
                         className="main-window__action"
+                        title="Редактирование категории"
                         onClick={() => {
                           props.history.push(
                             '/products/category/edit/' + category.id,
@@ -175,6 +176,7 @@ const TableView = (props) => {
                             </div>
                             <ImgLoader
                               imgSrc={product.photo}
+                              noPhotoTemplate
                               imgClass="tableview_products__product_img"
                             />
                           </span>
@@ -203,6 +205,7 @@ const TableView = (props) => {
                           <div className="main-window__actions">
                             <div
                               className="main-window__action"
+                              title="Просмотр продукции"
                               onClick={() => {
                                 return props.history.push(
                                   '/products/view/' + product.id,
@@ -218,6 +221,7 @@ const TableView = (props) => {
                               ]) && (
                                 <div
                                   className="main-window__action"
+                                  title="Редактирование продукции"
                                   onClick={() => {
                                     return props.history.push(
                                       '/products/edit/' + product.id,
@@ -234,6 +238,7 @@ const TableView = (props) => {
                               props.userHasAccess(['ROLE_ADMIN']) && (
                                 <div
                                   className="main-window__action"
+                                  title="Удаление продукции"
                                   data-id={product.id}
                                   onClick={props.deleteItem}
                                 >
@@ -247,6 +252,7 @@ const TableView = (props) => {
                               <div className="main-window__action main-window__action--row">
                                 <div
                                   data-id={product.id}
+                                  title="Выбрать и продолжить"
                                   className="main-window__action main-window__action--continue"
                                   onClick={() => {
                                     props.selectProduct(
@@ -263,6 +269,7 @@ const TableView = (props) => {
                                 </div>
                                 <div
                                   data-id={product.id}
+                                  title="Выбрать и закрыть"
                                   className="main-window__action main-window__action--close"
                                   onClick={() => {
                                     props.selectProduct(

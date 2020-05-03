@@ -1,11 +1,16 @@
 import React from 'react'
+import noPhotoIMG from '../../../../../../../assets/priceList/no_img.png'
 import './ImgLoader.scss'
 
 const ImgLoader = (props) => {
   return (
     <div className="img-loader">
-      {props.imgSrc && props.imgSrc !== '' ? (
-        <img className={props.imgClass} src={props.imgSrc} alt="" />
+      {props.imgSrc || props.imgSrc === '' ? (
+        (props.imgSrc === '' && props.noPhotoTemplate) ? (
+          <img className={props.imgClass} src={noPhotoIMG} alt="" />
+        ) : (
+          <img className={props.imgClass} src={props.imgSrc} alt="" />
+        )
       ) : (
         //: <div class={props.imgClass + " lds-roller"}>
         //    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>

@@ -4,6 +4,7 @@ import '../../../../utils/Form/Form.scss'
 import { getProductById } from '../../../../utils/RequestsAPI/Products.jsx'
 import { imgToBlobDownload } from '../../../../utils/functions.jsx'
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx'
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 
 const ViewProduct = (props) => {
   const [productInputs, setProductInputs] = useState({
@@ -62,9 +63,13 @@ const ViewProduct = (props) => {
       <form className="main-form__form">
         <div className="main-form__item">
           <div className="main-form__input_name">Фотография</div>
-          {productInputs.photo !== '' && (
-            <div className="main-form__product_img">
-              <img src={productInputs.photo} alt="" />
+          <div className="main-form__product_img">
+            <ImgLoader
+              imgClass=""
+              imgSrc={productInputs.photo}
+              noPhotoTemplate
+            />
+            {productInputs.photo !== '' && (
               <div
                 className="main-form__submit"
                 onClick={() =>
@@ -76,8 +81,8 @@ const ViewProduct = (props) => {
               >
                 Скачать картинку
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         <div className="main-form__item">
           <div className="main-form__input_name">Наименование</div>

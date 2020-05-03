@@ -473,9 +473,13 @@
     }
 
     .main-window__header {
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
       margin-bottom: 0;
       .main-window__title {
+        margin-bottom: 5px;
+      }
+      .main-window__button {
         margin-bottom: 5px;
       }
     }

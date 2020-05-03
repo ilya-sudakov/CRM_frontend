@@ -108,15 +108,15 @@ const NewProduct = (props) => {
       addProduct(productInputs)
         .then((res) => res.json())
         .then((res) => {
-          return Promise.all(
-            productInputs.packages.map((item) => {
-              return addPackagingToProduct(
-                {
-                  packingId: item.id,
-                },
-                res.id,
-              )
-            }),
+          let temp = productInputs.packages.map((item) => {
+            return item.id
+          })
+          console.log(temp)
+          return addPackagingToProduct(
+            {
+              temp,
+            },
+            res.id,
           )
         })
         .then(() => props.history.push('/products'))
