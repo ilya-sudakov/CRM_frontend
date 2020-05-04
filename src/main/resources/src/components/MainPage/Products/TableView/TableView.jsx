@@ -148,11 +148,11 @@ const TableView = (props) => {
                         <img className="main-window__img" src={editSVG} />
                       </div>
                     )}
-                  {/* {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && (
+                  {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && (
                     <div className="main-window__action" onClick={null}>
                       <img className="main-window__img" src={deleteSVG} />
                     </div>
-                  )} */}
+                  )}
                 </div>
               </div>
               {/* Dropdown list */}

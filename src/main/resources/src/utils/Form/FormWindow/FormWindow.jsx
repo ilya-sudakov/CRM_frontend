@@ -35,7 +35,7 @@ const FormWindow = (props) => {
         }
       >
         <div className="form-window__title">
-          {props.title}
+          <span>{props.title}</span>
           {props.headerButton && (
             <Link to={props.headerButton.path} className="form-window__button">
               {props.headerButton.name}
