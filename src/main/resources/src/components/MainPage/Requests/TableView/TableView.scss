@@ -181,6 +181,7 @@
     .main-window {
       .main-window__list {
         .main-window__list-item {
+          padding-left: 30px;
           span {
             &:nth-child(1) {
               max-width: none;
