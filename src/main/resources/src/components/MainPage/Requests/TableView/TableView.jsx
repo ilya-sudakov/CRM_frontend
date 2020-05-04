@@ -148,6 +148,9 @@ const TableView = (props) => {
                   'main-window__list-item main-window__list-item--' +
                   requestStatuses.find((item) => item.name === request.status)
                     ?.className
+                  // + (request_id % 2 === 0
+                  //   ? ' main-window__list-item--even'
+                  //   : ' main-window__list-item--odd')
                 }
                 onClick={(event) => {
                   //   console.log(event.target.classList)
@@ -281,6 +284,7 @@ const TableView = (props) => {
                     : 'main-window__list-options main-window__list-options--hidden'
                 }
               >
+                <div className="main-window__title">Список продукции:</div>
                 <div className="main-window__list">
                   <div className="main-window__list-item main-window__list-item--header">
                     <span>Название</span>

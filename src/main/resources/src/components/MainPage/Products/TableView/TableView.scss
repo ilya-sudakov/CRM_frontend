@@ -55,6 +55,13 @@
               font-weight: normal;
               padding: 0px 10px;
             }
+            &:nth-child(2) {
+              flex: 0 1 30%;
+            }
+            &:nth-child(3) {
+              flex: 0 1 10%;
+              max-width: 80px;
+            }
           }
 
           .main-window__actions {

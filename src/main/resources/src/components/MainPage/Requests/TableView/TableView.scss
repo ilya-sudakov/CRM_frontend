@@ -13,7 +13,7 @@
   .main-window {
     .main-window__list {
       .main-window__list-item {
-        padding: 15px 0px;
+        padding: 20px 0px;
         padding-left: 25px;
         padding-right: 10px;
         position: relative;
@@ -72,7 +72,7 @@
             flex: 0 1 10%;
           }
           &:nth-child(5) {
-            max-width: 100px;
+            max-width: 130px;
           }
         }
 
@@ -117,11 +117,17 @@
       }
 
       .main-window__list-options {
+        flex-direction: column;
+        align-items: flex-start;
+        .main-window__title {
+          font-size: 22px;
+        }
         .main-window__list {
           width: 80%;
           max-width: 800px;
           .main-window__list-item--header {
             padding-top: 0;
+            padding-bottom: 5px;
           }
           .main-window__list-item {
             padding-left: 10px;
