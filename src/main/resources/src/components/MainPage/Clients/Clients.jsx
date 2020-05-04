@@ -178,8 +178,6 @@ const Clients = (props) => {
       curSort: name,
       [name]: order,
     })
-    // loadData(props.location.pathname.split('/clients/category/')[1].split('/')[0],
-    //     props.location.pathname.split('/clients/category/')[1].split('/')[1]);
   }
 
   useEffect(() => {
