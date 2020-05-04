@@ -1,12 +1,12 @@
 @import "../../../variables.scss";
 
 .requests {
-  --shipped: #85c540;
+  --shipped: #c5e926;
   --priority: #e65252;
   --completed: #52d66c;
   --ready: #137a2a;
   --in-production: #ca077f;
-  --waiting: #42cc9e;
+  --waiting: #6df1c5;
   --problem: #d6574e;
   --materials: #d49a27;
   .main-window__status-panel {
@@ -112,6 +112,7 @@
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         transition: 0.2s ease-in-out;
+        cursor: pointer;
         &:last-child {
           margin: 0;
         }

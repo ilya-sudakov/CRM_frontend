@@ -17,15 +17,17 @@
         padding-left: 25px;
         padding-right: 10px;
         position: relative;
-        cursor: pointer;
+        &:not(.main-window__list-item--header) {
+          cursor: pointer;
+        }
         &:not(.main-window__list-item--header)::before {
           content: "";
           display: inline-block;
           position: absolute;
-          width: 10px;
-          height: 10px;
+          width: 7.5px;
+          height: calc(100% - 10px);
           left: 10px;
-          top: calc(50% - 5px);
+          top: calc(0);
           -moz-border-radius: 7.5px;
           -webkit-border-radius: 7.5px;
           border-radius: 7.5px;
@@ -117,7 +119,7 @@
       .main-window__list-options {
         .main-window__list {
           width: 80%;
-          max-width: 600px;
+          max-width: 800px;
           .main-window__list-item {
             padding-left: 10px;
             cursor: auto;

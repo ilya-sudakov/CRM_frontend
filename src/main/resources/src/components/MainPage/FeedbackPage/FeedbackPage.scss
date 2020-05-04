@@ -65,8 +65,8 @@
         content: "";
         display: inline-block;
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 7.5px;
+        height: calc(100% - 10px);
         left: 10px;
         -moz-border-radius: 7.5px;
         -webkit-border-radius: 7.5px;

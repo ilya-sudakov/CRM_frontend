@@ -131,6 +131,8 @@ const TableView = (props) => {
             <span>Кодовое слово</span>
             <span>Ответственный</span>
             <span>Статус</span>
+            {/* <span>Дата отгрузки</span>
+            <span>Комментарий</span> */}
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
@@ -207,6 +209,14 @@ const TableView = (props) => {
                     })}
                   </select>
                 </span>
+                {/* <span>
+                  <div className="main-window__mobile-text">Дата отгрузки:</div>
+                  {formatDateString(request.date)}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Комментарий:</div>
+                  {request.comment}
+                </span> */}
                 <div className="main-window__actions">
                   <Link
                     to={'/requests/view/' + request.id}
