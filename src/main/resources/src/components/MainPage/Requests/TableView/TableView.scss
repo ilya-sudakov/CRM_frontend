@@ -13,7 +13,9 @@
   .main-window {
     .main-window__list {
       .main-window__list-item {
+        padding: 15px 0px;
         padding-left: 25px;
+        padding-right: 10px;
         position: relative;
         cursor: pointer;
         &:not(.main-window__list-item--header)::before {
@@ -62,7 +64,7 @@
             flex: 0 1 20%;
           }
           &:nth-child(3) {
-            flex: 0 1 10%;
+            flex: 0 1 20%;
           }
           &:nth-child(4) {
             flex: 0 1 10%;
@@ -71,6 +73,11 @@
             max-width: 100px;
           }
         }
+
+        .main-window__actions {
+          flex: 0 1 15%;
+        }
+
         .main-window__status_select,
         .main-window__status_select--color {
           width: 100%;
