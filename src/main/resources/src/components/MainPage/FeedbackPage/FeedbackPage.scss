@@ -158,7 +158,9 @@
           left: 0;
         }
         &::before {
-          top: calc(50% - 10px);
+          // top: calc(50% - 10px);
+          top: 20px;
+          height: calc(100% - 40px) !important;
         }
         .main-window__list-col {
           width: calc(100% - 25px);

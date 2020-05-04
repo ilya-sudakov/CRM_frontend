@@ -120,6 +120,9 @@
         .main-window__list {
           width: 80%;
           max-width: 800px;
+          .main-window__list-item--header {
+            padding-top: 0;
+          }
           .main-window__list-item {
             padding-left: 10px;
             cursor: auto;
@@ -200,7 +203,9 @@
             }
           }
           &::before {
-            top: calc(50% - 10px);
+            // top: calc(50% - 10px);
+            top: 20px;
+            height: calc(100% - 40px) !important;
           }
         }
         .main-window__list-options {
