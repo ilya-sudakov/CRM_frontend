@@ -106,7 +106,7 @@ const TableView = (props) => {
         </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
-            <span>Категории</span>
+            <span>Название категории</span>
             <div className="main-window__actions">Действия</div>
           </div>
           {props.categories.map((category, category_id) => (
