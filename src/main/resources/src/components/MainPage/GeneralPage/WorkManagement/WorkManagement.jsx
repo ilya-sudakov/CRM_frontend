@@ -204,10 +204,10 @@ const WorkManagement = (props) => {
                 }
               })
               .sort((a, b) => {
-                if (a.lastName < b.lastName) {
+                if (a[1].lastName < b[1].lastName) {
                   return -1
                 }
-                if (a.lastName > b.lastName) {
+                if (a[1].lastName > b[1].lastName) {
                   return 1
                 }
                 return 0
