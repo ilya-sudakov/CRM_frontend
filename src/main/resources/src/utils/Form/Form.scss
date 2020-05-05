@@ -383,7 +383,8 @@
       width: calc(100% - 20px) !important;
       // min-width: 250px;
       .main-form__buttons {
-        width: calc(100% - 50px);
+        margin: 0 auto;
+        width: calc(100% - 50px) !important;
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
