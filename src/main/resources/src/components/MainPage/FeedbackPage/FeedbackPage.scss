@@ -11,18 +11,25 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
+    justify-content: flex-start;
     margin-right: auto;
     font-size: 90%;
     flex-wrap: wrap;
+    div:first-child {
+      margin-right: 10px;
+    }
 
     .main-window__button {
-      margin-left: 10px;
-      margin-right: 0;
+      // margin-left: 10px;
+      margin-right: 10px;
       // padding-left: 20px;
       position: relative;
       margin-top: 5px;
       padding: 5px 10px 5px 20px;
+      &:last-child {
+        margin-right: 0;
+      }
       &::before {
         content: "";
         display: inline-block;
