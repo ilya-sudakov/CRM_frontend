@@ -45,6 +45,12 @@
       text-align: center;
     }
     .main-window__filter-pick {
+      .checkbox {
+        margin-top: 5px;
+      }
+      .main-window__button {
+        margin-top: 5px;
+      }
       .main-window__button:last-child {
         margin-right: 0;
       }

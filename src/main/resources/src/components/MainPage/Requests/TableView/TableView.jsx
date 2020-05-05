@@ -216,9 +216,9 @@ const TableView = (props) => {
                       if (props.userHasAccess(status.access)) {
                         return (
                           <option
-                          // style={{
-                          //   backgroundColor: `var(--${status.className})`,
-                          // }}
+                            style={{
+                              // backgroundColor: `var(--${status.className})`,
+                            }}
                           >
                             {status.name}
                           </option>
