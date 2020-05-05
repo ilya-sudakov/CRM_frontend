@@ -126,6 +126,10 @@
       width: calc(100% - 30px);
       height: calc(100% - 50px);
 
+      .main-window__list {
+        width: calc(100% - 10px);
+      }
+
       .form-window__title {
         // flex-direction: column;
         align-items: baseline;

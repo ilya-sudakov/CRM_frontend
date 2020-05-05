@@ -103,7 +103,7 @@
         display: none;
       }
       .main-window__menu {
-        flex: 0 1 100%;
+        flex: 0 1 calc(100% - 10px);
 
         .main-window__item {
           flex-direction: column;

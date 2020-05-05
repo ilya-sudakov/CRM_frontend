@@ -15,7 +15,7 @@ const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true)
   const [sortOrder, setSortOrder] = useState({
     curSort: 'date',
-    date: 'asc',
+    date: 'desc',
   })
   const [requests, setRequests] = useState([])
   const [requestStatuses, setRequestStatutes] = useState([
@@ -118,7 +118,8 @@ const TableView = (props) => {
         <div className="main-window__sort-panel">
           <span>Сортировка: </span>
           <select onChange={changeSortOrder}>
-            <option value="date asc">По дате</option>
+            <option value="date desc">По дате (убыв.)</option>
+            <option value="date asc">По дате (возр.)</option>
             <option value="codeWord asc">По клиенту (А-Я)</option>
             <option value="codeWord desc">По клиенту (Я-А)</option>
             {/* <option value="nextDateContact asc">По дате след. контакта</option> */}
@@ -197,6 +198,9 @@ const TableView = (props) => {
                     requestStatuses.find((item) => item.name === request.status)
                       ?.className
                   }
+                  // style={{
+                  //   content: `"${status.name}"`,
+                  // }}
                 >
                   <div className="main-window__mobile-text">Статус:</div>
                   <select
@@ -216,9 +220,11 @@ const TableView = (props) => {
                       if (props.userHasAccess(status.access)) {
                         return (
                           <option
-                            style={{
-                              // backgroundColor: `var(--${status.className})`,
-                            }}
+                            style={
+                              {
+                                // backgroundColor: `var(--${status.className})`,
+                              }
+                            }
                           >
                             {status.name}
                           </option>

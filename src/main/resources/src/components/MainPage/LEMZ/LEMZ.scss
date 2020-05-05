@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: calc(100% - 25px) !important;
+    width: calc(100% - 50px) !important;
     border-top-left-radius: 10px;
     text-align: center;
     z-index: 1;
@@ -98,11 +98,12 @@
 
   @media (max-width: 768px) {
     .main-window__header {
+      width: calc(100% - 25px) !important;
       .main-window__title {
         display: none;
       }
       .main-window__menu {
-        flex: 0 1 100%;
+        flex: 0 1 calc(100%) !important;
 
         .main-window__item {
           flex-direction: column;

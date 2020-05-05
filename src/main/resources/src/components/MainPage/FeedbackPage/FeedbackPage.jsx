@@ -192,19 +192,20 @@ const FeedbackPage = (props) => {
                           title="Удаление чата"
                           onClick={(event) => {
                             event.preventDefault()
-                            let temp = []
                             getMessagesByDiscussionId(item.id)
                               .then((res) => res.json())
                               .then((res) => {
-                                Promise.all(
+                                return Promise.all(
                                   res.map((message) => {
                                     return deleteMessage(message.id)
                                   }),
-                                ).then(() => {
-                                  deleteFeedbackById(item.id).then(() => {
-                                    return loadData()
-                                  })
-                                })
+                                )
+                              })
+                              .then(() => {
+                                return deleteFeedbackById(item.id)
+                              })
+                              .then(() => {
+                                return loadData()
                               })
                           }}
                         >
