@@ -19,27 +19,28 @@
           //Товар
           &:nth-child(2) {
             // flex: 0 1 35%;
-            flex: 0 1 50%;
+            flex: 0 1 40%;
           }
 
           &:nth-child(3) {
             // flex: 0 1 12.5%;
             flex: 0 1 10%;
+            max-width: 80px;
           }
 
           //Откуда
           &:nth-child(4) {
             // flex: 0 1 12.5%;
-            flex: 0 1 12%;
+            flex: 0 1 15%;
           }
 
           &:nth-child(5) {
             // flex: 0 1 5%;
-            flex: 0 1 12%;
+            flex: 0 1 15%;
           }
 
           &:nth-child(6) {
-            flex: 0 1 10%;
+            flex: 0 1 15%;
           }
         }
       }
