@@ -83,7 +83,7 @@
 
       &--error {
         input[type="text"],
-        input[type="password"], 
+        input[type="password"],
         textarea {
           border: 1px solid #f73434 !important;
         }
@@ -94,6 +94,7 @@
   @media (max-width: 768px) {
     .input_text__input {
       flex-wrap: wrap;
+      align-items: flex-start;
       flex-direction: column;
 
       .input_text__input_name {
@@ -102,7 +103,7 @@
       }
 
       .input_text__input_field {
-        width: 100%;
+        width: calc(100% - 0px);
       }
     }
 

@@ -222,15 +222,18 @@ const Select = (props) => {
     props.onChange([...newSelected])
   }
 
-  const pressEscKey = useCallback((event) => {
-    if (event.keyCode === 27) {
-      console.log(showOptions, showOverlay);
-      
-      if (showOptions) {
-        return clickOnInput()
+  const pressEscKey = useCallback(
+    (event) => {
+      if (event.keyCode === 27) {
+        console.log(showOptions, showOverlay)
+
+        if (showOptions) {
+          return clickOnInput()
+        }
       }
-    }
-  }, [showOptions, showOverlay])
+    },
+    [showOptions, showOverlay],
+  )
 
   useEffect(() => {
     if (props.defaultValue !== undefined) {
@@ -354,7 +357,13 @@ const Select = (props) => {
           <span className="select__selected_title">Выбранная продукция:</span>
         )}
         {selected.map((item, index) => (
-          <div className="select__selected_row">
+          <div
+            className={
+              !props.readOnly && !props.workshop
+                ? 'select__selected_row'
+                : 'select__selected_row select__selected_row--minimized'
+            }
+          >
             {/* <img className="select__selected_photo" src={item.product ? item.product.photo : null} alt="" /> */}
             <div
               className={
@@ -372,15 +381,13 @@ const Select = (props) => {
               ) : (
                 <div className="select__selected_name">{item.name}</div>
               )}
-              {!props.readOnly && !props.workshop && (
-                <img
-                  id={index}
-                  className="select__img"
-                  src={deleteSVG}
-                  alt=""
-                  onClick={clickOnSelected}
-                />
-              )}
+              <img
+                id={index}
+                className="select__img"
+                src={deleteSVG}
+                alt=""
+                onClick={clickOnSelected}
+              />
             </div>
             <div className="select__selected_quantity">
               Кол-во{!props.readOnly && '*'}
