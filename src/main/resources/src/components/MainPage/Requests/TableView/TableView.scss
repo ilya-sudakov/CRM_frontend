@@ -19,6 +19,21 @@
         position: relative;
         &:not(.main-window__list-item--header) {
           cursor: pointer;
+          span:nth-child(5) {
+            &::before {
+              content: "";
+              display: inline-block;
+              position: absolute;
+              width: 10px;
+              height: 10px;
+              left: 10px;
+              top: calc(50% - 5px);
+              -moz-border-radius: 7.5px;
+              -webkit-border-radius: 7.5px;
+              border-radius: 7.5px;
+              background-color: #cccccc;
+            }
+          }
         }
         &:not(.main-window__list-item--header)::before {
           content: "";
@@ -34,28 +49,28 @@
           background-color: #cccccc;
         }
         &--shipped:not(.main-window__list-item--header)::before {
-          background-color: var(--shipped);
+          background-color: var(--shipped) !important;
         }
         &--in-production:not(.main-window__list-item--header)::before {
-          background-color: var(--in-production);
+          background-color: var(--in-production) !important;
         }
         &--completed:not(.main-window__list-item--header)::before {
-          background-color: var(--completed);
+          background-color: var(--completed) !important;
         }
         &--priority:not(.main-window__list-item--header)::before {
-          background-color: var(--priority);
+          background-color: var(--priority) !important;
         }
         &--waiting:not(.main-window__list-item--header)::before {
-          background-color: var(--waiting);
+          background-color: var(--waiting) !important;
         }
         &--ready:not(.main-window__list-item--header)::before {
-          background-color: var(--ready);
+          background-color: var(--ready) !important;
         }
         &--problem:not(.main-window__list-item--header)::before {
-          background-color: var(--problem);
+          background-color: var(--problem) !important;
         }
         &--materials:not(.main-window__list-item--header)::before {
-          background-color: var(--materials);
+          background-color: var(--materials) !important;
         }
         span {
           &:nth-child(1) {
@@ -73,6 +88,7 @@
           }
           &:nth-child(5) {
             max-width: 130px;
+            position: relative;
           }
         }
 
@@ -88,14 +104,12 @@
           font-size: 90%;
           border-radius: 5px;
           outline: 0;
+          // color: #eeeeee;
+          padding-left: 15px;
         }
 
         .main-window__status_select--color {
-          option {
-            // content: "";
-          }
-
-          option[value="red"] {
+          option[value="Ожидание"] {
             background: red;
             &:hover {
               box-shadow: 0 0 10px 100px red inset;
@@ -208,6 +222,14 @@
             }
             &:nth-child(5) {
               max-width: none;
+              padding-right: 25px;
+              width: calc(100% - 20px);
+              &::before {
+                // top: calc(50% - 10px);
+                top: 20px;
+                left: auto !important;
+                right: 5px;
+              }
             }
           }
           &::before {

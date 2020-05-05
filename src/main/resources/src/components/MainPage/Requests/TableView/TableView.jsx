@@ -191,20 +191,46 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Ответственный:</div>
                   {request.responsible}
                 </span>
-                <span>
+                <span
+                  className={
+                    'main-window__list-item--' +
+                    requestStatuses.find((item) => item.name === request.status)
+                      ?.className
+                  }
+                >
                   <div className="main-window__mobile-text">Статус:</div>
                   <select
                     id={request.id}
                     className="main-window__status_select"
+                    // style={{
+                    //   backgroundColor: `var(--${
+                    //     requestStatuses.find(
+                    //       (item) => item.name === request.status,
+                    //     )?.className
+                    //   })`,
+                    // }}
                     value={request.status}
                     onChange={handleStatusChange}
                   >
                     {requestStatuses.map((status) => {
                       if (props.userHasAccess(status.access)) {
-                        return <option>{status.name}</option>
+                        return (
+                          <option
+                          // style={{
+                          //   backgroundColor: `var(--${status.className})`,
+                          // }}
+                          >
+                            {status.name}
+                          </option>
+                        )
                       } else {
                         return (
-                          <option style={{ display: `none` }}>
+                          <option
+                          // style={{
+                          //   display: `none`,
+                          //   backgroundColor: `var(--"${status.className}")`,
+                          // }}
+                          >
                             {status.name}
                           </option>
                         )

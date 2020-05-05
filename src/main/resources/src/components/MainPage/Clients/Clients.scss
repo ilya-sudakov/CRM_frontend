@@ -145,9 +145,8 @@
   }
   @media (max-width: 768px) {
     .main-window__header {
-      flex-direction: column !important;
+      flex-direction: column;
       width: calc(100% - 25px) !important;
-      flex-wrap: nowrap !important;
       .main-window__title {
         font-size: 125%;
       }

@@ -6,10 +6,15 @@ const ImgLoader = (props) => {
   return (
     <div className="img-loader">
       {props.imgSrc || props.imgSrc === '' ? (
-        (props.imgSrc === '' && props.noPhotoTemplate) ? (
+        props.imgSrc === '' && props.noPhotoTemplate ? (
           <img className={props.imgClass} src={noPhotoIMG} alt="" />
         ) : (
-          <img className={props.imgClass} src={props.imgSrc} alt="" />
+          <img
+            className={props.imgClass}
+            src={props.imgSrc}
+            alt=""
+            loading="lazy"
+          />
         )
       ) : (
         //: <div class={props.imgClass + " lds-roller"}>
