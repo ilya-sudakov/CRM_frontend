@@ -438,8 +438,8 @@ const Clients = (props) => {
                             comment: item.comment,
                             manager: item.manager,
                             name: item.name,
-                            // nextDateContact:
-                            //   new Date(item.nextDateContact).getTime() / 1000,
+                            nextDateContact:
+                              new Date(item.nextDateContact).getTime() / 1000,
                             price: item.price,
                             site: item.site,
                             storageAddress: item.storageAddress,
