@@ -373,6 +373,11 @@
     border: 0;
     transform: scale(1);
     // color: $button__background--inverted;
+
+    .main-window__img {
+      width: 22.5px !important;
+    }
+
     &:last-child {
       margin-bottom: 0;
       margin-right: 0;

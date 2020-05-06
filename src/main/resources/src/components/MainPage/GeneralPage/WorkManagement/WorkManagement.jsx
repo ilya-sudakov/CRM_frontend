@@ -117,7 +117,11 @@ const WorkManagement = (props) => {
           setRecordedWork(res)
           combineWorkHoursForSamePeople(res)
           getAllEmployees(res)
-          return setIsLoading(false)
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          console.log(error)
+          setIsLoading(false)
         })
     return function cancel() {
       abortController.abort()
@@ -163,15 +167,14 @@ const WorkManagement = (props) => {
           setSearchQuery={setSearchQuery}
         />
         {recordedWork.length === 0 ? (
-          isLoading ? (
-            <TableDataLoading className="work-management__item" />
-          ) : (
-            <div className="work-management__info">
-              Нет записей о проведенной работе за сегодня!
-            </div>
-          )
+          <div className="work-management__info">
+            Нет записей о проведенной работе за сегодня!
+          </div>
         ) : (
           <div className="work-management__list">
+            {isLoading && (
+              <TableDataLoading className="work-management__item" />
+            )}
             {Object.entries(employees)
               .filter((employee) => {
                 const item = employee[1]
