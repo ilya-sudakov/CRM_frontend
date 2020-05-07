@@ -122,18 +122,15 @@ const TableView = (props) => {
             <option value="date asc">По дате (возр.)</option>
             <option value="codeWord asc">По клиенту (А-Я)</option>
             <option value="codeWord desc">По клиенту (Я-А)</option>
-            {/* <option value="nextDateContact asc">По дате след. контакта</option> */}
           </select>
         </div>
-        <div className="main-window__list">
+        {/* <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Дата</span>
             <span>Продукция</span>
             <span>Кодовое слово</span>
             <span>Ответственный</span>
             <span>Статус</span>
-            {/* <span>Дата отгрузки</span>
-            <span>Комментарий</span> */}
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
@@ -149,12 +146,8 @@ const TableView = (props) => {
                   'main-window__list-item main-window__list-item--' +
                   requestStatuses.find((item) => item.name === request.status)
                     ?.className
-                  // + (request_id % 2 === 0
-                  //   ? ' main-window__list-item--even'
-                  //   : ' main-window__list-item--odd')
                 }
                 onClick={(event) => {
-                  //   console.log(event.target.classList)
                   if (
                     !event.target.classList.contains(
                       'main-window__status_select',
@@ -198,67 +191,29 @@ const TableView = (props) => {
                     requestStatuses.find((item) => item.name === request.status)
                       ?.className
                   }
-                  // style={{
-                  //   content: `"${status.name}"`,
-                  // }}
                 >
                   <div className="main-window__mobile-text">Статус:</div>
                   <select
                     id={request.id}
                     className="main-window__status_select"
-                    // style={{
-                    //   backgroundColor: `var(--${
-                    //     requestStatuses.find(
-                    //       (item) => item.name === request.status,
-                    //     )?.className
-                    //   })`,
-                    // }}
                     value={request.status}
                     onChange={handleStatusChange}
                   >
                     {requestStatuses.map((status) => {
                       if (props.userHasAccess(status.access)) {
-                        return (
-                          <option
-                            style={
-                              {
-                                // backgroundColor: `var(--${status.className})`,
-                              }
-                            }
-                          >
-                            {status.name}
-                          </option>
-                        )
+                        return <option>{status.name}</option>
                       } else {
-                        return (
-                          <option
-                          // style={{
-                          //   display: `none`,
-                          //   backgroundColor: `var(--"${status.className}")`,
-                          // }}
-                          >
-                            {status.name}
-                          </option>
-                        )
+                        return <option style={{ display: `none` }}>{status.name}</option>
                       }
                     })}
                   </select>
                 </span>
-                {/* <span>
-                  <div className="main-window__mobile-text">Дата отгрузки:</div>
-                  {formatDateString(request.date)}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Комментарий:</div>
-                  {request.comment}
-                </span> */}
                 <div className="main-window__actions">
                   <Link
                     to={'/requests/view/' + request.id}
                     className="main-window__action"
                     title="Просмотр заявки"
                   >
-                    {/* Просмотр */}
                     <img className="main-window__img" src={viewSVG} />
                   </Link>
                   {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
@@ -267,7 +222,6 @@ const TableView = (props) => {
                       className="main-window__action"
                       title="Редактирование заявки"
                     >
-                      {/* Редактировать */}
                       <img className="main-window__img" src={editSVG} />
                     </Link>
                   )}
@@ -278,7 +232,6 @@ const TableView = (props) => {
                       title="Удаление заявки"
                       onClick={props.deleteItem}
                     >
-                      {/* Удалить */}
                       <img className="main-window__img" src={deleteSVG} />
                     </div>
                   )}
@@ -292,7 +245,6 @@ const TableView = (props) => {
                         props.transferRequest(request.id)
                       }}
                     >
-                      {/* Перенести */}
                       <img className="main-window__img" src={transferSVG} />
                     </div>
                   )}
@@ -303,7 +255,6 @@ const TableView = (props) => {
                       title="Копирование заявки"
                       onClick={() => props.copyRequest(request.id)}
                     >
-                      {/* Копировать */}
                       <img className="main-window__img" src={copySVG} />
                     </div>
                   )}
@@ -357,12 +308,12 @@ const TableView = (props) => {
               </div>
             </React.Fragment>
           ))}
-        </div>
+        </div> */}
       </div>
 
-      {/* //!!! */}
+      {/* //!!! OLD DESIGN*/}
 
-      {/* <div className="tableview_requests__row tableview_requests__row--header">
+      <div className="tableview_requests__row tableview_requests__row--header">
         <div className="tableview_requests__col">
           <span>Дата</span>
           <img
@@ -390,25 +341,27 @@ const TableView = (props) => {
         <div
           key={request_id}
           className={
-            'tableview_requests__row ' +
-            ((request.status === 'Проблема' &&
-              'tableview_requests__row--status_problem') ||
-              (request.status === 'Материалы' &&
-                'tableview_requests__row--status_materials') ||
-              (request.status === 'Ожидание' &&
-                'tableview_requests__row--status_waiting') ||
-              (request.status === 'В производстве' &&
-                'tableview_requests__row--status_in_production') ||
-              (request.status === 'Готово' &&
-                'tableview_requests__row--status_ready') ||
-              (request.status === 'Частично готово' &&
-                'tableview_requests__row--status_ready') ||
-              (request.status === 'Отгружено' &&
-                'tableview_requests__row--status_shipped') ||
-              (request.status === 'Приоритет' &&
-                'tableview_requests__row--status_priority') ||
-              (request.status === 'Завершено' &&
-                'tableview_requests__row--status_completed'))
+            'tableview_requests__row tableview_requests__row--status_' +
+            requestStatuses.find((item) => item.name === request.status)
+              ?.className
+            // ((request.status === 'Проблема' &&
+            //   'tableview_requests__row--status_problem') ||
+            //   (request.status === 'Материалы' &&
+            //     'tableview_requests__row--status_materials') ||
+            //   (request.status === 'Ожидание' &&
+            //     'tableview_requests__row--status_waiting') ||
+            //   (request.status === 'В производстве' &&
+            //     'tableview_requests__row--status_in_production') ||
+            //   (request.status === 'Готово' &&
+            //     'tableview_requests__row--status_ready') ||
+            //   (request.status === 'Частично готово' &&
+            //     'tableview_requests__row--status_ready') ||
+            //   (request.status === 'Отгружено' &&
+            //     'tableview_requests__row--status_shipped') ||
+            //   (request.status === 'Приоритет' &&
+            //     'tableview_requests__row--status_priority') ||
+            //   (request.status === 'Завершено' &&
+            //     'tableview_requests__row--status_completed'))
           }
         >
           <div className="tableview_requests__col">
@@ -510,7 +463,7 @@ const TableView = (props) => {
             )}
           </div>
         </div>
-      ))} */}
+      ))}
     </div>
   )
 }
