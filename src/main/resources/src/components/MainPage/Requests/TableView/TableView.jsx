@@ -323,7 +323,7 @@ const TableView = (props) => {
         <div className="tableview_requests__col">Статус</div>
         <div className="tableview_requests__col">Действия</div>
       </div>
-      {isLoading && (
+      {props.isLoading && (
         <TableDataLoading
           minHeight="50px"
           className="tableview_requests__row tableview_requests__row--even"

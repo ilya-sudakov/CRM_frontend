@@ -126,7 +126,7 @@ const WorkManagement = (props) => {
     return function cancel() {
       abortController.abort()
     }
-  }, [employeesMap])
+  }, [])
 
   return (
     <div className="work-management">
@@ -172,9 +172,6 @@ const WorkManagement = (props) => {
           </div>
         ) : (
           <div className="work-management__list">
-            {isLoading && (
-              <TableDataLoading className="work-management__item" />
-            )}
             {Object.entries(employees)
               .filter((employee) => {
                 const item = employee[1]
