@@ -314,15 +314,7 @@ const TableView = (props) => {
       {/* //!!! OLD DESIGN*/}
 
       <div className="tableview_requests__row tableview_requests__row--header">
-        <div className="tableview_requests__col">
-          <span>Дата</span>
-          <img
-            name="date"
-            className="tableview_requests__img"
-            onClick={changeSortOrder}
-            src={sortIcon}
-          />
-        </div>
+        <div className="tableview_requests__col">Дата</div>
         <div className="tableview_requests__col">Продукция</div>
         <div className="tableview_requests__col">Фасовка</div>
         <div className="tableview_requests__col">Количество</div>
@@ -344,24 +336,6 @@ const TableView = (props) => {
             'tableview_requests__row tableview_requests__row--status_' +
             requestStatuses.find((item) => item.name === request.status)
               ?.className
-            // ((request.status === 'Проблема' &&
-            //   'tableview_requests__row--status_problem') ||
-            //   (request.status === 'Материалы' &&
-            //     'tableview_requests__row--status_materials') ||
-            //   (request.status === 'Ожидание' &&
-            //     'tableview_requests__row--status_waiting') ||
-            //   (request.status === 'В производстве' &&
-            //     'tableview_requests__row--status_in_production') ||
-            //   (request.status === 'Готово' &&
-            //     'tableview_requests__row--status_ready') ||
-            //   (request.status === 'Частично готово' &&
-            //     'tableview_requests__row--status_ready') ||
-            //   (request.status === 'Отгружено' &&
-            //     'tableview_requests__row--status_shipped') ||
-            //   (request.status === 'Приоритет' &&
-            //     'tableview_requests__row--status_priority') ||
-            //   (request.status === 'Завершено' &&
-            //     'tableview_requests__row--status_completed'))
           }
         >
           <div className="tableview_requests__col">
