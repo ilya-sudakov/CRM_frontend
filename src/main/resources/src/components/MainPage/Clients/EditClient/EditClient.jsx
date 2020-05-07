@@ -37,6 +37,7 @@ const EditClient = (props) => {
         clientType: 'Активные',
         categoryId: 0,
         categoryName: '',
+        favorite: false,
         nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     });
     const [formErrors, setFormErrors] = useState({
@@ -114,7 +115,8 @@ const EditClient = (props) => {
             workCondition: clientInputs.workCondition,
             check: clientInputs.check,
             nextDateContact: new Date(clientInputs.nextContactDate).getTime() / 1000,
-            categoryId: clientInputs.categoryId
+            categoryId: clientInputs.categoryId,
+            favorite: clientInputs.favorite
         }, clientId)
             .then(res => {
                 //PUT if edited, POST if item is new
@@ -323,6 +325,7 @@ const EditClient = (props) => {
                         contactsNew: res.contacts,
                         workHistoryNew: res.histories,
                         categoryId: res.category.id,
+                        favorite: res.favorite,
                         categoryName: res.category.name
                     })
                 })
