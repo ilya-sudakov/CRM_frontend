@@ -79,7 +79,7 @@ const TableView = (props) => {
   const handleStatusChange = (event) => {
     const status = event.target.value
     const id = event.target.getAttribute('id')
-    editRequestStatus(
+    return editRequestStatus(
       {
         status: status,
       },

@@ -167,9 +167,13 @@ const WorkManagement = (props) => {
           setSearchQuery={setSearchQuery}
         />
         {recordedWork.length === 0 ? (
-          <div className="work-management__info">
-            Нет записей о проведенной работе за сегодня!
-          </div>
+          isLoading ? (
+            <TableDataLoading className="work-management__item" />
+          ) : (
+            <div className="work-management__info">
+              Нет записей о проведенной работе за сегодня!
+            </div>
+          )
         ) : (
           <div className="work-management__list">
             {Object.entries(employees)
