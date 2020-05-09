@@ -127,3 +127,12 @@ export function getDataUri(url, extension, quality) {
     img.src = url
   })
 }
+
+export const changeSortOrder = (event) => {
+  const name = event.target.value.split(' ')[0]
+  const order = event.target.value.split(' ')[1]
+  return Object.assign({
+    curSort: name,
+    [name]: order,
+  })
+}

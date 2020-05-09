@@ -45,11 +45,19 @@
     display: none;
   }
 
-  .main-window__filter-pick {
+  &__filter-pick {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     font-size: 90%;
+    width: calc(100% - 50px);
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    div:first-child {
+      color: #666666;
+      font-size: 90%;
+      margin-right: 10px;
+    }
 
     .main-window__button {
       font-size: 75%;
@@ -524,6 +532,16 @@
 
       div:first-child {
         font-size: 22px;
+      }
+    }
+
+
+    &__filter-pick {
+      div:first-child {
+        margin-top: 5px;
+      }
+      .main-window__button {
+        margin-top: 5px;
       }
     }
 
