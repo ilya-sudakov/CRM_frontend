@@ -6,8 +6,14 @@
   width: calc(100% - 25px);
   font-size: 100%;
   min-width: 950px;
-  border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+  // border-radius: 10px;
+  // box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+
+  .main-window {
+    .main-window__sort-panel {
+      width: calc(100% - 40px);
+    }
+  }
 
   &__img {
     width: 15px;
@@ -181,9 +187,9 @@
   }
 
   .tableview_general_tasks__row--status_waiting {
-    background-color: #9ec2b6;
+    background-color: #d4d4d4;
     &:hover {
-      background-color: darken(#9ec2b6, 5%);
+      background-color: darken(#d4d4d4, 5%);
     }
   }
 
@@ -209,9 +215,9 @@
   }
 
   .tableview_general_tasks__row--status_completed {
-    background-color: #bed6c3;
+    background-color: #39d859;
     &:hover {
-      background-color: darken(#bed6c3, 5%);
+      background-color: darken(#39d859, 5%);
     }
   }
 

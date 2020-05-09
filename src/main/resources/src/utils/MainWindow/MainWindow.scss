@@ -343,6 +343,50 @@
       width: fit-content !important;
     }
   }
+  .main-window__status-panel {
+    // width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: auto;
+    font-size: 80%;
+    flex-wrap: wrap;
+    padding: 5px 25px;
+    color: #666666;
+    margin-bottom: 5px;
+    div:first-child {
+      margin-right: 10px;
+    }
+    .main-window__button {
+      // margin-left: 10px;
+      margin-right: 10px;
+      padding-left: 20px;
+      padding: 5px 10px 5px 20px;
+      position: relative;
+      font-size: 90%;
+      margin-top: 5px;
+      &:last-child {
+        margin-right: 0;
+      }
+      &::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        left: 5px;
+        -moz-border-radius: 7.5px;
+        -webkit-border-radius: 7.5px;
+        border-radius: 7.5px;
+        background-color: #cccccc;
+      }
+    }
+
+    .main-window__button--inverted {
+      color: #555555;
+    }
+  }
   .main-window__actions {
     display: flex;
     flex-direction: row;
