@@ -84,41 +84,42 @@ const Users = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <div className="main-window__info-panel">
+          <div className="main-window__filter-pick">
+            <div>Фильтр по ролям: </div>
+            {userRoles.map((role, index) => {
+              return (
+                <div
+                  className={
+                    (role.visible
+                      ? 'main-window__button'
+                      : 'main-window__button main-window__button--inverted') +
+                    ' main-window__list-item--' +
+                    role.className
+                  }
+                  onClick={() => {
+                    let temp = userRoles.map((role) => {
+                      return {
+                        ...role,
+                        visible: false,
+                      }
+                    })
+                    temp.splice(index, 1, {
+                      ...role,
+                      visible: !role.visible,
+                    })
+                    setUserRoles([...temp])
+                  }}
+                >
+                  {role.name}
+                </div>
+              )
+            })}
+          </div>
           <div className="main-window__amount_table">
             Всего: {users.length} записей
           </div>
         </div>
-        <div className="main-window__filter-pick">
-          <div>Фильтр по ролям: </div>
-          {userRoles.map((role, index) => {
-            return (
-              <div
-                className={
-                  (role.visible
-                    ? 'main-window__button'
-                    : 'main-window__button main-window__button--inverted') +
-                  ' main-window__list-item--' +
-                  role.className
-                }
-                onClick={() => {
-                  let temp = userRoles.map((role) => {
-                    return {
-                      ...role,
-                      visible: false,
-                    }
-                  })
-                  temp.splice(index, 1, {
-                    ...role,
-                    visible: !role.visible,
-                  })
-                  setUserRoles([...temp])
-                }}
-              >
-                {role.name}
-              </div>
-            )
-          })}
-        </div>
+
         <TableView
           data={users.filter((item) => {
             let check = false

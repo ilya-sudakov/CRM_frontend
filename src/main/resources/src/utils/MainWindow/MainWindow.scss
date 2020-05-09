@@ -112,6 +112,14 @@
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 10px;
+
+    .main-window__filter-pick {
+      padding-left: 0;
+    }
+
+    .main-window__status-panel {
+      padding-left: 0 !important;
+    }
   }
 
   &__amount_table {
@@ -535,13 +543,22 @@
       }
     }
 
-
     &__filter-pick {
       div:first-child {
         margin-top: 5px;
       }
       .main-window__button {
         margin-top: 5px;
+      }
+    }
+
+    &__info-panel {
+      flex-direction: column;
+      .main-window__filter-pick {
+        width: 100%;
+      }
+      .main-window__status-panel {
+        width: 100%;
       }
     }
 
