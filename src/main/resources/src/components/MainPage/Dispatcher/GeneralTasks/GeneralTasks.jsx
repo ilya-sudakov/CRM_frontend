@@ -11,6 +11,7 @@ import {
 const GeneralTasks = (props) => {
   const [generalTasks, setGeneralTasks] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [taskStatuses, setTaskStatuses] = useState([
     {
       name: 'Выполнено',
@@ -49,19 +50,21 @@ const GeneralTasks = (props) => {
   }, [])
 
   const loadTasks = (signal) => {
-    getMainTasks(signal)
+    setIsLoading(true)
+    return getMainTasks(signal)
       .then((res) => res.json())
       .then((res) => {
         // console.log(res);
+        setIsLoading(false)
         setGeneralTasks(res)
       })
       .catch((error) => {
+        setIsLoading(false)
         console.log(error)
       })
   }
 
-  const deleteItem = (event) => {
-    const id = event.target.dataset.id
+  const deleteItem = (id) => {
     deleteMainTask(id).then(() => loadTasks())
   }
 
@@ -134,6 +137,8 @@ const GeneralTasks = (props) => {
           userData={props.userData}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
+          isLoading={isLoading}
+          taskStatuses={taskStatuses}
           loadData={loadTasks}
         />
       </div>

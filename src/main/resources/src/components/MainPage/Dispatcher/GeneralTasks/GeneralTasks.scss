@@ -1,11 +1,11 @@
 @import "../../../../variables.scss";
 
 .general_tasks {
-    --completed: #39d859;
-    --delayed: #d4d4d4;
-    --materials: #d4b77e;
-    --in-progress: #7dbfdb;
-    --problem: #c48681;
+    --completed: #52d66c;
+    --in-progress: #ca077f;
+    --delayed: #00b7ff;
+    --problem: #d6574e;
+    --materials: #d49a27;
     .main-window__status-panel {
         .main-window__list-item--completed::before {
             background-color: var(--completed);

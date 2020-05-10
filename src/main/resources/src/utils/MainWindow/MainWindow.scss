@@ -360,7 +360,7 @@
     }
   }
   .main-window__status-panel {
-    // width: 100%;
+    width: calc(100% - 50px);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -368,7 +368,8 @@
     margin-right: auto;
     font-size: 80%;
     flex-wrap: wrap;
-    padding: 5px 25px;
+    padding: 5px 0px;
+    padding-right: 10px;
     color: #666666;
     margin-bottom: 5px;
     div:first-child {

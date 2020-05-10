@@ -5,14 +5,32 @@ import { formatDateString } from '../../../../../utils/functions.jsx'
 import './TableView.scss'
 import { editTaskStatus } from '../../../../../utils/RequestsAPI/MainTasks.jsx'
 import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import editSVG from '../../../../../../../../../assets/tableview/edit.svg'
+import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
     curSort: 'dateCreated',
     dateCreated: 'asc',
   })
+  // const [statuses, setStatuses] = {
+  //   Проблема: {
+  //     className: 'problem',
+  //   },
+  //   Материалы: {
+  //     className: 'materials',
+  //   },
+  //   Выполнено: {
+  //     className: 'completed',
+  //   },
+  //   'В процессе': {
+  //     className: 'in-progress',
+  //   },
+  //   Отложено: {
+  //     className: 'delayed',
+  //   },
+  // }
   const [isLoading, setIsLoading] = useState(true)
-  let selectorId = 0
 
   const changeSortOrder = (event) => {
     const name = event.target.value.split(' ')[0]
@@ -81,31 +99,124 @@ const TableView = (props) => {
             <option value="dateControl desc">По дате контроля (возр.)</option>
           </select>
         </div>
+        <div className="main-window__list">
+          <div className="main-window__list-item main-window__list-item--header">
+            <span>Дата постановки</span>
+            <span>Описание</span>
+            <span>Ответственный</span>
+            <span>Дата контроля</span>
+            <span>Состояние</span>
+            <span>Статус</span>
+            <div className="main-window__actions">Действия</div>
+          </div>
+          {props.isLoading && (
+            <TableDataLoading
+              minHeight="50px"
+              className="main-window__list-item"
+            />
+          )}
+          {sortTasks(props.data).map(
+            (task, task_id) =>
+              (props.userHasAccess(['ROLE_ADMIN']) ||
+                props.userData.username === task.responsible) && (
+                <div
+                  key={task_id}
+                  className={
+                    'main-window__list-item main-window__list-item--' +
+                    props.taskStatuses.find(
+                      (status) => status.name === task.condition,
+                    )?.className
+                  }
+                >
+                  <span>
+                    <div className="main-window__mobile-text">
+                      Дата постановки:
+                    </div>
+                    {formatDateString(task.dateCreated)}
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">Описание:</div>
+                    {task.description}
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">
+                      Ответственный:
+                    </div>
+                    {task.responsible}
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">
+                      Дата контроля:
+                    </div>
+                    {formatDateString(task.dateControl)}
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">Состояние:</div>
+                    {task.status}
+                  </span>
+                  <span
+                    className={
+                      'main-window__list-item--' +
+                      props.taskStatuses.find(
+                        (status) => status.name === task.condition,
+                      )?.className
+                    }
+                  >
+                    <div className="main-window__mobile-text">Статус:</div>
+                    <select
+                      id={task.id}
+                      className="main-window__status_select"
+                      value={task.condition}
+                      onChange={handleConditionChange}
+                    >
+                      <option>Материалы</option>
+                      <option>Выполнено</option>
+                      <option>В процессе</option>
+                      <option>Отложено</option>
+                      <option>Проблема</option>
+                    </select>
+                  </span>
+                  <div className="main-window__actions">
+                    {props.userHasAccess([
+                      'ROLE_ADMIN',
+                      'ROLE_DISPATCHER',
+                      'ROLE_ENGINEER',
+                      'ROLE_WORKSHOP',
+                    ]) && (
+                      <Link
+                        to={'/dispatcher/general-tasks/edit/' + task.id}
+                        className="main-window__action"
+                        title="Редактировать задачу"
+                      >
+                        <img className="main-window__img" src={editSVG} />
+                      </Link>
+                    )}
+                    {props.userHasAccess(['ROLE_ADMIN']) && (
+                      <div
+                        className="main-window__action"
+                        title="Удалить задачу"
+                        onClick={() => {
+                          props.deleteItem(task.id)
+                        }}
+                      >
+                        <img className="main-window__img" src={deleteSVG} />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ),
+          )}
+        </div>
       </div>
-      <div className="tableview_general_tasks__row tableview_general_tasks__row--header">
-        {/* <div className="tableview_general_tasks__col">
-                    <span>ID</span>
-                    <img name="id" className="tableview_general_tasks__img" onClick={changeSortOrder} src={sortIcon} />
-                </div> */}
+      {/* //! OLD DESIGN */}
+      {/* <div className="tableview_general_tasks__row tableview_general_tasks__row--header">
         <div className="tableview_general_tasks__col">
           <span>Дата постановки</span>
-          {/* <img
-            name="dateCreated"
-            className="tableview_general_tasks__img"
-            onClick={changeSortOrder}
-            src={sortIcon}
-          /> */}
         </div>
         <div className="tableview_general_tasks__col">Описание</div>
         <div className="tableview_general_tasks__col">Ответственный</div>
         <div className="tableview_general_tasks__col">
           <span>Дата контроля</span>
-          {/* <img
-            name="dateControl"
-            className="tableview_general_tasks__img"
-            onClick={changeSortOrder}
-            src={sortIcon}
-          /> */}
         </div>
         <div className="tableview_general_tasks__col">Состояние</div>
         <div className="tableview_general_tasks__col">Статус</div>
@@ -138,7 +249,6 @@ const TableView = (props) => {
                   'tableview_general_tasks__row--status_materials')
               }
             >
-              {/* <div className="tableview_general_tasks__col">{task.id}</div> */}
               <div className="tableview_general_tasks__col">
                 {formatDateString(task.dateCreated)}
               </div>
@@ -167,7 +277,6 @@ const TableView = (props) => {
                 </select>
               </div>
               <div className="tableview_general_tasks__actions">
-                {/* <Link to={"/task/view/" + task.id} className="tableview_general_tasks__action">Просмотр</Link> */}
                 {props.userHasAccess([
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -183,9 +292,10 @@ const TableView = (props) => {
                 )}
                 {props.userHasAccess(['ROLE_ADMIN']) && (
                   <div
-                    data-id={task.id}
                     className="tableview_general_tasks__action"
-                    onClick={props.deleteItem}
+                    onClick={() => {
+                      props.deleteItem(task.id)
+                    }}
                   >
                     Удалить
                   </div>
@@ -193,7 +303,7 @@ const TableView = (props) => {
               </div>
             </div>
           ),
-      )}
+      )} */}
     </div>
   )
 }
