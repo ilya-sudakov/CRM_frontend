@@ -11,6 +11,7 @@
   --materials: #d49a27;
   .main-window__status-panel {
     margin-bottom: 0px;
+    padding-left: 35px;
 
     .main-window__list-item--shipped::before {
       background-color: var(--shipped);
