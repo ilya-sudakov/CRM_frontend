@@ -148,7 +148,15 @@ const TableView = (props) => {
                     <div className="main-window__mobile-text">
                       Дата контроля:
                     </div>
-                    {formatDateString(task.dateControl)}
+                    {/* {formatDateString(task.dateControl)} */}
+                    {new Date(task.dateControl) < new Date() ? (
+                      <div className="main-window__reminder">
+                        <div>!</div>
+                        <div>{formatDateString(task.dateControl)}</div>
+                      </div>
+                    ) : (
+                      formatDateString(task.dateControl)
+                    )}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">Состояние:</div>

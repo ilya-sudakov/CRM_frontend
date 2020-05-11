@@ -12,17 +12,6 @@ const SelectContacts = (props) => {
       phoneNumber: '',
     },
   ])
-  const [options, setOptions] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-
-  const clickOverlay = (event) => {
-    const overlay = document.getElementsByClassName(
-      'select-contacts__overlay',
-    )[0]
-    if (!overlay.classList.contains('select-contacts__overlay--hidden')) {
-      overlay.classList.add('select-contacts__overlay--hidden')
-    }
-  }
 
   useEffect(() => {
     if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
@@ -75,8 +64,8 @@ const SelectContacts = (props) => {
     ])
   }
 
-  const deleteContact = (e) => {
-    const id = e.target.getAttribute('index')
+  const deleteContact = (event) => {
+    const id = event.target.getAttribute('index')
     let temp = selected
     temp.splice(id, 1)
     setSelected([...temp])
@@ -99,10 +88,6 @@ const SelectContacts = (props) => {
 
   return (
     <div className="select-contacts">
-      <div
-        className="select-contacts__overlay select-contacts__overlay--hidden"
-        onClick={clickOverlay}
-      ></div>
       {!props.readOnly && (
         <button className="select-contacts__button" onClick={handleNewContact}>
           Добавить контактное лицо

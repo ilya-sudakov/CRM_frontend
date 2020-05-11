@@ -10,7 +10,7 @@
   .main-window {
     .main-window__list {
       .main-window__list-item {
-        padding: 20px 0px;
+        padding: 7.5px 0px;
         padding-left: 25px;
         padding-right: 10px;
         position: relative;
@@ -34,7 +34,12 @@
           &:nth-child(4) {
             // flex: 0 1 5%;
             flex: 0 1 10%;
-            max-width: 90px;
+            max-width: 120px;
+            min-width: 90px;
+
+            .main-window__reminder {
+              min-width: 80px;
+            }
           }
 
           &:nth-child(5) {
