@@ -1,200 +1,213 @@
-import React, { useState, useEffect } from 'react';
-import './ViewFeedback.scss';
-import '../../../../utils/Form/Form.scss';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
-import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
-import FeedbackChat from '../FeedbackChat/FeedbackChat.jsx';
-import { getFeedbackById, editFeedback } from '../../../../utils/RequestsAPI/Feedback/feedback';
-import { addMessage, getMessagesByDiscussionId } from '../../../../utils/RequestsAPI/Feedback/messages';
-import { formatDateStringWithTime } from '../../../../utils/functions.jsx';
+import React, { useState, useEffect } from 'react'
+import './ViewFeedback.scss'
+import '../../../../utils/Form/Form.scss'
+import InputText from '../../../../utils/Form/InputText/InputText.jsx'
+import FeedbackChat from '../FeedbackChat/FeedbackChat.jsx'
+import {
+  getFeedbackById,
+  editFeedback,
+} from '../../../../utils/RequestsAPI/Feedback/feedback'
+import {
+  addMessage,
+  getMessagesByDiscussionId,
+} from '../../../../utils/RequestsAPI/Feedback/messages'
+import { formatDateStringWithTime } from '../../../../utils/functions.jsx'
+import Button from '../../../../utils/Form/Button/Button.jsx'
 
 const ViewFeedback = (props) => {
-    const [formInputs, setFormInputs] = useState({
-        date: new Date(),
-        subject: '',
-        text: '',
-        author: props.userData.username,
-        status: 'in-progress',
-        messages: []
-    });
-    const [formErrors, setFormErrors] = useState({
-        subject: false,
-        text: false,
+  const [formInputs, setFormInputs] = useState({
+    date: new Date(),
+    subject: '',
+    text: '',
+    author: props.userData.username,
+    status: 'in-progress',
+    messages: [],
+  })
+  const [formErrors, setFormErrors] = useState({
+    subject: false,
+    text: false,
+  })
+  const [validInputs, setValidInputs] = useState({
+    subject: false,
+    text: false,
+  })
+  const [showError, setShowError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [feedbackId, setFeedbackId] = useState(0)
+
+  useEffect(() => {
+    document.title = 'Просмотр обсуждения'
+    const id = props.history.location.pathname.split('/feedback/view/')[1]
+    setFeedbackId(id)
+    if (isNaN(Number.parseInt(id))) {
+      alert('Неправильный индекс обсуждения!')
+      props.history.push('/feedback')
+    } else {
+      loadData(id)
+    }
+  }, [])
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    validateField(name, value)
+    setFormInputs({
+      ...formInputs,
+      [name]: value,
     })
-    const [validInputs, setValidInputs] = useState({
-        subject: false,
-        text: false,
+    setFormErrors({
+      ...formErrors,
+      [name]: false,
     })
-    const [showError, setShowError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [feedbackId, setFeedbackId] = useState(0)
+  }
 
-    useEffect(() => {
-        document.title = "Просмотр обсуждения";
-        const id = props.history.location.pathname.split("/feedback/view/")[1];
-        setFeedbackId(id);
-        if (isNaN(Number.parseInt(id))) {
-            alert('Неправильный индекс обсуждения!');
-            props.history.push("/feedback");
-        } else {
-            loadData(id);
+  const validateField = (fieldName, value) => {
+    switch (fieldName) {
+      default:
+        if (validInputs[fieldName] !== undefined) {
+          setValidInputs({
+            ...validInputs,
+            [fieldName]: value !== '',
+          })
         }
-    }, [])
+        break
+    }
+  }
 
-    const handleInputChange = e => {
-        const { name, value } = e.target;
-        validateField(name, value);
-        setFormInputs({
-            ...formInputs,
-            [name]: value
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    console.log(formInputs)
+  }
+
+  const loadData = (id) => {
+    setIsLoading(true)
+    let temp
+    getFeedbackById(id)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+        temp = Object.assign({
+          ...formInputs,
+          date: res.date,
+          subject: res.subject,
+          text: res.text,
+          author: res.author,
+          status: res.status,
         })
-        setFormErrors({
-            ...formErrors,
-            [name]: false
-        })
-    }
-
-    const validateField = (fieldName, value) => {
-        switch (fieldName) {
-            default:
-                if (validInputs[fieldName] !== undefined) {
-                    setValidInputs({
-                        ...validInputs,
-                        [fieldName]: (value !== "")
-                    })
-                }
-                break;
-        }
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(formInputs);
-    }
-
-    const loadData = (id) => {
-        setIsLoading(true);
-        let temp;
-        getFeedbackById(id)
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                temp = Object.assign({
-                    ...formInputs,
-                    date: res.date,
-                    subject: res.subject,
-                    text: res.text,
-                    author: res.author,
-                    status: res.status
-                });
-                // setFormInputs({
-                //     ...formInputs,
-                //     date: res.date,
-                //     subject: res.subject,
-                //     text: res.text,
-                //     author: res.author,
-                //     status: res.status
-                // });
+        // setFormInputs({
+        //     ...formInputs,
+        //     date: res.date,
+        //     subject: res.subject,
+        //     text: res.text,
+        //     author: res.author,
+        //     status: res.status
+        // });
+      })
+      .then(() => {
+        getMessagesByDiscussionId(id)
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res)
+            setFormInputs({
+              ...temp,
+              messages: res ? res : [],
             })
-            .then(() => {
-                getMessagesByDiscussionId(id)
-                    .then(res => res.json())
-                    .then(res => {
-                        console.log(res);
-                        setFormInputs({
-                            ...temp,
-                            messages: res ? res : []
-                        })
-                        setIsLoading(false);
-                    })
-            })
-    }
+            setIsLoading(false)
+          })
+      })
+  }
 
-    return (
-        <div className="view-feedback">
-            <div className="main-form">
-                <div className="main-form__title">Просмотр обсуждения</div>
-                <form className="main-form__form">
-                    {/* <InputDate
+  return (
+    <div className="view-feedback">
+      <div className="main-form">
+        <div className="main-form__title">Просмотр обсуждения</div>
+        <form className="main-form__form">
+          {/* <InputDate
                         inputName="Дата"
                         readOnly
                         selected={Date.parse(formInputs.date)}
                     /> */}
-                    <InputText
-                        inputName="Дата"
-                        defaultValue={formatDateStringWithTime(formInputs.date)}
-                        readOnly
-                    />
-                    <InputText
-                        inputName="Автор"
-                        defaultValue={formInputs.author}
-                        readOnly
-                    />
-                    <div className="main-form__item">
-                        <div className="main-form__input_name">Статус</div>
-                        <div className="main-form__input_field">
-                            <select
-                                name="status"
-                                onChange={(event) => {
-                                    const value = event.target.value;
-                                    setFormInputs({
-                                        ...formInputs,
-                                        status: value
-                                    })
-                                    editFeedback({
-                                        date: new Date(formInputs.date).getTime() / 1000,
-                                        subject: formInputs.subject,
-                                        text: formInputs.text,
-                                        author: formInputs.author,
-                                        status: value,
-                                    }, feedbackId)
-                                }}
-                                value={formInputs.status}
-                                disabled={props.userHasAccess(['ROLE_ADMIN']) ? false : "disabled"}
-                            >
-                                <option value="in-progress">В процессе</option>
-                                <option value="completed">Завершено</option>
-                                <option value="urgent">Срочно</option>
-                                <option value="testing">Тестирование</option>
-                                <option value="waiting">Ожидание ответа</option>
-                            </select>
-                        </div>
-                    </div>
-                    <InputText
-                        inputName="Тема"
-                        defaultValue={formInputs.subject}
-                        readOnly
-                    />
-                    <InputText
-                        inputName="Сообщение"
-                        type="textarea"
-                        defaultValue={formInputs.text}
-                        readOnly
-                    />
-                    <FeedbackChat
-                        messages={formInputs.messages}
-                        handleSubmit={(message) => {
-                            addMessage({
-                                author: props.userData.username,
-                                date: new Date().getTime() / 1000,
-                                text: message,
-                                discussionId: feedbackId
-                            })
-                                .then(() => {
-                                    loadData(feedbackId);
-                                })
-                        }}
-                    />
-                    <div className="main-form__buttons">
-                        <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/feedback')} value="Вернуться назад" />
-                        {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить обсуждение" /> */}
-                        {isLoading && <ImgLoader />}
-                    </div>
-                </form>
+          <InputText
+            inputName="Дата"
+            defaultValue={formatDateStringWithTime(formInputs.date)}
+            readOnly
+          />
+          <InputText
+            inputName="Автор"
+            defaultValue={formInputs.author}
+            readOnly
+          />
+          <div className="main-form__item">
+            <div className="main-form__input_name">Статус</div>
+            <div className="main-form__input_field">
+              <select
+                name="status"
+                onChange={(event) => {
+                  const value = event.target.value
+                  setFormInputs({
+                    ...formInputs,
+                    status: value,
+                  })
+                  editFeedback(
+                    {
+                      date: new Date(formInputs.date).getTime() / 1000,
+                      subject: formInputs.subject,
+                      text: formInputs.text,
+                      author: formInputs.author,
+                      status: value,
+                    },
+                    feedbackId,
+                  )
+                }}
+                value={formInputs.status}
+                disabled={
+                  props.userHasAccess(['ROLE_ADMIN']) ? false : 'disabled'
+                }
+              >
+                <option value="in-progress">В процессе</option>
+                <option value="completed">Завершено</option>
+                <option value="urgent">Срочно</option>
+                <option value="testing">Тестирование</option>
+                <option value="waiting">Ожидание ответа</option>
+              </select>
             </div>
-        </div>
-    );
-};
+          </div>
+          <InputText
+            inputName="Тема"
+            defaultValue={formInputs.subject}
+            readOnly
+          />
+          <InputText
+            inputName="Сообщение"
+            type="textarea"
+            defaultValue={formInputs.text}
+            readOnly
+          />
+          <FeedbackChat
+            messages={formInputs.messages}
+            handleSubmit={(message) => {
+              addMessage({
+                author: props.userData.username,
+                date: new Date().getTime() / 1000,
+                text: message,
+                discussionId: feedbackId,
+              }).then(() => {
+                loadData(feedbackId)
+              })
+            }}
+          />
+          <div className="main-form__buttons">
+            <Button
+              text="Вернуться назад"
+              isLoading={isLoading}
+              inverted
+              className="main-form__submit main-form__submit--inverted"
+              onClick={() => props.history.push('/feedback')}
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
 
-export default ViewFeedback;
+export default ViewFeedback
