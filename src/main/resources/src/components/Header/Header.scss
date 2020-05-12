@@ -37,13 +37,14 @@
     width: 100%;
     height: 100%;
     margin-left: 15px;
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
+    margin-bottom: 2.5px;
   }
 
   & .header__logo {
-    width: 100px;
-    max-width: 100px;
-    max-height: 35px;
+    width: 150px;
+    max-width: 110px;
+    max-height: 40px;
   }
 
   &__company {
@@ -54,6 +55,9 @@
 
     .header__name {
       margin-left: 5px;
+      margin-bottom: 2.5px;
+      // color: $button__background--inverted;
+      color: #555555;
       // color: $secondary-text-color;
       // margin-right: 10px;
     }
@@ -269,17 +273,22 @@
     & .header__link {
       display: flex;
       margin-left: 5px;
-      margin-bottom: 10px;
+      // margin-bottom: 10px;
+      // margin-bottom: 2.5px;
     }
     .header__logo {
       // display: none;
-      width: 60px;
+      width: 80px;
     }
   }
 
   @media (max-width: 768px) {
     & {
       padding: 0 10px;
+
+      .header__name {
+        font-size: 80%;
+      }
     }
 
     .header__sidemenu {

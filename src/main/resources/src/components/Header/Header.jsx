@@ -3,6 +3,7 @@ import profileSVG from '../../../../../../assets/header/profile1.svg';
 import exitSVG from '../../../../../../assets/header/exit.svg';
 import employeeSVG from '../../../../../../assets/header/employee.svg';
 import logoSVG from '../../../../../../assets/header/logo.png';
+import newLogoSVG from '../../../../../../assets/header/new_logo.png';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 
@@ -46,11 +47,11 @@ const Header = (props) => {
                         Меню
                     </div> */}
                 </div>
-                {/* <Link className="header__link" to="/">
-                    <img className="header__logo" src={logoSVG} alt="" />
-                </Link> */}
+                <Link className="header__link" to="/">
+                    <img className="header__logo" src={newLogoSVG} alt="" />
+                </Link>
                 {/* <div className="header__name">
-                    Компания
+                    Ц.Р.М.
                 </div> */}
             </div>
             <div className="header__menu">
