@@ -43,7 +43,9 @@
 
   & .header__logo {
     width: 150px;
-    max-width: 85px;
+    // max-width: 85px;
+    // max-height: 45px;
+    max-width: 145px;
     max-height: 45px;
   }
 
@@ -269,6 +271,12 @@
     }
   }
 
+  @media (max-width: 375px) {
+    .header__logo {
+      display: none;
+    }
+  }
+
   @media (max-width: 425px) {
     & .header__link {
       display: flex;
@@ -278,7 +286,7 @@
     }
     .header__logo {
       // display: none;
-      width: 80px;
+      // width: 80px;
     }
   }
 

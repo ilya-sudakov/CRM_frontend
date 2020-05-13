@@ -6,10 +6,10 @@ import {
   refreshToken,
 } from '../../../utils/RequestsAPI/Authorization.jsx'
 import profileSVG from '../../../../../../../assets/header/profile1.svg'
-import companyLogo from '../../../../../../../assets/priceList/osfix_logo.png'
+// import companyLogo from '../../../../../../../assets/priceList/osfix_logo.png'
 import PasswordIcon from '../../../../../../../assets/loginPage/password.png'
 import eyeIcon from '../../../../../../../assets/loginPage/eye.png'
-import newCompanyIcon from '../../../../../../../assets/loginPage/new_logo.png'
+import newCompanyIcon from '../../../../../../../assets/loginPage/login__new_logo.png'
 import ErrorMessage from '../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import exitSVG from '../../../../../../../assets/header/exit.svg'
 import CheckBox from '../../../utils/Form/CheckBox/CheckBox.jsx'

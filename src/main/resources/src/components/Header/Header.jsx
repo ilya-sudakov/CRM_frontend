@@ -3,7 +3,7 @@ import profileSVG from '../../../../../../assets/header/profile1.svg';
 import exitSVG from '../../../../../../assets/header/exit.svg';
 import employeeSVG from '../../../../../../assets/header/employee.svg';
 import logoSVG from '../../../../../../assets/header/logo.png';
-import newLogoSVG from '../../../../../../assets/header/new_logo.png';
+import newLogoSVG from '../../../../../../assets/header/header__new_logo.png';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 
