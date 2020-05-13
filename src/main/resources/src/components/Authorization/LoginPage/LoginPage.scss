@@ -12,9 +12,7 @@
   // background-color: #5cbdbd;
   height: calc(100vh - 50px);
   background: rgb(127, 195, 218);
-  background: linear-gradient(228deg, rgb(195, 231, 243) 30%, rgb(15, 233, 233) 100%);
-  //   background: rgb(186,207,214);
-  // background: linear-gradient(228deg, rgba(186,207,214,1) 33%, rgba(0,163,162,1) 78%);
+  background: linear-gradient(228deg, rgb(195, 231, 243) 50%, rgb(15, 233, 233) 100%);
 
   &__title {
     // margin-top: 10vh;
@@ -77,7 +75,7 @@
         padding: 10px 10px;
         border-radius: 5px;
         padding-left: var(--padding-left);
-        background-color: #efefef;
+        // background-color: #efefef;
 
         &:focus {
           border: 1px solid $button__background--inverted;
