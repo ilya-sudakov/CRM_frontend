@@ -186,10 +186,13 @@
     > span {
       color: #222222;
       position: relative;
-      text-decoration: underline;
       display: flex;
       flex-direction: row;
       align-items: center;
+
+      div:first-child {
+        text-decoration: underline;
+      }
 
       .main-window__action {
         margin-left: 5px;
