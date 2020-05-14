@@ -14,7 +14,7 @@ const NewTask = (props) => {
     dateCreated: new Date(),
     description: '',
     responsible: '',
-    dateControl: new Date(),
+    dateControl: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу,
     status: '',
     condition: 'В процессе',
     // visibility: 'all'

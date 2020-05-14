@@ -160,7 +160,7 @@
       // border-radius: 999px;
       //line
       // top: 22px;
-      bottom: 4px;
+      bottom: 6px;
       left: 5px;
     }
 
@@ -405,12 +405,22 @@
           text-align: left;
           margin-right: 10px;
         }
+        > div:nth-child(2) {
+          padding: 0 7.5px;
+          border: 2px solid $button__background--inverted;
+          background-color: $button__background--inverted;
+          color: $secondary-text-color;
+          border-radius: 999px;
+          font-size: 90%;
+          white-space: nowrap;
+        }
         .main-window__mobile-text:last-child {
           min-width: 50px;
-          text-align: right;
+          // text-align: right;
         }
-        .main-window__action:first-of-type {
-          margin-left: auto;
+        .main-window__action:last-child {
+          margin-right: auto;
+          // align-self: flex-start;
         }
       }
     }
