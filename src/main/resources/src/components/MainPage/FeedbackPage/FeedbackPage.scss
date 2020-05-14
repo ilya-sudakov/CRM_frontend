@@ -5,39 +5,9 @@
   --completed: #399639;
   --in-progress: #bdbd41;
   --testing: #28868a;
-  .feedback-page__status-wrapper {
-    // width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-right: auto;
-    font-size: 90%;
-    flex-wrap: wrap;
-
-    .main-window__button {
-      margin-left: 10px;
-      margin-right: 0;
-      padding-left: 20px;
-      position: relative;
-      margin-top: 5px;
-      &::before {
-        content: "";
-        display: inline-block;
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        left: 5px;
-        -moz-border-radius: 7.5px;
-        -webkit-border-radius: 7.5px;
-        border-radius: 7.5px;
-        background-color: #cccccc;
-      }
-    }
-
-    .main-window__button--inverted {
-      color: #555555;
-    }
+  --waiting: #864f7d;
+  .main-window__status-panel {
+    margin-bottom: 5px;
 
     .main-window__list-item--urgent::before {
       background-color: var(--urgent);
@@ -51,6 +21,9 @@
     .main-window__list-item--testing::before {
       background-color: var(--testing);
     }
+    .main-window__list-item--waiting::before {
+      background-color: var(--waiting);
+    }
   }
   .main-window__list {
     .main-window__list-item {
@@ -61,8 +34,8 @@
         content: "";
         display: inline-block;
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 7.5px;
+        height: calc(100% - 10px);
         left: 10px;
         -moz-border-radius: 7.5px;
         -webkit-border-radius: 7.5px;
@@ -105,6 +78,9 @@
     }
     .main-window__list-item--testing:not(.main-window__list-item--header)::before {
       background-color: var(--testing);
+    }
+    .main-window__list-item--waiting:not(.main-window__list-item--header)::before {
+      background-color: var(--waiting);
     }
   }
   .feedback-page__info-message {
@@ -151,7 +127,9 @@
           left: 0;
         }
         &::before {
-          top: calc(50% - 10px);
+          // top: calc(50% - 10px);
+          top: 10px;
+          height: calc(100% - 20px) !important;
         }
         .main-window__list-col {
           width: calc(100% - 25px);

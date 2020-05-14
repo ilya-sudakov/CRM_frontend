@@ -4,6 +4,7 @@ import '../../../../utils/Form/Form.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import { addFeedback } from '../../../../utils/RequestsAPI/Feedback/feedback';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const NewFeedback = (props) => {
     const [formInputs, setFormInputs] = useState({
@@ -78,7 +79,7 @@ const NewFeedback = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         console.log(formInputs);
         formIsValid() && addFeedback(formInputs)
@@ -122,8 +123,14 @@ const NewFeedback = (props) => {
                     <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/feedback')} value="Вернуться назад" />
-                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить обсуждение" />
-                        {isLoading && <ImgLoader />}
+                        {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить обсуждение" />
+                        {isLoading && <ImgLoader />} */}
+                        <Button
+                            text="Добавить обсуждение"
+                            isLoading={isLoading}
+                            className="main-form__submit"
+                            onClick={handleSubmit}
+                        />
                     </div>
                 </form>
             </div>

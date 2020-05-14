@@ -45,12 +45,12 @@
     border-radius: 5px;
     padding: 0px 15px;
     margin-top: 5px;
-    width: calc(100% - 60px);
+    width: calc(100% - 30px);
     position: relative;
     transition: 0.2s ease-in-out;
 
-    &:first-child {
-      width: calc(100% - 30px);
+    &--minimized {
+      width: calc(100% - 80px);
     }
 
     &:hover {

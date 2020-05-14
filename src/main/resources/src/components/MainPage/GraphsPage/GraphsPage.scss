@@ -1,0 +1,77 @@
+@import "../../../variables.scss";
+
+.graphs-page {
+  .main-window__control-panel {
+    // width: 50%;
+    justify-content: center;
+
+    .main-window__button:last-child {
+      margin-right: 0;
+    }
+  }
+  &__chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 30px);
+    max-width: 60%;
+    // max-height: 230px;
+    // background-color: $secondary-text-color;
+    border-radius: 5px;
+    padding: 10px 15px;
+    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    position: relative;
+    min-height: 250px;
+    max-height: 50%;
+    margin-bottom: 15px;
+
+    .graphs-page__header {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-bottom: auto;
+      .graphs-page__title {
+        font-size: 20px;
+        text-align: center;
+        // margin: 0 10px;
+        transition: 100ms ease-in-out;
+      }
+    }
+    .graphs-page__chart {
+      height: 100%;
+      min-height: 225px;
+      max-height: 20%;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .graphs-page__chart-wrapper {
+      width: calc(100% - 10px);
+      padding: 5px 5px;
+      // min-height: 500px;
+      max-height: 380px;
+      .graphs-page__chart {
+        // min-height: 200px;
+        max-height: 300px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .graphs-page__chart-wrapper {
+      max-width: calc(100% - 50px) !important;
+      .graphs-page__header {
+        font-size: 80%;
+        .graphs-page__title {
+          font-size: 16px;
+        }
+        .graphs-page__button {
+          padding: 10px 2.5px;
+        }
+      }
+    }
+  }
+}

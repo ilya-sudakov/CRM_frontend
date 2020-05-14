@@ -21,10 +21,11 @@ export function getRecordedWorkByMonth(month) {
     })
 }
 
-export function getRecordedWorkByDay(month, day) {
+export function getRecordedWorkByDay(month, day, signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/work_control/day/" + day + '&' + month,
-        method: "GET"
+        method: "GET", 
+        signal: signal
     })
 }
 

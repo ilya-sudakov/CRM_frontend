@@ -7,6 +7,7 @@ import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
 import { getOrderById, editOrder, editProductInOrder, addProductToOrder, deleteProductFromOrder } from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const EditWorkshopOrder = (props) => {
     const [formInputs, setFormInputs] = useState({
@@ -93,7 +94,7 @@ const EditWorkshopOrder = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         // console.log(formInputs);
         formIsValid() && editOrder({
@@ -286,8 +287,14 @@ const EditWorkshopOrder = (props) => {
                     <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                     <div className="main-form__buttons">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lepsari/workshop-orders')} value="Вернуться назад" />
-                        <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать заказ" />
-                        {isLoading && <ImgLoader />}
+                        {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать заказ" />
+                        {isLoading && <ImgLoader />} */}
+                        <Button
+                            text="Редактировать запись"
+                            isLoading={isLoading}
+                            className="main-form__submit"
+                            onClick={handleSubmit}
+                        />
                     </div>
                 </div>
             </div>

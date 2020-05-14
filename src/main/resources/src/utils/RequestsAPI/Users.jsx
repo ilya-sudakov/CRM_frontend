@@ -1,9 +1,10 @@
 import { request } from '../utilsAPI.jsx';
 
-export function getUsers() {
+export function getUsers(signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/admin/user/",
-        method: "GET"
+        method: "GET",
+        signal: signal
     })
 }
 

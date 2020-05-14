@@ -14,11 +14,12 @@ export function getEmployeeById(id) {
     })
 }
 
-export function getEmployeesByWorkshop(Workshop) {
+export function getEmployeesByWorkshop(Workshop, signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/employee/workshop",
         method: "POST",
-        body: JSON.stringify(Workshop)
+        body: JSON.stringify(Workshop),
+        signal: signal
     })
 }
 

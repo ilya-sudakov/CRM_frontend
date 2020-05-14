@@ -8,6 +8,7 @@ import TableView from './TableView/TableView.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../utils/Form/Button/Button.jsx';
 
 const WorkshopLEMZ = (props) => {
     const [requestsLEMZ, setRequestsLEMZ] = useState([]);
@@ -50,12 +51,16 @@ const WorkshopLEMZ = (props) => {
 
     useEffect(() => {
         document.title = "Заявки - ЛЭМЗ";
-        loadRequestsLEMZ()
+        const abortController = new AbortController();
+        loadRequestsLEMZ(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadRequestsLEMZ = () => {
+    const loadRequestsLEMZ = (signal) => {
         setIsLoading(true);
-        getRequestsLEMZ()
+        getRequestsLEMZ(signal)
             .then(res => res.json())
             .then(requests => {
                 setRequestsLEMZ(requests);
@@ -72,10 +77,17 @@ const WorkshopLEMZ = (props) => {
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
-                    {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printRequestsList}>
+                    {/* {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printRequestsList}>
                         <img className="main-window__img" src={PrintIcon} alt="" />
                         <span>Печать списка</span>
-                    </div>}
+                    </div>} */}
+                    <Button
+                        text="Печать списка"
+                        isLoading={isLoading}
+                        imgSrc={PrintIcon}
+                        className="main-window__button"
+                        onClick={printRequestsList}
+                    />
                     <div className="main-window__amount_table">Всего: {requestsLEMZ.length} записей</div>
                 </div>
                 <TableView

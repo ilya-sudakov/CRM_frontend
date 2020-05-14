@@ -1,149 +1,17 @@
 @import "../../../../../variables.scss";
 
 .tableview_users {
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 25px);
-  font-size: 100%;
-  min-width: 950px;
-  border-radius: 10px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-
-  &__img {
-    width: 15px;
-    margin-left: 5px;
-    cursor: pointer;
-  }
-
-  &__user_img {
-    max-width: 90px;
-    max-height: 90px;
-    // width: 80px;
-    // padding: 5px;
-  }
-
-  &__row--header {
-    font-size: 80%!important;
-    position: sticky; //test
-    top: calc(-6px); //test
-    .tableview_users__col {
-      &:last-child {
-        max-width: 125px;
-      }
-    }
-  }
-
-  &__row {
-    display: flex;
-    background-color: $primary-background-color;
-    border-bottom: 1px solid #cccccc;
-    text-align: center;
-    transition: 0.2s ease-in-out;
-    font-size: 75%;
-
-    .tableview_users__col {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px 5px;
-      // flex: 0 1 12.5%;
-      border-right: 1px solid #cccccc; //border between columns
-      // min-width: 100px;
-      // max-width: 150px;
-
-      &:nth-child(1) {
-        flex: 0 1 40%;
-      }
-
-      &:nth-child(2) {
-        flex: 0 1 30%;
-      }
-
-      &:nth-child(3) {
-        flex: 0 1 30%;
-      }
-
-      &:nth-child(4) {
-        flex: 0 1 10%;
-      }
-
-      &:last-child {
-        flex: 0 1 10%;
-        border-right: none;
-      }
-    }
-
-    .tableview_users__actions {
-      flex: 0 1 10%;
-      display: flex;
-      padding: 10px 5px;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      max-width: 125px;
-
-      .tableview_users__action {
-        font-size: 90%;
-        width: 75%;
-        border-radius: 5px;
-        margin-bottom: 5px;
-        padding: 5px 10px;
-        cursor: pointer;
-        color: $secondary-text-color;
-        background-color: $button__background--inverted;
-        transition: 0.2s ease-in-out;
-        word-wrap: break-word;
-        word-break: break-all;
-
-        &:last-child {
-          margin: 0;
+  width: 100%;
+  .main-window__list {
+    .main-window__list-item {
+      span {
+        &:nth-child(1) {
+          flex: 0 1 30%;
         }
-
-        &:hover {
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-          background-color: lighten($button__background--inverted, 5%);
+        &:nth-child(3) {
+          flex: 0 1 10%;
         }
       }
     }
-
-    &:first-of-type {
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      // padding: 0px 5px;
-      // .tableview_users__col:last-child {
-      //   flex: 0 1 10%;
-      // }
-    }
-
-    &:last-of-type {
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-      border-bottom: 0;
-    }
-  }
-
-  .tableview_users__row--even {
-    background-color: #f8f8f8;
-
-    &:hover {
-      background-color: #f0f0f0;
-    }
-  }
-
-  .tableview_users__row--odd {
-    background-color: #ebebeb;
-
-    &:hover {
-      background-color: #dbdbdb;
-    }
-  }
-}
-
-@media (max-width: 1024px) {
-  .tableview_users {
-    flex-direction: column;
-    align-self: flex-start;
-    margin-left: 5px;
-    width: calc(100% - 10px);
   }
 }

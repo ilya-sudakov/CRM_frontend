@@ -1,7 +1,7 @@
 @import "../../../variables.scss";
 
 .file-uploader {
-  margin: 5px;
+  margin: 0 5px;
   padding: 5px 0px;
   min-width: 280px;
   width: calc(90% - 20px);
@@ -93,6 +93,14 @@
           transform: rotate(-45deg) scale(1.1);
         }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      // margin-left: 50px;
+      width: calc(100% - 20px);
+      justify-content: center;
     }
   }
 }

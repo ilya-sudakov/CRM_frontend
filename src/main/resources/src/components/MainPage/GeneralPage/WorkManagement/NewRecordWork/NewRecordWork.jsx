@@ -13,6 +13,7 @@ import { addRecordedWork, addProductToRecordedWork } from '../../../../../utils/
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx';
 import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const NewRecordWork = (props) => {
     const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -90,7 +91,7 @@ const NewRecordWork = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         if (curPage !== 1) {
             return setCurPage(1);
         }
@@ -111,11 +112,10 @@ const NewRecordWork = (props) => {
                         .then(res => res.json())
                         .then(res => {
                             // console.log(res);
-                            const productsArr = item.product.map(product => {
+                            Promise.all(item.product.map(product => {
                                 // console.log(product);
-                                addProductToRecordedWork(res.id, product.id, product.quantity, { name: product.name })
-                            })
-                            Promise.all(productsArr)
+                                return addProductToRecordedWork(res.id, product.id, product.quantity, { name: product.name })
+                            }))
                                 .then(() => {
                                     props.history.push("/work-managment");
                                 })
@@ -300,8 +300,12 @@ const NewRecordWork = (props) => {
                                         props.history.push('/');
                                     }
                                 }} value="Вернуться назад" />
-                                {worktimeInputs.works.length > 0 && <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Далее" />}
-                                {isLoading && <ImgLoader />}
+                                {worktimeInputs.works.length > 0 && <Button
+                                    text="Указать часы"
+                                    isLoading={isLoading}
+                                    className="main-form__submit"
+                                    onClick={handleSubmit}
+                                />}
                             </div>
                         </div>
                         <div className="main-form__wrapper-item">
@@ -332,14 +336,20 @@ const NewRecordWork = (props) => {
                                         props.history.push('/');
                                     }
                                 }} value="Вернуться назад" />
-                                <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Создать запись" />
-                                {isLoading && <ImgLoader />}
+                                {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Создать запись" />
+                                {isLoading && <ImgLoader />} */}
+                                <Button
+                                    text="Создать запись"
+                                    isLoading={isLoading}
+                                    className="main-form__submit"
+                                    onClick={handleSubmit}
+                                />
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-        </div >
+        </div>
     );
 };
 

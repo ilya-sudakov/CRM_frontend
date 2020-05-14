@@ -13,11 +13,15 @@ const Parts = (props) => {
 
     useEffect(() => {
         document.title = "Запчасти";
-        loadParts();
+        const abortController = new AbortController();
+        loadParts(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadParts = () => {
-        getPart()
+    const loadParts = (signal) => {
+        getPart(signal)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);

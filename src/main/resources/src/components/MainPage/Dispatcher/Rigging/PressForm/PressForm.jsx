@@ -11,11 +11,15 @@ const PressForm = (props) => {
 
     useEffect(() => {
         document.title = "Пресс-формы";
-        loadPressForm();
+        const abortController = new AbortController();
+        loadPressForm(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
-    const loadPressForm = () => {
-        getPressForm()
+    const loadPressForm = (signal) => {
+        getPressForm(signal)
             .then(res => res.json())
             .then(res => {
                 // console.log(res);                

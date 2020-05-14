@@ -70,6 +70,9 @@ const WorkshopOrders = (props) => {
         const abortController = new AbortController();
         loadData(abortController.signal);
         setIsLoading(false);
+        return function cancel() {
+            abortController.abort();
+        };
     }, []);
 
     return (

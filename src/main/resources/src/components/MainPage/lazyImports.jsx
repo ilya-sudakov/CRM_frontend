@@ -364,6 +364,22 @@ const EtceteraPage = lazy(
     () => import('./EtceteraPage/EtceteraPage.jsx')
 )
 
+const GraphsPage = lazy(
+    () => import('./GraphsPage/GraphsPage.jsx')
+)
+
+const PackagingPage = lazy(
+    () => import('./PackagingPage/PackagingPage.jsx')
+)
+
+const NewPackaging = lazy(
+    () => import('./PackagingPage/NewPackaging/NewPackaging.jsx')
+)
+
+const EditPackaging = lazy(
+    () => import('./PackagingPage/EditPackaging/EditPackaging.jsx')
+)
+
 export {
     Clients, newClient, ViewClient, EditClient, ClientCategories,
     Contracts,
@@ -388,5 +404,7 @@ export {
     LEMZ, Lepsari,
     PriceList, NewPriceList, ViewPriceList,
     FeedbackPage, NewFeedback, ViewFeedback,
-    EtceteraPage
+    EtceteraPage,
+    GraphsPage,
+    PackagingPage, NewPackaging, EditPackaging
 };

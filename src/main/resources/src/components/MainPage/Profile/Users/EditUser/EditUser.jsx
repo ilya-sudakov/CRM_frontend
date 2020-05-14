@@ -4,7 +4,8 @@ import '../../../../../utils/Form/Form.scss';
 import { getUserById, editUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+// import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const EditUser = (props) => {
     const [userId, setUserId] = useState(1);
@@ -71,7 +72,7 @@ const EditUser = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         formIsValid() && editUser(userInputs, userId)
             .then(() => {
@@ -163,8 +164,14 @@ const EditUser = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/profile/users')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Обновить данные"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

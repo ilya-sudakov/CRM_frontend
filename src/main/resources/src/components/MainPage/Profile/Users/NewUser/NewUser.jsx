@@ -4,7 +4,8 @@ import '../../../../../utils/Form/Form.scss';
 import { addUser } from '../../../../../utils/RequestsAPI/Users.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+// import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const NewUser = (props) => {
     const [userInputs, setUserInputs] = useState({
@@ -71,10 +72,9 @@ const NewUser = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         console.log(userInputs);
-
         formIsValid() && addUser(userInputs)
             .then(() => props.history.push("/profile/users"))
             .catch(error => {
@@ -157,8 +157,14 @@ const NewUser = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/profile/users')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить пользователя" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить пользователя" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Добавить пользователя"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

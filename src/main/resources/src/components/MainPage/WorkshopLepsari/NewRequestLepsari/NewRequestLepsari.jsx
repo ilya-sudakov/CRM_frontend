@@ -8,6 +8,7 @@ import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.js
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import { addProductsToRequestLepsari, addRequestLepsari } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const NewRequestLepsari = (props) => {
     const [requestInputs, setRequestInputs] = useState({
@@ -97,7 +98,7 @@ const NewRequestLepsari = (props) => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setIsLoading(true);
         let id = 0;
         // console.log(requestInputs);
@@ -327,8 +328,14 @@ const NewRequestLepsari = (props) => {
                 <div className="main-form__input_hint">* - поля, обязательные для заполнения</div>
                 <div className="main-form__buttons">
                     <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/lepsari/workshop-lepsari')} value="Вернуться назад" />
-                    <input className="main-form__submit" type="submit" onClick={(event) => handleSubmit(event)} value="Оформить заявку" />
-                    {isLoading && <ImgLoader />}
+                    {/* <input className="main-form__submit" type="submit" onClick={(event) => handleSubmit(event)} value="Оформить заявку" />
+                    {isLoading && <ImgLoader />} */}
+                    <Button
+                        text="Оформить заявку"
+                        isLoading={isLoading}
+                        className="main-form__submit"
+                        onClick={handleSubmit}
+                    />
                 </div>
             </form>
         </div>

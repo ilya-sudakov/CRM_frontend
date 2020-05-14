@@ -1,9 +1,10 @@
 import { request } from '../../utilsAPI.jsx';
 
-export function getPart() {
+export function getPart(signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/detail/",
-        method: "GET"
+        method: "GET",
+        signal: signal
     })
 }
 

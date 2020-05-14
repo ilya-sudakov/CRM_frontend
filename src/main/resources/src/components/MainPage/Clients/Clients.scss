@@ -26,7 +26,7 @@
       display: flex;
       // flex: 0 1 80%;
       width: 100%;
-      align-self: flex-end;
+      align-self: flex-start;
 
       .main-window__item {
         width: 100%;
@@ -73,14 +73,20 @@
     .main-window__list-item {
       span {
         align-items: center;
+        &:nth-child(1) {
+          flex: 0 1 15%;
+        }
         &:nth-child(2) {
           flex: 0 1 10%;
-          max-width: 100px;
+          max-width: 120px;
           overflow: hidden;
           text-overflow: ellipsis;
         }
         &:nth-child(3) {
           flex: 0 1 15%;
+        }
+        &:nth-child(4) {
+          flex: 0 1 30%;
         }
         &:nth-child(5) {
           flex: 0 1 10%;
@@ -123,7 +129,7 @@
 
   .main-window__actions {
     flex-direction: row !important;
-    flex: 0 1 15% !important;
+    flex: 0 1 20% !important;
     flex-wrap: wrap;
     .main-window__action {
       .main-window__img {

@@ -12,6 +12,7 @@ import {
 } from '../../../utils/RequestsAPI/Workshop/Lepsari.jsx';
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx';
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../utils/Form/Button/Button.jsx';
 
 const WorkshopLepsari = (props) => {
     const [requestLepsari, setRequestLepsari] = useState([]);
@@ -49,7 +50,11 @@ const WorkshopLepsari = (props) => {
 
     useEffect(() => {
         document.title = "Заявки - Лепсари";
-        loadRequestLepsari();
+        const abortController = new AbortController();
+        loadRequestLepsari(abortController.signal);
+        return function cancel() {
+            abortController.abort();
+        };
     }, [])
 
     const printRequestsList = () => {
@@ -57,9 +62,9 @@ const WorkshopLepsari = (props) => {
         pdfMake.createPdf(dd).print();
     }
 
-    const loadRequestLepsari = () => {
+    const loadRequestLepsari = (signal) => {
         setIsLoading(true);
-        getRequestsLepsari()
+        getRequestsLepsari(signal)
             .then(res => res.json())
             .then(requests => {
                 // console.log(requests);                
@@ -78,10 +83,17 @@ const WorkshopLepsari = (props) => {
                     setSearchQuery={setSearchQuery}
                 />
                 <div className="main-window__info-panel">
-                    {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printRequestsList}>
+                    {/* {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printRequestsList}>
                         <img className="main-window__img" src={PrintIcon} alt="" />
                         <span>Печать списка</span>
-                    </div>}
+                    </div>} */}
+                    <Button
+                        text="Печать списка"
+                        isLoading={isLoading}
+                        imgSrc={PrintIcon}
+                        className="main-window__button"
+                        onClick={printRequestsList}
+                    />
                     <div className="main-window__amount_table">Всего: {requestLepsari.length} записей</div>
                 </div>
                 <TableView

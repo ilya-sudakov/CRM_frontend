@@ -1,5 +1,26 @@
-@import '../../../../variables.scss';
+@import "../../../../variables.scss";
 
 .general_tasks {
-  
+    --completed: #52d66c;
+    --in-progress: #ca077f;
+    --delayed: #00b7ff;
+    --problem: #d6574e;
+    --materials: #d49a27;
+    .main-window__status-panel {
+        .main-window__list-item--completed::before {
+            background-color: var(--completed);
+        }
+        .main-window__list-item--delayed::before {
+            background-color: var(--delayed);
+        }
+        .main-window__list-item--materials::before {
+            background-color: var(--materials);
+        }
+        .main-window__list-item--in-progress::before {
+            background-color: var(--in-progress);
+        }
+        .main-window__list-item--problem::before {
+            background-color: var(--problem);
+        }
+    }
 }

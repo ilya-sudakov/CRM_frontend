@@ -45,11 +45,19 @@
     display: none;
   }
 
-  .main-window__filter-pick {
+  &__filter-pick {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     font-size: 90%;
+    width: calc(100% - 50px);
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    div:first-child {
+      color: #666666;
+      font-size: 90%;
+      margin-right: 10px;
+    }
 
     .main-window__button {
       font-size: 75%;
@@ -85,7 +93,16 @@
     margin: 0;
   }
   .main-window__header .main-window__button {
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  &__control-panel {
+    width: calc(100% - 50px);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   &__info-panel {
@@ -95,6 +112,14 @@
     justify-content: flex-end;
     align-items: center;
     margin-bottom: 10px;
+
+    .main-window__filter-pick {
+      padding-left: 0;
+    }
+
+    .main-window__status-panel {
+      padding-left: 0 !important;
+    }
   }
 
   &__amount_table {
@@ -147,6 +172,7 @@
 
     &:hover {
       background-color: lighten($button__background--inverted, 5%);
+      color: #ffffff !important;
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     }
   }
@@ -189,6 +215,12 @@
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
     }
+    &--even {
+      background-color: #ffffff;
+    }
+    &--odd {
+      background-color: #eeeeee;
+    }
     &:last-child {
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
@@ -200,6 +232,10 @@
 
       .main-window__link {
         color: #ffffff;
+      }
+
+      .main-window__actions .main-window__action {
+        color: $secondary-text-color;
       }
     }
     &:hover .main-window__action {
@@ -223,6 +259,7 @@
   .main-window__list-item span,
   .main-window__list-options span {
     flex: 0 1 20%;
+    align-items: center;
     // text-align: center;
     padding: 0px 5px;
     &:first-child {
@@ -252,7 +289,7 @@
     // height: 1px;
     min-height: 25px;
     // height: ;
-    // overflow-y: hidden;
+    overflow-y: hidden;
     // background-color: #dddddd;
     // background-color: darken(#ffffff, 4%);
     // border: 1px solid $button__background--inverted;
@@ -263,7 +300,7 @@
     // background-color: transparent;
     padding: 10px 10px;
     // margin-bottom: 10px;
-    transition: 0.2s ease-in-out;
+    transition: 100ms ease-in-out;
     // box-shadow: none;
     // border: none;
     box-shadow: inset 0px 0px 3px 0px rgba(0, 0, 0, 0.6);
@@ -271,6 +308,11 @@
     &:hover {
       background-color: #dddddd;
       color: $primary-text-color;
+      .main-window__action {
+        .main-window__img {
+          filter: brightness(1);
+        }
+      }
     }
   }
   .main-window__list-options--hidden {
@@ -292,6 +334,11 @@
       // background-color: darken(#eeeeee, 5%);
       // color: $primary-text-color;
       // box-shadow: none;
+      .main-window__action {
+        .main-window__img {
+          filter: brightness(3);
+        }
+      }
     }
   }
   .main-window__sort-panel {
@@ -309,11 +356,58 @@
       border-radius: 5px;
       min-width: 100px;
       padding: 2.5px 5px;
+      width: fit-content !important;
+    }
+  }
+  .main-window__status-panel {
+    width: calc(100% - 50px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: auto;
+    font-size: 80%;
+    flex-wrap: wrap;
+    padding: 5px 0px;
+    padding-right: 10px;
+    color: #666666;
+    margin-bottom: 5px;
+    div:first-child {
+      margin-right: 10px;
+    }
+    .main-window__button {
+      // margin-left: 10px;
+      margin-right: 10px;
+      padding-left: 20px;
+      padding: 5px 10px 5px 20px;
+      position: relative;
+      font-size: 90%;
+      margin-top: 5px;
+      &:last-child {
+        margin-right: 0;
+      }
+      &::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        left: 5px;
+        -moz-border-radius: 7.5px;
+        -webkit-border-radius: 7.5px;
+        border-radius: 7.5px;
+        background-color: #cccccc;
+      }
+    }
+
+    .main-window__button--inverted {
+      color: #555555;
     }
   }
   .main-window__actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     // flex-direction: row;
     justify-content: center;
     min-width: 110px;
@@ -327,7 +421,7 @@
     transition: all 100ms ease-in-out;
     color: $primary-text-color;
     // color: $secondary-text-color;
-    font-size: 80%;
+    font-size: 90%;
     cursor: pointer;
     //---
     padding: 5px;
@@ -339,6 +433,12 @@
     background-color: transparent;
     border: 0;
     transform: scale(1);
+    // color: $button__background--inverted;
+
+    .main-window__img {
+      width: 22.5px !important;
+    }
+
     &:last-child {
       margin-bottom: 0;
       margin-right: 0;
@@ -444,14 +544,38 @@
       }
     }
 
+    &__filter-pick {
+      div:first-child {
+        margin-top: 5px;
+      }
+      .main-window__button {
+        margin-top: 5px;
+      }
+    }
+
+    &__info-panel {
+      flex-direction: column;
+      .main-window__filter-pick {
+        width: 100%;
+      }
+      .main-window__status-panel {
+        width: 100%;
+      }
+    }
+
     &__amount_table {
       margin-top: 5px;
+      margin-left: auto;
     }
 
     .main-window__header {
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
       margin-bottom: 0;
       .main-window__title {
+        margin-bottom: 5px;
+      }
+      .main-window__button {
         margin-bottom: 5px;
       }
     }
@@ -482,12 +606,16 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
     .main-window__actions {
       flex-direction: row;
       justify-content: center;
       align-items: center;
+
+      .main-window__img {
+        width: 25px;
+      }
     }
     .main-window__action {
       font-size: 90%;

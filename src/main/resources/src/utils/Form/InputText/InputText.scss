@@ -31,8 +31,8 @@
     .input_text__input_name {
       color: lighten($primary-text-color, 40%);
       //   margin-bottom: 5px;
-      padding-right: 5px;
-      flex: 0 1 calc(20% - 5px);
+      padding-right: 10px;
+      flex: 0 1 calc(20% - 10px);
     }
 
     .input_text__input_field {
@@ -83,7 +83,7 @@
 
       &--error {
         input[type="text"],
-        input[type="password"], 
+        input[type="password"],
         textarea {
           border: 1px solid #f73434 !important;
         }
@@ -94,6 +94,7 @@
   @media (max-width: 768px) {
     .input_text__input {
       flex-wrap: wrap;
+      align-items: flex-start;
       flex-direction: column;
 
       .input_text__input_name {
@@ -102,7 +103,11 @@
       }
 
       .input_text__input_field {
-        width: 100%;
+        width: calc(100% - 0px);
+
+        input {
+          padding: 10px !important;
+        }
       }
     }
 
