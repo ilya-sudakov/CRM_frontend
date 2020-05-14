@@ -1,6 +1,6 @@
 @import "../../../variables.scss";
 
-.requests {
+.requests-lemz {
   .main-window {
     padding: 10px 0;
   }
@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: calc(100% - 50px) !important;
+    width: calc(100% - 25px) !important;
     border-top-left-radius: 10px;
     text-align: center;
     z-index: 1;
@@ -29,10 +29,10 @@
       align-self: flex-end;
 
       .main-window__item {
-        width: 100%;
+        // width: 100%;
         margin-right: 2.5px;
         font-size: 80%;
-        padding: 10px 0;
+        padding: 10px 50px;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -107,6 +107,8 @@
 
         .main-window__item {
           flex-direction: column;
+          padding: 10px 20px;
+          width: 100%;
 
           .main-window__addButton {
             margin: 0;
@@ -118,6 +120,16 @@
     .main-window__content {
       .searchbar {
         width: calc(100%) !important;
+      }
+    }
+  }
+
+  @media (max-width: 425px) {
+    .main-window__header {
+      .main-window__menu {
+        .main-window__item {
+          padding: 10px 10px;
+        }
       }
     }
   }

@@ -10,7 +10,7 @@ import { WorkshopLEMZ, Storage, ViewRequestLEMZ, EditRequestLEMZ, NewRequestLEMZ
 
 const LEMZ = (props) => {
     return (
-        <div className="requests">
+        <div className="requests-lemz">
             <div className="main-window">
                 <div className="main-window__header">
                     <div className="main-window__title">Цех ЛЭМЗ</div>

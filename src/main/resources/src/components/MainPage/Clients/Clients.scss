@@ -29,10 +29,11 @@
       align-self: flex-start;
 
       .main-window__item {
-        width: 100%;
+        // width: 100%;
+        width: fit-content;
         margin-right: 2.5px;
         font-size: 80%;
-        padding: 10px 0;
+        padding: 10px 50px;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -152,6 +153,11 @@
       }
       .main-window__menu {
         width: 100% !important;
+
+        .main-window__item {
+          width: 100%;
+          padding: 10px 20px;
+        }
       }
     }
     .main-window__list-item {
@@ -186,6 +192,10 @@
     .main-window__header {
       .main-window__menu {
         font-size: 85%;
+
+        .main-window__item {
+          padding: 10px 10px;
+        }
       }
     }
   }
