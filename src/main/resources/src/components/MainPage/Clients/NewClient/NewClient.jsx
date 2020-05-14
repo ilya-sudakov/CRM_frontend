@@ -458,43 +458,46 @@ const newClient = (props) => {
                 handleInputChange={handleInputChange}
                 defaultValue={clientInputs.check}
               />
-              <div className="main-form__item">
-                <div className="main-form__input_name">Тип клиента*</div>
-                <div className="main-form__input_field">
-                  <select
-                    name="clientType"
-                    onChange={handleInputChange}
-                    defaultValue={clientInputs.clientType}
-                  >
-                    <option value="Активные">Активные</option>
-                    <option value="Потенциальные">Потенциальные</option>
-                    <option value="В разработке">В разработке</option>
-                  </select>
+              <div className="main-form__fieldset">
+                <div className="main-form__group-name">Категория клиента</div>
+                <div className="main-form__item">
+                  <div className="main-form__input_name">Тип клиента*</div>
+                  <div className="main-form__input_field">
+                    <select
+                      name="clientType"
+                      onChange={handleInputChange}
+                      defaultValue={clientInputs.clientType}
+                    >
+                      <option value="Активные">Активные</option>
+                      <option value="Потенциальные">Потенциальные</option>
+                      <option value="В разработке">В разработке</option>
+                    </select>
+                  </div>
                 </div>
+                <SelectClientCategory
+                  inputName="Выбор категории клиента"
+                  required
+                  error={formErrors.category}
+                  userHasAccess={props.userHasAccess}
+                  windowName="select-category"
+                  name="categoryId"
+                  handleCategoryChange={(value, name) => {
+                    validateField('categoryId', value)
+                    setClientInputs({
+                      ...clientInputs,
+                      categoryId: value,
+                      categoryName: name,
+                    })
+                    setFormErrors({
+                      ...formErrors,
+                      categoryId: false,
+                    })
+                  }}
+                  defaultValue={clientInputs.categoryName}
+                  errorsArr={formErrors}
+                  setErrorsArr={setFormErrors}
+                />
               </div>
-              <SelectClientCategory
-                inputName="Выбор категории клиента"
-                required
-                error={formErrors.category}
-                userHasAccess={props.userHasAccess}
-                windowName="select-category"
-                name="categoryId"
-                handleCategoryChange={(value, name) => {
-                  validateField('categoryId', value)
-                  setClientInputs({
-                    ...clientInputs,
-                    categoryId: value,
-                    categoryName: name,
-                  })
-                  setFormErrors({
-                    ...formErrors,
-                    categoryId: false,
-                  })
-                }}
-                defaultValue={clientInputs.categoryName}
-                errorsArr={formErrors}
-                setErrorsArr={setFormErrors}
-              />
             </React.Fragment>
           )}
           <div className="main-form__input_hint">

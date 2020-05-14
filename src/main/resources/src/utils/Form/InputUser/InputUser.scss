@@ -82,6 +82,10 @@
 
       .input_user__input_field {
         width: 100%;
+
+        input {
+          padding: 10px !important;
+        }
       }
     }
 

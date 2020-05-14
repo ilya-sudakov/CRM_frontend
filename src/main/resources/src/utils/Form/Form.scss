@@ -84,6 +84,28 @@
     padding: 10px 25px;
     padding-top: 35px;
 
+    .main-form__fieldset {
+      width: calc(100% - 20px);
+      margin: 15px 0;
+      .main-form__group-name {
+        // font-weight: bold;
+        text-align: left;
+        width: 100%;
+        font-size: 110%;
+        margin-bottom: 5px;
+        // margin-left: 20px;
+        color: #000000;
+      }
+
+      .main-form__item,
+      .input_text,
+      .input_date,
+      .input_products,
+      .select-client-category {
+        margin-left: 20px;
+      }
+    }
+
     .main-form__item {
       width: calc(100% - 20px);
       display: flex;
@@ -405,8 +427,17 @@
         width: 100%;
       }
 
+      select {
+        padding: 10px !important;
+      }
+
       .main-form__input_field {
         width: 100%;
+        // padding: 5px 10px;
+
+        input {
+          padding: 10px 10px;
+        }
       }
 
       .main-form__product_img {

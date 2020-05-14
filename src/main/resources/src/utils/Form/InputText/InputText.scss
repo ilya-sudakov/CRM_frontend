@@ -104,6 +104,10 @@
 
       .input_text__input_field {
         width: calc(100% - 0px);
+
+        input {
+          padding: 10px !important;
+        }
       }
     }
 
