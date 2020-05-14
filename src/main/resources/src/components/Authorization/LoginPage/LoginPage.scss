@@ -5,12 +5,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
+  padding-top: 80px;
   // background-color: $secondary-background-color;
   // background-color: #00d4d4;
   // background-color: #a0d4d4;
   // background-color: #5cbdbd;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 80px);
   background: rgb(127, 195, 218);
   background: linear-gradient(228deg, rgb(195, 231, 243) 50%, rgb(15, 233, 233) 100%);
 
@@ -34,7 +34,7 @@
   .authorization__img--logo {
     min-width: 150px;
     width: 25%;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
     filter: none;
   }
 
@@ -48,12 +48,12 @@
     max-width: 280px;
     // border: 1px solid black;
     border-radius: 5px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     padding: 10px 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
 
     .authorization__field_name {
       align-self: flex-start;
