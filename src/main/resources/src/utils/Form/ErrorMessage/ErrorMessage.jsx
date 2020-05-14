@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 // import { Link } from 'react-router-dom';
 import './ErrorMessage.scss'
 
@@ -16,6 +16,20 @@ const ErrorMessage = (props) => {
       props.setShowError(false)
     }
   }
+
+  const handleCloseWindow = useCallback((event) => {
+    if (event.key === 'Enter' || event.key === 'Escape') {
+      event.preventDefault()
+      props.setShowError(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleCloseWindow, false)
+    return () => {
+      document.removeEventListener('keydown', handleCloseWindow, false)
+    }
+  }, [])
 
   return (
     //Окно для добавления продукции по категориям
