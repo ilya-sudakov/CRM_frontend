@@ -42,6 +42,7 @@
   .main-window__info-panel {
     justify-content: space-between !important;
     align-items: center;
+    flex-wrap: wrap;
     .work-management-page__date-pick {
       display: flex;
       justify-content: space-between;
@@ -67,6 +68,10 @@
       }
       .main-window__button--inverted {
         color: #666666;
+      }
+
+      .main-window__amount_table {
+        margin-top: 5px;
       }
 
       .main-window__button:last-child {
@@ -361,13 +366,20 @@
       margin-bottom: 5px;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+      // flex-wrap: wrap;
       justify-content: center;
+      .work-management-page__date {
+        // align-self: flex-start;
+      }
       & .input_date,
       & .input_date input {
+        margin-bottom: 20px;
         width: calc(100% - 20px) !important;
       }
       & .main-window__button {
         margin-top: 5px;
+        // align-self: flex-end;
       }
     }
     .work-management-page__workshop-pick {

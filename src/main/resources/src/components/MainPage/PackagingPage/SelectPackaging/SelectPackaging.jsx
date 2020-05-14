@@ -8,6 +8,7 @@ import {
 import SearchBar from '../../SearchBar/SearchBar.jsx'
 import '../../../../utils/MainWindow/MainWindow.scss'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
+import okSVG from '../../../../../../../../assets/tableview/ok.svg'
 import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx'
 
 const SelectPackaging = (props) => {
@@ -231,6 +232,7 @@ const TableView = (props) => {
                 <div className="main-window__actions">
                   <div
                     className="main-window__action"
+                    title="Выбрать упаковку"
                     onClick={(event) => {
                       event.preventDefault()
                       props.onSelect(item)
@@ -241,7 +243,8 @@ const TableView = (props) => {
                       props.setShowWindow(false)
                     }}
                   >
-                    Выбрать
+                    {/* Выбрать */}
+                    <img className="main-window__img" src={okSVG} />
                   </div>
                 </div>
               </div>

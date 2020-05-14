@@ -339,7 +339,7 @@ const EditRequest = (props) => {
           {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Обновить данные" />
                     {isLoading && <ImgLoader />} */}
           <Button
-            text="Оформить заявку"
+            text="Редактировать заявку"
             isLoading={isLoading}
             className="main-form__submit"
             onClick={handleSubmit}

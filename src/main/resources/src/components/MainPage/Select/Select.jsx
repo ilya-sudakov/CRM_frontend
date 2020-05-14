@@ -390,7 +390,10 @@ const Select = (props) => {
               />
             </div>
             <div className="select__selected_quantity">
-              Кол-во{!props.readOnly && '*'}
+              <span>
+                Кол-во
+                {!props.readOnly && '*'}
+              </span>
               <input
                 quantity_id={index}
                 type="text"
@@ -404,7 +407,10 @@ const Select = (props) => {
             </div>
             {!props.noPackaging && (
               <div className="select__selected_packaging">
-                Фасовка{!props.readOnly && '*'}
+                <span>
+                  Фасовка
+                  {!props.readOnly && '*'}
+                </span>
                 <input
                   packaging_id={index}
                   type="text"
