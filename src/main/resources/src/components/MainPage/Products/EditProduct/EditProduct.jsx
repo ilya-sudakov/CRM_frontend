@@ -239,25 +239,28 @@ const EditProduct = (props) => {
           setErrorsArr={setProductErrors}
           readOnly
         />
-        <InputText
-          inputName="Вес изделия"
-          required
-          error={productErrors.weight}
-          defaultValue={productInputs.weight}
-          name="weight"
-          type="number"
-          handleInputChange={handleInputChange}
-          errorsArr={productErrors}
-          setErrorsArr={setProductErrors}
-        />
-        <InputText
-          inputName="Артикул"
-          defaultValue={productInputs.vendor}
-          name="vendor"
-          type="text"
-          handleInputChange={handleInputChange}
-        />
-        {/* <div className="main-form__item">
+
+        <div className="main-form__fieldset">
+          <div className="main-form__group-name">Характеристика продукции</div>
+          <InputText
+            inputName="Вес изделия"
+            required
+            error={productErrors.weight}
+            defaultValue={productInputs.weight}
+            name="weight"
+            type="number"
+            handleInputChange={handleInputChange}
+            errorsArr={productErrors}
+            setErrorsArr={setProductErrors}
+          />
+          <InputText
+            inputName="Артикул"
+            defaultValue={productInputs.vendor}
+            name="vendor"
+            type="text"
+            handleInputChange={handleInputChange}
+          />
+          {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения*</div>
           <div className="main-form__input_field">
             <select
@@ -271,7 +274,7 @@ const EditProduct = (props) => {
             </select>
           </div>
         </div> */}
-        {/* <InputText
+          {/* <InputText
           inputName="Упаковка"
           required
           defaultValue={productInputs.packages}
@@ -281,21 +284,22 @@ const EditProduct = (props) => {
           errorsArr={productErrors}
           setErrorsArr={setProductErrors}
         /> */}
-        <SelectPackaging
-          required
-          onChange={(packages) => {
-            validateField('packages', packages)
-            setProductInputs({
-              ...productInputs,
-              packages: packages,
-            })
-          }}
-          defaultValue={productInputs.packages}
-          errorName="packages"
-          errorsArr={productErrors}
-          setErrorsArr={setProductErrors}
-          error={productErrors.packages}
-        />
+          <SelectPackaging
+            required
+            onChange={(packages) => {
+              validateField('packages', packages)
+              setProductInputs({
+                ...productInputs,
+                packages: packages,
+              })
+            }}
+            defaultValue={productInputs.packages}
+            errorName="packages"
+            errorsArr={productErrors}
+            setErrorsArr={setProductErrors}
+            error={productErrors.packages}
+          />
+        </div>
         <InputText
           inputName="Комментарий"
           name="comment"

@@ -107,18 +107,22 @@ const ViewProduct = (props) => {
               />
             </div>
           </div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Вес изделия</div>
-            <div className="main-form__input_field">
-              <input
-                type="text"
-                name="weight"
-                defaultValue={productInputs.weight}
-                readOnly
-              />
+          <div className="main-form__fieldset">
+            <div className="main-form__group-name">
+              Характеристика продукции
             </div>
-          </div>
-          {/* <div className="main-form__item">
+            <div className="main-form__item">
+              <div className="main-form__input_name">Вес изделия</div>
+              <div className="main-form__input_field">
+                <input
+                  type="text"
+                  name="weight"
+                  defaultValue={productInputs.weight}
+                  readOnly
+                />
+              </div>
+            </div>
+            {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения</div>
           <div className="main-form__input_field">
             <input
@@ -129,24 +133,25 @@ const ViewProduct = (props) => {
             />
           </div>
         </div> */}
-          <div className="main-form__item">
-            <div className="main-form__input_name">Артикул</div>
-            <div className="main-form__input_field">
-              <input
-                type="text"
-                name="vendor"
-                defaultValue={productInputs.vendor}
-                readOnly
-              />
+            <div className="main-form__item">
+              <div className="main-form__input_name">Артикул</div>
+              <div className="main-form__input_field">
+                <input
+                  type="text"
+                  name="vendor"
+                  defaultValue={productInputs.vendor}
+                  readOnly
+                />
+              </div>
             </div>
-          </div>
-          {/* <div className="main-form__item">
+            {/* <div className="main-form__item">
                     <div className="main-form__input_name">Упаковка</div>
                     <div className="main-form__input_field">
                         <input type="text" name="packaging" defaultValue={productInputs.packaging} readOnly />
                     </div>
                 </div> */}
-          <SelectPackaging defaultValue={productInputs.packaging} readOnly />
+            <SelectPackaging defaultValue={productInputs.packaging} readOnly />
+          </div>
           <div className="main-form__item">
             <div className="main-form__input_name">Место производства</div>
             <div className="main-form__input_field">

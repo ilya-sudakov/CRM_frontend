@@ -301,7 +301,7 @@ const NewRecordWork = (props) => {
                                     }
                                 }} value="Вернуться назад" />
                                 {worktimeInputs.works.length > 0 && <Button
-                                    text="Далее"
+                                    text="Указать часы"
                                     isLoading={isLoading}
                                     className="main-form__submit"
                                     onClick={handleSubmit}

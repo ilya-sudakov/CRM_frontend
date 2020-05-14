@@ -436,33 +436,36 @@ const EditClient = (props) => {
                   />
                 </div>
               </div>
-              {/* Добавление контактных лиц */}
-              <div className="main-form__item">
-                <div className="main-form__input_name">Контактное лицо*</div>
-                <div className="main-form__input_field">
-                  <SelectContacts
-                    handleContactsChange={(value) => {
-                      validateField('contacts', value)
-                      setClientInputs({
-                        ...clientInputs,
-                        contactsNew: value,
-                      })
-                    }}
-                    defaultValue={clientInputs.contacts}
-                    userHasAccess={props.userHasAccess}
-                  />
+              <div className="main-form__fieldset">
+                <div className="main-form__group-name">Контактные данные</div>
+                {/* Добавление контактных лиц */}
+                <div className="main-form__item">
+                  <div className="main-form__input_name">Контактное лицо*</div>
+                  <div className="main-form__input_field">
+                    <SelectContacts
+                      handleContactsChange={(value) => {
+                        validateField('contacts', value)
+                        setClientInputs({
+                          ...clientInputs,
+                          contactsNew: value,
+                        })
+                      }}
+                      defaultValue={clientInputs.contacts}
+                      userHasAccess={props.userHasAccess}
+                    />
+                  </div>
                 </div>
+                <InputText
+                  inputName="Сайт"
+                  required
+                  name="site"
+                  error={formErrors.site}
+                  errorsArr={formErrors}
+                  setErrorsArr={setFormErrors}
+                  defaultValue={clientInputs.site}
+                  handleInputChange={handleInputChange}
+                />
               </div>
-              <InputText
-                inputName="Сайт"
-                required
-                name="site"
-                error={formErrors.site}
-                errorsArr={formErrors}
-                setErrorsArr={setFormErrors}
-                defaultValue={clientInputs.site}
-                handleInputChange={handleInputChange}
-              />
               <InputText
                 inputName="Комментарий"
                 name="comment"

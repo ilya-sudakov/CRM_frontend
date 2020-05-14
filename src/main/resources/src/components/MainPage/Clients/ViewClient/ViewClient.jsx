@@ -134,23 +134,26 @@ const ViewClient = (props) => {
                   />
                 </div>
               </div>
-              {/* Добавление контактных лиц */}
-              <div className="main-form__item">
-                <div className="main-form__input_name">Контактное лицо</div>
-                <div className="main-form__input_field">
-                  <SelectContacts
-                    defaultValue={clientInputs.contacts}
-                    userHasAccess={props.userHasAccess}
-                    readOnly
-                  />
+              <div className="main-form__fieldset">
+                <div className="main-form__group-name">Контактные данные</div>
+                {/* Добавление контактных лиц */}
+                <div className="main-form__item">
+                  <div className="main-form__input_name">Контактное лицо</div>
+                  <div className="main-form__input_field">
+                    <SelectContacts
+                      defaultValue={clientInputs.contacts}
+                      userHasAccess={props.userHasAccess}
+                      readOnly
+                    />
+                  </div>
                 </div>
+                <InputText
+                  inputName="Сайт"
+                  name="site"
+                  readOnly
+                  defaultValue={clientInputs.site}
+                />
               </div>
-              <InputText
-                inputName="Сайт"
-                name="site"
-                readOnly
-                defaultValue={clientInputs.site}
-              />
               <InputText
                 inputName="Комментарий"
                 name="comment"

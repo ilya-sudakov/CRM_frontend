@@ -168,29 +168,32 @@ const NewTask = (props) => {
             })
           }}
         />
-        <InputText
-          inputName="Описание"
-          required
-          error={taskErrors.description}
-          name="description"
-          handleInputChange={handleInputChange}
-          errorsArr={taskErrors}
-          setErrorsArr={setTaskErrors}
-        />
-        <InputUser
-          inputName="Ответственный"
-          userData={props.userData}
-          required
-          error={taskErrors.responsible}
-          name="responsible"
-          options={users}
-          errorsArr={taskErrors}
-          setErrorsArr={setTaskErrors}
-          handleUserChange={handleResponsibleChange}
-          searchPlaceholder="Введите имя пользователя для поиска..."
-        />
+        <div className="main-form__fieldset">
+          <div className="main-form__group-name">Сведения</div>
+          <InputText
+            inputName="Описание"
+            required
+            error={taskErrors.description}
+            name="description"
+            handleInputChange={handleInputChange}
+            errorsArr={taskErrors}
+            setErrorsArr={setTaskErrors}
+          />
+          <InputUser
+            inputName="Ответственный"
+            userData={props.userData}
+            required
+            error={taskErrors.responsible}
+            name="responsible"
+            options={users}
+            errorsArr={taskErrors}
+            setErrorsArr={setTaskErrors}
+            handleUserChange={handleResponsibleChange}
+            searchPlaceholder="Введите имя пользователя для поиска..."
+          />
+        </div>
         <InputDate
-          inputName="Дата контроля задачи"
+          inputName="Дата контроля"
           required
           error={taskErrors.dateControl}
           errorsArr={taskErrors}

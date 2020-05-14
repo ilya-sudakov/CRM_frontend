@@ -31,8 +31,8 @@
     .input_text__input_name {
       color: lighten($primary-text-color, 40%);
       //   margin-bottom: 5px;
-      padding-right: 5px;
-      flex: 0 1 calc(20% - 5px);
+      padding-right: 10px;
+      flex: 0 1 calc(20% - 10px);
     }
 
     .input_text__input_field {

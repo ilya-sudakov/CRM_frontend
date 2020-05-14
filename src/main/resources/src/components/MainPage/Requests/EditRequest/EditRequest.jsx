@@ -268,28 +268,31 @@ const EditRequest = (props) => {
           errorsArr={requestErrors}
           setErrorsArr={setRequestErrors}
         />
-        <InputProducts
-          inputName="Продукция"
-          userHasAccess={props.userHasAccess}
-          required
-          options={products}
-          onChange={handleProductsChange}
-          defaultValue={selectedProducts}
-          searchPlaceholder="Введите название продукта для поиска..."
-          error={requestErrors.requestProducts}
-          errorsArr={requestErrors}
-          setErrorsArr={setRequestErrors}
-        />
-        <InputText
-          inputName="Кодовое слово"
-          required
-          error={requestErrors.codeWord}
-          name="codeWord"
-          handleInputChange={handleInputChange}
-          defaultValue={requestInputs.codeWord}
-          errorsArr={requestErrors}
-          setErrorsArr={setRequestErrors}
-        />
+        <div className="main-form__fieldset">
+          <div className="main-form__group-name">Данные заказа</div>
+          <InputProducts
+            inputName="Продукция"
+            userHasAccess={props.userHasAccess}
+            required
+            options={products}
+            onChange={handleProductsChange}
+            defaultValue={selectedProducts}
+            searchPlaceholder="Введите название продукта для поиска..."
+            error={requestErrors.requestProducts}
+            errorsArr={requestErrors}
+            setErrorsArr={setRequestErrors}
+          />
+          <InputText
+            inputName="Кодовое слово"
+            required
+            error={requestErrors.codeWord}
+            name="codeWord"
+            handleInputChange={handleInputChange}
+            defaultValue={requestInputs.codeWord}
+            errorsArr={requestErrors}
+            setErrorsArr={setRequestErrors}
+          />
+        </div>
         <InputUser
           inputName="Ответственный"
           userData={props.userData}

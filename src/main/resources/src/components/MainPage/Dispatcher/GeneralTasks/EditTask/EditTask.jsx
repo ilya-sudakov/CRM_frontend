@@ -201,33 +201,36 @@ const EditTask = (props) => {
             })
           }}
         />
-        <InputText
-          inputName="Описание"
-          required
-          error={taskErrors.description}
-          name="description"
-          handleInputChange={handleInputChange}
-          readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
-          errorsArr={taskErrors}
-          setErrorsArr={setTaskErrors}
-          defaultValue={taskInputs.description}
-        />
-        <InputUser
-          inputName="Ответственный"
-          userData={props.userData}
-          required
-          error={taskErrors.responsible}
-          defaultValue={taskInputs.responsible}
-          readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
-          name="responsible"
-          options={users}
-          handleUserChange={handleResponsibleChange}
-          errorsArr={taskErrors}
-          setErrorsArr={setTaskErrors}
-          searchPlaceholder="Введите имя пользователя для поиска..."
-        />
+        <div className="main-form__fieldset">
+          <div className="main-form__group-name">Сведения</div>
+          <InputText
+            inputName="Описание"
+            required
+            error={taskErrors.description}
+            name="description"
+            handleInputChange={handleInputChange}
+            readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
+            errorsArr={taskErrors}
+            setErrorsArr={setTaskErrors}
+            defaultValue={taskInputs.description}
+          />
+          <InputUser
+            inputName="Ответственный"
+            userData={props.userData}
+            required
+            error={taskErrors.responsible}
+            defaultValue={taskInputs.responsible}
+            readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
+            name="responsible"
+            options={users}
+            handleUserChange={handleResponsibleChange}
+            errorsArr={taskErrors}
+            setErrorsArr={setTaskErrors}
+            searchPlaceholder="Введите имя пользователя для поиска..."
+          />
+        </div>
         <InputDate
-          inputName="Дата контроля задачи"
+          inputName="Дата контроля"
           required
           error={taskErrors.dateControl}
           name="dateControl"

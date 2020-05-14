@@ -171,30 +171,33 @@ const ViewFeedback = (props) => {
               </select>
             </div>
           </div>
-          <InputText
-            inputName="Тема"
-            defaultValue={formInputs.subject}
-            readOnly
-          />
-          <InputText
-            inputName="Сообщение"
-            type="textarea"
-            defaultValue={formInputs.text}
-            readOnly
-          />
-          <FeedbackChat
-            messages={formInputs.messages}
-            handleSubmit={(message) => {
-              addMessage({
-                author: props.userData.username,
-                date: new Date().getTime() / 1000,
-                text: message,
-                discussionId: feedbackId,
-              }).then(() => {
-                loadData(feedbackId)
-              })
-            }}
-          />
+          <div className="main-form__fieldset">
+            <div className="main-form__group-name">Содержание</div>
+            <InputText
+              inputName="Тема"
+              defaultValue={formInputs.subject}
+              readOnly
+            />
+            <InputText
+              inputName="Сообщение"
+              type="textarea"
+              defaultValue={formInputs.text}
+              readOnly
+            />
+            <FeedbackChat
+              messages={formInputs.messages}
+              handleSubmit={(message) => {
+                addMessage({
+                  author: props.userData.username,
+                  date: new Date().getTime() / 1000,
+                  text: message,
+                  discussionId: feedbackId,
+                }).then(() => {
+                  loadData(feedbackId)
+                })
+              }}
+            />
+          </div>
           <div className="main-form__buttons">
             <Button
               text="Вернуться назад"

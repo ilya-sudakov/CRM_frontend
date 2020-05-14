@@ -53,6 +53,14 @@
     &:first-child {
       width: 100%;
     }
+
+    .main-form__input_field {
+      flex-wrap: wrap;
+      .main-form__title {
+        min-width: 400px;
+        margin-bottom: 10px;
+      }
+    }
   }
   .main-form__item .main-form__input_field {
     // width: calc(100% - 0px) !important;
@@ -84,6 +92,20 @@
     }
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .main-form__item--header {
+      // margin: 0 5px;
+      flex-direction: row !important;
+      align-items: center !important;
+      width: calc(100% - 50px) !important;
+
+      .main-form__input_name {
+        width: fit-content !important;
+        margin-bottom: 10px;
+      }
     }
   }
 }
