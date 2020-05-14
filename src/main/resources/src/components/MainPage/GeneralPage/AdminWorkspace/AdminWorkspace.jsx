@@ -1,194 +1,222 @@
-import React, { useEffect, useState } from 'react';
-import './AdminWorkspace.scss';
+import React, { useEffect, useState } from 'react'
+import './AdminWorkspace.scss'
 // import XLSX from 'xlsx';
-import { Notifications, WorkManagement } from '../../lazyImports.jsx';
-import Chart from 'chart.js';
-import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
-import { formatDateStringNoYear } from '../../../../utils/functions.jsx';
-import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx';
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+import { Notifications, WorkManagement } from '../../lazyImports.jsx'
+import Chart from 'chart.js'
+import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import { formatDateStringNoYear } from '../../../../utils/functions.jsx'
+import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx'
+import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
+import Button from '../../../../utils/Form/Button/Button.jsx'
 
 const AdminWorkspace = (props) => {
-    const lemz = "#1b4e6b";
-    const lepsari = "#5c63a2";
-    const ligovskiy = "#c068a8";
-    const office = "#ec7176";
-    const weekdays = [
-        'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'
-    ]
+  const lemz = '#1b4e6b'
+  const lepsari = '#5c63a2'
+  const ligovskiy = '#c068a8'
+  const office = '#ec7176'
+  const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
 
-    const [weekOffset, setWeekOffset] = useState(0);
-    const [graph, setGraph] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [canvasLoaded, setCanvasLoaded] = useState(false);
-    const [workshops, setWorkshops] = useState([
-        {
-            label: 'ЦехЛЭМЗ',
-            backgroundColor: lemz,
-            data: [],
-            borderWidth: 1
-        },
-        {
-            label: 'ЦехЛепсари',
-            backgroundColor: lepsari,
-            data: [],
-            borderWidth: 1
-        },
-        {
-            label: 'ЦехЛиговский',
-            backgroundColor: ligovskiy,
-            data: [],
-            borderWidth: 1
-        },
-        {
-            label: 'Офис',
-            backgroundColor: office,
-            data: [],
-            borderWidth: 1
-        }
-    ]);
+  const [weekOffset, setWeekOffset] = useState(0)
+  const [graph, setGraph] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [canvasLoaded, setCanvasLoaded] = useState(false)
+  const [workshops, setWorkshops] = useState([
+    {
+      label: 'ЦехЛЭМЗ',
+      backgroundColor: lemz,
+      data: [],
+      borderWidth: 1,
+    },
+    {
+      label: 'ЦехЛепсари',
+      backgroundColor: lepsari,
+      data: [],
+      borderWidth: 1,
+    },
+    {
+      label: 'ЦехЛиговский',
+      backgroundColor: ligovskiy,
+      data: [],
+      borderWidth: 1,
+    },
+    {
+      label: 'Офис',
+      backgroundColor: office,
+      data: [],
+      borderWidth: 1,
+    },
+  ])
 
-    useEffect(() => {
-        let abortController = new AbortController();
-        const curDay = new Date(new Date().setDate(new Date().getDate() + (- 7 * weekOffset)));
-        let week = [];
-        for (let i = 1; i <= 7; i++) {
-            let first = curDay.getDate() - curDay.getDay() + i
-            let day = new Date(curDay.setDate(first))
-            week.push(day)
-        }
-        // console.log(week);
-        workshops.map((workshop, index) => {
-            let temp = workshops;
+  useEffect(() => {
+    let abortController = new AbortController()
+    const curDay = new Date(
+      new Date().setDate(new Date().getDate() + -7 * weekOffset),
+    )
+    let week = []
+    for (let i = 1; i <= 7; i++) {
+      let first = curDay.getDate() - curDay.getDay() + i
+      let day = new Date(curDay.setDate(first))
+      week.push(day)
+    }
+    // console.log(week);
+    workshops.map((workshop, index) => {
+      let temp = workshops
+      temp.splice(index, 1, {
+        ...workshop,
+        data: [],
+      })
+    })
+    setIsLoading(true)
+    getRecordedWorkByDateRange(
+      week[0].getDate(),
+      week[0].getMonth() + 1,
+      week[6].getDate(),
+      week[6].getMonth() + 1,
+      abortController.signal,
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        week.map((day) => {
+          workshops.map((workshop, index) => {
+            let temp = workshops
+            let oldData = workshop.data
+            oldData.push(
+              res.reduce((sum, cur) => {
+                if (
+                  workshop.label === cur.employee.workshop &&
+                  new Date(day).getDate() ===
+                    new Date(cur.year, cur.month + 1, cur.day).getDate()
+                ) {
+                  return Math.ceil((sum + cur.hours) * 10) / 10
+                } else return sum
+              }, 0),
+            )
             temp.splice(index, 1, {
-                ...workshop,
-                data: []
+              ...workshop,
+              data: oldData,
             })
-        });
-        setIsLoading(true);
-        getRecordedWorkByDateRange(week[0].getDate(), week[0].getMonth() + 1, week[6].getDate(), week[6].getMonth() + 1,
-            abortController.signal)
-            .then(res => res.json())
-            .then(res => {
-                // console.log(res);
-                week.map(day => {
-                    workshops.map((workshop, index) => {
-                        let temp = workshops;
-                        let oldData = workshop.data;
-                        oldData.push(res.reduce((sum, cur) => {
-                            if (workshop.label === cur.employee.workshop && new Date(day).getDate() === new Date(cur.year, cur.month + 1, cur.day).getDate()) {
-                                return Math.ceil((sum + cur.hours) * 10) / 10;
-                            }
-                            else return sum;
-                        }, 0))
-                        temp.splice(index, 1, {
-                            ...workshop,
-                            data: oldData
-                        })
-                    })
-                })
-                console.log(workshops);
-                if (props.userHasAccess(['ROLE_ADMIN'])) {
-                    !canvasLoaded && loadCanvas("admin-workspace__chart-wrapper", "admin-workspace__chart");
-                    setCanvasLoaded(true);
-                    const options = {
-                        type: (window.innerWidth
-                            || document.documentElement.clientWidth
-                            || document.body.clientWidth) > 500 ? 'bar' : 'horizontalBar',
-                        data: {
-                            labels: [...week.map((day, index) => weekdays[index] + ' ' + formatDateStringNoYear(day))],
-                            datasets: [...workshops],
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: (window.innerWidth
-                                || document.documentElement.clientWidth
-                                || document.body.clientWidth) > 500 ? true : false,
-                            animation: {
-                                easing: 'easeInOutCirc'
-                            },
-                            tooltips: {
-                                mode: 'index'
-                            },
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true
-                                    },
-                                    stacked: true,
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Часы',
-                                        fontStyle: 'italic'
-                                    }
-                                }],
-                                xAxes: [{
-                                    stacked: true,
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Дни недели',
-                                        fontStyle: 'italic'
-                                    }
-                                }],
-                            }
-                        }
-                    };
-                    setTimeout(() => {
-                        setIsLoading(false);
-                        canvasLoaded && graph.destroy();
-                        setGraph(createGraph(options));
-                    }, 150)
-                }
-            })
-        return function cancel() {
-            abortController.abort();
-        };
-    }, [weekOffset, workshops]);
+          })
+        })
+        console.log(workshops)
+        if (props.userHasAccess(['ROLE_ADMIN'])) {
+          !canvasLoaded &&
+            loadCanvas(
+              'admin-workspace__chart-wrapper',
+              'admin-workspace__chart',
+            )
+          setCanvasLoaded(true)
+          const options = {
+            type:
+              (window.innerWidth ||
+                document.documentElement.clientWidth ||
+                document.body.clientWidth) > 500
+                ? 'bar'
+                : 'horizontalBar',
+            data: {
+              labels: [
+                ...week.map(
+                  (day, index) =>
+                    weekdays[index] + ' ' + formatDateStringNoYear(day),
+                ),
+              ],
+              datasets: [...workshops],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio:
+                (window.innerWidth ||
+                  document.documentElement.clientWidth ||
+                  document.body.clientWidth) > 500
+                  ? true
+                  : false,
+              animation: {
+                easing: 'easeInOutCirc',
+              },
+              tooltips: {
+                mode: 'index',
+              },
+              scales: {
+                yAxes: [
+                  {
+                    ticks: {
+                      beginAtZero: true,
+                    },
+                    stacked: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Часы',
+                      fontStyle: 'italic',
+                    },
+                  },
+                ],
+                xAxes: [
+                  {
+                    stacked: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: 'Дни недели',
+                      fontStyle: 'italic',
+                    },
+                  },
+                ],
+              },
+            },
+          }
+          setTimeout(() => {
+            setIsLoading(false)
+            canvasLoaded && graph.destroy()
+            setGraph(createGraph(options))
+          }, 150)
+        }
+      })
+    return function cancel() {
+      abortController.abort()
+    }
+  }, [weekOffset, workshops])
 
-    return (
-        <div className="admin-workspace">
-            <WorkManagement
-                userHasAccess={props.userHasAccess}
-            />
-            {/* {props.userHasAccess(['ROLE_ADMIN']) && <Notifications
+  return (
+    <div className="admin-workspace">
+      <WorkManagement userHasAccess={props.userHasAccess} />
+      {/* {props.userHasAccess(['ROLE_ADMIN']) && <Notifications
                 userHasAccess={props.userHasAccess}
             />} */}
-            {props.userHasAccess(['ROLE_ADMIN']) && <div className="admin-workspace__chart-wrapper">
-                <TableLoading
-                    isLoading={isLoading}
-                />
-                <div className="admin-workspace__header">
-                    {/* <button className="admin-workspace__button" onClick={(event) => {
+      {props.userHasAccess(['ROLE_ADMIN']) && (
+        <div className="admin-workspace__chart-wrapper">
+          <TableLoading isLoading={isLoading} />
+          <div className="main-window__mobile-text">Сводка за неделю</div>
+          <div className="admin-workspace__header">
+            {/* <button className="admin-workspace__button" onClick={(event) => {
                         event.preventDefault();
                         setWeekOffset(weekOffset + 1);
                     }}>Пред. неделя</button>
                      */}
-                    <Button
-                        text="Пред. неделя"
-                        className="admin-workspace__button"
-                        isLoading={weekOffset === 0 ? false : isLoading}
-                        onClick={(event) => {
-                            setWeekOffset(weekOffset + 1);
-                        }}
-                    />
-                    <div className="admin-workspace__title">Сводка за неделю</div>
-                    {/* <button className="admin-workspace__button" onClick={(event) => {
+            <Button
+              text="Пред. неделя"
+              className="admin-workspace__button"
+              isLoading={weekOffset === 0 ? false : isLoading}
+              onClick={(event) => {
+                setWeekOffset(weekOffset + 1)
+              }}
+            />
+            <div className="admin-workspace__title">Сводка за неделю</div>
+            {/* <button className="admin-workspace__button" onClick={(event) => {
                         event.preventDefault();
                         setWeekOffset(0);
                     }}>Тек. неделя</button> */}
-                    <Button
-                        text="Тек. неделя"
-                        className="admin-workspace__button"
-                        isLoading={weekOffset !== 0 ? false : isLoading}
-                        onClick={(event) => {
-                            setWeekOffset(0);
-                        }}
-                    />
-                </div>
-            </div>}
+            <Button
+              text="Тек. неделя"
+              className="admin-workspace__button"
+              isLoading={weekOffset !== 0 ? false : isLoading}
+              onClick={(event) => {
+                setWeekOffset(0)
+              }}
+            />
+          </div>
         </div>
-    );
-};
+      )}
+    </div>
+  )
+}
 
-export default AdminWorkspace;
+export default AdminWorkspace
