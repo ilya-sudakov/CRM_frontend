@@ -1,18 +1,14 @@
 @import "../../variables.scss";
 
 .sidemenu {
-  //   min-width: 150px;
-  // position: fixed;
-  // left: 0;
-  // top: 60px;
   position: relative;
   font-size: 82%;
-  width: 210px;
-  // max-height: calc(100vh - 70px - 1px);
+  width: 230px;
   max-height: calc(100vh - 70px + 5px);
-  border-right: 1px solid #444444;
+  // border-right: 1px solid #444444;
   background-color: $side_menu__background;
-  padding: 5px 10px 0px 10px;
+  // padding: 5px 10px 0px 10px;
+  padding: 5px 0 0 0;
   transform-origin: left;
   display: flex;
   flex-direction: column;
@@ -36,15 +32,27 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    // padding: 2.5px 10px;
     padding: 0px 10px;
     margin-bottom: 5px;
     transition: 0.2s ease-in-out;
     width: 90%;
     font-size: 95%;
-    border-radius: 5px;
+    // border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     white-space: nowrap;
-    // position: static;
+    margin-right: 5px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0px;
+      width: 3px;
+      height: 100%;
+      background-color: transparent;
+      transition: 100ms ease-in-out;
+    }
 
     .sidemenu__img {
       width: 20px;
@@ -69,6 +77,10 @@
     &--active {
       background-color: $button__background--inverted;
       // background-color: darken($side_menu__background, 20%);
+
+      &::before {
+        background-color: $secondary-text-color;
+      }
 
       & .sidemenu__img {
         filter: brightness(3);
@@ -110,6 +122,7 @@
       transform-origin: 0 0;
       transition: 0.2s ease-in-out;
       margin-bottom: 0;
+      border-radius: 2.5px;
 
       // .sidemenu__img {
       //   // margin-left: 5px;
@@ -139,7 +152,7 @@
       padding-left: 0;
       // width: 100%;
       font-size: 100%;
-      width: calc(100% - 35px);
+      width: calc(100% - 25px);
       // text-align: center;
       color: #dddddd;
 
@@ -215,6 +228,10 @@
       max-width: 100% !important;
       width: 100%;
       padding: 0 0px;
+      border-radius: 5px;
+      &::before {
+        display: none;
+      }
       &:hover {
         .sidemenu__img--icon {
           transform: scale(1.1);
@@ -314,7 +331,7 @@
       left: 0;
       height: 100%;
       z-index: 99;
-      width: 205px;
+      width: 225px;
       overflow-y: auto;
       overflow-x: hidden;
 
