@@ -38,8 +38,8 @@
     width: 90%;
     font-size: 95%;
     // border-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 2.5px;
+    border-bottom-right-radius: 2.5px;
     white-space: nowrap;
     margin-right: 5px;
 
@@ -70,7 +70,7 @@
       background-color: darken($side_menu__background, 10%);
 
       .sidemenu__img--icon {
-        transform: scale(1.1);
+        // transform: scale(1.1);
       }
     }
 

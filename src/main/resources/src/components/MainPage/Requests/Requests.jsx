@@ -145,6 +145,11 @@ const Requests = (props) => {
       <div className="main-window">
         <div className="main-window__header">
           <div className="main-window__title">Заявки</div>
+          <SearchBar
+            title="Поиск по заявкам"
+            placeholder="Введите название продукции для поиска..."
+            setSearchQuery={setSearchQuery}
+          />
           <div className="main-window__menu">
             <div
               className={
@@ -215,11 +220,6 @@ const Requests = (props) => {
           }
           showWindow={showWindow}
           setShowWindow={setShowWindow}
-        />
-        <SearchBar
-          title="Поиск по заявкам"
-          placeholder="Введите название продукции для поиска..."
-          setSearchQuery={setSearchQuery}
         />
         <div className="main-window__info-panel">
           <div className="requests__clients-sort">
