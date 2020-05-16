@@ -16,6 +16,11 @@
     margin: 0 !important;
     // margin-bottom: 5px;
 
+    &--hidden {
+      transform: scaleY(0);
+      height: 0;
+    }
+
     .main-window__title {
       // // flex: 0 1 20%;
       // width: calc(100% - 20px);
@@ -39,6 +44,7 @@
       border-top-right-radius: 5px;
       // border-bottom-right-radius: 5px;
       // margin-bottom: 10px;
+      transition: 200ms ease-in-out;
 
       .main-window__item {
         // width: 100%;

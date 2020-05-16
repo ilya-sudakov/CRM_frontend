@@ -16,6 +16,11 @@
     margin: 0 !important;
     // margin-bottom: 5px;
 
+    &--hidden {
+      transform: scaleY(0);
+      height: 0;
+    }
+
     .main-window__title {
       // // flex: 0 1 20%;
       // width: calc(100% - 20px);

@@ -24,7 +24,15 @@ const LEMZ = (props) => {
   return (
     <div className="requests-lemz">
       <div className="main-window">
-        <div className="main-window__header">
+        <div
+          className={
+            props.history.location.pathname.includes('new') ||
+            props.history.location.pathname.includes('edit') ||
+            props.history.location.pathname.includes('view')
+              ? 'main-window__header main-window__header--hidden'
+              : 'main-window__header'
+          }
+        >
           <div className="main-window__title">Цех ЛЭМЗ</div>
           <div className="main-window__menu">
             <Link
