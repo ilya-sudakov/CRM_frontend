@@ -30,17 +30,29 @@
       // flex-direction: column;
       padding-left: 25px;
       position: relative;
-      &:not(.main-window__list-item--header)::before {
-        content: "";
-        display: inline-block;
-        position: absolute;
-        width: 7.5px;
-        height: calc(100% - 10px);
-        left: 10px;
-        -moz-border-radius: 7.5px;
-        -webkit-border-radius: 7.5px;
-        border-radius: 7.5px;
-        background-color: #cccccc;
+      &:not(.main-window__list-item--header) {
+        &::before {
+          content: "";
+          display: inline-block;
+          position: absolute;
+          width: 10px;
+          // height: calc(100% - 2px);
+          height: 100%;
+          left: 0px;
+          // border-top-right-radius: 2.5px;
+          // border-bottom-right-radius: 2.5px;
+          background-color: #cccccc;
+        }
+        &:nth-child(2) {
+          &::before {
+            border-top-left-radius: 5px;
+          }
+        }
+        &:last-child {
+          &::before {
+            border-bottom-left-radius: 5px;
+          }
+        }
       }
       &:hover {
         .main-window__list-col {

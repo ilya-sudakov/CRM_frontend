@@ -32,22 +32,22 @@ const TableView = (props) => {
     {
       name: 'Отгружено',
       className: 'shipped',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
     },
     {
       name: 'Готово',
       className: 'ready',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN'],
     },
     {
       name: 'В производстве',
       className: 'in-production',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN'],
     },
     {
       name: 'Ожидание',
       className: 'waiting',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN'],
     },
   ])
 
