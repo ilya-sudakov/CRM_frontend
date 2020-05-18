@@ -212,8 +212,8 @@
     border-bottom: 1px solid #aaaaaa;
     &:nth-child(2) {
       margin-top: 0;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-top-left-radius: 2.5px;
+      border-top-right-radius: 2.5px;
     }
     &--even {
       background-color: #ffffff;
@@ -222,8 +222,8 @@
       background-color: #eeeeee;
     }
     &:last-child {
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 2.5px;
+      border-bottom-right-radius: 2.5px;
     }
     &:hover {
       color: $secondary-text-color;

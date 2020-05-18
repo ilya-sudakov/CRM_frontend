@@ -91,7 +91,7 @@ const WorkshopOrders = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <div className="main-window__info-panel">
-          <div className="workshop-orders__status-wrapper">
+          <div className="main-window__status-panel">
             <div>Фильтр по статусам: </div>
             {statuses.map((status, index) => {
               return (

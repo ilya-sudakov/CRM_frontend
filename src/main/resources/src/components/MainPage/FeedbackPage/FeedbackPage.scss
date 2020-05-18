@@ -45,12 +45,12 @@
         }
         &:nth-child(2) {
           &::before {
-            border-top-left-radius: 5px;
+            border-top-left-radius: 2.5px;
           }
         }
         &:last-child {
           &::before {
-            border-bottom-left-radius: 5px;
+            border-bottom-left-radius: 2.5px;
           }
         }
       }
@@ -140,8 +140,8 @@
         }
         &::before {
           // top: calc(50% - 10px);
-          top: 10px;
-          height: calc(100% - 20px) !important;
+          top: 0px;
+          height: calc(100% - 0px) !important;
         }
         .main-window__list-col {
           width: calc(100% - 25px);
