@@ -136,3 +136,72 @@ export const changeSortOrder = (event) => {
     [name]: order,
   })
 }
+
+export const getAllProductsFromWorkCount = (works) => {
+  let parts = {}
+  works.map((work) => {
+    // console.log(work)
+    work.workControlProduct.map((product) => {
+      if (parts[product.product.id] === undefined) {
+        return (parts = Object.assign({
+          ...parts,
+          [product.product.id]: {
+            name: product.product.name,
+            quantity: Number.parseFloat(product.quantity),
+          },
+        }))
+      } else {
+        return (parts = Object.assign({
+          ...parts,
+          [product.product.id]: {
+            ...parts[product.product.id],
+            quantity:
+              Number.parseFloat(parts[product.product.id].quantity) +
+              Number.parseFloat(product.quantity),
+          },
+        }))
+      }
+    })
+  })
+  // console.log(parts)
+  return parts
+}
+
+export const getAllDraftsFromWorkCount = (works) => {
+  let parts = {}
+  works.map((work) => {
+    // console.log(work)
+    work.workControlDrafts.map((draft) => {
+      if (parts[draft.draft.id] === undefined) {
+        return (parts = Object.assign({
+          ...parts,
+          [draft.draft.id]: {
+            name: draft.draft.name,
+            quantity: Number.parseFloat(draft.quantity),
+          },
+        }))
+      } else {
+        return (parts = Object.assign({
+          ...parts,
+          [draft.draft.id]: {
+            ...parts[draft.draft.id],
+            quantity:
+              Number.parseFloat(parts[draft.draft.id].quantity) +
+              Number.parseFloat(draft.quantity),
+          },
+        }))
+      }
+    })
+  })
+  // console.log(parts)
+  return parts
+}
+
+export const getRandomColor = () => {
+  var letters = '0123456789ABCDEF'
+  var color = '#'
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}

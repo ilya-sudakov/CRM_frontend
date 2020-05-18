@@ -6,7 +6,7 @@ import FeedbackChat from '../FeedbackChat/FeedbackChat.jsx'
 import {
   getFeedbackById,
   editFeedback,
-} from '../../../../utils/RequestsAPI/Feedback/feedback'
+} from '../../../../utils/RequestsAPI/Feedback/feedback.js'
 import {
   addMessage,
   getMessagesByDiscussionId,
@@ -73,9 +73,27 @@ const ViewFeedback = (props) => {
     }
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const handleSubmit = () => {
+    // event.preventDefault()
+    // console.log(formInputs)
+    setIsLoading(true)
     console.log(formInputs)
+    editFeedback(
+      {
+        date: new Date(formInputs.date).getTime() / 1000,
+        subject: formInputs.subject,
+        text: formInputs.text,
+        author: formInputs.author,
+        status: formInputs.status,
+      },
+      feedbackId,
+    )
+      .then(() => setIsLoading(false))
+      // .then(() => props.history.push('/feedback'))
+      .catch((error) => {
+        setIsLoading(false)
+        alert('Ошибка при изменении записи')
+      })
   }
 
   const loadData = (id) => {
@@ -181,8 +199,10 @@ const ViewFeedback = (props) => {
             <InputText
               inputName="Сообщение"
               type="textarea"
+              name="text"
               defaultValue={formInputs.text}
-              readOnly
+              handleInputChange={handleInputChange}
+              // readOnly
             />
             <FeedbackChat
               messages={formInputs.messages}
@@ -206,6 +226,13 @@ const ViewFeedback = (props) => {
               inverted
               className="main-form__submit main-form__submit--inverted"
               onClick={() => props.history.push('/feedback')}
+            />
+            <Button
+              text="Редактировать содержание"
+              isLoading={isLoading}
+              inverted
+              className="main-form__submit"
+              onClick={handleSubmit}
             />
           </div>
         </form>

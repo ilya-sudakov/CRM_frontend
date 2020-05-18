@@ -1,0 +1,15 @@
+@import "../../../../../../variables.scss";
+
+.parts-statistic {
+    width: calc(100% - 30px);
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+
+    .main-window__chart-wrapper {
+        background-color: rgba(255, 255, 255, 0.6);
+        padding: 10px 15px;
+        min-width: 400px;
+        margin-left: 5px;
+    }
+}

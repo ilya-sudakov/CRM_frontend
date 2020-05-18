@@ -181,11 +181,10 @@ const SelectWork = (props) => {
                 <InputProducts
                   inputName="Продукция"
                   options
-                  id={0}
-                  customName={'select-products' + index}
                   defaultValue={item.product}
                   categories={props.categories}
                   products={props.products}
+                  numberInput
                   name="product"
                   noPackaging
                   onChange={(value) => {

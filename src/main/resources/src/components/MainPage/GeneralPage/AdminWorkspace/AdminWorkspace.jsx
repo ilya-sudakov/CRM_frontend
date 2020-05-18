@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './AdminWorkspace.scss'
 // import XLSX from 'xlsx';
 import { Notifications, WorkManagement } from '../../lazyImports.jsx'
-import Chart from 'chart.js'
+// import Chart from 'chart.js'
 import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { formatDateStringNoYear } from '../../../../utils/functions.jsx'
 import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx'
@@ -15,7 +15,6 @@ const AdminWorkspace = (props) => {
   const ligovskiy = '#c068a8'
   const office = '#ec7176'
   const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
-
   const [weekOffset, setWeekOffset] = useState(0)
   const [graph, setGraph] = useState(null)
   const [isLoading, setIsLoading] = useState(false)

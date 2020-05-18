@@ -396,7 +396,7 @@ const Select = (props) => {
               </span>
               <input
                 quantity_id={index}
-                type="text"
+                type={props.numberInput ? 'number' : 'text'}
                 name="quantity"
                 autoComplete="off"
                 defaultValue={item.quantity != 0 ? item.quantity : 0}
