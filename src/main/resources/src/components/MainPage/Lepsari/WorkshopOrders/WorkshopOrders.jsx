@@ -128,6 +128,7 @@ const WorkshopOrders = (props) => {
             <span>Продукция</span>
             <span>Комплектация</span>
             <span>Статус</span>
+            <span>Дата поставки</span>
             <div className="main-window__actions">Действие</div>
           </div>
           {isLoading && (
@@ -213,6 +214,20 @@ const WorkshopOrders = (props) => {
                       statuses.find((item) => item.className === order.status)
                         ?.name
                     }
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">
+                      Дата поставки:{' '}
+                    </div>
+                    {new Date(order.deliverBy) < new Date() &&
+                    order.status !== 'completed' ? (
+                      <div className="main-window__reminder">
+                        <div>!</div>
+                        <div>{formatDateString(order.deliverBy)}</div>
+                      </div>
+                    ) : (
+                      formatDateString(order.deliverBy)
+                    )}
                   </span>
                   <div className="main-window__actions">
                     <div

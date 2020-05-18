@@ -211,7 +211,7 @@ const LEMZ = (props) => {
                 // transferData={props.transferData}
                 // setTransferState={props.setTransferState}
                 // setTransferData={props.setTransferData}
-                allowedRoles={['ROLE_ADMIN']}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
               />
               <Route component={PageNotFound} />
             </Switch>

@@ -112,7 +112,9 @@ const SideMenu = (props) => {
     },
     {
       pathname: '/lemz/',
-      linkTo: '/lemz/workshop-lemz',
+      linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
+        ? '/lemz/workshop-orders'
+        : '/lemz/workshop-lemz',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
       icon: screwImg,
@@ -123,17 +125,20 @@ const SideMenu = (props) => {
           pathname: '/lemz/workshop-lemz',
           link: '/lemz/workshop-lemz',
           icon: listImg,
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
           name: 'Склад',
           pathname: '/lemz/workshop-storage',
           link: '/lemz/workshop-storage',
           icon: boxImg,
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
           name: 'Комплектация цеха',
           pathname: '/lemz/workshop-orders',
           link: '/lemz/workshop-orders',
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
           icon: screwImg,
         },
       ],
@@ -146,7 +151,9 @@ const SideMenu = (props) => {
     },
     {
       pathname: '/lepsari/',
-      linkTo: '/lepsari/workshop-lepsari',
+      linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
+        ? '/lepsari/workshop-orders'
+        : '/lepsari/workshop-lepsari',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       name: 'ЦехЛепсари',
       icon: screwImg,
@@ -157,18 +164,21 @@ const SideMenu = (props) => {
           pathname: '/lepsari/workshop-lepsari',
           link: '/lepsari/workshop-lepsari',
           icon: listImg,
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
           name: 'Склад',
           pathname: '/lepsari/workshop-storage',
           link: '/lepsari/workshop-storage',
           icon: boxImg,
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
           name: 'Комплектация цеха',
           pathname: '/lepsari/workshop-orders',
           link: '/lepsari/workshop-orders',
           icon: screwImg,
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
         },
       ],
     },
@@ -316,12 +326,14 @@ const SideMenu = (props) => {
               pathname: '/clients/new',
               link: '/clients/new',
               icon: plusImg,
+              mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             },
             {
               name: 'Управление категориями',
               pathname: '/clients/categories',
               link: '/clients/categories',
               icon: contractImg,
+              mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
             },
             ...res
               .sort((a, b) => {
@@ -341,6 +353,7 @@ const SideMenu = (props) => {
                 return {
                   name: item.name,
                   pathname: '/clients/category/' + item.name + '/',
+                  mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
                   link: '/clients/category/' + item.name + '/active',
                 }
               }),
@@ -425,39 +438,41 @@ const SideMenu = (props) => {
               {item.dropdownMenu && (
                 <div className="sidemenu__dropdown-menu">
                   {item.dropdownMenu.map((dropdownMenuItem) => {
-                    return (
-                      <Link
-                        className={
-                          props.location.pathname.includes(
-                            dropdownMenuItem.pathname,
-                          ) && dropdownMenuItem.pathname !== '/'
-                            ? 'sidemenu__item sidemenu__item--active'
-                            : props.location.pathname.length === 1 &&
-                              props.location.pathname.includes(
-                                dropdownMenuItem.pathname,
-                              )
-                            ? 'sidemenu__item sidemenu__item--active'
-                            : 'sidemenu__item'
-                        }
-                        to={dropdownMenuItem.link}
-                      >
-                        <div className="sidemenu__link">
-                          {dropdownMenuItem.icon && (
-                            <img
-                              className={
-                                dropdownMenuItem.iconClassName
-                                  ? 'sidemenu__img ' +
-                                    dropdownMenuItem.iconClassName
-                                  : 'sidemenu__img'
-                              }
-                              src={dropdownMenuItem.icon}
-                              alt=""
-                            />
-                          )}
-                          {dropdownMenuItem.name}
-                        </div>
-                      </Link>
-                    )
+                    if (props.userHasAccess(dropdownMenuItem.mainRoles)) {
+                      return (
+                        <Link
+                          className={
+                            props.location.pathname.includes(
+                              dropdownMenuItem.pathname,
+                            ) && dropdownMenuItem.pathname !== '/'
+                              ? 'sidemenu__item sidemenu__item--active'
+                              : props.location.pathname.length === 1 &&
+                                props.location.pathname.includes(
+                                  dropdownMenuItem.pathname,
+                                )
+                              ? 'sidemenu__item sidemenu__item--active'
+                              : 'sidemenu__item'
+                          }
+                          to={dropdownMenuItem.link}
+                        >
+                          <div className="sidemenu__link">
+                            {dropdownMenuItem.icon && (
+                              <img
+                                className={
+                                  dropdownMenuItem.iconClassName
+                                    ? 'sidemenu__img ' +
+                                      dropdownMenuItem.iconClassName
+                                    : 'sidemenu__img'
+                                }
+                                src={dropdownMenuItem.icon}
+                                alt=""
+                              />
+                            )}
+                            {dropdownMenuItem.name}
+                          </div>
+                        </Link>
+                      )
+                    }
                   })}
                 </div>
               )}

@@ -11,24 +11,36 @@ import {
 
 const FeedbackChat = (props) => {
   const [newMessage, setNewMessage] = useState('')
-  const [newMessagesAmount, setNewMessagesAmount] = useState(0)
+  // const [newMessagesAmount, setNewMessagesAmount] = useState(0)
   const [showNewMessages, setShowNewMessages] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     let list = document.getElementsByClassName('feedback-chat__list')[0]
     list.scrollTop = list.scrollHeight
-    setShowNewMessages(props.isRead)
+    if (!isLoaded) {
+      console.log(props.isRead)
+      setShowNewMessages(!props.isRead)
+      !props.isRead && setIsLoaded(true)
+    }
+    // console.log(
+    //   props.messages[props.messages.length - 1]?.author !==
+    //     props.userData.username && showNewMessages === true,
+    // )
     //Отмечаем все непрочитанные сообщения - прочитанными
     if (
       props.messages[props.messages.length - 1]?.author !==
         props.userData.username &&
-      showNewMessages
+      showNewMessages === true &&
+      isLoaded
     ) {
+      props.handleReadMessages()
+      // console.log(123);
       setTimeout(() => {
         setShowNewMessages(false)
       }, 5000)
     }
-  }, [props.messages])
+  }, [props.messages, props.isRead, showNewMessages, isLoaded])
 
   return (
     <div className="feedback-chat">

@@ -136,6 +136,10 @@
             position: relative;
             padding-left: 20px;
           }
+          &:nth-child(6) {
+            max-width: 100px;
+            margin-right: 10px;
+          }
         }
 
         .main-window__actions {
@@ -197,6 +201,10 @@
               left: auto !important;
               right: 5px;
             }
+          }
+          &:nth-child(6) {
+            max-width: 100% !important;
+            margin-right: 0 !important;
           }
         }
       }

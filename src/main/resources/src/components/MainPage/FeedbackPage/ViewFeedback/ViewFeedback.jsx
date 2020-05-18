@@ -22,6 +22,7 @@ const ViewFeedback = (props) => {
     author: props.userData.username,
     status: 'in-progress',
     messages: [],
+    isRead: true,
   })
   const [formErrors, setFormErrors] = useState({
     subject: false,
@@ -110,6 +111,7 @@ const ViewFeedback = (props) => {
           text: res.text,
           author: res.author,
           status: res.status,
+          isRead: res.isRead,
         })
         // setFormInputs({
         //     ...formInputs,
@@ -202,20 +204,61 @@ const ViewFeedback = (props) => {
               name="text"
               defaultValue={formInputs.text}
               handleInputChange={handleInputChange}
-              // readOnly
+              readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
             />
             <FeedbackChat
               messages={formInputs.messages}
               userData={props.userData}
+              isRead={formInputs.isRead}
+              handleReadMessages={() => {
+                setIsLoading(true)
+                console.log(formInputs)
+                return (
+                  editFeedback(
+                    {
+                      date: new Date(formInputs.date).getTime() / 1000,
+                      subject: formInputs.subject,
+                      text: formInputs.text,
+                      author: formInputs.author,
+                      status: formInputs.status,
+                      isRead: true,
+                    },
+                    feedbackId,
+                  )
+                    .then(() => setIsLoading(false))
+                    .then(() => {
+                      // loadData(feedbackId)
+                    })
+                    // .then(() => props.history.push('/feedback'))
+                    .catch((error) => {
+                      setIsLoading(false)
+                      alert('Ошибка при изменении записи')
+                    })
+                )
+              }}
               handleSubmit={(message) => {
                 addMessage({
                   author: props.userData.username,
                   date: new Date().getTime() / 1000,
                   text: message,
                   discussionId: feedbackId,
-                }).then(() => {
-                  loadData(feedbackId)
                 })
+                  .then(() => {
+                    editFeedback(
+                      {
+                        date: new Date(formInputs.date).getTime() / 1000,
+                        subject: formInputs.subject,
+                        text: formInputs.text,
+                        author: formInputs.author,
+                        status: formInputs.status,
+                        isRead: false,
+                      },
+                      feedbackId,
+                    )
+                  })
+                  .then(() => {
+                    loadData(feedbackId)
+                  })
               }}
             />
           </div>
@@ -227,13 +270,15 @@ const ViewFeedback = (props) => {
               className="main-form__submit main-form__submit--inverted"
               onClick={() => props.history.push('/feedback')}
             />
-            <Button
-              text="Редактировать содержание"
-              isLoading={isLoading}
-              inverted
-              className="main-form__submit"
-              onClick={handleSubmit}
-            />
+            {props.userHasAccess(['ROLE_ADMIN']) && (
+              <Button
+                text="Редактировать содержание"
+                isLoading={isLoading}
+                inverted
+                className="main-form__submit"
+                onClick={handleSubmit}
+              />
+            )}
           </div>
         </form>
       </div>
