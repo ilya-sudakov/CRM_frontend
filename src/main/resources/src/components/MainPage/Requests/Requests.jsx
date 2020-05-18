@@ -24,7 +24,8 @@ const Requests = (props) => {
   const [curPage, setCurPage] = useState('Открытые')
   const [requestStatuses, setRequestStatutes] = useState([
     {
-      name: 'Проблема-материалы',
+      name: 'Проблема/Материалы',
+      oldName: 'Проблема-материалы',
       className: 'materials',
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
       visible: false,
@@ -43,6 +44,7 @@ const Requests = (props) => {
     },
     {
       name: 'Готово к отгрузке',
+      oldName: 'Готово',
       className: 'ready',
       access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       visible: false,
@@ -318,7 +320,9 @@ const Requests = (props) => {
                 })
                 if (
                   noActiveStatuses === true ||
-                  (status.visible && status.name === item.status)
+                  (status.visible &&
+                    (status.name === item.status ||
+                      status.oldName === item.status))
                 ) {
                   check = true
                   return

@@ -178,9 +178,9 @@ const AdminWorkspace = (props) => {
   return (
     <div className="admin-workspace">
       <WorkManagement userHasAccess={props.userHasAccess} />
-      {/* {props.userHasAccess(['ROLE_ADMIN']) && <Notifications
-                userHasAccess={props.userHasAccess}
-            />} */}
+      {/* {props.userHasAccess(['ROLE_ADMIN']) && (
+        <Notifications userHasAccess={props.userHasAccess} />
+      )} */}
       {props.userHasAccess(['ROLE_ADMIN']) && (
         <div className="admin-workspace__chart-wrapper">
           <TableLoading isLoading={isLoading} />

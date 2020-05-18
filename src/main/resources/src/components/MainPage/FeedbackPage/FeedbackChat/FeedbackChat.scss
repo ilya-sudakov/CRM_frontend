@@ -10,7 +10,7 @@
     // padding: 25px 0;
     margin-top: 5px;
     margin-top: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     padding-left: 3em;
     max-height: 500px;
     overflow-y: auto;
@@ -78,7 +78,7 @@
 
       .feedback-chat__text {
         margin-top: 5px;
-        font-size: 90%;
+        font-size: 85%;
         padding-right: 150px;
       }
     }
@@ -140,40 +140,59 @@
 
   .feedback-chat__divider {
     display: flex;
-    width: 100%;
     position: relative;
     z-index: 1;
     text-align: center;
     justify-content: center;
-    margin: 5px 0;
+    align-items: center;
+    // margin: 5px 0;
     transform: scale(1);
     transition: 200ms ease-in-out;
     height: 20px;
-    &:before {
-      border-top: 1.5px solid $button__background--inverted;
-      content: "";
-      margin: 0 auto; /* this centers the line to the full width specified */
-      position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
-      top: 50%;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 95%;
-      z-index: -1;
+    width: fit-content;
+    margin: 0px auto;
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    color: $secondary-text-color;
+    font-size: 90%;
+    background-color: $button__background--inverted;
+    cursor: pointer;
+
+    .feedback-chat__img {
+      // margin-left: 5px;
+      width: 35px;
+      height: 30px;
+      max-height: 35px;
+      filter: brightness(3);
     }
-    span {
-      /* to hide the lines from behind the text, you have to set the background color the same as the container */
-      // background: #fff;b
-      background: #fafafa;
-      padding: 0 15px;
-      font-size: 90%;
-      color: $button__background--inverted;
-    }
+    
+    
+    //alternative design
+    // width: 100%;
+    // &:before {
+    //   border-top: 1.5px solid $button__background--inverted;
+    //   content: "";
+    //   margin: 0 auto;
+    //   position: absolute;
+    //   top: 50%;
+    //   left: 0;
+    //   right: 0;
+    //   bottom: 0;
+    //   width: 95%;
+    //   z-index: -1;
+    // }
+    // span {
+    //   background: #fafafa;
+    //   padding: 0 15px;
+    //   font-size: 90%;
+    //   color: $button__background--inverted;
+    // }
   }
   .feedback-chat__divider--hidden {
     transform: scaleY(0);
     height: 0;
-    margin: 0;
+    margin: 0 auto;
   }
 
   .feedback-chat__img {

@@ -20,6 +20,7 @@ import {
 // import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoading.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
+import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -31,11 +32,13 @@ const WorkManagementPage = (props) => {
       name: 'ЦехЛЭМЗ',
       visibility: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       active: true,
+      minimized: true,
     },
     {
       name: 'ЦехЛепсари',
       visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       active: true,
+      minimized: true,
     },
     {
       name: 'ЦехЛиговский',
@@ -46,6 +49,7 @@ const WorkManagementPage = (props) => {
         'ROLE_MANAGER',
       ],
       active: true,
+      minimized: true,
     },
     {
       name: 'Офис',
@@ -56,6 +60,7 @@ const WorkManagementPage = (props) => {
         'ROLE_ENGINEER',
       ],
       active: true,
+      minimized: true,
     },
   ])
   const [dates, setDates] = useState({
@@ -95,7 +100,8 @@ const WorkManagementPage = (props) => {
           ...res.map((item) => {
             return {
               ...item,
-              openWorks: false,
+              // openWorks: false,
+              openWorks: true,
             }
           }),
         ])
@@ -103,7 +109,8 @@ const WorkManagementPage = (props) => {
           ...res.map((item) => {
             return {
               ...item,
-              openWorks: false,
+              // openWorks: false,
+              openWorks: true,
             }
           }),
         ])
@@ -111,7 +118,8 @@ const WorkManagementPage = (props) => {
           ...res.map((item) => {
             return {
               ...item,
-              openWorks: false,
+              // openWorks: false,
+              openWorks: true,
             }
           }),
         ])
@@ -162,7 +170,8 @@ const WorkManagementPage = (props) => {
             [work.employee.id]: {
               ...newEmployeesMap[work.employee.id],
               [new Date(work.year, work.month - 1, work.day)]: [
-                { openWorks: false },
+                // { openWorks: false },
+                { openWorks: true },
                 work,
               ],
             },
@@ -170,7 +179,7 @@ const WorkManagementPage = (props) => {
         }
       }),
     ).then(() => {
-      // console.log(newEmployeesMap);
+      console.log(newEmployeesMap)
       setEmployeesMap(newEmployeesMap)
     })
   }
@@ -178,7 +187,7 @@ const WorkManagementPage = (props) => {
   useEffect(() => {
     let abortController = new AbortController()
     loadWorks(abortController.signal)
-    console.log(workItems)
+    // console.log(employeesMap)
     return function cancel() {
       abortController.abort()
     }
@@ -232,7 +241,7 @@ const WorkManagementPage = (props) => {
                             onClick={() => loadWorks()}
                         >Применить фильтр</div> */}
             <Button
-              text="Применить фильтр"
+              text="Применить"
               isLoading={isLoading}
               className="main-window__button"
               onClick={loadWorks}
@@ -282,7 +291,7 @@ const WorkManagementPage = (props) => {
                         className="main-window__list-item"
                     />} */}
           <TableLoading isLoading={isLoading} />
-          {workshops.map((workshop) => {
+          {workshops.map((workshop, workshopIndex) => {
             if (
               workshop.active &&
               //&& employees.entries().find(item => item.workshop === workshop.name) !== undefined
@@ -294,7 +303,33 @@ const WorkManagementPage = (props) => {
               return (
                 <React.Fragment>
                   <div className="main-window__list-item main-window__list-item--divider">
-                    <span>{workshop.name}</span>
+                    <span>
+                      {workshop.name}
+                      <CheckBox
+                        checked={workshop.minimized}
+                        // text="Свернуть"
+                        onChange={() => {
+                          let temp = employeesMap
+                          Object.entries(temp).map((employee) => {
+                            if (
+                              employees[employee[0]].workshop === workshop.name
+                            ) {
+                              Object.entries(employee[1]).map((date) => {
+                                console.log(date[1][0])
+                                date[1][0].openWorks = !date[1][0].openWorks
+                              })
+                            }
+                          })
+                          let newWorkshops = workshops
+                          newWorkshops.splice(workshopIndex, 1, {
+                            ...workshop,
+                            minimized: !workshop.minimized,
+                          })
+                          setWorkshops([...newWorkshops])
+                          return setEmployeesMap({ ...temp })
+                        }}
+                      />
+                    </span>
                   </div>
                   <div className="main-window__list-item main-window__list-item--header">
                     <span>Должность</span>

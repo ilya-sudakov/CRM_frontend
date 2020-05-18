@@ -16,34 +16,34 @@ const TableView = (props) => {
     curSort: 'date',
     date: 'desc',
   })
-//   const [requestStatuses, setRequestStatutes] = useState([
-//     {
-//       name: 'Проблема/Материалы',
-//       oldName: 'Проблема-материалы',
-//       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-//     },
-//     {
-//       name: 'Завершено',
-//       access: ['ROLE_ADMIN'],
-//     },
-//     {
-//       name: 'Отгружено',
-//       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-//     },
-//     {
-//       name: 'Готово к отгрузке',
-//       oldName: 'Готово',
-//       access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-//     },
-//     {
-//       name: 'В производстве',
-//       access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
-//     },
-//     {
-//       name: 'Ожидание',
-//       access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
-//     },
-//   ])
+  //   const [requestStatuses, setRequestStatutes] = useState([
+  //     {
+  //       name: 'Проблема/Материалы',
+  //       oldName: 'Проблема-материалы',
+  //       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+  //     },
+  //     {
+  //       name: 'Завершено',
+  //       access: ['ROLE_ADMIN'],
+  //     },
+  //     {
+  //       name: 'Отгружено',
+  //       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+  //     },
+  //     {
+  //       name: 'Готово к отгрузке',
+  //       oldName: 'Готово',
+  //       access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+  //     },
+  //     {
+  //       name: 'В производстве',
+  //       access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
+  //     },
+  //     {
+  //       name: 'Ожидание',
+  //       access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
+  //     },
+  //   ])
   const [requestStatuses, setRequestStatutes] = useState([
     {
       name: 'Проблема/Материалы',
@@ -362,18 +362,19 @@ const TableView = (props) => {
                   value={request.status}
                   onChange={handleStatusChange}
                 >
-                  {/* <option>Приоритет</option>
-                                    <option>Проблема</option>
-                                    <option>Материалы</option>
-                                    <option>Ожидание</option>
-                                    <option>В производстве</option>
-                                    <option>Готово</option>
-                                    <option>Частично готово</option>
-                                    <option>Отгружено</option>
-                                    <option>Завершено</option> */}
                   {requestStatuses.map((status) => {
                     if (props.userHasAccess(status.access)) {
-                      return <option>{status.name}</option>
+                      return (
+                        <option
+                          value={
+                            status.oldName === request.status
+                              ? status.oldName
+                              : status.name
+                          }
+                        >
+                          {status.name}
+                        </option>
+                      )
                     } else {
                       return (
                         <option style={{ display: `none` }}>

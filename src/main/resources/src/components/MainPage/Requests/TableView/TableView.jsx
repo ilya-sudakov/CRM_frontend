@@ -389,7 +389,17 @@ const TableView = (props) => {
             >
               {requestStatuses.map((status) => {
                 if (props.userHasAccess(status.access)) {
-                  return <option>{status.name}</option>
+                  return (
+                    <option
+                      value={
+                        status.oldName === request.status
+                          ? status.oldName
+                          : status.name
+                      }
+                    >
+                      {status.name}
+                    </option>
+                  )
                 } else {
                   return (
                     <option style={{ display: `none` }}>{status.name}</option>
