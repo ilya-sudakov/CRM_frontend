@@ -104,7 +104,7 @@ const Lepsari = (props) => {
                 setTransferData={props.setTransferData}
                 allowedRoles={[
                   'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
+                  // 'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
                   'ROLE_LEPSARI',
                 ]}
@@ -139,7 +139,7 @@ const Lepsari = (props) => {
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
+                  // 'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
                   'ROLE_LEPSARI',
                 ]}
@@ -186,7 +186,7 @@ const Lepsari = (props) => {
                 // setTransferData={props.setTransferData}
                 allowedRoles={[
                   'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
+                  // 'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
                   'ROLE_LEPSARI',
                 ]}

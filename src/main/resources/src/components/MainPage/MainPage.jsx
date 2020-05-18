@@ -303,7 +303,12 @@ class MainPage extends React.Component {
                       transferData: value,
                     })
                   }
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_LEMZ',
+                    'ROLE_DISPATCHER',
+                  ]}
                 />
                 <PrivateRoute
                   path="/lepsari"
@@ -322,7 +327,12 @@ class MainPage extends React.Component {
                       transferData: value,
                     })
                   }
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_LEPSARI',
+                    'ROLE_DISPATCHER',
+                  ]}
                 />
                 <PrivateRoute
                   path="/dispatcher/rigging"
