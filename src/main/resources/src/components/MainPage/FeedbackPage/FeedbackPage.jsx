@@ -179,10 +179,10 @@ const FeedbackPage = (props) => {
                       </span>
                       {item.isRead === false && (
                         <div className="feedback-page__info-message">
-                          <div className="main-window__mobile-text">
+                          {/* <div className="main-window__mobile-text">
                             Новые сообщения:{' '}
-                          </div>
-                          !
+                          </div> */}
+                          Новые сообщения
                         </div>
                       )}
                     </div>
