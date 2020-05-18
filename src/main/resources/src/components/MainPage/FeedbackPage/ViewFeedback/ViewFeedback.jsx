@@ -186,6 +186,7 @@ const ViewFeedback = (props) => {
             />
             <FeedbackChat
               messages={formInputs.messages}
+              userData={props.userData}
               handleSubmit={(message) => {
                 addMessage({
                   author: props.userData.username,

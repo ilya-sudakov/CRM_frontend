@@ -20,7 +20,8 @@ const TableView = (props) => {
   const [requests, setRequests] = useState([])
   const [requestStatuses, setRequestStatutes] = useState([
     {
-      name: 'Проблема-материалы',
+      name: 'Проблема/Материалы',
+      oldName: 'Проблема-материалы',
       className: 'materials',
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
     },
@@ -35,14 +36,15 @@ const TableView = (props) => {
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
     },
     {
-      name: 'Готово',
+      name: 'Готово к отгрузке',
+      oldName: 'Готово',
       className: 'ready',
       access: ['ROLE_ADMIN'],
     },
     {
       name: 'В производстве',
       className: 'in-production',
-      access: ['ROLE_ADMIN'],
+      access: [],
     },
     {
       name: 'Ожидание',
@@ -334,8 +336,11 @@ const TableView = (props) => {
           key={request_id}
           className={
             'tableview_requests__row tableview_requests__row--status_' +
-            requestStatuses.find((item) => item.name === request.status)
-              ?.className
+            requestStatuses.find((item) => {
+              return (
+                item.name === request.status || item.oldName === request.status
+              )
+            })?.className
           }
         >
           <div className="tableview_requests__col">

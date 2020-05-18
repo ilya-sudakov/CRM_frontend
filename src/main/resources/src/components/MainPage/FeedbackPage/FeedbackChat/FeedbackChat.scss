@@ -173,6 +173,7 @@
   .feedback-chat__divider--hidden {
     transform: scaleY(0);
     height: 0;
+    margin: 0;
   }
 
   .feedback-chat__img {
@@ -180,6 +181,10 @@
   }
 
   @media (max-width: 768px) {
+    & {
+      width: calc(100% - 15px);
+      padding: 7.5px 7.5px;
+    }
     .feedback-chat__list {
       .feedback-chat__message {
         .feedback-chat__img {

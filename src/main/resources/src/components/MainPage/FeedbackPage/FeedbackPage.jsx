@@ -177,7 +177,14 @@ const FeedbackPage = (props) => {
                         </div>
                         {item.author}
                       </span>
-                      {/* <div className="feedback-page__info-message"><div className="main-window__mobile-text">Новые сообщения: </div>{2}</div> */}
+                      {item.isRead && (
+                        <div className="feedback-page__info-message">
+                          <div className="main-window__mobile-text">
+                            Новые сообщения:{' '}
+                          </div>
+                          !
+                        </div>
+                      )}
                     </div>
                     <div className="main-window__actions">
                       <div

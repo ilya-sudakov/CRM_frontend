@@ -42,7 +42,7 @@ const Requests = (props) => {
       visible: false,
     },
     {
-      name: 'Готово',
+      name: 'Готово к отгрузке',
       className: 'ready',
       access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       visible: false,
