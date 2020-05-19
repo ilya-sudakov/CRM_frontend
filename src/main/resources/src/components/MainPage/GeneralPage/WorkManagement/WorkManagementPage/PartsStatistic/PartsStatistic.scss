@@ -2,7 +2,7 @@
 
 .parts-statistic {
     width: calc(100% - 50px);
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.6);
     border-radius: 5px;
     margin: 15px 0;
     padding: 15px 10px;
@@ -17,9 +17,12 @@
         overflow-y: auto;
         transform-origin: 50% 0;
         transition: 200ms ease-in-out;
+        min-height: 100px;
+        position: relative;
 
         &--hidden {
             max-height: 0px;
+            min-height: 0px;
             transform: scaleY(0);
             transition: 200ms ease-in-out;
         }
@@ -33,7 +36,8 @@
         min-width: 400px;
         // margin-left: 5px;
         margin: 15px 10px;
-        min-height: 100%;
+        // min-height: 100%;
+        min-height: calc(250px) !important;
 
         .main-window__chart {
             // min-height: 100%;
@@ -46,9 +50,12 @@
     }
 
     .main-window__list {
-        padding: 15px;
+        // padding: 15px;
+        margin: 5px;
         // width: calc(100%);
         max-width: 500px;
+        height: fit-content;
+        // box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
         .main-window__list-item {
             span {
                 &:nth-child(1) {

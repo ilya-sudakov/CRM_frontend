@@ -3,6 +3,7 @@ import './PartsStatistic.scss'
 import { createGraph, loadCanvas } from '../../../../../../utils/graphs.js'
 import { getRandomColor } from '../../../../../../utils/functions.jsx'
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
+import TableLoading from '../../../../../../utils/TableView/TableLoading/TableLoading.jsx'
 
 const PartsStatistic = (props) => {
   const [graph, setGraph] = useState(null)
@@ -72,13 +73,11 @@ const PartsStatistic = (props) => {
   }
 
   useEffect(() => {
-    console.log([
-      ...Object.entries(props.data).map(
-        (product, index) => '#00' + (index % 10) + '3a2',
-      ),
-    ])
+    setIsLoading(true)
     if (Object.entries(props.data).length > 0) {
+      setIsLoading(true)
       if (!canvasLoaded) {
+        setIsLoading(true)
         loadCanvas('main-window__chart-wrapper', 'main-window__chart')
         setCanvasLoaded(true)
       }
@@ -114,6 +113,7 @@ const PartsStatistic = (props) => {
             : 'parts-statistic__wrapper parts-statistic__wrapper--hidden'
         }
       >
+        <TableLoading isLoading={isLoading} />
         <div className="main-window__chart-wrapper"></div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
