@@ -153,8 +153,9 @@ const FeedbackChat = (props) => {
               </div>
             )
           })}
-        {props.messages[props.messages.length - 1]?.author !==
-          props.userData.username && (
+        {(props.messages[props.messages.length - 1]?.author !==
+          props.userData.username ||
+          props.messages.length !== 0) && (
           <div
             className={
               showNewMessages
