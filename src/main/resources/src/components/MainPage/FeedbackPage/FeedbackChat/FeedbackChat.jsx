@@ -152,7 +152,7 @@ const FeedbackChat = (props) => {
             )
           })}
         {(props.messages[props.messages.length - 1]?.author !==
-          props.userData.username ||
+          props.userData.username &&
           props.messages.length !== 0) && (
           <div
             className={
