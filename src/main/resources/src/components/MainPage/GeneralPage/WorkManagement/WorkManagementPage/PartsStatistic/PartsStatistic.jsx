@@ -58,7 +58,7 @@ const PartsStatistic = (props) => {
       ],
     },
     options: {
-      // maintainAspectRation: false,
+      maintainAspectRatio: false,
       responsive: true,
       animation: {
         easing: 'easeInOutCirc',
@@ -136,7 +136,12 @@ const PartsStatistic = (props) => {
         }
       >
         <TableLoading isLoading={isLoading} />
-        <div className="main-window__chart-wrapper"></div>
+        <div
+          className="main-window__chart-wrapper"
+          style={{
+            height: `${Object.entries(props.data).length * 40}px`,
+          }}
+        ></div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название</span>
