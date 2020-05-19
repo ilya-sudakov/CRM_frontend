@@ -182,7 +182,7 @@ const FeedbackPage = (props) => {
                           {/* <div className="main-window__mobile-text">
                             Новые сообщения:{' '}
                           </div> */}
-                          Новые сообщения
+                          Непрочитанные сообщения
                         </div>
                       )}
                     </div>
