@@ -153,7 +153,7 @@ const GeneralPage = (props) => {
                   return employeeInfo[0].push(check)
                 }
               })
-              console.log(employeeInfo[0])
+              // console.log(employeeInfo[0])
 
               return (dataWS = XLSX2.utils.sheet_add_aoa(
                 dataWS,

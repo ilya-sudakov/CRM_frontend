@@ -221,7 +221,12 @@ const WorkManagementPage = (props) => {
             Табель
           </Link> */}
         </div>
-        <PartsStatistic data={partsStatistics} />
+        {(props.userHasAccess(['ROLE_ADMIN']) ||
+          props.userHasAccess(['ROLE_LIGOVSKIY']) ||
+          props.userHasAccess(['ROLE_LEMZ']) ||
+          props.userHasAccess(['ROLE_LEPSARI'])) && (
+          <PartsStatistic data={partsStatistics} />
+        )}
         <SearchBar
           title="Поиск по записям"
           placeholder="Введите запрос для поиска..."

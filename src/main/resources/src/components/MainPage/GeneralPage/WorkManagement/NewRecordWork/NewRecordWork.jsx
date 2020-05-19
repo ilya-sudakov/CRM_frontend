@@ -130,16 +130,17 @@ const NewRecordWork = (props) => {
                 props.history.push('/work-managment')
               })
             })
-            .catch((error) => {
-              alert('Ошибка при добавлении записи')
-              setIsLoading(false)
-              // setShowError(true);
-              console.log(error)
-            })
       })
-      Promise.all(newWork).then(() => {
-        setIsLoading(false)
-      })
+      Promise.all(newWork)
+        .then(() => {
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          alert('Ошибка при добавлении записи')
+          setIsLoading(false)
+          // setShowError(true);
+          console.log(error)
+        })
       // const temp = Object.assign({
       //     day: worktimeInputs.date.getDate(),
       //     month: (worktimeInputs.date.getMonth() + 1),

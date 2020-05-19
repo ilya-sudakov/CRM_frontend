@@ -1,17 +1,78 @@
 @import "../../../../../../variables.scss";
 
 .parts-statistic {
-    width: calc(100% - 30px);
-    display: flex;
-    flex-direction: row;
-    overflow-y: auto;
-    max-height: 400px;
-    overflow-y: auto;
+    width: calc(100% - 50px);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    margin: 15px 0;
+    padding: 15px 10px;
+
+    &__wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        overflow-y: auto;
+        width: 100%;
+        max-height: 400px;
+        overflow-y: auto;
+        transform-origin: 50% 0;
+        transition: 200ms ease-in-out;
+
+        &--hidden {
+            max-height: 0px;
+            transform: scaleY(0);
+            transition: 200ms ease-in-out;
+        }
+    }
 
     .main-window__chart-wrapper {
-        background-color: rgba(255, 255, 255, 0.6);
+        // background-color: rgba(255, 255, 255, 0.6);
+        background-color: transparent;
+        box-shadow: none;
         padding: 10px 15px;
         min-width: 400px;
-        margin-left: 5px;
+        // margin-left: 5px;
+        margin: 15px 10px;
+        min-height: 100%;
+
+        .main-window__chart {
+            // min-height: 100%;
+        }
+    }
+
+    .main-window__title {
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .main-window__list {
+        padding: 15px;
+        // width: calc(100%);
+        max-width: 500px;
+        .main-window__list-item {
+            span {
+                &:nth-child(1) {
+                    flex: 0 1 80%;
+                }
+                &:nth-child(2) {
+                    flex: 0 1 20%;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        & {
+            .parts-statistic__wrapper {
+                max-height: none;
+                flex-direction: column !important;
+                justify-content: center;
+                align-items: center;
+
+                &--hidden {
+                    max-height: 0px;
+                }
+            }
+        }
     }
 }

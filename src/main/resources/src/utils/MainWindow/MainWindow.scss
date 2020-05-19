@@ -33,6 +33,11 @@
   .main-window__img {
     width: 20px;
     // filter: brightness(5);
+
+    &--rotated {
+      transition: transform 100ms ease-in-out;
+      transform: rotate(180deg) !important;
+    }
   }
 
   .main-window__info-panel .main-window__img {
