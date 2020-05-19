@@ -19,7 +19,19 @@ const PartsStatistic = (props) => {
       // barThickness: 6,
       // maxBarThickness: 8,
       // minBarLength: 2,
-      labels: [...Object.entries(props.data).map((product) => product[1].name)],
+      labels: [
+        ...Object.entries(props.data)
+          .sort((a, b) => {
+            if (a[1].quantity < b[1].quantity) {
+              return 1
+            }
+            if (a[1].quantity > b[1].quantity) {
+              return -1
+            }
+            return 0
+          })
+          .map((product) => product[1].name),
+      ],
       datasets: [
         {
           label: 'Количество ед. продукции',
@@ -30,7 +42,17 @@ const PartsStatistic = (props) => {
             ),
           ],
           data: [
-            ...Object.entries(props.data).map((product) => product[1].quantity),
+            ...Object.entries(props.data)
+              .sort((a, b) => {
+                if (a[1].quantity < b[1].quantity) {
+                  return 1
+                }
+                if (a[1].quantity > b[1].quantity) {
+                  return -1
+                }
+                return 0
+              })
+              .map((product) => product[1].quantity),
           ],
         },
       ],
@@ -120,20 +142,30 @@ const PartsStatistic = (props) => {
             <span>Название</span>
             <span>Количество</span>
           </div>
-          {Object.entries(props.data).map((part) => {
-            return (
-              <div className="main-window__list-item">
-                <span>
-                  <div className="main-window__mobile-text">Название:</div>
-                  {part[1].name}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Количество:</div>
-                  {part[1].quantity}
-                </span>
-              </div>
-            )
-          })}
+          {Object.entries(props.data)
+            .sort((a, b) => {
+              if (a[1].quantity < b[1].quantity) {
+                return 1
+              }
+              if (a[1].quantity > b[1].quantity) {
+                return -1
+              }
+              return 0
+            })
+            .map((part) => {
+              return (
+                <div className="main-window__list-item">
+                  <span>
+                    <div className="main-window__mobile-text">Название:</div>
+                    {part[1].name}
+                  </span>
+                  <span>
+                    <div className="main-window__mobile-text">Количество:</div>
+                    {part[1].quantity}
+                  </span>
+                </div>
+              )
+            })}
         </div>
       </div>
     </div>
