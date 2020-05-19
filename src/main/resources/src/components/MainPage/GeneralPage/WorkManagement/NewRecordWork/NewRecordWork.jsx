@@ -335,7 +335,12 @@ const NewRecordWork = (props) => {
                 worktimeInputs.works.reduce((sum, cur) => {
                   if (cur.workType === 'Без продукции/чертежа') {
                     return sum + 1
-                  } else return cur?.product.length + cur?.draft.length
+                  } else if (cur.workType === 'Чертеж') {
+                    {
+                      /* return sum + cur?.draft.length */
+                    }
+                    return sum + 1
+                  } else return cur?.product.length
                 }, 0) > 0 ? (
                   <Button
                     text="Указать часы"
