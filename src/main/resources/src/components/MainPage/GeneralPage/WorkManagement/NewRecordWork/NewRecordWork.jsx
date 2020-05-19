@@ -333,8 +333,10 @@ const NewRecordWork = (props) => {
                 />
                 {worktimeInputs.works.length > 0 &&
                 worktimeInputs.works.reduce((sum, cur) => {
-                  return sum + cur?.product.length + cur?.draft.length
-                }, 0) ? (
+                  if (cur.workType === 'Без продукции/чертежа') {
+                    return sum + 1
+                  } else return cur?.product.length + cur?.draft.length
+                }, 0) > 0 ? (
                   <Button
                     text="Указать часы"
                     isLoading={isLoading}
