@@ -86,7 +86,7 @@ const ViewFeedback = (props) => {
         text: formInputs.text,
         author: formInputs.author,
         status: formInputs.status,
-        isRead: formInputs.isRead
+        isRead: formInputs.isRead,
       },
       feedbackId,
     )
@@ -174,6 +174,7 @@ const ViewFeedback = (props) => {
                       subject: formInputs.subject,
                       text: formInputs.text,
                       author: formInputs.author,
+                      isRead: formInputs.isRead,
                       status: value,
                     },
                     feedbackId,
