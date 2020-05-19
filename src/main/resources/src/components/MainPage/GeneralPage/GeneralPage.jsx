@@ -134,13 +134,17 @@ const GeneralPage = (props) => {
               dates[0].map((date, dateIndex) => {
                 let check = null
                 item.days.map((workDay) => {
-                  if (workDay.day === date + 1) {
-                    // console.log(workDay.day, date);
+                  // console.log(item.employee.lastName, workDay, date, workDay.day === date)
+                  if (workDay.day === date) {
                     check = workDay.hours
                     sum += check
                   }
                 })
-                if (dates[0].length - 1 < employeeInfo[0].length) {
+                // console.log(item.employee.lastName, date, check)
+                // if (dates[0].length - 1 < employeeInfo[0].length) {
+                //   return
+                // }
+                if (date === '') {
                   return
                 }
                 if (check === null) {
@@ -149,6 +153,8 @@ const GeneralPage = (props) => {
                   return employeeInfo[0].push(check)
                 }
               })
+              console.log(employeeInfo[0])
+
               return (dataWS = XLSX2.utils.sheet_add_aoa(
                 dataWS,
                 [[...employeeInfo[0], '', sum]],
@@ -190,13 +196,16 @@ const GeneralPage = (props) => {
               dates[1].map((date) => {
                 let check = null
                 res.days.map((workDay) => {
-                  if (workDay.day === date + 1) {
+                  if (workDay.day === date) {
                     // console.log(workDay.day, date);
                     check = workDay.hours
                     sum += check
                   }
                 })
-                if (dates[0].length - 1 < employeeInfo[0].length) {
+                // if (dates[0].length - 1 < employeeInfo[0].length) {
+                //   return
+                // }
+                if (date === '') {
                   return
                 }
                 if (check === null) {
