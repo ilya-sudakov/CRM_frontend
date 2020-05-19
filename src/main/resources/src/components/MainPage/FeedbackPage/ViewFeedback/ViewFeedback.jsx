@@ -86,6 +86,7 @@ const ViewFeedback = (props) => {
         text: formInputs.text,
         author: formInputs.author,
         status: formInputs.status,
+        isRead: formInputs.isRead
       },
       feedbackId,
     )
