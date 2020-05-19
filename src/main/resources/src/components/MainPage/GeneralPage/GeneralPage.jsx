@@ -90,10 +90,11 @@ const GeneralPage = (props) => {
       })
         .then((employees) => employees.json())
         .then((employees) => {
-          employeesList.push(...employees)
+          return employeesList.push(...employees)
         })
     })
     Promise.all(allWorkshops).then(() => {
+      // console.log(employeesList);
       const allEmployees = employeesList
         .sort((a, b) => {
           if (
@@ -116,13 +117,28 @@ const GeneralPage = (props) => {
             .then((res) => {
               // console.log(res);
               employeesWorksList.push(res)
+            })
+        })
+      Promise.all(allEmployees)
+        .then(() => {
+          const allEmployees = employeesWorksList
+            .sort((a, b) => {
+              if (a.employee.lastName < b.employee.lastName) {
+                return -1
+              }
+              if (a.employee.lastName > b.employee.lastName) {
+                return 1
+              }
+              return 0
+            })
+            .map((item, index) => {
               let employeeInfo = [
-                [item.lastName + ' ' + item.name + ' ' + item.middleName],
+                [item.employee.lastName + ' ' + item.employee.name + ' ' + item.employee.middleName],
               ]
               let sum = 0
               dates[0].map((date, dateIndex) => {
                 let check = null
-                res.days.map((workDay) => {
+                item.days.map((workDay) => {
                   if (workDay.day === date + 1) {
                     // console.log(workDay.day, date);
                     check = workDay.hours
@@ -146,98 +162,99 @@ const GeneralPage = (props) => {
                 },
               ))
             })
+          Promise.all(allEmployees)
         })
-      Promise.all(allEmployees).then(() => {
-        dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[1]], {
-          origin: 'A' + (globalIndex++ + 1),
-        })
-        globalIndex++
-        const allEmployees = employeesWorksList
-          .sort((a, b) => {
-            if (a.employee.lastName < b.employee.lastName) {
-              return -1
-            }
-            if (a.employee.lastName > b.employee.lastName) {
-              return 1
-            }
-            return 0
+        .then(() => {
+          dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[1]], {
+            origin: 'A' + (globalIndex++ + 1),
           })
-          .map((res, index) => {
-            // console.log(res);
-            let employeeInfo = [
-              [
-                res.employee.lastName +
-                  ' ' +
-                  res.employee.name +
-                  ' ' +
-                  res.employee.middleName,
-              ],
-            ]
-            let sum = 0
-            dates[1].map((date) => {
-              let check = null
-              res.days.map((workDay) => {
-                if (workDay.day === date + 1) {
-                  // console.log(workDay.day, date);
-                  check = workDay.hours
-                  sum += check
+          globalIndex++
+          const allEmployees = employeesWorksList
+            .sort((a, b) => {
+              if (a.employee.lastName < b.employee.lastName) {
+                return -1
+              }
+              if (a.employee.lastName > b.employee.lastName) {
+                return 1
+              }
+              return 0
+            })
+            .map((res, index) => {
+              // console.log(res);
+              let employeeInfo = [
+                [
+                  res.employee.lastName +
+                    ' ' +
+                    res.employee.name +
+                    ' ' +
+                    res.employee.middleName,
+                ],
+              ]
+              let sum = 0
+              dates[1].map((date) => {
+                let check = null
+                res.days.map((workDay) => {
+                  if (workDay.day === date + 1) {
+                    // console.log(workDay.day, date);
+                    check = workDay.hours
+                    sum += check
+                  }
+                })
+                if (dates[0].length - 1 < employeeInfo[0].length) {
+                  return
+                }
+                if (check === null) {
+                  employeeInfo[0].push('')
+                } else {
+                  employeeInfo[0].push(check)
                 }
               })
-              if (dates[0].length - 1 < employeeInfo[0].length) {
-                return
-              }
-              if (check === null) {
-                employeeInfo[0].push('')
-              } else {
-                employeeInfo[0].push(check)
-              }
+              return (dataWS = XLSX2.utils.sheet_add_aoa(
+                dataWS,
+                [[...employeeInfo[0], '', sum]],
+                {
+                  origin: 'A' + globalIndex++,
+                },
+              ))
             })
-            dataWS = XLSX2.utils.sheet_add_aoa(
-              dataWS,
-              [[...employeeInfo[0], '', sum]],
-              {
-                origin: 'A' + globalIndex++,
-              },
+          Promise.all(allEmployees).then(() => {
+            // console.log([employeeInfo[0]]);
+            var wscols = [
+              { width: 25 }, // first column
+            ]
+            //Новая ширина столбцов
+            dataWS['!cols'] = wscols
+            //merge ячеек A1 и B1
+            const mergeCols = [
+              { s: { r: 0, c: 0 }, e: { r: 0, c: dates[0].length - 1 } },
+            ]
+            // console.log(dataWS.A1);
+            dataWS['!merges'] = mergeCols
+            let wb = XLSX2.utils.book_new() //Создание новой workbook
+            XLSX2.utils.book_append_sheet(wb, dataWS, 'Табель')
+            var wboutput = XLSX2.write(wb, {
+              bookType: 'xlsx',
+              bookSST: false,
+              type: 'binary',
+            })
+            function s2ab(s) {
+              var buf = new ArrayBuffer(s.length)
+              var view = new Uint8Array(buf)
+              for (var i = 0; i != s.length; ++i)
+                view[i] = s.charCodeAt(i) & 0xff
+              return buf
+            }
+            FileSaver.saveAs(
+              new Blob([s2ab(wboutput)], { type: '' }),
+              'Табель-' +
+                months[new Date().getMonth()] +
+                '_' +
+                new Date().getFullYear() +
+                '.xlsx',
             )
+            setIsLoading(false)
           })
-
-        Promise.all(allEmployees).then(() => {
-          // console.log([employeeInfo[0]]);
-          var wscols = [
-            { width: 25 }, // first column
-          ]
-          //Новая ширина столбцов
-          dataWS['!cols'] = wscols
-          //merge ячеек A1 и B1
-          const mergeCols = [
-            { s: { r: 0, c: 0 }, e: { r: 0, c: dates[0].length - 1 } },
-          ]
-          // console.log(dataWS.A1);
-          dataWS['!merges'] = mergeCols
-          let wb = XLSX2.utils.book_new() //Создание новой workbook
-          XLSX2.utils.book_append_sheet(wb, dataWS, 'Табель')
-          var wboutput = XLSX2.write(wb, {
-            bookType: 'xlsx',
-            bookSST: false,
-            type: 'binary',
-          })
-          function s2ab(s) {
-            var buf = new ArrayBuffer(s.length)
-            var view = new Uint8Array(buf)
-            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
-            return buf
-          }
-          FileSaver.saveAs(
-            new Blob([s2ab(wboutput)], { type: '' }),
-            'Табель-' +
-              months[new Date().getMonth()] +
-              '_' +
-              new Date().getFullYear() +
-              '.xlsx',
-          )
-          setIsLoading(false)
         })
-      })
     })
   }
 
