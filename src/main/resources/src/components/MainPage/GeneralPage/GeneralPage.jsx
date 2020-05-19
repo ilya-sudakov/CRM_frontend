@@ -214,9 +214,14 @@ const GeneralPage = (props) => {
                   employeeInfo[0].push(check)
                 }
               })
+              const diff = 16 - (employeeInfo[0].length - 1)
+              let diffArray = []
+              for (let i = 0; i < diff; i++) {
+                diffArray.push('')
+              }
               return (dataWS = XLSX2.utils.sheet_add_aoa(
                 dataWS,
-                [[...employeeInfo[0], '', sum]],
+                [[...employeeInfo[0], ...diffArray, sum]],
                 {
                   origin: 'A' + globalIndex++,
                 },
