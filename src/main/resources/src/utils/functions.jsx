@@ -213,3 +213,7 @@ export const addHexColor = (color1, color2) => {
   }
   return hexStr
 }
+
+export const addSpaceDelimiter = (str) => {
+  return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
+}

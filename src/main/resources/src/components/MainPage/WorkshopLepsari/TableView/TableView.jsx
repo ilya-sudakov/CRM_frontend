@@ -6,7 +6,7 @@ import {
   editRequestLepsariStatus,
   editProductStatusToRequestLepsari,
 } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
-import { formatDateString } from '../../../../utils/functions.jsx'
+import { formatDateString, addSpaceDelimiter } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 
 const TableView = (props) => {
@@ -339,7 +339,7 @@ const TableView = (props) => {
                           {item.packaging}
                         </div>
                         <div className="tableview_requests_lepsari__sub_col">
-                          {item.quantity}
+                          {addSpaceDelimiter(item.quantity)}
                         </div>
                       </div>
                     )

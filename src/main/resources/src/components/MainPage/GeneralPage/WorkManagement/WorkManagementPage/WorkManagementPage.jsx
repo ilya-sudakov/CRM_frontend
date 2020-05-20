@@ -12,6 +12,7 @@ import {
   formatDateString,
   numberToString,
   getAllProductsFromWorkCount,
+  addSpaceDelimiter,
 } from '../../../../../utils/functions.jsx'
 import {
   getRecordedWorkByDateRange,
@@ -708,7 +709,9 @@ const WorkManagementPage = (props) => {
                                                 <div className="main-window__mobile-text">
                                                   Кол-во:{' '}
                                                 </div>
-                                                {item.quantity}
+                                                {addSpaceDelimiter(
+                                                  item.quantity,
+                                                )}
                                               </span>
                                               {/* <span><div className="main-window__mobile-text">Часы: </div>{work.hours}</span> */}
                                             </div>

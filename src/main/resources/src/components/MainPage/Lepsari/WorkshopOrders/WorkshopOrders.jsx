@@ -5,7 +5,7 @@ import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
 import viewSVG from '../../../../../../../../assets/tableview/view.svg'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
-import { formatDateString } from '../../../../utils/functions.jsx'
+import { formatDateString, addSpaceDelimiter } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import {
   getOrdersByName,
@@ -198,7 +198,7 @@ const WorkshopOrders = (props) => {
                         return (
                           <div className="workshop-orders__products">
                             <div>{product.name}</div>
-                            <div> ({product.quantity} шт.)</div>
+                            <div> ({addSpaceDelimiter(product.quantity)} шт.)</div>
                           </div>
                         )
                       })}

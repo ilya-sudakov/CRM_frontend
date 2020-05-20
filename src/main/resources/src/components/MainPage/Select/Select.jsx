@@ -15,6 +15,7 @@ import {
   getProductsByLocation,
 } from '../../../utils/RequestsAPI/Products.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
+import { addSpaceDelimiter } from '../../../utils/functions.jsx'
 
 const Select = (props) => {
   const [searchQuery, setSearchQuery] = useState('')

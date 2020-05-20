@@ -4,6 +4,7 @@ import { createGraph, loadCanvas } from '../../../../../../utils/graphs.js'
 import {
   getRandomColor,
   addHexColor,
+  addSpaceDelimiter,
 } from '../../../../../../utils/functions.jsx'
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
 import TableLoading from '../../../../../../utils/TableView/TableLoading/TableLoading.jsx'
@@ -165,7 +166,7 @@ const PartsStatistic = (props) => {
                   </span>
                   <span>
                     <div className="main-window__mobile-text">Количество:</div>
-                    {part[1].quantity}
+                    {addSpaceDelimiter(part[1].quantity)}
                   </span>
                 </div>
               )

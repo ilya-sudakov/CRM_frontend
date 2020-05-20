@@ -6,7 +6,7 @@ import {
   editRequestLEMZStatus,
   editProductStatusToRequestLEMZ,
 } from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx'
-import { formatDateString } from '../../../../utils/functions.jsx'
+import { formatDateString, addSpaceDelimiter } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 
 const TableView = (props) => {
@@ -324,7 +324,7 @@ const TableView = (props) => {
                       {item.packaging}
                     </div>
                     <div className="tableview_requests_LEMZ__sub_col">
-                      {item.quantity}
+                      {addSpaceDelimiter(item.quantity)}
                     </div>
                   </div>
                 )

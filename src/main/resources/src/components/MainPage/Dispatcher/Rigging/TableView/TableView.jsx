@@ -4,6 +4,7 @@ import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png'
 import './TableView.scss';
 import ColorPicker from '../ColorPicker/ColorPicker.jsx';
 import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
+import { addSpaceDelimiter } from '../../../../../utils/functions.jsx';
 
 const TableView = (props) => {
     const [sortOrder, setSortOrder] = useState({
@@ -207,7 +208,7 @@ const TableView = (props) => {
                                         }
                                     />
                                 </div>
-                                <div className="tableview_stamps__col">{part.amount}</div>
+                                <div className="tableview_stamps__col">{addSpaceDelimiter(part.amount)}</div>
                                 <div className="tableview_stamps__col">{part.location}</div>
                                 <div className="tableview_stamps__col">{part.comment}</div>
                                 <div className="tableview_stamps__col">{part.cuttingDimensions}</div>

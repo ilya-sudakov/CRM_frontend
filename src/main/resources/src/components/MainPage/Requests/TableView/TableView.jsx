@@ -8,7 +8,10 @@ import copySVG from '../../../../../../../../assets/tableview/copy.svg'
 import transferSVG from '../../../../../../../../assets/tableview/transfer.svg'
 import './TableView.scss'
 import { editRequestStatus } from '../../../../utils/RequestsAPI/Requests.jsx'
-import { formatDateString } from '../../../../utils/functions.jsx'
+import {
+  formatDateString,
+  addSpaceDelimiter,
+} from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 
 const TableView = (props) => {
@@ -372,7 +375,7 @@ const TableView = (props) => {
                       {item.packaging}
                     </div>
                     <div className="tableview_requests__sub_col">
-                      {item.quantity}
+                      {addSpaceDelimiter(item.quantity)}
                     </div>
                   </div>
                 )
