@@ -14,7 +14,8 @@ const PartsStatistic = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
-  const originalColor = '029b09'
+  // const originalColor = '029b09' // ? green color, but works for big amount of elements
+  const originalColor = '00a3a2'
 
   const options = {
     type: 'horizontalBar',
@@ -40,10 +41,7 @@ const PartsStatistic = (props) => {
             ...Object.entries(props.data).map(
               (product, index) =>
                 '#' +
-                addHexColor(
-                  originalColor,
-                  (index * 10).toString(16).padStart(6, '0'),
-                ),
+                addHexColor(originalColor, index.toString(16).padEnd(6, '0')),
             ),
           ],
           data: [
@@ -141,7 +139,7 @@ const PartsStatistic = (props) => {
         <div
           className="main-window__chart-wrapper"
           style={{
-            height: `${Object.entries(props.data).length * 40}px`,
+            height: `${Object.entries(props.data).length * 50}px`,
           }}
         ></div>
         <div className="main-window__list">
@@ -166,7 +164,7 @@ const PartsStatistic = (props) => {
                   style={{
                     backgroundColor: `#${addHexColor(
                       originalColor,
-                      (index * 10).toString(16).padStart(6, '0'),
+                      index.toString(16).padEnd(6, '0'),
                     )}ee`,
                   }}
                 >

@@ -122,6 +122,8 @@ const AdminWorkspace = (props) => {
               datasets: [...workshops],
             },
             options: {
+              cornerRadius: 2.5,
+              fullCornerRadius: false,
               responsive: true,
               maintainAspectRatio:
                 (window.innerWidth ||
