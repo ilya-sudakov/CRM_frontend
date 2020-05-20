@@ -205,3 +205,11 @@ export const getRandomColor = () => {
   }
   return color
 }
+
+export const addHexColor = (color1, color2) => {
+  var hexStr = (parseInt(color1, 16) + parseInt(color2, 16)).toString(16)
+  while (hexStr.length < 6) {
+    hexStr = '0' + hexStr
+  }
+  return hexStr
+}

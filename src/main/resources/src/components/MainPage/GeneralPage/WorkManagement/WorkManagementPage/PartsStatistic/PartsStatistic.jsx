@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './PartsStatistic.scss'
 import { createGraph, loadCanvas } from '../../../../../../utils/graphs.js'
-import { getRandomColor } from '../../../../../../utils/functions.jsx'
+import {
+  getRandomColor,
+  addHexColor,
+} from '../../../../../../utils/functions.jsx'
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
 import TableLoading from '../../../../../../utils/TableView/TableLoading/TableLoading.jsx'
 
@@ -10,15 +13,11 @@ const PartsStatistic = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
-  const originalColor = '#00a3a2'
+  const originalColor = '00a3a2'
 
   const options = {
     type: 'horizontalBar',
     data: {
-      // barPercentage: 0.5,
-      // barThickness: 6,
-      // maxBarThickness: 8,
-      // minBarLength: 2,
       labels: [
         ...Object.entries(props.data)
           .sort((a, b) => {
@@ -37,8 +36,7 @@ const PartsStatistic = (props) => {
           label: 'Количество ед. продукции',
           backgroundColor: [
             ...Object.entries(props.data).map(
-              (product, index) =>
-                '#' + (index % 10) + (index % 10) + 'a3a' + (index % 10),
+              (product, index) => '#' + addHexColor(originalColor, index * 500),
             ),
           ],
           data: [
@@ -74,20 +72,16 @@ const PartsStatistic = (props) => {
               labelString: 'Название',
               fontStyle: 'italic',
             },
-            // barPercentage: 0.2,
             barThickness: 'flex',
-            // minBarLength: 10
           },
         ],
         xAxes: [
           {
             scaleLabel: {
               display: true,
-              labelString: 'Количество',
+              labelString: 'Количество (шт.)',
               fontStyle: 'italic',
             },
-            // padding: 10
-            // barThickness: 10,
           },
         ],
       },
