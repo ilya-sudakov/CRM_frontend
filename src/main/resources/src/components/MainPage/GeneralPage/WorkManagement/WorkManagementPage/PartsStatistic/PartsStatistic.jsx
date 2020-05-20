@@ -14,7 +14,7 @@ const PartsStatistic = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
-  const originalColor = '00a3a2'
+  const originalColor = '029b09'
 
   const options = {
     type: 'horizontalBar',
@@ -65,6 +65,8 @@ const PartsStatistic = (props) => {
     options: {
       maintainAspectRatio: false,
       responsive: true,
+      cornerRadius: 2.5,
+      fullCornerRadius: false,
       animation: {
         easing: 'easeInOutCirc',
       },
@@ -157,12 +159,24 @@ const PartsStatistic = (props) => {
               }
               return 0
             })
-            .map((part) => {
+            .map((part, index) => {
               return (
-                <div className="main-window__list-item">
+                <div
+                  className="main-window__list-item"
+                  style={{
+                    backgroundColor: `#${addHexColor(
+                      originalColor,
+                      (index * 10).toString(16).padStart(6, '0'),
+                    )}ee`,
+                  }}
+                >
                   <span>
                     <div className="main-window__mobile-text">Название:</div>
                     {part[1].name}
+                    {/* {addHexColor(
+                      originalColor,
+                      (index * 10).toString(16).padStart(6, '0'),
+                    )} */}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">Количество:</div>
