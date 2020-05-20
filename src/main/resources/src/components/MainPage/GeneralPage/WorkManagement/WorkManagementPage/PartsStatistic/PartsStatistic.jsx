@@ -33,10 +33,16 @@ const PartsStatistic = (props) => {
       ],
       datasets: [
         {
+          barThickness: 'flex',
           label: 'Количество ед. продукции',
           backgroundColor: [
             ...Object.entries(props.data).map(
-              (product, index) => '#' + addHexColor(originalColor, index * 500),
+              (product, index) =>
+                '#' +
+                addHexColor(
+                  originalColor,
+                  (index * 10).toString(16).padStart(6, '0'),
+                ),
             ),
           ],
           data: [
@@ -72,7 +78,6 @@ const PartsStatistic = (props) => {
               labelString: 'Название',
               fontStyle: 'italic',
             },
-            barThickness: 'flex',
           },
         ],
         xAxes: [
