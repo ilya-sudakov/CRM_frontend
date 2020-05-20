@@ -37,11 +37,16 @@ const PartsStatistic = (props) => {
         {
           barThickness: 'flex',
           label: 'Количество ед. продукции',
+          // backgroundColor: [
+          //   ...Object.entries(props.data).map(
+          //     (product, index) =>
+          //       '#' +
+          //       addHexColor(originalColor, index.toString(16).padEnd(6, '0')),
+          //   ),
+          // ],
           backgroundColor: [
             ...Object.entries(props.data).map(
-              (product, index) =>
-                '#' +
-                addHexColor(originalColor, index.toString(16).padEnd(6, '0')),
+              (product, index) => '#' + originalColor,
             ),
           ],
           data: [
@@ -161,12 +166,12 @@ const PartsStatistic = (props) => {
               return (
                 <div
                   className="main-window__list-item"
-                  style={{
-                    backgroundColor: `#${addHexColor(
-                      originalColor,
-                      index.toString(16).padEnd(6, '0'),
-                    )}ee`,
-                  }}
+                  // style={{
+                  //   backgroundColor: `#${addHexColor(
+                  //     originalColor,
+                  //     index.toString(16).padEnd(6, '0'),
+                  //   )}ee`,
+                  // }}
                 >
                   <span>
                     <div className="main-window__mobile-text">Название:</div>
