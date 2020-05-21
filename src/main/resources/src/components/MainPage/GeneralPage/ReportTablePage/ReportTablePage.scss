@@ -1,0 +1,78 @@
+@import "../../../../variables.scss";
+
+.report-table-page {
+    position: relative;
+    .main-window {
+        position: relative;
+    }
+    &__tableview {
+        width: calc(100% - 30px);
+
+        .main-window__title {
+            font-size: 20px;
+        }
+
+        .main-window__list {
+            width: fit-content;
+            margin-bottom: 50px;
+            // &:first-of-type {
+            //     margin-bottom: 50px;
+            // }
+            min-height: 100px;
+            .main-window__list-item--header {
+                margin-left: -0px;
+            }
+            .main-window__list-item {
+                padding: 0 !important;
+                align-items: stretch;
+                span {
+                    // flex: 0 1 40px;
+                    max-width: 35px;
+                    min-width: 30px;
+                    min-height: 30px;
+                    // padding: 0 !important;
+                    padding: 5px 10px;
+                    // box-sizing: border-box;
+                    text-align: center;
+                    &:nth-child(1) {
+                        text-align: left;
+                        cursor: auto;
+                        flex: 0 1 100%;
+                        max-width: none;
+                        min-width: 250px;
+                    }
+                    &:not(:last-child) {
+                        border: 1px solid transparent;
+                        border-right: 1px solid #999999;
+                    }
+                    &:last-child {
+                        border-right: 1px solid transparent;
+                        font-weight: bold;
+                        cursor: auto !important;
+                        min-width: 40px;
+                        max-width: 45px;
+                    }
+                }
+            }
+
+            .main-window__list-item:not(.main-window__list-item--header) span {
+                &:not(:first-child) {
+                    &:not(:last-child) {
+                        &:hover {
+                            background-color: $secondary-text-color;
+                            color: $primary-text-color;
+                            border-radius: 2.5px;
+                            transform: scale(1.2);
+                            border: 1px solid #999999;
+                        }
+                    }
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    transition: 50ms ease-in-out;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

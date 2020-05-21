@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import './GeneralPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import DownloadIcon from '../../../../../../../assets/download.svg'
+import graphIcon from '../../../../../../../assets/graph-icon.svg'
+import calenderIcon from '../../../../../../../assets/tableview/calendar.svg'
 import {
   getRecordedWorkByMonth,
   getWorkReportByEmployee,
@@ -134,16 +136,11 @@ const GeneralPage = (props) => {
               dates[0].map((date, dateIndex) => {
                 let check = null
                 item.days.map((workDay) => {
-                  // console.log(item.employee.lastName, workDay, date, workDay.day === date)
                   if (workDay.day === date) {
                     check = workDay.hours
                     sum += check
                   }
                 })
-                // console.log(item.employee.lastName, date, check)
-                // if (dates[0].length - 1 < employeeInfo[0].length) {
-                //   return
-                // }
                 if (date === '') {
                   return
                 }
@@ -153,8 +150,6 @@ const GeneralPage = (props) => {
                   return employeeInfo[0].push(check)
                 }
               })
-              // console.log(employeeInfo[0])
-
               return (dataWS = XLSX2.utils.sheet_add_aoa(
                 dataWS,
                 [[...employeeInfo[0], '', sum]],
@@ -303,7 +298,14 @@ const GeneralPage = (props) => {
             {/* {props.userHasAccess(['ROLE_ADMIN']) && isLoading && <ImgLoader />} */}
             {props.userHasAccess(['ROLE_ADMIN']) && (
               <Link className="main-window__button" to="/graphs">
+                <img className="main-window__img" src={graphIcon} />
                 Графики
+              </Link>
+            )}
+            {props.userHasAccess(['ROLE_ADMIN']) && (
+              <Link className="main-window__button" to="/report-table">
+                <img className="main-window__img" src={calenderIcon} />
+                Интерактивный табель
               </Link>
             )}
           </div>

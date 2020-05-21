@@ -55,6 +55,7 @@ import {
   PackagingPage,
   NewPackaging,
   EditPackaging,
+  ReportTablePage,
 } from './lazyImports.jsx'
 import SideMenu from '../SideMenu/SideMenu.jsx'
 import PageNotFound from './PageNotFound/PageNotFound.jsx'
@@ -604,6 +605,14 @@ class MainPage extends React.Component {
                 <PrivateRoute
                   path="/packaging/edit/"
                   component={EditPackaging}
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={['ROLE_ADMIN']}
+                />
+                <PrivateRoute
+                  exact
+                  path="/report-table"
+                  component={ReportTablePage}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN']}
