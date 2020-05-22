@@ -15,6 +15,7 @@ import {
   addSpaceDelimiter,
   formatDateString,
 } from '../../../../utils/functions.jsx'
+import SearchBar from '../../SearchBar/SearchBar.jsx'
 
 const ReportTablePage = (props) => {
   const [date, setDate] = useState(new Date())
@@ -33,8 +34,9 @@ const ReportTablePage = (props) => {
   const [workList, setWorkList] = useState({})
   const [showWindow, setShowWindow] = useState(false)
   const [selectedInfo, setSelectedInfo] = useState({})
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const getAllEmployeesWorkData = (date) => {
+  const getAllEmployeesWorkData = (date, signal) => {
     setIsLoading(true)
     //Получаем массив с датами месяца
     const dates = []
@@ -49,7 +51,7 @@ const ReportTablePage = (props) => {
     let employeesWorkList = {} //Массив работ для каждого сотрудника за месяц
     // let newWorkList = {}
 
-    return getRecordedWorkByMonth(date.getMonth() + 1)
+    return getRecordedWorkByMonth(date.getMonth() + 1, signal)
       .then((res) => res.json())
       .then((res) => {
         //Создаем объект с работами сотрудников, в которых их id - поля объекта,
@@ -170,13 +172,22 @@ const ReportTablePage = (props) => {
   }
 
   useEffect(() => {
-    getAllEmployeesWorkData(date)
+    let abortController = new AbortController()
+    getAllEmployeesWorkData(date, abortController.signal)
+    return function cancel() {
+      abortController.abort()
+    }
   }, [date])
 
   return (
     <div className="report-table-page">
       <div className="main-window">
         <div className="main-window__title">Табель</div>
+        <SearchBar
+          title="Поиск по сотрудникам"
+          placeholder="Введите запрос для поиска по сотрудникам..."
+          setSearchQuery={setSearchQuery}
+        />
         <div className="report-table-page__date">
           <InputDate
             selected={Date.parse(date)}
@@ -205,6 +216,7 @@ const ReportTablePage = (props) => {
           setShowWindow={setShowWindow}
           setSelectedInfo={setSelectedInfo}
           date={date}
+          searchQuery={searchQuery}
         />
       </div>
     </div>
@@ -234,6 +246,19 @@ export const TableView = (props) => {
           <span>Сумма</span>
         </div>
         {Object.values(props.workData)
+          .filter((item) => {
+            return (
+              item.employee.lastName
+                .toLowerCase()
+                .includes(props.searchQuery.toLowerCase()) ||
+              item.employee.name
+                .toLowerCase()
+                .includes(props.searchQuery.toLowerCase()) ||
+              item.employee.middleName
+                .toLowerCase()
+                .includes(props.searchQuery.toLowerCase())
+            )
+          })
           .sort((a, b) => {
             if (a.employee.lastName < b.employee.lastName) {
               return -1
@@ -322,6 +347,19 @@ export const TableView = (props) => {
           <span>Сумма</span>
         </div>
         {Object.values(props.workData)
+          .filter((item) => {
+            return (
+              item.employee.lastName
+                .toLowerCase()
+                .includes(props.searchQuery.toLowerCase()) ||
+              item.employee.name
+                .toLowerCase()
+                .includes(props.searchQuery.toLowerCase()) ||
+              item.employee.middleName
+                .toLowerCase()
+                .includes(props.searchQuery.toLowerCase())
+            )
+          })
           .sort((a, b) => {
             if (a.employee.lastName < b.employee.lastName) {
               return -1

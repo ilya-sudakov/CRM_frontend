@@ -22,7 +22,11 @@
         }
     }
     &__employee-info {
+        .form-window__content {
+            max-width: 600px;
+        }
         .report-table-page__employee-wrapper {
+            padding: 0 15px;
             .report-table-page__employee-general {
                 padding: 2.5px;
                 margin-bottom: 25px;

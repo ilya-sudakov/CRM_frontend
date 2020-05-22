@@ -28,7 +28,7 @@ const GeneralPage = (props) => {
   ])
   const [isLoading, setIsLoading] = useState(false)
 
-  const exportCSVFile = (event) => {
+  const exportCSVFile = () => {
     // event.preventDefault();
     setIsLoading(true)
     const dates = [[''], ['']]

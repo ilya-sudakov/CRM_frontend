@@ -14,10 +14,11 @@ export function getRecordedWorkById(id) {
     })
 }
 
-export function getRecordedWorkByMonth(month) {
+export function getRecordedWorkByMonth(month, signal) {
     return request({
         url: process.env.API_BASE_URL + "/api/v1/work_control/month/" + month,
-        method: "GET"
+        method: "GET",
+        signal: signal
     })
 }
 
