@@ -221,11 +221,11 @@ export const TableView = (props) => {
     <div className="report-table-page__tableview">
       {/* //1-ая половина месяца(1-15) */}
       <div className="main-window__title">
-        1/2 {months[props.date.getMonth()]}
+        1/2 {months[props.date.getMonth()]}.{props.date.getFullYear()}
       </div>
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
-          <span>ФИО</span>
+          <span>ФИО сотрудника</span>
           {props.dates.map((date) => {
             if (date < 16) {
               return <span>{date}</span>
@@ -309,11 +309,11 @@ export const TableView = (props) => {
       </div>
       {/* //2-ая половина месяца(15-конец месяца) */}
       <div className="main-window__title">
-        2/2 {months[props.date.getMonth()]}
+        2/2 {months[props.date.getMonth()]}.{props.date.getFullYear()}
       </div>
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
-          <span>ФИО</span>
+          <span>ФИО сотрудника</span>
           {props.dates.map((date) => {
             if (date > 15) {
               return <span>{date}</span>
