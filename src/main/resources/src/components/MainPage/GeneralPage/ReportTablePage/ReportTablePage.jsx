@@ -445,7 +445,7 @@ export const EmployeeInfo = (props) => {
   return (
     <div className="report-table-page__employee-info">
       <FormWindow
-        title="Отчет работника"
+        // title="Отчет работника"
         showWindow={props.showWindow}
         setShowWindow={props.setShowWindow}
         content={
@@ -478,16 +478,6 @@ export const EmployeeInfo = (props) => {
                 {props.selectedInfo?.employee?.position}
               </div>
             </div>
-            {/* <div className="report-table-page__employee-date">
-              Отчет за:{' '}
-              {formatDateStringNoYear(
-                new Date(
-                  props.selectedInfo?.year,
-                  props.selectedInfo?.month - 1,
-                  props.selectedInfo?.day,
-                ),
-              )}
-            </div> */}
             {/* //Вывод работ сотрудника */}
             <div className="report-table-page__employee-title">
               Список работ
@@ -539,6 +529,27 @@ export const EmployeeInfo = (props) => {
                   )
                 })
               )}
+            </div>
+            <div className="report-table-page__employee-title">
+              Всего:{' '}
+              {props.selectedInfo?.works?.length > 0
+                ? props.selectedInfo?.works?.reduce(
+                    (sum, cur) => sum + cur.hours,
+                    0,
+                  ) +
+                  ' ' +
+                  numberToString(
+                    Number.parseInt(
+                      Math.floor(
+                        props.selectedInfo?.works?.reduce(
+                          (sum, cur) => sum + cur.hours,
+                          0,
+                        ) * 100,
+                      ) / 100,
+                    ),
+                    ['час', 'часа', 'часов'],
+                  )
+                : 0}
             </div>
           </div>
         }

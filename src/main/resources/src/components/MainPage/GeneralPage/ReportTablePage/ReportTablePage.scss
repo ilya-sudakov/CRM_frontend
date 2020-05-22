@@ -65,19 +65,20 @@
                     left: 0;
                 }
             }
+
+            .report-table-page__employee-hours {
+                padding: 5px 15px;
+                border-radius: 999px;
+                background-color: $button__background--inverted;
+                color: $secondary-text-color;
+                margin: 10px 0;
+                margin-left: 10px;
+                white-space: nowrap;
+            }
             .report-table-page__employee-works-wrapper {
                 padding: 5px;
                 padding-left: 25px;
-
-                .report-table-page__employee-hours {
-                    padding: 5px 15px;
-                    border-radius: 999px;
-                    background-color: $button__background--inverted;
-                    color: $secondary-text-color;
-                    margin: 10px 0;
-                    margin-left: 10px;
-                    white-space: nowrap;
-                }
+                margin-bottom: 20px;
 
                 .report-table-page__employee-works-item {
                     margin-top: 20px;
