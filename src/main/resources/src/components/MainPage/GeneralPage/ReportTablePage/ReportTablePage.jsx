@@ -7,6 +7,12 @@ import {
   getRecordedWorkByMonth,
 } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx'
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx'
+import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
+import {
+  formatDateStringNoYear,
+  numberToString,
+} from '../../../../utils/functions.jsx'
 
 const ReportTablePage = (props) => {
   const [date, setDate] = useState(new Date())
@@ -23,20 +29,16 @@ const ReportTablePage = (props) => {
   const [workData, setWorkData] = useState([])
   const [dates, setDates] = useState([])
   const [workList, setWorkList] = useState({})
+  const [showWindow, setShowWindow] = useState(false)
+  const [selectedInfo, setSelectedInfo] = useState({})
 
-  const getAllEmployeesWorkData = () => {
+  const getAllEmployeesWorkData = (date) => {
     setIsLoading(true)
     //Получаем массив с датами месяца
     const dates = []
     for (
       let i = 1;
-      i <
-      new Date(
-        new Date().getFullYear(),
-        new Date().getMonth() + 1,
-        0,
-      ).getDate() +
-        1;
+      i < new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() + 1;
       i++
     )
       dates.push(i)
@@ -45,7 +47,7 @@ const ReportTablePage = (props) => {
     let employeesWorkList = {} //Массив работ для каждого сотрудника за месяц
     // let newWorkList = {}
 
-    return getRecordedWorkByMonth(new Date().getMonth() + 1)
+    return getRecordedWorkByMonth(date.getMonth() + 1)
       .then((res) => res.json())
       .then((res) => {
         //Создаем объект с работами сотрудников, в которых их id - поля объекта,
@@ -166,15 +168,42 @@ const ReportTablePage = (props) => {
   }
 
   useEffect(() => {
-    getAllEmployeesWorkData()
-  }, [])
+    getAllEmployeesWorkData(date)
+  }, [date])
 
   return (
     <div className="report-table-page">
       <div className="main-window">
         <div className="main-window__title">Табель</div>
+        <div className="report-table-page__date">
+          <InputDate
+            selected={Date.parse(date)}
+            inputName="Выбор месяца:"
+            handleDateChange={(date) => {
+              // console.log(value)
+              setDate(date)
+            }}
+            showMonthYearPicker
+          />
+        </div>
+        {/* //Окно для вывода информации о сотруднике и его работе за день */}
+        <EmployeeInfo
+          // dates={dates}
+          // workData={workList}
+          showWindow={showWindow}
+          setShowWindow={setShowWindow}
+          selectedInfo={selectedInfo}
+          // date={date}
+        />
         <TableLoading isLoading={isLoading} />
-        <TableView dates={dates} workData={workList} />
+        <TableView
+          dates={dates}
+          workData={workList}
+          showWindow={showWindow}
+          setShowWindow={setShowWindow}
+          setSelectedInfo={setSelectedInfo}
+          date={date}
+        />
       </div>
     </div>
   )
@@ -182,13 +211,15 @@ const ReportTablePage = (props) => {
 
 export default ReportTablePage
 
+//Таблица с табелем
 export const TableView = (props) => {
   useEffect(() => {}, [])
 
   return (
     <div className="report-table-page__tableview">
+      {/* //1-ая половина месяца(1-15) */}
       <div className="main-window__title">
-        1/2 половина - {months[new Date().getMonth()]}
+        1/2 половина - {months[props.date.getMonth()]}
       </div>
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
@@ -226,20 +257,27 @@ export const TableView = (props) => {
                       <span
                         onClick={() => {
                           if (workItem.length > 0) {
-                            console.log({
+                            props.setSelectedInfo({
                               employeeId: work.employee.id,
-                              day: workItem[0].day,
+                              employee: work.employee,
+                              // day: workItem[0].day,
+                              date: props.date,
                               worksId: workItem.map((item) => {
                                 return item.workList.id
                               }),
+                              works: workItem,
                             })
                           } else {
-                            console.log({
+                            props.setSelectedInfo({
                               employeeId: work.employee.id,
-                              day: workItemIndex + 1,
+                              employee: work.employee,
+                              // day: workItem[0].day,
+                              date: props.date,
                               worksId: null,
+                              works: workItem,
                             })
                           }
+                          props.setShowWindow(true)
                         }}
                       >
                         {workItem.hours === 0
@@ -265,9 +303,9 @@ export const TableView = (props) => {
             )
           })}
       </div>
-
+      {/* //2-ая половина месяца(15-конец месяца) */}
       <div className="main-window__title">
-        2/2 половина - {months[new Date().getMonth()]}
+        2/2 половина - {months[props.date.getMonth()]}
       </div>
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
@@ -307,16 +345,22 @@ export const TableView = (props) => {
                           if (workItem.length > 0) {
                             console.log({
                               employeeId: work.employee.id,
-                              day: workItem[0].day,
+                              employee: work.employee,
+                              // day: workItem[0].day,
+                              date: props.date,
                               worksId: workItem.map((item) => {
                                 return item.workList.id
                               }),
+                              works: workItem,
                             })
                           } else {
                             console.log({
                               employeeId: work.employee.id,
-                              day: workItemIndex + 1,
+                              employee: work.employee,
+                              // day: workItem[0].day,
+                              date: props.date,
                               worksId: null,
+                              works: workItem,
                             })
                           }
                         }}
@@ -344,6 +388,73 @@ export const TableView = (props) => {
             )
           })}
       </div>
+    </div>
+  )
+}
+
+//Окно для вывода информации о сотруднике и его работе за день
+export const EmployeeInfo = (props) => {
+  useEffect(() => {}, [])
+
+  return (
+    <div className="report-table-page__employee-info">
+      <FormWindow
+        title="Отчет работника"
+        showWindow={props.showWindow}
+        setShowWindow={props.setShowWindow}
+        content={
+          <div className="report-table-page__employee-wrapper">
+            <div className="report-table-page__employee-general">
+              <div className="report-table-page__full-name">
+                {props.selectedInfo?.employee?.lastName +
+                  ' ' +
+                  props.selectedInfo?.employee?.name +
+                  ' ' +
+                  props.selectedInfo?.employee?.middleName}
+              </div>
+              <div className="report-table-page__workshop">
+                Подразделение: {props.selectedInfo?.employee?.workshop}
+              </div>
+              <div className="report-table-page__position">
+                {props.selectedInfo?.employee?.position}
+              </div>
+            </div>
+            <div className="report-table-page__employee-date">
+              Отчет за:{' '}
+              {/* {props.selectedInfo?.date?.getDate() +
+                ' ' +
+                months[props.selectedInfo?.date?.getMonth()]} */}
+              {formatDateStringNoYear(props.selectedInfo?.date)}
+            </div>
+            {/* //Вывод работ сотрудника */}
+            <div className="report-table-page__employee-title">
+              Список работ
+            </div>
+            <div className="report-table-page__employee-works-wrapper">
+              {props.selectedInfo?.works?.length === undefined ? (
+                <div>Нет учтенной работы</div>
+              ) : (
+                props.selectedInfo?.works?.map((item) => {
+                  console.log(item.workList.work)
+                  return (
+                    <div className="report-table-page__employee-works-item">
+                      {item.workList.work}
+                      <span className="report-table-page__employee-hours">
+                        {item.hours +
+                          ' ' +
+                          numberToString(
+                            Number.parseInt(Math.floor(item.hours * 100) / 100),
+                            ['час', 'часа', 'часов'],
+                          )}
+                      </span>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          </div>
+        }
+      />
     </div>
   )
 }

@@ -4,6 +4,64 @@
     position: relative;
     .main-window {
         position: relative;
+
+        .report-table-page__date {
+            max-width: 250px;
+            align-self: flex-start;
+            margin-left: 30px;
+            .input_date {
+                width: 100%;
+                .input_date__input_name {
+                    white-space: nowrap;
+                }
+                .react-datepicker__month-text {
+                    padding: 5px 0px;
+                    border-radius: 2.5px;
+                }
+            }
+        }
+    }
+    &__employee-info {
+        .report-table-page__employee-wrapper {
+            .report-table-page__employee-general {
+                padding: 2.5px;
+                .report-table-page__full-name {
+                    font-size: 24px;
+                }
+                .report-table-page__workshop {
+                    font-size: 18px;
+                }
+                .report-table-page__position {
+                    font-size: 16px;
+                }
+            }
+            .report-table-page__employee-date {
+                font-size: 22px;
+                width: 100%;
+                text-align: center;
+            }
+            .report-table-page__employee-title {
+                font-size: 20px;
+            }
+            .report-table-page__employee-works-wrapper {
+                padding: 5px;
+
+                .report-table-page__employee-hours {
+                    padding: 5px 15px;
+                    border-radius: 999px;
+                    background-color: $button__background--inverted;
+                    color: $secondary-text-color;
+                    margin-left: 10px;
+                }
+
+                .report-table-page__employee-works-item {
+                    margin-top: 20px;
+                    &:first-child {
+                        margin-top: 5px;
+                    }
+                }
+            }
+        }
     }
     &__tableview {
         width: calc(100% - 30px);
@@ -40,6 +98,7 @@
                         flex: 0 1 100%;
                         max-width: none;
                         min-width: 250px;
+                        // font-weight: bold;
                     }
                     &:not(:last-child) {
                         border: 1px solid transparent;
@@ -71,6 +130,24 @@
                     justify-content: center;
                     transition: 50ms ease-in-out;
                     cursor: pointer;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .report-table-page__tableview {
+            .main-window__list {
+                .main-window__list-item--header{ 
+                    display: flex;
+                }
+                .main-window__list-item {
+                    flex-direction: row;
+                    span {
+                        width: auto;
+                        text-align: initial !important;
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
