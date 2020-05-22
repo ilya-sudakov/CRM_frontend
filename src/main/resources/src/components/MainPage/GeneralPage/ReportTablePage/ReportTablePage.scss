@@ -25,6 +25,7 @@
         .report-table-page__employee-wrapper {
             .report-table-page__employee-general {
                 padding: 2.5px;
+                margin-bottom: 10px;
                 .report-table-page__full-name {
                     font-size: 24px;
                 }
@@ -58,6 +59,24 @@
                     margin-top: 20px;
                     &:first-child {
                         margin-top: 5px;
+                    }
+
+                    .main-window__list {
+                        max-width: 500px;
+                        margin: 30px 0;
+                        margin-top: 0px;
+                        margin-left: 25px;
+                        .main-window__list-item {
+                            padding: 10px 10px;
+                            span {
+                                &:nth-child(1) {
+                                    flex: 0 1 80%;
+                                }
+                                &:nth-child(2) {
+                                    flex: 0 1 20%;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -128,7 +147,7 @@
                     display: flex;
                     flex-direction: row;
                     justify-content: center;
-                    transition: 50ms ease-in-out;
+                    transition: 0ms ease-in-out;
                     cursor: pointer;
                 }
             }
@@ -138,7 +157,7 @@
     @media (max-width: 768px) {
         .report-table-page__tableview {
             .main-window__list {
-                .main-window__list-item--header{ 
+                .main-window__list-item--header {
                     display: flex;
                 }
                 .main-window__list-item {

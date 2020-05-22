@@ -12,6 +12,7 @@ import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
 import {
   formatDateStringNoYear,
   numberToString,
+  addSpaceDelimiter,
 } from '../../../../utils/functions.jsx'
 
 const ReportTablePage = (props) => {
@@ -213,7 +214,7 @@ export default ReportTablePage
 
 //Таблица с табелем
 export const TableView = (props) => {
-  useEffect(() => {}, [])
+  useEffect(() => {}, [props.date])
 
   return (
     <div className="report-table-page__tableview">
@@ -260,8 +261,9 @@ export const TableView = (props) => {
                             props.setSelectedInfo({
                               employeeId: work.employee.id,
                               employee: work.employee,
-                              // day: workItem[0].day,
-                              date: props.date,
+                              day: workItem[0].day,
+                              year: props.date.getFullYear(),
+                              month: props.date.getMonth() + 1,
                               worksId: workItem.map((item) => {
                                 return item.workList.id
                               }),
@@ -271,8 +273,9 @@ export const TableView = (props) => {
                             props.setSelectedInfo({
                               employeeId: work.employee.id,
                               employee: work.employee,
-                              // day: workItem[0].day,
-                              date: props.date,
+                              day: workItem.day,
+                              month: props.date.getMonth() + 1,
+                              year: props.date.getFullYear(),
                               worksId: null,
                               works: workItem,
                             })
@@ -343,26 +346,30 @@ export const TableView = (props) => {
                       <span
                         onClick={() => {
                           if (workItem.length > 0) {
-                            console.log({
+                            props.setSelectedInfo({
                               employeeId: work.employee.id,
                               employee: work.employee,
-                              // day: workItem[0].day,
-                              date: props.date,
+                              day: workItem[0].day,
+                              month: props.date.getMonth() + 1,
+                              year: props.date.getFullYear(),
                               worksId: workItem.map((item) => {
                                 return item.workList.id
                               }),
                               works: workItem,
                             })
                           } else {
-                            console.log({
+                            console.log('no works')
+                            props.setSelectedInfo({
                               employeeId: work.employee.id,
                               employee: work.employee,
-                              // day: workItem[0].day,
-                              date: props.date,
+                              day: workItem.day,
+                              month: props.date.getMonth() + 1,
+                              year: props.date.getFullYear(),
                               worksId: null,
                               works: workItem,
                             })
                           }
+                          props.setShowWindow(true)
                         }}
                       >
                         {workItem.hours === 0
@@ -394,7 +401,7 @@ export const TableView = (props) => {
 
 //Окно для вывода информации о сотруднике и его работе за день
 export const EmployeeInfo = (props) => {
-  useEffect(() => {}, [])
+  useEffect(() => {}, [props.date])
 
   return (
     <div className="report-table-page__employee-info">
@@ -424,11 +431,18 @@ export const EmployeeInfo = (props) => {
               {/* {props.selectedInfo?.date?.getDate() +
                 ' ' +
                 months[props.selectedInfo?.date?.getMonth()]} */}
-              {formatDateStringNoYear(props.selectedInfo?.date)}
+              {/* {formatDateStringNoYear(props.selectedInfo?.date)} */}
+              {formatDateStringNoYear(
+                new Date(
+                  props.selectedInfo?.year,
+                  props.selectedInfo?.month - 1,
+                  props.selectedInfo?.day,
+                ),
+              )}
             </div>
             {/* //Вывод работ сотрудника */}
             <div className="report-table-page__employee-title">
-              Список работ
+              Список работ:
             </div>
             <div className="report-table-page__employee-works-wrapper">
               {props.selectedInfo?.works?.length === undefined ? (
@@ -447,6 +461,24 @@ export const EmployeeInfo = (props) => {
                             ['час', 'часа', 'часов'],
                           )}
                       </span>
+                      {item.workControlProduct.length > 0 && (
+                        <div className="main-window__list">
+                          <div className="main-window__list-item main-window__list-item--header">
+                            <span>Название</span>
+                            <span>Кол-во</span>
+                          </div>
+                          {item.workControlProduct.map((product) => {
+                            return (
+                              <div className="main-window__list-item">
+                                <span>{product.product.name}</span>
+                                <span>
+                                  {addSpaceDelimiter(product.quantity)}
+                                </span>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )}
                     </div>
                   )
                 })
