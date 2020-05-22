@@ -13,6 +13,7 @@ import {
   formatDateStringNoYear,
   numberToString,
   addSpaceDelimiter,
+  formatDateString,
 } from '../../../../utils/functions.jsx'
 
 const ReportTablePage = (props) => {
@@ -220,7 +221,7 @@ export const TableView = (props) => {
     <div className="report-table-page__tableview">
       {/* //1-ая половина месяца(1-15) */}
       <div className="main-window__title">
-        1/2 половина - {months[props.date.getMonth()]}
+        1/2 {months[props.date.getMonth()]}
       </div>
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
@@ -308,7 +309,7 @@ export const TableView = (props) => {
       </div>
       {/* //2-ая половина месяца(15-конец месяца) */}
       <div className="main-window__title">
-        2/2 половина - {months[props.date.getMonth()]}
+        2/2 {months[props.date.getMonth()]}
       </div>
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
@@ -411,6 +412,19 @@ export const EmployeeInfo = (props) => {
         setShowWindow={props.setShowWindow}
         content={
           <div className="report-table-page__employee-wrapper">
+            <div className="report-table-page__employee-date">
+              {/* Отчет за{' '} */}
+              {formatDateString(
+                new Date(
+                  props.selectedInfo?.year,
+                  props.selectedInfo?.month - 1,
+                  props.selectedInfo?.day,
+                ),
+              )}
+            </div>
+            <div className="report-table-page__employee-title">
+              Данные сотрудника
+            </div>
             <div className="report-table-page__employee-general">
               <div className="report-table-page__full-name">
                 {props.selectedInfo?.employee?.lastName +
@@ -426,12 +440,8 @@ export const EmployeeInfo = (props) => {
                 {props.selectedInfo?.employee?.position}
               </div>
             </div>
-            <div className="report-table-page__employee-date">
+            {/* <div className="report-table-page__employee-date">
               Отчет за:{' '}
-              {/* {props.selectedInfo?.date?.getDate() +
-                ' ' +
-                months[props.selectedInfo?.date?.getMonth()]} */}
-              {/* {formatDateStringNoYear(props.selectedInfo?.date)} */}
               {formatDateStringNoYear(
                 new Date(
                   props.selectedInfo?.year,
@@ -439,10 +449,10 @@ export const EmployeeInfo = (props) => {
                   props.selectedInfo?.day,
                 ),
               )}
-            </div>
+            </div> */}
             {/* //Вывод работ сотрудника */}
             <div className="report-table-page__employee-title">
-              Список работ:
+              Список работ
             </div>
             <div className="report-table-page__employee-works-wrapper">
               {props.selectedInfo?.works?.length === undefined ? (
@@ -452,7 +462,7 @@ export const EmployeeInfo = (props) => {
                   console.log(item.workList.work)
                   return (
                     <div className="report-table-page__employee-works-item">
-                      {item.workList.work}
+                      <span>{item.workList.work}</span>
                       <span className="report-table-page__employee-hours">
                         {item.hours +
                           ' ' +
@@ -470,8 +480,16 @@ export const EmployeeInfo = (props) => {
                           {item.workControlProduct.map((product) => {
                             return (
                               <div className="main-window__list-item">
-                                <span>{product.product.name}</span>
                                 <span>
+                                  <div className="main-window__mobile-text">
+                                    Название:
+                                  </div>
+                                  {product.product.name}
+                                </span>
+                                <span>
+                                  <div className="main-window__mobile-text">
+                                    Кол-во:
+                                  </div>
                                   {addSpaceDelimiter(product.quantity)}
                                 </span>
                               </div>

@@ -37,22 +37,42 @@
                 }
             }
             .report-table-page__employee-date {
-                font-size: 22px;
+                font-size: 16px;
                 width: 100%;
-                text-align: center;
+                margin-left: 0px;
+                margin-bottom: 10px;
+                color: #777777;
+                // text-align: center;
             }
             .report-table-page__employee-title {
                 font-size: 20px;
+                color: #333333;
+                position: relative;
+                text-align: left;
+                width: fit-content;
+                margin-bottom: 10px;
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: calc(100% + 5px);
+                    background-color: #cccccc;
+                    height: 3px;
+                    top: calc(100% + 3px);
+                    left: 0;
+                }
             }
             .report-table-page__employee-works-wrapper {
                 padding: 5px;
+                padding-left: 25px;
 
                 .report-table-page__employee-hours {
                     padding: 5px 15px;
                     border-radius: 999px;
                     background-color: $button__background--inverted;
                     color: $secondary-text-color;
+                    margin: 10px 0;
                     margin-left: 10px;
+                    white-space: nowrap;
                 }
 
                 .report-table-page__employee-works-item {
@@ -168,6 +188,18 @@
                         margin-bottom: 0;
                     }
                 }
+            }
+        }
+        .report-table-page__employee-info {
+            .report-table-page__employee-title {
+            }
+            .main-window__list {
+                margin: 0 !important;
+                margin-top: 15px !important;
+            }
+
+            .report-table-page__employee-works-wrapper {
+                padding-left: 5px;
             }
         }
     }
