@@ -472,7 +472,7 @@ export const EmployeeInfo = (props) => {
                   props.selectedInfo?.employee?.middleName}
               </div>
               <div className="report-table-page__workshop">
-                Подразделение: {props.selectedInfo?.employee?.workshop}
+                {props.selectedInfo?.employee?.workshop}
               </div>
               <div className="report-table-page__position">
                 {props.selectedInfo?.employee?.position}

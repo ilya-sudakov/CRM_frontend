@@ -69,13 +69,15 @@
             }
 
             .report-table-page__employee-hours {
-                padding: 5px 15px;
+                padding: 5px 10px;
                 border-radius: 999px;
                 background-color: $button__background--inverted;
                 color: $secondary-text-color;
                 margin: 10px 0;
                 margin-left: 10px;
                 white-space: nowrap;
+                // font-size: 12px;
+                font-size: 80%;
             }
             .report-table-page__employee-works-wrapper {
                 padding: 5px;
@@ -125,14 +127,14 @@
             // }
             min-height: 100px;
             .main-window__list-item--header {
-                margin-left: -0px;
+                margin-left: -1px;
             }
             .main-window__list-item {
                 padding: 0 !important;
                 align-items: stretch;
                 span {
                     // flex: 0 1 40px;
-                    max-width: 35px;
+                    max-width: 30px;
                     min-width: 30px;
                     min-height: 30px;
                     // padding: 0 !important;
@@ -145,6 +147,7 @@
                         flex: 0 1 100%;
                         max-width: none;
                         min-width: 250px;
+                        max-width: 250px;
                         // font-weight: bold;
                     }
                     &:not(:last-child) {
