@@ -29,6 +29,7 @@
             padding: 0 15px;
             .report-table-page__employee-general {
                 padding: 2.5px;
+                padding-left: 0;
                 margin-bottom: 25px;
                 .report-table-page__full-name {
                     font-size: 24px;
@@ -87,12 +88,13 @@
                     }
 
                     .main-window__list {
-                        max-width: 500px;
+                        max-width: 400px;
                         margin: 30px 0;
                         margin-top: 0px;
                         margin-left: 25px;
                         .main-window__list-item {
-                            padding: 10px 10px;
+                            padding: 7.5px 10px;
+                            font-size: 75%;
                             span {
                                 &:nth-child(1) {
                                     flex: 0 1 80%;
