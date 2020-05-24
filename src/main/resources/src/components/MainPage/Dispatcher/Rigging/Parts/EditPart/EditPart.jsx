@@ -162,6 +162,7 @@ const EditPart = (props) => {
                 .then(res => {
                     setPartInputs({
                         ...res,
+                        lastEdited: res.lastEdited ? res.lastEdited : new Date(),
                         parts: res.detailParts
                     });
                 })

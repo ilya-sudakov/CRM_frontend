@@ -174,6 +174,7 @@ const EditPressForm = (props) => {
                 .then(res => {
                     setPressFormInputs({
                         ...res,
+                        lastEdited: res.lastEdited ? res.lastEdited : new Date(),
                         parts: res.pressParts
                     });
                 })
