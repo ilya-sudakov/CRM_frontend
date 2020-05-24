@@ -131,7 +131,6 @@ const TableView = (props) => {
                         <div className="tableview_stamps__col">
                             <ColorPicker
                                 defaultName={stamp.name}
-                                index={selectorId++}
                                 id={stamp.id}
                                 loadData={props.loadData}
                                 type={

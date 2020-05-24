@@ -68,12 +68,10 @@ const ColorPicker = (props) => {
             ? 'tableview__color_overlay'
             : 'tableview__color_overlay tableview__color_overlay--hidden'
         }
-        index={props.index}
         onClick={() => setShowColorPicker(false)}
       ></div>
       <div
         className="tableview__color_name"
-        index={props.index}
         onClick={(event) => {
         //   clickOnColorPicker(event)
           setShowColorPicker(!showColorPicker)
@@ -90,21 +88,18 @@ const ColorPicker = (props) => {
         }
       >
         <div
-          index={props.index}
           onClick={clickOnColorOption}
           className="tableview__color_option tableview__color_option--completed"
         >
           Завершено
         </div>
         <div
-          index={props.index}
           onClick={clickOnColorOption}
           className="tableview__color_option tableview__color_option--defect"
         >
           Приоритет
         </div>
         <div
-          index={props.index}
           onClick={clickOnColorOption}
           className="tableview__color_option tableview__color_option--production"
         >

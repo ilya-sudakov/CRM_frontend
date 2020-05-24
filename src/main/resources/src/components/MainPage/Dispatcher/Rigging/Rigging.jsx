@@ -298,7 +298,8 @@ const Rigging = (props) => {
                     (props.location.pathname.includes('machine') &&
                       'machine') ||
                     (props.location.pathname.includes('press-form') &&
-                      'press-form')) +
+                      'press-form') ||
+                    (props.location.pathname.includes('parts') && 'parts')) +
                   '/edit-part/'
                 }
                 component={EditPartInRigging}
