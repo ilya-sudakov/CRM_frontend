@@ -340,6 +340,17 @@ export const TableView = (props) => {
                                   props.setShowWindow(true)
                                 }}
                               >
+                                <div className="report-table-report__date-hint">
+                                  {formatDateStringNoYear(
+                                    new Date(
+                                      props.date.getFullYear(),
+                                      props.date.getMonth(),
+                                      workItem.length > 0
+                                        ? workItem[0].day
+                                        : workItem.day,
+                                    ),
+                                  )}
+                                </div>
                                 {workItem.hours === 0
                                   ? ' '
                                   : workItem.reduce(
@@ -460,6 +471,17 @@ export const TableView = (props) => {
                                   props.setShowWindow(true)
                                 }}
                               >
+                                <div className="report-table-report__date-hint">
+                                  {formatDateStringNoYear(
+                                    new Date(
+                                      props.date.getFullYear(),
+                                      props.date.getMonth(),
+                                      workItem.length > 0
+                                        ? workItem[0].day
+                                        : workItem.day,
+                                    ),
+                                  )}
+                                </div>
                                 {workItem.hours === 0
                                   ? ' '
                                   : workItem.reduce(

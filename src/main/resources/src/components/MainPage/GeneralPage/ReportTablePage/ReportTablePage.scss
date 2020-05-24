@@ -182,7 +182,16 @@
             }
 
             .main-window__list-item:not(.main-window__list-item--header) span {
+                .report-table-report__date-hint {
+                    color: #777777;
+                    transform: scaleY(0);
+                    font-size: 10px;
+                    height: 0;
+                    transition: 100ms ease-in-out;
+                }
                 &:not(:first-child) {
+                    display: flex;
+                    flex-direction: column !important;
                     &:not(:last-child) {
                         &:hover {
                             background-color: $secondary-text-color;
@@ -190,6 +199,11 @@
                             border-radius: 2.5px;
                             transform: scale(1.2);
                             border: 1px solid #999999;
+
+                            .report-table-report__date-hint {
+                                transform: scaleY(1);
+                                height: 10px;
+                            }
                         }
                     }
                     display: flex;
