@@ -10,18 +10,21 @@ const SelectContacts = (props) => {
       email: '',
       position: '',
       phoneNumber: '',
+      isMinimized: true,
     },
   ])
-  const [isMinimized, setIsMinimized] = useState(true)
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
 
   useEffect(() => {
-    if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
+    if (
+      props.defaultValue !== undefined &&
+      props.defaultValue.length !== 0 &&
+      !defaultValueLoaded
+    ) {
+      setDefaultValueLoaded(true)
       setSelected([...props.defaultValue])
     }
-    if (props.options !== undefined) {
-      setOptions([...props.options])
-    }
-  }, [props.defaultValue, props.options])
+  }, [props.defaultValue, selected])
 
   const handleNewContact = (e) => {
     e.preventDefault()
@@ -35,6 +38,7 @@ const SelectContacts = (props) => {
         email: '',
         position: '',
         phoneNumber: '',
+        isMinimized: true,
       },
     ])
     props.handleContactsChange([
@@ -90,7 +94,15 @@ const SelectContacts = (props) => {
             <div
               className="select-contacts__selected_header"
               index={index}
-              onClick={() => setIsMinimized(!isMinimized)}
+              onClick={() => {
+                const temp = selected
+                temp.splice(index, 1, {
+                  ...item,
+                  isMinimized: !item.isMinimized,
+                })
+                setSelected([...temp])
+                props.handleLegalEntityChange([...temp])
+              }}
             >
               <div className="select-contacts__selected_name">
                 <span>ФИО: </span>{' '}
@@ -105,7 +117,7 @@ const SelectContacts = (props) => {
             </div>
             <div
               className={
-                isMinimized
+                item.isMinimized
                   ? 'select-contacts__selected_form select-contacts__selected_form--hidden'
                   : 'select-contacts__selected_form'
               }

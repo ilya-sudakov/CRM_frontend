@@ -91,11 +91,11 @@ export const getRequestPdfText = (date, requestProducts, codeWord, workshopName,
     })
     var dd = {
         info: {
-            title: 'План производства №' + itemId
+            title: 'Очередь производства №' + itemId
         },
         content: [
             {
-                text: 'План производства' + ' №' + itemId + '\n',
+                text: 'Очередь производства' + ' №' + itemId + '\n',
                 alignment: 'center',
                 style: 'header',
             },
@@ -187,7 +187,7 @@ export const getRequestsListPdfText = (requests, workshopName, productsName) => 
                 {
                     text: [
                         {
-                            text: 'План производства №' + item.id + '\n',
+                            text: 'Очередь производства №' + item.id + '\n',
                             style: 'header',
                             alignment: 'center',
                             margin: [0, 0, 0, 10]
@@ -259,11 +259,11 @@ export const getRequestsListPdfText = (requests, workshopName, productsName) => 
     });
     var dd = {
         info: {
-            title: 'План производства - список'
+            title: 'Очередь производства - список'
         },
         content: [
             {
-                text: 'План производства - список\n',
+                text: 'Очередь производства - список\n',
                 alignment: 'center',
                 style: 'title',
             },

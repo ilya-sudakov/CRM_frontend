@@ -18,20 +18,28 @@ const SelectLegalEntity = (props) => {
       checkingAccount: '',
       legalAddress: '',
       factualAddress: '',
+      isMinimized: true,
     },
   ])
   const [options, setOptions] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [isMinimized, setIsMinimized] = useState(true)
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
 
   useEffect(() => {
-    if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
+    if (
+      props.defaultValue !== undefined &&
+      props.defaultValue.length !== 0 &&
+      !defaultValueLoaded
+    ) {
+      setDefaultValueLoaded(true)
       setSelected([...props.defaultValue])
     }
-    if (props.options !== undefined) {
-      setOptions([...props.options])
-    }
-  }, [props.defaultValue, props.options])
+    console.log(1)
+
+    // if (props.options !== undefined) {
+    //   setOptions([...props.options])
+    // }
+  }, [props.defaultValue, selected])
 
   const handleNewLegalEntity = (e) => {
     e.preventDefault()
@@ -48,6 +56,7 @@ const SelectLegalEntity = (props) => {
         checkingAccount: '',
         legalAddress: '',
         factualAddress: '',
+        isMinimized: true,
       },
     ])
     props.handleLegalEntityChange([
@@ -109,7 +118,15 @@ const SelectLegalEntity = (props) => {
             <div
               className="select-legal-entity__selected_header"
               index={index}
-              onClick={() => setIsMinimized(!isMinimized)}
+              onClick={() => {
+                const temp = selected
+                temp.splice(index, 1, {
+                  ...item,
+                  isMinimized: !item.isMinimized,
+                })
+                setSelected([...temp])
+                props.handleLegalEntityChange([...temp])
+              }}
             >
               <div className="select-legal-entity__selected_name">
                 <span>ИНН: </span> <span>{item.inn}</span>
@@ -123,7 +140,7 @@ const SelectLegalEntity = (props) => {
             </div>
             <div
               className={
-                isMinimized
+                item.isMinimized
                   ? 'select-legal-entity__selected_form select-legal-entity__selected_form--hidden'
                   : 'select-legal-entity__selected_form'
               }
