@@ -5,20 +5,18 @@ import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.js
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx'
 import SelectWork from '../SelectWork/SelectWork.jsx'
-import SelectWorkNew from '../SelectWorkNew/SelectWorkNew.jsx'
+// import SelectWorkNew from '../SelectWorkNew/SelectWorkNew.jsx'
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx'
 import {
   getProductById,
   getProductsByCategory,
   getProductsByLocation,
 } from '../../../../../utils/RequestsAPI/Products.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
 import {
   addRecordedWork,
   addProductToRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
+// import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
 import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 
@@ -142,31 +140,9 @@ const NewRecordWork = (props) => {
           // setShowError(true);
           console.log(error)
         })
-      // const temp = Object.assign({
-      //     day: worktimeInputs.date.getDate(),
-      //     month: (worktimeInputs.date.getMonth() + 1),
-      //     year: worktimeInputs.date.getFullYear(),
-      //     employeeId: worktimeInputs.employeeId,
-      //     workListId: worktimeInputs.works[0].workId,
-      //     hours: totalHours
-      // });
-      // console.log(temp);
     }
   }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
-    setWorkTimeInputs({
-      ...worktimeInputs,
-      [name]: value,
-    })
-    setWorkTimeErrors({
-      ...workTimeErrors,
-      [name]: false,
-    })
-  }
-
+  
   const loadProducts = (signal) => {
     getCategoriesNames(signal) //Только категории
       .then((res) => res.json())

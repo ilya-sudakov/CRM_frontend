@@ -1,3 +1,4 @@
+//Получение строки типа 'дд.мм.ГГГГ' из объекта Date
 export const formatDateString = (dateString) => {
   // const testDate = new Date(Date.parse(dateString));
   const temp = new Date(dateString)
@@ -64,38 +65,40 @@ export const formatDateStringToTime = (dateString) => {
   )
 }
 
-export const numberToString = (n, text_forms) => {
-  n = Math.abs(n) % 100
-  var n1 = n % 10
-  if (n > 10 && n < 20) {
-    return text_forms[2]
+//Определение склонения слова в зависимости от остатка числа
+//к которому оно относится
+export const numberToString = (number, wordForms) => {
+  number = Math.abs(number) % 100
+  let remainder = number % 10
+  if (number > 10 && number < 20) {
+    return wordForms[2]
   }
-  if (n1 > 1 && n1 < 5) {
-    return text_forms[1]
+  if (remainder > 1 && remainder < 5) {
+    return wordForms[1]
   }
-  if (n1 == 1) {
-    return text_forms[0]
+  if (remainder == 1) {
+    return wordForms[0]
   }
-  return text_forms[2]
+  return wordForms[2]
 }
 
+//Функция для скачивания переданной картинки
 export const imgToBlobDownload = (imageSrc, imageName) => {
   var img = new Image()
   img.src = imageSrc
   var c = document.createElement('canvas')
   var ctx = c.getContext('2d')
-  c.width = img.naturalWidth // update canvas size to match image
+  c.width = img.naturalWidth
   c.height = img.naturalHeight
-  ctx.drawImage(img, 0, 0) // draw in image
+  ctx.drawImage(img, 0, 0)
   c.toBlob(
     function (blob) {
-      // get content as JPEG blob
-      // here the image is a blob
+      // получаем содержимое как JPEG Blob
       let link = document.createElement('a')
       link.download = imageName
       link.href = URL.createObjectURL(blob)
       link.click()
-      // удаляем внутреннюю ссылку на Blob, что позволит браузеру очистить память
+      // удаляем ссылку на Blo
       URL.revokeObjectURL(link.href)
     },
     'image/jpeg',
@@ -105,10 +108,10 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
   img.src = 'url-to-image'
 }
 
+//Получение URI из полученной картинки
 export function getDataUri(url, extension, quality) {
   return new Promise((resolve, reject) => {
     var img = new Image()
-    // img.setAttribute("crossOrigin", "anonymous");
     img.onload = () => {
       var canvas = document.createElement('canvas')
       canvas.width = img.width
@@ -128,6 +131,7 @@ export function getDataUri(url, extension, quality) {
   })
 }
 
+//Функция для изменения порядка сортировки
 export const changeSortOrder = (event) => {
   const name = event.target.value.split(' ')[0]
   const order = event.target.value.split(' ')[1]
@@ -137,6 +141,7 @@ export const changeSortOrder = (event) => {
   })
 }
 
+//Получение списка работ сотрудников из полученного массива
 export const getAllProductsFromWorkCount = (works) => {
   let parts = {}
   works.map((work) => {
@@ -197,6 +202,7 @@ export const getAllDraftsFromWorkCount = (works) => {
   return parts
 }
 
+//Получить случайный цвет формата hex
 export const getRandomColor = () => {
   var letters = '0123456789ABCDEF'
   var color = '#'
@@ -206,6 +212,7 @@ export const getRandomColor = () => {
   return color
 }
 
+//Сложить два цвета
 export const addHexColor = (color1, color2) => {
   var hexStr = (parseInt(color1, 16) + parseInt(color2, 16)).toString(16)
   while (hexStr.length < 6) {
@@ -214,6 +221,7 @@ export const addHexColor = (color1, color2) => {
   return hexStr
 }
 
+//Добавить разделитель пробел для полученной строки
 export const addSpaceDelimiter = (str) => {
   return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
 }

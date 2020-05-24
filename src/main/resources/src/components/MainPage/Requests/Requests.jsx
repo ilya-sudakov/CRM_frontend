@@ -14,14 +14,16 @@ import SearchBar from '../SearchBar/SearchBar.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 
 const Requests = (props) => {
-  const [requests, setRequests] = useState([])
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showWindow, setShowWindow] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [toWorkshop, setToWorkshop] = useState('lemz')
+  const [requests, setRequests] = useState([]) //Массив заявок
+  const [searchQuery, setSearchQuery] = useState('') //Значение строки поиска
+  const [showWindow, setShowWindow] = useState(false) //Показывать ли окно
+  const [isLoading, setIsLoading] = useState(false) //Индикатор загрузки
+  const [toWorkshop, setToWorkshop] = useState('lemz') //Название цеха для переноса заявки
+  //id заявки, использующийся при ее дальнейшем копировании или переносе в цеха
   const [requestId, setRequestId] = useState(0)
-  const [clients, setClients] = useState([])
-  const [curPage, setCurPage] = useState('Открытые')
+  const [clients, setClients] = useState([]) //Массив клиентов
+  const [curPage, setCurPage] = useState('Открытые') //Текущая страница
+  //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([
     {
       name: 'Проблема/Материалы',
@@ -30,12 +32,6 @@ const Requests = (props) => {
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
       visible: false,
     },
-    // {
-    //   name: 'Завершено',
-    //   className: 'completed',
-    //   access: ['ROLE_ADMIN'],
-    //   visible: false,
-    // },
     {
       name: 'Отгружено',
       className: 'shipped',
@@ -63,6 +59,7 @@ const Requests = (props) => {
     },
   ])
 
+  //Удалить заявку
   const deleteItem = (event) => {
     const id = event.target.dataset.id
     getRequestById(id)
@@ -86,6 +83,7 @@ const Requests = (props) => {
     }
   }, [curPage])
 
+  //Получение списка клиентов из массива заявок
   const getClientsFromRequests = (reqs) => {
     const temp = clients
     reqs.map((request) => {
@@ -103,6 +101,7 @@ const Requests = (props) => {
     setClients([...temp])
   }
 
+  //GET-запрос на получение всех заявок
   const loadRequests = (signal) => {
     setIsLoading(true)
     getRequests(signal)
@@ -125,11 +124,13 @@ const Requests = (props) => {
       })
   }
 
+  //Перенести заявку
   const transferRequest = (id) => {
     setRequestId(id)
     setShowWindow(!showWindow)
   }
 
+  //Копировать заявку
   const copyRequest = (id) => {
     props.setTransferState(true)
     props.setTransferData(

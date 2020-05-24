@@ -12,6 +12,7 @@ const SelectContacts = (props) => {
       phoneNumber: '',
     },
   ])
+  const [isMinimized, setIsMinimized] = useState(true)
 
   useEffect(() => {
     if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
@@ -21,22 +22,6 @@ const SelectContacts = (props) => {
       setOptions([...props.options])
     }
   }, [props.defaultValue, props.options])
-
-  const clickOnForm = (e) => {
-    const id = e.currentTarget.getAttribute('index')
-    const form = document.getElementsByClassName(
-      'select-contacts__selected_form',
-    )[id]
-    if (form.classList.contains('select-contacts__selected_form--hidden')) {
-      e.target.type !== 'text' &&
-        !e.target.classList.contains('select-contacts__img') &&
-        form.classList.remove('select-contacts__selected_form--hidden')
-    } else {
-      e.target.type !== 'text' &&
-        !e.target.classList.contains('select-contacts__img') &&
-        form.classList.add('select-contacts__selected_form--hidden')
-    }
-  }
 
   const handleNewContact = (e) => {
     e.preventDefault()
@@ -105,7 +90,7 @@ const SelectContacts = (props) => {
             <div
               className="select-contacts__selected_header"
               index={index}
-              onClick={clickOnForm}
+              onClick={() => setIsMinimized(!isMinimized)}
             >
               <div className="select-contacts__selected_name">
                 <span>ФИО: </span>{' '}
@@ -118,7 +103,13 @@ const SelectContacts = (props) => {
                 <span>Телефон: </span> <span>{item.phoneNumber}</span>
               </div>
             </div>
-            <div className="select-contacts__selected_form select-contacts__selected_form--hidden">
+            <div
+              className={
+                isMinimized
+                  ? 'select-contacts__selected_form select-contacts__selected_form--hidden'
+                  : 'select-contacts__selected_form'
+              }
+            >
               <div className="select-contacts__item">
                 <div className="select-contacts__input_name">Имя</div>
                 <div className="select-contacts__input_field">

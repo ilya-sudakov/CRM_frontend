@@ -51,6 +51,7 @@
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       transition: 0.2s ease-in-out;
+      text-align: center;
       position: relative;
       cursor: pointer;
       &:first-child {
@@ -79,6 +80,10 @@
       &:hover {
         color: lighten($primary-text-color, 10%);
         // background-color: darken($primary-background-color, 5%);
+
+        &::after {
+          background-color: lighten($primary-text-color, 90%);
+        }
       }
 
       &--active {
@@ -87,6 +92,10 @@
 
         &:hover {
           color: lighten($button__background--inverted, 5%);
+
+          &::after {
+            background-color: lighten($button__background--inverted, 10%);
+          }
         }
 
         &::after {
@@ -524,7 +533,7 @@
 
       .main-form__menu-item {
         width: fit-content;
-        padding: 10px 80px;
+        padding: 15px 80px;
 
         &:not(:last-child) {
           margin-right: 10px;

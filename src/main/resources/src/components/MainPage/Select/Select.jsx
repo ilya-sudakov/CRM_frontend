@@ -375,7 +375,6 @@ const Select = (props) => {
               {!props.readOnly ? (
                 <ColorPicker
                   defaultName={item.name}
-                  index={index}
                   id={item.id}
                   handleStatusChange={handleStatusChange}
                 />

@@ -100,7 +100,7 @@ const PartsStatistic = (props) => {
   }
 
   useEffect(() => {
-    setIsLoading(true)
+    // setIsLoading(true)
     if (Object.entries(props.data).length > 0) {
       setIsLoading(true)
       if (!canvasLoaded) {

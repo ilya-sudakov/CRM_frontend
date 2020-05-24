@@ -2,21 +2,18 @@ import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import './App.scss'
 import './variables.scss'
-const MainPage = lazy(() => import('./components/MainPage/MainPage.jsx'))
+const MainPage = lazy(() => import('./components/MainPage/MainPage.jsx')) //lazy-загрузка компонента MainPage
 import LoginPage from './components/Authorization/LoginPage/LoginPage.jsx'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
 import { login, refreshToken } from './utils/RequestsAPI/Authorization.jsx'
 import PageLoading from './components/MainPage/PageLoading/PageLoading.jsx'
-
-const ROLE_ADMIN = 'ROLE_ADMIN'
-const ROLE_MANAGER = 'ROLE_MANAGER'
-
 export const UserContext = React.createContext()
 
 class App extends React.Component {
   state = {
-    isAuthorized: false,
+    isAuthorized: false, //Авторизован ли пользователь
     userData: {
+      //Данные пользователя
       email: '',
       username: '',
       firstName: '',
@@ -26,6 +23,7 @@ class App extends React.Component {
     },
   }
 
+  //Метод для обновления состояния данных пользователя
   setUserData = (isAuthorized, userData) => {
     this.setState({
       isAuthorized: isAuthorized,
@@ -33,10 +31,12 @@ class App extends React.Component {
     })
   }
 
-  userHasAccess = (roleNeeded) => {
+  //Метод для проверки на принадлежность пользователя
+  //к одной из ролей из переданного массива ролей
+  userHasAccess = (rolesNeeded) => {
     let check = false
     this.state.userData.roles.map((item) => {
-      roleNeeded.map((role) => {
+      rolesNeeded.map((role) => {
         if (item.name === role) {
           check = true
         }
@@ -46,6 +46,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    //Проверка на наличие в localStorage браузера токена,
+    //запрос на его обновление при отсутствии
     if (
       localStorage.getItem('refreshToken') &&
       this.state.isAuthorized === false
@@ -83,11 +85,12 @@ class App extends React.Component {
               />
             )}
           />
+          {/* Отображение компонента загрузки страницы, пока грузятся внутренние компоненты */}
           <Suspense fallback={<PageLoading />}>
             <UserContext.Provider
               value={{
                 userData: { ...this.state.userData },
-                userHasAccess: this.userHasAccess
+                userHasAccess: this.userHasAccess,
               }}
             >
               <PrivateRoute

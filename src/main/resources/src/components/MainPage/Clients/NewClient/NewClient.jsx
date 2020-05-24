@@ -10,7 +10,6 @@ import InputText from '../../../../utils/Form/InputText/InputText.jsx'
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx'
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import SelectContacts from '../SelectContacts/SelectContacts.jsx'
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx'
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx'
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx'
@@ -37,12 +36,14 @@ const newClient = (props) => {
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
   })
+  //Ошибки для обязательных полей
   const [formErrors, setFormErrors] = useState({
     name: false,
     contacts: false,
     categoryId: false,
     site: false,
   })
+  //Корректность заполнения обязательных полей
   const [validInputs, setValidInputs] = useState({
     name: false,
     contacts: false,
@@ -55,6 +56,7 @@ const newClient = (props) => {
   const [users, setUsers] = useState([])
   const [curTab, setCurTab] = useState('clientData')
 
+  //Проверка поля на корректность
   const validateField = (fieldName, value) => {
     switch (fieldName) {
       default:
@@ -68,6 +70,7 @@ const newClient = (props) => {
     }
   }
 
+  //Проверка всех полей формы на корректность
   const formIsValid = () => {
     let check = true
     let newErrors = Object.assign({
@@ -96,8 +99,9 @@ const newClient = (props) => {
     }
   }
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  //Добавление клиента и остальных обязательных данных
+  //при корректном заполнении всей формы
+  const handleSubmit = () => {
     setIsLoading(true)
     console.log(clientInputs)
     let clientId = 0
@@ -183,6 +187,7 @@ const newClient = (props) => {
         })
   }
 
+  //При изменении данных в поле - обновляем состояние
   const handleInputChange = (e) => {
     const { name, value } = e.target
     validateField(name, value)
@@ -198,6 +203,7 @@ const newClient = (props) => {
 
   useEffect(() => {
     document.title = 'Добавление клиента'
+    //Загружаем список пользователей
     users.length === 0 &&
       getUsers()
         .then((res) => res.json())
@@ -235,6 +241,7 @@ const newClient = (props) => {
     <div className="new_client">
       <div className="main-form">
         <div className="main-form__title">Новый клиент</div>
+        {/* //Меню для перехода на разные страницы формы */}
         <div className="main-form__header">
           <div
             className={
@@ -398,63 +405,6 @@ const newClient = (props) => {
                 defaultValue={clientInputs.managerName}
                 searchPlaceholder="Введите имя менеджера для поиска..."
               />
-              {/* Видимость для менеджеров */}
-              {/* <div className="main-form__item">
-                                    <div className="main-form__input_name">Видимость</div>
-                                    <div className="main-form__input_field main-form__input_field--vertical">
-                                        <CheckBox
-                                            text="Видно всем"
-                                            uniqueId='visible-all'
-                                            defaultChecked={true}
-                                            disabled={!props.userHasAccess(["ROLE_ADMIN"])}
-                                            onChange={(value) => {
-                                                setUsers([...users.map(user => {
-                                                    return {
-                                                        ...user,
-                                                        active: value
-                                                    };
-                                                })]);
-                                            }}
-                                        />
-                                        {users.map((user, userIndex) => {
-                                            return <CheckBox
-                                                text={user.username}
-                                                uniqueId={userIndex}
-                                                defaultChecked={true}
-                                                checked={user.active}
-                                                onChange={(value) => {
-                                                    let temp = users;
-                                                    temp.splice(userIndex, 1, {
-                                                        ...user,
-                                                        active: value
-                                                    })
-                                                    setUsers([...temp]);
-                                                }}
-                                            />
-                                        })}
-                                    </div>
-                                </div> */}
-              {/* <div className="main-form__item">
-                                    <div className="main-form__input_name">Скидки</div>
-                                    <div className="main-form__input_field main-form__input_field--vertical">
-                                        <CheckBox
-                                            text="Скидка №1"
-                                            uniqueId={0}
-                                            defaultChecked={true}
-                                            onChange={(value) => {
-
-                                            }}
-                                        />
-                                        <CheckBox
-                                            text="Скидка №2"
-                                            uniqueId={1}
-                                            defaultChecked={true}
-                                            onChange={(value) => {
-
-                                            }}
-                                        />
-                                    </div>
-                                </div> */}
               <InputText
                 inputName="Акт сверки"
                 name="check"

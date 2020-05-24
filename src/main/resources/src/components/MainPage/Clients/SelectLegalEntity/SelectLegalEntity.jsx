@@ -22,15 +22,7 @@ const SelectLegalEntity = (props) => {
   ])
   const [options, setOptions] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
-  const clickOverlay = (event) => {
-    const overlay = document.getElementsByClassName(
-      'select-legal-entity__overlay',
-    )[0]
-    if (!overlay.classList.contains('select-legal-entity__overlay--hidden')) {
-      overlay.classList.add('select-legal-entity__overlay--hidden')
-    }
-  }
+  const [isMinimized, setIsMinimized] = useState(true)
 
   useEffect(() => {
     if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
@@ -40,22 +32,6 @@ const SelectLegalEntity = (props) => {
       setOptions([...props.options])
     }
   }, [props.defaultValue, props.options])
-
-  const clickOnForm = (e) => {
-    const id = e.currentTarget.getAttribute('index')
-    const form = document.getElementsByClassName(
-      'select-legal-entity__selected_form',
-    )[id]
-    if (form.classList.contains('select-legal-entity__selected_form--hidden')) {
-      e.target.type !== 'text' &&
-        !e.target.classList.contains('select-legal-entity__img') &&
-        form.classList.remove('select-legal-entity__selected_form--hidden')
-    } else {
-      e.target.type !== 'text' &&
-        !e.target.classList.contains('select-legal-entity__img') &&
-        form.classList.add('select-legal-entity__selected_form--hidden')
-    }
-  }
 
   const handleNewLegalEntity = (e) => {
     e.preventDefault()
@@ -87,10 +63,6 @@ const SelectLegalEntity = (props) => {
         factualAddress: '',
       },
     ])
-    // const form = document.getElementsByClassName("select-legal-entity__selected_form")[0];
-    // console.log(form);
-
-    // form.classList.remove("select-legal-entity__selected_form--hidden");
   }
 
   const deleteLegalEntity = (e) => {
@@ -117,10 +89,6 @@ const SelectLegalEntity = (props) => {
 
   return (
     <div className="select-legal-entity">
-      <div
-        className="select-legal-entity__overlay select-legal-entity__overlay--hidden"
-        onClick={clickOverlay}
-      ></div>
       {!props.readOnly && (
         <button
           className="select-legal-entity__button"
@@ -141,7 +109,7 @@ const SelectLegalEntity = (props) => {
             <div
               className="select-legal-entity__selected_header"
               index={index}
-              onClick={clickOnForm}
+              onClick={() => setIsMinimized(!isMinimized)}
             >
               <div className="select-legal-entity__selected_name">
                 <span>ИНН: </span> <span>{item.inn}</span>
@@ -153,7 +121,13 @@ const SelectLegalEntity = (props) => {
                 <span>Адрес: </span> <span>{item.legalAddress}</span>
               </div>
             </div>
-            <div className="select-legal-entity__selected_form select-legal-entity__selected_form--hidden">
+            <div
+              className={
+                isMinimized
+                  ? 'select-legal-entity__selected_form select-legal-entity__selected_form--hidden'
+                  : 'select-legal-entity__selected_form'
+              }
+            >
               <div className="select-legal-entity__item">
                 <div className="select-legal-entity__input_name">Название</div>
                 <div className="select-legal-entity__input_field">
