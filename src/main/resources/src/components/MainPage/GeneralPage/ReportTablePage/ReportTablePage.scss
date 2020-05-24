@@ -135,7 +135,18 @@
             .main-window__list-item--header {
                 margin-left: -1px;
             }
-            .main-window__list-item {
+            .main-window__list-item--divider {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                margin: 15px 10px;
+                width: calc(100% - 20px);
+                span {
+                    padding: 2.5px 10px;
+                    font-size: 12px !important;
+                }
+            }
+            .main-window__list-item:not(.main-window__list-item--divider) {
                 padding: 0 !important;
                 align-items: stretch;
                 span {

@@ -227,6 +227,29 @@ export default ReportTablePage
 
 //Таблица с табелем
 export const TableView = (props) => {
+  const [workshops, setWorkshops] = useState([
+    {
+      name: 'ЦехЛЭМЗ',
+      active: true,
+      minimized: true,
+    },
+    {
+      name: 'ЦехЛепсари',
+      active: true,
+      minimized: true,
+    },
+    {
+      name: 'ЦехЛиговский',
+      active: true,
+      minimized: true,
+    },
+    {
+      name: 'Офис',
+      active: true,
+      minimized: true,
+    },
+  ])
+
   useEffect(() => {}, [props.date])
 
   return (
@@ -245,92 +268,110 @@ export const TableView = (props) => {
           })}
           <span>Сумма</span>
         </div>
-        {Object.values(props.workData)
-          .filter((item) => {
-            return (
-              item.employee.lastName
-                .toLowerCase()
-                .includes(props.searchQuery.toLowerCase()) ||
-              item.employee.name
-                .toLowerCase()
-                .includes(props.searchQuery.toLowerCase()) ||
-              item.employee.middleName
-                .toLowerCase()
-                .includes(props.searchQuery.toLowerCase())
-            )
-          })
-          .sort((a, b) => {
-            if (a.employee.lastName < b.employee.lastName) {
-              return -1
-            }
-            if (a.employee.lastName > b.employee.lastName) {
-              return 1
-            }
-            return 0
-          })
-          .map((work) => {
-            return (
-              <div className="main-window__list-item">
-                <span>
-                  {work.employee.lastName +
-                    ' ' +
-                    work.employee.name +
-                    ' ' +
-                    work.employee.middleName}
-                </span>
-                {Object.values(work.works).map((workItem, workItemIndex) => {
-                  if (workItemIndex < 15) {
-                    return (
-                      <span
-                        onClick={() => {
-                          if (workItem.length > 0) {
-                            props.setSelectedInfo({
-                              employeeId: work.employee.id,
-                              employee: work.employee,
-                              day: workItem[0].day,
-                              year: props.date.getFullYear(),
-                              month: props.date.getMonth() + 1,
-                              worksId: workItem.map((item) => {
-                                return item.workList.id
-                              }),
-                              works: workItem,
-                            })
-                          } else {
-                            props.setSelectedInfo({
-                              employeeId: work.employee.id,
-                              employee: work.employee,
-                              day: workItem.day,
-                              month: props.date.getMonth() + 1,
-                              year: props.date.getFullYear(),
-                              worksId: null,
-                              works: workItem,
-                            })
-                          }
-                          props.setShowWindow(true)
-                        }}
-                      >
-                        {workItem.hours === 0
-                          ? ' '
-                          : workItem.reduce((sum, cur) => sum + cur.hours, 0)}
-                      </span>
-                    )
-                  }
-                })}
-                <span>
-                  {Object.values(work.works).reduce((sum, item, index) => {
-                    if (item.length > 0 && index < 15) {
-                      return (
-                        sum +
-                        item.reduce((sum, cur) => {
-                          return sum + cur.hours
-                        }, 0)
-                      )
-                    } else return sum
-                  }, 0)}
-                </span>
+        {workshops.map((workshop) => {
+          return (
+            <>
+              <div className="main-window__list-item main-window__list-item--divider">
+                <span>{workshop.name}</span>
               </div>
-            )
-          })}
+              {Object.values(props.workData)
+                .filter((item) => {
+                  return (
+                    (item.employee.lastName
+                      .toLowerCase()
+                      .includes(props.searchQuery.toLowerCase()) ||
+                      item.employee.name
+                        .toLowerCase()
+                        .includes(props.searchQuery.toLowerCase()) ||
+                      item.employee.middleName
+                        .toLowerCase()
+                        .includes(props.searchQuery.toLowerCase())) &&
+                    item.employee.workshop === workshop.name
+                  )
+                })
+                .sort((a, b) => {
+                  if (a.employee.lastName < b.employee.lastName) {
+                    return -1
+                  }
+                  if (a.employee.lastName > b.employee.lastName) {
+                    return 1
+                  }
+                  return 0
+                })
+                .map((work) => {
+                  return (
+                    <div className="main-window__list-item">
+                      <span>
+                        {work.employee.lastName +
+                          ' ' +
+                          work.employee.name +
+                          ' ' +
+                          work.employee.middleName}
+                      </span>
+                      {Object.values(work.works).map(
+                        (workItem, workItemIndex) => {
+                          if (workItemIndex < 15) {
+                            return (
+                              <span
+                                onClick={() => {
+                                  if (workItem.length > 0) {
+                                    props.setSelectedInfo({
+                                      employeeId: work.employee.id,
+                                      employee: work.employee,
+                                      day: workItem[0].day,
+                                      year: props.date.getFullYear(),
+                                      month: props.date.getMonth() + 1,
+                                      worksId: workItem.map((item) => {
+                                        return item.workList.id
+                                      }),
+                                      works: workItem,
+                                    })
+                                  } else {
+                                    props.setSelectedInfo({
+                                      employeeId: work.employee.id,
+                                      employee: work.employee,
+                                      day: workItem.day,
+                                      month: props.date.getMonth() + 1,
+                                      year: props.date.getFullYear(),
+                                      worksId: null,
+                                      works: workItem,
+                                    })
+                                  }
+                                  props.setShowWindow(true)
+                                }}
+                              >
+                                {workItem.hours === 0
+                                  ? ' '
+                                  : workItem.reduce(
+                                      (sum, cur) => sum + cur.hours,
+                                      0,
+                                    )}
+                              </span>
+                            )
+                          }
+                        },
+                      )}
+                      <span>
+                        {Object.values(work.works).reduce(
+                          (sum, item, index) => {
+                            if (item.length > 0 && index < 15) {
+                              return (
+                                sum +
+                                item.reduce((sum, cur) => {
+                                  return sum + cur.hours
+                                }, 0)
+                              )
+                            } else return sum
+                          },
+                          0,
+                        )}
+                      </span>
+                    </div>
+                  )
+                })}
+            </>
+          )
+        })}
       </div>
       {/* //2-ая половина месяца(15-конец месяца) */}
       <div className="main-window__title">
@@ -346,93 +387,111 @@ export const TableView = (props) => {
           })}
           <span>Сумма</span>
         </div>
-        {Object.values(props.workData)
-          .filter((item) => {
-            return (
-              item.employee.lastName
-                .toLowerCase()
-                .includes(props.searchQuery.toLowerCase()) ||
-              item.employee.name
-                .toLowerCase()
-                .includes(props.searchQuery.toLowerCase()) ||
-              item.employee.middleName
-                .toLowerCase()
-                .includes(props.searchQuery.toLowerCase())
-            )
-          })
-          .sort((a, b) => {
-            if (a.employee.lastName < b.employee.lastName) {
-              return -1
-            }
-            if (a.employee.lastName > b.employee.lastName) {
-              return 1
-            }
-            return 0
-          })
-          .map((work) => {
-            return (
-              <div className="main-window__list-item">
-                <span>
-                  {work.employee.lastName +
-                    ' ' +
-                    work.employee.name +
-                    ' ' +
-                    work.employee.middleName}
-                </span>
-                {Object.values(work.works).map((workItem, workItemIndex) => {
-                  if (workItemIndex > 14) {
-                    return (
-                      <span
-                        onClick={() => {
-                          if (workItem.length > 0) {
-                            props.setSelectedInfo({
-                              employeeId: work.employee.id,
-                              employee: work.employee,
-                              day: workItem[0].day,
-                              month: props.date.getMonth() + 1,
-                              year: props.date.getFullYear(),
-                              worksId: workItem.map((item) => {
-                                return item.workList.id
-                              }),
-                              works: workItem,
-                            })
-                          } else {
-                            console.log('no works')
-                            props.setSelectedInfo({
-                              employeeId: work.employee.id,
-                              employee: work.employee,
-                              day: workItem.day,
-                              month: props.date.getMonth() + 1,
-                              year: props.date.getFullYear(),
-                              worksId: null,
-                              works: workItem,
-                            })
-                          }
-                          props.setShowWindow(true)
-                        }}
-                      >
-                        {workItem.hours === 0
-                          ? ' '
-                          : workItem.reduce((sum, cur) => sum + cur.hours, 0)}
-                      </span>
-                    )
-                  }
-                })}
-                <span>
-                  {Object.values(work.works).reduce((sum, item, index) => {
-                    if (item.length > 0 && index > 14) {
-                      return (
-                        sum +
-                        item.reduce((sum, cur) => {
-                          return sum + cur.hours
-                        }, 0)
-                      )
-                    } else return sum
-                  }, 0)}
-                </span>
+        {workshops.map((workshop) => {
+          return (
+            <>
+              <div className="main-window__list-item main-window__list-item--divider">
+                <span>{workshop.name}</span>
               </div>
-            )
-          })}
+              {Object.values(props.workData)
+                .filter((item) => {
+                  return (
+                    (item.employee.lastName
+                      .toLowerCase()
+                      .includes(props.searchQuery.toLowerCase()) ||
+                      item.employee.name
+                        .toLowerCase()
+                        .includes(props.searchQuery.toLowerCase()) ||
+                      item.employee.middleName
+                        .toLowerCase()
+                        .includes(props.searchQuery.toLowerCase())) &&
+                    item.employee.workshop === workshop.name
+                  )
+                })
+                .sort((a, b) => {
+                  if (a.employee.lastName < b.employee.lastName) {
+                    return -1
+                  }
+                  if (a.employee.lastName > b.employee.lastName) {
+                    return 1
+                  }
+                  return 0
+                })
+                .map((work) => {
+                  return (
+                    <div className="main-window__list-item">
+                      <span>
+                        {work.employee.lastName +
+                          ' ' +
+                          work.employee.name +
+                          ' ' +
+                          work.employee.middleName}
+                      </span>
+                      {Object.values(work.works).map(
+                        (workItem, workItemIndex) => {
+                          if (workItemIndex > 14) {
+                            return (
+                              <span
+                                onClick={() => {
+                                  if (workItem.length > 0) {
+                                    props.setSelectedInfo({
+                                      employeeId: work.employee.id,
+                                      employee: work.employee,
+                                      day: workItem[0].day,
+                                      month: props.date.getMonth() + 1,
+                                      year: props.date.getFullYear(),
+                                      worksId: workItem.map((item) => {
+                                        return item.workList.id
+                                      }),
+                                      works: workItem,
+                                    })
+                                  } else {
+                                    console.log('no works')
+                                    props.setSelectedInfo({
+                                      employeeId: work.employee.id,
+                                      employee: work.employee,
+                                      day: workItem.day,
+                                      month: props.date.getMonth() + 1,
+                                      year: props.date.getFullYear(),
+                                      worksId: null,
+                                      works: workItem,
+                                    })
+                                  }
+                                  props.setShowWindow(true)
+                                }}
+                              >
+                                {workItem.hours === 0
+                                  ? ' '
+                                  : workItem.reduce(
+                                      (sum, cur) => sum + cur.hours,
+                                      0,
+                                    )}
+                              </span>
+                            )
+                          }
+                        },
+                      )}
+                      <span>
+                        {Object.values(work.works).reduce(
+                          (sum, item, index) => {
+                            if (item.length > 0 && index > 14) {
+                              return (
+                                sum +
+                                item.reduce((sum, cur) => {
+                                  return sum + cur.hours
+                                }, 0)
+                              )
+                            } else return sum
+                          },
+                          0,
+                        )}
+                      </span>
+                    </div>
+                  )
+                })}
+            </>
+          )
+        })}
       </div>
     </div>
   )
