@@ -119,6 +119,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -140,6 +141,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -150,6 +152,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -161,6 +164,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -182,6 +186,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -192,6 +197,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -203,6 +209,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -224,6 +231,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -234,6 +242,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -245,6 +254,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -265,6 +275,7 @@ const Rigging = (props) => {
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
+                  'ROLE_WORKSHOP',
                   'ROLE_ENGINEER',
                 ]}
               />
@@ -276,6 +287,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                   'ROLE_WORKSHOP',
                 ]}
               />

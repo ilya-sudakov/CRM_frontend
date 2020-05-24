@@ -48,11 +48,12 @@
       // align-self: flex-end;
       background-color: $secondary-text-color;
       // border-bottom-left-radius: 5px;
+      border-radius: 0;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
+      margin-bottom: 0;
       // border-bottom-right-radius: 5px;
       // margin-bottom: 10px;
-
       .main-window__item {
         // width: 100%;
         width: fit-content;

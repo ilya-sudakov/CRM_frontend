@@ -128,6 +128,13 @@ const SideMenu = (props) => {
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
+          name: 'Очередь инструментального производства',
+          pathname: '/dispatcher/rigging/parts',
+          link: '/dispatcher/rigging/parts',
+          icon: listImg,
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
+        },
+        {
           name: 'Склад',
           pathname: '/lemz/workshop-storage',
           link: '/lemz/workshop-storage',
@@ -163,6 +170,13 @@ const SideMenu = (props) => {
           name: 'Очередь производства',
           pathname: '/lepsari/workshop-lepsari',
           link: '/lepsari/workshop-lepsari',
+          icon: listImg,
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
+        },
+        {
+          name: 'Очередь инструментального производства',
+          pathname: '/dispatcher/rigging/parts',
+          link: '/dispatcher/rigging/parts',
           icon: listImg,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },

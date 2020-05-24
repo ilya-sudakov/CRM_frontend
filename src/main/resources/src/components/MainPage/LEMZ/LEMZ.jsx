@@ -51,6 +51,9 @@ const LEMZ = (props) => {
                 <img className="main-window__img" src={plusImg} alt="" />
               </Link>
             </Link>
+            {/* <Link to="/dispatcher/rigging/parts" className="main-window__item">
+              Очередь инструментального производства
+            </Link> */}
             <Link
               to="/lemz/workshop-storage"
               className={
