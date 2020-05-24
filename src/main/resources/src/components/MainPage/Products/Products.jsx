@@ -48,12 +48,12 @@ const Products = (props) => {
   }
 
   const loadCategories = (signal) => {
+    let categoriesArr = []
+    let productsArr = []
     return getCategoriesNames(signal) //Только категории
       .then((res) => res.json())
       .then((res) => {
-        const categoriesArr = res
         setCategories([...res])
-        let productsArr = []
         //Загрузка по местоположению
         if (
           props.userHasAccess([
@@ -63,6 +63,7 @@ const Products = (props) => {
             'ROLE_MANAGER',
           ])
         ) {
+          categoriesArr = res
           // console.log(categoriesArr);
           Promise.all(
             categoriesArr.map((item) => {
@@ -74,24 +75,29 @@ const Products = (props) => {
                 })
             }),
           ).then(() => {
-            const tempNew = productsArr.map((item, index) => {
-              return getProductById(item.id, signal)
-                .then((res) => res.json())
-                .then((res) => {
-                  //   console.log(res);
-                  productsArr.splice(index, 1, res)
-                  setProducts([...productsArr])
-                })
-            })
-            Promise.all(tempNew).then(() => {
+            Promise.all(
+              productsArr.map((item, index) => {
+                return getProductById(item.id, signal)
+                  .then((res) => res.json())
+                  .then((res) => {
+                    //   console.log(res);
+                    productsArr.splice(index, 1, res)
+                    setProducts([...productsArr])
+                  })
+              }),
+            ).then(() => {
               //   console.log(productsArr);
               return console.log('all images downloaded')
             })
           })
-        } else if (props.userHasAccess(['ROLE_LEMZ'])) {
+        } else {
           getProductsByLocation(
             {
-              productionLocation: 'ЦехЛЭМЗ',
+              productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
+                ? 'ЦехЛиговский'
+                : props.userHasAccess(['ROLE_LEMZ'])
+                ? 'ЦехЛЭМЗ'
+                : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
             },
             signal,
           )
@@ -99,66 +105,17 @@ const Products = (props) => {
             .then((res) => {
               res.map((item) => productsArr.push(item))
               setProducts([...productsArr])
-              const tempNew = productsArr.map((item, index) => {
-                getProductById(item.id, signal)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    // console.log(res);
-                    productsArr.splice(index, 1, res)
-                    setProducts([...productsArr])
-                  })
-              })
-              Promise.all(tempNew).then(() =>
-                console.log('all images downloaded'),
-              )
-            })
-        } else if (props.userHasAccess(['ROLE_LEPSARI'])) {
-          getProductsByLocation(
-            {
-              productionLocation: 'ЦехЛепсари',
-            },
-            signal,
-          )
-            .then((res) => res.json())
-            .then((res) => {
-              res.map((item) => productsArr.push(item))
-              setProducts([...productsArr])
-              const tempNew = productsArr.map((item, index) => {
-                getProductById(item.id, signal)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    // console.log(res);
-                    productsArr.splice(index, 1, res)
-                    setProducts([...productsArr])
-                  })
-              })
-              Promise.all(tempNew).then(() =>
-                console.log('all images downloaded'),
-              )
-            })
-        } else if (props.userHasAccess(['ROLE_LIGOVSKIY'])) {
-          getProductsByLocation(
-            {
-              productionLocation: 'ЦехЛиговский',
-            },
-            signal,
-          )
-            .then((res) => res.json())
-            .then((res) => {
-              res.map((item) => productsArr.push(item))
-              setProducts([...productsArr])
-              const tempNew = productsArr.map((item, index) => {
-                getProductById(item.id, signal)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    // console.log(res);
-                    productsArr.splice(index, 1, res)
-                    setProducts([...productsArr])
-                  })
-              })
-              Promise.all(tempNew).then(() =>
-                console.log('all images downloaded'),
-              )
+              Promise.all(
+                productsArr.map((item, index) => {
+                  getProductById(item.id, signal)
+                    .then((res) => res.json())
+                    .then((res) => {
+                      // console.log(res);
+                      productsArr.splice(index, 1, res)
+                      setProducts([...productsArr])
+                    })
+                }),
+              ).then(() => console.log('all images downloaded'))
             })
         }
       })

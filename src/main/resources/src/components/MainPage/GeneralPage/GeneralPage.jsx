@@ -277,8 +277,7 @@ const GeneralPage = (props) => {
               'ROLE_ADMIN',
               'ROLE_DISPATCHER',
               'ROLE_MANAGER',
-              'ROLE_LEPSARI',
-              'ROLE_LIGOVSKIY',
+              'ROLE_WORKSHOP',
               'ROLE_ENGINEER',
             ]) && (
               <Link

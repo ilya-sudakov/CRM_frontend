@@ -10,6 +10,7 @@ import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Ca
 import {
   getProductById,
   getProductsByCategory,
+  getProductsByLocation,
 } from '../../../../../utils/RequestsAPI/Products.jsx'
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
 import {
@@ -166,6 +167,82 @@ const NewRecordWork = (props) => {
     })
   }
 
+  const loadProducts = (signal) => {
+    getCategoriesNames(signal) //Только категории
+      .then((res) => res.json())
+      .then((res) => {
+        const categoriesArr = res
+        setCategories(res)
+        let productsArr = []
+        if (
+          props.userHasAccess([
+            'ROLE_ADMIN',
+            'ROLE_DISPATCHER',
+            'ROLE_ENGINEER',
+            'ROLE_MANAGER',
+          ])
+        ) {
+          Promise.all(
+            categoriesArr.map((item) => {
+              let category = {
+                category: item.category,
+              }
+              return getProductsByCategory(category, signal) //Продукция по категории
+                .then((res) => res.json())
+                .then((res) => {
+                  res.map((item) => productsArr.push(item))
+                  setProducts([...productsArr])
+                })
+            }),
+          ).then(() => {
+            //Загружаем картинки по отдельности для каждой продукции
+            Promise.all(
+              productsArr.map((item, index) => {
+                getProductById(item.id, signal)
+                  .then((res) => res.json())
+                  .then((res) => {
+                    // console.log(res);
+                    productsArr.splice(index, 1, res)
+                    setProducts([...productsArr])
+                  })
+              }),
+            ).then(() => {
+              console.log('all images downloaded')
+            })
+          })
+        } else {
+          getProductsByLocation(
+            {
+              productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
+                ? 'ЦехЛиговский'
+                : props.userHasAccess(['ROLE_LEMZ'])
+                ? 'ЦехЛЭМЗ'
+                : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
+            },
+            signal,
+          )
+            .then((res) => res.json())
+            .then((res) => {
+              res.map((item) => productsArr.push(item))
+              setProducts([...productsArr])
+              Promise.all(
+                productsArr.map((item, index) => {
+                  getProductById(item.id, signal)
+                    .then((res) => res.json())
+                    .then((res) => {
+                      // console.log(res);
+                      productsArr.splice(index, 1, res)
+                      setProducts([...productsArr])
+                    })
+                }),
+              ).then(() => {
+                console.log('all images downloaded')
+              })
+            })
+        }
+      })
+  }
+
   useEffect(() => {
     document.title = 'Создание заявки'
     const abortController = new AbortController()
@@ -174,40 +251,7 @@ const NewRecordWork = (props) => {
         'px',
     )
     //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
-    products.length === 0 &&
-      getCategoriesNames(abortController.signal) //Только категории
-        .then((res) => res.json())
-        .then((res) => {
-          const categoriesArr = res
-          setCategories(res)
-          let productsArr = []
-          const temp = categoriesArr.map((item) => {
-            let category = {
-              category: item.category,
-            }
-            return getProductsByCategory(category, abortController.signal) //Продукция по категории
-              .then((res) => res.json())
-              .then((res) => {
-                res.map((item) => productsArr.push(item))
-                setProducts([...productsArr])
-              })
-          })
-          Promise.all(temp).then(() => {
-            //Загружаем картинки по отдельности для каждой продукции
-            const temp = productsArr.map((item, index) => {
-              getProductById(item.id, abortController.signal)
-                .then((res) => res.json())
-                .then((res) => {
-                  // console.log(res);
-                  productsArr.splice(index, 1, res)
-                  setProducts([...productsArr])
-                })
-            })
-            Promise.all(temp).then(() => {
-              // console.log('all images downloaded');
-            })
-          })
-        })
+    products.length === 0 && loadProducts(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
