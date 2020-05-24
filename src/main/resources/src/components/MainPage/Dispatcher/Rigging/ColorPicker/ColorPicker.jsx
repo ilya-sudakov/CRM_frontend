@@ -56,6 +56,7 @@ const ColorPicker = (props) => {
           : editPartPartColor(req, id).then(() => props.loadData())
         break
     }
+    setShowColorPicker(false)
     // console.log(req, id, type === 'part');
     // clickOnColorPickerOverlay(event); //Hide options
   }
@@ -73,7 +74,7 @@ const ColorPicker = (props) => {
       <div
         className="tableview__color_name"
         onClick={(event) => {
-        //   clickOnColorPicker(event)
+          //   clickOnColorPicker(event)
           setShowColorPicker(!showColorPicker)
         }}
       >

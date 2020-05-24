@@ -70,19 +70,18 @@ const Stamp = (props) => {
             >
               Активные
             </div>
-            <div
-              className={
-                curPage === 'Завершено'
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
-              }
-              onClick={() =>
-                !props.userHasAccess(['ROLE_WORKSHOP']) &&
-                setCurPage('Завершено')
-              }
-            >
-              Завершено
-            </div>
+            {!props.userHasAccess(['ROLE_WORKSHOP']) && (
+              <div
+                className={
+                  curPage === 'Завершено'
+                    ? 'main-window__item--active main-window__item'
+                    : 'main-window__item'
+                }
+                onClick={() => setCurPage('Завершено')}
+              >
+                Завершено
+              </div>
+            )}
           </div>
         </div>
         <div className="main-window__info-panel">
