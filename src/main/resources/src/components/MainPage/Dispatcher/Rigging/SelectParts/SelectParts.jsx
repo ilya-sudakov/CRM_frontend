@@ -5,16 +5,14 @@ import './SelectParts.scss'
 const SelectParts = (props) => {
   const [selected, setSelected] = useState([])
   const [options, setOptions] = useState([])
-  const [isMinimized, setIsMinimized] = useState(false)
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
 
   useEffect(() => {
-    if (props.defaultValue !== undefined) {
+    if (props.defaultValue !== undefined && !defaultValueLoaded) {
       setSelected([...props.defaultValue])
+      setDefaultValueLoaded(true)
     }
-    if (props.options !== undefined) {
-      setOptions([...props.options])
-    }
-  }, [props.defaultValue, props.options])
+  }, [props.defaultValue, selected])
 
   const handleNewPart = (e) => {
     e.preventDefault()
@@ -32,6 +30,7 @@ const SelectParts = (props) => {
         grinding: '',
         erosion: '',
         controll: '',
+        isMinimized: true,
       },
     ])
     props.handlePartsChange([
@@ -93,7 +92,15 @@ const SelectParts = (props) => {
             <div
               className="select_parts__selected_header"
               index={index}
-              onClick={() => setIsMinimized(!isMinimized)}
+              onClick={() => {
+                const temp = selected
+                temp.splice(index, 1, {
+                  ...item,
+                  isMinimized: !item.isMinimized,
+                })
+                setSelected([...temp])
+                props.handlePartsChange([...temp])
+              }}
             >
               <div className="select_parts__selected_name">
                 <span>Название: </span> {item.name}
@@ -107,7 +114,7 @@ const SelectParts = (props) => {
             </div>
             <div
               className={
-                isMinimized
+                item.isMinimized
                   ? 'select_parts__selected_form select_parts__selected_form--hidden'
                   : 'select_parts__selected_form'
               }
