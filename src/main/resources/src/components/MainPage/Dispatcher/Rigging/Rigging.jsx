@@ -266,6 +266,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP'
                 ]}
               />
               <PrivateRoute
