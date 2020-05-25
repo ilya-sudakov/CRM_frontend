@@ -75,13 +75,6 @@ class MainPage extends React.Component {
     })
   }
 
-  clickOverlay = (event) => {
-    const overlay = document.getElementsByClassName('main_page__overlay')[0]
-    overlay.classList.contains('main_page__overlay--hidden')
-      ? overlay.classList.remove('main_page__overlay--hidden')
-      : overlay.classList.add('main_page__overlay--hidden')
-  }
-
   componentDidMount() {
     // console.log(this.state.transferState, this.state.transferData);
     if (
@@ -100,7 +93,6 @@ class MainPage extends React.Component {
           userData={this.props.userData}
           sideMenu={this.state.sidemenu_hidden}
           setSideMenu={this.setSideMenu}
-          clickOverlay={this.clickOverlay}
           userHasAccess={this.props.userHasAccess}
         />
         <div className="main_page__content">
