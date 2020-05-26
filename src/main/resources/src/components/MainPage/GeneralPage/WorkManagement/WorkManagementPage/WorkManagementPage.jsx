@@ -19,6 +19,7 @@ import {
   deleteRecordedWork,
   deleteProductFromRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx'
 // import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
 import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoading.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
@@ -189,9 +190,30 @@ const WorkManagementPage = (props) => {
     })
   }
 
+  const loadEmployeesCount = (signal) => {
+    let temp = workshops
+    Promise.all(
+      workshops.map((workshop, index) => {
+        return getEmployeesByWorkshop({ workshop: workshop.name }, signal)
+          .then((res) => res.json())
+          .then((res) => {
+            temp.splice(index, 1, {
+              ...workshop,
+              employeesTotal: res.length,
+            })
+          })
+      }),
+    ).then(() => {
+      console.log(temp)
+
+      return setWorkshops([...temp])
+    })
+  }
+
   useEffect(() => {
     let abortController = new AbortController()
     loadWorks(abortController.signal)
+    loadEmployeesCount(abortController.signal)
     // console.log(employeesMap)
     return function cancel() {
       abortController.abort()
@@ -327,7 +349,15 @@ const WorkManagementPage = (props) => {
                 <React.Fragment>
                   <div className="main-window__list-item main-window__list-item--divider">
                     <span>
-                      {workshop.name}
+                      {workshop.name +
+                        ' (' +
+                        Object.entries(employeesMap).filter(
+                          (item) =>
+                            workshop.name === employees[item[0]]?.workshop,
+                        ).length +
+                        ' из ' +
+                        workshop.employeesTotal +
+                        ' сотрудников)'}
                       <CheckBox
                         checked={workshop.minimized}
                         // text="Свернуть"

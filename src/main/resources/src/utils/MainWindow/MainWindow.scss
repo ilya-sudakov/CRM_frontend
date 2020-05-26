@@ -564,6 +564,7 @@
       font-size: 16px;
       width: fit-content !important;
       margin-bottom: 0 !important;
+      white-space: nowrap;
 
       .checkbox {
         margin-left: 5px;
@@ -710,7 +711,6 @@
         margin-top: 5px;
       }
     }
-
     &__info-panel {
       flex-direction: column;
       .main-window__filter-pick {
@@ -794,6 +794,15 @@
       font-size: 90%;
       margin-bottom: 0;
       margin-right: 5px;
+    }
+
+    .main-window__list-item--divider {
+      margin: 35px auto;
+      span {
+        width: fit-content;
+        white-space: normal;
+        text-align: center !important;
+      }
     }
 
     .main-window__pagination {
