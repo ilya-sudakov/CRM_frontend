@@ -164,6 +164,7 @@ const ViewFeedback = (props) => {
                 name="status"
                 onChange={(event) => {
                   const value = event.target.value
+                  console.log(formInputs)
                   setFormInputs({
                     ...formInputs,
                     status: value,
@@ -257,6 +258,10 @@ const ViewFeedback = (props) => {
                       },
                       feedbackId,
                     )
+                    setFormInputs({
+                      ...formInputs,
+                      isRead: false,
+                    })
                   })
                   .then(() => {
                     loadData(feedbackId)

@@ -100,7 +100,7 @@ const PartsStatistic = (props) => {
   }
 
   useEffect(() => {
-    // setIsLoading(true)
+    setIsLoading(true)
     if (Object.entries(props.data).length > 0) {
       setIsLoading(true)
       if (!canvasLoaded) {
@@ -110,9 +110,13 @@ const PartsStatistic = (props) => {
       }
       setTimeout(() => {
         setIsLoading(false)
+        setIsVisible(true)
         canvasLoaded && graph.destroy()
         setGraph(createGraph(options))
       }, 150)
+    } else {
+      setIsLoading(false)
+      setIsVisible(false)
     }
   }, [props.data])
   return (
