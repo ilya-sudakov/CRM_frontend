@@ -89,9 +89,9 @@ const WorkManagementPage = (props) => {
     })
   }
 
-  const loadWorks = (signal) => {
+  async function loadWorks(signal) {
     setIsLoading(true)
-    getRecordedWorkByDateRange(
+    return getRecordedWorkByDateRange(
       dates.start.getDate(),
       dates.start.getMonth() + 1,
       dates.end.getDate(),
@@ -192,28 +192,28 @@ const WorkManagementPage = (props) => {
 
   const loadEmployeesCount = (signal) => {
     let temp = workshops
-    Promise.all(
+    return Promise.all(
       workshops.map((workshop, index) => {
         return getEmployeesByWorkshop({ workshop: workshop.name }, signal)
           .then((res) => res.json())
           .then((res) => {
             temp.splice(index, 1, {
               ...workshop,
-              employeesTotal: res.length,
+              employeesTotal: res.filter((item) => item.relevance !== 'Уволен')
+                .length,
             })
           })
       }),
     ).then(() => {
-      console.log(temp)
-
       return setWorkshops([...temp])
     })
   }
 
   useEffect(() => {
     let abortController = new AbortController()
-    loadWorks(abortController.signal)
-    loadEmployeesCount(abortController.signal)
+    loadWorks(abortController.signal).then(() => {
+      loadEmployeesCount(abortController.signal)
+    })
     // console.log(employeesMap)
     return function cancel() {
       abortController.abort()

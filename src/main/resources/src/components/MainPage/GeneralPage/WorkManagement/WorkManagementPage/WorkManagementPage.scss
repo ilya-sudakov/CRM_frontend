@@ -30,6 +30,12 @@
     .main-window__list-item {
       cursor: pointer;
       span {
+        &:nth-child(1) {
+          flex: 0 1 30%
+        }
+        &:nth-child(2) {
+          flex: 0 1 50%
+        }
         &:nth-child(3) {
           max-width: 50px;
         }

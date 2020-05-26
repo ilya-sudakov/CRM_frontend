@@ -117,6 +117,7 @@ const PartsStatistic = (props) => {
     } else {
       setIsLoading(false)
       setIsVisible(false)
+      canvasLoaded && graph.destroy()
     }
   }, [props.data])
   return (
