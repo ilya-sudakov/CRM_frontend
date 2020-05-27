@@ -31,7 +31,7 @@ class App extends React.Component {
       description: '',
       img: null,
       link: '/',
-      visible: true,
+      visible: false,
     },
     setLastNotification: (message) => {
       this.setState({

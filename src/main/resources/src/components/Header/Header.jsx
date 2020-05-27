@@ -71,8 +71,8 @@ const Header = (props) => {
                     : 'header__notification-message header__notification-message--hidden'
                 }
               >
+                <span>{ctx.lastNotification.title}</span>
                 <span>{ctx.lastNotification.body}</span>
-                <span>{ctx.lastNotification.description}</span>
                 <span></span>
                 <span></span>
               </div>
