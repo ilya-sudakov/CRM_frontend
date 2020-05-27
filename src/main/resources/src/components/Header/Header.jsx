@@ -73,6 +73,8 @@ const Header = (props) => {
               >
                 <span>{ctx.lastNotification.body}</span>
                 <span>{ctx.lastNotification.description}</span>
+                <span></span>
+                <span></span>
               </div>
             </Link>
             <div
