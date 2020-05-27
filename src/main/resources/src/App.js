@@ -8,10 +8,9 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
 import { login, refreshToken } from './utils/RequestsAPI/Authorization.jsx'
 import PageLoading from './components/MainPage/PageLoading/PageLoading.jsx'
 export const UserContext = React.createContext()
-// const json = require('./../templates/manifest.json')
 import { AppIcon__128 } from '../../../../assets/app_icon__128.png'
 import { AppIcon__144 } from '../../../../assets/app_icon__144.png'
-import { messaging } from './init-fcm.js'
+// import { messaging } from './init-fcm.js'
 
 class App extends React.Component {
   state = {
@@ -91,6 +90,7 @@ class App extends React.Component {
           window.location.reload()
         })
     }
+    // !FIREBASE
     // messaging
     //   .requestPermission()
     //   .then(async function () {
