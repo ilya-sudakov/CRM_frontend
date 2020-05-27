@@ -25,6 +25,24 @@ class App extends React.Component {
       roles: [],
       id: 0,
     },
+    newNotifications: 0,
+    lastNotification: {
+      body: '',
+      description: '',
+      img: null,
+      link: '/',
+      visible: false,
+    },
+    setLastNotification: (message) => {
+      this.setState({
+        lastNotification: {
+          ...message,
+        },
+      })
+    },
+    setNewNotificationsCount: (newValue) => {
+      this.setState({ newNotifications: newValue })
+    },
   }
 
   //Метод для обновления состояния данных пользователя
@@ -82,9 +100,14 @@ class App extends React.Component {
       .catch(function (err) {
         console.log('Unable to get permission to notify.', err)
       })
-    navigator.serviceWorker.addEventListener('message', (message) =>
-      console.log(message),
-    )
+    navigator.serviceWorker.addEventListener('message', (message) => {
+      console.log(message.data['firebase-messaging-msg-data'].data)
+      this.state.setNewNotificationsCount(this.state.newNotifications + 1)
+      this.state.setLastNotification({
+        ...message.data['firebase-messaging-msg-data'].data,
+        visible: true,
+      })
+    })
   }
 
   render() {
@@ -107,6 +130,9 @@ class App extends React.Component {
               value={{
                 userData: { ...this.state.userData },
                 userHasAccess: this.userHasAccess,
+                newNotifications: this.state.newNotifications,
+                lastNotification: this.state.lastNotification,
+                setLastNotification: this.state.setLastNotification,
               }}
             >
               <PrivateRoute
