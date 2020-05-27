@@ -3,8 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
 // const CopyPlugin = require('copy-webpack-plugin')
-// // WriteFilePlugin  needed only for webpack 3-4 and webpack dev-server
-// const WriteFilePlugin = require('write-file-webpack-plugin');
+// WriteFilePlugin  needed only for webpack 3-4 and webpack dev-server
+// const WriteFilePlugin = require('write-file-webpack-plugin')
+// const json = require('./assets/manifest.json')
 
 module.exports = {
   entry: [
@@ -19,8 +20,18 @@ module.exports = {
   mode: 'development',
   module: {
     rules: [
+      // {
+      //   test: /\.json$/,
+      //   loader: 'file-loader',
+      //   type: 'javascript/auto',
+      //   exclude: /node_modules/,
+      //   options: {
+      //     name: 'public/[name].[ext]',
+      //     esModule: false,
+      //   },
+      // },
       {
-        test: /\.jsx?/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: [
           {
@@ -46,23 +57,11 @@ module.exports = {
           'sass-loader',
         ],
       },
-      //   {
-      //     test: /manifest.json$/,
-      //     loader: 'file-loader',
-      //     type: 'javascript/auto',
-      //     exclude: /node_modules/,
-      //     options: {
-      //       name(file) {
-      //         return '[name].[ext]'
-      //       },
-      //       esModule: false,
-      //     },
-      //   },
       {
-        test: /\.(png|svg|jpg|gif|ico)$/,
+        test: /\.(png|svg|jpg|gif|ico|json)$/,
         loader: 'file-loader',
         options: {
-          name: 'images/[name].[ext]',
+          name: 'assets/[name].[ext]',
         },
       },
     ],
@@ -86,6 +85,7 @@ module.exports = {
       template: './src/main/resources/templates/index.html',
       filename: 'index.html',
       favicon: './assets/favicon.ico',
+      manifest: '/assets/manifest.json',
     }),
     new Dotenv({
       path: './.env',

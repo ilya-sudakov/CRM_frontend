@@ -337,7 +337,8 @@
         // background-color: $button__background--inverted;
         // color: $secondary-text-color;
         .main-window__img {
-          transform: scale(1.1);
+          // transform: scale(1.1);
+        filter: brightness(2.4);
         }
       }
     }

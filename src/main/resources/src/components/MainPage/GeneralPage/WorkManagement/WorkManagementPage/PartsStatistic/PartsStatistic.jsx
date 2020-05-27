@@ -115,8 +115,8 @@ const PartsStatistic = (props) => {
         setGraph(createGraph(options))
       }, 150)
     } else {
-      setIsLoading(false)
       setIsVisible(false)
+      setIsLoading(false)
       canvasLoaded && graph.destroy()
     }
   }, [props.data])
