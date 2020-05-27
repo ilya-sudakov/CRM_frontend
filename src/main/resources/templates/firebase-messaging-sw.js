@@ -5,9 +5,9 @@ firebase.initializeApp({
   // Project Settings => Add Firebase to your web app
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
 })
-const messaging = firebase.messaging()
 
 if (firebase.messaging.isSupported()) {
+  const messaging = firebase.messaging()
   messaging.setBackgroundMessageHandler(function (payload) {
     console.log('Handling background message ', payload)
 
