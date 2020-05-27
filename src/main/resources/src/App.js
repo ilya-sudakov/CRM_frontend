@@ -91,23 +91,23 @@ class App extends React.Component {
           window.location.reload()
         })
     }
-    messaging
-      .requestPermission()
-      .then(async function () {
-        const token = await messaging.getToken()
-        console.log('token: ' + token)
-      })
-      .catch(function (err) {
-        console.log('Unable to get permission to notify.', err)
-      })
-    navigator.serviceWorker.addEventListener('message', (message) => {
-      console.log(message.data['firebase-messaging-msg-data'].data)
-      this.state.setNewNotificationsCount(this.state.newNotifications + 1)
-      this.state.setLastNotification({
-        ...message.data['firebase-messaging-msg-data'].data,
-        visible: true,
-      })
-    })
+    // messaging
+    //   .requestPermission()
+    //   .then(async function () {
+    //     const token = await messaging.getToken()
+    //     console.log('token: ' + token)
+    //   })
+    //   .catch(function (err) {
+    //     console.log('Unable to get permission to notify.', err)
+    //   })
+    // navigator.serviceWorker.addEventListener('message', (message) => {
+    //   console.log(message.data['firebase-messaging-msg-data'].data)
+    //   this.state.setNewNotificationsCount(this.state.newNotifications + 1)
+    //   this.state.setLastNotification({
+    //     ...message.data['firebase-messaging-msg-data'].data,
+    //     visible: true,
+    //   })
+    // })
   }
 
   render() {
