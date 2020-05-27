@@ -1,7 +1,19 @@
 {
   "gcm_sender_id": "103953800507",
   "start_url": "/",
-  "name" : "c.r.m.",
+  "name": "c.r.m.",
   "display": "standalone",
-  "scope": "/"
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/app_icon__128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/app_icon__144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
 }

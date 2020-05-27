@@ -4,11 +4,13 @@ import exitSVG from '../../../../../../assets/header/exit.svg'
 import employeeSVG from '../../../../../../assets/header/employee.svg'
 // import logoSVG from '../../../../../../assets/header/logo.png'
 import newLogoSVG from '../../../../../../assets/header/header__new_logo.png'
+import notificationBellSVG from '../../../../../../assets/notifications/notification_bell.svg'
 import { Link } from 'react-router-dom'
 import './Header.scss'
 
 const Header = (props) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false)
+  const [newNotifications, setNewNotifications] = useState(0)
 
   const sideMenuClickDesktop = () => {
     props.setSideMenu(!props.sideMenu)
@@ -40,6 +42,18 @@ const Header = (props) => {
                 </div> */}
       </div>
       <div className="header__menu">
+        <Link
+          className={
+            newNotifications > 0
+              ? 'header__item header__item--notification'
+              : 'header__item header__item--notification header__item--notification-empty'
+          }
+          data-notifications={newNotifications}
+          // to="/notifications"
+          to="/"
+        >
+          <img className="header__img" src={notificationBellSVG} alt="" />
+        </Link>
         <div
           className="header__item header__item--user"
           onClick={

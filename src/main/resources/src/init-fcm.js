@@ -1,14 +1,14 @@
 import * as firebase from 'firebase/app'
 import 'firebase/messaging'
 const initializedFirebaseApp = firebase.initializeApp({
-  apiKey: 'AIzaSyDrKl7_lL_cRf24vR5EHQtIY1sfum1iHM0',
-  authDomain: 'crm-test-43d00.firebaseapp.com',
-  databaseURL: 'https://crm-test-43d00.firebaseio.com',
-  projectId: 'crm-test-43d00',
-  storageBucket: 'crm-test-43d00.appspot.com',
-  messagingSenderId: '735601754535',
-  appId: '1:735601754535:web:7fa59c7e80419294537682',
-  measurementId: 'G-NX5EHDN8DM',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_PROJECT_ID + '.firebaseapp.com',
+  databaseURL: 'https://' + process.env.FIREBASE_PROJECT_ID + '.firebaseio.com',
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_PROJECT_ID + '.appspot.com',
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 })
 const messaging = initializedFirebaseApp.messaging()
 messaging.usePublicVapidKey(

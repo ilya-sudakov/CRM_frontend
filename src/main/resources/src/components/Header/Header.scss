@@ -141,6 +141,45 @@
         }
       }
 
+      &--notification {
+        margin-right: 10px;
+        position: relative;
+        // border: 1px solid #9b9b9b;
+        border-radius: 999px;
+        padding: 5px 10px;
+        transition: 100ms ease-in-out;
+
+        .header__img {
+          width: 25px;
+        }
+
+        &::after {
+          content: attr(data-notifications);
+          // background-color: $secondary-text-color;
+          background-color: $button__background--inverted;
+          border-radius: 999px;
+          color: $secondary-text-color;
+          padding: 3px 7px;
+          width: fit-content;
+          // height: 1rem;
+          line-height: 0.8rem;
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          font-size: 12px;
+          transform: scale(1);
+          transition: 100ms ease-in-out;
+        }
+        &-empty {
+          .header__img {
+            filter: brightness(2);
+          }
+          &::after {
+            transform: scale(0);
+          }
+        }
+      }
+
       &--user {
         display: flex;
         flex-direction: row;
