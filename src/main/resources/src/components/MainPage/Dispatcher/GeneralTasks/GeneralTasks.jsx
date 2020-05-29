@@ -12,6 +12,7 @@ const GeneralTasks = (props) => {
   const [generalTasks, setGeneralTasks] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  //Статусы задач
   const [taskStatuses, setTaskStatuses] = useState([
     {
       name: 'Выполнено',
@@ -42,6 +43,8 @@ const GeneralTasks = (props) => {
 
   useEffect(() => {
     document.title = 'Основные задачи'
+    //abortController для прерывания загрузки данных
+    //при переходе на другие страницы
     let abortController = new AbortController()
     loadTasks(abortController.signal)
     return function cancel() {
@@ -49,6 +52,7 @@ const GeneralTasks = (props) => {
     }
   }, [])
 
+  //Запрос на получение списка задач
   const loadTasks = (signal) => {
     setIsLoading(true)
     return getMainTasks(signal)
@@ -59,11 +63,13 @@ const GeneralTasks = (props) => {
         setGeneralTasks(res)
       })
       .catch((error) => {
+        //Обработка ошибок
         setIsLoading(false)
         console.log(error)
       })
   }
 
+  //Удаление задачи
   const deleteItem = (id) => {
     deleteMainTask(id).then(() => loadTasks())
   }
