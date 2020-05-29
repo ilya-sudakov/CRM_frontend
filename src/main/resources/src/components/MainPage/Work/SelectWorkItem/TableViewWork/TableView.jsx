@@ -53,7 +53,13 @@ const TableView = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {sortProducts(props.data).map((work, work_id) => (
-            <div key={work_id} className="main-window__list-item">
+            <div
+              key={work_id}
+              className="main-window__list-item"
+              onClick={() => {
+                props.selectWork(work.work, work.id, work.typeOfWork)
+              }}
+            >
               <span>
                 <div className="main-window__mobile-text">Название:</div>
                 {work.work}

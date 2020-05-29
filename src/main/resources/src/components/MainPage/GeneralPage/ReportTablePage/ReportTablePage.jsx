@@ -65,6 +65,7 @@ const ReportTablePage = (props) => {
                 workArray: [
                   {
                     workControlProduct: workItem.workControlProduct,
+                    partsWorks: workItem.partsWorks,
                     workList: workItem.workList,
                     day: workItem.day,
                     hours: workItem.hours,
@@ -81,6 +82,7 @@ const ReportTablePage = (props) => {
                   ...employeesWorkList[workItem.employee.id].workArray,
                   {
                     workControlProduct: workItem.workControlProduct,
+                    partsWorks: workItem.partsWorks,
                     workList: workItem.workList,
                     day: workItem.day,
                     hours: workItem.hours,
@@ -111,6 +113,7 @@ const ReportTablePage = (props) => {
                     [workItem.day]: [
                       {
                         workControlProduct: workItem.workControlProduct,
+                        partsWorks: workItem.partsWorks,
                         workList: workItem.workList,
                         day: workItem.day,
                         hours: workItem.hours,
@@ -130,6 +133,7 @@ const ReportTablePage = (props) => {
                       ...newWorkList[item.employee.id].works[workItem.day],
                       {
                         workControlProduct: workItem.workControlProduct,
+                        partsWorks: workItem.partsWorks,
                         workList: workItem.workList,
                         day: workItem.day,
                         hours: workItem.hours,
@@ -580,7 +584,8 @@ export const EmployeeInfo = (props) => {
                             ['час', 'часа', 'часов'],
                           )}
                       </span>
-                      {item.workControlProduct.length > 0 && (
+                      {(item.workControlProduct.length > 0 ||
+                        item.partsWorks.length > 0) && (
                         <div className="main-window__list">
                           <div className="main-window__list-item main-window__list-item--header">
                             <span>Название</span>
@@ -600,6 +605,24 @@ export const EmployeeInfo = (props) => {
                                     Кол-во:
                                   </div>
                                   {addSpaceDelimiter(product.quantity)}
+                                </span>
+                              </div>
+                            )
+                          })}
+                          {item.partsWorks.map((draft) => {
+                            return (
+                              <div className="main-window__list-item">
+                                <span>
+                                  <div className="main-window__mobile-text">
+                                    Название:
+                                  </div>
+                                  {draft.name}
+                                </span>
+                                <span>
+                                  <div className="main-window__mobile-text">
+                                    Кол-во:
+                                  </div>
+                                  {addSpaceDelimiter(draft.quantity)}
                                 </span>
                               </div>
                             )

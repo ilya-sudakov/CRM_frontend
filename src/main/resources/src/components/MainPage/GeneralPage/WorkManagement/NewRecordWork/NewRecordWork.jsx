@@ -15,6 +15,7 @@ import {
 import {
   addRecordedWork,
   addProductToRecordedWork,
+  addDraftToRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 // import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
 import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx'
@@ -99,6 +100,7 @@ const NewRecordWork = (props) => {
     if (curPage !== 1) {
       return setCurPage(1)
     } else {
+      let workId = 0
       setIsLoading(true)
       console.log(worktimeInputs)
       const newWork = worktimeInputs.works.map((item) => {
@@ -114,20 +116,35 @@ const NewRecordWork = (props) => {
           return addRecordedWork(temp)
             .then((res) => res.json())
             .then((res) => {
+              workId = res.id
               // console.log(res);
               Promise.all(
                 item.product.map((product) => {
                   // console.log(product);
                   return addProductToRecordedWork(
-                    res.id,
+                    workId,
                     product.id,
                     product.quantity,
                     { name: product.name },
                   )
                 }),
-              ).then(() => {
-                props.history.push('/work-managment')
-              })
+              )
+            })
+            .then(() => {
+              return Promise.all(
+                item.draft.map((draft) => {
+                  // console.log(product);
+                  return addDraftToRecordedWork(
+                    workId,
+                    draft.id,
+                    draft.type,
+                    draft.quantity,
+                  )
+                }),
+              )
+            })
+            .then(() => {
+              props.history.push('/work-managment')
             })
       })
       Promise.all(newWork)
@@ -142,7 +159,7 @@ const NewRecordWork = (props) => {
         })
     }
   }
-  
+
   const loadProducts = (signal) => {
     getCategoriesNames(signal) //Только категории
       .then((res) => res.json())
@@ -357,10 +374,10 @@ const NewRecordWork = (props) => {
                   if (cur.workType === 'Без продукции/чертежа') {
                     return sum + 1
                   } else if (cur.workType === 'Чертеж') {
+                    return sum + cur?.draft.length
                     {
-                      /* return sum + cur?.draft.length */
+                      /* return sum + 1 */
                     }
-                    return sum + 1
                   } else return cur?.product.length
                 }, 0) > 0 ? (
                   <Button

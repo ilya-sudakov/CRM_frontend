@@ -18,6 +18,8 @@ import {
   deleteProductFromRecordedWork,
   addProductToRecordedWork,
   addRecordedWork,
+  deleteDraftFromRecordedWork,
+  addDraftToRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
@@ -122,7 +124,7 @@ const EditRecordWork = (props) => {
                   deleteProductFromRecordedWork(itemId, product.id)
                 },
               )
-              Promise.all(oldProductsArr).then(() => {
+              return Promise.all(oldProductsArr).then(() => {
                 const productsArr = item.product.map((product) => {
                   addProductToRecordedWork(
                     itemId,
@@ -133,10 +135,31 @@ const EditRecordWork = (props) => {
                     },
                   )
                 })
-                Promise.all(productsArr).then(() => {
-                  props.history.push('/work-managment')
-                })
+                Promise.all(productsArr)
               })
+            })
+            .then(() => {
+              // console.log(res);
+              const oldProductsArr = worktimeInputs.originalWorks[0].draft.map(
+                (draft) => {
+                  deleteDraftFromRecordedWork(itemId, draft.partId, draft.type)
+                },
+              )
+              Promise.all(oldProductsArr).then(() => {
+                return Promise.all(
+                  item.draft.map((draft) => {
+                    addDraftToRecordedWork(
+                      itemId,
+                      draft.partId,
+                      draft.type,
+                      draft.quantity,
+                    )
+                  }),
+                )
+              })
+            })
+            .then(() => {
+              props.history.push('/work-managment')
             })
             .catch((error) => {
               alert('Ошибка при добавлении записи')
@@ -153,9 +176,20 @@ const EditRecordWork = (props) => {
                   name: product.name,
                 })
               })
-              Promise.all(productsArr).then(() => {
-                props.history.push('/')
-              })
+              Promise.all(productsArr)
+                .then(() => {
+                  const productsArr = item.draft.map((draft) => {
+                    addDraftToRecordedWork(
+                      itemId,
+                      draft.partId,
+                      draft.type,
+                      draft.quantity,
+                    )
+                  })
+                })
+                .then(() => {
+                  props.history.push('/')
+                })
             })
             .catch((error) => {
               alert('Ошибка при добавлении записи')
@@ -221,6 +255,17 @@ const EditRecordWork = (props) => {
                     }),
                   ),
                 ],
+                draft: [
+                  ...res.partsWorks.map((item) =>
+                    Object.assign({
+                      id: item.id,
+                      partId: item.partId,
+                      name: item.name,
+                      type: item.partType,
+                      quantity: item.quantity,
+                    }),
+                  ),
+                ],
               },
             ],
             originalWorks: [
@@ -233,6 +278,17 @@ const EditRecordWork = (props) => {
                     Object.assign({
                       id: item.product.id,
                       name: item.product.name,
+                      quantity: item.quantity,
+                    }),
+                  ),
+                ],
+                draft: [
+                  ...res.partsWorks.map((item) =>
+                    Object.assign({
+                      id: item.id,
+                      partId: item.partId,
+                      name: item.name,
+                      type: item.partType,
                       quantity: item.quantity,
                     }),
                   ),

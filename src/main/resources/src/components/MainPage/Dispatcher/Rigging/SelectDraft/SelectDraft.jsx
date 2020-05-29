@@ -8,6 +8,7 @@ import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
 import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
+import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
 
 const SelectDraft = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -17,6 +18,7 @@ const SelectDraft = (props) => {
   const [showWindow, setShowWindow] = useState(false)
   const [closeWindow, setCloseWindow] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
 
   const search = () => {
     // console.log(drafts);
@@ -67,7 +69,7 @@ const SelectDraft = (props) => {
             return item.stampParts.map((stamp) => {
               newDrafts.push({
                 ...stamp,
-                type: 'stamp',
+                type: 'Stamp',
               })
             })
           })
@@ -83,7 +85,7 @@ const SelectDraft = (props) => {
                 return item.pressParts.map((stamp) => {
                   newDrafts.push({
                     ...stamp,
-                    type: 'press-form',
+                    type: 'Press',
                   })
                 })
               })
@@ -93,18 +95,35 @@ const SelectDraft = (props) => {
               getMachine()
                 .then((response) => response.json())
                 .then((response) => {
-                  console.log(response)
+                  // console.log(response)
                   response.map((item) => {
                     return item.benchParts.map((stamp) => {
                       newDrafts.push({
                         ...stamp,
-                        type: 'machine',
+                        type: 'Bench',
                       })
                     })
                   })
                   setDrafts([...newDrafts])
-                  console.log(newDrafts)
+                  // console.log(newDrafts)
                 })
+            })
+        })
+        .then(() => {
+          getParts()
+            .then((res) => res.json())
+            .then((res) => {
+              // console.log(res)
+              res.map((item) => {
+                return item.detailParts.map((stamp) => {
+                  newDrafts.push({
+                    ...stamp,
+                    type: 'Detail',
+                  })
+                })
+              })
+              setDrafts([...newDrafts])
+              console.log(newDrafts)
             })
         })
     }
@@ -118,7 +137,7 @@ const SelectDraft = (props) => {
     setSelected([
       ...selected,
       {
-        id: id,
+        partId: id,
         name: value,
         type: type,
         quantity: 0,
@@ -127,7 +146,7 @@ const SelectDraft = (props) => {
     props.onChange([
       ...selected,
       {
-        id: id,
+        partId: id,
         type: type,
         name: value,
         quantity: 0,
@@ -139,7 +158,7 @@ const SelectDraft = (props) => {
     setSelected([
       ...selected,
       {
-        id: id,
+        partId: id,
         type: type,
         name: value,
         quantity: 0,
@@ -148,7 +167,7 @@ const SelectDraft = (props) => {
     props.onChange([
       ...selected,
       {
-        id: id,
+        partId: id,
         type: type,
         name: value,
         quantity: 0,
@@ -186,8 +205,9 @@ const SelectDraft = (props) => {
   }, [])
 
   useEffect(() => {
-    if (props.defaultValue !== undefined) {
+    if (props.defaultValue !== undefined && !defaultValueLoaded) {
       setSelected([...props.defaultValue])
+      setDefaultValueLoaded(true)
     }
     document.addEventListener('keydown', pressEscKey, false)
     drafts.length === 0 && loadDrafts()
@@ -195,7 +215,7 @@ const SelectDraft = (props) => {
     return () => {
       document.removeEventListener('keydown', pressEscKey, false)
     }
-  }, [props.defaultValue, props.categories])
+  }, [props.defaultValue, props.categories, showOptions])
 
   return (
     <div className="select-draft">
@@ -205,7 +225,7 @@ const SelectDraft = (props) => {
             ? 'select-draft__overlay'
             : 'select-draft__overlay select-draft__overlay--hidden'
         }
-        onClick={() => showOptions(!showOptions)}
+        onClick={() => setShowOptions(!showOptions)}
       ></div>
       {!props.readOnly && !props.workshop && (
         <div className="select-draft__searchbar">
@@ -219,7 +239,7 @@ const SelectDraft = (props) => {
             >
               Добавить чертеж
             </button>
-            <button
+            {/* <button
               className="select-draft__search_button"
               onClick={(e) => {
                 e.preventDefault()
@@ -242,7 +262,7 @@ const SelectDraft = (props) => {
               }}
             >
               Создать новый чертеж
-            </button>
+            </button> */}
           </div>
           <input
             type="text"
@@ -252,9 +272,9 @@ const SelectDraft = (props) => {
                 : 'select-draft__input'
             }
             onChange={handleInputChange}
-            onClick={
-              !props.readOnly ? () => setShowOptions(!showOptions) : null
-            }
+            onClick={() => {
+              !props.readOnly && setShowOptions(!showOptions)
+            }}
             placeholder={props.searchPlaceholder}
             readOnly={props.readOnly || props.workshop}
           />
@@ -360,7 +380,8 @@ const SelectDraft = (props) => {
               Кол-во{!props.readOnly && '*'}
               <input
                 quantity_id={index}
-                type="text"
+                // type="text"
+                type="number"
                 name="quantity"
                 autoComplete="off"
                 defaultValue={item.quantity != 0 ? item.quantity : 0}

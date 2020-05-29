@@ -704,7 +704,8 @@ const WorkManagementPage = (props) => {
                                             />
                                           </div>
                                         </span>
-                                        {work.workControlProduct.length > 0 && (
+                                        {(work.workControlProduct.length > 0 ||
+                                          work.partsWorks.length > 0) && (
                                           <div className="main-window__list-item main-window__list-item--header">
                                             <span>Название</span>
                                             <span>Кол-во</span>
@@ -734,6 +735,27 @@ const WorkManagementPage = (props) => {
                                                   Название:{' '}
                                                 </div>
                                                 {item.product.name}
+                                              </span>
+                                              <span>
+                                                <div className="main-window__mobile-text">
+                                                  Кол-во:{' '}
+                                                </div>
+                                                {addSpaceDelimiter(
+                                                  item.quantity,
+                                                )}
+                                              </span>
+                                              {/* <span><div className="main-window__mobile-text">Часы: </div>{work.hours}</span> */}
+                                            </div>
+                                          )
+                                        })}
+                                        {work.partsWorks.map((item) => {
+                                          return (
+                                            <div className="main-window__list-item">
+                                              <span>
+                                                <div className="main-window__mobile-text">
+                                                  Название:{' '}
+                                                </div>
+                                                {item.name}
                                               </span>
                                               <span>
                                                 <div className="main-window__mobile-text">

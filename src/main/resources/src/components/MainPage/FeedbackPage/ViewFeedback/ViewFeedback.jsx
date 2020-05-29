@@ -240,14 +240,14 @@ const ViewFeedback = (props) => {
                 )
               }}
               handleSubmit={(message) => {
-                addMessage({
+                return addMessage({
                   author: props.userData.username,
                   date: new Date().getTime() / 1000,
                   text: message,
                   discussionId: feedbackId,
                 })
                   .then(() => {
-                    editFeedback(
+                    return editFeedback(
                       {
                         date: new Date(formInputs.date).getTime() / 1000,
                         subject: formInputs.subject,
@@ -258,13 +258,13 @@ const ViewFeedback = (props) => {
                       },
                       feedbackId,
                     )
+                  })
+                  .then(() => {
                     setFormInputs({
                       ...formInputs,
                       isRead: false,
                     })
-                  })
-                  .then(() => {
-                    loadData(feedbackId)
+                    return loadData(feedbackId)
                   })
               }}
             />
