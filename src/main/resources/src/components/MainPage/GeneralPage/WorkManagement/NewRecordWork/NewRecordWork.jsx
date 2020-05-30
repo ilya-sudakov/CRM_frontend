@@ -246,7 +246,7 @@ const NewRecordWork = (props) => {
     //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
     products.length === 0 && loadProducts(abortController.signal)
     return function cancel() {
-      worktimeInputs.works.length === 0 && abortController.abort()
+      abortController.abort()
     }
   }, [worktimeInputs])
 
