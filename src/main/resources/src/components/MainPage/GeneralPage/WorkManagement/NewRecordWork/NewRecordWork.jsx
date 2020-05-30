@@ -374,10 +374,10 @@ const NewRecordWork = (props) => {
                   if (cur.workType === 'Без продукции/чертежа') {
                     return sum + 1
                   } else if (cur.workType === 'Чертеж') {
-                    return sum + cur?.draft.length
                     {
-                      /* return sum + 1 */
+                      /* return sum + cur?.draft.length */
                     }
+                    return sum + 1
                   } else return cur?.product.length
                 }, 0) > 0 ? (
                   <Button
