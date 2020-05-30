@@ -704,8 +704,8 @@ const WorkManagementPage = (props) => {
                                             />
                                           </div>
                                         </span>
-                                        {(work.workControlProduct.length > 0 ||
-                                          work?.partsWorks?.length > 0) && (
+                                        {work.workControlProduct.length > 0 && (
+                                          //||  work.partsWorks.length > 0
                                           <div className="main-window__list-item main-window__list-item--header">
                                             <span>Название</span>
                                             <span>Кол-во</span>
@@ -748,7 +748,7 @@ const WorkManagementPage = (props) => {
                                             </div>
                                           )
                                         })}
-                                        {work?.partsWorks.map((item) => {
+                                        {/* {work.partsWorks.map((item) => {
                                           return (
                                             <div className="main-window__list-item">
                                               <span>
@@ -765,10 +765,9 @@ const WorkManagementPage = (props) => {
                                                   item.quantity,
                                                 )}
                                               </span>
-                                              {/* <span><div className="main-window__mobile-text">Часы: </div>{work.hours}</span> */}
                                             </div>
                                           )
-                                        })}
+                                        })} */}
                                       </React.Fragment>
                                     )
                                   }
