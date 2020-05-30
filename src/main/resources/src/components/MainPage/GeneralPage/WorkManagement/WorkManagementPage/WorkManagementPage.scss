@@ -30,6 +30,12 @@
     .main-window__list-item {
       cursor: pointer;
       span {
+        &:nth-child(1) {
+          flex: 0 1 30%
+        }
+        &:nth-child(2) {
+          flex: 0 1 50%
+        }
         &:nth-child(3) {
           max-width: 50px;
         }
@@ -113,7 +119,7 @@
     width: 2px;
     background-color: $button__background--inverted;
     // height: calc(100% - 30px);
-    height: calc(100% - 30px);
+    height: calc(100% - 25px);
     // height: 15px;
     position: absolute;
     top: 0;
@@ -128,7 +134,8 @@
     // box-shadow: none !important;
     // border: 1px solid black;
     position: relative;
-    padding-bottom: 15px !important;
+    padding-bottom: 10px !important;
+    font-size: 80% !important;
 
     &--hidden {
       padding-bottom: 0px !important;
@@ -157,7 +164,7 @@
       // background-color: $button__background--inverted;
       background-color: #dddddd;
       // background-color: red;
-      height: 25px;
+      height: 22px;
       font-size: 90%;
       position: absolute;
       // top: 16px;
@@ -165,7 +172,7 @@
       // border-radius: 999px;
       //line
       // top: 22px;
-      bottom: 6px;
+      bottom: 2px;
       left: 5px;
     }
 
@@ -178,7 +185,7 @@
     }
 
     > span:not(:first-of-type) {
-      margin-top: 25px;
+      margin-top: 10px;
     }
     > span:last-of-type {
       // background-color: red;
@@ -194,6 +201,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      font-size: 95% !important;
 
       div:first-child {
         text-decoration: underline;
@@ -213,7 +221,7 @@
         border-color: transparent transparent transparent $button__background--inverted;
         position: absolute;
         // top: 0px;
-        left: -105px;
+        left: -85px;
         border-radius: 999px;
         // transform: rotate(-45deg);
         //line
@@ -241,7 +249,7 @@
         font-size: 90%;
         position: absolute;
         top: -3.5px;
-        left: -95px;
+        left: -75px;
         border-radius: 999px;
       }
     }
@@ -249,7 +257,7 @@
     span,
     .main-window__list-item {
       // width: 90%;
-      width: calc(100% - 200px);
+      width: calc(100% - 160px);
       margin-left: 20px;
 
       span {
@@ -390,6 +398,7 @@
     }
 
     .main-window__list-options {
+      font-size: 100% !important;
       .main-window__list-item {
         margin-left: 0px;
         width: calc(90% - 10px);

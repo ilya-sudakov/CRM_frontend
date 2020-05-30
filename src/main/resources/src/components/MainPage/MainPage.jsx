@@ -55,6 +55,7 @@ import {
   PackagingPage,
   NewPackaging,
   EditPackaging,
+  ReportTablePage,
 } from './lazyImports.jsx'
 import SideMenu from '../SideMenu/SideMenu.jsx'
 import PageNotFound from './PageNotFound/PageNotFound.jsx'
@@ -72,13 +73,6 @@ class MainPage extends React.Component {
     this.setState({
       sidemenu_hidden: sidemenu_hidden,
     })
-  }
-
-  clickOverlay = (event) => {
-    const overlay = document.getElementsByClassName('main_page__overlay')[0]
-    overlay.classList.contains('main_page__overlay--hidden')
-      ? overlay.classList.remove('main_page__overlay--hidden')
-      : overlay.classList.add('main_page__overlay--hidden')
   }
 
   componentDidMount() {
@@ -99,7 +93,6 @@ class MainPage extends React.Component {
           userData={this.props.userData}
           sideMenu={this.state.sidemenu_hidden}
           setSideMenu={this.setSideMenu}
-          clickOverlay={this.clickOverlay}
           userHasAccess={this.props.userHasAccess}
         />
         <div className="main_page__content">
@@ -303,7 +296,12 @@ class MainPage extends React.Component {
                       transferData: value,
                     })
                   }
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_LEMZ',
+                    'ROLE_DISPATCHER',
+                  ]}
                 />
                 <PrivateRoute
                   path="/lepsari"
@@ -322,7 +320,12 @@ class MainPage extends React.Component {
                       transferData: value,
                     })
                   }
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_LEPSARI',
+                    'ROLE_DISPATCHER',
+                  ]}
                 />
                 <PrivateRoute
                   path="/dispatcher/rigging"
@@ -333,6 +336,7 @@ class MainPage extends React.Component {
                     'ROLE_ADMIN',
                     'ROLE_DISPATCHER',
                     'ROLE_ENGINEER',
+                    'ROLE_WORKSHOP'
                   ]}
                 />
                 <PrivateRoute
@@ -594,6 +598,14 @@ class MainPage extends React.Component {
                 <PrivateRoute
                   path="/packaging/edit/"
                   component={EditPackaging}
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={['ROLE_ADMIN']}
+                />
+                <PrivateRoute
+                  exact
+                  path="/report-table"
+                  component={ReportTablePage}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN']}

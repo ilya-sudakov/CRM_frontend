@@ -86,7 +86,21 @@ const TableView = (props) => {
           {sortEmployees(props.data).map(
             (employee, employee_id) =>
               employee.relevance !== 'Уволен' && (
-                <div className="main-window__list-item" key={employee_id}>
+                <div
+                  className="main-window__list-item"
+                  key={employee_id}
+                  onClick={() => {
+                    props.selectEmployee(
+                      employee.lastName +
+                        ' ' +
+                        employee.name +
+                        ' ' +
+                        employee.middleName,
+                      employee.id,
+                    )
+                    props.setCloseWindow(!props.closeWindow)
+                  }}
+                >
                   <span>
                     <div className="main-window__mobile-text">ФИО:</div>
                     {employee.lastName +

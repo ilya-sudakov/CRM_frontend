@@ -26,6 +26,14 @@
       .main-form__wrapper-item {
         width: calc(100% / var(--page-items));
 
+        .select__options {
+          max-height: 120px;
+        }
+
+        .select-draft__options {
+          max-height: 120px;
+        }
+
         .main-form__buttons {
           // width: 100%;
           // width: calc(100% - 60px);

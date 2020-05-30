@@ -231,7 +231,7 @@ const WorkManagement = (props) => {
                       {item.lastName + ' ' + item.name + ' ' + item.middleName}
                     </div>
                     <div>
-                      Время работы:{' '}
+                      {/* Время работы:{' '} */}
                       {employeesMap !== undefined &&
                         Math.floor(employeesMap[item.id]?.hours * 100) / 100 +
                           ' ' +

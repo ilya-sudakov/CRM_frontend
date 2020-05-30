@@ -3,7 +3,6 @@ import './FeedbackPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import viewSVG from '../../../../../../../assets/tableview/view.svg'
-import editSVG from '../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { Link } from 'react-router-dom'
@@ -177,7 +176,14 @@ const FeedbackPage = (props) => {
                         </div>
                         {item.author}
                       </span>
-                      {/* <div className="feedback-page__info-message"><div className="main-window__mobile-text">Новые сообщения: </div>{2}</div> */}
+                      {item.isRead === false && (
+                        <div className="feedback-page__info-message">
+                          {/* <div className="main-window__mobile-text">
+                            Новые сообщения:{' '}
+                          </div> */}
+                          Непрочитанные сообщения
+                        </div>
+                      )}
                     </div>
                     <div className="main-window__actions">
                       <div

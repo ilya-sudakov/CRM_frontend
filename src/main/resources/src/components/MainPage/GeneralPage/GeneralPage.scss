@@ -12,6 +12,9 @@
     }
 
     .main-window__button {
+      .main-window__img {
+        filter: brightness(3);
+      }
       &:last-child {
         margin-right: 0;
       }

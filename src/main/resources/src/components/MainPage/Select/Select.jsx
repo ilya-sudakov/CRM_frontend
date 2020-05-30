@@ -15,6 +15,7 @@ import {
   getProductsByLocation,
 } from '../../../utils/RequestsAPI/Products.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
+import { addSpaceDelimiter } from '../../../utils/functions.jsx'
 
 const Select = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -374,7 +375,6 @@ const Select = (props) => {
               {!props.readOnly ? (
                 <ColorPicker
                   defaultName={item.name}
-                  index={index}
                   id={item.id}
                   handleStatusChange={handleStatusChange}
                 />
@@ -396,7 +396,7 @@ const Select = (props) => {
               </span>
               <input
                 quantity_id={index}
-                type="text"
+                type={props.numberInput ? 'number' : 'text'}
                 name="quantity"
                 autoComplete="off"
                 defaultValue={item.quantity != 0 ? item.quantity : 0}

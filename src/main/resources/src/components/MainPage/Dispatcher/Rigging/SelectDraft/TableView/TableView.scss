@@ -2,8 +2,11 @@
 
 .select-drafts__list {
   .main-window__list {
-    .main-window__list-item span{
+    .main-window__list-item {
+      cursor: pointer;
+      span {
         flex: 0 1 25%;
+      }
     }
   }
 }

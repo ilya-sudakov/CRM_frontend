@@ -12,12 +12,13 @@
   &__title {
     margin-bottom: 20px;
     font-size: 24px;
+    text-align: center;
   }
 
   &__button {
     cursor: pointer;
     padding: 15px 25px;
-    border-radius: 15px;
+    border-radius: 5px;
     background-color: $button__background--inverted;
     color: $secondary-text-color;
     transition: 0.2s ease-in-out;

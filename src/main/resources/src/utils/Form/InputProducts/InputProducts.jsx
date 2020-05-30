@@ -23,6 +23,7 @@ const InputProducts = (props) => {
                     products={props.products}
                     workshop={props.workshop}
                     noPackaging={props.noPackaging}
+                    numberInput
                     userHasAccess={props.userHasAccess}
                 />
             </div>

@@ -12,7 +12,10 @@ import '../../../../utils/MainWindow/MainWindow.scss'
 import viewSVG from '../../../../../../../../assets/tableview/view.svg'
 import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
-import { numberToString } from '../../../../utils/functions.jsx'
+import {
+  numberToString,
+  addSpaceDelimiter,
+} from '../../../../utils/functions.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -203,7 +206,7 @@ const TableView = (props) => {
                           </span>
                           <span>
                             <div className="main-window__mobile-text">Вес:</div>
-                            {product.weight}
+                            {addSpaceDelimiter(product.weight)}
                           </span>
                           <span>
                             <div className="main-window__mobile-text">

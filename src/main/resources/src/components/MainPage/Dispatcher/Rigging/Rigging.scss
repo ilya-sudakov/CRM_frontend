@@ -14,56 +14,118 @@
   }
   .main-window__header {
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    width: calc(100% - 25px) !important;
+    // width: calc(100% - 25px) !important;
     border-top-left-radius: 10px;
     text-align: center;
     z-index: 1;
     margin: 0 !important;
+    // margin-bottom: 5px;
+
+    &--hidden {
+      transform: scaleY(0);
+      height: 0;
+    }
+
+    .main-window__title {
+      // // flex: 0 1 20%;
+      // width: calc(100% - 20px);
+      // // font-size: 90%;
+      // font-size: 24px;
+      // padding: 10px 10px;
+      // margin: 0;
+      // padding-top: 0;
+      display: none;
+    }
 
     .main-window__menu {
       display: flex;
       // flex: 0 1 80%;
-      width: 100%;
-      align-self: flex-end;
-
+      // width: 100%;
+      width: calc(100% - 25px);
+      // align-self: flex-end;
+      background-color: $secondary-text-color;
+      // border-bottom-left-radius: 5px;
+      border-radius: 0;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      margin-bottom: 0;
+      // border-bottom-right-radius: 5px;
+      // margin-bottom: 10px;
       .main-window__item {
-        width: 100%;
+        // width: 100%;
+        width: fit-content;
         margin-right: 2.5px;
         font-size: 80%;
-        padding: 10px 0;
+        padding: 10px 50px;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        color: lighten($primary-text-color, 100%);
-        background-color: darken($table-primary__background, 10%);
+        // color: lighten($primary-text-color, 100%);
+        // background-color: darken($table-primary__background, 10%);
+        color: lighten($primary-text-color, 50%);
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         transition: 0.2s ease-in-out;
-
+        position: relative;
+        cursor: pointer;
+        &:first-child {
+          // margin-left: auto;
+          border-bottom-left-radius: 5px;
+        }
         &:last-child {
           margin: 0;
         }
 
+        &::after {
+          content: "";
+          position: absolute;
+          width: calc(100% - 50px);
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+          border-bottom-left-radius: 2.5px;
+          border-bottom-right-radius: 2.5px;
+          height: 5px;
+          bottom: 0;
+          left: 25px;
+          background-color: transparent;
+          transition: 200ms ease-in-out;
+        }
+
         &:hover {
           color: lighten($primary-text-color, 10%);
-          background-color: darken($primary-background-color, 5%);
+          // background-color: darken($primary-background-color, 5%);
         }
 
         &--active {
-          color: lighten($primary-text-color, 50%);
+          // color: lighten($primary-text-color, 50%);
+          color: darken($button__background--inverted, 5%);
           background-color: $primary-background-color;
+
+          &:hover {
+            color: lighten($button__background--inverted, 5%);
+          }
+
+          &::after {
+            background-color: lighten($button__background--inverted, 5%);
+          }
         }
       }
     }
   }
 
   .searchbar {
-    background-color: $secondary-text-color;
-    border-top-left-radius: 0px;
+    // border-top-right-radius: 0px;
     border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    background-color: $secondary-text-color;
+    // width: calc(100% - 25px);
+    text-align: left;
+    // border-bottom-left-radius: 0;
+    // border-bottom-right-radius: 0;
     margin-bottom: 10px;
   }
 
@@ -97,20 +159,43 @@
     }
   }
 
-  @media (max-width: 620px) {
+  @media (max-width: 768px) {
     .main-window__header {
+      width: calc(100% - 10px);
       .main-window__title {
         display: none;
       }
       .main-window__menu {
-        flex: 0 1 calc(100% - 10px);
+        width: calc(100% - 10px);
 
         .main-window__item {
           flex-direction: column;
+          justify-content: space-between;
+          padding: 10px 20px;
+          width: 100%;
 
           .main-window__addButton {
             margin: 0;
+            margin-top: 5px;
           }
+        }
+      }
+    }
+
+    .searchbar {
+      width: calc(100% - 10px) !important;
+    }
+
+    .main-window__content {
+      width: calc(100% - 10px);
+    }
+  }
+
+  @media (max-width: 425px) {
+    .main-window__header {
+      .main-window__menu {
+        .main-window__item {
+          padding: 10px 5px;
         }
       }
     }

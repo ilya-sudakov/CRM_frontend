@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png'
-import { formatDateString } from '../../../../../utils/functions.jsx'
+import { formatDateString, addSpaceDelimiter } from '../../../../../utils/functions.jsx'
 import './TableView.scss'
 import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import editSVG from '../../../../../../../../../assets/tableview/edit.svg'
@@ -90,7 +90,7 @@ const TableView = (props) => {
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Кол-во:</div>
-                  {transportation.quantity}
+                  {addSpaceDelimiter(transportation.quantity)}
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Откуда:</div>

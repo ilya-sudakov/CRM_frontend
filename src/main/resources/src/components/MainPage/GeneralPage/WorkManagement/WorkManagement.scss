@@ -109,19 +109,23 @@
       background-color: $button__background--inverted;
       color: $secondary-text-color;
     }
-  }
-  .work-management__item div:nth-child(1) {
-    text-decoration: underline;
-    flex: 0 1 33.3%;
-    text-align: left;
-  }
-  .work-management__item div:nth-child(2) {
-    flex: 0 1 33.3%;
-  }
-  .work-management__item div:nth-child(3) {
-    text-decoration: underline;
-    flex: 0 1 33.3%;
-    text-align: right;
+
+    div:nth-child(1) {
+      text-decoration: underline;
+      flex: 0 1 50%;
+      text-align: left;
+      padding-right: 10px;
+    }
+    div:nth-child(2) {
+      flex: 0 1 20%;
+      max-width: 100px;
+      text-align: left;
+    }
+    div:nth-child(3) {
+      text-decoration: underline;
+      flex: 0 1 33.3%;
+      text-align: right;
+    }
   }
 
   @media (max-width: 425px) {

@@ -2,4 +2,23 @@
 
 .machine {
   
+    .main-window__menu {
+        width: calc(100%) !important;
+        border-radius: 0 !important;
+        border-bottom-left-radius: 5px !important;
+        border-bottom-right-radius: 5px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .searchbar {
+        // border-top-right-radius: 0px;
+        // border-top-right-radius: 0px;
+        // border-top-left-radius: 0px;
+        background-color: $secondary-text-color;
+        // width: calc(100% - 25px);
+        text-align: left;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        margin-bottom: 0px;
+    }
 }

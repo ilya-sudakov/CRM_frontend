@@ -212,6 +212,35 @@ const Clients = (props) => {
       <div className="main-window">
         <div className="main-window__header">
           <div className="main-window__title">{curCategory}</div>
+          <SearchBar
+            title="Поиск по клиентам"
+            placeholder="Введите запрос для поиска..."
+            setSearchQuery={setSearchQuery}
+            searchQuery={searchQuery}
+            onButtonClick={(query) => {
+              setIsLoading(true)
+              // console.log(query);
+              if (query === '') {
+                loadData(curCategory, curClientType)
+              } else {
+                searchClients({
+                  name: query,
+                })
+                  .then((res) => res.json())
+                  .then((res) => {
+                    // console.log(res);
+                    setClients(res)
+                    setItemsCount(res.length)
+                    setPagination([1])
+                    setIsLoading(false)
+                  })
+                  .catch((error) => {
+                    console.log(error)
+                    setIsLoading(false)
+                  })
+              }
+            }}
+          />
           <div className="main-window__menu">
             <Link
               to={'/clients/category/' + curCategory + '/active'}
@@ -245,35 +274,6 @@ const Clients = (props) => {
             </Link>
           </div>
         </div>
-        <SearchBar
-          title="Поиск по клиентам"
-          placeholder="Введите запрос для поиска..."
-          setSearchQuery={setSearchQuery}
-          searchQuery={searchQuery}
-          onButtonClick={(query) => {
-            setIsLoading(true)
-            // console.log(query);
-            if (query === '') {
-              loadData(curCategory, curClientType)
-            } else {
-              searchClients({
-                name: query,
-              })
-                .then((res) => res.json())
-                .then((res) => {
-                  // console.log(res);
-                  setClients(res)
-                  setItemsCount(res.length)
-                  setPagination([1])
-                  setIsLoading(false)
-                })
-                .catch((error) => {
-                  console.log(error)
-                  setIsLoading(false)
-                })
-            }
-          }}
-        />
         <FormWindow
           title={
             curForm === 'nextContactDate'

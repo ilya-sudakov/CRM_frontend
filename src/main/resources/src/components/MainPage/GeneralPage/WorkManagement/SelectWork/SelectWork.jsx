@@ -181,11 +181,10 @@ const SelectWork = (props) => {
                 <InputProducts
                   inputName="Продукция"
                   options
-                  id={0}
-                  customName={'select-products' + index}
                   defaultValue={item.product}
                   categories={props.categories}
                   products={props.products}
+                  numberInput
                   name="product"
                   noPackaging
                   onChange={(value) => {
@@ -204,31 +203,33 @@ const SelectWork = (props) => {
                   // workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />
               ) : null}
-              {/* {
-                                : selected[index].workType === 'Чертеж'
-                                    ? <div className="select-work__item">
-                                        <div className="select-work__input_name">Чертежи</div>
-                                        <div className="select-work__input_field">
-                                            <SelectDraft
-                                                onChange={(value) => {
-                                                    // console.log(value)
-                                                    let temp = selected;
-                                                    let originalItem = selected[index];
-                                                    temp.splice(index, 1, {
-                                                        ...originalItem,
-                                                        draft: value
-                                                    })
-                                                    setSelected([...temp]);
-                                                    props.handleWorkChange([...temp]);
-                                                }}
-                                                options
-                                                searchPlaceholder={"Добавьте чертеж нажав на кнопку 'Добавить чертеж'"}
-                                                userHasAccess={props.userHasAccess}
-                                                id={index}
-                                            />
-                                        </div>
-                                    </div>
-                            } */}
+              {/* 
+               : selected[index].workType === 'Чертеж' ? (
+                <div className="select-work__item">
+                  <div className="select-work__input_name">Чертежи</div>
+                  <div className="select-work__input_field">
+                    <SelectDraft
+                      options
+                      defaultValue={item.draft}
+                      onChange={(value) => {
+                        let temp = selected
+                        let originalItem = selected[index]
+                        temp.splice(index, 1, {
+                          ...originalItem,
+                          draft: value,
+                        })
+                        setSelected([...temp])
+                        props.handleWorkChange([...temp])
+                      }}
+                      searchPlaceholder={
+                        "Добавьте чертеж нажав на кнопку 'Добавить чертеж'"
+                      }
+                      userHasAccess={props.userHasAccess}
+                    />
+                  </div>
+                </div>
+              ) 
+               */}
               {!props.noTime && (
                 <div className="select-work__item">
                   <div className="select-work__input_name">Часы</div>

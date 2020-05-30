@@ -174,6 +174,7 @@ const EditMachine = (props) => {
                 .then(res => {
                     setMachineInputs({
                         ...res,
+                        lastEdited: res.lastEdited ? res.lastEdited : new Date(),
                         parts: res.benchParts
                     });
                 })

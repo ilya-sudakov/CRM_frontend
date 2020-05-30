@@ -5,38 +5,14 @@ import './SelectParts.scss'
 const SelectParts = (props) => {
   const [selected, setSelected] = useState([])
   const [options, setOptions] = useState([])
-
-  const clickOverlay = (event) => {
-    const overlay = document.getElementsByClassName('select_parts__overlay')[0]
-    if (!overlay.classList.contains('select_parts__overlay--hidden')) {
-      overlay.classList.add('select_parts__overlay--hidden')
-    }
-  }
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
 
   useEffect(() => {
-    if (props.defaultValue !== undefined) {
+    if (props.defaultValue !== undefined && !defaultValueLoaded) {
       setSelected([...props.defaultValue])
+      setDefaultValueLoaded(true)
     }
-    if (props.options !== undefined) {
-      setOptions([...props.options])
-    }
-  }, [props.defaultValue, props.options])
-
-  const clickOnForm = (e) => {
-    const id = e.currentTarget.getAttribute('index')
-    const form = document.getElementsByClassName('select_parts__selected_form')[
-      id
-    ]
-    if (form.classList.contains('select_parts__selected_form--hidden')) {
-      e.target.type !== 'text' &&
-        !e.target.classList.contains('select_parts__img') &&
-        form.classList.remove('select_parts__selected_form--hidden')
-    } else {
-      e.target.type !== 'text' &&
-        !e.target.classList.contains('select_parts__img') &&
-        form.classList.add('select_parts__selected_form--hidden')
-    }
-  }
+  }, [props.defaultValue, selected])
 
   const handleNewPart = (e) => {
     e.preventDefault()
@@ -54,6 +30,7 @@ const SelectParts = (props) => {
         grinding: '',
         erosion: '',
         controll: '',
+        isMinimized: true,
       },
     ])
     props.handlePartsChange([
@@ -98,10 +75,6 @@ const SelectParts = (props) => {
 
   return (
     <div className="select_parts">
-      <div
-        className="select_parts__overlay select_parts__overlay--hidden"
-        onClick={clickOverlay}
-      ></div>
       {!props.readOnly && (
         <button className="select_parts__button" onClick={handleNewPart}>
           Добавить деталь
@@ -119,7 +92,15 @@ const SelectParts = (props) => {
             <div
               className="select_parts__selected_header"
               index={index}
-              onClick={clickOnForm}
+              onClick={() => {
+                const temp = selected
+                temp.splice(index, 1, {
+                  ...item,
+                  isMinimized: !item.isMinimized,
+                })
+                setSelected([...temp])
+                props.handlePartsChange([...temp])
+              }}
             >
               <div className="select_parts__selected_name">
                 <span>Название: </span> {item.name}
@@ -133,7 +114,7 @@ const SelectParts = (props) => {
             </div>
             <div
               className={
-                props.readOnly || props.defaultValue
+                item.isMinimized
                   ? 'select_parts__selected_form select_parts__selected_form--hidden'
                   : 'select_parts__selected_form'
               }

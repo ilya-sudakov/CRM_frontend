@@ -8,7 +8,10 @@ import copySVG from '../../../../../../../../assets/tableview/copy.svg'
 import transferSVG from '../../../../../../../../assets/tableview/transfer.svg'
 import './TableView.scss'
 import { editRequestStatus } from '../../../../utils/RequestsAPI/Requests.jsx'
-import { formatDateString } from '../../../../utils/functions.jsx'
+import {
+  formatDateString,
+  addSpaceDelimiter,
+} from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 
 const TableView = (props) => {
@@ -20,7 +23,8 @@ const TableView = (props) => {
   const [requests, setRequests] = useState([])
   const [requestStatuses, setRequestStatutes] = useState([
     {
-      name: 'Проблема-материалы',
+      name: 'Проблема/Материалы',
+      oldName: 'Проблема-материалы',
       className: 'materials',
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
     },
@@ -32,22 +36,23 @@ const TableView = (props) => {
     {
       name: 'Отгружено',
       className: 'shipped',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
     },
     {
-      name: 'Готово',
+      name: 'Готово к отгрузке',
+      oldName: 'Готово',
       className: 'ready',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN'],
     },
     {
       name: 'В производстве',
       className: 'in-production',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+      access: [],
     },
     {
       name: 'Ожидание',
       className: 'waiting',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN'],
     },
   ])
 
@@ -334,8 +339,11 @@ const TableView = (props) => {
           key={request_id}
           className={
             'tableview_requests__row tableview_requests__row--status_' +
-            requestStatuses.find((item) => item.name === request.status)
-              ?.className
+            requestStatuses.find((item) => {
+              return (
+                item.name === request.status || item.oldName === request.status
+              )
+            })?.className
           }
         >
           <div className="tableview_requests__col">
@@ -367,7 +375,7 @@ const TableView = (props) => {
                       {item.packaging}
                     </div>
                     <div className="tableview_requests__sub_col">
-                      {item.quantity}
+                      {addSpaceDelimiter(item.quantity)}
                     </div>
                   </div>
                 )
@@ -384,7 +392,17 @@ const TableView = (props) => {
             >
               {requestStatuses.map((status) => {
                 if (props.userHasAccess(status.access)) {
-                  return <option>{status.name}</option>
+                  return (
+                    <option
+                      value={
+                        status.oldName === request.status
+                          ? status.oldName
+                          : status.name
+                      }
+                    >
+                      {status.name}
+                    </option>
+                  )
                 } else {
                   return (
                     <option style={{ display: `none` }}>{status.name}</option>

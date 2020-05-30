@@ -9,7 +9,6 @@ import {
   getTransportations,
   deleteTransportation,
 } from '../../../../utils/RequestsAPI/Transportation.jsx'
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import { getTransportationListPdfText } from '../../../../utils/pdfFunctions.jsx'
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
@@ -198,10 +197,6 @@ const Transportation = (props) => {
               />
             </div>
           </div>
-          {/* {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printTransportationList}>
-                        <img className="main-window__img" src={PrintIcon} alt="" />
-                        <span>Печать списка</span>
-                    </div>} */}
           <Button
             text="Печать списка"
             imgSrc={PrintIcon}
