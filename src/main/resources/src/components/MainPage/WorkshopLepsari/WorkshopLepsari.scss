@@ -1,5 +1,43 @@
 @import "../../../variables.scss";
 
 .requests_lepsari {
-  
+    .main-window__header {
+        .main-window__menu {
+            width: calc(100% - 0px);
+            border-radius: 0;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            margin-bottom: 10px;
+
+            .main-window__item {
+                margin-right: 2.5px;
+                font-size: 80%;
+                padding: 10px 50px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                transition: 0.2s ease-in-out;
+                &:first-child {
+                    // margin-left: auto;
+                    border-bottom-left-radius: 5px;
+                }
+                &:last-child {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    .searchbar {
+        background-color: $secondary-text-color;
+        margin-bottom: 0 !important;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        // margin-bottom: 5px;
+    }
+
+    @media (max-width: 768px) {
+        .main-window__header {
+            width: 100%;
+        }
+    }
 }

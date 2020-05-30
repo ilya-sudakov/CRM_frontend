@@ -10,7 +10,6 @@ import { formatDateString, addSpaceDelimiter } from '../../../../utils/functions
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 
 const TableView = (props) => {
-  const [curPage, setCurPage] = useState('Открытые')
   const [isLoading, setIsLoading] = useState(true)
   const [sortOrder, setSortOrder] = useState({
     curSort: 'date',
@@ -90,13 +89,6 @@ const TableView = (props) => {
     const query = props.searchQuery.toLowerCase()
     //Временно
     return data
-      .filter((item) => {
-        if (curPage === 'Открытые') {
-          if (item.status !== 'Завершено') return true
-        } else {
-          if (item.status === 'Завершено') return true
-        }
-      })
       .filter((item) => {
         return item.lepsariProducts.length !== 0 &&
           item.lepsariProducts[0].name !== null
@@ -199,28 +191,6 @@ const TableView = (props) => {
 
   return (
     <div className="tableview_requests_lepsari">
-      <div className="tableview_requests_lepsari__menu">
-        <div
-          className={
-            curPage === 'Открытые'
-              ? 'tableview_requests_lepsari__item--active tableview_requests_lepsari__item'
-              : 'tableview_requests_lepsari__item'
-          }
-          onClick={() => setCurPage('Открытые')}
-        >
-          Открытые
-        </div>
-        <div
-          className={
-            curPage === 'Завершено'
-              ? 'tableview_requests_lepsari__item--active tableview_requests_lepsari__item'
-              : 'tableview_requests_lepsari__item'
-          }
-          onClick={() => setCurPage('Завершено')}
-        >
-          Завершено
-        </div>
-      </div>
       <div className="tableview_requests_lepsari__row tableview_requests_lepsari__row--header">
         {/* <div className="tableview_requests_lepsari__col">
                     <span>ID</span>
