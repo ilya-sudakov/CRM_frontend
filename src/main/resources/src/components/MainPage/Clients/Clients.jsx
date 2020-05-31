@@ -34,6 +34,7 @@ import InputDate from '../../../utils/Form/InputDate/InputDate.jsx'
 import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx'
 import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
+import { exportClientsEmailsCSV } from '../../../utils/xlsxFunctions.jsx'
 
 const Clients = (props) => {
   const [clients, setClients] = useState([])
@@ -180,6 +181,29 @@ const Clients = (props) => {
     })
   }
 
+  const getEmailsExcel = () => {
+    setIsLoading(true)
+    let totalClients = 1
+    let clients = []
+    getClients(1)
+      .then((res) => res.json())
+      .then((res) => {
+        totalClients = res.totalElements
+        return getClients(totalClients)
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        clients = res.content
+        console.log(clients)
+        exportClientsEmailsCSV(clients)
+      })
+      .then(() => setIsLoading(false))
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
+      })
+  }
+
   useEffect(() => {
     document.title = 'Клиенты'
     const abortController = new AbortController()
@@ -211,7 +235,15 @@ const Clients = (props) => {
     <div className="clients">
       <div className="main-window">
         <div className="main-window__header">
-          <div className="main-window__title">{curCategory}</div>
+          <div className="main-window__title">
+            {curCategory}
+            <Button
+              text="Выгрузить e-mail"
+              isLoading={isLoading}
+              className="main-window__button"
+              onClick={getEmailsExcel}
+            />
+          </div>
           <SearchBar
             title="Поиск по клиентам"
             placeholder="Введите запрос для поиска..."
