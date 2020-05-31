@@ -238,7 +238,7 @@ const Clients = (props) => {
           <div className="main-window__title">
             {curCategory}
             <Button
-              text="Выгрузить e-mail"
+              text="Выгрузить эл. почты"
               isLoading={isLoading}
               className="main-window__button"
               onClick={getEmailsExcel}
