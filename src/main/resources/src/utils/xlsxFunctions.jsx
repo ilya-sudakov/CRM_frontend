@@ -25,6 +25,14 @@ export const exportClientsEmailsCSV = (clients) => {
       //   dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [])
     }),
   ).then(() => {
+    var wscols = [
+      { width: 30 }, // first column
+      { width: 20 }, // first column
+      { width: 30 }, // first column
+      { width: 40 }, // first column
+    ]
+    //Новая ширина столбцов
+    dataWS['!cols'] = wscols
     let wb = XLSX2.utils.book_new() //Создание новой workbook
     XLSX2.utils.book_append_sheet(wb, dataWS, 'Почты')
     var wboutput = XLSX2.write(wb, {

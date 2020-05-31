@@ -24,12 +24,6 @@ const SelectDraft = (props) => {
     // console.log(drafts);
     let re = /[.,\s]/gi
     const query = searchQuery.toLowerCase()
-    // return data.filter(item => (
-    //     item.id.toString().includes(query) ||
-    //     item.comment.toLowerCase().includes(query) ||
-    //     item.name.toLowerCase().includes(query) ||
-    //     item.number.toLowerCase().replace(re, '').includes(query.replace(re, ''))
-    // ))
     let searchArr = query.split(' ')
     return (props.drafts ? props.drafts : drafts).filter((item) => {
       let check = true
@@ -355,6 +349,7 @@ const SelectDraft = (props) => {
                 name_id={index}
                 name="name"
                 autoComplete="off"
+                readOnly
                 value={
                   (item.type === 'stamp'
                     ? 'Штамп | '
