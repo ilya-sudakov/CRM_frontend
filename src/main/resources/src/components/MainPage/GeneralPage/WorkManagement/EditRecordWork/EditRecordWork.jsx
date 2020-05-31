@@ -153,6 +153,7 @@ const EditRecordWork = (props) => {
                       draft.partId,
                       draft.type,
                       draft.quantity,
+                      draft.name,
                     )
                   }),
                 )

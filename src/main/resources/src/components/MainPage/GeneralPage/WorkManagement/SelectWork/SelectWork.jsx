@@ -202,9 +202,7 @@ const SelectWork = (props) => {
                   searchPlaceholder="Введите название продукта для поиска..."
                   // workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
                 />
-              ) : null}
-              {/* 
-               : selected[index].workType === 'Чертеж' ? (
+              ) : selected[index].workType === 'Чертеж' ? (
                 <div className="select-work__item">
                   <div className="select-work__input_name">Чертежи</div>
                   <div className="select-work__input_field">
@@ -228,8 +226,7 @@ const SelectWork = (props) => {
                     />
                   </div>
                 </div>
-              ) 
-               */}
+              ) : null}
               {!props.noTime && (
                 <div className="select-work__item">
                   <div className="select-work__input_name">Часы</div>

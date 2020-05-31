@@ -38,7 +38,7 @@ const TableView = (props) => {
                   className="main-window__list-item"
                   onClick={() => {
                     props.selectDraft(draft.id, draft.name, draft.type)
-                    console.log(props.closeWindow)
+                    // console.log(props.closeWindow)
                     props.setCloseWindow(!props.closeWindow)
                   }}
                 >

@@ -95,6 +95,14 @@
     border-bottom-right-radius: 0;
     // margin-bottom: 5px;
   }
+
+  .form-window {
+    .form-window__content {
+      max-width: 600px;
+      max-height: 250px;
+    }
+  }
+
   .requests__clients-sort {
     display: flex;
     flex-direction: row;

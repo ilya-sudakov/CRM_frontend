@@ -18,6 +18,7 @@ import {
   getRecordedWorkByDateRange,
   deleteRecordedWork,
   deleteProductFromRecordedWork,
+  deleteDraftFromRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx'
 // import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
@@ -38,12 +39,14 @@ const WorkManagementPage = (props) => {
       visibility: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       active: true,
       minimized: true,
+      employeesTotal: 0,
     },
     {
       name: 'ЦехЛепсари',
       visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       active: true,
       minimized: true,
+      employeesTotal: 0,
     },
     {
       name: 'ЦехЛиговский',
@@ -55,6 +58,7 @@ const WorkManagementPage = (props) => {
       ],
       active: true,
       minimized: true,
+      employeesTotal: 0,
     },
     {
       name: 'Офис',
@@ -66,6 +70,7 @@ const WorkManagementPage = (props) => {
       ],
       active: true,
       minimized: true,
+      employeesTotal: 0,
     },
   ])
   const [dates, setDates] = useState({
@@ -676,7 +681,6 @@ const WorkManagementPage = (props) => {
                                           <div
                                             className="main-window__action"
                                             onClick={() => {
-                                              // console.log(tempItem[1]);
                                               return Promise.all(
                                                 work.workControlProduct.map(
                                                   (product) => {
@@ -687,6 +691,20 @@ const WorkManagementPage = (props) => {
                                                   },
                                                 ),
                                               )
+                                                .then(() => {
+                                                  return Promise.all(
+                                                    work.partsWorks.map(
+                                                      (draft) => {
+                                                        console.log(draft)
+                                                        return deleteDraftFromRecordedWork(
+                                                          work.id,
+                                                          draft.partId,
+                                                          draft.partType,
+                                                        )
+                                                      },
+                                                    ),
+                                                  )
+                                                })
                                                 .then(() => {
                                                   return deleteRecordedWork(
                                                     work.id,
@@ -704,14 +722,14 @@ const WorkManagementPage = (props) => {
                                             />
                                           </div>
                                         </span>
-                                        {work.workControlProduct.length > 0 && (
-                                          //||  work.partsWorks.length > 0
-                                          <div className="main-window__list-item main-window__list-item--header">
-                                            <span>Название</span>
-                                            <span>Кол-во</span>
-                                            {/* <span>Часы</span> */}
-                                          </div>
-                                        )}
+                                        {work.workControlProduct.length > 0 ||
+                                          (work.partsWorks.length > 0 && (
+                                            <div className="main-window__list-item main-window__list-item--header">
+                                              <span>Название</span>
+                                              <span>Кол-во</span>
+                                              {/* <span>Часы</span> */}
+                                            </div>
+                                          ))}
                                         {work.workControlProduct.length === 0 &&
                                           work.workList.typeOfWork ===
                                             'Продукция' && (
@@ -748,7 +766,7 @@ const WorkManagementPage = (props) => {
                                             </div>
                                           )
                                         })}
-                                        {/* {work.partsWorks.map((item) => {
+                                        {work.partsWorks.map((item) => {
                                           return (
                                             <div className="main-window__list-item">
                                               <span>
@@ -767,7 +785,7 @@ const WorkManagementPage = (props) => {
                                               </span>
                                             </div>
                                           )
-                                        })} */}
+                                        })}
                                       </React.Fragment>
                                     )
                                   }

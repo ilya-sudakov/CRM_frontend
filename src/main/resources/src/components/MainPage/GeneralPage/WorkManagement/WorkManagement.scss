@@ -110,7 +110,7 @@
       color: $secondary-text-color;
     }
 
-    div:nth-child(1) {
+    > div:nth-child(1) {
       text-decoration: underline;
       flex: 0 1 50%;
       text-align: left;

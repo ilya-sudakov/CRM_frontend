@@ -139,6 +139,7 @@ const NewRecordWork = (props) => {
                     draft.id,
                     draft.type,
                     draft.quantity,
+                    draft.name
                   )
                 }),
               )

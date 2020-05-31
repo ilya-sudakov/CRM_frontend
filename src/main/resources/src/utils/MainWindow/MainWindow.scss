@@ -92,12 +92,12 @@
         }
 
         &--active {
-          // color: lighten($primary-text-color, 50%);
-          color: darken($button__background--inverted, 5%);
+          color: $primary-text-color !important;
+          // color: darken($button__background--inverted, 5%);
           background-color: $primary-background-color;
 
           &:hover {
-            color: lighten($button__background--inverted, 5%);
+            color: lighten($primary-text-color, 15%);
 
             &::after {
               background-color: lighten($button__background--inverted, 10%);
@@ -338,7 +338,7 @@
         // color: $secondary-text-color;
         .main-window__img {
           // transform: scale(1.1);
-        filter: brightness(2.4);
+          filter: brightness(2.4);
         }
       }
     }

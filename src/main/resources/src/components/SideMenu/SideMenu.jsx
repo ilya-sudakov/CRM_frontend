@@ -197,6 +197,47 @@ const SideMenu = (props) => {
       ],
     },
     {
+      pathname: '/ligovskiy/',
+      // linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
+      //   ? '/ligovskiy/orders'
+      //   : '/ligovskiy/workshop',
+      linkTo: '/dispatcher/rigging/parts',
+      mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
+      name: 'ЦехЛиговский',
+      icon: screwImg,
+      iconClassName: 'sidemenu__img--bigger',
+      dropdownMenu: [
+        // {
+        //   name: 'Очередь производства',
+        //   pathname: '/ligovskiy/workshop',
+        //   link: '/ligovskiy/workshop',
+        //   icon: listImg,
+        //   mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
+        // },
+        {
+          name: 'Очередь инструментального производства',
+          pathname: '/dispatcher/rigging/parts',
+          link: '/dispatcher/rigging/parts',
+          icon: listImg,
+          mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
+        },
+        // {
+        //   name: 'Склад',
+        //   pathname: '/ligovskiy/storage',
+        //   link: '/ligovskiy/storage',
+        //   icon: boxImg,
+        //   mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
+        // },
+        // {
+        //   name: 'Комплектация цеха',
+        //   pathname: '/ligovskiy/orders',
+        //   link: '/ligovskiy/orders',
+        //   icon: screwImg,
+        //   mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
+        // },
+      ],
+    },
+    {
       pathname: '/lepsari/workshop-lepsari',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
