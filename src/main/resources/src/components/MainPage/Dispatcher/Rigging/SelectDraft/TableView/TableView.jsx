@@ -4,6 +4,13 @@ import '../../../../../../utils/MainWindow/MainWindow.scss'
 import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
 
 const TableView = (props) => {
+  const partTypes = {
+    Bench: 'Станок',
+    Stamp: 'Штамп',
+    Press: 'Пресс-форма',
+    Detail: 'Деталь',
+  }
+
   useEffect(() => {
     // console.log(props.drafts);
     props.setShowWindow(false)
@@ -17,6 +24,7 @@ const TableView = (props) => {
             <span>Артикул</span>
             <span>Название</span>
             <span>Местоположение</span>
+            <span>Тип</span>
             <div className="main-window__actions">Действие</div>
           </div>
           {props.drafts
@@ -45,6 +53,7 @@ const TableView = (props) => {
                   <span>{draft.number}</span>
                   <span>{draft.name}</span>
                   <span>{draft.location}</span>
+                  <span>{partTypes[draft.type]}</span>
                   <div className="main-window__actions">
                     <div
                       className="main-window__action"
