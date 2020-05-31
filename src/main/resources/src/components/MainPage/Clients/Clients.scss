@@ -163,6 +163,15 @@
       width: calc(100% - 10px) !important;
       .main-window__title {
         font-size: 125%;
+        flex-direction: column;
+        align-self: center;
+        justify-content: center;
+
+        .main-window__button {
+          width: fit-content;
+          margin-top: 5px;
+          align-self: center;
+        }
       }
       .main-window__menu {
         width: calc(100% - 10px) !important;
