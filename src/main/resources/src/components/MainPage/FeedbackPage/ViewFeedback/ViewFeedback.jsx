@@ -281,7 +281,7 @@ const ViewFeedback = (props) => {
               <Button
                 text="Редактировать содержание"
                 isLoading={isLoading}
-                inverted
+                // inverted
                 className="main-form__submit"
                 onClick={handleSubmit}
               />

@@ -52,6 +52,7 @@ const FeedbackPage = (props) => {
   ])
 
   useEffect(() => {
+    document.title = 'Обсуждения'
     let abortController = new AbortController()
     loadData(abortController.signal)
     return function cancel() {

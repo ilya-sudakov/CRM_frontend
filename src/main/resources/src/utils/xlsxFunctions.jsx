@@ -48,7 +48,7 @@ export const exportClientsEmailsCSV = (clients) => {
     }
     FileSaver.saveAs(
       new Blob([s2ab(wboutput)], { type: '' }),
-      'sendpulseEmails.xlsx',
+      'ЭлПочты_SendPulse.xlsx',
     )
   })
 }

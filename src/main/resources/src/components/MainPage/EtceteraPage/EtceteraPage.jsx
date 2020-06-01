@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './EtceteraPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import { Link } from 'react-router-dom'
 
 const EtceteraPage = (props) => {
+  useEffect(() => {
+    document.title = 'Разное'
+  }, [])
+
   const [menuItems, setMenuItems] = useState([
     {
       linkTo: '/clients/categories',
