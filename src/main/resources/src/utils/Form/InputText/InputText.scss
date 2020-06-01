@@ -71,9 +71,13 @@
       & textarea {
         min-width: calc(100% - 20px);
         outline: none;
-        min-height: 80px;
+        min-height: 50px;
         max-height: 150px;
         resize: vertical;
+
+        &:focus {
+          min-height: 120px;
+        }
       }
 
       /* Firefox */

@@ -171,7 +171,7 @@ const WorkManagement = (props) => {
             <TableDataLoading className="work-management__item" />
           ) : (
             <div className="work-management__info">
-              Нет записей о проведенной работе за сегодня!
+              Нет записей о проведенной работе!
             </div>
           )
         ) : (

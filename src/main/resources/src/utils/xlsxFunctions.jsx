@@ -5,25 +5,35 @@ export const exportClientsEmailsCSV = (clients) => {
   let index = 0
   let dataWS = null
   Promise.all(
-    clients.map((client, clientIndex) => {
-      client.contacts.map((contactData) => {
-        if (index === 0) {
-          dataWS = XLSX2.utils.aoa_to_sheet([
-            [client.name, client.site, contactData.name, contactData.email],
-          ])
-        } else {
-          dataWS = XLSX2.utils.sheet_add_aoa(
-            dataWS,
-            [[client.name, client.site, contactData.name, contactData.email]],
-            { origin: 'A' + index },
-          )
+    clients
+      .sort((a, b) => {
+        if (a.name < b.name) {
+          return -1
         }
-        index++
+        if (a.name > b.name) {
+          return 1
+        }
+        return 0
       })
-      //   dataWS = XLSX2.utils.aoa_to_sheet([[]])
-      //   dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[0]], { origin: 'A3' })
-      //   dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [])
-    }),
+      .map((client, clientIndex) => {
+        client.contacts.map((contactData) => {
+          if (index === 0) {
+            dataWS = XLSX2.utils.aoa_to_sheet([
+              [client.name, client.site, contactData.name, contactData.email],
+            ])
+          } else {
+            dataWS = XLSX2.utils.sheet_add_aoa(
+              dataWS,
+              [[client.name, client.site, contactData.name, contactData.email]],
+              { origin: 'A' + index },
+            )
+          }
+          index++
+        })
+        //   dataWS = XLSX2.utils.aoa_to_sheet([[]])
+        //   dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[0]], { origin: 'A3' })
+        //   dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [])
+      }),
   ).then(() => {
     var wscols = [
       { width: 30 }, // first column

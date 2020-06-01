@@ -435,7 +435,7 @@ const Clients = (props) => {
                           : '') + item.contacts[0].phoneNumber
                       : 'Не указаны контакт. данные'}
                   </span>
-                  <span>
+                  <span title={item.comment}>
                     <div className="main-window__mobile-text">
                       Комментарий:{' '}
                     </div>
