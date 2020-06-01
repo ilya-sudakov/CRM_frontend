@@ -163,7 +163,7 @@ const FeedbackPage = (props) => {
                     to={'/feedback/view/' + item.id}
                   >
                     <div className="main-window__list-col">
-                      <span>
+                      <span title={item.subject}>
                         <div className="main-window__mobile-text">Тема: </div>
                         {item.subject}
                       </span>
