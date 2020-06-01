@@ -151,6 +151,7 @@ export const getAllProductsFromWorkCount = (works) => {
         return (parts = Object.assign({
           ...parts,
           [product.product.id]: {
+            product: product.product,
             name: product.product.name,
             quantity: Number.parseFloat(product.quantity),
           },

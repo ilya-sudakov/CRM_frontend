@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './PartsStatistic.scss'
 import { createGraph, loadCanvas } from '../../../../../../utils/graphs.js'
 import {
@@ -8,6 +8,7 @@ import {
 } from '../../../../../../utils/functions.jsx'
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
 import TableLoading from '../../../../../../utils/TableView/TableLoading/TableLoading.jsx'
+import { UserContext } from '../../../../../../App.js'
 
 const PartsStatistic = (props) => {
   const [graph, setGraph] = useState(null)
@@ -121,81 +122,89 @@ const PartsStatistic = (props) => {
     }
   }, [props.data])
   return (
-    <div className="parts-statistic">
-      <div
-        className="main-window__title"
-        onClick={() => {
-          return setIsVisible(!isVisible)
-        }}
-      >
-        Отчет по произведенной продукции
-        <img
-          className={
-            isVisible
-              ? 'main-window__img'
-              : 'main-window__img main-window__img--rotated'
-          }
-          src={chevronDownSVG}
-        />
-      </div>
-      <div
-        className={
-          isVisible
-            ? 'parts-statistic__wrapper'
-            : 'parts-statistic__wrapper parts-statistic__wrapper--hidden'
-        }
-      >
-        <TableLoading isLoading={isLoading} />
-        <div
-          className="main-window__chart-wrapper"
-          style={{
-            height: `${Object.entries(props.data).length * 50}px`,
-          }}
-        ></div>
-        <div className="main-window__list">
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>Название</span>
-            <span>Количество</span>
+    <UserContext.Consumer>
+      {(ctx) => (
+        <div className="parts-statistic">
+          <div
+            className="main-window__title"
+            onClick={() => {
+              return setIsVisible(!isVisible)
+            }}
+          >
+            Отчет по произведенной продукции
+            <img
+              className={
+                isVisible
+                  ? 'main-window__img'
+                  : 'main-window__img main-window__img--rotated'
+              }
+              src={chevronDownSVG}
+            />
           </div>
-          {Object.entries(props.data)
-            .sort((a, b) => {
-              if (a[1].quantity < b[1].quantity) {
-                return 1
-              }
-              if (a[1].quantity > b[1].quantity) {
-                return -1
-              }
-              return 0
-            })
-            .map((part, index) => {
-              return (
-                <div
-                  className="main-window__list-item"
-                  // style={{
-                  //   backgroundColor: `#${addHexColor(
-                  //     originalColor,
-                  //     index.toString(16).padEnd(6, '0'),
-                  //   )}ee`,
-                  // }}
-                >
-                  <span>
-                    <div className="main-window__mobile-text">Название:</div>
-                    {part[1].name}
-                    {/* {addHexColor(
-                      originalColor,
-                      (index * 10).toString(16).padStart(6, '0'),
-                    )} */}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Количество:</div>
-                    {addSpaceDelimiter(part[1].quantity)}
-                  </span>
-                </div>
-              )
-            })}
+          <div
+            className={
+              isVisible
+                ? 'parts-statistic__wrapper'
+                : 'parts-statistic__wrapper parts-statistic__wrapper--hidden'
+            }
+          >
+            <TableLoading isLoading={isLoading} />
+            <div
+              className="main-window__chart-wrapper"
+              style={{
+                height: `${Object.entries(props.data).length * 50}px`,
+              }}
+            ></div>
+            <div className="main-window__list">
+              <div className="main-window__list-item main-window__list-item--header">
+                <span>Название</span>
+                <span>Количество</span>
+              </div>
+              {Object.entries(props.data)
+                .sort((a, b) => {
+                  if (a[1].quantity < b[1].quantity) {
+                    return 1
+                  }
+                  if (a[1].quantity > b[1].quantity) {
+                    return -1
+                  }
+                  return 0
+                })
+                .map((part, index) => {
+                  return (
+                    <div
+                      className="main-window__list-item"
+                      // style={{
+                      //   backgroundColor: `#${addHexColor(
+                      //     originalColor,
+                      //     index.toString(16).padEnd(6, '0'),
+                      //   )}ee`,
+                      // }}
+                    >
+                      <span>
+                        <div className="main-window__mobile-text">
+                          Название:
+                        </div>
+                        {part[1].name}
+                        {/* {addHexColor(
+                    originalColor,
+                    (index * 10).toString(16).padStart(6, '0'),
+                  )} */}
+                      </span>
+                      <span>
+                        <div className="main-window__mobile-text">
+                          Количество:
+                        </div>
+                        {addSpaceDelimiter(part[1].quantity)}
+                      </span>
+                    </div>
+                  )
+                })}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </UserContext.Consumer>
   )
 }
 

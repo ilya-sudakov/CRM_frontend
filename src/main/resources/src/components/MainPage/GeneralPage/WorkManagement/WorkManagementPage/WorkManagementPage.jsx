@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import './WorkManagementPage.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
@@ -26,6 +26,7 @@ import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoadi
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx'
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx'
+import { UserContext } from '../../../../../App.js'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -73,6 +74,12 @@ const WorkManagementPage = (props) => {
       employeesTotal: 0,
     },
   ])
+  const workshopsSwitch = {
+    ЦехЛЭМЗ: 'ROLE_LEMZ',
+    ЦехЛепсари: 'ROLE_LEPSARI',
+    ЦехЛиговский: 'ROLE_LIGOVSKIY',
+  }
+  const userContext = useContext(UserContext)
   const [dates, setDates] = useState({
     // start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
     // end: new Date()
@@ -250,10 +257,18 @@ const WorkManagementPage = (props) => {
           </Link> */}
         </div>
         {(props.userHasAccess(['ROLE_ADMIN']) ||
-          props.userHasAccess(['ROLE_LIGOVSKIY']) ||
-          props.userHasAccess(['ROLE_LEMZ']) ||
-          props.userHasAccess(['ROLE_LEPSARI'])) && (
-          <PartsStatistic data={partsStatistics} />
+          props.userHasAccess(['ROLE_WORKSHOP'])) && (
+          <PartsStatistic
+            data={Object.values(partsStatistics).filter((part) => {
+              if (userContext.userHasAccess(['ROLE_ADMIN'])) {
+                return true
+              } else {
+                return userContext.userHasAccess([
+                  workshopsSwitch[part.product.productionLocation],
+                ])
+              }
+            })}
+          />
         )}
         <SearchBar
           title="Поиск по записям"
