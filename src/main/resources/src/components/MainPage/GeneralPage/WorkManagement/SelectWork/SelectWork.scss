@@ -95,6 +95,11 @@
       width: calc(100%);
       padding: 15px 0;
       transition: 0.2s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      // min-height: 150px;
 
       &--hidden {
         transform: scaleY(0);
@@ -118,11 +123,21 @@
         }
         .select-work__input_field {
           flex: 0 1 80%;
+          max-width: 80%;
 
-          > input {
+          > input,
+          textarea {
             font-size: 70%;
             width: calc(100% - 20px - 2px);
             min-width: fit-content;
+          }
+          > textarea {
+            max-width: calc(100% - 22px);
+            min-width: calc(100% - 22px);
+            outline: none;
+            min-height: 50px;
+            resize: none;
+            transition: 100ms ease-in-out;
           }
         }
       }

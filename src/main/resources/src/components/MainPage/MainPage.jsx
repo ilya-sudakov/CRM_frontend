@@ -90,10 +90,8 @@ class MainPage extends React.Component {
     return (
       <div className="main_page">
         <Header
-          userData={this.props.userData}
           sideMenu={this.state.sidemenu_hidden}
           setSideMenu={this.setSideMenu}
-          userHasAccess={this.props.userHasAccess}
         />
         <div className="main_page__content">
           <SideMenu

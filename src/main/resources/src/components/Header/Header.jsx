@@ -80,18 +80,16 @@ const Header = (props) => {
             <div
               className="header__item header__item--user"
               onClick={
-                props.userHasAccess(['ROLE_ADMIN'])
+                ctx.userHasAccess(['ROLE_ADMIN'])
                   ? () => setShowProfileMenu(!showProfileMenu)
                   : null
               }
             >
               <div className="header__profile_data">
-                <div className="header__username">
-                  {props.userData.username}
-                </div>
+                <div className="header__username">{ctx.userData.username}</div>
                 <img className="header__userimg" src={profileSVG} alt="" />
               </div>
-              {props.userHasAccess(['ROLE_ADMIN']) && (
+              {ctx.userHasAccess(['ROLE_ADMIN']) && (
                 <div
                   className={
                     showProfileMenu

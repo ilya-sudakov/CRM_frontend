@@ -14,6 +14,7 @@ const SelectWork = (props) => {
       workId: null,
       hours: 0,
       draft: [],
+      comment: '',
     },
   ])
   const [options, setOptions] = useState([])
@@ -49,6 +50,7 @@ const SelectWork = (props) => {
         workType: '',
         workId: null,
         hours: 0,
+        comment: '',
       },
     ])
     props.handleWorkChange([
@@ -60,6 +62,7 @@ const SelectWork = (props) => {
         workId: null,
         workType: '',
         hours: 0,
+        comment: '',
       },
     ])
     // const form = document.getElementsByClassName("select-work__selected_form")[0];
@@ -227,6 +230,20 @@ const SelectWork = (props) => {
                   </div>
                 </div>
               ) : null}
+              {/* <div className="select-work__item">
+                <div className="select-work__input_name">Комментарий</div>
+                <div className="select-work__input_field">
+                  <textarea
+                    type="text"
+                    name="comment"
+                    index={index}
+                    autoComplete="off"
+                    onChange={handleInputChange}
+                    value={item.comment}
+                    readOnly={props.readOnly}
+                  />
+                </div>
+              </div> */}
               {!props.noTime && (
                 <div className="select-work__item">
                   <div className="select-work__input_name">Часы</div>
