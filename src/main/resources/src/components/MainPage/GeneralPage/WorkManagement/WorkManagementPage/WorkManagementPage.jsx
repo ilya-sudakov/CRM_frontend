@@ -34,6 +34,7 @@ const WorkManagementPage = (props) => {
   const [employeesMap, setEmployeesMap] = useState({})
   const [employees, setEmployees] = useState({})
   const [partsStatistics, setPartsStatistics] = useState({})
+  const [curPage, setCurPage] = useState('Сотрудники')
   const [workshops, setWorkshops] = useState([
     {
       name: 'ЦехЛЭМЗ',
@@ -236,25 +237,7 @@ const WorkManagementPage = (props) => {
     <div className="work-management-page">
       <div className="main-window">
         <div className="main-window__title">
-          <div className="main-window__title">
-            <span>Отчет производства</span>
-            {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => { exportCSVFile() }}>
-                            <img className="main-window__img" src={DownloadIcon} alt="" />
-                            <span>Скачать Excel</span>
-                        </div>} */}
-          </div>
-          {/* <Link
-            to="/work-managment/parts-statistics"
-            className="main-window__button"
-          >
-            Сводка деталей
-          </Link> */}
-          {/* <Link
-            to="/work-managment/work-report"
-            className="main-window__button"
-          >
-            Табель
-          </Link> */}
+          <span>Отчет производства</span>
         </div>
         {(props.userHasAccess(['ROLE_ADMIN']) ||
           props.userHasAccess(['ROLE_WORKSHOP'])) && (
@@ -270,11 +253,35 @@ const WorkManagementPage = (props) => {
             })}
           />
         )}
-        <SearchBar
-          title="Поиск по записям"
-          placeholder="Введите запрос для поиска..."
-          setSearchQuery={setSearchQuery}
-        />
+        <div className="main-window__header">
+          <SearchBar
+            title="Поиск по записям"
+            placeholder="Введите запрос для поиска..."
+            setSearchQuery={setSearchQuery}
+          />
+          <div className="main-window__menu">
+            <div
+              className={
+                curPage === 'Сотрудники'
+                  ? 'main-window__item main-window__item--active'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Сотрудники')}
+            >
+              Сотрудники
+            </div>
+            {/* <div
+              className={
+                curPage === 'Работы'
+                  ? 'main-window__item main-window__item--active'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Работы')}
+            >
+              Работы
+            </div> */}
+          </div>
+        </div>
         <div className="main-window__info-panel">
           <div className="work-management-page__date-pick">
             <div className="work-management-page__date">
@@ -737,14 +744,14 @@ const WorkManagementPage = (props) => {
                                             />
                                           </div>
                                         </span>
-                                        {work.workControlProduct.length > 0 ||
-                                          (work.partsWorks.length > 0 && (
-                                            <div className="main-window__list-item main-window__list-item--header">
-                                              <span>Название</span>
-                                              <span>Кол-во</span>
-                                              {/* <span>Часы</span> */}
-                                            </div>
-                                          ))}
+                                        {(work.workControlProduct.length > 0 ||
+                                          work.partsWorks.length > 0) && (
+                                          <div className="main-window__list-item main-window__list-item--header">
+                                            <span>Название</span>
+                                            <span>Кол-во</span>
+                                            {/* <span>Часы</span> */}
+                                          </div>
+                                        )}
                                         {work.workControlProduct.length === 0 &&
                                           work.workList.typeOfWork ===
                                             'Продукция' && (
