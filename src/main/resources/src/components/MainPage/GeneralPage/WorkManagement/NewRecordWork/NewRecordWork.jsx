@@ -136,7 +136,7 @@ const NewRecordWork = (props) => {
                   // console.log(product);
                   return addDraftToRecordedWork(
                     workId,
-                    draft.id,
+                    draft.partId,
                     draft.type,
                     draft.quantity,
                     draft.name

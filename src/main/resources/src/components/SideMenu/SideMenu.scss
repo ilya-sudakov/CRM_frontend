@@ -17,7 +17,7 @@
   color: $primary-text-color;
   // overflow-y: auto;
   // overflow-x: hidden;
-  z-index: 999;
+  // z-index: 999;
 
   .sidemenu__add-buttons {
     display: flex;
@@ -349,5 +349,9 @@
 
   @media (min-width: 1920px) {
     font-size: 90%;
+
+    .sidemenu__link {
+      padding: 8px 2.5px;
+    }
   }
 }

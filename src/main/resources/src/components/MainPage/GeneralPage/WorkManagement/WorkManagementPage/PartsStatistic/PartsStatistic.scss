@@ -90,12 +90,23 @@
     }
 
     .main-window__list {
-        // padding: 15px;
         margin: 5px;
-        // width: calc(100%);
         max-width: 500px;
         height: fit-content;
-        // box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+        transition: opacity 200ms ease-in-out, right 500ms ease-in-out;
+        // position: absolute;
+        right: 0;
+        opacity: 1;
+        &--hidden {
+            position: absolute;
+            opacity: 0;
+            // visibility: hidden;
+            // max-width: 0;
+            right: 200px;
+            // width: 0;
+            max-height: 100px;
+            transition: opacity 200ms ease-in-out, right 500ms ease-in-out;
+        }
         .main-window__list-item {
             cursor: auto;
             span {
@@ -111,6 +122,10 @@
             // color: #eeeeee;
             background-color: darken($secondary-text-color, 4%);
             padding: 7.5px 10px;
+
+            &:hover {
+                background-color: $button__background--inverted;
+            }
         }
     }
 

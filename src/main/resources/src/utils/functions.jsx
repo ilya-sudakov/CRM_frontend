@@ -174,33 +174,49 @@ export const getAllProductsFromWorkCount = (works) => {
 }
 
 export const getAllDraftsFromWorkCount = (works) => {
-  let parts = {}
+  let parts = { Stamp: {}, Press: {}, Detail: {}, Bench: {} }
+  const Stamp = {},
+    Press = {},
+    Detail = {},
+    Bench = {}
   works.map((work) => {
+    const draftTypes = ['Stamp', 'Press', 'Detail', 'Bench']
     // console.log(work)
-    work.workControlDrafts.map((draft) => {
-      if (parts[draft.draft.id] === undefined) {
-        return (parts = Object.assign({
-          ...parts,
-          [draft.draft.id]: {
-            name: draft.draft.name,
-            quantity: Number.parseFloat(draft.quantity),
-          },
-        }))
-      } else {
-        return (parts = Object.assign({
-          ...parts,
-          [draft.draft.id]: {
-            ...parts[draft.draft.id],
-            quantity:
-              Number.parseFloat(parts[draft.draft.id].quantity) +
-              Number.parseFloat(draft.quantity),
-          },
-        }))
-      }
+    draftTypes.map((draftType) => {
+      return work.partsWorks.map((draft) => {
+        if (draft.partType === draftType) {
+          if (parts[draftType][draft.partId] === undefined) {
+            return (parts[draftType] = Object.assign({
+              ...parts[draftType],
+              [draft.partId]: {
+                name: draft.name,
+                partType: draft.partType,
+                partId: draft.partId,
+                quantity: Number.parseFloat(draft.quantity),
+              },
+            }))
+          } else {
+            return (parts[draftType] = Object.assign({
+              ...parts[draftType],
+              [draft.partId]: {
+                ...parts[draftType][draft.partId],
+                quantity:
+                  Number.parseFloat(parts[draftType][draft.partId].quantity) +
+                  Number.parseFloat(draft.quantity),
+              },
+            }))
+          }
+        }
+      })
     })
   })
-  // console.log(parts)
-  return parts
+  let newParts = []
+  Object.values(parts).map((draftType) => {
+    Object.values(draftType).map((draft) => {
+      newParts.push(draft)
+    })
+  })
+  return newParts
 }
 
 //Получить случайный цвет формата hex

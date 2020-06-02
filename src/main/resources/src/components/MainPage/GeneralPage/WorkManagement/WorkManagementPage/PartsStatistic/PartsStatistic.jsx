@@ -36,7 +36,7 @@ const PartsStatistic = (props) => {
     })
   }
 
-  const options = {
+  const optionsProducts = {
     type: 'horizontalBar',
     data: {
       labels: [
@@ -118,20 +118,97 @@ const PartsStatistic = (props) => {
     },
   }
 
+  const optionsDrafts = {
+    type: 'horizontalBar',
+    data: {
+      labels: [
+        ...props.drafts
+          .sort((a, b) => {
+            if (a.quantity < b.quantity) {
+              return 1
+            }
+            if (a.quantity > b.quantity) {
+              return -1
+            }
+            return 0
+          })
+          .map((product) => product.name),
+      ],
+      datasets: [
+        {
+          barThickness: 'flex',
+          label: 'Количество ед. деталей',
+          backgroundColor: [
+            ...props.drafts.map((product, index) => '#' + originalColor),
+          ],
+          data: [
+            ...props.drafts
+              .sort((a, b) => {
+                if (a.quantity < b.quantity) {
+                  return 1
+                }
+                if (a.quantity > b.quantity) {
+                  return -1
+                }
+                return 0
+              })
+              .map((product) => product.quantity),
+          ],
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      responsive: true,
+      cornerRadius: 2.5,
+      fullCornerRadius: false,
+      animation: {
+        easing: 'easeInOutCirc',
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Название',
+              fontStyle: 'italic',
+            },
+          },
+        ],
+        xAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: 'Количество (шт.)',
+              fontStyle: 'italic',
+            },
+          },
+        ],
+      },
+    },
+  }
+
   useEffect(() => {
     setIsLoading(true)
-    if (filterWorkshops(Object.entries(props.data)).length > 0) {
+    if (filterWorkshops(Object.values(props.data)).length > 0) {
       setIsLoading(true)
       if (!canvasLoaded) {
         setIsLoading(true)
-        loadCanvas('parts-statistic__chart-products', 'main-window__chart')
+        loadCanvas('main-window__chart-wrapper', 'main-window__chart')
         setCanvasLoaded(true)
       }
       setTimeout(() => {
         setIsLoading(false)
         setIsVisible(true)
         canvasLoaded && graph.destroy()
-        setGraph(createGraph(options))
+        setGraph(
+          createGraph(
+            curPage === 'Продукция' ? optionsProducts : optionsDrafts,
+          ),
+        )
       }, 150)
     } else {
       setIsVisible(false)
@@ -139,7 +216,7 @@ const PartsStatistic = (props) => {
       // console.log(canvasLoaded);
       canvasLoaded && graph.destroy()
     }
-  }, [props.data])
+  }, [props.data, props.drafts, curPage])
   return (
     <UserContext.Consumer>
       {(ctx) => (
@@ -174,6 +251,7 @@ const PartsStatistic = (props) => {
                     ? 'main-window__item main-window__item--active'
                     : 'main-window__item'
                 }
+                onClick={() => setCurPage('Продукция')}
               >
                 Продукция
               </div>
@@ -183,6 +261,7 @@ const PartsStatistic = (props) => {
                     ? 'main-window__item main-window__item--active'
                     : 'main-window__item'
                 }
+                onClick={() => setCurPage('Чертежи')}
               >
                 Чертежи
               </div>
@@ -195,49 +274,25 @@ const PartsStatistic = (props) => {
                 : 'parts-statistic__wrapper parts-statistic__wrapper--hidden'
             }
           >
-            <TableLoading isLoading={isLoading} />
+            <TableLoading isLoading={props.isLoading} />
             <div
-              className="main-window__chart-wrapper parts-statistic__chart-products"
+              className="main-window__chart-wrapper"
               style={{
                 height: `${
                   filterWorkshops(Object.entries(props.data)).length * 50
                 }px`,
               }}
             ></div>
-            <div className="main-window__list">
-              <div className="main-window__list-item main-window__list-item--header">
-                <span>Название</span>
-                <span>Количество</span>
-              </div>
-              {filterWorkshops(Object.entries(props.data))
-                .sort((a, b) => {
-                  if (a[1].quantity < b[1].quantity) {
-                    return 1
-                  }
-                  if (a[1].quantity > b[1].quantity) {
-                    return -1
-                  }
-                  return 0
-                })
-                .map((part, index) => {
-                  return (
-                    <div className="main-window__list-item">
-                      <span>
-                        <div className="main-window__mobile-text">
-                          Название:
-                        </div>
-                        {part[1].name}
-                      </span>
-                      <span>
-                        <div className="main-window__mobile-text">
-                          Количество:
-                        </div>
-                        {addSpaceDelimiter(part[1].quantity)}
-                      </span>
-                    </div>
-                  )
-                })}
-            </div>
+            <ProductsStatistics
+              data={filterWorkshops(Object.entries(props.data))}
+              isLoading={isLoading}
+              isHidden={curPage !== 'Продукция'}
+            />
+            <DraftsStatistics
+              data={props.drafts}
+              isLoading={isLoading}
+              isHidden={curPage !== 'Чертежи'}
+            />
           </div>
         </div>
       )}
@@ -247,8 +302,92 @@ const PartsStatistic = (props) => {
 
 export default PartsStatistic
 
-const ProductStatistic = (props) => {
+const ProductsStatistics = (props) => {
   useEffect(() => {}, [])
 
-  return <div></div>
+  return (
+    <>
+      <div
+        className={
+          props.isHidden
+            ? 'main-window__list main-window__list--hidden'
+            : 'main-window__list'
+        }
+      >
+        <div className="main-window__list-item main-window__list-item--header">
+          <span>Название</span>
+          <span>Количество</span>
+        </div>
+        {props.data
+          .sort((a, b) => {
+            if (a[1].quantity < b[1].quantity) {
+              return 1
+            }
+            if (a[1].quantity > b[1].quantity) {
+              return -1
+            }
+            return 0
+          })
+          .map((part, index) => {
+            return (
+              <div className="main-window__list-item">
+                <span>
+                  <div className="main-window__mobile-text">Название:</div>
+                  {part[1].name}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Количество:</div>
+                  {addSpaceDelimiter(part[1].quantity)}
+                </span>
+              </div>
+            )
+          })}
+      </div>
+    </>
+  )
+}
+
+const DraftsStatistics = (props) => {
+  useEffect(() => {}, [])
+
+  return (
+    <>
+      <div
+        className={
+          props.isHidden
+            ? 'main-window__list main-window__list--hidden'
+            : 'main-window__list'
+        }
+      >
+        <div className="main-window__list-item main-window__list-item--header">
+          <span>Название</span>
+          <span>Количество</span>
+        </div>
+        {props.data
+          .sort((a, b) => {
+            if (a.quantity < b.quantity) {
+              return 1
+            }
+            if (a.quantity > b.quantity) {
+              return -1
+            }
+            return 0
+          })
+          .map((part, index) => {
+            return (
+              <div className="main-window__list-item">
+                <span>
+                  <div className="main-window__mobile-text">Название:</div>
+                  {part.name}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Количество:</div>
+                  {addSpaceDelimiter(part.quantity)}
+                </span>
+              </div>
+            )
+          })}
+      </div>
+    </>
+  )
 }

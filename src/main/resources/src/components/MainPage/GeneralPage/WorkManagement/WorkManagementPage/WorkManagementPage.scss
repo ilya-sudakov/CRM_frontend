@@ -380,6 +380,9 @@
     .main-window__info-panel {
       flex-direction: column !important;
     }
+    .searchbar {
+      width: calc(100% - 10px);
+    }
     .work-management-page__date-pick {
       margin-bottom: 5px;
       flex-direction: column;

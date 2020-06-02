@@ -218,14 +218,11 @@ const WorkManagement = (props) => {
               })
               .map((employee) => {
                 const item = employee[1]
-                {
-                  /* console.log(employeesMap[item.id]) */
-                }
                 return (
                   <Link
                     className="work-management__item"
                     // to={'/work-management/record-time/edit/' + item.id}
-                    to={'/work-management'}
+                    to="/work-management"
                   >
                     <div>
                       {item.lastName + ' ' + item.name + ' ' + item.middleName}

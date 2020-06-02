@@ -13,6 +13,7 @@ import {
   numberToString,
   getAllProductsFromWorkCount,
   addSpaceDelimiter,
+  getAllDraftsFromWorkCount,
 } from '../../../../../utils/functions.jsx'
 import {
   getRecordedWorkByDateRange,
@@ -34,6 +35,7 @@ const WorkManagementPage = (props) => {
   const [employeesMap, setEmployeesMap] = useState({})
   const [employees, setEmployees] = useState({})
   const [partsStatistics, setPartsStatistics] = useState({})
+  const [draftsStatistics, setDraftsStatistics] = useState([])
   const [curPage, setCurPage] = useState('Сотрудники')
   const [workshops, setWorkshops] = useState([
     {
@@ -110,6 +112,7 @@ const WorkManagementPage = (props) => {
       .then((res) => {
         console.log(res)
         setPartsStatistics(getAllProductsFromWorkCount(res))
+        setDraftsStatistics(getAllDraftsFromWorkCount(res))
         combineWorksForSamePeople([
           ...res.map((item) => {
             return {
@@ -236,9 +239,7 @@ const WorkManagementPage = (props) => {
         </div>
         {(props.userHasAccess(['ROLE_ADMIN']) ||
           props.userHasAccess(['ROLE_WORKSHOP'])) && (
-          <PartsStatistic
-            data={partsStatistics}
-          />
+          <PartsStatistic data={partsStatistics} drafts={draftsStatistics} />
         )}
         <div className="main-window__header">
           <SearchBar
