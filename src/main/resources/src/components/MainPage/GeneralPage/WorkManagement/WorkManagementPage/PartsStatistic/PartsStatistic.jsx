@@ -124,7 +124,7 @@ const PartsStatistic = (props) => {
       setIsLoading(true)
       if (!canvasLoaded) {
         setIsLoading(true)
-        loadCanvas('main-window__chart-wrapper', 'main-window__chart')
+        loadCanvas('parts-statistic__chart-products', 'main-window__chart')
         setCanvasLoaded(true)
       }
       setTimeout(() => {
@@ -197,7 +197,7 @@ const PartsStatistic = (props) => {
           >
             <TableLoading isLoading={isLoading} />
             <div
-              className="main-window__chart-wrapper"
+              className="main-window__chart-wrapper parts-statistic__chart-products"
               style={{
                 height: `${
                   filterWorkshops(Object.entries(props.data)).length * 50

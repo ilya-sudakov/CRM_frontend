@@ -27,13 +27,16 @@ const FeedbackChat = (props) => {
     }
     //Отмечаем все непрочитанные сообщения - прочитанными
     if (
-      props.messages[props.messages.length - 1]?.author !==
-        props.userData.username &&
+      (props.messages.length > 0
+        ? props.messages[props.messages.length - 1]?.author !==
+          props.userData.username
+        : false) &&
       showNewMessages === true &&
-      isLoaded
+      isLoaded 
     ) {
       // console.log(123);
       props.handleReadMessages()
+      console.log(props.messages[props.messages.length - 1]?.author)
       setTimeout(() => {
         setShowNewMessages(false)
       }, 5000)
@@ -151,20 +154,20 @@ const FeedbackChat = (props) => {
               </div>
             )
           })}
-        {(props.messages[props.messages.length - 1]?.author !==
+        {props.messages[props.messages.length - 1]?.author !==
           props.userData.username &&
-          props.messages.length !== 0) && (
-          <div
-            className={
-              showNewMessages
-                ? 'feedback-chat__divider'
-                : 'feedback-chat__divider feedback-chat__divider--hidden'
-            }
-          >
-            <span>Новые сообщения</span>
-            <img className="feedback-chat__img" src={arrowUpSVG} />
-          </div>
-        )}
+          props.messages.length !== 0 && (
+            <div
+              className={
+                showNewMessages
+                  ? 'feedback-chat__divider'
+                  : 'feedback-chat__divider feedback-chat__divider--hidden'
+              }
+            >
+              <span>Новые сообщения</span>
+              <img className="feedback-chat__img" src={arrowUpSVG} />
+            </div>
+          )}
       </div>
       <div className="feedback-chat__input">
         <input
