@@ -95,7 +95,7 @@
         height: fit-content;
         transition: opacity 200ms ease-in-out, right 500ms ease-in-out;
         // position: absolute;
-        right: 0;
+        right: 10px;
         opacity: 1;
         &--hidden {
             position: absolute;
@@ -105,6 +105,7 @@
             right: 200px;
             // width: 0;
             max-height: 100px;
+            overflow: hidden;
             transition: opacity 200ms ease-in-out, right 500ms ease-in-out;
         }
         .main-window__list-item {
