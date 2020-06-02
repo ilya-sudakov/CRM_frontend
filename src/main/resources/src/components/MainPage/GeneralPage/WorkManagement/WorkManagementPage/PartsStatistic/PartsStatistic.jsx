@@ -17,12 +17,30 @@ const PartsStatistic = (props) => {
   const [isVisible, setIsVisible] = useState(true)
   // const originalColor = '029b09' // ? green color, but works for big amount of elements
   const originalColor = '00a3a2'
+  const userContext = useContext(UserContext)
+  const [curPage, setCurPage] = useState('Продукция')
+  const workshopsSwitch = {
+    ЦехЛЭМЗ: 'ROLE_LEMZ',
+    ЦехЛепсари: 'ROLE_LEPSARI',
+    ЦехЛиговский: 'ROLE_LIGOVSKIY',
+  }
+  const filterWorkshops = (data) => {
+    return data.filter((part) => {
+      if (userContext.userHasAccess(['ROLE_ADMIN'])) {
+        return true
+      } else {
+        return userContext.userHasAccess([
+          workshopsSwitch[part[1].product.productionLocation],
+        ])
+      }
+    })
+  }
 
   const options = {
     type: 'horizontalBar',
     data: {
       labels: [
-        ...Object.entries(props.data)
+        ...filterWorkshops(Object.entries(props.data))
           .sort((a, b) => {
             if (a[1].quantity < b[1].quantity) {
               return 1
@@ -46,12 +64,12 @@ const PartsStatistic = (props) => {
           //   ),
           // ],
           backgroundColor: [
-            ...Object.entries(props.data).map(
+            ...filterWorkshops(Object.entries(props.data)).map(
               (product, index) => '#' + originalColor,
             ),
           ],
           data: [
-            ...Object.entries(props.data)
+            ...filterWorkshops(Object.entries(props.data))
               .sort((a, b) => {
                 if (a[1].quantity < b[1].quantity) {
                   return 1
@@ -102,7 +120,7 @@ const PartsStatistic = (props) => {
 
   useEffect(() => {
     setIsLoading(true)
-    if (Object.entries(props.data).length > 0) {
+    if (filterWorkshops(Object.entries(props.data)).length > 0) {
       setIsLoading(true)
       if (!canvasLoaded) {
         setIsLoading(true)
@@ -118,8 +136,8 @@ const PartsStatistic = (props) => {
     } else {
       setIsVisible(false)
       setIsLoading(false)
-      // console.log(canvasLoaded); 
-      // canvasLoaded && graph.destroy()
+      // console.log(canvasLoaded);
+      canvasLoaded && graph.destroy()
     }
   }, [props.data])
   return (
@@ -132,7 +150,7 @@ const PartsStatistic = (props) => {
               return setIsVisible(!isVisible)
             }}
           >
-            Отчет по произведенной продукции
+            Отчет производства
             <img
               className={
                 isVisible
@@ -145,6 +163,34 @@ const PartsStatistic = (props) => {
           <div
             className={
               isVisible
+                ? 'main-window__header'
+                : 'main-window__header main-window__header--hidden'
+            }
+          >
+            <div className="main-window__menu">
+              <div
+                className={
+                  curPage === 'Продукция'
+                    ? 'main-window__item main-window__item--active'
+                    : 'main-window__item'
+                }
+              >
+                Продукция
+              </div>
+              <div
+                className={
+                  curPage === 'Чертежи'
+                    ? 'main-window__item main-window__item--active'
+                    : 'main-window__item'
+                }
+              >
+                Чертежи
+              </div>
+            </div>
+          </div>
+          <div
+            className={
+              isVisible
                 ? 'parts-statistic__wrapper'
                 : 'parts-statistic__wrapper parts-statistic__wrapper--hidden'
             }
@@ -153,7 +199,9 @@ const PartsStatistic = (props) => {
             <div
               className="main-window__chart-wrapper"
               style={{
-                height: `${Object.entries(props.data).length * 50}px`,
+                height: `${
+                  filterWorkshops(Object.entries(props.data)).length * 50
+                }px`,
               }}
             ></div>
             <div className="main-window__list">
@@ -161,7 +209,7 @@ const PartsStatistic = (props) => {
                 <span>Название</span>
                 <span>Количество</span>
               </div>
-              {Object.entries(props.data)
+              {filterWorkshops(Object.entries(props.data))
                 .sort((a, b) => {
                   if (a[1].quantity < b[1].quantity) {
                     return 1
@@ -173,24 +221,12 @@ const PartsStatistic = (props) => {
                 })
                 .map((part, index) => {
                   return (
-                    <div
-                      className="main-window__list-item"
-                      // style={{
-                      //   backgroundColor: `#${addHexColor(
-                      //     originalColor,
-                      //     index.toString(16).padEnd(6, '0'),
-                      //   )}ee`,
-                      // }}
-                    >
+                    <div className="main-window__list-item">
                       <span>
                         <div className="main-window__mobile-text">
                           Название:
                         </div>
                         {part[1].name}
-                        {/* {addHexColor(
-                    originalColor,
-                    (index * 10).toString(16).padStart(6, '0'),
-                  )} */}
                       </span>
                       <span>
                         <div className="main-window__mobile-text">
@@ -210,3 +246,9 @@ const PartsStatistic = (props) => {
 }
 
 export default PartsStatistic
+
+const ProductStatistic = (props) => {
+  useEffect(() => {}, [])
+
+  return <div></div>
+}

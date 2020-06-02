@@ -481,7 +481,7 @@ class MainPage extends React.Component {
                 />
                 <PrivateRoute
                   exact
-                  path="/work-managment"
+                  path="/work-management"
                   component={WorkManagementPage}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
@@ -495,7 +495,7 @@ class MainPage extends React.Component {
                 />
                 <PrivateRoute
                   exact
-                  path="/work-managment/record-time/new"
+                  path="/work-management/record-time/new"
                   component={NewRecordWork}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
@@ -508,7 +508,7 @@ class MainPage extends React.Component {
                   ]}
                 />
                 <PrivateRoute
-                  path="/work-managment/record-time/edit/"
+                  path="/work-management/record-time/edit/"
                   component={EditRecordWork}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}

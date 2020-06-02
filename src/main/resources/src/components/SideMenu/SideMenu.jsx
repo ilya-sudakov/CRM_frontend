@@ -42,7 +42,7 @@ const SideMenu = (props) => {
       ],
       addButtonName: 'Учесть рабочее время',
       linkTo: '/',
-      addButtonLinkTo: '/work-managment/record-time/new',
+      addButtonLinkTo: '/work-management/record-time/new',
       name: 'Главная',
       icon: homeImg,
     },
@@ -58,8 +58,8 @@ const SideMenu = (props) => {
       dropdownMenu: [],
     },
     {
-      pathname: '/work-managment',
-      addButtonLinkTo: '/work-managment/record-time/new',
+      pathname: '/work-management',
+      addButtonLinkTo: '/work-management/record-time/new',
       mainRoles: [
         'ROLE_ADMIN',
         'ROLE_MANAGER',

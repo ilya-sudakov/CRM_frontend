@@ -14,7 +14,7 @@ const EtceteraPage = (props) => {
       name: 'Категории клиентов',
     },
     {
-      linkTo: '/work-managment',
+      linkTo: '/work-management',
       name: 'Учет времени',
     },
     {

@@ -40,7 +40,7 @@ const TableView = (props) => {
   useEffect(() => {
     // console.log(props.drafts);
     props.setShowWindow(false)
-  }, [props.drafts, props.closeWindow])
+  }, [props.closeWindow])
 
   return (
     <div className="select-drafts__list">
@@ -85,7 +85,9 @@ const TableView = (props) => {
                     {draft.name}
                   </span>
                   <span>
-                    <div className="main-window__mobile-text">Местоположение:</div>
+                    <div className="main-window__mobile-text">
+                      Местоположение:
+                    </div>
                     {draft.location}
                   </span>
                   <span>

@@ -75,11 +75,6 @@ const WorkManagementPage = (props) => {
       employeesTotal: 0,
     },
   ])
-  const workshopsSwitch = {
-    ЦехЛЭМЗ: 'ROLE_LEMZ',
-    ЦехЛепсари: 'ROLE_LEPSARI',
-    ЦехЛиговский: 'ROLE_LIGOVSKIY',
-  }
   const userContext = useContext(UserContext)
   const [dates, setDates] = useState({
     // start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
@@ -237,20 +232,12 @@ const WorkManagementPage = (props) => {
     <div className="work-management-page">
       <div className="main-window">
         <div className="main-window__title">
-          <span>Отчет производства</span>
+          {/* <span>Отчет производства</span> */}
         </div>
         {(props.userHasAccess(['ROLE_ADMIN']) ||
           props.userHasAccess(['ROLE_WORKSHOP'])) && (
           <PartsStatistic
-            data={Object.values(partsStatistics).filter((part) => {
-              if (userContext.userHasAccess(['ROLE_ADMIN'])) {
-                return true
-              } else {
-                return userContext.userHasAccess([
-                  workshopsSwitch[part.product.productionLocation],
-                ])
-              }
-            })}
+            data={partsStatistics}
           />
         )}
         <div className="main-window__header">
@@ -260,16 +247,6 @@ const WorkManagementPage = (props) => {
             setSearchQuery={setSearchQuery}
           />
           <div className="main-window__menu">
-            <div
-              className={
-                curPage === 'Сотрудники'
-                  ? 'main-window__item main-window__item--active'
-                  : 'main-window__item'
-              }
-              onClick={() => setCurPage('Сотрудники')}
-            >
-              Сотрудники
-            </div>
             {/* <div
               className={
                 curPage === 'Работы'
@@ -280,6 +257,16 @@ const WorkManagementPage = (props) => {
             >
               Работы
             </div> */}
+            <div
+              className={
+                curPage === 'Сотрудники'
+                  ? 'main-window__item main-window__item--active'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Сотрудники')}
+            >
+              Сотрудники
+            </div>
           </div>
         </div>
         <div className="main-window__info-panel">
@@ -607,7 +594,7 @@ const WorkManagementPage = (props) => {
                                   {formatDateString(new Date(tempItem[0]))}
                                 </span>
                                 <div className="main-window__actions">
-                                  {/* <Link to={"work-managment/record-time/edit/" + tempItem[1].id} className="main-window__action" title="Редактировать">
+                                  {/* <Link to={"work-management/record-time/edit/" + tempItem[1].id} className="main-window__action" title="Редактировать">
                                                             <img className="main-window__img" src={editSVG} />
                                                         </Link> */}
                                   <div
@@ -689,7 +676,7 @@ const WorkManagementPage = (props) => {
                                           </div>
                                           <Link
                                             to={
-                                              'work-managment/record-time/edit/' +
+                                              'work-management/record-time/edit/' +
                                               work.id
                                             }
                                             className="main-window__action"

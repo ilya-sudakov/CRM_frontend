@@ -154,7 +154,7 @@ const WorkManagement = (props) => {
         <div
           className="work-management__button work-management__button--inverted"
           onClick={() => {
-            props.history.push('/work-managment')
+            props.history.push('/work-management')
           }}
         >
           Открыть
@@ -224,8 +224,8 @@ const WorkManagement = (props) => {
                 return (
                   <Link
                     className="work-management__item"
-                    // to={'/work-managment/record-time/edit/' + item.id}
-                    to={'/work-managment'}
+                    // to={'/work-management/record-time/edit/' + item.id}
+                    to={'/work-management'}
                   >
                     <div>
                       {item.lastName + ' ' + item.name + ' ' + item.middleName}

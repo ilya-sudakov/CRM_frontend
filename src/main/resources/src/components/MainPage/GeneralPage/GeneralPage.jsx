@@ -282,7 +282,7 @@ const GeneralPage = (props) => {
             ]) && (
               <Link
                 className="main-window__button"
-                to="/work-managment/record-time/new"
+                to="/work-management/record-time/new"
               >
                 Учесть рабочее время
               </Link>

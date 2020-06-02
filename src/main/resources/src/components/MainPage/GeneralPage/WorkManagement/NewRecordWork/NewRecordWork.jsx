@@ -145,7 +145,7 @@ const NewRecordWork = (props) => {
               )
             })
             .then(() => {
-              props.history.push('/work-managment')
+              props.history.push('/work-management')
             })
       })
       Promise.all(newWork)

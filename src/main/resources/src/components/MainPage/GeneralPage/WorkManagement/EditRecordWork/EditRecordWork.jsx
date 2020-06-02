@@ -160,7 +160,7 @@ const EditRecordWork = (props) => {
               })
             })
             .then(() => {
-              props.history.push('/work-managment')
+              props.history.push('/work-management')
             })
             .catch((error) => {
               alert('Ошибка при добавлении записи')
@@ -221,7 +221,7 @@ const EditRecordWork = (props) => {
     document.title = 'Редактирование заявки'
     const abortController = new AbortController()
     const id = props.history.location.pathname.split(
-      '/work-managment/record-time/edit/',
+      '/work-management/record-time/edit/',
     )[1]
     if (isNaN(Number.parseInt(id))) {
       alert('Неправильный индекс работы!')
@@ -469,7 +469,7 @@ const EditRecordWork = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => props.history.push('/work-managment')}
+            onClick={() => props.history.push('/work-management')}
             value="Вернуться назад"
           />
           {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
