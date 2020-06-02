@@ -279,7 +279,9 @@ const PartsStatistic = (props) => {
               className="main-window__chart-wrapper"
               style={{
                 height: `${
-                  filterWorkshops(Object.entries(props.data)).length * 50
+                  curPage === 'Продукция'
+                    ? filterWorkshops(Object.entries(props.data)).length * 50
+                    : props.drafts.length * 50
                 }px`,
               }}
             ></div>
