@@ -149,7 +149,8 @@ const TableView = (props) => {
                       Дата контроля:
                     </div>
                     {/* {formatDateString(task.dateControl)} */}
-                    {new Date(task.dateControl) < new Date() ? (
+                    {new Date(task.dateControl) < new Date() &&
+                    task.condition !== 'Выполнено' ? (
                       <div className="main-window__reminder">
                         <div>!</div>
                         <div>{formatDateString(task.dateControl)}</div>
