@@ -30,7 +30,7 @@ const PartsStatistic = (props) => {
         return true
       } else {
         return userContext.userHasAccess([
-          workshopsSwitch[part[1].product.productionLocation],
+          workshopsSwitch[part.product.productionLocation],
         ])
       }
     })
@@ -40,17 +40,17 @@ const PartsStatistic = (props) => {
     type: 'horizontalBar',
     data: {
       labels: [
-        ...filterWorkshops(Object.entries(props.data))
+        ...filterWorkshops(Object.values(props.data))
           .sort((a, b) => {
-            if (a[1].quantity < b[1].quantity) {
+            if (a.quantity < b.quantity) {
               return 1
             }
-            if (a[1].quantity > b[1].quantity) {
+            if (a.quantity > b.quantity) {
               return -1
             }
             return 0
           })
-          .map((product) => product[1].name),
+          .map((product) => product.name),
       ],
       datasets: [
         {
@@ -64,22 +64,22 @@ const PartsStatistic = (props) => {
           //   ),
           // ],
           backgroundColor: [
-            ...filterWorkshops(Object.entries(props.data)).map(
-              (product, index) => '#' + originalColor,
+            ...filterWorkshops(Object.values(props.data)).map(
+              () => '#' + originalColor,
             ),
           ],
           data: [
-            ...filterWorkshops(Object.entries(props.data))
+            ...filterWorkshops(Object.values(props.data))
               .sort((a, b) => {
-                if (a[1].quantity < b[1].quantity) {
+                if (a.quantity < b.quantity) {
                   return 1
                 }
-                if (a[1].quantity > b[1].quantity) {
+                if (a.quantity > b.quantity) {
                   return -1
                 }
                 return 0
               })
-              .map((product) => product[1].quantity),
+              .map((product) => product.quantity),
           ],
         },
       ],
@@ -137,7 +137,7 @@ const PartsStatistic = (props) => {
       datasets: [
         {
           barThickness: 'flex',
-          label: 'Количество ед. деталей',
+          label: 'Количество ед. чертежей',
           backgroundColor: [
             ...props.drafts.map((product, index) => '#' + originalColor),
           ],
@@ -196,27 +196,30 @@ const PartsStatistic = (props) => {
     if (filterWorkshops(Object.values(props.data)).length > 0) {
       setIsLoading(true)
       if (!canvasLoaded) {
-        setIsLoading(true)
+        // setIsLoading(true)
+        console.log('loading canvas')
         loadCanvas('main-window__chart-wrapper', 'main-window__chart')
         setCanvasLoaded(true)
       }
       setTimeout(() => {
-        setIsLoading(false)
         setIsVisible(true)
+        console.log(canvasLoaded, 'destroying graph1')
         canvasLoaded && graph.destroy()
         setGraph(
           createGraph(
             curPage === 'Продукция' ? optionsProducts : optionsDrafts,
           ),
         )
+        setIsLoading(false)
       }, 150)
     } else {
       setIsVisible(false)
-      setIsLoading(false)
-      // console.log(canvasLoaded);
+      console.log(canvasLoaded, 'destroying graph2')
       canvasLoaded && graph.destroy()
+      setIsLoading(false)
     }
-  }, [props.data, props.drafts, curPage])
+  }, [props.drafts, curPage])
+
   return (
     <UserContext.Consumer>
       {(ctx) => (
@@ -280,13 +283,13 @@ const PartsStatistic = (props) => {
               style={{
                 height: `${
                   curPage === 'Продукция'
-                    ? filterWorkshops(Object.entries(props.data)).length * 50
+                    ? filterWorkshops(Object.values(props.data)).length * 50
                     : props.drafts.length * 50
                 }px`,
               }}
             ></div>
             <ProductsStatistics
-              data={filterWorkshops(Object.entries(props.data))}
+              data={filterWorkshops(Object.values(props.data))}
               isLoading={isLoading}
               isHidden={curPage !== 'Продукция'}
             />
@@ -322,10 +325,10 @@ const ProductsStatistics = (props) => {
         </div>
         {props.data
           .sort((a, b) => {
-            if (a[1].quantity < b[1].quantity) {
+            if (a.quantity < b.quantity) {
               return 1
             }
-            if (a[1].quantity > b[1].quantity) {
+            if (a.quantity > b.quantity) {
               return -1
             }
             return 0
@@ -335,11 +338,11 @@ const ProductsStatistics = (props) => {
               <div className="main-window__list-item">
                 <span>
                   <div className="main-window__mobile-text">Название:</div>
-                  {part[1].name}
+                  {part.name}
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Количество:</div>
-                  {addSpaceDelimiter(part[1].quantity)}
+                  {addSpaceDelimiter(part.quantity)}
                 </span>
               </div>
             )

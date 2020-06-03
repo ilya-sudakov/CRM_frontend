@@ -239,7 +239,11 @@ const WorkManagementPage = (props) => {
         </div>
         {(props.userHasAccess(['ROLE_ADMIN']) ||
           props.userHasAccess(['ROLE_WORKSHOP'])) && (
-          <PartsStatistic data={partsStatistics} drafts={draftsStatistics} />
+          <PartsStatistic
+            data={partsStatistics}
+            drafts={draftsStatistics}
+            isLoading={isLoading}
+          />
         )}
         <div className="main-window__header">
           <SearchBar
@@ -740,21 +744,32 @@ const WorkManagementPage = (props) => {
                                             {/* <span>Часы</span> */}
                                           </div>
                                         )}
-                                        {work.workControlProduct.length === 0 &&
+                                        {((work.workControlProduct.length ===
+                                          0 &&
                                           work.workList.typeOfWork ===
-                                            'Продукция' && (
-                                            <React.Fragment>
-                                              <div className="main-window__list-item main-window__list-item--header"></div>
-                                              <div className="main-window__list-item">
-                                                <span>
-                                                  <div className="main-window__reminder">
-                                                    <div>!</div>
-                                                    <div>Нет продукции</div>
+                                            'Продукция') ||
+                                          (work.partsWorks.length === 0 &&
+                                            work.workList.typeOfWork ===
+                                              'Чертеж')) && (
+                                          <React.Fragment>
+                                            <div className="main-window__list-item main-window__list-item--header"></div>
+                                            <div className="main-window__list-item">
+                                              <span>
+                                                <div className="main-window__reminder">
+                                                  <div>!</div>
+                                                  <div>
+                                                    Нет{' '}
+                                                    {work.workList
+                                                      .typeOfWork ===
+                                                    'Продукция'
+                                                      ? 'продукции'
+                                                      : 'чертежа'}
                                                   </div>
-                                                </span>
-                                              </div>
-                                            </React.Fragment>
-                                          )}
+                                                </div>
+                                              </span>
+                                            </div>
+                                          </React.Fragment>
+                                        )}
                                         {work.workControlProduct.map((item) => {
                                           return (
                                             <div className="main-window__list-item">

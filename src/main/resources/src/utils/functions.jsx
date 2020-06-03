@@ -216,7 +216,6 @@ export const getAllDraftsFromWorkCount = (works) => {
       newParts.push(draft)
     })
   })
-  console.log(parts, newParts);
   return newParts
 }
 
