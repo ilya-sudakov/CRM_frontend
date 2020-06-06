@@ -180,6 +180,9 @@ const PartsStatistic = (props) => {
         ],
         xAxes: [
           {
+            ticks: {
+              beginAtZero: true,
+            },
             scaleLabel: {
               display: true,
               labelString: 'Количество (шт.)',
@@ -193,7 +196,7 @@ const PartsStatistic = (props) => {
 
   useEffect(() => {
     setIsLoading(true)
-    if (filterWorkshops(Object.values(props.data)).length > 0) {
+    if (filterWorkshops(Object.values(props.data)).length > 0 || props.drafts.length > 0) {
       setIsLoading(true)
       if (!canvasLoaded) {
         // setIsLoading(true)
