@@ -25,6 +25,7 @@
     top: 0;
     left: 0;
     z-index: 2;
+    background-color: rgba($color: #000000, $alpha: 0.3);
 
     &--hidden {
       display: none;
@@ -257,6 +258,20 @@
         // background-color: lighten($side_menu__background, 0%);
         // color: #ffffff;
 
+        .header__profile_overlay {
+          position: fixed;
+          height: 100vh;
+          width: 100vw;
+          top: 0;
+          left: 0;
+          // z-index: 10;
+          background-color: red;
+
+          &--hidden {
+            display: none;
+          }
+        }
+
         &:hover {
           background-color: darken($primary-background-color, 7.5%);
           //dark-theme
@@ -333,21 +348,6 @@
               background-color: darken($side_menu__background, 10%);
             }
           }
-
-          .header__profile_overlay {
-            position: fixed;
-            height: 100vh;
-            width: 100vw;
-            top: 0;
-            left: 0;
-            // z-index: 10;
-            // background-color: red;
-
-            &--hidden {
-              display: none;
-            }
-          }
-
           &--hidden {
             transform: scale(0);
           }

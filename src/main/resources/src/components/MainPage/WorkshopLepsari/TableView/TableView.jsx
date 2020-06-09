@@ -63,7 +63,7 @@ const TableView = (props) => {
       name: 'Готово к отгрузке',
       oldName: 'Готово',
       className: 'ready',
-      access: ['ROLE_ADMIN'],
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
     },
     {
       name: 'В производстве',

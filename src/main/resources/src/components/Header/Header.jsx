@@ -22,14 +22,14 @@ const Header = (props) => {
     <UserContext.Consumer>
       {(ctx) => (
         <div className="header">
-          <div
+          {/* <div
             className={
-              showProfileMenu
+              !props.sideMenu
                 ? 'main_page__overlay'
                 : 'main_page__overlay main_page__overlay--hidden'
             }
-            onClick={() => setShowProfileMenu(!showProfileMenu)}
-          ></div>
+            onClick={() => props.setSideMenu(!props.sideMenu)}
+          ></div> */}
           <div className="header__company">
             <div className="header__sidemenu" onClick={sideMenuClickDesktop}>
               <div className="linesWrapper">
@@ -85,6 +85,14 @@ const Header = (props) => {
                   : null
               }
             >
+              <div
+                className={
+                  showProfileMenu
+                    ? 'header__profile_overlay'
+                    : 'header__profile_overlay header__profile_overlay--hidden'
+                }
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+              ></div>
               <div className="header__profile_data">
                 <div className="header__username">{ctx.userData.username}</div>
                 <img className="header__userimg" src={profileSVG} alt="" />

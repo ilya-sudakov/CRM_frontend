@@ -87,11 +87,11 @@
       }
 
       &--active {
-        // color: lighten($primary-text-color, 50%);
-        color: darken($button__background--inverted, 5%);
+        color: $primary-text-color;
+        // color: darken($button__background--inverted, 5%);
 
         &:hover {
-          color: lighten($button__background--inverted, 5%);
+          color: lighten($primary-text-color, 30%);
 
           &::after {
             background-color: lighten($button__background--inverted, 10%);
