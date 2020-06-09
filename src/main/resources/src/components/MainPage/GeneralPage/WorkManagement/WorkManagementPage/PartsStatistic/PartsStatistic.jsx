@@ -264,7 +264,7 @@ const PartsStatistic = (props) => {
               >
                 Продукция
               </div>
-              <div
+              {/* <div
                 className={
                   curPage === 'Чертежи'
                     ? 'main-window__item main-window__item--active'
@@ -273,7 +273,7 @@ const PartsStatistic = (props) => {
                 onClick={() => setCurPage('Чертежи')}
               >
                 Чертежи
-              </div>
+              </div> */}
             </div>
           </div>
           <div
@@ -299,11 +299,11 @@ const PartsStatistic = (props) => {
               isLoading={isLoading}
               isHidden={curPage !== 'Продукция'}
             />
-            <DraftsStatistics
+            {/* <DraftsStatistics
               data={props.drafts}
               isLoading={isLoading}
               isHidden={curPage !== 'Чертежи'}
-            />
+            /> */}
           </div>
         </div>
       )}
