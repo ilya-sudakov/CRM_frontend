@@ -393,7 +393,9 @@ const DraftsStatistics = (props) => {
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Количество:</div>
-                  {addSpaceDelimiter(part.quantity)}
+                  {addSpaceDelimiter(
+                    part.quantity === null ? 0 : part.quantity,
+                  )}
                 </span>
               </div>
             )
