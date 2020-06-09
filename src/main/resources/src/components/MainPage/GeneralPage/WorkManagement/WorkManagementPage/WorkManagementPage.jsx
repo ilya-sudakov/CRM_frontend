@@ -784,7 +784,9 @@ const WorkManagementPage = (props) => {
                                                   Кол-во:{' '}
                                                 </div>
                                                 {addSpaceDelimiter(
-                                                  item.quantity,
+                                                  item.quantity === null
+                                                    ? 0
+                                                    : item.quantity,
                                                 )}
                                               </span>
                                               {/* <span><div className="main-window__mobile-text">Часы: </div>{work.hours}</span> */}
@@ -805,7 +807,9 @@ const WorkManagementPage = (props) => {
                                                   Кол-во:{' '}
                                                 </div>
                                                 {addSpaceDelimiter(
-                                                  item.quantity,
+                                                  item.quantity === null
+                                                    ? 0
+                                                    : item.quantity,
                                                 )}
                                               </span>
                                             </div>
