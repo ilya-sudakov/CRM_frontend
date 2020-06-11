@@ -264,8 +264,8 @@
           width: 100vw;
           top: 0;
           left: 0;
-          // z-index: 10;
-          background-color: red;
+          z-index: 999;
+          // background-color: red;
 
           &--hidden {
             display: none;
