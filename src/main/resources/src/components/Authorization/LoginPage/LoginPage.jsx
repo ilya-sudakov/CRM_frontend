@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import './LoginPage.scss'
 import {
@@ -32,7 +32,7 @@ const LoginPage = (props) => {
     }
   }, [])
 
-  const handleLogin = (event) => {
+  const handleLogin = () => {
     // event.preventDefault();
     setIsLoading(true)
     const loginRequest = Object.assign({
@@ -93,6 +93,11 @@ const LoginPage = (props) => {
                 onChange={(e) => setUserName(e.target.value)}
                 placeholder="Введите логин..."
                 defaultValue=""
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    handleLogin()
+                  }
+                }}
               />
             </div>
             {/* <div className="authorization__field_name">
@@ -126,6 +131,11 @@ const LoginPage = (props) => {
                 type={showPassword ? 'text' : 'password'}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Введите пароль..."
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    handleLogin()
+                  }
+                }}
               />
             </div>
             <CheckBox
@@ -138,6 +148,7 @@ const LoginPage = (props) => {
             <Button
               text="Войти"
               imgSrc={exitSVG}
+              type="submit"
               className="authorization__submit"
               isLoading={isLoading}
               onClick={handleLogin}

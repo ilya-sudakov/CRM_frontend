@@ -18,4 +18,10 @@
       max-height: calc(100vh - 60px - 1px);
     }
   }
+
+  @media (min-width: 1920px) {
+    .main_page__activity_panel {
+      font-size: 110%;
+    }
+  }
 }

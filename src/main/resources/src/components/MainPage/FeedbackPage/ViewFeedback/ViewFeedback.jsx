@@ -76,7 +76,7 @@ const ViewFeedback = (props) => {
 
   const handleSubmit = () => {
     // event.preventDefault()
-    // console.log(formInputs)
+    console.log('handleEditSubmit')
     setIsLoading(true)
     console.log(formInputs)
     editFeedback(
@@ -215,7 +215,8 @@ const ViewFeedback = (props) => {
               isRead={formInputs.isRead}
               handleReadMessages={() => {
                 setIsLoading(true)
-                console.log(formInputs)
+                // console.log(formInputs)
+                console.log('handleReadMessages', formInputs.isRead)
                 return (
                   editFeedback(
                     {
@@ -240,6 +241,7 @@ const ViewFeedback = (props) => {
                 )
               }}
               handleSubmit={(message) => {
+                console.log('handleSubmit')
                 return addMessage({
                   author: props.userData.username,
                   date: new Date().getTime() / 1000,
@@ -247,6 +249,10 @@ const ViewFeedback = (props) => {
                   discussionId: feedbackId,
                 })
                   .then(() => {
+                    setFormInputs({
+                      ...formInputs,
+                      isRead: false,
+                    })
                     return editFeedback(
                       {
                         date: new Date(formInputs.date).getTime() / 1000,
@@ -260,10 +266,6 @@ const ViewFeedback = (props) => {
                     )
                   })
                   .then(() => {
-                    setFormInputs({
-                      ...formInputs,
-                      isRead: false,
-                    })
                     return loadData(feedbackId)
                   })
               }}
@@ -281,7 +283,7 @@ const ViewFeedback = (props) => {
               <Button
                 text="Редактировать содержание"
                 isLoading={isLoading}
-                inverted
+                // inverted
                 className="main-form__submit"
                 onClick={handleSubmit}
               />

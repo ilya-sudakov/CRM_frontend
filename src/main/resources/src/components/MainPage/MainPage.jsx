@@ -90,10 +90,8 @@ class MainPage extends React.Component {
     return (
       <div className="main_page">
         <Header
-          userData={this.props.userData}
           sideMenu={this.state.sidemenu_hidden}
           setSideMenu={this.setSideMenu}
-          userHasAccess={this.props.userHasAccess}
         />
         <div className="main_page__content">
           <SideMenu
@@ -483,7 +481,7 @@ class MainPage extends React.Component {
                 />
                 <PrivateRoute
                   exact
-                  path="/work-managment"
+                  path="/work-management"
                   component={WorkManagementPage}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
@@ -497,7 +495,7 @@ class MainPage extends React.Component {
                 />
                 <PrivateRoute
                   exact
-                  path="/work-managment/record-time/new"
+                  path="/work-management/record-time/new"
                   component={NewRecordWork}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
@@ -510,7 +508,7 @@ class MainPage extends React.Component {
                   ]}
                 />
                 <PrivateRoute
-                  path="/work-managment/record-time/edit/"
+                  path="/work-management/record-time/edit/"
                   component={EditRecordWork}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}

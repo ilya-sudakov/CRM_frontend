@@ -202,7 +202,7 @@
         .select-draft__img {
           position: absolute;
           left: calc(100% + 10px);
-          width: 30px;
+          width: 25px;
           border-radius: 105px;
         }
 
@@ -212,6 +212,8 @@
           padding: 10px 5px;
           // text-decoration: underline;
           border: none !important;
+          cursor: pointer;
+          font-size: 85%;
         }
 
         &:hover {

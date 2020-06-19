@@ -154,7 +154,7 @@ const WorkManagement = (props) => {
         <div
           className="work-management__button work-management__button--inverted"
           onClick={() => {
-            props.history.push('/work-managment')
+            props.history.push('/work-management')
           }}
         >
           Открыть
@@ -171,7 +171,7 @@ const WorkManagement = (props) => {
             <TableDataLoading className="work-management__item" />
           ) : (
             <div className="work-management__info">
-              Нет записей о проведенной работе за сегодня!
+              Нет записей о проведенной работе!
             </div>
           )
         ) : (
@@ -218,14 +218,11 @@ const WorkManagement = (props) => {
               })
               .map((employee) => {
                 const item = employee[1]
-                {
-                  /* console.log(employeesMap[item.id]) */
-                }
                 return (
                   <Link
                     className="work-management__item"
-                    // to={'/work-managment/record-time/edit/' + item.id}
-                    to={'/work-managment'}
+                    // to={'/work-management/record-time/edit/' + item.id}
+                    to="/work-management"
                   >
                     <div>
                       {item.lastName + ' ' + item.name + ' ' + item.middleName}

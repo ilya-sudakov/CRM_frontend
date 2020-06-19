@@ -85,16 +85,20 @@
   }
 
   .searchbar {
-    // border-top-right-radius: 0px;
-    // border-top-right-radius: 0px;
-    // border-top-left-radius: 0px;
     background-color: $secondary-text-color;
     width: calc(100% - 25px);
     text-align: left;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    // margin-bottom: 5px;
   }
+
+  .form-window {
+    .form-window__content {
+      max-width: 600px;
+      max-height: 250px;
+    }
+  }
+
   .requests__clients-sort {
     display: flex;
     flex-direction: row;

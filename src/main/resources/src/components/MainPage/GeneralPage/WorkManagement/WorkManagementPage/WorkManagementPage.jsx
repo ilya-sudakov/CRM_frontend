@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import './WorkManagementPage.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
@@ -13,11 +13,13 @@ import {
   numberToString,
   getAllProductsFromWorkCount,
   addSpaceDelimiter,
+  getAllDraftsFromWorkCount,
 } from '../../../../../utils/functions.jsx'
 import {
   getRecordedWorkByDateRange,
   deleteRecordedWork,
   deleteProductFromRecordedWork,
+  deleteDraftFromRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx'
 // import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
@@ -25,6 +27,7 @@ import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoadi
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx'
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx'
+import { UserContext } from '../../../../../App.js'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -32,18 +35,22 @@ const WorkManagementPage = (props) => {
   const [employeesMap, setEmployeesMap] = useState({})
   const [employees, setEmployees] = useState({})
   const [partsStatistics, setPartsStatistics] = useState({})
+  const [draftsStatistics, setDraftsStatistics] = useState([])
+  const [curPage, setCurPage] = useState('Сотрудники')
   const [workshops, setWorkshops] = useState([
     {
       name: 'ЦехЛЭМЗ',
       visibility: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       active: true,
       minimized: true,
+      employeesTotal: 0,
     },
     {
       name: 'ЦехЛепсари',
       visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       active: true,
       minimized: true,
+      employeesTotal: 0,
     },
     {
       name: 'ЦехЛиговский',
@@ -55,6 +62,7 @@ const WorkManagementPage = (props) => {
       ],
       active: true,
       minimized: true,
+      employeesTotal: 0,
     },
     {
       name: 'Офис',
@@ -66,8 +74,10 @@ const WorkManagementPage = (props) => {
       ],
       active: true,
       minimized: true,
+      employeesTotal: 0,
     },
   ])
+  const userContext = useContext(UserContext)
   const [dates, setDates] = useState({
     // start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
     // end: new Date()
@@ -102,6 +112,7 @@ const WorkManagementPage = (props) => {
       .then((res) => {
         console.log(res)
         setPartsStatistics(getAllProductsFromWorkCount(res))
+        setDraftsStatistics(getAllDraftsFromWorkCount(res))
         combineWorksForSamePeople([
           ...res.map((item) => {
             return {
@@ -224,37 +235,45 @@ const WorkManagementPage = (props) => {
     <div className="work-management-page">
       <div className="main-window">
         <div className="main-window__title">
-          <div className="main-window__title">
-            <span>Отчет производства</span>
-            {/* {props.userHasAccess(['ROLE_ADMIN']) && <div className="main-window__button" onClick={() => { exportCSVFile() }}>
-                            <img className="main-window__img" src={DownloadIcon} alt="" />
-                            <span>Скачать Excel</span>
-                        </div>} */}
-          </div>
-          {/* <Link
-            to="/work-managment/parts-statistics"
-            className="main-window__button"
-          >
-            Сводка деталей
-          </Link> */}
-          {/* <Link
-            to="/work-managment/work-report"
-            className="main-window__button"
-          >
-            Табель
-          </Link> */}
+          {/* <span>Отчет производства</span> */}
         </div>
         {(props.userHasAccess(['ROLE_ADMIN']) ||
-          props.userHasAccess(['ROLE_LIGOVSKIY']) ||
-          props.userHasAccess(['ROLE_LEMZ']) ||
-          props.userHasAccess(['ROLE_LEPSARI'])) && (
-          <PartsStatistic data={partsStatistics} />
+          props.userHasAccess(['ROLE_WORKSHOP'])) && (
+          <PartsStatistic
+            data={partsStatistics}
+            drafts={draftsStatistics}
+            isLoading={isLoading}
+          />
         )}
-        <SearchBar
-          title="Поиск по записям"
-          placeholder="Введите запрос для поиска..."
-          setSearchQuery={setSearchQuery}
-        />
+        <div className="main-window__header">
+          <SearchBar
+            title="Поиск по записям"
+            placeholder="Введите запрос для поиска..."
+            setSearchQuery={setSearchQuery}
+          />
+          <div className="main-window__menu">
+            {/* <div
+              className={
+                curPage === 'Работы'
+                  ? 'main-window__item main-window__item--active'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Работы')}
+            >
+              Работы
+            </div> */}
+            <div
+              className={
+                curPage === 'Сотрудники'
+                  ? 'main-window__item main-window__item--active'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Сотрудники')}
+            >
+              Сотрудники
+            </div>
+          </div>
+        </div>
         <div className="main-window__info-panel">
           <div className="work-management-page__date-pick">
             <div className="work-management-page__date">
@@ -580,7 +599,7 @@ const WorkManagementPage = (props) => {
                                   {formatDateString(new Date(tempItem[0]))}
                                 </span>
                                 <div className="main-window__actions">
-                                  {/* <Link to={"work-managment/record-time/edit/" + tempItem[1].id} className="main-window__action" title="Редактировать">
+                                  {/* <Link to={"work-management/record-time/edit/" + tempItem[1].id} className="main-window__action" title="Редактировать">
                                                             <img className="main-window__img" src={editSVG} />
                                                         </Link> */}
                                   <div
@@ -662,7 +681,7 @@ const WorkManagementPage = (props) => {
                                           </div>
                                           <Link
                                             to={
-                                              'work-managment/record-time/edit/' +
+                                              'work-management/record-time/edit/' +
                                               work.id
                                             }
                                             className="main-window__action"
@@ -676,7 +695,6 @@ const WorkManagementPage = (props) => {
                                           <div
                                             className="main-window__action"
                                             onClick={() => {
-                                              // console.log(tempItem[1]);
                                               return Promise.all(
                                                 work.workControlProduct.map(
                                                   (product) => {
@@ -687,6 +705,20 @@ const WorkManagementPage = (props) => {
                                                   },
                                                 ),
                                               )
+                                                .then(() => {
+                                                  return Promise.all(
+                                                    work.partsWorks.map(
+                                                      (draft) => {
+                                                        console.log(draft)
+                                                        return deleteDraftFromRecordedWork(
+                                                          work.id,
+                                                          draft.partId,
+                                                          draft.partType,
+                                                        )
+                                                      },
+                                                    ),
+                                                  )
+                                                })
                                                 .then(() => {
                                                   return deleteRecordedWork(
                                                     work.id,
@@ -712,21 +744,32 @@ const WorkManagementPage = (props) => {
                                             {/* <span>Часы</span> */}
                                           </div>
                                         )}
-                                        {work.workControlProduct.length === 0 &&
+                                        {((work.workControlProduct.length ===
+                                          0 &&
                                           work.workList.typeOfWork ===
-                                            'Продукция' && (
-                                            <React.Fragment>
-                                              <div className="main-window__list-item main-window__list-item--header"></div>
-                                              <div className="main-window__list-item">
-                                                <span>
-                                                  <div className="main-window__reminder">
-                                                    <div>!</div>
-                                                    <div>Нет продукции</div>
+                                            'Продукция') ||
+                                          (work.partsWorks.length === 0 &&
+                                            work.workList.typeOfWork ===
+                                              'Чертеж')) && (
+                                          <React.Fragment>
+                                            <div className="main-window__list-item main-window__list-item--header"></div>
+                                            <div className="main-window__list-item">
+                                              <span>
+                                                <div className="main-window__reminder">
+                                                  <div>!</div>
+                                                  <div>
+                                                    Нет{' '}
+                                                    {work.workList
+                                                      .typeOfWork ===
+                                                    'Продукция'
+                                                      ? 'продукции'
+                                                      : 'чертежа'}
                                                   </div>
-                                                </span>
-                                              </div>
-                                            </React.Fragment>
-                                          )}
+                                                </div>
+                                              </span>
+                                            </div>
+                                          </React.Fragment>
+                                        )}
                                         {work.workControlProduct.map((item) => {
                                           return (
                                             <div className="main-window__list-item">
@@ -741,7 +784,9 @@ const WorkManagementPage = (props) => {
                                                   Кол-во:{' '}
                                                 </div>
                                                 {addSpaceDelimiter(
-                                                  item.quantity,
+                                                  item.quantity === null
+                                                    ? 0
+                                                    : item.quantity,
                                                 )}
                                               </span>
                                               {/* <span><div className="main-window__mobile-text">Часы: </div>{work.hours}</span> */}
@@ -762,10 +807,11 @@ const WorkManagementPage = (props) => {
                                                   Кол-во:{' '}
                                                 </div>
                                                 {addSpaceDelimiter(
-                                                  item.quantity,
+                                                  item.quantity === null
+                                                    ? 0
+                                                    : item.quantity,
                                                 )}
                                               </span>
-                                              {/* <span><div className="main-window__mobile-text">Часы: </div>{work.hours}</span> */}
                                             </div>
                                           )
                                         })}

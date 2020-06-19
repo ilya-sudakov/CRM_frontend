@@ -2,10 +2,44 @@
 
 .parts-statistic {
     width: calc(100% - 50px);
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 5px;
     margin: 15px 0;
     padding: 15px 10px;
+
+    .main-window__title {
+        .main-window__img {
+            margin-left: 2px;
+            margin-top: 3px;
+        }
+    }
+
+    .main-window__header {
+        margin-bottom: 0;
+        transition: 200ms ease-in-out;
+        margin-top: 10px;
+        .main-window__menu {
+            width: 100%;
+            transition: 200ms ease-in-out;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        &--hidden {
+            height: 0px;
+            transform: scaleY(0);
+            transition: 200ms ease-in-out;
+            margin-top: 0;
+
+            .main-window__menu {
+                height: 0px;
+                transform: scaleY(0);
+                transition: 200ms ease-in-out;
+            }
+        }
+    }
 
     &__wrapper {
         display: flex;
@@ -19,6 +53,9 @@
         transition: 200ms ease-in-out;
         min-height: 100px;
         position: relative;
+        background-color: $secondary-text-color;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
 
         &--hidden {
             max-height: 0px;
@@ -53,12 +90,24 @@
     }
 
     .main-window__list {
-        // padding: 15px;
         margin: 5px;
-        // width: calc(100%);
         max-width: 500px;
         height: fit-content;
-        // box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+        transition: opacity 200ms ease-in-out, right 500ms ease-in-out;
+        // position: absolute;
+        right: 10px;
+        opacity: 1;
+        &--hidden {
+            position: absolute;
+            opacity: 0;
+            visibility: hidden;
+            // max-width: 0;
+            right: 200px;
+            // width: 0;
+            max-height: 100px;
+            overflow: hidden;
+            transition: opacity 200ms ease-in-out, right 500ms ease-in-out;
+        }
         .main-window__list-item {
             cursor: auto;
             span {
@@ -72,7 +121,12 @@
         }
         .main-window__list-item:not(.main-window__list-item--header) {
             // color: #eeeeee;
+            background-color: darken($secondary-text-color, 4%);
             padding: 7.5px 10px;
+
+            &:hover {
+                background-color: $button__background--inverted;
+            }
         }
     }
 

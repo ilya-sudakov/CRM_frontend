@@ -136,15 +136,16 @@ const NewRecordWork = (props) => {
                   // console.log(product);
                   return addDraftToRecordedWork(
                     workId,
-                    draft.id,
+                    draft.partId,
                     draft.type,
                     draft.quantity,
+                    draft.name
                   )
                 }),
               )
             })
             .then(() => {
-              props.history.push('/work-managment')
+              props.history.push('/work-management')
             })
       })
       Promise.all(newWork)

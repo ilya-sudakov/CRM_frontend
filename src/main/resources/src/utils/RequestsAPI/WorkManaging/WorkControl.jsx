@@ -96,7 +96,7 @@ export function deleteProductFromRecordedWork(id, productId) {
   })
 }
 
-export function addDraftToRecordedWork(id, draftId, draftType, quantity) {
+export function addDraftToRecordedWork(id, draftId, draftType, quantity, name) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/work_control/part/',
     method: 'POST',
@@ -105,6 +105,7 @@ export function addDraftToRecordedWork(id, draftId, draftType, quantity) {
       partId: draftId,
       quantity: quantity,
       partType: draftType,
+      name: name,
     }),
   })
 }

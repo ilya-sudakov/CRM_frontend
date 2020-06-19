@@ -585,7 +585,7 @@ export const EmployeeInfo = (props) => {
                           )}
                       </span>
                       {(item.workControlProduct.length > 0 ||
-                        item.partsWorks.length > 0) && (
+                        item?.partsWorks.length > 0) && (
                         <div className="main-window__list">
                           <div className="main-window__list-item main-window__list-item--header">
                             <span>Название</span>

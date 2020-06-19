@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './EditRequest.scss'
 import '../../../../utils/Form/Form.scss'
 import { getProducts } from '../../../../utils/RequestsAPI/Products.jsx'
@@ -17,6 +17,7 @@ import InputProducts from '../../../../utils/Form/InputProducts/InputProducts.js
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import { UserContext } from '../../../../App.js'
 
 const EditRequest = (props) => {
   const [requestId, setRequestId] = useState(1)
@@ -45,6 +46,41 @@ const EditRequest = (props) => {
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const userContext = useContext(UserContext)
+  const [requestStatuses, setRequestStatutes] = useState([
+    {
+      name: 'Проблема/Материалы',
+      oldName: 'Проблема-материалы',
+      className: 'materials',
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    },
+    {
+      name: 'Отгружено',
+      className: 'shipped',
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    },
+    {
+      name: 'Готово к отгрузке',
+      oldName: 'Готово',
+      className: 'ready',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+    },
+    {
+      name: 'В производстве',
+      className: 'in-production',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+    },
+    {
+      name: 'Ожидание',
+      className: 'waiting',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+    },
+    {
+      name: 'Завершено',
+      className: 'completed',
+      access: ['ROLE_ADMIN'],
+    },
+  ])
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
@@ -314,15 +350,25 @@ const EditRequest = (props) => {
               onChange={handleInputChange}
               value={requestInputs.status}
             >
-              <option value="Проблема">Проблема</option>
-              <option value="Материалы">Материалы</option>
-              <option value="Ожидание">Ожидание</option>
-              <option value="В производстве">В производстве</option>
-              <option value="Готово">Готово</option>
-              <option value="Частично готово">Частично готово</option>
-              <option value="Завершено">Завершено</option>
-              <option value="Отгружено">Отгружено</option>
-              <option value="Приоритет">Приоритет</option>
+              {requestStatuses.map((status) => {
+                if (userContext.userHasAccess(status.access)) {
+                  return (
+                    <option
+                      value={
+                        status.oldName === requestInputs.status
+                          ? status.oldName
+                          : status.name
+                      }
+                    >
+                      {status.name}
+                    </option>
+                  )
+                } else {
+                  return (
+                    <option style={{ display: `none` }}>{status.name}</option>
+                  )
+                }
+              })}
             </select>
           </div>
         </div>

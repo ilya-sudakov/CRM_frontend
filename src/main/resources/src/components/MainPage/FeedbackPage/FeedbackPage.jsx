@@ -52,6 +52,7 @@ const FeedbackPage = (props) => {
   ])
 
   useEffect(() => {
+    document.title = 'Обсуждения'
     let abortController = new AbortController()
     loadData(abortController.signal)
     return function cancel() {
@@ -162,7 +163,7 @@ const FeedbackPage = (props) => {
                     to={'/feedback/view/' + item.id}
                   >
                     <div className="main-window__list-col">
-                      <span>
+                      <span title={item.subject}>
                         <div className="main-window__mobile-text">Тема: </div>
                         {item.subject}
                       </span>
