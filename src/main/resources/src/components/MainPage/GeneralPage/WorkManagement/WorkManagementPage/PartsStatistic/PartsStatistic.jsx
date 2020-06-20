@@ -229,7 +229,12 @@ const PartsStatistic = (props) => {
   return (
     <UserContext.Consumer>
       {(ctx) => (
-        <div className="parts-statistic">
+        <div
+          className="parts-statistic"
+          style={{
+            backgroundColor: isVisible ? '#ffffff' : 'rgba(255, 255, 255, 0.5)',
+          }}
+        >
           <div
             className="main-window__title"
             onClick={() => {
