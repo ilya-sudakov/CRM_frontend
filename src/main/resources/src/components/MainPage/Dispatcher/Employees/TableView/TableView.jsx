@@ -18,7 +18,7 @@ const TableView = (props) => {
     const [workshopsVisible, setWorkshopsVisible] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [sortOrder, setSortOrder] = useState({
-        curSort: 'id',
+        curSort: 'lastName',
         date: 'desc'
     })
 

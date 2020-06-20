@@ -2,7 +2,8 @@
 
 .new-price-item {
   .new-price-item__checkbox-container {
-    width: 50%;
+    // width: 50%;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,6 +22,10 @@
       line-height: 70px;
       margin-bottom: 0;
     }
+
+    .main-form__fieldset {
+      margin-bottom: 0;
+    }
   }
   .checkbox__container {
     padding-left: 35px !important;
@@ -35,7 +40,7 @@
     flex-direction: column;
   }
   .main-form__info-panel {
-    width: 50% !important;
+    width: 60% !important;
     & .main-form__button--inverted {
       color: #555555 !important;
     }
@@ -84,6 +89,19 @@
   }
   .main-form__buttons {
     margin-bottom: 15px;
+
+    &--vertical {
+      width: 100% !important;
+      margin-bottom: 0;
+
+      .main-form__item--header {
+        .main-form__input_name {
+          min-width: fit-content;
+          flex: 0 1 calc(30% - 30px);
+        }
+      }
+    }
+
     .checkbox {
       width: 50%;
     }

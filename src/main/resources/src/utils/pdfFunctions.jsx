@@ -1187,7 +1187,7 @@ export async function getPriceListPdfText(categories, priceList, optionalCols, l
                                                         {
                                                             image: listImgData,
                                                             fit: [15, 15],
-                                                            margin: [0, 3, 0, 0],
+                                                            margin: [0, 1, 0, 0],
                                                             width: 15
                                                         },
                                                         {
