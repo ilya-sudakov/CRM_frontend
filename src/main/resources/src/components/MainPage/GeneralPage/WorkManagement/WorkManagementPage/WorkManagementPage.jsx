@@ -28,6 +28,7 @@ import Button from '../../../../../utils/Form/Button/Button.jsx'
 import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx'
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx'
 import { UserContext } from '../../../../../App.js'
+import TableView from './TableView/TableView.jsx'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -404,6 +405,59 @@ const WorkManagementPage = (props) => {
                       />
                     </span>
                   </div>
+                  {/* <TableView
+                    data={Object.entries(employeesMap)
+                      .filter((item) => {
+                        if (
+                          workshop.name === employees[item[0]]?.workshop &&
+                          (employees[item[0]].lastName
+                            .toLowerCase()
+                            .includes(searchQuery.toLowerCase()) ||
+                            employees[item[0]].name
+                              .toLowerCase()
+                              .includes(searchQuery.toLowerCase()) ||
+                            employees[item[0]].middleName
+                              .toLowerCase()
+                              .includes(searchQuery.toLowerCase()) ||
+                            employees[item[0]].workshop
+                              .toLowerCase()
+                              .includes(searchQuery.toLowerCase()))
+                          //formatDateString(new Date(temp)).includes(searchQuery)
+                        ) {
+                          let check = false
+                          workshops.map((workshop) => {
+                            if (
+                              workshop.active &&
+                              workshop.name === employees[item[0]].workshop &&
+                              props.userHasAccess(workshop.visibility)
+                            ) {
+                              check = true
+                              return
+                            }
+                          })
+                          return check
+                        }
+                      })
+                      .sort((a, b) => {
+                        if (
+                          employees[a[0]][sortOrder.curSort] <
+                          employees[b[0]][sortOrder.curSort]
+                        ) {
+                          return sortOrder[sortOrder.curSort] === 'desc'
+                            ? 1
+                            : -1
+                        }
+                        if (
+                          employees[a[0]][sortOrder.curSort] >
+                          employees[b[0]][sortOrder.curSort]
+                        ) {
+                          return sortOrder[sortOrder.curSort] === 'desc'
+                            ? -1
+                            : 1
+                        }
+                        return 0
+                      })}
+                  /> */}
                   <div className="main-window__list-item main-window__list-item--header">
                     <span>Должность</span>
                     <span>ФИО</span>

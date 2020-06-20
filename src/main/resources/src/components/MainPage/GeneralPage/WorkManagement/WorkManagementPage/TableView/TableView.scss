@@ -1,0 +1,16 @@
+@import "../../../../../../variables.scss";
+
+.work-management-page__table-view {
+    .work-management-page__row {
+        display: flex;
+        flex-direction: row;
+
+        .work-management-page__item {
+            display: flex;
+
+            &--header {
+                font-size: 120%;
+            }
+        }
+    }
+}
