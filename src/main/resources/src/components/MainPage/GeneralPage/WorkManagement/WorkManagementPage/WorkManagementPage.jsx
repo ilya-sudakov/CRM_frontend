@@ -87,8 +87,8 @@ const WorkManagementPage = (props) => {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [sortOrder, setSortOrder] = useState({
-    curSort: 'date',
-    date: 'asc',
+    curSort: 'lastName',
+    date: 'desc',
   })
   const changeSortOrder = (event) => {
     const name = event.target.value.split(' ')[0]
@@ -221,6 +221,7 @@ const WorkManagementPage = (props) => {
   }
 
   useEffect(() => {
+    document.title = 'Отчет производства'
     let abortController = new AbortController()
     loadWorks(abortController.signal).then(() => {
       loadEmployeesCount(abortController.signal)
@@ -344,9 +345,9 @@ const WorkManagementPage = (props) => {
         <div className="main-window__sort-panel">
           <span>Сортировка: </span>
           <select onChange={changeSortOrder}>
-            <option value="date asc">По дате</option>
             <option value="lastName desc">По алфавиту (А-Я)</option>
             <option value="lastName asc">По алфавиту (Я-А)</option>
+            <option value="date asc">По дате</option>
             <option value="hours desc">По часам</option>
           </select>
         </div>
