@@ -82,6 +82,11 @@ const EditRequestLEMZ = (props) => {
       className: 'completed',
       access: ['ROLE_ADMIN'],
     },
+    {
+      name: 'Приоритет',
+      className: 'priority',
+      access: ['ROLE_ADMIN'],
+    },
   ])
 
   const validateField = (fieldName, value) => {
