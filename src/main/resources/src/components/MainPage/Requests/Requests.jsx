@@ -48,13 +48,19 @@ const Requests = (props) => {
     {
       name: 'В производстве',
       className: 'in-production',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       visible: false,
     },
     {
       name: 'Ожидание',
       className: 'waiting',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      visible: false,
+    },
+    {
+      name: 'Приоритет',
+      className: 'priority',
+      access: ['ROLE_ADMIN'],
       visible: false,
     },
   ])

@@ -80,6 +80,11 @@ const TableView = (props) => {
       className: 'waiting',
       access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
     },
+    {
+      name: 'Приоритет',
+      className: 'priority',
+      access: ['ROLE_ADMIN'],
+    },
   ])
 
   const changeSortOrder = (event) => {
@@ -376,7 +381,7 @@ const TableView = (props) => {
                     >
                       <option value="production">В работе</option>
                       <option value="completed">Завершено</option>
-                      <option value="defect">Брак</option>
+                      <option value="defect">Приоритет</option>
                     </select>
                   </div>
                 </div>

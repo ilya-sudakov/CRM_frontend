@@ -54,6 +54,12 @@ const TableView = (props) => {
       className: 'waiting',
       access: ['ROLE_ADMIN'],
     },
+    {
+      name: 'Приоритет',
+      className: 'priority',
+      access: ['ROLE_ADMIN'],
+      visible: false,
+    },
   ])
 
   const changeSortOrder = (event) => {

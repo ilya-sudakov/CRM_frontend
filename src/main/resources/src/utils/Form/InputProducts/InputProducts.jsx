@@ -24,7 +24,6 @@ const InputProducts = (props) => {
                     workshop={props.workshop}
                     noPackaging={props.noPackaging}
                     numberInput
-                    userHasAccess={props.userHasAccess}
                 />
             </div>
         </div>

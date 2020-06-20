@@ -6,7 +6,10 @@ import {
   editRequestLepsariStatus,
   editProductStatusToRequestLepsari,
 } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
-import { formatDateString, addSpaceDelimiter } from '../../../../utils/functions.jsx'
+import {
+  formatDateString,
+  addSpaceDelimiter,
+} from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 
 const TableView = (props) => {
@@ -75,6 +78,11 @@ const TableView = (props) => {
       className: 'waiting',
       access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
     },
+    {
+      name: 'Приоритет',
+      className: 'priority',
+      access: ['ROLE_ADMIN'],
+    },
   ])
 
   const changeSortOrder = (event) => {
@@ -88,19 +96,18 @@ const TableView = (props) => {
   const searchQuery = (data) => {
     const query = props.searchQuery.toLowerCase()
     //Временно
-    return data
-      .filter((item) => {
-        return item.lepsariProducts.length !== 0 &&
-          item.lepsariProducts[0].name !== null
-          ? item.lepsariProducts[0].name.toLowerCase().includes(query) ||
-              item.id.toString().includes(query) ||
-              formatDateString(item.date).includes(query) ||
-              item.codeWord.toLowerCase().includes(query) ||
-              item.status.toLowerCase().includes(query) ||
-              item.responsible.toLowerCase().includes(query) ||
-              formatDateString(item.shippingDate).includes(query)
-          : item.status.toLowerCase().includes(query)
-      })
+    return data.filter((item) => {
+      return item.lepsariProducts.length !== 0 &&
+        item.lepsariProducts[0].name !== null
+        ? item.lepsariProducts[0].name.toLowerCase().includes(query) ||
+            item.id.toString().includes(query) ||
+            formatDateString(item.date).includes(query) ||
+            item.codeWord.toLowerCase().includes(query) ||
+            item.status.toLowerCase().includes(query) ||
+            item.responsible.toLowerCase().includes(query) ||
+            formatDateString(item.shippingDate).includes(query)
+        : item.status.toLowerCase().includes(query)
+    })
     // return data.filter(item => {
     //     return (
     //         (item.lemzProducts.length !== 0 && item.lemzProducts[0].name !== null)
@@ -394,7 +401,7 @@ const TableView = (props) => {
                         >
                           <option value="production">В работе</option>
                           <option value="completed">Завершено</option>
-                          <option value="defect">Брак</option>
+                          <option value="defect">Приоритет</option>
                         </select>
                       </div>
                     </div>

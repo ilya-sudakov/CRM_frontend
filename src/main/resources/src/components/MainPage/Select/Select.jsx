@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import deleteSVG from '../../../../../../../assets/select/delete.svg'
 import './Select.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
@@ -16,6 +16,7 @@ import {
 } from '../../../utils/RequestsAPI/Products.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import { addSpaceDelimiter } from '../../../utils/functions.jsx'
+import { UserContext } from '../../../App.js'
 
 const Select = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -27,6 +28,7 @@ const Select = (props) => {
   const [closeWindow, setCloseWindow] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
   const [showOverlay, setShowOverlay] = useState(false)
+  const userContext = useContext(UserContext)
 
   const search = () => {
     // console.log(products);
@@ -78,7 +80,7 @@ const Select = (props) => {
           let productsArr = []
           let temp
           if (
-            props.userHasAccess([
+            userContext.userHasAccess([
               'ROLE_ADMIN',
               'ROLE_DISPATCHER',
               'ROLE_ENGINEER',
@@ -96,7 +98,7 @@ const Select = (props) => {
                   setProducts([...productsArr])
                 })
             })
-          } else if (props.userHasAccess(['ROLE_LEMZ'])) {
+          } else if (userContext.userHasAccess(['ROLE_LEMZ'])) {
             temp = getProductsByLocation({
               productionLocation: 'ЦехЛЭМЗ',
             })
@@ -105,7 +107,7 @@ const Select = (props) => {
                 res.map((item) => productsArr.push(item))
                 setProducts([...productsArr])
               })
-          } else if (props.userHasAccess(['ROLE_LEPSARI'])) {
+          } else if (userContext.userHasAccess(['ROLE_LEPSARI'])) {
             temp = getProductsByLocation({
               productionLocation: 'ЦехЛепсари',
             })
@@ -303,7 +305,7 @@ const Select = (props) => {
               </React.Fragment>
             }
             headerButton={
-              props.userHasAccess(['ROLE_ADMIN'])
+              userContext.userHasAccess(['ROLE_ADMIN'])
                 ? {
                     name: 'Создать продукцию',
                     path: '/products/new',

@@ -53,7 +53,7 @@ const ColorPicker = (props) => {
           onClick={clickOnColorOption}
           className="select-product__color_option select-product__color_option--defect"
         >
-          Брак
+          Приоритет
         </div>
         <div
           onClick={clickOnColorOption}
