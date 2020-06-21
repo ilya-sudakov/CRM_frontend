@@ -39,7 +39,7 @@ const Storage = (props) => {
         <div className="storage">
             <div className="main-window">
                 <SearchBar
-                    title="Поиск по складу"
+                    // title="Поиск по складу"
                     placeholder="Введите артикул детали для поиска..."
                     setSearchQuery={setSearchQuery}
                 />

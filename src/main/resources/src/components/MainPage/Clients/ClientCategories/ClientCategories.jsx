@@ -76,7 +76,7 @@ const ClientCategories = (props) => {
                     setShowWindow={setShowWindow}
                 />
                 <SearchBar
-                    title="Поиск по категориям клиентов"
+                    // title="Поиск по категориям клиентов"
                     placeholder="Введите запрос для поиска..."
                     setSearchQuery={setSearchQuery}
                 />

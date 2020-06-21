@@ -50,7 +50,7 @@ const Machine = (props) => {
     <div className="machine">
       <div className="main-window">
         <SearchBar
-          title="Поиск станка"
+          // title="Поиск станка"
           setSearchQuery={setSearchQuery}
           placeholder="Введите здесь запрос для поиска..."
         />

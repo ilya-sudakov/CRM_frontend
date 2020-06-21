@@ -40,7 +40,7 @@ const StorageLepsari = (props) => {
             <div className="main-window">
                 {/* <div className="main-window__title">Склад</div> */}
                 <SearchBar
-                    title="Поиск по складу"
+                    // title="Поиск по складу"
                     placeholder="Введите артикул детали для поиска..."
                     setSearchQuery={setSearchQuery}
                 />

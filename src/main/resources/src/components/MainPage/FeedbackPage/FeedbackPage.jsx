@@ -18,6 +18,7 @@ import {
   getMessagesByDiscussionId,
   deleteMessage,
 } from '../../../utils/RequestsAPI/Feedback/messages.js'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const FeedbackPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -73,8 +74,17 @@ const FeedbackPage = (props) => {
     <div className="feedback-page">
       <div className="main-window">
         <div className="main-window__title">Обратная связь</div>
+        <FloatingPlus
+          linkTo="/feedback/new"
+          visibility={[
+            'ROLE_ADMIN',
+            'ROLE_WORKSHOP',
+            'ROLE_DISPATCHER',
+            'ROLE_MANAGER',
+          ]}
+        />
         <SearchBar
-          title="Поиск по обсуждениям"
+          // title="Поиск по обсуждениям"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />

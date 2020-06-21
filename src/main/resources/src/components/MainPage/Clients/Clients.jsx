@@ -245,7 +245,7 @@ const Clients = (props) => {
             />
           </div>
           <SearchBar
-            title="Поиск по клиентам"
+            // title="Поиск по клиентам"
             placeholder="Введите запрос для поиска..."
             setSearchQuery={setSearchQuery}
             searchQuery={searchQuery}

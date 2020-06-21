@@ -86,7 +86,7 @@ const Employees = (props) => {
       <div className="main-window">
         <div className="main-window__title">Сотрудники</div>
         <SearchBar
-          title="Поиск сотрудников"
+          // title="Поиск сотрудников"
           placeholder="Введите фамилию сотрудника для поиска..."
           setSearchQuery={setSearchQuery}
         />

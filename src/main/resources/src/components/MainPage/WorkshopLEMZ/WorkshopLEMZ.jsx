@@ -83,7 +83,7 @@ const WorkshopLEMZ = (props) => {
       <div className="main-window">
         <div className="main-window__header">
           <SearchBar
-            title="Поиск по заявкам ЛЭМЗ"
+            // title="Поиск по заявкам ЛЭМЗ"
             placeholder="Введите название продукции для поиска..."
             setSearchQuery={setSearchQuery}
           />

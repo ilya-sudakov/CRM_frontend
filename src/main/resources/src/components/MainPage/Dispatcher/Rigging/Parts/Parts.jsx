@@ -56,7 +56,7 @@ const Parts = (props) => {
     <div className="parts">
       <div className="main-window">
         <SearchBar
-          title="Поиск запчастей"
+          // title="Поиск запчастей"
           placeholder="Введите артикул запчасти для поиска..."
           setSearchQuery={setSearchQuery}
         />

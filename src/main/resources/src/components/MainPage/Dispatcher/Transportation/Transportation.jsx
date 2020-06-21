@@ -107,7 +107,7 @@ const Transportation = (props) => {
       <div className="main-window">
         <div className="main-window__title">Реестр транспортировок</div>
         <SearchBar
-          title="Поиск по транспортировкам"
+          // title="Поиск по транспортировкам"
           placeholder="Введите название товара для поиска..."
           setSearchQuery={setSearchQuery}
         />

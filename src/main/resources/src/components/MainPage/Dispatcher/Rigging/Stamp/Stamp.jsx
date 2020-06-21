@@ -54,7 +54,7 @@ const Stamp = (props) => {
     <div className="stamp">
       <div className="main-window">
         <SearchBar
-          title="Поиск штампа"
+          // title="Поиск штампа"
           setSearchQuery={setSearchQuery}
           placeholder="Введите здесь запрос для поиска..."
         />

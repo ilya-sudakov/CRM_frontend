@@ -54,7 +54,7 @@ const PressForm = (props) => {
     <div className="press_form">
       <div className="main-window">
         <SearchBar
-          title="Поиск пресс-формы"
+          // title="Поиск пресс-формы"
           setSearchQuery={setSearchQuery}
           placeholder="Введите здесь запрос для поиска..."
         />

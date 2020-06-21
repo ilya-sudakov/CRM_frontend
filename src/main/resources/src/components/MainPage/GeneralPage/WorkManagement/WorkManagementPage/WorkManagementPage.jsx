@@ -249,7 +249,7 @@ const WorkManagementPage = (props) => {
         )}
         <div className="main-window__header">
           <SearchBar
-            title="Поиск по записям"
+            // title="Поиск по записям"
             placeholder="Введите запрос для поиска..."
             setSearchQuery={setSearchQuery}
           />

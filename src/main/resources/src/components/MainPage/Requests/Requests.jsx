@@ -155,7 +155,7 @@ const Requests = (props) => {
         <div className="main-window__header">
           <div className="main-window__title">Заявки</div>
           <SearchBar
-            title="Поиск по заявкам"
+            // title="Поиск по заявкам"
             placeholder="Введите название продукции для поиска..."
             setSearchQuery={setSearchQuery}
           />

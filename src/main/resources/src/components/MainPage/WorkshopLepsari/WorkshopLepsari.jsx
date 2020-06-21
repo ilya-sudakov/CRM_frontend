@@ -84,7 +84,7 @@ const WorkshopLepsari = (props) => {
         {/* <div className="main-window__title">Заявки на производство Лепсари</div> */}
         <div className="main-window__header">
           <SearchBar
-            title="Поиск по заявкам Лепсари"
+            // title="Поиск по заявкам Лепсари"
             placeholder="Введите название продукции для поиска..."
             setSearchQuery={setSearchQuery}
           />

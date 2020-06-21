@@ -152,7 +152,7 @@ const Products = (props) => {
           content={
             <React.Fragment>
               <SearchBar
-                title="Поиск по категориям"
+                // title="Поиск по категориям"
                 placeholder="Введите название категории для поиска..."
                 setSearchQuery={setSearchQueryCategory}
               />
@@ -172,7 +172,7 @@ const Products = (props) => {
           setShowWindow={setShowWindow}
         />
         <SearchBar
-          title="Поиск продукции"
+          // title="Поиск продукции"
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />

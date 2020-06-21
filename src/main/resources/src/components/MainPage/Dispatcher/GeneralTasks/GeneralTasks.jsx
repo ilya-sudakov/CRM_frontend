@@ -79,7 +79,7 @@ const GeneralTasks = (props) => {
       <div className="main-window">
         <div className="main-window__title">Основные задачи</div>
         <SearchBar
-          title="Поиск по задачам"
+          // title="Поиск по задачам"
           placeholder="Введите описание задачи для поиска..."
           setSearchQuery={setSearchQuery}
         />
