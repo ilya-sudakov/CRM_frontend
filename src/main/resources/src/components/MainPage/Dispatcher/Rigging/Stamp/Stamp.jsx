@@ -9,6 +9,7 @@ import {
   deletePartsFromStamp,
   deleteStamp,
 } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Stamp = (props) => {
   const [stamps, setStamps] = useState([])
@@ -57,6 +58,10 @@ const Stamp = (props) => {
           // title="Поиск штампа"
           setSearchQuery={setSearchQuery}
           placeholder="Введите здесь запрос для поиска..."
+        />
+        <FloatingPlus
+          linkTo="/dispatcher/rigging/stamp/new"
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
         <div className="main-window__header">
           <div className="main-window__menu">

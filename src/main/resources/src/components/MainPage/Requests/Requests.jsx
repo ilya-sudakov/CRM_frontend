@@ -12,6 +12,7 @@ import {
 import TableView from './TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]) //Массив заявок
@@ -158,6 +159,10 @@ const Requests = (props) => {
             // title="Поиск по заявкам"
             placeholder="Введите название продукции для поиска..."
             setSearchQuery={setSearchQuery}
+          />
+          <FloatingPlus
+            linkTo="/requests/new"
+            visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
           />
           <div className="main-window__menu">
             <div

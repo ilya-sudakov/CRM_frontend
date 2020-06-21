@@ -35,6 +35,7 @@ import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx'
 import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import { exportClientsEmailsCSV } from '../../../utils/xlsxFunctions.jsx'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Clients = (props) => {
   const [clients, setClients] = useState([])
@@ -244,6 +245,10 @@ const Clients = (props) => {
               onClick={getEmailsExcel}
             />
           </div>
+          <FloatingPlus
+            linkTo="/clients/new"
+            visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
+          />
           <SearchBar
             // title="Поиск по клиентам"
             placeholder="Введите запрос для поиска..."

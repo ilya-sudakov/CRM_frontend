@@ -7,6 +7,7 @@ import {
   getMainTasks,
   deleteMainTask,
 } from '../../../../utils/RequestsAPI/MainTasks.jsx'
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const GeneralTasks = (props) => {
   const [generalTasks, setGeneralTasks] = useState([])
@@ -78,6 +79,10 @@ const GeneralTasks = (props) => {
     <div className="general_tasks">
       <div className="main-window">
         <div className="main-window__title">Основные задачи</div>
+        <FloatingPlus
+          linkTo="/dispatcher/general-tasks/new"
+          visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
+        />
         <SearchBar
           // title="Поиск по задачам"
           placeholder="Введите описание задачи для поиска..."

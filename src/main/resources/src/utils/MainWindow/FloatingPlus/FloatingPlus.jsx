@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import './FloatingPlus.scss'
 import plusIcon from '../../../../../../../assets/sidemenu/plus.svg'
 import { Link } from 'react-router-dom'
@@ -6,7 +6,9 @@ import { UserContext } from '../../../App.js'
 
 const FloatingPlus = (props) => {
   const userContext = useContext(UserContext)
-  if (userContext.userHasAccess(props.visibility)) {
+  const [showButton, setShowButton] = useState(true)
+
+  if (userContext.userHasAccess(props.visibility) && showButton) {
     return (
       <Link
         className="floating-plus"
@@ -14,6 +16,17 @@ const FloatingPlus = (props) => {
         title={props.title ? props.title : 'Создать'}
       >
         <img className="floating-plus__img" src={plusIcon} />
+        <div
+          className="floating-plus__hide-btn"
+          onClick={(event) => {
+            event.preventDefault()
+            setShowButton(!showButton)
+          }}
+          title="Убрать кнопку"
+        >
+          <div className="floating-plus__line"></div>
+          <div className="floating-plus__line"></div>
+        </div>
       </Link>
     )
   } else {

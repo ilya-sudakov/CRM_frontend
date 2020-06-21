@@ -9,6 +9,7 @@ import {
   deletePartsFromPressForm,
   deletePressForm,
 } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
+import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const PressForm = (props) => {
   const [pressForm, setPressForms] = useState([])
@@ -57,6 +58,10 @@ const PressForm = (props) => {
           // title="Поиск пресс-формы"
           setSearchQuery={setSearchQuery}
           placeholder="Введите здесь запрос для поиска..."
+        />
+        <FloatingPlus
+          linkTo="/dispatcher/rigging/press-form/new"
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
         <div className="main-window__header">
           <div className="main-window__menu">

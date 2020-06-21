@@ -12,6 +12,7 @@ import {
 import { getTransportationListPdfText } from '../../../../utils/pdfFunctions.jsx'
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Transportation = (props) => {
   const [transportation, setTransportation] = useState([])
@@ -106,6 +107,10 @@ const Transportation = (props) => {
     <div className="transportation">
       <div className="main-window">
         <div className="main-window__title">Реестр транспортировок</div>
+        <FloatingPlus
+          linkTo="/dispatcher/transportation/new"
+          visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+        />
         <SearchBar
           // title="Поиск по транспортировкам"
           placeholder="Введите название товара для поиска..."

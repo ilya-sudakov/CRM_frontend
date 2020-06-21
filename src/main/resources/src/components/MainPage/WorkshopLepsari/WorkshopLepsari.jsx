@@ -13,6 +13,7 @@ import {
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const WorkshopLepsari = (props) => {
   const [requestLepsari, setRequestLepsari] = useState([])
@@ -87,6 +88,10 @@ const WorkshopLepsari = (props) => {
             // title="Поиск по заявкам Лепсари"
             placeholder="Введите название продукции для поиска..."
             setSearchQuery={setSearchQuery}
+          />
+          <FloatingPlus
+            linkTo="/lepsari/workshop-lepsari/new"
+            visibility={['ROLE_ADMIN', 'ROLE_LEPSARI']}
           />
           <div className="main-window__menu">
             <div

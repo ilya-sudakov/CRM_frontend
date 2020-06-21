@@ -11,6 +11,7 @@ import {
   deletePartsFromPart,
   getPartById,
 } from '../../../../../utils/RequestsAPI/Rigging/Parts.jsx'
+import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Parts = (props) => {
   const [parts, setParts] = useState([])
@@ -59,6 +60,10 @@ const Parts = (props) => {
           // title="Поиск запчастей"
           placeholder="Введите артикул запчасти для поиска..."
           setSearchQuery={setSearchQuery}
+        />
+        <FloatingPlus
+          linkTo="/dispatcher/rigging/parts/new"
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
         <div className="main-window__header">
           <div className="main-window__menu">

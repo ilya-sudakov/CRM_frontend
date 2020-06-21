@@ -14,6 +14,7 @@ import SearchBar from '../SearchBar/SearchBar.jsx'
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([])
@@ -86,6 +87,10 @@ const WorkshopLEMZ = (props) => {
             // title="Поиск по заявкам ЛЭМЗ"
             placeholder="Введите название продукции для поиска..."
             setSearchQuery={setSearchQuery}
+          />
+          <FloatingPlus
+            linkTo="/lemz/workshop-lemz/new"
+            visibility={['ROLE_ADMIN', 'ROLE_LEMZ']}
           />
           <div className="main-window__menu">
             <div

@@ -4,6 +4,7 @@ import '../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
 import TableView from './TableView/TableView.jsx'
 import { getUsers, deleteUser } from '../../../../utils/RequestsAPI/Users.jsx'
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Users = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -83,6 +84,7 @@ const Users = (props) => {
           placeholder="Введите имя пользователя для поиска..."
           setSearchQuery={setSearchQuery}
         />
+        <FloatingPlus linkTo="/profile/users/new" visibility={['ROLE_ADMIN']} />
         <div className="main-window__info-panel">
           <div className="main-window__filter-pick">
             <div>Фильтр по ролям: </div>

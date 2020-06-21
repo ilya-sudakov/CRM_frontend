@@ -9,6 +9,7 @@ import {
   getPackaging,
   deletePackaging,
 } from '../../../utils/RequestsAPI/Products/packaging.js'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const PackagingPage = (props) => {
   const [packages, setPackages] = useState([])
@@ -64,6 +65,10 @@ const PackagingPage = (props) => {
     <div className="packaging-page">
       <div className="main-window">
         <div className="main-window__title">Упаковки</div>
+        <FloatingPlus
+          linkTo="/packaging/new"
+          visibility={['ROLE_ADMIN']}
+        />
         <SearchBar
           title="Поиск по упаковкам"
           placeholder="Введите запрос для поиска..."

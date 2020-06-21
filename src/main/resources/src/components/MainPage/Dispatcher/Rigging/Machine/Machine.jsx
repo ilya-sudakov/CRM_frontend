@@ -9,6 +9,7 @@ import {
   deletePartsFromMachine,
   deleteMachine,
 } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
+import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Machine = (props) => {
   const [machines, setMachines] = useState([])
@@ -53,6 +54,10 @@ const Machine = (props) => {
           // title="Поиск станка"
           setSearchQuery={setSearchQuery}
           placeholder="Введите здесь запрос для поиска..."
+        />
+        <FloatingPlus
+          linkTo="/dispatcher/rigging/machine/new"
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
         <div className="main-window__header">
           <div className="main-window__menu">
