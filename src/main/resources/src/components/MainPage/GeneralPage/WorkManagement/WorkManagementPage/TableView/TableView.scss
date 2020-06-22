@@ -2,23 +2,24 @@
 
 .work-management-page__table-view {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    // flex-direction: row;
+    // flex-wrap: wrap;
 
     .work-management-page__table-date {
-        // width: 100%;
         margin-right: 100%;
         margin-bottom: 5px;
         padding: 0 5px;
-        padding-right: 15px;
         color: #333333;
-        border-bottom: 1.5px solid #666666;
+        border-bottom: 1.5px solid #aaaaaa;
+        font-size: 90%;
+        width: fit-content;
     }
 
     .work-management-page__row {
         display: flex;
         flex-direction: column;
-        border-radius: 10px;
+        border-radius: 5px;
         padding: 5px 10px;
         border: 1px solid #999999;
         background-color: $secondary-text-color;
@@ -26,9 +27,10 @@
         cursor: pointer;
         margin-right: 10px;
         margin-bottom: 10px;
-        min-width: 250px;
         max-width: 500px;
-        // height: fit-content;
+        height: fit-content;
+        min-width: 250px;
+        // width: calc(30%);
 
         &:hover {
             background-color: darken($color: #ffffff, $amount: 5%);
@@ -37,8 +39,9 @@
         &--hidden {
             .work-management-page__item:not(.work-management-page__item--header) {
                 transform: scaleY(0);
-                height: 0;
+                max-height: 0;
                 padding: 0;
+                overflow-y: hidden;
             }
 
             .work-management-page__item {
@@ -52,7 +55,10 @@
             padding-left: 15px;
             // align-items: center;
             justify-content: center;
-            // transition: 200ms ease-in-out;
+            transition: 200ms ease-in-out;
+            transform-origin: 50% 0;
+            max-height: 200px;
+            overflow-y: auto;
             // height: fit-content;
 
             &--header {
@@ -61,17 +67,20 @@
                 flex-direction: row;
                 justify-content: flex-start;
                 align-items: center;
+                flex-wrap: wrap;
 
                 span {
                     &:nth-child(1) {
                         margin-right: 5px;
                         color: #333333;
                         font-size: 85%;
+                        width: 100%;
                     }
 
                     &:nth-child(2) {
                         // margin-right: 5px;
                         margin-right: auto;
+                        font-size: 95%;
                     }
 
                     &:nth-child(3) {
@@ -90,6 +99,7 @@
                         font-size: 80%;
                         border-radius: 999px;
                         margin-left: 15px;
+                        white-space: nowrap;
                         // margin-left: auto;
                     }
                 }
@@ -104,6 +114,26 @@
                 padding-left: 30px;
                 color: #555555 !important;
                 font-size: 90% !important;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        & {
+            .work-management-page__row {
+                width: 100%;
+                max-width: 500px;
+            }
+            .work-management-page__item--header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+
+                span {
+                    &:nth-child(3) {
+                        margin-top: 5px;
+                        margin-left: 0 !important;
+                    }
+                }
             }
         }
     }

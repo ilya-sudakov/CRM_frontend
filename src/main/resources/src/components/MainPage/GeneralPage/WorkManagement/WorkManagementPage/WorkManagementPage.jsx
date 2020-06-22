@@ -180,7 +180,7 @@ const WorkManagementPage = (props) => {
               [item.employee.id]: {
                 employee: item.employee,
                 workshop: item.employee.workshop,
-                isOpen: true,
+                isOpen: false,
                 works: [
                   {
                     hours: item.hours,
@@ -204,7 +204,7 @@ const WorkManagementPage = (props) => {
                 [item.employee.id]: {
                   employee: item.employee,
                   workshop: item.employee.workshop,
-                  isOpen: true,
+                  isOpen: false,
                   works: [
                     {
                       hours: item.hours,
@@ -242,7 +242,7 @@ const WorkManagementPage = (props) => {
         }
       }
     })
-    console.log(newData)
+    // console.log(newData)
     return newData
   }
 
@@ -460,7 +460,25 @@ const WorkManagementPage = (props) => {
                         ' сотрудников)'}
                       <CheckBox
                         checked={workshop.minimized}
-                        onChange={() => {
+                        onChange={(value) => {
+                          let temp = datesEmployees
+                          Object.entries(datesEmployees[workshop.name]).map(
+                            (date) => {
+                              Object.entries(date[1]).map((employee) => {
+                                return (temp[workshop.name][date[0]][
+                                  employee[0]
+                                ].isOpen = !value)
+                              })
+                            },
+                          )
+                          datesEmployees[workshop.name]
+                          let newWorkshops = workshops
+                          newWorkshops.splice(workshopIndex, 1, {
+                            ...workshop,
+                            minimized: !workshop.minimized,
+                          })
+                          setWorkshops([...newWorkshops])
+                          // return setEmployeesMap({ ...temp })
                           // datesEmployees = Object.assign({
                           //   ...datesEmployees,
                           //   [workshop.name]: {
@@ -479,13 +497,6 @@ const WorkManagementPage = (props) => {
                           //     })
                           //   }
                           // })
-                          // let newWorkshops = workshops
-                          // newWorkshops.splice(workshopIndex, 1, {
-                          //   ...workshop,
-                          //   minimized: !workshop.minimized,
-                          // })
-                          // setWorkshops([...newWorkshops])
-                          // return setEmployeesMap({ ...temp })
                         }}
                       />
                     </span>
@@ -494,6 +505,13 @@ const WorkManagementPage = (props) => {
                     employees={employees}
                     isLoading={isLoading}
                     openWork={(newData) => setDatesEmployees(newData)}
+                    onChange={(newData) => {
+                      let temp = Object.assign({
+                        ...datesEmployees,
+                        [workshop.name]: { ...newData },
+                      })
+                      setDatesEmployees({ ...temp })
+                    }}
                     data={
                       datesEmployees[workshop.name]
                       // Object.entries(employeesMap).filter((item) => {
