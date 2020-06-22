@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './TableView.scss'
 import {
   numberToString,
@@ -31,7 +31,13 @@ const TableView = (props) => {
   }
 
   return (
-    <div className="work-management-page__table-view">
+    <div
+      className={
+        props.isOneColumn
+          ? 'work-management-page__table-view work-management-page__table-view--one-col'
+          : 'work-management-page__table-view work-management-page__table-view--two-col'
+      }
+    >
       {props.isLoading && (
         <TableDataLoading className="work-management-page__row" />
       )}

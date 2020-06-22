@@ -2,9 +2,20 @@
 
 .work-management-page__table-view {
     display: flex;
-    flex-direction: column;
-    // flex-direction: row;
-    // flex-wrap: wrap;
+
+    &--one-col {
+        flex-direction: column;
+    }
+
+    &--two-col {
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .work-management-page__row {
+            width: 30%;
+            max-width: 500px;
+        }
+    }
 
     .work-management-page__table-date {
         margin-right: 100%;
@@ -29,7 +40,7 @@
         margin-bottom: 7.5px;
         max-width: 500px;
         height: fit-content;
-        min-width: 250px;
+        min-width: 300px;
         // width: calc(30%);
 
         &:hover {

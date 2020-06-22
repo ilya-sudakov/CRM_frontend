@@ -1,16 +1,23 @@
 @import "../../../../../../variables.scss";
 
 .parts-statistic {
-    width: calc(100% - 50px);
+    width: calc(100% - 30px);
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 5px;
     margin: 15px 0;
-    padding: 0px 10px;
+    padding: 0px 0px;
     transition: 200ms ease-in-out;
 
     .main-window__title {
         padding: 15px 0;
         cursor: pointer;
+        transition: 200ms ease-in-out;
+        border-radius: 5px;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
         .main-window__img {
             margin-left: 2px;
             margin-top: 3px;

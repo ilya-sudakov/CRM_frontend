@@ -232,11 +232,13 @@ const PartsStatistic = (props) => {
         <div
           className="parts-statistic"
           style={{
-            backgroundColor: isVisible ? '#ffffff' : 'rgba(255, 255, 255, 0.5)',
+            backgroundColor: isVisible ? '#ffffff' : 'rgba(255, 255, 255, 0.7)',
+            // backgroundColor: '#ffffff',
           }}
         >
           <div
             className="main-window__title"
+            title={isVisible ? 'Свернуть' : 'Развернуть'}
             onClick={() => {
               return setIsVisible(!isVisible)
             }}

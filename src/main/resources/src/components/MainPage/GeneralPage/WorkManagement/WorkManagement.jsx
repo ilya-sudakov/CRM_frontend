@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './WorkManagement.scss'
 import { Link, withRouter } from 'react-router-dom'
 import searchImg from '../../../../../../../../assets/searchbar/search.svg'
+import openWidget from '../../../../../../../../assets/tableview/bx-window-open.svg'
 import {
   getRecordedWorks,
   getRecordedWorkByMonth,
@@ -157,6 +158,7 @@ const WorkManagement = (props) => {
             props.history.push('/work-management')
           }}
         >
+          <img src={openWidget} className="work-management__img" />
           Открыть
         </div>
       </div>

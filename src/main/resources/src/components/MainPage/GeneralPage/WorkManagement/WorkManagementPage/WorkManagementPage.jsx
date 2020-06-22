@@ -4,8 +4,8 @@ import './WorkManagementPage.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 // import viewSVG from '../../../../../../../../../assets/tableview/view.svg';
-import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg'
-import editSVG from '../../../../../../../../../assets/tableview/edit.svg'
+import OneColumnIcon from '../../../../../../../../../assets/tableview/onecolumn.png'
+import TwoColumnsIcon from '../../../../../../../../../assets/tableview/twocolumns.png'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 // import DownloadIcon from '../../../../../../../../../assets/download.svg';
 import {
@@ -29,6 +29,7 @@ import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx'
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx'
 import { UserContext } from '../../../../../App.js'
 import TableView from './TableView/TableView.jsx'
+import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -39,6 +40,7 @@ const WorkManagementPage = (props) => {
   const [partsStatistics, setPartsStatistics] = useState({})
   const [draftsStatistics, setDraftsStatistics] = useState([])
   const [curPage, setCurPage] = useState('Сотрудники')
+  const [isOneColumn, setIsOneColumn] = useState(true)
   const [workshops, setWorkshops] = useState([
     {
       name: 'ЦехЛЭМЗ',
@@ -323,6 +325,14 @@ const WorkManagementPage = (props) => {
   return (
     <div className="work-management-page">
       <div className="main-window">
+        <FloatingPlus
+          iconSrc={isOneColumn ? TwoColumnsIcon : OneColumnIcon}
+          title={isOneColumn ? 'Несколько столбцов' : 'Один столбец'}
+          onClick={() => {
+            setIsOneColumn(!isOneColumn)
+          }}
+          visibility={['ROLE_ADMIN']}
+        />
         <div className="main-window__title">
           {/* <span>Отчет производства</span> */}
         </div>
@@ -504,7 +514,7 @@ const WorkManagementPage = (props) => {
                   <TableView
                     employees={employees}
                     isLoading={isLoading}
-                    openWork={(newData) => setDatesEmployees(newData)}
+                    isOneColumn={isOneColumn}
                     onChange={(newData) => {
                       let temp = Object.assign({
                         ...datesEmployees,
@@ -512,59 +522,7 @@ const WorkManagementPage = (props) => {
                       })
                       setDatesEmployees({ ...temp })
                     }}
-                    data={
-                      datesEmployees[workshop.name]
-                      // Object.entries(employeesMap).filter((item) => {
-                      //   if (
-                      //     workshop.name === employees[item[0]]?.workshop &&
-                      //     (employees[item[0]].lastName
-                      //       .toLowerCase()
-                      //       .includes(searchQuery.toLowerCase()) ||
-                      //       employees[item[0]].name
-                      //         .toLowerCase()
-                      //         .includes(searchQuery.toLowerCase()) ||
-                      //       employees[item[0]].middleName
-                      //         .toLowerCase()
-                      //         .includes(searchQuery.toLowerCase()) ||
-                      //       employees[item[0]].workshop
-                      //         .toLowerCase()
-                      //         .includes(searchQuery.toLowerCase()))
-                      //   ) {
-                      //     let check = false
-                      //     workshops.map((workshop) => {
-                      //       if (
-                      //         workshop.active &&
-                      //         workshop.name === employees[item[0]].workshop &&
-                      //         props.userHasAccess(workshop.visibility)
-                      //       ) {
-                      //         check = true
-                      //         return
-                      //       }
-                      //     })
-                      //     return check
-                      //   }
-                      // })
-
-                      // .sort((a, b) => {
-                      //   if (
-                      //     employees[a[0]][sortOrder.curSort] <
-                      //     employees[b[0]][sortOrder.curSort]
-                      //   ) {
-                      //     return sortOrder[sortOrder.curSort] === 'desc'
-                      //       ? 1
-                      //       : -1
-                      //   }
-                      //   if (
-                      //     employees[a[0]][sortOrder.curSort] >
-                      //     employees[b[0]][sortOrder.curSort]
-                      //   ) {
-                      //     return sortOrder[sortOrder.curSort] === 'desc'
-                      //       ? -1
-                      //       : 1
-                      //   }
-                      //   return 0
-                      // })
-                    }
+                    data={datesEmployees[workshop.name]}
                   />
                   {/* <div className="main-window__list-item main-window__list-item--header">
                     <span>Должность</span>

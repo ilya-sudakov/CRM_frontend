@@ -47,9 +47,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .work-management__img {
+      margin-right: 5px;
+      transition: 200ms ease-in-out;
+    }
+
     &:hover {
       background-color: lighten($button__background--inverted, 5%);
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+
+      .work-management__img {
+        filter: brightness(3);
+      }
     }
   }
   .work-management__button--inverted {

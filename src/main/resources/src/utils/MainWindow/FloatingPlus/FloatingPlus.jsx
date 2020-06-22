@@ -23,7 +23,10 @@ const FloatingPlus = (props) => {
             : null
         }
       >
-        <img className="floating-plus__img" src={plusIcon} />
+        <img
+          className="floating-plus__img"
+          src={props.iconSrc ? props.iconSrc : plusIcon}
+        />
         <div
           className="floating-plus__hide-btn"
           onClick={(event) => {
