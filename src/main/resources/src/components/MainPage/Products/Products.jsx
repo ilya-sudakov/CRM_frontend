@@ -173,10 +173,10 @@ const Products = (props) => {
               />
             </React.Fragment>
           }
-          headerButton={{
-            name: 'Создать категорию',
-            path: '/products/category/new',
-          }}
+          // headerButton={{
+          //   name: 'Создать категорию',
+          //   path: '/products/category/new',
+          // }}
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />

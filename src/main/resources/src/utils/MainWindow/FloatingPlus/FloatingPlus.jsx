@@ -14,6 +14,14 @@ const FloatingPlus = (props) => {
         className="floating-plus"
         to={props.linkTo ? props.linkTo : '/'}
         title={props.title ? props.title : 'Создать'}
+        onClick={
+          props.onClick
+            ? (event) => {
+                event.preventDefault()
+                props.onClick()
+              }
+            : null
+        }
       >
         <img className="floating-plus__img" src={plusIcon} />
         <div

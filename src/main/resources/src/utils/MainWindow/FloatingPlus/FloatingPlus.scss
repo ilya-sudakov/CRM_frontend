@@ -46,11 +46,18 @@
         transform: scale(0);
         transition: 200ms ease-in-out;
 
+        &:hover {
+            .floating-plus__line {
+                background-color: #444444;
+            }
+        }
+
         .floating-plus__line {
             width: 15px;
             height: 2px;
             background-color: #777777;
             position: absolute;
+            transition: 200ms ease-in-out;
 
             &:nth-child(1) {
                 transform: rotate(45deg);

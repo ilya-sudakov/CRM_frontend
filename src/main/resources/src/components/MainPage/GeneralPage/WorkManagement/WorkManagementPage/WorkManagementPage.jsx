@@ -405,7 +405,8 @@ const WorkManagementPage = (props) => {
                       />
                     </span>
                   </div>
-                  {/* <TableView
+                  <TableView
+                    employees={employees}
                     data={Object.entries(employeesMap)
                       .filter((item) => {
                         if (
@@ -457,7 +458,7 @@ const WorkManagementPage = (props) => {
                         }
                         return 0
                       })}
-                  /> */}
+                  />
                   <div className="main-window__list-item main-window__list-item--header">
                     <span>Должность</span>
                     <span>ФИО</span>

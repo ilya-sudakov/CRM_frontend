@@ -1,15 +1,100 @@
 @import "../../../../../../variables.scss";
 
 .work-management-page__table-view {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
     .work-management-page__row {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        border-radius: 10px;
+        padding: 5px 10px;
+        border: 1px solid #999999;
+        background-color: $secondary-text-color;
+        transition: 200ms ease-in-out;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        min-width: 250px;
+        max-width: 500px;
+        // height: fit-content;
+
+        &:hover {
+            background-color: darken($color: #ffffff, $amount: 5%);
+        }
+
+        &--hidden {
+            .work-management-page__item:not(.work-management-page__item--header) {
+                transform: scaleY(0);
+                height: 0;
+                padding: 0;
+            }
+
+            .work-management-page__item {
+
+            }
+        }
 
         .work-management-page__item {
             display: flex;
+            flex-direction: column;
+            padding: 2.5px 0;
+            padding-left: 15px;
+            // align-items: center;
+            justify-content: center;
+            // transition: 200ms ease-in-out;
+            // height: fit-content;
 
             &--header {
                 font-size: 120%;
+                padding-left: 0;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+
+                span {
+                    &:nth-child(1) {
+                        margin-right: 5px;
+                        color: #333333;
+                        font-size: 85%;
+                    }
+
+                    &:nth-child(2) {
+                        // margin-right: 5px;
+                        margin-right: auto;
+                    }
+
+                    &:nth-child(3) {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        content: "";
+                        width: 25px;
+                        height: 25px;
+                        padding: 0 10px;
+                        width: fit-content;
+                        border: 2px solid $button__background--inverted;
+                        background-color: $button__background--inverted;
+                        color: $secondary-text-color;
+                        font-size: 80%;
+                        border-radius: 999px;
+                        margin-left: 15px;
+                        // margin-left: auto;
+                    }
+                }
+            }
+
+            &:not(.work-management-page__item--header) {
+                color: #444444;
+                font-size: 95%;
+            }
+
+            &--products {
+                padding-left: 30px;
+                color: #555555 !important;
+                font-size: 90% !important;
             }
         }
     }
