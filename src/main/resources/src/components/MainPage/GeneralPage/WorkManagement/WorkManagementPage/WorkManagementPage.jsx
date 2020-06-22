@@ -426,7 +426,7 @@ const WorkManagementPage = (props) => {
             </div>
           </div>
         </div>
-        <div className="main-window__sort-panel">
+        {/* <div className="main-window__sort-panel">
           <span>Сортировка: </span>
           <select onChange={changeSortOrder}>
             <option value="lastName desc">По алфавиту (А-Я)</option>
@@ -434,7 +434,7 @@ const WorkManagementPage = (props) => {
             <option value="date asc">По дате</option>
             <option value="hours desc">По часам</option>
           </select>
-        </div>
+        </div> */}
         <div className="main-window__list">
           {/* <TableLoading isLoading={isLoading} /> */}
           {workshops.map((workshop, workshopIndex) => {

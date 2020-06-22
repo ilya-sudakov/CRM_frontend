@@ -121,7 +121,7 @@
         & {
             .work-management-page__row {
                 width: 100%;
-                max-width: 500px;
+                max-width: calc(100% - 20px);
             }
             .work-management-page__item--header {
                 flex-direction: column !important;
