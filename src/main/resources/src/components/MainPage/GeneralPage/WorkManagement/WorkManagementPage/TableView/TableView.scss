@@ -12,7 +12,7 @@
         flex-wrap: wrap;
 
         .work-management-page__row {
-            width: 30%;
+            width: calc(33.3% - 30px);
             max-width: 500px;
         }
     }
@@ -25,6 +25,8 @@
         border-bottom: 1.5px solid #aaaaaa;
         font-size: 90%;
         width: fit-content;
+        white-space: nowrap;
+        margin-top: 5px;
     }
 
     .work-management-page__row {
@@ -92,6 +94,7 @@
                         // margin-right: 5px;
                         margin-right: auto;
                         font-size: 95%;
+                        width: calc(100% - 100px);
                     }
 
                     &:nth-child(3) {
@@ -108,8 +111,9 @@
                         color: $secondary-text-color;
                         font-size: 80%;
                         border-radius: 999px;
-                        margin-left: 15px;
+                        // margin-left: 15px;
                         white-space: nowrap;
+                        margin-top: -10px;
                         // margin-left: auto;
                     }
                 }
@@ -126,23 +130,43 @@
                 font-size: 85% !important;
             }
         }
+
+        &--reminder {
+            border: 1px solid #b95757;
+            background-color: #ffb9b9;
+
+            &:hover {
+                background-color: lighten(#ffb9b9, 2.5%);
+            }
+
+            .work-management-page__item--header {
+                span {
+                    &:nth-child(3) {
+                        border: 1.5px solid #cc7c7c;
+                        // background-color: #ffb9b9;
+                        background-color: #f8cdcd;
+                        // background-color: $secondary-text-color;
+                        color: #222222;
+                    }
+                }
+            }
+        }
     }
 
     @media (max-width: 768px) {
-        & {
-            .work-management-page__row {
-                width: 100%;
-                max-width: calc(100% - 20px);
-            }
-            .work-management-page__item--header {
-                flex-direction: column !important;
-                align-items: flex-start !important;
+        .work-management-page__row {
+            width: 100%;
+            min-width: 220px;
+            max-width: calc(100% - 20px);
+        }
+        .work-management-page__item--header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
 
-                span {
-                    &:nth-child(3) {
-                        margin-top: 5px;
-                        margin-left: 0 !important;
-                    }
+            span {
+                &:nth-child(3) {
+                    margin-top: 5px !important;
+                    margin-left: 0 !important;
                 }
             }
         }

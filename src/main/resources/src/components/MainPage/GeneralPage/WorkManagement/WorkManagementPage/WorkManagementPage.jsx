@@ -14,6 +14,7 @@ import {
   getAllProductsFromWorkCount,
   addSpaceDelimiter,
   getAllDraftsFromWorkCount,
+  getDatesAndWorkItems,
 } from '../../../../../utils/functions.jsx'
 import {
   getRecordedWorkByDateRange,
@@ -40,21 +41,21 @@ const WorkManagementPage = (props) => {
   const [partsStatistics, setPartsStatistics] = useState({})
   const [draftsStatistics, setDraftsStatistics] = useState([])
   const [curPage, setCurPage] = useState('Сотрудники')
-  const [isOneColumn, setIsOneColumn] = useState(true)
+  const [isOneColumn, setIsOneColumn] = useState(false)
   const [workshops, setWorkshops] = useState([
     {
       name: 'ЦехЛЭМЗ',
       visibility: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       active: true,
       minimized: true,
-      employeesTotal: 0,
+      employees: [],
     },
     {
       name: 'ЦехЛепсари',
       visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       active: true,
       minimized: true,
-      employeesTotal: 0,
+      employees: [],
     },
     {
       name: 'ЦехЛиговский',
@@ -66,7 +67,7 @@ const WorkManagementPage = (props) => {
       ],
       active: true,
       minimized: true,
-      employeesTotal: 0,
+      employees: [],
     },
     {
       name: 'Офис',
@@ -78,7 +79,7 @@ const WorkManagementPage = (props) => {
       ],
       active: true,
       minimized: true,
-      employeesTotal: 0,
+      employees: [],
     },
   ])
   const userContext = useContext(UserContext)
@@ -163,91 +164,6 @@ const WorkManagementPage = (props) => {
     setEmployees(newEmployees)
   }
 
-  const getDatesAndWorkItems = (works) => {
-    let newData = Object.assign({
-      ЦехЛЭМЗ: {},
-      ЦехЛепсари: {},
-      ЦехЛиговский: {},
-      Офис: {},
-    })
-    works.map((item) => {
-      const curDate = new Date(item.year, item.month - 1, item.day)
-      const curWorkshop = item.employee.workshop
-      if (newData[curWorkshop][curDate] === undefined) {
-        newData = Object.assign({
-          ...newData,
-          [curWorkshop]: {
-            ...newData[curWorkshop],
-            [curDate]: {
-              [item.employee.id]: {
-                employee: item.employee,
-                workshop: item.employee.workshop,
-                isOpen: false,
-                works: [
-                  {
-                    hours: item.hours,
-                    workList: item.workList,
-                    workControlProduct: item.workControlProduct,
-                    partsWorks: item.partsWorks,
-                  },
-                ],
-              },
-            },
-          },
-        })
-      } else {
-        if (newData[curWorkshop][curDate][item.employee.id] === undefined) {
-          newData = Object.assign({
-            ...newData,
-            [curWorkshop]: {
-              ...newData[curWorkshop],
-              [curDate]: {
-                ...newData[curWorkshop][curDate],
-                [item.employee.id]: {
-                  employee: item.employee,
-                  workshop: item.employee.workshop,
-                  isOpen: false,
-                  works: [
-                    {
-                      hours: item.hours,
-                      workList: item.workList,
-                      workControlProduct: item.workControlProduct,
-                      partsWorks: item.partsWorks,
-                    },
-                  ],
-                },
-              },
-            },
-          })
-        } else {
-          newData = Object.assign({
-            ...newData,
-            [curWorkshop]: {
-              ...newData[curWorkshop],
-              [curDate]: {
-                ...newData[curWorkshop][curDate],
-                [item.employee.id]: {
-                  ...newData[curWorkshop][curDate][item.employee.id],
-                  works: [
-                    ...newData[curWorkshop][curDate][item.employee.id].works,
-                    {
-                      hours: item.hours,
-                      workList: item.workList,
-                      workControlProduct: item.workControlProduct,
-                      partsWorks: item.partsWorks,
-                    },
-                  ],
-                },
-              },
-            },
-          })
-        }
-      }
-    })
-    // console.log(newData)
-    return newData
-  }
-
   const combineWorksForSamePeople = (works) => {
     // let newEmployeesWorkMap = [];
     let newEmployeesMap = {}
@@ -300,13 +216,14 @@ const WorkManagementPage = (props) => {
           .then((res) => {
             temp.splice(index, 1, {
               ...workshop,
-              employeesTotal: res.filter((item) => item.relevance !== 'Уволен')
-                .length,
+              employees: res.filter((item) => item.relevance !== 'Уволен'),
             })
           })
       }),
     ).then(() => {
-      return setWorkshops([...temp])
+      // console.log(temp)
+      setWorkshops([...temp])
+      return temp
     })
   }
 
@@ -466,7 +383,7 @@ const WorkManagementPage = (props) => {
                             workshop.name === employees[item[0]]?.workshop,
                         ).length +
                         ' из ' +
-                        workshop.employeesTotal +
+                        workshop.employees.length +
                         ' сотрудников)'}
                       <CheckBox
                         checked={workshop.minimized}
@@ -515,6 +432,9 @@ const WorkManagementPage = (props) => {
                     employees={employees}
                     isLoading={isLoading}
                     isOneColumn={isOneColumn}
+                    employees={workshop.employees}
+                    curWorkshop={workshop.name}
+                    searchQuery={searchQuery}
                     onChange={(newData) => {
                       let temp = Object.assign({
                         ...datesEmployees,
@@ -523,6 +443,22 @@ const WorkManagementPage = (props) => {
                       setDatesEmployees({ ...temp })
                     }}
                     data={datesEmployees[workshop.name]}
+                    // data={Object.values(datesEmployees[workshop.name]).filter(
+                    //   (item) => {
+                    //     let check = false
+                    //     Object.values(item).filter((employee) => {
+                    //       console.log(employee)
+                    //       if (
+                    //         employee.employee.lastName
+                    //           .toLowerCase()
+                    //           .includes(searchQuery.toLowerCase())
+                    //       ) {
+                    //         check = true
+                    //       }
+                    //     })
+                    //     return check
+                    //   },
+                    // )}
                   />
                   {/* <div className="main-window__list-item main-window__list-item--header">
                     <span>Должность</span>

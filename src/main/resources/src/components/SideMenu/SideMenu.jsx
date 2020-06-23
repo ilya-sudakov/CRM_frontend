@@ -436,6 +436,16 @@ const SideMenu = (props) => {
                   ? 'sidemenu__item--add'
                   : 'sidemenu__item--add sidemenu__item--hidden'
               }
+              onClick={() => {
+                if (
+                  (window.innerWidth ||
+                    document.documentElement.clientWidth ||
+                    document.body.clientWidth) < 1220 &&
+                  item.dropdownMenu === undefined
+                ) {
+                  props.setSideMenu(!props.hidden)
+                }
+              }}
               to={
                 item.addButtonLinkTo
                   ? item.addButtonLinkTo
