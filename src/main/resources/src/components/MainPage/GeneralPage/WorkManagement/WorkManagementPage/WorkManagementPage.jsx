@@ -208,6 +208,7 @@ const WorkManagementPage = (props) => {
   }
 
   const loadEmployeesCount = (signal) => {
+    setIsLoading(true)
     let temp = workshops
     return Promise.all(
       workshops.map((workshop, index) => {
@@ -220,11 +221,17 @@ const WorkManagementPage = (props) => {
             })
           })
       }),
-    ).then(() => {
-      // console.log(temp)
-      setWorkshops([...temp])
-      return temp
-    })
+    )
+      .then(() => {
+        setIsLoading(false)
+        // console.log(temp)
+        setWorkshops([...temp])
+        return temp
+      })
+      .catch((error) => {
+        setIsLoading(true)
+        console.log(error)
+      })
   }
 
   useEffect(() => {
@@ -405,25 +412,6 @@ const WorkManagementPage = (props) => {
                             minimized: !workshop.minimized,
                           })
                           setWorkshops([...newWorkshops])
-                          // return setEmployeesMap({ ...temp })
-                          // datesEmployees = Object.assign({
-                          //   ...datesEmployees,
-                          //   [workshop.name]: {
-                          //     ...datesEmployees[workshop.name].map((item) => {
-                          //       return item
-                          //     }),
-                          //   },
-                          // })
-                          // let temp = employeesMap
-                          // Object.entries(temp).map((employee) => {
-                          //   if (
-                          //     employees[employee[0]].workshop === workshop.name
-                          //   ) {
-                          //     Object.entries(employee[1]).map((date) => {
-                          //       date[1][0].openWorks = !date[1][0].openWorks
-                          //     })
-                          //   }
-                          // })
                         }}
                       />
                     </span>
