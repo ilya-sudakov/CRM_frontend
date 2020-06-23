@@ -399,9 +399,10 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      flex-direction: row;
-      flex-wrap: wrap;
+      // flex-direction: row;
+      // flex-wrap: wrap;
       justify-content: flex-start !important;
+      align-items: flex-start !important;
       .work-management-page__date {
         // width: 100%;
         // align-self: flex-start;
@@ -428,9 +429,10 @@
       .input_date__input_field {
         width: calc(100% - 60px) !important;
         max-width: 150px;
+        height: fit-content;
       }
       > .main-window__button {
-        margin-top: 5px;
+        margin: 0 auto;
         padding: 10px 10px !important;
         // align-self: flex-end;
       }
