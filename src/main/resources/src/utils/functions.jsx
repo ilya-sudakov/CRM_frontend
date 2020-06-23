@@ -241,6 +241,7 @@ export const getDatesAndWorkItems = (works) => {
               isOpen: false,
               works: [
                 {
+                  id: item.id,
                   hours: item.hours,
                   workList: item.workList,
                   workControlProduct: item.workControlProduct,
@@ -265,6 +266,7 @@ export const getDatesAndWorkItems = (works) => {
                 isOpen: false,
                 works: [
                   {
+                    id: item.id,
                     hours: item.hours,
                     workList: item.workList,
                     workControlProduct: item.workControlProduct,
@@ -287,6 +289,7 @@ export const getDatesAndWorkItems = (works) => {
                 works: [
                   ...newData[curWorkshop][curDate][item.employee.id].works,
                   {
+                    id: item.id,
                     hours: item.hours,
                     workList: item.workList,
                     workControlProduct: item.workControlProduct,

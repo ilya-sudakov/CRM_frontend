@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './TableView.scss'
+import editSVG from '../../../../../../../../../../assets/tableview/edit.svg';
 import {
   numberToString,
   formatDateString,
@@ -7,6 +8,7 @@ import {
 } from '../../../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { days } from '../../../../../../utils/dataObjects'
+import { Link } from 'react-router-dom'
 
 const TableView = (props) => {
   const [datesEmployees, setDatesEmployees] = useState({})
@@ -149,9 +151,16 @@ const TableView = (props) => {
                           </span>
                         </div>
                         {item.works.map((workItem, index) => {
+                          console.log(workItem)
                           return (
                             <div className="work-management-page__item">
-                              <div>
+                              <Link
+                                title="Редактировать"
+                                to={
+                                  '/work-management/record-time/edit/' +
+                                  workItem.id
+                                }
+                              >
                                 {workItem.workList.work +
                                   ' - ' +
                                   workItem.hours +
@@ -162,7 +171,8 @@ const TableView = (props) => {
                                     ),
                                     ['час', 'часа', 'часов'],
                                   )}
-                              </div>
+                                  <img className="main-window__img" src={editSVG} alt=""/>
+                              </Link>
                               <div className="work-management-page__item work-management-page__item--products">
                                 {workItem.workControlProduct.map((product) => {
                                   return (

@@ -122,12 +122,27 @@
             &:not(.work-management-page__item--header) {
                 color: #222222;
                 font-size: 90%;
+
+                a {
+                    color: #333333;
+                    text-decoration: underline;
+                    display: flex;
+                    flex-direction: row;
+                    
+                    &:hover {
+                        color: #000000;
+                    }
+
+                    .main-window__img {
+                        margin-left: 5px;
+                    }
+                }
             }
 
             &--products {
                 padding-left: 30px;
                 color: #444444 !important;
-                font-size: 85% !important;
+                font-size: 90% !important;
             }
         }
 
