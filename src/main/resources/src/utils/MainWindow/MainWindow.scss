@@ -539,7 +539,7 @@
     position: relative;
     border: none;
     height: 3px;
-    margin: 25px auto;
+    margin: 20px auto;
     padding: 0;
     justify-content: center;
     border-radius: 5px;
@@ -563,7 +563,8 @@
       color: #444444;
       // color: $secondary-text-color;
       border-radius: 5px;
-      padding: 2.5px 10px;
+      padding: 5px 10px;
+      transition: 200ms ease-in-out;
       font-size: 100%;
       width: fit-content !important;
       margin-bottom: 0 !important;

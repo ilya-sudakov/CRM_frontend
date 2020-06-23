@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './TableView.scss'
-import editSVG from '../../../../../../../../../../assets/tableview/edit.svg';
+import editSVG from '../../../../../../../../../../assets/tableview/edit.svg'
 import {
   numberToString,
   formatDateString,
@@ -95,7 +95,8 @@ const TableView = (props) => {
                 .map((item) => {
                   if (
                     item.works.length > 0 ||
-                    new Date(date[0]).getDay() !== 0
+                    (new Date(date[0]).getDay() !== 0 &&
+                      new Date(date[0]).getDay() !== 6)
                   ) {
                     return (
                       <div
@@ -171,7 +172,11 @@ const TableView = (props) => {
                                     ),
                                     ['час', 'часа', 'часов'],
                                   )}
-                                  <img className="main-window__img" src={editSVG} alt=""/>
+                                <img
+                                  className="main-window__img"
+                                  src={editSVG}
+                                  alt=""
+                                />
                               </Link>
                               <div className="work-management-page__item work-management-page__item--products">
                                 {workItem.workControlProduct.map((product) => {

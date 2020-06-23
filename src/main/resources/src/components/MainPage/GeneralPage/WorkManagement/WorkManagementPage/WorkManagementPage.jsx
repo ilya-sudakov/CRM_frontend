@@ -7,6 +7,7 @@ import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import OneColumnIcon from '../../../../../../../../../assets/tableview/onecolumn.png'
 import okIcon from '../../../../../../../../../assets/tableview/ok.svg'
 import TwoColumnsIcon from '../../../../../../../../../assets/tableview/twocolumns.png'
+import chevronDownSVG from '../../../../../../../../../assets/tableview/chevron-down.svg'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 // import DownloadIcon from '../../../../../../../../../assets/download.svg';
 import {
@@ -256,7 +257,12 @@ const WorkManagementPage = (props) => {
           onClick={() => {
             setIsOneColumn(!isOneColumn)
           }}
-          visibility={['ROLE_ADMIN']}
+          visibility={[
+            'ROLE_ADMIN',
+            'ROLE_WORKSHOP',
+            'ROLE_MANAGER',
+            'ROLE_DISPATCHER',
+          ]}
         />
         <div className="main-window__title">
           {/* <span>Отчет производства</span> */}
@@ -384,7 +390,29 @@ const WorkManagementPage = (props) => {
               return (
                 <React.Fragment>
                   <div className="main-window__list-item main-window__list-item--divider">
-                    <span>
+                    <span
+                      onClick={() => {
+                        let temp = datesEmployees
+                        Object.entries(datesEmployees[workshop.name]).map(
+                          (date) => {
+                            Object.entries(date[1]).map((employee) => {
+                              return (temp[workshop.name][date[0]][
+                                employee[0]
+                              ].isOpen = !datesEmployees[workshop.name][
+                                date[0]
+                              ][employee[0]].isOpen)
+                            })
+                          },
+                        )
+                        datesEmployees[workshop.name]
+                        let newWorkshops = workshops
+                        newWorkshops.splice(workshopIndex, 1, {
+                          ...workshop,
+                          minimized: !workshop.minimized,
+                        })
+                        setWorkshops([...newWorkshops])
+                      }}
+                    >
                       {workshop.name +
                         ' (' +
                         Object.entries(employeesMap).filter(
@@ -394,27 +422,14 @@ const WorkManagementPage = (props) => {
                         ' из ' +
                         workshop.employees.length +
                         ' сотрудников)'}
-                      <CheckBox
-                        checked={workshop.minimized}
-                        onChange={(value) => {
-                          let temp = datesEmployees
-                          Object.entries(datesEmployees[workshop.name]).map(
-                            (date) => {
-                              Object.entries(date[1]).map((employee) => {
-                                return (temp[workshop.name][date[0]][
-                                  employee[0]
-                                ].isOpen = !value)
-                              })
-                            },
-                          )
-                          datesEmployees[workshop.name]
-                          let newWorkshops = workshops
-                          newWorkshops.splice(workshopIndex, 1, {
-                            ...workshop,
-                            minimized: !workshop.minimized,
-                          })
-                          setWorkshops([...newWorkshops])
-                        }}
+                      <img
+                        className={
+                          workshop.minimized
+                            ? 'main-window__img'
+                            : 'main-window__img main-window__img--rotated'
+                        }
+                        src={chevronDownSVG}
+                        // checked={workshop.minimized}
                       />
                     </span>
                   </div>

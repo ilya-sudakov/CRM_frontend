@@ -26,7 +26,12 @@
         font-size: 90%;
         width: fit-content;
         white-space: nowrap;
-        margin-top: 5px;
+        margin-top: 15px;
+        margin-bottom: 5px;
+
+        &:first-child {
+            margin-top: 5px;
+        }
     }
 
     .work-management-page__row {
@@ -128,7 +133,7 @@
                     text-decoration: underline;
                     display: flex;
                     flex-direction: row;
-                    
+
                     &:hover {
                         color: #000000;
                     }
