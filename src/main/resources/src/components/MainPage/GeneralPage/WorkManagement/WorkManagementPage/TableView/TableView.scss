@@ -120,13 +120,13 @@
             }
 
             &:not(.work-management-page__item--header) {
-                color: #444444;
+                color: #222222;
                 font-size: 90%;
             }
 
             &--products {
                 padding-left: 30px;
-                color: #555555 !important;
+                color: #444444 !important;
                 font-size: 85% !important;
             }
         }
@@ -142,9 +142,9 @@
             .work-management-page__item--header {
                 span {
                     &:nth-child(3) {
-                        border: 1.5px solid #cc7c7c;
+                        border: 1px solid #d17474;
                         // background-color: #ffb9b9;
-                        background-color: #f8cdcd;
+                        background-color: #fcdddd;
                         // background-color: $secondary-text-color;
                         color: #222222;
                     }
