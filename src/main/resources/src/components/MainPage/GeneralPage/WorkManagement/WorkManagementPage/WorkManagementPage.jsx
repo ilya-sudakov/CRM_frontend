@@ -391,6 +391,7 @@ const WorkManagementPage = (props) => {
                 <React.Fragment>
                   <div className="main-window__list-item main-window__list-item--divider">
                     <span
+                      title={workshop.minimized ? 'Развернуть' : 'Свернуть'}
                       onClick={() => {
                         let temp = datesEmployees
                         Object.entries(datesEmployees[workshop.name]).map(
@@ -413,15 +414,17 @@ const WorkManagementPage = (props) => {
                         setWorkshops([...newWorkshops])
                       }}
                     >
-                      {workshop.name +
-                        ' (' +
+                      {
+                        workshop.name
+                        /* +  ' (' +
                         Object.entries(employeesMap).filter(
                           (item) =>
                             workshop.name === employees[item[0]]?.workshop,
                         ).length +
                         ' из ' +
                         workshop.employees.length +
-                        ' сотрудников)'}
+                        ' сотрудников)' */
+                      }
                       <img
                         className={
                           workshop.minimized

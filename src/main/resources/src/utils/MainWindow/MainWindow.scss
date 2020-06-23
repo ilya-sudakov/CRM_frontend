@@ -569,9 +569,11 @@
       width: fit-content !important;
       margin-bottom: 0 !important;
       white-space: nowrap;
+      padding-right: 0;
 
-      .checkbox {
-        margin-left: 5px;
+      .main-window__img {
+        margin-right: 2.5px;
+        margin-left: 2.5px;
       }
     }
   }
