@@ -97,7 +97,28 @@ class MainPage extends React.Component {
           <SideMenu
             userHasAccess={this.props.userHasAccess}
             hidden={this.state.sidemenu_hidden}
+            setSideMenu={this.setSideMenu}
           />
+          {(window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth) < 1220 && (
+            <div
+              className={
+                this.state.sidemenu_hidden
+                  ? 'main_page__overlay main_page__overlay--hidden'
+                  : 'main_page__overlay'
+              }
+              onClick={() => {
+                if (
+                  (window.innerWidth ||
+                    document.documentElement.clientWidth ||
+                    document.body.clientWidth) < 1220
+                ) {
+                  this.setSideMenu(!this.state.sidemenu_hidden)
+                }
+              }}
+            ></div>
+          )}
           <div className="main_page__activity_panel">
             <Suspense fallback={<PageLoading />}>
               <Switch>
@@ -334,7 +355,7 @@ class MainPage extends React.Component {
                     'ROLE_ADMIN',
                     'ROLE_DISPATCHER',
                     'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP'
+                    'ROLE_WORKSHOP',
                   ]}
                 />
                 <PrivateRoute

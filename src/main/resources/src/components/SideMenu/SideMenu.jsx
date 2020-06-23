@@ -464,6 +464,16 @@ const SideMenu = (props) => {
             >
               <Link
                 className="sidemenu__link"
+                onClick={() => {
+                  if (
+                    (window.innerWidth ||
+                      document.documentElement.clientWidth ||
+                      document.body.clientWidth) < 1220 &&
+                    item.dropdownMenu === undefined
+                  ) {
+                    props.setSideMenu(!props.hidden)
+                  }
+                }}
                 to={item.linkTo ? item.linkTo : item.pathname}
               >
                 {item.icon && (
@@ -485,6 +495,15 @@ const SideMenu = (props) => {
                 props.userHasAccess(item.addButtonRoles) && (
                   <Link
                     to={item.pathname + '/new'}
+                    onClick={() => {
+                      if (
+                        (window.innerWidth ||
+                          document.documentElement.clientWidth ||
+                          document.body.clientWidth) < 1220
+                      ) {
+                        props.setSideMenu(!props.hidden)
+                      }
+                    }}
                     className="sidemenu__addButton"
                   >
                     <img className="sidemenu__img" src={plusImg} />
@@ -509,6 +528,15 @@ const SideMenu = (props) => {
                               : 'sidemenu__item'
                           }
                           to={dropdownMenuItem.link}
+                          onClick={() => {
+                            if (
+                              (window.innerWidth ||
+                                document.documentElement.clientWidth ||
+                                document.body.clientWidth) < 1220
+                            ) {
+                              props.setSideMenu(!props.hidden)
+                            }
+                          }}
                         >
                           <div className="sidemenu__link">
                             {dropdownMenuItem.icon && (

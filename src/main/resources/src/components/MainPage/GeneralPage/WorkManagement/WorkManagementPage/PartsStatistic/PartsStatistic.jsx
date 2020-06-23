@@ -208,7 +208,13 @@ const PartsStatistic = (props) => {
         setCanvasLoaded(true)
       }
       setTimeout(() => {
-        setIsVisible(true)
+        if (
+          (window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth) > 768
+        ) {
+          setIsVisible(true)
+        }
         console.log(canvasLoaded, 'destroying graph1')
         canvasLoaded && graph.destroy()
         setGraph(
