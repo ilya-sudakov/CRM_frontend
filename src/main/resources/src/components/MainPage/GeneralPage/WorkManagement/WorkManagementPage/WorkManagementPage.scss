@@ -68,7 +68,11 @@
       .main-window__button {
         // align-items: ;
         // padding: 15px 15px !important;
-        padding: 5px 10px;
+        padding: 7.5px 5px;
+
+        img {
+          filter: brightness(3);
+        }
       }
     }
     .work-management-page__workshop-pick {
@@ -395,23 +399,46 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      // flex-wrap: wrap;
-      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start !important;
       .work-management-page__date {
+        // width: 100%;
         // align-self: flex-start;
       }
-      & .input_date,
-      & .input_date input {
-        margin-bottom: 20px;
-        width: calc(100% - 20px) !important;
+
+      & .input_date {
+        width: 100%;
       }
-      & .main-window__button {
+
+      & .input_date,
+      & .input_date__input {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 5px;
+        width: calc(100% - 0px);
+        .input_date__input_name {
+          max-width: 50px;
+          width: 50px;
+          flex: 0 1 50px;
+        }
+      }
+      .input_date__input_field {
+        width: calc(100% - 60px) !important;
+        max-width: 150px;
+      }
+      > .main-window__button {
         margin-top: 5px;
+        padding: 10px 10px !important;
         // align-self: flex-end;
       }
     }
     .work-management-page__workshop-pick {
+      margin-top: 10px;
       flex-wrap: wrap;
+      justify-content: flex-start !important;
     }
     .main-window__button {
       margin-bottom: 5px;

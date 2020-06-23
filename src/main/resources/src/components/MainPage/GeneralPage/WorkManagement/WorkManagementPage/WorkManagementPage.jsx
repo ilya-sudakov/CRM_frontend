@@ -5,6 +5,7 @@ import '../../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 // import viewSVG from '../../../../../../../../../assets/tableview/view.svg';
 import OneColumnIcon from '../../../../../../../../../assets/tableview/onecolumn.png'
+import okIcon from '../../../../../../../../../assets/tableview/ok.svg'
 import TwoColumnsIcon from '../../../../../../../../../assets/tableview/twocolumns.png'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 // import DownloadIcon from '../../../../../../../../../assets/download.svg';
@@ -326,6 +327,7 @@ const WorkManagementPage = (props) => {
             <Button
               text="Применить"
               isLoading={isLoading}
+              imgSrc={okIcon}
               className="main-window__button"
               onClick={loadWorks}
             />
