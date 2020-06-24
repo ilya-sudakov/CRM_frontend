@@ -98,8 +98,11 @@ const PartsStatistic = (props) => {
             ticks: {
               beginAtZero: true,
             },
+            gridLines: {
+              display: false,
+            },
             scaleLabel: {
-              display: true,
+              display: false,
               labelString: 'Название',
               fontStyle: 'italic',
             },
@@ -168,11 +171,14 @@ const PartsStatistic = (props) => {
       scales: {
         yAxes: [
           {
+            gridLines: {
+              display: false,
+            },
             ticks: {
               beginAtZero: true,
             },
             scaleLabel: {
-              display: true,
+              display: false,
               labelString: 'Название',
               fontStyle: 'italic',
             },

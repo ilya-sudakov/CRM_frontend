@@ -9,6 +9,10 @@
     transition: 200ms ease-in-out;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
 
+    &:hover {
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 7px rgba(0, 0, 0, 0.24) !important;
+    }
+
     .main-window__title {
         padding: 15px 0;
         cursor: pointer;

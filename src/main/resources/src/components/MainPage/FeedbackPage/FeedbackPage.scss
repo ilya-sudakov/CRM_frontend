@@ -14,7 +14,7 @@
     margin: 15px 15px;
     width: calc(100% - 30px);
     margin-bottom: 25px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 7px rgba(0, 0, 0, 0.24);
   }
   .main-window__status-panel {
     margin-bottom: 5px;
@@ -133,6 +133,16 @@
   }
 
   @media (max-width: 768px) {
+    max-width: none;
+    margin: 0;
+    box-shadow: none;
+    .main-window {
+      background-color: transparent;
+      border-radius: 5px;
+      margin: 0 !important;
+      width: 100% !important;
+      box-shadow: none;
+    }
     .main-window {
       width: calc(100% - 10px);
       margin: 10px 5px;

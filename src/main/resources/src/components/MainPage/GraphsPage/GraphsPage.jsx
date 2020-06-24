@@ -124,7 +124,7 @@ const GraphsPage = (props) => {
                     },
                     stacked: true,
                     scaleLabel: {
-                      display: true,
+                      display: false,
                       labelString: 'Часы',
                       fontStyle: 'italic',
                     },

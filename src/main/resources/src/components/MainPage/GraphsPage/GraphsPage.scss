@@ -107,6 +107,10 @@
   }
 
   @media (max-width: 768px) {
+    margin: 0;
+    width: 100%;
+    background-color: transparent;
+    box-shadow: none;
     .graphs-page__chart-wrapper {
       max-width: calc(100% - 50px) !important;
       .graphs-page__header {

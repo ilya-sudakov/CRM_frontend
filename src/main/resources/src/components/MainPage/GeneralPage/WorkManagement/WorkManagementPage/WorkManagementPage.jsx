@@ -377,7 +377,13 @@ const WorkManagementPage = (props) => {
             <option value="hours desc">По часам</option>
           </select>
         </div> */}
-        <div className="main-window__list">
+        <div
+          className={
+            isOneColumn
+              ? 'main-window__list main-window__list--one-column'
+              : 'main-window__list'
+          }
+        >
           {/* <TableLoading isLoading={isLoading} /> */}
           {workshops.map((workshop, workshopIndex) => {
             if (
