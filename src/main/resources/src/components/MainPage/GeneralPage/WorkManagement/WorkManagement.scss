@@ -19,11 +19,9 @@
     // flex-wrap: wrap;
     align-items: center;
     font-size: 125%;
-    // margin: 15px 0;
     padding: 15px 26px;
     position: relative;
     padding-bottom: 5px;
-    // padding-left: 50px;
     & span {
       // padding: 0 10px;
       // margin-right: px;
@@ -41,8 +39,6 @@
     // width: 100%;
   }
   .work-management__button {
-    // position: absolute;
-    // right: 5px;
     border: 0;
     cursor: pointer;
     padding: 5px 10px;
@@ -51,11 +47,12 @@
     background-color: $button__background--inverted;
     color: $secondary-text-color;
     transition: 0.2s ease-in-out;
-    // margin-right: 10px;
     outline: none;
     display: flex;
     justify-content: center;
     align-items: center;
+    // margin-left: auto;
+    // margin-top: -1.5rem;
 
     .work-management__img {
       margin-right: 5px;

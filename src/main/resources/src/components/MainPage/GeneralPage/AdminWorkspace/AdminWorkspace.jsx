@@ -197,13 +197,87 @@ const AdminWorkspace = (props) => {
       {props.userHasAccess(['ROLE_ADMIN']) && (
         <div className="admin-workspace__chart-wrapper">
           <TableLoading isLoading={isLoading} />
-          <div className="main-window__mobile-text">Сводка за неделю</div>
+          <div className="main-window__mobile-text">
+            <span className="admin-workspace__date">
+              {formatDateStringNoYear(
+                new Date(
+                  new Date().setDate(
+                    new Date().getDate() +
+                      -7 * weekOffset -
+                      new Date(
+                        new Date().setDate(
+                          new Date().getDate() + -7 * weekOffset,
+                        ),
+                      ).getDay() +
+                      1,
+                  ),
+                ),
+              ) +
+                ' - ' +
+                formatDateStringNoYear(
+                  new Date(
+                    new Date().setDate(
+                      new Date().getDate() +
+                        -7 * weekOffset -
+                        new Date(
+                          new Date().setDate(
+                            new Date().getDate() + -7 * weekOffset,
+                          ),
+                        ).getDay() +
+                        7,
+                    ),
+                  ),
+                )}
+            </span>
+            Сводка за неделю
+          </div>
           <div className="admin-workspace__header">
             {/* <button className="admin-workspace__button" onClick={(event) => {
                         event.preventDefault();
                         setWeekOffset(weekOffset + 1);
                     }}>Пред. неделя</button>
                      */}
+            {/* <img
+              src={chevronDownSVG}
+              onClick={(event) => {
+                setWeekOffset(weekOffset + 1)
+              }}
+              className="admin-workspace__chevron admin-workspace__chevron--back"
+            /> */}
+            <div className="admin-workspace__title">
+              <span className="admin-workspace__date">
+                {formatDateStringNoYear(
+                  new Date(
+                    new Date().setDate(
+                      new Date().getDate() +
+                        -7 * weekOffset -
+                        new Date(
+                          new Date().setDate(
+                            new Date().getDate() + -7 * weekOffset,
+                          ),
+                        ).getDay() +
+                        1,
+                    ),
+                  ),
+                ) +
+                  ' - ' +
+                  formatDateStringNoYear(
+                    new Date(
+                      new Date().setDate(
+                        new Date().getDate() +
+                          -7 * weekOffset -
+                          new Date(
+                            new Date().setDate(
+                              new Date().getDate() + -7 * weekOffset,
+                            ),
+                          ).getDay() +
+                          7,
+                      ),
+                    ),
+                  )}
+              </span>
+              Сводка за неделю
+            </div>
             <Button
               text="Пред. неделя"
               className="admin-workspace__button"
@@ -213,14 +287,6 @@ const AdminWorkspace = (props) => {
               }}
               inverted
             />
-            {/* <img
-              src={chevronDownSVG}
-              onClick={(event) => {
-                setWeekOffset(weekOffset + 1)
-              }}
-              className="admin-workspace__chevron admin-workspace__chevron--back"
-            /> */}
-            <div className="admin-workspace__title">Сводка за неделю</div>
             <Button
               text="Тек. неделя"
               className="admin-workspace__button"
