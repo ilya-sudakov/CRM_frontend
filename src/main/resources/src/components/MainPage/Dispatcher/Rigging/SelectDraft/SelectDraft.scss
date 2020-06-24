@@ -181,7 +181,7 @@
 
       .select-draft__selected_item {
         display: flex;
-        padding: 0px 0px;
+        padding: 2.5px 0px;
         border-radius: 2.5px;
         width: 50%;
         margin-right: 30px;
@@ -190,7 +190,8 @@
         //   width: fit-content;
         align-items: center;
         color: $primary-text-color;
-        border: 1px solid $button__background--inverted;
+        // border: 1px solid $button__background--inverted;
+        border: 1px solid #777777;
         transition: 0.2s ease-in-out;
         cursor: pointer;
         background-color: #ffffff;

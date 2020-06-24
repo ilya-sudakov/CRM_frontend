@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './WorkManagement.scss'
 import { Link, withRouter } from 'react-router-dom'
 import searchImg from '../../../../../../../../assets/searchbar/search.svg'
@@ -17,6 +17,7 @@ import {
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
+import { UserContext } from '../../../../App.js'
 
 const WorkManagement = (props) => {
   const [recordedWork, setRecordedWork] = useState([])
@@ -24,6 +25,7 @@ const WorkManagement = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [employeesMap, setEmployeesMap] = useState({})
   const [employees, setEmployees] = useState({})
+  const userContext = useContext(UserContext)
   const [workshops, setWorkshops] = useState([
     {
       name: 'ЦехЛЭМЗ',
@@ -138,20 +140,21 @@ const WorkManagement = (props) => {
           )}
           {/* <InputDate selected={new Date(new Date().setDate(new Date().getDate() - 1))} /> */}
         </div>
-        <span>
-          {props.userHasAccess(['ROLE_ADMIN'])
+        {/* <span>
+          {userContext.userHasAccess(['ROLE_ADMIN'])
             ? 'Сводка дня'
-            : props.userHasAccess(['ROLE_DISPATCHER']) ||
-              props.userHasAccess(['ROLE_MANAGER'])
+            : userContext.userHasAccess(['ROLE_DISPATCHER']) ||
+              userContext.userHasAccess(['ROLE_MANAGER'])
             ? 'Офис'
-            : props.userHasAccess(['ROLE_LEPSARI'])
+            : userContext.userHasAccess(['ROLE_LEPSARI'])
             ? 'ЦехЛепсари'
-            : props.userHasAccess(['ROLE_LEMZ'])
+            : userContext.userHasAccess(['ROLE_LEMZ'])
             ? 'ЦехЛЭМЗ'
-            : props.userHasAccess(['ROLE_LIGOVSKIY'])
+            : userContext.userHasAccess(['ROLE_LIGOVSKIY'])
             ? 'ЦехЛиговский'
-            : props.userHasAccess(['ROLE_ENGINEER']) && 'Инженер'}
-        </span>
+            : userContext.userHasAccess(['ROLE_ENGINEER']) && 'Инженер'}
+        </span> */}
+        <span>Сводка дня</span>
         <div
           className="work-management__button work-management__button--inverted"
           onClick={() => {
@@ -178,74 +181,84 @@ const WorkManagement = (props) => {
           )
         ) : (
           <div className="work-management__list">
-            {Object.entries(employees)
-              .filter((employee) => {
-                const item = employee[1]
-                {
-                  /* console.log(item, item.lastName) */
-                }
-                if (
-                  item.lastName
-                    .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
-                  //item.hours.toString().includes(searchQuery) ||
-                  item.workshop
-                    .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
-                  item.workshop
-                    .toLowerCase()
-                    .includes(searchQuery.toLowerCase())
-                ) {
-                  let check = false
-                  workshops.map((workshop) => {
-                    if (
-                      workshop.name === item.workshop &&
-                      props.userHasAccess(workshop.visibility)
-                    ) {
-                      check = true
-                      return
-                    }
-                  })
-                  return check
-                }
-              })
-              .sort((a, b) => {
-                if (a[1].lastName < b[1].lastName) {
-                  return -1
-                }
-                if (a[1].lastName > b[1].lastName) {
-                  return 1
-                }
-                return 0
-              })
-              .map((employee) => {
-                const item = employee[1]
+            {workshops.map((workshop) => {
+              if (
+                userContext.userHasAccess(workshop.visibility) &&
+                Object.entries(employees).filter((employee) => {
+                  const item = employee[1]
+                  if (item.workshop === workshop.name) {
+                    return true
+                  }
+                }).length > 0
+              ) {
                 return (
-                  <Link
-                    className="work-management__item"
-                    // to={'/work-management/record-time/edit/' + item.id}
-                    to="/work-management"
-                  >
-                    <div>
-                      {item.lastName + ' ' + item.name + ' ' + item.middleName}
+                  <>
+                    <div className="work-management__workshop-item">
+                      {workshop.name}
                     </div>
-                    <div>
-                      {/* Время работы:{' '} */}
-                      {employeesMap !== undefined &&
-                        Math.floor(employeesMap[item.id]?.hours * 100) / 100 +
-                          ' ' +
-                          numberToString(
-                            Number.parseInt(
-                              Math.floor(employeesMap[item.id]?.hours * 100) /
-                                100,
-                            ),
-                            ['час', 'часа', 'часов'],
-                          )}
-                    </div>
-                    <div>{item.workshop}</div>
-                  </Link>
+                    {Object.entries(employees)
+                      .filter((employee) => {
+                        const item = employee[1]
+                        if (
+                          (item.lastName
+                            .toLowerCase()
+                            .includes(searchQuery.toLowerCase()) ||
+                            item.workshop
+                              .toLowerCase()
+                              .includes(searchQuery.toLowerCase()) ||
+                            item.workshop
+                              .toLowerCase()
+                              .includes(searchQuery.toLowerCase())) &&
+                          item.workshop === workshop.name
+                        ) {
+                          return true
+                        }
+                      })
+                      .sort((a, b) => {
+                        if (a[1].lastName < b[1].lastName) {
+                          return -1
+                        }
+                        if (a[1].lastName > b[1].lastName) {
+                          return 1
+                        }
+                        return 0
+                      })
+                      .map((employee) => {
+                        const item = employee[1]
+                        return (
+                          <Link
+                            className="work-management__item"
+                            to="/work-management"
+                          >
+                            <div>
+                              {item.lastName +
+                                ' ' +
+                                item.name +
+                                ' ' +
+                                item.middleName}
+                            </div>
+                            <div>
+                              {employeesMap !== undefined &&
+                                Math.floor(employeesMap[item.id]?.hours * 100) /
+                                  100 +
+                                  ' ' +
+                                  numberToString(
+                                    Number.parseInt(
+                                      Math.floor(
+                                        employeesMap[item.id]?.hours * 100,
+                                      ) / 100,
+                                    ),
+                                    ['час', 'часа', 'часов'],
+                                  )}
+                            </div>
+                            {/* <div>{item.workshop}</div> */}
+                          </Link>
+                        )
+                      })}
+                  </>
                 )
-              })}
+              }
+            })}
           </div>
         )}
       </div>

@@ -152,7 +152,9 @@ const TableView = (props) => {
                           </span>
                         </div>
                         {item.works.map((workItem, index) => {
-                          console.log(workItem)
+                          {
+                            /* console.log(workItem) */
+                          }
                           return (
                             <div className="work-management-page__item">
                               <Link
@@ -207,6 +209,25 @@ const TableView = (props) => {
                     )
                   }
                 })}
+              {new Date(date[0]).getDay() !== 0 &&
+                new Date(date[0]).getDay() !== 6 && (
+                  <div className="work-management-page__table-employees-count">
+                    <span>
+                      {
+                        Object.values(date[1]).filter(
+                          (item) => item.works.length > 0,
+                        ).length
+                        //+ ' из'
+                      }
+                    </span>
+                    <span>
+                      {
+                        '/' + Object.values(props.employees).length
+                        //+ ' сотрудников'
+                      }
+                    </span>
+                  </div>
+                )}
             </>
           )
         })}
