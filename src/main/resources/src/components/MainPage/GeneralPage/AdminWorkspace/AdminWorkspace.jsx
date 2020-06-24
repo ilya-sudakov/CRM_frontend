@@ -145,12 +145,16 @@ const AdminWorkspace = (props) => {
               scales: {
                 yAxes: [
                   {
+                    // display: false,
+                    gridLines: {
+                      // display: false,
+                    },
                     ticks: {
                       beginAtZero: true,
                     },
                     stacked: true,
                     scaleLabel: {
-                      display: true,
+                      display: false,
                       labelString: 'Часы',
                       fontStyle: 'italic',
                     },
@@ -158,9 +162,12 @@ const AdminWorkspace = (props) => {
                 ],
                 xAxes: [
                   {
+                    gridLines: {
+                      display: false,
+                    },
                     stacked: true,
                     scaleLabel: {
-                      display: true,
+                      display: false,
                       labelString: 'Дни недели',
                       fontStyle: 'italic',
                     },
