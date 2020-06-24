@@ -22,8 +22,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    //
+    padding: 7.5px 10px;
+    background-color: $secondary-text-color;
+    color: $primary-text-color;
+    border: 1px solid $button__background--inverted;
+
+    &__img {
+      max-width: 20px;
+      margin-right: 5px;
+      filter: brightness(1) invert(0);
+    }
+
+    &:hover {
+      color: $secondary-text-color;
+    }
+    //
     &:last-child {
       margin-right: 0;
+      margin-left: 15px;
     }
     &:hover {
       background-color: lighten($button__background--inverted, 5%);
@@ -40,9 +58,9 @@
     max-width: 570px;
     // max-height: 230px;
     background-color: $secondary-text-color;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 10px 15px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 10px rgba(0, 0, 0, 0.24);
     position: relative;
     min-height: 250px;
     max-height: 320px;
@@ -50,10 +68,38 @@
     .admin-workspace__header {
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      // justify-content: space-around;
+      // justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      width: 100%;
+      // padding: 0 25px;
+      width: calc(100% - 25px);
       margin-bottom: auto;
+
+      .admin-workspace__button {
+        &:nth-child(1) {
+          margin-right: 15px;
+        }
+        &:nth-child(2) {
+          margin-left: 15px;
+        }
+      }
+
+      .admin-workspace__chevron {
+        width: 25px;
+        padding: 5px;
+        cursor: pointer;
+        &--next {
+          transform: rotate(-90deg);
+          margin-left: 5px;
+        }
+
+        &--back {
+          transform: rotate(90deg);
+          margin-right: 5px;
+        }
+      }
+
       .admin-workspace__title {
         font-size: 20px;
         text-align: center;

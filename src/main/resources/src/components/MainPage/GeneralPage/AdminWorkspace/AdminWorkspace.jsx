@@ -6,6 +6,7 @@ import { Notifications, WorkManagement } from '../../lazyImports.jsx'
 import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { formatDateStringNoYear } from '../../../../utils/functions.jsx'
 import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx'
+import chevronDownSVG from '../../../../../../../../assets/tableview/chevron-down.svg'
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
 import Button from '../../../../utils/Form/Button/Button.jsx'
 
@@ -14,6 +15,10 @@ const AdminWorkspace = (props) => {
   const lepsari = '#5c63a2'
   const ligovskiy = '#c068a8'
   const office = '#ec7176'
+  // const lemz = '#365c8d'
+  // const lepsari = '#277f8e'
+  // const ligovskiy = '#1fa187'
+  // const office = '#4ac16d'
   const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
   const [weekOffset, setWeekOffset] = useState(0)
   const [graph, setGraph] = useState(null)
@@ -199,12 +204,16 @@ const AdminWorkspace = (props) => {
               onClick={(event) => {
                 setWeekOffset(weekOffset + 1)
               }}
+              inverted
             />
+            {/* <img
+              src={chevronDownSVG}
+              onClick={(event) => {
+                setWeekOffset(weekOffset + 1)
+              }}
+              className="admin-workspace__chevron admin-workspace__chevron--back"
+            /> */}
             <div className="admin-workspace__title">Сводка за неделю</div>
-            {/* <button className="admin-workspace__button" onClick={(event) => {
-                        event.preventDefault();
-                        setWeekOffset(0);
-                    }}>Тек. неделя</button> */}
             <Button
               text="Тек. неделя"
               className="admin-workspace__button"
@@ -212,7 +221,15 @@ const AdminWorkspace = (props) => {
               onClick={(event) => {
                 setWeekOffset(0)
               }}
+              inverted
             />
+            {/* <img
+              src={chevronDownSVG}
+              className="admin-workspace__chevron admin-workspace__chevron--next"
+              onClick={(event) => {
+                setWeekOffset(0)
+              }}
+            /> */}
           </div>
         </div>
       )}

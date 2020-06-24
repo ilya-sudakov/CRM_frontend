@@ -166,11 +166,11 @@ const WorkManagement = (props) => {
         </div>
       </div>
       <div className="work-management__content">
-        <SearchBar
+        {/* <SearchBar
           title=""
           placeholder="Введите данные работника для поиска..."
           setSearchQuery={setSearchQuery}
-        />
+        /> */}
         {recordedWork.length === 0 ? (
           isLoading ? (
             <TableDataLoading className="work-management__item" />
