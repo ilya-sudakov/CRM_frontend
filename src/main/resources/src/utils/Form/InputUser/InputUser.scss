@@ -76,6 +76,7 @@
     .input_user__input {
       flex-wrap: wrap;
       flex-direction: column;
+      align-items: flex-start;
 
       .input_user__input_name {
         width: 100%;

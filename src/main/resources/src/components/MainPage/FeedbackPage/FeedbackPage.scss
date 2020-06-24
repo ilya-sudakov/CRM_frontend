@@ -6,6 +6,16 @@
   --in-progress: #bdbd41;
   --testing: #28868a;
   --waiting: #864f7d;
+  max-width: 900px;
+  margin: 0 auto;
+  .main-window {
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin: 15px 15px;
+    width: calc(100% - 30px);
+    margin-bottom: 25px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+  }
   .main-window__status-panel {
     margin-bottom: 5px;
 
@@ -31,6 +41,7 @@
       padding-left: 25px;
       position: relative;
       &:not(.main-window__list-item--header) {
+        border-right: 1px solid #aaaaaa;
         &::before {
           content: "";
           display: inline-block;
@@ -44,11 +55,13 @@
           background-color: #cccccc;
         }
         &:nth-child(2) {
+          border-top: 1px solid #aaaaaa;
           &::before {
             border-top-left-radius: 2.5px;
           }
         }
         &:last-child {
+          border-bottom-right-radius: 5px;
           &::before {
             border-bottom-left-radius: 2.5px;
           }
@@ -71,7 +84,7 @@
           width: 100%;
           &:nth-child(1) {
             font-size: 20px;
-            max-width: 60%;
+            max-width: 100%;
             white-space: nowrap;
             overflow-x: hidden;
             text-overflow: ellipsis;
@@ -104,7 +117,7 @@
     display: flex;
     justify-content: flex-start;
     // top: 25px;
-    top: calc(50% - 11px);
+    top: calc(50%);
     right: 125px;
     background-color: $button__background--inverted;
     color: #ffffff;
@@ -120,6 +133,10 @@
   }
 
   @media (max-width: 768px) {
+    .main-window {
+      width: calc(100% - 10px);
+      margin: 10px 5px;
+    }
     .main-window__info-panel {
       flex-direction: column;
       // justify-content: flex-start;
@@ -139,6 +156,7 @@
         .feedback-page__info-message {
           position: relative;
           // width: 25px;
+          font-size: 85%;
           top: 0;
           left: 0;
         }
@@ -153,13 +171,29 @@
 
         span {
           font-size: 12px;
-          margin-bottom: 5px;
+          margin-bottom: 1px;
           &:nth-child(1) {
+            .main-window__mobile-text {
+              display: none;
+            }
             font-size: 16px !important;
             white-space: normal !important;
             text-overflow: unset !important;
             max-width: none !important;
+            text-align: left !important;
           }
+          &:nth-child(2) {
+            text-align: left !important;
+            .main-window__mobile-text {
+              display: none;
+            }
+          }
+          // &:nth-child(3) {
+          //   text-align: left !important;
+          //   .main-window__mobile-text {
+          //     display: none;
+          //   }
+          // }
         }
       }
     }

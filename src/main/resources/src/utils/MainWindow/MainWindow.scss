@@ -559,7 +559,8 @@
       text-align: center !important;
       // background-color: rgba($button__background--inverted, 0.9);
       background-color: $secondary-text-color;
-      border: 1px solid $button__background--inverted;
+      // border: 1px solid $button__background--inverted;
+      border: 1px solid #999999;
       color: #444444;
       // color: $secondary-text-color;
       border-radius: 5px;

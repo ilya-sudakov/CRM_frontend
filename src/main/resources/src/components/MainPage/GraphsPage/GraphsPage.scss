@@ -1,6 +1,12 @@
 @import "../../../variables.scss";
 
 .graphs-page {
+  margin: 15px auto;
+  width: calc(100% - 30px);
+  border-radius: 5px;
+  max-width: 900px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
   .main-window__control-panel {
     justify-content: center;
 
@@ -8,13 +14,54 @@
       margin-right: 0;
     }
   }
+
+  &__button {
+    border: 0;
+    cursor: pointer;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-size: 90%;
+    background-color: $button__background--inverted;
+    color: $secondary-text-color;
+    transition: 0.2s ease-in-out;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    //
+    padding: 5px 10px;
+    background-color: $secondary-text-color;
+    color: $primary-text-color;
+    border: 1px solid $button__background--inverted;
+
+    &__img {
+      max-width: 20px;
+      margin-right: 5px;
+      filter: brightness(1) invert(0);
+    }
+
+    &:hover {
+      color: $secondary-text-color;
+    }
+    //
+    &:last-child {
+      margin-right: 0;
+      margin-left: 15px;
+    }
+    &:hover {
+      background-color: lighten($button__background--inverted, 5%);
+      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    }
+  }
+
   &__chart-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: calc(100% - 30px);
-    max-width: 60%;
+    max-width: calc(100% - 200px);
     // max-height: 230px;
     // background-color: $secondary-text-color;
     border-radius: 5px;
@@ -68,7 +115,7 @@
           font-size: 16px;
         }
         .graphs-page__button {
-          padding: 10px 2.5px;
+          padding: 5px 10px;
         }
       }
     }

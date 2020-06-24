@@ -8,6 +8,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   margin-top: 10px;
+
   // align-items: center;
   // justify-content: center;
   &__button {
@@ -65,7 +66,7 @@
     padding-top: 16px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 10px rgba(0, 0, 0, 0.24);
     position: relative;
-    min-height: 200px;
+    min-height: 298px;
     max-height: 316px;
     margin-bottom: 15px;
     .admin-workspace__header {
@@ -122,6 +123,7 @@
     .admin-workspace__chart-wrapper {
       width: calc(100% - 10px);
       padding: 5px 5px;
+      padding-top: 15px;
       // min-height: 500px;
       max-height: 380px;
       .admin-workspace__chart {
@@ -136,6 +138,7 @@
       padding-bottom: 60px;
       .main-window__mobile-text {
         font-size: 18px;
+        margin-bottom: 15px;
       }
       .admin-workspace__header {
         // font-size: 80%;
@@ -154,7 +157,8 @@
           top: 10px;
         }
         .admin-workspace__button {
-          padding: 10px 5px;
+          padding: 5px 5px;
+          font-size: 80%;
         }
       }
     }

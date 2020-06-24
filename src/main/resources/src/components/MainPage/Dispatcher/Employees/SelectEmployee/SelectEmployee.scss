@@ -113,6 +113,7 @@
     .select-employee__input {
       flex-wrap: wrap;
       flex-direction: column;
+      align-items: flex-start;
 
       .select-employee__input_name {
         width: 100%;

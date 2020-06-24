@@ -227,6 +227,7 @@ const WorkManagement = (props) => {
                         const item = employee[1]
                         return (
                           <Link
+                            index={item.id}
                             className="work-management__item"
                             to="/work-management"
                           >

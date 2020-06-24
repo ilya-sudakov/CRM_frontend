@@ -102,7 +102,7 @@ const AdminWorkspace = (props) => {
             })
           })
         })
-        console.log(workshops)
+        // console.log(workshops)
         if (props.userHasAccess(['ROLE_ADMIN'])) {
           !canvasLoaded &&
             loadCanvas(

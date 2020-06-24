@@ -137,7 +137,7 @@ const GraphsPage = (props) => {
                     },
                     stacked: true,
                     scaleLabel: {
-                      display: true,
+                      display: false,
                       labelString: 'Дни недели',
                       fontStyle: 'italic',
                     },
@@ -204,11 +204,11 @@ const GraphsPage = (props) => {
           xAxes: [
             {
               stacked: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Дни недели',
-                fontStyle: 'italic',
-              },
+              // scaleLabel: {
+              //   display: false,
+              //   labelString: 'Дни недели',
+              //   fontStyle: 'italic',
+              // },
             },
           ],
         },
@@ -274,30 +274,34 @@ const GraphsPage = (props) => {
         <div className="graphs-page__chart-wrapper">
           <TableLoading isLoading={isLoading} />
           <div className="graphs-page__header">
-            <div className="graphs-page__title">
+            {/* <div className="graphs-page__title">
               {curWeek.length > 0 &&
                 'Отчет (' +
                   formatDateStringNoYear(curWeek[0]) +
                   ' - ' +
                   formatDateStringNoYear(curWeek[6]) +
                   ')'}
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="main-window__control-panel">
           <Button
+            className="graphs-page__button"
             text="Пред. неделя"
             isLoading={weekOffset === 0 ? false : isLoading}
             onClick={(event) => {
               setWeekOffset(weekOffset + 1)
             }}
+            inverted
           />
           <Button
+            className="graphs-page__button"
             text="Тек. неделя"
             isLoading={weekOffset !== 0 ? false : isLoading}
             onClick={() => {
               setWeekOffset(0)
             }}
+            inverted
           />
         </div>
       </div>

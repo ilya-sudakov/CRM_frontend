@@ -8,5 +8,9 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     width: 100%;
+
+    .main-window__button {
+      margin-top: 5px;
+    }
   }
 }
