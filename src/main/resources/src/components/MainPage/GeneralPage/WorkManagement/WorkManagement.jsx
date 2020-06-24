@@ -154,7 +154,8 @@ const WorkManagement = (props) => {
             ? 'ЦехЛиговский'
             : userContext.userHasAccess(['ROLE_ENGINEER']) && 'Инженер'}
         </span> */}
-        <span>Сводка дня</span>
+        {/* <span>Сводка дня</span> */}
+        <span>Отчет производства</span>
         <div
           className="work-management__button work-management__button--inverted"
           onClick={() => {
