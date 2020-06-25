@@ -186,10 +186,24 @@
 
   @media (max-width: 425px) {
     .work-management__title {
+      // padding-top: 10px;
+      // margin-top: 10px;
+      margin-top: 5px;
+      flex-wrap: nowrap !important;
+      flex-direction: column;
+      align-items: flex-start !important;
       span {
-        max-width: 130px;
+        // max-width: 130px;
+        margin-top: 5px;
+        // padding-right: 80px;
         font-size: 90% !important;
         // word-break: break-all;
+      }
+
+      .work-management__button {
+        // margin-left: 0;
+        margin-bottom: 20px;
+        margin-top: -55px !important;
       }
     }
     .work-management__input {
