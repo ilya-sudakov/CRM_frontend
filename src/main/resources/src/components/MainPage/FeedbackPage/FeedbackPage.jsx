@@ -3,6 +3,7 @@ import './FeedbackPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import viewSVG from '../../../../../../../assets/tableview/view.svg'
+import unreadMessagesSVG from '../../../../../../../assets/chat/unread_messages__mail_icon.svg'
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { Link } from 'react-router-dom'
@@ -196,12 +197,19 @@ const FeedbackPage = (props) => {
                         {item.author}
                       </span>
                       {item.isRead === false && (
-                        <div className="feedback-page__info-message">
-                          {/* <div className="main-window__mobile-text">
-                            Новые сообщения:{' '}
-                          </div> */}
-                          Новые сообщения
-                          {/* 1 */}
+                        <div
+                          className="feedback-page__info-message"
+                          title="Новые сообщения"
+                        >
+                          <div className="main-window__mobile-text">
+                            Новые сообщения
+                          </div>
+                          {/* Новые сообщения */}
+                          <img
+                            className="main-window__img"
+                            src={unreadMessagesSVG}
+                            alt=""
+                          />
                         </div>
                       )}
                     </div>
