@@ -263,7 +263,7 @@ const PartsStatistic = (props) => {
             Отчет производства
             <img
               className={
-                isVisible
+                !isVisible
                   ? 'main-window__img'
                   : 'main-window__img main-window__img--rotated'
               }

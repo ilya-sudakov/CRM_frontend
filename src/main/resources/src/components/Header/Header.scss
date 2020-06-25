@@ -43,11 +43,15 @@
   }
 
   & .header__logo {
-    width: 150px;
+    width: 200px;
     // max-width: 85px;
     // max-height: 45px;
-    max-width: 145px;
+    max-width: 130px;
     max-height: 45px;
+
+    &--mobile {
+      display: none;
+    }
   }
 
   &__company {
@@ -387,8 +391,13 @@
       // margin-bottom: 2.5px;
     }
     .header__logo {
-      // display: none;
+      display: none;
       // width: 80px;
+
+      &--mobile {
+        display: block;
+        width: 35px;
+      }
     }
   }
 
@@ -400,7 +409,9 @@
         font-size: 80%;
       }
     }
-
+    .header__logo  {
+      max-width: 135px;
+    }
     .header__sidemenu {
       font-size: 80%;
     }

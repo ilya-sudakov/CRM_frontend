@@ -3,7 +3,9 @@ import profileSVG from '../../../../../../assets/header/profile1.svg'
 import exitSVG from '../../../../../../assets/header/exit.svg'
 import employeeSVG from '../../../../../../assets/header/employee.svg'
 // import logoSVG from '../../../../../../assets/header/logo.png'
+// import newLogoSVG from '../../../../../../assets/header/header__new_logo.png'
 import newLogoSVG from '../../../../../../assets/header/header__new_logo.png'
+import mobileLogoSVG from '../../../../../../assets/header/header__mobile_logo.png'
 import notificationBellSVG from '../../../../../../assets/notifications/notification_bell.svg'
 import { Link } from 'react-router-dom'
 import './Header.scss'
@@ -41,6 +43,11 @@ const Header = (props) => {
             {console.log(ctx)}
             <Link className="header__link" to="/">
               <img className="header__logo" src={newLogoSVG} alt="" />
+              <img
+                className="header__logo header__logo--mobile"
+                src={mobileLogoSVG}
+                alt=""
+              />
             </Link>
             {/* <div className="header__name">
                     Ц.Р.М.

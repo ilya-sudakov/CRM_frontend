@@ -187,7 +187,8 @@
   @media (max-width: 425px) {
     .work-management__title {
       span {
-        max-width: 150px;
+        max-width: 130px;
+        font-size: 90% !important;
         // word-break: break-all;
       }
     }
