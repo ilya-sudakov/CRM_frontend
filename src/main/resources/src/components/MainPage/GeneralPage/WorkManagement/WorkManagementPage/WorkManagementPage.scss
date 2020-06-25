@@ -65,9 +65,15 @@
     flex-wrap: wrap;
     .work-management-page__date-pick {
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
       align-items: center;
       font-size: 80%;
+
+      > div:first-child {
+        display: flex;
+        flex-direction: row;
+      }
 
       .main-window__button {
         // align-items: ;
@@ -79,7 +85,7 @@
         }
       }
     }
-    
+
     .work-management-page__workshop-pick {
       display: flex;
       justify-content: center;
@@ -131,6 +137,15 @@
     margin-right: 10px;
     & .input_date__input_field input[type="text"] {
       width: fit-content;
+    }
+
+    .input_date__input_field {
+      max-width: 125px;
+    }
+
+    .input_date__input_name {
+      // width: 100px;
+      // flex: 0 1 80px !important;
     }
   }
 
@@ -381,6 +396,9 @@
   }
 
   @media (max-width: 768px) {
+    .main-window {
+      padding-top: 0;
+    }
     .main-window__header {
       margin-bottom: 10px;
     }
@@ -394,6 +412,7 @@
       }
     }
     .main-window__info-panel {
+      width: calc(100% - 30px);
       flex-direction: column !important;
     }
     .searchbar {
@@ -401,13 +420,15 @@
     }
     .work-management-page__date-pick {
       margin-bottom: 5px;
-      flex-direction: column;
-      align-items: center;
       width: 100%;
-      // flex-direction: row;
-      // flex-wrap: wrap;
+      // flex-direction: column;
+      // align-items: center;
+      flex-direction: row;
       justify-content: flex-start !important;
-      align-items: flex-start !important;
+      // align-items: flex-start !important;
+      > div:first-child {
+        flex-direction: column !important;
+      }
       .work-management-page__date {
         // width: 100%;
         // align-self: flex-start;
@@ -423,7 +444,7 @@
         flex-wrap: nowrap !important;
         align-items: center;
         justify-content: flex-start;
-        margin-bottom: 5px;
+        margin-bottom: 2.5px;
         width: calc(100% - 0px);
         .input_date__input_name {
           max-width: 50px;
@@ -433,23 +454,41 @@
       }
       .input_date__input_field {
         width: calc(100% - 60px) !important;
-        max-width: 150px;
-        height: fit-content;
+        max-width: 120px;
+        height: fit-content !important;
       }
       > .main-window__button {
-        margin: 0 auto;
-        margin-top: 5px;
+        // margin: 0 auto;
+        margin-left: 5px;
+        margin-top: 0px;
         padding: 10px 10px !important;
         // align-self: flex-end;
+
+        .button__img {
+          margin-right: 0;
+        }
+
+        .button__text {
+          display: none;
+        }
       }
     }
     .work-management-page__workshop-pick {
       margin-top: 10px;
       flex-wrap: wrap;
+      width: 100%;
       justify-content: flex-start !important;
-    }
-    .main-window__button {
-      margin-bottom: 5px;
+
+      .main-window__button {
+        margin-right: 2.5px;
+        margin-bottom: 2.5px;
+        margin-top: 0 !important;
+      }
+
+      .main-window__amount_table {
+        margin-left: 10px;
+        margin-top: 0 !important; 
+      }
     }
 
     .main-window__list-options {

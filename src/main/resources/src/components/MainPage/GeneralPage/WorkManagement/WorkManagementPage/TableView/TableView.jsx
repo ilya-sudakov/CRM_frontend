@@ -55,7 +55,7 @@ const TableView = (props) => {
       {props.isLoading && (
         <TableDataLoading
           className="work-management-page__row"
-          minHeight="60px"
+          minHeight="45px"
         />
       )}
       {Object.entries(datesEmployees)

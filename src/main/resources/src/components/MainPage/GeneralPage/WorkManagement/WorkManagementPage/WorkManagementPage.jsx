@@ -281,7 +281,7 @@ const WorkManagementPage = (props) => {
         )}
         <div className="main-window__header">
           <SearchBar
-            title="Поиск по сотрудникам"
+            // title="Поиск по сотрудникам"
             placeholder="Введите запрос для поиска..."
             setSearchQuery={setSearchQuery}
           />
@@ -310,29 +310,37 @@ const WorkManagementPage = (props) => {
         </div>
         <div className="main-window__info-panel">
           <div className="work-management-page__date-pick">
-            <div className="work-management-page__date">
-              <InputDate
-                inputName="Начало:"
-                selected={Date.parse(dates.start)}
-                handleDateChange={(value) => {
-                  setDates({
-                    ...dates,
-                    start: value,
-                  })
-                }}
-              />
-            </div>
-            <div className="work-management-page__date">
-              <InputDate
-                inputName="Конец:"
-                selected={Date.parse(dates.end)}
-                handleDateChange={(value) => {
-                  setDates({
-                    ...dates,
-                    end: value,
-                  })
-                }}
-              />
+            <div>
+              <div className="work-management-page__date">
+                <InputDate
+                  inputName="Начало:"
+                  selected={Date.parse(dates.start)}
+                  startDate={Date.parse(dates.start)}
+                  endDate={Date.parse(dates.end)}
+                  selectsStart
+                  handleDateChange={(value) => {
+                    setDates({
+                      ...dates,
+                      start: value,
+                    })
+                  }}
+                />
+              </div>
+              <div className="work-management-page__date">
+                <InputDate
+                  inputName="Конец:"
+                  selected={Date.parse(dates.end)}
+                  selectsEnd
+                  startDate={Date.parse(dates.start)}
+                  endDate={Date.parse(dates.end)}
+                  handleDateChange={(value) => {
+                    setDates({
+                      ...dates,
+                      end: value,
+                    })
+                  }}
+                />
+              </div>
             </div>
             <Button
               text="Применить"

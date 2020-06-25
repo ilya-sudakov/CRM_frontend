@@ -142,7 +142,7 @@
         }
         .main-window__list-item:not(.main-window__list-item--header) {
             // color: #eeeeee;
-            background-color: darken($secondary-text-color, 4%);
+            background-color: darken($secondary-text-color, 1%);
             padding: 7.5px 10px;
 
             &:hover {
