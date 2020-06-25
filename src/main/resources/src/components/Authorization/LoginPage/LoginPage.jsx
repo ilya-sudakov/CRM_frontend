@@ -69,24 +69,19 @@ const LoginPage = (props) => {
     <div className="authorization">
       {!props.isAuthorized ? (
         <React.Fragment>
-          <div className="authorization__title">
-            {/* <img className="authorization__img" src={profileSVG} alt="" /> */}
-            <img
-              className="authorization__img authorization__img--logo"
-              src={newCompanyIcon}
-              alt=""
-            />
-            {/* <span>Ц.Р.М.</span> */}
-          </div>
           <div className="authorization__panel">
+            <div className="authorization__title">
+              <img
+                className="authorization__img authorization__img--logo"
+                src={newCompanyIcon}
+                alt=""
+              />
+            </div>
             <ErrorMessage
               message="Ошибка при авторизации"
               showError={showError}
               setShowError={setShowError}
             />
-            {/* <div className="authorization__field_name">
-                            Email
-                        </div> */}
             <div className="authorization__field_input">
               <img className="authorization__img" src={profileSVG} alt="" />
               <input
@@ -158,16 +153,14 @@ const LoginPage = (props) => {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <div className="authorization__title">
-            {/* <img className="authorization__img" src={profileSVG} alt="" /> */}
-            <img
-              className="authorization__img authorization__img--logo"
-              src={newCompanyIcon}
-              alt=""
-            />
-            {/* <span>Выход из аккаунта</span> */}
-          </div>
           <div className="authorization__panel">
+            <div className="authorization__title">
+              <img
+                className="authorization__img authorization__img--logo"
+                src={newCompanyIcon}
+                alt=""
+              />
+            </div>
             <button className="authorization__submit" onClick={handleSignOut}>
               <span>Выйти</span>
               <img className="authorization__img" src={exitSVG} alt="" />

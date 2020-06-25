@@ -69,6 +69,7 @@
       justify-content: space-between;
       align-items: center;
       font-size: 80%;
+      width: fit-content;
 
       > div:first-child {
         display: flex;
@@ -140,7 +141,7 @@
     }
 
     .input_date__input_field {
-      max-width: 125px;
+      // max-width: 125px;
     }
 
     .input_date__input_name {

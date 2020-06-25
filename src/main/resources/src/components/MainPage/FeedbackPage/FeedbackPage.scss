@@ -68,8 +68,9 @@
           position: absolute;
           width: 10px;
           // height: calc(100% - 2px);
-          height: calc(100% + 1px);
-          left: 0px;
+          height: calc(100% + 2px);
+          left: 1px;
+          top: -1px;
           // border-top-right-radius: 2.5px;
           // border-bottom-right-radius: 2.5px;
           background-color: #cccccc;
