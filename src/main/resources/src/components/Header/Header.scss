@@ -48,6 +48,7 @@
     // max-height: 45px;
     max-width: 130px;
     max-height: 45px;
+    margin-left: 10px;
 
     &--mobile {
       display: none;
@@ -380,6 +381,7 @@
     .header__logo {
       display: none;
       // width: 100px;
+      margin-left: 0 !important;
     }
   }
 
@@ -411,6 +413,7 @@
     }
     .header__logo  {
       max-width: 135px;
+      margin-left: 5px;
     }
     .header__sidemenu {
       font-size: 80%;
@@ -430,6 +433,7 @@
 
         &--notification {
           padding: 5px 10px;
+          margin-right: 0;
         }
       }
     }

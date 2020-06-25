@@ -51,6 +51,7 @@ const WorkManagementPage = (props) => {
       active: true,
       minimized: true,
       employees: [],
+      className: 'lemz',
     },
     {
       name: 'ЦехЛепсари',
@@ -58,6 +59,7 @@ const WorkManagementPage = (props) => {
       active: true,
       minimized: true,
       employees: [],
+      className: 'lepsari',
     },
     {
       name: 'ЦехЛиговский',
@@ -70,6 +72,7 @@ const WorkManagementPage = (props) => {
       active: true,
       minimized: true,
       employees: [],
+      className: 'ligovskiy',
     },
     {
       name: 'Офис',
@@ -82,6 +85,7 @@ const WorkManagementPage = (props) => {
       active: true,
       minimized: true,
       employees: [],
+      className: 'office',
     },
   ])
   const userContext = useContext(UserContext)
@@ -277,7 +281,7 @@ const WorkManagementPage = (props) => {
         )}
         <div className="main-window__header">
           <SearchBar
-            // title="Поиск по записям"
+            title="Поиск по сотрудникам"
             placeholder="Введите запрос для поиска..."
             setSearchQuery={setSearchQuery}
           />
@@ -345,8 +349,8 @@ const WorkManagementPage = (props) => {
                   <div
                     className={
                       item.active
-                        ? 'main-window__button'
-                        : 'main-window__button main-window__button--inverted'
+                        ? 'main-window__button '
+                        : 'main-window__button main-window__button--inverted '
                     }
                     onClick={() => {
                       let temp = workshops

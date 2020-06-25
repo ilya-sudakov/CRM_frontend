@@ -84,7 +84,7 @@ const FeedbackPage = (props) => {
           ]}
         />
         <SearchBar
-          // title="Поиск по обсуждениям"
+          // title="Обратная связь"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
@@ -121,8 +121,8 @@ const FeedbackPage = (props) => {
         </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
-            <span>Обсуждения</span>
-            <div className="main-window__actions">Действие</div>
+            {/* <span>Обсуждения</span>
+            <div className="main-window__actions">Действие</div> */}
           </div>
           {isLoading && (
             <TableDataLoading
@@ -151,10 +151,10 @@ const FeedbackPage = (props) => {
             })
             .sort((a, b) => {
               if (a.date < b.date) {
-                return -1
+                return 1
               }
               if (a.date > b.date) {
-                return 1
+                return -1
               }
               return 0
             })
@@ -172,6 +172,14 @@ const FeedbackPage = (props) => {
                     }
                     to={'/feedback/view/' + item.id}
                   >
+                    <span
+                      className="feedback-page__avatar"
+                      data-username={
+                        item.author[0] + item.author[1] + item.author[2]
+                      }
+                    >
+                      {item.author[0] + item.author[1] + item.author[2]}
+                    </span>
                     <div className="main-window__list-col">
                       <span title={item.subject}>
                         <div className="main-window__mobile-text">Тема: </div>
@@ -192,17 +200,18 @@ const FeedbackPage = (props) => {
                           {/* <div className="main-window__mobile-text">
                             Новые сообщения:{' '}
                           </div> */}
-                          Непрочитанные сообщения
+                          Новые сообщения
+                          {/* 1 */}
                         </div>
                       )}
                     </div>
                     <div className="main-window__actions">
-                      <div
+                      {/* <div
                         className="main-window__action"
                         title="Просмотр чата"
                       >
                         <img className="main-window__img" src={viewSVG} />
-                      </div>
+                      </div> */}
                       {props.userHasAccess(['ROLE_ADMIN']) && (
                         <div
                           className="main-window__action"
