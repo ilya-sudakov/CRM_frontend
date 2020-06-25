@@ -187,14 +187,14 @@ const FeedbackPage = (props) => {
                         {item.subject}
                       </span>
                       <span>
-                        <div className="main-window__mobile-text">Дата: </div>
-                        {formatDateStringWithTime(item.date)}
-                      </span>
-                      <span>
                         <div className="main-window__mobile-text">
                           Пользователь:{' '}
                         </div>
                         {item.author}
+                      </span>
+                      <span>
+                        <div className="main-window__mobile-text">Дата: </div>
+                        {formatDateStringWithTime(item.date)}
                       </span>
                       {item.isRead === false && (
                         <div

@@ -92,7 +92,7 @@
       &:hover {
         .main-window__list-col {
           span {
-            &:nth-child(2) {
+            &:nth-child(3) {
               color: #dddddd;
             }
           }
@@ -118,6 +118,10 @@
             text-overflow: ellipsis;
           }
           &:nth-child(2) {
+            font-size: 110%;
+          }
+          &:nth-child(3) {
+            font-size: 100%;
             color: #555555;
             transition: 100ms ease-in-out;
           }
@@ -151,7 +155,7 @@
     right: 80px;
     // left: 200px;
     background-color: $button__background--inverted;
-    color: #ffffff;
+    // color: #ffffff;
     border-radius: 25px;
 
     // padding: 2.5px 12.5px;
@@ -232,14 +236,14 @@
           font-size: 85%;
           top: 0;
           left: 0;
-          padding: 5px;
+          padding: 5px 10px;
 
           .main-window__mobile-text {
-            margin-right: 0;
+            // margin-right: 0;
           }
 
           .main-window__img {
-            display: none;
+            // display: none;
           }
         }
         &::before {
