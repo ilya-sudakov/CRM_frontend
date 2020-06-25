@@ -248,8 +248,8 @@
         }
         &::before {
           // top: calc(50% - 10px);
-          top: 0px;
-          height: calc(100% - 0px) !important;
+          // top: 0px;
+          // height: calc(100% - 0px) !important;
         }
         .main-window__list-col {
           width: calc(100% - 25px);
