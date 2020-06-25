@@ -14,19 +14,7 @@
     >NODE_ENV = production
 
     >INN_TOKEN = INNToken
-
-    >FIREBASE_MESSAGING_SENDER_ID = 
     
-    >FIREBASE_MESSAGING_WEB_PUSH_CERTIFICATE = 
-    
-    >FIREBASE_PROJECT_ID = 
-    
-    >FIREBASE_API_KEY = 
-    
-    >FIREBASE_APP_ID = 
-    
-    >FIREBASE_MEASUREMENT_ID = 
-
 - Затем необходимо создать папку static/built, для этого выполните команду (Windows):
 
         npm run mkdir-built
