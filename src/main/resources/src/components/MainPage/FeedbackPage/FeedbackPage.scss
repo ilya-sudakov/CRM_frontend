@@ -221,15 +221,6 @@
     .main-window__list {
       .main-window__list-item {
         padding-left: 55px;
-        .feedback-page__avatar {
-          // margin-left: 10px !important;
-          // margin-bottom: 5px !important;
-          // margin-right: auto !important;
-          position: absolute;
-          // top: calc(50% - 25px);
-          top: 10px;
-          left: 20px;
-        }
         .feedback-page__info-message {
           position: relative;
           // width: 25px;
@@ -256,7 +247,7 @@
         }
 
         span {
-          font-size: 12px;
+          font-size: 14px !important;
           margin-bottom: 1px;
           &:nth-child(1) {
             .main-window__mobile-text {
@@ -280,6 +271,16 @@
               display: none;
             }
           }
+        }
+
+        .feedback-page__avatar {
+          // margin-left: 10px !important;
+          // margin-bottom: 5px !important;
+          // margin-right: auto !important;
+          position: absolute;
+          // top: calc(50% - 25px);
+          top: 10px;
+          left: 20px;
         }
       }
     }

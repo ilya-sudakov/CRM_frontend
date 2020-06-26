@@ -287,26 +287,26 @@ const GeneralPage = (props) => {
                 Учесть рабочее время
               </Link>
             )}
-            <Button
-              text="Скачать Табель"
-              imgSrc={DownloadIcon}
-              className="main-window__button"
-              isLoading={isLoading}
-              onClick={exportCSVFile}
-            />
-            {/* {props.userHasAccess(['ROLE_ADMIN']) && isLoading && <ImgLoader />} */}
-            {props.userHasAccess(['ROLE_ADMIN']) && (
-              <Link className="main-window__button" to="/graphs">
-                <img className="main-window__img" src={graphIcon} />
-                Графики
-              </Link>
-            )}
             {props.userHasAccess(['ROLE_ADMIN']) && (
               <Link className="main-window__button" to="/report-table">
                 <img className="main-window__img" src={calenderIcon} />
                 Интерактивный табель
               </Link>
             )}
+            {props.userHasAccess(['ROLE_ADMIN']) && (
+              <Link className="main-window__button" to="/graphs">
+                <img className="main-window__img" src={graphIcon} />
+                Графики
+              </Link>
+            )}
+            <Button
+              text="Скачать Табель"
+              imgSrc={DownloadIcon}
+              className="main-window__button main-window__button--inverted"
+              inverted
+              isLoading={isLoading}
+              onClick={exportCSVFile}
+            />
           </div>
           {props.userHasAccess([
             'ROLE_ADMIN',

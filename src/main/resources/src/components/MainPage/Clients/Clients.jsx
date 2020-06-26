@@ -241,7 +241,8 @@ const Clients = (props) => {
             <Button
               text="Выгрузить эл. почты"
               isLoading={isLoading}
-              className="main-window__button"
+              className="main-window__button main-window__button--inverted"
+              inverted
               onClick={getEmailsExcel}
             />
           </div>
