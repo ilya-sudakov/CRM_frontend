@@ -13,6 +13,7 @@ const GeneralTasks = (props) => {
   const [generalTasks, setGeneralTasks] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [curPage, setCurPage] = useState('В процессе')
   //Статусы задач
   const [taskStatuses, setTaskStatuses] = useState([
     {
@@ -83,11 +84,35 @@ const GeneralTasks = (props) => {
           linkTo="/dispatcher/general-tasks/new"
           visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
         />
-        <SearchBar
-          // title="Поиск по задачам"
-          placeholder="Введите описание задачи для поиска..."
-          setSearchQuery={setSearchQuery}
-        />
+        <div className="main-window__header">
+          <SearchBar
+            // title="Основные задачи"
+            placeholder="Введите описание задачи для поиска..."
+            setSearchQuery={setSearchQuery}
+          />
+          <div className="main-window__menu">
+            <div
+              className={
+                curPage === 'В процессе'
+                  ? 'main-window__item main-window__item--active'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('В процессе')}
+            >
+              В процессе
+            </div>
+            <div
+              className={
+                curPage === 'Завершено'
+                  ? 'main-window__item main-window__item--active'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Завершено')}
+            >
+              Завершено
+            </div>
+          </div>
+        </div>
         <div className="main-window__info-panel">
           <div className="main-window__status-panel">
             <div>Фильтр по статусам: </div>
@@ -126,23 +151,28 @@ const GeneralTasks = (props) => {
         </div>
         <TableView
           data={generalTasks.filter((item) => {
-            let check = false
-            let noActiveStatuses = true
-            taskStatuses.map((status) => {
+            if (
+              (curPage === 'В процессе' && item.condition !== 'Выполнено') ||
+              (curPage === 'Завершено' && item.condition === 'Выполнено')
+            ) {
+              let check = false
+              let noActiveStatuses = true
               taskStatuses.map((status) => {
-                if (status.visible) {
-                  noActiveStatuses = false
+                taskStatuses.map((status) => {
+                  if (status.visible) {
+                    noActiveStatuses = false
+                  }
+                })
+                if (
+                  noActiveStatuses === true ||
+                  (status.visible && status.name === item.condition)
+                ) {
+                  check = true
+                  return
                 }
               })
-              if (
-                noActiveStatuses === true ||
-                (status.visible && status.name === item.condition)
-              ) {
-                check = true
-                return
-              }
-            })
-            return check
+              return check
+            }
           })}
           searchQuery={searchQuery}
           userData={props.userData}
