@@ -227,10 +227,9 @@ const WorkManagement = (props) => {
                       .map((employee) => {
                         const item = employee[1]
                         return (
-                          <Link
+                          <div
                             index={item.id}
                             className="work-management__item"
-                            to="/work-management"
                           >
                             <div>
                               {item.lastName +
@@ -254,7 +253,7 @@ const WorkManagement = (props) => {
                                   )}
                             </div>
                             {/* <div>{item.workshop}</div> */}
-                          </Link>
+                          </div>
                         )
                       })}
                   </>

@@ -221,6 +221,13 @@
     .main-window__list {
       .main-window__list-item {
         padding-left: 55px;
+        &:hover {
+          .feedback-page__info-message {
+            .main-window__mobile-text {
+              color: $primary-text-color;
+            }
+          }
+        }
         .feedback-page__info-message {
           position: relative;
           // width: 25px;
@@ -236,11 +243,6 @@
           .main-window__img {
             // display: none;
           }
-        }
-        &::before {
-          // top: calc(50% - 10px);
-          // top: 0px;
-          // height: calc(100% - 0px) !important;
         }
         .main-window__list-col {
           width: calc(100% - 25px);
