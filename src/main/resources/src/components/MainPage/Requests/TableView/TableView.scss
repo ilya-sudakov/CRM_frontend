@@ -18,6 +18,7 @@
     // flex-direction: column;
     // justify-content: flex-start;
     // align-items: flex-start;
+    min-width: 1100px;
     .main-window__list {
       font-size: 95%;
       .main-window__list-item {
@@ -359,8 +360,10 @@
 @media (max-width: 768px) {
   .tableview_requests {
     .main-window {
+      min-width: 0;
       .main-window__list {
         .main-window__list-item {
+          padding: 20px 10px;
           padding-left: 10px;
           span {
             &:nth-child(1) {

@@ -145,7 +145,7 @@ const Transportation = (props) => {
                   )
                 }
               })}
-              <CheckBox
+              {/* <CheckBox
                 text="Выделить все"
                 onChange={(value) => {
                   let temp = workshops.map((item) => {
@@ -158,7 +158,7 @@ const Transportation = (props) => {
                 }}
                 defaultChecked={true}
                 uniqueId={0}
-              />
+              /> */}
             </div>
             <div className="main-window__filter-pick">
               <span className="transportation__text">Куда: </span>
@@ -186,7 +186,7 @@ const Transportation = (props) => {
                   )
                 }
               })}
-              <CheckBox
+              {/* <CheckBox
                 text="Выделить все"
                 onChange={(value) => {
                   let temp = workshops.map((item) => {
@@ -199,7 +199,7 @@ const Transportation = (props) => {
                 }}
                 defaultChecked={true}
                 uniqueId={1}
-              />
+              /> */}
             </div>
           </div>
           <Button
