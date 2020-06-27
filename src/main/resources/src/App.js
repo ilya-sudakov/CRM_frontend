@@ -10,7 +10,7 @@ import PageLoading from './components/MainPage/PageLoading/PageLoading.jsx'
 export const UserContext = React.createContext()
 import { AppIcon__128 } from '../../../../assets/app_icon__128.png'
 import { AppIcon__144 } from '../../../../assets/app_icon__144.png'
-// import { messaging } from './init-fcm.js'
+import { messaging } from './init-fcm.js'
 
 class App extends React.Component {
   state = {
