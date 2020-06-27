@@ -166,6 +166,12 @@ const TableView = (props) => {
                   <span>Актуальность</span>
                   <div className="main-window__actions">Действия</div>
                 </div>
+                {!isLoading && (
+                  <TableDataLoading
+                    minHeight="50px"
+                    className="main-window__list-item"
+                  />
+                )}
                 {sortEmployees(props.data).map(
                   (employee, employee_id) =>
                     ((item === employee.workshop &&
