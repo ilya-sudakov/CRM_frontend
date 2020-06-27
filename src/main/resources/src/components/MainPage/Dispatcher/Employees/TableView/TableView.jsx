@@ -129,7 +129,7 @@ const TableView = (props) => {
                   className="main-window__action"
                   onClick={() => {
                     let dd = getEmployeesByWorkshopListPdfText(
-                      props.data.filter(
+                      sortEmployees(props.data).filter(
                         (employee) =>
                           (item === employee.workshop &&
                             employee.relevance !== 'Уволен') ||
