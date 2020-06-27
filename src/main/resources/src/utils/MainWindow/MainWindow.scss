@@ -269,7 +269,8 @@
     color: $primary-text-color;
     border: 1px solid $button__background--inverted;
 
-    .main-window__img, .button__img {
+    .main-window__img,
+    .button__img {
       filter: brightness(1) !important;
     }
 
@@ -447,8 +448,19 @@
       outline: none;
       border-radius: 5px;
       min-width: 100px;
-      padding: 2.5px 5px;
+      // padding: 2.5px 5px;
+      padding: 5px 5px;
       width: fit-content !important;
+      border-color: #bbbbbb;
+      // color: #444444;
+
+      option {
+        color: #777777;
+      }
+
+      option:checked {
+        color: #000000 !important;
+      }
     }
   }
   .main-window__status-panel {
