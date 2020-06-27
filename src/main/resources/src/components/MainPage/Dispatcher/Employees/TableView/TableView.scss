@@ -37,11 +37,11 @@
             &:nth-child(2) {
               max-width: 125px;
             }
-            &:nth-child(4) {
-              flex: 0 1 20%;
+            &:nth-child(3) {
+              max-width: 200px;
             }
-            &:nth-child(5) {
-              max-width: 150px;
+            &:nth-child(4) {
+              flex: 0 1 25%;
             }
           }
           .main-window__action {

@@ -163,7 +163,7 @@ const TableView = (props) => {
                   {/* <span>Подразделение</span> */}
                   <span>Должность</span>
                   {/* <span>Комментарий</span> */}
-                  <span>Актуальность</span>
+                  {/* <span>Актуальность</span> */}
                   <div className="main-window__actions">Действия</div>
                 </div>
                 {isLoading && (
@@ -210,12 +210,12 @@ const TableView = (props) => {
                           {employee.position}
                         </span>
                         {/* <span>{employee.comment}</span> */}
-                        <span>
+                        {/* <span>
                           <div className="main-window__mobile-text">
                             Актуальность:
                           </div>
                           {employee.relevance}
-                        </span>
+                        </span> */}
                         <div className="main-window__actions">
                           <Link
                             to={'/dispatcher/employees/view/' + employee.id}
