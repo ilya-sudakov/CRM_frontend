@@ -166,7 +166,7 @@ const TableView = (props) => {
                   <span>Актуальность</span>
                   <div className="main-window__actions">Действия</div>
                 </div>
-                {!isLoading && (
+                {isLoading && (
                   <TableDataLoading
                     minHeight="50px"
                     className="main-window__list-item"
