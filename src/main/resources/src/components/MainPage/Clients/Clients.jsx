@@ -462,6 +462,7 @@ const Clients = (props) => {
                     )}
                   </span>
                   <div className="main-window__actions">
+                    {/* <div className="main-window__mobile-text">Действия:</div> */}
                     {props.userHasAccess(['ROLE_ADMIN']) && (
                       <div
                         className="main-window__action"

@@ -4,6 +4,7 @@ import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png'
 import viewIcon from '../../../../../../../../../assets/tableview/view.svg'
 import editIcon from '../../../../../../../../../assets/tableview/edit.svg'
 import deleteIcon from '../../../../../../../../../assets/tableview/delete.svg'
+import printSVG from '../../../../../../../../../assets/tableview/print.svg'
 import printIcon from '../../../../../../../../../assets/print.png'
 import pdfMake from 'pdfmake'
 import './TableView.scss'
@@ -119,7 +120,10 @@ const TableView = (props) => {
               className="main-window__list-item"
               onClick={() => handleClickWorkshop(index)}
             >
-              <span>{item}</span>
+              <span>
+                <div className="main-window__mobile-text">Подразделение:</div>
+                {item}
+              </span>
               <div className="main-window__actions">
                 <div
                   className="main-window__action"
@@ -138,7 +142,7 @@ const TableView = (props) => {
                   }}
                   title="Печать"
                 >
-                  <img className="main-window__img" src={printIcon} alt="" />
+                  <img className="main-window__img" src={printSVG} alt="" />
                   {'    '}
                   Печать
                 </div>

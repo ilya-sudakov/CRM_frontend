@@ -807,8 +807,9 @@
     }
     .main-window__actions {
       flex-direction: row;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
+      width: 100%;
 
       .main-window__img {
         width: 25px;

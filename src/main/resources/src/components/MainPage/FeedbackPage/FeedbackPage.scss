@@ -228,6 +228,10 @@
             }
           }
         }
+        .main-window__actions {
+          // width: 100%;
+          max-width: none;
+        }
         .feedback-page__info-message {
           position: relative;
           // width: 25px;

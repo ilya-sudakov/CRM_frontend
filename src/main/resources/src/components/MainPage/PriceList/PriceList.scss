@@ -122,18 +122,20 @@
     padding: 4px 0px;
   }
   @media (max-width: 768px) {
-    .main-window__list-options {
-      .main-window__list-item {
-        span:first-child {
-          display: none;
+    & {
+      .main-window__list-options {
+        .main-window__list-item {
+          span:first-child {
+            display: none;
+          }
         }
       }
-    }
-    .price-list__category-pick {
-      flex-wrap: wrap;
-    }
-    .main-window__button {
-      margin-bottom: 5px;
+      .price-list__category-pick {
+        flex-wrap: wrap;
+      }
+      .main-window__button {
+        margin-bottom: 5px;
+      }
     }
   }
 }
