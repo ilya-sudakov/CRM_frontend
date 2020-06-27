@@ -135,10 +135,17 @@ const TableView = (props) => {
             <option value="codeWord desc">По клиенту (Я-А)</option>
           </select>
         </div>
-        {/* <div className="main-window__list">
+        <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Дата</span>
-            <span>Продукция</span>
+            {/* <span>Продукция</span> */}
+            <div className="main-window__list-col">
+              <div className="main-window__list-col-row">
+                <span>Продукция</span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
             <span>Кодовое слово</span>
             <span>Ответственный</span>
             <span>Статус</span>
@@ -184,10 +191,37 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Дата:</div>
                   {formatDateString(request.date)}
                 </span>
-                <span>
-                  <div className="main-window__mobile-text">Продукция:</div>
-                  {request?.requestProducts[0].name}
-                </span>
+                <div className="main-window__list-col">
+                  <div className="main-window__list-col-row main-window__list-col-row--header">
+                    <span>Название</span>
+                    <span>Упаковка</span>
+                    <span>Кол-во</span>
+                  </div>
+                  {request?.requestProducts.map((product) => {
+                    return (
+                      <div className="main-window__list-col-row">
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Название:
+                          </div>
+                          {product.name}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Упаковка:
+                          </div>
+                          {product.packaging}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Кол-во:
+                          </div>
+                          {addSpaceDelimiter(product.quantity)}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
                 <span>
                   <div className="main-window__mobile-text">Кодовое слово:</div>
                   {request.codeWord}
@@ -212,9 +246,23 @@ const TableView = (props) => {
                   >
                     {requestStatuses.map((status) => {
                       if (props.userHasAccess(status.access)) {
-                        return <option>{status.name}</option>
+                        return (
+                          <option
+                            value={
+                              status.oldName === request.status
+                                ? status.oldName
+                                : status.name
+                            }
+                          >
+                            {status.name}
+                          </option>
+                        )
                       } else {
-                        return <option style={{ display: `none` }}>{status.name}</option>
+                        return (
+                          <option style={{ display: `none` }}>
+                            {status.name}
+                          </option>
+                        )
                       }
                     })}
                   </select>
@@ -271,60 +319,14 @@ const TableView = (props) => {
                   )}
                 </div>
               </div>
-              <div
-                className={
-                  request.open
-                    ? 'main-window__list-options'
-                    : 'main-window__list-options main-window__list-options--hidden'
-                }
-              >
-                <div className="main-window__title">Список продукции:</div>
-                <div className="main-window__list">
-                  <div className="main-window__list-item main-window__list-item--header">
-                    <span>Название</span>
-                    <span>Фасовка</span>
-                    <span>Количество</span>
-                  </div>
-                  {props.isLoading && (
-                    <TableDataLoading
-                      minHeight="20px"
-                      className="main-window__list-item"
-                    />
-                  )}
-                  {request.requestProducts.map((product) => {
-                    return (
-                      <div className="main-window__list-item">
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Название:
-                          </div>
-                          {product.name}
-                        </span>
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Фасовка:
-                          </div>
-                          {product.packaging}
-                        </span>
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Количество:
-                          </div>
-                          {product.quantity}
-                        </span>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
             </React.Fragment>
           ))}
-        </div> */}
+        </div>
       </div>
 
       {/* //!!! OLD DESIGN*/}
 
-      <div className="tableview_requests__row tableview_requests__row--header">
+      {/* <div className="tableview_requests__row tableview_requests__row--header">
         <div className="tableview_requests__col">Дата</div>
         <div className="tableview_requests__col">Продукция</div>
         <div className="tableview_requests__col">Фасовка</div>
@@ -461,7 +463,7 @@ const TableView = (props) => {
             )}
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   )
 }

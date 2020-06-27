@@ -1,14 +1,14 @@
 @import "../../../variables.scss";
 
 .requests {
-  --shipped: #c7db6c;
-  --priority: #e65252;
-  --completed: #52d66c;
-  --ready: #4aff13;
-  --in-production: #ca077f;
-  --waiting: #00b7ff;
+  --shipped: #b7c48c;
+  --priority: #ce8e8e;
+  --completed: #7fb98b;
+  --ready: #7fca69;
+  --in-production: #c99cb8;
+  --waiting: #80c6e2;
   --problem: #d6574e;
-  --materials: #d49a27;
+  --materials: #d4ae63;
   .main-window__status-panel {
     margin-bottom: 0px;
     padding-left: 35px;

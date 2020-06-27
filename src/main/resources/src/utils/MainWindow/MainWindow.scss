@@ -814,6 +814,7 @@
       justify-content: flex-end;
       align-items: center;
       width: 100%;
+      max-width: none !important;
 
       .main-window__img {
         width: 25px;
