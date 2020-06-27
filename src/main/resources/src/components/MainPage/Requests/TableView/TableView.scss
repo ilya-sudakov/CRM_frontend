@@ -57,7 +57,8 @@
             }
             .main-window__list-col-row {
               cursor: pointer;
-              border-color: #dddddd !important;
+              border-color: #eeeeeeaa !important;
+              // border-color: lighten($button__background--inverted, 15%) !important;
               span {
                 // color: #eaeaec !important;
               }
@@ -360,7 +361,7 @@
     .main-window {
       .main-window__list {
         .main-window__list-item {
-          padding-left: 30px;
+          padding-left: 10px;
           span {
             &:nth-child(1) {
               max-width: none;
@@ -398,10 +399,18 @@
               // border: none;
               // border-left: 1px solid #777777;
               width: calc(100% - 30px);
-              padding: 5px 15px;
+              padding: 5px 10px;
+              padding-left: 20px;
+              &--header {
+                display: none;
+              }
               &::before {
-                top: 50%;
+                height: 40px !important;
+                // top: 50%;
+                width: 7.5px !important;
+                top: calc(50% - 20px) !important;
                 left: -20px;
+                background-color: lighten($button__background--inverted, 10%) !important;
               }
               span {
                 &:nth-child(1) {
