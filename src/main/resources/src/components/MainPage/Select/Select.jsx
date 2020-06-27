@@ -304,14 +304,14 @@ const Select = (props) => {
                 />
               </React.Fragment>
             }
-            headerButton={
-              userContext.userHasAccess(['ROLE_ADMIN'])
-                ? {
-                    name: 'Создать продукцию',
-                    path: '/products/new',
-                  }
-                : null
-            }
+            // headerButton={
+            //   userContext.userHasAccess(['ROLE_ADMIN'])
+            //     ? {
+            //         name: 'Создать продукцию',
+            //         path: '/products/new',
+            //       }
+            //     : null
+            // }
             showWindow={showWindow}
             setShowWindow={setShowWindow}
           />

@@ -55,20 +55,24 @@
   }
 
   @media (max-width: 768px) {
-    .main-window__list {
-      width: calc(100% - 10px);
+    & {
+      font-size: 100%;
+      .main-window__list {
+        width: calc(100% - 10px);
 
-      .main-window__list-options {
-        .main-window__list-item {
-          span {
-            &:nth-child(1) {
-              // flex: 0 1 40%;
-            }
-            &:nth-child(2) {
-              max-width: none !important;
-            }
-            &:nth-child(5) {
-              max-width: none !important;
+        .main-window__list-options {
+          font-size: 90%;
+          .main-window__list-item {
+            span {
+              &:nth-child(1) {
+                // flex: 0 1 40%;
+              }
+              &:nth-child(2) {
+                max-width: none !important;
+              }
+              &:nth-child(5) {
+                max-width: none !important;
+              }
             }
           }
         }

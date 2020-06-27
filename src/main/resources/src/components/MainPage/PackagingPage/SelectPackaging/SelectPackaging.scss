@@ -144,6 +144,9 @@
             > .main-window {
                 width: calc(100%);
             }
+            .main-window__actions {
+                display: none;
+            }
         }
     }
 }

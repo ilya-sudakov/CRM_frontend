@@ -56,13 +56,15 @@
   }
 
   @media (max-width: 768px) {
-    .main-window__control-panel {
-      justify-content: flex-start !important;
-      width: 100%;
-      .main-window__button {
-        font-size: 80%;
-        padding: 5px 10px !important;
-        line-height: 1.5rem !important;
+    & {
+      .main-window__control-panel {
+        justify-content: flex-start !important;
+        width: 100%;
+        .main-window__button {
+          font-size: 80%;
+          padding: 5px 10px !important;
+          line-height: 1.5rem !important;
+        }
       }
     }
   }
