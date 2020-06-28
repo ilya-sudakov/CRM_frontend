@@ -163,7 +163,11 @@ const TableView = (props) => {
                 className={
                   'main-window__list-item main-window__list-item--' +
                   requestStatuses.find((item) => item.name === request.status)
-                    ?.className
+                    ?.className +
+                  ' ' +
+                  (request?.requestProducts?.length > 2
+                    ? 'main-window__list-item--multiple-items'
+                    : '')
                 }
                 onClick={(event) => {
                   if (
