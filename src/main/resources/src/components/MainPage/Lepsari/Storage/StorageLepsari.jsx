@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './StorageLepsari.scss'
 import '../../../../utils/MainWindow/MainWindow.scss'
-import TableView from './TableView/TableView.jsx'
+import TableViewNew from '../../Storage/TableView/TableView.jsx'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
 import {
   deleteStorage,
@@ -39,30 +39,28 @@ const StorageLepsari = (props) => {
   }
 
   return (
-    <div className="storage">
-      <div className="main-window">
-        {/* <div className="main-window__title">Склад</div> */}
-        <SearchBar
-          // title="Поиск по складу"
-          placeholder="Введите артикул детали для поиска..."
-          setSearchQuery={setSearchQuery}
-        />
-        <FloatingPlus
-          linkTo="/lepsari/workshop-storage/new"
-          visibility={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
-        />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {storage.length} записей
-          </div>
+    <div className="storage-lepsari">
+      {/* <div className="main-window__title">Склад</div> */}
+      <SearchBar
+        // title="Поиск по складу"
+        placeholder="Введите артикул детали для поиска..."
+        setSearchQuery={setSearchQuery}
+      />
+      <FloatingPlus
+        linkTo="/lepsari/workshop-storage/new"
+        visibility={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+      />
+      <div className="main-window__info-panel">
+        <div className="main-window__amount_table">
+          Всего: {storage.length} записей
         </div>
-        <TableView
-          data={storage}
-          searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
-        />
       </div>
+      <TableViewNew
+        data={storage}
+        searchQuery={searchQuery}
+        userHasAccess={props.userHasAccess}
+        deleteItem={deleteItem}
+      />
     </div>
   )
 }

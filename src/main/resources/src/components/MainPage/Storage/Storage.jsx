@@ -48,7 +48,7 @@ const Storage = (props) => {
         />
         <FloatingPlus
           linkTo="/lemz/workshop-storage/new"
-          visibility={['ROLE_ADMIN', 'ROLE_LEMZ']}
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP']}
         />
         <div className="main-window__info-panel">
           <div className="main-window__amount_table">

@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png'
+import editIcon from '../../../../../../../../assets/tableview/edit.svg'
+import deleteIcon from '../../../../../../../../assets/tableview/delete.svg'
 import './TableView.scss'
 import { addSpaceDelimiter } from '../../../../utils/functions.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
-    curSort: 'id',
-    date: 'desc',
+    curSort: 'number',
+    date: 'asc',
   })
 
   const changeSortOrder = (event) => {
@@ -55,8 +57,56 @@ const TableView = (props) => {
   }
 
   return (
-    <div className="tableview_storage">
-      <div className="tableview_storage__row tableview_storage__row--header">
+    <div className="tableview-storage">
+      <div className="main-window__list">
+        <div className="main-window__list-item main-window__list-item--header">
+          <span>Номер</span>
+          <span>Название</span>
+          <span>Кол-во</span>
+          <span>Комментарий</span>
+          <div className="main-window__actions">Действия</div>
+        </div>
+        {sortParts(props.data).map((storage, storage_id) => {
+          return (
+            <div className="main-window__list-item">
+              <span>
+                <div className="main-window__mobile-text">Номер:</div>
+                {storage.number}
+              </span>
+              <span>
+                <div className="main-window__mobile-text">Название:</div>
+                {storage.name}
+              </span>
+              <span>
+                <div className="main-window__mobile-text">Кол-во:</div>
+                {addSpaceDelimiter(storage.quantity)}
+              </span>
+              <span>
+                <div className="main-window__mobile-text">Комментарий:</div>
+                {storage.comment}
+              </span>
+              <div className="main-window__actions">
+                <Link
+                  to={'/lemz/workshop-storage/edit/' + storage.id}
+                  className="main-window__action"
+                >
+                  <img className="main-window__img" src={editIcon} alt="" />
+                </Link>
+                {props.userHasAccess(['ROLE_ADMIN']) && (
+                  <div
+                    data-id={storage.id}
+                    className="main-window__action"
+                    onClick={props.deleteItem}
+                  >
+                    <img className="main-window__img" src={deleteIcon} alt="" />
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      {/* <div className="tableview_storage__row tableview_storage__row--header">
         <div className="tableview_storage__col">
           <span>ID</span>
           <img
@@ -75,12 +125,7 @@ const TableView = (props) => {
       {sortParts(props.data).map((storage, storage_id) => (
         <div
           key={storage_id}
-          className={
-            'tableview_storage__row ' +
-            (storage.id % 2 === 0
-              ? 'tableview_storage__row--even'
-              : 'tableview_storage__row--odd')
-          }
+          className={'tableview_storage__row tableview_storage__row--even'}
         >
           <div className="tableview_storage__col">{storage.id}</div>
           <div className="tableview_storage__col">{storage.number}</div>
@@ -90,7 +135,6 @@ const TableView = (props) => {
           </div>
           <div className="tableview_storage__col">{storage.comment}</div>
           <div className="tableview_storage__actions">
-            {/* <Link to={"/storage/view/" + storage.id} className="tableview_storage__action">Просмотр</Link> */}
             <Link
               to={'/lemz/workshop-storage/edit/' + storage.id}
               className="tableview_storage__action"
@@ -108,7 +152,7 @@ const TableView = (props) => {
             )}
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   )
 }
