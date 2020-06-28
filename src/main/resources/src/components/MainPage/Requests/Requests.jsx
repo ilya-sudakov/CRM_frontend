@@ -235,7 +235,7 @@ const Requests = (props) => {
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
-        <div className="main-window__info-panel">
+        {/* <div className="main-window__info-panel">
           <div className="requests__clients-sort">
             {clients
               .sort((a, b) => {
@@ -277,10 +277,7 @@ const Requests = (props) => {
                 )
               })}
           </div>
-          <div className="main-window__amount_table">
-            Всего: {requests.length} записей
-          </div>
-        </div>
+        </div> */}
         <div className="main-window__status-panel">
           <div>Фильтр по статусам: </div>
           {requestStatuses.map((status, index) => {
@@ -311,6 +308,9 @@ const Requests = (props) => {
               </div>
             )
           })}
+          <div className="main-window__amount_table">
+            Всего: {requests.length} записей
+          </div>
         </div>
         <TableView
           data={requests

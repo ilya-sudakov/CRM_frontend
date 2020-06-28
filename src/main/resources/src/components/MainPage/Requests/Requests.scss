@@ -11,7 +11,7 @@
   --materials: #d4ae63;
   .main-window__status-panel {
     margin-bottom: 0px;
-    padding-left: 35px;
+    padding-left: 25px;
 
     .main-window__list-item--shipped::before {
       background-color: var(--shipped);
@@ -36,6 +36,13 @@
     }
     .main-window__list-item--materials::before {
       background-color: var(--materials);
+    }
+
+    .main-window__amount_table {
+      margin: 0;
+      margin-left: auto;
+      font-size: 100%;
+      margin-top: 5px;
     }
   }
   .main-window__header {
@@ -102,16 +109,16 @@
   .requests__clients-sort {
     display: flex;
     flex-direction: row;
-    align-content: center;
     justify-content: flex-start;
-    flex-wrap: wrap;
-    // width: 100%;
     margin-right: auto;
     font-size: 80%;
+    align-items: center;
+    flex-wrap: wrap;
 
     .main-window__button {
       padding: 5px 10px;
       margin-top: 5px;
+      white-space: nowrap;
     }
     .main-window__button--inverted {
       color: #555555;
