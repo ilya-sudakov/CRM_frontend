@@ -186,14 +186,6 @@ const WorkshopOrders = (props) => {
                       Дата создания:{' '}
                     </div>
                     {formatDateString(order.date)}
-                    {/* {
-                                        (new Date(order.deliverBy) < new Date() && order.status !== 'completed')
-                                            ? <div className="main-window__reminder">
-                                                <div>!</div>
-                                                <div>{formatDateString(order.deliverBy)}</div>
-                                            </div>
-                                            : formatDateString(order.deliverBy)
-                                    } */}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">Название: </div>
