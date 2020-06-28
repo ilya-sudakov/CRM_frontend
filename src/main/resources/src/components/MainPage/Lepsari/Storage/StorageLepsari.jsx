@@ -60,6 +60,7 @@ const StorageLepsari = (props) => {
         searchQuery={searchQuery}
         userHasAccess={props.userHasAccess}
         deleteItem={deleteItem}
+        workshopName="lepsari"
       />
     </div>
   )

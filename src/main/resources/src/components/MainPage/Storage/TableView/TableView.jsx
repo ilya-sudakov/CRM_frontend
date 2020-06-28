@@ -45,17 +45,6 @@ const TableView = (props) => {
     })
   }
 
-  const formatDateString = (dateString) => {
-    const newDate = dateString.split('T')[0]
-    return (
-      newDate.split('-')[2] +
-      '.' +
-      newDate.split('-')[1] +
-      '.' +
-      newDate.split('-')[0]
-    )
-  }
-
   return (
     <div className="tableview-storage">
       <div className="main-window__list">
@@ -87,7 +76,12 @@ const TableView = (props) => {
               </span>
               <div className="main-window__actions">
                 <Link
-                  to={'/lemz/workshop-storage/edit/' + storage.id}
+                  to={
+                    '/' +
+                    props.workshopName +
+                    '/workshop-storage/edit/' +
+                    storage.id
+                  }
                   className="main-window__action"
                 >
                   <img className="main-window__img" src={editIcon} alt="" />

@@ -60,6 +60,7 @@ const Storage = (props) => {
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
+          workshopName="lemz"
         />
       </div>
     </div>
