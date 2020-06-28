@@ -4,15 +4,13 @@
 .tableview_requests {
   width: 100%;
   --shipped: #b8c493;
-  --priority: #ce8e8e;
-  --completed: #7fb98b;
-  // --ready: #8ac279;
-  --ready: #85be92;
+  --priority: #e08989;
+  --completed: #68d87e;
+  --ready: #77c78a;
   --in-production: #c99cb8;
-  --waiting: #9ec2b6;
+  --waiting: #84c7b1;
   --problem: #d6574e;
   --materials: #d4ae63;
-  // min-width: 1100px;
   .main-window {
     display: flex;
     // flex-direction: column;
@@ -34,7 +32,8 @@
         }
         &:not(.main-window__list-item--header) {
           // cursor: pointer;
-          border-color: #888888;
+          // border-color: #888888;
+          border-color: #ffffffaa;
           color: #111111 !important;
           span:nth-child(5) {
             &::before {
@@ -59,6 +58,10 @@
             .main-window__list-col-row {
               cursor: pointer;
               border-color: #eeeeeeaa !important;
+
+              &::before {
+                border-color: #eeeeee77 !important;
+              }
               // border-color: lighten($button__background--inverted, 15%) !important;
               span {
                 // color: #eaeaec !important;
