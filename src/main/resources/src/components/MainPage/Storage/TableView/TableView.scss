@@ -8,6 +8,7 @@
 
   .main-window {
     &__list {
+      width: 100%;
       &-item {
         span {
           &:nth-child(1) {
@@ -30,13 +31,15 @@
   @media (max-width: 768px) {
     & {
       width: 100%;
-      .main-window__list-item {
-        span {
-          &:nth-child(1) {
-            max-width: none;
-          }
-          &:nth-child(3) {
-            max-width: none;
+      .main-window__list {
+        .main-window__list-item {
+          span {
+            &:nth-child(1) {
+              max-width: none;
+            }
+            &:nth-child(3) {
+              max-width: none;
+            }
           }
         }
       }
