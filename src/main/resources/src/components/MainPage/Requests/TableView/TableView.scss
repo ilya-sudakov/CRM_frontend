@@ -77,6 +77,10 @@
             }
           }
 
+          .main-window__list-col-row {
+            padding: 10px 0px;
+          }
+
           &:hover {
             span {
               color: #111111 !important;
@@ -271,7 +275,7 @@
           .main-window__list-col-row {
             width: 100%;
             flex: 0 1 100%;
-            padding: 10px 0px;
+            // padding: 10px 0px;
             max-width: none;
             display: flex;
             transition: 100ms ease-in-out;
