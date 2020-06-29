@@ -33,7 +33,14 @@ const Header = (props) => {
             onClick={() => props.setSideMenu(!props.sideMenu)}
           ></div> */}
           <div className="header__company">
-            <div className="header__sidemenu" onClick={sideMenuClickDesktop}>
+            <div
+              className={
+                !props.sideMenu
+                  ? 'header__sidemenu header__sidemenu--hidden'
+                  : 'header__sidemenu'
+              }
+              onClick={sideMenuClickDesktop}
+            >
               <div className="linesWrapper">
                 <div className="line"></div>
                 <div className="line"></div>
