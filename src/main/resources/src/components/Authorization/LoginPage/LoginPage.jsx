@@ -76,6 +76,7 @@ const LoginPage = (props) => {
                 src={newCompanyIcon}
                 alt=""
               />
+              {/* <div className="authorization__title-text">Вход в аккаунт</div> */}
             </div>
             <ErrorMessage
               message="Ошибка при авторизации"
@@ -160,6 +161,7 @@ const LoginPage = (props) => {
                 src={newCompanyIcon}
                 alt=""
               />
+              {/* <div className="authorization__title-text">Выход из аккаунта</div> */}
             </div>
             <button className="authorization__submit" onClick={handleSignOut}>
               <span>Выйти</span>

@@ -128,8 +128,12 @@
 @media (max-width: 768px) {
   & {
     .main-window__list {
-      span:first-child {
-        padding: 5px 10px !important;
+      .main-window__list-item:not(.main-window__list-item--header) {
+        span {
+          &:nth-child(1) {
+            padding: 5px 10px;
+          }
+        }
       }
       .main-window__list-options {
         .main-window__list {

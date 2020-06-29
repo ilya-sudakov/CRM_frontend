@@ -26,13 +26,25 @@
   &__title {
     // margin-top: 10vh;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
     font-size: 150%;
     margin: 15px 0;
+    width: calc(100% - 0px);
+    // padding: 0 10px;
     color: $secondary-text-color;
+
+    // margin-bottom: 5px;
+
+    .authorization__title-text {
+      color: #333333;
+      font-size: 75%;
+      margin-right: auto;
+      // margin: 0 5px;
+      margin-top: 15px;
+    }
   }
   .authorization__img {
     width: 50px;
@@ -151,6 +163,7 @@
       width: 80%;
       max-width: 250px;
       text-align: center;
+      color: #333333;
 
       a {
         margin: 2px;
