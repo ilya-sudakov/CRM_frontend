@@ -1,7 +1,6 @@
 @import "../../variables.scss";
 
 .sidemenu {
-  position: relative;
   font-size: 82%;
   width: 230px;
   max-height: calc(100vh - 70px + 5px);
@@ -17,6 +16,11 @@
   // overflow-y: auto;
   // overflow-x: hidden;
   z-index: 999;
+  position: relative;
+
+  //new method
+  position: sticky;
+  top: 60px;
 
   .sidemenu__add-buttons {
     display: flex;

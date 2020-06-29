@@ -127,6 +127,9 @@
             margin-bottom: 5px;
             position: relative;
             // transition: 100ms ease-in-out;
+            span {
+              color: #000000;
+            }
             &::before {
               content: "";
               display: inline-block;
@@ -288,7 +291,6 @@
 
             span {
               max-width: none;
-              color: #000000;
               &:nth-child(1) {
                 flex: 0 1 100%;
                 margin-top: 0;

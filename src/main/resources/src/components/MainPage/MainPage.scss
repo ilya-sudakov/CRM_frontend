@@ -29,7 +29,9 @@
       overflow-x: auto;
       // background-color: $secondary-background-color;
       background-color: #f6f5f8;
-      max-height: calc(100vh - 60px);
+
+      //old method
+      // max-height: calc(100vh - 60px);
     }
   }
 

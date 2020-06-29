@@ -3,6 +3,7 @@
 .header {
   height: 60px;
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15), 0 0px 1px rgba(0, 0, 0, 0.15);
+  background-color: $secondary-text-color;
   // border-bottom: 1px solid #000000;
   padding: 0 25px;
   display: flex;
@@ -11,6 +12,7 @@
   position: sticky;
   position: -webkit-sticky;
   z-index: 999;
+  top: 0px;
   //dark-theme
   // background-color: lighten($side_menu__background, 0%);
 
@@ -406,6 +408,7 @@
   @media (max-width: 768px) {
     & {
       padding: 0 10px;
+      top: 0px;
 
       .header__name {
         font-size: 80%;
