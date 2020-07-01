@@ -49,7 +49,8 @@
 
     .window_error__title {
       text-align: center;
-      padding: 10px 0px;
+      padding: 0px 0px;
+      margin-bottom: 5px;
       font-size: 125%;
       display: flex;
       justify-content: center;
@@ -120,6 +121,14 @@
 
     .searchbar {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      .window_error__content {
+        width: 250px;
+      }
     }
   }
 }

@@ -455,8 +455,8 @@
           .linesWrapper {
             position: relative;
             width: 30px;
-            height: 30px;
-            margin-top: 10px;
+            height: 20px;
+            // margin-top: 10px;
             .line {
               position: absolute;
               transition: all 200ms ease-in-out;
@@ -482,6 +482,7 @@
           &--hidden {
             .linesWrapper {
               .line {
+                background-color: #555555;
                 &:nth-child(1) {
                   transform: rotate(45deg);
                   top: -1px;

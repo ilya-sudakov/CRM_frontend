@@ -131,6 +131,19 @@ const WorkManagement = (props) => {
     }
   }, [])
 
+  // if (document.querySelector('.work-management__list') !== null) {
+  //   document.querySelector('.work-management__list').onscroll = function () {
+  //     this.classList[this.scrollTop < 20 ? 'add' : 'remove'](
+  //       'work-management__list--shadow-top',
+  //     )
+  //     this.classList[
+  //       this.scrollHeight - this.clientHeight - this.scrollTop < 20
+  //         ? 'add'
+  //         : 'remove'
+  //     ]('work-management__list--shadow-bottom')
+  //   }
+  // }
+
   return (
     <div className="work-management">
       <div className="work-management__title">
