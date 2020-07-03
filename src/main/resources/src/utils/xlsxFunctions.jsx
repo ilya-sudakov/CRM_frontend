@@ -303,6 +303,23 @@ export async function exportPriceListToXLSX(
 
           //adding products
           workSheet.addRow([''])
+          const fakeTableHeaderRow = workSheet.addRow([
+            '',
+            '',
+            '',
+            '',
+            'Стоимость 1 шт., ₽',
+          ])
+          fakeTableHeaderRow.font = {
+            italic: true,
+          }
+          workSheet.mergeCells(
+            workSheet.rowCount,
+            5,
+            workSheet.rowCount,
+            7 + optionalCols.length,
+          )
+
           const tableHeaderRow = workSheet.addRow([
             'Артикул',
             'Название',
@@ -353,6 +370,28 @@ export async function exportPriceListToXLSX(
               3,
             )
           })
+
+          //adding infoText
+          workSheet.addRow([''])
+          const rowInfoText = workSheet.addRow([item.infoText])
+          rowInfoText.font = {
+            size: 11,
+            italic: true,
+            color: {
+              argb: 'FF000000',
+            },
+          }
+          workSheet.getCell(workSheet.rowCount, 1).border = {
+            left: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+            right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+          }
+          rowInfoText.alignment = {
+            vertical: 'middle',
+            horizontal: 'left',
+            wrapText: true,
+          }
+          workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 3)
+
           workSheet.addRow([''])
         })
     }),
