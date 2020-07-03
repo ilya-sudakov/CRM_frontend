@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png'
 import viewSVG from '../../../../../../../../assets/tableview/view.svg'
 import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import deleteSVG from '../../../../../../../assets/select/delete.svg'
+import Select from 'react-select'
 import './SelectUser.scss'
 import { getUsers } from '../../../utils/RequestsAPI/Users.jsx'
+import { customSelectStyles } from '../../../utils/dataObjects'
 
 const SelectUser = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -92,6 +94,17 @@ const SelectUser = (props) => {
           onClick={() => setShowOptions(!showOptions)}
         ></div>
       )}
+      {/* <Select
+        // defaultValue={workTypes[0]}
+        styles={customSelectStyles}
+        onChange={(value) => {
+          setSelectedUser(value)
+          props.onChange(value, id)
+        }}
+        options={[
+          ...search().map((item) => ({ label: item.username, value: item.id })),
+        ]}
+      /> */}
       <input
         type="text"
         className="select_user__input"

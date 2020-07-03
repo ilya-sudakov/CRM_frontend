@@ -12,7 +12,7 @@
   margin-right: 25px;
   background-color: $primary-background-color;
 
-  .work-management__title {
+  &__title {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -35,12 +35,12 @@
       font-size: 70%;
     }
   }
-  .work-management__title .work-management__date {
+  &__title .work-management__date {
     font-size: 65%;
     color: #666666;
     width: 100%;
   }
-  .work-management__button {
+  &__button {
     border: 0;
     cursor: pointer;
     padding: 5px 10px;
@@ -70,7 +70,7 @@
       }
     }
   }
-  .work-management__button--inverted {
+  &__button--inverted {
     background-color: $secondary-text-color;
     color: $primary-text-color;
     border: 1px solid $button__background--inverted;

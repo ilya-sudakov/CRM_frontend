@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
+// import XLSX2 from 'xlsx'
 import XLSX2 from 'xlsx'
+import Excel from 'exceljs'
 import FileSaver from 'file-saver'
 import { AdminWorkspace } from '../lazyImports.jsx'
 import { Link } from 'react-router-dom'
@@ -12,6 +14,7 @@ import {
   getRecordedWorkByMonth,
   getWorkReportByEmployee,
 } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import { selectCellRange } from '../../../utils/xlsxFunctions.jsx'
 import { getEmployeesByWorkshop } from '../../../utils/RequestsAPI/Employees.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import ManagerWorkspace from './ManagerWorkspace/ManagerWorkspace.jsx'
@@ -28,8 +31,7 @@ const GeneralPage = (props) => {
   ])
   const [isLoading, setIsLoading] = useState(false)
 
-  const exportCSVFile = () => {
-    // event.preventDefault();
+  async function testExcelJSLibrary() {
     setIsLoading(true)
     const dates = [[''], ['']]
     for (
@@ -45,7 +47,6 @@ const GeneralPage = (props) => {
     )
       if (i < 16) dates[0].push(i)
       else dates[1].push(i)
-    let dataWS
     const months = [
       'Январь',
       'Февраль',
@@ -61,10 +62,153 @@ const GeneralPage = (props) => {
       'Декабрь',
     ]
     // console.log(XLSX.version)
-    dataWS = XLSX2.utils.aoa_to_sheet([
-      ['Табель - ' + months[new Date().getMonth()]],
+    let workBook = new Excel.Workbook()
+
+    const workSheet = workBook.addWorksheet(
+      'Табель - ' + months[new Date().getMonth()],
+    )
+
+    workSheet.columns = [
+      {
+        key: 'name',
+        width: 45,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 5,
+        style: {
+          font: { size: 12 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      {
+        width: 10,
+        style: {
+          font: { bold: true, size: 14 },
+          alignment: { vertical: 'middle', horizontal: 'center' },
+        },
+      },
+      // { header: 'Hours', key: 'name', width: 32 },
+      // { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 },
+    ]
+
+    const titleRow = workSheet.addRow([
+      'Табель - ' + months[new Date().getMonth()],
     ])
-    dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[0]], { origin: 'A3' })
+    workSheet.mergeCells(1, 1, 1, 18)
+    titleRow.font = { bold: true, size: 18 }
+    titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+
+    workSheet.addRow([''])
+    workSheet.addRow([...dates[0], '', 'Сумма'])
     let globalIndex = 4
     let employeesList = []
     let employeesWorksList = []
@@ -85,6 +229,7 @@ const GeneralPage = (props) => {
     } else if (props.userHasAccess(['ROLE_MANAGER'])) {
       filteredWorkshops = ['Офис']
     }
+
     Promise.all(
       filteredWorkshops.map((workshop) => {
         // console.log(workshop);
@@ -112,146 +257,164 @@ const GeneralPage = (props) => {
       })
       .then(() => {
         return Promise.all(
-          employeesWorksList
-            .sort((a, b) => {
-              if (a.employee.lastName < b.employee.lastName) {
-                return -1
+          filteredWorkshops.map((workshop) => {
+            if (
+              employeesWorksList.filter(
+                (employee) => employee.employee.workshop === workshop,
+              ).length > 0
+            ) {
+              const titleRow = workSheet.addRow([workshop])
+              workSheet.getCell(workSheet.rowCount, 1).border = {
+                top: { style: 'thin', color: { argb: '00000000' } },
+                left: { style: 'thin', color: { argb: '00000000' } },
+                bottom: { style: 'thin', color: { argb: '00000000' } },
+                right: { style: 'thin', color: { argb: '00000000' } },
               }
-              if (a.employee.lastName > b.employee.lastName) {
-                return 1
-              }
-              return 0
-            })
-            .map((item, index) => {
-              let employeeInfo = [
-                [
-                  item.employee.lastName +
-                    ' ' +
-                    item.employee.name +
-                    ' ' +
-                    item.employee.middleName,
-                ],
-              ]
-              let sum = 0
-              dates[0].map((date, dateIndex) => {
-                let check = null
-                item.days.map((workDay) => {
-                  if (workDay.day === date) {
-                    check = workDay.hours
-                    sum += check
+              workSheet.mergeCells(
+                workSheet.rowCount,
+                1,
+                workSheet.rowCount,
+                18,
+              )
+              titleRow.font = { size: 14 }
+              titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+            }
+            return employeesWorksList
+              .filter((employee) => employee.employee.workshop === workshop)
+              .sort((a, b) => {
+                if (a.employee.lastName < b.employee.lastName) {
+                  return -1
+                }
+                if (a.employee.lastName > b.employee.lastName) {
+                  return 1
+                }
+                return 0
+              })
+              .map((item, index) => {
+                let employeeInfo = [
+                  [
+                    item.employee.lastName +
+                      ' ' +
+                      item.employee.name +
+                      ' ' +
+                      item.employee.middleName,
+                  ],
+                ]
+                let sum = 0
+                dates[0].map((date, dateIndex) => {
+                  let check = null
+                  item.days.map((workDay) => {
+                    if (workDay.day === date) {
+                      check = workDay.hours
+                      sum += check
+                    }
+                  })
+                  if (date === '') {
+                    return
+                  }
+                  if (check === null) {
+                    return employeeInfo[0].push('')
+                  } else {
+                    return employeeInfo[0].push(check)
                   }
                 })
-                if (date === '') {
-                  return
-                }
-                if (check === null) {
-                  return employeeInfo[0].push('')
-                } else {
-                  return employeeInfo[0].push(check)
-                }
+                return workSheet.addRow([...employeeInfo[0], '', sum])
+
+                // const newRow = selectCellRange(
+                //   workSheet,
+                //   'A:' + workSheet.rowCount,
+                //   'R:' + workSheet.rowCount,
+                // )
+                // return newRow.map((cell) => {
+                //   cell.fill = {
+                //     bgColor: { argb: 'FF0000FF' },
+                //   }
+                // })
               })
-              return (dataWS = XLSX2.utils.sheet_add_aoa(
-                dataWS,
-                [[...employeeInfo[0], '', sum]],
-                {
-                  origin: 'A' + globalIndex++,
-                },
-              ))
-            }),
+          }),
         )
       })
       .then(() => {
-        dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[1]], {
-          origin: 'A' + (globalIndex++ + 1),
-        })
+        workSheet.addRow('')
+        workSheet.addRow([...dates[1], 'Сумма'])
         globalIndex++
         return Promise.all(
-          employeesWorksList
-            .sort((a, b) => {
-              if (a.employee.lastName < b.employee.lastName) {
-                return -1
+          filteredWorkshops.map((workshop) => {
+            if (
+              employeesWorksList.filter(
+                (employee) => employee.employee.workshop === workshop,
+              ).length > 0
+            ) {
+              const titleRow = workSheet.addRow([workshop])
+              workSheet.getCell(workSheet.rowCount, 1).border = {
+                top: { style: 'thin', color: { argb: '00000000' } },
+                left: { style: 'thin', color: { argb: '00000000' } },
+                bottom: { style: 'thin', color: { argb: '00000000' } },
+                right: { style: 'thin', color: { argb: '00000000' } },
               }
-              if (a.employee.lastName > b.employee.lastName) {
-                return 1
-              }
-              return 0
-            })
-            .map((res, index) => {
-              // console.log(res);
-              let employeeInfo = [
-                [
-                  res.employee.lastName +
-                    ' ' +
-                    res.employee.name +
-                    ' ' +
-                    res.employee.middleName,
-                ],
-              ]
-              let sum = 0
-              dates[1].map((date) => {
-                let check = null
-                res.days.map((workDay) => {
-                  if (workDay.day === date) {
-                    // console.log(workDay.day, date);
-                    check = workDay.hours
-                    sum += check
+              workSheet.mergeCells(
+                workSheet.rowCount,
+                1,
+                workSheet.rowCount,
+                18,
+              )
+              titleRow.font = { size: 14 }
+              titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+            }
+            return employeesWorksList
+              .filter((employee) => employee.employee.workshop === workshop)
+              .sort((a, b) => {
+                if (a.employee.lastName < b.employee.lastName) {
+                  return -1
+                }
+                if (a.employee.lastName > b.employee.lastName) {
+                  return 1
+                }
+                return 0
+              })
+              .map((res, index) => {
+                // console.log(res);
+                let employeeInfo = [
+                  [
+                    res.employee.lastName +
+                      ' ' +
+                      res.employee.name +
+                      ' ' +
+                      res.employee.middleName,
+                  ],
+                ]
+                let sum = 0
+                dates[1].map((date) => {
+                  let check = null
+                  res.days.map((workDay) => {
+                    if (workDay.day === date) {
+                      check = workDay.hours
+                      sum += check
+                    }
+                  })
+                  if (date === '') {
+                    return
+                  }
+                  if (check === null) {
+                    employeeInfo[0].push('')
+                  } else {
+                    employeeInfo[0].push(check)
                   }
                 })
-                // if (dates[0].length - 1 < employeeInfo[0].length) {
-                //   return
-                // }
-                if (date === '') {
-                  return
+                const diff = 16 - (employeeInfo[0].length - 1)
+                let diffArray = []
+                for (let i = 0; i < diff; i++) {
+                  diffArray.push('')
                 }
-                if (check === null) {
-                  employeeInfo[0].push('')
-                } else {
-                  employeeInfo[0].push(check)
-                }
+                return workSheet.addRow([...employeeInfo[0], ...diffArray, sum])
               })
-              const diff = 16 - (employeeInfo[0].length - 1)
-              let diffArray = []
-              for (let i = 0; i < diff; i++) {
-                diffArray.push('')
-              }
-              return (dataWS = XLSX2.utils.sheet_add_aoa(
-                dataWS,
-                [[...employeeInfo[0], ...diffArray, sum]],
-                {
-                  origin: 'A' + globalIndex++,
-                },
-              ))
-            }),
+          }),
         )
       })
-      .then(() => {
-        // console.log([employeeInfo[0]]);
-        var wscols = [
-          { width: 25 }, // first column
-        ]
-        //Новая ширина столбцов
-        dataWS['!cols'] = wscols
-        //merge ячеек A1 и B1
-        const mergeCols = [
-          { s: { r: 0, c: 0 }, e: { r: 0, c: dates[0].length - 1 } },
-        ]
-        // console.log(dataWS.A1);
-        dataWS['!merges'] = mergeCols
-        let wb = XLSX2.utils.book_new() //Создание новой workbook
-        XLSX2.utils.book_append_sheet(wb, dataWS, 'Табель')
-        var wboutput = XLSX2.write(wb, {
-          bookType: 'xlsx',
-          bookSST: false,
-          type: 'binary',
-        })
-        function s2ab(s) {
-          var buf = new ArrayBuffer(s.length)
-          var view = new Uint8Array(buf)
-          for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
-          return buf
-        }
-        FileSaver.saveAs(
-          new Blob([s2ab(wboutput)], { type: '' }),
+      .then(async () => {
+        const buffer = await workBook.xlsx.writeBuffer()
+        saveAs(
+          new Blob([buffer]),
           'Табель-' +
             months[new Date().getMonth()] +
             '_' +
@@ -305,7 +468,7 @@ const GeneralPage = (props) => {
               className="main-window__button main-window__button--inverted"
               inverted
               isLoading={isLoading}
-              onClick={exportCSVFile}
+              onClick={testExcelJSLibrary}
             />
           </div>
           {props.userHasAccess([

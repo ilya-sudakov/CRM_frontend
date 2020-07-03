@@ -5,6 +5,7 @@ import {
   formatDateStringWithTime,
 } from '../../../../utils/functions.jsx'
 import deleteSVG from '../../../../../../../../assets/select/delete.svg'
+import openWidget from '../../../../../../../../assets/tableview/bx-window-open.svg'
 import './Notifications.scss'
 
 const Notifications = (props) => {
@@ -34,7 +35,10 @@ const Notifications = (props) => {
   const deleteNotification = (id) => {
     //API
     let newNotifications = notifications
-    newNotifications.splice(id - 1, 1)
+    newNotifications.splice(
+      notifications.indexOf(notifications.find((item) => item.id === id)),
+      1,
+    )
     setNotifications([...newNotifications])
     // markAllMessages(newNotifications)
   }
@@ -67,9 +71,21 @@ const Notifications = (props) => {
 
   return (
     <div className="notifications">
-      <div className="notifications__title">Уведомления (Тест)</div>
+      <div className="notifications__title">
+        <span>Уведомления</span>
+        <div
+          className="notifications__button notifications__button--inverted"
+          onClick={() => {
+            props.history.push('/notifications')
+          }}
+        >
+          <img src={openWidget} className="notifications__img" />
+          Открыть
+        </div>
+      </div>
       <div className="notifications__content">
         <div className="notifications__list">
+          <div className="notifications__category-item">Клиенты</div>
           {notifications.map((item, index) => (
             <div
               className={
