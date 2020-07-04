@@ -371,6 +371,11 @@ const GeneralPage = (props) => {
                 workSheet.getCell(workSheet.rowCount, 1).border = {
                   right: { style: 'thin', color: { argb: '00000000' } },
                 }
+                for (let i = 2; i <= 17; i++) {
+                  workSheet.getCell(workSheet.rowCount, i).border = {
+                    right: { style: 'hair', color: { argb: '00000000' } },
+                  }
+                }
                 return (workSheet.getCell(workSheet.rowCount, 18).border = {
                   top: { style: 'thin', color: { argb: '00000000' } },
                   left: { style: 'thin', color: { argb: '00000000' } },
@@ -396,6 +401,12 @@ const GeneralPage = (props) => {
         for (let i = 1; i <= 18; i++) {
           workSheet.getCell(workSheet.rowCount, i).border = {
             bottom: { style: 'thin', color: { argb: '00000000' } },
+          }
+          if (i >= 2 && i <= 17) {
+            workSheet.getCell(workSheet.rowCount, i).border = {
+              right: { style: 'hair', color: { argb: '00000000' } },
+              bottom: { style: 'thin', color: { argb: '00000000' } },
+            }
           }
         }
         workSheet.getCell(workSheet.rowCount, 1).border = {
@@ -514,6 +525,11 @@ const GeneralPage = (props) => {
                 workSheet.getCell(workSheet.rowCount, 1).border = {
                   right: { style: 'thin', color: { argb: '00000000' } },
                 }
+                for (let i = 2; i <= 17; i++) {
+                  workSheet.getCell(workSheet.rowCount, i).border = {
+                    right: { style: 'hair', color: { argb: '00000000' } },
+                  }
+                }
                 return (workSheet.getCell(workSheet.rowCount, 18).border = {
                   top: { style: 'thin', color: { argb: '00000000' } },
                   left: { style: 'thin', color: { argb: '00000000' } },
@@ -528,6 +544,12 @@ const GeneralPage = (props) => {
         for (let i = 1; i <= 18; i++) {
           workSheet.getCell(workSheet.rowCount, i).border = {
             bottom: { style: 'thin', color: { argb: '00000000' } },
+          }
+          if (i >= 2 && i <= 17) {
+            workSheet.getCell(workSheet.rowCount, i).border = {
+              right: { style: 'hair', color: { argb: '00000000' } },
+              bottom: { style: 'thin', color: { argb: '00000000' } },
+            }
           }
         }
         workSheet.getCell(workSheet.rowCount, 1).border = {
