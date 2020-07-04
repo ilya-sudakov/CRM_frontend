@@ -111,6 +111,7 @@ export async function exportPriceListToXLSX(
   let workBook = new Excel.Workbook()
   workBook.creator = 'Osfix'
   workBook.created = new Date()
+  const tempImg = await getDataUri('assets/osfix_logo.png')
   const workSheet = workBook.addWorksheet('Каталог продукции')
   console.log(categories, priceList, optionalCols, locationTypes, disclaimer)
   workSheet.columns = [
@@ -197,7 +198,83 @@ export async function exportPriceListToXLSX(
   ]
 
   Promise.all(
-    categories.map(async (category) => {
+    categories.map((category) => {
+      //adding company header
+      let temp = workSheet.addRow([''])
+      workSheet.getCell(1, 1).value = {
+        text: 'ООО «ОСФИКС»',
+        hyperlink: 'https://www.osfix.ru',
+        tooltip: 'Перейти на сайт www.osfix.ru',
+      }
+      workSheet.getCell(1, 1).font = {
+        bold: true,
+      }
+      temp.alignment = {
+        horizontal: 'left',
+        vertical: 'middle',
+      }
+      temp.height = 25
+
+      temp = workSheet.addRow([''])
+      workSheet.getCell(2, 1).value = {
+        text: 'Лиговский пр., 52, Санкт-Петербург, 191040',
+        hyperlink: 'https://yandex.ru/maps/-/CKUrY0Ih',
+        tooltip: 'Открыть Яндекс.Карту',
+      }
+      temp.alignment = {
+        horizontal: 'left',
+        vertical: 'middle',
+      }
+      temp.height = 25
+
+      temp = workSheet.addRow([''])
+      workSheet.getCell(2, 1).value = {
+        text: 'www.osfix.ru',
+        hyperlink: 'https://www.osfix.ru',
+        tooltip: 'Открыть сайт',
+      }
+      temp.alignment = {
+        horizontal: 'left',
+        vertical: 'middle',
+      }
+      temp.height = 25
+
+      temp = workSheet.addRow([''])
+      workSheet.getCell(3, 1).value = {
+        text: 'info@osfix.ru',
+        hyperlink: 'mailto:info@osfix.ru',
+        tooltip: 'Написать',
+      }
+      temp.alignment = {
+        horizontal: 'left',
+        vertical: 'middle',
+      }
+      temp.height = 25
+
+      temp = workSheet.addRow([''])
+      workSheet.getCell(4, 1).value = {
+        text: '+7 (812) 449-10-09',
+        hyperlink: 'tel:+78124491009',
+        tooltip: 'Позвонить',
+      }
+      temp.alignment = {
+        horizontal: 'left',
+        vertical: 'middle',
+      }
+      temp.height = 25
+
+      //adding logo assets/osfix_logo.png
+      const logoImg = workBook.addImage({
+        base64: tempImg,
+        extension: 'png',
+      })
+      workSheet.addImage(logoImg, {
+        tl: { col: 5 + optionalCols.length, row: 0.5 },
+        br: { col: 7 + optionalCols.length, row: 3.8 },
+        // editAs: 'absolute',
+      })
+
+      //adding category name
       const rowCategoryName = workSheet.addRow([category.name])
       // const tempImg = await getDataUri(
       //   category.img.split('.png')[0] + '_excel.png',
