@@ -266,13 +266,18 @@ export async function exportPriceListToXLSX(
       //adding logo assets/osfix_logo.png
       const logoImg = workBook.addImage({
         base64: tempImg,
-        extension: 'png',
+        extension: 'jpeg',
       })
       workSheet.addImage(logoImg, {
         tl: { col: 5 + optionalCols.length, row: 0.5 },
         br: { col: 7 + optionalCols.length, row: 3.8 },
         // editAs: 'absolute',
       })
+      for (let i = 1; i <= 7 + optionalCols.length; i++) {
+        workSheet.getCell(workSheet.rowCount - 1, i).border = {
+          bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+        }
+      }
 
       //adding category name
       const rowCategoryName = workSheet.addRow([category.name])
@@ -574,7 +579,10 @@ export async function exportPriceListToXLSX(
             wrapText: true,
           }
           workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 3)
-          rowInfoText.height = (item.infoText.split(' ').length / 10) * 22
+          rowInfoText.height =
+            (item.infoText.split(' ').length > 10
+              ? item.infoText.split(' ').length / 10
+              : 1.5) * 22
 
           const spaceBetweenRow = workSheet.addRow([''])
           spaceBetweenRow.height = 50
