@@ -300,7 +300,9 @@ const GeneralPage = (props) => {
           filteredWorkshops.map((workshop) => {
             if (
               employeesWorksList.filter(
-                (employee) => employee.employee.workshop === workshop,
+                (employee) =>
+                  employee.employee.workshop === workshop &&
+                  item.relevance !== 'Уволен',
               ).length > 0
             ) {
               const titleRow = workSheet.addRow([workshop])
@@ -320,7 +322,11 @@ const GeneralPage = (props) => {
               titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
             }
             return employeesWorksList
-              .filter((employee) => employee.employee.workshop === workshop)
+              .filter(
+                (employee) =>
+                  employee.employee.workshop === workshop &&
+                  item.relevance !== 'Уволен',
+              )
               .sort((a, b) => {
                 if (a.employee.lastName < b.employee.lastName) {
                   return -1
