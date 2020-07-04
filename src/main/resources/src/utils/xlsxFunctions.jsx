@@ -113,7 +113,7 @@ export async function exportPriceListToXLSX(
   workBook.created = new Date()
   const tempImg = await getDataUri('assets/osfix_logo.png')
   const workSheet = workBook.addWorksheet('Каталог продукции')
-  console.log(categories, priceList, optionalCols, locationTypes, disclaimer)
+  // console.log(categories, priceList, optionalCols, locationTypes, disclaimer)
   workSheet.columns = [
     {
       // key: 'number',
@@ -473,7 +473,7 @@ export async function exportPriceListToXLSX(
           }
 
           //adding products
-          workSheet.addRow([''])
+          // workSheet.addRow([''])
           const fakeTableHeaderRow = workSheet.addRow([
             '',
             '',
