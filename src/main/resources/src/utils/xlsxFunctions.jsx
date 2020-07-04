@@ -207,10 +207,13 @@ export async function exportPriceListToXLSX(
   workSheet.getCell(1, 2).font = {
     bold: true,
   }
+  workSheet.getCell(1, 2).border = {
+    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  }
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
-    indent: 2
+    indent: 2,
   }
   temp.height = 25
 
@@ -220,10 +223,13 @@ export async function exportPriceListToXLSX(
     hyperlink: 'https://yandex.ru/maps/-/CKUrY0Ih',
     tooltip: 'Открыть Яндекс.Карту',
   }
+  workSheet.getCell(2, 2).border = {
+    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  }
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
-    indent: 2
+    indent: 2,
   }
   temp.height = 25
 
@@ -233,10 +239,13 @@ export async function exportPriceListToXLSX(
     hyperlink: 'https://www.osfix.ru',
     tooltip: 'Открыть сайт',
   }
+  workSheet.getCell(2, 2).border = {
+    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  }
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
-    indent: 2
+    indent: 2,
   }
   temp.height = 25
 
@@ -246,10 +255,13 @@ export async function exportPriceListToXLSX(
     hyperlink: 'mailto:info@osfix.ru',
     tooltip: 'Написать',
   }
+  workSheet.getCell(3, 2).border = {
+    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  }
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
-    indent: 2
+    indent: 2,
   }
   temp.height = 25
 
@@ -262,7 +274,7 @@ export async function exportPriceListToXLSX(
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
-    indent: 2
+    indent: 2,
   }
   temp.height = 25
 
@@ -271,15 +283,27 @@ export async function exportPriceListToXLSX(
     base64: tempImg,
     extension: 'jpeg',
   })
+  // workSheet.addImage(logoImg, {
+  //   tl: { col: 0.2, row: 0.5 },
+  //   br: { col: 1, row: 3.8 },
+  //   // editAs: 'absolute',
+  // })
+
+  workSheet.mergeCells(1, 1, 4, 1)
   workSheet.addImage(logoImg, {
-    tl: { col: 0.2, row: 0.5 },
-    br: { col: 1, row: 3.8 },
+    tl: { col: 0.3, row: 0.4 },
+    ext: { width: 180, height: 80 },
     // editAs: 'absolute',
   })
+
   for (let i = 1; i <= 2; i++) {
     workSheet.getCell(workSheet.rowCount - 1, i).border = {
       bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
     }
+  }
+  workSheet.getCell(4, 2).border = {
+    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+    bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
   }
 
   Promise.all(
@@ -586,11 +610,12 @@ export async function exportPriceListToXLSX(
             vertical: 'middle',
             horizontal: 'left',
             wrapText: true,
+            indent: 1,
           }
           workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 3)
           rowInfoText.height =
-            (item.infoText.split(' ').length > 10
-              ? item.infoText.split(' ').length / 10
+            (item.infoText.split(' ').length > 9
+              ? item.infoText.split(' ').length / 9
               : 1.5) * 22
 
           const spaceBetweenRow = workSheet.addRow([''])
