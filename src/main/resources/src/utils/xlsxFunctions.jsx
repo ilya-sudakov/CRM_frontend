@@ -1,7 +1,11 @@
 import XLSX2 from 'xlsx'
 import Excel from 'exceljs'
-import noImgPlaceholder from '../../../../../assets/priceList/no_img.png'
+// import category1Img from '../../../../../assets/priceList/крепеж_для_деревянных_досок_excel.png'
+// import category2Img from '../../../../../assets/priceList/крепеж_для_дпк_досок_excel.png'
+// import category3Img from '../../../../../assets/priceList/крепежные_элементы_excel.png'
+// import categoryImg from '../../../../../assets/priceList/default_category_excel.png'
 import FileSaver from 'file-saver'
+import { getDataUri } from './functions.jsx'
 
 export const exportClientsEmailsCSV = (clients) => {
   let index = 0
@@ -105,6 +109,8 @@ export async function exportPriceListToXLSX(
   titlePage,
 ) {
   let workBook = new Excel.Workbook()
+  workBook.creator = 'Osfix'
+  workBook.created = new Date()
   const workSheet = workBook.addWorksheet('Каталог продукции')
   console.log(categories, priceList, optionalCols, locationTypes, disclaimer)
   workSheet.columns = [
@@ -191,8 +197,36 @@ export async function exportPriceListToXLSX(
   ]
 
   Promise.all(
-    categories.map((category) => {
+    categories.map(async (category) => {
       const rowCategoryName = workSheet.addRow([category.name])
+      // const tempImg = await getDataUri(
+      //   category.img.split('.png')[0] + '_excel.png',
+      // )
+      // const categoryImg = workBook.addImage({
+      //   base64: tempImg,
+      //   extension: 'png',
+      // })
+      // workSheet.addImage(categoryImg, {
+      //   tl: { col: 0, row: workSheet.rowCount - 1 },
+      //   br: { col: 7, row: workSheet.rowCount },
+      //   editAs: 'absolute',
+      // })
+      // workSheet.getCell(workSheet.rowCount, 1).fill = {
+      //   type: 'pattern',
+      //   pattern: 'solid',
+      //   bgColor: {
+      //     argb: 'FFFFFFFF',
+      //   },
+      //   fgColor: {
+      //     argb: '00FF1B5F',
+      //   },
+      // }
+      workSheet.getCell(workSheet.rowCount, 1).border = {
+        left: { style: 'medium', color: { argb: 'FF666666' } },
+        top: { style: 'medium', color: { argb: 'FF666666' } },
+        right: { style: 'medium', color: { argb: 'FF666666' } },
+        bottom: { style: 'medium', color: { argb: 'FF666666' } },
+      }
       rowCategoryName.font = {
         size: 18,
         bold: true,
@@ -202,12 +236,13 @@ export async function exportPriceListToXLSX(
         vertical: 'middle',
         horizontal: 'center',
       }
-      // rowCategoryName.fill = {
-      //   bgColor: {
-      //     argb: '999999ff',
-      //   },
-      // }
-      workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 7)
+      workSheet.mergeCells(
+        workSheet.rowCount,
+        1,
+        workSheet.rowCount,
+        7 + optionalCols.length,
+      )
+      workSheet.addRow([''])
       return priceList
         .filter((item) => item.category === category.name)
         .map((item) => {
@@ -217,6 +252,11 @@ export async function exportPriceListToXLSX(
             size: 14,
             bold: true,
           }
+          // workSheet.getCell(workSheet.rowCount, 1).value = {
+          //   text: '\t' + item.name,
+          //   hyperlink: item.linkAddress !== undefined ? item.linkAddress : '',
+          //   tooltip: 'Перейти на сайт www.osfix.ru',
+          // }
           newRowName.height = 50
           newRowName.alignment = {
             wrapText: true,
@@ -226,6 +266,8 @@ export async function exportPriceListToXLSX(
             indent: 2,
           }
           workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 2)
+
+          //adding location type
           workSheet.getCell(workSheet.rowCount, 3).value = item.locationType
           workSheet.getCell(workSheet.rowCount, 3).font = {
             size: 11,
@@ -237,6 +279,35 @@ export async function exportPriceListToXLSX(
             wrapText: true,
           }
 
+          //adding link button
+          workSheet.getCell(workSheet.rowCount, 4).value = {
+            text: 'Смотреть на сайте',
+            hyperlink:
+              item.linkAddress !== undefined
+                ? item.linkAddress
+                : 'https://www.osfix.ru',
+            tooltip: 'Смотреть на сайте',
+          }
+          workSheet.getCell(workSheet.rowCount, 4).alignment = {
+            horizontal: 'center',
+            vertical: 'middle',
+          }
+          workSheet.getCell(workSheet.rowCount, 4).fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            bgColor: {
+              // argb: 'FFFFFFFF',
+            },
+            fgColor: { argb: 'FFE30235' },
+          }
+          workSheet.getCell(workSheet.rowCount, 4).font = {
+            size: 12,
+            bold: false,
+            color: {
+              argb: 'FFFFFFFF',
+            },
+          }
+
           //adding product group description
           const newRowDescription = workSheet.addRow([item.description])
           newRowDescription.font = {
@@ -245,60 +316,74 @@ export async function exportPriceListToXLSX(
               argb: 'FF777777',
             },
           }
-          newRowDescription.height = 30
+          newRowDescription.height = 35
           newRowDescription.alignment = {
             vertical: 'middle',
             wrapText: true,
             // horizontal: 'center',
           }
-          workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 7)
+          workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 3)
 
           //adding 4 group images
-          const imagesRow = workSheet.addRow([''])
-          imagesRow.height = 120
-          // workSheet.getCell(workSheet.rowCount, 1)
-          // add image to workbook by base64
-          if (item.groupImg1 !== '') {
-            const groupImg1 = workBook.addImage({
-              base64: item.groupImg1,
-              extension: 'jpeg',
-            })
-            workSheet.addImage(
-              groupImg1,
-              'A' + workSheet.rowCount + ':A' + workSheet.rowCount,
-            )
-          }
 
-          if (item.groupImg2 !== '') {
-            const groupImg2 = workBook.addImage({
-              base64: item.groupImg2,
-              extension: 'jpeg',
-            })
-            workSheet.addImage(
-              groupImg2,
-              'B' + workSheet.rowCount + ':B' + workSheet.rowCount,
-            )
-          }
+          if (
+            item.groupImg1 !== '' ||
+            item.groupImg2 !== '' ||
+            item.groupImg3 !== '' ||
+            item.groupImg4 !== ''
+          ) {
+            const imagesRow = workSheet.addRow([''])
+            imagesRow.height = 120
 
-          if (item.groupImg3 !== '') {
-            const groupImg3 = workBook.addImage({
-              base64: item.groupImg3,
-              extension: 'jpeg',
-            })
-            workSheet.addImage(
-              groupImg3,
-              'C' + workSheet.rowCount + ':C' + workSheet.rowCount,
-            )
-          }
-          if (item.groupImg4 !== '') {
-            const groupImg4 = workBook.addImage({
-              base64: item.groupImg4,
-              extension: 'jpeg',
-            })
-            workSheet.addImage(
-              groupImg4,
-              'D' + workSheet.rowCount + ':D' + workSheet.rowCount,
-            )
+            let imageIndex = 0
+
+            // add image to workbook by base64
+            if (item.groupImg1 !== '') {
+              const groupImg1 = workBook.addImage({
+                base64: item.groupImg1,
+                extension: 'jpeg',
+              })
+              workSheet.addImage(groupImg1, {
+                tl: { col: imageIndex, row: workSheet.rowCount - 1 },
+                br: { col: ++imageIndex, row: workSheet.rowCount },
+                editAs: 'absolute',
+              })
+            }
+
+            if (item.groupImg2 !== '') {
+              const groupImg2 = workBook.addImage({
+                base64: item.groupImg2,
+                extension: 'jpeg',
+              })
+              workSheet.addImage(groupImg2, {
+                tl: { col: imageIndex, row: workSheet.rowCount - 1 },
+                br: { col: ++imageIndex, row: workSheet.rowCount },
+                editAs: 'absolute',
+              })
+            }
+
+            if (item.groupImg3 !== '') {
+              const groupImg3 = workBook.addImage({
+                base64: item.groupImg3,
+                extension: 'jpeg',
+              })
+              workSheet.addImage(groupImg3, {
+                tl: { col: imageIndex, row: workSheet.rowCount - 1 },
+                br: { col: ++imageIndex, row: workSheet.rowCount },
+                editAs: 'absolute',
+              })
+            }
+            if (item.groupImg4 !== '') {
+              const groupImg4 = workBook.addImage({
+                base64: item.groupImg4,
+                extension: 'jpeg',
+              })
+              workSheet.addImage(groupImg4, {
+                tl: { col: imageIndex, row: workSheet.rowCount - 1 },
+                br: { col: ++imageIndex, row: workSheet.rowCount },
+                editAs: 'absolute',
+              })
+            }
           }
 
           //adding products
@@ -312,6 +397,12 @@ export async function exportPriceListToXLSX(
           ])
           fakeTableHeaderRow.font = {
             italic: true,
+          }
+          workSheet.getCell(workSheet.rowCount, 5).border = {
+            left: { style: 'medium', color: { argb: 'FF666666' } },
+            top: { style: 'medium', color: { argb: 'FF666666' } },
+            right: { style: 'medium', color: { argb: 'FF666666' } },
+            bottom: { style: 'medium', color: { argb: 'FF666666' } },
           }
           workSheet.mergeCells(
             workSheet.rowCount,
@@ -337,6 +428,14 @@ export async function exportPriceListToXLSX(
                   item.distributorName,
             ),
           ])
+          for (let i = 1; i <= 7 + optionalCols.length; i++) {
+            workSheet.getCell(workSheet.rowCount, i).border = {
+              left: { style: 'medium', color: { argb: 'FF666666' } },
+              top: { style: 'medium', color: { argb: 'FF666666' } },
+              right: { style: 'medium', color: { argb: 'FF666666' } },
+              bottom: { style: 'medium', color: { argb: 'FF666666' } },
+            }
+          }
           workSheet.mergeCells(workSheet.rowCount, 2, workSheet.rowCount, 3)
           tableHeaderRow.font = {
             color: {
@@ -363,6 +462,14 @@ export async function exportPriceListToXLSX(
                   : ' ',
               ),
             ])
+            for (let i = 1; i <= 7 + optionalCols.length; i++) {
+              workSheet.getCell(workSheet.rowCount, i).border = {
+                left: { style: 'medium', color: { argb: 'FF666666' } },
+                top: { style: 'medium', color: { argb: 'FF666666' } },
+                right: { style: 'medium', color: { argb: 'FF666666' } },
+                bottom: { style: 'medium', color: { argb: 'FF666666' } },
+              }
+            }
             return workSheet.mergeCells(
               workSheet.rowCount,
               2,
@@ -382,17 +489,18 @@ export async function exportPriceListToXLSX(
             },
           }
           workSheet.getCell(workSheet.rowCount, 1).border = {
-            left: { style: 'medium', color: { argb: 'FFFF1B5F' } },
             right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
           }
-          rowInfoText.alignment = {
+          workSheet.getCell(workSheet.rowCount, 1).alignment = {
             vertical: 'middle',
             horizontal: 'left',
             wrapText: true,
           }
           workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 3)
+          rowInfoText.height = (item.infoText.split(' ').length / 10) * 22
 
-          workSheet.addRow([''])
+          const spaceBetweenRow = workSheet.addRow([''])
+          spaceBetweenRow.height = 50
         })
     }),
   ).then(async () => {
