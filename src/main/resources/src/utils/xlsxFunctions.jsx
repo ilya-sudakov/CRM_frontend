@@ -279,52 +279,56 @@ export async function exportPriceListToXLSX(
 
   Promise.all(
     categories.map((category) => {
-      //adding category name
-      const rowCategoryName = workSheet.addRow([category.name])
-      // const tempImg = await getDataUri(
-      //   category.img.split('.png')[0] + '_excel.png',
-      // )
-      // const categoryImg = workBook.addImage({
-      //   base64: tempImg,
-      //   extension: 'png',
-      // })
-      // workSheet.addImage(categoryImg, {
-      //   tl: { col: 0, row: workSheet.rowCount - 1 },
-      //   br: { col: 7, row: workSheet.rowCount },
-      //   editAs: 'absolute',
-      // })
-      // workSheet.getCell(workSheet.rowCount, 1).fill = {
-      //   type: 'pattern',
-      //   pattern: 'solid',
-      //   bgColor: {
-      //     argb: 'FFFFFFFF',
-      //   },
-      //   fgColor: {
-      //     argb: '00FF1B5F',
-      //   },
-      // }
-      workSheet.getCell(workSheet.rowCount, 1).border = {
-        left: { style: 'medium', color: { argb: 'FF666666' } },
-        top: { style: 'medium', color: { argb: 'FF666666' } },
-        right: { style: 'medium', color: { argb: 'FF666666' } },
-        bottom: { style: 'medium', color: { argb: 'FF666666' } },
+      if (
+        priceList.filter((item) => item.category === category.name).length > 0
+      ) {
+        //adding category name
+        const rowCategoryName = workSheet.addRow([category.name])
+        // const tempImg = await getDataUri(
+        //   category.img.split('.png')[0] + '_excel.png',
+        // )
+        // const categoryImg = workBook.addImage({
+        //   base64: tempImg,
+        //   extension: 'png',
+        // })
+        // workSheet.addImage(categoryImg, {
+        //   tl: { col: 0, row: workSheet.rowCount - 1 },
+        //   br: { col: 7, row: workSheet.rowCount },
+        //   editAs: 'absolute',
+        // })
+        // workSheet.getCell(workSheet.rowCount, 1).fill = {
+        //   type: 'pattern',
+        //   pattern: 'solid',
+        //   bgColor: {
+        //     argb: 'FFFFFFFF',
+        //   },
+        //   fgColor: {
+        //     argb: '00FF1B5F',
+        //   },
+        // }
+        workSheet.getCell(workSheet.rowCount, 1).border = {
+          left: { style: 'medium', color: { argb: 'FF666666' } },
+          top: { style: 'medium', color: { argb: 'FF666666' } },
+          right: { style: 'medium', color: { argb: 'FF666666' } },
+          bottom: { style: 'medium', color: { argb: 'FF666666' } },
+        }
+        rowCategoryName.font = {
+          size: 18,
+          bold: true,
+        }
+        rowCategoryName.height = 80
+        rowCategoryName.alignment = {
+          vertical: 'middle',
+          horizontal: 'center',
+        }
+        workSheet.mergeCells(
+          workSheet.rowCount,
+          1,
+          workSheet.rowCount,
+          7 + optionalCols.length,
+        )
+        workSheet.addRow([''])
       }
-      rowCategoryName.font = {
-        size: 18,
-        bold: true,
-      }
-      rowCategoryName.height = 80
-      rowCategoryName.alignment = {
-        vertical: 'middle',
-        horizontal: 'center',
-      }
-      workSheet.mergeCells(
-        workSheet.rowCount,
-        1,
-        workSheet.rowCount,
-        7 + optionalCols.length,
-      )
-      workSheet.addRow([''])
       return priceList
         .filter((item) => item.category === category.name)
         .map((item) => {
