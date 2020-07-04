@@ -214,15 +214,15 @@ const GeneralPage = (props) => {
       // { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 },
     ]
 
-    const titleRow = workSheet.addRow([
-      'Табель - ' + months[new Date().getMonth()],
-    ])
-    workSheet.mergeCells(1, 1, 1, 18)
-    titleRow.font = { bold: true, size: 18 }
-    titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+    // const titleRow = workSheet.addRow([
+    //   'Табель - ' + months[new Date().getMonth()],
+    // ])
+    // workSheet.mergeCells(1, 1, 1, 18)
+    // titleRow.font = { bold: true, size: 18 }
+    // titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+    // workSheet.addRow([''])
 
     //adding date header
-    workSheet.addRow([''])
     const dateTitleRow = workSheet.addRow([
       '1/2 ' +
         monthsNew[new Date().getMonth()] +
@@ -236,8 +236,9 @@ const GeneralPage = (props) => {
       right: { style: 'thin', color: { argb: '00000000' } },
     }
     workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18)
-    dateTitleRow.font = { bold: true, size: 16 }
+    dateTitleRow.font = { bold: true, size: 18 }
     dateTitleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+    dateTitleRow.height = 50
 
     //adding dates
     workSheet.addRow([...dates[0], '', 'Сумма'])
@@ -247,6 +248,12 @@ const GeneralPage = (props) => {
         left: { style: 'thin', color: { argb: '00000000' } },
         bottom: { style: 'thin', color: { argb: '00000000' } },
         right: { style: 'thin', color: { argb: '00000000' } },
+      }
+      if (i >= 2 && i <= 17) {
+        workSheet.getCell(workSheet.rowCount, i).border = {
+          right: { style: 'hair', color: { argb: '00000000' } },
+          bottom: { style: 'thin', color: { argb: '00000000' } },
+        }
       }
     }
 
@@ -320,6 +327,7 @@ const GeneralPage = (props) => {
               )
               titleRow.font = { size: 14, bold: true }
               titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+              titleRow.height = 30
             }
             return employeesWorksList
               .filter(
@@ -424,7 +432,8 @@ const GeneralPage = (props) => {
           bottom: { style: 'thin', color: { argb: '00000000' } },
           left: { style: 'thin', color: { argb: '00000000' } },
         }
-        workSheet.addRow([''])
+        const temp = workSheet.addRow([''])
+        temp.height = 50
         const dateTitleRow = workSheet.addRow([
           '2/2 ' +
             monthsNew[new Date().getMonth()] +
@@ -438,8 +447,9 @@ const GeneralPage = (props) => {
           right: { style: 'thin', color: { argb: '00000000' } },
         }
         workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18)
-        dateTitleRow.font = { bold: true, size: 16 }
+        dateTitleRow.font = { bold: true, size: 18 }
         dateTitleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+        dateTitleRow.height = 50
 
         workSheet.addRow([...dates[1], 'Сумма'])
         for (let i = 1; i <= 18; i++) {
@@ -448,6 +458,12 @@ const GeneralPage = (props) => {
             left: { style: 'thin', color: { argb: '00000000' } },
             bottom: { style: 'thin', color: { argb: '00000000' } },
             right: { style: 'thin', color: { argb: '00000000' } },
+          }
+          if (i >= 2 && i <= 17) {
+            workSheet.getCell(workSheet.rowCount, i).border = {
+              right: { style: 'hair', color: { argb: '00000000' } },
+              bottom: { style: 'thin', color: { argb: '00000000' } },
+            }
           }
         }
         return Promise.all(
@@ -470,8 +486,9 @@ const GeneralPage = (props) => {
                 workSheet.rowCount,
                 18,
               )
-              titleRow.font = { size: 14 }
+              titleRow.font = { size: 14, bold: true }
               titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+              titleRow.height = 30
             }
             return employeesWorksList
               .filter((employee) => employee.employee.workshop === workshop)
@@ -577,6 +594,10 @@ const GeneralPage = (props) => {
             new Date().getFullYear() +
             '.xlsx',
         )
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.log(error)
         setIsLoading(false)
       })
   }
