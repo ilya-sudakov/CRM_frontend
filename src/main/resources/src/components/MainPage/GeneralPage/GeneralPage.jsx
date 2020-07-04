@@ -78,9 +78,7 @@ const GeneralPage = (props) => {
     // console.log(XLSX.version)
     let workBook = new Excel.Workbook()
 
-    const workSheet = workBook.addWorksheet(
-      'Табель - ' + months[new Date().getMonth()],
-    )
+    const workSheet = workBook.addWorksheet(months[new Date().getMonth()])
 
     workSheet.columns = [
       {
@@ -210,17 +208,7 @@ const GeneralPage = (props) => {
           alignment: { vertical: 'middle', horizontal: 'center' },
         },
       },
-      // { header: 'Hours', key: 'name', width: 32 },
-      // { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 },
     ]
-
-    // const titleRow = workSheet.addRow([
-    //   'Табель - ' + months[new Date().getMonth()],
-    // ])
-    // workSheet.mergeCells(1, 1, 1, 18)
-    // titleRow.font = { bold: true, size: 18 }
-    // titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
-    // workSheet.addRow([''])
 
     //adding date header
     const dateTitleRow = workSheet.addRow([
@@ -396,17 +384,6 @@ const GeneralPage = (props) => {
                   bottom: { style: 'thin', color: { argb: '00000000' } },
                   right: { style: 'thin', color: { argb: '00000000' } },
                 })
-
-                // const newRow = selectCellRange(
-                //   workSheet,
-                //   'A:' + workSheet.rowCount,
-                //   'R:' + workSheet.rowCount,
-                // )
-                // return newRow.map((cell) => {
-                //   cell.fill = {
-                //     bgColor: { argb: 'FF0000FF' },
-                //   }
-                // })
               })
           }),
         )
