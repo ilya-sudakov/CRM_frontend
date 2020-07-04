@@ -197,88 +197,88 @@ export async function exportPriceListToXLSX(
     },
   ]
 
+  //adding company header
+  let temp = workSheet.addRow([''])
+  workSheet.getCell(1, 1).value = {
+    text: 'ООО «ОСФИКС»',
+    hyperlink: 'https://www.osfix.ru',
+    tooltip: 'Перейти на сайт www.osfix.ru',
+  }
+  workSheet.getCell(1, 1).font = {
+    bold: true,
+  }
+  temp.alignment = {
+    horizontal: 'left',
+    vertical: 'middle',
+  }
+  temp.height = 25
+
+  temp = workSheet.addRow([''])
+  workSheet.getCell(2, 1).value = {
+    text: 'Лиговский пр., 52, Санкт-Петербург, 191040',
+    hyperlink: 'https://yandex.ru/maps/-/CKUrY0Ih',
+    tooltip: 'Открыть Яндекс.Карту',
+  }
+  temp.alignment = {
+    horizontal: 'left',
+    vertical: 'middle',
+  }
+  temp.height = 25
+
+  temp = workSheet.addRow([''])
+  workSheet.getCell(2, 1).value = {
+    text: 'www.osfix.ru',
+    hyperlink: 'https://www.osfix.ru',
+    tooltip: 'Открыть сайт',
+  }
+  temp.alignment = {
+    horizontal: 'left',
+    vertical: 'middle',
+  }
+  temp.height = 25
+
+  temp = workSheet.addRow([''])
+  workSheet.getCell(3, 1).value = {
+    text: 'info@osfix.ru',
+    hyperlink: 'mailto:info@osfix.ru',
+    tooltip: 'Написать',
+  }
+  temp.alignment = {
+    horizontal: 'left',
+    vertical: 'middle',
+  }
+  temp.height = 25
+
+  temp = workSheet.addRow([''])
+  workSheet.getCell(4, 1).value = {
+    text: '+7 (812) 449-10-09',
+    hyperlink: 'tel:+78124491009',
+    tooltip: 'Позвонить',
+  }
+  temp.alignment = {
+    horizontal: 'left',
+    vertical: 'middle',
+  }
+  temp.height = 25
+
+  //adding logo assets/osfix_logo.png
+  const logoImg = workBook.addImage({
+    base64: tempImg,
+    extension: 'jpeg',
+  })
+  workSheet.addImage(logoImg, {
+    tl: { col: 5 + optionalCols.length, row: 0.5 },
+    br: { col: 7 + optionalCols.length, row: 3.8 },
+    // editAs: 'absolute',
+  })
+  for (let i = 1; i <= 7 + optionalCols.length; i++) {
+    workSheet.getCell(workSheet.rowCount - 1, i).border = {
+      bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+    }
+  }
+
   Promise.all(
     categories.map((category) => {
-      //adding company header
-      let temp = workSheet.addRow([''])
-      workSheet.getCell(1, 1).value = {
-        text: 'ООО «ОСФИКС»',
-        hyperlink: 'https://www.osfix.ru',
-        tooltip: 'Перейти на сайт www.osfix.ru',
-      }
-      workSheet.getCell(1, 1).font = {
-        bold: true,
-      }
-      temp.alignment = {
-        horizontal: 'left',
-        vertical: 'middle',
-      }
-      temp.height = 25
-
-      temp = workSheet.addRow([''])
-      workSheet.getCell(2, 1).value = {
-        text: 'Лиговский пр., 52, Санкт-Петербург, 191040',
-        hyperlink: 'https://yandex.ru/maps/-/CKUrY0Ih',
-        tooltip: 'Открыть Яндекс.Карту',
-      }
-      temp.alignment = {
-        horizontal: 'left',
-        vertical: 'middle',
-      }
-      temp.height = 25
-
-      temp = workSheet.addRow([''])
-      workSheet.getCell(2, 1).value = {
-        text: 'www.osfix.ru',
-        hyperlink: 'https://www.osfix.ru',
-        tooltip: 'Открыть сайт',
-      }
-      temp.alignment = {
-        horizontal: 'left',
-        vertical: 'middle',
-      }
-      temp.height = 25
-
-      temp = workSheet.addRow([''])
-      workSheet.getCell(3, 1).value = {
-        text: 'info@osfix.ru',
-        hyperlink: 'mailto:info@osfix.ru',
-        tooltip: 'Написать',
-      }
-      temp.alignment = {
-        horizontal: 'left',
-        vertical: 'middle',
-      }
-      temp.height = 25
-
-      temp = workSheet.addRow([''])
-      workSheet.getCell(4, 1).value = {
-        text: '+7 (812) 449-10-09',
-        hyperlink: 'tel:+78124491009',
-        tooltip: 'Позвонить',
-      }
-      temp.alignment = {
-        horizontal: 'left',
-        vertical: 'middle',
-      }
-      temp.height = 25
-
-      //adding logo assets/osfix_logo.png
-      const logoImg = workBook.addImage({
-        base64: tempImg,
-        extension: 'jpeg',
-      })
-      workSheet.addImage(logoImg, {
-        tl: { col: 5 + optionalCols.length, row: 0.5 },
-        br: { col: 7 + optionalCols.length, row: 3.8 },
-        // editAs: 'absolute',
-      })
-      for (let i = 1; i <= 7 + optionalCols.length; i++) {
-        workSheet.getCell(workSheet.rowCount - 1, i).border = {
-          bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-        }
-      }
-
       //adding category name
       const rowCategoryName = workSheet.addRow([category.name])
       // const tempImg = await getDataUri(
