@@ -61,6 +61,20 @@ const GeneralPage = (props) => {
       'Ноябрь',
       'Декабрь',
     ]
+    const monthsNew = [
+      'Января',
+      'Февраля',
+      'Марта',
+      'Апреля',
+      'Мая',
+      'Июня',
+      'Июля',
+      'Августа',
+      'Сентября',
+      'Октября',
+      'Ноября',
+      'Декабря',
+    ]
     // console.log(XLSX.version)
     let workBook = new Excel.Workbook()
 
@@ -207,9 +221,35 @@ const GeneralPage = (props) => {
     titleRow.font = { bold: true, size: 18 }
     titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
 
+    //adding date header
     workSheet.addRow([''])
+    const dateTitleRow = workSheet.addRow([
+      '1/2 ' +
+        monthsNew[new Date().getMonth()] +
+        '.' +
+        new Date().getFullYear(),
+    ])
+    workSheet.getCell(workSheet.rowCount, 1).border = {
+      top: { style: 'thin', color: { argb: '00000000' } },
+      left: { style: 'thin', color: { argb: '00000000' } },
+      bottom: { style: 'thin', color: { argb: '00000000' } },
+      right: { style: 'thin', color: { argb: '00000000' } },
+    }
+    workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18)
+    dateTitleRow.font = { bold: true, size: 16 }
+    dateTitleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+
+    //adding dates
     workSheet.addRow([...dates[0], '', 'Сумма'])
-    let globalIndex = 4
+    for (let i = 1; i <= 18; i++) {
+      workSheet.getCell(workSheet.rowCount, i).border = {
+        top: { style: 'thin', color: { argb: '00000000' } },
+        left: { style: 'thin', color: { argb: '00000000' } },
+        bottom: { style: 'thin', color: { argb: '00000000' } },
+        right: { style: 'thin', color: { argb: '00000000' } },
+      }
+    }
+
     let employeesList = []
     let employeesWorksList = []
     let filteredWorkshops = []
@@ -318,7 +358,25 @@ const GeneralPage = (props) => {
                     return employeeInfo[0].push(check)
                   }
                 })
-                return workSheet.addRow([...employeeInfo[0], '', sum])
+                const tempRow = workSheet.addRow([...employeeInfo[0], '', sum])
+                for (let i = 1; i <= 18; i++) {
+                  workSheet.getCell(workSheet.rowCount, i).fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                      argb: index % 2 === 0 ? 'FFFEFF99' : 'FFFFFFFF',
+                    },
+                  }
+                }
+                workSheet.getCell(workSheet.rowCount, 1).border = {
+                  right: { style: 'thin', color: { argb: '00000000' } },
+                }
+                return (workSheet.getCell(workSheet.rowCount, 18).border = {
+                  top: { style: 'thin', color: { argb: '00000000' } },
+                  left: { style: 'thin', color: { argb: '00000000' } },
+                  bottom: { style: 'thin', color: { argb: '00000000' } },
+                  right: { style: 'thin', color: { argb: '00000000' } },
+                })
 
                 // const newRow = selectCellRange(
                 //   workSheet,
@@ -335,9 +393,46 @@ const GeneralPage = (props) => {
         )
       })
       .then(() => {
-        workSheet.addRow('')
+        for (let i = 1; i <= 18; i++) {
+          workSheet.getCell(workSheet.rowCount, i).border = {
+            bottom: { style: 'thin', color: { argb: '00000000' } },
+          }
+        }
+        workSheet.getCell(workSheet.rowCount, 1).border = {
+          right: { style: 'thin', color: { argb: '00000000' } },
+          bottom: { style: 'thin', color: { argb: '00000000' } },
+        }
+        workSheet.getCell(workSheet.rowCount, 18).border = {
+          right: { style: 'thin', color: { argb: '00000000' } },
+          bottom: { style: 'thin', color: { argb: '00000000' } },
+          left: { style: 'thin', color: { argb: '00000000' } },
+        }
+        workSheet.addRow([''])
+        const dateTitleRow = workSheet.addRow([
+          '2/2 ' +
+            monthsNew[new Date().getMonth()] +
+            '.' +
+            new Date().getFullYear(),
+        ])
+        workSheet.getCell(workSheet.rowCount, 1).border = {
+          top: { style: 'thin', color: { argb: '00000000' } },
+          left: { style: 'thin', color: { argb: '00000000' } },
+          bottom: { style: 'thin', color: { argb: '00000000' } },
+          right: { style: 'thin', color: { argb: '00000000' } },
+        }
+        workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18)
+        dateTitleRow.font = { bold: true, size: 16 }
+        dateTitleRow.alignment = { vertical: 'middle', horizontal: 'center' }
+
         workSheet.addRow([...dates[1], 'Сумма'])
-        globalIndex++
+        for (let i = 1; i <= 18; i++) {
+          workSheet.getCell(workSheet.rowCount, i).border = {
+            top: { style: 'thin', color: { argb: '00000000' } },
+            left: { style: 'thin', color: { argb: '00000000' } },
+            bottom: { style: 'thin', color: { argb: '00000000' } },
+            right: { style: 'thin', color: { argb: '00000000' } },
+          }
+        }
         return Promise.all(
           filteredWorkshops.map((workshop) => {
             if (
@@ -406,12 +501,45 @@ const GeneralPage = (props) => {
                 for (let i = 0; i < diff; i++) {
                   diffArray.push('')
                 }
-                return workSheet.addRow([...employeeInfo[0], ...diffArray, sum])
+                workSheet.addRow([...employeeInfo[0], ...diffArray, sum])
+                for (let i = 1; i <= 18; i++) {
+                  workSheet.getCell(workSheet.rowCount, i).fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                      argb: index % 2 === 0 ? 'FFFEFF99' : 'FFFFFFFF',
+                    },
+                  }
+                }
+                workSheet.getCell(workSheet.rowCount, 1).border = {
+                  right: { style: 'thin', color: { argb: '00000000' } },
+                }
+                return (workSheet.getCell(workSheet.rowCount, 18).border = {
+                  top: { style: 'thin', color: { argb: '00000000' } },
+                  left: { style: 'thin', color: { argb: '00000000' } },
+                  bottom: { style: 'thin', color: { argb: '00000000' } },
+                  right: { style: 'thin', color: { argb: '00000000' } },
+                })
               })
           }),
         )
       })
       .then(async () => {
+        for (let i = 1; i <= 18; i++) {
+          workSheet.getCell(workSheet.rowCount, i).border = {
+            bottom: { style: 'thin', color: { argb: '00000000' } },
+          }
+        }
+        workSheet.getCell(workSheet.rowCount, 1).border = {
+          right: { style: 'thin', color: { argb: '00000000' } },
+          bottom: { style: 'thin', color: { argb: '00000000' } },
+        }
+        workSheet.getCell(workSheet.rowCount, 18).border = {
+          right: { style: 'thin', color: { argb: '00000000' } },
+          bottom: { style: 'thin', color: { argb: '00000000' } },
+          left: { style: 'thin', color: { argb: '00000000' } },
+        }
+
         const buffer = await workBook.xlsx.writeBuffer()
         saveAs(
           new Blob([buffer]),
