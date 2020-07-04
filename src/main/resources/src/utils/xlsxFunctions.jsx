@@ -199,22 +199,23 @@ export async function exportPriceListToXLSX(
 
   //adding company header
   let temp = workSheet.addRow([''])
-  workSheet.getCell(1, 1).value = {
+  workSheet.getCell(1, 2).value = {
     text: 'ООО «ОСФИКС»',
     hyperlink: 'https://www.osfix.ru',
     tooltip: 'Перейти на сайт www.osfix.ru',
   }
-  workSheet.getCell(1, 1).font = {
+  workSheet.getCell(1, 2).font = {
     bold: true,
   }
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
+    indent: 2
   }
   temp.height = 25
 
   temp = workSheet.addRow([''])
-  workSheet.getCell(2, 1).value = {
+  workSheet.getCell(2, 2).value = {
     text: 'Лиговский пр., 52, Санкт-Петербург, 191040',
     hyperlink: 'https://yandex.ru/maps/-/CKUrY0Ih',
     tooltip: 'Открыть Яндекс.Карту',
@@ -222,11 +223,12 @@ export async function exportPriceListToXLSX(
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
+    indent: 2
   }
   temp.height = 25
 
   temp = workSheet.addRow([''])
-  workSheet.getCell(2, 1).value = {
+  workSheet.getCell(2, 2).value = {
     text: 'www.osfix.ru',
     hyperlink: 'https://www.osfix.ru',
     tooltip: 'Открыть сайт',
@@ -234,11 +236,12 @@ export async function exportPriceListToXLSX(
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
+    indent: 2
   }
   temp.height = 25
 
   temp = workSheet.addRow([''])
-  workSheet.getCell(3, 1).value = {
+  workSheet.getCell(3, 2).value = {
     text: 'info@osfix.ru',
     hyperlink: 'mailto:info@osfix.ru',
     tooltip: 'Написать',
@@ -246,11 +249,12 @@ export async function exportPriceListToXLSX(
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
+    indent: 2
   }
   temp.height = 25
 
   temp = workSheet.addRow([''])
-  workSheet.getCell(4, 1).value = {
+  workSheet.getCell(4, 2).value = {
     text: '+7 (812) 449-10-09',
     hyperlink: 'tel:+78124491009',
     tooltip: 'Позвонить',
@@ -258,6 +262,7 @@ export async function exportPriceListToXLSX(
   temp.alignment = {
     horizontal: 'left',
     vertical: 'middle',
+    indent: 2
   }
   temp.height = 25
 
@@ -267,11 +272,11 @@ export async function exportPriceListToXLSX(
     extension: 'jpeg',
   })
   workSheet.addImage(logoImg, {
-    tl: { col: 5 + optionalCols.length, row: 0.5 },
-    br: { col: 7 + optionalCols.length, row: 3.8 },
+    tl: { col: 0.2, row: 0.5 },
+    br: { col: 1, row: 3.8 },
     // editAs: 'absolute',
   })
-  for (let i = 1; i <= 7 + optionalCols.length; i++) {
+  for (let i = 1; i <= 2; i++) {
     workSheet.getCell(workSheet.rowCount - 1, i).border = {
       bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
     }
