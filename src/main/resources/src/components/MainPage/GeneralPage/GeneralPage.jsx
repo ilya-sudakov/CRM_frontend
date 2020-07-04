@@ -302,7 +302,7 @@ const GeneralPage = (props) => {
               employeesWorksList.filter(
                 (employee) =>
                   employee.employee.workshop === workshop &&
-                  item.relevance !== 'Уволен',
+                  employee.employee.relevance !== 'Уволен',
               ).length > 0
             ) {
               const titleRow = workSheet.addRow([workshop])
@@ -318,14 +318,14 @@ const GeneralPage = (props) => {
                 workSheet.rowCount,
                 18,
               )
-              titleRow.font = { size: 14 }
+              titleRow.font = { size: 14, bold: true }
               titleRow.alignment = { vertical: 'middle', horizontal: 'center' }
             }
             return employeesWorksList
               .filter(
                 (employee) =>
                   employee.employee.workshop === workshop &&
-                  item.relevance !== 'Уволен',
+                  employee.employee.relevance !== 'Уволен',
               )
               .sort((a, b) => {
                 if (a.employee.lastName < b.employee.lastName) {
