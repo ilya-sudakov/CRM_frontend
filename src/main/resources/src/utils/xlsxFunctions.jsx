@@ -392,6 +392,12 @@ export async function exportPriceListToXLSX(
             workSheet.rowCount,
             lastColumnNumber - 4,
           )
+          workSheet.getCell(workSheet.rowCount, 1).border = {
+            left: { style: 'medium', color: { argb: 'FF666666' } },
+            top: { style: 'medium', color: { argb: 'FF666666' } },
+            right: { style: 'medium', color: { argb: 'FF666666' } },
+            bottom: { style: 'medium', color: { argb: 'FF666666' } },
+          }
 
           //adding location type
           workSheet.getCell(
@@ -409,6 +415,12 @@ export async function exportPriceListToXLSX(
             horizontal: 'center',
             vertical: 'middle',
             // wrapText: true,
+          }
+          workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).border = {
+            left: { style: 'medium', color: { argb: 'FF666666' } },
+            top: { style: 'medium', color: { argb: 'FF666666' } },
+            right: { style: 'medium', color: { argb: 'FF666666' } },
+            bottom: { style: 'medium', color: { argb: 'FF666666' } },
           }
           workSheet.mergeCells(
             workSheet.rowCount,
@@ -461,7 +473,7 @@ export async function exportPriceListToXLSX(
           newRowDescription.font = {
             size: 10,
             color: {
-              argb: 'FF777777',
+              argb: 'FF666666',
             },
           }
           newRowDescription.height = 35
