@@ -15,7 +15,7 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            
+
             .main-window__button {
                 font-size: 60%;
                 margin-left: 15px;
@@ -23,7 +23,8 @@
         }
 
         .report-table-page__date {
-            max-width: 250px;
+            width: 100%;
+            max-width: 360px;
             align-self: flex-start;
             margin-left: 30px;
             .input_date {
@@ -34,6 +35,15 @@
                 .react-datepicker__month-text {
                     padding: 5px 0px;
                     border-radius: 2.5px;
+                }
+
+                input {
+                    width: 100%;
+                    max-width: 60px;
+
+                    &:focus {
+                        // max-width: 240px;
+                    }
                 }
             }
         }

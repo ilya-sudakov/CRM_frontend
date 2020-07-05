@@ -151,7 +151,7 @@ export async function exportPriceListToXLSX(
     },
     {
       key: 'group1',
-      width: 12,
+      width: 14,
       style: {
         font: { size: 11, color: { argb: 'FF333333' } },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
@@ -159,7 +159,7 @@ export async function exportPriceListToXLSX(
     },
     {
       key: 'group2',
-      width: 12,
+      width: 14,
       style: {
         font: { size: 11, color: { argb: 'FF333333' } },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
@@ -167,7 +167,7 @@ export async function exportPriceListToXLSX(
     },
     {
       key: 'group3',
-      width: 12,
+      width: 14,
       style: {
         font: { size: 11, color: { argb: 'FF333333' } },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
@@ -175,7 +175,7 @@ export async function exportPriceListToXLSX(
     },
     {
       key: 'group4',
-      width: 12,
+      width: 14,
       style: {
         font: { size: 11, color: { argb: 'FF333333' } },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
@@ -183,7 +183,7 @@ export async function exportPriceListToXLSX(
     },
     {
       key: 'group5',
-      width: 12,
+      width: 14,
       style: {
         font: { size: 11, color: { argb: 'FF333333' } },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
@@ -191,13 +191,15 @@ export async function exportPriceListToXLSX(
     },
     {
       key: 'group6',
-      width: 12,
+      width: 14,
       style: {
         font: { size: 11, color: { argb: 'FF333333' } },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
   ]
+
+  const lastColumnNumber = 7 + optionalCols.length
 
   //adding company header
   let temp = workSheet.addRow([''])
@@ -356,7 +358,7 @@ export async function exportPriceListToXLSX(
           workSheet.rowCount,
           1,
           workSheet.rowCount,
-          7 + optionalCols.length,
+          lastColumnNumber,
         )
         workSheet.addRow([''])
       }
@@ -377,27 +379,44 @@ export async function exportPriceListToXLSX(
           newRowName.height = 50
           newRowName.alignment = {
             wrapText: true,
-            horizontal: 'left',
-            // vertical: 'top',
             vertical: 'middle',
-            indent: 2,
+            // indent: 2,
+            // horizontal: 'left',
+            horizontal: 'center',
           }
-          workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 2)
+          workSheet.mergeCells(
+            workSheet.rowCount,
+            1,
+            workSheet.rowCount,
+            lastColumnNumber - 4,
+          )
 
           //adding location type
-          workSheet.getCell(workSheet.rowCount, 3).value = item.locationType
-          workSheet.getCell(workSheet.rowCount, 3).font = {
+          workSheet.getCell(
+            workSheet.rowCount,
+            lastColumnNumber - 3,
+          ).value = item.locationType.split('/').join('/ ')
+          workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).font = {
             size: 11,
             bold: false,
           }
-          workSheet.getCell(workSheet.rowCount, 3).alignment = {
+          workSheet.getCell(
+            workSheet.rowCount,
+            lastColumnNumber - 3,
+          ).alignment = {
             horizontal: 'center',
             vertical: 'middle',
-            wrapText: true,
+            // wrapText: true,
           }
+          workSheet.mergeCells(
+            workSheet.rowCount,
+            lastColumnNumber - 3,
+            workSheet.rowCount,
+            lastColumnNumber - 2,
+          )
 
           //adding link button
-          workSheet.getCell(workSheet.rowCount, 4).value = {
+          workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).value = {
             text: 'Смотреть на сайте',
             hyperlink:
               item.linkAddress !== undefined
@@ -405,11 +424,15 @@ export async function exportPriceListToXLSX(
                 : 'https://www.osfix.ru',
             tooltip: 'Смотреть на сайте',
           }
-          workSheet.getCell(workSheet.rowCount, 4).alignment = {
+          workSheet.getCell(
+            workSheet.rowCount,
+            lastColumnNumber - 1,
+          ).alignment = {
             horizontal: 'center',
             vertical: 'middle',
+            wrapText: true,
           }
-          workSheet.getCell(workSheet.rowCount, 4).fill = {
+          workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).fill = {
             type: 'pattern',
             pattern: 'solid',
             bgColor: {
@@ -417,13 +440,19 @@ export async function exportPriceListToXLSX(
             },
             fgColor: { argb: 'FFE30235' },
           }
-          workSheet.getCell(workSheet.rowCount, 4).font = {
+          workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
             size: 12,
             bold: false,
             color: {
               argb: 'FFFFFFFF',
             },
           }
+          workSheet.mergeCells(
+            workSheet.rowCount,
+            lastColumnNumber - 1,
+            workSheet.rowCount,
+            lastColumnNumber,
+          )
 
           //adding product group description
           const newRowDescription = workSheet.addRow([item.description])
@@ -439,7 +468,12 @@ export async function exportPriceListToXLSX(
             wrapText: true,
             // horizontal: 'center',
           }
-          workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 3)
+          workSheet.mergeCells(
+            workSheet.rowCount,
+            1,
+            workSheet.rowCount,
+            lastColumnNumber,
+          )
 
           //adding 4 group images
 
@@ -525,7 +559,7 @@ export async function exportPriceListToXLSX(
             workSheet.rowCount,
             5,
             workSheet.rowCount,
-            7 + optionalCols.length,
+            lastColumnNumber,
           )
 
           const tableHeaderRow = workSheet.addRow([
@@ -545,7 +579,7 @@ export async function exportPriceListToXLSX(
                   item.distributorName,
             ),
           ])
-          for (let i = 1; i <= 7 + optionalCols.length; i++) {
+          for (let i = 1; i <= lastColumnNumber; i++) {
             workSheet.getCell(workSheet.rowCount, i).border = {
               left: { style: 'medium', color: { argb: 'FF666666' } },
               top: { style: 'medium', color: { argb: 'FF666666' } },
@@ -579,7 +613,7 @@ export async function exportPriceListToXLSX(
                   : ' ',
               ),
             ])
-            for (let i = 1; i <= 7 + optionalCols.length; i++) {
+            for (let i = 1; i <= lastColumnNumber; i++) {
               workSheet.getCell(workSheet.rowCount, i).border = {
                 left: { style: 'medium', color: { argb: 'FF666666' } },
                 top: { style: 'medium', color: { argb: 'FF666666' } },
@@ -609,15 +643,26 @@ export async function exportPriceListToXLSX(
             right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
           }
           workSheet.getCell(workSheet.rowCount, 1).alignment = {
-            vertical: 'middle',
+            // vertical: 'middle',
+            vertical: 'top',
             horizontal: 'left',
             wrapText: true,
             indent: 1,
           }
-          workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 3)
+          workSheet.mergeCells(
+            workSheet.rowCount,
+            1,
+            workSheet.rowCount,
+            lastColumnNumber,
+          )
+          // rowInfoText.height =
+          //   (item.infoText.split(' ').length > 9
+          //     ? item.infoText.split(' ').length / 9
+          // : 1.5) * 22
+
           rowInfoText.height =
-            (item.infoText.split(' ').length > 9
-              ? item.infoText.split(' ').length / 9
+            (item.infoText.split(' ').length > 17 + optionalCols.length
+              ? item.infoText.split(' ').length / (17 + optionalCols.length)
               : 1.5) * 22
 
           const spaceBetweenRow = workSheet.addRow([''])
@@ -626,7 +671,7 @@ export async function exportPriceListToXLSX(
     }),
   ).then(async () => {
     const buffer = await workBook.xlsx.writeBuffer()
-    saveAs(new Blob([buffer]), 'каталог_продукции.xlsx')
+    saveAs(new Blob([buffer]), 'Osfix_Прайс-лист.xlsx')
   })
 
   // workSheet.columns = [
