@@ -127,4 +127,14 @@
       }
     }
   }
+
+  @media (min-width: 1024px) {
+    & {
+      .main-form {
+        .main-form__form {
+          max-width: 900px;
+        }
+      }
+    }
+  }
 }

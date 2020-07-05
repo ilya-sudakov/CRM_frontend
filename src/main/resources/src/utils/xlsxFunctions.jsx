@@ -4,7 +4,7 @@ import Excel from 'exceljs'
 // import category2Img from '../../../../../assets/priceList/крепеж_для_дпк_досок_excel.png'
 // import category3Img from '../../../../../assets/priceList/крепежные_элементы_excel.png'
 // import categoryImg from '../../../../../assets/priceList/default_category_excel.png'
-import patentImg from '../../../../../assets/priceList/rospatent.png'
+import contactsExcelImg from '../../../../../assets/priceList/contacts_excel.png'
 import FileSaver from 'file-saver'
 import { getDataUri } from './functions.jsx'
 import { getEmployeesByWorkshop } from './RequestsAPI/Employees.jsx'
@@ -116,6 +116,7 @@ export async function exportPriceListToXLSX(
   workBook.created = new Date()
   const rospatentTempImg = await getDataUri('assets/rospatent.png')
   const tempImg = await getDataUri('assets/osfix_logo.png')
+  const contactsImg = await getDataUri('assets/contacts_excel.png')
   const workSheet = workBook.addWorksheet('Каталог продукции')
   // console.log(categories, priceList, optionalCols, locationTypes, disclaimer)
   workSheet.columns = [
@@ -205,83 +206,97 @@ export async function exportPriceListToXLSX(
 
   //adding company header
   let temp = workSheet.addRow([''])
-  workSheet.getCell(1, 2).value = {
+  workSheet.getCell(1, 3).value = {
     text: 'ООО «ОСФИКС»',
     hyperlink: 'https://www.osfix.ru',
     tooltip: 'Перейти на сайт www.osfix.ru',
   }
-  workSheet.getCell(1, 2).font = {
+  workSheet.getCell(1, 3).font = {
+    size: 16,
     bold: true,
   }
-  workSheet.getCell(1, 2).border = {
-    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  }
+  // workSheet.getCell(1,3).border = {
+  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  // }
   temp.alignment = {
-    horizontal: 'left',
+    // horizontal: 'left',
     vertical: 'middle',
-    indent: 2,
+    // indent: 2,
+    horizontal: 'center',
   }
+  workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4)
   temp.height = 25
 
+  // temp = workSheet.addRow([''])
+  // workSheet.getCell(3,3).value = {
+  //   text: 'info@osfix.ru',
+  //   hyperlink: 'mailto:info@osfix.ru',
+  //   tooltip: 'Написать',
+  // }
+  // // workSheet.getCell(3, 3).border = {
+  // //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  // // }
+  // temp.alignment = {
+  //   vertical: 'middle',
+  //   // horizontal: 'left',
+  //   // indent: 2,
+  //   horizontal: 'center',
+  // }
+  // workSheet.mergeCells(
+  //   workSheet.rowCount,
+  //  3,
+  //   workSheet.rowCount,
+  //  4,
+  // )
+  // temp.height = 25
   temp = workSheet.addRow([''])
-  workSheet.getCell(2, 2).value = {
+  workSheet.getCell(2, 3).value = {
     text: 'Лиговский пр., 52, Санкт-Петербург, 191040',
     hyperlink: 'https://yandex.ru/maps/-/CKUrY0Ih',
     tooltip: 'Открыть Яндекс.Карту',
   }
-  workSheet.getCell(2, 2).border = {
-    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  }
-  temp.alignment = {
-    horizontal: 'left',
+  // workSheet.getCell(2,3).border = {
+  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  // }
+  workSheet.getCell(2, 3).alignment = {
     vertical: 'middle',
-    indent: 2,
+    // horizontal: 'left',
+    // indent: 2,
+    horizontal: 'center',
   }
+  workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4)
   temp.height = 25
 
   temp = workSheet.addRow([''])
-  workSheet.getCell(2, 2).value = {
+  workSheet.getCell(3, 3).value = 'info@osfix.ru, +7 (812) 449-10-09'
+  temp.alignment = {
+    vertical: 'middle',
+    // horizontal: 'left',
+    // indent: 2,
+    horizontal: 'center',
+  }
+  workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4)
+  temp.height = 25
+
+  temp = workSheet.addRow([''])
+  workSheet.getCell(4, 3).value = {
     text: 'www.osfix.ru',
     hyperlink: 'https://www.osfix.ru',
     tooltip: 'Открыть сайт',
   }
-  workSheet.getCell(2, 2).border = {
-    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  // workSheet.getCell(2, 3).border = {
+  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  // }
+  workSheet.getCell(4, 3).font = {
+    size: 14,
   }
-  temp.alignment = {
-    horizontal: 'left',
+  workSheet.getCell(4, 3).alignment = {
     vertical: 'middle',
-    indent: 2,
+    // horizontal: 'left',
+    // indent: 2,
+    horizontal: 'center',
   }
-  temp.height = 25
-
-  temp = workSheet.addRow([''])
-  workSheet.getCell(3, 2).value = {
-    text: 'info@osfix.ru',
-    hyperlink: 'mailto:info@osfix.ru',
-    tooltip: 'Написать',
-  }
-  workSheet.getCell(3, 2).border = {
-    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  }
-  temp.alignment = {
-    horizontal: 'left',
-    vertical: 'middle',
-    indent: 2,
-  }
-  temp.height = 25
-
-  temp = workSheet.addRow([''])
-  workSheet.getCell(4, 2).value = {
-    text: '+7 (812) 449-10-09',
-    hyperlink: 'tel:+78124491009',
-    tooltip: 'Позвонить',
-  }
-  temp.alignment = {
-    horizontal: 'left',
-    vertical: 'middle',
-    indent: 2,
-  }
+  workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4)
   temp.height = 25
 
   //adding logo assets/osfix_logo.png
@@ -289,11 +304,6 @@ export async function exportPriceListToXLSX(
     base64: tempImg,
     extension: 'jpeg',
   })
-  // workSheet.addImage(logoImg, {
-  //   tl: { col: 0.2, row: 0.5 },
-  //   br: { col: 1, row: 3.8 },
-  //   // editAs: 'absolute',
-  // })
 
   workSheet.mergeCells(1, 1, 4, 1)
   workSheet.addImage(logoImg, {
@@ -302,15 +312,34 @@ export async function exportPriceListToXLSX(
     // editAs: 'absolute',
   })
 
-  for (let i = 1; i <= 2; i++) {
-    workSheet.getCell(workSheet.rowCount - 1, i).border = {
+  for (let i = 1; i <= lastColumnNumber; i++) {
+    workSheet.getCell(workSheet.rowCount, i).border = {
       bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
     }
   }
-  workSheet.getCell(4, 2).border = {
-    right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-    bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  }
+
+  //adding contacts icons
+  const contactsExcelImg = workBook.addImage({
+    base64: contactsImg,
+    extension: 'jpeg',
+  })
+  workSheet.addImage(contactsExcelImg, {
+    tl: { col: 2.1, row: 0.3 },
+    ext: { width: 17, height: 96 },
+    // editAs: 'absolute',
+  })
+
+  temp = workSheet.addRow([''])
+  temp.height = 25
+  // for (let i = 1; i <= 2; i++) {
+  //   workSheet.getCell(workSheet.rowCount - 1, i).border = {
+  //     bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  //   }
+  // }
+  // workSheet.getCell(4, 2).border = {
+  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  //   bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  // }
 
   Promise.all(
     categories.map((category) => {
