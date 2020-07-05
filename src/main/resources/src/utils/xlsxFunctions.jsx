@@ -4,6 +4,7 @@ import Excel from 'exceljs'
 // import category2Img from '../../../../../assets/priceList/крепеж_для_дпк_досок_excel.png'
 // import category3Img from '../../../../../assets/priceList/крепежные_элементы_excel.png'
 // import categoryImg from '../../../../../assets/priceList/default_category_excel.png'
+import patentImg from '../../../../../assets/priceList/rospatent.png'
 import FileSaver from 'file-saver'
 import { getDataUri } from './functions.jsx'
 import { getEmployeesByWorkshop } from './RequestsAPI/Employees.jsx'
@@ -113,6 +114,7 @@ export async function exportPriceListToXLSX(
   let workBook = new Excel.Workbook()
   workBook.creator = 'Osfix'
   workBook.created = new Date()
+  const rospatentTempImg = await getDataUri('assets/rospatent.png')
   const tempImg = await getDataUri('assets/osfix_logo.png')
   const workSheet = workBook.addWorksheet('Каталог продукции')
   // console.log(categories, priceList, optionalCols, locationTypes, disclaimer)
@@ -481,12 +483,21 @@ export async function exportPriceListToXLSX(
             item.groupImg1 !== '' ||
             item.groupImg2 !== '' ||
             item.groupImg3 !== '' ||
-            item.groupImg4 !== ''
+            item.groupImg4 !== '' ||
+            item.proprietaryItemText1 !== undefined ||
+            item.proprietaryItemText2 !== undefined
           ) {
             const imagesRow = workSheet.addRow([''])
             imagesRow.height = 120
 
             let imageIndex = 0
+
+            workSheet.mergeCells(
+              workSheet.rowCount,
+              lastColumnNumber - 1,
+              workSheet.rowCount,
+              lastColumnNumber,
+            )
 
             // add image to workbook by base64
             if (item.groupImg1 !== '') {
@@ -534,6 +545,39 @@ export async function exportPriceListToXLSX(
                 br: { col: ++imageIndex, row: workSheet.rowCount },
                 editAs: 'absolute',
               })
+            }
+          }
+
+          //adding patent data rospatentTempImg
+          if (
+            item.proprietaryItemText1 !== undefined ||
+            item.proprietaryItemText2 !== undefined
+          ) {
+            const rospatentImg = workBook.addImage({
+              base64: rospatentTempImg,
+              extension: 'png',
+            })
+            workSheet.addImage(rospatentImg, {
+              tl: {
+                col: lastColumnNumber - 2 + 0.6,
+                row: workSheet.rowCount - 1 + 0.3,
+              },
+              ext: { width: 125, height: 80 },
+            })
+            workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).value =
+              item.proprietaryItemText1 !== undefined
+                ? item.proprietaryItemText1 + '\n'
+                : item.proprietaryItemText2 + '\n'
+            workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
+              size: 12,
+            }
+            workSheet.getCell(
+              workSheet.rowCount,
+              lastColumnNumber - 1,
+            ).alignment = {
+              vertical: 'bottom',
+              horizontal: 'center',
+              wrapText: true,
             }
           }
 
