@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from 'react'
-// import XLSX2 from 'xlsx'
-// import XLSX2 from 'xlsx'
-// import Excel from 'exceljs'
-// import FileSaver from 'file-saver'
 import { AdminWorkspace } from '../lazyImports.jsx'
 import { Link } from 'react-router-dom'
 import './GeneralPage.scss'
@@ -10,13 +6,6 @@ import '../../../utils/MainWindow/MainWindow.scss'
 import DownloadIcon from '../../../../../../../assets/download.svg'
 import graphIcon from '../../../../../../../assets/graph-icon.svg'
 import calenderIcon from '../../../../../../../assets/tableview/calendar.svg'
-// import {
-//   getRecordedWorkByMonth,
-//   getWorkReportByEmployee,
-// } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-// import { getEmployeesByWorkshop } from '../../../utils/RequestsAPI/Employees.jsx'
-// import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-// import ManagerWorkspace from './ManagerWorkspace/ManagerWorkspace.jsx'
 import { exportReportTableExcel } from '../../../utils/xlsxFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 
