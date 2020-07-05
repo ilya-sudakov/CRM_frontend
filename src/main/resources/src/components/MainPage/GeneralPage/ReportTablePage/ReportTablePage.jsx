@@ -18,7 +18,7 @@ import {
 } from '../../../../utils/functions.jsx'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
-import { testExcelJSLibrary } from '../../../../utils/xlsxFunctions.jsx'
+import { exportReportTableExcel } from '../../../../utils/xlsxFunctions.jsx'
 import { UserContext } from '../../../../App.js'
 
 const ReportTablePage = (props) => {
@@ -199,32 +199,8 @@ const ReportTablePage = (props) => {
             className="main-window__button main-window__button--inverted"
             inverted
             isLoading={isLoading}
-            onClick={() => {
+            onClick={async () => {
               setIsLoading(true)
-              // const workshops = [
-              //   'ЦехЛЭМЗ',
-              //   'ЦехЛепсари',
-              //   'ЦехЛиговский',
-              //   'Офис',
-              //   'Уволенные',
-              // ]
-              // let filteredWorkshops = []
-              // if (
-              //   props.userHasAccess(['ROLE_ADMIN']) ||
-              //   props.userHasAccess(['ROLE_DISPATCHER'])
-              // ) {
-              //   filteredWorkshops = workshops
-              // } else if (props.userHasAccess(['ROLE_LEMZ'])) {
-              //   filteredWorkshops = ['ЦехЛЭМЗ']
-              // } else if (props.userHasAccess(['ROLE_LEPSARI'])) {
-              //   filteredWorkshops = ['ЦехЛепсари']
-              // } else if (props.userHasAccess(['ROLE_LIGOVSKIY'])) {
-              //   filteredWorkshops = ['ЦехЛиговский']
-              // } else if (props.userHasAccess(['ROLE_ENGINEER'])) {
-              //   filteredWorkshops = ['Офис']
-              // } else if (props.userHasAccess(['ROLE_MANAGER'])) {
-              //   filteredWorkshops = ['Офис']
-              // }
               const filteredWorkshops = [
                 'ЦехЛЭМЗ',
                 'ЦехЛепсари',
@@ -232,9 +208,8 @@ const ReportTablePage = (props) => {
                 'Офис',
                 'Уволенные',
               ]
-              testExcelJSLibrary(new Date(date), filteredWorkshops).then(() =>
-                setIsLoading(false),
-              )
+              await exportReportTableExcel(new Date(date), filteredWorkshops)
+              setIsLoading(false)
             }}
           />
         </div>

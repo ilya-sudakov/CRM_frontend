@@ -648,7 +648,7 @@ export async function exportPriceListToXLSX(
   // ]
 }
 
-export async function testExcelJSLibrary(curDate, filteredWorkshops) {
+export async function exportReportTableExcel(curDate, filteredWorkshops) {
   // setIsLoading(true)
   const dates = [[''], ['']]
   for (
@@ -856,7 +856,7 @@ export async function testExcelJSLibrary(curDate, filteredWorkshops) {
   let employeesList = []
   let employeesWorksList = []
 
-  Promise.all(
+  return Promise.all(
     filteredWorkshops.map((workshop) => {
       // console.log(workshop);
       return getEmployeesByWorkshop({
