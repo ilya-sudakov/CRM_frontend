@@ -181,6 +181,7 @@ const ReportTablePage = (props) => {
   }
 
   useEffect(() => {
+    document.title = 'Табель'
     let abortController = new AbortController()
     getAllEmployeesWorkData(date, abortController.signal)
     return function cancel() {
