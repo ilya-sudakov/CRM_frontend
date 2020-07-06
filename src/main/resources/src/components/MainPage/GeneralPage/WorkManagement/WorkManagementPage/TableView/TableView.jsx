@@ -186,7 +186,11 @@ const TableView = (props) => {
                                     <div>
                                       {product.product.name +
                                         ' (' +
-                                        addSpaceDelimiter(product.quantity) +
+                                        addSpaceDelimiter(
+                                          product.quantity !== null
+                                            ? product.quantity
+                                            : 0,
+                                        ) +
                                         ' шт.)'}
                                     </div>
                                   )
@@ -196,7 +200,11 @@ const TableView = (props) => {
                                     <div>
                                       {draft.name +
                                         ' (' +
-                                        draft.quantity +
+                                        addSpaceDelimiter(
+                                          draft.quantity !== null
+                                            ? draft.quantity
+                                            : 0,
+                                        ) +
                                         ' шт.)'}
                                     </div>
                                   )

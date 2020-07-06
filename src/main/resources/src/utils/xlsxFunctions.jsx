@@ -104,12 +104,9 @@ export const selectCellRange = (sheet, startCell, endCell) => {
 }
 
 export async function exportPriceListToXLSX(
-  categories,
-  priceList,
-  optionalCols,
-  locationTypes,
-  disclaimer,
-  titlePage,
+  categories = [],
+  priceList = [],
+  optionalCols = [],
 ) {
   let workBook = new Excel.Workbook()
   workBook.creator = 'Osfix'
@@ -508,10 +505,8 @@ export async function exportPriceListToXLSX(
           }
 
           //adding location type
-          workSheet.getCell(
-            workSheet.rowCount,
-            lastColumnNumber - 3,
-          ).value = item.locationType.split('/').join('/ ')
+          workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).value =
+            item.locationType //.split('/').join('/ ')
           workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).font = {
             size: 11,
             bold: false,
@@ -873,7 +868,10 @@ export async function exportPriceListToXLSX(
   // ]
 }
 
-export async function exportReportTableExcel(curDate, filteredWorkshops) {
+export async function exportReportTableExcel(
+  curDate = new Date(),
+  filteredWorkshops = [],
+) {
   // setIsLoading(true)
   const dates = [[''], ['']]
   for (
@@ -1146,11 +1144,7 @@ export async function exportReportTableExcel(curDate, filteredWorkshops) {
             .map((item, index) => {
               let employeeInfo = [
                 [
-                  item.employee.lastName +
-                    ' ' +
-                    item.employee.name +
-                    ' ' +
-                    item.employee.middleName,
+                  `${item.employee.lastName} ${item.employee.name} ${item.employee.middleName}`,
                 ],
               ]
               let sum = 0
@@ -1285,11 +1279,7 @@ export async function exportReportTableExcel(curDate, filteredWorkshops) {
               // console.log(res);
               let employeeInfo = [
                 [
-                  res.employee.lastName +
-                    ' ' +
-                    res.employee.name +
-                    ' ' +
-                    res.employee.middleName,
+                  `${res.employee.lastName} ${res.employee.name} ${res.employee.middleName}`,
                 ],
               ]
               let sum = 0

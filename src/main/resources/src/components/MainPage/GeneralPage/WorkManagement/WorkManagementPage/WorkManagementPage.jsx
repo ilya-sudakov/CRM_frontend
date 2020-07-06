@@ -434,14 +434,6 @@ const WorkManagementPage = (props) => {
                     >
                       {
                         workshop.name
-                        /* +  ' (' +
-                        Object.entries(employeesMap).filter(
-                          (item) =>
-                            workshop.name === employees[item[0]]?.workshop,
-                        ).length +
-                        ' из ' +
-                        workshop.employees.length +
-                        ' сотрудников)' */
                       }
                       <img
                         className={

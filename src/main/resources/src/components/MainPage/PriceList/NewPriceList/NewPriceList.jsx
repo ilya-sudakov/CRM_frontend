@@ -441,9 +441,6 @@ const NewPriceList = (props) => {
                         }
                         return 0
                       }),
-                    locationTypes,
-                    disclaimer,
-                    titlePage,
                   ).then(() => {
                     setIsLoading(false)
                   })
