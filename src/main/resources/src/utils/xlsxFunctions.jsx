@@ -127,8 +127,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -140,8 +140,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -153,8 +153,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -166,8 +166,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -179,8 +179,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -192,8 +192,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -205,8 +205,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -218,8 +218,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -231,8 +231,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -244,8 +244,8 @@ export async function exportPriceListToXLSX(
         font: {
           size: 11,
           color: { argb: 'FF333333' },
-          name: 'DejaVu',
-          family: 2,
+          // name: 'DejaVu',
+          // family: 2,
         },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
@@ -310,6 +310,10 @@ export async function exportPriceListToXLSX(
   // workSheet.getCell(2,3).border = {
   //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
   // }
+  workSheet.getCell(2, 3).font = {
+    name: 'DejaVu',
+    family: 2,
+  }
   workSheet.getCell(2, 3).alignment = {
     vertical: 'middle',
     // horizontal: 'left',
@@ -326,6 +330,10 @@ export async function exportPriceListToXLSX(
     // horizontal: 'left',
     // indent: 2,
     horizontal: 'center',
+  }
+  temp.font = {
+    name: 'DejaVu',
+    family: 2,
   }
   workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4)
   temp.height = 25
