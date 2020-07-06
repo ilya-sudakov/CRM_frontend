@@ -124,7 +124,12 @@ export async function exportPriceListToXLSX(
       // key: 'number',
       width: 30,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -132,7 +137,12 @@ export async function exportPriceListToXLSX(
       key: 'number',
       width: 30,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -140,7 +150,12 @@ export async function exportPriceListToXLSX(
       key: 'name',
       width: 30,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -148,7 +163,12 @@ export async function exportPriceListToXLSX(
       key: 'units',
       width: 30,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -156,7 +176,12 @@ export async function exportPriceListToXLSX(
       key: 'group1',
       width: 14,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -164,7 +189,12 @@ export async function exportPriceListToXLSX(
       key: 'group2',
       width: 14,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -172,7 +202,12 @@ export async function exportPriceListToXLSX(
       key: 'group3',
       width: 14,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -180,7 +215,12 @@ export async function exportPriceListToXLSX(
       key: 'group4',
       width: 14,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -188,7 +228,12 @@ export async function exportPriceListToXLSX(
       key: 'group5',
       width: 14,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -196,7 +241,12 @@ export async function exportPriceListToXLSX(
       key: 'group6',
       width: 14,
       style: {
-        font: { size: 11, color: { argb: 'FF333333' } },
+        font: {
+          size: 11,
+          color: { argb: 'FF333333' },
+          name: 'DejaVu',
+          family: 2,
+        },
         alignment: { vertical: 'middle', horizontal: 'center', wrapText: true },
       },
     },
@@ -214,6 +264,8 @@ export async function exportPriceListToXLSX(
   workSheet.getCell(1, 3).font = {
     size: 16,
     bold: true,
+    name: 'DejaVu',
+    family: 2,
   }
   // workSheet.getCell(1,3).border = {
   //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
@@ -289,6 +341,8 @@ export async function exportPriceListToXLSX(
   // }
   workSheet.getCell(4, 3).font = {
     size: 14,
+    name: 'DejaVu',
+    family: 2,
   }
   workSheet.getCell(4, 3).alignment = {
     vertical: 'middle',
@@ -312,11 +366,24 @@ export async function exportPriceListToXLSX(
     // editAs: 'absolute',
   })
 
+  //border-bottom
   for (let i = 1; i <= lastColumnNumber; i++) {
     workSheet.getCell(workSheet.rowCount, i).border = {
       bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
     }
   }
+
+  //border-right
+  for (let i = 1; i <= workSheet.rowCount; i++) {
+    workSheet.getCell(i, lastColumnNumber).border = {
+      ...workSheet.getCell(i, lastColumnNumber).border,
+      right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+    }
+  }
+  // workSheet.getCell(workSheet.rowCount, lastColumnNumber).border = {
+  //   bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
+  // }
 
   //adding contacts icons
   const contactsExcelImg = workBook.addImage({
@@ -379,6 +446,8 @@ export async function exportPriceListToXLSX(
         rowCategoryName.font = {
           size: 18,
           bold: true,
+          name: 'DejaVu',
+          family: 2,
         }
         rowCategoryName.height = 80
         rowCategoryName.alignment = {
@@ -401,6 +470,8 @@ export async function exportPriceListToXLSX(
           newRowName.font = {
             size: 14,
             bold: true,
+            name: 'DejaVu',
+            family: 2,
           }
           // workSheet.getCell(workSheet.rowCount, 1).value = {
           //   text: '\t' + item.name,
@@ -436,6 +507,8 @@ export async function exportPriceListToXLSX(
           workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).font = {
             size: 11,
             bold: false,
+            // name: 'DejaVu',
+            // family: 2,
           }
           workSheet.getCell(
             workSheet.rowCount,
@@ -489,6 +562,8 @@ export async function exportPriceListToXLSX(
             color: {
               argb: 'FFFFFFFF',
             },
+            // name: 'DejaVu',
+            // family: 2,
           }
           workSheet.mergeCells(
             workSheet.rowCount,
@@ -504,6 +579,8 @@ export async function exportPriceListToXLSX(
             color: {
               argb: 'FF666666',
             },
+            // name: 'DejaVu',
+            // family: 2,
           }
           newRowDescription.height = 35
           newRowDescription.alignment = {
@@ -611,6 +688,8 @@ export async function exportPriceListToXLSX(
                 : item.proprietaryItemText2 + '\n'
             workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
               size: 12,
+              // name: 'DejaVu',
+              // family: 2,
             }
             workSheet.getCell(
               workSheet.rowCount,
@@ -633,6 +712,8 @@ export async function exportPriceListToXLSX(
           ])
           fakeTableHeaderRow.font = {
             italic: true,
+            // name: 'DejaVu',
+            // family: 2,
           }
           workSheet.getCell(workSheet.rowCount, 5).border = {
             left: { style: 'medium', color: { argb: 'FF666666' } },
@@ -677,6 +758,8 @@ export async function exportPriceListToXLSX(
             color: {
               argb: 'FF111111',
             },
+            // name: 'DejaVu',
+            // family: 2,
           }
           tableHeaderRow.height = 30
           item.products.map((product) => {
@@ -723,6 +806,8 @@ export async function exportPriceListToXLSX(
             color: {
               argb: 'FF000000',
             },
+            // name: 'DejaVu',
+            // family: 2,
           }
           workSheet.getCell(workSheet.rowCount, 1).border = {
             right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
