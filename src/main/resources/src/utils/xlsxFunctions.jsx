@@ -723,6 +723,7 @@ export async function exportPriceListToXLSX(
             // name: 'DejaVu',
             // family: 2,
           }
+          fakeTableHeaderRow.height = 20
           workSheet.getCell(workSheet.rowCount, 5).border = {
             left: { style: 'medium', color: { argb: 'FF666666' } },
             top: { style: 'medium', color: { argb: 'FF666666' } },
@@ -771,7 +772,7 @@ export async function exportPriceListToXLSX(
           }
           tableHeaderRow.height = 30
           item.products.map((product) => {
-            workSheet.addRow([
+            const productRow = workSheet.addRow([
               product.number,
               product.name,
               '',
@@ -789,6 +790,7 @@ export async function exportPriceListToXLSX(
                   : ' ',
               ),
             ])
+            productRow.height = 25
             for (let i = 1; i <= lastColumnNumber; i++) {
               workSheet.getCell(workSheet.rowCount, i).border = {
                 left: { style: 'medium', color: { argb: 'FF666666' } },
