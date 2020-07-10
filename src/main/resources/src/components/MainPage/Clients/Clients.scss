@@ -192,10 +192,13 @@
       }
       .main-window__menu {
         width: calc(100% - 10px) !important;
+        
+        overflow-x: auto;
 
         .main-window__item {
-          width: 100%;
-          padding: 10px 20px;
+          // width: 100%;
+          // padding: 10px 20px;
+          white-space: nowrap;
         }
       }
     }

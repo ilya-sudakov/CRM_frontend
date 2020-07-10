@@ -166,14 +166,14 @@
         width: calc(100% - 15px);
 
         .main-window__item {
-          flex-direction: column;
-          justify-content: space-between;
-          padding: 10px 20px;
-          width: 100%;
+          // flex-direction: column;
+          // justify-content: space-between;
+          padding: 10px 25px;
+          // width: 100%;
 
           .main-window__addButton {
-            margin: 0;
-            margin-top: 5px;
+            // margin: 0;
+            // margin-top: 5px;
           }
         }
       }
@@ -194,7 +194,7 @@
     .main-window__header {
       .main-window__menu {
         .main-window__item {
-          padding: 10px 10px !important;
+          padding: 10px 25px !important;
         }
       }
     }
