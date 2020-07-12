@@ -224,7 +224,7 @@
           &:nth-child(7) {
             flex: 0 1 15%;
 
-            max-width: 120px;
+            max-width: 135px;
             // overflow-x: hidden;
             // text-overflow: ellipsis;
             // white-space: nowrap;
@@ -238,7 +238,8 @@
 
         .main-window__actions {
           flex: 0 1 15%;
-          max-width: 100px;
+          min-width: 50px;
+          max-width: 80px;
         }
 
         .main-window__status_select,
