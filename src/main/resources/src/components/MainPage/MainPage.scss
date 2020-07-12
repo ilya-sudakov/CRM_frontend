@@ -7,7 +7,6 @@
   &__content {
     display: flex;
     flex-direction: row;
-    //1px from header border
     min-height: calc(100vh - 60px - 0px);
 
     .main_page__overlay {
@@ -29,6 +28,9 @@
       overflow-x: auto;
       // background-color: $secondary-background-color;
       background-color: #f6f5f8;
+
+      //dark-theme
+      // background-color: darken($side_menu__background, 10%);
 
       //old method
       // max-height: calc(100vh - 60px);

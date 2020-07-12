@@ -35,6 +35,10 @@
         // margin-bottom: 5px;
     }
 
+    .main-window__info-panel {
+        margin-bottom: 0;
+    }
+
     @media (max-width: 768px) {
         .main-window__header {
             width: 100%;

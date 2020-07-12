@@ -9,7 +9,8 @@ import {
   getRequestLEMZById,
   deleteProductsToRequestLEMZ,
 } from '../../../utils/RequestsAPI/Workshop/LEMZ.jsx'
-import TableView from './TableView/TableView.jsx'
+import TableViewOld from './TableView/TableView.jsx'
+import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
@@ -79,6 +80,48 @@ const WorkshopLEMZ = (props) => {
       })
   }
 
+  //Статусы заявок
+  const [requestStatuses, setRequestStatutes] = useState([
+    {
+      name: 'Проблема/Материалы',
+      oldName: 'Проблема-материалы',
+      className: 'materials',
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+      visible: false,
+    },
+    {
+      name: 'Отгружено',
+      className: 'shipped',
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+      visible: false,
+    },
+    {
+      name: 'Готово к отгрузке',
+      oldName: 'Готово',
+      className: 'ready',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      visible: false,
+    },
+    {
+      name: 'В производстве',
+      className: 'in-production',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      visible: false,
+    },
+    {
+      name: 'Ожидание',
+      className: 'waiting',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      visible: false,
+    },
+    {
+      name: 'Приоритет',
+      className: 'priority',
+      access: ['ROLE_ADMIN'],
+      visible: false,
+    },
+  ])
+
   return (
     <div className="requests_LEMZ">
       <div className="main-window">
@@ -131,7 +174,47 @@ const WorkshopLEMZ = (props) => {
             Всего: {requestsLEMZ.length} записей
           </div>
         </div>
+
         <TableView
+          data={requestsLEMZ
+            .filter((item) => {
+              if (curPage === 'Открытые') {
+                if (item.status !== 'Завершено') return true
+              } else {
+                if (item.status === 'Завершено') return true
+              }
+            })
+            .filter((item) => {
+              let check = false
+              let noActiveStatuses = true
+              requestStatuses.map((status) => {
+                requestStatuses.map((status) => {
+                  if (status.visible) {
+                    noActiveStatuses = false
+                  }
+                })
+                if (
+                  noActiveStatuses === true ||
+                  (status.visible &&
+                    (status.name === item.status ||
+                      status.oldName === item.status))
+                ) {
+                  check = true
+                  return
+                }
+              })
+              return check
+            })}
+          workshopName="lemz"
+          isLoading={isLoading}
+          loadData={loadRequestsLEMZ}
+          deleteItem={deleteItem}
+          // transferRequest={}
+          copyRequest={copyRequest}
+          searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
+        />
+        {/* <TableViewOld
           data={requestsLEMZ.filter((item) => {
             if (curPage === 'Открытые') {
               if (item.status !== 'Завершено') return true
@@ -144,7 +227,7 @@ const WorkshopLEMZ = (props) => {
           deleteItem={deleteItem}
           copyRequest={copyRequest}
           searchQuery={searchQuery}
-        />
+        /> */}
       </div>
     </div>
   )
