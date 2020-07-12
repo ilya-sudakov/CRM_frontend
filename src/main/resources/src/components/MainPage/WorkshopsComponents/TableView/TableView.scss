@@ -45,7 +45,7 @@
               align-self: flex-start;
             }
             &:nth-child(7) {
-              margin-top: calc(var(--padding-top) - 5px);
+              margin-top: var(--padding-top);
               align-self: flex-start;
               -webkit-line-clamp: 6;
             }
