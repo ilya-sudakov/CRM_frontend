@@ -124,7 +124,7 @@ const SideMenu = (props) => {
           name: 'Очередь производства',
           pathname: '/lemz/workshop-lemz',
           link: '/lemz/workshop-lemz',
-          icon: listImg,
+          icon: playListImg,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
@@ -170,7 +170,7 @@ const SideMenu = (props) => {
           name: 'Очередь производства',
           pathname: '/lepsari/workshop-lepsari',
           link: '/lepsari/workshop-lepsari',
-          icon: listImg,
+          icon: playListImg,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
         },
         {
