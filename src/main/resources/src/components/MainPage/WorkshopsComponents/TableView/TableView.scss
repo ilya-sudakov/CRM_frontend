@@ -7,7 +7,6 @@
   --priority: #e08989;
   --completed: #98dda6;
   --ready: #77c78a;
-  --in-production: #c99cb8;
   --in-production: #cfafc3;
   --waiting: #84c7b1;
   --problem: #d6574e;
@@ -309,7 +308,7 @@
               }
               &:nth-child(2) {
                 flex: 0 1 50%;
-                max-width: 125px;
+                // max-width: 125px;
               }
               &:nth-child(3) {
                 flex: 0 1 30%;
@@ -323,6 +322,7 @@
                 max-width: 100px;
                 background-color: transparent;
                 margin-top: 0;
+                align-self: center;
               }
             }
           }

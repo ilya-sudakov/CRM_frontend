@@ -18,6 +18,10 @@ import {
   addSpaceDelimiter,
 } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import {
+  editRequestLepsariStatus,
+  editProductStatusToRequestLepsari,
+} from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -69,14 +73,15 @@ const TableView = (props) => {
 
   const [productsStatuses, setProductsStatutes] = useState([
     {
+      name: 'В работе',
+      oldName: null,
+      className: 'production',
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
+    },
+    {
       name: 'Завершено',
       className: 'completed',
       access: ['ROLE_ADMIN'],
-    },
-    {
-      name: 'В работе',
-      className: 'production',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
     },
     {
       name: 'Приоритет',
@@ -92,8 +97,8 @@ const TableView = (props) => {
       product: (body, id) => editProductStatusToRequestLEMZ(body, id),
     },
     lepsari: {
-      request: (body, id) => editRequestLEMZStatus(body, id),
-      product: (body, id) => editProductStatusToRequestLEMZ(body, id),
+      request: (body, id) => editRequestLepsariStatus(body, id),
+      product: (body, id) => editProductStatusToRequestLepsari(body, id),
     },
   })
 
@@ -143,9 +148,11 @@ const TableView = (props) => {
   const searchQuery = (data) => {
     const query = props.searchQuery.toLowerCase()
     return data.filter((item) => {
-      return item.lemzProducts.length !== 0 &&
-        item.lemzProducts[0].name !== null
-        ? item.lemzProducts[0].name.toLowerCase().includes(query) ||
+      return item[`${props.workshopName}Products`].length !== 0 &&
+        item[`${props.workshopName}Products`][0].name !== null
+        ? item[`${props.workshopName}Products`][0].name
+            .toLowerCase()
+            .includes(query) ||
             item.id.toString().includes(query) ||
             formatDateString(item.date).includes(query) ||
             item.codeWord.toLowerCase().includes(query) ||
@@ -222,7 +229,7 @@ const TableView = (props) => {
                       item.oldName === request.status,
                   )?.className +
                   ' ' +
-                  (request?.lemzProducts?.length > 1
+                  (request?.[`${props.workshopName}Products`]?.length > 1
                     ? 'main-window__list-item--multiple-items'
                     : '')
                 }
@@ -259,75 +266,85 @@ const TableView = (props) => {
                     <span>Кол-во</span>
                     <span>Статус</span>
                   </div>
-                  {request?.lemzProducts.map((product) => {
-                    return (
-                      <div
-                        className={`main-window__list-col-row main-window__list-item--${
-                          productsStatuses.find(
-                            (item) =>
-                              item.className === product.status ||
-                              item.oldName === product.status,
-                          )?.className
-                        }`}
-                      >
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Название:
-                          </div>
-                          {product.name}
-                        </span>
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Упаковка:
-                          </div>
-                          {product.packaging}
-                        </span>
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Кол-во:
-                          </div>
-                          {addSpaceDelimiter(product.quantity)}
-                        </span>
-                        <span
-                          className={
-                            'main-window__list-item--' +
+                  {request?.[`${props.workshopName}Products`]
+                    .sort((a, b) => {
+                      if (a.name < b.name) {
+                        return -1
+                      }
+                      if (a.name > b.name) {
+                        return 1
+                      }
+                      return 0
+                    })
+                    .map((product) => {
+                      return (
+                        <div
+                          className={`main-window__list-col-row main-window__list-item--${
                             productsStatuses.find(
                               (item) =>
                                 item.className === product.status ||
                                 item.oldName === product.status,
                             )?.className
-                          }
+                          }`}
                         >
-                          <div className="main-window__mobile-text">
-                            Статус:
-                          </div>
-                          <select
-                            // id={product.id}
-                            className="main-window__status_select"
-                            value={product.status}
-                            onChange={(event) =>
-                              handleProductStatusChange(
-                                product.id,
-                                event.target.value,
-                              )
+                          <span>
+                            <div className="main-window__mobile-text">
+                              Название:
+                            </div>
+                            {product.name}
+                          </span>
+                          <span>
+                            <div className="main-window__mobile-text">
+                              Упаковка:
+                            </div>
+                            {product.packaging}
+                          </span>
+                          <span>
+                            <div className="main-window__mobile-text">
+                              Кол-во:
+                            </div>
+                            {addSpaceDelimiter(product.quantity)}
+                          </span>
+                          <span
+                            className={
+                              'main-window__list-item--' +
+                              productsStatuses.find(
+                                (item) =>
+                                  item.className === product.status ||
+                                  item.oldName === product.status,
+                              )?.className
                             }
                           >
-                            {productsStatuses.map((status) => (
-                              <option
-                                value={
-                                  status.oldName === product.status
-                                    ? status.oldName
-                                    : status.className
-                                }
-                              >
-                                {status.name}
-                              </option>
-                            ))}
-                          </select>
-                        </span>
-                      </div>
-                    )
-                  })}
+                            <div className="main-window__mobile-text">
+                              Статус:
+                            </div>
+                            <select
+                              // id={product.id}
+                              className="main-window__status_select"
+                              value={product.status}
+                              onChange={(event) =>
+                                handleProductStatusChange(
+                                  product.id,
+                                  event.target.value,
+                                )
+                              }
+                            >
+                              {productsStatuses.map((status) => (
+                                <option
+                                  value={
+                                    status.oldName === product.status
+                                      ? status.oldName
+                                      : status.className
+                                  }
+                                >
+                                  {status.name}
+                                </option>
+                              ))}
+                            </select>
+                          </span>
+                        </div>
+                      )
+                    })}
                 </div>
                 <span>
                   <div className="main-window__mobile-text">Кодовое слово:</div>
@@ -407,7 +424,7 @@ const TableView = (props) => {
                       data-id={request.id}
                       className="main-window__action"
                       title="Удаление заявки"
-                      onClick={props.deleteItem}
+                      onClick={(event) => props.deleteItem(event)}
                     >
                       <img className="main-window__img" src={deleteSVG} />
                     </div>

@@ -24,7 +24,8 @@ const WorkshopLEMZ = (props) => {
   const [curPage, setCurPage] = useState('Открытые')
 
   const deleteItem = (event) => {
-    const id = event.target.dataset.id
+    const id = event.currentTarget.dataset.id
+
     getRequestLEMZById(id)
       .then((res) => res.json())
       .then((res) => {
@@ -158,11 +159,38 @@ const WorkshopLEMZ = (props) => {
             </div>
           </div>
         </div>
+        {/* <div className="main-window__status-panel">
+          <div>Фильтр по статусам: </div>
+          {requestStatuses.map((status, index) => {
+            return (
+              <div
+                className={
+                  (status.visible
+                    ? 'main-window__button'
+                    : 'main-window__button main-window__button--inverted') +
+                  ' main-window__list-item--' +
+                  status.className
+                }
+                onClick={() => {
+                  let temp = requestStatuses.map((status) => {
+                    return {
+                      ...status,
+                      visible: false,
+                    }
+                  })
+                  temp.splice(index, 1, {
+                    ...status,
+                    visible: !status.visible,
+                  })
+                  setRequestStatutes([...temp])
+                }}
+              >
+                {status.name}
+              </div>
+            )
+          })}
+        </div> */}
         <div className="main-window__info-panel">
-          {/* {isLoading ? <ImgLoader /> : <div className="main-window__button" onClick={printRequestsList}>
-                        <img className="main-window__img" src={PrintIcon} alt="" />
-                        <span>Печать списка</span>
-                    </div>} */}
           <Button
             text="Печать списка"
             isLoading={isLoading}
