@@ -403,6 +403,9 @@
     .main-window__header {
       margin-bottom: 10px;
     }
+    .main-window__menu {
+      width: calc(100% - 10px)!important;
+    }
     .floating-plus {
       display: none;
     }

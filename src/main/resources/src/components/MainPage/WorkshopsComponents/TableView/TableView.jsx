@@ -61,7 +61,7 @@ const TableView = (props) => {
     {
       name: 'Ожидание',
       className: 'waiting',
-      access: ['ROLE_ADMIN'],
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
     },
     {
       name: 'Приоритет',
