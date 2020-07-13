@@ -207,7 +207,7 @@ const TableView = (props) => {
             </div>
             <span>Кодовое слово</span>
             <span>Ответственный</span>
-            <span>Статус</span>
+            <span>Статус заявки</span>
             <span>Дата отгрузки</span>
             <span>Комментарий</span>
             <div className="main-window__actions">Действия</div>
@@ -364,7 +364,7 @@ const TableView = (props) => {
                     )?.className
                   }
                 >
-                  <div className="main-window__mobile-text">Статус:</div>
+                  <div className="main-window__mobile-text">Статус заявки:</div>
                   <select
                     id={request.id}
                     className="main-window__status_select"
