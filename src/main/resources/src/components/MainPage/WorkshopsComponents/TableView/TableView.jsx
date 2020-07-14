@@ -399,7 +399,7 @@ const TableView = (props) => {
 
                   {/* {formatDateString(item.nextDateContact)} */}
                   {new Date(request.shippingDate) < new Date() &&
-                  request.status !== 'completed' ? (
+                  request.status !== 'Завершено' ? (
                     <div className="main-window__reminder">
                       <div>!</div>
                       <div>{formatDateString(request.shippingDate)}</div>
@@ -422,7 +422,11 @@ const TableView = (props) => {
                   >
                     <img className="main-window__img" src={viewSVG} />
                   </Link>
-                  {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && (
+                  {props.userHasAccess([
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_WORKSHOP',
+                  ]) && (
                     <Link
                       to={`/${props.workshopName}/workshop-${props.workshopName}/edit/${request.id}`}
                       className="main-window__action"

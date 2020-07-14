@@ -191,7 +191,11 @@ const WorkshopLepsari = (props) => {
               if (curPage === 'Отгружено' && item.status === 'Отгружено') {
                 return true
               }
-              if (curPage === 'Открытые' && item.status !== 'Завершено' && item.status !== 'Отгружено') {
+              if (
+                curPage === 'Открытые' &&
+                item.status !== 'Завершено' &&
+                item.status !== 'Отгружено'
+              ) {
                 return true
               }
               return false

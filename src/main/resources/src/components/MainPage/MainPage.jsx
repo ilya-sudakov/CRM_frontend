@@ -56,6 +56,7 @@ import {
   NewPackaging,
   EditPackaging,
   ReportTablePage,
+  RiggingList,
 } from './lazyImports.jsx'
 import SideMenu from '../SideMenu/SideMenu.jsx'
 import PageNotFound from './PageNotFound/PageNotFound.jsx'
@@ -628,6 +629,19 @@ class MainPage extends React.Component {
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN']}
+                />
+                <PrivateRoute
+                  exact
+                  path="/rigging-list"
+                  component={RiggingList}
+                  userHasAccess={this.props.userHasAccess}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_WORKSHOP',
+                    'ROLE_DISPATCHER',
+                    'ROLE_ENGINEER',
+                    'ROLE_MANAGER',
+                  ]}
                 />
                 <Route component={PageNotFound} />
               </Switch>

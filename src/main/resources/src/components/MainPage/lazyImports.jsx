@@ -10,6 +10,10 @@ const NewRequest = lazy(() => import('./Requests/NewRequest/NewRequest.jsx'))
 
 const GeneralPage = lazy(() => import('./GeneralPage/GeneralPage.jsx'))
 
+const RiggingList = lazy(() =>
+  import('./Dispatcher/Rigging/RiggingList/RiggingList.jsx'),
+)
+
 const AdminWorkspace = lazy(() =>
   import('./GeneralPage/AdminWorkspace/AdminWorkspace.jsx'),
 )
@@ -409,4 +413,5 @@ export {
   NewPackaging,
   EditPackaging,
   ReportTablePage,
+  RiggingList,
 }

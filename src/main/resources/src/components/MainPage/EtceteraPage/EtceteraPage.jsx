@@ -29,6 +29,10 @@ const EtceteraPage = (props) => {
       linkTo: '/report-table',
       name: 'Интерактивный табель',
     },
+    {
+      linkTo: '/rigging-list',
+      name: 'Список оснастки',
+    },
   ])
 
   return (
