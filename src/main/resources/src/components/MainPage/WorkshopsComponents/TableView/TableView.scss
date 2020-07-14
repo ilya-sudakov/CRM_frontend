@@ -40,8 +40,17 @@
               align-self: flex-start;
             }
             &:nth-child(6) {
-              margin-top: var(--padding-top);
+              // margin-top: var(--padding-top);
               align-self: flex-start;
+
+              .main-window__reminder {
+                margin-top: calc(var(--padding-top) - 8px);
+                // margin-top: 0;
+              }
+
+              .main-window__date {
+                margin-top: var(--padding-top);
+              }
             }
             &:nth-child(7) {
               margin-top: var(--padding-top);
@@ -219,7 +228,11 @@
           }
           &:nth-child(6) {
             flex: 0 1 8%;
-            max-width: 75px;
+            max-width: 90px;
+
+            .main-window__reminder {
+              margin-top: 0;
+            }
           }
           &:nth-child(7) {
             flex: 0 1 15%;

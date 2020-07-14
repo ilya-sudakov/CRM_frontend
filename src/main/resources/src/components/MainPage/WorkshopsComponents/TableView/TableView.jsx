@@ -395,8 +395,20 @@ const TableView = (props) => {
                   </select>
                 </span>
                 <span>
-                  <div className="main-window__mobile-text">Дата:</div>
-                  {formatDateString(request.shippingDate)}
+                  <div className="main-window__mobile-text">Дата отгрузки:</div>
+
+                  {/* {formatDateString(item.nextDateContact)} */}
+                  {new Date(request.shippingDate) < new Date() &&
+                  request.status !== 'completed' ? (
+                    <div className="main-window__reminder">
+                      <div>!</div>
+                      <div>{formatDateString(request.shippingDate)}</div>
+                    </div>
+                  ) : (
+                    <div className="main-window__date">
+                      {formatDateString(request.shippingDate)}
+                    </div>
+                  )}
                 </span>
                 <span title={request.comment}>
                   <div className="main-window__mobile-text">Комментарий:</div>
