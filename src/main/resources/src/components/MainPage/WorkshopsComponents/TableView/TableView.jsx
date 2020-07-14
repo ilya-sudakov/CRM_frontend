@@ -422,7 +422,7 @@ const TableView = (props) => {
                   >
                     <img className="main-window__img" src={viewSVG} />
                   </Link>
-                  {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
+                  {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']) && (
                     <Link
                       to={`/${props.workshopName}/workshop-${props.workshopName}/edit/${request.id}`}
                       className="main-window__action"
