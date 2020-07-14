@@ -253,7 +253,7 @@ const TableView = (props) => {
                     setRequests([...temp])
                   }
                 }}
-                key={request_id}
+                key={request.id}
               >
                 <span>
                   <div className="main-window__mobile-text">Дата:</div>
@@ -368,7 +368,11 @@ const TableView = (props) => {
                   <select
                     id={request.id}
                     className="main-window__status_select"
-                    value={request.status}
+                    value={
+                      status.oldName === request.status
+                        ? status.oldName
+                        : status.name
+                    }
                     onChange={handleStatusChange}
                   >
                     {requestStatuses.map((status) => {
