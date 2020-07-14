@@ -368,11 +368,7 @@ const TableView = (props) => {
                   <select
                     id={request.id}
                     className="main-window__status_select"
-                    value={
-                      status.oldName === request.status
-                        ? status.oldName
-                        : status.name
-                    }
+                    value={request.status}
                     onChange={handleStatusChange}
                   >
                     {requestStatuses.map((status) => {
