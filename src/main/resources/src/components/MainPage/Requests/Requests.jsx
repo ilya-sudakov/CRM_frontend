@@ -177,6 +177,16 @@ const Requests = (props) => {
             </div>
             <div
               className={
+                curPage === 'Отгружено'
+                  ? 'main-window__item--active main-window__item'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Отгружено')}
+            >
+              Отгружено
+            </div>
+            <div
+              className={
                 curPage === 'Завершено'
                   ? 'main-window__item--active main-window__item'
                   : 'main-window__item'
@@ -315,11 +325,20 @@ const Requests = (props) => {
         <TableView
           data={requests
             .filter((item) => {
-              if (curPage === 'Открытые') {
-                if (item.status !== 'Завершено') return true
-              } else {
-                if (item.status === 'Завершено') return true
+              if (curPage === 'Завершено' && item.status === 'Завершено') {
+                return true
               }
+              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
+                return true
+              }
+              if (
+                curPage === 'Открытые' &&
+                item.status !== 'Завершено' &&
+                item.status !== 'Отгружено'
+              ) {
+                return true
+              }
+              return false
             })
             .filter((item) => {
               let check = false
