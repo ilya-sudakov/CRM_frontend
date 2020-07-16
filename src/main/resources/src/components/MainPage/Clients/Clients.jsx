@@ -247,7 +247,7 @@ const Clients = (props) => {
             />
           </div>
           <FloatingPlus
-            linkTo="/clients/new"
+            linkTo={'/' + props.type + '/new'}
             visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
           />
           <SearchBar

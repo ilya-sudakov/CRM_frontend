@@ -27,12 +27,21 @@ const ViewClient = (props) => {
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
   })
+  
+  const clientTypes = {
+    clients: {
+      name: 'клиент',
+    },
+    suppliers: {
+      name: 'поставщик',
+    },
+  }
 
   const [isLoading, setIsLoading] = useState(false)
   const [curTab, setCurTab] = useState('clientData')
 
   useEffect(() => {
-    document.title = 'Просмотр клиента'
+    document.title = `Просмотр ${clientTypes[props.type].name}а`
     const id = props.history.location.pathname.split('/view/')[1]
     if (isNaN(Number.parseInt(id))) {
       alert('Неправильный индекс клиента!')
@@ -66,7 +75,9 @@ const ViewClient = (props) => {
   return (
     <div className="view_client">
       <div className="main-form">
-        <div className="main-form__title">Просмотр клиента</div>
+        <div className="main-form__title">{`Просмотр ${
+          clientTypes[props.type].name
+        }а`}</div>
         <div className="main-form__header">
           <div
             className={
@@ -90,7 +101,7 @@ const ViewClient = (props) => {
               setCurTab('clientData')
             }}
           >
-            Данные клиента
+            {`Данные ${clientTypes[props.type].name}а`}
           </div>
         </div>
         <form className="main-form__form">
@@ -198,9 +209,9 @@ const ViewClient = (props) => {
                 readOnly
               />
               <div className="main-form__fieldset">
-                <div className="main-form__group-name">Категория клиента</div>
+                <div className="main-form__group-name">Категория</div>
                 <InputText
-                  inputName="Тип клиента"
+                  inputName={`Тип ${clientTypes[props.type].name}а`}
                   name="clientType"
                   defaultValue={clientInputs.clientType}
                   readOnly
@@ -220,7 +231,9 @@ const ViewClient = (props) => {
               type="submit"
               onClick={() =>
                 props.history.push(
-                  '/clients/category/' +
+                  '/' +
+                    props.type +
+                    '/category/' +
                     clientInputs.categoryName +
                     '/' +
                     (clientInputs.clientType === 'Активные'

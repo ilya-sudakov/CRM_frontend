@@ -51,6 +51,15 @@ const newClient = (props) => {
     site: false,
   })
 
+  const clientTypes = {
+    clients: {
+      name: 'клиент',
+    },
+    suppliers: {
+      name: 'поставщик',
+    },
+  }
+
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [users, setUsers] = useState([])
@@ -177,7 +186,11 @@ const newClient = (props) => {
         })
         .then(() => {
           return props.history.push(
-            '/clients/category/' + clientInputs.categoryName + '/active',
+            '/' +
+              props.type +
+              '/category/' +
+              clientInputs.categoryName +
+              '/active',
           )
         })
         .catch((error) => {
@@ -202,7 +215,7 @@ const newClient = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Добавление клиента'
+    document.title = `Добавление ${clientTypes[props.type].name}`
     //Загружаем список пользователей
     users.length === 0 &&
       getUsers()
@@ -240,7 +253,9 @@ const newClient = (props) => {
   return (
     <div className="new_client">
       <div className="main-form">
-        <div className="main-form__title">Новый клиент</div>
+        <div className="main-form__title">{`Новый ${
+          clientTypes[props.type].name
+        }`}</div>
         {/* //Меню для перехода на разные страницы формы */}
         <div className="main-form__header">
           <div
@@ -265,7 +280,7 @@ const newClient = (props) => {
               setCurTab('clientData')
             }}
           >
-            Данные клиента
+            {`Данные ${clientTypes[props.type].name}а`}
           </div>
         </div>
         <form className="main-form__form">
@@ -412,9 +427,11 @@ const newClient = (props) => {
                 defaultValue={clientInputs.check}
               />
               <div className="main-form__fieldset">
-                <div className="main-form__group-name">Категория клиента</div>
+                <div className="main-form__group-name">Категория</div>
                 <div className="main-form__item">
-                  <div className="main-form__input_name">Тип клиента*</div>
+                  <div className="main-form__input_name">
+                    {`Тип ${clientTypes[props.type].name}а`}*
+                  </div>
                   <div className="main-form__input_field">
                     <select
                       name="clientType"
@@ -428,7 +445,7 @@ const newClient = (props) => {
                   </div>
                 </div>
                 <SelectClientCategory
-                  inputName="Выбор категории клиента"
+                  inputName="Выбор категории"
                   required
                   error={formErrors.category}
                   userHasAccess={props.userHasAccess}
@@ -460,7 +477,9 @@ const newClient = (props) => {
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() => props.history.push('/clients/categories')}
+              onClick={() =>
+                props.history.push('/' + props.type + '/categories')
+              }
               value="Вернуться назад"
             />
             <Button

@@ -64,13 +64,13 @@ const EtceteraPage = (props) => {
         linkTo: '/rigging-list',
         name: 'Список оснастки',
         access: ['ROLE_ADMIN'],
-        icon: tasksImg,
+        icon: playListImg,
       },
       {
         linkTo: '/work-list',
         name: 'Список работ',
         access: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-        icon: tasksImg,
+        icon: playListImg,
       },
     ],
     Статистика: [
