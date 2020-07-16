@@ -315,11 +315,11 @@ const EditClient = (props) => {
 
   useEffect(() => {
     document.title = 'Редактирование клиента'
-    const id = props.history.location.pathname.split('/clients/edit/')[1]
+    const id = props.history.location.pathname.split('/edit/')[1]
     setClientId(id)
     if (isNaN(Number.parseInt(id))) {
       alert('Неправильный индекс клиента!')
-      props.history.push('/clients/categories')
+      props.history.push(`/${props.type}/categories`)
     } else {
       getClientById(id)
         .then((res) => res.json())

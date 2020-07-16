@@ -10,7 +10,8 @@
   max-width: 600px;
   // max-width: 450px;
   margin-right: 25px;
-  background-color: $primary-background-color;
+  background-color: rgba(#ffffff, 1);
+  backdrop-filter: blur(10px);
 
   &__title {
     display: flex;

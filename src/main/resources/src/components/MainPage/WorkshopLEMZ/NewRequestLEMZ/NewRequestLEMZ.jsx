@@ -13,6 +13,8 @@ import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
 import { UserContext } from '../../../../App.js'
+import { copyRequest } from '../../../../utils/RequestsAPI/Requests.jsx'
+import { request } from '../../../../utils/utilsAPI.jsx'
 
 const NewRequestLEMZ = (props) => {
   const [requestInputs, setRequestInputs] = useState({
@@ -144,7 +146,13 @@ const NewRequestLEMZ = (props) => {
     // event.preventDefault();
     setIsLoading(true)
     let id = 0
-    // console.log(requestInputs);
+    // console.log(props.transferState)
+    if (props.transferData !== null && formIsValid()) {
+      return copyRequest(props.transferData.id, 'Lemz').then(() =>
+        props.history.push('/lemz/workshop-lemz'),
+      )
+    }
+
     formIsValid() &&
       addRequestLEMZ(requestInputs)
         .then((res) => res.json())
@@ -185,35 +193,39 @@ const NewRequestLEMZ = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Создание заявки ЛЭМЗ'
-    // console.log(props.transferState, props.transferData);
-    //Если есть перенос данных, то добавляем их в state
-    if (props.transferState === true && props.transferData !== null) {
-      props.setTransferState(false)
-      setRequestInputs({
-        date: props.transferData.date,
-        requestProducts: props.transferData.requestProducts
-          ? props.transferData.requestProducts
-          : props.transferData.lemzProducts,
-        quantity: props.transferData.quantity,
-        codeWord: props.transferData.codeWord,
-        responsible: props.transferData.responsible,
-        status: props.transferData.status,
-        shippingDate: new Date(
-          new Date(props.transferData.date).setDate(
-            new Date(props.transferData.date).getDate() + 7,
+    const getTransferedData = () => {
+      //Если есть перенос данных, то добавляем их в state
+      if (props.transferState === true && props.transferData !== null) {
+        console.log(props.transferState, props.transferData)
+        props.setTransferState(false)
+        setRequestInputs({
+          date: props.transferData.date,
+          requestProducts: props.transferData.requestProducts
+            ? props.transferData.requestProducts
+            : props.transferData.lemzProducts,
+          quantity: props.transferData.quantity,
+          codeWord: props.transferData.codeWord,
+          responsible: props.transferData.responsible,
+          status: props.transferData.status,
+          shippingDate: new Date(
+            new Date(props.transferData.date).setDate(
+              new Date(props.transferData.date).getDate() + 7,
+            ),
           ),
-        ),
-        comment: props.transferData.comment ? props.transferData.comment : '',
-      })
-      setValidInputs({
-        date: true,
-        requestProducts: true,
-        codeWord: true,
-        responsible: true,
-        shippingDate: true,
-      })
+          comment: props.transferData.comment ? props.transferData.comment : '',
+        })
+        setValidInputs({
+          date: true,
+          requestProducts: true,
+          codeWord: true,
+          responsible: true,
+          shippingDate: true,
+        })
+      }
     }
+
+    document.title = 'Создание заявки ЛЭМЗ'
+    // getTransferedData()
   }, [])
 
   const handleDateChange = (date) => {

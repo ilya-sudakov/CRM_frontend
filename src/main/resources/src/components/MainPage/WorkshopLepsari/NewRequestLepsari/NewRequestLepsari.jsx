@@ -186,35 +186,39 @@ const NewRequestLepsari = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Создание заявки Лепсари'
-    // console.log(props.transferState, props.transferData);
-    //Если есть перенос данных, то добавляем их в state
-    if (props.transferState === true && props.transferData !== null) {
-      props.setTransferState(false)
-      setRequestInputs({
-        date: props.transferData.date,
-        requestProducts: props.transferData.requestProducts
-          ? props.transferData.requestProducts
-          : props.transferData.lepsariProducts,
-        quantity: props.transferData.quantity,
-        codeWord: props.transferData.codeWord,
-        responsible: props.transferData.responsible,
-        status: props.transferData.status,
-        shippingDate: new Date(
-          new Date(props.transferData.date).setDate(
-            new Date(props.transferData.date).getDate() + 7,
+    const getTransferedData = () => {
+      //Если есть перенос данных, то добавляем их в state
+      if (props.transferState === true && props.transferData !== null) {
+        console.log(props.transferState, props.transferData)
+        props.setTransferState(false)
+        setRequestInputs({
+          date: props.transferData.date,
+          requestProducts: props.transferData.requestProducts
+            ? props.transferData.requestProducts
+            : props.transferData.lemzProducts,
+          quantity: props.transferData.quantity,
+          codeWord: props.transferData.codeWord,
+          responsible: props.transferData.responsible,
+          status: props.transferData.status,
+          shippingDate: new Date(
+            new Date(props.transferData.date).setDate(
+              new Date(props.transferData.date).getDate() + 7,
+            ),
           ),
-        ),
-        comment: props.transferData.comment ? props.transferData.comment : '',
-      })
-      setValidInputs({
-        date: true,
-        requestProducts: true,
-        codeWord: true,
-        responsible: true,
-        shippingDate: true,
-      })
+          comment: props.transferData.comment ? props.transferData.comment : '',
+        })
+        setValidInputs({
+          date: true,
+          requestProducts: true,
+          codeWord: true,
+          responsible: true,
+          shippingDate: true,
+        })
+      }
     }
+
+    document.title = 'Создание заявки Лепсари'
+    // getTransferedData()
   }, [])
 
   const handleDateChange = (date) => {

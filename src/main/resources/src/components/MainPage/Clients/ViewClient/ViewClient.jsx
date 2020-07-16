@@ -33,10 +33,10 @@ const ViewClient = (props) => {
 
   useEffect(() => {
     document.title = 'Просмотр клиента'
-    const id = props.history.location.pathname.split('/clients/view/')[1]
+    const id = props.history.location.pathname.split('/view/')[1]
     if (isNaN(Number.parseInt(id))) {
       alert('Неправильный индекс клиента!')
-      props.history.push('/clients/categories')
+      props.history.push(`/${props.type}/categories`)
     } else {
       getClientById(id)
         .then((res) => res.json())

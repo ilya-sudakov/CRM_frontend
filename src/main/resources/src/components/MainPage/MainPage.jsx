@@ -171,6 +171,7 @@ class MainPage extends React.Component {
                 <PrivateRoute
                   path="/clients/category/"
                   component={Clients}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -179,6 +180,7 @@ class MainPage extends React.Component {
                   exact
                   path="/clients/categories/"
                   component={ClientCategories}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -187,6 +189,7 @@ class MainPage extends React.Component {
                   exact
                   path="/clients/new"
                   component={newClient}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -194,6 +197,7 @@ class MainPage extends React.Component {
                 <PrivateRoute
                   path="/clients/view/"
                   component={ViewClient}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -201,6 +205,49 @@ class MainPage extends React.Component {
                 <PrivateRoute
                   path="/clients/edit/"
                   component={EditClient}
+                  type="clients"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                />
+                <PrivateRoute
+                  path="/suppliers/category/"
+                  component={Clients}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                />
+                <PrivateRoute
+                  exact
+                  path="/suppliers/categories/"
+                  component={ClientCategories}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                />
+                <PrivateRoute
+                  exact
+                  path="/suppliers/new"
+                  component={newClient}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                />
+                <PrivateRoute
+                  path="/suppliers/view/"
+                  component={ViewClient}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                />
+                <PrivateRoute
+                  path="/suppliers/edit/"
+                  component={EditClient}
+                  type="suppliers"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -589,7 +636,12 @@ class MainPage extends React.Component {
                   component={EtceteraPage}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_DISPATCHER',
+                    'ROLE_MANAGER',
+                    'ROLE_ENGINEER',
+                  ]}
                 />
                 <PrivateRoute
                   exact

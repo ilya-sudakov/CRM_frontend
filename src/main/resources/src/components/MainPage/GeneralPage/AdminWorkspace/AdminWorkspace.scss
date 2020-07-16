@@ -69,6 +69,7 @@
     max-width: 570px;
     // max-height: 230px;
     background-color: $secondary-text-color;
+    backdrop-filter: blur(10px);
     // background-color: #eeeeee;
     border-radius: 5px;
     padding: 9px 15px;

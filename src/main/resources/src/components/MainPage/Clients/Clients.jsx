@@ -210,10 +210,10 @@ const Clients = (props) => {
     const abortController = new AbortController()
     // console.log(curPage);
     const curCategoryTemp = props.location.pathname
-      .split('/clients/category/')[1]
+      .split('/category/')[1]
       .split('/')[0]
     const curClientTypeTemp = props.location.pathname
-      .split('/clients/category/')[1]
+      .split('/category/')[1]
       .split('/')[1]
     if (
       curCategoryTemp !== curCategory ||
@@ -281,7 +281,7 @@ const Clients = (props) => {
           />
           <div className="main-window__menu">
             <Link
-              to={'/clients/category/' + curCategory + '/active'}
+              to={'/' + props.type + '/category/' + curCategory + '/active'}
               className={
                 props.location.pathname.includes('active') === true
                   ? 'main-window__item--active main-window__item'
@@ -291,7 +291,7 @@ const Clients = (props) => {
               Активные ({itemsActiveCount})
             </Link>
             <Link
-              to={'/clients/category/' + curCategory + '/potential'}
+              to={'/' + props.type + '/category/' + curCategory + '/potential'}
               className={
                 props.location.pathname.includes('potential') === true
                   ? 'main-window__item--active main-window__item'
@@ -301,7 +301,9 @@ const Clients = (props) => {
               Потенциальные ({itemsPotentialCount})
             </Link>
             <Link
-              to={'/clients/category/' + curCategory + '/in-progress'}
+              to={
+                '/' + props.type + '/category/' + curCategory + '/in-progress'
+              }
               className={
                 props.location.pathname.includes('in-progress') === true
                   ? 'main-window__item--active main-window__item'
@@ -533,7 +535,7 @@ const Clients = (props) => {
                       className="main-window__action"
                       title="Просмотр клиента"
                       onClick={() => {
-                        props.history.push('/clients/view/' + item.id)
+                        props.history.push(`/${props.type}/view/${item.id}`)
                       }}
                     >
                       <img className="main-window__img" src={viewSVG} />
@@ -542,7 +544,7 @@ const Clients = (props) => {
                       className="main-window__action"
                       title="Редактирование клиента"
                       onClick={() => {
-                        props.history.push('/clients/edit/' + item.id)
+                        props.history.push(`/${props.type}/edit/${item.id}`)
                       }}
                     >
                       <img className="main-window__img" src={editSVG} />

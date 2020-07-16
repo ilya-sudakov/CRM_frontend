@@ -8,11 +8,13 @@ import {
   deleteRequest,
   deleteProductsToRequest,
   getRequestById,
+  copyRequest,
 } from '../../../utils/RequestsAPI/Requests.jsx'
 import TableView from './TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import Button from '../../../utils/Form/Button/Button.jsx'
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]) //Массив заявок
@@ -138,7 +140,7 @@ const Requests = (props) => {
   }
 
   //Копировать заявку
-  const copyRequest = (id) => {
+  const copySelectedRequest = (id) => {
     props.setTransferState(true)
     props.setTransferData(
       requests.find((item) => {
@@ -219,23 +221,37 @@ const Requests = (props) => {
                     </div>
                   </div>
                   <div className="main-form__buttons">
-                    <input
+                    <Button
                       className="main-form__submit"
-                      type="submit"
+                      isLoading={isLoading}
                       onClick={() => {
-                        props.setTransferState(true)
-                        props.setTransferData(
+                        setIsLoading(true)
+                        copyRequest(
                           requests.find((item) => {
                             if (item.id === requestId) {
                               return true
                             }
-                          }),
+                          }).id,
+                          toWorkshop,
                         )
-                        props.history.push(
-                          toWorkshop + '/workshop-' + toWorkshop + '/new',
-                        )
+                          .then((res) => res.json())
+                          .then((res) => {
+                            setIsLoading(false)
+                            props.history.push(
+                              toWorkshop +
+                                '/workshop-' +
+                                toWorkshop +
+                                '/edit/' +
+                                res,
+                            )
+                          })
+                          .catch((error) => {
+                            console.log(error)
+                            alert('Ошибка при копировании записи')
+                            setIsLoading(false)
+                          })
                       }}
-                      value="Перенести в цех"
+                      text="Перенести в цех"
                     />
                   </div>
                 </div>
@@ -385,7 +401,7 @@ const Requests = (props) => {
           loadData={loadRequests}
           deleteItem={deleteItem}
           transferRequest={transferRequest}
-          copyRequest={copyRequest}
+          copyRequest={copySelectedRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />
