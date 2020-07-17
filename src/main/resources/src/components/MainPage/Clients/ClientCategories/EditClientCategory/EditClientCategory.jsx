@@ -98,6 +98,7 @@ const EditClientCategory = (props) => {
         id: props.category.id,
         name: props.category.name,
         visibility: props.category.visibility,
+        type: props.category.type,
       })
   }, [props.category])
 

@@ -19,7 +19,10 @@ import playListImg from '../../../../../../assets/sidemenu/play_list.svg'
 import factoryIcon from '../../../../../../assets/sidemenu/factory.svg'
 import supplierIcon from '../../../../../../assets/sidemenu/supplier_icon.svg'
 import './SideMenu.scss'
-import { getClientCategories } from '../../utils/RequestsAPI/Clients/Categories.jsx'
+import {
+  getClientCategories,
+  getSupplierCategories,
+} from '../../utils/RequestsAPI/Clients/Categories.jsx'
 
 const SideMenu = (props) => {
   const [curPath, setCurPath] = useState('/')
@@ -394,7 +397,11 @@ const SideMenu = (props) => {
           let temp = sidemenuItems
           temp.splice(1, 1, {
             ...temp[1],
-            linkTo: `/clients/category/${res[res.length - 1].name}/active`,
+            linkTo: `/clients/${
+              res.length > 0
+                ? 'category/' + res[res.length - 1].name + '/active'
+                : 'categories'
+            }`,
             dropdownMenu: [
               {
                 name: 'Создать клиента',
@@ -443,14 +450,18 @@ const SideMenu = (props) => {
     }
 
     async function loadSuppliersCategories(temp) {
-      getClientCategories()
+      getSupplierCategories()
         .then((res) => res.json())
         .then((res) => {
           // console.log(res);
           let temp = sidemenuItems
           temp.splice(2, 1, {
             ...temp[2],
-            linkTo: `/suppliers/category/${res[res.length - 1].name}/active`,
+            linkTo: `/suppliers/${
+              res.length > 0
+                ? 'category/' + res[res.length - 1].name + '/active'
+                : 'categories'
+            }`,
             dropdownMenu: [
               {
                 name: 'Создать поставщика',

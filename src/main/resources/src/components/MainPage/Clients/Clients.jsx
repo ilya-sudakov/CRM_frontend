@@ -36,6 +36,7 @@ import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx
 import Button from '../../../utils/Form/Button/Button.jsx'
 import { exportClientsEmailsCSV } from '../../../utils/xlsxFunctions.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import { getSuppliersByCategoryAndType } from '../../../utils/RequestsAPI/Clients/Suppliers'
 
 const Clients = (props) => {
   const [clients, setClients] = useState([])
@@ -189,6 +190,7 @@ const Clients = (props) => {
   const clientTypes = {
     clients: {
       name: 'клиент',
+      type: null,
       loadItemsByCategory: (
         category,
         curPage,
@@ -216,6 +218,7 @@ const Clients = (props) => {
     },
     suppliers: {
       name: 'поставщик',
+      type: 'supplier',
       loadItemsByCategory: (
         category,
         curPage,
@@ -223,7 +226,7 @@ const Clients = (props) => {
         sortOrder,
         signal,
       ) =>
-        getClientsByCategoryAndType(
+        getSuppliersByCategoryAndType(
           category,
           curPage,
           itemsPerPage,
@@ -291,7 +294,7 @@ const Clients = (props) => {
     return function cancel() {
       abortController.abort()
     }
-  }, [props.location, curPage, sortOrder, itemsPerPage])
+  }, [props.location, curPage, sortOrder, itemsPerPage, props.type])
 
   return (
     <div className="clients">
@@ -324,6 +327,7 @@ const Clients = (props) => {
               } else {
                 searchClients({
                   name: query,
+                  type: clientTypes[props.type].type,
                 })
                   .then((res) => res.json())
                   .then((res) => {
@@ -546,6 +550,7 @@ const Clients = (props) => {
                           let temp = clients
                           //   console.log(item);
                           let newClient = Object.assign({
+                            type: item.type,
                             categoryId: item.category.id,
                             check: item.check,
                             clientType: item.clientType,
@@ -879,7 +884,11 @@ const EditNextContactDate = (props) => {
         setIsLoading(false)
         props.loadData(
           props.selectedItem.category.name,
-          props.selectedItem.clientType === 'Активные' ? 'active' : 'potential',
+          props.selectedItem.clientType === 'Активные'
+            ? 'active'
+            : props.selectedItem.clientType === 'Потенциальные'
+            ? 'potential'
+            : 'in-progress',
         )
         props.setCloseWindow(!props.closeWindow)
       })

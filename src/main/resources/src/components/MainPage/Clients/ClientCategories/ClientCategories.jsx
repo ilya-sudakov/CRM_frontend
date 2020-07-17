@@ -10,6 +10,7 @@ import {
   deleteClientCategory,
   addClientCategory,
   editClientCategory,
+  getSupplierCategories,
 } from '../../../../utils/RequestsAPI/Clients/Categories.jsx'
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
 import NewClientCategory from './NewClientCategory/NewClientCategory.jsx'
@@ -28,15 +29,17 @@ const ClientCategories = (props) => {
     clients: {
       name: 'клиент',
       getCategoriesFunction: () => getClientCategories(),
-      addCategoryFunction: (newCategory) => addClientCategory(newCategory),
+      addCategoryFunction: (newCategory) =>
+        addClientCategory({ ...newCategory, type: null }),
       editCategoryFunction: (newCategory, id) =>
         editClientCategory(newCategory, id),
       deleteCategoryFunction: (id) => deleteClientCategory(id),
     },
     suppliers: {
       name: 'поставщик',
-      getCategoriesFunction: () => getClientCategories(),
-      addCategoryFunction: (newCategory) => addClientCategory(newCategory),
+      getCategoriesFunction: () => getSupplierCategories(),
+      addCategoryFunction: (newCategory) =>
+        addClientCategory({ ...newCategory, type: 'supplier' }),
       editCategoryFunction: (newCategory, id) =>
         editClientCategory(newCategory, id),
       deleteCategoryFunction: (id) => deleteClientCategory(id),
@@ -45,7 +48,7 @@ const ClientCategories = (props) => {
 
   useEffect(() => {
     loadData()
-  }, [])
+  }, [props.type])
 
   const loadData = () => {
     clientTypes[props.type]

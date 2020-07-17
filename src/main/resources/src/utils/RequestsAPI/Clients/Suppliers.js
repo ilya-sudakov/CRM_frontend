@@ -1,13 +1,13 @@
-import { request, requestINN } from '../utilsAPI.jsx'
+import { request, requestINN } from '../../utilsAPI.jsx'
 
-export function getClients(elements) {
+export function getSuppliers(elements) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/client/' + '?size=' + elements,
     method: 'GET',
   })
 }
 
-export function searchClients(query) {
+export function searchSuppliers(query) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/client/search/',
     method: 'POST',
@@ -15,7 +15,7 @@ export function searchClients(query) {
   })
 }
 
-export function getClientsByCategory(category) {
+export function getSuppliersByCategory(category) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/client/category/',
     method: 'POST',
@@ -23,7 +23,7 @@ export function getClientsByCategory(category) {
   })
 }
 
-export function editNextContactDateClient(date) {
+export function editNextContactDateSupplier(date) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/client/date/',
     method: 'POST',
@@ -31,7 +31,7 @@ export function editNextContactDateClient(date) {
   })
 }
 
-export function getClientsByCategoryAndType(
+export function getSuppliersByCategoryAndType(
   category_type,
   curPage,
   itemsPerPage,
@@ -41,7 +41,7 @@ export function getClientsByCategoryAndType(
   return request({
     url:
       process.env.API_BASE_URL +
-      '/api/v1/client/category_type/client/' +
+      '/api/v1/client/category_type/supplier/' +
       '?' +
       'page=' +
       (curPage - 1) +
@@ -59,7 +59,7 @@ export function getClientsByCategoryAndType(
   })
 }
 
-export function searchClientsByCategoryAndType(query, signal) {
+export function searchSuppliersByCategoryAndType(query, signal) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/client/category_type/search/',
     method: 'POST',

@@ -3,7 +3,10 @@ import './SelectClientCategory.scss'
 import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import TableView from './TableView/TableView.jsx'
-import { getClientCategories } from '../../../../../utils/RequestsAPI/Clients/Categories.jsx'
+import {
+  getClientCategories,
+  getSupplierCategories,
+} from '../../../../../utils/RequestsAPI/Clients/Categories.jsx'
 
 const SelectClientCategory = (props) => {
   const [showWindow, setShowWindow] = useState(false)
@@ -24,7 +27,7 @@ const SelectClientCategory = (props) => {
     },
     suppliers: {
       name: 'поставщик',
-      getCategoriesFunction: () => getClientCategories(),
+      getCategoriesFunction: () => getSupplierCategories(),
     },
   }
 

@@ -68,7 +68,7 @@ const EditClient = (props) => {
     categoryId: true,
     site: true,
   })
-  
+
   const clientTypes = {
     clients: {
       name: 'клиент',
@@ -144,6 +144,7 @@ const EditClient = (props) => {
             new Date(clientInputs.nextContactDate).getTime() / 1000,
           categoryId: clientInputs.categoryId,
           favorite: clientInputs.favorite,
+          type: clientInputs.type,
         },
         clientId,
       )
@@ -358,6 +359,7 @@ const EditClient = (props) => {
             workHistoryNew: res.histories,
             categoryId: res.category.id,
             favorite: res.favorite,
+            type: res.type,
             categoryName: res.category.name,
           })
         })

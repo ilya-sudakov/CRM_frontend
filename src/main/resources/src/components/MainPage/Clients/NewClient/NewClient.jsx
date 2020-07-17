@@ -55,7 +55,7 @@ const newClient = (props) => {
     clients: {
       name: 'клиент',
       filteredRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-      addItemFunction: (newClient) => addClient(newClient),
+      addItemFunction: (newClient) => addClient({ ...newClient, type: null }),
       addLegalEntityFunction: (newLegalEntity) =>
         addClientLegalEntity(newLegalEntity),
       addContactsFunction: (newContact) => addClientContact(newContact),
@@ -71,7 +71,8 @@ const newClient = (props) => {
         'ROLE_MANAGER',
         'ROLE_WORKSHOP',
       ],
-      addItemFunction: (newClient) => addClient(newClient),
+      addItemFunction: (newClient) =>
+        addClient({ ...newClient, type: 'supplier' }),
       addLegalEntityFunction: (newLegalEntity) =>
         addClientLegalEntity(newLegalEntity),
       addContactsFunction: (newContact) => addClientContact(newContact),
