@@ -7,7 +7,10 @@ import copySVG from '../../../../../../../../assets/tableview/copy.svg'
 import transferSVG from '../../../../../../../../assets/tableview/transfer.svg'
 import './TableView.scss'
 
-import { editRequestStatus } from '../../../../utils/RequestsAPI/Requests.jsx'
+import {
+  editRequestStatus,
+  editProductStatusToRequest,
+} from '../../../../utils/RequestsAPI/Requests.jsx'
 import {
   editProductStatusToRequestLEMZ,
   editRequestLEMZStatus,
@@ -61,7 +64,7 @@ const TableView = (props) => {
     {
       name: 'Ожидание',
       className: 'waiting',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
     },
     {
       name: 'Приоритет',
@@ -92,11 +95,18 @@ const TableView = (props) => {
   ])
 
   const [workshopsFuncs, setWorkshopsFuncs] = useState({
+    requests: {
+      productsName: 'requestProducts',
+      request: (body, id) => editRequestStatus(body, id),
+      product: (body, id) => editProductStatusToRequest(body, id),
+    },
     lemz: {
+      productsName: 'lemzProducts',
       request: (body, id) => editRequestLEMZStatus(body, id),
       product: (body, id) => editProductStatusToRequestLEMZ(body, id),
     },
     lepsari: {
+      productsName: 'lepsariProducts',
       request: (body, id) => editRequestLepsariStatus(body, id),
       product: (body, id) => editProductStatusToRequestLepsari(body, id),
     },
@@ -148,9 +158,9 @@ const TableView = (props) => {
   const searchQuery = (data) => {
     const query = props.searchQuery.toLowerCase()
     return data.filter((item) => {
-      return item[`${props.workshopName}Products`].length !== 0 &&
-        item[`${props.workshopName}Products`][0].name !== null
-        ? item[`${props.workshopName}Products`][0].name
+      return item[workshopsFuncs[props.workshopName].productsName].length !== 0 &&
+        item[workshopsFuncs[props.workshopName].productsName][0].name !== null
+        ? item[workshopsFuncs[props.workshopName].productsName][0].name
             .toLowerCase()
             .includes(query) ||
             item.id.toString().includes(query) ||
@@ -229,7 +239,7 @@ const TableView = (props) => {
                       item.oldName === request.status,
                   )?.className +
                   ' ' +
-                  (request?.[`${props.workshopName}Products`]?.length > 1
+                  (request?.[workshopsFuncs[props.workshopName].productsName]?.length > 1
                     ? 'main-window__list-item--multiple-items'
                     : '')
                 }
@@ -266,7 +276,7 @@ const TableView = (props) => {
                     <span>Кол-во</span>
                     <span>Статус</span>
                   </div>
-                  {request?.[`${props.workshopName}Products`]
+                  {request?.[workshopsFuncs[props.workshopName].productsName]
                     .sort((a, b) => {
                       if (a.name < b.name) {
                         return -1
@@ -396,8 +406,6 @@ const TableView = (props) => {
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Дата отгрузки:</div>
-
-                  {/* {formatDateString(item.nextDateContact)} */}
                   {new Date(request.shippingDate) < new Date() &&
                   request.status !== 'Завершено' ? (
                     <div className="main-window__reminder">
@@ -416,7 +424,11 @@ const TableView = (props) => {
                 </span>
                 <div className="main-window__actions">
                   <Link
-                    to={`/${props.workshopName}/workshop-${props.workshopName}/view/${request.id}`}
+                    to={
+                      props.workshopName === 'requests'
+                        ? `/requests/view/${request.id}`
+                        : `/${props.workshopName}/workshop-${props.workshopName}/view/${request.id}`
+                    }
                     className="main-window__action"
                     title="Просмотр заявки"
                   >
@@ -428,7 +440,11 @@ const TableView = (props) => {
                     'ROLE_WORKSHOP',
                   ]) && (
                     <Link
-                      to={`/${props.workshopName}/workshop-${props.workshopName}/edit/${request.id}`}
+                      to={
+                        props.workshopName === 'requests'
+                          ? `/requests/edit/${request.id}`
+                          : `/${props.workshopName}/workshop-${props.workshopName}/edit/${request.id}`
+                      }
                       className="main-window__action"
                       title="Редактирование заявки"
                     >
@@ -445,7 +461,7 @@ const TableView = (props) => {
                       <img className="main-window__img" src={deleteSVG} />
                     </div>
                   )}
-                  {/* {props.transferRequest &&
+                  {props.workshopName === 'requests' &&
                     props.userHasAccess(['ROLE_ADMIN']) && (
                       <div
                         data-id={request.id}
@@ -458,7 +474,7 @@ const TableView = (props) => {
                       >
                         <img className="main-window__img" src={transferSVG} />
                       </div>
-                    )} */}
+                    )}
                   {props.userHasAccess(['ROLE_ADMIN']) && (
                     <div
                       data-id={request.id}
