@@ -64,7 +64,8 @@ const EditClientCategory = (props) => {
     setIsLoading(true)
     console.log(formInputs)
     formIsValid() &&
-      editClientCategory(formInputs, formInputs.id)
+      props
+        .editCategory(formInputs, formInputs.id)
         .then(() => {
           setIsLoading(false)
           props.onSubmit()

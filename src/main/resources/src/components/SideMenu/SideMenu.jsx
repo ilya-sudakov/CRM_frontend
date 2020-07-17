@@ -16,6 +16,8 @@ import screwImg from '../../../../../../assets/sidemenu/screw.svg'
 import feedbackImg from '../../../../../../assets/sidemenu/feedback.svg'
 import moreImg from '../../../../../../assets/sidemenu/more.svg'
 import playListImg from '../../../../../../assets/sidemenu/play_list.svg'
+import factoryIcon from '../../../../../../assets/sidemenu/factory.svg'
+import supplierIcon from '../../../../../../assets/sidemenu/supplier_icon.svg'
 import './SideMenu.scss'
 import { getClientCategories } from '../../utils/RequestsAPI/Clients/Categories.jsx'
 
@@ -55,6 +57,17 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       name: 'Клиенты',
       icon: clientImg,
+      dropdownMenu: [],
+    },
+    {
+      pathname: '/suppliers',
+      linkTo: props.location.pathname,
+      addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      addButtonName: 'Добавить поставщика',
+      addButtonLinkTo: '/suppliers/new',
+      mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      name: 'Поставщики',
+      icon: supplierIcon,
       dropdownMenu: [],
     },
     {
@@ -117,7 +130,7 @@ const SideMenu = (props) => {
         : '/lemz/workshop-lemz',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
-      icon: screwImg,
+      icon: factoryIcon,
       iconClassName: 'sidemenu__img--bigger',
       dropdownMenu: [
         {
@@ -163,7 +176,7 @@ const SideMenu = (props) => {
         : '/lepsari/workshop-lepsari',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       name: 'ЦехЛепсари',
-      icon: screwImg,
+      icon: factoryIcon,
       iconClassName: 'sidemenu__img--bigger',
       dropdownMenu: [
         {
@@ -204,7 +217,7 @@ const SideMenu = (props) => {
       linkTo: '/dispatcher/rigging/parts',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
       name: 'ЦехЛиговский',
-      icon: screwImg,
+      icon: factoryIcon,
       iconClassName: 'sidemenu__img--bigger',
       dropdownMenu: [
         // {
@@ -325,14 +338,14 @@ const SideMenu = (props) => {
       addButtonName: 'Добавить запись',
       icon: truckImg,
     },
-    {
-      pathname: '/work-list',
-      name: 'Список работ',
-      mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-      addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-      addButtonName: 'Добавить работу',
-      icon: listImg,
-    },
+    // {
+    //   pathname: '/work-list',
+    //   name: 'Список работ',
+    //   mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+    //   addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+    //   addButtonName: 'Добавить работу',
+    //   icon: listImg,
+    // },
     {
       pathname: '/feedback',
       name: 'Обратная связь',
@@ -356,7 +369,12 @@ const SideMenu = (props) => {
     {
       pathname: '/etcetera',
       name: 'Разное',
-      mainRoles: ['ROLE_ADMIN'],
+      mainRoles: [
+        'ROLE_ADMIN',
+        'ROLE_DISPATCHER',
+        'ROLE_MANAGER',
+        'ROLE_ENGINEER',
+      ],
       icon: moreImg,
     },
     {
@@ -368,56 +386,125 @@ const SideMenu = (props) => {
   ])
 
   useEffect(() => {
-    getClientCategories()
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res);
-        let temp = sidemenuItems
-        temp.splice(1, 1, {
-          ...temp[1],
-          dropdownMenu: [
-            {
-              name: 'Создать клиента',
-              pathname: '/clients/new',
-              link: '/clients/new',
-              icon: plusImg,
-              mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            },
-            {
-              name: 'Управление категориями',
-              pathname: '/clients/categories',
-              link: '/clients/categories',
-              icon: contractImg,
-              mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-            },
-            ...res
-              .sort((a, b) => {
-                if (
-                  a.name.localeCompare(b.name, undefined, { numeric: true }) < 0
-                ) {
-                  return -1
-                }
-                if (
-                  a.name.localeCompare(b.name, undefined, { numeric: true }) > 0
-                ) {
-                  return 1
-                }
-                return 0
-              })
-              .map((item) => {
-                return {
-                  name: item.name,
-                  pathname: '/clients/category/' + item.name + '/',
-                  mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-                  link: '/clients/category/' + item.name + '/active',
-                }
-              }),
-          ],
-          linkTo: props.location.pathname,
+    async function loadClientCategories() {
+      getClientCategories()
+        .then((res) => res.json())
+        .then((res) => {
+          // console.log(res);
+          let temp = sidemenuItems
+          temp.splice(1, 1, {
+            ...temp[1],
+            linkTo: `/clients/category/${res[res.length - 1].name}/active`,
+            dropdownMenu: [
+              {
+                name: 'Создать клиента',
+                pathname: '/clients/new',
+                link: '/clients/new',
+                icon: plusImg,
+                mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+              },
+              {
+                name: 'Управление категориями',
+                pathname: '/clients/categories',
+                link: '/clients/categories',
+                icon: contractImg,
+                mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+              },
+              ...res
+                .sort((a, b) => {
+                  if (
+                    a.name.localeCompare(b.name, undefined, { numeric: true }) <
+                    0
+                  ) {
+                    return -1
+                  }
+                  if (
+                    a.name.localeCompare(b.name, undefined, { numeric: true }) >
+                    0
+                  ) {
+                    return 1
+                  }
+                  return 0
+                })
+                .map((item) => {
+                  return {
+                    name: item.name,
+                    pathname: '/clients/category/' + item.name + '/',
+                    mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+                    link: '/clients/category/' + item.name + '/active',
+                  }
+                }),
+            ],
+            // linkTo: props.location.pathname,
+          })
+          setSidemenuItems([...temp])
+          return temp
         })
-        setSidemenuItems([...temp])
-      })
-  }, [props.location])
+    }
+
+    async function loadSuppliersCategories(temp) {
+      getClientCategories()
+        .then((res) => res.json())
+        .then((res) => {
+          // console.log(res);
+          let temp = sidemenuItems
+          temp.splice(2, 1, {
+            ...temp[2],
+            linkTo: `/suppliers/category/${res[res.length - 1].name}/active`,
+            dropdownMenu: [
+              {
+                name: 'Создать поставщика',
+                pathname: '/suppliers/new',
+                link: '/suppliers/new',
+                icon: plusImg,
+                mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+              },
+              {
+                name: 'Управление категориями',
+                pathname: '/suppliers/categories',
+                link: '/suppliers/categories',
+                icon: contractImg,
+                mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+              },
+              ...res
+                .sort((a, b) => {
+                  if (
+                    a.name.localeCompare(b.name, undefined, { numeric: true }) <
+                    0
+                  ) {
+                    return -1
+                  }
+                  if (
+                    a.name.localeCompare(b.name, undefined, { numeric: true }) >
+                    0
+                  ) {
+                    return 1
+                  }
+                  return 0
+                })
+                .map((item) => {
+                  return {
+                    name: item.name,
+                    pathname: '/suppliers/category/' + item.name + '/',
+                    mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+                    link: '/suppliers/category/' + item.name + '/active',
+                  }
+                }),
+            ],
+            // linkTo: props.location.pathname,
+          })
+          setSidemenuItems([...temp])
+          return temp
+        })
+    }
+
+    if (sidemenuItems[1].dropdownMenu.length === 0) {
+      loadClientCategories() //client categories are loaded
+        .then((temp) => {
+          loadSuppliersCategories(temp) //suppliers categories are loaded
+        })
+    }
+  }, [props.location.pathname])
 
   return (
     <div className={props.hidden ? 'sidemenu sidemenu--hidden' : 'sidemenu'}>

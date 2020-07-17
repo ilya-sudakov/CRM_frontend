@@ -63,21 +63,21 @@ const Clients = (props) => {
   const deleteItem = (clientId, index) => {
     Promise.all(
       clients[index].legalEntities.map((item) => {
-        return deleteClientLegalEntity(item.id)
+        return clientTypes[props.type].deleteLegalEntityFunction(item.id)
       }),
     )
       .then(() => {
         Promise.all(
           clients[index].contacts.map((item) => {
-            return deleteClientContact(item.id)
+            return clientTypes[props.type].deleteContactsFunction(item.id)
           }),
         ).then(() => {
           Promise.all(
             clients[index].histories.map((item) => {
-              return deleteClientWorkHistory(item.id)
+              return clientTypes[props.type].deleteWorkHistoryFunction(item.id)
             }),
           ).then(() => {
-            deleteClient(clientId).then(() => {
+            clientTypes[props.type].deleteItemFunction(clientId).then(() => {
               let temp = clients
               temp.splice(index, 1)
               setClients([...temp])
@@ -93,39 +93,42 @@ const Clients = (props) => {
   }
 
   const loadClientsTotalByType = (category) => {
-    return getClientsByCategoryAndType(
-      {
-        categoryName: category,
-        clientType: 'Активные',
-      },
-      1,
-      1,
-      sortOrder,
-    )
+    return clientTypes[props.type]
+      .loadItemsByCategory(
+        {
+          categoryName: category,
+          clientType: 'Активные',
+        },
+        1,
+        1,
+        sortOrder,
+      )
       .then((res) => res.json())
       .then((res) => {
         setItemsActiveCount(res.totalElements)
-        return getClientsByCategoryAndType(
-          {
-            categoryName: category,
-            clientType: 'Потенциальные',
-          },
-          1,
-          1,
-          sortOrder,
-        )
+        return clientTypes[props.type]
+          .loadItemsByCategory(
+            {
+              categoryName: category,
+              clientType: 'Потенциальные',
+            },
+            1,
+            1,
+            sortOrder,
+          )
           .then((res) => res.json())
           .then((res) => {
             setItemsPotentialCount(res.totalElements)
-            return getClientsByCategoryAndType(
-              {
-                categoryName: category,
-                clientType: 'В разработке',
-              },
-              1,
-              1,
-              sortOrder,
-            )
+            return clientTypes[props.type]
+              .loadItemsByCategory(
+                {
+                  categoryName: category,
+                  clientType: 'В разработке',
+                },
+                1,
+                1,
+                sortOrder,
+              )
               .then((res) => res.json())
               .then((res) => {
                 setItemsProgressCount(res.totalElements)
@@ -138,21 +141,22 @@ const Clients = (props) => {
     // console.log(category, type);
     setSearchQuery('')
     setIsLoading(true)
-    getClientsByCategoryAndType(
-      {
-        categoryName: category,
-        clientType:
-          type === 'active'
-            ? 'Активные'
-            : type === 'potential'
-            ? 'Потенциальные'
-            : 'В разработке',
-      },
-      curPage,
-      itemsPerPage,
-      sortOrder,
-      signal,
-    )
+    clientTypes[props.type]
+      .loadItemsByCategory(
+        {
+          categoryName: category,
+          clientType:
+            type === 'active'
+              ? 'Активные'
+              : type === 'potential'
+              ? 'Потенциальные'
+              : 'В разработке',
+        },
+        curPage,
+        itemsPerPage,
+        sortOrder,
+        signal,
+      )
       .then((res) => res.json())
       .then((res) => {
         console.log(res)
@@ -180,6 +184,63 @@ const Clients = (props) => {
       curSort: name,
       [name]: order,
     })
+  }
+
+  const clientTypes = {
+    clients: {
+      name: 'клиент',
+      loadItemsByCategory: (
+        category,
+        curPage,
+        itemsPerPage,
+        sortOrder,
+        signal,
+      ) =>
+        getClientsByCategoryAndType(
+          category,
+          curPage,
+          itemsPerPage,
+          sortOrder,
+          signal,
+        ),
+      editItemFunction: (newClient, id) => editClient(newClient, id),
+      deleteItemFunction: (id) => deleteClient(id),
+      editWorkHistoryFunction: (newWorkHistory, id) =>
+        editClientWorkHistory(newWorkHistory, id),
+      editNextContactDateFunction: (date) => editNextContactDateClient(date),
+      addWorkHistoryFunction: (newWorkHistory) =>
+        addClientWorkHistory(newWorkHistory),
+      deleteWorkHistoryFunction: (id) => deleteClientWorkHistory(id),
+      deleteContactsFunction: (id) => deleteClientContact(id),
+      deleteLegalEntityFunction: (id) => deleteClientLegalEntity(id),
+    },
+    suppliers: {
+      name: 'поставщик',
+      loadItemsByCategory: (
+        category,
+        curPage,
+        itemsPerPage,
+        sortOrder,
+        signal,
+      ) =>
+        getClientsByCategoryAndType(
+          category,
+          curPage,
+          itemsPerPage,
+          sortOrder,
+          signal,
+        ),
+      editItemFunction: (newClient, id) => editClient(newClient, id),
+      deleteItemFunction: (id) => deleteClient(id),
+      editWorkHistoryFunction: (newWorkHistory, id) =>
+        editClientWorkHistory(newWorkHistory, id),
+      editNextContactDateFunction: (date) => editNextContactDateClient(date),
+      addWorkHistoryFunction: (newWorkHistory) =>
+        addClientWorkHistory(newWorkHistory),
+      deleteWorkHistoryFunction: (id) => deleteClientWorkHistory(id),
+      deleteContactsFunction: (id) => deleteClientContact(id),
+      deleteLegalEntityFunction: (id) => deleteClientLegalEntity(id),
+    },
   }
 
   const getEmailsExcel = () => {
@@ -330,6 +391,9 @@ const Clients = (props) => {
                   setCloseWindow={setCloseWindow}
                   closeWindow={closeWindow}
                   loadData={loadData}
+                  editNextContactDate={
+                    clientTypes[props.type].editNextContactDateFunction
+                  }
                 />
               ) : (
                 <EditWorkHistory
@@ -339,6 +403,15 @@ const Clients = (props) => {
                   setCloseWindow={setCloseWindow}
                   closeWindow={closeWindow}
                   userHasAccess={props.userHasAccess}
+                  addWorkHistory={
+                    clientTypes[props.type].addWorkHistoryFunction
+                  }
+                  editWorkHistory={
+                    clientTypes[props.type].editWorkHistoryFunction
+                  }
+                  deleteWorkHistory={
+                    clientTypes[props.type].deleteWorkHistoryFunction
+                  }
                 />
               )}
             </React.Fragment>
@@ -487,7 +560,8 @@ const Clients = (props) => {
                             workCondition: item.workCondition,
                             favorite: !item.favorite,
                           })
-                          editClient(newClient, item.id)
+                          clientTypes[props.type]
+                            .editItemFunction(newClient, item.id)
                             .then(() => {
                               temp.splice(index, 1, {
                                 ...item,
@@ -796,17 +870,19 @@ const EditNextContactDate = (props) => {
 
   const handleSubmit = () => {
     setIsLoading(true)
-    editNextContactDateClient({
-      nextDateContact: new Date(date).getTime() / 1000,
-      id: props.selectedItem.id,
-    }).then(() => {
-      setIsLoading(false)
-      props.loadData(
-        props.selectedItem.category.name,
-        props.selectedItem.clientType === 'Активные' ? 'active' : 'potential',
-      )
-      props.setCloseWindow(!props.closeWindow)
-    })
+    props
+      .editNextContactDate({
+        nextDateContact: new Date(date).getTime() / 1000,
+        id: props.selectedItem.id,
+      })
+      .then(() => {
+        setIsLoading(false)
+        props.loadData(
+          props.selectedItem.category.name,
+          props.selectedItem.clientType === 'Активные' ? 'active' : 'potential',
+        )
+        props.setCloseWindow(!props.closeWindow)
+      })
   }
 
   useEffect(() => {
@@ -871,7 +947,7 @@ const EditWorkHistory = (props) => {
         }
       })
       return edited === true
-        ? editClientWorkHistory(
+        ? props.editWorkHistory(
             {
               date: selected.date,
               action: selected.action,
@@ -881,7 +957,7 @@ const EditWorkHistory = (props) => {
             },
             selected.id,
           )
-        : addClientWorkHistory({
+        : props.addWorkHistory({
             date: selected.date,
             action: selected.action,
             result: selected.result,
@@ -899,7 +975,7 @@ const EditWorkHistory = (props) => {
             return
           }
         })
-        return deleted === true && deleteClientWorkHistory(item.id)
+        return deleted === true && props.deleteWorkHistory(item.id)
       })
       Promise.all(itemsArr).then(() => {
         setIsLoading(false)

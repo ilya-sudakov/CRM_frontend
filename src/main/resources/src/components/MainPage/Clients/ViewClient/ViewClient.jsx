@@ -27,13 +27,15 @@ const ViewClient = (props) => {
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
   })
-  
+
   const clientTypes = {
     clients: {
       name: 'клиент',
+      getItemFunction: (id) => getClientById(id),
     },
     suppliers: {
       name: 'поставщик',
+      getItemFunction: (id) => getClientById(id),
     },
   }
 
@@ -44,10 +46,11 @@ const ViewClient = (props) => {
     document.title = `Просмотр ${clientTypes[props.type].name}а`
     const id = props.history.location.pathname.split('/view/')[1]
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс клиента!')
+      alert('Неправильный индекс!')
       props.history.push(`/${props.type}/categories`)
     } else {
-      getClientById(id)
+      clientTypes[props.type]
+        .getItemFunction(id)
         .then((res) => res.json())
         .then((res) => {
           console.log(res)

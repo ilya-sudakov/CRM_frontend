@@ -68,6 +68,15 @@ const EditClient = (props) => {
     categoryId: true,
     site: true,
   })
+  
+  const clientTypes = {
+    clients: {
+      name: 'клиент',
+    },
+    suppliers: {
+      name: 'поставщик',
+    },
+  }
 
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -290,7 +299,11 @@ const EditClient = (props) => {
         .then(() => {
           setIsLoading(false)
           props.history.push(
-            '/clients/category/' + clientInputs.categoryName + '/active',
+            '/' +
+              props.type +
+              '/category/' +
+              clientInputs.categoryName +
+              '/active',
           )
         })
         .catch((error) => {
@@ -314,11 +327,11 @@ const EditClient = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Редактирование клиента'
+    document.title = `Редактирование ${clientTypes[props.type].name}а`
     const id = props.history.location.pathname.split('/edit/')[1]
     setClientId(id)
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс клиента!')
+      alert('Неправильный индекс!')
       props.history.push(`/${props.type}/categories`)
     } else {
       getClientById(id)
@@ -354,7 +367,9 @@ const EditClient = (props) => {
   return (
     <div className="edit_client">
       <div className="main-form">
-        <div className="main-form__title">Редактирование клиента</div>
+        <div className="main-form__title">{`Редактирование ${
+          clientTypes[props.type].name
+        }а`}</div>
         <div className="main-form__header">
           <div
             className={
@@ -378,7 +393,7 @@ const EditClient = (props) => {
               setCurTab('clientData')
             }}
           >
-            Данные клиента
+            {`Данные ${clientTypes[props.type].name}а`}
           </div>
         </div>
         <form className="main-form__form">
@@ -528,9 +543,11 @@ const EditClient = (props) => {
               />
 
               <div className="main-form__fieldset">
-                <div className="main-form__group-name">Категория клиента</div>
+                <div className="main-form__group-name">Категория </div>
                 <div className="main-form__item">
-                  <div className="main-form__input_name">Тип клиента*</div>
+                  <div className="main-form__input_name">{`Тип ${
+                    clientTypes[props.type].name
+                  }а*`}</div>
                   <div className="main-form__input_field">
                     <select
                       name="clientType"
@@ -544,8 +561,9 @@ const EditClient = (props) => {
                   </div>
                 </div>
                 <SelectClientCategory
-                  inputName="Выбор категории клиента"
+                  inputName={`Выбор категории ${clientTypes[props.type].name}а`}
                   required
+                  type={props.type}
                   error={formErrors.category}
                   userHasAccess={props.userHasAccess}
                   windowName="select-category"
@@ -578,7 +596,9 @@ const EditClient = (props) => {
               type="submit"
               onClick={() =>
                 props.history.push(
-                  '/clients/category/' +
+                  '/' +
+                    props.type +
+                    '/category/' +
                     clientInputs.categoryName +
                     '/' +
                     (clientInputs.clientType === 'Активные'

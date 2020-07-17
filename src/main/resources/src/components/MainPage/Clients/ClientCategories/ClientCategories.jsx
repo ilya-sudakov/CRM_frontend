@@ -24,12 +24,32 @@ const ClientCategories = (props) => {
   const [curForm, setCurForm] = useState('new')
   const [editCategory, setEditCategory] = useState(null)
 
+  const clientTypes = {
+    clients: {
+      name: 'клиент',
+      getCategoriesFunction: () => getClientCategories(),
+      addCategoryFunction: (newCategory) => addClientCategory(newCategory),
+      editCategoryFunction: (newCategory, id) =>
+        editClientCategory(newCategory, id),
+      deleteCategoryFunction: (id) => deleteClientCategory(id),
+    },
+    suppliers: {
+      name: 'поставщик',
+      getCategoriesFunction: () => getClientCategories(),
+      addCategoryFunction: (newCategory) => addClientCategory(newCategory),
+      editCategoryFunction: (newCategory, id) =>
+        editClientCategory(newCategory, id),
+      deleteCategoryFunction: (id) => deleteClientCategory(id),
+    },
+  }
+
   useEffect(() => {
     loadData()
   }, [])
 
   const loadData = () => {
-    getClientCategories()
+    clientTypes[props.type]
+      .getCategoriesFunction()
       .then((res) => res.json())
       .then((res) => {
         console.log(res)
@@ -39,7 +59,8 @@ const ClientCategories = (props) => {
   }
 
   const deleteItem = (id) => {
-    deleteClientCategory(id)
+    clientTypes[props.type]
+      .deleteCategoryFunction(id)
       .then(() => {
         loadData()
       })
@@ -62,7 +83,9 @@ const ClientCategories = (props) => {
           visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
         />
         <div className="main-window__header">
-          <div className="main-window__title">Категории клиентов</div>
+          <div className="main-window__title">{`Категории ${
+            clientTypes[props.type].name
+          }ов`}</div>
           {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
             <div
               className="main-window__button"
@@ -87,6 +110,7 @@ const ClientCategories = (props) => {
                 <NewClientCategory
                   onSubmit={loadData}
                   showWindow={showWindow}
+                  addCategory={clientTypes[props.type].addCategoryFunction}
                   setShowWindow={setShowWindow}
                 />
               ) : (
@@ -95,6 +119,7 @@ const ClientCategories = (props) => {
                   showWindow={showWindow}
                   setShowWindow={setShowWindow}
                   category={editCategory}
+                  editCategory={clientTypes[props.type].editCategoryFunction}
                 />
               )}
             </React.Fragment>

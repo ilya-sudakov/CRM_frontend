@@ -54,9 +54,29 @@ const newClient = (props) => {
   const clientTypes = {
     clients: {
       name: 'клиент',
+      filteredRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      addItemFunction: (newClient) => addClient(newClient),
+      addLegalEntityFunction: (newLegalEntity) =>
+        addClientLegalEntity(newLegalEntity),
+      addContactsFunction: (newContact) => addClientContact(newContact),
+      addWorkHistoryFunction: (newWorkHistory) =>
+        addClientWorkHistory(newWorkHistory),
     },
     suppliers: {
       name: 'поставщик',
+      filteredRoles: [
+        'ROLE_ADMIN',
+        'ROLE_ENGINEER',
+        'ROLE_DISPATCHER',
+        'ROLE_MANAGER',
+        'ROLE_WORKSHOP',
+      ],
+      addItemFunction: (newClient) => addClient(newClient),
+      addLegalEntityFunction: (newLegalEntity) =>
+        addClientLegalEntity(newLegalEntity),
+      addContactsFunction: (newContact) => addClientContact(newContact),
+      addWorkHistoryFunction: (newWorkHistory) =>
+        addClientWorkHistory(newWorkHistory),
     },
   }
 
@@ -115,25 +135,26 @@ const newClient = (props) => {
     console.log(clientInputs)
     let clientId = 0
     formIsValid() &&
-      addClient({
-        clientType: clientInputs.clientType,
-        comment: clientInputs.comment,
-        manager: clientInputs.managerName,
-        name: clientInputs.name,
-        price: clientInputs.price,
-        site: clientInputs.site,
-        storageAddress: clientInputs.storageAddress,
-        workCondition: clientInputs.workCondition,
-        check: clientInputs.check,
-        nextDateContact: clientInputs.nextContactDate.getTime() / 1000,
-        categoryId: clientInputs.categoryId,
-      })
+      clientTypes[props.type]
+        .addItemFunction({
+          clientType: clientInputs.clientType,
+          comment: clientInputs.comment,
+          manager: clientInputs.managerName,
+          name: clientInputs.name,
+          price: clientInputs.price,
+          site: clientInputs.site,
+          storageAddress: clientInputs.storageAddress,
+          workCondition: clientInputs.workCondition,
+          check: clientInputs.check,
+          nextDateContact: clientInputs.nextContactDate.getTime() / 1000,
+          categoryId: clientInputs.categoryId,
+        })
         .then((res) => res.json())
         .then((res) => {
           clientId = res.id
           return Promise.all(
             clientInputs.legalEntity.map((item) => {
-              return addClientLegalEntity({
+              return clientTypes[props.type].addLegalEntityFunction({
                 name: item.name,
                 inn: item.inn,
                 kpp: item.kpp,
@@ -151,7 +172,7 @@ const newClient = (props) => {
         .then(() => {
           return Promise.all(
             clientInputs.contacts.map((item) => {
-              return addClientContact({
+              return clientTypes[props.type].addContactsFunction({
                 name: item.name,
                 lastName: item.lastName,
                 email: item.email,
@@ -163,7 +184,7 @@ const newClient = (props) => {
           )
         })
         .then(() => {
-          return addClientWorkHistory({
+          return clientTypes[props.type].addWorkHistoryFunction({
             date: new Date(),
             action: 'Создание записи',
             result: 'Запись успешно создана',
@@ -174,7 +195,7 @@ const newClient = (props) => {
         .then(() => {
           return Promise.all(
             clientInputs.workHistory.map((item) => {
-              return addClientWorkHistory({
+              return clientTypes[props.type].addWorkHistoryFunction({
                 date: item.date,
                 action: item.action,
                 result: item.result,
@@ -221,7 +242,7 @@ const newClient = (props) => {
       getUsers()
         .then((res) => res.json())
         .then((res) => {
-          const filteredRoles = ['ROLE_ADMIN', 'ROLE_MANAGER']
+          const filteredRoles = clientTypes[props.type].filteredRoles
           let newUsers = res
           setUsers([
             ...newUsers
@@ -448,8 +469,8 @@ const newClient = (props) => {
                   inputName="Выбор категории"
                   required
                   error={formErrors.category}
+                  type={props.type}
                   userHasAccess={props.userHasAccess}
-                  windowName="select-category"
                   name="categoryId"
                   handleCategoryChange={(value, name) => {
                     validateField('categoryId', value)
