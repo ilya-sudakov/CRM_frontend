@@ -15,6 +15,7 @@ const SelectClientCategory = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [id, setId] = useState(0)
   const [fullName, setFullName] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value)
@@ -36,11 +37,17 @@ const SelectClientCategory = (props) => {
   }, [])
 
   const loadCategories = () => {
+    setIsLoading(true)
     clientTypes[props.type]
       .getCategoriesFunction()
       .then((res) => res.json())
       .then((res) => {
         setCategories(res)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(true)
       })
   }
 
