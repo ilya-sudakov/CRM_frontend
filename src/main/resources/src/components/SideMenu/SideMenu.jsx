@@ -134,7 +134,7 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
       icon: factoryIcon,
-      iconClassName: 'sidemenu__img--bigger',
+      iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
           name: 'Очередь производства',
@@ -180,7 +180,7 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       name: 'ЦехЛепсари',
       icon: factoryIcon,
-      iconClassName: 'sidemenu__img--bigger',
+      iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
           name: 'Очередь производства',
@@ -221,7 +221,7 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
       name: 'ЦехЛиговский',
       icon: factoryIcon,
-      iconClassName: 'sidemenu__img--bigger',
+      iconClassName: 'sidemenu__img',
       dropdownMenu: [
         // {
         //   name: 'Очередь производства',
