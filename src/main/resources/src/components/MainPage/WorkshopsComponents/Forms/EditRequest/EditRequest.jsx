@@ -219,7 +219,10 @@ const EditRequest = (props) => {
             codeWord: oldRequest.codeWord,
             responsible: oldRequest.responsible,
             status: oldRequest.status,
-            shippingDate: oldRequest.shippingDate,
+            shippingDate:
+              oldRequest.shippingDate !== null
+                ? oldRequest.shippingDate
+                : new Date(),
             comment: oldRequest.comment,
             factory: oldRequest.factory,
           })
