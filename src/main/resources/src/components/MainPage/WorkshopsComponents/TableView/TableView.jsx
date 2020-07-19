@@ -371,7 +371,16 @@ const TableView = (props) => {
                   request.status !== 'Завершено' ? (
                     <div className="main-window__reminder">
                       <div>!</div>
-                      <div>{formatDateString(request.shippingDate)}</div>
+                      <div>
+                        {formatDateString(
+                          formatDateString(
+                            request.shippingDate === null ||
+                              request.shippingDate === undefined
+                              ? new Date()
+                              : request.shippingDate,
+                          ),
+                        )}
+                      </div>
                     </div>
                   ) : (
                     <div className="main-window__date">
