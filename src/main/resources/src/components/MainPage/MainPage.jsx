@@ -7,13 +7,13 @@ import {
   Clients,
   Contracts,
   Requests,
-  NewRequest,
+  // NewRequest,
   GeneralPage,
   newClient,
   Products,
   NewProduct,
-  EditRequest,
-  ViewRequest,
+  // EditRequest,
+  // ViewRequest,
   Users,
   EditUser,
   NewUser,
@@ -58,6 +58,9 @@ import {
   ReportTablePage,
   RiggingList,
 } from './lazyImports.jsx'
+import NewRequest from './WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
+import EditRequest from './WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
+import ViewRequest from './WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx'
 import SideMenu from '../SideMenu/SideMenu.jsx'
 import PageNotFound from './PageNotFound/PageNotFound.jsx'
 import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx'
@@ -216,7 +219,13 @@ class MainPage extends React.Component {
                   type="suppliers"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_WORKSHOP',
+                    'ROLE_ENGINEER',
+                  ]}
                 />
                 <PrivateRoute
                   exact
@@ -225,7 +234,13 @@ class MainPage extends React.Component {
                   type="suppliers"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_WORKSHOP',
+                    'ROLE_ENGINEER',
+                  ]}
                 />
                 <PrivateRoute
                   exact
@@ -234,7 +249,12 @@ class MainPage extends React.Component {
                   type="suppliers"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_ENGINEER',
+                  ]}
                 />
                 <PrivateRoute
                   path="/suppliers/view/"
@@ -271,32 +291,22 @@ class MainPage extends React.Component {
                     })
                   }
                 />
-                <Route path="/requests/view/" component={ViewRequest} />
+                <Route
+                  path="/requests/view/"
+                  component={ViewRequest}
+                  type="requests"
+                />
                 <PrivateRoute
                   exact
                   path="/requests/new"
                   component={NewRequest}
-                  userHasAccess={this.props.userHasAccess}
-                  userData={this.props.userData}
-                  transferState={this.state.transferState}
-                  transferData={this.state.transferData}
-                  setTransferState={(value) =>
-                    this.setState({
-                      transferState: value,
-                    })
-                  }
-                  setTransferData={(value) =>
-                    this.setState({
-                      transferData: value,
-                    })
-                  }
+                  type="requests"
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                 />
                 <PrivateRoute
                   path="/requests/edit/"
                   component={EditRequest}
-                  userHasAccess={this.props.userHasAccess}
-                  userData={this.props.userData}
+                  type="requests"
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                 />
                 <PrivateRoute

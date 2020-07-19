@@ -8,9 +8,6 @@ import PageNotFound from '../PageNotFound/PageNotFound.jsx'
 import PageLoading from '../PageLoading/PageLoading.jsx'
 import {
   WorkshopLepsari,
-  NewRequestLepsari,
-  EditRequestLepsari,
-  ViewRequestLepsari,
   StorageLepsari,
   NewStorageLepsari,
   EditStorageLepsari,
@@ -19,6 +16,9 @@ import {
   NewWorkshopOrderLepsari,
   WorkshopOrdersLepsari,
 } from '../lazyImports.jsx'
+import NewRequest from '../WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
+import EditRequest from '../WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
+import ViewRequest from '../WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx'
 
 const Lepsari = (props) => {
   return (
@@ -111,25 +111,20 @@ const Lepsari = (props) => {
               />
               <Route
                 path="/lepsari/workshop-lepsari/view/"
-                component={ViewRequestLepsari}
+                type="lepsari"
+                component={ViewRequest}
               />
               <PrivateRoute
                 exact
                 path="/lepsari/workshop-lepsari/new"
-                component={NewRequestLepsari}
-                userHasAccess={props.userHasAccess}
-                transferState={props.transferState}
-                transferData={props.transferData}
-                setTransferState={props.setTransferState}
-                setTransferData={props.setTransferData}
-                userData={props.userData}
+                component={NewRequest}
+                type="lepsari"
                 allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']}
               />
               <PrivateRoute
                 path="/lepsari/workshop-lepsari/edit/"
-                component={EditRequestLepsari}
-                userHasAccess={props.userHasAccess}
-                userData={props.userData}
+                component={EditRequest}
+                type="lepsari"
                 allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']}
               />
               <PrivateRoute

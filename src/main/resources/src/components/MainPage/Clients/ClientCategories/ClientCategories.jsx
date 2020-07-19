@@ -34,6 +34,7 @@ const ClientCategories = (props) => {
       editCategoryFunction: (newCategory, id) =>
         editClientCategory(newCategory, id),
       deleteCategoryFunction: (id) => deleteClientCategory(id),
+      visibility: ['ROLE_ADMIN', 'ROLE_MANAGER'],
     },
     suppliers: {
       name: 'поставщик',
@@ -43,6 +44,7 @@ const ClientCategories = (props) => {
       editCategoryFunction: (newCategory, id) =>
         editClientCategory(newCategory, id),
       deleteCategoryFunction: (id) => deleteClientCategory(id),
+      visibility: ['ROLE_ADMIN'],
     },
   }
 
@@ -83,13 +85,13 @@ const ClientCategories = (props) => {
             setCurForm('new')
             setShowWindow(!showWindow)
           }}
-          visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
+          visibility={clientTypes[props.type].visibility}
         />
         <div className="main-window__header">
           <div className="main-window__title">{`Категории ${
             clientTypes[props.type].name
           }ов`}</div>
-          {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
+          {props.userHasAccess(clientTypes[props.type].visibility) && (
             <div
               className="main-window__button"
               onClick={() => {

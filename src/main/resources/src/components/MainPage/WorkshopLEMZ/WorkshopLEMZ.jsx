@@ -9,7 +9,6 @@ import {
   getRequestLEMZById,
   deleteProductsToRequestLEMZ,
 } from '../../../utils/RequestsAPI/Workshop/LEMZ.jsx'
-import TableViewOld from './TableView/TableView.jsx'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
@@ -261,20 +260,6 @@ const WorkshopLEMZ = (props) => {
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />
-        {/* <TableViewOld
-          data={requestsLEMZ.filter((item) => {
-            if (curPage === 'Открытые') {
-              if (item.status !== 'Завершено') return true
-            } else {
-              if (item.status === 'Завершено') return true
-            }
-          })}
-          loadData={loadRequestsLEMZ}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
-          copyRequest={copyRequest}
-          searchQuery={searchQuery}
-        /> */}
       </div>
     </div>
   )

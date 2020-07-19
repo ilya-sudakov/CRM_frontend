@@ -25,6 +25,7 @@ import {
   editRequestLepsariStatus,
   editProductStatusToRequestLepsari,
 } from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
+import { requestStatuses, productsStatuses } from '../workshopVariables.js'
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -33,66 +34,6 @@ const TableView = (props) => {
     date: 'desc',
   })
   const [requests, setRequests] = useState([])
-  const [requestStatuses, setRequestStatutes] = useState([
-    {
-      name: 'Проблема/Материалы',
-      oldName: 'Проблема-материалы',
-      className: 'materials',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_LEMZ', 'ROLE_LEPSARI'],
-    },
-    {
-      name: 'Завершено',
-      className: 'completed',
-      access: ['ROLE_ADMIN'],
-    },
-    {
-      name: 'Отгружено',
-      className: 'shipped',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
-    },
-    {
-      name: 'Готово к отгрузке',
-      oldName: 'Готово',
-      className: 'ready',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-    },
-    {
-      name: 'В производстве',
-      className: 'in-production',
-      access: [],
-    },
-    {
-      name: 'Ожидание',
-      className: 'waiting',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
-    },
-    {
-      name: 'Приоритет',
-      className: 'priority',
-      access: ['ROLE_ADMIN'],
-      visible: false,
-    },
-  ])
-
-  const [productsStatuses, setProductsStatutes] = useState([
-    {
-      name: 'В работе',
-      oldName: null,
-      className: 'production',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
-    },
-    {
-      name: 'Завершено',
-      className: 'completed',
-      access: ['ROLE_ADMIN'],
-    },
-    {
-      name: 'Приоритет',
-      className: 'defect',
-      access: ['ROLE_ADMIN'],
-      visible: false,
-    },
-  ])
 
   const [workshopsFuncs, setWorkshopsFuncs] = useState({
     requests: {
@@ -158,7 +99,8 @@ const TableView = (props) => {
   const searchQuery = (data) => {
     const query = props.searchQuery.toLowerCase()
     return data.filter((item) => {
-      return item[workshopsFuncs[props.workshopName].productsName].length !== 0 &&
+      return item[workshopsFuncs[props.workshopName].productsName].length !==
+        0 &&
         item[workshopsFuncs[props.workshopName].productsName][0].name !== null
         ? item[workshopsFuncs[props.workshopName].productsName][0].name
             .toLowerCase()
@@ -239,7 +181,8 @@ const TableView = (props) => {
                       item.oldName === request.status,
                   )?.className +
                   ' ' +
-                  (request?.[workshopsFuncs[props.workshopName].productsName]?.length > 1
+                  (request?.[workshopsFuncs[props.workshopName].productsName]
+                    ?.length > 1
                     ? 'main-window__list-item--multiple-items'
                     : '')
                 }
@@ -414,7 +357,7 @@ const TableView = (props) => {
                     </div>
                   ) : (
                     <div className="main-window__date">
-                      {formatDateString(request.shippingDate)}
+                      {formatDateString(request.shippingDate || new Date())}
                     </div>
                   )}
                 </span>

@@ -6,7 +6,7 @@ const Contracts = lazy(() => import('./Contracts/Contracts.jsx'))
 
 const Requests = lazy(() => import('./Requests/Requests.jsx'))
 
-const NewRequest = lazy(() => import('./Requests/NewRequest/NewRequest.jsx'))
+// const NewRequest = lazy(() => import('./Requests/NewRequest/NewRequest.jsx'))
 
 const GeneralPage = lazy(() => import('./GeneralPage/GeneralPage.jsx'))
 
@@ -62,9 +62,9 @@ const Products = lazy(() => import('./Products/Products.jsx'))
 
 const NewProduct = lazy(() => import('./Products/NewProduct/NewProduct.jsx'))
 
-const EditRequest = lazy(() => import('./Requests/EditRequest/EditRequest.jsx'))
+// const EditRequest = lazy(() => import('./Requests/EditRequest/EditRequest.jsx'))
 
-const ViewRequest = lazy(() => import('./Requests/ViewRequest/ViewRequest.jsx'))
+// const ViewRequest = lazy(() => import('./Requests/ViewRequest/ViewRequest.jsx'))
 
 const Users = lazy(() => import('./Profile/Users/Users.jsx'))
 
@@ -80,17 +80,17 @@ const EditProduct = lazy(() => import('./Products/EditProduct/EditProduct.jsx'))
 
 const WorkshopLEMZ = lazy(() => import('./WorkshopLEMZ/WorkshopLEMZ.jsx'))
 
-const NewRequestLEMZ = lazy(() =>
-  import('./WorkshopLEMZ/NewRequestLEMZ/NewRequestLEMZ.jsx'),
-)
+// const NewRequestLEMZ = lazy(() =>
+//   import('./WorkshopLEMZ/NewRequestLEMZ/NewRequestLEMZ.jsx'),
+// )
 
-const ViewRequestLEMZ = lazy(() =>
-  import('./WorkshopLEMZ/ViewRequestLEMZ/ViewRequestLEMZ.jsx'),
-)
+// const ViewRequestLEMZ = lazy(() =>
+//   import('./WorkshopLEMZ/ViewRequestLEMZ/ViewRequestLEMZ.jsx'),
+// )
 
-const EditRequestLEMZ = lazy(() =>
-  import('./WorkshopLEMZ/EditRequestLEMZ/EditRequestLEMZ.jsx'),
-)
+// const EditRequestLEMZ = lazy(() =>
+//   import('./WorkshopLEMZ/EditRequestLEMZ/EditRequestLEMZ.jsx'),
+// )
 
 const WorkshopOrdersLEMZ = lazy(() =>
   import('./LEMZ/WorkshopOrders/WorkshopOrders.jsx'),
@@ -238,17 +238,17 @@ const WorkshopLepsari = lazy(() =>
   import('./WorkshopLepsari/WorkshopLepsari.jsx'),
 )
 
-const NewRequestLepsari = lazy(() =>
-  import('./WorkshopLepsari/NewRequestLepsari/NewRequestLepsari.jsx'),
-)
+// const NewRequestLepsari = lazy(() =>
+//   import('./WorkshopLepsari/NewRequestLepsari/NewRequestLepsari.jsx'),
+// )
 
-const ViewRequestLepsari = lazy(() =>
-  import('./WorkshopLepsari/ViewRequestLepsari/ViewRequestLepsari.jsx'),
-)
+// const ViewRequestLepsari = lazy(() =>
+//   import('./WorkshopLepsari/ViewRequestLepsari/ViewRequestLepsari.jsx'),
+// )
 
-const EditRequestLepsari = lazy(() =>
-  import('./WorkshopLepsari/EditRequestLepsari/EditRequestLepsari.jsx'),
-)
+// const EditRequestLepsari = lazy(() =>
+//   import('./WorkshopLepsari/EditRequestLepsari/EditRequestLepsari.jsx'),
+// )
 
 const Storage = lazy(() => import('./Storage/Storage.jsx'))
 
@@ -326,9 +326,9 @@ export {
   ClientCategories,
   Contracts,
   Requests,
-  NewRequest,
-  EditRequest,
-  ViewRequest,
+  // NewRequest,
+  // EditRequest,
+  // ViewRequest,
   GeneralPage,
   AdminWorkspace,
   Notifications,
@@ -347,9 +347,9 @@ export {
   NewUser,
   LoginHistory,
   WorkshopLEMZ,
-  NewRequestLEMZ,
-  ViewRequestLEMZ,
-  EditRequestLEMZ,
+  // NewRequestLEMZ,
+  // ViewRequestLEMZ,
+  // EditRequestLEMZ,
   Storage,
   NewStorage,
   EditStorage,
@@ -393,9 +393,9 @@ export {
   NewWork,
   EditWork,
   WorkshopLepsari,
-  NewRequestLepsari,
-  ViewRequestLepsari,
-  EditRequestLepsari,
+  // NewRequestLepsari,
+  // ViewRequestLepsari,
+  // EditRequestLepsari,
   StorageLepsari,
   NewStorageLepsari,
   EditStorageLepsari,

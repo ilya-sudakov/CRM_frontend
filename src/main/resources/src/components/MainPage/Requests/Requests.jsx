@@ -339,7 +339,7 @@ const Requests = (props) => {
             Всего: {requests.length} записей
           </div>
         </div>
-        {/* <TableView
+        <TableView
           data={requests
             .filter((item) => {
               if (curPage === 'Завершено' && item.status === 'Завершено') {
@@ -386,8 +386,8 @@ const Requests = (props) => {
           copyRequest={copySelectedRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
-        /> */}
-        <TableViewOld
+        />
+        {/* <TableViewOld
           data={requests
             .filter((item) => {
               if (curPage === 'Завершено' && item.status === 'Завершено') {
@@ -425,26 +425,6 @@ const Requests = (props) => {
                 }
               })
               return check
-            })
-            .filter((item) => {
-              let check = false
-              let noActiveClients = true
-              clients.map((client) => {
-                if (client.active) {
-                  noActiveClients = false
-                }
-              })
-              clients.map((client) => {
-                if (
-                  noActiveClients ||
-                  (client.active && client.name === item.codeWord) ||
-                  item.status === 'Завершено'
-                ) {
-                  check = true
-                  return
-                }
-              })
-              return check
             })}
           isLoading={isLoading}
           loadData={loadRequests}
@@ -453,7 +433,7 @@ const Requests = (props) => {
           copyRequest={copySelectedRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
-        />
+        /> */}
       </div>
     </div>
   )

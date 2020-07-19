@@ -9,7 +9,7 @@
   --waiting: #76d1b3;
   --problem: #d6574e;
   --materials: #d4ae63;
-  
+
   .main-window__status-panel {
     margin-bottom: 0px;
     padding-left: 25px;
@@ -44,6 +44,12 @@
       margin-left: auto;
       font-size: 100%;
       margin-top: 5px;
+    }
+  }
+
+  .main-window {
+    &__list {
+      width: calc(100% - 30px) !important;
     }
   }
   .main-window__header {

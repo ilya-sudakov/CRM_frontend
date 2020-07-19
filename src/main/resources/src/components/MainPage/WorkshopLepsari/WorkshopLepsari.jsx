@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import pdfMake from 'pdfmake'
 import './WorkshopLepsari.scss'
 import PrintIcon from '../../../../../../../assets/print.png'
-import TableViewOld from './TableView/TableView.jsx'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import {
@@ -12,7 +11,6 @@ import {
   deleteRequestLepsari,
 } from '../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
-import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
@@ -230,20 +228,6 @@ const WorkshopLepsari = (props) => {
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />
-        {/* <TableViewOld
-          data={requestLepsari.filter((item) => {
-            if (curPage === 'Открытые') {
-              if (item.status !== 'Завершено') return true
-            } else {
-              if (item.status === 'Завершено') return true
-            }
-          })}
-          loadData={loadRequestLepsari}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
-          copyRequest={copyRequest}
-          searchQuery={searchQuery}
-        /> */}
       </div>
     </div>
   )
