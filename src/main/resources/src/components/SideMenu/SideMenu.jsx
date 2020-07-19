@@ -371,7 +371,7 @@ const SideMenu = (props) => {
     },
     {
       pathname: '/etcetera',
-      name: 'Разное',
+      name: 'Остальное',
       mainRoles: [
         'ROLE_ADMIN',
         'ROLE_DISPATCHER',
