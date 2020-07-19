@@ -8,6 +8,14 @@ export function getRequests(signal) {
   })
 }
 
+export function getRequestsByWorkshop(factory, signal) {
+  return request({
+    url: `${process.env.API_BASE_URL}/api/v1/request/factory/${factory}`,
+    method: 'GET',
+    signal: signal,
+  })
+}
+
 export function deleteRequest(id) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/request/' + id,

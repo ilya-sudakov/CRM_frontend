@@ -221,7 +221,7 @@ const EditRequest = (props) => {
             status: oldRequest.status,
             shippingDate: oldRequest.shippingDate,
             comment: oldRequest.comment,
-            type: oldRequest.type,
+            factory: oldRequest.factory,
           })
           setSelectedProducts(oldRequest.requestProducts)
         })
@@ -261,7 +261,7 @@ const EditRequest = (props) => {
     <div className="edit-request">
       <div className="main-form">
         <div className="main-form__title">{`Редактирование заявки ${
-          workshops[props.type].name
+          workshops[props.type].title
         }`}</div>
         <form className="main-form__form">
           <ErrorMessage

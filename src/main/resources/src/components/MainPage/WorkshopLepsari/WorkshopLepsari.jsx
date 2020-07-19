@@ -12,6 +12,7 @@ import {
   deleteProductsToRequest,
   deleteRequest,
   getRequests,
+  getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
 
 const WorkshopLepsari = (props) => {
@@ -104,14 +105,14 @@ const WorkshopLepsari = (props) => {
     let dd = getRequestsListPdfText(
       requestLepsari.sort((a, b) => a.id - b.id),
       'ЦехЛепсари',
-      'lepsariProducts',
+      'requestProducts',
     )
     pdfMake.createPdf(dd).print()
   }
 
   const loadRequestLepsari = (signal) => {
     setIsLoading(true)
-    getRequests(signal)
+    getRequestsByWorkshop('lepsari', signal)
       .then((res) => res.json())
       .then((requests) => {
         // console.log(requests);
@@ -251,7 +252,6 @@ const WorkshopLepsari = (props) => {
           isLoading={isLoading}
           loadData={loadRequestLepsari}
           deleteItem={deleteItem}
-          // transferRequest={}
           // copyRequest={copyRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}

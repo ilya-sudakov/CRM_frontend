@@ -1,21 +1,25 @@
 export const workshops = {
   requests: {
     name: 'Заявки',
+    title: '',
     redirectURL: '/requests',
     type: 'requests',
   },
   lemz: {
     name: 'ЛЭМЗ',
+    title: 'ЛЭМЗ',
     redirectURL: '/lemz/workshop-lemz',
     type: 'lemz',
   },
   lepsari: {
     name: 'Лепсари',
+    title: 'Лепсари',
     redirectURL: '/lepsari/workshop-lepsari',
     type: 'lepsari',
   },
   ligovskiy: {
     name: 'Лиговский',
+    title: 'Лиговский',
     redirectURL: '/ligovskiy/workshop',
     type: 'ligovskiy',
   },

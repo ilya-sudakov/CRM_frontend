@@ -8,7 +8,7 @@
   // background-color: $primary-background-color;
   // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
   // margin-bottom: 15px;
-  
+
 
   .searchbar__title {
     padding-left: 25px;
@@ -41,7 +41,8 @@
       flex: 0 1 calc(100% - 15px);
       position: relative;
 
-      &:focus-within, &:hover {
+      &:focus-within,
+      &:hover {
         &::before {
           background-color: #bbbbbb;
         }

@@ -241,7 +241,7 @@ const Requests = (props) => {
                           (item) => item.id === requestId,
                         )
                         editRequest(
-                          { ...request, type: toWorkshop },
+                          { ...request, factory: toWorkshop },
                           request.id,
                         )
                           .then((res) => res.json())

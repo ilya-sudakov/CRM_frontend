@@ -14,6 +14,7 @@ import {
   getRequestById,
   deleteProductsToRequest,
   deleteRequest,
+  getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
 
 const WorkshopLEMZ = (props) => {
@@ -43,7 +44,7 @@ const WorkshopLEMZ = (props) => {
     let dd = getRequestsListPdfText(
       requestsLEMZ.sort((a, b) => a.id - b.id),
       'ЦехЛЭМЗ',
-      'lemzProducts',
+      'requestProducts',
     )
     pdfMake.createPdf(dd).print()
   }
@@ -71,7 +72,7 @@ const WorkshopLEMZ = (props) => {
 
   const loadRequestsLEMZ = (signal) => {
     setIsLoading(true)
-    getRequests(signal)
+    getRequestsByWorkshop('lemz', signal)
       .then((res) => res.json())
       .then((requests) => {
         setRequestsLEMZ(requests)
