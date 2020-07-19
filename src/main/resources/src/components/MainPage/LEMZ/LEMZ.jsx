@@ -106,8 +106,7 @@ const LEMZ = (props) => {
               />
               <Route
                 path="/lemz/workshop-lemz/view/"
-                component={ViewRequest}
-                type="lemz"
+                render={(props) => <ViewRequest {...props} type="lemz" />}
               />
               <PrivateRoute
                 exact

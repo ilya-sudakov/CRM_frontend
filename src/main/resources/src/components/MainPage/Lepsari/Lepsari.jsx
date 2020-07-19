@@ -112,7 +112,7 @@ const Lepsari = (props) => {
               <Route
                 path="/lepsari/workshop-lepsari/view/"
                 type="lepsari"
-                component={ViewRequest}
+                render={(props) => <ViewRequest {...props} type="lepsari" />}
               />
               <PrivateRoute
                 exact

@@ -252,7 +252,7 @@ const WorkshopLepsari = (props) => {
           loadData={loadRequestLepsari}
           deleteItem={deleteItem}
           // transferRequest={}
-          copyRequest={copyRequest}
+          // copyRequest={copyRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />

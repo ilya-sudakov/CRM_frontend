@@ -97,7 +97,9 @@ const ViewRequest = (props) => {
   return (
     <div className="view-request">
       <div className="main-form">
-        <div className="main-form__title">Просмотр заявки</div>
+        <div className="main-form__title">{`Просмотр заявки ${
+          workshops[props.type].name
+        }`}</div>
         <form className="main-form__form">
           <InputDate
             inputName="Дата заявки"

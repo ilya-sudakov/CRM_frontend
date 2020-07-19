@@ -25,6 +25,7 @@ const NewRequest = (props) => {
     status: 'Ожидание',
     shippingDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     comment: '',
+    type: props.type,
   })
   const [requestErrors, setRequestErrors] = useState({
     date: false,
@@ -200,7 +201,9 @@ const NewRequest = (props) => {
   return (
     <div className="new-request">
       <div className="main-form">
-        <div className="main-form__title">Новая заявка</div>
+        <div className="main-form__title">{`Новая заявка ${
+          workshops[props.type].name
+        }`}</div>
         <form className="main-form__form">
           <ErrorMessage
             message="Не заполнены все обязательные поля!"

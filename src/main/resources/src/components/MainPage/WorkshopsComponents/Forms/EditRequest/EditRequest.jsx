@@ -221,6 +221,7 @@ const EditRequest = (props) => {
             status: oldRequest.status,
             shippingDate: oldRequest.shippingDate,
             comment: oldRequest.comment,
+            type: oldRequest.type,
           })
           setSelectedProducts(oldRequest.requestProducts)
         })
@@ -259,7 +260,9 @@ const EditRequest = (props) => {
   return (
     <div className="edit-request">
       <div className="main-form">
-        <div className="main-form__title">Редактирование заявки</div>
+        <div className="main-form__title">{`Редактирование заявки ${
+          workshops[props.type].name
+        }`}</div>
         <form className="main-form__form">
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
@@ -389,9 +392,10 @@ const EditRequest = (props) => {
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() =>
+              onClick={() => {
+                console.log(props.type)
                 props.history.push(workshops[props.type].redirectURL)
-              }
+              }}
               value="Вернуться назад"
             />
             <Button

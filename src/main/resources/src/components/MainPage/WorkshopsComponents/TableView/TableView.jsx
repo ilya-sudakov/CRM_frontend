@@ -422,7 +422,7 @@ const TableView = (props) => {
                       <img className="main-window__img" src={deleteSVG} />
                     </div>
                   )}
-                  {props.workshopName === 'requests' &&
+                  {props.transferRequest &&
                     props.userHasAccess(['ROLE_ADMIN']) && (
                       <div
                         data-id={request.id}
@@ -436,7 +436,7 @@ const TableView = (props) => {
                         <img className="main-window__img" src={transferSVG} />
                       </div>
                     )}
-                  {props.userHasAccess(['ROLE_ADMIN']) && (
+                  {props.copyRequest && props.userHasAccess(['ROLE_ADMIN']) && (
                     <div
                       data-id={request.id}
                       className="main-window__action"

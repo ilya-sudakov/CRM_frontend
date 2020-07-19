@@ -9,6 +9,8 @@ import {
   deleteProductsToRequest,
   getRequestById,
   copyRequest,
+  addRequest,
+  editRequest,
 } from '../../../utils/RequestsAPI/Requests.jsx'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import TableViewOld from './TableView/TableView.jsx'
@@ -142,15 +144,23 @@ const Requests = (props) => {
 
   //Копировать заявку
   const copySelectedRequest = (id) => {
-    props.setTransferState(true)
-    props.setTransferData(
-      requests.find((item) => {
+    // props.setTransferState(true)
+    // props.setTransferData(
+    //   requests.find((item) => {
+    //     if (item.id === id) {
+    //       return true
+    //     }
+    //   }),
+    // )
+    // props.history.push('/requests/new')
+
+    addRequest({
+      ...requests.find((item) => {
         if (item.id === id) {
           return true
         }
       }),
-    )
-    props.history.push('/requests/new')
+    }).then(() => loadData())
   }
 
   return (
@@ -227,13 +237,12 @@ const Requests = (props) => {
                       isLoading={isLoading}
                       onClick={() => {
                         setIsLoading(true)
-                        copyRequest(
-                          requests.find((item) => {
-                            if (item.id === requestId) {
-                              return true
-                            }
-                          }).id,
-                          toWorkshop,
+                        const request = requests.find(
+                          (item) => item.id === requestId,
+                        )
+                        editRequest(
+                          { ...request, type: toWorkshop },
+                          request.id,
                         )
                           .then((res) => res.json())
                           .then((res) => {
@@ -243,7 +252,7 @@ const Requests = (props) => {
                                 '/workshop-' +
                                 toWorkshop +
                                 '/edit/' +
-                                res,
+                                res.id,
                             )
                           })
                           .catch((error) => {
@@ -251,6 +260,31 @@ const Requests = (props) => {
                             alert('Ошибка при копировании записи')
                             setIsLoading(false)
                           })
+
+                        // copyRequest(
+                        //   requests.find((item) => {
+                        //     if (item.id === requestId) {
+                        //       return true
+                        //     }
+                        //   }).id,
+                        //   toWorkshop,
+                        // )
+                        //   .then((res) => res.json())
+                        //   .then((res) => {
+                        //     setIsLoading(false)
+                        //     props.history.push(
+                        //       toWorkshop +
+                        //         '/workshop-' +
+                        //         toWorkshop +
+                        //         '/edit/' +
+                        //         res,
+                        //     )
+                        //   })
+                        //   .catch((error) => {
+                        //     console.log(error)
+                        //     alert('Ошибка при копировании записи')
+                        //     setIsLoading(false)
+                        //   })
                       }}
                       text="Перенести в цех"
                     />

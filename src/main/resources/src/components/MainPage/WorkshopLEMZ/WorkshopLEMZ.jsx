@@ -251,7 +251,7 @@ const WorkshopLEMZ = (props) => {
           isLoading={isLoading}
           loadData={loadRequestsLEMZ}
           deleteItem={deleteItem}
-          copyRequest={copyRequest}
+          // copyRequest={copyRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />

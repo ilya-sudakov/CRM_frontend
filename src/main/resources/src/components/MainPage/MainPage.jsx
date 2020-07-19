@@ -293,8 +293,7 @@ class MainPage extends React.Component {
                 />
                 <Route
                   path="/requests/view/"
-                  component={ViewRequest}
-                  type="requests"
+                  render={(props) => <ViewRequest {...props} type="requests" />}
                 />
                 <PrivateRoute
                   exact
