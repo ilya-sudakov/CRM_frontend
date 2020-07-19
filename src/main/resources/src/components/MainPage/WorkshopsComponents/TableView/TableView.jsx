@@ -373,12 +373,10 @@ const TableView = (props) => {
                       <div>!</div>
                       <div>
                         {formatDateString(
-                          formatDateString(
-                            request.shippingDate === null ||
-                              request.shippingDate === undefined
-                              ? new Date()
-                              : request.shippingDate,
-                          ),
+                          request.shippingDate === null ||
+                            request.shippingDate === undefined
+                            ? new Date()
+                            : request.shippingDate,
                         )}
                       </div>
                     </div>
