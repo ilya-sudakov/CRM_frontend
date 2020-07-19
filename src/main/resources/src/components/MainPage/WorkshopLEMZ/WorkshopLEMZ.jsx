@@ -3,18 +3,18 @@ import './WorkshopLEMZ.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import PrintIcon from '../../../../../../../assets/print.png'
 import pdfMake from 'pdfmake'
-import {
-  getRequestsLEMZ,
-  deleteRequestLEMZ,
-  getRequestLEMZById,
-  deleteProductsToRequestLEMZ,
-} from '../../../utils/RequestsAPI/Workshop/LEMZ.jsx'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import {
+  getRequests,
+  getRequestById,
+  deleteProductsToRequest,
+  deleteRequest,
+} from '../../../utils/RequestsAPI/Requests.jsx'
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([])
@@ -24,15 +24,14 @@ const WorkshopLEMZ = (props) => {
 
   const deleteItem = (event) => {
     const id = event.currentTarget.dataset.id
-
-    getRequestLEMZById(id)
+    getRequestById(id)
       .then((res) => res.json())
       .then((res) => {
-        const productsArr = res.lemzProducts.map((product) => {
-          return deleteProductsToRequestLEMZ(product.id)
+        const productsArr = res.requestProducts.map((product) => {
+          return deleteProductsToRequest(product.id)
         })
         Promise.all(productsArr).then(() => {
-          deleteRequestLEMZ(id).then(() => loadRequestsLEMZ())
+          deleteRequest(id).then(() => loadRequestsLEMZ())
         })
       })
       .catch((error) => {
@@ -50,15 +49,15 @@ const WorkshopLEMZ = (props) => {
   }
 
   const copyRequest = (id) => {
-    props.setTransferState(true)
-    props.setTransferData(
-      requestsLEMZ.find((item) => {
-        if (item.id === id) {
-          return true
-        }
-      }),
-    )
-    props.history.push('/lemz/workshop-lemz/new')
+    // props.setTransferState(true)
+    // props.setTransferData(
+    //   requestsLEMZ.find((item) => {
+    //     if (item.id === id) {
+    //       return true
+    //     }
+    //   }),
+    // )
+    // props.history.push('/lemz/workshop-lemz/new')
   }
 
   useEffect(() => {
@@ -72,7 +71,7 @@ const WorkshopLEMZ = (props) => {
 
   const loadRequestsLEMZ = (signal) => {
     setIsLoading(true)
-    getRequestsLEMZ(signal)
+    getRequests(signal)
       .then((res) => res.json())
       .then((requests) => {
         setRequestsLEMZ(requests)
@@ -89,12 +88,12 @@ const WorkshopLEMZ = (props) => {
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
       visible: false,
     },
-    {
-      name: 'Отгружено',
-      className: 'shipped',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-      visible: false,
-    },
+    // {
+    //   name: 'Отгружено',
+    //   className: 'shipped',
+    //   access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    //   visible: false,
+    // },
     {
       name: 'Готово к отгрузке',
       oldName: 'Готово',
@@ -168,7 +167,7 @@ const WorkshopLEMZ = (props) => {
             </div>
           </div>
         </div>
-        {/* <div className="main-window__status-panel">
+        <div className="main-window__status-panel">
           <div>Фильтр по статусам: </div>
           {requestStatuses.map((status, index) => {
             return (
@@ -198,8 +197,6 @@ const WorkshopLEMZ = (props) => {
               </div>
             )
           })}
-        </div> */}
-        <div className="main-window__info-panel">
           <Button
             text="Печать списка"
             isLoading={isLoading}
@@ -211,7 +208,6 @@ const WorkshopLEMZ = (props) => {
             Всего: {requestsLEMZ.length} записей
           </div>
         </div>
-
         <TableView
           data={requestsLEMZ
             .filter((item) => {
@@ -255,7 +251,6 @@ const WorkshopLEMZ = (props) => {
           isLoading={isLoading}
           loadData={loadRequestsLEMZ}
           deleteItem={deleteItem}
-          // transferRequest={}
           copyRequest={copyRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}

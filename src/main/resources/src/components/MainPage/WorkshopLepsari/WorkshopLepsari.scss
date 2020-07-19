@@ -1,6 +1,61 @@
 @import "../../../variables.scss";
 
 .requests_lepsari {
+    --shipped: #b8c493;
+    --priority: #e08989;
+    --completed: #68d87e;
+    --ready: #77c78a;
+    --in-production: #c99cb8;
+    --waiting: #76d1b3;
+    --problem: #d6574e;
+    --materials: #d4ae63;
+
+    .main-window__status-panel {
+        margin-bottom: 0px;
+        padding-left: 25px;
+
+        .main-window__list-item--shipped::before {
+            background-color: var(--shipped);
+        }
+        .main-window__list-item--in-production::before {
+            background-color: var(--in-production);
+        }
+        .main-window__list-item--completed::before {
+            background-color: var(--completed);
+        }
+        .main-window__list-item--priority::before {
+            background-color: var(--priority);
+        }
+        .main-window__list-item--waiting::before {
+            background-color: var(--waiting);
+        }
+        .main-window__list-item--ready::before {
+            background-color: var(--ready);
+        }
+        .main-window__list-item--problem::before {
+            background-color: var(--problem);
+        }
+        .main-window__list-item--materials::before {
+            background-color: var(--materials);
+        }
+
+        .main-window__amount_table {
+            margin: 0;
+            font-size: 100%;
+            // margin-top: 5px;
+        }
+        .button {
+            margin: 0;
+            margin-left: auto;
+            margin-right: 10px;
+            padding: 10px 15px;
+            margin-top: 5px;
+
+            &::before {
+                display: none;
+            }
+        }
+    }
     .main-window__header {
         .main-window__menu {
             width: calc(100% - 0px);

@@ -35,6 +35,24 @@ const TableView = (props) => {
   })
   const [requests, setRequests] = useState([])
 
+  // const [workshopsFuncs, setWorkshopsFuncs] = useState({
+  //   requests: {
+  //     productsName: 'requestProducts',
+  //     request: (body, id) => editRequestStatus(body, id),
+  //     product: (body, id) => editProductStatusToRequest(body, id),
+  //   },
+  //   lemz: {
+  //     productsName: 'lemzProducts',
+  //     request: (body, id) => editRequestLEMZStatus(body, id),
+  //     product: (body, id) => editProductStatusToRequestLEMZ(body, id),
+  //   },
+  //   lepsari: {
+  //     productsName: 'lepsariProducts',
+  //     request: (body, id) => editRequestLepsariStatus(body, id),
+  //     product: (body, id) => editProductStatusToRequestLepsari(body, id),
+  //   },
+  // })
+
   const [workshopsFuncs, setWorkshopsFuncs] = useState({
     requests: {
       productsName: 'requestProducts',
@@ -42,14 +60,14 @@ const TableView = (props) => {
       product: (body, id) => editProductStatusToRequest(body, id),
     },
     lemz: {
-      productsName: 'lemzProducts',
-      request: (body, id) => editRequestLEMZStatus(body, id),
-      product: (body, id) => editProductStatusToRequestLEMZ(body, id),
+      productsName: 'requestProducts',
+      request: (body, id) => editRequestStatus(body, id),
+      product: (body, id) => editProductStatusToRequest(body, id),
     },
     lepsari: {
-      productsName: 'lepsariProducts',
-      request: (body, id) => editRequestLepsariStatus(body, id),
-      product: (body, id) => editProductStatusToRequestLepsari(body, id),
+      productsName: 'requestProducts',
+      request: (body, id) => editRequestStatus(body, id),
+      product: (body, id) => editProductStatusToRequest(body, id),
     },
   })
 

@@ -4,15 +4,15 @@ import './WorkshopLepsari.scss'
 import PrintIcon from '../../../../../../../assets/print.png'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
-import {
-  getRequestsLepsari,
-  getRequestLepsariById,
-  deleteProductsToRequestLepsari,
-  deleteRequestLepsari,
-} from '../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import {
+  getRequestById,
+  deleteProductsToRequest,
+  deleteRequest,
+  getRequests,
+} from '../../../utils/RequestsAPI/Requests.jsx'
 
 const WorkshopLepsari = (props) => {
   const [requestLepsari, setRequestLepsari] = useState([])
@@ -29,12 +29,12 @@ const WorkshopLepsari = (props) => {
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
       visible: false,
     },
-    {
-      name: 'Отгружено',
-      className: 'shipped',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-      visible: false,
-    },
+    // {
+    //   name: 'Отгружено',
+    //   className: 'shipped',
+    //   access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    //   visible: false,
+    // },
     {
       name: 'Готово к отгрузке',
       oldName: 'Готово',
@@ -64,14 +64,14 @@ const WorkshopLepsari = (props) => {
 
   const deleteItem = (event) => {
     const id = event.currentTarget.dataset.id
-    getRequestLepsariById(id)
+    getRequestById(id)
       .then((res) => res.json())
       .then((res) => {
         const productsArr = res.lepsariProducts.map((product) => {
-          return deleteProductsToRequestLepsari(product.id)
+          return deleteProductsToRequest(product.id)
         })
         Promise.all(productsArr).then(() => {
-          deleteRequestLepsari(id).then(() => loadRequestLepsari())
+          deleteRequest(id).then(() => loadRequestLepsari())
         })
       })
       .catch((error) => {
@@ -80,15 +80,15 @@ const WorkshopLepsari = (props) => {
   }
 
   const copyRequest = (id) => {
-    props.setTransferState(true)
-    props.setTransferData(
-      requestLepsari.find((item) => {
-        if (item.id === id) {
-          return true
-        }
-      }),
-    )
-    props.history.push('/lepsari/workshop-lepsari/new')
+    // props.setTransferState(true)
+    // props.setTransferData(
+    //   requestLepsari.find((item) => {
+    //     if (item.id === id) {
+    //       return true
+    //     }
+    //   }),
+    // )
+    // props.history.push('/lepsari/workshop-lepsari/new')
   }
 
   useEffect(() => {
@@ -111,7 +111,7 @@ const WorkshopLepsari = (props) => {
 
   const loadRequestLepsari = (signal) => {
     setIsLoading(true)
-    getRequestsLepsari(signal)
+    getRequests(signal)
       .then((res) => res.json())
       .then((requests) => {
         // console.log(requests);
@@ -167,7 +167,36 @@ const WorkshopLepsari = (props) => {
             </div>
           </div>
         </div>
-        <div className="main-window__info-panel">
+        <div className="main-window__status-panel">
+          <div>Фильтр по статусам: </div>
+          {requestStatuses.map((status, index) => {
+            return (
+              <div
+                className={
+                  (status.visible
+                    ? 'main-window__button'
+                    : 'main-window__button main-window__button--inverted') +
+                  ' main-window__list-item--' +
+                  status.className
+                }
+                onClick={() => {
+                  let temp = requestStatuses.map((status) => {
+                    return {
+                      ...status,
+                      visible: false,
+                    }
+                  })
+                  temp.splice(index, 1, {
+                    ...status,
+                    visible: !status.visible,
+                  })
+                  setRequestStatutes([...temp])
+                }}
+              >
+                {status.name}
+              </div>
+            )
+          })}
           <Button
             text="Печать списка"
             isLoading={isLoading}
@@ -179,7 +208,6 @@ const WorkshopLepsari = (props) => {
             Всего: {requestLepsari.length} записей
           </div>
         </div>
-
         <TableView
           data={requestLepsari
             .filter((item) => {
