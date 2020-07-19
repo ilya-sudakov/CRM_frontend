@@ -11,6 +11,7 @@ import {
   copyRequest,
   addRequest,
   editRequest,
+  addProductsToRequest,
 } from '../../../utils/RequestsAPI/Requests.jsx'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import TableViewOld from './TableView/TableView.jsx'
@@ -153,14 +154,47 @@ const Requests = (props) => {
     //   }),
     // )
     // props.history.push('/requests/new')
+    setIsLoading(true)
 
+    const requestToBeCopied = requests.find((item) => {
+      if (item.id === id) {
+        return true
+      }
+    })
     addRequest({
-      ...requests.find((item) => {
-        if (item.id === id) {
-          return true
-        }
-      }),
-    }).then(() => loadData())
+      date: requestToBeCopied.date,
+      products: requestToBeCopied.requestProducts,
+      quantity: requestToBeCopied.quantity,
+      codeWord: requestToBeCopied.codeWord,
+      responsible: requestToBeCopied.responsible,
+      status: requestToBeCopied.status,
+      shippingDate:
+        requestToBeCopied.shippingDate !== null
+          ? requestToBeCopied.shippingDate
+          : new Date(),
+      comment: requestToBeCopied.comment,
+      factory: requestToBeCopied.factory,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const productsArr = requestToBeCopied.requestProducts.map((item) => {
+          return addProductsToRequest({
+            requestId: res.id,
+            quantity: item.quantity,
+            packaging: item.packaging,
+            status: item.status,
+            name: item.name,
+          })
+        })
+        Promise.all(productsArr).then(() => {
+          setIsLoading(false)
+          loadRequests()
+        })
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        console.log(error)
+      })
   }
 
   return (
