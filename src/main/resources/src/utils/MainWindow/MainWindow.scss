@@ -773,12 +773,18 @@
           padding: 10px 25px;
           // width: 100%;
           white-space: nowrap;
+          // margin-right: 10px !important;
           // text-align: center !important;
 
           // .main-window__addButton {
           //   margin: 0;
           //   margin-top: 5px;
           // }
+
+          &::after {
+            left: 5px;
+            width: calc(100% - 10px);
+          }
         }
       }
     }

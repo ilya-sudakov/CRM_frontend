@@ -11,10 +11,10 @@ import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
 import Button from '../../../../utils/Form/Button/Button.jsx'
 
 const AdminWorkspace = (props) => {
-  const lemz = '#1b4e6b'
-  const lepsari = '#5c63a2'
-  const ligovskiy = '#c068a8'
-  const office = '#ec7176'
+  const lemz = '#1b4e6bbb'
+  const lepsari = '#5c63a2bb'
+  const ligovskiy = '#c068a8bb'
+  const office = '#ec7176bb'
   // const lemz = '#365c8d'
   // const lepsari = '#277f8e'
   // const ligovskiy = '#1fa187'
@@ -121,7 +121,8 @@ const AdminWorkspace = (props) => {
               labels: [
                 ...week.map(
                   (day, index) =>
-                    weekdays[index] + ' ' + formatDateStringNoYear(day),
+                    // weekdays[index] + ' ' + formatDateStringNoYear(day),
+                    weekdays[index],
                 ),
               ],
               datasets: [...workshops],
@@ -142,14 +143,21 @@ const AdminWorkspace = (props) => {
               tooltips: {
                 mode: 'index',
               },
+              legend: {
+                position: 'right',
+                labels: {
+                  usePointStyle: true,
+                },
+              },
               scales: {
                 yAxes: [
                   {
                     // display: false,
                     gridLines: {
-                      // display: false,
+                      display: false,
                     },
                     ticks: {
+                      display: false,
                       beginAtZero: true,
                     },
                     stacked: true,

@@ -25,10 +25,11 @@
   .sidemenu__add-buttons {
     display: flex;
     flex-direction: column;
-    min-height: 40px;
+    min-height: 36px;
     // justify-content: center;
     align-items: center;
-    margin: 3px 0;
+    // margin: 3px 0;
+    width: 100%;
     // margin-top: 2px;
   }
 
@@ -116,24 +117,32 @@
 
     &--add {
       // width: 50%;
-      width: fit-content;
+      // width: fit-content;
+      // text-align: left;
+      text-align: center;
+      width: 100%;
+      max-width: calc(100% - 40px);
       font-size: 90%;
       padding: 7.5px 10px;
       justify-content: center;
       background-color: $button__background--inverted;
       cursor: pointer;
       color: $secondary-text-color;
-      text-align: center;
       // white-space: nowrap;
       transform-origin: 0 0;
       transition: 0.2s ease-in-out;
       margin-bottom: 0;
+      margin-right: 0;
       border-radius: 2.5px;
 
       // .sidemenu__img {
       //   // margin-left: 5px;
       //   // filter: brightness(5);
       // }
+
+      span {
+        width: 100%;
+      }
 
       &:hover {
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
@@ -327,10 +336,10 @@
 
   @media (max-width: 1220px) {
     .sidemenu__add-buttons {
-      min-height: 30px;
-      // max-height: 30px;
+      min-height: 35px;
+      // display: none;
       .sidemenu__item--add:not(.sidemenu__item--hidden) {
-        padding: 5px 10px;
+        // padding: 5px 10px;
       }
     }
     .sidemenu__item {
