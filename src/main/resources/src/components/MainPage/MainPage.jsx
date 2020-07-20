@@ -254,6 +254,7 @@ class MainPage extends React.Component {
                     'ROLE_MANAGER',
                     'ROLE_DISPATCHER',
                     'ROLE_ENGINEER',
+                    'ROLE_WORKSHOP',
                   ]}
                 />
                 <PrivateRoute
@@ -262,7 +263,13 @@ class MainPage extends React.Component {
                   type="suppliers"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_ENGINEER',
+                    'ROLE_WORKSHOP',
+                  ]}
                 />
                 <PrivateRoute
                   path="/suppliers/edit/"
@@ -270,7 +277,11 @@ class MainPage extends React.Component {
                   type="suppliers"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                  ]}
                 />
                 <Route exact path="/contracts" component={Contracts} />
                 <PrivateRoute

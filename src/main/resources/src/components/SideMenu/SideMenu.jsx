@@ -68,7 +68,13 @@ const SideMenu = (props) => {
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addButtonName: 'Добавить поставщика',
       addButtonLinkTo: '/suppliers/new',
-      mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      mainRoles: [
+        'ROLE_ADMIN',
+        'ROLE_MANAGER',
+        'ROLE_DISPATCHER',
+        'ROLE_ENGINEER',
+        'ROLE_WORKSHOP',
+      ],
       name: 'Поставщики',
       icon: supplierIcon,
       dropdownMenu: [],
@@ -468,7 +474,13 @@ const SideMenu = (props) => {
                 pathname: '/suppliers/new',
                 link: '/suppliers/new',
                 icon: plusImg,
-                mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+                mainRoles: [
+                  'ROLE_ADMIN',
+                  'ROLE_MANAGER',
+                  'ROLE_DISPATCHER',
+                  'ROLE_WORKSHOP',
+                  'ROLE_ENGINEER',
+                ],
               },
               {
                 name: 'Управление категориями',
@@ -497,7 +509,13 @@ const SideMenu = (props) => {
                   return {
                     name: item.name,
                     pathname: '/suppliers/category/' + item.name + '/',
-                    mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+                    mainRoles: [
+                      'ROLE_ADMIN',
+                      'ROLE_MANAGER',
+                      'ROLE_DISPATCHER',
+                      'ROLE_WORKSHOP',
+                      'ROLE_ENGINEER',
+                    ],
                     link: '/suppliers/category/' + item.name + '/active',
                   }
                 }),
