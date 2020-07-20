@@ -144,7 +144,12 @@ const AdminWorkspace = (props) => {
                 mode: 'index',
               },
               legend: {
-                position: 'right',
+                position:
+                  (window.innerWidth ||
+                    document.documentElement.clientWidth ||
+                    document.body.clientWidth) > 500
+                    ? 'right'
+                    : 'bottom',
                 labels: {
                   usePointStyle: true,
                 },
@@ -157,7 +162,12 @@ const AdminWorkspace = (props) => {
                       display: false,
                     },
                     ticks: {
-                      display: false,
+                      display:
+                        (window.innerWidth ||
+                          document.documentElement.clientWidth ||
+                          document.body.clientWidth) > 500
+                          ? false
+                          : true,
                       beginAtZero: true,
                     },
                     stacked: true,
@@ -172,6 +182,14 @@ const AdminWorkspace = (props) => {
                   {
                     gridLines: {
                       display: false,
+                    },
+                    ticks: {
+                      display:
+                        (window.innerWidth ||
+                          document.documentElement.clientWidth ||
+                          document.body.clientWidth) > 500
+                          ? true
+                          : false,
                     },
                     stacked: true,
                     scaleLabel: {
