@@ -353,7 +353,12 @@ const Clients = (props) => {
                   : 'main-window__item'
               }
             >
-              Активные ({itemsActiveCount})
+              <div>
+                Активные
+                <span className="main-window__menu-item-amount">
+                  {itemsActiveCount}
+                </span>
+              </div>
             </Link>
             <Link
               to={'/' + props.type + '/category/' + curCategory + '/potential'}
@@ -363,7 +368,12 @@ const Clients = (props) => {
                   : 'main-window__item'
               }
             >
-              Потенциальные ({itemsPotentialCount})
+              <div>
+                Потенциальные
+                <span className="main-window__menu-item-amount">
+                  {itemsPotentialCount}
+                </span>
+              </div>
             </Link>
             <Link
               to={
@@ -375,7 +385,12 @@ const Clients = (props) => {
                   : 'main-window__item'
               }
             >
-              В разработке ({itemsProgressCount})
+              <div>
+                В разработке
+                <span className="main-window__menu-item-amount">
+                  {itemsProgressCount}
+                </span>
+              </div>
             </Link>
           </div>
         </div>

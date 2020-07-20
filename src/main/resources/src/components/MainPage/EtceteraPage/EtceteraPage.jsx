@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react'
 import './EtceteraPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { UserContext } from '../../../App.js'
 
 import tasksImg from '../../../../../../../assets/sidemenu/tasks.svg'
-import employeesImg from '../../../../../../../assets/sidemenu/employee.svg'
-import wrenchImg from '../../../../../../../assets/sidemenu/wrench.svg'
-import truckImg from '../../../../../../../assets/sidemenu/truck.svg'
-import priceListImg from '../../../../../../../assets/sidemenu/price.svg'
+// import employeesImg from '../../../../../../../assets/sidemenu/employee.svg'
+// import wrenchImg from '../../../../../../../assets/sidemenu/wrench.svg'
+// import truckImg from '../../../../../../../assets/sidemenu/truck.svg'
+// import priceListImg from '../../../../../../../assets/sidemenu/price.svg'
 import clientImg from '../../../../../../../assets/sidemenu/client.svg'
-import contractImg from '../../../../../../../assets/sidemenu/contract.svg'
-import listImg from '../../../../../../../assets/sidemenu/list.svg'
+// import contractImg from '../../../../../../../assets/sidemenu/contract.svg'
+// import listImg from '../../../../../../../assets/sidemenu/list.svg'
 import boxImg from '../../../../../../../assets/sidemenu/box.svg'
-import screwImg from '../../../../../../../assets/sidemenu/screw.svg'
-import feedbackImg from '../../../../../../../assets/sidemenu/feedback.svg'
-import moreImg from '../../../../../../../assets/sidemenu/more.svg'
+// import screwImg from '../../../../../../../assets/sidemenu/screw.svg'
+// import feedbackImg from '../../../../../../../assets/sidemenu/feedback.svg'
+// import moreImg from '../../../../../../../assets/sidemenu/more.svg'
 import playListImg from '../../../../../../../assets/sidemenu/play_list.svg'
 import supplierIcon from '../../../../../../../assets/sidemenu/supplier_icon.svg'
 import workTimeIcon from '../../../../../../../assets/sidemenu/work_time_icon.svg'
@@ -37,6 +37,12 @@ const EtceteraPage = (props) => {
         name: 'Категории клиентов',
         access: ['ROLE_ADMIN'],
         icon: clientImg,
+      },
+      {
+        linkTo: '/clients/categories',
+        name: 'Категории поставщиков',
+        access: ['ROLE_ADMIN'],
+        icon: supplierIcon,
       },
     ],
     'Учет времени': [

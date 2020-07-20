@@ -71,6 +71,17 @@ const Requests = (props) => {
       visible: false,
     },
   ])
+  const pages = {
+    Открытые: {
+      getRequests: (signal) => getRequests(signal),
+    },
+    Отгружено: {
+      getRequests: (signal) => getRequests(signal),
+    },
+    Завершено: {
+      getRequests: (signal) => getRequests(signal),
+    },
+  }
 
   //Удалить заявку
   const deleteItem = (event) => {
@@ -117,7 +128,8 @@ const Requests = (props) => {
   //GET-запрос на получение всех заявок
   const loadRequests = (signal) => {
     setIsLoading(true)
-    getRequests(signal)
+    return pages[curPage]
+      .getRequests(signal)
       .then((res) => res.json())
       .then((requests) => {
         let temp = requests.map((item) => {
@@ -145,17 +157,7 @@ const Requests = (props) => {
 
   //Копировать заявку
   const copySelectedRequest = (id) => {
-    // props.setTransferState(true)
-    // props.setTransferData(
-    //   requests.find((item) => {
-    //     if (item.id === id) {
-    //       return true
-    //     }
-    //   }),
-    // )
-    // props.history.push('/requests/new')
     setIsLoading(true)
-
     const requestToBeCopied = requests.find((item) => {
       if (item.id === id) {
         return true
