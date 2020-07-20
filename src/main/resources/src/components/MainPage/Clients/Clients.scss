@@ -75,6 +75,7 @@
             position: absolute;
             left: calc(100% + 5px);
             top: -7.5px;
+            font-size: 85%;
           }
         }
       }
@@ -206,7 +207,7 @@
       }
       .main-window__menu {
         width: calc(100% - 10px) !important;
-        
+
         overflow-x: auto;
 
         .main-window__item {
