@@ -21,7 +21,7 @@ const NewRequest = (props) => {
   const [requestInputs, setRequestInputs] = useState({
     date: new Date(),
     codeWord: '',
-    responsible: '',
+    responsible: userContext.userData.username,
     status: 'Ожидание',
     shippingDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     comment: '',
