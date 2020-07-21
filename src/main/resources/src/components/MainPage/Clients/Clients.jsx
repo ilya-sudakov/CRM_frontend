@@ -190,6 +190,7 @@ const Clients = (props) => {
   const clientTypes = {
     clients: {
       name: 'клиент',
+      title: 'Клиенты',
       type: null,
       loadItemsByCategory: (
         category,
@@ -218,6 +219,7 @@ const Clients = (props) => {
     },
     suppliers: {
       name: 'поставщик',
+      title: 'Поставщики',
       type: 'supplier',
       loadItemsByCategory: (
         category,
@@ -270,7 +272,7 @@ const Clients = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Клиенты'
+    document.title = clientTypes[props.type].title
     const abortController = new AbortController()
     // console.log(curPage);
     const curCategoryTemp = props.location.pathname
