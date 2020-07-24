@@ -9,6 +9,7 @@ import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
 
 const RiggingList = (props) => {
   const [drafts, setDrafts] = useState([])
+  const [filteredData, setFilteredData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [dataLoaded, setDataLoaded] = useState(false)
   const [statuses, setStatuses] = useState({
@@ -16,139 +17,33 @@ const RiggingList = (props) => {
       name: 'Распил/Габариты',
       visibility: ['ROLE_ADMIN'],
       active: true,
+      previous: null,
     },
     milling: {
       name: 'Фрезеровка/Точение',
       visibility: ['ROLE_ADMIN'],
       active: false,
+      previous: 'cuttingDimensions',
     },
     harding: {
       name: 'Закалка',
       visibility: ['ROLE_ADMIN'],
       active: false,
+      previous: 'milling',
     },
     grinding: {
       name: 'Шлифовка',
       visibility: ['ROLE_ADMIN'],
       active: false,
+      previous: 'harding',
     },
     erosion: {
       name: 'Эрозия',
       visibility: ['ROLE_ADMIN'],
       active: false,
+      previous: 'grinding',
     },
   })
-
-  const testData = [
-    {
-      amount: '1',
-      color: 'completed',
-      comment: 'Выполнено Лиговка 31.01.20 / Отдано в ЛЭМЗ 03.02.20',
-      controll: '-',
-      cuttingDimensions: 'Анатолий 10.10.19 -14.11.19 (ЛЭМЗ)',
-      drawing: null,
-      erosion: 'Глеб 27-30.01.20 (Лиговка)',
-      grinding: 'ЛЭМЗ',
-      harding: 'ЮЗМЗ 16.12.19',
-      id: 86,
-      location: 'ЛЭМЗ',
-      milling: 'Анатолий 26.11.19',
-      name: 'Пуансонодержатель',
-      number: 'ТМ_АН-047.002',
-      status: {
-        current: {
-          statusName: 'Распил/Габариты',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        cuttingDimensions: {
-          statusName: 'Распил/Габариты',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        milling: {
-          statusName: 'Фрезеровка/Точение',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        harding: {
-          statusName: 'Закалка',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        grinding: {
-          statusName: 'Шлифовка',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        erosion: {
-          statusName: 'Эрозия',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-      },
-    },
-    {
-      amount: '1',
-      color: 'completed',
-      comment: 'Выполнено Лиг. 20.04.19',
-      controll: '-',
-      cuttingDimensions: 'Лепс. Володя 01.03.19',
-      drawing: null,
-      erosion: '-',
-      grinding: 'Леша 11.03.19',
-      harding: '-',
-      id: 43,
-      location: 'Лепсари',
-      milling: 'Лиговка',
-      name: 'Плита верхняя',
-      number: 'ТМ_АН-039.001',
-      status: {
-        current: {
-          statusName: 'Распил/Габариты',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        cuttingDimensions: {
-          statusName: 'Распил/Габариты',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        milling: {
-          statusName: 'Фрезеровка/Точение',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        harding: {
-          statusName: 'Закалка',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        grinding: {
-          statusName: 'Шлифовка',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-        erosion: {
-          statusName: 'Эрозия',
-          date: new Date(),
-          worker: 'Борис',
-          comment: 'Комментарий',
-        },
-      },
-    },
-  ]
 
   async function loadDrafts() {
     let newDrafts = []
@@ -215,7 +110,7 @@ const RiggingList = (props) => {
               })
             })
             setDrafts([...newDrafts])
-            console.log(newDrafts)
+            // console.log(newDrafts)
           })
       })
       .catch((error) => {
@@ -227,7 +122,26 @@ const RiggingList = (props) => {
   useEffect(() => {
     document.title = 'Список оснастки'
     !dataLoaded && loadDrafts()
-  }, [])
+
+    //Временное решение пока нет бэка
+    let temp = []
+    Object.entries(statuses).map((status) => {
+      return temp.push(
+        ...drafts.filter((draft) => {
+          if (
+            status[1].active &&
+            draft[status[0]] === '' &&
+            (draft[status[1].previous] !== '' || status[1].previous === null)
+          ) {
+            return true
+          }
+          return false
+        }),
+      )
+    })
+    console.log(temp)
+    setFilteredData([...temp])
+  }, [statuses])
 
   return (
     <div className="rigging-list">
@@ -259,8 +173,8 @@ const RiggingList = (props) => {
           ))}
         </div>
         <TableView
-          //  data={testData}
-          data={drafts}
+          // data={drafts}
+          data={filteredData}
         />
       </div>
     </div>

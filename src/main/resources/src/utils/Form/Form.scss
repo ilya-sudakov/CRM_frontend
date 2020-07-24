@@ -531,10 +531,10 @@
   }
 
   @media (min-width: 1024px) {
-    --form__max-width: 850px;
+    // --form__max-width: 850px;
 
     //column direction
-    --form__max-width: 700px;
+    --form__max-width: 650px;
 
     .main-form__title {
       // align-self: flex-start;

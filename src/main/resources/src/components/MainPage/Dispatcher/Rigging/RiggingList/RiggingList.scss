@@ -39,6 +39,8 @@
                     height: 10px;
                     top: calc(50% - 5px);
                     border: 1px solid #bbbbbb;
+                    
+                    display: none;
                 }
 
                 &:not(:last-child) {
