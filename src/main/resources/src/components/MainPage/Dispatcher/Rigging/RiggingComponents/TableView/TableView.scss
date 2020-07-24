@@ -3,7 +3,43 @@
 //NEW DESIGN
 
 .rigging-tableview {
-  
+    --defect: #e08989;
+    --completed: #77c78a;
+    --production: #cdceaf;
+    width: 100%;
+
+    .main-window {
+        &__list {
+            &-item {
+                &--defect {
+                    background-color: var(--defect);
+                }
+                &--completed {
+                    background-color: var(--completed);
+                }
+                &--production {
+                    background-color: var(--production);
+                }
+                span {
+                    &:nth-child(1) {
+                        flex: 0 1 20%;
+                    }
+                    &:nth-child(2) {
+                        flex: 0 1 50%;
+                    }
+                    &:nth-child(3) {
+                        flex: 0 1 20%;
+                    }
+                }
+
+                .main-window__actions {
+                    .main-window__img {
+                        filter: brightness(1);
+                    }
+                }
+            }
+        }
+    }
 }
 
 //OLD DESIGN

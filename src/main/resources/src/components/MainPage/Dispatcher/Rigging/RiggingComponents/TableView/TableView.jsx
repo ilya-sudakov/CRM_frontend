@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import sortIcon from '../../../../../../../../../../assets/tableview/sort_icon.png'
+// import sortIcon from '../../../../../../../../../../assets/tableview/sort_icon.png'
+import viewIcon from '../../../../../../../../../../assets/tableview/view.svg'
+import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
+import deleteIcon from '../../../../../../../../../../assets/tableview/delete.svg'
 import './TableView.scss'
-import ColorPicker from '../../ColorPicker/ColorPicker.jsx'
+import ColorPicker from '../ColorPicker/ColorPicker.jsx'
 import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx'
 
@@ -105,15 +108,15 @@ const TableView = (props) => {
           <div className="main-window__list-item main-window__list-item--header">
             <span>Артикул</span>
             <span>Название</span>
-            <span>Кол-во</span>
-            <span>Местоположение</span>
+            {/* <span>Кол-во</span> */}
+            {/* <span>Местоположение</span> */}
             <span>Комментарий</span>
-            <span>Распил/габариты</span>
-            <span>Фрезеровка/точение</span>
-            <span>Закалка</span>
-            <span>Шлифовка</span>
-            <span>Эрозия</span>
-            <span>Проверка</span>
+            {/* <span>Распил/габариты</span> */}
+            {/* <span>Фрезеровка/точение</span> */}
+            {/* <span>Закалка</span> */}
+            {/* <span>Шлифовка</span> */}
+            {/* <span>Эрозия</span> */}
+            {/* <span>Проверка</span> */}
             <div className="main-window__actions">Действия</div>
           </div>
           {isLoading && (
@@ -132,7 +135,7 @@ const TableView = (props) => {
                 }
                 onClick={handleClickStamp}
               >
-                <span>{stamp.id}</span>
+                {/* <span>{stamp.id}</span> */}
                 <span>{stamp.number}</span>
                 <span>
                   <ColorPicker
@@ -142,15 +145,45 @@ const TableView = (props) => {
                     type={props.type}
                   />
                 </span>
-                <span></span>
-                <span></span>
+                {/* <span></span>
+                <span></span> */}
                 <span>{stamp.comment}</span>
+                {/* <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                <span></span>
-                <span></span>
+                <span></span> */}
+                <div className="main-window__actions">
+                  <Link
+                    to={`/dispatcher/rigging/${props.type}/view/${stamp.id}`}
+                    className="main-window__action"
+                  >
+                    {/* Просмотр */}
+                    <img className="main-window__img" src={viewIcon} alt="" />
+                  </Link>
+                  <Link
+                    to={`/dispatcher/rigging/${props.type}/edit/${stamp.id}`}
+                    className="main-window__action"
+                  >
+                    {/* Редактировать */}
+                    <img className="main-window__img" src={editIcon} alt="" />
+                  </Link>
+                  {props.userHasAccess(['ROLE_ADMIN']) && (
+                    <div
+                      data-id={stamp.id}
+                      className="main-window__action"
+                      onClick={props.deleteItem}
+                    >
+                      {/* Удалить */}
+                      <img
+                        className="main-window__img"
+                        src={deleteIcon}
+                        alt=""
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </React.Fragment>
           ))}

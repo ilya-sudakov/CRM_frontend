@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import './Stamp.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
-import TableView from '../TableView/TableView.jsx'
+import TableViewOld from '../TableView/TableView.jsx'
+import TableView from '../RiggingComponents/TableView/TableView.jsx'
 import {
   getStamp,
   getStampById,
@@ -94,6 +95,19 @@ const Stamp = (props) => {
             Всего: {stamps.length} записей
           </div>
         </div>
+        {/* <TableViewOld
+          data={stamps.filter((item) => {
+            if (item.color === 'completed' && curPage === 'Завершено') {
+              return true
+            } else if (curPage === 'Активные' && item.color !== 'completed') {
+              return true
+            }
+          })}
+          searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
+          loadData={loadStamps}
+          deleteItem={deleteItem}
+        /> */}
         <TableView
           data={stamps.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
@@ -106,6 +120,7 @@ const Stamp = (props) => {
           userHasAccess={props.userHasAccess}
           loadData={loadStamps}
           deleteItem={deleteItem}
+          type="stamp"
         />
       </div>
     </div>
