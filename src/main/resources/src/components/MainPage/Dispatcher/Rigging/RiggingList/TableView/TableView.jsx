@@ -10,10 +10,17 @@ import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
     { name: 'ЦехЛЭМЗ', alternative: 'ЛЭМЗ', isMinimized: false },
-    { name: 'ЦехЛиговский', alternative: 'Лиговский', isMinimized: false },
+    { name: 'ЦехЛиговский', alternative: 'Лиговка', isMinimized: false },
     { name: 'ЦехЛепсари', alternative: 'Лепсари', isMinimized: false },
     { name: 'Главный инженер', alternative: 'А.И.', isMinimized: false },
   ])
+
+  const riggingNames = {
+    stamp: 'stamp',
+    bench: 'machine',
+    press: 'press-form',
+    detail: 'parts',
+  }
 
   const temp = {
     status: {
@@ -116,9 +123,9 @@ const TableView = (props) => {
                         <div className="main-window__actions">
                           <Link
                             className="main-window__action"
-                            to={`/dispatcher/rigging/${item.type.toLowerCase()}/edit-part/${
-                              item.id
-                            }/${item.id}`}
+                            to={`/dispatcher/rigging/${
+                              riggingNames[item.type.toLowerCase()]
+                            }/edit-part/${item.id}/${item.id}`}
                             title="Редактирование"
                           >
                             <img
