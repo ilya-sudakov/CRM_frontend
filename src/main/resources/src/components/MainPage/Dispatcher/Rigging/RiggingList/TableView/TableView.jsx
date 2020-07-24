@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './TableView.scss'
 
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
+import { Link } from 'react-router-dom'
 
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
@@ -26,14 +27,14 @@ const TableView = (props) => {
     <div className="rigging-list-tableview">
       <div className="main-window__list">
         {workshops
-          .filter(
+          /*.filter(
             (workshop) =>
               props.data.filter(
                 (item) =>
                   item.location === workshop.name ||
                   item.location === workshop.alternative,
               ).length > 0,
-          )
+          )*/
           .map((workshop, workshopIndex) => (
             <>
               <div
@@ -104,10 +105,14 @@ const TableView = (props) => {
                       {temp.status.current.statusName}
                     </span> */}
                         <div className="main-window__actions">
-                          <div className="main-window__action">Просмотр</div>
-                          <div className="main-window__action">
-                            Редактировать
-                          </div>
+                          <Link
+                            className="main-window__action"
+                            to={`/dispatcher/rigging/${item.type.toLowerCase()}/edit-part/${
+                              item.id
+                            }/${item.id}`}
+                          >
+                            Редактирование
+                          </Link>
                         </div>
                       </div>
                     )
