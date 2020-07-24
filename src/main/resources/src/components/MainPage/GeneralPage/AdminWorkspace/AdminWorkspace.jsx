@@ -148,7 +148,7 @@ const AdminWorkspace = (props) => {
                   (window.innerWidth ||
                     document.documentElement.clientWidth ||
                     document.body.clientWidth) > 500
-                    ? 'left'
+                    ? 'right'
                     : 'bottom',
                 labels: {
                   usePointStyle: true,

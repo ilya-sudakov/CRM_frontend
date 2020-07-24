@@ -231,7 +231,7 @@ const RiggingList = (props) => {
   return (
     <div className="rigging-list">
       <div className="main-window">
-        <div className="main-window__title">Список оснастки</div>
+        {/* <div className="main-window__title">Список оснастки</div> */}
         <div className="main-window__status-panel">
           {Object.entries(statuses).map((status) => (
             <div

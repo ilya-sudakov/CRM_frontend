@@ -66,20 +66,22 @@ const TableView = (props) => {
                     item.location === workshop.alternative) && (
                     <div className="main-window__list-item">
                       <span>
-                        <div className="main-window__mobile-text">Артикул</div>
+                        <div className="main-window__mobile-text">Артикул:</div>
                         {item.number}
                       </span>
                       <span>
-                        <div className="main-window__mobile-text">Название</div>
+                        <div className="main-window__mobile-text">
+                          Название:
+                        </div>
                         {item.name}
                       </span>
                       <span>
-                        <div className="main-window__mobile-text">Кол-во</div>
+                        <div className="main-window__mobile-text">Кол-во:</div>
                         {item.amount}
                       </span>
                       <span>
                         <div className="main-window__mobile-text">
-                          Комментарий
+                          Комментарий:
                         </div>
                         {item.comment}
                       </span>
@@ -89,6 +91,7 @@ const TableView = (props) => {
                     </span> */}
                       <div className="main-window__actions">
                         <div className="main-window__action">Просмотр</div>
+                        <div className="main-window__action">Редактировать</div>
                       </div>
                     </div>
                   )

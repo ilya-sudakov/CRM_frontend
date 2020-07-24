@@ -54,16 +54,5 @@
                 }
             }
         }
-
-        &__list {
-            &-item {
-                &--divider {
-                    cursor: pointer;
-                    span {
-                        max-width: fit-content !important;
-                    }
-                }
-            }
-        }
     }
 }

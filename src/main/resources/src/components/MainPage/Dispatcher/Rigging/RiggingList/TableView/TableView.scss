@@ -45,6 +45,13 @@
         }
 
         &-item {
+            &--divider {
+                cursor: pointer;
+                span {
+                    max-width: fit-content !important;
+                }
+            }
+
             span {
                 &:nth-child(1) {
                     max-width: 125px;
@@ -77,6 +84,26 @@
                             top: calc(50% - 7.5px);
                             border-radius: 999px;
                             background-color: #cccccc;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-window {
+            &__list {
+                &-item {
+                    span {
+                        &:nth-child(1) {
+                            max-width: none;
+                        }
+                        &:nth-child(3) {
+                            max-width: none;
+                        }
+                        &:nth-child(4) {
+                            max-width: none;
                         }
                     }
                 }
