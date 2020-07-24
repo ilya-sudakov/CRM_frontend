@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './TableView.scss'
 
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
+import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
 import { Link } from 'react-router-dom'
 
 const TableView = (props) => {
@@ -110,8 +111,14 @@ const TableView = (props) => {
                             to={`/dispatcher/rigging/${item.type.toLowerCase()}/edit-part/${
                               item.id
                             }/${item.id}`}
+                            title="Редактирование"
                           >
-                            Редактирование
+                            <img
+                              className="main-window__img"
+                              src={editIcon}
+                              alt=""
+                            />
+                            {/* Редактирование */}
                           </Link>
                         </div>
                       </div>

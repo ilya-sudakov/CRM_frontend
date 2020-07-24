@@ -109,6 +109,7 @@ const RiggingList = (props) => {
                 })
               })
             })
+            setDataLoaded(true)
             setDrafts([...newDrafts])
             // console.log(newDrafts)
           })
@@ -121,27 +122,31 @@ const RiggingList = (props) => {
 
   useEffect(() => {
     document.title = 'Список оснастки'
-    !dataLoaded && loadDrafts()
+    if (dataLoaded) {
+      //Временное решение пока нет бэка
+      let temp = []
+      Object.entries(statuses).map((status) => {
+        return temp.push(
+          ...drafts.filter((draft) => {
+            if (
+              status[1].active &&
+              draft[status[0]] === '' &&
+              (draft[status[1].previous] !== '' || status[1].previous === null)
+            ) {
+              return true
+            }
+            return false
+          }),
+        )
+      })
+      console.log(temp)
+      setFilteredData([...temp])
+    }
 
-    //Временное решение пока нет бэка
-    let temp = []
-    Object.entries(statuses).map((status) => {
-      return temp.push(
-        ...drafts.filter((draft) => {
-          if (
-            status[1].active &&
-            draft[status[0]] === '' &&
-            (draft[status[1].previous] !== '' || status[1].previous === null)
-          ) {
-            return true
-          }
-          return false
-        }),
-      )
-    })
-    console.log(temp)
-    setFilteredData([...temp])
-  }, [statuses])
+    if (!dataLoaded && !isLoading) {
+      loadDrafts()
+    }
+  }, [dataLoaded, drafts, statuses])
 
   return (
     <div className="rigging-list">

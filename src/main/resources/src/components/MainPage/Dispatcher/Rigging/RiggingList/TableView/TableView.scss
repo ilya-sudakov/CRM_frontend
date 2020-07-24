@@ -54,13 +54,15 @@
 
             span {
                 &:nth-child(1) {
+                    flex: 0 1 20%;
                     max-width: 125px;
                 }
                 &:nth-child(2) {
+                    flex: 0 1 30%;
                     // max-width: 125px;
                 }
                 &:nth-child(3) {
-                    max-width: 50px;
+                    max-width: 80px;
                 }
                 &:nth-child(4) {
                     flex: 0 1 15%;
