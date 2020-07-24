@@ -58,7 +58,7 @@ const SelectUser = (props) => {
   }
 
   const pressEscKey = useCallback((event) => {
-    if (event.keyCode === 27) {
+    if (event.keyCode === 27 && showOptions) {
       setShowOptions(!showOptions)
     }
   }, [])

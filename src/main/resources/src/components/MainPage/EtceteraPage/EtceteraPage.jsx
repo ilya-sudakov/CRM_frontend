@@ -11,7 +11,7 @@ import tasksImg from '../../../../../../../assets/sidemenu/tasks.svg'
 // import priceListImg from '../../../../../../../assets/sidemenu/price.svg'
 import clientImg from '../../../../../../../assets/sidemenu/client.svg'
 // import contractImg from '../../../../../../../assets/sidemenu/contract.svg'
-// import listImg from '../../../../../../../assets/sidemenu/list.svg'
+import listImg from '../../../../../../../assets/sidemenu/list.svg'
 import boxImg from '../../../../../../../assets/sidemenu/box.svg'
 // import screwImg from '../../../../../../../assets/sidemenu/screw.svg'
 // import feedbackImg from '../../../../../../../assets/sidemenu/feedback.svg'
@@ -70,7 +70,7 @@ const EtceteraPage = (props) => {
         linkTo: '/rigging-list',
         name: 'Список оснастки',
         access: ['ROLE_ADMIN'],
-        icon: playListImg,
+        icon: listImg,
       },
       {
         linkTo: '/work-list',
