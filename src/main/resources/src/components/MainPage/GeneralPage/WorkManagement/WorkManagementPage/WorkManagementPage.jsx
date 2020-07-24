@@ -432,9 +432,7 @@ const WorkManagementPage = (props) => {
                         setWorkshops([...newWorkshops])
                       }}
                     >
-                      {
-                        workshop.name
-                      }
+                      {workshop.name}
                       <img
                         className={
                           workshop.minimized

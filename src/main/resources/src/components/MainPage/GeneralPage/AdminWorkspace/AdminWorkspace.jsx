@@ -57,7 +57,7 @@ const AdminWorkspace = (props) => {
       new Date().setDate(new Date().getDate() + -7 * weekOffset),
     )
     let week = []
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= (weekOffset === 0 ? new Date().getDay() : 7); i++) {
       let first = curDay.getDate() - curDay.getDay() + i
       let day = new Date(curDay.setDate(first))
       week.push(day)
@@ -74,8 +74,8 @@ const AdminWorkspace = (props) => {
     getRecordedWorkByDateRange(
       week[0].getDate(),
       week[0].getMonth() + 1,
-      week[6].getDate(),
-      week[6].getMonth() + 1,
+      week[week.length - 1].getDate(),
+      week[week.length - 1].getMonth() + 1,
       abortController.signal,
     )
       .then((res) => res.json())
@@ -148,7 +148,7 @@ const AdminWorkspace = (props) => {
                   (window.innerWidth ||
                     document.documentElement.clientWidth ||
                     document.body.clientWidth) > 500
-                    ? 'right'
+                    ? 'left'
                     : 'bottom',
                 labels: {
                   usePointStyle: true,
@@ -191,6 +191,9 @@ const AdminWorkspace = (props) => {
                           ? true
                           : false,
                     },
+                    maxBarThickness: 80,
+                    // barPercentage: 0.6,
+                    // categoryPercentage: 0.9,
                     stacked: true,
                     scaleLabel: {
                       display: false,

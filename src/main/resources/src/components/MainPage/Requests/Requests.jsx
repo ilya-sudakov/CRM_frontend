@@ -39,12 +39,12 @@ const Requests = (props) => {
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
       visible: false,
     },
-    {
-      name: 'Отгружено',
-      className: 'shipped',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-      visible: false,
-    },
+    // {
+    //   name: 'Отгружено',
+    //   className: 'shipped',
+    //   access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    //   visible: false,
+    // },
     {
       name: 'Готово к отгрузке',
       oldName: 'Готово',

@@ -11,6 +11,33 @@ const RiggingList = (props) => {
   const [drafts, setDrafts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [dataLoaded, setDataLoaded] = useState(false)
+  const [statuses, setStatuses] = useState({
+    cuttingDimensions: {
+      name: 'Распил/Габариты',
+      visibility: ['ROLE_ADMIN'],
+      active: true,
+    },
+    milling: {
+      name: 'Фрезеровка/Точение',
+      visibility: ['ROLE_ADMIN'],
+      active: false,
+    },
+    harding: {
+      name: 'Закалка',
+      visibility: ['ROLE_ADMIN'],
+      active: false,
+    },
+    grinding: {
+      name: 'Шлифовка',
+      visibility: ['ROLE_ADMIN'],
+      active: false,
+    },
+    erosion: {
+      name: 'Эрозия',
+      visibility: ['ROLE_ADMIN'],
+      active: false,
+    },
+  })
 
   const testData = [
     {
@@ -205,6 +232,31 @@ const RiggingList = (props) => {
     <div className="rigging-list">
       <div className="main-window">
         <div className="main-window__title">Список оснастки</div>
+        <div className="main-window__status-panel">
+          {Object.entries(statuses).map((status) => (
+            <div
+              className={`main-window__button ${
+                !status[1].active ? 'main-window__button--inverted' : ''
+              } main-window__list-item--${status[0]}`}
+              onClick={() => {
+                let temp = statuses
+                Object.entries(statuses).map((status) => {
+                  temp[status[0]] = {
+                    ...temp[status[0]],
+                    active: false,
+                  }
+                })
+                temp[status[0]] = {
+                  ...status[1],
+                  active: !status[0].active,
+                }
+                setStatuses({ ...temp })
+              }}
+            >
+              {status[1].name}
+            </div>
+          ))}
+        </div>
         <TableView
           //  data={testData}
           data={drafts}
