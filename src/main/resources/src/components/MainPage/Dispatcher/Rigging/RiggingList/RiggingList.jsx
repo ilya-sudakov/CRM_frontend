@@ -109,6 +109,7 @@ const RiggingList = (props) => {
                 })
               })
             })
+            setIsLoading(false)
             setDataLoaded(true)
             setDrafts([...newDrafts])
             // console.log(newDrafts)
@@ -179,6 +180,7 @@ const RiggingList = (props) => {
         </div>
         <TableView
           // data={drafts}
+          isLoading={isLoading}
           data={filteredData}
         />
       </div>

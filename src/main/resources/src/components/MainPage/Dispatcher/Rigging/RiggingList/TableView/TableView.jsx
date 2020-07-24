@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './TableView.scss'
+
+import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
 import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
-import { Link } from 'react-router-dom'
 
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
@@ -67,6 +69,12 @@ const TableView = (props) => {
                 {/* <span>Статус</span> */}
                 <div className="main-window__actions">Действия</div>
               </div>
+              {props.isLoading && (
+                <TableDataLoading
+                  className="main-window__list-item"
+                  minHeight="40px"
+                />
+              )}
               {props.data
                 .filter(
                   (item) =>
