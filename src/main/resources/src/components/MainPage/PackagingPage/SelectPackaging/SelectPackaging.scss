@@ -56,15 +56,21 @@
 
     &__input {
         display: flex;
-        flex-direction: row;
-        align-items: center;
+        // flex-direction: row;
+        // align-items: center;
         justify-content: space-between;
         width: 100%;
+        //column direction
+        flex-direction: column;
+        align-items: flex-start;
 
         .select-packaging__input_name {
             color: lighten($primary-text-color, 40%);
             //   margin-bottom: 5px;
             flex: 0 1 20%;
+
+            //column direction
+            width: 100%;
         }
 
         .select-packaging__input-field {
@@ -74,6 +80,9 @@
             position: relative;
             flex-direction: column;
             // height: 2rem;
+
+            //column direction
+            width: 100%;
 
             input[type="text"],
             input[type="number"],
@@ -118,8 +127,11 @@
     > .main-window {
         background-color: #dddddd;
         border-radius: 5px;
-        align-self: flex-end;
-        width: calc(80% + 18px);
+        // align-self: flex-end;
+        // width: calc(80% + 18px);
+
+        //column direction
+        width: 100%;
 
         .main-window__reminder {
             width: fit-content;

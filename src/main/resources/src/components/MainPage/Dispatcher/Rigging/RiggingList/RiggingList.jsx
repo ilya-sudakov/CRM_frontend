@@ -225,6 +225,7 @@ const RiggingList = (props) => {
   }
 
   useEffect(() => {
+    document.title = 'Список оснастки'
     !dataLoaded && loadDrafts()
   }, [])
 

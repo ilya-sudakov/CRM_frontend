@@ -170,21 +170,25 @@
     .main-form__item {
       width: calc(100% - 20px);
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      // transition: 200ms ease-in-out;
-      // transform-origin: 0 0;
 
-      // &:first-child {
-      //   margin-top: 15px;
-      // }
+      //row direction
+      // flex-direction: row;
+      // align-items: center;
+      // justify-content: space-between;
+      //column direction
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 20px;
+
       .main-form__input_name {
         color: lighten($primary-text-color, 40%);
         margin-bottom: 5px;
         padding-right: 10px;
         flex: 0 1 calc(20% - 10px);
+
+        //column direction
+        width: 100%;
       }
 
       .file-uploader {
@@ -196,7 +200,9 @@
         display: flex;
         justify-content: center;
         width: calc(90% - 20px);
-        // margin-bottom: 15px;
+
+        //column direction
+        width: 100%;
 
         .react-datepicker-wrapper {
           width: 100%;
@@ -292,7 +298,8 @@
       }
 
       .select {
-        width: calc(90% - 20px);
+        //row direction
+        // width: calc(90% - 20px);
       }
     }
 
@@ -525,6 +532,10 @@
 
   @media (min-width: 1024px) {
     --form__max-width: 850px;
+
+    //column direction
+    --form__max-width: 700px;
+
     .main-form__title {
       // align-self: flex-start;
       // margin-left: calc(400px);

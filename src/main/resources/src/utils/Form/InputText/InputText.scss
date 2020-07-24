@@ -23,8 +23,12 @@
 
   .input_text__input {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    // flex-direction: row;
+    // align-items: center;
+    // justify-content: space-between;
+    //column direction
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
 
@@ -33,6 +37,10 @@
       //   margin-bottom: 5px;
       padding-right: 10px;
       flex: 0 1 calc(20% - 10px);
+
+      //column direction
+      width: 100%;
+      margin-bottom: 5px;
     }
 
     .input_text__input_field {
@@ -41,6 +49,9 @@
       width: calc(90% - 20px);
       position: relative;
       min-height: 2rem;
+
+      //column direction
+      width: 100%;
 
       input[type="text"],
       input[type="password"],

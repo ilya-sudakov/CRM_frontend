@@ -9,16 +9,28 @@
   .select-work-item__input {
     display: flex;
     width: calc(100% - 0px);
-    flex-direction: row;
-    align-items: center;
+    // flex-direction: row;
+    // align-items: center;
     justify-content: space-between;
+
+    //column direction
+    flex-direction: column;
+    align-items: flex-start;
+
     .select-work-item__input_name {
       color: lighten($primary-text-color, 40%);
       font-size: 80%;
       flex: 0 1 20%;
+
+      //column direction
+      width: 100%;
+      margin-bottom: 5px;
     }
     .select-work-item__input_field {
-      width: calc(80% - 0px);
+      // width: calc(80% - 0px);
+
+      //column direction
+      width: 100%;
     }
   }
 
