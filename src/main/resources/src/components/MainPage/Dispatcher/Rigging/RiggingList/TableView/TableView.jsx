@@ -1,18 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import './TableView.scss'
 
 import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import { UserContext } from '../../../../../../App.js'
 
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
 import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
 
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
-    { name: 'ЦехЛЭМЗ', alternative: 'ЛЭМЗ', isMinimized: false },
-    { name: 'ЦехЛиговский', alternative: 'Лиговка', isMinimized: false },
-    { name: 'ЦехЛепсари', alternative: 'Лепсари', isMinimized: false },
-    { name: 'Главный инженер', alternative: 'А.И.', isMinimized: false },
+    {
+      name: 'ЦехЛЭМЗ',
+      alternative: 'ЛЭМЗ',
+      isMinimized: false,
+      visibility: ['ROLE_ADMIN', 'ROLE_LEMZ'],
+    },
+    {
+      name: 'ЦехЛиговский',
+      alternative: 'Лиговка',
+      isMinimized: false,
+      visibility: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
+    },
+    {
+      name: 'ЦехЛепсари',
+      alternative: 'Лепсари',
+      isMinimized: false,
+      visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
+    },
+    {
+      name: 'Главный инженер',
+      alternative: 'А.И.',
+      isMinimized: false,
+      visibility: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    },
   ])
 
   const riggingNames = {
@@ -22,16 +43,7 @@ const TableView = (props) => {
     detail: 'parts',
   }
 
-  const temp = {
-    status: {
-      current: {
-        statusName: 'Распил/Габариты',
-        date: new Date(),
-        worker: 'Борис',
-        comment: 'Комментарий',
-      },
-    },
-  }
+  const userContext = useContext(UserContext)
 
   return (
     <div className="rigging-list-tableview">
@@ -45,6 +57,7 @@ const TableView = (props) => {
                   item.location === workshop.alternative,
               ).length > 0,
           )*/
+          .filter((workshop) => userContext.userHasAccess(workshop.visibility))
           .map((workshop, workshopIndex) => (
             <>
               <div

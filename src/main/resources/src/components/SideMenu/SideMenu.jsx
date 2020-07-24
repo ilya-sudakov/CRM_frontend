@@ -382,6 +382,7 @@ const SideMenu = (props) => {
         'ROLE_ADMIN',
         'ROLE_DISPATCHER',
         'ROLE_MANAGER',
+        'ROLE_WORKSHOP',
         'ROLE_ENGINEER',
       ],
       icon: moreImg,

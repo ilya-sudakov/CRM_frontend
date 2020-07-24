@@ -69,7 +69,7 @@ const EtceteraPage = (props) => {
       {
         linkTo: '/rigging-list',
         name: 'Список оснастки',
-        access: ['ROLE_ADMIN'],
+        access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
         icon: listImg,
       },
       {
