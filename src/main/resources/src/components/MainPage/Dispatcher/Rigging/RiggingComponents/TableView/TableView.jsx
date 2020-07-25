@@ -111,6 +111,7 @@ const TableView = (props) => {
       <div className="main-window">
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
+            <span>ID</span>
             <span>Артикул</span>
             <span>Название</span>
             {/* <span>Кол-во</span> */}
@@ -141,6 +142,7 @@ const TableView = (props) => {
                 }
                 onClick={handleClickStamp}
               >
+                <span>{stamp.id}</span>
                 <span>{stamp.number}</span>
                 <span>{stamp.name}</span>
                 <span title={stamp.comment}>{stamp.comment}</span>

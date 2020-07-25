@@ -32,7 +32,7 @@
                     }
                 }
                 &:not(.main-window__list-item--header) {
-                    span:nth-child(4) {
+                    span:nth-child(5) {
                         &::before {
                             content: "";
                             display: inline-block;
@@ -59,15 +59,18 @@
                 }
                 span {
                     &:nth-child(1) {
-                        flex: 0 1 20%;
+                        max-width: 40px;
                     }
                     &:nth-child(2) {
-                        flex: 0 1 30%;
+                        flex: 0 1 20%;
                     }
                     &:nth-child(3) {
-                        flex: 0 1 40%;
+                        flex: 0 1 30%;
                     }
                     &:nth-child(4) {
+                        flex: 0 1 40%;
+                    }
+                    &:nth-child(5) {
                         position: relative;
 
                         .main-window__status_select {
