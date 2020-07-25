@@ -22,6 +22,7 @@ const EditRig = (props) => {
     comment: '',
     parts: [],
     lastEdited: new Date(),
+    type: 'stamp',
   })
   const [stampId, setStampId] = useState(0)
   const [riggingErrors, setRiggingErrors] = useState({

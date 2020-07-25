@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import './Stamp.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
-import TableViewOld from '../TableView/TableView.jsx'
 import TableView from '../RiggingComponents/TableView/TableView.jsx'
 import {
   getStamp,
   getStampById,
   deletePartsFromStamp,
   deleteStamp,
+  addStamp,
+  addPartsToStamp,
 } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
+import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
+import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
 
 const Stamp = (props) => {
   const [stamps, setStamps] = useState([])
@@ -58,6 +62,118 @@ const Stamp = (props) => {
       })
   }
 
+  const handleCopyDataToStamp = (event) => {
+    event.preventDefault()
+    getPressForm()
+      .then((res) => res.json())
+      .then((res) => {
+        return Promise.all(
+          res.map((item) =>
+            addStamp({
+              color: item.color,
+              comment: item.comment,
+              lastEdited: item.lastEdited,
+              name: item.name,
+              number: item.number,
+              type: 'pressForm',
+            })
+              .then((res) => res.json())
+              .then((newId) =>
+                item.pressParts.map((part) =>
+                  addPartsToStamp({
+                    amount: part.amount,
+                    comment: part.comment,
+                    controll: part.controll,
+                    cuttingDimension: part.cuttingDimension,
+                    erosion: part.erosion,
+                    grinding: part.grinding,
+                    harding: part.harding,
+                    location: part.location,
+                    milling: part.milling,
+                    name: part.name,
+                    number: part.number,
+                    color: part.color,
+                    riggingId: newId.id,
+                  }),
+                ),
+              ),
+          ),
+        )
+      })
+      .then(() => getMachine())
+      .then((res) => res.json())
+      .then((res) => {
+        return Promise.all(
+          res.map((item) =>
+            addStamp({
+              color: item.color,
+              comment: item.comment,
+              lastEdited: item.lastEdited,
+              name: item.name,
+              number: item.number,
+              type: 'machine',
+            })
+              .then((res) => res.json())
+              .then((newId) =>
+                item.benchParts.map((part) =>
+                  addPartsToStamp({
+                    amount: part.amount,
+                    comment: part.comment,
+                    controll: part.controll,
+                    cuttingDimension: part.cuttingDimension,
+                    erosion: part.erosion,
+                    grinding: part.grinding,
+                    harding: part.harding,
+                    location: part.location,
+                    milling: part.milling,
+                    name: part.name,
+                    number: part.number,
+                    color: part.color,
+                    riggingId: newId.id,
+                  }),
+                ),
+              ),
+          ),
+        )
+      })
+      .then(() => getParts())
+      .then((res) => res.json())
+      .then((res) => {
+        return Promise.all(
+          res.map((item) =>
+            addStamp({
+              color: item.color,
+              comment: item.comment,
+              lastEdited: item.lastEdited,
+              name: item.name,
+              number: item.number,
+              type: 'parts',
+            })
+              .then((res) => res.json())
+              .then((newId) =>
+                item.detailParts.map((part) =>
+                  addPartsToStamp({
+                    amount: part.amount,
+                    comment: part.comment,
+                    controll: part.controll,
+                    cuttingDimension: part.cuttingDimension,
+                    erosion: part.erosion,
+                    grinding: part.grinding,
+                    harding: part.harding,
+                    location: part.location,
+                    milling: part.milling,
+                    name: part.name,
+                    number: part.number,
+                    color: part.color,
+                    riggingId: newId.id,
+                  }),
+                ),
+              ),
+          ),
+        )
+      })
+  }
+
   return (
     <div className="stamp">
       <div className="main-window">
@@ -97,23 +213,16 @@ const Stamp = (props) => {
           </div>
         </div>
         <div className="main-window__info-panel">
+          {/* <button
+            className="main-window__button main-window__button--inverted"
+            onClick={handleCopyDataToStamp}
+          >
+            Перекинуть все сюда
+          </button> */}
           <div className="main-window__amount_table">
             Всего: {stamps.length} записей
           </div>
         </div>
-        {/* <TableViewOld
-          data={stamps.filter((item) => {
-            if (item.color === 'completed' && curPage === 'Завершено') {
-              return true
-            } else if (curPage === 'Активные' && item.color !== 'completed') {
-              return true
-            }
-          })}
-          searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
-          loadData={loadStamps}
-          deleteItem={deleteItem}
-        /> */}
         <TableView
           data={stamps.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {

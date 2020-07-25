@@ -30,6 +30,7 @@ const SelectParts = (props) => {
         grinding: '',
         erosion: '',
         controll: '',
+        color: 'production',
         isMinimized: true,
       },
     ])
@@ -47,6 +48,7 @@ const SelectParts = (props) => {
         grinding: '',
         erosion: '',
         controll: '',
+        color: 'production',
       },
     ])
   }
