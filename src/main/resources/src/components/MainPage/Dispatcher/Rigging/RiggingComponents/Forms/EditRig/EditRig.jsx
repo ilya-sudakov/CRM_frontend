@@ -1,39 +1,43 @@
 import React, { useState, useEffect } from 'react'
-import './NewRig.scss'
+import './EditRig.scss'
 import '../../../../../../../utils/Form/Form.scss'
 import SelectParts from '../../../SelectParts/SelectParts.jsx'
-
+import {
+  getStampById,
+  editStamp,
+  editPartsOfStamp,
+  addPartsToStamp,
+  deletePartsFromStamp,
+} from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import InputText from '../../../../../../../utils/Form/InputText/InputText.jsx'
 import ErrorMessage from '../../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import Button from '../../../../../../../utils/Form/Button/Button.jsx'
-import {
-  addStamp,
-  addPartsToStamp,
-} from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import { formatDateString } from '../../../../../../../utils/functions.jsx'
 import { rigTypes } from '../../rigsVariables.js'
 
-const NewRig = (props) => {
+const EditRig = (props) => {
   const [rigInputs, setRigInputs] = useState({
     name: '',
     number: '',
     comment: '',
     parts: [],
     lastEdited: new Date(),
-    color: 'production',
   })
+  const [stampId, setStampId] = useState(0)
   const [riggingErrors, setRiggingErrors] = useState({
     name: false,
     number: false,
+    // comment: false,
     parts: false,
   })
   const [validInputs, setValidInputs] = useState({
-    name: false,
-    number: false,
-    parts: false,
+    name: true,
+    number: true,
+    // comment: true,
+    parts: true,
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
   const validateField = (fieldName, value) => {
     switch (fieldName) {
       case 'parts':
@@ -58,9 +62,11 @@ const NewRig = (props) => {
     let newErrors = Object.assign({
       name: false,
       number: false,
+      // comment: false,
       parts: false,
     })
     for (let item in validInputs) {
+      // console.log(item, validInputs[item]);
       if (validInputs[item] === false) {
         check = false
         newErrors = Object.assign({
@@ -73,30 +79,58 @@ const NewRig = (props) => {
     if (check === true) {
       return true
     } else {
+      // alert("Форма не заполнена");
       setIsLoading(false)
       setShowError(true)
       return false
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    // event.preventDefault();
     setIsLoading(true)
-    let itemId = 1
+    // console.log(rigInputs.parts);
     formIsValid() &&
-      addStamp(rigInputs)
-        .then((res) => res.json())
-        .then((res) => (itemId = res.id))
+      editStamp({ ...rigInputs, lastEdited: new Date() }, stampId)
         .then(() => {
-          const parts = rigInputs.parts.map((item) => {
-            let newPart = Object.assign({
-              ...item,
-              riggingId: itemId,
+          //PUT if edited, POST if part is new
+          const partsArr = rigInputs.parts.map((selected) => {
+            let edited = false
+            rigInputs.stampParts.map((item) => {
+              if (item.id === selected.id) {
+                edited = true
+                return
+              }
             })
-            return addPartsToStamp(newPart)
+            return edited === true
+              ? editPartsOfStamp(
+                  {
+                    ...selected,
+                    riggingId: stampId,
+                  },
+                  selected.id,
+                )
+              : addPartsToStamp({
+                  ...selected,
+                  riggingId: stampId,
+                })
           })
-          Promise.all(parts).then(() =>
-            props.history.push(rigTypes[props.type].redirectURL),
-          )
+          Promise.all(partsArr).then(() => {
+            //DELETE parts removed by user
+            const partsArr = rigInputs.stampParts.map((item) => {
+              let deleted = true
+              rigInputs.parts.map((selected) => {
+                if (selected.id === item.id) {
+                  deleted = false
+                  return
+                }
+              })
+              return deleted === true && deletePartsFromStamp(item.id)
+            })
+            Promise.all(partsArr).then(() => {
+              props.history.push(rigTypes[props.type].redirectURL)
+            })
+          })
         })
         .catch((error) => {
           setIsLoading(false)
@@ -131,15 +165,32 @@ const NewRig = (props) => {
   }
 
   useEffect(() => {
-    document.title = `Создание ${rigTypes[props.type].name}`
-  }, [props.type])
+    document.title = 'Редактирование записи'
+    const id = props.history.location.pathname.split('/edit/')[1]
+    setStampId(id)
+    if (isNaN(Number.parseInt(id))) {
+      alert('Неправильный индекс!')
+      props.history.push(rigTypes[props.type].redirectURL)
+    } else {
+      getStampById(id)
+        .then((res) => res.json())
+        .then((res) => {
+          setRigInputs({
+            ...res,
+            lastEdited: res.lastEdited ? res.lastEdited : new Date(),
+            parts: res.stampParts,
+          })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }, [])
 
   return (
-    <div className="new-rig">
+    <div className="edit-rig">
       <div className="main-form">
-        <div className="main-form__title">{`Новый ${
-          rigTypes[props.type].name
-        }`}</div>
+        <div className="main-form__title">Редактирование записи</div>
         <form className="main-form__form">
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
@@ -151,6 +202,7 @@ const NewRig = (props) => {
             required
             error={riggingErrors.name}
             name="name"
+            defaultValue={rigInputs.name}
             handleInputChange={handleInputChange}
             errorsArr={riggingErrors}
             setErrorsArr={setRiggingErrors}
@@ -160,21 +212,36 @@ const NewRig = (props) => {
             required
             error={riggingErrors.number}
             name="number"
+            defaultValue={rigInputs.number}
             handleInputChange={handleInputChange}
             errorsArr={riggingErrors}
             setErrorsArr={setRiggingErrors}
           />
           <InputText
             inputName="Комментарий"
+            // required
+            // error={riggingErrors.comment}
             name="comment"
+            defaultValue={rigInputs.comment}
             handleInputChange={handleInputChange}
           />
           <div className="main-form__item">
             <div className="main-form__input_name">Детали*</div>
             <div className="main-form__input_field">
-              <SelectParts handlePartsChange={handlePartsChange} />
+              {/* <input type="text" name="name" autoComplete="off" onChange={handleInputChange} /> */}
+              <SelectParts
+                handlePartsChange={handlePartsChange}
+                defaultValue={rigInputs.stampParts}
+                searchPlaceholder="Введите название продукта для поиска..."
+              />
             </div>
           </div>
+          <InputText
+            inputName="Дата последнего изменения"
+            name="lastEdited"
+            readOnly
+            defaultValue={formatDateString(rigInputs.lastEdited)}
+          />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>
@@ -188,7 +255,7 @@ const NewRig = (props) => {
               value="Вернуться назад"
             />
             <Button
-              text="Добавить запись"
+              text="Редактировать запись"
               isLoading={isLoading}
               className="main-form__submit"
               onClick={handleSubmit}
@@ -200,4 +267,4 @@ const NewRig = (props) => {
   )
 }
 
-export default NewRig
+export default EditRig

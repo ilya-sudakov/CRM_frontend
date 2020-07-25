@@ -6,9 +6,9 @@ import {
   EditPart,
   Machine,
   PressForm,
-  NewStamp,
-  ViewStamp,
-  EditStamp,
+  // NewStamp,
+  // ViewStamp,
+  // EditStamp,
   NewMachine,
   NewPressForm,
   ViewMachine,
@@ -25,6 +25,9 @@ import './Rigging.scss'
 import '../../../../utils/MainWindow/MainWindow.scss'
 import PageNotFound from '../../PageNotFound/PageNotFound.jsx'
 import PageLoading from '../../PageLoading/PageLoading.jsx'
+import NewRig from './RiggingComponents/Forms/NewRig/NewRig.jsx'
+import ViewRig from './RiggingComponents/Forms/ViewRig/ViewRig.jsx'
+import EditRig from './RiggingComponents/Forms/EditRig/EditRig.jsx'
 
 const Rigging = (props) => {
   return (
@@ -125,18 +128,21 @@ const Rigging = (props) => {
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/stamp/new"
-                component={NewStamp}
+                component={NewRig}
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
                 ]}
+                type="stamp"
               />
               <PrivateRoute
                 path="/dispatcher/rigging/stamp/view/"
-                component={ViewStamp}
+                // component={ViewStamp}
+                component={ViewRig}
                 userHasAccess={props.userHasAccess}
+                type="stamp"
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -146,7 +152,9 @@ const Rigging = (props) => {
               />
               <PrivateRoute
                 path="/dispatcher/rigging/stamp/edit/"
-                component={EditStamp}
+                // component={EditStamp}
+                component={EditRig}
+                type="stamp"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -266,7 +274,7 @@ const Rigging = (props) => {
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP'
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute

@@ -46,6 +46,10 @@
                             border: 1px solid #777777;
                         }
                     }
+
+                    &:hover {
+                        color: inherit;
+                    }
                 }
                 cursor: pointer;
                 .main-window__status_select {

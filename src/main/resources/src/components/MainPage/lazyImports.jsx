@@ -154,17 +154,17 @@ const EditTask = lazy(() =>
 
 const Stamp = lazy(() => import('./Dispatcher/Rigging/Stamp/Stamp.jsx'))
 
-const NewStamp = lazy(() =>
-  import('./Dispatcher/Rigging/Stamp/NewStamp/NewStamp.jsx'),
-)
+// const NewStamp = lazy(() =>
+//   import('./Dispatcher/Rigging/Stamp/NewStamp/NewStamp.jsx'),
+// )
 
-const ViewStamp = lazy(() =>
-  import('./Dispatcher/Rigging/Stamp/ViewStamp/ViewStamp.jsx'),
-)
+// const ViewStamp = lazy(() =>
+//   import('./Dispatcher/Rigging/Stamp/ViewStamp/ViewStamp.jsx'),
+// )
 
-const EditStamp = lazy(() =>
-  import('./Dispatcher/Rigging/Stamp/EditStamp/EditStamp.jsx'),
-)
+// const EditStamp = lazy(() =>
+//   import('./Dispatcher/Rigging/Stamp/EditStamp/EditStamp.jsx'),
+// )
 
 const Machine = lazy(() => import('./Dispatcher/Rigging/Machine/Machine.jsx'))
 
@@ -377,9 +377,9 @@ export {
   EditEmployee,
   ViewEmployee,
   Stamp,
-  NewStamp,
-  ViewStamp,
-  EditStamp,
+  // NewStamp,
+  // ViewStamp,
+  // EditStamp,
   Machine,
   NewMachine,
   ViewMachine,
