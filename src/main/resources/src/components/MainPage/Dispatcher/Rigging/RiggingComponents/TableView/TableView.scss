@@ -140,6 +140,63 @@
             }
         }
     }
+
+    @media (max-width: 768px) {
+        .main-window {
+            &__list {
+                &-item {
+                    span {
+                        max-width: none !important;
+                        &:nth-child(5) {
+                            box-sizing: border-box;
+                            padding-right: 10px;
+                            width: calc(100% + 10px);
+
+                            select {
+                                border-top-right-radius: 0;
+                                border-bottom-right-radius: 0;
+                            }
+                            &::before {
+                                left: auto !important;
+                                right: 0;
+                                border-radius: 2.5px;
+                                border-top-left-radius: 0 !important;
+                                border-bottom-left-radius: 0 !important;
+                            }
+                        }
+                    }
+                }
+                .main-window__list-options {
+                    .main-window__list-item {
+                        span {
+                            &:nth-child(5) {
+                                box-sizing: content-box;
+                                padding-right: 5px;
+                                width: 100%;
+                            }
+                            &:nth-child(6) {
+                                box-sizing: border-box;
+                                padding-right: 10px;
+                                width: calc(100% + 10px);
+
+                                select {
+                                    border-top-right-radius: 0;
+                                    border-bottom-right-radius: 0;
+                                }
+                                &::before {
+                                    left: auto !important;
+                                    right: 0;
+                                    border-radius: 2.5px;
+                                    border-top-left-radius: 0 !important;
+                                    border-bottom-left-radius: 0 !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 //OLD DESIGN

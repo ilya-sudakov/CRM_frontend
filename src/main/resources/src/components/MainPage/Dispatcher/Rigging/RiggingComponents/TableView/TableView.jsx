@@ -20,7 +20,6 @@ const TableView = (props) => {
     date: 'desc',
   })
   let selectorId = 0
-  const [isLoading, setIsLoading] = useState(true)
   const [partsVisible, setPartsVisible] = useState([])
 
   const changeSortOrder = (event) => {
@@ -67,7 +66,6 @@ const TableView = (props) => {
       }),
     )
     setPartsVisible([...temp])
-    props.data && setIsLoading(false)
   }, [props.data])
 
   const checkPart = (index) => {
@@ -97,10 +95,9 @@ const TableView = (props) => {
 
   const handleClickStamp = (event) => {
     let id = event.currentTarget.getAttribute('id')
-    event.target.className !== 'tableview__color_name' &&
-      !event.target.className.includes('tableview__color_option') &&
-      !event.target.className.includes('tableview__color_overlay') &&
-      !event.target.className.includes('tableview__img') &&
+    !event.target.className.includes('main-window__status_select') &&
+      !event.target.className.includes('main-window__action') &&
+      !event.target.className.includes('main-window__img') &&
       setPartsVisible([...checkPart(id)])
   }
 
@@ -126,7 +123,7 @@ const TableView = (props) => {
             {/* <span>Проверка</span> */}
             <div className="main-window__actions">Действия</div>
           </div>
-          {isLoading && (
+          {props.isLoading && (
             <TableDataLoading
               minHeight="50px"
               className="main-window__list-item"
@@ -142,10 +139,22 @@ const TableView = (props) => {
                 }
                 onClick={handleClickStamp}
               >
-                <span>{stamp.id}</span>
-                <span>{stamp.number}</span>
-                <span>{stamp.name}</span>
-                <span title={stamp.comment}>{stamp.comment}</span>
+                <span>
+                  <div className="main-window__mobile-text">ID:</div>
+                  {stamp.id}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Артикул:</div>
+                  {stamp.number}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Название:</div>
+                  {stamp.name}
+                </span>
+                <span title={stamp.comment}>
+                  <div className="main-window__mobile-text">Комментарий:</div>
+                  {stamp.comment}
+                </span>
                 <span
                   className={
                     'main-window__list-item--' +
@@ -252,7 +261,12 @@ const TableView = (props) => {
                           (part.color ? part.color : 'production')
                         }
                       >
-                        <span>{part.number}</span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Артикул:
+                          </div>
+                          {part.number}
+                        </span>
                         <span>
                           {/* <ColorPicker
                             defaultName={part.name}
@@ -261,11 +275,29 @@ const TableView = (props) => {
                             loadData={props.loadData}
                             type={props.type}
                           /> */}
+                          <div className="main-window__mobile-text">
+                            Название:
+                          </div>{' '}
                           {part.name}
                         </span>
-                        <span>{addSpaceDelimiter(part.amount)}</span>
-                        <span>{part.location}</span>
-                        <span>{part.comment}</span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Кол-во:
+                          </div>
+                          {addSpaceDelimiter(part.amount)}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Местоположение:
+                          </div>
+                          {part.location}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Комментарий:
+                          </div>
+                          {part.comment}
+                        </span>
                         <span
                           className={
                             'main-window__list-item--' +
@@ -295,11 +327,36 @@ const TableView = (props) => {
                             ))}
                           </select>
                         </span>
-                        <span>{part.cuttingDimensions}</span>
-                        <span>{part.milling}</span>
-                        <span>{part.harding}</span>
-                        <span>{part.grinding}</span>
-                        <span>{part.erosion}</span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Распил/габариты:
+                          </div>
+                          {part.cuttingDimensions}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Фрезеровка/точение:
+                          </div>
+                          {part.milling}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Закалка:
+                          </div>
+                          {part.harding}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Шлифовка:
+                          </div>
+                          {part.grinding}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Эрозия:
+                          </div>
+                          {part.erosion}
+                        </span>
                         {/* <span>{part.controll}</span> */}
                         <div className="main-window__actions">
                           <Link

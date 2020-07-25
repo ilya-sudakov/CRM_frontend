@@ -16,24 +16,30 @@ const Stamp = (props) => {
   const [stamps, setStamps] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [curPage, setCurPage] = useState('Активные')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     document.title = 'Штампы'
     const abortController = new AbortController()
-    loadStamps(abortController.signal)
+    !isLoaded && !isLoading && loadStamps(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
   }, [])
 
   const loadStamps = (signal) => {
+    setIsLoading(true)
     getStamp(signal)
       .then((res) => res.json())
       .then((res) => {
+        setIsLoaded(true)
         console.log(res)
         setStamps(res)
+        setIsLoading(false)
       })
       .catch((error) => {
+        setIsLoading(false)
         console.log(error)
       })
   }
@@ -120,6 +126,7 @@ const Stamp = (props) => {
           userHasAccess={props.userHasAccess}
           loadData={loadStamps}
           deleteItem={deleteItem}
+          isLoading={isLoading}
           type="stamp"
         />
       </div>
