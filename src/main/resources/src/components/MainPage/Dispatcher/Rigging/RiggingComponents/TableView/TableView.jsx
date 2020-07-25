@@ -149,7 +149,7 @@ const TableView = (props) => {
                 <span
                   className={
                     'main-window__list-item--' +
-                    rigStatuses[stamp.color].className
+                    rigStatuses[stamp.color]?.className
                   }
                 >
                   {' '}
@@ -269,7 +269,7 @@ const TableView = (props) => {
                         <span
                           className={
                             'main-window__list-item--' +
-                            rigStatuses[part.color].className
+                            rigStatuses[part.color]?.className
                           }
                         >
                           <div className="main-window__mobile-text">
