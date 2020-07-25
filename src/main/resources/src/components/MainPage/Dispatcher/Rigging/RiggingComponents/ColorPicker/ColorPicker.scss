@@ -1,6 +1,6 @@
 @import "../../../../../../variables.scss";
 
-.tableview__color {
+.color-picker {
   --defect: #e08989;
   --completed: #77c78a;
   --production: #cdceaf;
@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
 
-  .tableview__color_overlay {
+  .color-picker_overlay {
     // background-color: red;
     width: 100vw;
     height: 100vh;
@@ -26,7 +26,7 @@
     }
   }
 
-  .tableview__color_name {
+  .color-picker_name {
     cursor: pointer;
     display: flex;
     text-align: left;
@@ -43,7 +43,7 @@
 
     &:hover,
     &:focus {
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
       text-decoration: underline;
     }
 
@@ -56,12 +56,13 @@
     }
   }
 
-  .tableview__color_picker {
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+  .color-picker_picker {
+    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     border-radius: 2.5px;
     font-weight: normal;
     position: absolute;
     top: calc(100% - 1.5rem);
+    left: 10%;
     transform-origin: 0 0;
     width: 100%;
     z-index: 1;
@@ -71,7 +72,7 @@
       transform: scaleY(0);
     }
 
-    .tableview__color_option {
+    .color-picker_option {
       content: "";
       width: 100%;
       padding: 2.5px 0px;
@@ -89,14 +90,14 @@
       }
       &--completed {
         background-color: var(--completed);
-        color: #ffffff;
+        color: #333333;
         // &:hover {
         //   background-color: darken(var(--completed), 10%);
         // }
       }
       &--defect {
         background-color: var(--defect);
-        color: #eeeeee;
+        color: #333333;
         // &:hover {
         //   background-color: darken(var(--defect), 10%);
         // }

@@ -24,3 +24,18 @@ export const rigTypes = {
     title: 'Запчасти',
   },
 }
+
+export const rigStatuses = {
+  completed: {
+    name: 'Завершено',
+    className: 'completed',
+  },
+  defect: {
+    name: 'Приоритет',
+    className: 'defect',
+  },
+  production: {
+    name: 'В производстве',
+    className: 'production',
+  },
+}

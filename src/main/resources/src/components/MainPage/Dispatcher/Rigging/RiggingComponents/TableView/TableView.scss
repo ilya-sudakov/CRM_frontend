@@ -10,31 +10,123 @@
 
     .main-window {
         &__list {
+            width: 100%;
             &-item {
+                padding: 15px 10px;
                 &--defect {
                     background-color: var(--defect);
+                    &::before {
+                        background-color: var(--defect) !important;
+                    }
                 }
                 &--completed {
                     background-color: var(--completed);
+                    &::before {
+                        background-color: var(--completed) !important;
+                    }
                 }
                 &--production {
                     background-color: var(--production);
+                    &::before {
+                        background-color: var(--production) !important;
+                    }
                 }
+                &:not(.main-window__list-item--header) {
+                    span:nth-child(4) {
+                        &::before {
+                            content: "";
+                            display: inline-block;
+                            position: absolute;
+                            width: 10px;
+                            left: 0px;
+                            border-top-left-radius: 2.5px;
+                            border-bottom-left-radius: 2.5px;
+                            background-color: #cccccc;
+                            height: calc(100% - 2px);
+                            border: 1px solid #777777;
+                        }
+                    }
+                }
+                cursor: pointer;
                 span {
                     &:nth-child(1) {
                         flex: 0 1 20%;
                     }
                     &:nth-child(2) {
-                        flex: 0 1 50%;
+                        flex: 0 1 30%;
                     }
                     &:nth-child(3) {
-                        flex: 0 1 20%;
+                        flex: 0 1 40%;
+                    }
+                    &:nth-child(4) {
+                        position: relative;
+                    }
+
+                    .main-window__status_select {
+                        width: 100%;
+                        padding: 5px 0px;
+                        font-size: 90%;
+                        border-radius: 5px;
+                        outline: 0;
+                        padding-left: 10px;
+                        max-width: 110px;
                     }
                 }
 
                 .main-window__actions {
+                    max-width: 125px;
                     .main-window__img {
                         filter: brightness(1);
+                    }
+                }
+            }
+            .main-window__list-options {
+                .main-window__list {
+                    &-item {
+                        &:not(.main-window__list-item--header) {
+                            span:nth-child(6) {
+                                &::before {
+                                    content: "";
+                                    display: inline-block;
+                                    position: absolute;
+                                    width: 10px;
+                                    left: 0px;
+                                    border-top-left-radius: 2.5px;
+                                    border-bottom-left-radius: 2.5px;
+                                    background-color: #cccccc;
+                                    height: calc(100% - 2px);
+                                    border: 1px solid #777777;
+                                }
+                            }
+                        }
+                        span {
+                            &:nth-child(1) {
+                                flex: 0 1 20%;
+                                max-width: 100px;
+                            }
+                            &:nth-child(2) {
+                                flex: 0 1 20%;
+                            }
+                            &:nth-child(3) {
+                                flex: 0 1 20%;
+                                max-width: 50px;
+                            }
+                            &:nth-child(4) {
+                                flex: 0 1 15%;
+                                max-width: 150px;
+                                &::before {
+                                    display: none;
+                                }
+                            }
+                            &:nth-child(6) {
+                                max-width: 100px;
+                                position: relative;
+                            }
+                        }
+                        .main-window__actions {
+                            min-width: 50px;
+                            max-width: 80px;
+                        }
                     }
                 }
             }

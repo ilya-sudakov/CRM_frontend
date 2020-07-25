@@ -6,15 +6,14 @@ import {
   editStampPartColor,
 } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 
+import { rigStatuses } from '../rigsVariables.js'
+
 const ColorPicker = (props) => {
   const [showColorPicker, setShowColorPicker] = useState(false)
 
   const clickOnColorOption = (event) => {
-    // const id = Number.parseInt(event.target.getAttribute("index"));
     const id = props.id
-    const color = event.target.classList[1].split(
-      'tableview__color_option--',
-    )[1]
+    const color = event.target.classList[1].split('color-picker_option--')[1]
     const name = props.type.split('/')[0]
     const type = props.type.split('/')[1]
     const req = Object.assign({
@@ -31,17 +30,17 @@ const ColorPicker = (props) => {
   }
 
   return (
-    <div className="tableview__color">
+    <div className="color-picker">
       <div
         className={
           showColorPicker
-            ? 'tableview__color_overlay'
-            : 'tableview__color_overlay tableview__color_overlay--hidden'
+            ? 'color-picker_overlay'
+            : 'color-picker_overlay color-picker_overlay--hidden'
         }
         onClick={() => setShowColorPicker(false)}
       ></div>
       <div
-        className="tableview__color_name"
+        className="color-picker_name"
         onClick={(event) => {
           //   clickOnColorPicker(event)
           setShowColorPicker(!showColorPicker)
@@ -53,28 +52,18 @@ const ColorPicker = (props) => {
       <div
         className={
           showColorPicker
-            ? 'tableview__color_picker'
-            : 'tableview__color_picker tableview__color_picker--hidden'
+            ? 'color-picker_picker'
+            : 'color-picker_picker color-picker_picker--hidden'
         }
       >
-        <div
-          onClick={clickOnColorOption}
-          className="tableview__color_option tableview__color_option--completed"
-        >
-          Завершено
-        </div>
-        <div
-          onClick={clickOnColorOption}
-          className="tableview__color_option tableview__color_option--defect"
-        >
-          Приоритет
-        </div>
-        <div
-          onClick={clickOnColorOption}
-          className="tableview__color_option tableview__color_option--production"
-        >
-          В работе
-        </div>
+        {Object.values(rigStatuses).map((status) => (
+          <div
+            onClick={clickOnColorOption}
+            className={`color-picker_option color-picker_option--${status.className}`}
+          >
+            {status.name}
+          </div>
+        ))}
       </div>
     </div>
   )

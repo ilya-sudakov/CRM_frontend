@@ -8,6 +8,11 @@ import './TableView.scss'
 import ColorPicker from '../ColorPicker/ColorPicker.jsx'
 import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx'
+import { rigStatuses } from '../rigsVariables'
+import {
+  editStampColor,
+  editStampPartColor,
+} from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -111,6 +116,7 @@ const TableView = (props) => {
             {/* <span>Кол-во</span> */}
             {/* <span>Местоположение</span> */}
             <span>Комментарий</span>
+            <span>Статус</span>
             {/* <span>Распил/габариты</span> */}
             {/* <span>Фрезеровка/точение</span> */}
             {/* <span>Закалка</span> */}
@@ -135,38 +141,48 @@ const TableView = (props) => {
                 }
                 onClick={handleClickStamp}
               >
-                {/* <span>{stamp.id}</span> */}
                 <span>{stamp.number}</span>
-                <span>
-                  <ColorPicker
-                    defaultName={stamp.name}
+                <span>{stamp.name}</span>
+                <span title={stamp.comment}>{stamp.comment}</span>
+                <span
+                  className={
+                    'main-window__list-item--' +
+                    rigStatuses[stamp.color].className
+                  }
+                >
+                  {' '}
+                  <div className="main-window__mobile-text">Статус заявки:</div>
+                  <select
                     id={stamp.id}
-                    loadData={props.loadData}
-                    type={props.type}
-                  />
+                    className="main-window__status_select"
+                    value={stamp.color}
+                    onChange={(event) => {
+                      editStampColor(
+                        {
+                          color: event.target.value,
+                        },
+                        stamp.id,
+                      ).then(() => props.loadData())
+                    }}
+                  >
+                    {Object.values(rigStatuses).map((status) => (
+                      <option value={status.className}>{status.name}</option>
+                    ))}
+                  </select>
                 </span>
-                {/* <span></span>
-                <span></span> */}
-                <span>{stamp.comment}</span>
-                {/* <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span> */}
                 <div className="main-window__actions">
                   <Link
                     to={`/dispatcher/rigging/${props.type}/view/${stamp.id}`}
                     className="main-window__action"
+                    title="Просмотр"
                   >
-                    {/* Просмотр */}
                     <img className="main-window__img" src={viewIcon} alt="" />
                   </Link>
                   <Link
                     to={`/dispatcher/rigging/${props.type}/edit/${stamp.id}`}
                     className="main-window__action"
+                    title="Редактирование"
                   >
-                    {/* Редактировать */}
                     <img className="main-window__img" src={editIcon} alt="" />
                   </Link>
                   {props.userHasAccess(['ROLE_ADMIN']) && (
@@ -174,8 +190,8 @@ const TableView = (props) => {
                       data-id={stamp.id}
                       className="main-window__action"
                       onClick={props.deleteItem}
+                      title="Удалить"
                     >
-                      {/* Удалить */}
                       <img
                         className="main-window__img"
                         src={deleteIcon}
@@ -183,6 +199,121 @@ const TableView = (props) => {
                       />
                     </div>
                   )}
+                </div>
+              </div>
+              <div
+                id={stamp_id}
+                className={`main-window__list-options 
+                  ${
+                    isPartHidden(stamp.id) === true
+                      ? 'main-window__list-options--hidden'
+                      : ''
+                  }`}
+              >
+                <div className="main-window__list">
+                  <div className="main-window__list-item main-window__list-item--header">
+                    <span>Артикул</span>
+                    <span>Название</span>
+                    <span>Кол-во</span>
+                    <span>Местоположение</span>
+                    <span>Комментарий</span>
+                    <span>Статус</span>
+                    <span>Распил/габариты</span>
+                    <span>Фрезеровка/точение</span>
+                    <span>Закалка</span>
+                    <span>Шлифовка</span>
+                    <span>Эрозия</span>
+                    {/* <span>Проверка</span> */}
+                    <div className="main-window__actions">Действия</div>
+                  </div>
+                  {stamp.stampParts
+                    .sort((a, b) => {
+                      if (a.number < b.number) {
+                        return -1
+                      }
+                      if (a.number > b.number) {
+                        return 1
+                      }
+                      if (a.number === b.number && a.id < b.id) {
+                        return -1
+                      }
+                      if (a.number === b.number && a.id > b.id) {
+                        return 1
+                      }
+                      return 0
+                    })
+                    .map((part, index) => (
+                      <div
+                        key={index}
+                        className={
+                          'main-window__list-item main-window__list-item--' +
+                          (part.color ? part.color : 'production')
+                        }
+                      >
+                        <span>{part.number}</span>
+                        <span>
+                          {/* <ColorPicker
+                            defaultName={part.name}
+                            index={selectorId++}
+                            id={part.id}
+                            loadData={props.loadData}
+                            type={props.type}
+                          /> */}
+                          {part.name}
+                        </span>
+                        <span>{addSpaceDelimiter(part.amount)}</span>
+                        <span>{part.location}</span>
+                        <span>{part.comment}</span>
+                        <span
+                          className={
+                            'main-window__list-item--' +
+                            rigStatuses[part.color].className
+                          }
+                        >
+                          <div className="main-window__mobile-text">
+                            Статус заявки:
+                          </div>
+                          <select
+                            id={part.id}
+                            className="main-window__status_select"
+                            value={part.color}
+                            onChange={(event) => {
+                              editStampPartColor(
+                                {
+                                  color: event.target.value,
+                                },
+                                part.id,
+                              ).then(() => props.loadData())
+                            }}
+                          >
+                            {Object.values(rigStatuses).map((status) => (
+                              <option value={status.className}>
+                                {status.name}
+                              </option>
+                            ))}
+                          </select>
+                        </span>
+                        <span>{part.cuttingDimensions}</span>
+                        <span>{part.milling}</span>
+                        <span>{part.harding}</span>
+                        <span>{part.grinding}</span>
+                        <span>{part.erosion}</span>
+                        {/* <span>{part.controll}</span> */}
+                        <div className="main-window__actions">
+                          <Link
+                            to={`/dispatcher/rigging/${props.type}/edit-part/${stamp.id}/${part.id}`}
+                            className="main-window__action"
+                            title="Редактировать"
+                          >
+                            <img
+                              className="main-window__img"
+                              src={editIcon}
+                              alt=""
+                            />
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               </div>
             </React.Fragment>
