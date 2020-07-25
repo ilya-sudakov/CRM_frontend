@@ -26,6 +26,10 @@ export const rigTypes = {
 }
 
 export const rigStatuses = {
+  production: {
+    name: 'В производстве',
+    className: 'production',
+  },
   completed: {
     name: 'Завершено',
     className: 'completed',
@@ -33,9 +37,5 @@ export const rigStatuses = {
   defect: {
     name: 'Приоритет',
     className: 'defect',
-  },
-  production: {
-    name: 'В производстве',
-    className: 'production',
   },
 }
