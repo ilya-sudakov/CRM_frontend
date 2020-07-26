@@ -213,12 +213,12 @@ const Stamp = (props) => {
           </div>
         </div>
         <div className="main-window__info-panel">
-          {/* <button
+          <button
             className="main-window__button main-window__button--inverted"
             onClick={handleCopyDataToStamp}
           >
-            Перекинуть все сюда
-          </button> */}
+            Скопировать все сюда
+          </button>
           <div className="main-window__amount_table">
             Всего: {stamps.length} записей
           </div>

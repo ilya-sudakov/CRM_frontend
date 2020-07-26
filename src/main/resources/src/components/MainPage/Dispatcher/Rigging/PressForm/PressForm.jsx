@@ -15,11 +15,14 @@ const PressForm = (props) => {
   const [pressForm, setPressForms] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [curPage, setCurPage] = useState('Активные')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     document.title = 'Пресс-формы'
     const abortController = new AbortController()
     loadPressForm(abortController.signal)
+    // loadData(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
@@ -33,6 +36,22 @@ const PressForm = (props) => {
         setPressForms(res)
       })
       .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const loadData = (signal) => {
+    setIsLoading(true)
+    getStamp(signal)
+      .then((res) => res.json())
+      .then((res) => {
+        setIsLoaded(true)
+        console.log(res)
+        setStamps(res)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setIsLoading(false)
         console.log(error)
       })
   }
@@ -103,6 +122,7 @@ const PressForm = (props) => {
             }
           })}
           searchQuery={searchQuery}
+          isLoading={isLoading}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
           loadData={loadPressForm}

@@ -17,11 +17,14 @@ const Parts = (props) => {
   const [parts, setParts] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [curPage, setCurPage] = useState('Активные')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     document.title = 'Запчасти'
     const abortController = new AbortController()
     loadParts(abortController.signal)
+    // loadData(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
@@ -35,6 +38,22 @@ const Parts = (props) => {
         setParts(res)
       })
       .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const loadData = (signal) => {
+    setIsLoading(true)
+    getStamp(signal)
+      .then((res) => res.json())
+      .then((res) => {
+        setIsLoaded(true)
+        console.log(res)
+        setStamps(res)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setIsLoading(false)
         console.log(error)
       })
   }
@@ -104,6 +123,7 @@ const Parts = (props) => {
               return true
             }
           })}
+          isLoading={isLoading}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}

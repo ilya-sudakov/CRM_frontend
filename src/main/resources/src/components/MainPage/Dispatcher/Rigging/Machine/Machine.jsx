@@ -15,10 +15,14 @@ const Machine = (props) => {
   const [machines, setMachines] = useState([])
   const [curPage, setCurPage] = useState('Активные')
   const [searchQuery, setSearchQuery] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    const abortController = new AbortController()
     document.title = 'Станки'
     loadMachines()
+    // loadData(abortController.signal)
   }, [])
 
   const loadMachines = () => {
@@ -29,6 +33,22 @@ const Machine = (props) => {
         setMachines(res)
       })
       .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const loadData = (signal) => {
+    setIsLoading(true)
+    getStamp(signal)
+      .then((res) => res.json())
+      .then((res) => {
+        setIsLoaded(true)
+        console.log(res)
+        setStamps(res)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setIsLoading(false)
         console.log(error)
       })
   }
@@ -98,6 +118,7 @@ const Machine = (props) => {
               return true
             }
           })}
+          isLoading={isLoading}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
