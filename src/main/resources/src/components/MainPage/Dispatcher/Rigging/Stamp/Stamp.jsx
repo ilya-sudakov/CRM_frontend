@@ -213,12 +213,14 @@ const Stamp = (props) => {
           </div>
         </div>
         <div className="main-window__info-panel">
-          <button
-            className="main-window__button main-window__button--inverted"
-            onClick={handleCopyDataToStamp}
-          >
-            Скопировать все сюда
-          </button>
+          {props.userHasAccess(['ROLE_ADMIN']) && (
+            <button
+              className="main-window__button main-window__button--inverted"
+              onClick={handleCopyDataToStamp}
+            >
+              Скопировать все сюда
+            </button>
+          )}
           <div className="main-window__amount_table">
             Всего: {stamps.length} записей
           </div>
