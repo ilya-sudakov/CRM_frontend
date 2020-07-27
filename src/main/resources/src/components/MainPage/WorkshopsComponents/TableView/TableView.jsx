@@ -11,20 +11,12 @@ import {
   editRequestStatus,
   editProductStatusToRequest,
 } from '../../../../utils/RequestsAPI/Requests.jsx'
-import {
-  editProductStatusToRequestLEMZ,
-  editRequestLEMZStatus,
-} from '../../../../utils/RequestsAPI/Workshop/LEMZ.jsx'
 
 import {
   formatDateString,
   addSpaceDelimiter,
 } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
-import {
-  editRequestLepsariStatus,
-  editProductStatusToRequestLepsari,
-} from '../../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
 import { requestStatuses, productsStatuses } from '../workshopVariables.js'
 
 const TableView = (props) => {
@@ -34,24 +26,6 @@ const TableView = (props) => {
     date: 'desc',
   })
   const [requests, setRequests] = useState([])
-
-  // const [workshopsFuncs, setWorkshopsFuncs] = useState({
-  //   requests: {
-  //     productsName: 'requestProducts',
-  //     request: (body, id) => editRequestStatus(body, id),
-  //     product: (body, id) => editProductStatusToRequest(body, id),
-  //   },
-  //   lemz: {
-  //     productsName: 'lemzProducts',
-  //     request: (body, id) => editRequestLEMZStatus(body, id),
-  //     product: (body, id) => editProductStatusToRequestLEMZ(body, id),
-  //   },
-  //   lepsari: {
-  //     productsName: 'lepsariProducts',
-  //     request: (body, id) => editRequestLepsariStatus(body, id),
-  //     product: (body, id) => editProductStatusToRequestLepsari(body, id),
-  //   },
-  // })
 
   const [workshopsFuncs, setWorkshopsFuncs] = useState({
     requests: {
@@ -202,8 +176,13 @@ const TableView = (props) => {
                   (request?.[workshopsFuncs[props.workshopName].productsName]
                     ?.length > 1
                     ? 'main-window__list-item--multiple-items'
+                    : '') +
+                  (request.factory === undefined ||
+                  request.factory === 'requests'
+                    ? ' main-window__list-item--message main-window__list-item--warning'
                     : '')
                 }
+                data-warning-msg="Напоминание! Заявка не перенесена в цеха"
                 onClick={(event) => {
                   if (
                     !event.target.classList.contains(

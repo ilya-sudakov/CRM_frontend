@@ -1,4 +1,3 @@
-// !NEW DESIGN
 @import "../../../../variables.scss";
 
 .tableview-workshops {
@@ -18,6 +17,7 @@
     .main-window__list {
       font-size: 95%;
       width: 100%;
+
       .main-window__list-item {
         position: relative;
         &--multiple-items:not(.main-window__list-item--header) {
