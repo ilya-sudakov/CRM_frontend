@@ -178,7 +178,8 @@ const TableView = (props) => {
                     ? 'main-window__list-item--multiple-items'
                     : '') +
                   (request.factory === undefined ||
-                  request.factory === 'requests'
+                  request.factory === 'requests' ||
+                  request.factory === null
                     ? ' main-window__list-item--message main-window__list-item--warning'
                     : '')
                 }
