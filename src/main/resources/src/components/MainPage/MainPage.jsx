@@ -41,9 +41,9 @@ import {
   LoginHistory,
   EditRecordWork,
   WorkManagementPage,
-  PriceList,
+  // PriceList,
   NewPriceList,
-  ViewPriceList,
+  // ViewPriceList,
   ClientCategories,
   ViewClient,
   EditClient,
@@ -335,13 +335,13 @@ class MainPage extends React.Component {
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 /> */}
-                <PrivateRoute
+                {/* <PrivateRoute
                   path="/price-list/view/"
                   component={ViewPriceList}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN']}
-                />
+                /> */}
                 <PrivateRoute
                   exact
                   path="/products"

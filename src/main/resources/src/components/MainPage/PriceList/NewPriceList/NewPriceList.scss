@@ -51,6 +51,7 @@
     border-radius: 5px;
     padding: 10px;
     font-size: 125%;
+    flex-direction: row !important;
     justify-content: flex-start !important;
     margin-bottom: 10px !important;
     & .main-form__input_name {
@@ -66,6 +67,13 @@
         min-width: 400px;
         margin-bottom: 10px;
       }
+    }
+  }
+
+  .main-form__item {
+    flex-direction: row !important;
+    .main-form__input_name {
+      width: fit-content !important;
     }
   }
   .main-form__item .main-form__input_field {
