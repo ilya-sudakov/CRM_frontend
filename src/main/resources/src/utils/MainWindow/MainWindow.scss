@@ -601,6 +601,9 @@
       position: relative;
       &::after {
         position: absolute;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         top: 100%;
         left: 0px;
         width: calc(100% - 40px - 2px);
@@ -617,7 +620,7 @@
         background: #f7f4d6 url("../../../../../../assets/tableview/warning-outlined.svg") no-repeat 5px 0.25rem;
         background-size: 25px 25px;
         border: 1px solid #d3d1aa;
-        content: attr(data-warning-msg);
+        content: attr(data-msg);
       }
     }
 
@@ -627,7 +630,16 @@
         background: #edc8c5 url("../../../../../../assets/tableview/error_icon.svg") no-repeat 5px 0.25rem;
         background-size: 25px 25px;
         border: 1px solid #b08f8f;
-        content: attr(data-error-msg);
+        content: attr(data-msg);
+      }
+    }
+    &--info {
+      &::after {
+        color: #5980a1;
+        background: #cde9f7 url("../../../../../../assets/tableview/info-circle-outlined.svg") no-repeat 5px 0.25rem;
+        background-size: 25px 25px;
+        border: 1px solid #9bb9cc;
+        content: attr(data-msg);
       }
     }
   }
@@ -886,9 +898,9 @@
         &::after {
           min-height: 30px;
           height: fit-content;
-          padding-top: 8px;
+          // padding-top: 8px;
           font-size: 90%;
-          background-position: 5px 10px;
+          background-position: 5px 8px;
         }
       }
     }

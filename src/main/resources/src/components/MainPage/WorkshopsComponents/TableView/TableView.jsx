@@ -182,7 +182,7 @@ const TableView = (props) => {
                     ? ' main-window__list-item--message main-window__list-item--warning'
                     : '')
                 }
-                data-warning-msg="Напоминание! Заявка не перенесена в цеха"
+                data-msg="Напоминание! Заявка не перенесена в цеха"
                 onClick={(event) => {
                   if (
                     !event.target.classList.contains(
