@@ -871,12 +871,25 @@
       margin-right: 5px;
     }
 
-    .main-window__list-item--divider {
-      margin: 35px auto;
-      span {
-        width: fit-content;
-        white-space: normal;
-        text-align: center !important;
+    .main-window__list-item {
+      &--divider {
+        margin: 35px auto;
+        span {
+          width: fit-content;
+          white-space: normal;
+          text-align: center !important;
+        }
+      }
+
+      &--message {
+        margin-bottom: 60px;
+        &::after {
+          min-height: 30px;
+          height: fit-content;
+          padding-top: 8px;
+          font-size: 90%;
+          background-position: 5px 10px;
+        }
       }
     }
 
