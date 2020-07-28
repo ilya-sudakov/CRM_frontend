@@ -130,47 +130,11 @@ const Stamp = lazy(() => import('./Dispatcher/Rigging/Stamp/Stamp.jsx'))
 
 const Machine = lazy(() => import('./Dispatcher/Rigging/Machine/Machine.jsx'))
 
-const NewMachine = lazy(() =>
-  import('./Dispatcher/Rigging/Machine/NewMachine/NewMachine.jsx'),
-)
-
-const ViewMachine = lazy(() =>
-  import('./Dispatcher/Rigging/Machine/ViewMachine/ViewMachine.jsx'),
-)
-
-const EditMachine = lazy(() =>
-  import('./Dispatcher/Rigging/Machine/EditMachine/EditMachine.jsx'),
-)
-
 const PressForm = lazy(() =>
   import('./Dispatcher/Rigging/PressForm/PressForm.jsx'),
 )
 
-const NewPressForm = lazy(() =>
-  import('./Dispatcher/Rigging/PressForm/NewPressForm/NewPressForm.jsx'),
-)
-
-const ViewPressForm = lazy(() =>
-  import('./Dispatcher/Rigging/PressForm/ViewPressForm/ViewPressForm.jsx'),
-)
-
-const EditPressForm = lazy(() =>
-  import('./Dispatcher/Rigging/PressForm/EditPressForm/EditPressForm.jsx'),
-)
-
 const Parts = lazy(() => import('./Dispatcher/Rigging/Parts/Parts.jsx'))
-
-const NewPart = lazy(() =>
-  import('./Dispatcher/Rigging/Parts/NewPart/NewPart.jsx'),
-)
-
-const EditPart = lazy(() =>
-  import('./Dispatcher/Rigging/Parts/EditPart/EditPart.jsx'),
-)
-
-const ViewPart = lazy(() =>
-  import('./Dispatcher/Rigging/Parts/ViewPart/ViewPart.jsx'),
-)
 
 const Employees = lazy(() => import('./Dispatcher/Employees/Employees.jsx'))
 
@@ -185,10 +149,6 @@ const EditEmployee = lazy(() =>
 const ViewEmployee = lazy(() =>
   import('./Dispatcher/Employees/ViewEmployee/ViewEmployee.jsx'),
 )
-
-// const EditPartInRigging = lazy(() =>
-//   import('./Dispatcher/Rigging/EditPartInRigging/EditPartInRigging.jsx'),
-// )
 
 const Work = lazy(() => import('./Work/Work.jsx'))
 
@@ -307,23 +267,13 @@ export {
   NewTask,
   EditTask,
   Parts,
-  NewPart,
-  EditPart,
-  ViewPart,
   Employees,
   NewEmployee,
   EditEmployee,
   ViewEmployee,
   Stamp,
   Machine,
-  NewMachine,
-  ViewMachine,
-  EditMachine,
   PressForm,
-  NewPressForm,
-  ViewPressForm,
-  EditPressForm,
-  // EditPartInRigging,
   Work,
   NewWork,
   EditWork,
