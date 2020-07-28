@@ -113,6 +113,7 @@
                             &:nth-child(1) {
                                 flex: 0 1 20%;
                                 max-width: 100px;
+                                word-break: break-all;
                             }
                             &:nth-child(2) {
                                 flex: 0 1 20%;

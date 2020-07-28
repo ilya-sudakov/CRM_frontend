@@ -3,9 +3,6 @@ import './RiggingList.scss'
 
 import TableView from './TableView/TableView.jsx'
 import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
-import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
-import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
 
 const RiggingList = (props) => {
   const [drafts, setDrafts] = useState([])
@@ -60,60 +57,10 @@ const RiggingList = (props) => {
             })
           })
         })
+        setIsLoading(false)
         // console.log(newDrafts);
         setDrafts([...newDrafts])
-      })
-      .then(() => {
-        getPressForm()
-          .then((response) => response.json())
-          .then((response) => {
-            // console.log(response);
-            response.map((item) => {
-              return item.pressParts.map((stamp) => {
-                newDrafts.push({
-                  ...stamp,
-                  type: 'Press',
-                })
-              })
-            })
-            return setDrafts([...newDrafts])
-          })
-      })
-      .then(() => {
-        getMachine()
-          .then((response) => response.json())
-          .then((response) => {
-            // console.log(response)
-            response.map((item) => {
-              return item.benchParts.map((stamp) => {
-                newDrafts.push({
-                  ...stamp,
-                  type: 'Bench',
-                })
-              })
-            })
-            setDrafts([...newDrafts])
-            // console.log(newDrafts)
-          })
-      })
-      .then(() => {
-        getParts()
-          .then((res) => res.json())
-          .then((res) => {
-            // console.log(res)
-            res.map((item) => {
-              return item.detailParts.map((stamp) => {
-                newDrafts.push({
-                  ...stamp,
-                  type: 'Detail',
-                })
-              })
-            })
-            setIsLoading(false)
-            setDataLoaded(true)
-            setDrafts([...newDrafts])
-            // console.log(newDrafts)
-          })
+        setDataLoaded(true)
       })
       .catch((error) => {
         console.log(error)
