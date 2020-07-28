@@ -187,7 +187,7 @@ const TableView = (props) => {
                     <div
                       data-id={stamp.id}
                       className="main-window__action"
-                      onClick={props.deleteItem}
+                      onClick={() => props.deleteItem(stamp.id)}
                       title="Удалить"
                     >
                       <img

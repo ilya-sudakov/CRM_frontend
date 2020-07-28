@@ -51,18 +51,16 @@ const Stamp = (props) => {
       })
   }
 
-  const deleteItem = (event) => {
-    const id = event.target.dataset.id
+  const deleteItem = (id) => {
     getStampById(id)
       .then((res) => res.json())
-      .then((res) => {
-        const parts = res.stampParts.map((item) => {
-          return deletePartsFromStamp(item.id)
-        })
-        Promise.all(parts).then(() => {
-          deleteStamp(id).then(() => loadStamps())
-        })
-      })
+      .then((res) =>
+        Promise.all(
+          res.stampParts.map((item) => deletePartsFromStamp(item.id)),
+        ),
+      )
+      .then(() => deleteStamp(id))
+      .then(() => loadStamps())
   }
 
   const handleCopyDataToStamp = () => {
