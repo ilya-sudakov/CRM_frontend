@@ -20,6 +20,7 @@ const NewRig = (props) => {
     parts: [],
     lastEdited: new Date(),
     color: 'production',
+    status: props.type,
   })
   const [riggingErrors, setRiggingErrors] = useState({
     name: false,

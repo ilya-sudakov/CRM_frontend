@@ -4,7 +4,8 @@ import '../../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 // import TableView from './TableView/TableView.jsx';
 // import { getParts, deletePart } from '../../../../../utils/RequestsAPI/Parts.jsx';
-import TableView from '../TableView/TableView.jsx'
+import TableViewOld from '../TableView/TableView.jsx'
+import TableView from '../RiggingComponents/TableView/TableView.jsx'
 import {
   getPart,
   deletePart,
@@ -12,6 +13,12 @@ import {
   getPartById,
 } from '../../../../../utils/RequestsAPI/Rigging/Parts.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import {
+  getStampById,
+  deletePartsFromStamp,
+  deleteStamp,
+  getStampsByStatus,
+} from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 
 const Parts = (props) => {
   const [parts, setParts] = useState([])
@@ -23,8 +30,8 @@ const Parts = (props) => {
   useEffect(() => {
     document.title = 'Запчасти'
     const abortController = new AbortController()
-    loadParts(abortController.signal)
-    // loadData(abortController.signal)
+    // loadParts(abortController.signal)
+    loadData(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
@@ -44,12 +51,12 @@ const Parts = (props) => {
 
   const loadData = (signal) => {
     setIsLoading(true)
-    getStamp(signal)
+    getStampsByStatus('parts', signal)
       .then((res) => res.json())
       .then((res) => {
         setIsLoaded(true)
         console.log(res)
-        setStamps(res)
+        setParts(res)
         setIsLoading(false)
       })
       .catch((error) => {
@@ -60,14 +67,14 @@ const Parts = (props) => {
 
   const deleteItem = (event) => {
     const id = event.target.dataset.id
-    getPartById(id)
+    getStampById(id)
       .then((res) => res.json())
       .then((res) => {
         const parts = res.detailParts.map((item) => {
-          return deletePartsFromPart(item.id)
+          return deletePartsFromStamp(item.id)
         })
         Promise.all(parts).then(() => {
-          deletePart(id).then(() => loadParts())
+          deleteStamp(id).then(() => loadParts())
         })
       })
   }
@@ -115,7 +122,7 @@ const Parts = (props) => {
             Всего: {parts.length} записей
           </div>
         </div>
-        <TableView
+        {/* <TableViewOld
           data={parts.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
               return true
@@ -128,6 +135,22 @@ const Parts = (props) => {
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
           loadData={loadParts}
+        /> */}
+        <TableView
+          data={parts.filter((item) => {
+            if (item.color === 'completed' && curPage === 'Завершено') {
+              return true
+            }
+            if (curPage === 'Активные' && item.color !== 'completed') {
+              return true
+            }
+          })}
+          isLoading={isLoading}
+          searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
+          deleteItem={deleteItem}
+          loadData={loadParts}
+          type="parts"
         />
       </div>
     </div>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import './PressForm.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
-import TableView from '../TableView/TableView.jsx'
+import TableViewOld from '../TableView/TableView.jsx'
+import TableView from '../RiggingComponents/TableView/TableView.jsx'
 import {
   getPressForm,
   getPressFormById,
@@ -10,6 +11,12 @@ import {
   deletePressForm,
 } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import {
+  getStampsByStatus,
+  getStampById,
+  deletePartsFromStamp,
+  deleteStamp,
+} from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 
 const PressForm = (props) => {
   const [pressForm, setPressForms] = useState([])
@@ -21,8 +28,8 @@ const PressForm = (props) => {
   useEffect(() => {
     document.title = 'Пресс-формы'
     const abortController = new AbortController()
-    loadPressForm(abortController.signal)
-    // loadData(abortController.signal)
+    // loadPressForm(abortController.signal)
+    loadData(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
@@ -42,12 +49,12 @@ const PressForm = (props) => {
 
   const loadData = (signal) => {
     setIsLoading(true)
-    getStamp(signal)
+    getStampsByStatus('pressForm', signal)
       .then((res) => res.json())
       .then((res) => {
         setIsLoaded(true)
         console.log(res)
-        setStamps(res)
+        setPressForms(res)
         setIsLoading(false)
       })
       .catch((error) => {
@@ -58,14 +65,14 @@ const PressForm = (props) => {
 
   const deleteItem = (event) => {
     const id = event.target.dataset.id
-    getPressFormById(id)
+    getStampById(id)
       .then((res) => res.json())
       .then((res) => {
         const parts = res.pressParts.map((item) => {
-          return deletePartsFromPressForm(item.id)
+          return deletePartsFromStamp(item.id)
         })
         Promise.all(parts).then(() => {
-          deletePressForm(id).then(() => loadPressForm())
+          deleteStamp(id).then(() => loadPressForm())
         })
       })
   }
@@ -113,7 +120,7 @@ const PressForm = (props) => {
             Всего: {pressForm.length} записей
           </div>
         </div>
-        <TableView
+        {/* <TableViewOld
           data={pressForm.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
               return true
@@ -126,6 +133,22 @@ const PressForm = (props) => {
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
           loadData={loadPressForm}
+        /> */}
+        <TableView
+          data={pressForm.filter((item) => {
+            if (item.color === 'completed' && curPage === 'Завершено') {
+              return true
+            }
+            if (curPage === 'Активные' && item.color !== 'completed') {
+              return true
+            }
+          })}
+          searchQuery={searchQuery}
+          isLoading={isLoading}
+          userHasAccess={props.userHasAccess}
+          deleteItem={deleteItem}
+          loadData={loadPressForm}
+          type="pressForm"
         />
       </div>
     </div>

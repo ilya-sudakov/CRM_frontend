@@ -10,11 +10,13 @@ import {
   deleteStamp,
   addStamp,
   addPartsToStamp,
+  getStampsByStatus,
 } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
 import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
 import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
+import Button from '../../../../../utils/Form/Button/Button.jsx'
 
 const Stamp = (props) => {
   const [stamps, setStamps] = useState([])
@@ -34,7 +36,8 @@ const Stamp = (props) => {
 
   const loadStamps = (signal) => {
     setIsLoading(true)
-    getStamp(signal)
+    getStampsByStatus('stamp', signal)
+      // getStamp(signal)
       .then((res) => res.json())
       .then((res) => {
         setIsLoaded(true)
@@ -62,8 +65,8 @@ const Stamp = (props) => {
       })
   }
 
-  const handleCopyDataToStamp = (event) => {
-    event.preventDefault()
+  const handleCopyDataToStamp = () => {
+    setIsLoading(true)
     getPressForm()
       .then((res) => res.json())
       .then((res) => {
@@ -75,7 +78,7 @@ const Stamp = (props) => {
               lastEdited: item.lastEdited,
               name: item.name,
               number: item.number,
-              type: 'pressForm',
+              status: 'pressForm',
             })
               .then((res) => res.json())
               .then((newId) =>
@@ -111,7 +114,7 @@ const Stamp = (props) => {
               lastEdited: item.lastEdited,
               name: item.name,
               number: item.number,
-              type: 'machine',
+              status: 'machine',
             })
               .then((res) => res.json())
               .then((newId) =>
@@ -147,7 +150,7 @@ const Stamp = (props) => {
               lastEdited: item.lastEdited,
               name: item.name,
               number: item.number,
-              type: 'parts',
+              status: 'parts',
             })
               .then((res) => res.json())
               .then((newId) =>
@@ -171,6 +174,14 @@ const Stamp = (props) => {
               ),
           ),
         )
+      })
+      .then(() => {
+        setIsLoading(false)
+        loadStamps()
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
       })
   }
 
@@ -213,14 +224,15 @@ const Stamp = (props) => {
           </div>
         </div>
         <div className="main-window__info-panel">
-          {/* {props.userHasAccess(['ROLE_ADMIN']) && (
-            <button
+          {props.userHasAccess(['ROLE_ADMIN']) && (
+            <Button
+              inverted
+              isLoading={isLoading}
+              text="Скопировать все сюда"
               className="main-window__button main-window__button--inverted"
               onClick={handleCopyDataToStamp}
-            >
-              Скопировать все сюда
-            </button>
-          )} */}
+            />
+          )}
           <div className="main-window__amount_table">
             Всего: {stamps.length} записей
           </div>
@@ -229,7 +241,8 @@ const Stamp = (props) => {
           data={stamps.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
               return true
-            } else if (curPage === 'Активные' && item.color !== 'completed') {
+            }
+            if (curPage === 'Активные' && item.color !== 'completed') {
               return true
             }
           })}

@@ -6,7 +6,7 @@ import deleteIcon from '../../../../../../../../../../assets/tableview/delete.sv
 import './TableView.scss'
 import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx'
-import { rigStatuses } from '../rigsVariables'
+import { rigStatuses, rigTypes } from '../rigsVariables'
 import {
   editStampColor,
   editStampPartColor,
@@ -170,14 +170,14 @@ const TableView = (props) => {
                 </span>
                 <div className="main-window__actions">
                   <Link
-                    to={`/dispatcher/rigging/${props.type}/view/${stamp.id}`}
+                    to={`${rigTypes[props.type].redirectURL}/view/${stamp.id}`}
                     className="main-window__action"
                     title="Просмотр"
                   >
                     <img className="main-window__img" src={viewIcon} alt="" />
                   </Link>
                   <Link
-                    to={`/dispatcher/rigging/${props.type}/edit/${stamp.id}`}
+                    to={`${rigTypes[props.type].redirectURL}/edit/${stamp.id}`}
                     className="main-window__action"
                     title="Редактирование"
                   >
@@ -339,7 +339,9 @@ const TableView = (props) => {
                         </span>
                         <div className="main-window__actions">
                           <Link
-                            to={`/dispatcher/rigging/${props.type}/edit-part/${stamp.id}/${part.id}`}
+                            to={`${
+                              rigTypes[props.type].redirectURL
+                            }/edit-part/${stamp.id}/${part.id}`}
                             className="main-window__action"
                             title="Редактировать"
                           >

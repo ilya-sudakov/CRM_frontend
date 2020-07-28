@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import './Machine.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
-import TableView from '../TableView/TableView.jsx'
+import TableViewOld from '../TableView/TableView.jsx'
+import TableView from '../RiggingComponents/TableView/TableView.jsx'
 import {
   getMachine,
   getMachineById,
@@ -10,6 +11,12 @@ import {
   deleteMachine,
 } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import {
+  getStampById,
+  deletePartsFromStamp,
+  deleteStamp,
+  getStampsByStatus,
+} from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 
 const Machine = (props) => {
   const [machines, setMachines] = useState([])
@@ -21,8 +28,8 @@ const Machine = (props) => {
   useEffect(() => {
     const abortController = new AbortController()
     document.title = 'Станки'
-    loadMachines()
-    // loadData(abortController.signal)
+    // loadMachines()
+    loadData(abortController.signal)
   }, [])
 
   const loadMachines = () => {
@@ -39,12 +46,12 @@ const Machine = (props) => {
 
   const loadData = (signal) => {
     setIsLoading(true)
-    getStamp(signal)
+    getStampsByStatus('machine', signal)
       .then((res) => res.json())
       .then((res) => {
         setIsLoaded(true)
         console.log(res)
-        setStamps(res)
+        setMachines(res)
         setIsLoading(false)
       })
       .catch((error) => {
@@ -55,14 +62,14 @@ const Machine = (props) => {
 
   const deleteItem = (event) => {
     const id = event.target.dataset.id
-    getMachineById(id)
+    getStampById(id)
       .then((res) => res.json())
       .then((res) => {
         const parts = res.benchParts.map((item) => {
-          return deletePartsFromMachine(item.id)
+          return deletePartsFromStamp(item.id)
         })
         Promise.all(parts).then(() => {
-          deleteMachine(id).then(() => loadMachines())
+          deleteStamp(id).then(() => loadMachines())
         })
       })
   }
@@ -110,7 +117,7 @@ const Machine = (props) => {
             Всего: {machines.length} записей
           </div>
         </div>
-        <TableView
+        {/* <TableViewOld
           data={machines.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
               return true
@@ -123,6 +130,22 @@ const Machine = (props) => {
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
           loadData={loadMachines}
+        /> */}
+        <TableView
+          data={machines.filter((item) => {
+            if (item.color === 'completed' && curPage === 'Завершено') {
+              return true
+            }
+            if (curPage === 'Активные' && item.color !== 'completed') {
+              return true
+            }
+          })}
+          isLoading={isLoading}
+          searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
+          deleteItem={deleteItem}
+          loadData={loadMachines}
+          type="machine"
         />
       </div>
     </div>

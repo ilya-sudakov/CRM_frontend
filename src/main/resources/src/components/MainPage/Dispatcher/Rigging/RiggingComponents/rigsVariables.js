@@ -3,6 +3,7 @@ export const rigTypes = {
     name: 'штамп',
     redirectURL: '/dispatcher/rigging/stamp',
     type: 'stamp',
+    // type: null,
     title: 'Штамп',
   },
   machine: {
