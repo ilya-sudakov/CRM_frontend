@@ -147,7 +147,7 @@ const Parts = (props) => {
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
-          loadData={loadParts}
+          loadData={loadData}
           type="parts"
         />
       </div>

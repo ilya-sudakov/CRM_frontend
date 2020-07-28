@@ -55,6 +55,7 @@ const TableView = (props) => {
   }
 
   useEffect(() => {
+    // console.log(props.data);
     let temp = []
     props.data.map((element, index) =>
       temp.push({
@@ -155,7 +156,7 @@ const TableView = (props) => {
                     className="main-window__status_select"
                     value={stamp.color}
                     onChange={(event) => {
-                      editStampColor(
+                      return editStampColor(
                         {
                           color: event.target.value,
                         },
@@ -285,14 +286,14 @@ const TableView = (props) => {
                           }
                         >
                           <div className="main-window__mobile-text">
-                            Статус заявки:
+                            Статус:
                           </div>
                           <select
                             id={part.id}
                             className="main-window__status_select"
                             value={part.color}
                             onChange={(event) => {
-                              editStampPartColor(
+                              return editStampPartColor(
                                 {
                                   color: event.target.value,
                                 },

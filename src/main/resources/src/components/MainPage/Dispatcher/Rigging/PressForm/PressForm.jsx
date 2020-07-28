@@ -145,7 +145,7 @@ const PressForm = (props) => {
           isLoading={isLoading}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
-          loadData={loadPressForm}
+          loadData={loadData}
           type="pressForm"
         />
       </div>
