@@ -62,7 +62,7 @@ const EditPartInRigging = (props) => {
         },
         partId,
       )
-        .then(() => props.history.push(rigTypes[type]).redirectURL)
+        .then(() => props.history.push(rigTypes[type].redirectURL))
         .catch((error) => {
           setIsLoading(false)
           alert('Ошибка при добавлении записи')
@@ -249,7 +249,8 @@ const EditPartInRigging = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault()
               const type = props.location.pathname.includes('/stamp')
                 ? 'stamp'
                 : props.location.pathname.includes('/machine')

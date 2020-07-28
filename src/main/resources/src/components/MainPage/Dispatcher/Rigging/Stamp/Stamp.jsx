@@ -11,6 +11,7 @@ import {
   addStamp,
   addPartsToStamp,
   getStampsByStatus,
+  editStamp,
 } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
@@ -65,7 +66,16 @@ const Stamp = (props) => {
 
   const handleCopyDataToStamp = () => {
     setIsLoading(true)
-    getPressForm()
+    return getStamp()
+      .then((res) => res.json())
+      .then((res) =>
+        Promise.all(
+          res.map((stamp) =>
+            editStamp({ ...stamp, status: 'stamp' }, stamp.id),
+          ),
+        ),
+      )
+      .then(() => getPressForm())
       .then((res) => res.json())
       .then((res) => {
         return Promise.all(
