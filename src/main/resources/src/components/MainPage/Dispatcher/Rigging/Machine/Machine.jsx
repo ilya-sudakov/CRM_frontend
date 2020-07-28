@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import './Machine.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
-import TableViewOld from '../TableView/TableView.jsx'
 import TableView from '../RiggingComponents/TableView/TableView.jsx'
-import {
-  getMachine,
-  getMachineById,
-  deletePartsFromMachine,
-  deleteMachine,
-} from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import {
   getStampById,
@@ -31,18 +24,6 @@ const Machine = (props) => {
     // loadMachines()
     loadData(abortController.signal)
   }, [])
-
-  const loadMachines = () => {
-    getMachine()
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res);
-        setMachines(res)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
 
   const loadData = (signal) => {
     setIsLoading(true)
@@ -115,20 +96,6 @@ const Machine = (props) => {
             Всего: {machines.length} записей
           </div>
         </div>
-        {/* <TableViewOld
-          data={machines.filter((item) => {
-            if (item.color === 'completed' && curPage === 'Завершено') {
-              return true
-            } else if (curPage === 'Активные' && item.color !== 'completed') {
-              return true
-            }
-          })}
-          isLoading={isLoading}
-          searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
-          loadData={loadMachines}
-        /> */}
         <TableView
           data={machines.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {

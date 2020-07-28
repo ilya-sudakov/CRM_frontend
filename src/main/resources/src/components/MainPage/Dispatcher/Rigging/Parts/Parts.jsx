@@ -2,16 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './Parts.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
-// import TableView from './TableView/TableView.jsx';
-// import { getParts, deletePart } from '../../../../../utils/RequestsAPI/Parts.jsx';
-import TableViewOld from '../TableView/TableView.jsx'
 import TableView from '../RiggingComponents/TableView/TableView.jsx'
-import {
-  getPart,
-  deletePart,
-  deletePartsFromPart,
-  getPartById,
-} from '../../../../../utils/RequestsAPI/Rigging/Parts.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import {
   getStampById,
@@ -36,18 +27,6 @@ const Parts = (props) => {
       abortController.abort()
     }
   }, [])
-
-  const loadParts = (signal) => {
-    getPart(signal)
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res);
-        setParts(res)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
 
   const loadData = (signal) => {
     setIsLoading(true)
@@ -120,20 +99,6 @@ const Parts = (props) => {
             Всего: {parts.length} записей
           </div>
         </div>
-        {/* <TableViewOld
-          data={parts.filter((item) => {
-            if (item.color === 'completed' && curPage === 'Завершено') {
-              return true
-            } else if (curPage === 'Активные' && item.color !== 'completed') {
-              return true
-            }
-          })}
-          isLoading={isLoading}
-          searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
-          loadData={loadParts}
-        /> */}
         <TableView
           data={parts.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
