@@ -8,15 +8,21 @@
   .select-category__input {
     display: flex;
     width: 100%;
-    flex-direction: row;
-    align-items: center;
+    // flex-direction: row;
+    // align-items: center;
     justify-content: space-between;
+    //column direction
+    flex-direction: column;
+    align-items: flex-start;
     .select-category__input_name {
       color: lighten($primary-text-color, 40%);
       flex: 0 1 20%;
+      width: 100%;
+      margin-bottom: 5px;
     }
     .select-category__input_field {
       width: calc(90% - 20px);
+      width: 100%;
     }
   }
 

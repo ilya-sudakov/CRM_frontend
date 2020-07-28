@@ -4,9 +4,14 @@
   width: 100%;
   margin-bottom: 10px;
 
+  .main-window {
+    width: 100%;
+  }
+
   .main-window__list {
     // background-color: #eeeeee;
     border-radius: 5px;
+    width: 100%;
 
     .main-window__list-item {
       transition: 200ms ease-in-out;

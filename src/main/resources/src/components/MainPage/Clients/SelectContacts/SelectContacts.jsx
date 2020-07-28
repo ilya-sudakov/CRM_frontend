@@ -10,7 +10,7 @@ const SelectContacts = (props) => {
       email: '',
       position: '',
       phoneNumber: '',
-      isMinimized: true,
+      isMinimized: false,
     },
   ])
   const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)

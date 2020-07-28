@@ -6,9 +6,11 @@ const Contracts = lazy(() => import('./Contracts/Contracts.jsx'))
 
 const Requests = lazy(() => import('./Requests/Requests.jsx'))
 
-const NewRequest = lazy(() => import('./Requests/NewRequest/NewRequest.jsx'))
-
 const GeneralPage = lazy(() => import('./GeneralPage/GeneralPage.jsx'))
+
+const RiggingList = lazy(() =>
+  import('./Dispatcher/Rigging/RiggingList/RiggingList.jsx'),
+)
 
 const AdminWorkspace = lazy(() =>
   import('./GeneralPage/AdminWorkspace/AdminWorkspace.jsx'),
@@ -46,21 +48,9 @@ const ClientCategories = lazy(() =>
   import('./Clients/ClientCategories/ClientCategories.jsx'),
 )
 
-// const NewClientCategories = lazy(
-//     () => import('./Clients/ClientCategories/NewClientCategories/NewClientCategories.jsx')
-// )
-
-// const EditClientCategories = lazy(
-//     () => import('./Clients/ClientCategories/EditClientCategories/EditClientCategories.jsx')
-// )
-
 const Products = lazy(() => import('./Products/Products.jsx'))
 
 const NewProduct = lazy(() => import('./Products/NewProduct/NewProduct.jsx'))
-
-const EditRequest = lazy(() => import('./Requests/EditRequest/EditRequest.jsx'))
-
-const ViewRequest = lazy(() => import('./Requests/ViewRequest/ViewRequest.jsx'))
 
 const Users = lazy(() => import('./Profile/Users/Users.jsx'))
 
@@ -75,18 +65,6 @@ const ViewProduct = lazy(() => import('./Products/ViewProduct/ViewProduct.jsx'))
 const EditProduct = lazy(() => import('./Products/EditProduct/EditProduct.jsx'))
 
 const WorkshopLEMZ = lazy(() => import('./WorkshopLEMZ/WorkshopLEMZ.jsx'))
-
-const NewRequestLEMZ = lazy(() =>
-  import('./WorkshopLEMZ/NewRequestLEMZ/NewRequestLEMZ.jsx'),
-)
-
-const ViewRequestLEMZ = lazy(() =>
-  import('./WorkshopLEMZ/ViewRequestLEMZ/ViewRequestLEMZ.jsx'),
-)
-
-const EditRequestLEMZ = lazy(() =>
-  import('./WorkshopLEMZ/EditRequestLEMZ/EditRequestLEMZ.jsx'),
-)
 
 const WorkshopOrdersLEMZ = lazy(() =>
   import('./LEMZ/WorkshopOrders/WorkshopOrders.jsx'),
@@ -150,61 +128,13 @@ const EditTask = lazy(() =>
 
 const Stamp = lazy(() => import('./Dispatcher/Rigging/Stamp/Stamp.jsx'))
 
-const NewStamp = lazy(() =>
-  import('./Dispatcher/Rigging/Stamp/NewStamp/NewStamp.jsx'),
-)
-
-const ViewStamp = lazy(() =>
-  import('./Dispatcher/Rigging/Stamp/ViewStamp/ViewStamp.jsx'),
-)
-
-const EditStamp = lazy(() =>
-  import('./Dispatcher/Rigging/Stamp/EditStamp/EditStamp.jsx'),
-)
-
 const Machine = lazy(() => import('./Dispatcher/Rigging/Machine/Machine.jsx'))
-
-const NewMachine = lazy(() =>
-  import('./Dispatcher/Rigging/Machine/NewMachine/NewMachine.jsx'),
-)
-
-const ViewMachine = lazy(() =>
-  import('./Dispatcher/Rigging/Machine/ViewMachine/ViewMachine.jsx'),
-)
-
-const EditMachine = lazy(() =>
-  import('./Dispatcher/Rigging/Machine/EditMachine/EditMachine.jsx'),
-)
 
 const PressForm = lazy(() =>
   import('./Dispatcher/Rigging/PressForm/PressForm.jsx'),
 )
 
-const NewPressForm = lazy(() =>
-  import('./Dispatcher/Rigging/PressForm/NewPressForm/NewPressForm.jsx'),
-)
-
-const ViewPressForm = lazy(() =>
-  import('./Dispatcher/Rigging/PressForm/ViewPressForm/ViewPressForm.jsx'),
-)
-
-const EditPressForm = lazy(() =>
-  import('./Dispatcher/Rigging/PressForm/EditPressForm/EditPressForm.jsx'),
-)
-
 const Parts = lazy(() => import('./Dispatcher/Rigging/Parts/Parts.jsx'))
-
-const NewPart = lazy(() =>
-  import('./Dispatcher/Rigging/Parts/NewPart/NewPart.jsx'),
-)
-
-const EditPart = lazy(() =>
-  import('./Dispatcher/Rigging/Parts/EditPart/EditPart.jsx'),
-)
-
-const ViewPart = lazy(() =>
-  import('./Dispatcher/Rigging/Parts/ViewPart/ViewPart.jsx'),
-)
 
 const Employees = lazy(() => import('./Dispatcher/Employees/Employees.jsx'))
 
@@ -220,10 +150,6 @@ const ViewEmployee = lazy(() =>
   import('./Dispatcher/Employees/ViewEmployee/ViewEmployee.jsx'),
 )
 
-const EditPartInRigging = lazy(() =>
-  import('./Dispatcher/Rigging/EditPartInRigging/EditPartInRigging.jsx'),
-)
-
 const Work = lazy(() => import('./Work/Work.jsx'))
 
 const NewWork = lazy(() => import('./Work/NewWork/NewWork.jsx'))
@@ -232,18 +158,6 @@ const EditWork = lazy(() => import('./Work/EditWork/EditWork.jsx'))
 
 const WorkshopLepsari = lazy(() =>
   import('./WorkshopLepsari/WorkshopLepsari.jsx'),
-)
-
-const NewRequestLepsari = lazy(() =>
-  import('./WorkshopLepsari/NewRequestLepsari/NewRequestLepsari.jsx'),
-)
-
-const ViewRequestLepsari = lazy(() =>
-  import('./WorkshopLepsari/ViewRequestLepsari/ViewRequestLepsari.jsx'),
-)
-
-const EditRequestLepsari = lazy(() =>
-  import('./WorkshopLepsari/EditRequestLepsari/EditRequestLepsari.jsx'),
 )
 
 const Storage = lazy(() => import('./Storage/Storage.jsx'))
@@ -276,14 +190,8 @@ const LEMZ = lazy(() => import('./LEMZ/LEMZ.jsx'))
 
 const Lepsari = lazy(() => import('./Lepsari/Lepsari.jsx'))
 
-const PriceList = lazy(() => import('./PriceList/PriceList.jsx'))
-
 const NewPriceList = lazy(() =>
   import('./PriceList/NewPriceList/NewPriceList.jsx'),
-)
-
-const ViewPriceList = lazy(() =>
-  import('./PriceList/ViewPriceList/ViewPriceList.jsx'),
 )
 
 const FeedbackPage = lazy(() => import('./FeedbackPage/FeedbackPage.jsx'))
@@ -322,9 +230,6 @@ export {
   ClientCategories,
   Contracts,
   Requests,
-  NewRequest,
-  EditRequest,
-  ViewRequest,
   GeneralPage,
   AdminWorkspace,
   Notifications,
@@ -343,9 +248,6 @@ export {
   NewUser,
   LoginHistory,
   WorkshopLEMZ,
-  NewRequestLEMZ,
-  ViewRequestLEMZ,
-  EditRequestLEMZ,
   Storage,
   NewStorage,
   EditStorage,
@@ -365,41 +267,23 @@ export {
   NewTask,
   EditTask,
   Parts,
-  NewPart,
-  EditPart,
-  ViewPart,
   Employees,
   NewEmployee,
   EditEmployee,
   ViewEmployee,
   Stamp,
-  NewStamp,
-  ViewStamp,
-  EditStamp,
   Machine,
-  NewMachine,
-  ViewMachine,
-  EditMachine,
   PressForm,
-  NewPressForm,
-  ViewPressForm,
-  EditPressForm,
-  EditPartInRigging,
   Work,
   NewWork,
   EditWork,
   WorkshopLepsari,
-  NewRequestLepsari,
-  ViewRequestLepsari,
-  EditRequestLepsari,
   StorageLepsari,
   NewStorageLepsari,
   EditStorageLepsari,
   LEMZ,
   Lepsari,
-  PriceList,
   NewPriceList,
-  ViewPriceList,
   FeedbackPage,
   NewFeedback,
   ViewFeedback,
@@ -409,4 +293,5 @@ export {
   NewPackaging,
   EditPackaging,
   ReportTablePage,
+  RiggingList,
 }

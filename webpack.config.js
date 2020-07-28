@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
+const webpack = require('webpack')
 // const CopyPlugin = require('copy-webpack-plugin')
 // WriteFilePlugin  needed only for webpack 3-4 and webpack dev-server
 // const WriteFilePlugin = require('write-file-webpack-plugin')
@@ -76,6 +77,7 @@ module.exports = {
     // index: "index.html"
   },
   plugins: [
+    new webpack.IgnorePlugin(/cptable/),
     new MiniCssExtractPlugin({
       filename: 'style.css',
     }),
@@ -102,4 +104,8 @@ module.exports = {
     //   },
     // ]),
   ],
+  node: {
+    fs: 'empty',
+  },
+  externals: [{ './cptable': 'var cptable', './jszip': 'jszip' }],
 }

@@ -12,3 +12,25 @@ export const months = [
   'Ноябрь',
   'Декабрь',
 ]
+
+export const days = [
+  'Воскресенье',
+  'Понедельник',
+  'Вторник',
+  'Среда',
+  'Четверг',
+  'Пятница',
+  'Суббота',
+]
+
+export const customSelectStyles = {
+  container: (provided, state) => ({
+    ...provided,
+    width: '100%',
+    borderColor: '1px solid #00a3a2',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    borderColor: '1px solid #00a3a2',
+  }),
+}

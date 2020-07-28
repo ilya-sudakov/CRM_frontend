@@ -64,7 +64,8 @@ const NewClientCategory = (props) => {
     setIsLoading(true)
     console.log(formInputs)
     formIsValid() &&
-      addClientCategory(formInputs)
+      props
+        .addCategory(formInputs)
         .then(() => {
           setIsLoading(false)
           props.onSubmit()

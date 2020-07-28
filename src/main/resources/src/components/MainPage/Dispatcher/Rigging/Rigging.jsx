@@ -1,23 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react'
-import {
-  Stamp,
-  Parts,
-  NewPart,
-  EditPart,
-  Machine,
-  PressForm,
-  NewStamp,
-  ViewStamp,
-  EditStamp,
-  NewMachine,
-  NewPressForm,
-  ViewMachine,
-  EditMachine,
-  ViewPressForm,
-  EditPressForm,
-  EditPartInRigging,
-  ViewPart,
-} from '../../lazyImports.jsx'
+import { Stamp, Parts, Machine, PressForm } from '../../lazyImports.jsx'
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx'
 import { Route, Switch, Link } from 'react-router-dom'
 import plusImg from '../../../../../../../../assets/sidemenu/plus.png'
@@ -25,6 +7,10 @@ import './Rigging.scss'
 import '../../../../utils/MainWindow/MainWindow.scss'
 import PageNotFound from '../../PageNotFound/PageNotFound.jsx'
 import PageLoading from '../../PageLoading/PageLoading.jsx'
+import NewRig from './RiggingComponents/Forms/NewRig/NewRig.jsx'
+import ViewRig from './RiggingComponents/Forms/ViewRig/ViewRig.jsx'
+import EditRig from './RiggingComponents/Forms/EditRig/EditRig.jsx'
+import EditPartInRigging from './RiggingComponents/Forms/EditPartInRigging/EditPartInRigging.jsx'
 
 const Rigging = (props) => {
   return (
@@ -125,18 +111,21 @@ const Rigging = (props) => {
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/stamp/new"
-                component={NewStamp}
+                component={NewRig}
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
                 ]}
+                type="stamp"
               />
               <PrivateRoute
                 path="/dispatcher/rigging/stamp/view/"
-                component={ViewStamp}
+                // component={ViewStamp}
+                component={ViewRig}
                 userHasAccess={props.userHasAccess}
+                type="stamp"
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -146,7 +135,9 @@ const Rigging = (props) => {
               />
               <PrivateRoute
                 path="/dispatcher/rigging/stamp/edit/"
-                component={EditStamp}
+                // component={EditStamp}
+                component={EditRig}
+                type="stamp"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -170,7 +161,9 @@ const Rigging = (props) => {
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/machine/new"
-                component={NewMachine}
+                // component={NewMachine}
+                component={NewRig}
+                type="machine"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -180,7 +173,9 @@ const Rigging = (props) => {
               />
               <PrivateRoute
                 path="/dispatcher/rigging/machine/view/"
-                component={ViewMachine}
+                // component={ViewMachine}
+                component={ViewRig}
+                type="machine"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -191,7 +186,9 @@ const Rigging = (props) => {
               />
               <PrivateRoute
                 path="/dispatcher/rigging/machine/edit/"
-                component={EditMachine}
+                // component={EditMachine}
+                component={EditRig}
+                type="machine"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -215,7 +212,9 @@ const Rigging = (props) => {
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/press-form/new"
-                component={NewPressForm}
+                // component={NewPressForm}
+                component={NewRig}
+                type="pressForm"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -225,7 +224,9 @@ const Rigging = (props) => {
               />
               <PrivateRoute
                 path="/dispatcher/rigging/press-form/view/"
-                component={ViewPressForm}
+                // component={ViewPressForm}
+                component={ViewRig}
+                type="pressForm"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -236,7 +237,9 @@ const Rigging = (props) => {
               />
               <PrivateRoute
                 path="/dispatcher/rigging/press-form/edit/"
-                component={EditPressForm}
+                // component={EditPressForm}
+                component={EditRig}
+                type="pressForm"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -260,18 +263,22 @@ const Rigging = (props) => {
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/parts/new"
-                component={NewPart}
+                // component={NewPart}
+                component={NewRig}
+                type="parts"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
                   'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP'
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
                 path="/dispatcher/rigging/parts/edit/"
-                component={EditPart}
+                // component={EditPart}
+                component={EditRig}
+                type="parts"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -282,7 +289,9 @@ const Rigging = (props) => {
               />
               <PrivateRoute
                 path="/dispatcher/rigging/parts/view/"
-                component={ViewPart}
+                // component={ViewPart}
+                component={ViewRig}
+                type="parts"
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',

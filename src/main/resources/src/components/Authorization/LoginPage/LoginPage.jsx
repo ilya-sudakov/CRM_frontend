@@ -9,6 +9,7 @@ import profileSVG from '../../../../../../../assets/header/profile1.svg'
 // import companyLogo from '../../../../../../../assets/priceList/osfix_logo.png'
 import PasswordIcon from '../../../../../../../assets/loginPage/password.png'
 import eyeIcon from '../../../../../../../assets/loginPage/eye.png'
+// import newCompanyIcon from '../../../../../../../assets/loginPage/login__new_logo.png'
 import newCompanyIcon from '../../../../../../../assets/loginPage/login__new_logo.png'
 import ErrorMessage from '../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import exitSVG from '../../../../../../../assets/header/exit.svg'
@@ -68,24 +69,20 @@ const LoginPage = (props) => {
     <div className="authorization">
       {!props.isAuthorized ? (
         <React.Fragment>
-          <div className="authorization__title">
-            {/* <img className="authorization__img" src={profileSVG} alt="" /> */}
-            <img
-              className="authorization__img authorization__img--logo"
-              src={newCompanyIcon}
-              alt=""
-            />
-            {/* <span>Ц.Р.М.</span> */}
-          </div>
           <div className="authorization__panel">
+            <div className="authorization__title">
+              <img
+                className="authorization__img authorization__img--logo"
+                src={newCompanyIcon}
+                alt=""
+              />
+              {/* <div className="authorization__title-text">Вход в аккаунт</div> */}
+            </div>
             <ErrorMessage
               message="Ошибка при авторизации"
               showError={showError}
               setShowError={setShowError}
             />
-            {/* <div className="authorization__field_name">
-                            Email
-                        </div> */}
             <div className="authorization__field_input">
               <img className="authorization__img" src={profileSVG} alt="" />
               <input
@@ -157,16 +154,15 @@ const LoginPage = (props) => {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <div className="authorization__title">
-            {/* <img className="authorization__img" src={profileSVG} alt="" /> */}
-            <img
-              className="authorization__img authorization__img--logo"
-              src={newCompanyIcon}
-              alt=""
-            />
-            {/* <span>Выход из аккаунта</span> */}
-          </div>
           <div className="authorization__panel">
+            <div className="authorization__title">
+              <img
+                className="authorization__img authorization__img--logo"
+                src={newCompanyIcon}
+                alt=""
+              />
+              {/* <div className="authorization__title-text">Выход из аккаунта</div> */}
+            </div>
             <button className="authorization__submit" onClick={handleSignOut}>
               <span>Выйти</span>
               <img className="authorization__img" src={exitSVG} alt="" />

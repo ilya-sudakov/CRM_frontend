@@ -1,0 +1,60 @@
+@import "../../../../../variables.scss";
+
+.rigging-list {
+    --cuttingDimensions: #ffe500;
+    --milling: #e5ac00;
+    --harding: #a1ac00;
+    --grinding: #a0e22d;
+    --erosion: #00ff73;
+    .main-window {
+        &__status-panel {
+            margin-right: 0;
+
+            .main-window__list-item--cuttingDimensions::before {
+                background-color: var(--cuttingDimensions);
+            }
+
+            .main-window__list-item--milling::before {
+                background-color: var(--milling);
+            }
+
+            .main-window__list-item--harding::before {
+                background-color: var(--harding);
+            }
+
+            .main-window__list-item--grinding::before {
+                background-color: var(--grinding);
+            }
+
+            .main-window__list-item--erosion::before {
+                background-color: var(--erosion);
+            }
+
+            .main-window__button {
+                padding: 15px 25px;
+                font-size: 120%;
+
+                &::before {
+                    width: 10px;
+                    height: 10px;
+                    top: calc(50% - 5px);
+                    border: 1px solid #bbbbbb;
+                    
+                    display: none;
+                }
+
+                &:not(:last-child) {
+                    margin-right: 35px !important;
+
+                    &::after {
+                        position: absolute;
+                        right: -40px;
+                        content: "";
+                        border: 15px solid transparent;
+                        border-left: 15px solid #bbbbbb;
+                    }
+                }
+            }
+        }
+    }
+}

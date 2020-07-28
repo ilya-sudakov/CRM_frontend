@@ -3,6 +3,7 @@ import './FeedbackPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import viewSVG from '../../../../../../../assets/tableview/view.svg'
+import unreadMessagesSVG from '../../../../../../../assets/chat/unread_messages__mail_icon.svg'
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
 import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { Link } from 'react-router-dom'
@@ -18,6 +19,7 @@ import {
   getMessagesByDiscussionId,
   deleteMessage,
 } from '../../../utils/RequestsAPI/Feedback/messages.js'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const FeedbackPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -73,8 +75,17 @@ const FeedbackPage = (props) => {
     <div className="feedback-page">
       <div className="main-window">
         <div className="main-window__title">Обратная связь</div>
+        <FloatingPlus
+          linkTo="/feedback/new"
+          visibility={[
+            'ROLE_ADMIN',
+            'ROLE_WORKSHOP',
+            'ROLE_DISPATCHER',
+            'ROLE_MANAGER',
+          ]}
+        />
         <SearchBar
-          title="Поиск по обсуждениям"
+          // title="Обратная связь"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
@@ -111,8 +122,8 @@ const FeedbackPage = (props) => {
         </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
-            <span>Обсуждения</span>
-            <div className="main-window__actions">Действие</div>
+            {/* <span>Обсуждения</span>
+            <div className="main-window__actions">Действие</div> */}
           </div>
           {isLoading && (
             <TableDataLoading
@@ -141,10 +152,10 @@ const FeedbackPage = (props) => {
             })
             .sort((a, b) => {
               if (a.date < b.date) {
-                return -1
+                return 1
               }
               if (a.date > b.date) {
-                return 1
+                return -1
               }
               return 0
             })
@@ -162,14 +173,18 @@ const FeedbackPage = (props) => {
                     }
                     to={'/feedback/view/' + item.id}
                   >
+                    <span
+                      className="feedback-page__avatar"
+                      data-username={
+                        item.author[0] + item.author[1] + item.author[2]
+                      }
+                    >
+                      {item.author[0] + item.author[1] + item.author[2]}
+                    </span>
                     <div className="main-window__list-col">
                       <span title={item.subject}>
                         <div className="main-window__mobile-text">Тема: </div>
                         {item.subject}
-                      </span>
-                      <span>
-                        <div className="main-window__mobile-text">Дата: </div>
-                        {formatDateStringWithTime(item.date)}
                       </span>
                       <span>
                         <div className="main-window__mobile-text">
@@ -177,22 +192,34 @@ const FeedbackPage = (props) => {
                         </div>
                         {item.author}
                       </span>
+                      <span>
+                        <div className="main-window__mobile-text">Дата: </div>
+                        {formatDateStringWithTime(item.date)}
+                      </span>
                       {item.isRead === false && (
-                        <div className="feedback-page__info-message">
-                          {/* <div className="main-window__mobile-text">
-                            Новые сообщения:{' '}
-                          </div> */}
-                          Непрочитанные сообщения
+                        <div
+                          className="feedback-page__info-message"
+                          title="Новые сообщения"
+                        >
+                          <div className="main-window__mobile-text">
+                            Новые сообщения
+                          </div>
+                          {/* Новые сообщения */}
+                          <img
+                            className="main-window__img"
+                            src={unreadMessagesSVG}
+                            alt=""
+                          />
                         </div>
                       )}
                     </div>
                     <div className="main-window__actions">
-                      <div
+                      {/* <div
                         className="main-window__action"
                         title="Просмотр чата"
                       >
                         <img className="main-window__img" src={viewSVG} />
-                      </div>
+                      </div> */}
                       {props.userHasAccess(['ROLE_ADMIN']) && (
                         <div
                           className="main-window__action"

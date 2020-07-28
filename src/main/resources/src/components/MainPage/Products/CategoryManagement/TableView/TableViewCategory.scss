@@ -11,4 +11,11 @@
       flex: 0 1 20%;
     }
   }
+  @media (max-width: 768px) {
+    & {
+      .main-window__actions {
+        display: none;
+      }
+    }
+  }
 }

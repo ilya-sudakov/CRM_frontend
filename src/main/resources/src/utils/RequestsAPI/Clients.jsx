@@ -41,7 +41,7 @@ export function getClientsByCategoryAndType(
   return request({
     url:
       process.env.API_BASE_URL +
-      '/api/v1/client/category_type/' +
+      '/api/v1/client/category_type/client/' +
       '?' +
       'page=' +
       (curPage - 1) +

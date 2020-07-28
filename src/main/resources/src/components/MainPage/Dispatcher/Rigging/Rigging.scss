@@ -133,16 +133,18 @@
       }
       .main-window__menu {
         width: calc(100% - 10px);
+        overflow-x: auto;
 
         .main-window__item {
-          flex-direction: column;
-          justify-content: space-between;
-          padding: 10px 20px;
-          width: 100%;
+          // flex-direction: column;
+          // justify-content: space-between;
+          // padding: 10px 20px;
+          // width: 100%;
+          white-space: nowrap;
 
           .main-window__addButton {
-            margin: 0;
-            margin-top: 5px;
+            // margin: 0;
+            // margin-top: 5px;
           }
         }
       }
@@ -161,7 +163,7 @@
     .main-window__header {
       .main-window__menu {
         .main-window__item {
-          padding: 10px 5px;
+          padding: 10px 25px;
         }
       }
     }

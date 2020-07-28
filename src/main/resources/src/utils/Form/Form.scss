@@ -27,8 +27,8 @@
     // width: 100%;
     width: calc(100% - 25px);
     // align-self: flex-end;
-    // background-color: $secondary-text-color;
-    background-color: rgba(250, 250, 250, 1);
+    background-color: $secondary-text-color;
+    // background-color: rgba(250, 250, 250, 1);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     margin-bottom: 10px;
@@ -117,7 +117,8 @@
     min-width: 300px;
     border-radius: 5px;
     // background-color: $primary-background-color;
-    background-color: rgba(250, 250, 250, 1);
+    // background-color: rgba(250, 250, 250, 1);
+    background-color: #ffffff;
     // width: calc(100% - 80px);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     // padding: 10px 25px;
@@ -129,7 +130,7 @@
     .main-form__fieldset {
       width: calc(100% - 0px);
       margin: 10px 0;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -169,21 +170,25 @@
     .main-form__item {
       width: calc(100% - 20px);
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      // transition: 200ms ease-in-out;
-      // transform-origin: 0 0;
 
-      // &:first-child {
-      //   margin-top: 15px;
-      // }
+      //row direction
+      // flex-direction: row;
+      // align-items: center;
+      // justify-content: space-between;
+      //column direction
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 20px;
+
       .main-form__input_name {
         color: lighten($primary-text-color, 40%);
         margin-bottom: 5px;
         padding-right: 10px;
         flex: 0 1 calc(20% - 10px);
+
+        //column direction
+        width: 100%;
       }
 
       .file-uploader {
@@ -195,7 +200,9 @@
         display: flex;
         justify-content: center;
         width: calc(90% - 20px);
-        // margin-bottom: 15px;
+
+        //column direction
+        width: 100%;
 
         .react-datepicker-wrapper {
           width: 100%;
@@ -245,6 +252,7 @@
       input[type="number"],
       textarea {
         border: 1px solid #bbbbbb;
+        // border: 1px solid #cccccc;
         width: calc(100% - 20px);
         max-width: calc(100% - 20px);
         min-width: calc(100% - 20px);
@@ -290,7 +298,8 @@
       }
 
       .select {
-        width: calc(90% - 20px);
+        //row direction
+        // width: calc(90% - 20px);
       }
     }
 
@@ -522,7 +531,11 @@
   }
 
   @media (min-width: 1024px) {
-    --form__max-width: 800px;
+    // --form__max-width: 850px;
+
+    //column direction
+    --form__max-width: 700px;
+
     .main-form__title {
       // align-self: flex-start;
       // margin-left: calc(400px);

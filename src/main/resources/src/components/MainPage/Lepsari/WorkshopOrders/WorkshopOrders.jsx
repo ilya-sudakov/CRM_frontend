@@ -5,13 +5,17 @@ import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
 import viewSVG from '../../../../../../../../assets/tableview/view.svg'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
-import { formatDateString, addSpaceDelimiter } from '../../../../utils/functions.jsx'
+import {
+  formatDateString,
+  addSpaceDelimiter,
+} from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import {
   getOrdersByName,
   deleteProductFromOrder,
   deleteOrder,
 } from '../../../../utils/RequestsAPI/Workshop/Orders.jsx'
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const WorkshopOrders = (props) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -86,9 +90,13 @@ const WorkshopOrders = (props) => {
     <div className="workshop-orders">
       <div className="main-window">
         <SearchBar
-          title="Поиск по заказам"
+          // title="Поиск по заказам"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
+        />
+        <FloatingPlus
+          linkTo="/lepsari/workshop-orders/new"
+          visibility={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEPSARI']}
         />
         <div className="main-window__info-panel">
           <div className="main-window__status-panel">
@@ -178,14 +186,6 @@ const WorkshopOrders = (props) => {
                       Дата создания:{' '}
                     </div>
                     {formatDateString(order.date)}
-                    {/* {
-                                        (new Date(order.deliverBy) < new Date() && order.status !== 'completed')
-                                            ? <div className="main-window__reminder">
-                                                <div>!</div>
-                                                <div>{formatDateString(order.deliverBy)}</div>
-                                            </div>
-                                            : formatDateString(order.deliverBy)
-                                    } */}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">Название: </div>
@@ -198,7 +198,10 @@ const WorkshopOrders = (props) => {
                         return (
                           <div className="workshop-orders__products">
                             <div>{product.name}</div>
-                            <div> ({addSpaceDelimiter(product.quantity)} шт.)</div>
+                            <div>
+                              {' '}
+                              ({addSpaceDelimiter(product.quantity)} шт.)
+                            </div>
                           </div>
                         )
                       })}

@@ -2,11 +2,13 @@
 
 .new-price-item {
   .new-price-item__checkbox-container {
-    width: 50%;
+    // width: 50%;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    margin-right: auto;
     .checkbox {
       margin-bottom: 10px;
     }
@@ -19,6 +21,10 @@
       min-height: 70px;
       color: $secondary-text-color;
       line-height: 70px;
+      margin-bottom: 0;
+    }
+
+    .main-form__fieldset {
       margin-bottom: 0;
     }
   }
@@ -35,7 +41,7 @@
     flex-direction: column;
   }
   .main-form__info-panel {
-    width: 50% !important;
+    width: 60% !important;
     & .main-form__button--inverted {
       color: #555555 !important;
     }
@@ -45,6 +51,7 @@
     border-radius: 5px;
     padding: 10px;
     font-size: 125%;
+    flex-direction: row !important;
     justify-content: flex-start !important;
     margin-bottom: 10px !important;
     & .main-form__input_name {
@@ -60,6 +67,13 @@
         min-width: 400px;
         margin-bottom: 10px;
       }
+    }
+  }
+
+  .main-form__item {
+    flex-direction: row !important;
+    .main-form__input_name {
+      width: fit-content !important;
     }
   }
   .main-form__item .main-form__input_field {
@@ -84,6 +98,19 @@
   }
   .main-form__buttons {
     margin-bottom: 15px;
+
+    &--vertical {
+      width: 100% !important;
+      margin-bottom: 0;
+
+      .main-form__item--header {
+        .main-form__input_name {
+          min-width: fit-content;
+          flex: 0 1 calc(30% - 30px);
+        }
+      }
+    }
+
     .checkbox {
       width: 50%;
     }
@@ -105,6 +132,16 @@
       .main-form__input_name {
         width: fit-content !important;
         margin-bottom: 10px;
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    & {
+      .main-form {
+        .main-form__form {
+          max-width: 900px;
+        }
       }
     }
   }

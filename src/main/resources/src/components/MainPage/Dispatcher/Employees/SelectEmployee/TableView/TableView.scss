@@ -25,10 +25,15 @@
   }
 
   @media (max-width: 768px) {
-    .main-window__list-item {
-      span {
-        &:nth-child(2) {
-          max-width: none;
+    & {
+      .main-window__list-item {
+        span {
+          &:nth-child(2) {
+            max-width: none;
+          }
+        }
+        .main-window__actions {
+          display: none;
         }
       }
     }

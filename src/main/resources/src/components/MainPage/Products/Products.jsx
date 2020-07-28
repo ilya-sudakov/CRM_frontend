@@ -18,6 +18,7 @@ import {
 import { deletePackagingFromProduct } from '../../../utils/RequestsAPI/Products/packaging.js'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Products = (props) => {
   const [products, setProducts] = useState([])
@@ -124,6 +125,10 @@ const Products = (props) => {
   return (
     <div className="products">
       <div className="main-window">
+        <FloatingPlus
+          linkTo="/products/new"
+          visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
+        />
         <div className="main-window__header">
           <div className="main-window__title">Продукция</div>
           {props.userHasAccess([
@@ -151,8 +156,12 @@ const Products = (props) => {
           title="Категории продукции"
           content={
             <React.Fragment>
+              <FloatingPlus
+                linkTo="/products/category/new"
+                visibility={['ROLE_ADMIN']}
+              />
               <SearchBar
-                title="Поиск по категориям"
+                // title="Поиск по категориям"
                 placeholder="Введите название категории для поиска..."
                 setSearchQuery={setSearchQueryCategory}
               />
@@ -164,15 +173,15 @@ const Products = (props) => {
               />
             </React.Fragment>
           }
-          headerButton={{
-            name: 'Создать категорию',
-            path: '/products/category/new',
-          }}
+          // headerButton={{
+          //   name: 'Создать категорию',
+          //   path: '/products/category/new',
+          // }}
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
         <SearchBar
-          title="Поиск продукции"
+          // title="Поиск продукции"
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />

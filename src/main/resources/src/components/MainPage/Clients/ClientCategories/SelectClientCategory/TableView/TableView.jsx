@@ -5,10 +5,10 @@ import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
 import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 
 const TableView = (props) => {
-  const [isLoading, setIsLoading] = useState(true)
+  // const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    props.data.length > 0 && setIsLoading(false)
+    // props.data.length > 0 && setIsLoading(false)
     props.setShowWindow && props.setShowWindow(false)
   }, [props.closeWindow, props.data])
 
@@ -21,7 +21,7 @@ const TableView = (props) => {
             <span>Видимость</span>
             <div className="main-window__actions">Действия</div>
           </div>
-          {isLoading && (
+          {props.isLoading && (
             <TableDataLoading
               className="main-window__list-item"
               minHeight="20px"

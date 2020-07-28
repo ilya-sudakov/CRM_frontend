@@ -22,8 +22,12 @@
   }
 
   &__content {
-    width: 80%;
-    height: 80%;
+    --padding-top-bottom: 7.5px;
+    --padding-left-right: 7.5px;
+    width: calc(80% - var(--padding-left-right) * 2);
+    height: calc(80% - var(--padding-left-right) * 2);
+    // height: 80%;
+    // width: 80%;
     background-color: #eeeeee;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     border-radius: 5px;
@@ -52,6 +56,7 @@
       // margin-bottom: 10px;
       padding-bottom: 0;
       position: relative;
+      min-height: 1.5rem;
       // flex-wrap: wrap;
 
       span {
@@ -122,9 +127,13 @@
 
   @media (max-width: 768px) {
     &__content {
-      padding: 5px;
-      width: calc(100% - 30px);
-      height: calc(100% - 50px);
+      --padding-top-bottom: 5px;
+      --padding-left-right: 5px;
+      padding: var(--padding-top-bottom) var(--padding-left-right);
+      // width: calc(100% - 30px);
+      // height: calc(100% - 50px);
+      width: calc(100% - var(--padding-left-right) * 2 - 10px);
+      height: calc(100% - var(--padding-top-bottom) * 2 - 10px);
 
       .main-window__list {
         width: calc(100% - 10px);
@@ -132,9 +141,11 @@
 
       .form-window__title {
         // flex-direction: column;
-        align-items: baseline;
+        // align-items: baseline;
         span {
-          margin-top: 40px;
+          width: 100%;
+          padding: 0 45px;
+          // margin-top: 40px;
         }
         .form-window__button {
           // position: relative;

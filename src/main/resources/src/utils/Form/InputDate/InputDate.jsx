@@ -27,6 +27,10 @@ const InputDate = (props) => {
             locale={ru}
             readOnly={props.readOnly}
             showMonthYearPicker={props.showMonthYearPicker}
+            selectsEnd={props.selectsEnd}
+            selectsStart={props.selectsStart}
+            startDate={props.startDate}
+            endDate={props.endDate}
           />
         </div>
       </div>

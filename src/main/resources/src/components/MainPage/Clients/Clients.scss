@@ -47,7 +47,7 @@
         width: fit-content;
         margin-right: 2.5px;
         font-size: 80%;
-        padding: 10px 50px;
+        padding: 10px 40px;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -66,6 +66,17 @@
         }
         &:last-child {
           margin: 0;
+        }
+
+        div {
+          position: relative;
+
+          .main-window__menu-item-amount {
+            position: absolute;
+            left: calc(100% + 5px);
+            top: -7.5px;
+            font-size: 85%;
+          }
         }
       }
     }
@@ -114,6 +125,10 @@
           flex: 0 1 10%;
           max-width: 100px;
         }
+      }
+      .main-window__actions {
+        // flex: ;
+        max-width: 225px;
       }
     }
   }
@@ -193,9 +208,12 @@
       .main-window__menu {
         width: calc(100% - 10px) !important;
 
+        overflow-x: auto;
+
         .main-window__item {
-          width: 100%;
-          padding: 10px 20px;
+          // width: 100%;
+          // padding: 10px 20px;
+          white-space: nowrap;
         }
       }
     }

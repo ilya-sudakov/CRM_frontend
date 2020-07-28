@@ -9,9 +9,6 @@ import PageLoading from '../PageLoading/PageLoading.jsx'
 import {
   WorkshopLEMZ,
   Storage,
-  ViewRequestLEMZ,
-  EditRequestLEMZ,
-  NewRequestLEMZ,
   NewStorage,
   EditStorage,
   WorkshopOrdersLEMZ,
@@ -19,6 +16,9 @@ import {
   ViewWorkshopOrderLEMZ,
   EditWorkshopOrderLEMZ,
 } from '../lazyImports.jsx'
+import NewRequest from '../WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
+import EditRequest from '../WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
+import ViewRequest from '../WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx'
 
 const LEMZ = (props) => {
   return (
@@ -102,34 +102,23 @@ const LEMZ = (props) => {
                 transferData={props.transferData}
                 setTransferState={props.setTransferState}
                 setTransferData={props.setTransferData}
-                allowedRoles={[
-                  'ROLE_ADMIN',
-                  // 'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_LEMZ',
-                ]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEMZ']}
               />
               <Route
                 path="/lemz/workshop-lemz/view/"
-                component={ViewRequestLEMZ}
+                render={(props) => <ViewRequest {...props} type="lemz" />}
               />
               <PrivateRoute
                 exact
                 path="/lemz/workshop-lemz/new"
-                component={NewRequestLEMZ}
-                userHasAccess={props.userHasAccess}
-                userData={props.userData}
-                transferState={props.transferState}
-                transferData={props.transferData}
-                setTransferState={props.setTransferState}
-                setTransferData={props.setTransferData}
+                component={NewRequest}
+                type="lemz"
                 allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 path="/lemz/workshop-lemz/edit/"
-                component={EditRequestLEMZ}
-                userHasAccess={props.userHasAccess}
-                userData={props.userData}
+                component={EditRequest}
+                type="lemz"
                 allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
@@ -164,10 +153,6 @@ const LEMZ = (props) => {
                 path="/lemz/workshop-orders"
                 component={WorkshopOrdersLEMZ}
                 userHasAccess={props.userHasAccess}
-                // transferState={props.transferState}
-                // transferData={props.transferData}
-                // setTransferState={props.setTransferState}
-                // setTransferData={props.setTransferData}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -180,10 +165,6 @@ const LEMZ = (props) => {
                 path="/lemz/workshop-orders/new"
                 component={NewWorkshopOrderLEMZ}
                 userHasAccess={props.userHasAccess}
-                // transferState={props.transferState}
-                // transferData={props.transferData}
-                // setTransferState={props.setTransferState}
-                // setTransferData={props.setTransferData}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   // 'ROLE_DISPATCHER',
@@ -195,10 +176,6 @@ const LEMZ = (props) => {
                 path="/lemz/workshop-orders/view/"
                 component={ViewWorkshopOrderLEMZ}
                 userHasAccess={props.userHasAccess}
-                // transferState={props.transferState}
-                // transferData={props.transferData}
-                // setTransferState={props.setTransferState}
-                // setTransferData={props.setTransferData}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -210,10 +187,6 @@ const LEMZ = (props) => {
                 path="/lemz/workshop-orders/edit/"
                 component={EditWorkshopOrderLEMZ}
                 userHasAccess={props.userHasAccess}
-                // transferState={props.transferState}
-                // transferData={props.transferData}
-                // setTransferState={props.setTransferState}
-                // setTransferData={props.setTransferData}
                 allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
               />
               <Route component={PageNotFound} />

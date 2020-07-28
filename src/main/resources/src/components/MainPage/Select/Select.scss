@@ -152,7 +152,7 @@
   }
 
   &__selected {
-    font-size: 80%;
+    font-size: 90%;
     display: flex;
     flex-direction: column;
 
@@ -164,7 +164,7 @@
     }
 
     &_title {
-      margin-top: 10px;
+      margin-top: 5px;
       // margin-left: 15px;
       font-size: 85%;
       color: lighten($primary-text-color, 40%);
@@ -268,25 +268,35 @@
             border: 1px solid $button__background--inverted;
           }
         }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        /* Firefox */
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
       }
     }
 
     .select__selected_item--completed {
-      background-color: #5ea76e;
+      background-color: #98dda6;
       &:hover {
-        background-color: darken(#5ea76e, 5%);
+        background-color: darken(#98dda6, 5%);
       }
     }
     .select__selected_item--defect {
-      background-color: #c48681;
+      background-color: #d6574e;
       &:hover {
-        background-color: darken(#c48681, 5%);
+        background-color: darken(#d6574e, 5%);
       }
     }
     .select__selected_item--production {
-      background-color: #87a8b6;
+      background-color: #cdceaf;
       &:hover {
-        background-color: darken(#87a8b6, 5%);
+        background-color: darken(#cdceaf, 5%);
       }
     }
   }

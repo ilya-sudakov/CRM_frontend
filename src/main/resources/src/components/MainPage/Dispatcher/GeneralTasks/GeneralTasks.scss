@@ -6,6 +6,26 @@
     --delayed: #00b7ff;
     --problem: #d6574e;
     --materials: #d49a27;
+    .main-window__header {
+        flex-direction: column;
+        .main-window__menu {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    }
+    .searchbar {
+        background-color: $secondary-text-color;
+        width: calc(100% - 25px);
+        text-align: left;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        // padding-top: 0px;
+    }
+
+    .main-window__info-panel {
+        margin-bottom: 0;
+    }
+    
     .main-window__status-panel {
         .main-window__list-item--completed::before {
             background-color: var(--completed);

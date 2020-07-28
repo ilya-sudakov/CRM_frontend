@@ -2,22 +2,34 @@ import React, { useState, useEffect } from 'react'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import './Machine.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
-import TableView from '../TableView/TableView.jsx'
+import TableViewOld from '../TableView/TableView.jsx'
+import TableView from '../RiggingComponents/TableView/TableView.jsx'
 import {
   getMachine,
   getMachineById,
   deletePartsFromMachine,
   deleteMachine,
 } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
+import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import {
+  getStampById,
+  deletePartsFromStamp,
+  deleteStamp,
+  getStampsByStatus,
+} from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 
 const Machine = (props) => {
   const [machines, setMachines] = useState([])
   const [curPage, setCurPage] = useState('Активные')
   const [searchQuery, setSearchQuery] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    const abortController = new AbortController()
     document.title = 'Станки'
-    loadMachines()
+    // loadMachines()
+    loadData(abortController.signal)
   }, [])
 
   const loadMachines = () => {
@@ -32,27 +44,45 @@ const Machine = (props) => {
       })
   }
 
-  const deleteItem = (event) => {
-    const id = event.target.dataset.id
-    getMachineById(id)
+  const loadData = (signal) => {
+    setIsLoading(true)
+    getStampsByStatus('machine', signal)
       .then((res) => res.json())
       .then((res) => {
-        const parts = res.benchParts.map((item) => {
-          return deletePartsFromMachine(item.id)
-        })
-        Promise.all(parts).then(() => {
-          deleteMachine(id).then(() => loadMachines())
-        })
+        setIsLoaded(true)
+        console.log(res)
+        setMachines(res)
+        setIsLoading(false)
       })
+      .catch((error) => {
+        setIsLoading(false)
+        console.log(error)
+      })
+  }
+
+  const deleteItem = (id) => {
+    getStampById(id)
+      .then((res) => res.json())
+      .then((res) =>
+        Promise.all(
+          res.stampParts.map((item) => deletePartsFromStamp(item.id)),
+        ),
+      )
+      .then(() => deleteStamp(id))
+      .then(() => loadData())
   }
 
   return (
     <div className="machine">
       <div className="main-window">
         <SearchBar
-          title="Поиск станка"
+          // title="Поиск станка"
           setSearchQuery={setSearchQuery}
           placeholder="Введите здесь запрос для поиска..."
+        />
+        <FloatingPlus
+          linkTo="/dispatcher/rigging/machine/new"
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
         <div className="main-window__header">
           <div className="main-window__menu">
@@ -85,7 +115,7 @@ const Machine = (props) => {
             Всего: {machines.length} записей
           </div>
         </div>
-        <TableView
+        {/* <TableViewOld
           data={machines.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
               return true
@@ -93,10 +123,27 @@ const Machine = (props) => {
               return true
             }
           })}
+          isLoading={isLoading}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
           loadData={loadMachines}
+        /> */}
+        <TableView
+          data={machines.filter((item) => {
+            if (item.color === 'completed' && curPage === 'Завершено') {
+              return true
+            }
+            if (curPage === 'Активные' && item.color !== 'completed') {
+              return true
+            }
+          })}
+          isLoading={isLoading}
+          searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
+          deleteItem={deleteItem}
+          loadData={loadMachines}
+          type="machine"
         />
       </div>
     </div>

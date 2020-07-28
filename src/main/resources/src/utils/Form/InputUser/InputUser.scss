@@ -8,7 +8,7 @@
 
   .input_user__error {
     align-self: flex-end;
-    width: calc(80%);
+    width: calc(100% - 20px);
     margin-top: 1px;
     font-size: 0.75rem;
     // position: absolute;
@@ -23,9 +23,12 @@
 
   .input_user__input {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    // flex-direction: row;
+    // align-items: center;
     justify-content: space-between;
+    //column direction
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
 
     .input_user__input_name {
@@ -33,6 +36,9 @@
       //   margin-bottom: 5px;
       flex: 0 1 calc(20% - 10px);
       padding-right: 10px;
+      //column direction
+      width: 100%;
+      margin-bottom: 5px;
     }
 
     .input_user__input_field {
@@ -41,6 +47,8 @@
       width: calc(90% - 20px);
       position: relative;
       height: 2rem;
+      //column direction
+      width: 100%;
 
       input[type="text"],
       input[type="password"] {
@@ -76,6 +84,7 @@
     .input_user__input {
       flex-wrap: wrap;
       flex-direction: column;
+      align-items: flex-start;
 
       .input_user__input_name {
         width: 100%;

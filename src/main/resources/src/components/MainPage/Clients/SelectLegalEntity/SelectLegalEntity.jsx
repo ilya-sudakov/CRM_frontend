@@ -18,7 +18,7 @@ const SelectLegalEntity = (props) => {
       checkingAccount: '',
       legalAddress: '',
       factualAddress: '',
-      isMinimized: true,
+      isMinimized: false,
     },
   ])
   const [options, setOptions] = useState([])
@@ -34,8 +34,6 @@ const SelectLegalEntity = (props) => {
       setDefaultValueLoaded(true)
       setSelected([...props.defaultValue])
     }
-    console.log(1)
-
     // if (props.options !== undefined) {
     //   setOptions([...props.options])
     // }

@@ -7,13 +7,13 @@ import {
   Clients,
   Contracts,
   Requests,
-  NewRequest,
+  // NewRequest,
   GeneralPage,
   newClient,
   Products,
   NewProduct,
-  EditRequest,
-  ViewRequest,
+  // EditRequest,
+  // ViewRequest,
   Users,
   EditUser,
   NewUser,
@@ -41,9 +41,9 @@ import {
   LoginHistory,
   EditRecordWork,
   WorkManagementPage,
-  PriceList,
+  // PriceList,
   NewPriceList,
-  ViewPriceList,
+  // ViewPriceList,
   ClientCategories,
   ViewClient,
   EditClient,
@@ -56,7 +56,11 @@ import {
   NewPackaging,
   EditPackaging,
   ReportTablePage,
+  RiggingList,
 } from './lazyImports.jsx'
+import NewRequest from './WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
+import EditRequest from './WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
+import ViewRequest from './WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx'
 import SideMenu from '../SideMenu/SideMenu.jsx'
 import PageNotFound from './PageNotFound/PageNotFound.jsx'
 import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx'
@@ -97,7 +101,28 @@ class MainPage extends React.Component {
           <SideMenu
             userHasAccess={this.props.userHasAccess}
             hidden={this.state.sidemenu_hidden}
+            setSideMenu={this.setSideMenu}
           />
+          {(window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth) < 1220 && (
+            <div
+              className={
+                this.state.sidemenu_hidden
+                  ? 'main_page__overlay main_page__overlay--hidden'
+                  : 'main_page__overlay'
+              }
+              onClick={() => {
+                if (
+                  (window.innerWidth ||
+                    document.documentElement.clientWidth ||
+                    document.body.clientWidth) < 1220
+                ) {
+                  this.setSideMenu(!this.state.sidemenu_hidden)
+                }
+              }}
+            ></div>
+          )}
           <div className="main_page__activity_panel">
             <Suspense fallback={<PageLoading />}>
               <Switch>
@@ -149,6 +174,7 @@ class MainPage extends React.Component {
                 <PrivateRoute
                   path="/clients/category/"
                   component={Clients}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -157,6 +183,7 @@ class MainPage extends React.Component {
                   exact
                   path="/clients/categories/"
                   component={ClientCategories}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -165,6 +192,7 @@ class MainPage extends React.Component {
                   exact
                   path="/clients/new"
                   component={newClient}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -172,6 +200,7 @@ class MainPage extends React.Component {
                 <PrivateRoute
                   path="/clients/view/"
                   component={ViewClient}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -179,9 +208,80 @@ class MainPage extends React.Component {
                 <PrivateRoute
                   path="/clients/edit/"
                   component={EditClient}
+                  type="clients"
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                />
+                <PrivateRoute
+                  path="/suppliers/category/"
+                  component={Clients}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_WORKSHOP',
+                    'ROLE_ENGINEER',
+                  ]}
+                />
+                <PrivateRoute
+                  exact
+                  path="/suppliers/categories/"
+                  component={ClientCategories}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_WORKSHOP',
+                    'ROLE_ENGINEER',
+                  ]}
+                />
+                <PrivateRoute
+                  exact
+                  path="/suppliers/new"
+                  component={newClient}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_ENGINEER',
+                    'ROLE_WORKSHOP',
+                  ]}
+                />
+                <PrivateRoute
+                  path="/suppliers/view/"
+                  component={ViewClient}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_ENGINEER',
+                    'ROLE_WORKSHOP',
+                  ]}
+                />
+                <PrivateRoute
+                  path="/suppliers/edit/"
+                  component={EditClient}
+                  type="suppliers"
+                  userHasAccess={this.props.userHasAccess}
+                  userData={this.props.userData}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                  ]}
                 />
                 <Route exact path="/contracts" component={Contracts} />
                 <PrivateRoute
@@ -202,32 +302,21 @@ class MainPage extends React.Component {
                     })
                   }
                 />
-                <Route path="/requests/view/" component={ViewRequest} />
+                <Route
+                  path="/requests/view/"
+                  render={(props) => <ViewRequest {...props} type="requests" />}
+                />
                 <PrivateRoute
                   exact
                   path="/requests/new"
                   component={NewRequest}
-                  userHasAccess={this.props.userHasAccess}
-                  userData={this.props.userData}
-                  transferState={this.state.transferState}
-                  transferData={this.state.transferData}
-                  setTransferState={(value) =>
-                    this.setState({
-                      transferState: value,
-                    })
-                  }
-                  setTransferData={(value) =>
-                    this.setState({
-                      transferData: value,
-                    })
-                  }
+                  type="requests"
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                 />
                 <PrivateRoute
                   path="/requests/edit/"
                   component={EditRequest}
-                  userHasAccess={this.props.userHasAccess}
-                  userData={this.props.userData}
+                  type="requests"
                   allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                 />
                 <PrivateRoute
@@ -246,13 +335,13 @@ class MainPage extends React.Component {
                                     userData={this.props.userData}
                                     allowedRoles={["ROLE_ADMIN"]}
                                 /> */}
-                <PrivateRoute
+                {/* <PrivateRoute
                   path="/price-list/view/"
                   component={ViewPriceList}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN']}
-                />
+                /> */}
                 <PrivateRoute
                   exact
                   path="/products"
@@ -334,7 +423,7 @@ class MainPage extends React.Component {
                     'ROLE_ADMIN',
                     'ROLE_DISPATCHER',
                     'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP'
+                    'ROLE_WORKSHOP',
                   ]}
                 />
                 <PrivateRoute
@@ -567,7 +656,13 @@ class MainPage extends React.Component {
                   component={EtceteraPage}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_DISPATCHER',
+                    'ROLE_MANAGER',
+                    'ROLE_ENGINEER',
+                    'ROLE_WORKSHOP'
+                  ]}
                 />
                 <PrivateRoute
                   exact
@@ -607,6 +702,19 @@ class MainPage extends React.Component {
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
                   allowedRoles={['ROLE_ADMIN']}
+                />
+                <PrivateRoute
+                  exact
+                  path="/rigging-list"
+                  component={RiggingList}
+                  userHasAccess={this.props.userHasAccess}
+                  allowedRoles={[
+                    'ROLE_ADMIN',
+                    'ROLE_WORKSHOP',
+                    'ROLE_DISPATCHER',
+                    'ROLE_ENGINEER',
+                    'ROLE_MANAGER',
+                  ]}
                 />
                 <Route component={PageNotFound} />
               </Switch>

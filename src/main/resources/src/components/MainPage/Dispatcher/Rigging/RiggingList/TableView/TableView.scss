@@ -1,0 +1,115 @@
+.rigging-list-tableview {
+    font-size: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__list {
+        width: calc(100% - 50px);
+        padding: 25px;
+        .rigging-list-tableview__workshop {
+            margin-right: 100%;
+            margin-bottom: 5px;
+            padding: 0 5px;
+            color: #666666;
+            border-bottom: 1.5px solid #aaaaaa;
+            font-size: 85%;
+            width: fit-content;
+            white-space: nowrap;
+            // margin-top: 15px;
+            margin-bottom: 5px;
+
+            &:not(:first-child) {
+                margin-top: 5px;
+            }
+        }
+    }
+
+    .main-window__list {
+        .rigging-list-tableview__workshop {
+            margin-right: 100%;
+            margin-bottom: 5px;
+            padding: 0 5px;
+            color: #666666;
+            border-bottom: 1.5px solid #aaaaaa;
+            font-size: 90%;
+            width: fit-content;
+            white-space: nowrap;
+            // margin-top: 15px;
+            margin-bottom: 5px;
+
+            &:not(:first-child) {
+                margin-top: 5px;
+            }
+        }
+
+        &-item {
+            &--divider {
+                cursor: pointer;
+                span {
+                    max-width: fit-content !important;
+                }
+            }
+
+            span {
+                &:nth-child(1) {
+                    flex: 0 1 20%;
+                    max-width: 125px;
+                }
+                &:nth-child(2) {
+                    flex: 0 1 30%;
+                    // max-width: 125px;
+                }
+                &:nth-child(3) {
+                    max-width: 80px;
+                }
+                &:nth-child(4) {
+                    flex: 0 1 15%;
+                }
+                &:nth-child(5) {
+                    max-width: 140px;
+                    padding-left: 25px;
+                    position: relative;
+                }
+            }
+            &:not(.main-window__list-item--header) {
+                span {
+                    &:nth-child(5) {
+                        &::before {
+                            content: "";
+                            display: inline-block;
+                            position: absolute;
+                            width: 15px;
+                            height: 15px;
+                            left: 5px;
+                            top: calc(50% - 7.5px);
+                            border-radius: 999px;
+                            background-color: #cccccc;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-window {
+            &__list {
+                &-item {
+                    span {
+                        &:nth-child(1) {
+                            max-width: none;
+                        }
+                        &:nth-child(3) {
+                            max-width: none;
+                        }
+                        &:nth-child(4) {
+                            max-width: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -12,6 +12,7 @@ import {
 import { getTransportationListPdfText } from '../../../../utils/pdfFunctions.jsx'
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Transportation = (props) => {
   const [transportation, setTransportation] = useState([])
@@ -106,8 +107,12 @@ const Transportation = (props) => {
     <div className="transportation">
       <div className="main-window">
         <div className="main-window__title">Реестр транспортировок</div>
+        <FloatingPlus
+          linkTo="/dispatcher/transportation/new"
+          visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+        />
         <SearchBar
-          title="Поиск по транспортировкам"
+          // title="Поиск по транспортировкам"
           placeholder="Введите название товара для поиска..."
           setSearchQuery={setSearchQuery}
         />
@@ -140,7 +145,7 @@ const Transportation = (props) => {
                   )
                 }
               })}
-              <CheckBox
+              {/* <CheckBox
                 text="Выделить все"
                 onChange={(value) => {
                   let temp = workshops.map((item) => {
@@ -153,7 +158,7 @@ const Transportation = (props) => {
                 }}
                 defaultChecked={true}
                 uniqueId={0}
-              />
+              /> */}
             </div>
             <div className="main-window__filter-pick">
               <span className="transportation__text">Куда: </span>
@@ -181,7 +186,7 @@ const Transportation = (props) => {
                   )
                 }
               })}
-              <CheckBox
+              {/* <CheckBox
                 text="Выделить все"
                 onChange={(value) => {
                   let temp = workshops.map((item) => {
@@ -194,7 +199,7 @@ const Transportation = (props) => {
                 }}
                 defaultChecked={true}
                 uniqueId={1}
-              />
+              /> */}
             </div>
           </div>
           <Button

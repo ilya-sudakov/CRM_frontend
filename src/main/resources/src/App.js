@@ -10,7 +10,7 @@ import PageLoading from './components/MainPage/PageLoading/PageLoading.jsx'
 export const UserContext = React.createContext()
 import { AppIcon__128 } from '../../../../assets/app_icon__128.png'
 import { AppIcon__144 } from '../../../../assets/app_icon__144.png'
-// import { messaging } from './init-fcm.js'
+import { messaging } from './init-fcm.js'
 
 class App extends React.Component {
   state = {
@@ -91,23 +91,25 @@ class App extends React.Component {
         })
     }
     // !FIREBASE
-    // messaging
-    //   .requestPermission()
-    //   .then(async function () {
-    //     const token = await messaging.getToken()
-    //     console.log('token: ' + token)
-    //   })
-    //   .catch(function (err) {
-    //     console.log('Unable to get permission to notify.', err)
-    //   })
-    // navigator.serviceWorker.addEventListener('message', (message) => {
-    //   console.log(message.data['firebase-messaging-msg-data'].data)
-    //   this.state.setNewNotificationsCount(this.state.newNotifications + 1)
-    //   this.state.setLastNotification({
-    //     ...message.data['firebase-messaging-msg-data'].data,
-    //     visible: true,
-    //   })
-    // })
+    if (messaging !== null) {
+      messaging
+        .requestPermission()
+        .then(async function () {
+          const token = await messaging.getToken()
+          console.log('token: ' + token)
+        })
+        .catch(function (err) {
+          console.log('Unable to get permission to notify.', err)
+        })
+      navigator.serviceWorker.addEventListener('message', (message) => {
+        console.log(message.data['firebase-messaging-msg-data'].data)
+        this.state.setNewNotificationsCount(this.state.newNotifications + 1)
+        this.state.setLastNotification({
+          ...message.data['firebase-messaging-msg-data'].data,
+          visible: true,
+        })
+      })
+    }
   }
 
   render() {

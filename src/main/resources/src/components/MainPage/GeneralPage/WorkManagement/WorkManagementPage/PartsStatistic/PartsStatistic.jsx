@@ -98,8 +98,11 @@ const PartsStatistic = (props) => {
             ticks: {
               beginAtZero: true,
             },
+            gridLines: {
+              display: false,
+            },
             scaleLabel: {
-              display: true,
+              display: false,
               labelString: 'Название',
               fontStyle: 'italic',
             },
@@ -168,11 +171,14 @@ const PartsStatistic = (props) => {
       scales: {
         yAxes: [
           {
+            gridLines: {
+              display: false,
+            },
             ticks: {
               beginAtZero: true,
             },
             scaleLabel: {
-              display: true,
+              display: false,
               labelString: 'Название',
               fontStyle: 'italic',
             },
@@ -208,7 +214,13 @@ const PartsStatistic = (props) => {
         setCanvasLoaded(true)
       }
       setTimeout(() => {
-        setIsVisible(true)
+        if (
+          (window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth) > 768
+        ) {
+          setIsVisible(true)
+        }
         console.log(canvasLoaded, 'destroying graph1')
         canvasLoaded && graph.destroy()
         setGraph(
@@ -229,9 +241,21 @@ const PartsStatistic = (props) => {
   return (
     <UserContext.Consumer>
       {(ctx) => (
-        <div className="parts-statistic">
+        <div
+          className="parts-statistic"
+          style={{
+            backgroundColor: isVisible ? '#ffffff' : 'rgba(255, 255, 255, 0.7)',
+            boxShadow:
+              !isVisible &&
+              '0 1px 1px rgba(0, 0, 0, 0.05), 0 0px 5px rgba(0, 0, 0, 0.1)',
+            // backgroundColor: '#ffffff',
+            maxWidth: isVisible && 'calc(100% - 30px)',
+            paddingBottom: !isVisible && 0,
+          }}
+        >
           <div
             className="main-window__title"
+            title={isVisible ? 'Свернуть' : 'Развернуть'}
             onClick={() => {
               return setIsVisible(!isVisible)
             }}
@@ -239,7 +263,7 @@ const PartsStatistic = (props) => {
             Отчет производства
             <img
               className={
-                isVisible
+                !isVisible
                   ? 'main-window__img'
                   : 'main-window__img main-window__img--rotated'
               }

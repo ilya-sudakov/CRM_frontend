@@ -9,6 +9,7 @@
   // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
   // margin-bottom: 15px;
 
+
   .searchbar__title {
     padding-left: 25px;
     font-size: 110%;
@@ -40,7 +41,8 @@
       flex: 0 1 calc(100% - 15px);
       position: relative;
 
-      &:focus-within, &:hover {
+      &:focus-within,
+      &:hover {
         &::before {
           background-color: #bbbbbb;
         }
@@ -180,7 +182,7 @@
       & input {
         width: calc(100% - 20px - 0px) !important;
         line-height: 1.5rem;
-        font-size: 80%;
+        font-size: 90%;
         padding-left: 10px !important;
       }
     }

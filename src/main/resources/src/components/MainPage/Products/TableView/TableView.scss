@@ -126,45 +126,51 @@
 }
 
 @media (max-width: 768px) {
-  .main-window__list {
-    span:first-child {
-      padding: 5px 10px !important;
-    }
-    .main-window__list-options {
-      .main-window__list {
-        .main-window__list-item {
-          span {
-            &:nth-child(1) {
-              width: 100% !important;
-              flex: 0 1 100% !important;
-              max-width: 100% !important;
-              justify-content: center !important;
-              align-items: center;
-              .main-window__mobile-text {
-                margin-right: auto;
-              }
-              .img-loader {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-              }
-              .tableview_products__product_img {
-                // margin: 0 auto;
-                min-width: 150px;
-                max-height: none;
-              }
-            }
-            &:nth-child(3) {
-              max-width: none !important;
-            }
+  & {
+    .main-window__list {
+      .main-window__list-item:not(.main-window__list-item--header) {
+        span {
+          &:nth-child(1) {
+            padding: 5px 10px;
           }
-          .main-window__actions {
-            .main-window__action--row {
-              .main-window__action {
-                padding: 10px;
+        }
+      }
+      .main-window__list-options {
+        .main-window__list {
+          .main-window__list-item {
+            span {
+              &:nth-child(1) {
+                width: 100% !important;
+                flex: 0 1 100% !important;
+                max-width: 100% !important;
+                justify-content: center !important;
+                align-items: center;
+                .main-window__mobile-text {
+                  margin-right: auto;
+                }
+                .img-loader {
+                  width: 100%;
+                  display: flex;
+                  justify-content: center;
+                }
+                .tableview_products__product_img {
+                  // margin: 0 auto;
+                  min-width: 150px;
+                  max-height: none;
+                }
+              }
+              &:nth-child(3) {
+                max-width: none !important;
+              }
+            }
+            .main-window__actions {
+              .main-window__action--row {
+                .main-window__action {
+                  padding: 10px;
 
-                &:hover {
-                  padding: 15px !important;
+                  &:hover {
+                    padding: 15px !important;
+                  }
                 }
               }
             }

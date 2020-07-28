@@ -4,8 +4,10 @@ import './WorkManagementPage.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 // import viewSVG from '../../../../../../../../../assets/tableview/view.svg';
-import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg'
-import editSVG from '../../../../../../../../../assets/tableview/edit.svg'
+import OneColumnIcon from '../../../../../../../../../assets/tableview/onecolumn.png'
+import okIcon from '../../../../../../../../../assets/tableview/ok.svg'
+import TwoColumnsIcon from '../../../../../../../../../assets/tableview/twocolumns.png'
+import chevronDownSVG from '../../../../../../../../../assets/tableview/chevron-down.svg'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 // import DownloadIcon from '../../../../../../../../../assets/download.svg';
 import {
@@ -14,6 +16,7 @@ import {
   getAllProductsFromWorkCount,
   addSpaceDelimiter,
   getAllDraftsFromWorkCount,
+  getDatesAndWorkItems,
 } from '../../../../../utils/functions.jsx'
 import {
   getRecordedWorkByDateRange,
@@ -28,29 +31,35 @@ import Button from '../../../../../utils/Form/Button/Button.jsx'
 import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx'
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx'
 import { UserContext } from '../../../../../App.js'
+import TableView from './TableView/TableView.jsx'
+import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [workItems, setWorkItems] = useState([])
   const [employeesMap, setEmployeesMap] = useState({})
+  const [datesEmployees, setDatesEmployees] = useState({})
   const [employees, setEmployees] = useState({})
   const [partsStatistics, setPartsStatistics] = useState({})
   const [draftsStatistics, setDraftsStatistics] = useState([])
   const [curPage, setCurPage] = useState('Сотрудники')
+  const [isOneColumn, setIsOneColumn] = useState(false)
   const [workshops, setWorkshops] = useState([
     {
       name: 'ЦехЛЭМЗ',
       visibility: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       active: true,
       minimized: true,
-      employeesTotal: 0,
+      employees: [],
+      className: 'lemz',
     },
     {
       name: 'ЦехЛепсари',
       visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       active: true,
       minimized: true,
-      employeesTotal: 0,
+      employees: [],
+      className: 'lepsari',
     },
     {
       name: 'ЦехЛиговский',
@@ -62,7 +71,8 @@ const WorkManagementPage = (props) => {
       ],
       active: true,
       minimized: true,
-      employeesTotal: 0,
+      employees: [],
+      className: 'ligovskiy',
     },
     {
       name: 'Офис',
@@ -74,7 +84,8 @@ const WorkManagementPage = (props) => {
       ],
       active: true,
       minimized: true,
-      employeesTotal: 0,
+      employees: [],
+      className: 'office',
     },
   ])
   const userContext = useContext(UserContext)
@@ -87,8 +98,8 @@ const WorkManagementPage = (props) => {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [sortOrder, setSortOrder] = useState({
-    curSort: 'date',
-    date: 'asc',
+    curSort: 'lastName',
+    date: 'desc',
   })
   const changeSortOrder = (event) => {
     const name = event.target.value.split(' ')[0]
@@ -110,7 +121,7 @@ const WorkManagementPage = (props) => {
     )
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setPartsStatistics(getAllProductsFromWorkCount(res))
         setDraftsStatistics(getAllDraftsFromWorkCount(res))
         combineWorksForSamePeople([
@@ -122,6 +133,7 @@ const WorkManagementPage = (props) => {
             }
           }),
         ])
+        setDatesEmployees(getDatesAndWorkItems(res))
         getAllEmployees([
           ...res.map((item) => {
             return {
@@ -202,6 +214,7 @@ const WorkManagementPage = (props) => {
   }
 
   const loadEmployeesCount = (signal) => {
+    setIsLoading(true)
     let temp = workshops
     return Promise.all(
       workshops.map((workshop, index) => {
@@ -210,17 +223,25 @@ const WorkManagementPage = (props) => {
           .then((res) => {
             temp.splice(index, 1, {
               ...workshop,
-              employeesTotal: res.filter((item) => item.relevance !== 'Уволен')
-                .length,
+              employees: res.filter((item) => item.relevance !== 'Уволен'),
             })
           })
       }),
-    ).then(() => {
-      return setWorkshops([...temp])
-    })
+    )
+      .then(() => {
+        setIsLoading(false)
+        // console.log(temp)
+        setWorkshops([...temp])
+        return temp
+      })
+      .catch((error) => {
+        setIsLoading(true)
+        console.log(error)
+      })
   }
 
   useEffect(() => {
+    document.title = 'Отчет производства'
     let abortController = new AbortController()
     loadWorks(abortController.signal).then(() => {
       loadEmployeesCount(abortController.signal)
@@ -234,6 +255,19 @@ const WorkManagementPage = (props) => {
   return (
     <div className="work-management-page">
       <div className="main-window">
+        <FloatingPlus
+          iconSrc={isOneColumn ? TwoColumnsIcon : OneColumnIcon}
+          title={isOneColumn ? 'Несколько столбцов' : 'Один столбец'}
+          onClick={() => {
+            setIsOneColumn(!isOneColumn)
+          }}
+          visibility={[
+            'ROLE_ADMIN',
+            'ROLE_WORKSHOP',
+            'ROLE_MANAGER',
+            'ROLE_DISPATCHER',
+          ]}
+        />
         <div className="main-window__title">
           {/* <span>Отчет производства</span> */}
         </div>
@@ -247,7 +281,7 @@ const WorkManagementPage = (props) => {
         )}
         <div className="main-window__header">
           <SearchBar
-            title="Поиск по записям"
+            // title="Поиск по сотрудникам"
             placeholder="Введите запрос для поиска..."
             setSearchQuery={setSearchQuery}
           />
@@ -276,37 +310,42 @@ const WorkManagementPage = (props) => {
         </div>
         <div className="main-window__info-panel">
           <div className="work-management-page__date-pick">
-            <div className="work-management-page__date">
-              <InputDate
-                inputName="Начало:"
-                selected={Date.parse(dates.start)}
-                handleDateChange={(value) => {
-                  setDates({
-                    ...dates,
-                    start: value,
-                  })
-                }}
-              />
+            <div>
+              <div className="work-management-page__date">
+                <InputDate
+                  inputName="Начало:"
+                  selected={Date.parse(dates.start)}
+                  startDate={Date.parse(dates.start)}
+                  endDate={Date.parse(dates.end)}
+                  selectsStart
+                  handleDateChange={(value) => {
+                    setDates({
+                      ...dates,
+                      start: value,
+                    })
+                  }}
+                />
+              </div>
+              <div className="work-management-page__date">
+                <InputDate
+                  inputName="Конец:"
+                  selected={Date.parse(dates.end)}
+                  selectsEnd
+                  startDate={Date.parse(dates.start)}
+                  endDate={Date.parse(dates.end)}
+                  handleDateChange={(value) => {
+                    setDates({
+                      ...dates,
+                      end: value,
+                    })
+                  }}
+                />
+              </div>
             </div>
-            <div className="work-management-page__date">
-              <InputDate
-                inputName="Конец:"
-                selected={Date.parse(dates.end)}
-                handleDateChange={(value) => {
-                  setDates({
-                    ...dates,
-                    end: value,
-                  })
-                }}
-              />
-            </div>
-            {/* <div
-                            className="main-window__button"
-                            onClick={() => loadWorks()}
-                        >Применить фильтр</div> */}
             <Button
               text="Применить"
               isLoading={isLoading}
+              imgSrc={okIcon}
               className="main-window__button"
               onClick={loadWorks}
             />
@@ -318,8 +357,8 @@ const WorkManagementPage = (props) => {
                   <div
                     className={
                       item.active
-                        ? 'main-window__button'
-                        : 'main-window__button main-window__button--inverted'
+                        ? 'main-window__button '
+                        : 'main-window__button main-window__button--inverted '
                     }
                     onClick={() => {
                       let temp = workshops
@@ -341,24 +380,26 @@ const WorkManagementPage = (props) => {
             </div>
           </div>
         </div>
-        <div className="main-window__sort-panel">
+        {/* <div className="main-window__sort-panel">
           <span>Сортировка: </span>
           <select onChange={changeSortOrder}>
-            <option value="date asc">По дате</option>
             <option value="lastName desc">По алфавиту (А-Я)</option>
             <option value="lastName asc">По алфавиту (Я-А)</option>
+            <option value="date asc">По дате</option>
             <option value="hours desc">По часам</option>
           </select>
-        </div>
-        <div className="main-window__list">
-          {/* {isLoading && <TableDataLoading
-                        className="main-window__list-item"
-                    />} */}
-          <TableLoading isLoading={isLoading} />
+        </div> */}
+        <div
+          className={
+            isOneColumn
+              ? 'main-window__list main-window__list--one-column'
+              : 'main-window__list'
+          }
+        >
+          {/* <TableLoading isLoading={isLoading} /> */}
           {workshops.map((workshop, workshopIndex) => {
             if (
               workshop.active &&
-              //&& employees.entries().find(item => item.workshop === workshop.name) !== undefined
               workItems.find(
                 (item) => item.employee.workshop === workshop.name,
               ) !== undefined &&
@@ -367,55 +408,83 @@ const WorkManagementPage = (props) => {
               return (
                 <React.Fragment>
                   <div className="main-window__list-item main-window__list-item--divider">
-                    <span>
-                      {workshop.name +
-                        ' (' +
-                        Object.entries(employeesMap).filter(
-                          (item) =>
-                            workshop.name === employees[item[0]]?.workshop,
-                        ).length +
-                        ' из ' +
-                        workshop.employeesTotal +
-                        ' сотрудников)'}
-                      <CheckBox
-                        checked={workshop.minimized}
-                        // text="Свернуть"
-                        onChange={() => {
-                          let temp = employeesMap
-                          Object.entries(temp).map((employee) => {
-                            if (
-                              employees[employee[0]].workshop === workshop.name
-                            ) {
-                              Object.entries(employee[1]).map((date) => {
-                                // console.log(date[1][0])
-                                date[1][0].openWorks = !date[1][0].openWorks
-                              })
-                            }
-                          })
-                          let newWorkshops = workshops
-                          newWorkshops.splice(workshopIndex, 1, {
-                            ...workshop,
-                            minimized: !workshop.minimized,
-                          })
-                          setWorkshops([...newWorkshops])
-                          return setEmployeesMap({ ...temp })
-                        }}
+                    <span
+                      title={workshop.minimized ? 'Развернуть' : 'Свернуть'}
+                      onClick={() => {
+                        let temp = datesEmployees
+                        Object.entries(datesEmployees[workshop.name]).map(
+                          (date) => {
+                            Object.entries(date[1]).map((employee) => {
+                              return (temp[workshop.name][date[0]][
+                                employee[0]
+                              ].isOpen = !datesEmployees[workshop.name][
+                                date[0]
+                              ][employee[0]].isOpen)
+                            })
+                          },
+                        )
+                        datesEmployees[workshop.name]
+                        let newWorkshops = workshops
+                        newWorkshops.splice(workshopIndex, 1, {
+                          ...workshop,
+                          minimized: !workshop.minimized,
+                        })
+                        setWorkshops([...newWorkshops])
+                      }}
+                    >
+                      {workshop.name}
+                      <img
+                        className={
+                          workshop.minimized
+                            ? 'main-window__img'
+                            : 'main-window__img main-window__img--rotated'
+                        }
+                        src={chevronDownSVG}
+                        // checked={workshop.minimized}
                       />
                     </span>
                   </div>
-                  <div className="main-window__list-item main-window__list-item--header">
+                  <TableView
+                    employees={employees}
+                    isLoading={isLoading}
+                    isOneColumn={isOneColumn}
+                    employees={workshop.employees}
+                    curWorkshop={workshop.name}
+                    searchQuery={searchQuery}
+                    onChange={(newData) => {
+                      let temp = Object.assign({
+                        ...datesEmployees,
+                        [workshop.name]: { ...newData },
+                      })
+                      setDatesEmployees({ ...temp })
+                    }}
+                    data={datesEmployees[workshop.name]}
+                    // data={Object.values(datesEmployees[workshop.name]).filter(
+                    //   (item) => {
+                    //     let check = false
+                    //     Object.values(item).filter((employee) => {
+                    //       console.log(employee)
+                    //       if (
+                    //         employee.employee.lastName
+                    //           .toLowerCase()
+                    //           .includes(searchQuery.toLowerCase())
+                    //       ) {
+                    //         check = true
+                    //       }
+                    //     })
+                    //     return check
+                    //   },
+                    // )}
+                  />
+                  {/* <div className="main-window__list-item main-window__list-item--header">
                     <span>Должность</span>
                     <span>ФИО</span>
                     <span>Часы</span>
-                    {/* <span>Подразделение</span> */}
                     <span>Дата</span>
                     <div className="main-window__actions">Действие</div>
                   </div>
                   {Object.entries(employeesMap)
                     .filter((item) => {
-                      {
-                        /* console.log(item[1]) */
-                      }
                       if (
                         workshop.name === employees[item[0]]?.workshop &&
                         (employees[item[0]].lastName
@@ -430,7 +499,6 @@ const WorkManagementPage = (props) => {
                           employees[item[0]].workshop
                             .toLowerCase()
                             .includes(searchQuery.toLowerCase()))
-                        //formatDateString(new Date(temp)).includes(searchQuery)
                       ) {
                         let check = false
                         workshops.map((workshop) => {
@@ -448,9 +516,6 @@ const WorkManagementPage = (props) => {
                     })
                     .sort((a, b) => {
                       if (sortOrder.curSort === 'lastName') {
-                        {
-                          /* console.log(employees[a[0]][sortOrder.curSort]); */
-                        }
                         if (
                           employees[a[0]][sortOrder.curSort] <
                           employees[b[0]][sortOrder.curSort]
@@ -509,21 +574,6 @@ const WorkManagementPage = (props) => {
                         (tempItem, tempItemIndex) => {
                           return (
                             <React.Fragment>
-                              {/* {((prevDate < tempItem[0] &&
-                                (prevDate = tempItem[0])) ||
-                                count === 0) && (
-                                <div className="main-window__list-item main-window__list-item--date-divider">
-                                  <span>
-                                    {formatDateString(new Date(tempItem[0]))}
-                                  </span>
-                                </div>
-                              )} */}
-                              {/* {console.log(
-                                prevDate,
-                                tempItem[0],
-                                prevDate < tempItem[0],
-                                count,
-                              )} */}
                               <div
                                 className="main-window__list-item"
                                 onClick={() => {
@@ -544,7 +594,6 @@ const WorkManagementPage = (props) => {
                                       }
                                     }),
                                   ]
-                                  // temp = employeesMap[workItem[0]][new Date(tempItem[0])][0].openWorks
                                   temp = {
                                     ...temp,
                                     [workItem[0]]: {
@@ -552,7 +601,6 @@ const WorkManagementPage = (props) => {
                                       [new Date(tempItem[0])]: newDates,
                                     },
                                   }
-                                  // console.log(temp);
                                   setEmployeesMap(temp)
                                 }}
                               >
@@ -581,7 +629,6 @@ const WorkManagementPage = (props) => {
                                   {Math.floor(
                                     tempItem[1].reduce((sum, cur) => {
                                       {
-                                        /* console.log(cur.openWorks) */
                                       }
                                       if (cur.hours !== undefined) {
                                         return sum + cur.hours
@@ -591,7 +638,6 @@ const WorkManagementPage = (props) => {
                                     }, 0) * 100,
                                   ) / 100}
                                 </span>
-                                {/* <span><div className="main-window__mobile-text">Подразделение: </div>{employees[workItem[0]].workshop}</span> */}
                                 <span>
                                   <div className="main-window__mobile-text">
                                     Дата:{' '}
@@ -599,13 +645,9 @@ const WorkManagementPage = (props) => {
                                   {formatDateString(new Date(tempItem[0]))}
                                 </span>
                                 <div className="main-window__actions">
-                                  {/* <Link to={"work-management/record-time/edit/" + tempItem[1].id} className="main-window__action" title="Редактировать">
-                                                            <img className="main-window__img" src={editSVG} />
-                                                        </Link> */}
                                   <div
                                     className="main-window__action"
                                     onClick={() => {
-                                      // console.log(tempItem[1]);
                                       Promise.all(
                                         tempItem[1].map(
                                           (itemDelete, itemDeleteIndex) => {
@@ -665,7 +707,6 @@ const WorkManagementPage = (props) => {
                                             )
                                           }
                                         >
-                                          {/* <div className="main-window__mobile-text">Тип работы: </div> */}
                                           <div>{work.workList.work}</div>
                                           <div className="main-window__mobile-text">
                                             {Math.floor(work.hours * 100) /
@@ -741,7 +782,6 @@ const WorkManagementPage = (props) => {
                                           <div className="main-window__list-item main-window__list-item--header">
                                             <span>Название</span>
                                             <span>Кол-во</span>
-                                            {/* <span>Часы</span> */}
                                           </div>
                                         )}
                                         {((work.workControlProduct.length ===
@@ -789,7 +829,6 @@ const WorkManagementPage = (props) => {
                                                     : item.quantity,
                                                 )}
                                               </span>
-                                              {/* <span><div className="main-window__mobile-text">Часы: </div>{work.hours}</span> */}
                                             </div>
                                           )
                                         })}
@@ -824,7 +863,7 @@ const WorkManagementPage = (props) => {
                           )
                         },
                       )
-                    })}
+                    })} */}
                 </React.Fragment>
               )
             }

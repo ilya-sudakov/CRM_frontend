@@ -8,10 +8,17 @@ import {
   deleteRequest,
   deleteProductsToRequest,
   getRequestById,
+  copyRequest,
+  addRequest,
+  editRequest,
+  addProductsToRequest,
 } from '../../../utils/RequestsAPI/Requests.jsx'
-import TableView from './TableView/TableView.jsx'
+import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
+import TableViewOld from './TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import Button from '../../../utils/Form/Button/Button.jsx'
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]) //Массив заявок
@@ -32,12 +39,12 @@ const Requests = (props) => {
       access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
       visible: false,
     },
-    {
-      name: 'Отгружено',
-      className: 'shipped',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-      visible: false,
-    },
+    // {
+    //   name: 'Отгружено',
+    //   className: 'shipped',
+    //   access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    //   visible: false,
+    // },
     {
       name: 'Готово к отгрузке',
       oldName: 'Готово',
@@ -48,20 +55,37 @@ const Requests = (props) => {
     {
       name: 'В производстве',
       className: 'in-production',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       visible: false,
     },
     {
       name: 'Ожидание',
       className: 'waiting',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_MANAGER'],
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      visible: false,
+    },
+    {
+      name: 'Приоритет',
+      className: 'priority',
+      access: ['ROLE_ADMIN'],
       visible: false,
     },
   ])
+  const pages = {
+    Открытые: {
+      getRequests: (signal) => getRequests(signal),
+    },
+    Отгружено: {
+      getRequests: (signal) => getRequests(signal),
+    },
+    Завершено: {
+      getRequests: (signal) => getRequests(signal),
+    },
+  }
 
   //Удалить заявку
   const deleteItem = (event) => {
-    const id = event.target.dataset.id
+    const id = event.currentTarget.dataset.id
     getRequestById(id)
       .then((res) => res.json())
       .then((res) => {
@@ -104,7 +128,8 @@ const Requests = (props) => {
   //GET-запрос на получение всех заявок
   const loadRequests = (signal) => {
     setIsLoading(true)
-    getRequests(signal)
+    return pages[curPage]
+      .getRequests(signal)
       .then((res) => res.json())
       .then((requests) => {
         let temp = requests.map((item) => {
@@ -131,16 +156,47 @@ const Requests = (props) => {
   }
 
   //Копировать заявку
-  const copyRequest = (id) => {
-    props.setTransferState(true)
-    props.setTransferData(
-      requests.find((item) => {
-        if (item.id === id) {
-          return true
-        }
-      }),
-    )
-    props.history.push('/requests/new')
+  const copySelectedRequest = (id) => {
+    setIsLoading(true)
+    const requestToBeCopied = requests.find((item) => {
+      if (item.id === id) {
+        return true
+      }
+    })
+    addRequest({
+      date: requestToBeCopied.date,
+      products: requestToBeCopied.requestProducts,
+      quantity: requestToBeCopied.quantity,
+      codeWord: requestToBeCopied.codeWord,
+      responsible: requestToBeCopied.responsible,
+      status: requestToBeCopied.status,
+      shippingDate:
+        requestToBeCopied.shippingDate !== null
+          ? requestToBeCopied.shippingDate
+          : new Date(),
+      comment: requestToBeCopied.comment,
+      factory: requestToBeCopied.factory,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const productsArr = requestToBeCopied.requestProducts.map((item) => {
+          return addProductsToRequest({
+            requestId: res.id,
+            quantity: item.quantity,
+            packaging: item.packaging,
+            status: item.status,
+            name: item.name,
+          })
+        })
+        Promise.all(productsArr).then(() => {
+          setIsLoading(false)
+          loadRequests()
+        })
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        console.log(error)
+      })
   }
 
   return (
@@ -149,9 +205,13 @@ const Requests = (props) => {
         <div className="main-window__header">
           <div className="main-window__title">Заявки</div>
           <SearchBar
-            title="Поиск по заявкам"
+            // title="Поиск по заявкам"
             placeholder="Введите название продукции для поиска..."
             setSearchQuery={setSearchQuery}
+          />
+          <FloatingPlus
+            linkTo="/requests/new"
+            visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
           />
           <div className="main-window__menu">
             <div
@@ -163,6 +223,16 @@ const Requests = (props) => {
               onClick={() => setCurPage('Открытые')}
             >
               Открытые
+            </div>
+            <div
+              className={
+                curPage === 'Отгружено'
+                  ? 'main-window__item--active main-window__item'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Отгружено')}
+            >
+              Отгружено
             </div>
             <div
               className={
@@ -198,23 +268,61 @@ const Requests = (props) => {
                     </div>
                   </div>
                   <div className="main-form__buttons">
-                    <input
+                    <Button
                       className="main-form__submit"
-                      type="submit"
+                      isLoading={isLoading}
                       onClick={() => {
-                        props.setTransferState(true)
-                        props.setTransferData(
-                          requests.find((item) => {
-                            if (item.id === requestId) {
-                              return true
-                            }
-                          }),
+                        setIsLoading(true)
+                        const request = requests.find(
+                          (item) => item.id === requestId,
                         )
-                        props.history.push(
-                          toWorkshop + '/workshop-' + toWorkshop + '/new',
+                        editRequest(
+                          { ...request, factory: toWorkshop },
+                          request.id,
                         )
+                          .then((res) => res.json())
+                          .then((res) => {
+                            setIsLoading(false)
+                            props.history.push(
+                              toWorkshop +
+                                '/workshop-' +
+                                toWorkshop +
+                                '/edit/' +
+                                res.id,
+                            )
+                          })
+                          .catch((error) => {
+                            console.log(error)
+                            alert('Ошибка при копировании записи')
+                            setIsLoading(false)
+                          })
+
+                        // copyRequest(
+                        //   requests.find((item) => {
+                        //     if (item.id === requestId) {
+                        //       return true
+                        //     }
+                        //   }).id,
+                        //   toWorkshop,
+                        // )
+                        //   .then((res) => res.json())
+                        //   .then((res) => {
+                        //     setIsLoading(false)
+                        //     props.history.push(
+                        //       toWorkshop +
+                        //         '/workshop-' +
+                        //         toWorkshop +
+                        //         '/edit/' +
+                        //         res,
+                        //     )
+                        //   })
+                        //   .catch((error) => {
+                        //     console.log(error)
+                        //     alert('Ошибка при копировании записи')
+                        //     setIsLoading(false)
+                        //   })
                       }}
-                      value="Перенести в цех"
+                      text="Перенести в цех"
                     />
                   </div>
                 </div>
@@ -224,7 +332,7 @@ const Requests = (props) => {
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
-        <div className="main-window__info-panel">
+        {/* <div className="main-window__info-panel">
           <div className="requests__clients-sort">
             {clients
               .sort((a, b) => {
@@ -266,10 +374,7 @@ const Requests = (props) => {
                 )
               })}
           </div>
-          <div className="main-window__amount_table">
-            Всего: {requests.length} записей
-          </div>
-        </div>
+        </div> */}
         <div className="main-window__status-panel">
           <div>Фильтр по статусам: </div>
           {requestStatuses.map((status, index) => {
@@ -300,15 +405,27 @@ const Requests = (props) => {
               </div>
             )
           })}
+          <div className="main-window__amount_table">
+            Всего: {requests.length} записей
+          </div>
         </div>
         <TableView
           data={requests
             .filter((item) => {
-              if (curPage === 'Открытые') {
-                if (item.status !== 'Завершено') return true
-              } else {
-                if (item.status === 'Завершено') return true
+              if (curPage === 'Завершено' && item.status === 'Завершено') {
+                return true
               }
+              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
+                return true
+              }
+              if (
+                curPage === 'Открытые' &&
+                item.status !== 'Завершено' &&
+                item.status !== 'Отгружено'
+              ) {
+                return true
+              }
+              return false
             })
             .filter((item) => {
               let check = false
@@ -330,20 +447,48 @@ const Requests = (props) => {
                 }
               })
               return check
+            })}
+          isLoading={isLoading}
+          workshopName="requests"
+          loadData={loadRequests}
+          deleteItem={deleteItem}
+          transferRequest={transferRequest}
+          copyRequest={copySelectedRequest}
+          searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
+        />
+        {/* <TableViewOld
+          data={requests
+            .filter((item) => {
+              if (curPage === 'Завершено' && item.status === 'Завершено') {
+                return true
+              }
+              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
+                return true
+              }
+              if (
+                curPage === 'Открытые' &&
+                item.status !== 'Завершено' &&
+                item.status !== 'Отгружено'
+              ) {
+                return true
+              }
+              return false
             })
             .filter((item) => {
               let check = false
-              let noActiveClients = true
-              clients.map((client) => {
-                if (client.active) {
-                  noActiveClients = false
-                }
-              })
-              clients.map((client) => {
+              let noActiveStatuses = true
+              requestStatuses.map((status) => {
+                requestStatuses.map((status) => {
+                  if (status.visible) {
+                    noActiveStatuses = false
+                  }
+                })
                 if (
-                  noActiveClients ||
-                  (client.active && client.name === item.codeWord) ||
-                  item.status === 'Завершено'
+                  noActiveStatuses === true ||
+                  (status.visible &&
+                    (status.name === item.status ||
+                      status.oldName === item.status))
                 ) {
                   check = true
                   return
@@ -355,10 +500,10 @@ const Requests = (props) => {
           loadData={loadRequests}
           deleteItem={deleteItem}
           transferRequest={transferRequest}
-          copyRequest={copyRequest}
+          copyRequest={copySelectedRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
-        />
+        /> */}
       </div>
     </div>
   )

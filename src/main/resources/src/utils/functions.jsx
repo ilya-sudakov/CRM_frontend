@@ -219,6 +219,93 @@ export const getAllDraftsFromWorkCount = (works) => {
   return newParts
 }
 
+export const getDatesAndWorkItems = (works) => {
+  let newData = Object.assign({
+    ЦехЛЭМЗ: {},
+    ЦехЛепсари: {},
+    ЦехЛиговский: {},
+    Офис: {},
+  })
+  works.map((item) => {
+    const curDate = new Date(item.year, item.month - 1, item.day)
+    const curWorkshop = item.employee.workshop
+    if (newData[curWorkshop][curDate] === undefined) {
+      newData = Object.assign({
+        ...newData,
+        [curWorkshop]: {
+          ...newData[curWorkshop],
+          [curDate]: {
+            [item.employee.id]: {
+              employee: item.employee,
+              workshop: item.employee.workshop,
+              isOpen: false,
+              works: [
+                {
+                  id: item.id,
+                  hours: item.hours,
+                  workList: item.workList,
+                  workControlProduct: item.workControlProduct,
+                  partsWorks: item.partsWorks,
+                },
+              ],
+            },
+          },
+        },
+      })
+    } else {
+      if (newData[curWorkshop][curDate][item.employee.id] === undefined) {
+        newData = Object.assign({
+          ...newData,
+          [curWorkshop]: {
+            ...newData[curWorkshop],
+            [curDate]: {
+              ...newData[curWorkshop][curDate],
+              [item.employee.id]: {
+                employee: item.employee,
+                workshop: item.employee.workshop,
+                isOpen: false,
+                works: [
+                  {
+                    id: item.id,
+                    hours: item.hours,
+                    workList: item.workList,
+                    workControlProduct: item.workControlProduct,
+                    partsWorks: item.partsWorks,
+                  },
+                ],
+              },
+            },
+          },
+        })
+      } else {
+        newData = Object.assign({
+          ...newData,
+          [curWorkshop]: {
+            ...newData[curWorkshop],
+            [curDate]: {
+              ...newData[curWorkshop][curDate],
+              [item.employee.id]: {
+                ...newData[curWorkshop][curDate][item.employee.id],
+                works: [
+                  ...newData[curWorkshop][curDate][item.employee.id].works,
+                  {
+                    id: item.id,
+                    hours: item.hours,
+                    workList: item.workList,
+                    workControlProduct: item.workControlProduct,
+                    partsWorks: item.partsWorks,
+                  },
+                ],
+              },
+            },
+          },
+        })
+      }
+    }
+  })
+  return newData
+}
+
 //Получить случайный цвет формата hex
 export const getRandomColor = () => {
   var letters = '0123456789ABCDEF'

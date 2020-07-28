@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react'
 import pdfMake from 'pdfmake'
 import './WorkshopLepsari.scss'
 import PrintIcon from '../../../../../../../assets/print.png'
-import TableView from './TableView/TableView.jsx'
+import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
-import {
-  getRequestsLepsari,
-  getRequestLepsariById,
-  deleteProductsToRequestLepsari,
-  deleteRequestLepsari,
-} from '../../../utils/RequestsAPI/Workshop/Lepsari.jsx'
 import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
-import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import {
+  getRequestById,
+  deleteProductsToRequest,
+  deleteRequest,
+  getRequests,
+  getRequestsByWorkshop,
+} from '../../../utils/RequestsAPI/Requests.jsx'
 
 const WorkshopLepsari = (props) => {
   const [requestLepsari, setRequestLepsari] = useState([])
@@ -20,16 +21,58 @@ const WorkshopLepsari = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [curPage, setCurPage] = useState('Открытые')
 
+  //Статусы заявок
+  const [requestStatuses, setRequestStatutes] = useState([
+    {
+      name: 'Проблема/Материалы',
+      oldName: 'Проблема-материалы',
+      className: 'materials',
+      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+      visible: false,
+    },
+    // {
+    //   name: 'Отгружено',
+    //   className: 'shipped',
+    //   access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    //   visible: false,
+    // },
+    {
+      name: 'Готово к отгрузке',
+      oldName: 'Готово',
+      className: 'ready',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      visible: false,
+    },
+    {
+      name: 'В производстве',
+      className: 'in-production',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      visible: false,
+    },
+    {
+      name: 'Ожидание',
+      className: 'waiting',
+      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      visible: false,
+    },
+    {
+      name: 'Приоритет',
+      className: 'priority',
+      access: ['ROLE_ADMIN'],
+      visible: false,
+    },
+  ])
+
   const deleteItem = (event) => {
-    const id = event.target.dataset.id
-    getRequestLepsariById(id)
+    const id = event.currentTarget.dataset.id
+    getRequestById(id)
       .then((res) => res.json())
       .then((res) => {
         const productsArr = res.lepsariProducts.map((product) => {
-          return deleteProductsToRequestLepsari(product.id)
+          return deleteProductsToRequest(product.id)
         })
         Promise.all(productsArr).then(() => {
-          deleteRequestLepsari(id).then(() => loadRequestLepsari())
+          deleteRequest(id).then(() => loadRequestLepsari())
         })
       })
       .catch((error) => {
@@ -38,15 +81,15 @@ const WorkshopLepsari = (props) => {
   }
 
   const copyRequest = (id) => {
-    props.setTransferState(true)
-    props.setTransferData(
-      requestLepsari.find((item) => {
-        if (item.id === id) {
-          return true
-        }
-      }),
-    )
-    props.history.push('/lepsari/workshop-lepsari/new')
+    // props.setTransferState(true)
+    // props.setTransferData(
+    //   requestLepsari.find((item) => {
+    //     if (item.id === id) {
+    //       return true
+    //     }
+    //   }),
+    // )
+    // props.history.push('/lepsari/workshop-lepsari/new')
   }
 
   useEffect(() => {
@@ -62,14 +105,14 @@ const WorkshopLepsari = (props) => {
     let dd = getRequestsListPdfText(
       requestLepsari.sort((a, b) => a.id - b.id),
       'ЦехЛепсари',
-      'lepsariProducts',
+      'requestProducts',
     )
     pdfMake.createPdf(dd).print()
   }
 
   const loadRequestLepsari = (signal) => {
     setIsLoading(true)
-    getRequestsLepsari(signal)
+    getRequestsByWorkshop('lepsari', signal)
       .then((res) => res.json())
       .then((requests) => {
         // console.log(requests);
@@ -84,9 +127,13 @@ const WorkshopLepsari = (props) => {
         {/* <div className="main-window__title">Заявки на производство Лепсари</div> */}
         <div className="main-window__header">
           <SearchBar
-            title="Поиск по заявкам Лепсари"
+            // title="Поиск по заявкам Лепсари"
             placeholder="Введите название продукции для поиска..."
             setSearchQuery={setSearchQuery}
+          />
+          <FloatingPlus
+            linkTo="/lepsari/workshop-lepsari/new"
+            visibility={['ROLE_ADMIN', 'ROLE_LEPSARI']}
           />
           <div className="main-window__menu">
             <div
@@ -101,6 +148,16 @@ const WorkshopLepsari = (props) => {
             </div>
             <div
               className={
+                curPage === 'Отгружено'
+                  ? 'main-window__item--active main-window__item'
+                  : 'main-window__item'
+              }
+              onClick={() => setCurPage('Отгружено')}
+            >
+              Отгружено
+            </div>
+            <div
+              className={
                 curPage === 'Завершено'
                   ? 'main-window__item--active main-window__item'
                   : 'main-window__item'
@@ -111,7 +168,36 @@ const WorkshopLepsari = (props) => {
             </div>
           </div>
         </div>
-        <div className="main-window__info-panel">
+        <div className="main-window__status-panel">
+          <div>Фильтр по статусам: </div>
+          {requestStatuses.map((status, index) => {
+            return (
+              <div
+                className={
+                  (status.visible
+                    ? 'main-window__button'
+                    : 'main-window__button main-window__button--inverted') +
+                  ' main-window__list-item--' +
+                  status.className
+                }
+                onClick={() => {
+                  let temp = requestStatuses.map((status) => {
+                    return {
+                      ...status,
+                      visible: false,
+                    }
+                  })
+                  temp.splice(index, 1, {
+                    ...status,
+                    visible: !status.visible,
+                  })
+                  setRequestStatutes([...temp])
+                }}
+              >
+                {status.name}
+              </div>
+            )
+          })}
           <Button
             text="Печать списка"
             isLoading={isLoading}
@@ -124,18 +210,51 @@ const WorkshopLepsari = (props) => {
           </div>
         </div>
         <TableView
-          data={requestLepsari.filter((item) => {
-            if (curPage === 'Открытые') {
-              if (item.status !== 'Завершено') return true
-            } else {
-              if (item.status === 'Завершено') return true
-            }
-          })}
+          data={requestLepsari
+            .filter((item) => {
+              if (curPage === 'Завершено' && item.status === 'Завершено') {
+                return true
+              }
+              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
+                return true
+              }
+              if (
+                curPage === 'Открытые' &&
+                item.status !== 'Завершено' &&
+                item.status !== 'Отгружено'
+              ) {
+                return true
+              }
+              return false
+            })
+            .filter((item) => {
+              let check = false
+              let noActiveStatuses = true
+              requestStatuses.map((status) => {
+                requestStatuses.map((status) => {
+                  if (status.visible) {
+                    noActiveStatuses = false
+                  }
+                })
+                if (
+                  noActiveStatuses === true ||
+                  (status.visible &&
+                    (status.name === item.status ||
+                      status.oldName === item.status))
+                ) {
+                  check = true
+                  return
+                }
+              })
+              return check
+            })}
+          workshopName="lepsari"
+          isLoading={isLoading}
           loadData={loadRequestLepsari}
-          userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
-          copyRequest={copyRequest}
+          // copyRequest={copyRequest}
           searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
         />
       </div>
     </div>

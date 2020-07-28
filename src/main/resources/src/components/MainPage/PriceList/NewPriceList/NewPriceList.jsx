@@ -13,6 +13,7 @@ import {
   updatePriceGroupByName,
 } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx'
 import { getPriceListPdfText } from '../../../../utils/pdfFunctions.jsx'
+import { exportPriceListToXLSX } from '../../../../utils/xlsxFunctions.jsx'
 import category1Img from '../../../../../../../../assets/priceList/крепеж_для_деревянных_досок.png'
 import category2Img from '../../../../../../../../assets/priceList/крепеж_для_дпк_досок.png'
 import category3Img from '../../../../../../../../assets/priceList/крепежные_элементы.png'
@@ -412,6 +413,34 @@ const NewPriceList = (props) => {
                     locationTypes,
                     disclaimer,
                     titlePage,
+                  ).then(() => {
+                    setIsLoading(false)
+                  })
+                }}
+              />
+            )}
+            {priceList.length > 0 && (
+              <Button
+                text="Скачать .xlsx"
+                isLoading={isLoading}
+                className="main-form__submit main-form__submit--inverted"
+                inverted
+                onClick={() => {
+                  setIsLoading(true)
+                  exportPriceListToXLSX(
+                    categories,
+                    priceList.filter((item) => item.active),
+                    optionalCols
+                      .filter((item) => item.active && item)
+                      .sort((a, b) => {
+                        if (a.id < b.id) {
+                          return -1
+                        }
+                        if (a.id > b.id) {
+                          return 1
+                        }
+                        return 0
+                      }),
                   ).then(() => {
                     setIsLoading(false)
                   })

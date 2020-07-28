@@ -35,6 +35,8 @@ import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx'
 import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import { exportClientsEmailsCSV } from '../../../utils/xlsxFunctions.jsx'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import { getSuppliersByCategoryAndType } from '../../../utils/RequestsAPI/Clients/Suppliers'
 
 const Clients = (props) => {
   const [clients, setClients] = useState([])
@@ -62,21 +64,21 @@ const Clients = (props) => {
   const deleteItem = (clientId, index) => {
     Promise.all(
       clients[index].legalEntities.map((item) => {
-        return deleteClientLegalEntity(item.id)
+        return clientTypes[props.type].deleteLegalEntityFunction(item.id)
       }),
     )
       .then(() => {
         Promise.all(
           clients[index].contacts.map((item) => {
-            return deleteClientContact(item.id)
+            return clientTypes[props.type].deleteContactsFunction(item.id)
           }),
         ).then(() => {
           Promise.all(
             clients[index].histories.map((item) => {
-              return deleteClientWorkHistory(item.id)
+              return clientTypes[props.type].deleteWorkHistoryFunction(item.id)
             }),
           ).then(() => {
-            deleteClient(clientId).then(() => {
+            clientTypes[props.type].deleteItemFunction(clientId).then(() => {
               let temp = clients
               temp.splice(index, 1)
               setClients([...temp])
@@ -92,39 +94,42 @@ const Clients = (props) => {
   }
 
   const loadClientsTotalByType = (category) => {
-    return getClientsByCategoryAndType(
-      {
-        categoryName: category,
-        clientType: 'Активные',
-      },
-      1,
-      1,
-      sortOrder,
-    )
+    return clientTypes[props.type]
+      .loadItemsByCategory(
+        {
+          categoryName: category,
+          clientType: 'Активные',
+        },
+        1,
+        1,
+        sortOrder,
+      )
       .then((res) => res.json())
       .then((res) => {
         setItemsActiveCount(res.totalElements)
-        return getClientsByCategoryAndType(
-          {
-            categoryName: category,
-            clientType: 'Потенциальные',
-          },
-          1,
-          1,
-          sortOrder,
-        )
+        return clientTypes[props.type]
+          .loadItemsByCategory(
+            {
+              categoryName: category,
+              clientType: 'Потенциальные',
+            },
+            1,
+            1,
+            sortOrder,
+          )
           .then((res) => res.json())
           .then((res) => {
             setItemsPotentialCount(res.totalElements)
-            return getClientsByCategoryAndType(
-              {
-                categoryName: category,
-                clientType: 'В разработке',
-              },
-              1,
-              1,
-              sortOrder,
-            )
+            return clientTypes[props.type]
+              .loadItemsByCategory(
+                {
+                  categoryName: category,
+                  clientType: 'В разработке',
+                },
+                1,
+                1,
+                sortOrder,
+              )
               .then((res) => res.json())
               .then((res) => {
                 setItemsProgressCount(res.totalElements)
@@ -137,21 +142,22 @@ const Clients = (props) => {
     // console.log(category, type);
     setSearchQuery('')
     setIsLoading(true)
-    getClientsByCategoryAndType(
-      {
-        categoryName: category,
-        clientType:
-          type === 'active'
-            ? 'Активные'
-            : type === 'potential'
-            ? 'Потенциальные'
-            : 'В разработке',
-      },
-      curPage,
-      itemsPerPage,
-      sortOrder,
-      signal,
-    )
+    clientTypes[props.type]
+      .loadItemsByCategory(
+        {
+          categoryName: category,
+          clientType:
+            type === 'active'
+              ? 'Активные'
+              : type === 'potential'
+              ? 'Потенциальные'
+              : 'В разработке',
+        },
+        curPage,
+        itemsPerPage,
+        sortOrder,
+        signal,
+      )
       .then((res) => res.json())
       .then((res) => {
         console.log(res)
@@ -181,6 +187,67 @@ const Clients = (props) => {
     })
   }
 
+  const clientTypes = {
+    clients: {
+      name: 'клиент',
+      title: 'Клиенты',
+      type: null,
+      loadItemsByCategory: (
+        category,
+        curPage,
+        itemsPerPage,
+        sortOrder,
+        signal,
+      ) =>
+        getClientsByCategoryAndType(
+          category,
+          curPage,
+          itemsPerPage,
+          sortOrder,
+          signal,
+        ),
+      editItemFunction: (newClient, id) => editClient(newClient, id),
+      deleteItemFunction: (id) => deleteClient(id),
+      editWorkHistoryFunction: (newWorkHistory, id) =>
+        editClientWorkHistory(newWorkHistory, id),
+      editNextContactDateFunction: (date) => editNextContactDateClient(date),
+      addWorkHistoryFunction: (newWorkHistory) =>
+        addClientWorkHistory(newWorkHistory),
+      deleteWorkHistoryFunction: (id) => deleteClientWorkHistory(id),
+      deleteContactsFunction: (id) => deleteClientContact(id),
+      deleteLegalEntityFunction: (id) => deleteClientLegalEntity(id),
+    },
+    suppliers: {
+      name: 'поставщик',
+      title: 'Поставщики',
+      type: 'supplier',
+      loadItemsByCategory: (
+        category,
+        curPage,
+        itemsPerPage,
+        sortOrder,
+        signal,
+      ) =>
+        getSuppliersByCategoryAndType(
+          category,
+          curPage,
+          itemsPerPage,
+          sortOrder,
+          signal,
+        ),
+      editItemFunction: (newClient, id) => editClient(newClient, id),
+      deleteItemFunction: (id) => deleteClient(id),
+      editWorkHistoryFunction: (newWorkHistory, id) =>
+        editClientWorkHistory(newWorkHistory, id),
+      editNextContactDateFunction: (date) => editNextContactDateClient(date),
+      addWorkHistoryFunction: (newWorkHistory) =>
+        addClientWorkHistory(newWorkHistory),
+      deleteWorkHistoryFunction: (id) => deleteClientWorkHistory(id),
+      deleteContactsFunction: (id) => deleteClientContact(id),
+      deleteLegalEntityFunction: (id) => deleteClientLegalEntity(id),
+    },
+  }
+
   const getEmailsExcel = () => {
     setIsLoading(true)
     let totalClients = 1
@@ -205,14 +272,14 @@ const Clients = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Клиенты'
+    document.title = clientTypes[props.type].title
     const abortController = new AbortController()
     // console.log(curPage);
     const curCategoryTemp = props.location.pathname
-      .split('/clients/category/')[1]
+      .split('/category/')[1]
       .split('/')[0]
     const curClientTypeTemp = props.location.pathname
-      .split('/clients/category/')[1]
+      .split('/category/')[1]
       .split('/')[1]
     if (
       curCategoryTemp !== curCategory ||
@@ -229,7 +296,7 @@ const Clients = (props) => {
     return function cancel() {
       abortController.abort()
     }
-  }, [props.location, curPage, sortOrder, itemsPerPage])
+  }, [props.location, curPage, sortOrder, itemsPerPage, props.type])
 
   return (
     <div className="clients">
@@ -240,12 +307,17 @@ const Clients = (props) => {
             <Button
               text="Выгрузить эл. почты"
               isLoading={isLoading}
-              className="main-window__button"
+              className="main-window__button main-window__button--inverted"
+              inverted
               onClick={getEmailsExcel}
             />
           </div>
+          <FloatingPlus
+            linkTo={'/' + props.type + '/new'}
+            visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
+          />
           <SearchBar
-            title="Поиск по клиентам"
+            // title="Поиск по клиентам"
             placeholder="Введите запрос для поиска..."
             setSearchQuery={setSearchQuery}
             searchQuery={searchQuery}
@@ -257,6 +329,7 @@ const Clients = (props) => {
               } else {
                 searchClients({
                   name: query,
+                  type: clientTypes[props.type].type,
                 })
                   .then((res) => res.json())
                   .then((res) => {
@@ -275,34 +348,51 @@ const Clients = (props) => {
           />
           <div className="main-window__menu">
             <Link
-              to={'/clients/category/' + curCategory + '/active'}
+              to={'/' + props.type + '/category/' + curCategory + '/active'}
               className={
                 props.location.pathname.includes('active') === true
                   ? 'main-window__item--active main-window__item'
                   : 'main-window__item'
               }
             >
-              Активные ({itemsActiveCount})
+              <div>
+                Активные
+                <span className="main-window__menu-item-amount">
+                  {itemsActiveCount}
+                </span>
+              </div>
             </Link>
             <Link
-              to={'/clients/category/' + curCategory + '/potential'}
+              to={'/' + props.type + '/category/' + curCategory + '/potential'}
               className={
                 props.location.pathname.includes('potential') === true
                   ? 'main-window__item--active main-window__item'
                   : 'main-window__item'
               }
             >
-              Потенциальные ({itemsPotentialCount})
+              <div>
+                Потенциальные
+                <span className="main-window__menu-item-amount">
+                  {itemsPotentialCount}
+                </span>
+              </div>
             </Link>
             <Link
-              to={'/clients/category/' + curCategory + '/in-progress'}
+              to={
+                '/' + props.type + '/category/' + curCategory + '/in-progress'
+              }
               className={
                 props.location.pathname.includes('in-progress') === true
                   ? 'main-window__item--active main-window__item'
                   : 'main-window__item'
               }
             >
-              В разработке ({itemsProgressCount})
+              <div>
+                В разработке
+                <span className="main-window__menu-item-amount">
+                  {itemsProgressCount}
+                </span>
+              </div>
             </Link>
           </div>
         </div>
@@ -322,6 +412,9 @@ const Clients = (props) => {
                   setCloseWindow={setCloseWindow}
                   closeWindow={closeWindow}
                   loadData={loadData}
+                  editNextContactDate={
+                    clientTypes[props.type].editNextContactDateFunction
+                  }
                 />
               ) : (
                 <EditWorkHistory
@@ -331,6 +424,15 @@ const Clients = (props) => {
                   setCloseWindow={setCloseWindow}
                   closeWindow={closeWindow}
                   userHasAccess={props.userHasAccess}
+                  addWorkHistory={
+                    clientTypes[props.type].addWorkHistoryFunction
+                  }
+                  editWorkHistory={
+                    clientTypes[props.type].editWorkHistoryFunction
+                  }
+                  deleteWorkHistory={
+                    clientTypes[props.type].deleteWorkHistoryFunction
+                  }
                 />
               )}
             </React.Fragment>
@@ -456,6 +558,7 @@ const Clients = (props) => {
                     )}
                   </span>
                   <div className="main-window__actions">
+                    {/* <div className="main-window__mobile-text">Действия:</div> */}
                     {props.userHasAccess(['ROLE_ADMIN']) && (
                       <div
                         className="main-window__action"
@@ -464,6 +567,7 @@ const Clients = (props) => {
                           let temp = clients
                           //   console.log(item);
                           let newClient = Object.assign({
+                            type: item.type,
                             categoryId: item.category.id,
                             check: item.check,
                             clientType: item.clientType,
@@ -478,7 +582,8 @@ const Clients = (props) => {
                             workCondition: item.workCondition,
                             favorite: !item.favorite,
                           })
-                          editClient(newClient, item.id)
+                          clientTypes[props.type]
+                            .editItemFunction(newClient, item.id)
                             .then(() => {
                               temp.splice(index, 1, {
                                 ...item,
@@ -526,7 +631,7 @@ const Clients = (props) => {
                       className="main-window__action"
                       title="Просмотр клиента"
                       onClick={() => {
-                        props.history.push('/clients/view/' + item.id)
+                        props.history.push(`/${props.type}/view/${item.id}`)
                       }}
                     >
                       <img className="main-window__img" src={viewSVG} />
@@ -535,7 +640,7 @@ const Clients = (props) => {
                       className="main-window__action"
                       title="Редактирование клиента"
                       onClick={() => {
-                        props.history.push('/clients/edit/' + item.id)
+                        props.history.push(`/${props.type}/edit/${item.id}`)
                       }}
                     >
                       <img className="main-window__img" src={editSVG} />
@@ -787,17 +892,23 @@ const EditNextContactDate = (props) => {
 
   const handleSubmit = () => {
     setIsLoading(true)
-    editNextContactDateClient({
-      nextDateContact: new Date(date).getTime() / 1000,
-      id: props.selectedItem.id,
-    }).then(() => {
-      setIsLoading(false)
-      props.loadData(
-        props.selectedItem.category.name,
-        props.selectedItem.clientType === 'Активные' ? 'active' : 'potential',
-      )
-      props.setCloseWindow(!props.closeWindow)
-    })
+    props
+      .editNextContactDate({
+        nextDateContact: new Date(date).getTime() / 1000,
+        id: props.selectedItem.id,
+      })
+      .then(() => {
+        setIsLoading(false)
+        props.loadData(
+          props.selectedItem.category.name,
+          props.selectedItem.clientType === 'Активные'
+            ? 'active'
+            : props.selectedItem.clientType === 'Потенциальные'
+            ? 'potential'
+            : 'in-progress',
+        )
+        props.setCloseWindow(!props.closeWindow)
+      })
   }
 
   useEffect(() => {
@@ -862,7 +973,7 @@ const EditWorkHistory = (props) => {
         }
       })
       return edited === true
-        ? editClientWorkHistory(
+        ? props.editWorkHistory(
             {
               date: selected.date,
               action: selected.action,
@@ -872,7 +983,7 @@ const EditWorkHistory = (props) => {
             },
             selected.id,
           )
-        : addClientWorkHistory({
+        : props.addWorkHistory({
             date: selected.date,
             action: selected.action,
             result: selected.result,
@@ -890,7 +1001,7 @@ const EditWorkHistory = (props) => {
             return
           }
         })
-        return deleted === true && deleteClientWorkHistory(item.id)
+        return deleted === true && props.deleteWorkHistory(item.id)
       })
       Promise.all(itemsArr).then(() => {
         setIsLoading(false)

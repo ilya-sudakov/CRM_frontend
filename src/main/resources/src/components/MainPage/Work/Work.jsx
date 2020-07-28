@@ -7,6 +7,7 @@ import {
   getWork,
 } from '../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
 import '../../../utils/MainWindow/MainWindow.scss'
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const Work = (props) => {
   const [work, setWork] = useState([])
@@ -41,8 +42,9 @@ const Work = (props) => {
     <div className="work">
       <div className="main-window">
         <div className="main-window__title">Работы</div>
+        <FloatingPlus linkTo="/work-list/new" visibility={['ROLE_ADMIN']} />
         <SearchBar
-          title="Поиск работы"
+          // title="Поиск работы"
           placeholder="Введите название работы для поиска..."
           setSearchQuery={setSearchQuery}
         />

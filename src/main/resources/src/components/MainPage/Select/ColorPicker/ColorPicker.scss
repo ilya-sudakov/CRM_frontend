@@ -77,21 +77,21 @@
         border-bottom-right-radius: 2.5px;
       }
       &--completed {
-        background-color: #5ea76e;
+        background-color: #98dda6;
         &:hover {
-          background-color: darken(#5ea76e, 5%);
+          background-color: darken(#98dda6, 5%);
         }
       }
       &--defect {
-        background-color: #c48681;
+        background-color: #d6574e;
         &:hover {
-          background-color: darken(#c48681, 5%);
+          background-color: darken(#d6574e, 5%);
         }
       }
       &--production {
-        background-color: #87a8b6;
+        background-color: #cdceaf;
         &:hover {
-          background-color: darken(#87a8b6, 5%);
+          background-color: darken(#cdceaf, 5%);
         }
       }
     }

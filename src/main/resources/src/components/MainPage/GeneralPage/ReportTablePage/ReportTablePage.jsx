@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { months } from '../../../../utils/dataObjects.js' //Список месяцев
 import './ReportTablePage.scss'
+import DownloadIcon from '../../../../../../../../assets/download.svg'
 import { getEmployeesByWorkshop } from '../../../../utils/RequestsAPI/Employees.jsx'
 import {
   getWorkReportByEmployee,
@@ -16,6 +17,9 @@ import {
   formatDateString,
 } from '../../../../utils/functions.jsx'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
+import Button from '../../../../utils/Form/Button/Button.jsx'
+import { exportReportTableExcel } from '../../../../utils/xlsxFunctions.jsx'
+import { UserContext } from '../../../../App.js'
 
 const ReportTablePage = (props) => {
   const [date, setDate] = useState(new Date())
@@ -35,6 +39,7 @@ const ReportTablePage = (props) => {
   const [showWindow, setShowWindow] = useState(false)
   const [selectedInfo, setSelectedInfo] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
+  const userContext = useContext(UserContext)
 
   const getAllEmployeesWorkData = (date, signal) => {
     setIsLoading(true)
@@ -176,6 +181,7 @@ const ReportTablePage = (props) => {
   }
 
   useEffect(() => {
+    document.title = 'Табель'
     let abortController = new AbortController()
     getAllEmployeesWorkData(date, abortController.signal)
     return function cancel() {
@@ -186,7 +192,28 @@ const ReportTablePage = (props) => {
   return (
     <div className="report-table-page">
       <div className="main-window">
-        <div className="main-window__title">Табель</div>
+        <div className="main-window__title">
+          Табель
+          <Button
+            text="Скачать .xlsx"
+            imgSrc={DownloadIcon}
+            className="main-window__button main-window__button--inverted"
+            inverted
+            isLoading={isLoading}
+            onClick={async () => {
+              setIsLoading(true)
+              const filteredWorkshops = [
+                'ЦехЛЭМЗ',
+                'ЦехЛепсари',
+                'ЦехЛиговский',
+                'Офис',
+                'Уволенные',
+              ]
+              await exportReportTableExcel(new Date(date), filteredWorkshops)
+              setIsLoading(false)
+            }}
+          />
+        </div>
         <SearchBar
           title="Поиск по сотрудникам"
           placeholder="Введите запрос для поиска по сотрудникам..."
