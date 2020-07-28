@@ -15,7 +15,7 @@ import {
   EditMachine,
   ViewPressForm,
   EditPressForm,
-  EditPartInRigging,
+  EditPartInRiggingOld,
   ViewPart,
 } from '../../lazyImports.jsx'
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx'
@@ -28,6 +28,7 @@ import PageLoading from '../../PageLoading/PageLoading.jsx'
 import NewRig from './RiggingComponents/Forms/NewRig/NewRig.jsx'
 import ViewRig from './RiggingComponents/Forms/ViewRig/ViewRig.jsx'
 import EditRig from './RiggingComponents/Forms/EditRig/EditRig.jsx'
+import EditPartInRigging from './RiggingComponents/Forms/EditPartInRigging/EditPartInRigging.jsx'
 
 const Rigging = (props) => {
   return (
@@ -329,6 +330,7 @@ const Rigging = (props) => {
                     (props.location.pathname.includes('parts') && 'parts')) +
                   '/edit-part/'
                 }
+                // component={EditPartInRiggingOld}
                 component={EditPartInRigging}
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[

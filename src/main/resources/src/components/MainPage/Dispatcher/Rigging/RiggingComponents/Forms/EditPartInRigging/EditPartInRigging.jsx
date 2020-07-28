@@ -5,19 +5,9 @@ import {
   getPartFromStamp,
   editPartFromStamp,
 } from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import {
-  editPartFromPressForm,
-  getPartFromPressForm,
-} from '../../../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
-import {
-  getPartFromMachine,
-  editPartFromMachine,
-} from '../../../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
-import ImgLoader from '../../../../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import {
-  editPartFromPart,
-  getPartFromPart,
-} from '../../../../../../../utils/RequestsAPI/Rigging/Parts.jsx'
+import { rigTypes } from '../../rigsVariables.js'
+import Button from '../../../../../../../utils/Form/Button/Button.jsx'
+
 const EditPartInRigging = (props) => {
   const [partInputs, setPartInputs] = useState({
     number: '',
@@ -54,64 +44,25 @@ const EditPartInRigging = (props) => {
     }
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  const handleSubmit = () => {
     setIsLoading(true)
-    formIsValid() &&
-      (
-        (props.location.pathname.includes('/dispatcher/rigging/stamp') &&
-          editPartFromStamp(
-            {
-              ...partInputs,
-              riggingId: rigId,
-            },
-            partId,
-          )) ||
-        (props.location.pathname.includes('/dispatcher/rigging/machine') &&
-          editPartFromMachine(
-            {
-              ...partInputs,
-              riggingId: rigId,
-            },
-            partId,
-          )) ||
-        (props.location.pathname.includes('/dispatcher/rigging/press-form') &&
-          editPartFromPressForm(
-            {
-              ...partInputs,
-              riggingId: rigId,
-            },
-            partId,
-          )) ||
-        (props.location.pathname.includes('/dispatcher/rigging/parts') &&
-          editPartFromPart(
-            {
-              ...partInputs,
-              riggingId: rigId,
-            },
-            partId,
-          ))
-      )
+    const type = props.location.pathname.includes('/stamp')
+      ? 'stamp'
+      : props.location.pathname.includes('/machine')
+      ? 'machine'
+      : props.location.pathname.includes('/press-form')
+      ? 'pressForm'
+      : props.location.pathname.includes('/parts') && 'parts'
 
-        .then(() =>
-          props.history.push(
-            '/dispatcher/rigging/' +
-              ((props.location.pathname.includes('/dispatcher/rigging/stamp') &&
-                'stamp') ||
-                (props.location.pathname.includes(
-                  '/dispatcher/rigging/machine',
-                ) &&
-                  'machine') ||
-                (props.location.pathname.includes(
-                  '/dispatcher/rigging/press-form',
-                ) &&
-                  'press-form') ||
-                (props.location.pathname.includes(
-                  '/dispatcher/rigging/parts',
-                ) &&
-                  'parts')),
-          ),
-        )
+    formIsValid() &&
+      editPartFromStamp(
+        {
+          ...partInputs,
+          riggingId: rigId,
+        },
+        partId,
+      )
+        .then(() => props.history.push(rigTypes[type]).redirectURL)
         .catch((error) => {
           setIsLoading(false)
           alert('Ошибка при добавлении записи')
@@ -130,36 +81,24 @@ const EditPartInRigging = (props) => {
 
   useEffect(() => {
     document.title = 'Редактирование детали'
-    let rigId = props.history.location.pathname.split(
-      '/dispatcher/rigging/' +
-        ((props.location.pathname.includes('/dispatcher/rigging/stamp') &&
-          'stamp') ||
-          (props.location.pathname.includes('/dispatcher/rigging/machine') &&
-            'machine') ||
-          (props.location.pathname.includes('/dispatcher/rigging/press-form') &&
-            'press-form') ||
-          (props.location.pathname.includes('/dispatcher/rigging/parts') &&
-            'parts')) +
-        '/edit-part/',
-    )[1]
+    const type = props.location.pathname.includes('/stamp')
+      ? 'stamp'
+      : props.location.pathname.includes('/machine')
+      ? 'machine'
+      : props.location.pathname.includes('/press-form')
+      ? 'pressForm'
+      : props.location.pathname.includes('/parts') && 'parts'
+
+    let rigId = props.history.location.pathname.split('/edit-part/')[1]
     const partId = rigId.split('/')[1]
     rigId = rigId.split('/')[0]
     setPartId(partId)
     setRigId(rigId)
     if (isNaN(Number.parseInt(rigId)) || isNaN(Number.parseInt(partId))) {
       alert('Неправильный индекс!')
-      props.history.push('/dispatcher/rigging/machine')
+      props.history.push(rigTypes[type].redirectURL)
     } else {
-      ;(
-        (props.location.pathname.includes('/dispatcher/rigging/stamp') &&
-          getPartFromStamp(partId)) ||
-        (props.location.pathname.includes('/dispatcher/rigging/machine') &&
-          getPartFromMachine(partId)) ||
-        (props.location.pathname.includes('/dispatcher/rigging/press-form') &&
-          getPartFromPressForm(partId)) ||
-        (props.location.pathname.includes('/dispatcher/rigging/parts') &&
-          getPartFromPart(partId))
-      )
+      return getPartFromStamp(partId)
         .then((res) => res.json())
         .then((res) => {
           setPartInputs(res)
@@ -310,36 +249,24 @@ const EditPartInRigging = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() =>
-              props.history.push(
-                '/dispatcher/rigging/' +
-                  ((props.location.pathname.includes(
-                    '/dispatcher/rigging/stamp',
-                  ) &&
-                    'stamp') ||
-                    (props.location.pathname.includes(
-                      '/dispatcher/rigging/machine',
-                    ) &&
-                      'machine') ||
-                    (props.location.pathname.includes(
-                      '/dispatcher/rigging/press-form',
-                    ) &&
-                      'press-form') ||
-                    (props.location.pathname.includes(
-                      '/dispatcher/rigging/parts',
-                    ) &&
-                      'parts')),
-              )
-            }
+            onClick={() => {
+              const type = props.location.pathname.includes('/stamp')
+                ? 'stamp'
+                : props.location.pathname.includes('/machine')
+                ? 'machine'
+                : props.location.pathname.includes('/press-form')
+                ? 'pressForm'
+                : props.location.pathname.includes('/parts') && 'parts'
+              props.history.push(rigTypes[type].redirectURL)
+            }}
             value="Вернуться назад"
           />
-          <input
+          <Button
             className="main-form__submit"
-            type="submit"
+            text="Редактировать деталь"
+            isLoading={isLoading}
             onClick={handleSubmit}
-            value="Редактировать деталь"
           />
-          {isLoading && <ImgLoader />}
         </div>
       </form>
     </div>
