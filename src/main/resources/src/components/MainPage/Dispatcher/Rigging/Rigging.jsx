@@ -1,23 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react'
-import {
-  Stamp,
-  Parts,
-  NewPart,
-  EditPart,
-  Machine,
-  PressForm,
-  // NewStamp,
-  // ViewStamp,
-  // EditStamp,
-  NewMachine,
-  NewPressForm,
-  ViewMachine,
-  EditMachine,
-  ViewPressForm,
-  EditPressForm,
-  EditPartInRiggingOld,
-  ViewPart,
-} from '../../lazyImports.jsx'
+import { Stamp, Parts, Machine, PressForm } from '../../lazyImports.jsx'
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx'
 import { Route, Switch, Link } from 'react-router-dom'
 import plusImg from '../../../../../../../../assets/sidemenu/plus.png'
@@ -330,7 +312,6 @@ const Rigging = (props) => {
                     (props.location.pathname.includes('parts') && 'parts')) +
                   '/edit-part/'
                 }
-                // component={EditPartInRiggingOld}
                 component={EditPartInRigging}
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[

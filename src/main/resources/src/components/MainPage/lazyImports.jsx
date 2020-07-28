@@ -186,9 +186,9 @@ const ViewEmployee = lazy(() =>
   import('./Dispatcher/Employees/ViewEmployee/ViewEmployee.jsx'),
 )
 
-const EditPartInRigging = lazy(() =>
-  import('./Dispatcher/Rigging/EditPartInRigging/EditPartInRigging.jsx'),
-)
+// const EditPartInRigging = lazy(() =>
+//   import('./Dispatcher/Rigging/EditPartInRigging/EditPartInRigging.jsx'),
+// )
 
 const Work = lazy(() => import('./Work/Work.jsx'))
 
@@ -323,7 +323,7 @@ export {
   NewPressForm,
   ViewPressForm,
   EditPressForm,
-  EditPartInRigging,
+  // EditPartInRigging,
   Work,
   NewWork,
   EditWork,

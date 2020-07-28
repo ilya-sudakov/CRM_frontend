@@ -62,7 +62,11 @@ const EditPartInRigging = (props) => {
         },
         partId,
       )
-        .then(() => props.history.push(rigTypes[type].redirectURL))
+        .then(() => {
+          setIsLoading(false)
+          window.location.href = rigTypes[type].redirectURL
+          // props.history.push(rigTypes[type].redirectURL)
+        })
         .catch((error) => {
           setIsLoading(false)
           alert('Ошибка при добавлении записи')
@@ -246,11 +250,12 @@ const EditPartInRigging = (props) => {
           * - поля, обязательные для заполнения
         </div>
         <div className="main-form__buttons">
-          <input
+          <Button
             className="main-form__submit main-form__submit--inverted"
-            type="submit"
-            onClick={(event) => {
-              event.preventDefault()
+            inverted
+            text="Вернуться назад"
+            isLoading={isLoading}
+            onClick={() => {
               const type = props.location.pathname.includes('/stamp')
                 ? 'stamp'
                 : props.location.pathname.includes('/machine')
@@ -258,9 +263,9 @@ const EditPartInRigging = (props) => {
                 : props.location.pathname.includes('/press-form')
                 ? 'pressForm'
                 : props.location.pathname.includes('/parts') && 'parts'
-              props.history.push(rigTypes[type].redirectURL)
+              // props.history.push(rigTypes[type].redirectURL)
+              window.location.href = rigTypes[type].redirectURL
             }}
-            value="Вернуться назад"
           />
           <Button
             className="main-form__submit"
