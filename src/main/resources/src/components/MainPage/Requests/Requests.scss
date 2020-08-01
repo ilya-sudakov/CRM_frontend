@@ -76,9 +76,11 @@
 
     .main-window__menu {
       width: calc(100% - 25px);
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
       margin-bottom: 10px;
+      // border-bottom-left-radius: 5px;
+      // border-bottom-right-radius: 5px;
+      border-radius: 5px;
+      background-color: rgba(#ffffff, 0.9);
 
       .main-window__item {
         margin-right: 2.5px;
@@ -99,13 +101,11 @@
   }
 
   .searchbar {
-    background-color: $secondary-text-color;
     width: calc(100% - 25px);
     text-align: left;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    // margin-right: auto;
-    // margin-left: 12.5px;
+    // background-color: $secondary-text-color;
   }
 
   .form-window {

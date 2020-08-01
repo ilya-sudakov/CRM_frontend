@@ -123,7 +123,7 @@ const TableView = (props) => {
                 id={stamp.id}
                 className={
                   'main-window__list-item main-window__list-item--' +
-                  (stamp.color ? stamp.color : 'production')
+                  (stamp.color || 'production')
                 }
                 onClick={handleClickStamp}
               >
@@ -152,7 +152,7 @@ const TableView = (props) => {
                   {' '}
                   <div className="main-window__mobile-text">Статус заявки:</div>
                   <select
-                    id={stamp.id}
+                    // id={stamp.id}
                     className="main-window__status_select"
                     value={stamp.color}
                     onChange={(event) => {

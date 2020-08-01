@@ -5,7 +5,7 @@ import {
   getPartFromStamp,
   editPartFromStamp,
 } from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { rigTypes } from '../../rigsVariables.js'
+import { rigTypes, checkRiggingTypesInputs } from '../../rigsVariables.js'
 import Button from '../../../../../../../utils/Form/Button/Button.jsx'
 
 const EditPartInRigging = (props) => {
@@ -182,6 +182,9 @@ const EditPartInRigging = (props) => {
               name="cuttingDimensions"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={
+                !checkRiggingTypesInputs(partInputs, 'cuttingDimensions')
+              }
               defaultValue={partInputs.cuttingDimensions}
             />
           </div>
@@ -194,6 +197,7 @@ const EditPartInRigging = (props) => {
               name="milling"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'milling')}
               defaultValue={partInputs.milling}
             />
           </div>
@@ -206,6 +210,7 @@ const EditPartInRigging = (props) => {
               name="harding"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'harding')}
               defaultValue={partInputs.harding}
             />
           </div>
@@ -218,6 +223,7 @@ const EditPartInRigging = (props) => {
               name="grinding"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'grinding')}
               defaultValue={partInputs.grinding}
             />
           </div>
@@ -230,6 +236,7 @@ const EditPartInRigging = (props) => {
               name="erosion"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'erosion')}
               defaultValue={partInputs.erosion}
             />
           </div>
@@ -242,6 +249,7 @@ const EditPartInRigging = (props) => {
               name="controll"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'controll')}
               defaultValue={partInputs.controll}
             />
           </div>

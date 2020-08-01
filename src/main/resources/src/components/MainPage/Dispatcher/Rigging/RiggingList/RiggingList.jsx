@@ -69,7 +69,7 @@ const RiggingList = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Список оснастки'
+    document.title = 'Очередь инструментального производства'
     if (dataLoaded) {
       //Временное решение пока нет бэка
       let temp = []
@@ -99,7 +99,9 @@ const RiggingList = (props) => {
   return (
     <div className="rigging-list">
       <div className="main-window">
-        <div className="main-window__title">Список оснастки</div>
+        <div className="main-window__title">
+          Очередь инструментального производства
+        </div>
         <div className="main-window__status-panel">
           {Object.entries(statuses).map((status) => (
             <div

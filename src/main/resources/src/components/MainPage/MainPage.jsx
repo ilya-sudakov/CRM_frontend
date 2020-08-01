@@ -661,7 +661,7 @@ class MainPage extends React.Component {
                     'ROLE_DISPATCHER',
                     'ROLE_MANAGER',
                     'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP'
+                    'ROLE_WORKSHOP',
                   ]}
                 />
                 <PrivateRoute

@@ -151,8 +151,10 @@ const SideMenu = (props) => {
         },
         {
           name: 'Очередь инструментального производства',
-          pathname: '/dispatcher/rigging/parts',
-          link: '/dispatcher/rigging/parts',
+          // pathname: '/dispatcher/rigging/parts',
+          // link: '/dispatcher/rigging/parts',
+          pathname: '/rigging-list',
+          link: '/rigging-list',
           icon: listImg,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
@@ -197,8 +199,10 @@ const SideMenu = (props) => {
         },
         {
           name: 'Очередь инструментального производства',
-          pathname: '/dispatcher/rigging/parts',
-          link: '/dispatcher/rigging/parts',
+          // pathname: '/dispatcher/rigging/parts',
+          // link: '/dispatcher/rigging/parts',
+          pathname: '/rigging-list',
+          link: '/rigging-list',
           icon: listImg,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
         },
@@ -223,7 +227,8 @@ const SideMenu = (props) => {
       // linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
       //   ? '/ligovskiy/orders'
       //   : '/ligovskiy/workshop',
-      linkTo: '/dispatcher/rigging/parts',
+      // linkTo: '/dispatcher/rigging/parts',
+      linkTo: '/rigging-list',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
       name: 'ЦехЛиговский',
       icon: factoryIcon,
@@ -238,8 +243,10 @@ const SideMenu = (props) => {
         // },
         {
           name: 'Очередь инструментального производства',
-          pathname: '/dispatcher/rigging/parts',
-          link: '/dispatcher/rigging/parts',
+          // pathname: '/dispatcher/rigging/parts',
+          // link: '/dispatcher/rigging/parts',
+          pathname: '/rigging-list',
+          link: '/rigging-list',
           icon: listImg,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
         },
@@ -280,7 +287,12 @@ const SideMenu = (props) => {
     {
       pathname: '/dispatcher/rigging/',
       linkTo: '/dispatcher/rigging/stamp',
-      mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+      mainRoles: [
+        'ROLE_ADMIN',
+        'ROLE_DISPATCHER',
+        'ROLE_ENGINEER',
+        'ROLE_WORKSHOP',
+      ],
       name: 'Оснастка',
       icon: wrenchImg,
       // iconClassName: 'sidemenu__img--bigger'

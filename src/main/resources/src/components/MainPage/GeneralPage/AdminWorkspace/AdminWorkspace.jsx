@@ -112,7 +112,7 @@ const AdminWorkspace = (props) => {
             })
           })
         })
-        // console.log(workshops)
+        console.log(workshops)
         if (props.userHasAccess(['ROLE_ADMIN'])) {
           !canvasLoaded &&
             loadCanvas(
@@ -129,11 +129,9 @@ const AdminWorkspace = (props) => {
                 : 'horizontalBar',
             data: {
               labels: [
-                ...week.map(
-                  (day, index) =>
-                    // weekdays[index] + ' ' + formatDateStringNoYear(day),
-                    weekdays[index],
-                ),
+                ...week.map((day, index) => {
+                  return weekdays[index]
+                }),
               ],
               datasets: [...workshops],
             },

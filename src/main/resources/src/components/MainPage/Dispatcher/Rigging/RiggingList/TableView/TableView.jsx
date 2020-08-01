@@ -7,6 +7,7 @@ import { UserContext } from '../../../../../../App.js'
 
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
 import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
+import { rigStatuses } from '../../RiggingComponents/rigsVariables.js'
 
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
@@ -28,12 +29,12 @@ const TableView = (props) => {
       isMinimized: false,
       visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
     },
-    {
-      name: 'Главный инженер',
-      alternative: 'А.И.',
-      isMinimized: false,
-      visibility: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-    },
+    // {
+    //   name: 'Главный инженер',
+    //   alternative: 'А.И.',
+    //   isMinimized: false,
+    //   visibility: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    // },
   ])
 
   const riggingNames = {
@@ -86,7 +87,7 @@ const TableView = (props) => {
                 <span>Название</span>
                 <span>Кол-во</span>
                 <span>Комментарий</span>
-                {/* <span>Статус</span> */}
+                <span>Статус</span>
                 <div className="main-window__actions">Действия</div>
               </div>
               {props.isLoading && (
@@ -129,10 +130,14 @@ const TableView = (props) => {
                           </div>
                           {item.comment}
                         </span>
-                        {/* <span>
-                      <div className="main-window__mobile-text">Статус</div>
-                      {temp.status.current.statusName}
-                    </span> */}
+                        <span
+                          className={`main-window__list-item--${
+                            rigStatuses[item.color || 'production']?.className
+                          }`}
+                        >
+                          <div className="main-window__mobile-text">Статус</div>
+                          {rigStatuses[item.color || 'production'].name}
+                        </span>
                         <div className="main-window__actions">
                           <Link
                             className="main-window__action"
