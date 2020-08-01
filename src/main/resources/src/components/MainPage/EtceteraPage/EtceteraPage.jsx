@@ -48,8 +48,14 @@ const EtceteraPage = (props) => {
     'Учет времени': [
       {
         linkTo: '/work-management',
-        name: 'Учет времени',
-        access: ['ROLE_ADMIN'],
+        name: 'Отчет производства',
+        access: [
+          'ROLE_ADMIN',
+          'ROLE_WORKSHOP',
+          'ROLE_DISPATCHER',
+          'ROLE_ENGINEER',
+          'ROLE_MANAGER',
+        ],
         icon: workTimeIcon,
       },
       {
