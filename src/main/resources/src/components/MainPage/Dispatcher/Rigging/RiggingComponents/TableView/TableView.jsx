@@ -251,7 +251,7 @@ const TableView = (props) => {
                             ? ''
                             : ' main-window__list-item--message main-window__list-item--warning')
                         }
-                        data-msg="Предупреждение! Введено некорректное местоположение"
+                        data-msg="Предупреждение! Введите корректное местоположение"
                       >
                         <span>
                           <div className="main-window__mobile-text">

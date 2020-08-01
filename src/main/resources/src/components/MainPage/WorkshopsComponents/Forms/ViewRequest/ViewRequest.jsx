@@ -25,6 +25,7 @@ const ViewRequest = (props) => {
     status: 'Не готово',
     shippingDate: '',
     comment: '',
+    price: 0,
   })
   const [itemId, setItemId] = useState(0)
 
@@ -52,6 +53,7 @@ const ViewRequest = (props) => {
             status: oldRequest.status,
             shippingDate: oldRequest.shippingDate,
             comment: oldRequest.comment,
+            price: oldRequest.price,
           })
         })
         .catch((error) => {
@@ -161,6 +163,17 @@ const ViewRequest = (props) => {
               />
             </div>
           </div>
+          {/* <div className="main-form__item">
+            <div className="main-form__input_name">Цена</div>
+            <div className="main-form__input_field">
+              <input
+                type="number"
+                name="price"
+                defaultValue={requestInputs.price}
+                readOnly
+              />
+            </div>
+          </div> */}
           <div className="main-form__buttons">
             <input
               className="main-form__submit"

@@ -7,7 +7,7 @@
   --completed: #98dda6;
   --ready: #77c78a;
   // --in-production: #CDCEAF;
-  --in-production: #DADBBA;
+  --in-production: #dadbba;
   --waiting: #84c7b1;
   --problem: #d6574e;
   --materials: #d4ae63;
@@ -94,6 +94,9 @@
           }
         }
         &:not(.main-window__list-item--header) {
+          //test for price column
+          // padding-bottom: 40px;
+
           &::before {
             content: "";
             display: inline-block;
@@ -246,6 +249,13 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             // max-width: 65px;
+          }
+          &:nth-child(8) {
+            position: absolute;
+            left: 5px;
+            bottom: 10px;
+            font-size: 110%;
+            // font-style: italic;
           }
         }
 
