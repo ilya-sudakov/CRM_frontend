@@ -146,7 +146,7 @@ const TableView = (props) => {
                 <span
                   className={
                     'main-window__list-item--' +
-                    rigStatuses[stamp.color]?.className
+                    rigStatuses[stamp.color || 'production'].className
                   }
                 >
                   {' '}
@@ -246,7 +246,7 @@ const TableView = (props) => {
                         key={index}
                         className={
                           'main-window__list-item main-window__list-item--' +
-                          (part.color ? part.color : 'production') +
+                          (part.color || 'production') +
                           (workshopsLocations[part.location]
                             ? ''
                             : ' main-window__list-item--message main-window__list-item--warning')
@@ -288,7 +288,7 @@ const TableView = (props) => {
                         <span
                           className={
                             'main-window__list-item--' +
-                            rigStatuses[part.color]?.className
+                            rigStatuses[part.color || 'production'].className
                           }
                         >
                           <div className="main-window__mobile-text">
