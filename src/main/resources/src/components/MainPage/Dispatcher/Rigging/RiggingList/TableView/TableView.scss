@@ -6,7 +6,8 @@
     align-items: center;
     --defect: #e08989;
     --completed: #77c78a;
-    --production: #cdceaf;
+    // --production: #cdceaf;
+    --production: #d4d688;
 
     &__list {
         width: calc(100% - 50px);
@@ -102,10 +103,12 @@
                             content: "";
                             display: inline-block;
                             position: absolute;
-                            width: 15px;
-                            height: 15px;
-                            left: 5px;
-                            top: calc(50% - 7.5px);
+                            // width: 15px;
+                            // height: 15px;
+                            width: 12.5px;
+                            height: 12.5px;
+                            left: 7.5px;
+                            top: calc(50% - 6px);
                             border-radius: 999px;
                             background-color: #cccccc;
                         }
