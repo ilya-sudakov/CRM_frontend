@@ -69,8 +69,8 @@ const EditPartInRigging = (props) => {
       )
         .then(() => {
           setIsLoading(false)
-          window.location.href = rigTypes[type].redirectURL
-          // props.history.push(rigTypes[type].redirectURL)
+          // window.location.href = rigTypes[type].redirectURL
+          props.history.push(rigTypes[type].redirectURL)
         })
         .catch((error) => {
           setIsLoading(false)
@@ -98,7 +98,8 @@ const EditPartInRigging = (props) => {
       ? 'pressForm'
       : props.location.pathname.includes('/parts') && 'parts'
 
-    let rigId = props.history.location.pathname.split('/edit-part/')[1]
+    let rigId = props.history.location.pathname
+    rigId = rigId.split('/edit-part/')[1]
     const partId = rigId.split('/')[1]
     rigId = rigId.split('/')[0]
     setPartId(partId)
@@ -107,7 +108,7 @@ const EditPartInRigging = (props) => {
       alert('Неправильный индекс!')
       props.history.push(rigTypes[type].redirectURL)
     } else {
-      return getPartFromStamp(partId)
+      getPartFromStamp(partId)
         .then((res) => res.json())
         .then((res) => {
           setPartInputs(res)
@@ -285,8 +286,8 @@ const EditPartInRigging = (props) => {
                 : props.location.pathname.includes('/press-form')
                 ? 'pressForm'
                 : props.location.pathname.includes('/parts') && 'parts'
-              // props.history.push(rigTypes[type].redirectURL)
-              window.location.href = rigTypes[type].redirectURL
+              // window.location.href = rigTypes[type].redirectURL
+              props.history.push(rigTypes[type].redirectURL)
             }}
           />
           <Button
