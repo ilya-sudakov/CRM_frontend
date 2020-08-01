@@ -73,7 +73,7 @@ const TableView = (props) => {
             : true,
       })
     })
-    console.log(cacheElements)
+    // console.log(cacheElements)
     setPartsVisible([...temp])
   }, [props.data])
 
@@ -164,10 +164,9 @@ const TableView = (props) => {
                     rigStatuses[stamp.color || 'production'].className
                   }
                 >
-                  {' '}
                   <div className="main-window__mobile-text">Статус заявки:</div>
                   <select
-                    // id={stamp.id}
+                    id={stamp_id}
                     className="main-window__status_select"
                     value={stamp.color}
                     onChange={(event) => {
