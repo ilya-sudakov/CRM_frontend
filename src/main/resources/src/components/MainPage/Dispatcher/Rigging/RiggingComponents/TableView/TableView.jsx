@@ -18,6 +18,7 @@ const TableView = (props) => {
     date: 'desc',
   })
   const [partsVisible, setPartsVisible] = useState([])
+  const [cacheElements, setCacheElements] = useState({})
 
   const changeSortOrder = (event) => {
     const name = event.target.getAttribute('name')
@@ -57,12 +58,22 @@ const TableView = (props) => {
   useEffect(() => {
     // console.log(props.data);
     let temp = []
-    props.data.map((element, index) =>
-      temp.push({
+    props.data.map((element, index) => {
+      if (cacheElements[element.id] === undefined) {
+        setCacheElements({
+          ...cacheElements,
+          [element.id]: true,
+        })
+      }
+      return temp.push({
         id: element.id,
-        hidden: true,
-      }),
-    )
+        hidden:
+          cacheElements[element.id] !== undefined
+            ? cacheElements[element.id]
+            : true,
+      })
+    })
+    console.log(cacheElements)
     setPartsVisible([...temp])
   }, [props.data])
 
@@ -70,6 +81,10 @@ const TableView = (props) => {
     index = Number.parseInt(index)
     return partsVisible.map((element, element_index) => {
       if (element.id == index) {
+        setCacheElements({
+          ...cacheElements,
+          [index]: !element.hidden,
+        })
         let temp2 = Object.assign({
           id: index,
           hidden: !element.hidden,
