@@ -67,7 +67,7 @@ const GraphsPage = (props) => {
                 if (
                   workshop.label === cur.employee.workshop &&
                   new Date(day).getDate() ===
-                    new Date(cur.year, cur.month + 1, cur.day).getDate()
+                    new Date(cur.year, cur.month, cur.day).getDate()
                 ) {
                   return Math.ceil((sum + cur.hours) * 10) / 10
                 } else return sum

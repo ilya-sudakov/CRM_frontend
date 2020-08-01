@@ -50,12 +50,14 @@ const RiggingList = (props) => {
       .then((response) => {
         // console.log(response);
         response.map((item) => {
-          return item.stampParts.map((stamp) => {
-            newDrafts.push({
-              ...stamp,
-              type: 'Stamp',
+          return item.stampParts
+            .filter((stamp) => stamp.color !== 'completed') //Не показываем завершенные детали
+            .map((stamp) => {
+              newDrafts.push({
+                ...stamp,
+                type: 'Stamp',
+              })
             })
-          })
         })
         setIsLoading(false)
         // console.log(newDrafts);
