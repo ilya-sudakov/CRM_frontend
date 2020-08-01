@@ -5,8 +5,13 @@ import {
   getPartFromStamp,
   editPartFromStamp,
 } from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { rigTypes, checkRiggingTypesInputs } from '../../rigsVariables.js'
+import {
+  rigTypes,
+  checkRiggingTypesInputs,
+  workshopsLocations,
+} from '../../rigsVariables.js'
 import Button from '../../../../../../../utils/Form/Button/Button.jsx'
+import { workshops } from '../../../../../WorkshopsComponents/workshopVariables'
 
 const EditPartInRigging = (props) => {
   const [partInputs, setPartInputs] = useState({
@@ -153,13 +158,22 @@ const EditPartInRigging = (props) => {
         <div className="main-form__item">
           <div className="main-form__input_name">Местоположение</div>
           <div className="main-form__input_field">
-            <input
+            {/* <input
               type="text"
               name="location"
               autoComplete="off"
               onChange={handleInputChange}
               defaultValue={partInputs.location}
-            />
+            /> */}
+            <select
+              name="location"
+              onChange={handleInputChange}
+              value={partInputs.location}
+            >
+              {Object.entries(workshopsLocations).map((workshop) => (
+                <option value={workshop[0]}>{workshop[1].name}</option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="main-form__item">

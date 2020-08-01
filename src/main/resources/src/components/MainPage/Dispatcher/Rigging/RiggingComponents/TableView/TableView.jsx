@@ -6,7 +6,7 @@ import deleteIcon from '../../../../../../../../../../assets/tableview/delete.sv
 import './TableView.scss'
 import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx'
-import { rigStatuses, rigTypes } from '../rigsVariables'
+import { rigStatuses, rigTypes, workshopsLocations } from '../rigsVariables'
 import {
   editStampColor,
   editStampPartColor,
@@ -246,8 +246,12 @@ const TableView = (props) => {
                         key={index}
                         className={
                           'main-window__list-item main-window__list-item--' +
-                          (part.color ? part.color : 'production')
+                          (part.color ? part.color : 'production') +
+                          (workshopsLocations[part.location]
+                            ? ''
+                            : ' main-window__list-item--message main-window__list-item--warning')
                         }
+                        data-msg="Предупреждение! Введено некорректное местоположение"
                       >
                         <span>
                           <div className="main-window__mobile-text">
@@ -271,7 +275,9 @@ const TableView = (props) => {
                           <div className="main-window__mobile-text">
                             Местоположение:
                           </div>
-                          {part.location}
+                          {workshopsLocations[part.location]
+                            ? workshopsLocations[part.location].name
+                            : ''}
                         </span>
                         <span>
                           <div className="main-window__mobile-text">

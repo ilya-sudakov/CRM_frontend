@@ -74,3 +74,15 @@ export const checkRiggingTypesInputs = (inputs, type = 'controll') => {
   }
   return check
 }
+
+export const workshopsLocations = {
+  lemz: {
+    name: 'ЦехЛЭМЗ',
+  },
+  lepsari: {
+    name: 'ЦехЛепсари',
+  },
+  ligovskiy: {
+    name: 'ЦехЛиговский',
+  },
+}
