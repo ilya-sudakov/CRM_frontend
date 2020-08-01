@@ -166,9 +166,9 @@ const TableView = (props) => {
                 >
                   <div className="main-window__mobile-text">Статус заявки:</div>
                   <select
-                    id={stamp_id}
+                    id={stamp.id}
                     className="main-window__status_select"
-                    value={stamp.color}
+                    value={stamp.color || 'production'}
                     onChange={(event) => {
                       return editStampColor(
                         {
