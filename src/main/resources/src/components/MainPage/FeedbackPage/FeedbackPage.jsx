@@ -53,6 +53,29 @@ const FeedbackPage = (props) => {
     },
   ])
 
+  const [userCategories, setUserCategories] = useState([
+    {
+      name: 'Все',
+      filteredRoles: [],
+      active: true,
+    },
+    {
+      name: 'Руководитель',
+      filteredRoles: ['dev', 'Алексей', 'test'],
+      active: false,
+    },
+    {
+      name: 'Диспетчер',
+      filteredRoles: ['Диспетчер'],
+      active: false,
+    },
+    {
+      name: 'Цеха',
+      filteredRoles: ['ЦехЛЭМЗ', 'ЦехЛепсари', 'ЦехЛиговский'],
+      active: false,
+    },
+  ])
+
   useEffect(() => {
     document.title = 'Обсуждения'
     let abortController = new AbortController()
@@ -120,6 +143,38 @@ const FeedbackPage = (props) => {
             Всего: {messages.length} записей
           </div>
         </div>
+        <div className="main-window__filter-pick">
+          <div>Фильтр по категориям: </div>
+          {userCategories.map((category, index) => {
+            return (
+              <div
+                className={
+                  category.active
+                    ? 'main-window__button'
+                    : 'main-window__button main-window__button--inverted'
+                }
+                onClick={() => {
+                  let temp = userCategories
+                  temp = userCategories.map((item, tempIndex) => {
+                    if (index === tempIndex) {
+                      return {
+                        ...item,
+                        active: true,
+                      }
+                    }
+                    return {
+                      ...item,
+                      active: false,
+                    }
+                  })
+                  setUserCategories([...temp])
+                }}
+              >
+                {category.name}
+              </div>
+            )
+          })}
+        </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             {/* <span>Обсуждения</span>
@@ -131,7 +186,25 @@ const FeedbackPage = (props) => {
               minHeight="50px"
             />
           )}
+          {console.log(
+            messages.filter((item) => {
+              const temp = userCategories.find((category) => category.active)
+              if (temp.filteredRoles.length === 0) {
+                return true
+              } else {
+                return temp.filteredRoles.includes(item.author)
+              }
+            }),
+          )}
           {messages
+            .filter((item) => {
+              const temp = userCategories.find((category) => category.active)
+              if (temp.filteredRoles.length === 0) {
+                return true
+              } else {
+                return temp.filteredRoles.includes(item.author)
+              }
+            })
             .filter((item) => {
               if (
                 item.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
