@@ -359,6 +359,12 @@
       text-align: left;
     }
   }
+  .main-window__list-item--border-checked {
+    // box-sizing: border-box;
+    // border: 1px dashed transparent;
+    // border-left-color: red;
+    // height: 100%;
+  }
   .main-window__list-item--header {
     border: 1px solid transparent;
     background-color: transparent;

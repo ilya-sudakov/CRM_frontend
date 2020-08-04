@@ -328,31 +328,31 @@ const TableView = (props) => {
                             ))}
                           </select>
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Распил/габариты:
                           </div>
                           {part.cuttingDimensions}
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Фрезеровка/точение:
                           </div>
                           {part.milling}
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Закалка:
                           </div>
                           {part.harding}
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Шлифовка:
                           </div>
                           {part.grinding}
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Эрозия:
                           </div>

@@ -68,7 +68,7 @@ const GeneralPage = (props) => {
                 Учесть рабочее время
               </Link>
             )}
-            {props.userHasAccess(['ROLE_ADMIN']) && (
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
               <Link className="main-window__button" to="/report-table">
                 <img className="main-window__img" src={calenderIcon} />
                 Интерактивный табель

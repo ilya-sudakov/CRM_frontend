@@ -19,6 +19,7 @@ import SearchBar from '../SearchBar/SearchBar.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
+import { Link } from 'react-router-dom'
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]) //Массив заявок
@@ -204,11 +205,6 @@ const Requests = (props) => {
       <div className="main-window">
         <div className="main-window__header">
           <div className="main-window__title">Заявки</div>
-          <SearchBar
-            // title="Поиск по заявкам"
-            placeholder="Введите название продукции для поиска..."
-            setSearchQuery={setSearchQuery}
-          />
           <FloatingPlus
             linkTo="/requests/new"
             visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -244,8 +240,19 @@ const Requests = (props) => {
             >
               Завершено
             </div>
+            <Link className="main-window__item" to="/lemz/workshop-lemz">
+              Заявки ЛЭМЗ
+            </Link>
+            <Link className="main-window__item" to="/lepsari/workshop-lepsari">
+              Заявки Лепсари
+            </Link>
           </div>
         </div>
+        <SearchBar
+          // title="Поиск по заявкам"
+          placeholder="Введите название продукции для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
         <FormWindow
           title="Перенос заявки в план производства"
           windowName="transfer-request"

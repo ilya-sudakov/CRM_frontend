@@ -701,7 +701,7 @@ class MainPage extends React.Component {
                   component={ReportTablePage}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                 />
                 <PrivateRoute
                   exact
