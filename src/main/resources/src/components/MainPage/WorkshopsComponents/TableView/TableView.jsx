@@ -388,7 +388,7 @@ const TableView = (props) => {
                     {/* <div className="main-window__mobile-text">Цена:</div> */}
                     {`Цена: ${
                       request.sum ? addSpaceDelimiter(request.sum) : 0
-                    }`}
+                    } руб.`}
                   </span>
                 )}
                 <div className="main-window__actions">
