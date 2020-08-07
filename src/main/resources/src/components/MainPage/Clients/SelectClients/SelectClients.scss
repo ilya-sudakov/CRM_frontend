@@ -109,6 +109,35 @@
     }
   }
 
+  .main-window__list {
+    position: relative;
+    .main-window__list-item {
+      cursor: pointer;
+      span {
+        align-items: center;
+        &:nth-child(1) {
+          flex: 0 1 15%;
+        }
+        &:nth-child(2) {
+          flex: 0 1 10%;
+          max-width: 120px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        &:nth-child(3) {
+          flex: 0 1 15%;
+        }
+        &:nth-child(4) {
+          flex: 0 1 30%;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+
   @media (max-width: 768px) {
     .select-client__input {
       flex-wrap: wrap;

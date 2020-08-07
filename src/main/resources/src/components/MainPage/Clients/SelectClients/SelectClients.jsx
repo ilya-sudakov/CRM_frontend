@@ -59,15 +59,17 @@ const SelectClient = (props) => {
           {props.inputName + (props.required ? '*' : '')}
         </div>
         <div className={'select-client__input_field'}>
-          {!props.readOnly && <button
-            className="select-client__button"
-            onClick={(e) => {
-              e.preventDefault()
-              setShowWindow(!showWindow)
-            }}
-          >
-            Выбрать клиента
-          </button>}
+          {!props.readOnly && (
+            <button
+              className="select-client__button"
+              onClick={(e) => {
+                e.preventDefault()
+                setShowWindow(!showWindow)
+              }}
+            >
+              Выбрать клиента
+            </button>
+          )}
           <div className="select-client__searchbar">
             <input
               type="text"
@@ -76,7 +78,9 @@ const SelectClient = (props) => {
                   ? 'select-client__input select-client__input--error'
                   : 'select-client__input'
               }
-              value={props.defaultValue ? props.defaultValue : name}
+              value={
+                props.defaultValue && name === '' ? props.defaultValue : name
+              }
               placeholder="Выберите клиента, нажав на кнопку 'Выбрать клиента'"
               readOnly={props.readOnly}
             />
@@ -154,6 +158,9 @@ const TableView = (props) => {
           <>
             <div className="main-window__list-item main-window__list-item--header">
               <span>Название</span>
+              <span>Сайт</span>
+              <span>Контакты</span>
+              <span>Комментарий</span>
               <div className="main-window__actions">Действия</div>
             </div>
             {props.clients.map((client, index) => (
@@ -165,7 +172,39 @@ const TableView = (props) => {
                   props.setCloseWindow(!props.closeWindow)
                 }}
               >
-                <span>{client.name}</span>
+                <span>
+                  <div className="main-window__mobile-text">Название:</div>
+                  {client.name}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Сайт:</div>
+                  <a
+                    className="main-window__link"
+                    title={client.site}
+                    href={
+                      client.site.split('//').length > 1
+                        ? client.site
+                        : 'http://' + client.site
+                    }
+                    target="_blank"
+                  >
+                    {client.site.split('//').length > 1
+                      ? client.site.split('//')[1]
+                      : client.site}
+                  </a>
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Контакты:</div>
+                  {client.contacts?.length > 0
+                    ? (client.contacts[0].name !== ''
+                        ? client.contacts[0].name + ', '
+                        : '') + client.contacts[0].phoneNumber
+                    : 'Не указаны контакт. данные'}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Комментарий:</div>
+                  {client.comment}
+                </span>
                 <div className="main-window__actions">
                   <div className="main-window__action">Выбрать</div>
                 </div>
