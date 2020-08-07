@@ -83,6 +83,11 @@ const Requests = (props) => {
       getRequests: (signal) => getRequests(signal),
     },
   }
+  const [workshops, setWorkshops] = useState([
+    { filter: ['lemz', 'lepsari'], fullName: 'Все', visible: true },
+    { filter: ['lemz'], fullName: 'ЦехЛЭМЗ', visible: false },
+    { filter: ['lepsari'], fullName: 'ЦехЛепсари', visible: false },
+  ])
 
   //Удалить заявку
   const deleteItem = (event) => {
@@ -240,12 +245,6 @@ const Requests = (props) => {
             >
               Завершено
             </div>
-            <Link className="main-window__item" to="/lemz/workshop-lemz">
-              Заявки ЛЭМЗ
-            </Link>
-            <Link className="main-window__item" to="/lepsari/workshop-lepsari">
-              Заявки Лепсари
-            </Link>
           </div>
         </div>
         <SearchBar
@@ -303,31 +302,6 @@ const Requests = (props) => {
                             alert('Ошибка при копировании записи')
                             setIsLoading(false)
                           })
-
-                        // copyRequest(
-                        //   requests.find((item) => {
-                        //     if (item.id === requestId) {
-                        //       return true
-                        //     }
-                        //   }).id,
-                        //   toWorkshop,
-                        // )
-                        //   .then((res) => res.json())
-                        //   .then((res) => {
-                        //     setIsLoading(false)
-                        //     props.history.push(
-                        //       toWorkshop +
-                        //         '/workshop-' +
-                        //         toWorkshop +
-                        //         '/edit/' +
-                        //         res,
-                        //     )
-                        //   })
-                        //   .catch((error) => {
-                        //     console.log(error)
-                        //     alert('Ошибка при копировании записи')
-                        //     setIsLoading(false)
-                        //   })
                       }}
                       text="Перенести в цех"
                     />
@@ -339,49 +313,6 @@ const Requests = (props) => {
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
-        {/* <div className="main-window__info-panel">
-          <div className="requests__clients-sort">
-            {clients
-              .sort((a, b) => {
-                if (a.name < b.name) {
-                  return -1
-                }
-                if (a.name > b.name) {
-                  return 1
-                }
-                return 0
-              })
-              .map((client, index) => {
-                return (
-                  <div
-                    className={
-                      (client.active
-                        ? 'main-window__button'
-                        : 'main-window__button main-window__button--inverted') +
-                      ' main-window__list-item--' +
-                      status.className
-                    }
-                    onClick={() => {
-                      let temp = clients
-                      temp = temp.map((item) => {
-                        return {
-                          ...item,
-                          active: false,
-                        }
-                      })
-                      temp.splice(index, 1, {
-                        ...client,
-                        active: !client.active,
-                      })
-                      setClients([...temp])
-                    }}
-                  >
-                    {client.name}
-                  </div>
-                )
-              })}
-          </div>
-        </div> */}
         <div className="main-window__status-panel">
           <div>Фильтр по статусам: </div>
           {requestStatuses.map((status, index) => {
@@ -416,8 +347,52 @@ const Requests = (props) => {
             Всего: {requests.length} записей
           </div>
         </div>
+        <div className="main-window__filter-pick" style={{ marginTop: '10px' }}>
+          <div>Фильтр по цехам: </div>
+          {workshops.map((workshop, index) => {
+            return (
+              <div
+                className={
+                  workshop.visible
+                    ? 'main-window__button'
+                    : 'main-window__button main-window__button--inverted'
+                }
+                onClick={() => {
+                  let temp = workshops.map((tempWorkshop) => {
+                    return {
+                      ...tempWorkshop,
+                      visible: false,
+                    }
+                  })
+                  temp.splice(index, 1, {
+                    ...workshop,
+                    visible: !workshop.visible,
+                  })
+                  setWorkshops([...temp])
+                }}
+              >
+                {workshop.fullName}
+              </div>
+            )
+          })}
+        </div>
         <TableView
           data={requests
+            .filter((item) => {
+              const selectedWorkshop = workshops.find(
+                (workshop) => workshop.visible,
+              )
+              if (selectedWorkshop === undefined) {
+                return false
+              }
+              let check = false
+              selectedWorkshop.filter.map((type) => {
+                if (type === item.factory) {
+                  return (check = true)
+                }
+              })
+              return check
+            })
             .filter((item) => {
               if (curPage === 'Завершено' && item.status === 'Завершено') {
                 return true
