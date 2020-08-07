@@ -299,7 +299,7 @@ const TableView = (props) => {
                 </div>
                 <span>
                   <div className="main-window__mobile-text">Кодовое слово:</div>
-                  {request.codeWord}
+                  {request.client ? request.client.name : request.codeWord}
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Ответственный:</div>

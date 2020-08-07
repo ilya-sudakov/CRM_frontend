@@ -84,9 +84,14 @@ const Requests = (props) => {
     },
   }
   const [workshops, setWorkshops] = useState([
-    { filter: ['lemz', 'lepsari'], fullName: 'Все', visible: true },
+    {
+      filter: ['lemz', 'lepsari', null, 'requests'],
+      fullName: 'Все',
+      visible: true,
+    },
     { filter: ['lemz'], fullName: 'ЦехЛЭМЗ', visible: false },
     { filter: ['lepsari'], fullName: 'ЦехЛепсари', visible: false },
+    { filter: [null, 'requests'], fullName: 'Не перенесенные', visible: false },
   ])
 
   //Удалить заявку

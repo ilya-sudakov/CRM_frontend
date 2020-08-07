@@ -13,6 +13,7 @@ import { getRequestById } from '../../../../../utils/RequestsAPI/Requests.jsx'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import { workshops } from '../../workshopVariables.js'
 import { UserContext } from '../../../../../App.js'
+import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx'
 
 const ViewRequest = (props) => {
   const userContext = useContext(UserContext)
@@ -26,6 +27,8 @@ const ViewRequest = (props) => {
     shippingDate: '',
     comment: '',
     sum: 0,
+    clientId: 0,
+    client: null,
   })
   const [itemId, setItemId] = useState(0)
 
@@ -54,6 +57,8 @@ const ViewRequest = (props) => {
             shippingDate: oldRequest.shippingDate,
             comment: oldRequest.comment,
             sum: oldRequest.sum,
+            client: oldRequest.client,
+            clientId: oldRequest.client?.id,
           })
         })
         .catch((error) => {
@@ -114,17 +119,26 @@ const ViewRequest = (props) => {
             defaultValue={requestInputs.requestProducts}
             readOnly
           />
-          <div className="main-form__item">
-            <div className="main-form__input_name">Кодовое слово</div>
-            <div className="main-form__input_field">
-              <input
-                type="text"
-                name="codeWord"
-                defaultValue={requestInputs.codeWord}
-                readOnly
-              />
+          {requestInputs.client ? (
+            <SelectClient
+              inputName="Клиент"
+              userHasAccess={userContext.userHasAccess}
+              defaultValue={requestInputs.client?.name}
+              readOnly
+            />
+          ) : (
+            <div className="main-form__item">
+              <div className="main-form__input_name">Кодовое слово</div>
+              <div className="main-form__input_field">
+                <input
+                  type="text"
+                  name="codeWord"
+                  defaultValue={requestInputs.codeWord}
+                  readOnly
+                />
+              </div>
             </div>
-          </div>
+          )}
           <div className="main-form__item">
             <div className="main-form__input_name">Ответственный</div>
             <div className="main-form__input_field">

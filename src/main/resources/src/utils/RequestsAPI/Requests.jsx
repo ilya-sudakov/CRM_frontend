@@ -16,6 +16,14 @@ export function getRequestsByWorkshop(factory, signal) {
   })
 }
 
+export function connectClientToRequest(requestId, clientId, signal) {
+  return request({
+    url: `${process.env.API_BASE_URL}/api/v1/request/addClient/${requestId}/${clientId}/`,
+    method: 'GET',
+    signal: signal,
+  })
+}
+
 export function deleteRequest(id) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/request/' + id,

@@ -14,8 +14,10 @@ import {
   addProductsToRequest,
   deleteProductsToRequest,
   getRequestById,
+  connectClientToRequest,
 } from '../../../../../utils/RequestsAPI/Requests.jsx'
 import { requestStatuses, workshops } from '../../workshopVariables.js'
+import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx'
 
 const EditRequest = (props) => {
   const [requestId, setRequestId] = useState(1)
@@ -31,11 +33,14 @@ const EditRequest = (props) => {
     shippingDate: '',
     comment: '',
     sum: 0,
+    clientId: 0,
+    client: null,
   })
   const [requestErrors, setRequestErrors] = useState({
     date: false,
     requestProducts: false,
-    codeWord: false,
+    // codeWord: false,
+    clientId: false,
     responsible: false,
     shippingDate: false,
   })
@@ -45,6 +50,7 @@ const EditRequest = (props) => {
     codeWord: true,
     responsible: true,
     shippingDate: true,
+    clientId: requestInputs.client ? true : false,
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -55,6 +61,12 @@ const EditRequest = (props) => {
         setValidInputs({
           ...validInputs,
           date: value !== null,
+        })
+        break
+      case 'clientId':
+        setValidInputs({
+          ...validInputs,
+          clientId: value !== 0,
         })
         break
       case 'shippingDate':
@@ -86,7 +98,7 @@ const EditRequest = (props) => {
     let newErrors = Object.assign({
       date: false,
       requestProducts: false,
-      codeWord: false,
+      clientId: false,
       responsible: false,
       shippingDate: false,
     })
@@ -144,7 +156,7 @@ const EditRequest = (props) => {
                   name: selected.name,
                 })
           })
-          Promise.all(productsArr).then(() => {
+          return Promise.all(productsArr).then(() => {
             //DELETE products removed by user
             const productsArr = requestInputs.products.map((item) => {
               let deleted = true
@@ -160,6 +172,10 @@ const EditRequest = (props) => {
               props.history.push(workshops[props.type].redirectURL),
             )
           })
+        })
+        .then(() => {
+          requestInputs.client?.id !== requestInputs.clientId &&
+            connectClientToRequest(requestId, requestInputs.clientId)
         })
         .catch((error) => {
           setIsLoading(false)
@@ -227,6 +243,8 @@ const EditRequest = (props) => {
             comment: oldRequest.comment,
             factory: oldRequest.factory,
             sum: oldRequest.sum,
+            client: oldRequest.client,
+            clientId: oldRequest.client?.id,
           })
           setSelectedProducts(oldRequest.requestProducts)
         })
@@ -314,19 +332,15 @@ const EditRequest = (props) => {
             'ROLE_ADMIN',
             'ROLE_MANAGER',
             'ROLE_WORKSHOP',
-          ]) && (
-            <InputText
-              inputName="Кодовое слово"
-              required
-              error={requestErrors.codeWord}
-              defaultValue={requestInputs.codeWord}
-              name="codeWord"
-              handleInputChange={handleInputChange}
-              errorsArr={requestErrors}
-              setErrorsArr={setRequestErrors}
-              readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
-            />
-          )}
+          ]) &&
+            requestInputs.codeWord !== '' && (
+              <InputText
+                inputName="Кодовое слово"
+                defaultValue={requestInputs.codeWord}
+                name="codeWord"
+                readOnly
+              />
+            )}
           {userContext.userHasAccess([
             'ROLE_ADMIN',
             'ROLE_MANAGER',
@@ -396,6 +410,28 @@ const EditRequest = (props) => {
             type="number"
             defaultValue={requestInputs.sum}
             handleInputChange={handleInputChange}
+            errorsArr={requestErrors}
+            setErrorsArr={setRequestErrors}
+          />
+          <SelectClient
+            inputName="Клиент"
+            userHasAccess={userContext.userHasAccess}
+            defaultValue={
+              requestInputs.clientId === 0 ? false : requestInputs.client?.name
+            }
+            required
+            onChange={(value) => {
+              validateField('clientId', value)
+              setRequestInputs({
+                ...requestInputs,
+                clientId: value,
+              })
+              setRequestErrors({
+                ...requestErrors,
+                clientId: value,
+              })
+            }}
+            error={requestErrors.clientId}
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
           />
