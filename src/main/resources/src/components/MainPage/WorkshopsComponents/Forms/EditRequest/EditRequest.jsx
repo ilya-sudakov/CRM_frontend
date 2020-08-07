@@ -30,7 +30,7 @@ const EditRequest = (props) => {
     status: 'Не готово',
     shippingDate: '',
     comment: '',
-    price: 0,
+    sum: 0,
   })
   const [requestErrors, setRequestErrors] = useState({
     date: false,
@@ -226,7 +226,7 @@ const EditRequest = (props) => {
                 : new Date(),
             comment: oldRequest.comment,
             factory: oldRequest.factory,
-            price: oldRequest.price,
+            sum: oldRequest.sum,
           })
           setSelectedProducts(oldRequest.requestProducts)
         })
@@ -390,15 +390,15 @@ const EditRequest = (props) => {
             defaultValue={requestInputs.comment}
             handleInputChange={handleInputChange}
           />
-          {/* <InputText
+          <InputText
             inputName="Цена"
-            name="price"
+            name="sum"
             type="number"
-            defaultValue={requestInputs.price}
+            defaultValue={requestInputs.sum}
             handleInputChange={handleInputChange}
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
-          /> */}
+          />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>

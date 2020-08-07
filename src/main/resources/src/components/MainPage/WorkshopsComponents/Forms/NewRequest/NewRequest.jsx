@@ -26,7 +26,7 @@ const NewRequest = (props) => {
     shippingDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     comment: '',
     factory: props.type,
-    price: 0,
+    sum: 0,
   })
   const [requestErrors, setRequestErrors] = useState({
     date: false,
@@ -302,15 +302,15 @@ const NewRequest = (props) => {
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
           />
-          {/* <InputText
+          <InputText
             inputName="Цена"
-            name="price"
+            name="sum"
             type="number"
-            defaultValue={requestInputs.price}
+            defaultValue={requestInputs.sum}
             handleInputChange={handleInputChange}
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
-          /> */}
+          />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>

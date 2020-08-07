@@ -95,7 +95,7 @@
         }
         &:not(.main-window__list-item--header) {
           //test for price column
-          // padding-bottom: 40px;
+          padding-bottom: 30px;
 
           &::before {
             content: "";
@@ -254,7 +254,10 @@
             position: absolute;
             left: 5px;
             bottom: 10px;
-            font-size: 110%;
+            font-size: 100%;
+            padding-left: 10px;
+            // letter-spacing: 1px;
+            // text-transform: uppercase;
             // font-style: italic;
           }
         }
@@ -444,6 +447,13 @@
             }
             &:nth-child(7) {
               max-width: none;
+            }
+            &:nth-child(8) {
+              max-width: none;
+              position: relative;
+              padding-left: 5px;
+              bottom: auto;
+              left: auto;
             }
           }
           .main-window__list-col {
