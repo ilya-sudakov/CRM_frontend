@@ -205,6 +205,14 @@ const TableView = (props) => {
                   }
                 }}
                 key={request.id}
+                style={{
+                  paddingBottom: props.userHasAccess([
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                  ])
+                    ? '30px'
+                    : '5px',
+                }}
               >
                 <span>
                   <div className="main-window__mobile-text">Дата:</div>
@@ -375,10 +383,14 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Комментарий:</div>
                   {request.comment}
                 </span>
-                <span>
-                  {/* <div className="main-window__mobile-text">Цена:</div> */}
-                  {`Цена: ${request.sum ? addSpaceDelimiter(request.sum) : 0}`}
-                </span>
+                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
+                  <span>
+                    {/* <div className="main-window__mobile-text">Цена:</div> */}
+                    {`Цена: ${
+                      request.sum ? addSpaceDelimiter(request.sum) : 0
+                    }`}
+                  </span>
+                )}
                 <div className="main-window__actions">
                   <Link
                     to={

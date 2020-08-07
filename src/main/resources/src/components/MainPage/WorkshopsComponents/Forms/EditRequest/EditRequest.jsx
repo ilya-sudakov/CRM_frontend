@@ -50,7 +50,7 @@ const EditRequest = (props) => {
     codeWord: true,
     responsible: true,
     shippingDate: true,
-    clientId: requestInputs.client ? true : false,
+    clientId: requestInputs.clientId !== 0 ? true : false,
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -168,15 +168,15 @@ const EditRequest = (props) => {
               })
               return deleted === true && deleteProductsToRequest(item.id)
             })
-            Promise.all(productsArr).then(() =>
-              props.history.push(workshops[props.type].redirectURL),
-            )
+            return Promise.all(productsArr)
           })
         })
         .then(() => {
-          requestInputs.client?.id !== requestInputs.clientId &&
-            connectClientToRequest(requestId, requestInputs.clientId)
+          if (requestInputs.client?.id !== requestInputs.clientId) {
+            return connectClientToRequest(requestId, requestInputs.clientId)
+          }
         })
+        .then(() => props.history.push(workshops[props.type].redirectURL))
         .catch((error) => {
           setIsLoading(false)
           console.log(error)
@@ -228,7 +228,7 @@ const EditRequest = (props) => {
       getRequestById(id)
         .then((res) => res.json())
         .then((oldRequest) => {
-          // console.log(oldRequest),
+          // console.log(oldRequest)
           setRequestInputs({
             date: oldRequest.date,
             products: oldRequest.requestProducts,
@@ -244,8 +244,9 @@ const EditRequest = (props) => {
             factory: oldRequest.factory,
             sum: oldRequest.sum,
             client: oldRequest.client,
-            clientId: oldRequest.client?.id,
+            clientId: oldRequest.client ? oldRequest.client.id : 0,
           })
+          oldRequest.client && validateField('clientId', oldRequest.client.id)
           setSelectedProducts(oldRequest.requestProducts)
         })
         .catch((error) => {
