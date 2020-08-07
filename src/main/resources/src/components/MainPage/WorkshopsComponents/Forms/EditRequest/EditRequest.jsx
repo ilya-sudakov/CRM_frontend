@@ -50,7 +50,11 @@ const EditRequest = (props) => {
     codeWord: true,
     responsible: true,
     shippingDate: true,
-    clientId: requestInputs.clientId !== 0 ? true : false,
+    clientId:
+      requestInputs.clientId !== 0 ||
+      userContext.userHasAccess(['ROLE_WORKSHOP'])
+        ? true
+        : false,
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -421,6 +425,7 @@ const EditRequest = (props) => {
               requestInputs.clientId === 0 ? false : requestInputs.client?.name
             }
             required
+            readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
             onChange={(value) => {
               validateField('clientId', value)
               setRequestInputs({
