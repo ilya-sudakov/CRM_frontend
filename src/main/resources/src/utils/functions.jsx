@@ -329,3 +329,27 @@ export const addHexColor = (color1, color2) => {
 export const addSpaceDelimiter = (str) => {
   return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
 }
+
+export const sortRequestsByDates = (requests) => {
+  let dates = {}
+  requests.map((request) => {
+    let curDate = new Date(request.date)
+    curDate = new Date(
+      curDate.getFullYear(),
+      curDate.getMonth(),
+      curDate.getDate(),
+    )
+    if (dates[curDate] !== undefined) {
+      dates = {
+        ...dates,
+        [curDate]: [...dates[curDate], request],
+      }
+    } else {
+      dates = {
+        ...dates,
+        [curDate]: [request],
+      }
+    }
+  })
+  return dates
+}

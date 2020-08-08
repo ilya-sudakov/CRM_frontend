@@ -279,6 +279,23 @@
     }
   }
 
+  &__table-date {
+    margin-right: 100%;
+    margin-bottom: 5px;
+    padding: 0 5px;
+    color: #333333;
+    border-bottom: 1.5px solid #aaaaaa;
+    font-size: 90%;
+    width: fit-content;
+    white-space: nowrap;
+    margin-top: 15px;
+    margin-bottom: 5px;
+
+    &:first-child {
+      margin-top: 5px;
+    }
+  }
+
   &__list {
     width: calc(100% - 30px);
     position: relative;

@@ -22,42 +22,42 @@
         position: relative;
         &--multiple-items:not(.main-window__list-item--header) {
           --padding-top: 25px;
-          span {
-            &:nth-child(1) {
-              margin-top: var(--padding-top);
-              align-self: flex-start;
-            }
-            &:nth-child(3) {
-              margin-top: var(--padding-top);
-              align-self: flex-start;
-            }
-            &:nth-child(4) {
-              margin-top: var(--padding-top);
-              align-self: flex-start;
-            }
-            &:nth-child(5) {
-              margin-top: calc(var(--padding-top) - 5px);
-              align-self: flex-start;
-            }
-            &:nth-child(6) {
-              // margin-top: var(--padding-top);
-              align-self: flex-start;
+          // span {
+          .requests__column--date {
+            margin-top: var(--padding-top);
+            align-self: flex-start;
+          }
+          .requests__column--client {
+            margin-top: var(--padding-top);
+            align-self: flex-start;
+          }
+          .requests__column--responsible {
+            margin-top: var(--padding-top);
+            align-self: flex-start;
+          }
+          .requests__column--status {
+            margin-top: calc(var(--padding-top) - 5px);
+            align-self: flex-start;
+          }
+          .requests__column--date-shipping {
+            // margin-top: var(--padding-top);
+            align-self: flex-start;
 
-              .main-window__reminder {
-                margin-top: calc(var(--padding-top) - 8px);
-                // margin-top: 0;
-              }
-
-              .main-window__date {
-                margin-top: var(--padding-top);
-              }
+            .main-window__reminder {
+              margin-top: calc(var(--padding-top) - 8px);
+              // margin-top: 0;
             }
-            &:nth-child(7) {
+
+            .main-window__date {
               margin-top: var(--padding-top);
-              align-self: flex-start;
-              -webkit-line-clamp: 6;
             }
           }
+          .requests__column--comment {
+            margin-top: var(--padding-top);
+            align-self: flex-start;
+            -webkit-line-clamp: 6;
+          }
+          // }
           .main-window__actions {
             margin-top: calc(var(--padding-top) - 6px);
             align-self: flex-start;
@@ -68,7 +68,7 @@
           border-color: #ffffffaa;
           color: #111111 !important;
 
-          span:nth-child(5) {
+          .requests__column--status {
             &::before {
               content: "";
               display: inline-block;
@@ -209,57 +209,55 @@
             background-color: var(--materials) !important;
           }
         }
-        span {
-          &:nth-child(1) {
-            flex: 0 1 8%;
-            max-width: 75px;
-          }
-          // &:nth-child(2) {
-          //   flex: 0 1 20%;
-          // }
-          &:nth-child(3) {
-            flex: 0 1 15%;
-            max-width: 150px;
-          }
-          &:nth-child(4) {
-            flex: 0 1 10%;
-            max-width: 150px;
-          }
-          &:nth-child(5) {
-            max-width: 110px;
-            position: relative;
-          }
-          &:nth-child(6) {
-            flex: 0 1 8%;
-            max-width: 90px;
+        .requests__column--date {
+          flex: 0 1 8%;
+          max-width: 75px;
+        }
+        // &:nth-child(2) {
+        //   flex: 0 1 20%;
+        // }
+        .requests__column--client {
+          flex: 0 1 15%;
+          max-width: 150px;
+        }
+        .requests__column--responsible {
+          flex: 0 1 10%;
+          max-width: 150px;
+        }
+        .requests__column--status {
+          max-width: 110px;
+          position: relative;
+        }
+        .requests__column--date-shipping {
+          flex: 0 1 8%;
+          max-width: 90px;
 
-            .main-window__reminder {
-              margin-top: 0;
-            }
+          .main-window__reminder {
+            margin-top: 0;
           }
-          &:nth-child(7) {
-            flex: 0 1 15%;
+        }
+        .requests__column--comment {
+          flex: 0 1 15%;
 
-            max-width: 135px;
-            // overflow-x: hidden;
-            // text-overflow: ellipsis;
-            // white-space: nowrap;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            // max-width: 65px;
-          }
-          &:nth-child(8) {
-            position: absolute;
-            left: 5px;
-            bottom: 10px;
-            font-size: 100%;
-            padding-left: 10px;
-            // letter-spacing: 1px;
-            // text-transform: uppercase;
-            // font-style: italic;
-          }
+          max-width: 135px;
+          // overflow-x: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          // max-width: 65px;
+        }
+        .requests__column--price {
+          position: absolute;
+          left: 5px;
+          bottom: 10px;
+          font-size: 100%;
+          padding-left: 10px;
+          // letter-spacing: 1px;
+          // text-transform: uppercase;
+          // font-style: italic;
         }
 
         .main-window__actions {

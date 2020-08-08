@@ -8,7 +8,7 @@ import {
   deleteRequest,
   deleteProductsToRequest,
   getRequestById,
-  copyRequest,
+  // copyRequest,
   addRequest,
   editRequest,
   addProductsToRequest,
@@ -19,7 +19,11 @@ import SearchBar from '../SearchBar/SearchBar.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
+import {
+  // formatDateString,
+  sortRequestsByDates,
+} from '../../../utils/functions.jsx'
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]) //Массив заявок
@@ -30,6 +34,7 @@ const Requests = (props) => {
   //id заявки, использующийся при ее дальнейшем копировании или переносе в цеха
   const [requestId, setRequestId] = useState(0)
   const [clients, setClients] = useState([]) //Массив клиентов
+  const [requestsByDate, setRequestsByDate] = useState([])
   const [curPage, setCurPage] = useState('Открытые') //Текущая страница
   //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([
@@ -152,7 +157,8 @@ const Requests = (props) => {
         setIsLoading(false)
         console.log(temp)
         setRequests(temp)
-        getClientsFromRequests(temp)
+        // getClientsFromRequests(temp)
+        setRequestsByDate(sortRequestsByDates(temp))
       })
       .catch((error) => {
         setIsLoading(false)
@@ -435,6 +441,7 @@ const Requests = (props) => {
               })
               return check
             })}
+          requestsByDate={requestsByDate}
           isLoading={isLoading}
           workshopName="requests"
           loadData={loadRequests}

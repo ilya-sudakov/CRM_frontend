@@ -125,187 +125,174 @@ const TableView = (props) => {
     }
   }, [props.data, requests, props.isLoading])
 
-  return (
-    <div className="tableview-workshops">
-      <div className="main-window">
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="date desc">По дате (убыв.)</option>
-            <option value="date asc">По дате (возр.)</option>
-            <option value="codeWord asc">По клиенту (А-Я)</option>
-            <option value="codeWord desc">По клиенту (Я-А)</option>
-            <option value="shippingDate desc">По дате отгрузки (убыв.)</option>
-            <option value="shippingDate asc">По дате отгрузки (возр.)</option>
-          </select>
-        </div>
-        <div className="main-window__list">
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>Дата</span>
-            <div className="main-window__list-col">
-              <div className="main-window__list-col-row">
-                <span>Продукция</span>
-                <span></span>
-                <span></span>
-              </div>
-            </div>
-            <span>Кодовое слово</span>
-            <span>Ответственный</span>
-            <span>Статус заявки</span>
-            <span>Дата отгрузки</span>
-            <span>Комментарий</span>
-            <div className="main-window__actions">Действия</div>
-          </div>
-          {props.isLoading && (
-            <TableDataLoading
-              minHeight="50px"
-              className="main-window__list-item"
-            />
+  const printRequests = (requests, displayColumns) => {
+    return (
+      <>
+        <div className="main-window__list-item main-window__list-item--header">
+          {displayColumns['date'].visible && (
+            <span className="requests__column--date">Дата</span>
           )}
-          {sortRequests(requests).map((request, request_id) => (
-            <React.Fragment>
-              <div
-                className={
-                  'main-window__list-item main-window__list-item--' +
-                  requestStatuses.find(
-                    (item) =>
-                      item.name === request.status ||
-                      item.oldName === request.status,
-                  )?.className +
-                  ' ' +
-                  (request?.[workshopsFuncs[props.workshopName].productsName]
-                    ?.length > 1
-                    ? 'main-window__list-item--multiple-items'
-                    : '') +
-                  (request.factory === undefined ||
-                  request.factory === 'requests' ||
-                  request.factory === null
-                    ? ' main-window__list-item--message main-window__list-item--warning'
-                    : '')
+          <div className="main-window__list-col">
+            <div className="main-window__list-col-row">
+              <span>Продукция</span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <span className="requests__column--client">Кодовое слово</span>
+          <span className="requests__column--responsible">Ответственный</span>
+          <span className="requests__column--status">Статус заявки</span>
+          <span className="requests__column--date-shipping">Дата отгрузки</span>
+          <span className="requests__column--comment">Комментарий</span>
+          <div className="main-window__actions">Действия</div>
+        </div>
+        {sortRequests(requests).map((request, request_id) => (
+          <React.Fragment>
+            <div
+              className={
+                'main-window__list-item main-window__list-item--' +
+                requestStatuses.find(
+                  (item) =>
+                    item.name === request.status ||
+                    item.oldName === request.status,
+                )?.className +
+                ' ' +
+                (request?.[workshopsFuncs[props.workshopName].productsName]
+                  ?.length > 1
+                  ? 'main-window__list-item--multiple-items'
+                  : '') +
+                (request.factory === undefined ||
+                request.factory === 'requests' ||
+                request.factory === null
+                  ? ' main-window__list-item--message main-window__list-item--warning'
+                  : '')
+              }
+              data-msg="Напоминание! Заявка не перенесена в один из цехов"
+              onClick={(event) => {
+                if (
+                  !event.target.classList.contains(
+                    'main-window__status_select',
+                  ) &&
+                  !event.target.classList.contains('main-window__img') &&
+                  !event.target.classList.contains('main-window__action')
+                ) {
+                  let temp = requests
+                  temp.splice(
+                    temp.indexOf(temp.find((item) => item.id === request.id)),
+                    1,
+                    {
+                      ...request,
+                      open: !request.open,
+                    },
+                  )
+                  setRequests([...temp])
                 }
-                data-msg="Напоминание! Заявка не перенесена в один из цехов"
-                onClick={(event) => {
-                  if (
-                    !event.target.classList.contains(
-                      'main-window__status_select',
-                    ) &&
-                    !event.target.classList.contains('main-window__img') &&
-                    !event.target.classList.contains('main-window__action')
-                  ) {
-                    let temp = requests
-                    temp.splice(
-                      temp.indexOf(temp.find((item) => item.id === request.id)),
-                      1,
-                      {
-                        ...request,
-                        open: !request.open,
-                      },
-                    )
-                    setRequests([...temp])
-                  }
-                }}
-                key={request.id}
-                style={{
-                  paddingBottom: props.userHasAccess([
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                  ])
-                    ? '30px'
-                    : '5px',
-                }}
-              >
-                <span>
+              }}
+              key={request.id}
+              style={{
+                paddingBottom: props.userHasAccess([
+                  'ROLE_ADMIN',
+                  'ROLE_MANAGER',
+                ])
+                  ? '30px'
+                  : '5px',
+              }}
+            >
+              {displayColumns['date'].visible && (
+                <span className="requests__column--date">
                   <div className="main-window__mobile-text">Дата:</div>
                   {formatDateString(request.date)}
                 </span>
-                <div className="main-window__list-col">
-                  <div className="main-window__list-col-row main-window__list-col-row--header">
-                    <span>Название</span>
-                    <span>Упаковка</span>
-                    <span>Кол-во</span>
-                    <span>Статус</span>
-                  </div>
-                  {request?.[workshopsFuncs[props.workshopName].productsName]
-                    .sort((a, b) => {
-                      if (a.name < b.name) {
-                        return -1
-                      }
-                      if (a.name > b.name) {
-                        return 1
-                      }
-                      return 0
-                    })
-                    .map((product) => {
-                      return (
-                        <div
-                          className={`main-window__list-col-row main-window__list-item--${
+              )}
+              <div className="main-window__list-col">
+                <div className="main-window__list-col-row main-window__list-col-row--header">
+                  <span>Название</span>
+                  <span>Упаковка</span>
+                  <span>Кол-во</span>
+                  <span>Статус</span>
+                </div>
+                {request?.[workshopsFuncs[props.workshopName].productsName]
+                  .sort((a, b) => {
+                    if (a.name < b.name) {
+                      return -1
+                    }
+                    if (a.name > b.name) {
+                      return 1
+                    }
+                    return 0
+                  })
+                  .map((product) => {
+                    return (
+                      <div
+                        className={`main-window__list-col-row main-window__list-item--${
+                          productsStatuses.find(
+                            (item) =>
+                              item.className === product.status ||
+                              item.oldName === product.status,
+                          )?.className
+                        }`}
+                      >
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Название:
+                          </div>
+                          {product.name}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Упаковка:
+                          </div>
+                          {product.packaging}
+                        </span>
+                        <span>
+                          <div className="main-window__mobile-text">
+                            Кол-во:
+                          </div>
+                          {addSpaceDelimiter(product.quantity)}
+                        </span>
+                        <span
+                          className={
+                            'main-window__list-item--' +
                             productsStatuses.find(
                               (item) =>
                                 item.className === product.status ||
                                 item.oldName === product.status,
                             )?.className
-                          }`}
+                          }
                         >
-                          <span>
-                            <div className="main-window__mobile-text">
-                              Название:
-                            </div>
-                            {product.name}
-                          </span>
-                          <span>
-                            <div className="main-window__mobile-text">
-                              Упаковка:
-                            </div>
-                            {product.packaging}
-                          </span>
-                          <span>
-                            <div className="main-window__mobile-text">
-                              Кол-во:
-                            </div>
-                            {addSpaceDelimiter(product.quantity)}
-                          </span>
-                          <span
-                            className={
-                              'main-window__list-item--' +
-                              productsStatuses.find(
-                                (item) =>
-                                  item.className === product.status ||
-                                  item.oldName === product.status,
-                              )?.className
+                          <div className="main-window__mobile-text">
+                            Статус:
+                          </div>
+                          <select
+                            // id={product.id}
+                            className="main-window__status_select"
+                            value={product.status}
+                            onChange={(event) =>
+                              handleProductStatusChange(
+                                product.id,
+                                event.target.value,
+                              )
                             }
                           >
-                            <div className="main-window__mobile-text">
-                              Статус:
-                            </div>
-                            <select
-                              // id={product.id}
-                              className="main-window__status_select"
-                              value={product.status}
-                              onChange={(event) =>
-                                handleProductStatusChange(
-                                  product.id,
-                                  event.target.value,
-                                )
-                              }
-                            >
-                              {productsStatuses.map((status) => (
-                                <option
-                                  value={
-                                    status.oldName === product.status
-                                      ? status.oldName
-                                      : status.className
-                                  }
-                                >
-                                  {status.name}
-                                </option>
-                              ))}
-                            </select>
-                          </span>
-                        </div>
-                      )
-                    })}
-                </div>
-                <span>
+                            {productsStatuses.map((status) => (
+                              <option
+                                value={
+                                  status.oldName === product.status
+                                    ? status.oldName
+                                    : status.className
+                                }
+                              >
+                                {status.name}
+                              </option>
+                            ))}
+                          </select>
+                        </span>
+                      </div>
+                    )
+                  })}
+              </div>
+              {displayColumns['client'].visible && (
+                <span className="requests__column--client">
                   <div className="main-window__mobile-text">Кодовое слово:</div>
                   {request.client ? (
                     <Link
@@ -319,10 +306,14 @@ const TableView = (props) => {
                     request.codeWord
                   )}
                 </span>
-                <span>
+              )}
+              {displayColumns['responsible'].visible && (
+                <span className="requests__column--responsible">
                   <div className="main-window__mobile-text">Ответственный:</div>
                   {request.responsible}
                 </span>
+              )}
+              {displayColumns['status'].visible && (
                 <span
                   className={
                     'main-window__list-item--' +
@@ -330,7 +321,8 @@ const TableView = (props) => {
                       (item) =>
                         item.name === request.status ||
                         item.oldName === request.status,
-                    )?.className
+                    )?.className +
+                    ' requests__column--status'
                   }
                 >
                   <div className="main-window__mobile-text">Статус заявки:</div>
@@ -363,7 +355,9 @@ const TableView = (props) => {
                     })}
                   </select>
                 </span>
-                <span>
+              )}
+              {displayColumns['date-shipping'].visible && (
+                <span className="requests__column--date-shipping">
                   <div className="main-window__mobile-text">Дата отгрузки:</div>
                   {new Date(request.shippingDate) < new Date() &&
                   request.status !== 'Завершено' ? (
@@ -389,85 +383,182 @@ const TableView = (props) => {
                     </div>
                   )}
                 </span>
-                <span title={request.comment}>
+              )}
+              {displayColumns['comment'].visible && (
+                <span
+                  title={request.comment}
+                  className="requests__column--comment"
+                >
                   <div className="main-window__mobile-text">Комментарий:</div>
                   {request.comment}
                 </span>
-                {props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
-                  <span>
+              )}
+              {displayColumns['price'].visible &&
+                props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
+                  <span className="requests__column--price">
                     {/* <div className="main-window__mobile-text">Цена:</div> */}
                     {`Цена: ${
                       request.sum ? addSpaceDelimiter(request.sum) : 0
                     } руб.`}
                   </span>
                 )}
-                <div className="main-window__actions">
+              <div className="main-window__actions">
+                <Link
+                  to={
+                    props.workshopName === 'requests'
+                      ? `/requests/view/${request.id}`
+                      : `/${props.workshopName}/workshop-${props.workshopName}/view/${request.id}`
+                  }
+                  className="main-window__action"
+                  title="Просмотр заявки"
+                >
+                  <img className="main-window__img" src={viewSVG} />
+                </Link>
+                {props.userHasAccess([
+                  'ROLE_ADMIN',
+                  'ROLE_MANAGER',
+                  'ROLE_WORKSHOP',
+                ]) && (
                   <Link
                     to={
                       props.workshopName === 'requests'
-                        ? `/requests/view/${request.id}`
-                        : `/${props.workshopName}/workshop-${props.workshopName}/view/${request.id}`
+                        ? `/requests/edit/${request.id}`
+                        : `/${props.workshopName}/workshop-${props.workshopName}/edit/${request.id}`
                     }
                     className="main-window__action"
-                    title="Просмотр заявки"
+                    title="Редактирование заявки"
                   >
-                    <img className="main-window__img" src={viewSVG} />
+                    <img className="main-window__img" src={editSVG} />
                   </Link>
-                  {props.userHasAccess([
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_WORKSHOP',
-                  ]) && (
-                    <Link
-                      to={
-                        props.workshopName === 'requests'
-                          ? `/requests/edit/${request.id}`
-                          : `/${props.workshopName}/workshop-${props.workshopName}/edit/${request.id}`
-                      }
-                      className="main-window__action"
-                      title="Редактирование заявки"
-                    >
-                      <img className="main-window__img" src={editSVG} />
-                    </Link>
-                  )}
-                  {props.userHasAccess(['ROLE_ADMIN']) && (
-                    <div
-                      data-id={request.id}
-                      className="main-window__action"
-                      title="Удаление заявки"
-                      onClick={(event) => props.deleteItem(event)}
-                    >
-                      <img className="main-window__img" src={deleteSVG} />
-                    </div>
-                  )}
-                  {props.transferRequest &&
-                    props.userHasAccess(['ROLE_ADMIN']) && (
-                      <div
-                        data-id={request.id}
-                        className="main-window__action"
-                        title="Перенос заявки"
-                        onClick={(event) => {
-                          event.preventDefault()
-                          props.transferRequest(request.id)
-                        }}
-                      >
-                        <img className="main-window__img" src={transferSVG} />
-                      </div>
-                    )}
-                  {props.copyRequest && props.userHasAccess(['ROLE_ADMIN']) && (
-                    <div
-                      data-id={request.id}
-                      className="main-window__action"
-                      title="Копирование заявки"
-                      onClick={() => props.copyRequest(request.id)}
-                    >
-                      <img className="main-window__img" src={copySVG} />
-                    </div>
-                  )}
-                </div>
+                )}
+                {props.userHasAccess(['ROLE_ADMIN']) && (
+                  <div
+                    data-id={request.id}
+                    className="main-window__action"
+                    title="Удаление заявки"
+                    onClick={(event) => props.deleteItem(event)}
+                  >
+                    <img className="main-window__img" src={deleteSVG} />
+                  </div>
+                )}
+                {props.transferRequest && props.userHasAccess(['ROLE_ADMIN']) && (
+                  <div
+                    data-id={request.id}
+                    className="main-window__action"
+                    title="Перенос заявки"
+                    onClick={(event) => {
+                      event.preventDefault()
+                      props.transferRequest(request.id)
+                    }}
+                  >
+                    <img className="main-window__img" src={transferSVG} />
+                  </div>
+                )}
+                {props.copyRequest && props.userHasAccess(['ROLE_ADMIN']) && (
+                  <div
+                    data-id={request.id}
+                    className="main-window__action"
+                    title="Копирование заявки"
+                    onClick={() => props.copyRequest(request.id)}
+                  >
+                    <img className="main-window__img" src={copySVG} />
+                  </div>
+                )}
               </div>
-            </React.Fragment>
-          ))}
+            </div>
+          </React.Fragment>
+        ))}
+      </>
+    )
+  }
+
+  return (
+    <div className="tableview-workshops">
+      <div className="main-window">
+        <div className="main-window__sort-panel">
+          <span>Сортировка: </span>
+          <select onChange={changeSortOrder}>
+            <option value="date desc">По дате (убыв.)</option>
+            <option value="date asc">По дате (возр.)</option>
+            <option value="codeWord asc">По клиенту (А-Я)</option>
+            <option value="codeWord desc">По клиенту (Я-А)</option>
+            <option value="shippingDate desc">По дате отгрузки (убыв.)</option>
+            <option value="shippingDate asc">По дате отгрузки (возр.)</option>
+          </select>
+        </div>
+        <div className="main-window__list">
+          {props.isLoading && (
+            <TableDataLoading
+              minHeight="50px"
+              className="main-window__list-item"
+            />
+          )}
+          {sortOrder.curSort === 'date'
+            ? Object.entries(props.requestsByDate)
+                .sort((a, b) => {
+                  a = new Date(a[0])
+                  b = new Date(b[0])
+                  if (a < b) {
+                    return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+                  }
+                  if (a > b) {
+                    return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+                  }
+                  return 0
+                })
+                .map((date) => (
+                  <>
+                    <div className="main-window__table-date">
+                      {formatDateString(date[0])}
+                    </div>
+                    {printRequests(date[1], {
+                      date: {
+                        visible: false,
+                      },
+                      client: {
+                        visible: true,
+                      },
+                      responsible: {
+                        visible: true,
+                      },
+                      status: {
+                        visible: true,
+                      },
+                      'date-shipping': {
+                        visible: true,
+                      },
+                      comment: {
+                        visible: true,
+                      },
+                      price: {
+                        visible: true,
+                      },
+                    })}
+                  </>
+                ))
+            : printRequests(requests, {
+                date: {
+                  visible: true,
+                },
+                client: {
+                  visible: true,
+                },
+                responsible: {
+                  visible: true,
+                },
+                status: {
+                  visible: true,
+                },
+                'date-shipping': {
+                  visible: true,
+                },
+                comment: {
+                  visible: true,
+                },
+                price: {
+                  visible: true,
+                },
+              })}
         </div>
       </div>
     </div>
