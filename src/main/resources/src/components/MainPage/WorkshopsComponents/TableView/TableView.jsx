@@ -307,7 +307,17 @@ const TableView = (props) => {
                 </div>
                 <span>
                   <div className="main-window__mobile-text">Кодовое слово:</div>
-                  {request.client ? request.client.name : request.codeWord}
+                  {request.client ? (
+                    <Link
+                      target="_blank"
+                      className="main-window__link"
+                      to={`/clients/view/${request.client.id}`}
+                    >
+                      {request.client.name}
+                    </Link>
+                  ) : (
+                    request.codeWord
+                  )}
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Ответственный:</div>
