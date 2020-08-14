@@ -20,6 +20,9 @@
 
       .main-window__list-item {
         position: relative;
+        &--header {
+          margin-bottom: -20px;
+        }
         &--multiple-items:not(.main-window__list-item--header) {
           --padding-top: 25px;
           // span {

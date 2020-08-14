@@ -14,7 +14,6 @@ import {
   addProductsToRequest,
 } from '../../../utils/RequestsAPI/Requests.jsx'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
-import TableViewOld from './TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
@@ -33,8 +32,8 @@ const Requests = (props) => {
   const [toWorkshop, setToWorkshop] = useState('lemz') //Название цеха для переноса заявки
   //id заявки, использующийся при ее дальнейшем копировании или переносе в цеха
   const [requestId, setRequestId] = useState(0)
-  const [clients, setClients] = useState([]) //Массив клиентов
   const [requestsByDate, setRequestsByDate] = useState([])
+  const [clients, setClients] = useState([]) //Массив клиентов
   const [curPage, setCurPage] = useState('Открытые') //Текущая страница
   //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([
@@ -451,53 +450,6 @@ const Requests = (props) => {
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />
-        {/* <TableViewOld
-          data={requests
-            .filter((item) => {
-              if (curPage === 'Завершено' && item.status === 'Завершено') {
-                return true
-              }
-              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
-                return true
-              }
-              if (
-                curPage === 'Открытые' &&
-                item.status !== 'Завершено' &&
-                item.status !== 'Отгружено'
-              ) {
-                return true
-              }
-              return false
-            })
-            .filter((item) => {
-              let check = false
-              let noActiveStatuses = true
-              requestStatuses.map((status) => {
-                requestStatuses.map((status) => {
-                  if (status.visible) {
-                    noActiveStatuses = false
-                  }
-                })
-                if (
-                  noActiveStatuses === true ||
-                  (status.visible &&
-                    (status.name === item.status ||
-                      status.oldName === item.status))
-                ) {
-                  check = true
-                  return
-                }
-              })
-              return check
-            })}
-          isLoading={isLoading}
-          loadData={loadRequests}
-          deleteItem={deleteItem}
-          transferRequest={transferRequest}
-          copyRequest={copySelectedRequest}
-          searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
-        /> */}
       </div>
     </div>
   )

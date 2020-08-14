@@ -16,9 +16,11 @@ import {
   deleteRequest,
   getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
+import { sortRequestsByDates } from '../../../utils/functions.jsx'
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([])
+  const [requestsByDate, setRequestsByDate] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [curPage, setCurPage] = useState('Открытые')
@@ -76,6 +78,7 @@ const WorkshopLEMZ = (props) => {
       .then((res) => res.json())
       .then((requests) => {
         setRequestsLEMZ(requests)
+        setRequestsByDate(sortRequestsByDates(requests))
         setIsLoading(false)
       })
   }
@@ -251,6 +254,7 @@ const WorkshopLEMZ = (props) => {
           workshopName="lemz"
           isLoading={isLoading}
           loadData={loadRequestsLEMZ}
+          requestsByDate={requestsByDate}
           deleteItem={deleteItem}
           // copyRequest={copyRequest}
           searchQuery={searchQuery}

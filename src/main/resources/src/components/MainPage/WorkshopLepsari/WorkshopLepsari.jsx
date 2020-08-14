@@ -14,9 +14,11 @@ import {
   getRequests,
   getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
+import { sortRequestsByDates } from '../../../utils/functions.jsx'
 
 const WorkshopLepsari = (props) => {
   const [requestLepsari, setRequestLepsari] = useState([])
+  const [requestsByDate, setRequestsByDate] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [curPage, setCurPage] = useState('Открытые')
@@ -117,6 +119,7 @@ const WorkshopLepsari = (props) => {
       .then((requests) => {
         // console.log(requests);
         setRequestLepsari(requests)
+        setRequestsByDate(sortRequestsByDates(requests))
         setIsLoading(false)
       })
   }
@@ -251,6 +254,7 @@ const WorkshopLepsari = (props) => {
           workshopName="lepsari"
           isLoading={isLoading}
           loadData={loadRequestLepsari}
+          requestsByDate={requestsByDate}
           deleteItem={deleteItem}
           // copyRequest={copyRequest}
           searchQuery={searchQuery}

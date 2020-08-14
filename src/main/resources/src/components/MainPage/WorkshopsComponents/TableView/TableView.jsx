@@ -128,24 +128,6 @@ const TableView = (props) => {
   const printRequests = (requests, displayColumns) => {
     return (
       <>
-        <div className="main-window__list-item main-window__list-item--header">
-          {displayColumns['date'].visible && (
-            <span className="requests__column--date">Дата</span>
-          )}
-          <div className="main-window__list-col">
-            <div className="main-window__list-col-row">
-              <span>Продукция</span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-          <span className="requests__column--client">Кодовое слово</span>
-          <span className="requests__column--responsible">Ответственный</span>
-          <span className="requests__column--status">Статус заявки</span>
-          <span className="requests__column--date-shipping">Дата отгрузки</span>
-          <span className="requests__column--comment">Комментарий</span>
-          <div className="main-window__actions">Действия</div>
-        </div>
         {sortRequests(requests).map((request, request_id) => (
           <React.Fragment>
             <div
@@ -493,8 +475,31 @@ const TableView = (props) => {
               className="main-window__list-item"
             />
           )}
-          {sortOrder.curSort === 'date'
-            ? Object.entries(props.requestsByDate)
+          {sortOrder.curSort === 'date' ? (
+            <>
+              <div className="main-window__list-item main-window__list-item--header">
+                {/* {displayColumns['date'].visible && (
+                  <span className="requests__column--date">Дата</span>
+                )} */}
+                <div className="main-window__list-col">
+                  <div className="main-window__list-col-row">
+                    <span>Продукция</span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <span className="requests__column--client">Кодовое слово</span>
+                <span className="requests__column--responsible">
+                  Ответственный
+                </span>
+                <span className="requests__column--status">Статус заявки</span>
+                <span className="requests__column--date-shipping">
+                  Дата отгрузки
+                </span>
+                <span className="requests__column--comment">Комментарий</span>
+                <div className="main-window__actions">Действия</div>
+              </div>
+              {Object.entries(props.requestsByDate)
                 .sort((a, b) => {
                   a = new Date(a[0])
                   b = new Date(b[0])
@@ -535,8 +540,31 @@ const TableView = (props) => {
                       },
                     })}
                   </>
-                ))
-            : printRequests(requests, {
+                ))}
+            </>
+          ) : (
+            <>
+              <div className="main-window__list-item main-window__list-item--header">
+                <span className="requests__column--date">Дата</span>
+                <div className="main-window__list-col">
+                  <div className="main-window__list-col-row">
+                    <span>Продукция</span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <span className="requests__column--client">Кодовое слово</span>
+                <span className="requests__column--responsible">
+                  Ответственный
+                </span>
+                <span className="requests__column--status">Статус заявки</span>
+                <span className="requests__column--date-shipping">
+                  Дата отгрузки
+                </span>
+                <span className="requests__column--comment">Комментарий</span>
+                <div className="main-window__actions">Действия</div>
+              </div>
+              {printRequests(requests, {
                 date: {
                   visible: true,
                 },
@@ -559,6 +587,8 @@ const TableView = (props) => {
                   visible: true,
                 },
               })}
+            </>
+          )}
         </div>
       </div>
     </div>
