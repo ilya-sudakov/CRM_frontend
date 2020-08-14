@@ -172,12 +172,11 @@ const TableView = (props) => {
               }}
               key={request.id}
               style={{
-                paddingBottom: props.userHasAccess([
-                  'ROLE_ADMIN',
-                  'ROLE_MANAGER',
-                ])
-                  ? '30px'
-                  : '5px',
+                paddingBottom:
+                  props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) &&
+                  props.workshopName === 'requests'
+                    ? '30px'
+                    : '5px',
               }}
             >
               {displayColumns['date'].visible && (
@@ -379,7 +378,7 @@ const TableView = (props) => {
                 props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
                   <span className="requests__column--price">
                     {/* <div className="main-window__mobile-text">Цена:</div> */}
-                    {`Цена: ${
+                    {`Сумма заказа: ${
                       request.sum ? addSpaceDelimiter(request.sum) : 0
                     } руб.`}
                   </span>
@@ -536,7 +535,7 @@ const TableView = (props) => {
                         visible: true,
                       },
                       price: {
-                        visible: true,
+                        visible: props.workshopName === 'requests',
                       },
                     })}
                   </>
@@ -584,7 +583,7 @@ const TableView = (props) => {
                   visible: true,
                 },
                 price: {
-                  visible: true,
+                  visible: props.workshopName === 'requests',
                 },
               })}
             </>

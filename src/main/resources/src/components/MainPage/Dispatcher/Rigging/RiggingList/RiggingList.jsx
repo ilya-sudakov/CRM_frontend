@@ -3,6 +3,7 @@ import './RiggingList.scss'
 
 import TableView from './TableView/TableView.jsx'
 import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import { checkRiggingTypesInputs } from '../RiggingComponents/rigsVariables'
 
 const RiggingList = (props) => {
   const [drafts, setDrafts] = useState([])
@@ -80,8 +81,8 @@ const RiggingList = (props) => {
           ...drafts.filter((draft) => {
             if (
               status[1].active &&
-              draft[status[0]] === '' &&
-              (draft[status[1].previous] !== '' || status[1].previous === null)
+              (draft[status[0]] === '' || draft[status[0]] === null) &&
+              checkRiggingTypesInputs(draft, status[0])
             ) {
               return true
             }

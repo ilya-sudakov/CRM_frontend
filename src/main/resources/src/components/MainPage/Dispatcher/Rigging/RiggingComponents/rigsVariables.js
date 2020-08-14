@@ -66,7 +66,7 @@ export const checkRiggingTypesInputs = (inputs, type = 'controll') => {
   let check = true
   let curType = riggingTypeList[type].prev
   while (curType !== null) {
-    if (inputs[curType] === '') {
+    if (inputs[curType] === '' || inputs[curType] === null) {
       check = false
       return
     }

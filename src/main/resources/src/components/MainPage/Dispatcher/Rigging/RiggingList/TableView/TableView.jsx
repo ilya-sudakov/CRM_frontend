@@ -13,28 +13,22 @@ const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
     {
       name: 'ЦехЛЭМЗ',
-      alternative: 'ЛЭМЗ',
+      alternatives: ['ЛЭМЗ', 'lemz'],
       isMinimized: false,
       visibility: ['ROLE_ADMIN', 'ROLE_LEMZ'],
     },
     {
       name: 'ЦехЛиговский',
-      alternative: 'Лиговка',
+      alternatives: ['Лиговка', 'ligoskiy'],
       isMinimized: false,
       visibility: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
     },
     {
       name: 'ЦехЛепсари',
-      alternative: 'Лепсари',
+      alternatives: ['Лепсари', 'lepsari'],
       isMinimized: false,
       visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
     },
-    // {
-    //   name: 'Главный инженер',
-    //   alternative: 'А.И.',
-    //   isMinimized: false,
-    //   visibility: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-    // },
   ])
 
   const riggingNames = {
@@ -100,7 +94,9 @@ const TableView = (props) => {
                 .filter(
                   (item) =>
                     item.location === workshop.name ||
-                    item.location === workshop.alternative,
+                    workshop.alternatives.find(
+                      (oldName) => oldName === item.location,
+                    ) !== undefined,
                 )
                 .map((item) => {
                   if (!workshop.isMinimized) {

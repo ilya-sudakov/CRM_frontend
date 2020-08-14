@@ -199,7 +199,7 @@ const EditRig = (props) => {
             setShowError={setShowError}
           />
           <InputText
-            inputName="Название"
+            inputName="Название оснастки(оборудования)"
             required
             error={riggingErrors.name}
             name="name"
@@ -209,7 +209,7 @@ const EditRig = (props) => {
             setErrorsArr={setRiggingErrors}
           />
           <InputText
-            inputName="Артикул"
+            inputName="Артикул оснастки(оборудования)"
             required
             error={riggingErrors.number}
             name="number"
