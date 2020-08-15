@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import viewSVG from '../../../../../../../../assets/tableview/view.svg'
 import editSVG from '../../../../../../../../assets/tableview/edit.svg'
+import printSVG from '../../../../../../../../assets/tableview/print.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
 import copySVG from '../../../../../../../../assets/tableview/copy.svg'
 import transferSVG from '../../../../../../../../assets/tableview/transfer.svg'
 import './TableView.scss'
+import pdfMake from 'pdfmake'
 
 import {
   editRequestStatus,
@@ -18,7 +20,12 @@ import {
   createLabelForProduct,
 } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
-import { requestStatuses, productsStatuses } from '../workshopVariables.js'
+import {
+  requestStatuses,
+  productsStatuses,
+  workshops,
+} from '../workshopVariables.js'
+import { getRequestPdfText } from '../../../../utils/pdfFunctions.jsx'
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -73,8 +80,7 @@ const TableView = (props) => {
         .catch((error) => {
           console.log(error)
         })
-    }
-    else {
+    } else {
       alert('Введите сумму заказа для изменения статуса!')
     }
   }
@@ -131,6 +137,17 @@ const TableView = (props) => {
       setIsLoading(false)
     }
   }, [props.data, requests, props.isLoading, props.requestsByDate])
+
+  const printRequest = (index) => {
+    let dd = getRequestPdfText(
+      requests[index].date,
+      requests[index].requestProducts,
+      requests[index].codeWord,
+      workshops[props.workshopName].name,
+      requests[index].id,
+    )
+    pdfMake.createPdf(dd).print()
+  }
 
   const printRequests = (requests, displayColumns) => {
     return (
@@ -392,6 +409,15 @@ const TableView = (props) => {
                   </span>
                 )}
               <div className="main-window__actions">
+                {props.workshopName !== 'requests' && (
+                  <div
+                    className="main-window__action"
+                    title="Печать заявки"
+                    onClick={(event) => printRequest(index)}
+                  >
+                    <img className="main-window__img" src={printSVG} />
+                  </div>
+                )}
                 <Link
                   to={
                     props.workshopName === 'requests'
