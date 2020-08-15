@@ -161,11 +161,30 @@ const TableView = (props) => {
                             <span className="header--top-work">
                               {item.works.length > 0 ? (
                                 <>
-                                  {`${item.works[0].workList.work}`}
+                                  {`${
+                                    item.works.sort((a, b) => {
+                                      if (a.hours < b.hours) {
+                                        return 1
+                                      }
+                                      if (a.hours > b.hours) {
+                                        return -1
+                                      }
+                                      return 0
+                                    })[0].workList.work
+                                  }`}
                                   <span className="header--hours">
                                     {`${
-                                      Math.floor(item.works[0].hours * 100) /
-                                      100
+                                      Math.floor(
+                                        item.works.sort((a, b) => {
+                                          if (a.hours < b.hours) {
+                                            return 1
+                                          }
+                                          if (a.hours > b.hours) {
+                                            return -1
+                                          }
+                                          return 0
+                                        })[0].hours * 100,
+                                      ) / 100
                                     } ч`}
                                   </span>
                                 </>
