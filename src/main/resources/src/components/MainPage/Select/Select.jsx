@@ -393,7 +393,7 @@ const Select = (props) => {
             </div>
             <div className="select__selected_quantity">
               <span>
-                Кол-во
+                Кол-во (шт.)
                 {!props.readOnly && '*'}
               </span>
               <input
