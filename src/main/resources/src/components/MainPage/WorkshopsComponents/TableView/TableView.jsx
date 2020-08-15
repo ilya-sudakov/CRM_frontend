@@ -15,6 +15,7 @@ import {
 import {
   formatDateString,
   addSpaceDelimiter,
+  createLabelForProduct,
 } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { requestStatuses, productsStatuses } from '../workshopVariables.js'
@@ -57,19 +58,25 @@ const TableView = (props) => {
   const handleStatusChange = (event) => {
     const status = event.target.value
     const id = event.target.getAttribute('id')
-    return workshopsFuncs[props.workshopName]
-      .request(
-        {
-          status: status,
-        },
-        id,
-      )
-      .then(() => {
-        props.loadData()
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    const index = event.target.getAttribute('index')
+    if (props.data[index].sum !== 0 && status !== 'Завершено') {
+      return workshopsFuncs[props.workshopName]
+        .request(
+          {
+            status: status,
+          },
+          id,
+        )
+        .then(() => {
+          props.loadData()
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+    else {
+      alert('Введите сумму заказа для изменения статуса!')
+    }
   }
 
   const handleProductStatusChange = (productId, status) => {
@@ -123,12 +130,12 @@ const TableView = (props) => {
       setRequests(props.data)
       setIsLoading(false)
     }
-  }, [props.data, requests, props.isLoading])
+  }, [props.data, requests, props.isLoading, props.requestsByDate])
 
   const printRequests = (requests, displayColumns) => {
     return (
       <>
-        {sortRequests(requests).map((request, request_id) => (
+        {sortRequests(requests).map((request, index) => (
           <React.Fragment>
             <div
               className={
@@ -213,7 +220,7 @@ const TableView = (props) => {
                           )?.className
                         }`}
                       >
-                        <span>
+                        <span onClick={() => createLabelForProduct(product)}>
                           <div className="main-window__mobile-text">
                             Название:
                           </div>
@@ -309,6 +316,7 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Статус заявки:</div>
                   <select
                     id={request.id}
+                    index={index}
                     className="main-window__status_select"
                     value={request.status}
                     onChange={handleStatusChange}
@@ -510,36 +518,38 @@ const TableView = (props) => {
                   }
                   return 0
                 })
-                .map((date) => (
-                  <>
-                    <div className="main-window__table-date">
-                      {formatDateString(date[0])}
-                    </div>
-                    {printRequests(date[1], {
-                      date: {
-                        visible: false,
-                      },
-                      client: {
-                        visible: true,
-                      },
-                      responsible: {
-                        visible: true,
-                      },
-                      status: {
-                        visible: true,
-                      },
-                      'date-shipping': {
-                        visible: true,
-                      },
-                      comment: {
-                        visible: true,
-                      },
-                      price: {
-                        visible: props.workshopName === 'requests',
-                      },
-                    })}
-                  </>
-                ))}
+                .map((date) =>
+                  date[1].length > 0 ? (
+                    <>
+                      <div className="main-window__table-date">
+                        {formatDateString(date[0])}
+                      </div>
+                      {printRequests(date[1], {
+                        date: {
+                          visible: false,
+                        },
+                        client: {
+                          visible: true,
+                        },
+                        responsible: {
+                          visible: true,
+                        },
+                        status: {
+                          visible: true,
+                        },
+                        'date-shipping': {
+                          visible: true,
+                        },
+                        comment: {
+                          visible: true,
+                        },
+                        price: {
+                          visible: props.workshopName === 'requests',
+                        },
+                      })}
+                    </>
+                  ) : null,
+                )}
             </>
           ) : (
             <>

@@ -353,3 +353,10 @@ export const sortRequestsByDates = (requests) => {
   })
   return dates
 }
+
+export const createLabelForProduct = (product) => {
+  // we create a canvas element
+  var canvas = document.createElement('canvas')
+  var height = 100
+  var width = 100
+}

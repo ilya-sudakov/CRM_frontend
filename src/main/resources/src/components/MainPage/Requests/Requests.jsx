@@ -116,29 +116,11 @@ const Requests = (props) => {
   useEffect(() => {
     document.title = 'Заявки'
     let abortController = new AbortController()
-    loadRequests(abortController.signal)
+    requests.length === 0 && loadRequests(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
   }, [curPage])
-
-  //Получение списка клиентов из массива заявок
-  const getClientsFromRequests = (reqs) => {
-    const temp = clients
-    reqs.map((request) => {
-      if (
-        request.status !== 'Завершено' &&
-        !temp.find((item) => request.codeWord === item.name)
-      ) {
-        temp.push({
-          name: request.codeWord,
-          active: false,
-        })
-      }
-    })
-    // console.log(temp);
-    setClients([...temp])
-  }
 
   //GET-запрос на получение всех заявок
   const loadRequests = (signal) => {
@@ -213,6 +195,71 @@ const Requests = (props) => {
         setIsLoading(false)
         console.log(error)
       })
+  }
+
+  const filterRequests = (requests) => {
+    return requests
+      .filter((item) => {
+        const selectedWorkshop = workshops.find((workshop) => workshop.visible)
+        if (selectedWorkshop === undefined) {
+          return false
+        }
+        let check = false
+        selectedWorkshop.filter.map((type) => {
+          if (type === item.factory) {
+            return (check = true)
+          }
+        })
+        return check
+      })
+      .filter((item) => {
+        if (curPage === 'Завершено' && item.status === 'Завершено') {
+          return true
+        }
+        if (curPage === 'Отгружено' && item.status === 'Отгружено') {
+          return true
+        }
+        if (
+          curPage === 'Открытые' &&
+          item.status !== 'Завершено' &&
+          item.status !== 'Отгружено'
+        ) {
+          return true
+        }
+        return false
+      })
+      .filter((item) => {
+        let check = false
+        let noActiveStatuses = true
+        requestStatuses.map((status) => {
+          requestStatuses.map((status) => {
+            if (status.visible) {
+              noActiveStatuses = false
+            }
+          })
+          if (
+            noActiveStatuses === true ||
+            (status.visible &&
+              (status.name === item.status || status.oldName === item.status))
+          ) {
+            check = true
+            return
+          }
+        })
+        return check
+      })
+  }
+
+  const filterDates = (dates) => {
+    console.log(requestsByDate);
+    let newDates = dates
+    Object.entries(dates).map((item) => {
+      console.log(item[0], item[1], filterRequests(item[1]));
+      let temp = filterRequests(item[1])
+      newDates[item[0]] = temp
+    })
+    // console.log(newDates)
+    return newDates
   }
 
   return (
@@ -387,60 +434,8 @@ const Requests = (props) => {
           })}
         </div>
         <TableView
-          data={requests
-            .filter((item) => {
-              const selectedWorkshop = workshops.find(
-                (workshop) => workshop.visible,
-              )
-              if (selectedWorkshop === undefined) {
-                return false
-              }
-              let check = false
-              selectedWorkshop.filter.map((type) => {
-                if (type === item.factory) {
-                  return (check = true)
-                }
-              })
-              return check
-            })
-            .filter((item) => {
-              if (curPage === 'Завершено' && item.status === 'Завершено') {
-                return true
-              }
-              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
-                return true
-              }
-              if (
-                curPage === 'Открытые' &&
-                item.status !== 'Завершено' &&
-                item.status !== 'Отгружено'
-              ) {
-                return true
-              }
-              return false
-            })
-            .filter((item) => {
-              let check = false
-              let noActiveStatuses = true
-              requestStatuses.map((status) => {
-                requestStatuses.map((status) => {
-                  if (status.visible) {
-                    noActiveStatuses = false
-                  }
-                })
-                if (
-                  noActiveStatuses === true ||
-                  (status.visible &&
-                    (status.name === item.status ||
-                      status.oldName === item.status))
-                ) {
-                  check = true
-                  return
-                }
-              })
-              return check
-            })}
-          requestsByDate={requestsByDate}
+          data={filterRequests(requests)}
+          requestsByDate={filterDates(requestsByDate)}
           isLoading={isLoading}
           workshopName="requests"
           loadData={loadRequests}
