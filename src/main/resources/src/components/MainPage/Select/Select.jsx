@@ -85,6 +85,7 @@ const Select = (props) => {
               'ROLE_DISPATCHER',
               'ROLE_ENGINEER',
               'ROLE_MANAGER',
+              'ROLE_WORKSHOP', //temp
             ])
           ) {
             temp = categoriesArr.map((item) => {
