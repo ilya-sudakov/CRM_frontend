@@ -397,6 +397,11 @@
   .main-window__actions {
     flex-direction: row !important;
   }
+  @media (max-width: 1024px) {
+    .floating-plus {
+      display: none;
+    }
+  }
 
   @media (max-width: 768px) {
     .main-window {
@@ -407,9 +412,6 @@
     }
     .main-window__menu {
       width: calc(100% - 10px) !important;
-    }
-    .floating-plus {
-      display: none;
     }
     .main-window__list-item {
       span {

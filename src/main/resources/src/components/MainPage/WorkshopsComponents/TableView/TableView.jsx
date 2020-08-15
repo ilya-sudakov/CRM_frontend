@@ -413,7 +413,7 @@ const TableView = (props) => {
                   <div
                     className="main-window__action"
                     title="Печать заявки"
-                    onClick={(event) => printRequest(index)}
+                    onClick={() => printRequest(index)}
                   >
                     <img className="main-window__img" src={printSVG} />
                   </div>
