@@ -482,7 +482,7 @@ const TableView = (props) => {
               className="main-window__list-item"
             />
           )}
-          {sortOrder.curSort === 'date' ? (
+          {false ? ( //Временно sortOrder.curSort === 'date'
             <>
               <div className="main-window__list-item main-window__list-item--header">
                 {/* {displayColumns['date'].visible && (
