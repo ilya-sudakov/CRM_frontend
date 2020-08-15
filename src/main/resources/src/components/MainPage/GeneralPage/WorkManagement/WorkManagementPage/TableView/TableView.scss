@@ -111,8 +111,9 @@
                 padding-left: 0;
                 flex-direction: row;
                 justify-content: flex-start;
+                // justify-content: space-between;
                 align-items: center;
-                flex-wrap: wrap;
+                // flex-wrap: wrap;
 
                 .header {
                     &__wrapper {
@@ -135,7 +136,8 @@
                         white-space: nowrap;
                         // min-width: 300px;
                         font-size: 95%;
-                        width: calc(100% - 100px);
+                        width: fit-content;
+                        // width: calc(100% - 100px);
                     }
                     &--top-work {
                         display: flex;
@@ -143,6 +145,7 @@
                         border-left: 1px solid #bbbbbb;
                         padding-left: 20px;
                         margin-left: 20px;
+                        flex-wrap: nowrap;
 
                         .header--hours {
                             margin-left: 10px;
@@ -252,6 +255,7 @@
                     }
                     &__wrapper {
                         margin-bottom: 5px;
+                        margin-left: 0 !important;
                     }
                     &--top-work {
                         border-left: none;

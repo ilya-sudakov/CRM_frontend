@@ -141,7 +141,7 @@ const TableView = (props) => {
                                 )
                               : 'Нет записи!'}
                           </span>
-                          <div className="header__wrapper">
+                          <div className="header__wrapper header__wrapper--person">
                             <span className="header--position">
                               {item.employee.position + ' '}
                             </span>
@@ -154,7 +154,10 @@ const TableView = (props) => {
                                 item.employee.middleName}
                             </span>
                           </div>
-                          <div className="header__wrapper">
+                          <div
+                            className="header__wrapper"
+                            style={{ marginLeft: 'auto' }}
+                          >
                             <span className="header--top-work">
                               {item.works.length > 0 ? (
                                 <>
