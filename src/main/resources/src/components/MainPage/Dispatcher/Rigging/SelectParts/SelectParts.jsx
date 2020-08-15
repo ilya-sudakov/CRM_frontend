@@ -170,15 +170,6 @@ const SelectParts = (props) => {
               <div className="select_parts__item">
                 <div className="select_parts__input_name">Местоположение</div>
                 <div className="select_parts__input_field">
-                  {/* <input
-                    type="text"
-                    name="location"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.location}
-                    readOnly={props.readOnly}
-                  /> */}
                   <select
                     index={index}
                     name="location"

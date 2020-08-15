@@ -240,15 +240,17 @@ const ReportTablePage = (props) => {
           // date={date}
         />
         <TableLoading isLoading={isLoading} />
-        <TableView
-          dates={dates}
-          workData={workList}
-          showWindow={showWindow}
-          setShowWindow={setShowWindow}
-          setSelectedInfo={setSelectedInfo}
-          date={date}
-          searchQuery={searchQuery}
-        />
+        {!isLoading && (
+          <TableView
+            dates={dates}
+            workData={workList}
+            showWindow={showWindow}
+            setShowWindow={setShowWindow}
+            setSelectedInfo={setSelectedInfo}
+            date={date}
+            searchQuery={searchQuery}
+          />
+        )}
       </div>
     </div>
   )
