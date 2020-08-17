@@ -65,12 +65,22 @@ const TableView = (props) => {
   const handleStatusChange = (event) => {
     const status = event.target.value
     const id = event.target.getAttribute('id')
-    const index = event.target.getAttribute('index')
-    console.log(status)
+    const sum = Number.parseFloat(event.target.getAttribute('sum'))
+    console.log(
+      status,
+      sum,
+      sum !== 0 && sum !== null && sum !== undefined && status === 'Завершено',
+      status !== 'Завершено',
+      (sum !== 0 &&
+        sum !== null &&
+        sum !== undefined &&
+        status === 'Завершено') ||
+        status !== 'Завершено',
+    )
     if (
-      (props.data[index].sum !== 0 &&
-        props.data[index].sum !== null &&
-        props.data[index].sum !== undefined &&
+      (sum !== 0 &&
+        sum !== null &&
+        sum !== undefined &&
         status === 'Завершено') ||
       status !== 'Завершено'
     ) {
@@ -88,7 +98,7 @@ const TableView = (props) => {
           console.log(error)
         })
     } else {
-      alert('Введите сумму заказа для изменения статуса!')
+      return alert('Введите сумму заказа для изменения статуса!')
     }
   }
 
@@ -340,7 +350,7 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Статус заявки:</div>
                   <select
                     id={request.id}
-                    index={index}
+                    sum={request.sum}
                     className="main-window__status_select"
                     value={request.status}
                     onChange={handleStatusChange}
