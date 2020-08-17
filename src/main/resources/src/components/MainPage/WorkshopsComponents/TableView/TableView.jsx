@@ -66,7 +66,14 @@ const TableView = (props) => {
     const status = event.target.value
     const id = event.target.getAttribute('id')
     const index = event.target.getAttribute('index')
-    if (props.data[index].sum !== 0 && status !== 'Завершено') {
+    console.log(status)
+    if (
+      (props.data[index].sum !== 0 &&
+        props.data[index].sum !== null &&
+        props.data[index].sum !== undefined &&
+        status === 'Завершено') ||
+      status !== 'Завершено'
+    ) {
       return workshopsFuncs[props.workshopName]
         .request(
           {

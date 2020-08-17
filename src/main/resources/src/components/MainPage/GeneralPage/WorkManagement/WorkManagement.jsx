@@ -64,7 +64,7 @@ const WorkManagement = (props) => {
     let newEmployeesMap = {}
     Promise.all(
       works.map((work) => {
-        console.log(work)
+        // console.log(work)
         if (newEmployeesMap[work.employee.id] !== undefined) {
           return (newEmployeesMap = Object.assign({
             ...newEmployeesMap,
@@ -84,7 +84,7 @@ const WorkManagement = (props) => {
         }
       }),
     ).then(() => {
-      console.log(newEmployeesMap)
+      // console.log(newEmployeesMap)
       setEmployeesMap(newEmployeesMap)
     })
   }
@@ -99,7 +99,7 @@ const WorkManagement = (props) => {
         }))
       }
     })
-    console.log(newEmployees)
+    // console.log(newEmployees)
     setEmployees(newEmployees)
   }
 

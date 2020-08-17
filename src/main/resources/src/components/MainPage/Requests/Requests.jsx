@@ -136,7 +136,7 @@ const Requests = (props) => {
           }
         })
         setIsLoading(false)
-        console.log(temp)
+        // console.log(temp)
         setRequests(temp)
         // getClientsFromRequests(temp)
         setRequestsByDate(sortRequestsByDates(temp))
@@ -254,7 +254,7 @@ const Requests = (props) => {
     console.log(requestsByDate);
     let newDates = dates
     Object.entries(dates).map((item) => {
-      console.log(item[0], item[1], filterRequests(item[1]));
+      // console.log(item[0], item[1], filterRequests(item[1]));
       let temp = filterRequests(item[1])
       newDates[item[0]] = temp
     })
