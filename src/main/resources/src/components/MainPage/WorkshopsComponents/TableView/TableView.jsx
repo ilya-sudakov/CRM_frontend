@@ -8,6 +8,7 @@ import copySVG from '../../../../../../../../assets/tableview/copy.svg'
 import transferSVG from '../../../../../../../../assets/tableview/transfer.svg'
 import './TableView.scss'
 import pdfMake from 'pdfmake'
+import html2canvas from 'html2canvas'
 
 import {
   editRequestStatus,
@@ -26,9 +27,14 @@ import {
   workshops,
 } from '../workshopVariables.js'
 import { getRequestPdfText } from '../../../../utils/pdfFunctions.jsx'
+import LabelPrint from '../LabelPrint/LabelPrint.jsx'
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [selectedProduct, setSelectedProduct] = useState({
+    name: '',
+    link: '',
+  })
   const [sortOrder, setSortOrder] = useState({
     curSort: 'date',
     date: 'desc',
@@ -53,6 +59,42 @@ const TableView = (props) => {
     },
   })
 
+  const saveCanvasAsImage = (canvas) => {
+    canvas.toBlob(
+      function (blob) {
+        // получаем содержимое как JPEG Blob
+        let link = document.createElement('a')
+        link.download = 'test.jpeg'
+        link.href = URL.createObjectURL(blob)
+        link.click()
+        // удаляем ссылку на Blo
+        URL.revokeObjectURL(link.href)
+      },
+      'image/jpeg',
+      1,
+    )
+  }
+
+  const saveCanvas = (canvasSave) => {
+    const d = canvasSave.toDataURL('image/png')
+    const w = window.open('about:blank', 'image from canvas')
+    w.document.write("<img src='" + d + "' alt='from canvas'/>")
+    console.log('Saved!')
+  }
+
+  const downloadImage = (product) => {
+    setSelectedProduct({
+      ...product,
+    })
+    // console.log(product)
+    setTimeout(() => {
+      html2canvas(document.getElementById('label')).then((canvas) => {
+        // saveCanvas(canvas)
+        saveCanvasAsImage(canvas)
+      })
+    }, 1000)
+  }
+
   const changeSortOrder = (event) => {
     const name = event.target.value.split(' ')[0]
     const order = event.target.value.split(' ')[1]
@@ -66,17 +108,6 @@ const TableView = (props) => {
     const status = event.target.value
     const id = event.target.getAttribute('id')
     const sum = Number.parseFloat(event.target.getAttribute('sum'))
-    console.log(
-      status,
-      sum,
-      sum !== 0 && sum !== null && sum !== undefined && status === 'Завершено',
-      status !== 'Завершено',
-      (sum !== 0 &&
-        sum !== null &&
-        sum !== undefined &&
-        status === 'Завершено') ||
-        status !== 'Завершено',
-    )
     if (
       (sum !== 0 &&
         sum !== null &&
@@ -153,7 +184,13 @@ const TableView = (props) => {
       setRequests(props.data)
       setIsLoading(false)
     }
-  }, [props.data, requests, props.isLoading, props.requestsByDate])
+  }, [
+    props.data,
+    requests,
+    props.isLoading,
+    props.requestsByDate,
+    selectedProduct,
+  ])
 
   const printRequest = (index) => {
     let dd = getRequestPdfText(
@@ -496,6 +533,15 @@ const TableView = (props) => {
                     <img className="main-window__img" src={copySVG} />
                   </div>
                 )}
+                <div
+                  className="main-window__action"
+                  onClick={() => {
+                    downloadImage(request.requestProducts[0])
+                  }}
+                >
+                  {/* <img className="main-window__img" src={copySVG} /> */}
+                  Скачать
+                </div>
               </div>
             </div>
           </React.Fragment>
@@ -507,6 +553,7 @@ const TableView = (props) => {
   return (
     <div className="tableview-workshops">
       <div className="main-window">
+        <LabelPrint name={selectedProduct.name} link={selectedProduct.link} />
         <div className="main-window__sort-panel">
           <span>Сортировка: </span>
           <select onChange={changeSortOrder}>
