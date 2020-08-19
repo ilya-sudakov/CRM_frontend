@@ -36,6 +36,7 @@ const TableView = (props) => {
     name: '',
     link: '',
   })
+  const [labelIsHidden, setLabelIsHidden] = useState(true)
   const [sortOrder, setSortOrder] = useState({
     curSort: 'date',
     date: 'desc',
@@ -66,12 +67,12 @@ const TableView = (props) => {
     w.document.write("<img src='" + d + "' alt='from canvas'/>")
   }
 
-  const saveCanvasAsImage = (canvas) => {
+  const saveCanvasAsImage = (canvas, fileName) => {
     canvas.toBlob(
       function (blob) {
         // получаем содержимое как JPEG Blob
         let link = document.createElement('a')
-        link.download = 'test.jpeg'
+        link.download = fileName
         link.href = URL.createObjectURL(blob)
         link.click()
         // удаляем ссылку на Blo
@@ -86,16 +87,19 @@ const TableView = (props) => {
     setSelectedProduct({
       ...product,
     })
+    setLabelIsHidden(false)
     const element = document.getElementById('label')
     setTimeout(async () => {
       await html2canvas(element, {
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight,
         scrollY: 0,
+        scrollX: 0,
       }).then((canvas) => {
+        setLabelIsHidden(true)
         console.log(element, element.scrollWidth, element.scrollHeight, canvas)
-        saveCanvas(canvas)
-        // saveCanvasAsImage(canvas)
+        // saveCanvas(canvas)
+        saveCanvasAsImage(canvas, `${product.name}.jpeg`)
       })
     }, 1000)
   }
@@ -355,6 +359,9 @@ const TableView = (props) => {
                           onClick={() => downloadImage(product)}
                           title="Скачать этикетку"
                         >
+                          <div className="main-window__mobile-text">
+                            Скачать этикетку
+                          </div>
                           <img className="main-window__img" src={downloadSVG} />
                         </span>
                       </div>
@@ -555,7 +562,11 @@ const TableView = (props) => {
   return (
     <div className="tableview-workshops">
       <div className="main-window">
-        <LabelPrint name={selectedProduct.name} link={selectedProduct.link} />
+        <LabelPrint
+          name={selectedProduct.name}
+          link={selectedProduct.link}
+          isHidden={labelIsHidden}
+        />
         <div className="main-window__sort-panel">
           <span>Сортировка: </span>
           <select onChange={changeSortOrder}>

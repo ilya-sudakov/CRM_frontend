@@ -6,13 +6,15 @@ import { formatDateString } from '../../../../utils/functions.jsx'
 import QRCode from 'react-qr-code'
 
 const LabelPrint = (props) => {
-
   useEffect(() => {
-    console.log(props.name);
-  }, [props.name])
+    console.log(props.name)
+  }, [props])
 
   return (
-    <div id="label" className="label-print">
+    <div
+      id="label"
+      className={`label-print ${props.isHidden ? 'label-print--hidden' : ''}`}
+    >
       <div className="label-print__header">
         <div className="header__name">
           {props.name || 'ДПК Стандарт 6,5/3 (AISI430, 1мм)'}

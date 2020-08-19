@@ -1,4 +1,16 @@
 .label-print {
+    @keyframes pulse {
+        0% {
+            background-color: #dddddd;
+        }
+        50% {
+            background-color: #eeeeee;
+        }
+        100% {
+            background-color: #dddddd;
+        }
+    }
+
     width: 500px;
     // height: 520px;
     height: fit-content;
@@ -12,9 +24,29 @@
     padding: 25px;
 
     position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
+    top: 100px;
+    left: 600px;
+    background-color: #ffffff;
+    z-index: 999;
+    transition: 100ms ease-in-out;
+
+    &::after {
+        position: absolute;
+        bottom: -40px;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #bbbbbb;
+        content: "Идет скачивание...";
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 5px 15px;
+        animation: pulse 1s infinite ease-in-out;
+    }
+
+    &--hidden {
+        left: 2000px;
+    }
 
     &__header {
         display: flex;
