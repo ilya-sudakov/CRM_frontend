@@ -11,8 +11,9 @@
     box-sizing: border-box;
     padding: 25px;
 
-    position: absolute;
+    position: fixed;
     top: 0;
+    left: 0;
     z-index: -1;
 
     &__header {

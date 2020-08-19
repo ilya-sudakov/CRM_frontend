@@ -6,34 +6,8 @@ import { formatDateString } from '../../../../utils/functions.jsx'
 import QRCode from 'react-qr-code'
 
 const LabelPrint = (props) => {
-  const saveCanvas = (canvasSave) => {
-    const d = canvasSave.toDataURL('image/png')
-    const w = window.open('about:blank', 'image from canvas')
-    w.document.write("<img src='" + d + "' alt='from canvas'/>")
-    console.log('Saved!')
-  }
-
-  const saveCanvasAsImage = (canvas) => {
-    canvas.toBlob(
-      function (blob) {
-        // получаем содержимое как JPEG Blob
-        let link = document.createElement('a')
-        link.download = 'test.jpeg'
-        link.href = URL.createObjectURL(blob)
-        link.click()
-        // удаляем ссылку на Blo
-        URL.revokeObjectURL(link.href)
-      },
-      'image/jpeg',
-      1,
-    )
-  }
 
   useEffect(() => {
-    // html2canvas(document.getElementById('label')).then((canvas) => {
-    //   //   saveCanvas(canvas)
-    //   //   saveCanvasAsImage(canvas)
-    // })
     console.log(props.name);
   }, [props.name])
 

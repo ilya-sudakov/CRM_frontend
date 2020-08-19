@@ -4,6 +4,7 @@ import viewSVG from '../../../../../../../../assets/tableview/view.svg'
 import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import printSVG from '../../../../../../../../assets/tableview/print.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
+import downloadSVG from '../../../../../../../../assets/download.svg'
 import copySVG from '../../../../../../../../assets/tableview/copy.svg'
 import transferSVG from '../../../../../../../../assets/tableview/transfer.svg'
 import './TableView.scss'
@@ -59,6 +60,12 @@ const TableView = (props) => {
     },
   })
 
+  const saveCanvas = (canvasSave) => {
+    const d = canvasSave.toDataURL('image/jpeg')
+    const w = window.open('about:blank', 'image from canvas')
+    w.document.write("<img src='" + d + "' alt='from canvas'/>")
+  }
+
   const saveCanvasAsImage = (canvas) => {
     canvas.toBlob(
       function (blob) {
@@ -75,22 +82,20 @@ const TableView = (props) => {
     )
   }
 
-  const saveCanvas = (canvasSave) => {
-    const d = canvasSave.toDataURL('image/png')
-    const w = window.open('about:blank', 'image from canvas')
-    w.document.write("<img src='" + d + "' alt='from canvas'/>")
-    console.log('Saved!')
-  }
-
-  const downloadImage = (product) => {
+  const downloadImage = async (product) => {
     setSelectedProduct({
       ...product,
     })
-    // console.log(product)
-    setTimeout(() => {
-      html2canvas(document.getElementById('label')).then((canvas) => {
-        // saveCanvas(canvas)
-        saveCanvasAsImage(canvas)
+    const element = document.getElementById('label')
+    setTimeout(async () => {
+      await html2canvas(element, {
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
+        scrollY: 0,
+      }).then((canvas) => {
+        console.log(element, element.scrollWidth, element.scrollHeight, canvas)
+        saveCanvas(canvas)
+        // saveCanvasAsImage(canvas)
       })
     }, 1000)
   }
@@ -346,6 +351,12 @@ const TableView = (props) => {
                             ))}
                           </select>
                         </span>
+                        <span
+                          onClick={() => downloadImage(product)}
+                          title="Скачать этикетку"
+                        >
+                          <img className="main-window__img" src={downloadSVG} />
+                        </span>
                       </div>
                     )
                   })}
@@ -533,15 +544,6 @@ const TableView = (props) => {
                     <img className="main-window__img" src={copySVG} />
                   </div>
                 )}
-                <div
-                  className="main-window__action"
-                  onClick={() => {
-                    downloadImage(request.requestProducts[0])
-                  }}
-                >
-                  {/* <img className="main-window__img" src={copySVG} /> */}
-                  Скачать
-                </div>
               </div>
             </div>
           </React.Fragment>
