@@ -61,12 +61,6 @@ const TableView = (props) => {
     },
   })
 
-  const saveCanvas = (canvasSave) => {
-    const d = canvasSave.toDataURL('image/jpeg')
-    const w = window.open('about:blank', 'image from canvas')
-    w.document.write("<img src='" + d + "' alt='from canvas'/>")
-  }
-
   const saveCanvasAsImage = (canvas, fileName) => {
     canvas.toBlob(
       function (blob) {
@@ -97,11 +91,13 @@ const TableView = (props) => {
         scrollX: 0,
       }).then((canvas) => {
         setLabelIsHidden(true)
-        console.log(element, element.scrollWidth, element.scrollHeight, canvas)
         // saveCanvas(canvas)
-        saveCanvasAsImage(canvas, `${product.name}.jpeg`)
+        saveCanvasAsImage(
+          canvas,
+          `${formatDateString(new Date())}_${product.name}.jpeg`,
+        )
       })
-    }, 1000)
+    }, 1500)
   }
 
   const changeSortOrder = (event) => {

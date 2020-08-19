@@ -26,8 +26,8 @@ const LabelPrint = (props) => {
           new Date(),
         )}`}</div>
         <div className="content__description content__description--address">
-          Расфасовано в ООО "Osfix" 190013, г. Санкт-Петербург, улица Рузовская,
-          дом 5, литера А, помещение 3-Н, офис 25
+          Расфасовано в ООО "Osfix" 191040, г. Санкт-Петербург, Лиговский пр.,
+          д. 52
         </div>
         <div className="content__bar-code">
           <QRCode
