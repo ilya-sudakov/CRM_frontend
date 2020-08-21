@@ -1,4 +1,110 @@
 @import "../../../variables.scss";
 
 .statistics {
+    padding: 0 15px;
+    box-sizing: border-box;
+    .main-window {
+        &__title {
+            box-sizing: border-box;
+            text-align: left;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .statistics__row {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 1rem;
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 20px 25px;
+            box-sizing: border-box;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.1);
+            margin-right: 15px;
+            margin-bottom: 10px;
+
+            &__category {
+                color: #666666;
+                margin-bottom: 10px;
+            }
+
+            &__value {
+                font-size: 200%;
+                margin-bottom: 10px;
+            }
+
+            &__difference {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: flex-end;
+
+                .panel__arrow {
+                    display: flex;
+                    // width: 20px;
+                    // height: 25px;
+                    // background-color: red;
+                    margin-right: 6px;
+                    border: 8px solid transparent;
+                }
+
+                &--positive {
+                    .panel__arrow {
+                        margin-top: 1px;
+                        margin-bottom: auto;
+                        border-bottom: 10px solid #0acf97;
+                    }
+                    .panel__percentage {
+                        color: #0acf97;
+                    }
+                }
+
+                &--negative {
+                    .panel__arrow {
+                        margin-top: auto;
+                        margin-bottom: 1px;
+                        border-top: 10px solid #fa5c7c;
+                    }
+                    .panel__percentage {
+                        color: #fa5c7c;
+                    }
+                }
+
+                .panel__percentage {
+                    font-size: 125%;
+                    margin-right: 10px;
+                }
+
+                .panel__time-period {
+                    color: #666666;
+                    margin-bottom: 1px;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-window {
+            .statistics__row {
+                .panel {
+                    &__difference {
+                        flex-wrap: wrap;
+                        // align-items: flex-start;
+                        // flex-direction: column;
+                    }
+                }
+            }
+        }
+    }
 }
