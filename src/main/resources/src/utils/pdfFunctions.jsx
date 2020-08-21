@@ -257,6 +257,7 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
         text: [
           {
             text: '\nПродукция: \n',
+            margin: [0, 0, 0, 5],
             style: 'regularText',
           },
         ],
