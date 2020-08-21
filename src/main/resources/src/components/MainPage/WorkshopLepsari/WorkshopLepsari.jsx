@@ -4,7 +4,10 @@ import './WorkshopLepsari.scss'
 import PrintIcon from '../../../../../../../assets/print.png'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
-import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
+import {
+  getRequestsListPdfText,
+  getProductsFromRequestsListPdfText,
+} from '../../../utils/pdfFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import {
@@ -14,11 +17,15 @@ import {
   getRequests,
   getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
-import { sortRequestsByDates } from '../../../utils/functions.jsx'
+import {
+  sortRequestsByDates,
+  getQuantityOfProductsFromRequests,
+} from '../../../utils/functions.jsx'
 
 const WorkshopLepsari = (props) => {
   const [requestLepsari, setRequestLepsari] = useState([])
   const [requestsByDate, setRequestsByDate] = useState([])
+  const [productsQuantities, setProductsQuantities] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [curPage, setCurPage] = useState('Открытые')
@@ -82,18 +89,6 @@ const WorkshopLepsari = (props) => {
       })
   }
 
-  const copyRequest = (id) => {
-    // props.setTransferState(true)
-    // props.setTransferData(
-    //   requestLepsari.find((item) => {
-    //     if (item.id === id) {
-    //       return true
-    //     }
-    //   }),
-    // )
-    // props.history.push('/lepsari/workshop-lepsari/new')
-  }
-
   useEffect(() => {
     document.title = 'Заявки - Лепсари'
     const abortController = new AbortController()
@@ -104,11 +99,7 @@ const WorkshopLepsari = (props) => {
   }, [])
 
   const printRequestsList = () => {
-    let dd = getRequestsListPdfText(
-      requestLepsari.sort((a, b) => a.id - b.id),
-      'ЦехЛепсари',
-      'requestProducts',
-    )
+    let dd = getProductsFromRequestsListPdfText(productsQuantities, 'ЦехЛЭМЗ')
     pdfMake.createPdf(dd).print()
   }
 
@@ -119,6 +110,7 @@ const WorkshopLepsari = (props) => {
       .then((requests) => {
         // console.log(requests);
         setRequestLepsari(requests)
+        setProductsQuantities(getQuantityOfProductsFromRequests(requests))
         setRequestsByDate(sortRequestsByDates(requests))
         setIsLoading(false)
       })

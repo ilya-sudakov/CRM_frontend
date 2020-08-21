@@ -360,3 +360,25 @@ export const createLabelForProduct = (product) => {
   var height = 100
   var width = 100
 }
+
+export const getQuantityOfProductsFromRequests = (requests) => {
+  let products = {}
+  requests.map((request) => {
+    if (request.status !== 'Завершено' || request.status !== 'completed') {
+      return request.requestProducts.map((product) => {
+        if (product.status !== 'completed') {
+          return (products = {
+            ...products,
+            [product.name]:
+              products[product.name] === undefined
+                ? Number.parseFloat(product.quantity)
+                : Number.parseFloat(product.quantity) +
+                  Number.parseFloat(products[product.name]),
+          })
+        }
+      })
+    }
+  })
+  console.log(products)
+  return products
+}

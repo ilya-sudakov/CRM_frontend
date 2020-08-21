@@ -5,7 +5,10 @@ import PrintIcon from '../../../../../../../assets/print.png'
 import pdfMake from 'pdfmake'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
-import { getRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
+import {
+  getRequestsListPdfText,
+  getProductsFromRequestsListPdfText,
+} from '../../../utils/pdfFunctions.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
@@ -16,11 +19,15 @@ import {
   deleteRequest,
   getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
-import { sortRequestsByDates } from '../../../utils/functions.jsx'
+import {
+  sortRequestsByDates,
+  getQuantityOfProductsFromRequests,
+} from '../../../utils/functions.jsx'
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([])
   const [requestsByDate, setRequestsByDate] = useState([])
+  const [productsQuantities, setProductsQuantities] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [curPage, setCurPage] = useState('Открытые')
@@ -43,24 +50,8 @@ const WorkshopLEMZ = (props) => {
   }
 
   const printRequestsList = () => {
-    let dd = getRequestsListPdfText(
-      requestsLEMZ.sort((a, b) => a.id - b.id),
-      'ЦехЛЭМЗ',
-      'requestProducts',
-    )
+    let dd = getProductsFromRequestsListPdfText(productsQuantities, 'ЦехЛЭМЗ')
     pdfMake.createPdf(dd).print()
-  }
-
-  const copyRequest = (id) => {
-    // props.setTransferState(true)
-    // props.setTransferData(
-    //   requestsLEMZ.find((item) => {
-    //     if (item.id === id) {
-    //       return true
-    //     }
-    //   }),
-    // )
-    // props.history.push('/lemz/workshop-lemz/new')
   }
 
   useEffect(() => {
@@ -78,6 +69,7 @@ const WorkshopLEMZ = (props) => {
       .then((res) => res.json())
       .then((requests) => {
         setRequestsLEMZ(requests)
+        setProductsQuantities(getQuantityOfProductsFromRequests(requests))
         setRequestsByDate(sortRequestsByDates(requests))
         setIsLoading(false)
       })

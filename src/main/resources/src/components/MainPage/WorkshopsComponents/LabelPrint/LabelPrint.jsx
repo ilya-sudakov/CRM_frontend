@@ -7,7 +7,7 @@ import QRCode from 'react-qr-code'
 
 const LabelPrint = (props) => {
   useEffect(() => {
-    console.log(props.name)
+    // console.log(props.name)
   }, [props])
 
   return (

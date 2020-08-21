@@ -322,6 +322,79 @@ export const getRequestsListPdfText = (
   return dd
 }
 
+export const getProductsFromRequestsListPdfText = (products, workshopName) => {
+  const requestsFormatted = [
+    {
+      table: {
+        widths: ['*', 100, 80, 80],
+        body: [
+          [
+            { text: 'Название', style: 'tableHeader' },
+            { text: 'Кол-во', style: 'tableHeader' },
+            { text: '', style: 'tableHeader' },
+            { text: '', style: 'tableHeader' },
+          ],
+          ...Object.entries(products).map((product) => {
+            return [product[0], product[1], '', '']
+          }),
+        ],
+      },
+    },
+  ]
+
+  var dd = {
+    info: {
+      title: 'Очередь производства - список',
+    },
+    content: [
+      {
+        text: 'Очередь производства - список\n',
+        alignment: 'center',
+        style: 'title',
+      },
+      workshopName
+        ? {
+            text: [
+              {
+                text: '\n' + 'Подразделение: ',
+                style: 'subheader',
+              },
+              {
+                text: workshopName + '\n\n',
+                style: 'regularText',
+              },
+            ],
+          }
+        : '\n',
+      ...requestsFormatted,
+    ],
+    styles: {
+      header: {
+        fontSize: 22,
+        bold: true,
+      },
+      title: {
+        fontSize: 24,
+        bold: true,
+      },
+      subheader: {
+        fontSize: 18,
+        bold: true,
+      },
+      regularText: {
+        fontSize: 16,
+      },
+      tableHeader: {
+        fontSize: 16,
+        bold: true,
+        alignment: 'center',
+      },
+    },
+  }
+  pdfMake.vfs = font.pdfMake.vfs
+  return dd
+}
+
 export const getEmployeesListPdfText = (employees, workshops) => {
   const employeesList = []
   workshops.map((workshop) => {
