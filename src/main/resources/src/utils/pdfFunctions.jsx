@@ -92,9 +92,19 @@ export const getRequestPdfText = (
   workshopName,
   itemId,
 ) => {
-  let productsArr = requestProducts.map((item) => {
-    return [item.name, item.quantity, item.packaging, '', '']
-  })
+  let productsArr = requestProducts
+    .sort((a, b) => {
+      if (a.name < b.name) {
+        return -1
+      }
+      if (a.name > b.name) {
+        return 1
+      }
+      return 0
+    })
+    .map((item) => {
+      return [item.name, item.quantity, item.packaging, '', '']
+    })
   var dd = {
     info: {
       title: 'Очередь производства №' + itemId,
@@ -201,9 +211,19 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
             { text: '', style: 'tableHeader' },
             { text: '', style: 'tableHeader' },
           ],
-          ...Object.entries(products).map((product) => {
-            return [product[0], product[1], '', '']
-          }),
+          ...Object.entries(products)
+            .sort((a, b) => {
+              if (a[0] < b[0]) {
+                return -1
+              }
+              if (a[0] > b[0]) {
+                return 1
+              }
+              return 0
+            })
+            .map((product) => {
+              return [product[0], product[1], '', '']
+            }),
         ],
       },
     },
