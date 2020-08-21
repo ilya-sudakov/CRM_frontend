@@ -233,6 +233,14 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
             ],
           }
         : '\n',
+      {
+        text: [
+          {
+            text: '\nПродукция: \n',
+            style: 'regularText',
+          },
+        ],
+      },
       ...productsFormatted,
     ],
     styles: {

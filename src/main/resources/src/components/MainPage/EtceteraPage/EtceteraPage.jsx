@@ -87,6 +87,12 @@ const EtceteraPage = (props) => {
     ],
     Статистика: [
       {
+        linkTo: '/statistics',
+        name: 'Статистика',
+        access: ['ROLE_ADMIN'],
+        icon: graphIcon,
+      },
+      {
         linkTo: '/graphs',
         name: 'Графики',
         access: ['ROLE_ADMIN'],

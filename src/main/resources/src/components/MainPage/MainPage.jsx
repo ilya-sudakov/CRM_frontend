@@ -57,6 +57,7 @@ import {
   EditPackaging,
   ReportTablePage,
   RiggingList,
+  StatisticsPage,
 } from './lazyImports.jsx'
 import NewRequest from './WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
 import EditRequest from './WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
@@ -715,6 +716,12 @@ class MainPage extends React.Component {
                     'ROLE_ENGINEER',
                     'ROLE_MANAGER',
                   ]}
+                />
+                <PrivateRoute
+                  exact
+                  path="/statistics"
+                  component={StatisticsPage}
+                  allowedRoles={['ROLE_ADMIN']}
                 />
                 <Route component={PageNotFound} />
               </Switch>

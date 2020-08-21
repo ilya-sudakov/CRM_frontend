@@ -16,7 +16,6 @@
   // overflow-y: auto;
   // overflow-x: hidden;
 
-
   z-index: 999; //test
   position: relative;
 
@@ -30,6 +29,7 @@
     min-height: 36px;
     // justify-content: center;
     align-items: center;
+    transition: 0.2s ease-in-out;
     // margin: 3px 0;
     width: 100%;
     // margin-top: 2px;
@@ -172,6 +172,7 @@
       width: calc(100% - 25px);
       // text-align: center;
       color: #dddddd;
+      transition: 0.2s ease-in-out;
 
       & .sidemenu__img {
         // width: 25px;
@@ -179,6 +180,11 @@
       }
       & .sidemenu__img--bigger {
         margin-right: 2.5px;
+      }
+
+      span {
+        transform-origin: left;
+        transition: 0.2s ease-in-out;
       }
     }
 
@@ -191,13 +197,12 @@
       border-radius: 5px;
       display: flex;
       align-items: center;
-      transition: 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out, display 210ms ease-in-out, filter 0.5s ease-in-out;
       box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-      transition: filter 0.5s;
       transform: translate3d(-1px, -1px, 0);
       border: solid 1px transparent;
       border-width: 1px 0 0 1px;
-      transition: transform 100ms ease-in-out;
+      // transition: all 100ms ease-in-out;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
@@ -206,6 +211,7 @@
       .sidemenu__img {
         width: 22px;
         filter: brightness(3);
+        transition: 0.2s ease-in-out;
       }
     }
   }
@@ -278,18 +284,23 @@
   }
 
   &--hidden {
-    background-color: $side_menu__background;
-    width: 0;
-    border: 0;
+    // background-color: $side_menu__background;
+    // width: 0;
+    // transform: scaleX(0);
+    // width: 50px;
+    // border: 0;
+    width: fit-content;
     transition: 0.2s ease-in-out;
-    padding: 0px 0px 0px 0px;
-    transform: scaleX(0);
+    align-items: flex-start;
+    // padding: 0px 0px 0px 0px;
 
     .sidemenu__add-buttons {
       display: flex;
       flex-direction: column;
       // min-height: 40px;
       width: 0;
+      min-height: 0;
+      height: 0;
       // justify-content: center;
       align-items: center;
 
@@ -300,6 +311,9 @@
 
     .sidemenu__item {
       transition: 0.2s ease-in-out;
+      width: 100%;
+      min-width: 0 !important;
+      max-width: 30px !important;
       // position: static;
 
       &:nth-of-type(n + 1) {
@@ -310,7 +324,24 @@
       }
 
       &--active {
-        transform: scaleX(0);
+        // transform: scaleX(0);
+      }
+
+      .sidemenu__link {
+        width: 100%;
+        padding-right: 0;
+        justify-content: center;
+        span {
+          display: none;
+          transform: scaleX(0);
+        }
+
+        .sidemenu__img {
+          transition: 0.2s ease-in-out;
+          margin-right: 0;
+          padding-right: 0;
+          width: 25px;
+        }
       }
 
       &--add {
@@ -323,7 +354,13 @@
     }
 
     .sidemenu__addButton {
-      transform: scaleX(0);
+      transform: scale(0);
+      max-width: 0;
+
+      .sidemenu__img {
+        transform: scale(0);
+      }
+      // display: none;
     }
   }
 
@@ -359,6 +396,7 @@
       overflow-x: hidden;
 
       &--hidden {
+        width: 0;
         left: -200px;
       }
 

@@ -627,7 +627,7 @@ const SideMenu = (props) => {
                     alt=""
                   />
                 )}
-                {item.name}
+                <span>{item.name}</span>
               </Link>
               {item.addButtonName &&
                 item.pathname !== '/' &&
