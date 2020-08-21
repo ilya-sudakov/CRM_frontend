@@ -80,6 +80,12 @@ const GeneralPage = (props) => {
                 Графики
               </Link>
             )}
+            {props.userHasAccess(['ROLE_ADMIN']) && (
+              <Link className="main-window__button" to="/statistics">
+                <img className="main-window__img" src={graphIcon} />
+                Статистика
+              </Link>
+            )}
             <Button
               text="Скачать Табель"
               imgSrc={DownloadIcon}

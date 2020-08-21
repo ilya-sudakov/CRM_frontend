@@ -19,9 +19,9 @@ const StatisticsPage = () => {
     ),
   })
 
-  const getRequestStats = () => {
+  const getRequestStats = (signal) => {
     !requestsStats.isLoaded &&
-      getRequests()
+      getRequests(signal)
         .then((res) => res.json())
         .then((res) => {
           console.log(res)
@@ -61,7 +61,8 @@ const StatisticsPage = () => {
   }
 
   useEffect(() => {
-    getRequestStats()
+    const abortController = new AbortController()
+    getRequestStats(abortController.signal)
   }, [])
 
   return (
