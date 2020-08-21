@@ -48,6 +48,18 @@ module.exports = {
         ],
       },
       {
+        test: /\.(png|svg|jpg|gif|ico|json)$/,
+        exclude: /\.inline.svg$/,
+        loader: 'file-loader',
+        options: {
+          name: 'assets/[name].[ext]',
+        },
+      },
+      {
+        test: /\.inline.svg$/,
+        use: ['@svgr/webpack'],
+      },
+      {
         test: /\.s?css$/,
         // MiniCssExtractPlugin.loader для production
         use: [
@@ -57,13 +69,6 @@ module.exports = {
           'css-loader',
           'sass-loader',
         ],
-      },
-      {
-        test: /\.(png|svg|jpg|gif|ico|json)$/,
-        loader: 'file-loader',
-        options: {
-          name: 'assets/[name].[ext]',
-        },
       },
     ],
   },
