@@ -6,14 +6,11 @@ import pdfMake from 'pdfmake'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import {
-  getRequestsListPdfText,
   getProductsFromRequestsListPdfText,
 } from '../../../utils/pdfFunctions.jsx'
-import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import {
-  getRequests,
   getRequestById,
   deleteProductsToRequest,
   deleteRequest,

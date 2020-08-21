@@ -5,7 +5,6 @@ import PrintIcon from '../../../../../../../assets/print.png'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import {
-  getRequestsListPdfText,
   getProductsFromRequestsListPdfText,
 } from '../../../utils/pdfFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
@@ -14,7 +13,6 @@ import {
   getRequestById,
   deleteProductsToRequest,
   deleteRequest,
-  getRequests,
   getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
 import {

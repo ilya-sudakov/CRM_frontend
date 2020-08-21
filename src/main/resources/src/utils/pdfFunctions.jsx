@@ -101,7 +101,7 @@ export const getRequestPdfText = (
     },
     content: [
       {
-        text: 'Очередь производства' + ' №' + itemId + '\n',
+        text: 'Очередь производства  №' + itemId + '\n',
         alignment: 'center',
         style: 'header',
       },
@@ -109,12 +109,12 @@ export const getRequestPdfText = (
         ? {
             text: [
               {
-                text: '\n' + 'Подразделение: ',
-                style: 'subheader',
+                text: '\nПодразделение: \n',
+                style: 'regularText',
               },
               {
-                text: workshopName + '\n' + '\n',
-                style: 'regularText',
+                text: workshopName + '\n\n',
+                style: 'subheader',
               },
             ],
           }
@@ -122,18 +122,18 @@ export const getRequestPdfText = (
       {
         text: [
           {
-            text: 'Дата: ',
-            style: 'subheader',
+            text: 'Дата: \n',
+            style: 'regularText',
           },
           {
-            text: formatDateString(date) + '\n' + '\n',
-            style: 'regularText',
+            text: formatDateString(date) + '\n\n',
+            style: 'subheader',
           },
         ],
       },
       {
         text: 'Продукция: ',
-        style: 'subheader',
+        style: 'regularText',
         margin: [0, 0, 0, 5],
       },
       {
@@ -155,166 +155,33 @@ export const getRequestPdfText = (
       {
         text: [
           {
-            text: 'Кодовое слово: ',
-            style: 'subheader',
+            text: 'Кодовое слово: \n',
+            style: 'regularText',
           },
           {
             text: codeWord,
-            style: 'regularText',
+            style: 'subheader',
           },
         ],
       },
     ],
     styles: {
       header: {
-        fontSize: 22,
+        fontSize: 20,
         bold: true,
       },
       subheader: {
-        fontSize: 18,
-        bold: true,
+        fontSize: 16,
+        // bold: true,
       },
       regularText: {
-        fontSize: 16,
+        fontSize: 14,
+        color: '#444444',
       },
       tableHeader: {
-        fontSize: 16,
+        fontSize: 12,
         bold: true,
-        alignment: 'center',
-      },
-    },
-  }
-  pdfMake.vfs = font.pdfMake.vfs
-  return dd
-}
-
-export const getRequestsListPdfText = (
-  requests,
-  workshopName,
-  productsName,
-) => {
-  const requestsFormatted = requests.map((item) => {
-    if (item.status !== 'Завершено') {
-      return [
-        {
-          text: [
-            {
-              text: 'Очередь производства №' + item.id + '\n',
-              style: 'header',
-              alignment: 'center',
-              margin: [0, 0, 0, 10],
-            },
-          ],
-        },
-        {
-          text: [
-            {
-              text: 'Дата: ',
-              style: 'subheader',
-            },
-            {
-              text: formatDateString(item.date) + '\n',
-              style: 'regularText',
-            },
-          ],
-        },
-        {
-          text: [
-            {
-              text: 'Статус: ',
-              style: 'subheader',
-            },
-            {
-              text: item.status + '\n',
-              style: 'regularText',
-            },
-          ],
-        },
-        {
-          text: 'Продукция: ',
-          style: 'subheader',
-          margin: [0, 0, 0, 5],
-        },
-        {
-          table: {
-            widths: ['*', 70, 70, 70, 70],
-            body: [
-              [
-                { text: 'Название', style: 'tableHeader' },
-                { text: 'Кол-во', style: 'tableHeader' },
-                { text: 'Фасовка', style: 'tableHeader' },
-                { text: '', style: 'tableHeader' },
-                { text: '', style: 'tableHeader' },
-              ],
-              ...item[productsName].map((item) => {
-                return [item.name, item.quantity, item.packaging, '', '']
-              }),
-            ],
-          },
-        },
-        '\n',
-        {
-          text: [
-            {
-              text: 'Кодовое слово: ',
-              style: 'subheader',
-            },
-            {
-              text: item.codeWord,
-              style: 'regularText',
-            },
-          ],
-        },
-        '\n\n\n',
-      ]
-    }
-  })
-  var dd = {
-    info: {
-      title: 'Очередь производства - список',
-    },
-    content: [
-      {
-        text: 'Очередь производства - список\n',
-        alignment: 'center',
-        style: 'title',
-      },
-      workshopName
-        ? {
-            text: [
-              {
-                text: '\n' + 'Подразделение: ',
-                style: 'subheader',
-              },
-              {
-                text: workshopName + '\n\n',
-                style: 'regularText',
-              },
-            ],
-          }
-        : '\n',
-      ...requestsFormatted,
-    ],
-    styles: {
-      header: {
-        fontSize: 22,
-        bold: true,
-      },
-      title: {
-        fontSize: 24,
-        bold: true,
-      },
-      subheader: {
-        fontSize: 18,
-        bold: true,
-      },
-      regularText: {
-        fontSize: 16,
-      },
-      tableHeader: {
-        fontSize: 16,
-        bold: true,
-        alignment: 'center',
+        alignment: 'left',
       },
     },
   }
@@ -323,7 +190,7 @@ export const getRequestsListPdfText = (
 }
 
 export const getProductsFromRequestsListPdfText = (products, workshopName) => {
-  const requestsFormatted = [
+  const productsFormatted = [
     {
       table: {
         widths: ['*', 100, 80, 80],
@@ -356,38 +223,39 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
         ? {
             text: [
               {
-                text: '\n' + 'Подразделение: ',
-                style: 'subheader',
+                text: '\nПодразделение: \n',
+                style: 'regularText',
               },
               {
                 text: workshopName + '\n\n',
-                style: 'regularText',
+                style: 'subheader',
               },
             ],
           }
         : '\n',
-      ...requestsFormatted,
+      ...productsFormatted,
     ],
     styles: {
       header: {
-        fontSize: 22,
+        fontSize: 20,
         bold: true,
       },
       title: {
-        fontSize: 24,
+        fontSize: 20,
         bold: true,
       },
       subheader: {
-        fontSize: 18,
-        bold: true,
+        fontSize: 16,
+        // bold: true,
       },
       regularText: {
-        fontSize: 16,
+        fontSize: 14,
+        color: '#444444',
       },
       tableHeader: {
-        fontSize: 16,
+        fontSize: 12,
         bold: true,
-        alignment: 'center',
+        alignment: 'left',
       },
     },
   }
