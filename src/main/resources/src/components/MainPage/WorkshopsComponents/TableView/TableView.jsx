@@ -201,7 +201,9 @@ const TableView = (props) => {
     let dd = getRequestPdfText(
       requests[index].date,
       requests[index].requestProducts,
-      requests[index].codeWord,
+      requests[index].client
+        ? requests[index].client.name
+        : requests[index].codeWord,
       workshops[props.workshopName].name,
       requests[index].id,
     )

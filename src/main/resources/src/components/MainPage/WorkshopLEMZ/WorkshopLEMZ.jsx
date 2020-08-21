@@ -5,9 +5,7 @@ import PrintIcon from '../../../../../../../assets/print.png'
 import pdfMake from 'pdfmake'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
-import {
-  getProductsFromRequestsListPdfText,
-} from '../../../utils/pdfFunctions.jsx'
+import { getProductsFromRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import {
