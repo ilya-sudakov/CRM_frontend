@@ -3,6 +3,22 @@
 .statistics {
     padding: 0 15px;
     box-sizing: border-box;
+
+    @keyframes pulse {
+        0% {
+            border-color: #dddddd;
+            background-color: #dddddd;
+        }
+        50% {
+            border-color: #ffffff;
+            background-color: #ffffff;
+        }
+        100% {
+            border-color: #dddddd;
+            background-color: #dddddd;
+        }
+    }
+
     .main-window {
         &__title {
             box-sizing: border-box;
@@ -27,7 +43,7 @@
             font-size: 1rem;
             background-color: #ffffff;
             border-radius: 5px;
-            padding: 20px 25px;
+            padding: 20px 20px;
             box-sizing: border-box;
             box-shadow: 0 1px 3px rgba(59, 53, 53, 0.12), 0 1px 5px rgba(0, 0, 0, 0.1);
             margin-right: 15px;
@@ -36,7 +52,7 @@
             color: #000000;
 
             &:hover {
-                background-color: rgba(#ffffff, 0.5);
+                background-color: rgba(#ffffff, 0.4);
                 box-shadow: 0 1px 3px rgba(59, 53, 53, 0.12), 0 1px 5px rgba(0, 0, 0, 0.1);
 
                 .panel__category {
@@ -51,25 +67,25 @@
 
                 &--requests {
                     path:nth-child(1) {
-                        fill: $button__background--inverted;
-                    }
-                }
-
-                &--calls {
-                    *:nth-child(4) {
-                        fill: $button__background--inverted;
+                        fill: rgba($button__background--inverted, 0.7);
                     }
                 }
 
                 &--visits {
                     path:nth-child(1) {
-                        fill: $button__background--inverted;
+                        fill: rgba($button__background--inverted, 0.7);
+                    }
+                }
+
+                &--calls {
+                    *:nth-child(4) {
+                        fill: rgba($button__background--inverted, 0.7);
                     }
                 }
             }
 
             &__icon {
-                background-color: rgba($button__background--inverted, 0.3);
+                background-color: rgba($button__background--inverted, 0.2);
                 padding: 8px;
                 border-radius: 5px;
                 max-width: 25px;
@@ -130,8 +146,8 @@
                     .panel__arrow {
                         // margin-top: 1px;
                         margin-bottom: 5px;
-                        border: 8px solid #bbbbbb;
-                        background-color: #bbbbbb;
+                        border: 8px solid #cccccc;
+                        background-color: #cccccc;
                         border-radius: 999px;
                         // border-top: 10px solid #bbbbbb;
                     }
@@ -154,6 +170,39 @@
                     white-space: nowrap;
                 }
             }
+
+            &--placeholder {
+                .panel__category {
+                    span {
+                        // animation: pulse 1s infinite ease-in-out;
+                    }
+                }
+                .panel__value {
+                    animation: pulse 1s infinite ease-in-out;
+                    content: "";
+                    min-width: 200px;
+                    height: 1.5rem;
+                    border-radius: 5px;
+                }
+                .panel__difference {
+                    .panel__arrow {
+                        animation: pulse 1s infinite ease-in-out;
+                    }
+                    .panel__percentage {
+                        animation: pulse 1s infinite ease-in-out;
+                        border-radius: 5px;
+                        min-width: 20px;
+                        height: 1.5rem;
+                    }
+                    .panel__time-period {
+                        animation: pulse 1s infinite ease-in-out;
+                        border-radius: 5px;
+                        height: 1.5rem;
+                        margin-bottom: 0;
+                        min-width: 100px;
+                    }
+                }
+            }
         }
     }
 
@@ -166,6 +215,17 @@
                         // align-items: flex-start;
                         // flex-direction: column;
                     }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        .main-window {
+            .statistics__row {
+                .panel {
+                    width: 100%;
+                    margin-right: 0;
                 }
             }
         }
