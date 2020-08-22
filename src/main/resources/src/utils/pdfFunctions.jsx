@@ -203,6 +203,7 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
   const productsFormatted = [
     {
       table: {
+        margin: [0, 5, 0, 5],
         widths: ['*', 100, 80, 80],
         body: [
           [
@@ -213,10 +214,18 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
           ],
           ...Object.entries(products)
             .sort((a, b) => {
-              if (a[0] < b[0]) {
+              if (
+                a[0].localeCompare(b[0], undefined, {
+                  numeric: true,
+                }) < 0
+              ) {
                 return -1
               }
-              if (a[0] > b[0]) {
+              if (
+                a[0].localeCompare(b[0], undefined, {
+                  numeric: true,
+                }) > 0
+              ) {
                 return 1
               }
               return 0
@@ -256,9 +265,9 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
       {
         text: [
           {
-            text: '\nПродукция: \n',
-            margin: [0, 0, 0, 5],
+            text: 'Продукция: \n',
             style: 'regularText',
+            margin: [0, 5, 0, 5],
           },
         ],
       },

@@ -379,6 +379,6 @@ export const getQuantityOfProductsFromRequests = (requests) => {
       })
     }
   })
-  console.log(products)
+  // console.log(products)
   return products
 }

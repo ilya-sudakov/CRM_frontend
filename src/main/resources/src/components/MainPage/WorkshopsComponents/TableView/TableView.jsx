@@ -197,15 +197,13 @@ const TableView = (props) => {
     selectedProduct,
   ])
 
-  const printRequest = (index) => {
+  const printRequest = (request) => {
     let dd = getRequestPdfText(
-      requests[index].date,
-      requests[index].requestProducts,
-      requests[index].client
-        ? requests[index].client.name
-        : requests[index].codeWord,
+      request.date,
+      request.requestProducts,
+      request.client ? request.client.name : request.codeWord,
       workshops[props.workshopName].name,
-      requests[index].id,
+      request.id,
     )
     pdfMake.createPdf(dd).print()
   }
@@ -483,7 +481,7 @@ const TableView = (props) => {
                   <div
                     className="main-window__action"
                     title="Печать заявки"
-                    onClick={() => printRequest(index)}
+                    onClick={() => printRequest(request)}
                   >
                     <img className="main-window__img" src={printSVG} />
                   </div>
