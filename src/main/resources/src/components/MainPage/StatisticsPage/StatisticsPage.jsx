@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import './StatisticsPage.scss'
 
 import { getRequests } from '../../../utils/RequestsAPI/Requests.jsx'
+import { addSpaceDelimiter } from '../../../utils/functions.jsx'
 
 import ClientsIcon from '../../../../../../../assets/sidemenu/client.inline.svg'
 import MoneyIcon from '../../../../../../../assets/etc/bx-ruble.inline.svg'
@@ -145,7 +146,7 @@ const IncomeStatsPanel = (props) => {
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
-      value: `${curMonthIncome} руб.`,
+      value: `${addSpaceDelimiter(curMonthIncome)} руб.`,
       percentage:
         Math.floor(
           (curMonthIncome / (prevMonthIncome === 0 ? 1 : prevMonthIncome)) *
@@ -210,9 +211,9 @@ const AverageSumStatsPanel = (props) => {
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
-      value: `${
-        Math.floor((curMonthAverage / curMonthLength) * 100) / 100
-      } руб.`,
+      value: `${addSpaceDelimiter(
+        Math.floor((curMonthAverage / curMonthLength) * 100) / 100,
+      )} руб.`,
       percentage:
         Math.floor(
           (curMonthAverage /
