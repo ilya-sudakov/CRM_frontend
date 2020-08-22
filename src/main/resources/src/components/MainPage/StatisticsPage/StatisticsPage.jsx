@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom'
 import './StatisticsPage.scss'
 
 import { getRequests } from '../../../utils/RequestsAPI/Requests.jsx'
-import { addSpaceDelimiter } from '../../../utils/functions.jsx'
+import {
+  addSpaceDelimiter,
+  formatDateString,
+} from '../../../utils/functions.jsx'
+import { createGraph, loadCanvas } from '../../../utils/graphs.js'
 
 import ClientsIcon from '../../../../../../../assets/sidemenu/client.inline.svg'
 import MoneyIcon from '../../../../../../../assets/etc/bx-ruble.inline.svg'
+import ListIcon from '../../../../../../../assets/sidemenu/list.inline.svg'
 
 const StatisticsPage = () => {
   const [requests, setRequests] = useState([])
@@ -44,6 +49,10 @@ const StatisticsPage = () => {
           <RequestsQuantityPanel requests={requests} />
           <IncomeStatsPanel requests={requests} />
           <AverageSumStatsPanel requests={requests} />
+        </div>
+        <div className="statistics__row">
+          <TestGraphPanel data={requests} />
+          {/* <TestGraphPanel data={requests} /> */}
         </div>
       </div>
     </div>
@@ -246,8 +255,6 @@ const AverageSumStatsPanel = (props) => {
 }
 
 const SmallPanel = (props) => {
-  const Icon = props.icon
-
   return (
     <Link
       className={`panel ${props.isLoaded ? '' : 'panel--placeholder'}`}
@@ -300,5 +307,163 @@ const SmallPanel = (props) => {
         }`}
       ></div>
     </Link>
+  )
+}
+
+const TestGraphPanel = (props) => {
+  const [graph, setGraph] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [canvasLoaded, setCanvasLoaded] = useState(false)
+  const [stats, setStats] = useState({
+    category: 'Заказы',
+    isLoaded: false,
+    chartName: 'income-graph',
+    renderIcon: () => <ListIcon className="panel__img panel__img--list" />,
+  })
+
+  const getStats = (data) => {
+    let curMonthData = []
+    let prevMonthData = []
+    const date = new Date()
+    let dates = []
+    for (
+      let i = 1;
+      i <= new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+      i++
+    ) {
+      dates.push(i)
+    }
+    dates.map((item) => {
+      const curDate = new Date(date.getFullYear(), date.getMonth(), item)
+      const prevDate = new Date(date.getFullYear(), date.getMonth() - 1, item)
+      let curSum = 0
+      let prevSum = 0
+      data.map((request) => {
+        if (formatDateString(request.date) === formatDateString(curDate)) {
+          //   curMonthData.push()
+          return curSum++
+        }
+        if (formatDateString(request.date) === formatDateString(prevDate)) {
+          //   curMonthData.push()
+          return prevSum++
+        }
+      })
+      curMonthData.push(curSum)
+      prevMonthData.push(prevSum)
+    })
+    console.log(curMonthData, prevMonthData)
+    let dataset = {
+      labels: dates,
+      datasets: [
+        {
+          data: prevMonthData,
+          label: 'Пред. месяц',
+          borderColor: '#3e95cd',
+          fill: false,
+        },
+        {
+          data: curMonthData,
+          label: 'Тек. месяц',
+          borderColor: '#8e5ea2',
+          fill: false,
+        },
+      ],
+    }
+    renderGraph(dataset)
+  }
+
+  const renderGraph = (dataset) => {
+    if (!canvasLoaded) {
+      setStats((stats) => ({
+        ...stats,
+        isLoaded: true,
+      }))
+      loadCanvas(`panel__chart-wrapper--${stats.chartName}`, 'panel__chart')
+    }
+
+    setCanvasLoaded(true)
+    const options = {
+      type: 'line',
+      data: dataset,
+      options: {
+        cornerRadius: 2.5,
+        fullCornerRadius: false,
+        responsive: true,
+        maintainAspectRatio:
+          (window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth) > 500
+            ? true
+            : false,
+        animation: {
+          easing: 'easeInOutCirc',
+        },
+        legend: {
+          position: 'top',
+          labels: {
+            usePointStyle: true,
+          },
+        },
+        tooltips: {
+          mode: 'index',
+        },
+
+        scales: {
+          yAxes: [
+            {
+              // display: false,
+              gridLines: {
+                display: false,
+              },
+              ticks: {
+                // display: false,
+              },
+            },
+          ],
+          xAxes: [
+            {
+              // display: false,
+              gridLines: {
+                display: false,
+              },
+              ticks: {
+                // display: false,
+              },
+            },
+          ],
+        },
+      },
+    }
+    setTimeout(() => {
+      setIsLoading(false)
+      canvasLoaded && graph.destroy()
+      setGraph(createGraph(options))
+    }, 150)
+  }
+
+  useEffect(() => {
+    !stats.isLoaded && props.data.length > 1 && getStats(props.data)
+  }, [props.data, stats])
+
+  return <GraphPanel {...stats} />
+}
+
+const GraphPanel = (props) => {
+  return (
+    <div
+      className={`panel panel--chart ${
+        props.isLoaded ? '' : 'panel--placeholder'
+      }`}
+    >
+      <div className="panel__category">
+        <span>{props.category || 'Категория'}</span>
+        {props.renderIcon ? (
+          <div className="panel__icon">{props.renderIcon()}</div>
+        ) : null}
+      </div>
+      <div
+        className={`panel__chart-wrapper panel__chart-wrapper--${props.chartName}`}
+      ></div>
+    </div>
   )
 }

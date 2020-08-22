@@ -24,7 +24,7 @@
             box-sizing: border-box;
             text-align: left;
             width: 100%;
-            padding: 0 10px;
+            padding: 0 5px;
         }
 
         .statistics__row {
@@ -34,6 +34,7 @@
             flex-wrap: wrap;
             justify-content: flex-start;
             align-items: flex-start;
+            margin-bottom: 5px;
         }
 
         .panel {
@@ -57,7 +58,7 @@
                 box-shadow: 0 1px 3px rgba(59, 53, 53, 0.12), 0 1px 5px rgba(0, 0, 0, 0.1);
 
                 .panel__category {
-                    text-decoration: underline;
+                    // text-decoration: underline;
                 }
             }
 
@@ -73,6 +74,12 @@
                 }
 
                 &--money {
+                    path:nth-child(1) {
+                        fill: rgba($button__background--inverted, 0.7);
+                    }
+                }
+
+                &--list {
                     path:nth-child(1) {
                         fill: rgba($button__background--inverted, 0.7);
                     }
@@ -194,11 +201,31 @@
                 }
             }
 
+            &--chart {
+                width: 100%;
+                height: 100%;
+                flex: 0 1 calc(50% - 15px);
+                .panel__category {
+                    font-size: 125%;
+                }
+                .panel__chart-wrapper {
+                    width: 100%;
+                    // height: 500px;
+                    box-sizing: border-box;
+                    transition: 200ms cubic-bezier(0.23, 1, 0.32, 1);
+                }
+            }
+
             &--placeholder {
                 .panel__category {
                     span {
                         // animation: pulse 1s infinite ease-in-out;
                     }
+                }
+                .panel__chart-wrapper {
+                    height: 200px;
+                    border-radius: 5px;
+                    animation: pulse 1s infinite ease-in-out;
                 }
                 .panel__value {
                     animation: pulse 1s infinite ease-in-out;
@@ -237,6 +264,13 @@
                         flex-wrap: wrap;
                         // align-items: flex-start;
                         // flex-direction: column;
+                    }
+
+                    &--chart {
+                        font-size: 90%;
+                        width: 100%;
+                        flex: 0 1 100%;
+                        margin-right: 0;
                     }
                 }
             }
