@@ -5,9 +5,53 @@ import './StatisticsPage.scss'
 import { getRequests } from '../../../utils/RequestsAPI/Requests.jsx'
 
 import ClientsIcon from '../../../../../../../assets/sidemenu/client.inline.svg'
+import MoneyIcon from '../../../../../../../assets/etc/bx-ruble.inline.svg'
 
 const StatisticsPage = () => {
-  const [requestsStats, setRequestsStats] = useState({
+  const [requests, setRequests] = useState([])
+  const [requestsLoaded, setRequestsLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const loadRequests = (signal) => {
+    if (!requestsLoaded && !isLoading) {
+      setIsLoading(true)
+      getRequests(signal)
+        .then((res) => res.json())
+        .then((res) => {
+          setRequestsLoaded(true)
+          setRequests([...res])
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          setIsLoading(false)
+          setRequestsLoaded(true)
+          console.log(error)
+        })
+    }
+  }
+
+  useEffect(() => {
+    const abortController = new AbortController()
+    loadRequests(abortController.signal)
+  }, [])
+
+  return (
+    <div className="statistics">
+      <div className="main-window">
+        <div className="main-window__title">Статистика</div>
+        <div className="statistics__row">
+          <RequestsQuantityPanel requests={requests} />
+          <IncomeStatsPanel requests={requests} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default StatisticsPage
+
+const RequestsQuantityPanel = (props) => {
+  const [stats, setStats] = useState({
     category: 'Заявки',
     percentage: 0,
     value: null,
@@ -19,65 +63,103 @@ const StatisticsPage = () => {
     ),
   })
 
-  const getRequestStats = (signal) => {
-    !requestsStats.isLoaded &&
-      getRequests(signal)
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res)
-          let curMonthQuantity = 0
-          let prevMonthQuantity = 0
+  const getRequestQuantityStats = (requests) => {
+    let curMonthQuantity = 0
+    let prevMonthQuantity = 0
 
-          //check prev month
-          let temp = res.filter((request) => {
-            const date = new Date(request.date)
-            if (
-              date.getMonth() === new Date(new Date().setDate(0)).getMonth()
-            ) {
-              prevMonthQuantity++
-              return false
-            }
-            return true
-          })
-          temp.map((request) => {
-            const date = new Date(request.date)
-            if (date.getMonth() === new Date().getMonth()) {
-              curMonthQuantity++
-            }
-          })
+    //check prev month
+    let temp = requests.filter((request) => {
+      const date = new Date(request.date)
+      if (date.getMonth() === new Date(new Date().setDate(0)).getMonth()) {
+        prevMonthQuantity++
+        return false
+      }
+      return true
+    })
+    temp.map((request) => {
+      const date = new Date(request.date)
+      if (date.getMonth() === new Date().getMonth()) {
+        curMonthQuantity++
+      }
+    })
 
-          setRequestsStats((requestsStats) => ({
-            ...requestsStats,
-            isLoaded: true,
-            value: curMonthQuantity,
-            percentage:
-              Math.floor((curMonthQuantity / prevMonthQuantity) * 100 * 100) /
-              100,
-          }))
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    setStats((stats) => ({
+      ...stats,
+      isLoaded: true,
+      value: curMonthQuantity,
+      percentage:
+        Math.floor((curMonthQuantity / prevMonthQuantity) * 100 * 100) / 100,
+    }))
   }
 
   useEffect(() => {
-    const abortController = new AbortController()
-    getRequestStats(abortController.signal)
-  }, [])
+    !stats.isLoaded &&
+      props.requests.length > 1 &&
+      getRequestQuantityStats(props.requests)
+  }, [props.requests, stats])
 
-  return (
-    <div className="statistics">
-      <div className="main-window">
-        <div className="main-window__title">Статистика</div>
-        <div className="statistics__row">
-          <SmallPanel {...requestsStats} />
-        </div>
-      </div>
-    </div>
-  )
+  return <SmallPanel {...stats} />
 }
 
-export default StatisticsPage
+const IncomeStatsPanel = (props) => {
+  const [stats, setStats] = useState({
+    category: 'Доход',
+    percentage: 0,
+    value: null,
+    linkTo: '/requests',
+    isLoaded: false,
+    timePeriod: 'От прошлого месяца',
+    renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
+  })
+
+  const getStats = (requests) => {
+    let curMonthIncome = 0
+    let prevMonthIncome = 0
+
+    //check prev month
+    let temp = requests.filter((request) => {
+      const date = new Date(request.date)
+      if (
+        date.getMonth() === new Date(new Date().setDate(0)).getMonth() &&
+        request.status === 'Завершено'
+      ) {
+        prevMonthIncome += Number.parseFloat(request.sum)
+        return false
+      }
+      if (request.status !== 'Завершено') {
+        return false
+      }
+      return true
+    })
+    temp.map((request) => {
+      const date = new Date(request.date)
+      if (
+        date.getMonth() === new Date().getMonth() &&
+        request.status === 'Завершено'
+      ) {
+        curMonthIncome += Number.parseFloat(request.sum)
+      }
+    })
+
+    setStats((stats) => ({
+      ...stats,
+      isLoaded: true,
+      value: `${curMonthIncome} руб.`,
+      percentage:
+        Math.floor(
+          (curMonthIncome / (prevMonthIncome === 0 ? 1 : prevMonthIncome)) *
+            100 *
+            100,
+        ) / 100,
+    }))
+  }
+
+  useEffect(() => {
+    !stats.isLoaded && props.requests.length > 1 && getStats(props.requests)
+  }, [props.requests, stats])
+
+  return <SmallPanel {...stats} />
+}
 
 const SmallPanel = (props) => {
   const Icon = props.icon

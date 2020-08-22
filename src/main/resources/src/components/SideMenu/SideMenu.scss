@@ -313,8 +313,10 @@
     .sidemenu__item {
       // transition: 0.2s ease-in-out;
       width: 100%;
+      padding: 0 5px;
+      box-sizing: border-box;
       min-width: 0 !important;
-      max-width: 35px !important;
+      max-width: 50px !important;
       margin-right: 0;
       // position: static;
 
@@ -330,6 +332,8 @@
       }
 
       .sidemenu__link {
+        min-width: 35px;
+        max-width: 40px;
         width: 100%;
         padding-right: 0;
         justify-content: center;
@@ -344,6 +348,7 @@
           margin-right: 0;
           padding-right: 0;
           width: 25px;
+          margin-left: -1px;
 
           &--bigger {
             width: 30px;

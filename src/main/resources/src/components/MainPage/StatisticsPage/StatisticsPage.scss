@@ -71,14 +71,8 @@
                     }
                 }
 
-                &--visits {
+                &--money {
                     path:nth-child(1) {
-                        fill: rgba($button__background--inverted, 0.7);
-                    }
-                }
-
-                &--calls {
-                    *:nth-child(4) {
                         fill: rgba($button__background--inverted, 0.7);
                     }
                 }
@@ -191,15 +185,15 @@
                     .panel__percentage {
                         animation: pulse 1s infinite ease-in-out;
                         border-radius: 5px;
-                        min-width: 20px;
+                        min-width: 150px;
                         height: 1.5rem;
                     }
                     .panel__time-period {
-                        animation: pulse 1s infinite ease-in-out;
-                        border-radius: 5px;
-                        height: 1.5rem;
-                        margin-bottom: 0;
-                        min-width: 100px;
+                        // animation: pulse 1s infinite ease-in-out;
+                        // border-radius: 5px;
+                        // height: 1.5rem;
+                        // margin-bottom: 0;
+                        // min-width: 100px;
                     }
                 }
             }
