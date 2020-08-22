@@ -51,8 +51,7 @@ const StatisticsPage = () => {
           <AverageSumStatsPanel requests={requests} />
         </div>
         <div className="statistics__row">
-          <TestGraphPanel data={requests} />
-          {/* <TestGraphPanel data={requests} /> */}
+          <RequestsQuantityGraphPanel data={requests} />
         </div>
       </div>
     </div>
@@ -310,7 +309,7 @@ const SmallPanel = (props) => {
   )
 }
 
-const TestGraphPanel = (props) => {
+const RequestsQuantityGraphPanel = (props) => {
   const [graph, setGraph] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
@@ -359,13 +358,13 @@ const TestGraphPanel = (props) => {
           data: prevMonthData,
           label: 'Пред. месяц',
           borderColor: '#3e95cd',
-          fill: false,
+          backgroundColor: 'rgba(62, 149, 205, 0.2)',
         },
         {
           data: curMonthData,
           label: 'Тек. месяц',
           borderColor: '#8e5ea2',
-          fill: false,
+          backgroundColor: 'rgba(142, 94, 162, 0.2)',
         },
       ],
     }
