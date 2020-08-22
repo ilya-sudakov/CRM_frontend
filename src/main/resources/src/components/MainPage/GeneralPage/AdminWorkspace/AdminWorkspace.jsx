@@ -237,12 +237,8 @@ const AdminWorkspace = (props) => {
     <div className="admin-workspace">
       <WorkManagement userHasAccess={props.userHasAccess} />
       {props.userHasAccess(['ROLE_ADMIN']) && (
-        <div
-          className={`admin-workspace__chart-wrapper ${
-            !canvasLoaded ? 'admin-workspace__chart-wrapper--placeholder' : ''
-          }`}
-        >
-          {/* <TableLoading isLoading={isLoading} /> */}
+        <div className="admin-workspace__chart-wrapper">
+          <TableLoading isLoading={isLoading} />
           <div className="main-window__mobile-text">
             <span className="admin-workspace__date">
               {formatDateStringNoYear(
@@ -338,7 +334,6 @@ const AdminWorkspace = (props) => {
               }}
             /> */}
           </div>
-          <div className="admin-workspace__loading-panel"></div>
         </div>
       )}
     </div>
