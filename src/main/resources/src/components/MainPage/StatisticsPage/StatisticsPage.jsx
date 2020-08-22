@@ -60,6 +60,7 @@ const RequestsQuantityPanel = (props) => {
     linkTo: '/requests',
     isLoaded: false,
     timePeriod: 'От прошлого месяца',
+    difference: 0,
     renderIcon: () => (
       <ClientsIcon className="panel__img panel__img--requests" />
     ),
@@ -89,8 +90,13 @@ const RequestsQuantityPanel = (props) => {
       ...stats,
       isLoaded: true,
       value: curMonthQuantity,
+      difference: curMonthQuantity - prevMonthQuantity,
       percentage:
-        Math.floor((curMonthQuantity / prevMonthQuantity) * 100 * 100) / 100,
+        Math.floor(
+          ((curMonthQuantity - prevMonthQuantity) / prevMonthQuantity) *
+            100 *
+            100,
+        ) / 100,
     }))
   }
 
@@ -111,6 +117,7 @@ const IncomeStatsPanel = (props) => {
     linkTo: '/requests',
     isLoaded: false,
     timePeriod: 'От прошлого месяца',
+    difference: 0,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
   })
 
@@ -147,9 +154,11 @@ const IncomeStatsPanel = (props) => {
       ...stats,
       isLoaded: true,
       value: `${addSpaceDelimiter(curMonthIncome)} руб.`,
+      difference: curMonthIncome - prevMonthIncome,
       percentage:
         Math.floor(
-          (curMonthIncome / (prevMonthIncome === 0 ? 1 : prevMonthIncome)) *
+          ((curMonthIncome - prevMonthIncome) /
+            (prevMonthIncome === 0 ? 1 : prevMonthIncome)) *
             100 *
             100,
         ) / 100,
@@ -171,6 +180,7 @@ const AverageSumStatsPanel = (props) => {
     linkTo: '/requests',
     isLoaded: false,
     timePeriod: 'От прошлого месяца',
+    difference: 0,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
   })
 
@@ -208,17 +218,20 @@ const AverageSumStatsPanel = (props) => {
       }
     })
 
+    curMonthAverage = curMonthAverage / curMonthLength
+    prevMonthAverage = prevMonthAverage / prevMonthLength
+
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
       value: `${addSpaceDelimiter(
-        Math.floor((curMonthAverage / curMonthLength) * 100) / 100,
+        Math.floor(curMonthAverage * 100) / 100,
       )} руб.`,
+      difference: curMonthAverage - prevMonthAverage,
       percentage:
         Math.floor(
-          (curMonthAverage /
-            curMonthLength /
-            (prevMonthAverage === 0 ? 1 : prevMonthAverage / prevMonthLength)) *
+          ((curMonthAverage - prevMonthAverage) /
+            (prevMonthAverage === 0 ? 1 : prevMonthAverage)) *
             100 *
             100,
         ) / 100,
@@ -246,7 +259,18 @@ const SmallPanel = (props) => {
           <div className="panel__icon">{props.renderIcon()}</div>
         ) : null}
       </div>
-      <div className="panel__value">{props.value || ''}</div>
+      <div
+        className={`panel__value panel__value--${
+          props.difference < 0 ? 'negative' : 'positive'
+        }`}
+        data-diff={
+          props.isLoaded
+            ? `${props.difference < 0 ? '' : '+'}${props.difference}`
+            : ''
+        }
+      >
+        {props.value || ''}
+      </div>
       <div
         className={`panel__difference panel__difference--${
           props.percentage === 0 || !props.isLoaded
@@ -258,13 +282,21 @@ const SmallPanel = (props) => {
       >
         <div className="panel__arrow"></div>
         <div className="panel__percentage">
-          <span></span>
           {props.isLoaded ? `${Math.abs(props.percentage)}%` : ''}
         </div>
         <div className="panel__time-period">
           {props.isLoaded ? props.timePeriod : ''}
         </div>
       </div>
+      <div
+        className={`panel__difference panel__difference--${
+          props.percentage === 0 || !props.isLoaded
+            ? 'equal'
+            : props.percentage < 0
+            ? 'negative'
+            : 'positive'
+        }`}
+      ></div>
     </Link>
   )
 }

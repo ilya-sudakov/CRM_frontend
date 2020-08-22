@@ -50,6 +50,7 @@
             margin-bottom: 10px;
             cursor: pointer;
             color: #000000;
+            overflow-x: hidden;
 
             &:hover {
                 background-color: rgba(#ffffff, 0.4);
@@ -106,6 +107,30 @@
             &__value {
                 font-size: 200%;
                 margin-bottom: 10px;
+                position: relative;
+                margin-right: 100px;
+
+                &::after {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    left: calc(100% + 2px);
+                    content: attr(data-diff);
+                    font-size: 50%;
+                    color: #666666;
+                }
+
+                &--positive {
+                    &::after {
+                        color: #0acf97;
+                    }
+                }
+
+                &--negative {
+                    &::after {
+                        color: #fa5c7c;
+                    }
+                }
             }
 
             &__difference {
@@ -218,12 +243,17 @@
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 576px) {
         .main-window {
             .statistics__row {
                 .panel {
+                    font-size: 90%;
                     width: 100%;
                     margin-right: 0;
+
+                    &__value {
+                        font-size: 160%;
+                    }
                 }
             }
         }
