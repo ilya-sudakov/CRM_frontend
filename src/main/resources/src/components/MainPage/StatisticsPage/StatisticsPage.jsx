@@ -265,7 +265,9 @@ const SmallPanel = (props) => {
         }`}
         data-diff={
           props.isLoaded
-            ? `${props.difference < 0 ? '' : '+'}${props.difference}`
+            ? `${props.difference < 0 ? '' : '+'}${
+                Math.floor(props.difference * 100) / 100
+              }`
             : ''
         }
       >
