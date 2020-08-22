@@ -124,7 +124,7 @@ const IncomeStatsPanel = (props) => {
         date.getMonth() === new Date(new Date().setDate(0)).getMonth() &&
         request.status === 'Завершено'
       ) {
-        prevMonthIncome += Number.parseFloat(request.sum)
+        prevMonthIncome += Number.parseFloat(request.sum || 0)
         return false
       }
       if (request.status !== 'Завершено') {
@@ -138,7 +138,7 @@ const IncomeStatsPanel = (props) => {
         date.getMonth() === new Date().getMonth() &&
         request.status === 'Завершено'
       ) {
-        curMonthIncome += Number.parseFloat(request.sum)
+        curMonthIncome += Number.parseFloat(request.sum || 0)
       }
     })
 
@@ -187,7 +187,7 @@ const AverageSumStatsPanel = (props) => {
         request.status === 'Завершено'
       ) {
         prevMonthLength++
-        prevMonthAverage += Number.parseFloat(request.sum)
+        prevMonthAverage += Number.parseFloat(request.sum || 0)
         return false
       }
       if (request.status !== 'Завершено') {
@@ -203,7 +203,7 @@ const AverageSumStatsPanel = (props) => {
         request.status === 'Завершено'
       ) {
         curMonthLength++
-        curMonthAverage += Number.parseFloat(request.sum)
+        curMonthAverage += Number.parseFloat(request.sum || 0)
       }
     })
 
