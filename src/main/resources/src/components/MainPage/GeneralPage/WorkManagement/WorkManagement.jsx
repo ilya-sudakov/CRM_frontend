@@ -1,22 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react'
 import './WorkManagement.scss'
-import { Link, withRouter } from 'react-router-dom'
-import searchImg from '../../../../../../../../assets/searchbar/search.svg'
+import { withRouter } from 'react-router-dom'
 import openWidget from '../../../../../../../../assets/tableview/bx-window-open.svg'
-import {
-  getRecordedWorks,
-  getRecordedWorkByMonth,
-  getRecordedWorkByDay,
-} from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import { getRecordedWorkByDay } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import {
   formatDateString,
   numberToString,
-  // combineWorkHoursForSamePeople,
-  // getAllEmployees,
 } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
-import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx'
-import SearchBar from '../../SearchBar/SearchBar.jsx'
 import { UserContext } from '../../../../App.js'
 
 const WorkManagement = (props) => {
@@ -105,8 +96,6 @@ const WorkManagement = (props) => {
 
   useEffect(() => {
     let abortController = new AbortController()
-    let works = {}
-    let newEmployees = {}
     setIsLoading(true)
     recordedWork.length === 0 &&
       getRecordedWorkByDay(
@@ -130,20 +119,6 @@ const WorkManagement = (props) => {
       abortController.abort()
     }
   }, [])
-
-  // if (document.querySelector('.work-management__list') !== null) {
-  //   document.querySelector('.work-management__list').onscroll = function () {
-  //     this.classList[this.scrollTop < 20 ? 'add' : 'remove'](
-  //       'work-management__list--shadow-top',
-  //     )
-  //     this.classList[
-  //       this.scrollHeight - this.clientHeight - this.scrollTop < 20
-  //         ? 'add'
-  //         : 'remove'
-  //     ]('work-management__list--shadow-bottom')
-  //   }
-  // }
-
   return (
     <div className="work-management">
       <div className="work-management__title">
@@ -151,23 +126,7 @@ const WorkManagement = (props) => {
           {formatDateString(
             new Date(new Date().setDate(new Date().getDate() - 1)),
           )}
-          {/* <InputDate selected={new Date(new Date().setDate(new Date().getDate() - 1))} /> */}
         </div>
-        {/* <span>
-          {userContext.userHasAccess(['ROLE_ADMIN'])
-            ? 'Сводка дня'
-            : userContext.userHasAccess(['ROLE_DISPATCHER']) ||
-              userContext.userHasAccess(['ROLE_MANAGER'])
-            ? 'Офис'
-            : userContext.userHasAccess(['ROLE_LEPSARI'])
-            ? 'ЦехЛепсари'
-            : userContext.userHasAccess(['ROLE_LEMZ'])
-            ? 'ЦехЛЭМЗ'
-            : userContext.userHasAccess(['ROLE_LIGOVSKIY'])
-            ? 'ЦехЛиговский'
-            : userContext.userHasAccess(['ROLE_ENGINEER']) && 'Инженер'}
-        </span> */}
-        {/* <span>Сводка дня</span> */}
         <span>Отчет производства</span>
         <div
           className="work-management__button work-management__button--inverted"
@@ -180,14 +139,14 @@ const WorkManagement = (props) => {
         </div>
       </div>
       <div className="work-management__content">
-        {/* <SearchBar
-          title=""
-          placeholder="Введите данные работника для поиска..."
-          setSearchQuery={setSearchQuery}
-        /> */}
         {recordedWork.length === 0 ? (
           isLoading ? (
-            <TableDataLoading className="work-management__item" />
+            //<TableDataLoading className="work-management__item" />
+            <div className="work-management__list work-management__list--placeholder">
+              <div className="work-management__item"></div>
+              <div className="work-management__item"></div>
+              <div className="work-management__item"></div>
+            </div>
           ) : (
             <div className="work-management__info">
               Нет записей о проведенной работе!
@@ -265,7 +224,6 @@ const WorkManagement = (props) => {
                                     ['час', 'часа', 'часов'],
                                   )}
                             </div>
-                            {/* <div>{item.workshop}</div> */}
                           </div>
                         )
                       })}

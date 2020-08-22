@@ -236,12 +236,13 @@ const AdminWorkspace = (props) => {
   return (
     <div className="admin-workspace">
       <WorkManagement userHasAccess={props.userHasAccess} />
-      {/* {props.userHasAccess(['ROLE_ADMIN']) && (
-        <Notifications userHasAccess={props.userHasAccess} />
-      )} */}
       {props.userHasAccess(['ROLE_ADMIN']) && (
-        <div className="admin-workspace__chart-wrapper">
-          <TableLoading isLoading={isLoading} />
+        <div
+          className={`admin-workspace__chart-wrapper ${
+            !canvasLoaded ? 'admin-workspace__chart-wrapper--placeholder' : ''
+          }`}
+        >
+          {/* <TableLoading isLoading={isLoading} /> */}
           <div className="main-window__mobile-text">
             <span className="admin-workspace__date">
               {formatDateStringNoYear(
@@ -277,18 +278,6 @@ const AdminWorkspace = (props) => {
             Сводка за неделю
           </div>
           <div className="admin-workspace__header">
-            {/* <button className="admin-workspace__button" onClick={(event) => {
-                        event.preventDefault();
-                        setWeekOffset(weekOffset + 1);
-                    }}>Пред. неделя</button>
-                     */}
-            {/* <img
-              src={chevronDownSVG}
-              onClick={(event) => {
-                setWeekOffset(weekOffset + 1)
-              }}
-              className="admin-workspace__chevron admin-workspace__chevron--back"
-            /> */}
             <div className="admin-workspace__title">
               <span className="admin-workspace__date">
                 {formatDateStringNoYear(
@@ -349,6 +338,7 @@ const AdminWorkspace = (props) => {
               }}
             /> */}
           </div>
+          <div className="admin-workspace__loading-panel"></div>
         </div>
       )}
     </div>
