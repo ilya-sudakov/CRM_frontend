@@ -42,6 +42,7 @@ const StatisticsPage = () => {
         <div className="statistics__row">
           <RequestsQuantityPanel requests={requests} />
           <IncomeStatsPanel requests={requests} />
+          <AverageSumStatsPanel requests={requests} />
         </div>
       </div>
     </div>
@@ -148,6 +149,75 @@ const IncomeStatsPanel = (props) => {
       percentage:
         Math.floor(
           (curMonthIncome / (prevMonthIncome === 0 ? 1 : prevMonthIncome)) *
+            100 *
+            100,
+        ) / 100,
+    }))
+  }
+
+  useEffect(() => {
+    !stats.isLoaded && props.requests.length > 1 && getStats(props.requests)
+  }, [props.requests, stats])
+
+  return <SmallPanel {...stats} />
+}
+
+const AverageSumStatsPanel = (props) => {
+  const [stats, setStats] = useState({
+    category: 'Средняя сумма заказа',
+    percentage: 0,
+    value: null,
+    linkTo: '/requests',
+    isLoaded: false,
+    timePeriod: 'От прошлого месяца',
+    renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
+  })
+
+  const getStats = (requests) => {
+    let curMonthAverage = 0
+    let prevMonthAverage = 0
+    let prevMonthLength = 0
+    let curMonthLength = 0
+
+    //check prev month
+    let temp = requests.filter((request) => {
+      const date = new Date(request.date)
+      if (
+        date.getMonth() === new Date(new Date().setDate(0)).getMonth() &&
+        request.status === 'Завершено'
+      ) {
+        prevMonthLength++
+        prevMonthAverage += Number.parseFloat(request.sum)
+        return false
+      }
+      if (request.status !== 'Завершено') {
+        return false
+      }
+      return true
+    })
+
+    temp.map((request) => {
+      const date = new Date(request.date)
+      if (
+        date.getMonth() === new Date().getMonth() &&
+        request.status === 'Завершено'
+      ) {
+        curMonthLength++
+        curMonthAverage += Number.parseFloat(request.sum)
+      }
+    })
+
+    setStats((stats) => ({
+      ...stats,
+      isLoaded: true,
+      value: `${
+        Math.floor((curMonthAverage / curMonthLength) * 100) / 100
+      } руб.`,
+      percentage:
+        Math.floor(
+          (curMonthAverage /
+            curMonthLength /
+            (prevMonthAverage === 0 ? 1 : prevMonthAverage / prevMonthLength)) *
             100 *
             100,
         ) / 100,
