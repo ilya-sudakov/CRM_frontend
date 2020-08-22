@@ -5,6 +5,7 @@ import './GeneralPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import DownloadIcon from '../../../../../../../assets/download.svg'
 import graphIcon from '../../../../../../../assets/graph-icon.svg'
+import StatsIcon from '../../../../../../../assets/statistics/stats-alt.inline.svg'
 import calenderIcon from '../../../../../../../assets/tableview/calendar.svg'
 import { exportReportTableExcel } from '../../../utils/xlsxFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
@@ -82,7 +83,7 @@ const GeneralPage = (props) => {
             )}
             {props.userHasAccess(['ROLE_ADMIN']) && (
               <Link className="main-window__button" to="/statistics">
-                <img className="main-window__img" src={graphIcon} />
+                <StatsIcon className="main-window__img" />
                 Статистика
               </Link>
             )}
