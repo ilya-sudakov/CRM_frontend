@@ -9,6 +9,7 @@ import {
 } from '../../../../utils/functions.jsx'
 import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { UserContext } from '../../../../App.js'
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const WorkManagement = (props) => {
   const [recordedWork, setRecordedWork] = useState([])
@@ -141,12 +142,11 @@ const WorkManagement = (props) => {
       <div className="work-management__content">
         {recordedWork.length === 0 ? (
           isLoading ? (
-            //<TableDataLoading className="work-management__item" />
-            <div className="work-management__list work-management__list--placeholder">
-              <div className="work-management__item"></div>
-              <div className="work-management__item"></div>
-              <div className="work-management__item"></div>
-            </div>
+            <PlaceholderLoading
+              minHeight="1rem"
+              wrapperClassName="work-management__list work-management__list--placeholder"
+              itemClassName="work-management__item"
+            />
           ) : (
             <div className="work-management__info">
               Нет записей о проведенной работе!

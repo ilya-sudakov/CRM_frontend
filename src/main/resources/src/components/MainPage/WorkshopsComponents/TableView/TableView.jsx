@@ -29,6 +29,7 @@ import {
 } from '../workshopVariables.js'
 import { getRequestPdfText } from '../../../../utils/pdfFunctions.jsx'
 import LabelPrint from '../LabelPrint/LabelPrint.jsx'
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -576,9 +577,8 @@ const TableView = (props) => {
         </div>
         <div className="main-window__list">
           {props.isLoading && (
-            <TableDataLoading
-              minHeight="50px"
-              className="main-window__list-item"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
             />
           )}
           {false ? ( //Временно sortOrder.curSort === 'date'

@@ -9,6 +9,7 @@ import {
 import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { days } from '../../../../../../utils/dataObjects'
 import { Link } from 'react-router-dom'
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [datesEmployees, setDatesEmployees] = useState({})
@@ -53,9 +54,11 @@ const TableView = (props) => {
       }
     >
       {props.isLoading && (
-        <TableDataLoading
-          className="work-management-page__row"
-          minHeight="45px"
+        <PlaceholderLoading
+          wrapperClassName="work-management-page__table-view--placeholder"
+          itemClassName="work-management-page__row"
+          minHeight="2rem"
+          items={4}
         />
       )}
       {Object.entries(datesEmployees)

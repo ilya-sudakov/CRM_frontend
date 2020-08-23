@@ -18,6 +18,19 @@
         }
     }
 
+    &--placeholder {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+
+        .work-management-page__row {
+            // width: calc(33.3% - 30px);
+            min-width: calc(50% - 50px);
+            max-width: 500px;
+        }
+    }
+
     .work-management-page__table-date {
         margin-right: 100%;
         margin-bottom: 5px;
