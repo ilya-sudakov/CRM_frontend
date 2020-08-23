@@ -269,16 +269,14 @@ const NewClientsStatsPanel = (props) => {
 
   const getStats = (requests) => {
     let clients = {}
-    let curDate = new Date()
     //find all clients except once from cur and prev month
-    const oneMonthAgo = new Date(
-      curDate.setMonth(new Date().getMonth() - 1),
-    ).getMonth()
-    const curMonth = curDate.getMonth()
+    const oneMonthAgo = new Date(new Date().setDate(0)).getMonth()
+    const curMonth = new Date().getMonth()
+
     let prevMonthNewClients = 0
     let curMonthNewClients = 0
+
     requests.filter((request) => {
-      console.log(request)
       if (
         request.client !== null &&
         new Date(request.date).getMonth() !== oneMonthAgo &&
@@ -293,7 +291,6 @@ const NewClientsStatsPanel = (props) => {
       }
       return true
     })
-    console.log(clients)
     requests.filter((request) => {
       if (
         request.client !== null &&
@@ -312,7 +309,6 @@ const NewClientsStatsPanel = (props) => {
       }
       return true
     })
-    console.log(clients)
     requests.map((request) => {
       if (
         request.client !== null &&
@@ -326,7 +322,6 @@ const NewClientsStatsPanel = (props) => {
         }
       }
     })
-    console.log(clients)
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
