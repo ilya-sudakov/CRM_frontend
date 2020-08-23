@@ -489,7 +489,7 @@ const RequestsQuantityGraphPanel = (props) => {
       options: {
         elements: {
           line: {
-            tension: 0,
+            tension: 0.5,
           },
         },
         cornerRadius: 2.5,
