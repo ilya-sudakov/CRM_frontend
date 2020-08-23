@@ -112,29 +112,30 @@
             }
 
             &__value {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
                 font-size: 200%;
                 margin-bottom: 10px;
                 position: relative;
-                margin-right: 100px;
+                // margin-right: 100px;
 
-                &::after {
+                span {
                     display: flex;
-                    position: absolute;
-                    top: 0;
-                    left: calc(100% + 2px);
-                    content: attr(data-diff);
                     font-size: 50%;
                     color: #666666;
+                    margin-top: -4px;
+                    margin-left: 4px;
                 }
 
                 &--positive {
-                    &::after {
+                    span {
                         color: #0acf97;
                     }
                 }
 
                 &--negative {
-                    &::after {
+                    span {
                         color: #fa5c7c;
                     }
                 }
@@ -290,7 +291,7 @@
                     margin-right: 0;
 
                     &__value {
-                        font-size: 160%;
+                        font-size: 180%;
                     }
                 }
             }

@@ -12,6 +12,7 @@ import { createGraph, loadCanvas } from '../../../utils/graphs.js'
 import ClientsIcon from '../../../../../../../assets/sidemenu/client.inline.svg'
 import MoneyIcon from '../../../../../../../assets/etc/bx-ruble.inline.svg'
 import ListIcon from '../../../../../../../assets/sidemenu/list.inline.svg'
+import PlaylistIcon from '../../../../../../../assets/sidemenu/play_list.inline.svg'
 
 const StatisticsPage = () => {
   const [requests, setRequests] = useState([])
@@ -49,6 +50,7 @@ const StatisticsPage = () => {
           <RequestsQuantityPanel requests={requests} />
           <IncomeStatsPanel requests={requests} />
           <AverageSumStatsPanel requests={requests} />
+          <NewClientsStatsPanel requests={requests} />
         </div>
         <div className="statistics__row">
           <RequestsQuantityGraphPanel data={requests} />
@@ -70,7 +72,7 @@ const RequestsQuantityPanel = (props) => {
     timePeriod: 'От прошлого месяца',
     difference: 0,
     renderIcon: () => (
-      <ClientsIcon className="panel__img panel__img--requests" />
+      <PlaylistIcon className="panel__img panel__img--requests" />
     ),
   })
 
@@ -253,6 +255,100 @@ const AverageSumStatsPanel = (props) => {
   return <SmallPanel {...stats} />
 }
 
+const NewClientsStatsPanel = (props) => {
+  const [stats, setStats] = useState({
+    category: 'Новые клиенты',
+    percentage: 0,
+    value: null,
+    linkTo: '/clients/categories',
+    isLoaded: false,
+    timePeriod: 'От прошлого месяца',
+    difference: 0,
+    renderIcon: () => <ClientsIcon className="panel__img panel__img--money" />,
+  })
+
+  const getStats = (requests) => {
+    let clients = {}
+    let curDate = new Date()
+    //find all clients except once from cur and prev month
+    const oneMonthAgo = new Date(
+      curDate.setMonth(new Date().getMonth() - 1),
+    ).getMonth()
+    const curMonth = curDate.getMonth()
+    let prevMonthNewClients = 0
+    let curMonthNewClients = 0
+    requests.filter((request) => {
+      console.log(request)
+      if (
+        request.client !== null &&
+        new Date(request.date).getMonth() !== oneMonthAgo &&
+        new Date(request.date).getMonth() !== curMonth &&
+        clients[request.client.id] === undefined
+      ) {
+        clients = {
+          ...clients,
+          [request.client.id]: '',
+        }
+        return false
+      }
+      return true
+    })
+    console.log(clients)
+    requests.filter((request) => {
+      if (
+        request.client !== null &&
+        new Date(request.date).getMonth() === oneMonthAgo &&
+        clients[request.client.id] === undefined
+      ) {
+        prevMonthNewClients++
+        clients = {
+          ...clients,
+          [request.client.id]: '',
+        }
+        return false
+      }
+      if (request.client === null) {
+        return false
+      }
+      return true
+    })
+    console.log(clients)
+    requests.map((request) => {
+      if (
+        request.client !== null &&
+        new Date(request.date).getMonth() === curMonth &&
+        clients[request.client.id] === undefined
+      ) {
+        curMonthNewClients++
+        clients = {
+          ...clients,
+          [request.client.id]: '',
+        }
+      }
+    })
+    console.log(clients)
+    setStats((stats) => ({
+      ...stats,
+      isLoaded: true,
+      value: addSpaceDelimiter(Math.floor(curMonthNewClients * 100) / 100),
+      difference: curMonthNewClients - prevMonthNewClients,
+      percentage:
+        Math.floor(
+          ((curMonthNewClients - prevMonthNewClients) /
+            (prevMonthNewClients === 0 ? 1 : prevMonthNewClients)) *
+            100 *
+            100,
+        ) / 100,
+    }))
+  }
+
+  useEffect(() => {
+    !stats.isLoaded && props.requests.length > 1 && getStats(props.requests)
+  }, [props.requests, stats])
+
+  return <SmallPanel {...stats} />
+}
+
 const SmallPanel = (props) => {
   return (
     <Link
@@ -269,15 +365,15 @@ const SmallPanel = (props) => {
         className={`panel__value panel__value--${
           props.difference < 0 ? 'negative' : 'positive'
         }`}
-        data-diff={
-          props.isLoaded
+      >
+        {props.value || ''}
+        <span>
+          {props.isLoaded
             ? `${props.difference < 0 ? '' : '+'}${
                 Math.floor(props.difference * 100) / 100
               }`
-            : ''
-        }
-      >
-        {props.value || ''}
+            : ''}
+        </span>
       </div>
       <div
         className={`panel__difference panel__difference--${
@@ -350,7 +446,6 @@ const RequestsQuantityGraphPanel = (props) => {
       curMonthData.push(curSum)
       prevMonthData.push(prevSum)
     })
-    console.log(curMonthData, prevMonthData)
     let dataset = {
       labels: dates,
       datasets: [

@@ -579,6 +579,8 @@ const TableView = (props) => {
           {props.isLoading && (
             <PlaceholderLoading
               itemClassName="main-window__list-item"
+              minHeight="3rem"
+              items={15}
             />
           )}
           {false ? ( //Временно sortOrder.curSort === 'date'
