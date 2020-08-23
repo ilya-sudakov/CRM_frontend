@@ -13,6 +13,8 @@ import ClientsIcon from '../../../../../../../assets/sidemenu/client.inline.svg'
 import MoneyIcon from '../../../../../../../assets/etc/bx-ruble.inline.svg'
 import ListIcon from '../../../../../../../assets/sidemenu/list.inline.svg'
 import PlaylistIcon from '../../../../../../../assets/sidemenu/play_list.inline.svg'
+import EmployeeIcon from '../../../../../../../assets/sidemenu/employee.inline.svg'
+import { months } from '../../../utils/dataObjects'
 
 const StatisticsPage = () => {
   const [requests, setRequests] = useState([])
@@ -54,6 +56,7 @@ const StatisticsPage = () => {
         </div>
         <div className="statistics__row">
           <RequestsQuantityGraphPanel data={requests} />
+          <ManagerEfficiencyGraphPanel data={requests} />
         </div>
       </div>
     </div>
@@ -408,6 +411,9 @@ const RequestsQuantityGraphPanel = (props) => {
     category: 'Заказы',
     isLoaded: false,
     chartName: 'income-graph',
+    timePeriod: `${months[new Date().getMonth() - 1]} - ${
+      months[new Date().getMonth()]
+    }`,
     renderIcon: () => <ListIcon className="panel__img panel__img--list" />,
   })
 
@@ -467,7 +473,10 @@ const RequestsQuantityGraphPanel = (props) => {
         ...stats,
         isLoaded: true,
       }))
-      loadCanvas(`panel__chart-wrapper--${stats.chartName}`, 'panel__chart')
+      loadCanvas(
+        `panel__chart-wrapper--${stats.chartName}`,
+        `panel__chart panel__chart--${stats.chartName}`,
+      )
     }
 
     setCanvasLoaded(true)
@@ -476,9 +485,9 @@ const RequestsQuantityGraphPanel = (props) => {
       data: dataset,
       options: {
         elements: {
-            line: {
-                tension: 0
-            }
+          line: {
+            tension: 0,
+          },
         },
         cornerRadius: 2.5,
         fullCornerRadius: false,
@@ -531,7 +540,114 @@ const RequestsQuantityGraphPanel = (props) => {
     setTimeout(() => {
       setIsLoading(false)
       canvasLoaded && graph.destroy()
-      setGraph(createGraph(options))
+      setGraph(
+        createGraph(
+          options,
+          document.getElementsByClassName(
+            `panel__chart--${stats.chartName}`,
+          )[0],
+        ),
+      )
+    }, 150)
+  }
+
+  useEffect(() => {
+    !stats.isLoaded && props.data.length > 1 && getStats(props.data)
+  }, [props.data, stats])
+
+  return <GraphPanel {...stats} />
+}
+
+const ManagerEfficiencyGraphPanel = (props) => {
+  const [graph, setGraph] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [canvasLoaded, setCanvasLoaded] = useState(false)
+  const [stats, setStats] = useState({
+    category: 'Статистика по менеджерам',
+    isLoaded: false,
+    chartName: 'manager-efficiency-graph',
+    timePeriod: `${months[new Date().getMonth()]}`,
+    renderIcon: () => <EmployeeIcon className="panel__img panel__img--list" />,
+  })
+
+  const getStats = (data) => {
+    let managers = {}
+    data.map((request) => {
+      if (new Date(request.date).getMonth() === new Date().getMonth()) {
+        managers = {
+          ...managers,
+          [request.responsible]:
+            managers[request.responsible] !== undefined
+              ? managers[request.responsible] + 1
+              : 1,
+        }
+      }
+    })
+    // console.log(managers)
+    renderGraph(managers)
+  }
+
+  const renderGraph = (dataset) => {
+    if (!canvasLoaded) {
+      setStats((stats) => ({
+        ...stats,
+        isLoaded: true,
+      }))
+      loadCanvas(
+        `panel__chart-wrapper--${stats.chartName}`,
+        `panel__chart panel__chart--${stats.chartName}`,
+      )
+    }
+
+    setCanvasLoaded(true)
+    const options = {
+      type: 'pie',
+      data: {
+        labels: Object.entries(dataset).map((item) => item[0]),
+        datasets: [
+          {
+            // label: 'Population (millions)',
+            backgroundColor: [
+              '#3e95cd',
+              '#8e5ea2',
+              '#3cba9f',
+              '#e8c3b9',
+              '#c45850',
+              '#bbbbbb',
+              '#bbbbbb',
+              '#bbbbbb',
+            ],
+            data: Object.entries(dataset).map((item) => item[1]),
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio:
+          (window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth) > 500
+            ? true
+            : false,
+        animation: {
+          easing: 'easeInOutCirc',
+        },
+        tooltips: {
+          mode: 'index',
+        },
+      },
+    }
+    setTimeout(() => {
+      setIsLoading(false)
+      canvasLoaded && graph.destroy()
+      setGraph(
+        createGraph(
+          options,
+          document.getElementsByClassName(
+            `panel__chart--${stats.chartName}`,
+          )[0],
+        ),
+      )
     }, 150)
   }
 
@@ -558,6 +674,11 @@ const GraphPanel = (props) => {
       <div
         className={`panel__chart-wrapper panel__chart-wrapper--${props.chartName}`}
       ></div>
+      <div className={`panel__difference`}>
+        <div className="panel__time-period">
+          {props.isLoaded ? props.timePeriod : ''}
+        </div>
+      </div>
     </div>
   )
 }
