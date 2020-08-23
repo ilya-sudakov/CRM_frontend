@@ -475,6 +475,11 @@ const RequestsQuantityGraphPanel = (props) => {
       type: 'line',
       data: dataset,
       options: {
+        elements: {
+            line: {
+                tension: 0
+            }
+        },
         cornerRadius: 2.5,
         fullCornerRadius: false,
         responsive: true,
