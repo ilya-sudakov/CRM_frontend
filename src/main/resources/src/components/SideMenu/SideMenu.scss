@@ -96,6 +96,9 @@
         }
 
         &--truck {
+          path:first-child {
+            fill: transparent;
+          }
           path:nth-child(4) {
             fill: #6e7b8cdd;
           }
@@ -119,6 +122,15 @@
 
         path:first-child {
           fill: #6e7b8cff;
+        }
+
+        &--truck {
+          path:first-child {
+            fill: transparent;
+          }
+          path:nth-child(4) {
+            fill: #6e7b8cdd;
+          }
         }
       }
 
