@@ -182,7 +182,7 @@ const FeedbackPage = (props) => {
           {isLoading && (
             <PlaceholderLoading
               itemClassName="main-window__list-item"
-              minHeight="80px"
+              minHeight="60px"
               items={10}
             />
           )}
