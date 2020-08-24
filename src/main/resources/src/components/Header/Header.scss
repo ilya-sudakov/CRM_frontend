@@ -462,6 +462,7 @@
               transition: all 200ms ease-in-out;
               margin: 0;
               left: 0;
+              height: 2px;
               &:nth-child(1) {
                 top: 0px;
                 transform-origin: 0 0;
@@ -482,10 +483,9 @@
           &--hidden {
             .linesWrapper {
               .line {
-                background-color: #555555;
                 &:nth-child(1) {
                   transform: rotate(45deg);
-                  top: -1px;
+                  top: -3px;
                 }
 
                 &:nth-child(2) {
@@ -494,9 +494,7 @@
 
                 &:nth-child(3) {
                   transform: rotate(-45deg);
-                  // bottom: 0px;
-                  top: 20px;
-                  left: -1px;
+                  top: 18px;
                 }
               }
             }

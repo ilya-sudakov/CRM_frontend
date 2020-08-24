@@ -2,6 +2,14 @@
 
 .etcetera-page {
   padding: 0 25px;
+  .main-window {
+    &__title {
+      width: 100%;
+      padding: 0;
+      box-sizing: border-box;
+      text-align: left;
+    }
+  }
   &__buttons {
     display: flex;
     flex-direction: row;
