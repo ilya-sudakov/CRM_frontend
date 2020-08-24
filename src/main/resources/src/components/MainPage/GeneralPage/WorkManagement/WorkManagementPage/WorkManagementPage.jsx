@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import './WorkManagementPage.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
@@ -9,30 +8,19 @@ import okIcon from '../../../../../../../../../assets/tableview/ok.svg'
 import TwoColumnsIcon from '../../../../../../../../../assets/tableview/twocolumns.png'
 import chevronDownSVG from '../../../../../../../../../assets/tableview/chevron-down.svg'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-// import DownloadIcon from '../../../../../../../../../assets/download.svg';
 import {
-  formatDateString,
-  numberToString,
   getAllProductsFromWorkCount,
-  addSpaceDelimiter,
   getAllDraftsFromWorkCount,
   getDatesAndWorkItems,
 } from '../../../../../utils/functions.jsx'
-import {
-  getRecordedWorkByDateRange,
-  deleteRecordedWork,
-  deleteProductFromRecordedWork,
-  deleteDraftFromRecordedWork,
-} from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import { getRecordedWorkByDateRange } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx'
-// import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
-import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoading.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
-import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx'
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx'
 import { UserContext } from '../../../../../App.js'
 import TableView from './TableView/TableView.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -388,6 +376,14 @@ const WorkManagementPage = (props) => {
           }
         >
           {/* <TableLoading isLoading={isLoading} /> */}
+          {isLoading && (
+            <PlaceholderLoading
+              // wrapperClassName="work-management-page__table-view"
+              itemClassName="main-window__list-item"
+              minHeight="1.5rem"
+              items={3}
+            />
+          )}
           {workshops.map((workshop, workshopIndex) => {
             if (
               workshop.active &&

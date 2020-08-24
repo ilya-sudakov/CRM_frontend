@@ -69,6 +69,11 @@ const FeedbackPage = (props) => {
       active: false,
     },
     {
+      name: 'Менеджер',
+      filteredRoles: ['Иван', 'Менеджер1'],
+      active: false,
+    },
+    {
       name: 'Цеха',
       filteredRoles: ['ЦехЛЭМЗ', 'ЦехЛепсари', 'ЦехЛиговский'],
       active: false,
