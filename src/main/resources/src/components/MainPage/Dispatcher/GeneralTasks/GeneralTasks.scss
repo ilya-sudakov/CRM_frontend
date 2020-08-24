@@ -6,6 +6,15 @@
     --delayed: #00b7ff;
     --problem: #d6574e;
     --materials: #d49a27;
+    .main-window {
+        &__title {
+            text-align: left;
+            width: 100%;
+            padding: 0 25px;
+            box-sizing: border-box;
+            margin-bottom: 0px;
+        }
+    }
     .main-window__header {
         flex-direction: column;
         .main-window__menu {
