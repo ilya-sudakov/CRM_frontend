@@ -576,13 +576,6 @@ const TableView = (props) => {
           </select>
         </div>
         <div className="main-window__list">
-          {props.isLoading && (
-            <PlaceholderLoading
-              itemClassName="main-window__list-item"
-              minHeight="3rem"
-              items={15}
-            />
-          )}
           {false ? ( //Временно sortOrder.curSort === 'date'
             <>
               <div className="main-window__list-item main-window__list-item--header">
@@ -607,6 +600,13 @@ const TableView = (props) => {
                 <span className="requests__column--comment">Комментарий</span>
                 <div className="main-window__actions">Действия</div>
               </div>
+              {props.isLoading && (
+                <PlaceholderLoading
+                  itemClassName="main-window__list-item"
+                  minHeight="3rem"
+                  items={15}
+                />
+              )}
               {Object.entries(props.requestsByDate)
                 .sort((a, b) => {
                   a = new Date(a[0])
@@ -674,6 +674,13 @@ const TableView = (props) => {
                 <span className="requests__column--comment">Комментарий</span>
                 <div className="main-window__actions">Действия</div>
               </div>
+              {props.isLoading && (
+                <PlaceholderLoading
+                  itemClassName="main-window__list-item"
+                  minHeight="3rem"
+                  items={15}
+                />
+              )}
               {printRequests(requests, {
                 date: {
                   visible: true,
