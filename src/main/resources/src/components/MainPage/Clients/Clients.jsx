@@ -468,7 +468,7 @@ const Clients = (props) => {
           {isLoading && (
             <PlaceholderLoading
               itemClassName="main-window__list-item"
-              minHeight="50px"
+              minHeight="40px"
               items={itemsPerPage}
             />
           )}
