@@ -455,13 +455,13 @@ const RequestsQuantityGraphPanel = (props) => {
       datasets: [
         {
           data: prevMonthData,
-          label: 'Пред. месяц',
+          label: months[new Date().getMonth() - 1],
           borderColor: '#3e95cd',
           backgroundColor: 'rgba(62, 149, 205, 0.2)',
         },
         {
           data: curMonthData,
-          label: 'Тек. месяц',
+          label: months[new Date().getMonth()],
           borderColor: '#8e5ea2',
           backgroundColor: 'rgba(142, 94, 162, 0.2)',
         },
