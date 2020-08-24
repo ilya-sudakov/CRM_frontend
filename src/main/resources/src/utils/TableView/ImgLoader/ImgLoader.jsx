@@ -31,7 +31,7 @@ const ImgLoader = (props) => {
           <div class="sk-circle11 sk-child"></div>
           <div class="sk-circle12 sk-child"></div>
         </div>*/
-        <div className="img-loader__img--placeholder"></div>
+        <div className={`img-loader__img--placeholder ${props.imgClass}`}></div>
       )}
     </div>
   )
