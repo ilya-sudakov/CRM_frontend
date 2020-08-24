@@ -12,13 +12,11 @@ import calendarSVG from '../../../../../../../assets/tableview/calendar.svg'
 import {
   getClients,
   deleteClient,
-  getClientsByCategory,
   getClientsByCategoryAndType,
   editNextContactDateClient,
   searchClients,
   editClient,
 } from '../../../utils/RequestsAPI/Clients.jsx'
-import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import { Link } from 'react-router-dom'
 import { formatDateString } from '../../../utils/functions.jsx'
@@ -32,11 +30,11 @@ import {
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import InputDate from '../../../utils/Form/InputDate/InputDate.jsx'
 import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx'
-import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import { exportClientsEmailsCSV } from '../../../utils/xlsxFunctions.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import { getSuppliersByCategoryAndType } from '../../../utils/RequestsAPI/Clients/Suppliers'
+import PlaceholderLoading from '../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const Clients = (props) => {
   const [clients, setClients] = useState([])
@@ -454,7 +452,7 @@ const Clients = (props) => {
           </select>
         </div>
         <div className="main-window__list">
-          <TableLoading isLoading={isLoading} />
+          {/* <TableLoading isLoading={isLoading} /> */}
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название</span>
             <span>Сайт</span>
@@ -467,6 +465,13 @@ const Clients = (props) => {
                         className="main-window__list-item"
                         minHeight="50px"
                     />} */}
+          {isLoading && (
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="50px"
+              items={itemsPerPage}
+            />
+          )}
           {clients
             //.filter(item => {
             //    return (
