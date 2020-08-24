@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './FeedbackPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
-import viewSVG from '../../../../../../../assets/tableview/view.svg'
 import unreadMessagesSVG from '../../../../../../../assets/chat/unread_messages__mail_icon.svg'
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
-import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { Link } from 'react-router-dom'
 import {
   formatDateString,
@@ -20,6 +18,7 @@ import {
   deleteMessage,
 } from '../../../utils/RequestsAPI/Feedback/messages.js'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import PlaceholderLoading from '../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const FeedbackPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -181,20 +180,11 @@ const FeedbackPage = (props) => {
             <div className="main-window__actions">Действие</div> */}
           </div>
           {isLoading && (
-            <TableDataLoading
-              className="main-window__list-item"
-              minHeight="50px"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="80px"
+              items={10}
             />
-          )}
-          {console.log(
-            messages.filter((item) => {
-              const temp = userCategories.find((category) => category.active)
-              if (temp.filteredRoles.length === 0) {
-                return true
-              } else {
-                return temp.filteredRoles.includes(item.author)
-              }
-            }),
           )}
           {messages
             .filter((item) => {
