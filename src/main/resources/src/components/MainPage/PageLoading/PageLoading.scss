@@ -28,7 +28,7 @@
     display: block;
     position: absolute;
     --circle-size: 90px;
-    --border-size: 8px;
+    --border-size: 5px;
     top: calc(50% - (var(--circle-size) / 2) - var(--border-size));
     left: calc(50% - (var(--circle-size) / 2) - var(--border-size));
     height: var(--circle-size);
@@ -74,7 +74,7 @@
 
     &__circle {
       --circle-size: 80px;
-      --border-size: 8px;
+      // --border-size: 8px;
     }
   }
 

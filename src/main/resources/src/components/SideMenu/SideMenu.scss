@@ -44,7 +44,7 @@
     margin-bottom: 5px;
     // transition: 0.2s ease-in-out;
     width: 90%;
-    font-size: 95%;
+    font-size: 100%;
     // border-radius: 5px;
     border-top-right-radius: 2.5px;
     border-bottom-right-radius: 2.5px;
@@ -63,7 +63,7 @@
     }
 
     .sidemenu__img {
-      width: 25px;
+      min-width: 25px;
       // height: 25px;
       filter: brightness(1.8);
       // transition: 200ms ease-in-out;
@@ -90,7 +90,6 @@
 
     &:hover {
       background-color: darken($side_menu__background, 5%);
-
       .sidemenu__img {
         path:first-child {
           fill: #6e7b8cdd;
@@ -105,6 +104,11 @@
       }
       .sidemenu__img--icon {
         // transform: scale(1.1);
+      }
+      .sidemenu__link {
+        span {
+          color: #b0c0d4 !important;
+        }
       }
     }
 
@@ -142,6 +146,11 @@
       &:hover {
         background-color: darken($button__background--inverted, 5%);
         // background-color: darken($side_menu__background, 30%);
+        .sidemenu__link {
+          span {
+            color: #ffffff !important;
+          }
+        }
       }
     }
 
@@ -208,8 +217,8 @@
       font-size: 100%;
       width: calc(100% - 25px);
       // text-align: center;
-      // color: #cccccc;
-      color: #8391a2;
+      // color: #8391a2;
+      color: #8a9cad;
       // transition: 0.2s ease-in-out;
 
       & .sidemenu__img {
@@ -223,6 +232,7 @@
 
       span {
         transform-origin: left;
+        font-size: 105%;
         // transition: 200ms ease-in-out;
       }
     }
@@ -233,7 +243,7 @@
       font-size: 25px;
       // margin-left: 10px;
       padding: 1px;
-      border-radius: 5px;
+      border-radius: 3px;
       display: flex;
       align-items: center;
       transition: filter 0.5s ease-in-out;
@@ -252,7 +262,7 @@
       }
 
       .sidemenu__img {
-        width: 22px;
+        max-width: 21px;
         filter: brightness(3);
         // transition: 0.2s ease-in-out;
       }
@@ -464,10 +474,10 @@
   }
 
   @media (min-width: 1920px) {
-    font-size: 90%;
+    // font-size: 90%;
 
-    .sidemenu__link {
-      padding: 8px 2.5px;
-    }
+    // .sidemenu__link {
+    //   padding: 8px 2.5px;
+    // }
   }
 }
