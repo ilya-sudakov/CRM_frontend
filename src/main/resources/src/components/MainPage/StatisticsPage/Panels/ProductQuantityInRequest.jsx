@@ -4,7 +4,7 @@ import PlaylistIcon from '../../../../../../../../assets/sidemenu/play_list.inli
 
 const ProductQuantityInRequest = (props) => {
   const [stats, setStats] = useState({
-    category: 'Среднее кол-во продукции в заказе',
+    category: 'Среднее кол-во позиций в заказе',
     percentage: 0,
     value: null,
     linkTo: '/requests',
@@ -50,7 +50,7 @@ const ProductQuantityInRequest = (props) => {
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
-      value: curMonthAverage,
+      value: Math.floor(curMonthAverage * 100) / 100,
       difference: curMonthAverage - prevMonthAverage,
       percentage:
         Math.floor(
