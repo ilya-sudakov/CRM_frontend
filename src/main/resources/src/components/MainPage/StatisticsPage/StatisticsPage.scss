@@ -68,13 +68,19 @@
                 margin: 0 auto;
 
                 &--requests {
-                    path:nth-child(1) {
+                    g {
                         fill: rgba($button__background--inverted, 0.7);
                     }
                 }
 
                 &--money {
                     path:nth-child(1) {
+                        fill: rgba($button__background--inverted, 0.7);
+                    }
+                }
+
+                &--employee {
+                    g {
                         fill: rgba($button__background--inverted, 0.7);
                     }
                 }

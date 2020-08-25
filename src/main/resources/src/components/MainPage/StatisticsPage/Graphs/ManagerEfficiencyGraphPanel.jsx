@@ -13,7 +13,7 @@ const ManagerEfficiencyGraphPanel = (props) => {
     isLoaded: false,
     chartName: 'manager-efficiency-graph',
     timePeriod: `${months[new Date().getMonth()]}`,
-    renderIcon: () => <EmployeeIcon className="panel__img panel__img--list" />,
+    renderIcon: () => <EmployeeIcon className="panel__img panel__img--employee" />,
   })
 
   const getStats = (data) => {
