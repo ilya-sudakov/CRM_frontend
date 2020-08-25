@@ -65,6 +65,10 @@
     @media (max-width: 576px) {
         padding-top: 30px;
         --max-width: 90%;
+        &__error-code {
+            display: block;
+            margin-bottom: -15px;
+        }
         &__button {
             margin-left: 5%;
         }

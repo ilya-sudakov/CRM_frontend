@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: center;
   padding-top: 25vh;
+  --img-size: 45px;
 
   &__title {
     font-size: 200%;
@@ -19,11 +20,15 @@
     position: relative;
   }
 
+  &__img {
+    max-width: var(--img-size);
+  }
+
   &__circle {
     display: block;
     position: absolute;
-    --circle-size: 100px;
-    --border-size: 10px;
+    --circle-size: 90px;
+    --border-size: 8px;
     top: calc(50% - (var(--circle-size) / 2) - var(--border-size));
     left: calc(50% - (var(--circle-size) / 2) - var(--border-size));
     height: var(--circle-size);
@@ -64,60 +69,21 @@
     }
   }
 
-  .lds-ellipsis {
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
-    margin-top: -15px;
-  }
-  .lds-ellipsis div {
-    position: absolute;
-    top: 33px;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: $button__background--inverted;
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-  .lds-ellipsis div:nth-child(1) {
-    left: 8px;
-    animation: lds-ellipsis1 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(2) {
-    left: 8px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(3) {
-    left: 32px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(4) {
-    left: 56px;
-    animation: lds-ellipsis3 0.6s infinite;
-  }
-  @keyframes lds-ellipsis1 {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
+  @media (max-width: 768px) {
+    --img-size: 40px;
+
+    &__circle {
+      --circle-size: 80px;
+      --border-size: 8px;
     }
   }
-  @keyframes lds-ellipsis3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-  @keyframes lds-ellipsis2 {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(24px, 0);
+
+  @media (max-width: 576px) {
+    --img-size: 32px;
+
+    &__circle {
+      --circle-size: 60px;
+      --border-size: 4px;
     }
   }
 }
