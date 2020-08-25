@@ -4,13 +4,13 @@ import viewIcon from '../../../../../../../../../../assets/tableview/view.svg'
 import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
 import deleteIcon from '../../../../../../../../../../assets/tableview/delete.svg'
 import './TableView.scss'
-import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx'
 import { rigStatuses, rigTypes, workshopsLocations } from '../rigsVariables'
 import {
   editStampColor,
   editStampPartColor,
 } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -127,9 +127,10 @@ const TableView = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
-            <TableDataLoading
-              minHeight="50px"
-              className="main-window__list-item"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="35px"
+              items={5}
             />
           )}
           {sortStamps(props.data).map((stamp, stamp_id) => (

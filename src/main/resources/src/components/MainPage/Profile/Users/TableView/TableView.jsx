@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import editSVG from '../../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg'
 import './TableView.scss'
-import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { changeSortOrder } from '../../../../../utils/functions.jsx'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -54,9 +54,10 @@ const TableView = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
-            <TableDataLoading
-              minHeight="50px"
-              className="main-window__list-item"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="30px"
+              items={10}
             />
           )}
           {sortUsers(props.data).map((user, user_id) => (
@@ -117,66 +118,6 @@ const TableView = (props) => {
           ))}
         </div>
       </div>
-      {/* //!OLD DESIGN */}
-      {/* <div className="tableview_users__row tableview_users__row--header">
-        <div className="tableview_users__col">Имя пользователя</div>
-        <div className="tableview_users__col">Эл. почта</div>
-        <div className="tableview_users__col">Роль</div>
-        <div className="tableview_users__col">Действия</div>
-      </div>
-      {props.isLoading && (
-        <TableDataLoading
-          minHeight="50px"
-          className="tableview_users__row tableview_users__row--even"
-        />
-      )}
-      {sortUsers(props.data).map((user, user_id) => (
-        <div
-          key={user_id}
-          className="tableview_users__row tableview_users__row--even"
-        >
-          <div className="tableview_users__col">{user.username}</div>
-          <div className="tableview_users__col">{user.email}</div>
-          <div className="tableview_users__col">
-            {user.roles.map((item) => {
-              return item.name === 'ROLE_ADMIN'
-                ? 'Руководитель '
-                : item.name === 'ROLE_MANAGER'
-                ? 'Менеджер1 '
-                : item.name === 'ROLE_USER'
-                ? 'Пользователь '
-                : item.name === 'ROLE_DISPATCHER'
-                ? 'Диспетчер '
-                : item.name === 'ROLE_ENGINEER'
-                ? 'Инженер '
-                : item.name === 'ROLE_LEMZ'
-                ? 'Цех ЛЭМЗ '
-                : item.name === 'ROLE_LEPSARI'
-                ? 'Цех Лепсари '
-                : item.name === 'ROLE_LIGOVSKIY'
-                ? 'Цех Лиговский '
-                : null
-            })}
-          </div>
-          <div className="tableview_users__actions">
-            <Link
-              className="tableview_users__action"
-              to={'/profile/users/edit/' + user.id}
-            >
-              Редактировать
-            </Link>
-            {props.userHasAccess(['ROLE_ADMIN']) && (
-              <div
-                data-id={user.id}
-                className="tableview_users__action"
-                onClick={props.deleteItem}
-              >
-                Удалить
-              </div>
-            )}
-          </div>
-        </div>
-      ))} */}
     </div>
   )
 }

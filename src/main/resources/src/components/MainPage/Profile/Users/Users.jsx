@@ -121,7 +121,6 @@ const Users = (props) => {
             Всего: {users.length} записей
           </div>
         </div>
-
         <TableView
           data={users.filter((item) => {
             let check = false
