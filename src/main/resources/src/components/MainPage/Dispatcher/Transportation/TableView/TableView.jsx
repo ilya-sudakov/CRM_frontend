@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png'
-import { formatDateString, addSpaceDelimiter } from '../../../../../utils/functions.jsx'
+import {
+  formatDateString,
+  addSpaceDelimiter,
+} from '../../../../../utils/functions.jsx'
 import './TableView.scss'
-import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import editSVG from '../../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -72,9 +74,10 @@ const TableView = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
-            <TableDataLoading
-              minHeight="50px"
-              className="main-window__list-item"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="35px"
+              items={15}
             />
           )}
           {sortTransportations(props.data).map(
@@ -128,74 +131,6 @@ const TableView = (props) => {
             ),
           )}
         </div>
-        {/* //!! OLD DESIGN */}
-        {/* <div className="tableview_transportation__row tableview_transportation__row--header">
-           <div className="tableview_transportation__col">
-            <span>Дата</span>
-            <img
-              name="date"
-              className="tableview_transportation__img"
-              onClick={changeSortOrder}
-              src={sortIcon}
-            />
-          </div>
-          <div className="tableview_transportation__col">Товар</div>
-          <div className="tableview_transportation__col">Кол-во</div>
-          <div className="tableview_transportation__col">Откуда</div>
-          <div className="tableview_transportation__col">Куда</div>
-          <div className="tableview_transportation__col">Водитель</div>
-          <div className="tableview_transportation__col">Действия</div>
-        </div>
-        {isLoading && (
-          <TableDataLoading
-            minHeight="50px"
-            className="tableview_transportation__row tableview_transportation__row--even"
-          />
-        )}
-        {sortTransportations(props.data).map(
-          (transportation, transportation_id) => (
-            <div
-              key={transportation_id}
-              className="tableview_transportation__row tableview_transportation__row--even"
-            >
-              <div className="tableview_transportation__col">
-                {formatDateString(transportation.date)}
-              </div>
-              <div className="tableview_transportation__col">
-                {transportation.cargo}
-              </div>
-              <div className="tableview_transportation__col">
-                {transportation.quantity}
-              </div>
-              <div className="tableview_transportation__col">
-                {transportation.sender}
-              </div>
-              <div className="tableview_transportation__col">
-                {transportation.recipient}
-              </div>
-              <div className="tableview_transportation__col">
-                {transportation.driver}
-              </div>
-              <div className="tableview_transportation__actions">
-                <Link
-                  to={'/dispatcher/transportation/edit/' + transportation.id}
-                  className="tableview_transportation__action"
-                >
-                  Редактировать
-                </Link>
-                {props.userHasAccess(['ROLE_ADMIN']) && (
-                  <div
-                    data-id={transportation.id}
-                    className="tableview_transportation__action"
-                    onClick={props.deleteItem}
-                  >
-                    Удалить
-                  </div>
-                )}
-              </div>
-            </div>
-          ),
-        )} */}
       </div>
     </div>
   )

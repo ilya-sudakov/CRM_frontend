@@ -222,6 +222,8 @@ const ReportTablePage = lazy(() =>
   import('./GeneralPage/ReportTablePage/ReportTablePage.jsx'),
 )
 
+const StatisticsPage = lazy(() => import('./StatisticsPage/StatisticsPage.jsx'))
+
 export {
   Clients,
   newClient,
@@ -294,4 +296,5 @@ export {
   EditPackaging,
   ReportTablePage,
   RiggingList,
+  StatisticsPage,
 }

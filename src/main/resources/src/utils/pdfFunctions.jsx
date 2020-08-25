@@ -92,16 +92,26 @@ export const getRequestPdfText = (
   workshopName,
   itemId,
 ) => {
-  let productsArr = requestProducts.map((item) => {
-    return [item.name, item.quantity, item.packaging, '', '']
-  })
+  let productsArr = requestProducts
+    .sort((a, b) => {
+      if (a.name < b.name) {
+        return -1
+      }
+      if (a.name > b.name) {
+        return 1
+      }
+      return 0
+    })
+    .map((item) => {
+      return [item.name, item.quantity, item.packaging, '', '']
+    })
   var dd = {
     info: {
       title: 'Очередь производства №' + itemId,
     },
     content: [
       {
-        text: 'Очередь производства' + ' №' + itemId + '\n',
+        text: 'Очередь производства  №' + itemId + '\n',
         alignment: 'center',
         style: 'header',
       },
@@ -109,12 +119,12 @@ export const getRequestPdfText = (
         ? {
             text: [
               {
-                text: '\n' + 'Подразделение: ',
-                style: 'subheader',
+                text: '\nПодразделение: \n',
+                style: 'regularText',
               },
               {
-                text: workshopName + '\n' + '\n',
-                style: 'regularText',
+                text: workshopName + '\n\n',
+                style: 'subheader',
               },
             ],
           }
@@ -122,18 +132,18 @@ export const getRequestPdfText = (
       {
         text: [
           {
-            text: 'Дата: ',
-            style: 'subheader',
+            text: 'Дата: \n',
+            style: 'regularText',
           },
           {
-            text: formatDateString(date) + '\n' + '\n',
-            style: 'regularText',
+            text: formatDateString(date) + '\n\n',
+            style: 'subheader',
           },
         ],
       },
       {
         text: 'Продукция: ',
-        style: 'subheader',
+        style: 'regularText',
         margin: [0, 0, 0, 5],
       },
       {
@@ -155,32 +165,33 @@ export const getRequestPdfText = (
       {
         text: [
           {
-            text: 'Кодовое слово: ',
-            style: 'subheader',
+            text: 'Кодовое слово: \n',
+            style: 'regularText',
           },
           {
             text: codeWord,
-            style: 'regularText',
+            style: 'subheader',
           },
         ],
       },
     ],
     styles: {
       header: {
-        fontSize: 22,
+        fontSize: 20,
         bold: true,
       },
       subheader: {
-        fontSize: 18,
-        bold: true,
+        fontSize: 16,
+        // bold: true,
       },
       regularText: {
-        fontSize: 16,
+        fontSize: 14,
+        color: '#444444',
       },
       tableHeader: {
-        fontSize: 16,
+        fontSize: 12,
         bold: true,
-        alignment: 'center',
+        alignment: 'left',
       },
     },
   }
@@ -188,87 +199,45 @@ export const getRequestPdfText = (
   return dd
 }
 
-export const getRequestsListPdfText = (
-  requests,
-  workshopName,
-  productsName,
-) => {
-  const requestsFormatted = requests.map((item) => {
-    if (item.status !== 'Завершено') {
-      return [
-        {
-          text: [
-            {
-              text: 'Очередь производства №' + item.id + '\n',
-              style: 'header',
-              alignment: 'center',
-              margin: [0, 0, 0, 10],
-            },
+export const getProductsFromRequestsListPdfText = (products, workshopName) => {
+  const productsFormatted = [
+    {
+      table: {
+        margin: [0, 5, 0, 5],
+        widths: ['*', 100, 80, 80],
+        body: [
+          [
+            { text: 'Название', style: 'tableHeader' },
+            { text: 'Кол-во', style: 'tableHeader' },
+            { text: '', style: 'tableHeader' },
+            { text: '', style: 'tableHeader' },
           ],
-        },
-        {
-          text: [
-            {
-              text: 'Дата: ',
-              style: 'subheader',
-            },
-            {
-              text: formatDateString(item.date) + '\n',
-              style: 'regularText',
-            },
-          ],
-        },
-        {
-          text: [
-            {
-              text: 'Статус: ',
-              style: 'subheader',
-            },
-            {
-              text: item.status + '\n',
-              style: 'regularText',
-            },
-          ],
-        },
-        {
-          text: 'Продукция: ',
-          style: 'subheader',
-          margin: [0, 0, 0, 5],
-        },
-        {
-          table: {
-            widths: ['*', 70, 70, 70, 70],
-            body: [
-              [
-                { text: 'Название', style: 'tableHeader' },
-                { text: 'Кол-во', style: 'tableHeader' },
-                { text: 'Фасовка', style: 'tableHeader' },
-                { text: '', style: 'tableHeader' },
-                { text: '', style: 'tableHeader' },
-              ],
-              ...item[productsName].map((item) => {
-                return [item.name, item.quantity, item.packaging, '', '']
-              }),
-            ],
-          },
-        },
-        '\n',
-        {
-          text: [
-            {
-              text: 'Кодовое слово: ',
-              style: 'subheader',
-            },
-            {
-              text: item.codeWord,
-              style: 'regularText',
-            },
-          ],
-        },
-        '\n\n\n',
-      ]
-    }
-  })
+          ...Object.entries(products)
+            .sort((a, b) => {
+              if (
+                a[0].localeCompare(b[0], undefined, {
+                  numeric: true,
+                }) < 0
+              ) {
+                return -1
+              }
+              if (
+                a[0].localeCompare(b[0], undefined, {
+                  numeric: true,
+                }) > 0
+              ) {
+                return 1
+              }
+              return 0
+            })
+            .map((product) => {
+              return [product[0], product[1], '', '']
+            }),
+        ],
+      },
+    },
+  ]
+
   var dd = {
     info: {
       title: 'Очередь производства - список',
@@ -283,38 +252,48 @@ export const getRequestsListPdfText = (
         ? {
             text: [
               {
-                text: '\n' + 'Подразделение: ',
-                style: 'subheader',
+                text: '\nПодразделение: \n',
+                style: 'regularText',
               },
               {
                 text: workshopName + '\n\n',
-                style: 'regularText',
+                style: 'subheader',
               },
             ],
           }
         : '\n',
-      ...requestsFormatted,
+      {
+        text: [
+          {
+            text: 'Продукция: \n',
+            style: 'regularText',
+            margin: [0, 5, 0, 5],
+          },
+        ],
+      },
+      ...productsFormatted,
     ],
     styles: {
       header: {
-        fontSize: 22,
+        fontSize: 20,
         bold: true,
       },
       title: {
-        fontSize: 24,
+        fontSize: 20,
         bold: true,
       },
       subheader: {
-        fontSize: 18,
-        bold: true,
+        fontSize: 16,
+        // bold: true,
       },
       regularText: {
-        fontSize: 16,
+        fontSize: 14,
+        color: '#444444',
       },
       tableHeader: {
-        fontSize: 16,
+        fontSize: 12,
         bold: true,
-        alignment: 'center',
+        alignment: 'left',
       },
     },
   }

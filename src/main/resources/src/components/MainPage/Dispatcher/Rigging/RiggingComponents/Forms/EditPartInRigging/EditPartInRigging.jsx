@@ -5,8 +5,13 @@ import {
   getPartFromStamp,
   editPartFromStamp,
 } from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { rigTypes } from '../../rigsVariables.js'
+import {
+  rigTypes,
+  checkRiggingTypesInputs,
+  workshopsLocations,
+} from '../../rigsVariables.js'
 import Button from '../../../../../../../utils/Form/Button/Button.jsx'
+import { workshops } from '../../../../../WorkshopsComponents/workshopVariables'
 
 const EditPartInRigging = (props) => {
   const [partInputs, setPartInputs] = useState({
@@ -64,8 +69,8 @@ const EditPartInRigging = (props) => {
       )
         .then(() => {
           setIsLoading(false)
-          window.location.href = rigTypes[type].redirectURL
-          // props.history.push(rigTypes[type].redirectURL)
+          // window.location.href = rigTypes[type].redirectURL
+          props.history.push(rigTypes[type].redirectURL)
         })
         .catch((error) => {
           setIsLoading(false)
@@ -93,7 +98,8 @@ const EditPartInRigging = (props) => {
       ? 'pressForm'
       : props.location.pathname.includes('/parts') && 'parts'
 
-    let rigId = props.history.location.pathname.split('/edit-part/')[1]
+    let rigId = props.history.location.pathname
+    rigId = rigId.split('/edit-part/')[1]
     const partId = rigId.split('/')[1]
     rigId = rigId.split('/')[0]
     setPartId(partId)
@@ -102,7 +108,7 @@ const EditPartInRigging = (props) => {
       alert('Неправильный индекс!')
       props.history.push(rigTypes[type].redirectURL)
     } else {
-      return getPartFromStamp(partId)
+      getPartFromStamp(partId)
         .then((res) => res.json())
         .then((res) => {
           setPartInputs(res)
@@ -153,13 +159,22 @@ const EditPartInRigging = (props) => {
         <div className="main-form__item">
           <div className="main-form__input_name">Местоположение</div>
           <div className="main-form__input_field">
-            <input
+            {/* <input
               type="text"
               name="location"
               autoComplete="off"
               onChange={handleInputChange}
               defaultValue={partInputs.location}
-            />
+            /> */}
+            <select
+              name="location"
+              onChange={handleInputChange}
+              value={partInputs.location}
+            >
+              {Object.entries(workshopsLocations).map((workshop) => (
+                <option value={workshop[0]}>{workshop[1].name}</option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="main-form__item">
@@ -182,6 +197,9 @@ const EditPartInRigging = (props) => {
               name="cuttingDimensions"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={
+                !checkRiggingTypesInputs(partInputs, 'cuttingDimensions')
+              }
               defaultValue={partInputs.cuttingDimensions}
             />
           </div>
@@ -194,6 +212,7 @@ const EditPartInRigging = (props) => {
               name="milling"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'milling')}
               defaultValue={partInputs.milling}
             />
           </div>
@@ -206,6 +225,7 @@ const EditPartInRigging = (props) => {
               name="harding"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'harding')}
               defaultValue={partInputs.harding}
             />
           </div>
@@ -218,6 +238,7 @@ const EditPartInRigging = (props) => {
               name="grinding"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'grinding')}
               defaultValue={partInputs.grinding}
             />
           </div>
@@ -230,6 +251,7 @@ const EditPartInRigging = (props) => {
               name="erosion"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'erosion')}
               defaultValue={partInputs.erosion}
             />
           </div>
@@ -242,6 +264,7 @@ const EditPartInRigging = (props) => {
               name="controll"
               autoComplete="off"
               onChange={handleInputChange}
+              readOnly={!checkRiggingTypesInputs(partInputs, 'controll')}
               defaultValue={partInputs.controll}
             />
           </div>
@@ -263,8 +286,8 @@ const EditPartInRigging = (props) => {
                 : props.location.pathname.includes('/press-form')
                 ? 'pressForm'
                 : props.location.pathname.includes('/parts') && 'parts'
-              // props.history.push(rigTypes[type].redirectURL)
-              window.location.href = rigTypes[type].redirectURL
+              // window.location.href = rigTypes[type].redirectURL
+              props.history.push(rigTypes[type].redirectURL)
             }}
           />
           <Button

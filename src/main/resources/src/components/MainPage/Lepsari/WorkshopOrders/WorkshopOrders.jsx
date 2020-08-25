@@ -9,13 +9,13 @@ import {
   formatDateString,
   addSpaceDelimiter,
 } from '../../../../utils/functions.jsx'
-import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import {
   getOrdersByName,
   deleteProductFromOrder,
   deleteOrder,
 } from '../../../../utils/RequestsAPI/Workshop/Orders.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const WorkshopOrders = (props) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -140,9 +140,10 @@ const WorkshopOrders = (props) => {
             <div className="main-window__actions">Действие</div>
           </div>
           {isLoading && (
-            <TableDataLoading
-              className="main-window__list-item"
-              minHeight="50px"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="35px"
+              items={3}
             />
           )}
           {orders

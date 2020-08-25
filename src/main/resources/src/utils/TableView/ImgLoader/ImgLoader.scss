@@ -1,6 +1,54 @@
 @import "../../../variables.scss";
 
 .img-loader {
+  @keyframes pulse {
+    0% {
+      border-color: #dddddd;
+      background-color: #dddddd;
+    }
+    50% {
+      border-color: #f7f7f7;
+      background-color: #f7f7f7;
+    }
+    100% {
+      border-color: #dddddd;
+      background-color: #dddddd;
+    }
+  }
+
+  @keyframes load {
+    from {
+      background: linear-gradient(to right, transparent 0%, #fafafa 50%, transparent 100%);
+      left: -150px;
+    }
+    to {
+      background: linear-gradient(to right, transparent 0%, #e8e8e8 50%, transparent 100%);
+      left: 100%;
+    }
+  }
+
+  .img-loader__img--placeholder {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    border-radius: 5px;
+    animation: pulse 1s infinite ease-in-out;
+
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: -150px;
+      top: 0;
+      height: 100%;
+      width: 150px;
+      background: linear-gradient(to right, transparent 0%, #e8e8e8 50%, transparent 100%);
+      animation: load 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  }
   .sk-circle {
     // margin: 100px auto;
     width: 80px;

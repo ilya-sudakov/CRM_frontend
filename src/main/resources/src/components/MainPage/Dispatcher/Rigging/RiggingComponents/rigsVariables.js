@@ -40,3 +40,49 @@ export const rigStatuses = {
     className: 'defect',
   },
 }
+
+export const riggingTypeList = {
+  cuttingDimensions: {
+    prev: null,
+  },
+  milling: {
+    prev: 'cuttingDimensions',
+  },
+  harding: {
+    prev: 'milling',
+  },
+  grinding: {
+    prev: 'harding',
+  },
+  erosion: {
+    prev: 'grinding',
+  },
+  controll: {
+    prev: 'erosion',
+  },
+}
+
+export const checkRiggingTypesInputs = (inputs, type = 'controll') => {
+  let check = true
+  let curType = riggingTypeList[type].prev
+  while (curType !== null) {
+    if (inputs[curType] === '' || inputs[curType] === null) {
+      check = false
+      return
+    }
+    curType = riggingTypeList[curType].prev
+  }
+  return check
+}
+
+export const workshopsLocations = {
+  lemz: {
+    name: 'ЦехЛЭМЗ',
+  },
+  lepsari: {
+    name: 'ЦехЛепсари',
+  },
+  ligovskiy: {
+    name: 'ЦехЛиговский',
+  },
+}

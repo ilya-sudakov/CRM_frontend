@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import './WorkManagementPage.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
@@ -9,30 +8,19 @@ import okIcon from '../../../../../../../../../assets/tableview/ok.svg'
 import TwoColumnsIcon from '../../../../../../../../../assets/tableview/twocolumns.png'
 import chevronDownSVG from '../../../../../../../../../assets/tableview/chevron-down.svg'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-// import DownloadIcon from '../../../../../../../../../assets/download.svg';
 import {
-  formatDateString,
-  numberToString,
   getAllProductsFromWorkCount,
-  addSpaceDelimiter,
   getAllDraftsFromWorkCount,
   getDatesAndWorkItems,
 } from '../../../../../utils/functions.jsx'
-import {
-  getRecordedWorkByDateRange,
-  deleteRecordedWork,
-  deleteProductFromRecordedWork,
-  deleteDraftFromRecordedWork,
-} from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import { getRecordedWorkByDateRange } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx'
-// import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx';
-import TableLoading from '../../../../../utils/TableView/TableLoading/TableLoading.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
-import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx'
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx'
 import { UserContext } from '../../../../../App.js'
 import TableView from './TableView/TableView.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -380,15 +368,6 @@ const WorkManagementPage = (props) => {
             </div>
           </div>
         </div>
-        {/* <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="lastName desc">По алфавиту (А-Я)</option>
-            <option value="lastName asc">По алфавиту (Я-А)</option>
-            <option value="date asc">По дате</option>
-            <option value="hours desc">По часам</option>
-          </select>
-        </div> */}
         <div
           className={
             isOneColumn
@@ -397,6 +376,14 @@ const WorkManagementPage = (props) => {
           }
         >
           {/* <TableLoading isLoading={isLoading} /> */}
+          {isLoading && (
+            <PlaceholderLoading
+              // wrapperClassName="work-management-page__table-view"
+              itemClassName="main-window__list-item"
+              minHeight="1.5rem"
+              items={3}
+            />
+          )}
           {workshops.map((workshop, workshopIndex) => {
             if (
               workshop.active &&
@@ -459,411 +446,7 @@ const WorkManagementPage = (props) => {
                       setDatesEmployees({ ...temp })
                     }}
                     data={datesEmployees[workshop.name]}
-                    // data={Object.values(datesEmployees[workshop.name]).filter(
-                    //   (item) => {
-                    //     let check = false
-                    //     Object.values(item).filter((employee) => {
-                    //       console.log(employee)
-                    //       if (
-                    //         employee.employee.lastName
-                    //           .toLowerCase()
-                    //           .includes(searchQuery.toLowerCase())
-                    //       ) {
-                    //         check = true
-                    //       }
-                    //     })
-                    //     return check
-                    //   },
-                    // )}
                   />
-                  {/* <div className="main-window__list-item main-window__list-item--header">
-                    <span>Должность</span>
-                    <span>ФИО</span>
-                    <span>Часы</span>
-                    <span>Дата</span>
-                    <div className="main-window__actions">Действие</div>
-                  </div>
-                  {Object.entries(employeesMap)
-                    .filter((item) => {
-                      if (
-                        workshop.name === employees[item[0]]?.workshop &&
-                        (employees[item[0]].lastName
-                          .toLowerCase()
-                          .includes(searchQuery.toLowerCase()) ||
-                          employees[item[0]].name
-                            .toLowerCase()
-                            .includes(searchQuery.toLowerCase()) ||
-                          employees[item[0]].middleName
-                            .toLowerCase()
-                            .includes(searchQuery.toLowerCase()) ||
-                          employees[item[0]].workshop
-                            .toLowerCase()
-                            .includes(searchQuery.toLowerCase()))
-                      ) {
-                        let check = false
-                        workshops.map((workshop) => {
-                          if (
-                            workshop.active &&
-                            workshop.name === employees[item[0]].workshop &&
-                            props.userHasAccess(workshop.visibility)
-                          ) {
-                            check = true
-                            return
-                          }
-                        })
-                        return check
-                      }
-                    })
-                    .sort((a, b) => {
-                      if (sortOrder.curSort === 'lastName') {
-                        if (
-                          employees[a[0]][sortOrder.curSort] <
-                          employees[b[0]][sortOrder.curSort]
-                        ) {
-                          return sortOrder[sortOrder.curSort] === 'desc'
-                            ? 1
-                            : -1
-                        }
-                        if (
-                          employees[a[0]][sortOrder.curSort] >
-                          employees[b[0]][sortOrder.curSort]
-                        ) {
-                          return sortOrder[sortOrder.curSort] === 'desc'
-                            ? -1
-                            : 1
-                        }
-                        return 0
-                      } else {
-                        if (sortOrder.curSort === 'date') {
-                          if (
-                            new Date(Object.entries(a[1])[0][0]) <
-                            new Date(Object.entries(b[1])[0][0])
-                          ) {
-                            return sortOrder[sortOrder.curSort] === 'desc'
-                              ? 1
-                              : -1
-                          }
-                          if (
-                            new Date(Object.entries(a[1])[0][0]) >
-                            new Date(Object.entries(b[1])[0][0])
-                          ) {
-                            return sortOrder[sortOrder.curSort] === 'desc'
-                              ? -1
-                              : 1
-                          }
-                          return 0
-                        } else {
-                          if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                            return sortOrder[sortOrder.curSort] === 'desc'
-                              ? 1
-                              : -1
-                          }
-                          if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                            return sortOrder[sortOrder.curSort] === 'desc'
-                              ? -1
-                              : 1
-                          }
-                          return 0
-                        }
-                      }
-                    })
-                    .map((workItem, workItemIndex) => {
-                      let count = 0
-                      let prevDate = Object.entries(workItem[1])[0][0]
-                      return Object.entries(workItem[1]).map(
-                        (tempItem, tempItemIndex) => {
-                          return (
-                            <React.Fragment>
-                              <div
-                                className="main-window__list-item"
-                                onClick={() => {
-                                  let temp = employeesMap
-                                  let newDates = [
-                                    Object.assign({
-                                      openWorks: !employeesMap[workItem[0]][
-                                        new Date(tempItem[0])
-                                      ][0].openWorks,
-                                    }),
-                                    ...employeesMap[workItem[0]][
-                                      new Date(tempItem[0])
-                                    ].filter((item, index) => {
-                                      if (index > 0) {
-                                        return true
-                                      } else {
-                                        return false
-                                      }
-                                    }),
-                                  ]
-                                  temp = {
-                                    ...temp,
-                                    [workItem[0]]: {
-                                      ...employeesMap[workItem[0]],
-                                      [new Date(tempItem[0])]: newDates,
-                                    },
-                                  }
-                                  setEmployeesMap(temp)
-                                }}
-                              >
-                                <span>
-                                  <div className="main-window__mobile-text">
-                                    Должность:{' '}
-                                  </div>
-                                  {employees[workItem[0]].position}
-                                </span>
-                                <span>
-                                  <div className="main-window__mobile-text">
-                                    ФИО:{' '}
-                                  </div>
-                                  <div className="main-window__text">
-                                    {employees[workItem[0]].lastName +
-                                      ' ' +
-                                      employees[workItem[0]].name +
-                                      ' ' +
-                                      employees[workItem[0]].middleName}
-                                  </div>
-                                </span>
-                                <span>
-                                  <div className="main-window__mobile-text">
-                                    Часы:{' '}
-                                  </div>
-                                  {Math.floor(
-                                    tempItem[1].reduce((sum, cur) => {
-                                      {
-                                      }
-                                      if (cur.hours !== undefined) {
-                                        return sum + cur.hours
-                                      } else {
-                                        return sum
-                                      }
-                                    }, 0) * 100,
-                                  ) / 100}
-                                </span>
-                                <span>
-                                  <div className="main-window__mobile-text">
-                                    Дата:{' '}
-                                  </div>
-                                  {formatDateString(new Date(tempItem[0]))}
-                                </span>
-                                <div className="main-window__actions">
-                                  <div
-                                    className="main-window__action"
-                                    onClick={() => {
-                                      Promise.all(
-                                        tempItem[1].map(
-                                          (itemDelete, itemDeleteIndex) => {
-                                            if (itemDeleteIndex > 0) {
-                                              return Promise.all(
-                                                itemDelete.workControlProduct.map(
-                                                  (product) => {
-                                                    return deleteProductFromRecordedWork(
-                                                      itemDelete.id,
-                                                      product.product.id,
-                                                    )
-                                                  },
-                                                ),
-                                              ).then(() => {
-                                                return deleteRecordedWork(
-                                                  itemDelete.id,
-                                                )
-                                              })
-                                            }
-                                          },
-                                        ),
-                                      ).then(() => {
-                                        return loadWorks()
-                                      })
-                                    }}
-                                    title="Удалить"
-                                  >
-                                    <img
-                                      className="main-window__img"
-                                      src={deleteSVG}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className={
-                                  tempItem[1][0].openWorks
-                                    ? 'main-window__list-options'
-                                    : 'main-window__list-options main-window__list-options--hidden'
-                                }
-                              >
-                                <div className="main-window__line"></div>
-                                {tempItem[1].map((work, workIndex) => {
-                                  if (workIndex !== 0) {
-                                    return (
-                                      <React.Fragment>
-                                        <span
-                                          data-hours={
-                                            Math.floor(work.hours * 100) / 100 +
-                                            ' ' +
-                                            numberToString(
-                                              Number.parseInt(
-                                                Math.floor(work.hours * 100) /
-                                                  100,
-                                              ),
-                                              ['час', 'часа', 'часов'],
-                                            )
-                                          }
-                                        >
-                                          <div>{work.workList.work}</div>
-                                          <div className="main-window__mobile-text">
-                                            {Math.floor(work.hours * 100) /
-                                              100 +
-                                              ' ' +
-                                              numberToString(
-                                                Number.parseInt(
-                                                  Math.floor(work.hours * 100) /
-                                                    100,
-                                                ),
-                                                ['час', 'часа', 'часов'],
-                                              )}
-                                          </div>
-                                          <Link
-                                            to={
-                                              'work-management/record-time/edit/' +
-                                              work.id
-                                            }
-                                            className="main-window__action"
-                                            title="Редактировать"
-                                          >
-                                            <img
-                                              className="main-window__img"
-                                              src={editSVG}
-                                            />
-                                          </Link>
-                                          <div
-                                            className="main-window__action"
-                                            onClick={() => {
-                                              return Promise.all(
-                                                work.workControlProduct.map(
-                                                  (product) => {
-                                                    return deleteProductFromRecordedWork(
-                                                      work.id,
-                                                      product.product.id,
-                                                    )
-                                                  },
-                                                ),
-                                              )
-                                                .then(() => {
-                                                  return Promise.all(
-                                                    work.partsWorks.map(
-                                                      (draft) => {
-                                                        console.log(draft)
-                                                        return deleteDraftFromRecordedWork(
-                                                          work.id,
-                                                          draft.partId,
-                                                          draft.partType,
-                                                        )
-                                                      },
-                                                    ),
-                                                  )
-                                                })
-                                                .then(() => {
-                                                  return deleteRecordedWork(
-                                                    work.id,
-                                                  )
-                                                })
-                                                .then(() => {
-                                                  return loadWorks()
-                                                })
-                                            }}
-                                            title="Удалить"
-                                          >
-                                            <img
-                                              className="main-window__img"
-                                              src={deleteSVG}
-                                            />
-                                          </div>
-                                        </span>
-                                        {(work.workControlProduct.length > 0 ||
-                                          work.partsWorks.length > 0) && (
-                                          <div className="main-window__list-item main-window__list-item--header">
-                                            <span>Название</span>
-                                            <span>Кол-во</span>
-                                          </div>
-                                        )}
-                                        {((work.workControlProduct.length ===
-                                          0 &&
-                                          work.workList.typeOfWork ===
-                                            'Продукция') ||
-                                          (work.partsWorks.length === 0 &&
-                                            work.workList.typeOfWork ===
-                                              'Чертеж')) && (
-                                          <React.Fragment>
-                                            <div className="main-window__list-item main-window__list-item--header"></div>
-                                            <div className="main-window__list-item">
-                                              <span>
-                                                <div className="main-window__reminder">
-                                                  <div>!</div>
-                                                  <div>
-                                                    Нет{' '}
-                                                    {work.workList
-                                                      .typeOfWork ===
-                                                    'Продукция'
-                                                      ? 'продукции'
-                                                      : 'чертежа'}
-                                                  </div>
-                                                </div>
-                                              </span>
-                                            </div>
-                                          </React.Fragment>
-                                        )}
-                                        {work.workControlProduct.map((item) => {
-                                          return (
-                                            <div className="main-window__list-item">
-                                              <span>
-                                                <div className="main-window__mobile-text">
-                                                  Название:{' '}
-                                                </div>
-                                                {item.product.name}
-                                              </span>
-                                              <span>
-                                                <div className="main-window__mobile-text">
-                                                  Кол-во:{' '}
-                                                </div>
-                                                {addSpaceDelimiter(
-                                                  item.quantity === null
-                                                    ? 0
-                                                    : item.quantity,
-                                                )}
-                                              </span>
-                                            </div>
-                                          )
-                                        })}
-                                        {work.partsWorks.map((item) => {
-                                          return (
-                                            <div className="main-window__list-item">
-                                              <span>
-                                                <div className="main-window__mobile-text">
-                                                  Название:{' '}
-                                                </div>
-                                                {item.name}
-                                              </span>
-                                              <span>
-                                                <div className="main-window__mobile-text">
-                                                  Кол-во:{' '}
-                                                </div>
-                                                {addSpaceDelimiter(
-                                                  item.quantity === null
-                                                    ? 0
-                                                    : item.quantity,
-                                                )}
-                                              </span>
-                                            </div>
-                                          )
-                                        })}
-                                      </React.Fragment>
-                                    )
-                                  }
-                                })}
-                              </div>
-                            </React.Fragment>
-                          )
-                        },
-                      )
-                    })} */}
                 </React.Fragment>
               )
             }

@@ -8,6 +8,7 @@ import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx'
 import SelectContacts from '../SelectContacts/SelectContacts.jsx'
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx'
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx'
+import ViewRequests from '../ViewRequests/ViewRequests.jsx'
 
 const ViewClient = (props) => {
   const [clientInputs, setClientInputs] = useState({
@@ -19,6 +20,7 @@ const ViewClient = (props) => {
     comment: '',
     storageAddress: '',
     workCondition: '',
+    requests: [],
     price: '',
     discount: '',
     check: '',
@@ -66,6 +68,7 @@ const ViewClient = (props) => {
             manager: res.manager,
             nextContactDate: res.nextDateContact,
             legalEntity: res.legalEntities,
+            requests: res.requests || [],
             contacts: res.contacts,
             workHistory: res.histories,
             category: res.category,
@@ -82,6 +85,20 @@ const ViewClient = (props) => {
           clientTypes[props.type].name
         }а`}</div>
         <div className="main-form__header">
+          {/* {props.type === 'clients' ? (
+            <div
+              className={
+                curTab === 'requestsHistory'
+                  ? 'main-form__menu-item main-form__menu-item--active'
+                  : 'main-form__menu-item'
+              }
+              onClick={() => {
+                setCurTab('requestsHistory')
+              }}
+            >
+              История заказов
+            </div>
+          ) : null} */}
           <div
             className={
               curTab === 'workHistory'
@@ -126,6 +143,16 @@ const ViewClient = (props) => {
                     userHasAccess={props.userHasAccess}
                     readOnly
                   />
+                </div>
+              </div>
+            </React.Fragment>
+          ) : curTab === 'requestsHistory' ? (
+            <React.Fragment>
+              {/* История заявок */}
+              <div className="main-form__item">
+                <div className="main-form__input_name">История заявок</div>
+                <div className="main-form__input_field">
+                  <ViewRequests requests={clientInputs.requests} />
                 </div>
               </div>
             </React.Fragment>

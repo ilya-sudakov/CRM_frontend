@@ -85,6 +85,7 @@ const Select = (props) => {
               'ROLE_DISPATCHER',
               'ROLE_ENGINEER',
               'ROLE_MANAGER',
+              'ROLE_WORKSHOP', //temp
             ])
           ) {
             temp = categoriesArr.map((item) => {
@@ -393,7 +394,7 @@ const Select = (props) => {
             </div>
             <div className="select__selected_quantity">
               <span>
-                Кол-во
+                Кол-во (шт.)
                 {!props.readOnly && '*'}
               </span>
               <input

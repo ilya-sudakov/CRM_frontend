@@ -38,8 +38,10 @@
       width: calc(100% - 25px);
       // align-self: flex-end;
       background-color: $secondary-text-color;
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
+      // border-bottom-left-radius: 5px;
+      // border-bottom-right-radius: 5px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 2.5px;
       margin-bottom: 10px;
 
       .main-window__item {
@@ -86,11 +88,11 @@
     // border-top-right-radius: 0px;
     // border-top-right-radius: 0px;
     // border-top-left-radius: 0px;
-    background-color: $secondary-text-color;
+    // background-color: $secondary-text-color;
     width: calc(100% - 25px);
     text-align: left;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    // border-bottom-left-radius: 0;
+    // border-bottom-right-radius: 0;
     // margin-bottom: 5px;
   }
 

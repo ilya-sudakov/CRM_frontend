@@ -17,10 +17,7 @@ const ImgLoader = (props) => {
           />
         )
       ) : (
-        //: <div class={props.imgClass + " lds-roller"}>
-        //    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-        //</div>
-        <div class="sk-circle">
+        /*<div class="sk-circle">
           <div class="sk-circle1 sk-child"></div>
           <div class="sk-circle2 sk-child"></div>
           <div class="sk-circle3 sk-child"></div>
@@ -33,7 +30,8 @@ const ImgLoader = (props) => {
           <div class="sk-circle10 sk-child"></div>
           <div class="sk-circle11 sk-child"></div>
           <div class="sk-circle12 sk-child"></div>
-        </div>
+        </div>*/
+        <div className={`img-loader__img--placeholder ${props.imgClass}`}></div>
       )}
     </div>
   )

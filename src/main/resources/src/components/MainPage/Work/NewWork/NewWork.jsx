@@ -5,7 +5,6 @@ import '../../../../utils/Form/Form.scss'
 import InputText from '../../../../utils/Form/InputText/InputText.jsx'
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import { addWork } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
 import { customSelectStyles } from '../../../../utils/dataObjects'
 
@@ -156,8 +155,6 @@ const NewWork = (props) => {
             onClick={() => props.history.push('/work-list')}
             value="Вернуться назад"
           />
-          {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить работу" />
-                    {isLoading && <ImgLoader />} */}
           <Button
             text="Добавить работу"
             isLoading={isLoading}

@@ -4,6 +4,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    --defect: #e08989;
+    --completed: #77c78a;
+    // --production: #cdceaf;
+    --production: #d4d688;
 
     &__list {
         width: calc(100% - 50px);
@@ -51,6 +55,24 @@
                     max-width: fit-content !important;
                 }
             }
+            &--defect {
+                // background-color: var(--defect);
+                &::before {
+                    background-color: var(--defect) !important;
+                }
+            }
+            &--completed {
+                // background-color: var(--completed);
+                &::before {
+                    background-color: var(--completed) !important;
+                }
+            }
+            &--production {
+                // background-color: var(--production);
+                &::before {
+                    background-color: var(--production) !important;
+                }
+            }
 
             span {
                 &:nth-child(1) {
@@ -71,6 +93,7 @@
                     max-width: 140px;
                     padding-left: 25px;
                     position: relative;
+                    font-size: 90%;
                 }
             }
             &:not(.main-window__list-item--header) {
@@ -80,10 +103,12 @@
                             content: "";
                             display: inline-block;
                             position: absolute;
-                            width: 15px;
-                            height: 15px;
-                            left: 5px;
-                            top: calc(50% - 7.5px);
+                            // width: 15px;
+                            // height: 15px;
+                            width: 12.5px;
+                            height: 12.5px;
+                            left: 7.5px;
+                            top: calc(50% - 6px);
                             border-radius: 999px;
                             background-color: #cccccc;
                         }
@@ -106,6 +131,17 @@
                         }
                         &:nth-child(4) {
                             max-width: none;
+                        }
+                        &:nth-child(5) {
+                            max-width: none;
+                            padding: 0 5px;
+                            padding-right: 25px;
+                            width: calc(100% - 20px);
+
+                            &::before {
+                                left: auto !important;
+                                right: 5px;
+                            }
                         }
                     }
                 }

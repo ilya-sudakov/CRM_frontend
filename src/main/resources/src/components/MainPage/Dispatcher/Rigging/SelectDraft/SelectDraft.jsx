@@ -127,12 +127,14 @@ const SelectDraft = (props) => {
     const value = event.currentTarget.getAttribute('name')
     const id = event.currentTarget.getAttribute('id')
     const type = event.currentTarget.getAttribute('type')
+    const number = event.currentTarget.getAttribute('number')
     setShowOptions(!showOptions)
     setSelected([
       ...selected,
       {
         partId: id,
         name: value,
+        number: number,
         type: type,
         quantity: 0,
       },
@@ -142,19 +144,21 @@ const SelectDraft = (props) => {
       {
         partId: id,
         type: type,
+        number: number,
         name: value,
         quantity: 0,
       },
     ])
   }
 
-  const selectDraft = (id, value, type) => {
+  const selectDraft = (id, value, type, number) => {
     setSelected([
       ...selected,
       {
         partId: id,
         type: type,
         name: value,
+        number: number,
         quantity: 0,
       },
     ])
@@ -164,6 +168,7 @@ const SelectDraft = (props) => {
         partId: id,
         type: type,
         name: value,
+        number: number,
         quantity: 0,
       },
     ])
@@ -233,30 +238,6 @@ const SelectDraft = (props) => {
             >
               Добавить чертеж
             </button>
-            {/* <button
-              className="select-draft__search_button"
-              onClick={(e) => {
-                e.preventDefault()
-                setSelected([
-                  ...selected,
-                  {
-                    type: 'new',
-                    name: '',
-                    quantity: 0,
-                  },
-                ])
-                props.onChange([
-                  ...selected,
-                  {
-                    type: 'new',
-                    name: '',
-                    quantity: 0,
-                  },
-                ])
-              }}
-            >
-              Создать новый чертеж
-            </button> */}
           </div>
           <input
             type="text"
@@ -324,6 +305,7 @@ const SelectDraft = (props) => {
             <div
               id={item.id}
               type={item.type}
+              number={item.number}
               optionId={index}
               name={item.name}
               className="select-draft__option_item"
@@ -350,15 +332,7 @@ const SelectDraft = (props) => {
                 name="name"
                 autoComplete="off"
                 readOnly
-                value={
-                  (item.type === 'stamp'
-                    ? 'Штамп | '
-                    : item.type === 'machine'
-                    ? 'Станок | '
-                    : item.type === 'press-form'
-                    ? 'Пресс-форма | '
-                    : '') + item.name
-                }
+                value={`${item.number}, ${item.name}`}
                 onChange={item.type === 'new' ? handleParamChange : null}
               />
               {!props.readOnly && !props.workshop && (

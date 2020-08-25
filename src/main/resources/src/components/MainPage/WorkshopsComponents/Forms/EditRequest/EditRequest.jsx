@@ -14,8 +14,10 @@ import {
   addProductsToRequest,
   deleteProductsToRequest,
   getRequestById,
+  connectClientToRequest,
 } from '../../../../../utils/RequestsAPI/Requests.jsx'
 import { requestStatuses, workshops } from '../../workshopVariables.js'
+import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx'
 
 const EditRequest = (props) => {
   const [requestId, setRequestId] = useState(1)
@@ -30,11 +32,15 @@ const EditRequest = (props) => {
     status: 'Не готово',
     shippingDate: '',
     comment: '',
+    sum: 0,
+    clientId: 0,
+    client: null,
   })
   const [requestErrors, setRequestErrors] = useState({
     date: false,
     requestProducts: false,
-    codeWord: false,
+    // codeWord: false,
+    clientId: false,
     responsible: false,
     shippingDate: false,
   })
@@ -44,6 +50,11 @@ const EditRequest = (props) => {
     codeWord: true,
     responsible: true,
     shippingDate: true,
+    clientId:
+      requestInputs.clientId !== 0 ||
+      userContext.userHasAccess(['ROLE_WORKSHOP'])
+        ? true
+        : false,
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -54,6 +65,12 @@ const EditRequest = (props) => {
         setValidInputs({
           ...validInputs,
           date: value !== null,
+        })
+        break
+      case 'clientId':
+        setValidInputs({
+          ...validInputs,
+          clientId: value !== 0,
         })
         break
       case 'shippingDate':
@@ -85,7 +102,7 @@ const EditRequest = (props) => {
     let newErrors = Object.assign({
       date: false,
       requestProducts: false,
-      codeWord: false,
+      clientId: false,
       responsible: false,
       shippingDate: false,
     })
@@ -143,7 +160,7 @@ const EditRequest = (props) => {
                   name: selected.name,
                 })
           })
-          Promise.all(productsArr).then(() => {
+          return Promise.all(productsArr).then(() => {
             //DELETE products removed by user
             const productsArr = requestInputs.products.map((item) => {
               let deleted = true
@@ -155,11 +172,15 @@ const EditRequest = (props) => {
               })
               return deleted === true && deleteProductsToRequest(item.id)
             })
-            Promise.all(productsArr).then(() =>
-              props.history.push(workshops[props.type].redirectURL),
-            )
+            return Promise.all(productsArr)
           })
         })
+        .then(() => {
+          if (requestInputs.client?.id !== requestInputs.clientId) {
+            return connectClientToRequest(requestId, requestInputs.clientId)
+          }
+        })
+        .then(() => props.history.push(workshops[props.type].redirectURL))
         .catch((error) => {
           setIsLoading(false)
           console.log(error)
@@ -211,7 +232,7 @@ const EditRequest = (props) => {
       getRequestById(id)
         .then((res) => res.json())
         .then((oldRequest) => {
-          // console.log(oldRequest),
+          // console.log(oldRequest)
           setRequestInputs({
             date: oldRequest.date,
             products: oldRequest.requestProducts,
@@ -225,7 +246,11 @@ const EditRequest = (props) => {
                 : new Date(),
             comment: oldRequest.comment,
             factory: oldRequest.factory,
+            sum: oldRequest.sum,
+            client: oldRequest.client,
+            clientId: oldRequest.client ? oldRequest.client.id : 0,
           })
+          oldRequest.client && validateField('clientId', oldRequest.client.id)
           setSelectedProducts(oldRequest.requestProducts)
         })
         .catch((error) => {
@@ -312,19 +337,15 @@ const EditRequest = (props) => {
             'ROLE_ADMIN',
             'ROLE_MANAGER',
             'ROLE_WORKSHOP',
-          ]) && (
-            <InputText
-              inputName="Кодовое слово"
-              required
-              error={requestErrors.codeWord}
-              defaultValue={requestInputs.codeWord}
-              name="codeWord"
-              handleInputChange={handleInputChange}
-              errorsArr={requestErrors}
-              setErrorsArr={setRequestErrors}
-              readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
-            />
-          )}
+          ]) &&
+            requestInputs.codeWord !== '' && (
+              <InputText
+                inputName="Кодовое слово"
+                defaultValue={requestInputs.codeWord}
+                name="codeWord"
+                readOnly
+              />
+            )}
           {userContext.userHasAccess([
             'ROLE_ADMIN',
             'ROLE_MANAGER',
@@ -387,6 +408,38 @@ const EditRequest = (props) => {
             name="comment"
             defaultValue={requestInputs.comment}
             handleInputChange={handleInputChange}
+          />
+          <InputText
+            inputName="Цена"
+            name="sum"
+            type="number"
+            defaultValue={requestInputs.sum}
+            handleInputChange={handleInputChange}
+            errorsArr={requestErrors}
+            setErrorsArr={setRequestErrors}
+          />
+          <SelectClient
+            inputName="Клиент"
+            userHasAccess={userContext.userHasAccess}
+            defaultValue={
+              requestInputs.clientId === 0 ? false : requestInputs.client?.name
+            }
+            required
+            readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+            onChange={(value) => {
+              validateField('clientId', value)
+              setRequestInputs({
+                ...requestInputs,
+                clientId: value,
+              })
+              setRequestErrors({
+                ...requestErrors,
+                clientId: value,
+              })
+            }}
+            error={requestErrors.clientId}
+            errorsArr={requestErrors}
+            setErrorsArr={setRequestErrors}
           />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения

@@ -4,7 +4,6 @@ import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
 import '../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
-import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import {
   getClientCategories,
   deleteClientCategory,
@@ -16,6 +15,7 @@ import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
 import NewClientCategory from './NewClientCategory/NewClientCategory.jsx'
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const ClientCategories = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -149,9 +149,10 @@ const ClientCategories = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {isLoading && (
-            <TableDataLoading
-              className="main-window__list-item"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
               minHeight="20px"
+              items={2}
             />
           )}
           {categories

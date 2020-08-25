@@ -8,8 +8,9 @@ export const loadCanvas = (className, canvasClassName) => {
   div.appendChild(canvas)
 }
 
-export const createGraph = (options) => {
-  const ctx = document.getElementById('myChart').getContext('2d')
+export const createGraph = (options, chart) => {
+  let newChart = chart || document.getElementById('myChart')
+  const ctx = newChart.getContext('2d')
   return new Chart(ctx, options)
 }
 
@@ -279,5 +280,3 @@ Chart.scaleService.updateScaleDefaults('category', {
 //     ctx.stroke()
 //   }
 // }
-
-

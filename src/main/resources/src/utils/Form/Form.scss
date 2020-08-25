@@ -544,14 +544,14 @@
     .main-form__header {
       max-width: calc(var(--form__max-width) + 50px);
 
-      .main-form__menu-item {
-        width: fit-content;
-        padding: 15px 80px;
+      // .main-form__menu-item {
+      //   width: fit-content;
+      //   padding: 15px 80px;
 
-        &:not(:last-child) {
-          margin-right: 10px;
-        }
-      }
+      //   &:not(:last-child) {
+      //     margin-right: 10px;
+      //   }
+      // }
     }
     .main-form__form {
       // margin-left: 50px;

@@ -100,7 +100,6 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/stamp"
                 component={Stamp}
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -112,7 +111,6 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/stamp/new"
                 component={NewRig}
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -124,7 +122,6 @@ const Rigging = (props) => {
                 path="/dispatcher/rigging/stamp/view/"
                 // component={ViewStamp}
                 component={ViewRig}
-                userHasAccess={props.userHasAccess}
                 type="stamp"
                 allowedRoles={[
                   'ROLE_ADMIN',
@@ -138,7 +135,6 @@ const Rigging = (props) => {
                 // component={EditStamp}
                 component={EditRig}
                 type="stamp"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -150,7 +146,6 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/machine"
                 component={Machine}
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -164,7 +159,6 @@ const Rigging = (props) => {
                 // component={NewMachine}
                 component={NewRig}
                 type="machine"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -176,7 +170,6 @@ const Rigging = (props) => {
                 // component={ViewMachine}
                 component={ViewRig}
                 type="machine"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -189,7 +182,6 @@ const Rigging = (props) => {
                 // component={EditMachine}
                 component={EditRig}
                 type="machine"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -201,7 +193,6 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/press-form"
                 component={PressForm}
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -215,7 +206,6 @@ const Rigging = (props) => {
                 // component={NewPressForm}
                 component={NewRig}
                 type="pressForm"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -227,7 +217,6 @@ const Rigging = (props) => {
                 // component={ViewPressForm}
                 component={ViewRig}
                 type="pressForm"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -240,7 +229,6 @@ const Rigging = (props) => {
                 // component={EditPressForm}
                 component={EditRig}
                 type="pressForm"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -252,7 +240,6 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/parts"
                 component={Parts}
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -266,7 +253,6 @@ const Rigging = (props) => {
                 // component={NewPart}
                 component={NewRig}
                 type="parts"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -279,7 +265,6 @@ const Rigging = (props) => {
                 // component={EditPart}
                 component={EditRig}
                 type="parts"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -292,7 +277,6 @@ const Rigging = (props) => {
                 // component={ViewPart}
                 component={ViewRig}
                 type="parts"
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -302,18 +286,14 @@ const Rigging = (props) => {
                 ]}
               />
               <PrivateRoute
-                path={
-                  '/dispatcher/rigging/' +
-                  ((props.location.pathname.includes('stamp') && 'stamp') ||
-                    (props.location.pathname.includes('machine') &&
-                      'machine') ||
-                    (props.location.pathname.includes('press-form') &&
-                      'press-form') ||
-                    (props.location.pathname.includes('parts') && 'parts')) +
-                  '/edit-part/'
-                }
+                path={`/dispatcher/rigging/${
+                  (props.location.pathname.includes('stamp') && 'stamp') ||
+                  (props.location.pathname.includes('machine') && 'machine') ||
+                  (props.location.pathname.includes('press-form') &&
+                    'press-form') ||
+                  (props.location.pathname.includes('parts') && 'parts')
+                }/edit-part/`}
                 component={EditPartInRigging}
-                userHasAccess={props.userHasAccess}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',

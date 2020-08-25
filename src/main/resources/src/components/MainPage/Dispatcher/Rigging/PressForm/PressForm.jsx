@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SearchBar from '../../../SearchBar/SearchBar.jsx'
 import './PressForm.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
-import TableViewOld from '../TableView/TableView.jsx'
 import TableView from '../RiggingComponents/TableView/TableView.jsx'
-import {
-  getPressForm,
-  getPressFormById,
-  deletePartsFromPressForm,
-  deletePressForm,
-} from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import {
   getStampsByStatus,
@@ -34,18 +27,6 @@ const PressForm = (props) => {
       abortController.abort()
     }
   }, [])
-
-  const loadPressForm = (signal) => {
-    getPressForm(signal)
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res);
-        setPressForms(res)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
 
   const loadData = (signal) => {
     setIsLoading(true)
@@ -118,20 +99,6 @@ const PressForm = (props) => {
             Всего: {pressForm.length} записей
           </div>
         </div>
-        {/* <TableViewOld
-          data={pressForm.filter((item) => {
-            if (item.color === 'completed' && curPage === 'Завершено') {
-              return true
-            } else if (curPage === 'Активные' && item.color !== 'completed') {
-              return true
-            }
-          })}
-          searchQuery={searchQuery}
-          isLoading={isLoading}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
-          loadData={loadPressForm}
-        /> */}
         <TableView
           data={pressForm.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
@@ -145,7 +112,7 @@ const PressForm = (props) => {
           isLoading={isLoading}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
-          loadData={loadPressForm}
+          loadData={loadData}
           type="pressForm"
         />
       </div>

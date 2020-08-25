@@ -5,6 +5,7 @@ import './GeneralPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import DownloadIcon from '../../../../../../../assets/download.svg'
 import graphIcon from '../../../../../../../assets/graph-icon.svg'
+import StatsIcon from '../../../../../../../assets/statistics/stats-alt.inline.svg'
 import calenderIcon from '../../../../../../../assets/tableview/calendar.svg'
 import { exportReportTableExcel } from '../../../utils/xlsxFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
@@ -68,7 +69,7 @@ const GeneralPage = (props) => {
                 Учесть рабочее время
               </Link>
             )}
-            {props.userHasAccess(['ROLE_ADMIN']) && (
+            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
               <Link className="main-window__button" to="/report-table">
                 <img className="main-window__img" src={calenderIcon} />
                 Интерактивный табель
@@ -78,6 +79,12 @@ const GeneralPage = (props) => {
               <Link className="main-window__button" to="/graphs">
                 <img className="main-window__img" src={graphIcon} />
                 Графики
+              </Link>
+            )}
+            {props.userHasAccess(['ROLE_ADMIN']) && (
+              <Link className="main-window__button" to="/statistics">
+                <StatsIcon className="main-window__img" />
+                Статистика
               </Link>
             )}
             <Button

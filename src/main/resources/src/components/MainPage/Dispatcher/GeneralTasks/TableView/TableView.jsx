@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png'
 import { formatDateString } from '../../../../../utils/functions.jsx'
 import './TableView.scss'
 import { editTaskStatus } from '../../../../../utils/RequestsAPI/MainTasks.jsx'
-import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import editSVG from '../../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -110,9 +109,10 @@ const TableView = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
-            <TableDataLoading
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
               minHeight="50px"
-              className="main-window__list-item"
+              items={10}
             />
           )}
           {sortTasks(props.data).map(
@@ -217,102 +217,6 @@ const TableView = (props) => {
           )}
         </div>
       </div>
-      {/* //! OLD DESIGN */}
-      {/* <div className="tableview_general_tasks__row tableview_general_tasks__row--header">
-        <div className="tableview_general_tasks__col">
-          <span>Дата постановки</span>
-        </div>
-        <div className="tableview_general_tasks__col">Описание</div>
-        <div className="tableview_general_tasks__col">Ответственный</div>
-        <div className="tableview_general_tasks__col">
-          <span>Дата контроля</span>
-        </div>
-        <div className="tableview_general_tasks__col">Состояние</div>
-        <div className="tableview_general_tasks__col">Статус</div>
-        <div className="tableview_general_tasks__col">Действия</div>
-      </div>
-      {isLoading && (
-        <TableDataLoading
-          minHeight="50px"
-          className="tableview_general_tasks__row tableview_general_tasks__row--even"
-        />
-      )}
-      {sortTasks(props.data).map(
-        (task, task_id) =>
-          (props.userHasAccess(['ROLE_ADMIN']) ||
-            props.userData.username === task.responsible) && (
-            <div
-              key={task_id}
-              className={
-                'tableview_general_tasks__row ' +
-                ((task.condition === 'Проблема' &&
-                  'tableview_general_tasks__row--status_problem') ||
-                  (task.condition === 'Материалы' &&
-                    'tableview_general_tasks__row--status_materials') ||
-                  (task.condition === 'Отложено' &&
-                    'tableview_general_tasks__row--status_waiting') ||
-                  (task.condition === 'В процессе' &&
-                    'tableview_general_tasks__row--status_in_production') ||
-                  (task.condition === 'Выполнено' &&
-                    'tableview_general_tasks__row--status_ready') ||
-                  'tableview_general_tasks__row--status_materials')
-              }
-            >
-              <div className="tableview_general_tasks__col">
-                {formatDateString(task.dateCreated)}
-              </div>
-              <div className="tableview_general_tasks__col">
-                {task.description}
-              </div>
-              <div className="tableview_general_tasks__col">
-                {task.responsible}
-              </div>
-              <div className="tableview_general_tasks__col">
-                {formatDateString(task.dateControl)}
-              </div>
-              <div className="tableview_general_tasks__col">{task.status}</div>
-              <div className="tableview_general_tasks__col">
-                <select
-                  id={task.id}
-                  className="tableview_general_tasks__status_select"
-                  value={task.condition}
-                  onChange={handleConditionChange}
-                >
-                  <option>Материалы</option>
-                  <option>Выполнено</option>
-                  <option>В процессе</option>
-                  <option>Отложено</option>
-                  <option>Проблема</option>
-                </select>
-              </div>
-              <div className="tableview_general_tasks__actions">
-                {props.userHasAccess([
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
-                ]) && (
-                  <Link
-                    to={'/dispatcher/general-tasks/edit/' + task.id}
-                    className="tableview_general_tasks__action"
-                  >
-                    Редактировать
-                  </Link>
-                )}
-                {props.userHasAccess(['ROLE_ADMIN']) && (
-                  <div
-                    className="tableview_general_tasks__action"
-                    onClick={() => {
-                      props.deleteItem(task.id)
-                    }}
-                  >
-                    Удалить
-                  </div>
-                )}
-              </div>
-            </div>
-          ),
-      )} */}
     </div>
   )
 }

@@ -4,13 +4,13 @@ import viewIcon from '../../../../../../../../../../assets/tableview/view.svg'
 import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
 import deleteIcon from '../../../../../../../../../../assets/tableview/delete.svg'
 import './TableView.scss'
-import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx'
-import { rigStatuses, rigTypes } from '../rigsVariables'
+import { rigStatuses, rigTypes, workshopsLocations } from '../rigsVariables'
 import {
   editStampColor,
   editStampPartColor,
 } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -18,6 +18,7 @@ const TableView = (props) => {
     date: 'desc',
   })
   const [partsVisible, setPartsVisible] = useState([])
+  const [cacheElements, setCacheElements] = useState({})
 
   const changeSortOrder = (event) => {
     const name = event.target.getAttribute('name')
@@ -55,13 +56,24 @@ const TableView = (props) => {
   }
 
   useEffect(() => {
+    // console.log(props.data);
     let temp = []
-    props.data.map((element, index) =>
-      temp.push({
+    props.data.map((element, index) => {
+      if (cacheElements[element.id] === undefined) {
+        setCacheElements({
+          ...cacheElements,
+          [element.id]: true,
+        })
+      }
+      return temp.push({
         id: element.id,
-        hidden: true,
-      }),
-    )
+        hidden:
+          cacheElements[element.id] !== undefined
+            ? cacheElements[element.id]
+            : true,
+      })
+    })
+    // console.log(cacheElements)
     setPartsVisible([...temp])
   }, [props.data])
 
@@ -69,6 +81,10 @@ const TableView = (props) => {
     index = Number.parseInt(index)
     return partsVisible.map((element, element_index) => {
       if (element.id == index) {
+        setCacheElements({
+          ...cacheElements,
+          [index]: !element.hidden,
+        })
         let temp2 = Object.assign({
           id: index,
           hidden: !element.hidden,
@@ -111,9 +127,10 @@ const TableView = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
-            <TableDataLoading
-              minHeight="50px"
-              className="main-window__list-item"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="35px"
+              items={5}
             />
           )}
           {sortStamps(props.data).map((stamp, stamp_id) => (
@@ -122,7 +139,7 @@ const TableView = (props) => {
                 id={stamp.id}
                 className={
                   'main-window__list-item main-window__list-item--' +
-                  (stamp.color ? stamp.color : 'production')
+                  (stamp.color || 'production')
                 }
                 onClick={handleClickStamp}
               >
@@ -145,17 +162,16 @@ const TableView = (props) => {
                 <span
                   className={
                     'main-window__list-item--' +
-                    rigStatuses[stamp.color]?.className
+                    rigStatuses[stamp.color || 'production'].className
                   }
                 >
-                  {' '}
                   <div className="main-window__mobile-text">Статус заявки:</div>
                   <select
                     id={stamp.id}
                     className="main-window__status_select"
-                    value={stamp.color}
+                    value={stamp.color || 'production'}
                     onChange={(event) => {
-                      editStampColor(
+                      return editStampColor(
                         {
                           color: event.target.value,
                         },
@@ -245,8 +261,12 @@ const TableView = (props) => {
                         key={index}
                         className={
                           'main-window__list-item main-window__list-item--' +
-                          (part.color ? part.color : 'production')
+                          (part.color || 'production') +
+                          (workshopsLocations[part.location]
+                            ? ''
+                            : ' main-window__list-item--message main-window__list-item--warning')
                         }
+                        data-msg="Предупреждение! Введите корректное местоположение"
                       >
                         <span>
                           <div className="main-window__mobile-text">
@@ -270,7 +290,9 @@ const TableView = (props) => {
                           <div className="main-window__mobile-text">
                             Местоположение:
                           </div>
-                          {part.location}
+                          {workshopsLocations[part.location]
+                            ? workshopsLocations[part.location].name
+                            : ''}
                         </span>
                         <span>
                           <div className="main-window__mobile-text">
@@ -281,18 +303,18 @@ const TableView = (props) => {
                         <span
                           className={
                             'main-window__list-item--' +
-                            rigStatuses[part.color]?.className
+                            rigStatuses[part.color || 'production'].className
                           }
                         >
                           <div className="main-window__mobile-text">
-                            Статус заявки:
+                            Статус:
                           </div>
                           <select
                             id={part.id}
                             className="main-window__status_select"
                             value={part.color}
                             onChange={(event) => {
-                              editStampPartColor(
+                              return editStampPartColor(
                                 {
                                   color: event.target.value,
                                 },
@@ -307,31 +329,31 @@ const TableView = (props) => {
                             ))}
                           </select>
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Распил/габариты:
                           </div>
                           {part.cuttingDimensions}
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Фрезеровка/точение:
                           </div>
                           {part.milling}
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Закалка:
                           </div>
                           {part.harding}
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Шлифовка:
                           </div>
                           {part.grinding}
                         </span>
-                        <span>
+                        <span className="main-window__list-item--border-checked">
                           <div className="main-window__mobile-text">
                             Эрозия:
                           </div>

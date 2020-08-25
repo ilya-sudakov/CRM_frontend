@@ -1,0 +1,77 @@
+@import "../../../variables.scss";
+
+.error-page {
+    width: 100%;
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 25vh;
+    --max-width: 50%;
+
+    &__title {
+        margin-bottom: 20px;
+        font-size: 30px;
+        // text-align: center;
+        text-align: left;
+        width: 100%;
+        max-width: var(--max-width);
+
+        .error-page__error-code {
+            font-size: 150%;
+            margin-right: 15px;
+            color: #888888;
+        }
+    }
+
+    &__description {
+        margin-bottom: 20px;
+        font-size: 18px;
+        // text-align: center;
+        text-align: left;
+        width: 100%;
+        max-width: var(--max-width);
+    }
+
+    &__link {
+        color: #2485fc !important;
+        text-decoration: none;
+    }
+
+    &__button {
+        cursor: pointer;
+        padding: 15px 25px;
+        border-radius: 5px;
+        background-color: $button__background--inverted;
+        color: $secondary-text-color;
+        transition: 0.2s ease-in-out;
+        margin-right: auto;
+        margin-left: calc(var(--max-width) / 2);
+
+        &:hover {
+            background-color: lighten($button__background--inverted, 5%);
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding-top: 50px;
+        --max-width: 80%;
+        &__button {
+            margin-left: 10%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        padding-top: 30px;
+        --max-width: 90%;
+        &__error-code {
+            display: block;
+            margin-bottom: -15px;
+        }
+        &__button {
+            margin-left: 5%;
+        }
+    }
+}

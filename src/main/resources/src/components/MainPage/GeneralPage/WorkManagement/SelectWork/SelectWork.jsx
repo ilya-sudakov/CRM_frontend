@@ -6,17 +6,7 @@ import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
 
 const SelectWork = (props) => {
-  const [selected, setSelected] = useState([
-    {
-      product: [],
-      workName: '',
-      workType: '',
-      workId: null,
-      hours: 0,
-      draft: [],
-      comment: '',
-    },
-  ])
+  const [selected, setSelected] = useState([])
   const [options, setOptions] = useState([])
   const [curItemsType, setCurItemsType] = useState('')
 

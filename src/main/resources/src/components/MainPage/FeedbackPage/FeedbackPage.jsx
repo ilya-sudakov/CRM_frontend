@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './FeedbackPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
-import viewSVG from '../../../../../../../assets/tableview/view.svg'
 import unreadMessagesSVG from '../../../../../../../assets/chat/unread_messages__mail_icon.svg'
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
-import TableDataLoading from '../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { Link } from 'react-router-dom'
 import {
   formatDateString,
@@ -20,6 +18,7 @@ import {
   deleteMessage,
 } from '../../../utils/RequestsAPI/Feedback/messages.js'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import PlaceholderLoading from '../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const FeedbackPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -50,6 +49,34 @@ const FeedbackPage = (props) => {
       className: 'testing',
       name: 'Тестирование',
       visible: true,
+    },
+  ])
+
+  const [userCategories, setUserCategories] = useState([
+    {
+      name: 'Все',
+      filteredRoles: [],
+      active: true,
+    },
+    {
+      name: 'Руководитель',
+      filteredRoles: ['dev', 'Алексей', 'test'],
+      active: false,
+    },
+    {
+      name: 'Диспетчер',
+      filteredRoles: ['Диспетчер'],
+      active: false,
+    },
+    {
+      name: 'Менеджер',
+      filteredRoles: ['Иван', 'Менеджер1'],
+      active: false,
+    },
+    {
+      name: 'Цеха',
+      filteredRoles: ['ЦехЛЭМЗ', 'ЦехЛепсари', 'ЦехЛиговский'],
+      active: false,
     },
   ])
 
@@ -120,18 +147,59 @@ const FeedbackPage = (props) => {
             Всего: {messages.length} записей
           </div>
         </div>
+        <div className="main-window__filter-pick">
+          <div>Фильтр по категориям: </div>
+          {userCategories.map((category, index) => {
+            return (
+              <div
+                className={
+                  category.active
+                    ? 'main-window__button'
+                    : 'main-window__button main-window__button--inverted'
+                }
+                onClick={() => {
+                  let temp = userCategories
+                  temp = userCategories.map((item, tempIndex) => {
+                    if (index === tempIndex) {
+                      return {
+                        ...item,
+                        active: true,
+                      }
+                    }
+                    return {
+                      ...item,
+                      active: false,
+                    }
+                  })
+                  setUserCategories([...temp])
+                }}
+              >
+                {category.name}
+              </div>
+            )
+          })}
+        </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             {/* <span>Обсуждения</span>
             <div className="main-window__actions">Действие</div> */}
           </div>
           {isLoading && (
-            <TableDataLoading
-              className="main-window__list-item"
-              minHeight="50px"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="60px"
+              items={10}
             />
           )}
           {messages
+            .filter((item) => {
+              const temp = userCategories.find((category) => category.active)
+              if (temp.filteredRoles.length === 0) {
+                return true
+              } else {
+                return temp.filteredRoles.includes(item.author)
+              }
+            })
             .filter((item) => {
               if (
                 item.author.toLowerCase().includes(searchQuery.toLowerCase()) ||

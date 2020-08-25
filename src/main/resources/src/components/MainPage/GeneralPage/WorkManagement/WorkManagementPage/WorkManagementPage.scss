@@ -20,16 +20,18 @@
   .main-window__header {
     flex-direction: column;
     .main-window__menu {
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
+      // border-bottom-left-radius: 5px;
+      // border-bottom-right-radius: 5px;
+      border-radius: 2.5px;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.1);
     }
   }
   .searchbar {
-    background-color: $secondary-text-color;
+    // background-color: $secondary-text-color;
     width: calc(100% - 25px);
     text-align: left;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    // border-bottom-left-radius: 0;
+    // border-bottom-right-radius: 0;
     // padding-top: 0px;
   }
   .work-management-page__mobile-text {
@@ -395,6 +397,11 @@
   .main-window__actions {
     flex-direction: row !important;
   }
+  @media (max-width: 1024px) {
+    .floating-plus {
+      display: none;
+    }
+  }
 
   @media (max-width: 768px) {
     .main-window {
@@ -404,10 +411,7 @@
       margin-bottom: 10px;
     }
     .main-window__menu {
-      width: calc(100% - 10px)!important;
-    }
-    .floating-plus {
-      display: none;
+      width: calc(100% - 10px) !important;
     }
     .main-window__list-item {
       span {
@@ -491,7 +495,7 @@
 
       .main-window__amount_table {
         margin-left: 10px;
-        margin-top: 0 !important; 
+        margin-top: 0 !important;
       }
     }
 

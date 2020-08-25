@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-// import plusImg from '../../../../../../assets/sidemenu/plus.png';
-import plusImg from '../../../../../../assets/sidemenu/plus.svg'
-import homeImg from '../../../../../../assets/sidemenu/home.svg'
-import tasksImg from '../../../../../../assets/sidemenu/tasks.svg'
-import employeesImg from '../../../../../../assets/sidemenu/employee.svg'
-import wrenchImg from '../../../../../../assets/sidemenu/wrench.svg'
-import truckImg from '../../../../../../assets/sidemenu/truck.svg'
-import priceListImg from '../../../../../../assets/sidemenu/price.svg'
-import clientImg from '../../../../../../assets/sidemenu/client.svg'
-import contractImg from '../../../../../../assets/sidemenu/contract.svg'
-import listImg from '../../../../../../assets/sidemenu/list.svg'
-import boxImg from '../../../../../../assets/sidemenu/box.svg'
-import screwImg from '../../../../../../assets/sidemenu/screw.svg'
-import feedbackImg from '../../../../../../assets/sidemenu/feedback.svg'
-import moreImg from '../../../../../../assets/sidemenu/more.svg'
-import playListImg from '../../../../../../assets/sidemenu/play_list.svg'
-import factoryIcon from '../../../../../../assets/sidemenu/factory.svg'
-import supplierIcon from '../../../../../../assets/sidemenu/supplier_icon.svg'
+
+import HomeImg from '../../../../../../assets/sidemenu/home.inline.svg'
+import ClientImg from '../../../../../../assets/sidemenu/client.inline.svg'
+import SupplierIcon from '../../../../../../assets/sidemenu/supplier_icon.inline.svg'
+import PriceListImg from '../../../../../../assets/sidemenu/price.inline.svg'
+import PlayListImg from '../../../../../../assets/sidemenu/play_list.inline.svg'
+import PlusImg from '../../../../../../assets/sidemenu/plus.inline.svg'
+import MoreImg from '../../../../../../assets/sidemenu/more.inline.svg'
+import WrenchImg from '../../../../../../assets/sidemenu/wrench.inline.svg'
+import TasksImg from '../../../../../../assets/sidemenu/tasks.inline.svg'
+import EmployeesImg from '../../../../../../assets/sidemenu/employee.inline.svg'
+import TruckImg from '../../../../../../assets/sidemenu/truck.inline.svg'
+import FactoryIcon from '../../../../../../assets/sidemenu/factory.inline.svg'
+import BoxImg from '../../../../../../assets/sidemenu/box.inline.svg'
+import FeedbackImg from '../../../../../../assets/sidemenu/feedback.inline.svg'
+import ContractImg from '../../../../../../assets/sidemenu/contract.inline.svg'
+import ListImg from '../../../../../../assets/sidemenu/list.inline.svg'
+import ScrewImg from '../../../../../../assets/sidemenu/screw.inline.svg'
+
 import './SideMenu.scss'
 import {
   getClientCategories,
@@ -49,7 +50,7 @@ const SideMenu = (props) => {
       linkTo: '/',
       addButtonLinkTo: '/work-management/record-time/new',
       name: 'Главная',
-      icon: homeImg,
+      renderIcon: () => <HomeImg className="sidemenu__img" />,
     },
     {
       pathname: '/clients',
@@ -59,7 +60,7 @@ const SideMenu = (props) => {
       addButtonLinkTo: '/clients/new',
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       name: 'Клиенты',
-      icon: clientImg,
+      renderIcon: () => <ClientImg className="sidemenu__img" />,
       dropdownMenu: [],
     },
     {
@@ -76,7 +77,7 @@ const SideMenu = (props) => {
         'ROLE_WORKSHOP',
       ],
       name: 'Поставщики',
-      icon: supplierIcon,
+      renderIcon: () => <SupplierIcon className="sidemenu__img" />,
       dropdownMenu: [],
     },
     {
@@ -102,20 +103,13 @@ const SideMenu = (props) => {
       ],
       addButtonName: 'Учесть рабочее время',
     },
-    // {
-    //     pathname: "/contracts",
-    //     mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-    //     name: "Договоры",
-    //     icon: contractImg,
-    //     iconClassName: 'sidemenu__img--bigger'
-    // },
     {
       pathname: '/requests',
       name: 'Заявки',
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addButtonName: 'Добавить заявку',
-      icon: playListImg,
+      renderIcon: () => <PlayListImg className="sidemenu__img" />,
     },
     {
       pathname: '/products',
@@ -123,14 +117,15 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addButtonName: 'Добавить продукцию',
-      icon: boxImg,
-      iconClassName: 'sidemenu__img--bigger',
+      renderIcon: () => <BoxImg className="sidemenu__img" />,
     },
     {
       pathname: '/price-list',
       name: 'Каталог продукции',
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-      icon: priceListImg,
+      renderIcon: () => (
+        <PriceListImg className="sidemenu__img sidemenu__img--price" />
+      ),
     },
     {
       pathname: '/lemz/',
@@ -139,28 +134,31 @@ const SideMenu = (props) => {
         : '/lemz/workshop-lemz',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
-      icon: factoryIcon,
+      renderIcon: () => <FactoryIcon className="sidemenu__img sidemenu__img--factory" />,
       iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
           name: 'Очередь производства',
           pathname: '/lemz/workshop-lemz',
           link: '/lemz/workshop-lemz',
-          icon: playListImg,
+          // icon: playListImg,
+          renderIcon: () => <PlayListImg className="sidemenu__img" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
           name: 'Очередь инструментального производства',
-          pathname: '/dispatcher/rigging/parts',
-          link: '/dispatcher/rigging/parts',
-          icon: listImg,
+          // pathname: '/dispatcher/rigging/parts',
+          // link: '/dispatcher/rigging/parts',
+          pathname: '/rigging-list',
+          link: '/rigging-list',
+          renderIcon: () => <ListImg className="sidemenu__img" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
           name: 'Склад',
           pathname: '/lemz/workshop-storage',
           link: '/lemz/workshop-storage',
-          icon: boxImg,
+          renderIcon: () => <BoxImg className="sidemenu__img" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
@@ -168,7 +166,7 @@ const SideMenu = (props) => {
           pathname: '/lemz/workshop-orders',
           link: '/lemz/workshop-orders',
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
-          icon: screwImg,
+          renderIcon: () => <ScrewImg className="sidemenu__img" />,
         },
       ],
     },
@@ -185,35 +183,39 @@ const SideMenu = (props) => {
         : '/lepsari/workshop-lepsari',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       name: 'ЦехЛепсари',
-      icon: factoryIcon,
+      renderIcon: () => (
+        <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+      ),
       iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
           name: 'Очередь производства',
           pathname: '/lepsari/workshop-lepsari',
           link: '/lepsari/workshop-lepsari',
-          icon: playListImg,
+          renderIcon: () => <PlayListImg className="sidemenu__img" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
         },
         {
           name: 'Очередь инструментального производства',
-          pathname: '/dispatcher/rigging/parts',
-          link: '/dispatcher/rigging/parts',
-          icon: listImg,
+          // pathname: '/dispatcher/rigging/parts',
+          // link: '/dispatcher/rigging/parts',
+          pathname: '/rigging-list',
+          link: '/rigging-list',
+          renderIcon: () => <ListImg className="sidemenu__img" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
         },
         {
           name: 'Склад',
           pathname: '/lepsari/workshop-storage',
           link: '/lepsari/workshop-storage',
-          icon: boxImg,
+          renderIcon: () => <BoxImg className="sidemenu__img" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
         },
         {
           name: 'Комплектация цеха',
           pathname: '/lepsari/workshop-orders',
           link: '/lepsari/workshop-orders',
-          icon: screwImg,
+          renderIcon: () => <ScrewImg className="sidemenu__img" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
         },
       ],
@@ -223,40 +225,24 @@ const SideMenu = (props) => {
       // linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
       //   ? '/ligovskiy/orders'
       //   : '/ligovskiy/workshop',
-      linkTo: '/dispatcher/rigging/parts',
+      // linkTo: '/dispatcher/rigging/parts',
+      linkTo: '/rigging-list',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
       name: 'ЦехЛиговский',
-      icon: factoryIcon,
+      renderIcon: () => (
+        <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+      ),
       iconClassName: 'sidemenu__img',
       dropdownMenu: [
-        // {
-        //   name: 'Очередь производства',
-        //   pathname: '/ligovskiy/workshop',
-        //   link: '/ligovskiy/workshop',
-        //   icon: listImg,
-        //   mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
-        // },
         {
           name: 'Очередь инструментального производства',
-          pathname: '/dispatcher/rigging/parts',
-          link: '/dispatcher/rigging/parts',
-          icon: listImg,
+          // pathname: '/dispatcher/rigging/parts',
+          // link: '/dispatcher/rigging/parts',
+          pathname: '/rigging-list',
+          link: '/rigging-list',
+          renderIcon: () => <ListImg className="sidemenu__img" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
         },
-        // {
-        //   name: 'Склад',
-        //   pathname: '/ligovskiy/storage',
-        //   link: '/ligovskiy/storage',
-        //   icon: boxImg,
-        //   mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
-        // },
-        // {
-        //   name: 'Комплектация цеха',
-        //   pathname: '/ligovskiy/orders',
-        //   link: '/ligovskiy/orders',
-        //   icon: screwImg,
-        //   mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
-        // },
       ],
     },
     {
@@ -280,9 +266,14 @@ const SideMenu = (props) => {
     {
       pathname: '/dispatcher/rigging/',
       linkTo: '/dispatcher/rigging/stamp',
-      mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+      mainRoles: [
+        'ROLE_ADMIN',
+        'ROLE_DISPATCHER',
+        'ROLE_ENGINEER',
+        'ROLE_WORKSHOP',
+      ],
       name: 'Оснастка',
-      icon: wrenchImg,
+      renderIcon: () => <WrenchImg className="sidemenu__img" />,
       // iconClassName: 'sidemenu__img--bigger'
     },
     {
@@ -327,8 +318,7 @@ const SideMenu = (props) => {
       ],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
       addButtonName: 'Добавить задачу',
-      icon: tasksImg,
-      iconClassName: 'sidemenu__img--bigger',
+      renderIcon: () => <TasksImg className="sidemenu__img" />,
     },
     {
       pathname: '/dispatcher/employees',
@@ -336,8 +326,9 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
       addButtonName: 'Добавить сотрудника',
-      icon: employeesImg,
-      iconClassName: 'sidemenu__img--bigger',
+      renderIcon: () => (
+        <EmployeesImg className="sidemenu__img sidemenu__img--employees" />
+      ),
     },
     {
       pathname: '/dispatcher/transportation',
@@ -345,16 +336,10 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
       addButtonName: 'Добавить запись',
-      icon: truckImg,
+      renderIcon: () => (
+        <TruckImg className="sidemenu__img sidemenu__img--truck" />
+      ),
     },
-    // {
-    //   pathname: '/work-list',
-    //   name: 'Список работ',
-    //   mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-    //   addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-    //   addButtonName: 'Добавить работу',
-    //   icon: listImg,
-    // },
     {
       pathname: '/feedback',
       name: 'Обратная связь',
@@ -373,7 +358,7 @@ const SideMenu = (props) => {
         'ROLE_WORKSHOP',
       ],
       addButtonName: 'Оставить сообщение',
-      icon: feedbackImg,
+      renderIcon: () => <FeedbackImg className="sidemenu__img" />,
     },
     {
       pathname: '/etcetera',
@@ -385,7 +370,7 @@ const SideMenu = (props) => {
         'ROLE_WORKSHOP',
         'ROLE_ENGINEER',
       ],
-      icon: moreImg,
+      renderIcon: () => <MoreImg className="sidemenu__img" />,
     },
     {
       pathname: '/packaging',
@@ -414,14 +399,15 @@ const SideMenu = (props) => {
                 name: 'Создать клиента',
                 pathname: '/clients/new',
                 link: '/clients/new',
-                icon: plusImg,
+                // icon: plusImg,
+                renderIcon: () => <PlusImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               {
                 name: 'Управление категориями',
                 pathname: '/clients/categories',
                 link: '/clients/categories',
-                icon: contractImg,
+                renderIcon: () => <ContractImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...res
@@ -474,7 +460,7 @@ const SideMenu = (props) => {
                 name: 'Создать поставщика',
                 pathname: '/suppliers/new',
                 link: '/suppliers/new',
-                icon: plusImg,
+                renderIcon: () => <PlusImg className="sidemenu__img" />,
                 mainRoles: [
                   'ROLE_ADMIN',
                   'ROLE_MANAGER',
@@ -487,7 +473,7 @@ const SideMenu = (props) => {
                 name: 'Управление категориями',
                 pathname: '/suppliers/categories',
                 link: '/suppliers/categories',
-                icon: contractImg,
+                renderIcon: () => <ContractImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...res
@@ -557,7 +543,7 @@ const SideMenu = (props) => {
                 if (
                   (window.innerWidth ||
                     document.documentElement.clientWidth ||
-                    document.body.clientWidth) < 1220 &&
+                    document.body.clientWidth) < 1366 &&
                   item.dropdownMenu === undefined
                 ) {
                   props.setSideMenu(!props.hidden)
@@ -595,7 +581,7 @@ const SideMenu = (props) => {
                   if (
                     (window.innerWidth ||
                       document.documentElement.clientWidth ||
-                      document.body.clientWidth) < 1220 &&
+                      document.body.clientWidth) < 1366 &&
                     item.dropdownMenu === undefined
                   ) {
                     props.setSideMenu(!props.hidden)
@@ -603,19 +589,8 @@ const SideMenu = (props) => {
                 }}
                 to={item.linkTo ? item.linkTo : item.pathname}
               >
-                {item.icon && (
-                  <img
-                    className={
-                      item.iconClassName
-                        ? 'sidemenu__img sidemenu__img--icon ' +
-                          item.iconClassName
-                        : 'sidemenu__img sidemenu__img--icon'
-                    }
-                    src={item.icon}
-                    alt=""
-                  />
-                )}
-                {item.name}
+                {item.renderIcon && item.renderIcon()}
+                <span>{item.name}</span>
               </Link>
               {item.addButtonName &&
                 item.pathname !== '/' &&
@@ -626,14 +601,15 @@ const SideMenu = (props) => {
                       if (
                         (window.innerWidth ||
                           document.documentElement.clientWidth ||
-                          document.body.clientWidth) < 1220
+                          document.body.clientWidth) < 1366
                       ) {
                         props.setSideMenu(!props.hidden)
                       }
                     }}
                     className="sidemenu__addButton"
                   >
-                    <img className="sidemenu__img" src={plusImg} />
+                    {/* <img className="sidemenu__img" src={plusImg} /> */}
+                    <PlusImg className="sidemenu__img" />
                   </Link>
                 )}
               {item.dropdownMenu && (
@@ -659,25 +635,15 @@ const SideMenu = (props) => {
                             if (
                               (window.innerWidth ||
                                 document.documentElement.clientWidth ||
-                                document.body.clientWidth) < 1220
+                                document.body.clientWidth) < 1366
                             ) {
                               props.setSideMenu(!props.hidden)
                             }
                           }}
                         >
                           <div className="sidemenu__link">
-                            {dropdownMenuItem.icon && (
-                              <img
-                                className={
-                                  dropdownMenuItem.iconClassName
-                                    ? 'sidemenu__img ' +
-                                      dropdownMenuItem.iconClassName
-                                    : 'sidemenu__img'
-                                }
-                                src={dropdownMenuItem.icon}
-                                alt=""
-                              />
-                            )}
+                            {dropdownMenuItem.renderIcon &&
+                              dropdownMenuItem.renderIcon()}
                             {dropdownMenuItem.name}
                           </div>
                         </Link>

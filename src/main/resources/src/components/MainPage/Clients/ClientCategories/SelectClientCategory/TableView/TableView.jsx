@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './TableView.scss'
 import '../../../../../../utils/MainWindow/MainWindow.scss'
 import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
-import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   // const [isLoading, setIsLoading] = useState(true)
@@ -22,9 +22,10 @@ const TableView = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
-            <TableDataLoading
-              className="main-window__list-item"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
               minHeight="20px"
+              items={2}
             />
           )}
           {props.data

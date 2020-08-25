@@ -92,27 +92,35 @@ const AdminWorkspace = (props) => {
       .then((res) => {
         // console.log(res);
         week.map((day) => {
-          workshops.map((workshop, index) => {
+          return workshops.map((workshop, index) => {
             let temp = workshops
             let oldData = workshop.data
             oldData.push(
               res.reduce((sum, cur) => {
+                // console.log(
+                //   new Date(day).getDate(),
+                //   new Date(cur.year, cur.month, cur.day).getDate(),
+                //   new Date(day).getDate() ===
+                //     new Date(cur.year, cur.month, cur.day).getDate(),
+                //   day.getDate(),
+                //   cur.day,
+                // )
                 if (
                   workshop.label === cur.employee.workshop &&
                   new Date(day).getDate() ===
-                    new Date(cur.year, cur.month + 1, cur.day).getDate()
+                    new Date(cur.year, cur.month, cur.day).getDate()
                 ) {
                   return Math.ceil((sum + cur.hours) * 10) / 10
                 } else return sum
               }, 0),
             )
-            temp.splice(index, 1, {
+            return temp.splice(index, 1, {
               ...workshop,
               data: oldData,
             })
           })
         })
-        // console.log(workshops)
+        console.log(workshops)
         if (props.userHasAccess(['ROLE_ADMIN'])) {
           !canvasLoaded &&
             loadCanvas(
@@ -129,11 +137,9 @@ const AdminWorkspace = (props) => {
                 : 'horizontalBar',
             data: {
               labels: [
-                ...week.map(
-                  (day, index) =>
-                    // weekdays[index] + ' ' + formatDateStringNoYear(day),
-                    weekdays[index],
-                ),
+                ...week.map((day, index) => {
+                  return weekdays[index]
+                }),
               ],
               datasets: [...workshops],
             },
@@ -230,9 +236,6 @@ const AdminWorkspace = (props) => {
   return (
     <div className="admin-workspace">
       <WorkManagement userHasAccess={props.userHasAccess} />
-      {/* {props.userHasAccess(['ROLE_ADMIN']) && (
-        <Notifications userHasAccess={props.userHasAccess} />
-      )} */}
       {props.userHasAccess(['ROLE_ADMIN']) && (
         <div className="admin-workspace__chart-wrapper">
           <TableLoading isLoading={isLoading} />
@@ -271,18 +274,6 @@ const AdminWorkspace = (props) => {
             Сводка за неделю
           </div>
           <div className="admin-workspace__header">
-            {/* <button className="admin-workspace__button" onClick={(event) => {
-                        event.preventDefault();
-                        setWeekOffset(weekOffset + 1);
-                    }}>Пред. неделя</button>
-                     */}
-            {/* <img
-              src={chevronDownSVG}
-              onClick={(event) => {
-                setWeekOffset(weekOffset + 1)
-              }}
-              className="admin-workspace__chevron admin-workspace__chevron--back"
-            /> */}
             <div className="admin-workspace__title">
               <span className="admin-workspace__date">
                 {formatDateStringNoYear(

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import sortIcon from '../../../../../../../../../../assets/tableview/sort_icon.png'
 import './TableView.scss'
 import '../../../../../../utils/MainWindow/MainWindow.scss'
 import { formatDateString } from '../../../../../../utils/functions.jsx'
 import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
-import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -24,19 +22,23 @@ const TableView = (props) => {
 
   const searchQuery = (data) => {
     const query = props.searchQuery.toLowerCase()
-    return data.filter(
-      (item) =>
-        item.lastName.toLowerCase().includes(query) ||
-        item.name.toLowerCase().includes(query) ||
-        item.middleName.toLowerCase().includes(query) ||
-        item.id.toString().includes(query) ||
-        item.yearOfBirth.toString().includes(query) ||
-        item.citizenship.toLowerCase().includes(query) ||
-        item.workshop.toLowerCase().includes(query) ||
-        item.position.toLowerCase().includes(query) ||
-        item.comment.toLowerCase().includes(query) ||
-        item.relevance.toLowerCase().includes(query),
-    )
+    return data.filter((item) => {
+      if (item.name !== null) {
+        return (
+          item.lastName.toLowerCase().includes(query) ||
+          item.name.toLowerCase().includes(query) ||
+          item.middleName.toLowerCase().includes(query) ||
+          item.id.toString().includes(query) ||
+          item.yearOfBirth.toString().includes(query) ||
+          item.citizenship.toLowerCase().includes(query) ||
+          item.workshop.toLowerCase().includes(query) ||
+          item.position.toLowerCase().includes(query) ||
+          item.comment.toLowerCase().includes(query) ||
+          item.relevance.toLowerCase().includes(query)
+        )
+      }
+      return false
+    })
   }
 
   const sortEmployees = (data) => {
@@ -77,10 +79,11 @@ const TableView = (props) => {
             {/* <span>Актуальность</span> */}
             <div className="main-window__actions">Действия</div>
           </div>
-          {props.data.length === 0 && (
-            <TableDataLoading
-              className="main-window__list-item"
-              minHeight="50px"
+          {props.isLoading && (
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="35px"
+              items={10}
             />
           )}
           {sortEmployees(props.data).map(

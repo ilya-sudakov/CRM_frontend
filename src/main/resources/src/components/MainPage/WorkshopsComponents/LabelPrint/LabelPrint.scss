@@ -1,0 +1,105 @@
+.label-print {
+    @keyframes pulse {
+        0% {
+            background-color: #dddddd;
+        }
+        50% {
+            background-color: #ffffff;
+        }
+        100% {
+            background-color: #dddddd;
+        }
+    }
+
+    width: 600px;
+    // height: 520px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 1px solid #222222;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 25px;
+
+    position: fixed;
+    top: 100px;
+    left: 600px;
+    background-color: #ffffff;
+    z-index: 999;
+    transition: 100ms ease-in-out;
+
+    &::after {
+        position: absolute;
+        bottom: -40px;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #bbbbbb;
+        content: "Идет скачивание...";
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 5px 15px;
+        animation: pulse 1s infinite ease-in-out;
+    }
+
+    &--hidden {
+        left: 2000px;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        padding-bottom: 25px;
+
+        &::after {
+            width: calc(100% + 50px);
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -25px;
+            border-bottom: 1px dashed #000;
+        }
+
+        .header__name {
+            flex: 0 1 calc(100% - 80px);
+            font-size: 200%;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .header__box {
+            border: 1px solid #222222;
+            width: 70px;
+            height: 80px;
+            border-radius: 10px;
+        }
+    }
+
+    &__content {
+        padding-top: 25px;
+        position: relative;
+        // padding-bottom: 150px;
+        .content__description {
+            margin-bottom: 10px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+            &--address {
+                font-size: 95%;
+            }
+        }
+        .content__bar-code {
+            // position: absolute;
+            // bottom: -100px;
+            align-self: flex-end;
+            justify-self: flex-end;
+        }
+    }
+}

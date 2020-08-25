@@ -3,9 +3,7 @@ import './RiggingList.scss'
 
 import TableView from './TableView/TableView.jsx'
 import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
-import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
-import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
+import { checkRiggingTypesInputs } from '../RiggingComponents/rigsVariables'
 
 const RiggingList = (props) => {
   const [drafts, setDrafts] = useState([])
@@ -53,67 +51,19 @@ const RiggingList = (props) => {
       .then((response) => {
         // console.log(response);
         response.map((item) => {
-          return item.stampParts.map((stamp) => {
-            newDrafts.push({
-              ...stamp,
-              type: 'Stamp',
+          return item.stampParts
+            .filter((stamp) => stamp.color !== 'completed') //Не показываем завершенные детали
+            .map((stamp) => {
+              newDrafts.push({
+                ...stamp,
+                type: 'Stamp',
+              })
             })
-          })
         })
+        setIsLoading(false)
         // console.log(newDrafts);
         setDrafts([...newDrafts])
-      })
-      .then(() => {
-        getPressForm()
-          .then((response) => response.json())
-          .then((response) => {
-            // console.log(response);
-            response.map((item) => {
-              return item.pressParts.map((stamp) => {
-                newDrafts.push({
-                  ...stamp,
-                  type: 'Press',
-                })
-              })
-            })
-            return setDrafts([...newDrafts])
-          })
-      })
-      .then(() => {
-        getMachine()
-          .then((response) => response.json())
-          .then((response) => {
-            // console.log(response)
-            response.map((item) => {
-              return item.benchParts.map((stamp) => {
-                newDrafts.push({
-                  ...stamp,
-                  type: 'Bench',
-                })
-              })
-            })
-            setDrafts([...newDrafts])
-            // console.log(newDrafts)
-          })
-      })
-      .then(() => {
-        getParts()
-          .then((res) => res.json())
-          .then((res) => {
-            // console.log(res)
-            res.map((item) => {
-              return item.detailParts.map((stamp) => {
-                newDrafts.push({
-                  ...stamp,
-                  type: 'Detail',
-                })
-              })
-            })
-            setIsLoading(false)
-            setDataLoaded(true)
-            setDrafts([...newDrafts])
-            // console.log(newDrafts)
-          })
+        setDataLoaded(true)
       })
       .catch((error) => {
         console.log(error)
@@ -122,7 +72,7 @@ const RiggingList = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Список оснастки'
+    document.title = 'Очередь инструментального производства'
     if (dataLoaded) {
       //Временное решение пока нет бэка
       let temp = []
@@ -131,8 +81,8 @@ const RiggingList = (props) => {
           ...drafts.filter((draft) => {
             if (
               status[1].active &&
-              draft[status[0]] === '' &&
-              (draft[status[1].previous] !== '' || status[1].previous === null)
+              (draft[status[0]] === '' || draft[status[0]] === null) &&
+              checkRiggingTypesInputs(draft, status[0])
             ) {
               return true
             }
@@ -152,7 +102,9 @@ const RiggingList = (props) => {
   return (
     <div className="rigging-list">
       <div className="main-window">
-        <div className="main-window__title">Список оснастки</div>
+        <div className="main-window__title">
+          Очередь инструментального производства
+        </div>
         <div className="main-window__status-panel">
           {Object.entries(statuses).map((status) => (
             <div

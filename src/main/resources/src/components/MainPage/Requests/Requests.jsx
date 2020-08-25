@@ -8,17 +8,21 @@ import {
   deleteRequest,
   deleteProductsToRequest,
   getRequestById,
-  copyRequest,
+  // copyRequest,
   addRequest,
   editRequest,
   addProductsToRequest,
 } from '../../../utils/RequestsAPI/Requests.jsx'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
-import TableViewOld from './TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
+// import { Link } from 'react-router-dom'
+import {
+  // formatDateString,
+  sortRequestsByDates,
+} from '../../../utils/functions.jsx'
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]) //Массив заявок
@@ -28,6 +32,7 @@ const Requests = (props) => {
   const [toWorkshop, setToWorkshop] = useState('lemz') //Название цеха для переноса заявки
   //id заявки, использующийся при ее дальнейшем копировании или переносе в цеха
   const [requestId, setRequestId] = useState(0)
+  const [requestsByDate, setRequestsByDate] = useState([])
   const [clients, setClients] = useState([]) //Массив клиентов
   const [curPage, setCurPage] = useState('Открытые') //Текущая страница
   //Статусы заявок
@@ -82,6 +87,16 @@ const Requests = (props) => {
       getRequests: (signal) => getRequests(signal),
     },
   }
+  const [workshops, setWorkshops] = useState([
+    {
+      filter: ['lemz', 'lepsari', null, 'requests'],
+      fullName: 'Все',
+      visible: true,
+    },
+    { filter: ['lemz'], fullName: 'ЦехЛЭМЗ', visible: false },
+    { filter: ['lepsari'], fullName: 'ЦехЛепсари', visible: false },
+    { filter: [null, 'requests'], fullName: 'Не перенесенные', visible: false },
+  ])
 
   //Удалить заявку
   const deleteItem = (event) => {
@@ -101,29 +116,11 @@ const Requests = (props) => {
   useEffect(() => {
     document.title = 'Заявки'
     let abortController = new AbortController()
-    loadRequests(abortController.signal)
+    requests.length === 0 && loadRequests(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
   }, [curPage])
-
-  //Получение списка клиентов из массива заявок
-  const getClientsFromRequests = (reqs) => {
-    const temp = clients
-    reqs.map((request) => {
-      if (
-        request.status !== 'Завершено' &&
-        !temp.find((item) => request.codeWord === item.name)
-      ) {
-        temp.push({
-          name: request.codeWord,
-          active: false,
-        })
-      }
-    })
-    // console.log(temp);
-    setClients([...temp])
-  }
 
   //GET-запрос на получение всех заявок
   const loadRequests = (signal) => {
@@ -139,9 +136,10 @@ const Requests = (props) => {
           }
         })
         setIsLoading(false)
-        console.log(temp)
+        // console.log(temp)
         setRequests(temp)
-        getClientsFromRequests(temp)
+        // getClientsFromRequests(temp)
+        setRequestsByDate(sortRequestsByDates(temp))
       })
       .catch((error) => {
         setIsLoading(false)
@@ -199,16 +197,76 @@ const Requests = (props) => {
       })
   }
 
+  const filterRequests = (requests) => {
+    return requests
+      .filter((item) => {
+        const selectedWorkshop = workshops.find((workshop) => workshop.visible)
+        if (selectedWorkshop === undefined) {
+          return false
+        }
+        let check = false
+        selectedWorkshop.filter.map((type) => {
+          if (type === item.factory) {
+            return (check = true)
+          }
+        })
+        return check
+      })
+      .filter((item) => {
+        if (curPage === 'Завершено' && item.status === 'Завершено') {
+          return true
+        }
+        if (curPage === 'Отгружено' && item.status === 'Отгружено') {
+          return true
+        }
+        if (
+          curPage === 'Открытые' &&
+          item.status !== 'Завершено' &&
+          item.status !== 'Отгружено'
+        ) {
+          return true
+        }
+        return false
+      })
+      .filter((item) => {
+        let check = false
+        let noActiveStatuses = true
+        requestStatuses.map((status) => {
+          requestStatuses.map((status) => {
+            if (status.visible) {
+              noActiveStatuses = false
+            }
+          })
+          if (
+            noActiveStatuses === true ||
+            (status.visible &&
+              (status.name === item.status || status.oldName === item.status))
+          ) {
+            check = true
+            return
+          }
+        })
+        return check
+      })
+  }
+
+  const filterDates = (dates) => {
+    console.log(requestsByDate);
+    let newDates = dates
+    Object.entries(dates).map((item) => {
+      // console.log(item[0], item[1], filterRequests(item[1]));
+      let temp = filterRequests(item[1])
+      newDates[item[0]] = temp
+    })
+    // console.log(newDates)
+    return newDates
+  }
+
   return (
     <div className="requests">
       <div className="main-window">
         <div className="main-window__header">
           <div className="main-window__title">Заявки</div>
-          <SearchBar
-            // title="Поиск по заявкам"
-            placeholder="Введите название продукции для поиска..."
-            setSearchQuery={setSearchQuery}
-          />
           <FloatingPlus
             linkTo="/requests/new"
             visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
@@ -246,6 +304,11 @@ const Requests = (props) => {
             </div>
           </div>
         </div>
+        <SearchBar
+          // title="Поиск по заявкам"
+          placeholder="Введите название продукции для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
         <FormWindow
           title="Перенос заявки в план производства"
           windowName="transfer-request"
@@ -296,31 +359,6 @@ const Requests = (props) => {
                             alert('Ошибка при копировании записи')
                             setIsLoading(false)
                           })
-
-                        // copyRequest(
-                        //   requests.find((item) => {
-                        //     if (item.id === requestId) {
-                        //       return true
-                        //     }
-                        //   }).id,
-                        //   toWorkshop,
-                        // )
-                        //   .then((res) => res.json())
-                        //   .then((res) => {
-                        //     setIsLoading(false)
-                        //     props.history.push(
-                        //       toWorkshop +
-                        //         '/workshop-' +
-                        //         toWorkshop +
-                        //         '/edit/' +
-                        //         res,
-                        //     )
-                        //   })
-                        //   .catch((error) => {
-                        //     console.log(error)
-                        //     alert('Ошибка при копировании записи')
-                        //     setIsLoading(false)
-                        //   })
                       }}
                       text="Перенести в цех"
                     />
@@ -332,49 +370,6 @@ const Requests = (props) => {
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
-        {/* <div className="main-window__info-panel">
-          <div className="requests__clients-sort">
-            {clients
-              .sort((a, b) => {
-                if (a.name < b.name) {
-                  return -1
-                }
-                if (a.name > b.name) {
-                  return 1
-                }
-                return 0
-              })
-              .map((client, index) => {
-                return (
-                  <div
-                    className={
-                      (client.active
-                        ? 'main-window__button'
-                        : 'main-window__button main-window__button--inverted') +
-                      ' main-window__list-item--' +
-                      status.className
-                    }
-                    onClick={() => {
-                      let temp = clients
-                      temp = temp.map((item) => {
-                        return {
-                          ...item,
-                          active: false,
-                        }
-                      })
-                      temp.splice(index, 1, {
-                        ...client,
-                        active: !client.active,
-                      })
-                      setClients([...temp])
-                    }}
-                  >
-                    {client.name}
-                  </div>
-                )
-              })}
-          </div>
-        </div> */}
         <div className="main-window__status-panel">
           <div>Фильтр по статусам: </div>
           {requestStatuses.map((status, index) => {
@@ -409,45 +404,38 @@ const Requests = (props) => {
             Всего: {requests.length} записей
           </div>
         </div>
-        <TableView
-          data={requests
-            .filter((item) => {
-              if (curPage === 'Завершено' && item.status === 'Завершено') {
-                return true
-              }
-              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
-                return true
-              }
-              if (
-                curPage === 'Открытые' &&
-                item.status !== 'Завершено' &&
-                item.status !== 'Отгружено'
-              ) {
-                return true
-              }
-              return false
-            })
-            .filter((item) => {
-              let check = false
-              let noActiveStatuses = true
-              requestStatuses.map((status) => {
-                requestStatuses.map((status) => {
-                  if (status.visible) {
-                    noActiveStatuses = false
-                  }
-                })
-                if (
-                  noActiveStatuses === true ||
-                  (status.visible &&
-                    (status.name === item.status ||
-                      status.oldName === item.status))
-                ) {
-                  check = true
-                  return
+        <div className="main-window__filter-pick" style={{ marginTop: '10px' }}>
+          <div>Фильтр по цехам: </div>
+          {workshops.map((workshop, index) => {
+            return (
+              <div
+                className={
+                  workshop.visible
+                    ? 'main-window__button'
+                    : 'main-window__button main-window__button--inverted'
                 }
-              })
-              return check
-            })}
+                onClick={() => {
+                  let temp = workshops.map((tempWorkshop) => {
+                    return {
+                      ...tempWorkshop,
+                      visible: false,
+                    }
+                  })
+                  temp.splice(index, 1, {
+                    ...workshop,
+                    visible: !workshop.visible,
+                  })
+                  setWorkshops([...temp])
+                }}
+              >
+                {workshop.fullName}
+              </div>
+            )
+          })}
+        </div>
+        <TableView
+          data={filterRequests(requests)}
+          requestsByDate={filterDates(requestsByDate)}
           isLoading={isLoading}
           workshopName="requests"
           loadData={loadRequests}
@@ -457,53 +445,6 @@ const Requests = (props) => {
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />
-        {/* <TableViewOld
-          data={requests
-            .filter((item) => {
-              if (curPage === 'Завершено' && item.status === 'Завершено') {
-                return true
-              }
-              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
-                return true
-              }
-              if (
-                curPage === 'Открытые' &&
-                item.status !== 'Завершено' &&
-                item.status !== 'Отгружено'
-              ) {
-                return true
-              }
-              return false
-            })
-            .filter((item) => {
-              let check = false
-              let noActiveStatuses = true
-              requestStatuses.map((status) => {
-                requestStatuses.map((status) => {
-                  if (status.visible) {
-                    noActiveStatuses = false
-                  }
-                })
-                if (
-                  noActiveStatuses === true ||
-                  (status.visible &&
-                    (status.name === item.status ||
-                      status.oldName === item.status))
-                ) {
-                  check = true
-                  return
-                }
-              })
-              return check
-            })}
-          isLoading={isLoading}
-          loadData={loadRequests}
-          deleteItem={deleteItem}
-          transferRequest={transferRequest}
-          copyRequest={copySelectedRequest}
-          searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
-        /> */}
       </div>
     </div>
   )

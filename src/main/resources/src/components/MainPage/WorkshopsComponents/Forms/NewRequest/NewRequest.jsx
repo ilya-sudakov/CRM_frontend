@@ -12,34 +12,40 @@ import { UserContext } from '../../../../../App.js'
 import {
   addRequest,
   addProductsToRequest,
+  connectClientToRequest,
 } from '../../../../../utils/RequestsAPI/Requests.jsx'
 
 import { requestStatuses, workshops } from '../../workshopVariables.js'
+import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx'
 
 const NewRequest = (props) => {
   const userContext = useContext(UserContext)
   const [requestInputs, setRequestInputs] = useState({
     date: new Date(),
-    codeWord: '',
+    // codeWord: '',
     responsible: userContext.userData.username,
     status: 'Ожидание',
     shippingDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     comment: '',
     factory: props.type,
+    sum: 0,
+    clientId: 0,
   })
   const [requestErrors, setRequestErrors] = useState({
     date: false,
     requestProducts: false,
-    codeWord: false,
+    // codeWord: false,
     responsible: false,
     shippingDate: false,
+    clientId: false,
   })
   const [validInputs, setValidInputs] = useState({
     date: true,
     requestProducts: false,
-    codeWord: false,
-    responsible: userContext.userHasAccess(['ROLE_ADMIN']) ? false : true,
+    // codeWord: false,
+    responsible: true,
     shippingDate: true,
+    clientId: false,
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -64,6 +70,12 @@ const NewRequest = (props) => {
           requestProducts: value !== [],
         })
         break
+      case 'clientId':
+        setValidInputs({
+          ...validInputs,
+          clientId: value !== 0,
+        })
+        break
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
@@ -80,9 +92,10 @@ const NewRequest = (props) => {
     let newErrors = Object.assign({
       date: false,
       requestProducts: false,
-      codeWord: false,
+      // codeWord: false,
       responsible: false,
       shippingDate: false,
+      clientId: false,
     })
     for (let item in validInputs) {
       if (validInputs[item] === false) {
@@ -107,26 +120,28 @@ const NewRequest = (props) => {
   const handleSubmit = () => {
     setIsLoading(true)
     let id = 0
+    console.log(requestInputs)
     formIsValid() &&
       addRequest(requestInputs)
         .then((res) => res.json())
         .then((res) => {
           id = res.id
         })
-        .then(() => {
-          const productsArr = requestInputs.requestProducts.map((item) => {
-            return addProductsToRequest({
-              requestId: id,
-              quantity: item.quantity,
-              packaging: item.packaging,
-              status: item.status,
-              name: item.name,
-            })
-          })
-          Promise.all(productsArr).then(() =>
-            props.history.push(workshops[props.type].redirectURL),
-          )
-        })
+        .then(() =>
+          Promise.all(
+            requestInputs.requestProducts.map((item) => {
+              return addProductsToRequest({
+                requestId: id,
+                quantity: item.quantity,
+                packaging: item.packaging,
+                status: item.status,
+                name: item.name,
+              })
+            }),
+          ),
+        )
+        .then(() => connectClientToRequest(id, requestInputs.clientId))
+        .then(() => props.history.push(workshops[props.type].redirectURL))
         .catch((error) => {
           setIsLoading(false)
           console.log(error)
@@ -233,7 +248,7 @@ const NewRequest = (props) => {
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
           />
-          <InputText
+          {/* <InputText
             inputName="Кодовое слово"
             required
             error={requestErrors.codeWord}
@@ -242,7 +257,7 @@ const NewRequest = (props) => {
             defaultValue={requestInputs.codeWord}
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
-          />
+          /> */}
           <InputUser
             inputName="Ответственный"
             userData={userContext.userData}
@@ -298,6 +313,35 @@ const NewRequest = (props) => {
             name="comment"
             defaultValue={requestInputs.comment}
             handleInputChange={handleInputChange}
+            errorsArr={requestErrors}
+            setErrorsArr={setRequestErrors}
+          />
+          <InputText
+            inputName="Цена"
+            name="sum"
+            type="number"
+            defaultValue={requestInputs.sum}
+            handleInputChange={handleInputChange}
+            errorsArr={requestErrors}
+            setErrorsArr={setRequestErrors}
+          />
+          <SelectClient
+            inputName="Клиент"
+            userHasAccess={userContext.userHasAccess}
+            // defaultValue={requestInputs.clientId}
+            required
+            onChange={(value) => {
+              validateField('clientId', value)
+              setRequestInputs({
+                ...requestInputs,
+                clientId: value,
+              })
+              setRequestErrors({
+                ...requestErrors,
+                clientId: value,
+              })
+            }}
+            error={requestErrors.clientId}
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
           />

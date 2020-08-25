@@ -6,9 +6,9 @@ import {
   formatDateString,
   addSpaceDelimiter,
 } from '../../../../../../utils/functions.jsx'
-import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { days } from '../../../../../../utils/dataObjects'
 import { Link } from 'react-router-dom'
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [datesEmployees, setDatesEmployees] = useState({})
@@ -53,9 +53,11 @@ const TableView = (props) => {
       }
     >
       {props.isLoading && (
-        <TableDataLoading
-          className="work-management-page__row"
-          minHeight="45px"
+        <PlaceholderLoading
+          wrapperClassName="work-management-page__table-view--placeholder"
+          itemClassName="work-management-page__row"
+          minHeight="2rem"
+          items={4}
         />
       )}
       {Object.entries(datesEmployees)
@@ -114,16 +116,7 @@ const TableView = (props) => {
                         }}
                       >
                         <div className="work-management-page__item work-management-page__item--header">
-                          <span>{item.employee.position + ' '}</span>
-                          <span>
-                            {' ' +
-                              item.employee.lastName +
-                              ' ' +
-                              item.employee.name +
-                              ' ' +
-                              item.employee.middleName}
-                          </span>
-                          <span>
+                          <span className="header--hours">
                             {item.works.length > 0
                               ? Math.floor(
                                   item.works.reduce((sum, cur) => {
@@ -146,10 +139,60 @@ const TableView = (props) => {
                                       }
                                     }, 0) * 100,
                                   ) / 100,
-                                  ['час', 'часа', 'часов'],
+                                  ['ч', 'ч', 'ч'],
                                 )
                               : 'Нет записи!'}
                           </span>
+                          <div className="header__wrapper header__wrapper--person">
+                            <span className="header--position">
+                              {item.employee.position + ' '}
+                            </span>
+                            <span className="header--name">
+                              {' ' +
+                                item.employee.lastName +
+                                ' ' +
+                                item.employee.name +
+                                ' ' +
+                                item.employee.middleName}
+                            </span>
+                          </div>
+                          <div
+                            className="header__wrapper"
+                            style={{ marginLeft: 'auto' }}
+                          >
+                            <span className="header--top-work">
+                              {item.works.length > 0 ? (
+                                <>
+                                  {`${
+                                    item.works.sort((a, b) => {
+                                      if (a.hours < b.hours) {
+                                        return 1
+                                      }
+                                      if (a.hours > b.hours) {
+                                        return -1
+                                      }
+                                      return 0
+                                    })[0].workList.work
+                                  }`}
+                                  <span className="header--hours">
+                                    {`${
+                                      Math.floor(
+                                        item.works.sort((a, b) => {
+                                          if (a.hours < b.hours) {
+                                            return 1
+                                          }
+                                          if (a.hours > b.hours) {
+                                            return -1
+                                          }
+                                          return 0
+                                        })[0].hours * 100,
+                                      ) / 100
+                                    } ч`}
+                                  </span>
+                                </>
+                              ) : null}
+                            </span>
+                          </div>
                         </div>
                         {item.works.map((workItem, index) => {
                           {

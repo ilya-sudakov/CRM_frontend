@@ -57,6 +57,7 @@ import {
   EditPackaging,
   ReportTablePage,
   RiggingList,
+  StatisticsPage,
 } from './lazyImports.jsx'
 import NewRequest from './WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
 import EditRequest from './WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
@@ -661,7 +662,7 @@ class MainPage extends React.Component {
                     'ROLE_DISPATCHER',
                     'ROLE_MANAGER',
                     'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP'
+                    'ROLE_WORKSHOP',
                   ]}
                 />
                 <PrivateRoute
@@ -701,7 +702,7 @@ class MainPage extends React.Component {
                   component={ReportTablePage}
                   userHasAccess={this.props.userHasAccess}
                   userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
                 />
                 <PrivateRoute
                   exact
@@ -715,6 +716,12 @@ class MainPage extends React.Component {
                     'ROLE_ENGINEER',
                     'ROLE_MANAGER',
                   ]}
+                />
+                <PrivateRoute
+                  exact
+                  path="/statistics"
+                  component={StatisticsPage}
+                  allowedRoles={['ROLE_ADMIN']}
                 />
                 <Route component={PageNotFound} />
               </Switch>

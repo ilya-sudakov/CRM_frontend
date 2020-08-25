@@ -62,6 +62,7 @@ const Products = (props) => {
             'ROLE_DISPATCHER',
             'ROLE_ENGINEER',
             'ROLE_MANAGER',
+            'ROLE_WORKSHOP', //temp
           ])
         ) {
           categoriesArr = res
@@ -91,34 +92,35 @@ const Products = (props) => {
               return console.log('all images downloaded')
             })
           })
-        } else {
-          getProductsByLocation(
-            {
-              productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
-                ? 'ЦехЛиговский'
-                : props.userHasAccess(['ROLE_LEMZ'])
-                ? 'ЦехЛЭМЗ'
-                : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
-            },
-            signal,
-          )
-            .then((res) => res.json())
-            .then((res) => {
-              res.map((item) => productsArr.push(item))
-              setProducts([...productsArr])
-              Promise.all(
-                productsArr.map((item, index) => {
-                  getProductById(item.id, signal)
-                    .then((res) => res.json())
-                    .then((res) => {
-                      // console.log(res);
-                      productsArr.splice(index, 1, res)
-                      setProducts([...productsArr])
-                    })
-                }),
-              ).then(() => console.log('all images downloaded'))
-            })
         }
+        // else {
+        //   getProductsByLocation(
+        //     {
+        //       productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
+        //         ? 'ЦехЛиговский'
+        //         : props.userHasAccess(['ROLE_LEMZ'])
+        //         ? 'ЦехЛЭМЗ'
+        //         : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
+        //     },
+        //     signal,
+        //   )
+        //     .then((res) => res.json())
+        //     .then((res) => {
+        //       res.map((item) => productsArr.push(item))
+        //       setProducts([...productsArr])
+        //       Promise.all(
+        //         productsArr.map((item, index) => {
+        //           getProductById(item.id, signal)
+        //             .then((res) => res.json())
+        //             .then((res) => {
+        //               // console.log(res);
+        //               productsArr.splice(index, 1, res)
+        //               setProducts([...productsArr])
+        //             })
+        //         }),
+        //       ).then(() => console.log('all images downloaded'))
+        //     })
+        // }
       })
   }
 

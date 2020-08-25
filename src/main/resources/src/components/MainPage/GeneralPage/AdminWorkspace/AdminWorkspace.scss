@@ -9,6 +9,21 @@
   align-items: flex-start;
   margin-top: 10px;
 
+  @keyframes pulse {
+    0% {
+      border-color: #dddddd;
+      background-color: #dddddd;
+    }
+    50% {
+      border-color: #f7f7f7;
+      background-color: #f7f7f7;
+    }
+    100% {
+      border-color: #dddddd;
+      background-color: #dddddd;
+    }
+  }
+
   .admin-workspace__date {
     color: #777777;
     font-size: 65%;
@@ -79,6 +94,17 @@
     min-height: 298px;
     max-height: 316px;
     margin-bottom: 15px;
+
+    &--placeholder {
+      .admin-workspace__loading-panel {
+        height: 250px;
+        width: 100%;
+        border-radius: 5px;
+        animation: pulse 1s infinite ease-in-out;
+        margin-bottom: 10px;
+      }
+    }
+
     .admin-workspace__header {
       display: flex;
       flex-direction: row;
