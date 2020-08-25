@@ -35,7 +35,8 @@
     }
 
     &__link {
-        color: #2485fc;
+        color: #2485fc !important;
+        text-decoration: none;
     }
 
     &__button {

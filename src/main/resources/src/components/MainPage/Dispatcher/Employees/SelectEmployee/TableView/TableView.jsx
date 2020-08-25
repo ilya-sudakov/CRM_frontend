@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import sortIcon from '../../../../../../../../../../assets/tableview/sort_icon.png'
 import './TableView.scss'
 import '../../../../../../utils/MainWindow/MainWindow.scss'
 import { formatDateString } from '../../../../../../utils/functions.jsx'
 import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
-import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -81,10 +79,11 @@ const TableView = (props) => {
             {/* <span>Актуальность</span> */}
             <div className="main-window__actions">Действия</div>
           </div>
-          {props.data.length === 0 && (
-            <TableDataLoading
-              className="main-window__list-item"
-              minHeight="50px"
+          {props.isLoading && (
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="35px"
+              items={10}
             />
           )}
           {sortEmployees(props.data).map(

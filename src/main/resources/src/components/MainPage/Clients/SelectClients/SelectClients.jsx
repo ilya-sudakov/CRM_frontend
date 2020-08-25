@@ -3,7 +3,7 @@ import './SelectClients.scss'
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
 import { searchClients } from '../../../../utils/RequestsAPI/Clients.jsx'
-import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const SelectClient = (props) => {
   const [showWindow, setShowWindow] = useState(false)
@@ -149,10 +149,13 @@ const TableView = (props) => {
   return (
     <div className="main-window">
       <div className="main-window__list">
-        {props.isLoading && (
-          <TableDataLoading className="main-window__list-item" />
-        )}
-        {props.clients.length === 0 ? (
+        {props.isLoading ? (
+          <PlaceholderLoading
+            itemClassName="main-window__list-item"
+            minHeight="35px"
+            items={3}
+          />
+        ) : props.clients.length === 0 ? (
           <div>Введите не менее 3 символа для начала поиска</div>
         ) : (
           <>
