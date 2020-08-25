@@ -9,7 +9,7 @@ const ManagerEfficiencyGraphPanel = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
   const [stats, setStats] = useState({
-    category: 'Статистика по менеджерам',
+    category: 'Статистика по менеджерам (заказы)',
     isLoaded: false,
     chartName: 'manager-efficiency-graph',
     timePeriod: `${months[new Date().getMonth()]}`,

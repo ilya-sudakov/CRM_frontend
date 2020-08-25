@@ -11,6 +11,7 @@ import RequestsQuantityGraphPanel from './Graphs/RequestsQuantityGraphPanel.jsx'
 import ManagerEfficiencyGraphPanel from './Graphs/ManagerEfficiencyGraphPanel.jsx'
 import ManagerMoneyGraphPanel from './Graphs/ManagerMoneyGraphPanel.jsx'
 import RequestsAverageTimeCompletionPanel from './Panels/RequestsAverageTimeCompletionPanel.jsx'
+import ProductQuantityInRequest from './Panels/ProductQuantityInRequest.jsx'
 
 const StatisticsPage = () => {
   const [requests, setRequests] = useState([])
@@ -56,6 +57,7 @@ const StatisticsPage = () => {
         <div className="statistics__row">
           <RequestsAverageTimeCompletionPanel requests={requests} />
           <NewClientsStatsPanel requests={requests} />
+          <ProductQuantityInRequest requests={requests} />
         </div>
         <div className="statistics__row">
           <RequestsQuantityGraphPanel data={requests} />

@@ -61,14 +61,14 @@ const RequestsAverageTimeCompletionPanel = (props) => {
     })
 
     curMonthAverage =
-      curMonthAverage / (curMonthQuantity > 0 ? curMonthQuantity : 1)
+      curMonthAverage / (curMonthQuantity !== 0 ? curMonthQuantity : 1)
     prevMonthAverage =
-      prevMonthAverage / (prevMonthQuantity > 0 ? prevMonthQuantity : 1)
+      prevMonthAverage / (prevMonthQuantity !== 0 ? prevMonthQuantity : 1)
 
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
-      value: Math.floor(curMonthAverage * 100) / 100,
+      value: `${Math.floor(curMonthAverage * 100) / 100} дн.`,
       difference: curMonthAverage - prevMonthAverage,
       percentage:
         Math.floor(
