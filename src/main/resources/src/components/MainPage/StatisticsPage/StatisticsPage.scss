@@ -37,6 +37,25 @@
             margin-bottom: 5px;
         }
 
+        .statistics__wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .statistics__column {
+            width: 100%;
+            max-width: calc(50% - 0px);
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: stretch;
+            margin-bottom: 5px;
+        }
+
         .panel {
             display: flex;
             flex-direction: column;
@@ -87,6 +106,15 @@
 
                 &--list {
                     path:nth-child(1) {
+                        fill: rgba($button__background--inverted, 0.7);
+                    }
+                }
+
+                &--time {
+                    path:nth-child(1) {
+                        fill: rgba($button__background--inverted, 0.7);
+                    }
+                    path:nth-child(2) {
                         fill: rgba($button__background--inverted, 0.7);
                     }
                 }

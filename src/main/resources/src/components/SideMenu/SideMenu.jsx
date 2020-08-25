@@ -123,7 +123,9 @@ const SideMenu = (props) => {
       pathname: '/price-list',
       name: 'Каталог продукции',
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-      renderIcon: () => <PriceListImg className="sidemenu__img sidemenu__img--price" />,
+      renderIcon: () => (
+        <PriceListImg className="sidemenu__img sidemenu__img--price" />
+      ),
     },
     {
       pathname: '/lemz/',
@@ -132,7 +134,7 @@ const SideMenu = (props) => {
         : '/lemz/workshop-lemz',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
-      renderIcon: () => <FactoryIcon className="sidemenu__img" />,
+      renderIcon: () => <FactoryIcon className="sidemenu__img sidemenu__img--factory" />,
       iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
@@ -181,7 +183,9 @@ const SideMenu = (props) => {
         : '/lepsari/workshop-lepsari',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       name: 'ЦехЛепсари',
-      renderIcon: () => <FactoryIcon className="sidemenu__img" />,
+      renderIcon: () => (
+        <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+      ),
       iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
@@ -225,7 +229,9 @@ const SideMenu = (props) => {
       linkTo: '/rigging-list',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
       name: 'ЦехЛиговский',
-      renderIcon: () => <FactoryIcon className="sidemenu__img" />,
+      renderIcon: () => (
+        <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+      ),
       iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
@@ -320,7 +326,9 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
       addButtonName: 'Добавить сотрудника',
-      renderIcon: () => <EmployeesImg className="sidemenu__img" />,
+      renderIcon: () => (
+        <EmployeesImg className="sidemenu__img sidemenu__img--employees" />
+      ),
     },
     {
       pathname: '/dispatcher/transportation',

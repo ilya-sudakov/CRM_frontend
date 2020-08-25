@@ -10,6 +10,7 @@ import NewClientsStatsPanel from './Panels/NewClientsStatsPanel.jsx'
 import RequestsQuantityGraphPanel from './Graphs/RequestsQuantityGraphPanel.jsx'
 import ManagerEfficiencyGraphPanel from './Graphs/ManagerEfficiencyGraphPanel.jsx'
 import ManagerMoneyGraphPanel from './Graphs/ManagerMoneyGraphPanel.jsx'
+import RequestsAverageTimeCompletionPanel from './Panels/RequestsAverageTimeCompletionPanel.jsx'
 
 const StatisticsPage = () => {
   const [requests, setRequests] = useState([])
@@ -47,13 +48,32 @@ const StatisticsPage = () => {
           <RequestsQuantityPanel requests={requests} />
           <IncomeStatsPanel requests={requests} />
           <AverageSumStatsPanel requests={requests} />
+        </div>
+        <div className="statistics__row">
+          <ManagerEfficiencyGraphPanel data={requests} />
+          <ManagerMoneyGraphPanel data={requests} />
+        </div>
+        <div className="statistics__row">
+          <RequestsAverageTimeCompletionPanel requests={requests} />
           <NewClientsStatsPanel requests={requests} />
         </div>
         <div className="statistics__row">
           <RequestsQuantityGraphPanel data={requests} />
-          <ManagerEfficiencyGraphPanel data={requests} />
-          <ManagerMoneyGraphPanel data={requests} />
         </div>
+        {/* <div className="statistics__wrapper">
+          <div className="statistics__column" style={{ maxWidth: `calc(650px)` }}>
+            <RequestsQuantityPanel requests={requests} />
+            <IncomeStatsPanel requests={requests} />
+            <AverageSumStatsPanel requests={requests} />
+            <NewClientsStatsPanel requests={requests} />
+            <RequestsAverageTimeCompletionPanel requests={requests} />
+          </div>
+          <div className="statistics__column" style={{ maxWidth: `calc(80%)` }}>
+            <RequestsQuantityGraphPanel data={requests} />
+            <ManagerEfficiencyGraphPanel data={requests} />
+            <ManagerMoneyGraphPanel data={requests} />
+          </div>
+        </div> */}
       </div>
     </div>
   )

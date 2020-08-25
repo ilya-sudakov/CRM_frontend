@@ -81,6 +81,12 @@
           fill: #6e7b8c77;
         }
       }
+
+      &--employees {
+        g {
+          fill: #6e7b8c77;
+        }
+      }
     }
 
     .sidemenu__img--bigger {
@@ -99,6 +105,21 @@
           path:first-child {
             fill: transparent;
             stroke: #6e7b8cdd;
+          }
+        }
+
+        &--employees {
+          g {
+            fill: #6e7b8cdd;
+          }
+        }
+
+        &--factory {
+          path:first-child {
+            fill: #6e7b8cdd;
+          }
+          path:nth-child(2) {
+            fill: #6e7b8cdd;
           }
         }
       }
@@ -130,7 +151,19 @@
         &--price {
           path:first-child {
             fill: transparent;
-            stroke: #6e7b8cdd;
+            stroke: #6e7b8cff;
+          }
+        }
+
+        &--employees {
+          g {
+            fill: #6e7b8cff;
+          }
+        }
+
+        &--factory {
+          path:nth-child(2) {
+            fill: #6e7b8cff;
           }
         }
       }
@@ -260,7 +293,10 @@
 
       .sidemenu__img {
         max-width: 21px;
-        filter: brightness(3);
+        // filter: brightness(3);
+        path:first-child {
+          fill: #ffffff;
+        }
         // transition: 0.2s ease-in-out;
       }
     }

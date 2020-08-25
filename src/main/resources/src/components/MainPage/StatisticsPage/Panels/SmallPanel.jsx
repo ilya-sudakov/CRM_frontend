@@ -15,7 +15,13 @@ const SmallPanel = (props) => {
       </div>
       <div
         className={`panel__value panel__value--${
-          props.difference < 0 ? 'negative' : 'positive'
+          props.invertedStats === true
+            ? props.difference >= 0
+              ? 'negative'
+              : 'positive'
+            : props.difference < 0
+            ? 'negative'
+            : 'positive'
         }`}
       >
         {props.value || ''}
@@ -29,7 +35,13 @@ const SmallPanel = (props) => {
       </div>
       <div
         className={`panel__difference panel__difference--${
-          props.percentage === 0 || !props.isLoaded
+          props.invertedStats === true
+            ? props.percentage === 0 || !props.isLoaded
+              ? 'equal'
+              : props.percentage >= 0
+              ? 'negative'
+              : 'positive'
+            : props.percentage === 0 || !props.isLoaded
             ? 'equal'
             : props.percentage < 0
             ? 'negative'
