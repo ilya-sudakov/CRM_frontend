@@ -123,7 +123,7 @@ const SideMenu = (props) => {
       pathname: '/price-list',
       name: 'Каталог продукции',
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-      renderIcon: () => <PriceListImg className="sidemenu__img" />,
+      renderIcon: () => <PriceListImg className="sidemenu__img sidemenu__img--price" />,
     },
     {
       pathname: '/lemz/',

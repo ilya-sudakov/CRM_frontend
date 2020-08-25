@@ -72,11 +72,12 @@
         fill: #6e7b8c77;
       }
 
-      &--truck {
+      &--price {
         path:nth-child(1) {
           fill: transparent;
+          stroke: #6e7b8c77;
         }
-        path:nth-child(4) {
+        path:nth-child(2) {
           fill: #6e7b8c77;
         }
       }
@@ -95,12 +96,10 @@
           fill: #6e7b8cdd;
         }
 
-        &--truck {
+        &--price {
           path:first-child {
             fill: transparent;
-          }
-          path:nth-child(4) {
-            fill: #6e7b8cdd;
+            stroke: #6e7b8cdd;
           }
         }
       }
@@ -124,12 +123,10 @@
           fill: #6e7b8cff;
         }
 
-        &--truck {
+        &--price {
           path:first-child {
             fill: transparent;
-          }
-          path:nth-child(4) {
-            fill: #6e7b8cdd;
+            stroke: #6e7b8cdd;
           }
         }
       }

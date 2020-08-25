@@ -54,8 +54,6 @@ const StatisticsPage = () => {
           <ManagerEfficiencyGraphPanel data={requests} />
           <ManagerMoneyGraphPanel data={requests} />
         </div>
-        {/* <div className="statistics__row">
-        </div> */}
       </div>
     </div>
   )
