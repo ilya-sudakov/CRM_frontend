@@ -21,7 +21,6 @@ import {
   addSpaceDelimiter,
   createLabelForProduct,
 } from '../../../../utils/functions.jsx'
-import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import {
   requestStatuses,
   productsStatuses,

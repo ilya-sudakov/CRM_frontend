@@ -57,11 +57,12 @@ class App extends React.Component {
   userHasAccess = (rolesNeeded) => {
     let check = false
     this.state.userData.roles.map((item) => {
-      rolesNeeded.map((role) => {
-        if (item.name === role) {
+      for (let i = 0; i < rolesNeeded.length; i++) {
+        if (rolesNeeded[i] === item.name) {
           check = true
+          break
         }
-      })
+      }
     })
     return check
   }

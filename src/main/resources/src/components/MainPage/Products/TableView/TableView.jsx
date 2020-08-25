@@ -5,7 +5,6 @@ import plusIcon from '../../../../../../../../assets/tableview/add_item.png'
 import plusContIcon from '../../../../../../../../assets/tableview/add_cont.png'
 import './TableView.scss'
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import '../../../../utils/MainWindow/MainWindow.scss'
 
 import viewSVG from '../../../../../../../../assets/tableview/view.svg'
@@ -15,6 +14,7 @@ import {
   numberToString,
   addSpaceDelimiter,
 } from '../../../../utils/functions.jsx'
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -175,9 +175,10 @@ const TableView = (props) => {
                     <div className="main-window__actions">Действия</div>
                   </div>
                   {isLoading && (
-                    <TableDataLoading
-                      minHeight="50px"
-                      className="main-window__list-item"
+                    <PlaceholderLoading
+                      itemClassName="main-window__list-item"
+                      minHeight="35px"
+                      items={8}
                     />
                   )}
                   {sortProducts(searchQuery(props.products)).map(

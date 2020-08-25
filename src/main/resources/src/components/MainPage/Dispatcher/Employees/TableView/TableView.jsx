@@ -10,7 +10,7 @@ import pdfMake from 'pdfmake'
 import './TableView.scss'
 import { formatDateString } from '../../../../../utils/functions.jsx'
 import { getEmployeesByWorkshopListPdfText } from '../../../../../utils/pdfFunctions.jsx'
-import TableDataLoading from '../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
@@ -167,9 +167,10 @@ const TableView = (props) => {
                   <div className="main-window__actions">Действия</div>
                 </div>
                 {isLoading && (
-                  <TableDataLoading
-                    minHeight="50px"
-                    className="main-window__list-item"
+                  <PlaceholderLoading
+                    itemClassName="main-window__list-item"
+                    minHeight="35px"
+                    items={8}
                   />
                 )}
                 {sortEmployees(props.data).map(
@@ -262,139 +263,6 @@ const TableView = (props) => {
           </React.Fragment>
         ))}
       </div>
-      {/* <div className="tableview-employees__row tableview-employees__row--header">
-        <div className="tableview-employees__col">ФИО</div>
-        <div className="tableview-employees__col">
-          <span>Дата рождения</span>
-          <img
-            name="yearOfBirth"
-            className="tableview-employees__img"
-            onClick={changeSortOrder}
-            src={sortIcon}
-          />
-        </div>
-        <div className="tableview-employees__col">Гражданство</div>
-        <div className="tableview-employees__col">Подразделение</div>
-        <div className="tableview-employees__col">Должность</div>
-        <div className="tableview-employees__col">Комментарий</div>
-        <div className="tableview-employees__col">Актуальность</div>
-        <div className="tableview-employees__col">Действия</div>
-      </div>
-      {workshops.map((item, index) => (
-        <React.Fragment>
-          <div
-            className="tableview-employees__row tableview-employees__row--even"
-            id={index}
-            onClick={handleClickWorkshop}
-          >
-            <div className="tableview-employees__col"></div>
-            <div className="tableview-employees__col"></div>
-            <div className="tableview-employees__col"></div>
-            <div className="tableview-employees__col">{item}</div>
-            <div className="tableview-employees__col"></div>
-            <div className="tableview-employees__col"></div>
-            <div className="tableview-employees__col"></div>
-            <div className="tableview-employees__actions">
-              <div
-                className="tableview-employees__action"
-                onClick={() => {
-                  let dd = getEmployeesByWorkshopListPdfText(
-                    props.data.filter(
-                      (employee) =>
-                        (item === employee.workshop &&
-                          employee.relevance !== 'Уволен') ||
-                        (item === 'Уволенные' &&
-                          employee.relevance === 'Уволен'),
-                    ),
-                    item,
-                  )
-                  pdfMake.createPdf(dd).print()
-                }}
-              >
-                Печать
-              </div>
-            </div>
-          </div>
-          <div
-            id={index}
-            className={
-              isWorkshopHidden(index) === true
-                ? 'tableview-employees__employees tableview-employees__employees--hidden'
-                : 'tableview-employees__employees'
-            }
-          >
-            {isLoading && (
-              <TableDataLoading
-                minHeight="50px"
-                className="tableview-employees__row tableview-employees__row--even"
-              />
-            )}
-            {sortEmployees(props.data).map(
-              (employee, employee_id) =>
-                ((item === employee.workshop &&
-                  employee.relevance !== 'Уволен') ||
-                  (item === 'Уволенные' &&
-                    employee.relevance === 'Уволен')) && (
-                  <div
-                    key={employee_id}
-                    className={
-                      'tableview-employees__row tableview-employees__row--odd'
-                    }
-                  >
-                    <div className="tableview-employees__col">
-                      {employee.lastName +
-                        ' ' +
-                        employee.name +
-                        ' ' +
-                        employee.middleName}
-                    </div>
-                    <div className="tableview-employees__col">
-                      {formatDateString(employee.yearOfBirth)}
-                    </div>
-                    <div className="tableview-employees__col">
-                      {employee.citizenship}
-                    </div>
-                    <div className="tableview-employees__col">
-                      {employee.workshop}
-                    </div>
-                    <div className="tableview-employees__col">
-                      {employee.position}
-                    </div>
-                    <div className="tableview-employees__col">
-                      {employee.comment}
-                    </div>
-                    <div className="tableview-employees__col">
-                      {employee.relevance}
-                    </div>
-                    <div className="tableview-employees__actions">
-                      <Link
-                        to={'/dispatcher/employees/view/' + employee.id}
-                        className="tableview-employees__action"
-                      >
-                        Просмотр
-                      </Link>
-                      <Link
-                        to={'/dispatcher/employees/edit/' + employee.id}
-                        className="tableview-employees__action"
-                      >
-                        Редактировать
-                      </Link>
-                      {props.userHasAccess(['ROLE_ADMIN']) && (
-                        <div
-                          data-id={employee.id}
-                          className="tableview-employees__action"
-                          onClick={props.deleteItem}
-                        >
-                          Удалить
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ),
-            )}
-          </div>
-        </React.Fragment>
-      ))} */}
     </div>
   )
 }

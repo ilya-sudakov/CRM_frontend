@@ -6,7 +6,6 @@ import {
   formatDateString,
   addSpaceDelimiter,
 } from '../../../../../../utils/functions.jsx'
-import TableDataLoading from '../../../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { days } from '../../../../../../utils/dataObjects'
 import { Link } from 'react-router-dom'
 import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'

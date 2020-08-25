@@ -253,9 +253,12 @@
       }
     }
     .work-management__content {
+      padding: 0px 20px;
+      padding-bottom: 10px;
       .work-management__list {
         width: 100%;
-        padding: 0 5px;
+        padding: 0;
+        padding-right: 2px;
       }
     }
     .work-management__item {

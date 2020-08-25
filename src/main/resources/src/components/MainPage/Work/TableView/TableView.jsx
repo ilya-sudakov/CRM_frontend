@@ -5,7 +5,7 @@ import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
 import './TableView.scss'
 import '../../../../utils/MainWindow/MainWindow.scss'
-import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -57,9 +57,10 @@ const TableView = (props) => {
             <div className="main-window__actions">Действия</div>
           </div>
           {isLoading && (
-            <TableDataLoading
-              minHeight="50px"
-              className="tableview_products__row tableview_products__row--even"
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="35px"
+              items={8}
             />
           )}
           {sortProducts(props.data).map((work, work_id) => (

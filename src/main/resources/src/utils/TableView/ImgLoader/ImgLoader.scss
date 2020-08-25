@@ -18,9 +18,11 @@
 
   @keyframes load {
     from {
+      background: linear-gradient(to right, transparent 0%, #fafafa 50%, transparent 100%);
       left: -150px;
     }
     to {
+      background: linear-gradient(to right, transparent 0%, #e8e8e8 50%, transparent 100%);
       left: 100%;
     }
   }

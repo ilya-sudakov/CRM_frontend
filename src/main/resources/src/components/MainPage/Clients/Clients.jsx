@@ -461,10 +461,6 @@ const Clients = (props) => {
             <span>Дата след. контакта</span>
             <div className="main-window__actions">Действие</div>
           </div>
-          {/* {isLoading && <TableDataLoading
-                        className="main-window__list-item"
-                        minHeight="50px"
-                    />} */}
           {isLoading && (
             <PlaceholderLoading
               itemClassName="main-window__list-item"

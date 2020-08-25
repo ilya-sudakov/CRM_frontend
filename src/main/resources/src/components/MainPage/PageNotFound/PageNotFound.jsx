@@ -15,7 +15,7 @@ const PageNotFound = () => {
         <br />
         Если это ошибка, и запрашиваемая страница должна быть доступна для
         просмотра - напишите об этом в{' '}
-        <Link className="page-not-allowed__link" to="/feedback">
+        <Link className="error-page__link" to="/feedback">
           обратной связи
         </Link>
       </div>

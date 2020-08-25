@@ -7,7 +7,6 @@ import {
   formatDateString,
   numberToString,
 } from '../../../../utils/functions.jsx'
-import TableDataLoading from '../../../../utils/TableView/TableDataLoading/TableDataLoading.jsx'
 import { UserContext } from '../../../../App.js'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
