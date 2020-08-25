@@ -26,7 +26,7 @@ const ProductQuantityInRequest = (props) => {
     let temp = requests.filter((request) => {
       const date = new Date(request.date)
       if (date.getMonth() === new Date(new Date().setDate(0)).getMonth()) {
-        console.log(request, request.requestProducts.length)
+        // console.log(request, request.requestProducts.length)
         prevMonthAverage += request.requestProducts.length
         prevMonthQuantity++
         return false
