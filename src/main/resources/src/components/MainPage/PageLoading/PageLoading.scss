@@ -22,6 +22,11 @@
 
   &__img {
     max-width: var(--img-size);
+
+    &--placeholder {
+      max-height: var(--img-size);
+      border-radius: 5px !important;
+    }
   }
 
   &__circle {

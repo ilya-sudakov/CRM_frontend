@@ -27,6 +27,25 @@
             padding: 0 5px;
         }
 
+        &__header {
+            .main-window__menu {
+                width: 100%;
+                border-radius: 5px;
+                margin-bottom: -5px;
+                margin-right: 25px;
+                margin-left: -15px;
+                // max-width: fit-content;
+                // margin-right: auto;
+                // box-shadow: 0 1px 3px rgba(59, 53, 53, 0.12), 0 1px 5px rgba(0, 0, 0, 0.1);
+                background-color: transparent;
+                position: relative;
+
+                .main-window__item {
+                    background-color: transparent;
+                }
+            }
+        }
+
         .statistics__row {
             width: 100%;
             display: flex;
@@ -41,6 +60,14 @@
             width: 100%;
             display: flex;
             flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .statistics__page-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
         }
@@ -66,7 +93,7 @@
             padding: 20px 20px;
             box-sizing: border-box;
             box-shadow: 0 1px 3px rgba(59, 53, 53, 0.12), 0 1px 5px rgba(0, 0, 0, 0.1);
-            margin-right: 15px;
+            margin-right: 25px;
             margin-bottom: 10px;
             cursor: pointer;
             color: #000000;
@@ -240,7 +267,7 @@
             &--chart {
                 width: 100%;
                 height: 100%;
-                flex: 0 1 calc(50% - 15px);
+                flex: 0 1 calc(50% - 25px);
                 max-width: 700px;
                 // height: 400px;
                 .panel__category {
@@ -296,6 +323,12 @@
 
     @media (max-width: 768px) {
         .main-window {
+            &__header {
+                .main-window__menu {
+                    margin-bottom: 10px;
+                    margin-right: 0;
+                }
+            }
             .statistics__row {
                 .panel {
                     &__difference {

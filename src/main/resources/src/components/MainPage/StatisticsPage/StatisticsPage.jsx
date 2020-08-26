@@ -15,6 +15,45 @@ import ProductQuantityInRequest from './Panels/ProductQuantityInRequest.jsx'
 import ClientTypeDistributionInRequests from './Graphs/ClientTypeDistributionInRequests.jsx'
 
 const StatisticsPage = () => {
+  const [curPage, setCurPage] = useState('requests')
+  const pages = {
+    requests: () => <RequestsPage />,
+    production: () => <RequestsPage />,
+  }
+
+  return (
+    <div className="statistics">
+      <div className="main-window">
+        <div className="main-window__title">Статистика</div>
+        <div className="main-window__header">
+          <div className="main-window__menu">
+            <div
+              className={`main-window__item ${
+                curPage === 'requests' ? 'main-window__item--active' : ''
+              }`}
+              onClick={() => setCurPage('requests')}
+            >
+              Заказы
+            </div>
+            <div
+              className={`main-window__item ${
+                curPage === 'production' ? 'main-window__item--active' : ''
+              }`}
+              onClick={() => setCurPage('production')}
+            >
+              Производство
+            </div>
+          </div>
+        </div>
+        {pages[curPage]()}
+      </div>
+    </div>
+  )
+}
+
+export default StatisticsPage
+
+const RequestsPage = (props) => {
   const [requests, setRequests] = useState([])
   const [requestsLoaded, setRequestsLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -43,44 +82,25 @@ const StatisticsPage = () => {
   }, [])
 
   return (
-    <div className="statistics">
-      <div className="main-window">
-        <div className="main-window__title">Статистика</div>
-        <div className="statistics__row">
-          <RequestsQuantityPanel requests={requests} />
-          <IncomeStatsPanel requests={requests} />
-          <AverageSumStatsPanel requests={requests} />
-        </div>
-        <div className="statistics__row">
-          <ManagerEfficiencyGraphPanel data={requests} />
-          <ManagerMoneyGraphPanel data={requests} />
-        </div>
-        <div className="statistics__row">
-          <RequestsAverageTimeCompletionPanel requests={requests} />
-          <NewClientsStatsPanel requests={requests} />
-          <ProductQuantityInRequest requests={requests} />
-        </div>
-        <div className="statistics__row">
-          <RequestsQuantityGraphPanel data={requests} />
-          <ClientTypeDistributionInRequests data={requests} />
-        </div>
-        {/* <div className="statistics__wrapper">
-          <div className="statistics__column" style={{ maxWidth: `calc(650px)` }}>
-            <RequestsQuantityPanel requests={requests} />
-            <IncomeStatsPanel requests={requests} />
-            <AverageSumStatsPanel requests={requests} />
-            <NewClientsStatsPanel requests={requests} />
-            <RequestsAverageTimeCompletionPanel requests={requests} />
-          </div>
-          <div className="statistics__column" style={{ maxWidth: `calc(80%)` }}>
-            <RequestsQuantityGraphPanel data={requests} />
-            <ManagerEfficiencyGraphPanel data={requests} />
-            <ManagerMoneyGraphPanel data={requests} />
-          </div>
-        </div> */}
+    <div className="statistics__page-wrapper">
+      <div className="statistics__row">
+        <RequestsQuantityPanel requests={requests} />
+        <IncomeStatsPanel requests={requests} />
+        <AverageSumStatsPanel requests={requests} />
+      </div>
+      <div className="statistics__row">
+        <ManagerEfficiencyGraphPanel data={requests} />
+        <ManagerMoneyGraphPanel data={requests} />
+      </div>
+      <div className="statistics__row">
+        <RequestsAverageTimeCompletionPanel requests={requests} />
+        <NewClientsStatsPanel requests={requests} />
+        <ProductQuantityInRequest requests={requests} />
+      </div>
+      <div className="statistics__row">
+        <RequestsQuantityGraphPanel data={requests} />
+        <ClientTypeDistributionInRequests data={requests} />
       </div>
     </div>
   )
 }
-
-export default StatisticsPage

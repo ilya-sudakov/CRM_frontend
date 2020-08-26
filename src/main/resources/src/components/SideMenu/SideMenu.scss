@@ -82,6 +82,12 @@
         }
       }
 
+      &--request {
+        g {
+          fill: #6e7b8c77;
+        }
+      }
+
       &--employees {
         g {
           fill: #6e7b8c77;
@@ -122,6 +128,12 @@
             fill: #6e7b8cdd;
           }
         }
+
+        &--request {
+          g {
+            fill: #6e7b8cdd;
+          }
+        }
       }
       .sidemenu__img--icon {
         // transform: scale(1.1);
@@ -152,6 +164,12 @@
           path:first-child {
             fill: transparent;
             stroke: #6e7b8cff;
+          }
+        }
+
+        &--request {
+          g {
+            fill: #6e7b8cff;
           }
         }
 
@@ -268,7 +286,6 @@
     }
 
     .sidemenu__addButton {
-      background-color: $button__background--inverted;
       color: $secondary-text-color;
       font-size: 25px;
       // margin-left: 10px;
@@ -281,11 +298,9 @@
       transform: translate3d(-1px, -1px, 0);
       border: solid 1px transparent;
       border-width: 1px 0 0 1px;
+      background-color: $button__background--inverted;
+      // background-color: $secondary-text-color;
       // transition: all 100ms ease-in-out;
-
-      path:first-child {
-        fill: #6e7b8cee;
-      }
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);

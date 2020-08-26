@@ -109,7 +109,9 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addButtonName: 'Добавить заявку',
-      renderIcon: () => <PlayListImg className="sidemenu__img" />,
+      renderIcon: () => (
+        <PlayListImg className="sidemenu__img sidemenu__img--request" />
+      ),
     },
     {
       pathname: '/products',
@@ -134,7 +136,9 @@ const SideMenu = (props) => {
         : '/lemz/workshop-lemz',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
-      renderIcon: () => <FactoryIcon className="sidemenu__img sidemenu__img--factory" />,
+      renderIcon: () => (
+        <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+      ),
       iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
@@ -142,7 +146,7 @@ const SideMenu = (props) => {
           pathname: '/lemz/workshop-lemz',
           link: '/lemz/workshop-lemz',
           // icon: playListImg,
-          renderIcon: () => <PlayListImg className="sidemenu__img" />,
+          renderIcon: () => <PlayListImg className="sidemenu__img sidemenu__img--request" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
@@ -192,7 +196,7 @@ const SideMenu = (props) => {
           name: 'Очередь производства',
           pathname: '/lepsari/workshop-lepsari',
           link: '/lepsari/workshop-lepsari',
-          renderIcon: () => <PlayListImg className="sidemenu__img" />,
+          renderIcon: () => <PlayListImg className="sidemenu__img sidemenu__img--request" />,
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
         },
         {
