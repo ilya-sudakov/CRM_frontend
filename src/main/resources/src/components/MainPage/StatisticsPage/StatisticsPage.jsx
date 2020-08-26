@@ -18,7 +18,7 @@ const StatisticsPage = () => {
   const [curPage, setCurPage] = useState('requests')
   const pages = {
     requests: () => <RequestsPage />,
-    production: () => <RequestsPage />,
+    production: () => <ProductionPage />,
   }
 
   return (
@@ -101,6 +101,22 @@ const RequestsPage = (props) => {
         <RequestsQuantityGraphPanel data={requests} />
         <ClientTypeDistributionInRequests data={requests} />
       </div>
+    </div>
+  )
+}
+
+const ProductionPage = (props) => {
+  const [data, setData] = useState([])
+  const [dataLoaded, setDataLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const abortController = new AbortController()
+  }, [])
+
+  return (
+    <div className="statistics__page-wrapper">
+      <div className="statistics__row"></div>
     </div>
   )
 }

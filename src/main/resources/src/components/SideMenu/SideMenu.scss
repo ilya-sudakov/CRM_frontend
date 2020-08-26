@@ -303,7 +303,8 @@
       transition: filter 0.5s ease-in-out;
       transform: translate3d(-1px, -1px, 0);
       border: solid 1px transparent;
-      border-width: 1px 0 0 1px;
+      // border-width: 1px 0 0 1px;
+      // border-radius: 999px;
       // background-color: $secondary-text-color;
       // transition: all 100ms ease-in-out;
 
@@ -312,7 +313,10 @@
 
       &:hover {
         // background-color: lighten($button__background--inverted, 5%);
+        // border: 1px solid #b0c0d4;
         .sidemenu__img {
+          margin: 0;
+          padding: 0;
           path:first-child {
             // fill: #ffffff;
             fill: #ffffffff;
@@ -321,7 +325,7 @@
       }
 
       .sidemenu__img {
-        max-width: 21px;
+        max-width: 20px;
         // filter: brightness(3);
         path:first-child {
           // fill: #ffffff;
