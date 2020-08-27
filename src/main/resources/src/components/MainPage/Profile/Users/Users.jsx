@@ -78,8 +78,11 @@ const Users = (props) => {
   return (
     <div className="users-manage">
       <div className="main-window">
-        <div className="main-window__title">Управление пользователями</div>
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Управление пользователями</div>
+        </div>
         <SearchBar
+          fullSize
           // title="Поиск пользователя"
           placeholder="Введите имя пользователя для поиска..."
           setSearchQuery={setSearchQuery}
