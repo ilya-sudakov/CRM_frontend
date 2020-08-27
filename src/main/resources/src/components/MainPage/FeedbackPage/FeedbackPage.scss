@@ -54,6 +54,8 @@
         border-top: 1px solid #aaaaaa;
         border-radius: 5px;
 
+        border-left: 1px solid #aaaaaa;
+
         .feedback-page__avatar {
           --avatar-size: 50px;
           display: flex;
@@ -78,13 +80,18 @@
           display: inline-block;
           position: absolute;
           width: 10px;
-          // height: calc(100% - 2px);
-          height: calc(100% + 2px);
+          // height: calc(100% + 2px);
           left: 1px;
           top: -1px;
           border-top-left-radius: 5px;
           border-bottom-left-radius: 5px;
           background-color: #cccccc;
+
+          width: 8px;
+          top: 15px;
+          left: 5px;
+          border-radius: 25px;
+          height: calc(100% - 30px);
         }
         &:nth-child(2) {
           border-top: 1px solid #aaaaaa;
