@@ -13,9 +13,12 @@ import ManagerMoneyGraphPanel from './Graphs/ManagerMoneyGraphPanel.jsx'
 import RequestsAverageTimeCompletionPanel from './Panels/RequestsAverageTimeCompletionPanel.jsx'
 import ProductQuantityInRequest from './Panels/ProductQuantityInRequest.jsx'
 import ClientTypeDistributionInRequests from './Graphs/ClientTypeDistributionInRequests.jsx'
+import RiggingItemsQuantityForType from './Graphs/RiggingItemsQuantityForType.jsx'
+import { getStamp } from '../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import { checkRiggingTypesInputs } from '../Dispatcher/Rigging/RiggingComponents/rigsVariables.js'
 
 const StatisticsPage = () => {
-  const [curPage, setCurPage] = useState('requests')
+  const [curPage, setCurPage] = useState('production')
   const pages = {
     requests: () => <RequestsPage />,
     production: () => <ProductionPage />,
@@ -106,17 +109,50 @@ const RequestsPage = (props) => {
 }
 
 const ProductionPage = (props) => {
-  const [data, setData] = useState([])
+  const [drafts, setDrafts] = useState([])
   const [dataLoaded, setDataLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
+  async function loadDrafts() {
+    let newDrafts = []
+    setIsLoading(true)
+    getStamp()
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response);
+        response.map((item) => {
+          return item.stampParts
+            .filter((stamp) => stamp.color !== 'completed') //Не показываем завершенные детали
+            .map((stamp) => {
+              newDrafts.push({
+                ...stamp,
+                type: 'Stamp',
+              })
+            })
+        })
+        setIsLoading(false)
+        // console.log(newDrafts)
+        setDrafts([...newDrafts])
+        setDataLoaded(true)
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
+      })
+  }
+
   useEffect(() => {
     const abortController = new AbortController()
-  }, [])
+    if (!dataLoaded && !isLoading) {
+      loadDrafts()
+    }
+  }, [dataLoaded, isLoading])
 
   return (
     <div className="statistics__page-wrapper">
-      <div className="statistics__row"></div>
+      <div className="statistics__row">
+        <RiggingItemsQuantityForType data={drafts} />
+      </div>
     </div>
   )
 }
