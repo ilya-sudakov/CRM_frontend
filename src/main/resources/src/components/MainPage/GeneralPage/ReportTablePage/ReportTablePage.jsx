@@ -193,29 +193,32 @@ const ReportTablePage = (props) => {
   return (
     <div className="report-table-page">
       <div className="main-window">
-        <div className="main-window__title">
-          Табель
-          <Button
-            text="Скачать .xlsx"
-            imgSrc={DownloadIcon}
-            className="main-window__button main-window__button--inverted"
-            inverted
-            isLoading={isLoading}
-            onClick={async () => {
-              setIsLoading(true)
-              const filteredWorkshops = [
-                'ЦехЛЭМЗ',
-                'ЦехЛепсари',
-                'ЦехЛиговский',
-                'Офис',
-                'Уволенные',
-              ]
-              await exportReportTableExcel(new Date(date), filteredWorkshops)
-              setIsLoading(false)
-            }}
-          />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">
+            Табель
+            <Button
+              text="Скачать .xlsx"
+              imgSrc={DownloadIcon}
+              className="main-window__button main-window__button--inverted"
+              inverted
+              isLoading={isLoading}
+              onClick={async () => {
+                setIsLoading(true)
+                const filteredWorkshops = [
+                  'ЦехЛЭМЗ',
+                  'ЦехЛепсари',
+                  'ЦехЛиговский',
+                  'Офис',
+                  'Уволенные',
+                ]
+                await exportReportTableExcel(new Date(date), filteredWorkshops)
+                setIsLoading(false)
+              }}
+            />
+          </div>
         </div>
         <SearchBar
+          fullSize
           title="Поиск по сотрудникам"
           placeholder="Введите запрос для поиска по сотрудникам..."
           setSearchQuery={setSearchQuery}

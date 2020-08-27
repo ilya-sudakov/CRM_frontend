@@ -7,14 +7,14 @@
         min-height: 600px;
 
         .main-window__title {
-            width: calc(100% - 20px);
+            // width: calc(100% - 20px);
             font-size: 24px;
-            padding: 0px 10px;
-            margin: 0;
-            padding-top: 0;
+            // padding: 0px 10px;
+            // margin: 0;
+            // padding-top: 0;
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
 
             .main-window__button {
@@ -48,6 +48,9 @@
                 }
             }
         }
+    }
+    .searchbar {
+        margin-bottom: 10px;
     }
     &__employee-info {
         .form-window__content {
@@ -151,6 +154,8 @@
 
         .main-window__title {
             font-size: 20px;
+            justify-content: center !important;
+            text-align: center;
         }
 
         .main-window__list {
