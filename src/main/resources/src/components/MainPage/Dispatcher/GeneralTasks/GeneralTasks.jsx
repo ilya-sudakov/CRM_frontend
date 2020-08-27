@@ -79,17 +79,12 @@ const GeneralTasks = (props) => {
   return (
     <div className="general_tasks">
       <div className="main-window">
-        <div className="main-window__title">Основные задачи</div>
         <FloatingPlus
           linkTo="/dispatcher/general-tasks/new"
           visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
         />
-        <div className="main-window__header">
-          <SearchBar
-            // title="Основные задачи"
-            placeholder="Введите описание задачи для поиска..."
-            setSearchQuery={setSearchQuery}
-          />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Основные задачи</div>
           <div className="main-window__menu">
             <div
               className={
@@ -113,6 +108,11 @@ const GeneralTasks = (props) => {
             </div>
           </div>
         </div>
+        <SearchBar
+          // title="Основные задачи"
+          placeholder="Введите описание задачи для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
         <div className="main-window__info-panel">
           <div className="main-window__status-panel">
             <div>Фильтр по статусам: </div>

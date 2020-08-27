@@ -7,7 +7,6 @@ import PrintIcon from '../../../../../../../../assets/print.png'
 import pdfMake from 'pdfmake'
 import { getEmployeesListPdfText } from '../../../../utils/pdfFunctions.jsx'
 import {
-  getEmployees,
   deleteEmployee,
   getEmployeesByWorkshop,
 } from '../../../../utils/RequestsAPI/Employees.jsx'
@@ -52,16 +51,6 @@ const Employees = (props) => {
     Promise.all(temp).then(() => {
       setIsLoading(false)
     })
-    //Стандартный способ
-    // getEmployees()
-    //     .then(res => res.json())
-    //     .then(res => {
-    //         // console.log(res);
-    //         setEmployees(res);
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     })
   }
 
   const printEmployeesList = () => {

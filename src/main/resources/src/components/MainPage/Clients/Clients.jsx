@@ -299,9 +299,13 @@ const Clients = (props) => {
   return (
     <div className="clients">
       <div className="main-window">
-        <div className="main-window__header">
+        <FloatingPlus
+          linkTo={'/' + props.type + '/new'}
+          visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
+        />
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__title">
-            {curCategory}
+            <span>{curCategory}</span>
             <Button
               text="Выгрузить эл. почты"
               isLoading={isLoading}
@@ -310,40 +314,6 @@ const Clients = (props) => {
               onClick={getEmailsExcel}
             />
           </div>
-          <FloatingPlus
-            linkTo={'/' + props.type + '/new'}
-            visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
-          />
-          <SearchBar
-            // title="Поиск по клиентам"
-            placeholder="Введите запрос для поиска..."
-            setSearchQuery={setSearchQuery}
-            searchQuery={searchQuery}
-            onButtonClick={(query) => {
-              setIsLoading(true)
-              // console.log(query);
-              if (query === '') {
-                loadData(curCategory, curClientType)
-              } else {
-                searchClients({
-                  name: query,
-                  type: clientTypes[props.type].type,
-                })
-                  .then((res) => res.json())
-                  .then((res) => {
-                    // console.log(res);
-                    setClients(res)
-                    setItemsCount(res.length)
-                    setPagination([1])
-                    setIsLoading(false)
-                  })
-                  .catch((error) => {
-                    console.log(error)
-                    setIsLoading(false)
-                  })
-              }
-            }}
-          />
           <div className="main-window__menu">
             <Link
               to={'/' + props.type + '/category/' + curCategory + '/active'}
@@ -394,6 +364,36 @@ const Clients = (props) => {
             </Link>
           </div>
         </div>
+        <SearchBar
+          // title="Поиск по клиентам"
+          placeholder="Введите запрос для поиска..."
+          setSearchQuery={setSearchQuery}
+          searchQuery={searchQuery}
+          onButtonClick={(query) => {
+            setIsLoading(true)
+            // console.log(query);
+            if (query === '') {
+              loadData(curCategory, curClientType)
+            } else {
+              searchClients({
+                name: query,
+                type: clientTypes[props.type].type,
+              })
+                .then((res) => res.json())
+                .then((res) => {
+                  // console.log(res);
+                  setClients(res)
+                  setItemsCount(res.length)
+                  setPagination([1])
+                  setIsLoading(false)
+                })
+                .catch((error) => {
+                  console.log(error)
+                  setIsLoading(false)
+                })
+            }
+          }}
+        />
         <FormWindow
           title={
             curForm === 'nextContactDate'

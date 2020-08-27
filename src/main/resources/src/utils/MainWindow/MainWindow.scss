@@ -31,17 +31,11 @@
 
     .main-window__menu {
       display: flex;
-      // flex: 0 1 80%;
-      // width: 100%;
       width: calc(100% - 25px);
-      // align-self: flex-end;
       background-color: $secondary-text-color;
-      // border-bottom-left-radius: 5px;
-      // border-bottom-right-radius: 5px;
       margin-bottom: 0px;
 
       .main-window__item {
-        // width: 100%;
         width: fit-content;
         margin-right: 2.5px;
         font-size: 80%;
@@ -50,8 +44,6 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        // color: lighten($primary-text-color, 100%);
-        // background-color: darken($table-primary__background, 10%);
         color: lighten($primary-text-color, 50%);
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
@@ -60,7 +52,6 @@
         cursor: pointer;
         text-align: center;
         &:first-child {
-          // margin-left: auto;
           border-bottom-left-radius: 5px;
         }
         &:last-child {
@@ -84,7 +75,6 @@
 
         &:hover {
           color: lighten($primary-text-color, 10%);
-          // background-color: darken($primary-background-color, 5%);
 
           &::after {
             background-color: lighten($primary-text-color, 90%);
@@ -93,7 +83,6 @@
 
         &--active {
           color: $primary-text-color !important;
-          // color: darken($button__background--inverted, 5%);
           background-color: $primary-background-color;
 
           &:hover {
@@ -108,6 +97,27 @@
             background-color: lighten($button__background--inverted, 5%);
           }
         }
+      }
+    }
+
+    &--full {
+      margin-top: -10px;
+      background-color: #ffffff;
+      // background-color: #dddddd;
+      flex-direction: column;
+      padding-top: 15px;
+      border-bottom: 1px solid #dddddd;
+      margin-bottom: 5px;
+
+      .main-window__title {
+        text-align: left;
+        width: calc(100% - 30px);
+        margin-left: 10px;
+        margin-bottom: 10px !important;
+      }
+
+      .main-window__menu {
+        width: 100%;
       }
     }
   }
