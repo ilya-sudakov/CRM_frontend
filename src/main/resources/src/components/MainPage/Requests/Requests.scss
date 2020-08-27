@@ -48,6 +48,7 @@
   }
 
   .main-window {
+    padding-top: 0;
     &__list {
       width: calc(100% - 30px) !important;
     }
@@ -61,27 +62,38 @@
     border-top-left-radius: 10px;
     text-align: center;
     z-index: 1;
-    margin: 0 !important;
-    // margin-bottom: 5px;
+    // margin: 0 !important;
+    margin-bottom: 0;
+
+    // margin-top: 10px;
+    padding-top: 20px;
+    margin-left: -25px;
+    width: calc(100% + 25px);
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
 
     .main-window__title {
       // flex: 0 1 20%;
-      width: calc(100% - 20px);
+      width: calc(100% - 70px);
       // font-size: 90%;
       font-size: 24px;
       padding: 10px 10px;
       margin: 0;
       padding-top: 0;
+      text-align: left;
+      margin-left: 50px;
     }
 
     .main-window__menu {
-      width: calc(100% - 25px);
-      margin-bottom: 10px;
+      width: calc(100% - 30px);
+      // width: 100%;
+      // margin-bottom: 10px;
       // border-bottom-left-radius: 5px;
       // border-bottom-right-radius: 5px;
       border-radius: 2.5px;
       background-color: #ffffff;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.1);
+      margin-left: 30px;
+      // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.1);
 
       .main-window__item {
         margin-right: 2.5px;
@@ -138,13 +150,13 @@
   @media (max-width: 768px) {
     .main-window__header {
       flex-direction: column !important;
-      width: calc(100% - 10px);
+      // width: calc(100% - 10px);
       flex-wrap: nowrap !important;
       .main-window__title {
         font-size: 125%;
       }
       .main-window__menu {
-        width: calc(100% - 10px);
+        // width: calc(100% - 10px);
 
         .main-window__item {
           width: 100% !important;
@@ -176,6 +188,10 @@
     .main-window__header {
       .main-window__menu {
         font-size: 85%;
+      }
+
+      .main-window__title {
+        margin-left: 20px;
       }
     }
   }
