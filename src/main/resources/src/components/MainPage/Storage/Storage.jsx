@@ -41,14 +41,14 @@ const Storage = (props) => {
   return (
     <div className="storage">
       <div className="main-window">
+        <FloatingPlus
+          linkTo="/lemz/workshop-storage/new"
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP']}
+        />
         <SearchBar
           // title="Поиск по складу"
           placeholder="Введите артикул детали для поиска..."
           setSearchQuery={setSearchQuery}
-        />
-        <FloatingPlus
-          linkTo="/lemz/workshop-storage/new"
-          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP']}
         />
         <div className="main-window__info-panel">
           <div className="main-window__amount_table">

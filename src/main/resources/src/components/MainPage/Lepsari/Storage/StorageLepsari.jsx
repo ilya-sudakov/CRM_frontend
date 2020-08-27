@@ -41,27 +41,29 @@ const StorageLepsari = (props) => {
   return (
     <div className="storage-lepsari">
       {/* <div className="main-window__title">Склад</div> */}
-      <SearchBar
-        // title="Поиск по складу"
-        placeholder="Введите артикул детали для поиска..."
-        setSearchQuery={setSearchQuery}
-      />
-      <FloatingPlus
-        linkTo="/lepsari/workshop-storage/new"
-        visibility={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
-      />
-      <div className="main-window__info-panel">
-        <div className="main-window__amount_table">
-          Всего: {storage.length} записей
+      <div className="main-window">
+        <FloatingPlus
+          linkTo="/lepsari/workshop-storage/new"
+          visibility={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+        />
+        <SearchBar
+          // title="Поиск по складу"
+          placeholder="Введите артикул детали для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
+        <div className="main-window__info-panel">
+          <div className="main-window__amount_table">
+            Всего: {storage.length} записей
+          </div>
         </div>
+        <TableViewNew
+          data={storage}
+          searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
+          deleteItem={deleteItem}
+          workshopName="lepsari"
+        />
       </div>
-      <TableViewNew
-        data={storage}
-        searchQuery={searchQuery}
-        userHasAccess={props.userHasAccess}
-        deleteItem={deleteItem}
-        workshopName="lepsari"
-      />
     </div>
   )
 }

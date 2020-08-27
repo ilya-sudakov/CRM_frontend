@@ -30,7 +30,7 @@ const LEMZ = (props) => {
             props.history.location.pathname.includes('edit') ||
             props.history.location.pathname.includes('view')
               ? 'main-window__header main-window__header--hidden'
-              : 'main-window__header'
+              : 'main-window__header main-window__header--full'
           }
         >
           <div className="main-window__title">Цех ЛЭМЗ</div>

@@ -115,16 +115,16 @@ const WorkshopLEMZ = (props) => {
   return (
     <div className="requests_LEMZ">
       <div className="main-window">
-        <div className="main-window__header">
-          <SearchBar
-            // title="Поиск по заявкам ЛЭМЗ"
-            placeholder="Введите название продукции для поиска..."
-            setSearchQuery={setSearchQuery}
-          />
-          <FloatingPlus
-            linkTo="/lemz/workshop-lemz/new"
-            visibility={['ROLE_ADMIN', 'ROLE_LEMZ']}
-          />
+        <FloatingPlus
+          linkTo="/lemz/workshop-lemz/new"
+          visibility={['ROLE_ADMIN', 'ROLE_LEMZ']}
+        />
+        <SearchBar
+          // title="Поиск по заявкам ЛЭМЗ"
+          placeholder="Введите название продукции для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__menu">
             <div
               className={

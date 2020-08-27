@@ -4,9 +4,7 @@ import './WorkshopLepsari.scss'
 import PrintIcon from '../../../../../../../assets/print.png'
 import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
-import {
-  getProductsFromRequestsListPdfText,
-} from '../../../utils/pdfFunctions.jsx'
+import { getProductsFromRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import {
@@ -117,17 +115,16 @@ const WorkshopLepsari = (props) => {
   return (
     <div className="requests_lepsari">
       <div className="main-window">
+        <FloatingPlus
+          linkTo="/lepsari/workshop-lepsari/new"
+          visibility={['ROLE_ADMIN', 'ROLE_LEPSARI']}
+        />
         {/* <div className="main-window__title">Заявки на производство Лепсари</div> */}
-        <div className="main-window__header">
-          <SearchBar
-            // title="Поиск по заявкам Лепсари"
-            placeholder="Введите название продукции для поиска..."
-            setSearchQuery={setSearchQuery}
-          />
-          <FloatingPlus
-            linkTo="/lepsari/workshop-lepsari/new"
-            visibility={['ROLE_ADMIN', 'ROLE_LEPSARI']}
-          />
+        <SearchBar
+          placeholder="Введите название продукции для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__menu">
             <div
               className={
