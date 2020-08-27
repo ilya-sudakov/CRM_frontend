@@ -26,8 +26,8 @@ const StatisticsPage = () => {
   return (
     <div className="statistics">
       <div className="main-window">
-        <div className="main-window__title">Статистика</div>
         <div className="main-window__header">
+          <div className="main-window__title">Статистика</div>
           <div className="main-window__menu">
             <div
               className={`main-window__item ${
@@ -81,6 +81,9 @@ const RequestsPage = (props) => {
   useEffect(() => {
     const abortController = new AbortController()
     loadRequests(abortController.signal)
+    return function cancel() {
+      abortController.abort()
+    }
   }, [])
 
   return (
@@ -112,10 +115,10 @@ const ProductionPage = (props) => {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  async function loadDrafts() {
-    let newDrafts = []
+  function loadDrafts(signal) {
     setIsLoading(true)
-    getStamp()
+    let newDrafts = []
+    getStamp(signal)
       .then((response) => response.json())
       .then((response) => {
         // console.log(response);
@@ -129,8 +132,8 @@ const ProductionPage = (props) => {
               })
             })
         })
-        setIsLoading(false)
         setDrafts([...newDrafts])
+        setIsLoading(false)
         setDataLoaded(true)
       })
       .catch((error) => {
@@ -140,9 +143,13 @@ const ProductionPage = (props) => {
   }
 
   useEffect(() => {
+    if (dataLoaded || isLoading) {
+      return
+    }
     const abortController = new AbortController()
-    if (!dataLoaded && !isLoading) {
-      loadDrafts()
+    loadDrafts(abortController.signal)
+    return function cancel() {
+      abortController.abort()
     }
   }, [dataLoaded, isLoading])
 

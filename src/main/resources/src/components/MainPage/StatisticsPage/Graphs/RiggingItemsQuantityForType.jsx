@@ -14,7 +14,7 @@ const RiggingItemsQuantityForType = (props) => {
     category: 'Кол-во деталей в производстве',
     isLoaded: false,
     chartName: 'rigging-items-quantity-graph',
-    timePeriod: `${months[new Date().getMonth()]}`,
+    timePeriod: 'За все время',
     renderIcon: () => <WrenchIcon className="panel__img panel__img--wrench" />,
   })
 

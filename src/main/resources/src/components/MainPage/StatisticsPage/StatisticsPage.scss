@@ -20,6 +20,7 @@
     }
 
     .main-window {
+        padding-top: 0;
         &__title {
             box-sizing: border-box;
             text-align: left;
@@ -28,6 +29,16 @@
         }
 
         &__header {
+            width: 100vw;
+            // margin-left: 40px;
+            max-width: calc(100% + 40px);
+            padding: 0 10px;
+            padding-top: 15px;
+            padding-left: 50px;
+            background-color: #ffffff;
+            flex-direction: column;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #bbbbbb;
             .main-window__menu {
                 width: 100%;
                 border-radius: 5px;
@@ -36,9 +47,11 @@
                 margin-left: -15px;
                 // max-width: fit-content;
                 // margin-right: auto;
-                // box-shadow: 0 1px 3px rgba(59, 53, 53, 0.12), 0 1px 5px rgba(0, 0, 0, 0.1);
                 background-color: transparent;
                 position: relative;
+
+                background-color: #ffffff;
+                border-radius: 0;
 
                 .main-window__item {
                     background-color: transparent;
@@ -247,12 +260,19 @@
 
                 &--equal {
                     .panel__arrow {
-                        // margin-top: 1px;
                         margin-bottom: 5px;
                         border: 8px solid #cccccc;
-                        // background-color: #cccccc;
                         border-radius: 999px;
-                        // border-top: 10px solid #bbbbbb;
+
+                        // знак равно
+                        // margin-bottom: 7px;
+                        // width: 15px;
+                        // height: 2px;
+                        // border-left: 0;
+                        // border-right: 0;
+                        // border-top: 4px solid #cccccc;
+                        // border-bottom: 4px solid #cccccc;
+                        // background-color: transparent;
                     }
                 }
 
@@ -334,8 +354,9 @@
     @media (max-width: 768px) {
         .main-window {
             &__header {
+                margin-bottom: 15px;
                 .main-window__menu {
-                    margin-bottom: 10px;
+                    // margin-bottom: 10px;
                     margin-right: 0;
                 }
             }
