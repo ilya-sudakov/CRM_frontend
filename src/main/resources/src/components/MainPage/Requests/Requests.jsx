@@ -265,12 +265,12 @@ const Requests = (props) => {
   return (
     <div className="requests">
       <div className="main-window">
-        <div className="main-window__header">
+        <FloatingPlus
+          linkTo="/requests/new"
+          visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
+        />
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Заявки</div>
-          <FloatingPlus
-            linkTo="/requests/new"
-            visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
-          />
           <div className="main-window__menu">
             <div
               className={

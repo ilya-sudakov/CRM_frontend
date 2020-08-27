@@ -1,7 +1,6 @@
 @import "../../../variables.scss";
 
 .etcetera-page {
-  padding: 0 25px;
   .main-window {
     &__title {
       width: 100%;
@@ -16,6 +15,8 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     width: 100%;
+    box-sizing: border-box;
+    padding: 0 40px;
 
     .main-window__button {
       margin-top: 5px;
