@@ -15,10 +15,9 @@ import ProductQuantityInRequest from './Panels/ProductQuantityInRequest.jsx'
 import ClientTypeDistributionInRequests from './Graphs/ClientTypeDistributionInRequests.jsx'
 import RiggingItemsQuantityForType from './Graphs/RiggingItemsQuantityForType.jsx'
 import { getStamp } from '../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { checkRiggingTypesInputs } from '../Dispatcher/Rigging/RiggingComponents/rigsVariables.js'
 
 const StatisticsPage = () => {
-  const [curPage, setCurPage] = useState('production')
+  const [curPage, setCurPage] = useState('requests')
   const pages = {
     requests: () => <RequestsPage />,
     production: () => <ProductionPage />,
