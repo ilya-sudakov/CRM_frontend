@@ -131,7 +131,6 @@ const ProductionPage = (props) => {
             })
         })
         setIsLoading(false)
-        // console.log(newDrafts)
         setDrafts([...newDrafts])
         setDataLoaded(true)
       })

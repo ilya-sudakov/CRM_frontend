@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import GraphPanel from './GraphPanel.jsx'
-import ListIcon from '../../../../../../../../assets/sidemenu/list.inline.svg'
+import WrenchIcon from '../../../../../../../../assets/sidemenu/wrench.inline.svg'
 import { months } from '../../../../utils/dataObjects'
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
 import { checkRiggingTypesInputs } from '../../Dispatcher/Rigging/RiggingComponents/rigsVariables.js'
@@ -9,6 +9,14 @@ const RiggingItemsQuantityForType = (props) => {
   const [graph, setGraph] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
+
+  const [stats, setStats] = useState({
+    category: 'Кол-во деталей в производстве',
+    isLoaded: false,
+    chartName: 'rigging-items-quantity-graph',
+    timePeriod: `${months[new Date().getMonth()]}`,
+    renderIcon: () => <WrenchIcon className="panel__img panel__img--wrench" />,
+  })
 
   const [statuses, setStatuses] = useState({
     cuttingDimensions: {
@@ -36,14 +44,6 @@ const RiggingItemsQuantityForType = (props) => {
       previous: 'grinding',
       data: 0,
     },
-  })
-
-  const [stats, setStats] = useState({
-    category: 'Кол-во деталей в производстве',
-    isLoaded: false,
-    chartName: 'rigging-items-quantity-graph',
-    timePeriod: `${months[new Date().getMonth()]}`,
-    renderIcon: () => <ListIcon className="panel__img panel__img--list" />,
   })
 
   const getStats = (data) => {
