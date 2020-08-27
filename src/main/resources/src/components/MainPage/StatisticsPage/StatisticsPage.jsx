@@ -146,11 +146,12 @@ const ProductionPage = (props) => {
     if (dataLoaded || isLoading) {
       return
     }
-    const abortController = new AbortController()
-    loadDrafts(abortController.signal)
-    return function cancel() {
-      abortController.abort()
-    }
+    loadDrafts()
+    // const abortController = new AbortController()
+    // loadDrafts(abortController.signal)
+    // return function cancel() {
+    //   abortController.abort()
+    // }
   }, [dataLoaded, isLoading])
 
   return (
