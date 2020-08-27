@@ -93,34 +93,6 @@ const Products = (props) => {
             })
           })
         }
-        // else {
-        //   getProductsByLocation(
-        //     {
-        //       productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
-        //         ? 'ЦехЛиговский'
-        //         : props.userHasAccess(['ROLE_LEMZ'])
-        //         ? 'ЦехЛЭМЗ'
-        //         : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
-        //     },
-        //     signal,
-        //   )
-        //     .then((res) => res.json())
-        //     .then((res) => {
-        //       res.map((item) => productsArr.push(item))
-        //       setProducts([...productsArr])
-        //       Promise.all(
-        //         productsArr.map((item, index) => {
-        //           getProductById(item.id, signal)
-        //             .then((res) => res.json())
-        //             .then((res) => {
-        //               // console.log(res);
-        //               productsArr.splice(index, 1, res)
-        //               setProducts([...productsArr])
-        //             })
-        //         }),
-        //       ).then(() => console.log('all images downloaded'))
-        //     })
-        // }
       })
   }
 
@@ -131,28 +103,30 @@ const Products = (props) => {
           linkTo="/products/new"
           visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
         />
-        <div className="main-window__header">
-          <div className="main-window__title">Продукция</div>
-          {props.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_MANAGER',
-            'ROLE_ENGINEER',
-          ]) && (
-            <div
-              className="main-window__button"
-              onClick={() => setShowWindow(!showWindow)}
-            >
-              Категории
-            </div>
-          )}
-          {props.userHasAccess(['ROLE_ADMIN']) && (
-            <div
-              className="main-window__button"
-              onClick={() => props.history.push('/packaging')}
-            >
-              Упаковки
-            </div>
-          )}
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">
+            <span>Продукция</span>
+            {props.userHasAccess([
+              'ROLE_ADMIN',
+              'ROLE_MANAGER',
+              'ROLE_ENGINEER',
+            ]) && (
+              <div
+                className="main-window__button"
+                onClick={() => setShowWindow(!showWindow)}
+              >
+                Категории
+              </div>
+            )}
+            {props.userHasAccess(['ROLE_ADMIN']) && (
+              <div
+                className="main-window__button"
+                onClick={() => props.history.push('/packaging')}
+              >
+                Упаковки
+              </div>
+            )}
+          </div>
         </div>
         <FormWindow
           title="Категории продукции"
@@ -183,6 +157,7 @@ const Products = (props) => {
           setShowWindow={setShowWindow}
         />
         <SearchBar
+          fullSize
           // title="Поиск продукции"
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}

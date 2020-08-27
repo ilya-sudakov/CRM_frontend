@@ -1,5 +1,41 @@
 @import "../../../variables.scss";
 
 .products {
-  
+    .main-window {
+        &__header {
+            .main-window__title {
+                display: flex;
+                flex-direction: row;
+
+                .main-window__button {
+                    font-size: 60%;
+                    margin-left: 15px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-window {
+            &__header {
+                .main-window__title {
+                    flex-wrap: wrap;
+                    margin-bottom: 5px !important;
+                    // flex-direction: column;
+                    // align-items: flex-start;
+                    span {
+                        margin-top: 5px;
+                        margin-right: 10px;
+                    }
+                    .main-window__button {
+                        width: fit-content;
+                        margin-top: 5px;
+                        margin-left: 0;
+                        margin-bottom: 0;
+                        // align-self: center;
+                    }
+                }
+            }
+        }
+    }
 }

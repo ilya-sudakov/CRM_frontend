@@ -106,12 +106,15 @@ const Transportation = (props) => {
   return (
     <div className="transportation">
       <div className="main-window">
-        <div className="main-window__title">Реестр транспортировок</div>
         <FloatingPlus
           linkTo="/dispatcher/transportation/new"
           visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
         />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Реестр транспортировок</div>
+        </div>
         <SearchBar
+          fullSize
           // title="Поиск по транспортировкам"
           placeholder="Введите название товара для поиска..."
           setSearchQuery={setSearchQuery}

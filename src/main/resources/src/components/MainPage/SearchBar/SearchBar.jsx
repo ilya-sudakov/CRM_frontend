@@ -31,7 +31,9 @@ const SearchBar = (props) => {
   }, [props.searchQuery])
 
   return (
-    <div className="searchbar">
+    <div
+      className={`searchbar ${props.fullSize ? 'searchbar--full-size' : ''}`}
+    >
       <div className="searchbar__title">{props.title}</div>
       <div className="searchbar__panel">
         <div className="searchbar__input">

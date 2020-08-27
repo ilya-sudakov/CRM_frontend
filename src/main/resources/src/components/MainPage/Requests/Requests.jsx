@@ -251,7 +251,7 @@ const Requests = (props) => {
   }
 
   const filterDates = (dates) => {
-    console.log(requestsByDate);
+    console.log(requestsByDate)
     let newDates = dates
     Object.entries(dates).map((item) => {
       // console.log(item[0], item[1], filterRequests(item[1]));
@@ -306,6 +306,7 @@ const Requests = (props) => {
         </div>
         <SearchBar
           // title="Поиск по заявкам"
+          fullSize
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />

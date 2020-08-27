@@ -112,6 +112,7 @@ const GeneralTasks = (props) => {
           // title="Основные задачи"
           placeholder="Введите описание задачи для поиска..."
           setSearchQuery={setSearchQuery}
+          fullSize
         />
         <div className="main-window__info-panel">
           <div className="main-window__status-panel">

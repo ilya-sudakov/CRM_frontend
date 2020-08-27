@@ -73,8 +73,11 @@ const Employees = (props) => {
   return (
     <div className="employees">
       <div className="main-window">
-        <div className="main-window__title">Сотрудники</div>
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Сотрудники</div>
+        </div>
         <SearchBar
+          fullSize
           // title="Поиск сотрудников"
           placeholder="Введите фамилию сотрудника для поиска..."
           setSearchQuery={setSearchQuery}

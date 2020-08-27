@@ -101,7 +101,6 @@ const FeedbackPage = (props) => {
   return (
     <div className="feedback-page">
       <div className="main-window">
-        <div className="main-window__title">Обратная связь</div>
         <FloatingPlus
           linkTo="/feedback/new"
           visibility={[
@@ -111,8 +110,12 @@ const FeedbackPage = (props) => {
             'ROLE_MANAGER',
           ]}
         />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Обратная связь</div>
+        </div>
         <SearchBar
           // title="Обратная связь"
+          fullSize
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />

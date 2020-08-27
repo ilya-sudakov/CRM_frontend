@@ -259,20 +259,15 @@ const WorkManagementPage = (props) => {
         <div className="main-window__title">
           {/* <span>Отчет производства</span> */}
         </div>
-        {(props.userHasAccess(['ROLE_ADMIN']) ||
-          props.userHasAccess(['ROLE_WORKSHOP'])) && (
-          <PartsStatistic
-            data={partsStatistics}
-            drafts={draftsStatistics}
-            isLoading={isLoading}
-          />
-        )}
-        <div className="main-window__header">
-          <SearchBar
-            // title="Поиск по сотрудникам"
-            placeholder="Введите запрос для поиска..."
-            setSearchQuery={setSearchQuery}
-          />
+        <div className="main-window__header main-window__header--full">
+          {(props.userHasAccess(['ROLE_ADMIN']) ||
+            props.userHasAccess(['ROLE_WORKSHOP'])) && (
+            <PartsStatistic
+              data={partsStatistics}
+              drafts={draftsStatistics}
+              isLoading={isLoading}
+            />
+          )}
           <div className="main-window__menu">
             {/* <div
               className={
@@ -296,6 +291,12 @@ const WorkManagementPage = (props) => {
             </div>
           </div>
         </div>
+        <SearchBar
+          fullSize
+          // title="Поиск по сотрудникам"
+          placeholder="Введите запрос для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
         <div className="main-window__info-panel">
           <div className="work-management-page__date-pick">
             <div>
