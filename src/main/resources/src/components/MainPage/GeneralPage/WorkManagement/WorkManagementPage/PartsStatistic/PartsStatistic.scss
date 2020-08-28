@@ -155,6 +155,9 @@
 
     @media (max-width: 768px) {
         & {
+            .main-window__header {
+                margin-top: 0;
+             }
             .parts-statistic__wrapper {
                 max-height: none;
                 flex-direction: column !important;
