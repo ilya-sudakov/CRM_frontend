@@ -11,7 +11,7 @@
     .main-window__list {
       .main-window__list-item {
         padding: 7.5px 0px;
-        padding-left: 25px;
+        padding-left: 20px;
         padding-right: 10px;
         position: relative;
         span {
@@ -56,6 +56,7 @@
         &:not(.main-window__list-item--header) {
           margin-bottom: 6px;
           border-right: 1px solid #aaaaaa;
+          border-left: 1px solid #aaaaaa;
           border-top: 1px solid #aaaaaa;
           border-radius: 5px;
           span {
@@ -82,14 +83,13 @@
             content: "";
             display: inline-block;
             position: absolute;
-            width: 10px;
+            width: 6px;
             box-sizing: border-box;
             // height: calc(100% - 2px);
-            height: calc(100% + 2px);
-            left: 0px;
-            top: -1px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
+            height: calc(100% - 10px);
+            left: 5px;
+            top: 5px;
+            border-radius: 15px;
             background-color: #cccccc;
           }
         }
