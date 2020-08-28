@@ -895,8 +895,8 @@
       &--full {
         margin-bottom: 5px;
         .main-window__title {
-          margin-left: 0px !important;
-          padding-left: 5px;
+          // margin-left: 0px !important;
+          padding-left: 15px;
           // margin-bottom: 0 !important;
         }
 
@@ -990,6 +990,18 @@
       .main-window__page-number:not(.main-window__page-number--active):not(.main-window__page-number--skip),
       span {
         display: none;
+      }
+    }
+  }
+
+  @media (max-width: 425px) {
+    .main-window__header {
+      &--full {
+        .main-window__title {
+          margin-left: 0px !important;
+          // padding-left: 15px;
+          // margin-bottom: 0 !important;
+        }
       }
     }
   }
