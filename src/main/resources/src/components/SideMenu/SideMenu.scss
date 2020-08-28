@@ -59,7 +59,9 @@
       width: 3px;
       height: 100%;
       background-color: transparent;
-      // transition: 100ms ease-in-out;
+
+      //testing
+      width: 5px;
     }
 
     .sidemenu__img {
@@ -101,7 +103,8 @@
     }
 
     &:hover {
-      background-color: darken($side_menu__background, 5%);
+      //testing
+      // background-color: darken($side_menu__background, 5%);
       .sidemenu__img {
         path:first-child {
           fill: #6e7b8cdd;
@@ -146,11 +149,13 @@
     }
 
     &--active {
-      background-color: $button__background--inverted;
-      // background-color: darken($side_menu__background, 20%);
+      //testing
+      // background-color: $button__background--inverted;
 
       &::before {
-        background-color: $secondary-text-color;
+        //testing
+        // background-color: $secondary-text-color;
+        background-color: $button__background--inverted;
       }
 
       & .sidemenu__img {
@@ -202,8 +207,8 @@
       }
 
       &:hover {
-        background-color: darken($button__background--inverted, 5%);
-        // background-color: darken($side_menu__background, 30%);
+        //testing
+        // background-color: darken($button__background--inverted, 5%);
         .sidemenu__link {
           span {
             color: #ffffff !important;
