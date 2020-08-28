@@ -1,0 +1,19 @@
+.control-panel {
+    width: 100%;
+
+    .main-window__control-panel-wrapper {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        > .main-window__button {
+            padding: 5px 20px;
+            font-size: 85%;
+
+            .main-window__img {
+                max-width: 18px;
+                margin-top: 1px;
+                margin-left: 5px;
+            }
+        }
+    }
+}

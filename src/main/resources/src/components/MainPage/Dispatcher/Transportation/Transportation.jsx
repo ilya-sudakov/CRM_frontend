@@ -10,9 +10,9 @@ import {
   deleteTransportation,
 } from '../../../../utils/RequestsAPI/Transportation.jsx'
 import { getTransportationListPdfText } from '../../../../utils/pdfFunctions.jsx'
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Transportation = (props) => {
   const [transportation, setTransportation] = useState([])
@@ -119,77 +119,79 @@ const Transportation = (props) => {
           placeholder="Введите название товара для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__control-panel-wrapper">
-          <div className="main-window__info-panel">
-            <div className="transportation__container">
-              <span>Фильтр по подразделениям</span>
-              <div className="main-window__filter-pick">
-                <span className="transportation__text">Откуда: </span>
-                {workshops.map((item, index) => {
-                  if (props.userHasAccess(item.visibility)) {
-                    return (
-                      <div
-                        className={
-                          item.senderActive
-                            ? 'main-window__button'
-                            : 'main-window__button main-window__button--inverted'
-                        }
-                        onClick={() => {
-                          let temp = workshops
-                          temp.splice(index, 1, {
-                            ...temp[index],
-                            name: item.name,
-                            senderActive: !item.senderActive,
-                          })
-                          setWorkshops([...temp])
-                        }}
-                      >
-                        {item.name}
-                      </div>
-                    )
-                  }
-                })}
+        <ControlPanel
+          content={
+            <div className="main-window__info-panel">
+              <div className="transportation__container">
+                <span>Фильтр по подразделениям</span>
+                <div className="main-window__filter-pick">
+                  <span className="transportation__text">Откуда: </span>
+                  {workshops.map((item, index) => {
+                    if (props.userHasAccess(item.visibility)) {
+                      return (
+                        <div
+                          className={
+                            item.senderActive
+                              ? 'main-window__button'
+                              : 'main-window__button main-window__button--inverted'
+                          }
+                          onClick={() => {
+                            let temp = workshops
+                            temp.splice(index, 1, {
+                              ...temp[index],
+                              name: item.name,
+                              senderActive: !item.senderActive,
+                            })
+                            setWorkshops([...temp])
+                          }}
+                        >
+                          {item.name}
+                        </div>
+                      )
+                    }
+                  })}
+                </div>
+                <div className="main-window__filter-pick">
+                  <span className="transportation__text">Куда: </span>
+                  {workshops.map((item, index) => {
+                    if (props.userHasAccess(item.visibility)) {
+                      return (
+                        <div
+                          className={
+                            item.recipientActive
+                              ? 'main-window__button'
+                              : 'main-window__button main-window__button--inverted'
+                          }
+                          onClick={() => {
+                            let temp = workshops
+                            temp.splice(index, 1, {
+                              ...temp[index],
+                              name: item.name,
+                              recipientActive: !item.recipientActive,
+                            })
+                            setWorkshops([...temp])
+                          }}
+                        >
+                          {item.name}
+                        </div>
+                      )
+                    }
+                  })}
+                </div>
               </div>
-              <div className="main-window__filter-pick">
-                <span className="transportation__text">Куда: </span>
-                {workshops.map((item, index) => {
-                  if (props.userHasAccess(item.visibility)) {
-                    return (
-                      <div
-                        className={
-                          item.recipientActive
-                            ? 'main-window__button'
-                            : 'main-window__button main-window__button--inverted'
-                        }
-                        onClick={() => {
-                          let temp = workshops
-                          temp.splice(index, 1, {
-                            ...temp[index],
-                            name: item.name,
-                            recipientActive: !item.recipientActive,
-                          })
-                          setWorkshops([...temp])
-                        }}
-                      >
-                        {item.name}
-                      </div>
-                    )
-                  }
-                })}
+              <Button
+                text="Печать списка"
+                imgSrc={PrintIcon}
+                isLoading={isLoading}
+                className="main-window__button"
+                onClick={printTransportationList}
+              />
+              <div className="main-window__amount_table">
+                Всего: {transportation.length} записей
               </div>
             </div>
-            <Button
-              text="Печать списка"
-              imgSrc={PrintIcon}
-              isLoading={isLoading}
-              className="main-window__button"
-              onClick={printTransportationList}
-            />
-            <div className="main-window__amount_table">
-              Всего: {transportation.length} записей
-            </div>
-          </div>
-        </div>
+          }
+        />
 
         <TableView
           data={transportation.filter((item) => {

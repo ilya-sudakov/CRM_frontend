@@ -8,6 +8,7 @@ import {
   deleteMainTask,
 } from '../../../../utils/RequestsAPI/MainTasks.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const GeneralTasks = (props) => {
   const [generalTasks, setGeneralTasks] = useState([])
@@ -114,44 +115,46 @@ const GeneralTasks = (props) => {
           setSearchQuery={setSearchQuery}
           fullSize
         />
-        <div className="main-window__control-panel-wrapper">
-          <div className="main-window__info-panel">
-            <div className="main-window__status-panel">
-              <div>Фильтр по статусам: </div>
-              {taskStatuses.map((status, index) => {
-                return (
-                  <div
-                    className={
-                      (status.visible
-                        ? 'main-window__button'
-                        : 'main-window__button main-window__button--inverted') +
-                      ' main-window__list-item--' +
-                      status.className
-                    }
-                    onClick={() => {
-                      let temp = taskStatuses.map((status) => {
-                        return {
+        <ControlPanel
+          content={
+            <div className="main-window__info-panel">
+              <div className="main-window__status-panel">
+                <div>Фильтр по статусам: </div>
+                {taskStatuses.map((status, index) => {
+                  return (
+                    <div
+                      className={
+                        (status.visible
+                          ? 'main-window__button'
+                          : 'main-window__button main-window__button--inverted') +
+                        ' main-window__list-item--' +
+                        status.className
+                      }
+                      onClick={() => {
+                        let temp = taskStatuses.map((status) => {
+                          return {
+                            ...status,
+                            visible: false,
+                          }
+                        })
+                        temp.splice(index, 1, {
                           ...status,
-                          visible: false,
-                        }
-                      })
-                      temp.splice(index, 1, {
-                        ...status,
-                        visible: !status.visible,
-                      })
-                      setTaskStatuses([...temp])
-                    }}
-                  >
-                    {status.name}
-                  </div>
-                )
-              })}
+                          visible: !status.visible,
+                        })
+                        setTaskStatuses([...temp])
+                      }}
+                    >
+                      {status.name}
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="main-window__amount_table">
+                Всего: {generalTasks.length} записей
+              </div>
             </div>
-            <div className="main-window__amount_table">
-              Всего: {generalTasks.length} записей
-            </div>
-          </div>
-        </div>
+          }
+        />
         <TableView
           data={generalTasks.filter((item) => {
             if (

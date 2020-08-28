@@ -23,6 +23,7 @@ import {
   // formatDateString,
   sortRequestsByDates,
 } from '../../../utils/functions.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]) //Массив заявок
@@ -371,74 +372,78 @@ const Requests = (props) => {
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
-        <div className="main-window__control-panel-wrapper">
-          <div className="main-window__status-panel">
-            <div>Фильтр по статусам: </div>
-            {requestStatuses.map((status, index) => {
-              return (
-                <div
-                  className={
-                    (status.visible
-                      ? 'main-window__button'
-                      : 'main-window__button main-window__button--inverted') +
-                    ' main-window__list-item--' +
-                    status.className
-                  }
-                  onClick={() => {
-                    let temp = requestStatuses.map((status) => {
-                      return {
-                        ...status,
-                        visible: false,
+        <ControlPanel
+          content={
+            <>
+              <div className="main-window__status-panel">
+                <div>Фильтр по статусам: </div>
+                {requestStatuses.map((status, index) => {
+                  return (
+                    <div
+                      className={
+                        (status.visible
+                          ? 'main-window__button'
+                          : 'main-window__button main-window__button--inverted') +
+                        ' main-window__list-item--' +
+                        status.className
                       }
-                    })
-                    temp.splice(index, 1, {
-                      ...status,
-                      visible: !status.visible,
-                    })
-                    setRequestStatutes([...temp])
-                  }}
-                >
-                  {status.name}
+                      onClick={() => {
+                        let temp = requestStatuses.map((status) => {
+                          return {
+                            ...status,
+                            visible: false,
+                          }
+                        })
+                        temp.splice(index, 1, {
+                          ...status,
+                          visible: !status.visible,
+                        })
+                        setRequestStatutes([...temp])
+                      }}
+                    >
+                      {status.name}
+                    </div>
+                  )
+                })}
+                <div className="main-window__amount_table">
+                  Всего: {requests.length} записей
                 </div>
-              )
-            })}
-            <div className="main-window__amount_table">
-              Всего: {requests.length} записей
-            </div>
-          </div>
-          <div
-            className="main-window__filter-pick"
-            style={{ marginTop: '10px' }}
-          >
-            <div>Фильтр по цехам: </div>
-            {workshops.map((workshop, index) => {
-              return (
-                <div
-                  className={
-                    workshop.visible
-                      ? 'main-window__button'
-                      : 'main-window__button main-window__button--inverted'
-                  }
-                  onClick={() => {
-                    let temp = workshops.map((tempWorkshop) => {
-                      return {
-                        ...tempWorkshop,
-                        visible: false,
+              </div>
+              <div
+                className="main-window__filter-pick"
+                style={{ marginTop: '10px' }}
+              >
+                <div>Фильтр по цехам: </div>
+                {workshops.map((workshop, index) => {
+                  return (
+                    <div
+                      className={
+                        workshop.visible
+                          ? 'main-window__button'
+                          : 'main-window__button main-window__button--inverted'
                       }
-                    })
-                    temp.splice(index, 1, {
-                      ...workshop,
-                      visible: !workshop.visible,
-                    })
-                    setWorkshops([...temp])
-                  }}
-                >
-                  {workshop.fullName}
-                </div>
-              )
-            })}
-          </div>
-        </div>
+                      onClick={() => {
+                        let temp = workshops.map((tempWorkshop) => {
+                          return {
+                            ...tempWorkshop,
+                            visible: false,
+                          }
+                        })
+                        temp.splice(index, 1, {
+                          ...workshop,
+                          visible: !workshop.visible,
+                        })
+                        setWorkshops([...temp])
+                      }}
+                    >
+                      {workshop.fullName}
+                    </div>
+                  )
+                })}
+              </div>
+            </>
+          }
+        />
         <TableView
           data={filterRequests(requests)}
           requestsByDate={filterDates(requestsByDate)}
