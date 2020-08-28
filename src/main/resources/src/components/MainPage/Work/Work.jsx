@@ -41,9 +41,12 @@ const Work = (props) => {
   return (
     <div className="work">
       <div className="main-window">
-        <div className="main-window__title">Работы</div>
         <FloatingPlus linkTo="/work-list/new" visibility={['ROLE_ADMIN']} />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Работы</div>
+        </div>
         <SearchBar
+          fullSize
           // title="Поиск работы"
           placeholder="Введите название работы для поиска..."
           setSearchQuery={setSearchQuery}

@@ -2,31 +2,36 @@
 
 .work {
   width: 100%;
-  padding: 10px 0;
+  // padding: 10px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  &__title {
-    // margin-bottom: 20px;
-    font-size: 24px;
-  }
+  .main-window {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    &__title {
+      // margin-bottom: 20px;
+      font-size: 24px;
+    }
 
-  &__link {
-    margin-bottom: 15px;
-  }
+    &__link {
+      margin-bottom: 15px;
+    }
 
-  &__amount_table {
-    align-self: flex-end;
-    font-size: 75%;
-    margin-bottom: 5px;
-    margin-right: 35px;
-  }
-
-  @media (max-width: 768px) {
     &__amount_table {
-      margin-left: 10px;
-      align-self: flex-start;
+      align-self: flex-end;
+      font-size: 75%;
+      margin-bottom: 5px;
+      margin-right: 35px;
+    }
+  }
+  @media (max-width: 768px) {
+    .main-window {
+      &__amount_table {
+        margin-left: 10px;
+        align-self: flex-start;
+      }
     }
   }
 }

@@ -64,13 +64,13 @@ const PackagingPage = (props) => {
   return (
     <div className="packaging-page">
       <div className="main-window">
-        <div className="main-window__title">Упаковки</div>
-        <FloatingPlus
-          linkTo="/packaging/new"
-          visibility={['ROLE_ADMIN']}
-        />
+        <FloatingPlus linkTo="/packaging/new" visibility={['ROLE_ADMIN']} />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Упаковки</div>
+        </div>
         <SearchBar
-          title="Поиск по упаковкам"
+          fullSize
+          // title="Поиск по упаковкам"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />

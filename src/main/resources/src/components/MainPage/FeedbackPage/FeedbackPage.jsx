@@ -119,68 +119,70 @@ const FeedbackPage = (props) => {
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__status-panel">
-            <div>Фильтр по статусам: </div>
-            {statuses.map((status, index) => {
+        <div className="main-window__control-panel-wrapper">
+          <div className="main-window__info-panel">
+            <div className="main-window__status-panel">
+              <div>Фильтр по статусам: </div>
+              {statuses.map((status, index) => {
+                return (
+                  <div
+                    className={
+                      (status.visible
+                        ? 'main-window__button'
+                        : 'main-window__button main-window__button--inverted') +
+                      ' main-window__list-item--' +
+                      status.className
+                    }
+                    onClick={() => {
+                      let temp = statuses
+                      temp.splice(index, 1, {
+                        ...status,
+                        visible: !status.visible,
+                      })
+                      setStatuses([...temp])
+                    }}
+                  >
+                    {status.name}
+                  </div>
+                )
+              })}
+            </div>
+            <div className="main-window__amount_table">
+              Всего: {messages.length} записей
+            </div>
+          </div>
+          <div className="main-window__filter-pick">
+            <div>Фильтр по категориям: </div>
+            {userCategories.map((category, index) => {
               return (
                 <div
                   className={
-                    (status.visible
+                    category.active
                       ? 'main-window__button'
-                      : 'main-window__button main-window__button--inverted') +
-                    ' main-window__list-item--' +
-                    status.className
+                      : 'main-window__button main-window__button--inverted'
                   }
                   onClick={() => {
-                    let temp = statuses
-                    temp.splice(index, 1, {
-                      ...status,
-                      visible: !status.visible,
+                    let temp = userCategories
+                    temp = userCategories.map((item, tempIndex) => {
+                      if (index === tempIndex) {
+                        return {
+                          ...item,
+                          active: true,
+                        }
+                      }
+                      return {
+                        ...item,
+                        active: false,
+                      }
                     })
-                    setStatuses([...temp])
+                    setUserCategories([...temp])
                   }}
                 >
-                  {status.name}
+                  {category.name}
                 </div>
               )
             })}
           </div>
-          <div className="main-window__amount_table">
-            Всего: {messages.length} записей
-          </div>
-        </div>
-        <div className="main-window__filter-pick">
-          <div>Фильтр по категориям: </div>
-          {userCategories.map((category, index) => {
-            return (
-              <div
-                className={
-                  category.active
-                    ? 'main-window__button'
-                    : 'main-window__button main-window__button--inverted'
-                }
-                onClick={() => {
-                  let temp = userCategories
-                  temp = userCategories.map((item, tempIndex) => {
-                    if (index === tempIndex) {
-                      return {
-                        ...item,
-                        active: true,
-                      }
-                    }
-                    return {
-                      ...item,
-                      active: false,
-                    }
-                  })
-                  setUserCategories([...temp])
-                }}
-              >
-                {category.name}
-              </div>
-            )
-          })}
         </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
