@@ -65,8 +65,14 @@
   }
 
   @media (max-width: 768px) {
-    .main-window__header {
-      margin-bottom: 5px;
+    .main-window {
+      .main-window__header {
+        margin-bottom: 5px;
+
+        .main-window__title {
+          margin-bottom: 10px !important;
+        }
+      }
     }
   }
 

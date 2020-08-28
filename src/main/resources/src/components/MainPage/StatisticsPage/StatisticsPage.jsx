@@ -26,7 +26,7 @@ const StatisticsPage = () => {
   return (
     <div className="statistics">
       <div className="main-window">
-        <div className="main-window__header">
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Статистика</div>
           <div className="main-window__menu">
             <div

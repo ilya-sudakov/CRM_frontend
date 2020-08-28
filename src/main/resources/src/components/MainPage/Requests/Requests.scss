@@ -59,7 +59,6 @@
       }
     }
   }
-  
 
   .searchbar {
     // width: calc(100% - 25px);
@@ -98,18 +97,19 @@
 
   @media (max-width: 768px) {
     .main-window__header {
-      flex-direction: column !important;
+      // flex-direction: column !important;
       // width: calc(100% - 10px);
-      flex-wrap: nowrap !important;
+      // flex-wrap: nowrap !important;
       .main-window__title {
-        font-size: 125%;
+        // font-size: 125%;
+        margin-bottom: 10px !important;
       }
       .main-window__menu {
         // width: calc(100% - 10px);
 
         .main-window__item {
-          width: 100% !important;
-          padding: 10px 25px;
+          // width: 100% !important;
+          // padding: 10px 25px;
         }
       }
     }
