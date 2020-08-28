@@ -9,7 +9,7 @@ const ControlPanel = (props) => {
     <div className="control-panel">
       <div className="main-window__control-panel-wrapper">
         <div
-          className="main-window__button main-window__button--inverted"
+          className="main-window__button main-window__button--inverted main-window__button--filter"
           onClick={() => setIsHidden((isHidden) => !isHidden)}
         >
           <span>{props.panelName || 'Фильтры'}</span>

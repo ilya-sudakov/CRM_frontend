@@ -7,12 +7,14 @@
 
         > .main-window__button {
             padding: 5px 20px;
+            padding-right: 15px;
             font-size: 85%;
 
             .main-window__img {
                 max-width: 18px;
                 margin-top: 1px;
                 margin-left: 5px;
+                margin-right: 0;
             }
         }
     }
