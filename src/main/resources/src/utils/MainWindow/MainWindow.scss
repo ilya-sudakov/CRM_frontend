@@ -909,9 +909,23 @@
       &--full {
         margin-bottom: 5px;
         .main-window__title {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
           // margin-left: 0px !important;
           padding-left: 15px;
           // margin-bottom: 0 !important;
+
+          span {
+            margin-right: 15px;
+            margin-top: 5px;
+          }
+
+          .main-window__button {
+            margin-top: 5px;
+            margin-left: 0 !important;
+            margin-right: 10px !important;
+          }
         }
 
         .main-window__menu {

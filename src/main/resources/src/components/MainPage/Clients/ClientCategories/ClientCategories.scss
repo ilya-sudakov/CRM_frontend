@@ -2,6 +2,22 @@
 
 .client-categories {
   .main-window {
+    &__header {
+      .main-window__title {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .main-window__button {
+          font-size: 60%;
+          margin-left: 15px;
+        }
+      }
+    }
+
+    .searchbar {
+      margin-bottom: 10px;
+    }
     .main-window__list {
       .main-window__list-item {
         span {
@@ -47,5 +63,4 @@
       }
     }
   }
-  
 }

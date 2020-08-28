@@ -87,21 +87,21 @@ const ClientCategories = (props) => {
           }}
           visibility={clientTypes[props.type].visibility}
         />
-        <div className="main-window__header">
-          <div className="main-window__title">{`Категории ${
-            clientTypes[props.type].name
-          }ов`}</div>
-          {props.userHasAccess(clientTypes[props.type].visibility) && (
-            <div
-              className="main-window__button"
-              onClick={() => {
-                setCurForm('new')
-                setShowWindow(!showWindow)
-              }}
-            >
-              Создать категорию
-            </div>
-          )}
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">
+            <span>{`Категории ${clientTypes[props.type].name}ов`}</span>
+            {props.userHasAccess(clientTypes[props.type].visibility) && (
+              <div
+                className="main-window__button"
+                onClick={() => {
+                  setCurForm('new')
+                  setShowWindow(!showWindow)
+                }}
+              >
+                Создать категорию
+              </div>
+            )}
+          </div>
         </div>
         <FormWindow
           title={
@@ -133,6 +133,7 @@ const ClientCategories = (props) => {
           setShowWindow={setShowWindow}
         />
         <SearchBar
+          fullSize
           // title="Поиск по категориям клиентов"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
