@@ -51,9 +51,10 @@ const GeneralPage = (props) => {
   return (
     <div className="general-page">
       <div className="main-window">
-        <div className="main-window__title">Главная страница</div>
-        <div className="main-window__content">
-          {/* <div className="main-window__date">{'Дата: ' + formatDateString(date)}</div> */}
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Главная страница</div>
+        </div>
+        <div className="main-window__control-panel-wrapper">
           <div className="main-window__control-panel">
             {props.userHasAccess([
               'ROLE_ADMIN',
@@ -96,6 +97,8 @@ const GeneralPage = (props) => {
               onClick={testExcelJSLibrary}
             />
           </div>
+        </div>
+        <div className="main-window__content">
           {props.userHasAccess([
             'ROLE_ADMIN',
             'ROLE_DISPATCHER',
