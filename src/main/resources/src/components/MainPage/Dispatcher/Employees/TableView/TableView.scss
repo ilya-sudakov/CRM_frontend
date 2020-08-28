@@ -3,7 +3,8 @@
 .tableview-employees {
   display: flex;
   justify-content: center;
-  width: calc(100% - 25px);
+  // width: calc(100% - 25px);
+  width: 100%;
   font-size: 110%;
 
   .main-window__list {
