@@ -7,6 +7,12 @@
     --grinding: #a0e22d;
     --erosion: #00ff73;
     .main-window {
+        &__header {
+            margin-bottom: 0;
+        }
+        &__control-panel-wrapper {
+            margin-bottom: 10px;
+        }
         &__status-panel {
             margin-right: 0;
 
@@ -39,7 +45,7 @@
                     height: 10px;
                     top: calc(50% - 5px);
                     border: 1px solid #bbbbbb;
-                    
+
                     display: none;
                 }
 

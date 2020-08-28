@@ -105,36 +105,37 @@
     &:hover {
       //testing
       // background-color: darken($side_menu__background, 5%);
+      --hover-icon-fill: #6e7b8cdd;
       .sidemenu__img {
         path:first-child {
-          fill: #6e7b8cdd;
+          fill: var(--hover-icon-fill);
         }
 
         &--price {
           path:first-child {
             fill: transparent;
-            stroke: #6e7b8cdd;
+            stroke: var(--hover-icon-fill);
           }
         }
 
         &--employees {
           g {
-            fill: #6e7b8cdd;
+            fill: var(--hover-icon-fill);
           }
         }
 
         &--factory {
           path:first-child {
-            fill: #6e7b8cdd;
+            fill: var(--hover-icon-fill);
           }
           path:nth-child(2) {
-            fill: #6e7b8cdd;
+            fill: var(--hover-icon-fill);
           }
         }
 
         &--request {
           g {
-            fill: #6e7b8cdd;
+            fill: var(--hover-icon-fill);
           }
         }
       }
@@ -143,7 +144,9 @@
       }
       .sidemenu__link {
         span {
-          color: #b0c0d4 !important;
+          //testing
+          // color: #b0c0d4 !important;
+          color: #eeeeee !important;
         }
       }
     }
