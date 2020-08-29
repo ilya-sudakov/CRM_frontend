@@ -20,7 +20,11 @@ const ControlPanel = (props) => {
               }`}
             />
           </div>
+          {props.buttons || null}
           {props.sorting || null}
+          {props.itemsCount ? (
+            <div className="main-window__amount_table">{props.itemsCount}</div>
+          ) : null}
         </div>
         {!isHidden ? props.content : null}
       </div>

@@ -8,6 +8,11 @@
         .control-panel__buttons {
             display: flex;
             flex-direction: row;
+
+            .main-window__amount_table {
+                color: #666666;
+                align-self: center;
+            }
         }
 
         .main-window__button--filter {

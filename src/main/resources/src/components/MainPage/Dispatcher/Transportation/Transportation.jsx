@@ -120,6 +120,16 @@ const Transportation = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <ControlPanel
+          buttons={
+            <Button
+              text="Печать списка"
+              imgSrc={PrintIcon}
+              isLoading={isLoading}
+              className="main-window__button"
+              onClick={printTransportationList}
+            />
+          }
+          itemsCount={`Всего: ${transportation.length} записей`}
           content={
             <div className="main-window__info-panel">
               <div className="transportation__container">
@@ -178,16 +188,6 @@ const Transportation = (props) => {
                     }
                   })}
                 </div>
-              </div>
-              <Button
-                text="Печать списка"
-                imgSrc={PrintIcon}
-                isLoading={isLoading}
-                className="main-window__button"
-                onClick={printTransportationList}
-              />
-              <div className="main-window__amount_table">
-                Всего: {transportation.length} записей
               </div>
             </div>
           }
