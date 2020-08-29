@@ -338,6 +338,19 @@
             transition: 100ms ease-in-out;
             margin-bottom: 5px;
             text-align: left;
+            position: relative;
+
+            &::before {
+              content: "";
+              position: absolute;
+              top: 5px;
+              left: 0px;
+              height: calc(100% - 10px);
+              border-radius: 15px;
+              background-color: transparent;
+              width: 5px;
+            }
+
             & span {
               width: calc(100% - 30px);
             }
@@ -350,6 +363,11 @@
 
             &:last-child {
               margin: 0;
+            }
+            &--active {
+              &::before {
+                background-color: $button__background--inverted;
+              }
             }
 
             &:hover {
