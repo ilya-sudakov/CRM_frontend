@@ -332,10 +332,10 @@
             display: flex;
             align-items: center;
             // color: $primary-text-color;
-            color: #dddddd;
+            color: #bbbbbb;
             padding: 10px 0px;
             border-radius: 5px;
-            transition: 0.2s ease-in-out;
+            transition: 100ms ease-in-out;
             margin-bottom: 5px;
             text-align: left;
             & span {
@@ -345,7 +345,7 @@
             & .header__img {
               width: 25px;
               margin: 0 10px;
-              filter: brightness(2);
+              filter: brightness(1.7);
             }
 
             &:last-child {
@@ -353,7 +353,11 @@
             }
 
             &:hover {
-              background-color: darken($side_menu__background, 10%);
+              color: #eeeeee;
+
+              & .header__img {
+                filter: brightness(2);
+              }
             }
           }
           &--hidden {
