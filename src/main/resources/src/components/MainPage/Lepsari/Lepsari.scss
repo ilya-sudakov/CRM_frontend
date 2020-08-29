@@ -15,7 +15,7 @@
     }
 
     .main-window__title {
-      margin-bottom: -5px !important;
+      margin-bottom: 0px !important;
     }
   }
 
@@ -24,6 +24,7 @@
     border-top-left-radius: 0px;
     text-align: left;
     margin-top: -5px;
+    padding-bottom: 15px;
     // width: 100%;
     width: calc(100% + 25px);
     border: 0;

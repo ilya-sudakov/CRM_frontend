@@ -90,6 +90,7 @@ const Users = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <ControlPanel
+          itemsCount={`Всего: ${users.length} записей`}
           content={
             <div className="main-window__info-panel">
               <div className="main-window__filter-pick">
@@ -122,9 +123,6 @@ const Users = (props) => {
                     </div>
                   )
                 })}
-              </div>
-              <div className="main-window__amount_table">
-                Всего: {users.length} записей
               </div>
             </div>
           }

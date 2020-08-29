@@ -298,10 +298,8 @@ const WorkManagementPage = (props) => {
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        {/* <div className="main-window__control-panel-wrapper">
-          
-        </div> */}
         <ControlPanel
+          itemsCount={`Всего: ${workItems.length} записей`}
           content={
             <div className="main-window__info-panel">
               <div className="work-management-page__date-pick">
@@ -370,9 +368,6 @@ const WorkManagementPage = (props) => {
                     )
                   }
                 })}
-                <div className="main-window__amount_table">
-                  Всего: {workItems.length} записей
-                </div>
               </div>
             </div>
           }

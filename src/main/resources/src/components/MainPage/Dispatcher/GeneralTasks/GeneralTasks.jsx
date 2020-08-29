@@ -116,6 +116,7 @@ const GeneralTasks = (props) => {
           fullSize
         />
         <ControlPanel
+          itemsCount={`Всего: ${generalTasks.length} записей`}
           content={
             <div className="main-window__info-panel">
               <div className="main-window__status-panel">
@@ -148,9 +149,6 @@ const GeneralTasks = (props) => {
                     </div>
                   )
                 })}
-              </div>
-              <div className="main-window__amount_table">
-                Всего: {generalTasks.length} записей
               </div>
             </div>
           }

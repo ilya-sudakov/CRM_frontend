@@ -373,6 +373,7 @@ const Requests = (props) => {
           setShowWindow={setShowWindow}
         />
         <ControlPanel
+          itemsCount={`Всего: ${requests.length} записей`}
           content={
             <>
               <div className="main-window__status-panel">
@@ -405,9 +406,6 @@ const Requests = (props) => {
                     </div>
                   )
                 })}
-                <div className="main-window__amount_table">
-                  Всего: {requests.length} записей
-                </div>
               </div>
               <div
                 className="main-window__filter-pick"

@@ -11,6 +11,7 @@ import {
   getEmployeesByWorkshop,
 } from '../../../../utils/RequestsAPI/Employees.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Employees = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -82,27 +83,25 @@ const Employees = (props) => {
           placeholder="Введите фамилию сотрудника для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <Button
-            text="Печать списка"
-            isLoading={isLoading}
-            imgSrc={PrintIcon}
-            className="main-window__button"
-            onClick={printEmployeesList}
-          />
-          <div className="main-window__amount_table">
-            Всего:{' '}
-            {
-              employees.filter((employee) => {
-                return (
-                  employee.relevance !== 'Уволен' &&
-                  employee.workshop !== 'Уволенные'
-                )
-              }).length
-            }{' '}
-            записей
-          </div>
-        </div>
+        <ControlPanel
+          buttons={
+            <Button
+              text="Печать списка"
+              isLoading={isLoading}
+              imgSrc={PrintIcon}
+              className="main-window__button"
+              onClick={printEmployeesList}
+            />
+          }
+          itemsCount={`Всего: ${
+            employees.filter((employee) => {
+              return (
+                employee.relevance !== 'Уволен' &&
+                employee.workshop !== 'Уволенные'
+              )
+            }).length
+          } записей`}
+        />
         <TableView
           data={employees}
           searchQuery={searchQuery}

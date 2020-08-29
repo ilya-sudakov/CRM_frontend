@@ -16,6 +16,7 @@ import {
 } from '../../../../utils/RequestsAPI/Workshop/Orders.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const WorkshopOrders = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -98,37 +99,39 @@ const WorkshopOrders = (props) => {
           linkTo="/lemz/workshop-orders/new"
           visibility={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEMZ']}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__status-panel">
-            <div>Фильтр по статусам: </div>
-            {statuses.map((status, index) => {
-              return (
-                <div
-                  className={
-                    (status.visible
-                      ? 'main-window__button'
-                      : 'main-window__button main-window__button--inverted') +
-                    ' main-window__list-item--' +
-                    status.className
-                  }
-                  onClick={() => {
-                    let temp = statuses
-                    temp.splice(index, 1, {
-                      ...status,
-                      visible: !status.visible,
-                    })
-                    setStatuses([...temp])
-                  }}
-                >
-                  {status.name}
-                </div>
-              )
-            })}
-          </div>
-          <div className="main-window__amount_table">
-            Всего: {orders.length} записей
-          </div>
-        </div>
+        <ControlPanel
+          itemsCount={`Всего: ${orders.length} записей`}
+          content={
+            <div className="main-window__info-panel">
+              <div className="main-window__status-panel">
+                <div>Фильтр по статусам: </div>
+                {statuses.map((status, index) => {
+                  return (
+                    <div
+                      className={
+                        (status.visible
+                          ? 'main-window__button'
+                          : 'main-window__button main-window__button--inverted') +
+                        ' main-window__list-item--' +
+                        status.className
+                      }
+                      onClick={() => {
+                        let temp = statuses
+                        temp.splice(index, 1, {
+                          ...status,
+                          visible: !status.visible,
+                        })
+                        setStatuses([...temp])
+                      }}
+                    >
+                      {status.name}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          }
+        />
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Дата создания</span>

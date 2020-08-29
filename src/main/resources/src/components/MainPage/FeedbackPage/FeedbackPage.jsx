@@ -121,6 +121,7 @@ const FeedbackPage = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <ControlPanel
+          itemsCount={`Всего: ${messages.length} записей`}
           content={
             <>
               <div className="main-window__info-panel">
@@ -149,9 +150,6 @@ const FeedbackPage = (props) => {
                       </div>
                     )
                   })}
-                </div>
-                <div className="main-window__amount_table">
-                  Всего: {messages.length} записей
                 </div>
               </div>
               <div className="main-window__filter-pick">

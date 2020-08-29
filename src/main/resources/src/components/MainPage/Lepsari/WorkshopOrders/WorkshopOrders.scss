@@ -5,6 +5,26 @@
   --completed: #399639;
   --sent: #bdbd41;
   --problem: #c23737;
+  
+  .control-panel {
+    margin-top: -10px;
+    border-top: 1px solid #dddddd;
+    width: calc(100% + 25px);
+    margin-bottom: 10px;
+
+    .main-window__control-panel-wrapper {
+      padding-top: 10px;
+      padding-bottom: 15px;
+
+      .main-window__info-panel {
+        margin-bottom: 0;
+      }
+
+      .main-window__status-panel {
+        margin-bottom: 0;
+      }
+    }
+  }
 
   .main-window__status-panel {
     .main-window__button {

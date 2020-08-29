@@ -2,16 +2,22 @@
     width: 100%;
 
     .main-window__control-panel-wrapper {
-        padding-top: 10px;
+        padding-top: 5px;
         padding-bottom: 10px;
 
         .control-panel__buttons {
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
+
+            .main-window__button {
+                margin-top: 5px;
+            }
 
             .main-window__amount_table {
                 color: #666666;
                 align-self: center;
+                margin-top: 5px;
             }
         }
 

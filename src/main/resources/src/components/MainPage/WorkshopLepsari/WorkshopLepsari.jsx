@@ -160,6 +160,16 @@ const WorkshopLepsari = (props) => {
           </div>
         </div>
         <ControlPanel
+          itemsCount={`Всего: ${requestLepsari.length} записей`}
+          buttons={
+            <Button
+              text="Печать списка"
+              isLoading={isLoading}
+              imgSrc={PrintIcon}
+              className="main-window__button"
+              onClick={printRequestsList}
+            />
+          }
           content={
             <div className="main-window__status-panel">
               <div>Фильтр по статусам: </div>
@@ -191,16 +201,6 @@ const WorkshopLepsari = (props) => {
                   </div>
                 )
               })}
-              <Button
-                text="Печать списка"
-                isLoading={isLoading}
-                imgSrc={PrintIcon}
-                className="main-window__button"
-                onClick={printRequestsList}
-              />
-              <div className="main-window__amount_table">
-                Всего: {requestLepsari.length} записей
-              </div>
             </div>
           }
         />
