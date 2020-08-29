@@ -8,16 +8,19 @@ const ControlPanel = (props) => {
   return (
     <div className="control-panel">
       <div className="main-window__control-panel-wrapper">
-        <div
-          className="main-window__button main-window__button--inverted main-window__button--filter"
-          onClick={() => setIsHidden((isHidden) => !isHidden)}
-        >
-          <span>{props.panelName || 'Фильтры'}</span>
-          <ChevronSVG
-            className={`main-window__img ${
-              isHidden ? '' : 'main-window__img--rotated'
-            }`}
-          />
+        <div className="control-panel__buttons">
+          <div
+            className="main-window__button main-window__button--inverted main-window__button--filter"
+            onClick={() => setIsHidden((isHidden) => !isHidden)}
+          >
+            <span>{props.panelName || 'Фильтры'}</span>
+            <ChevronSVG
+              className={`main-window__img ${
+                isHidden ? '' : 'main-window__img--rotated'
+              }`}
+            />
+          </div>
+          {props.sorting || null}
         </div>
         {!isHidden ? props.content : null}
       </div>

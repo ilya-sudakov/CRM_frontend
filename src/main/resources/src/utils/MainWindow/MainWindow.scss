@@ -125,11 +125,16 @@
         margin-bottom: 10px !important;
         padding: 0 25px;
         box-sizing: border-box;
+        font-size: 170%;
+
+        .main-window__button {
+          font-size: 50% !important;
+        }
       }
 
       .main-window__menu {
         width: calc(100% - 5px);
-        margin-left: 5px;
+        margin-left: 0px;
       }
     }
   }
