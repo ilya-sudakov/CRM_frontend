@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import chevronSVG from '../../../../../../../assets/tableview/chevron-down.svg'
+import ChevronSVG from '../../../../../../../assets/tableview/chevron-down.inline.svg'
 import './ControlPanel.scss'
 
 const ControlPanel = (props) => {
@@ -13,11 +13,10 @@ const ControlPanel = (props) => {
           onClick={() => setIsHidden((isHidden) => !isHidden)}
         >
           <span>{props.panelName || 'Фильтры'}</span>
-          <img
+          <ChevronSVG
             className={`main-window__img ${
               isHidden ? '' : 'main-window__img--rotated'
             }`}
-            src={chevronSVG}
           />
         </div>
         {!isHidden ? props.content : null}
