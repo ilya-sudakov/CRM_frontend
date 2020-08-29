@@ -18,6 +18,7 @@ import {
   sortRequestsByDates,
   getQuantityOfProductsFromRequests,
 } from '../../../utils/functions.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([])
@@ -158,47 +159,51 @@ const WorkshopLEMZ = (props) => {
             </div>
           </div>
         </div>
-        <div className="main-window__status-panel">
-          <div>Фильтр по статусам: </div>
-          {requestStatuses.map((status, index) => {
-            return (
-              <div
-                className={
-                  (status.visible
-                    ? 'main-window__button'
-                    : 'main-window__button main-window__button--inverted') +
-                  ' main-window__list-item--' +
-                  status.className
-                }
-                onClick={() => {
-                  let temp = requestStatuses.map((status) => {
-                    return {
-                      ...status,
-                      visible: false,
+        <ControlPanel
+          content={
+            <div className="main-window__status-panel">
+              <div>Фильтр по статусам: </div>
+              {requestStatuses.map((status, index) => {
+                return (
+                  <div
+                    className={
+                      (status.visible
+                        ? 'main-window__button'
+                        : 'main-window__button main-window__button--inverted') +
+                      ' main-window__list-item--' +
+                      status.className
                     }
-                  })
-                  temp.splice(index, 1, {
-                    ...status,
-                    visible: !status.visible,
-                  })
-                  setRequestStatutes([...temp])
-                }}
-              >
-                {status.name}
+                    onClick={() => {
+                      let temp = requestStatuses.map((status) => {
+                        return {
+                          ...status,
+                          visible: false,
+                        }
+                      })
+                      temp.splice(index, 1, {
+                        ...status,
+                        visible: !status.visible,
+                      })
+                      setRequestStatutes([...temp])
+                    }}
+                  >
+                    {status.name}
+                  </div>
+                )
+              })}
+              <Button
+                text="Печать списка"
+                isLoading={isLoading}
+                imgSrc={PrintIcon}
+                className="main-window__button"
+                onClick={printRequestsList}
+              />
+              <div className="main-window__amount_table">
+                Всего: {requestsLEMZ.length} записей
               </div>
-            )
-          })}
-          <Button
-            text="Печать списка"
-            isLoading={isLoading}
-            imgSrc={PrintIcon}
-            className="main-window__button"
-            onClick={printRequestsList}
-          />
-          <div className="main-window__amount_table">
-            Всего: {requestsLEMZ.length} записей
-          </div>
-        </div>
+            </div>
+          }
+        />
         <TableView
           data={requestsLEMZ
             .filter((item) => {

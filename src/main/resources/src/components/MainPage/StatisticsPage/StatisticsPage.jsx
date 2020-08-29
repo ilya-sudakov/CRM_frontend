@@ -115,7 +115,7 @@ const ProductionPage = (props) => {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  function loadDrafts(signal) {
+  const loadDrafts = (signal) => {
     setIsLoading(true)
     let newDrafts = []
     getStamp(signal)
