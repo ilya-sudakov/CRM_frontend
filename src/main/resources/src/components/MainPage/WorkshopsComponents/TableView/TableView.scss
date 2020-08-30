@@ -72,7 +72,8 @@
         }
 
         &:not(.main-window__list-item--header) {
-          border-color: #ffffffaa;
+          // border-color: #ffffffaa;
+          border-color: #ffffff66;
           color: #111111 !important;
 
           .requests__column--status {

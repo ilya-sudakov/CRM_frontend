@@ -40,8 +40,8 @@
         border-right: 1px solid #aaaaaa;
         border-top: 1px solid #aaaaaa;
         border-radius: 5px;
-
         border-left: 1px solid #aaaaaa;
+        border-color: #dddddd !important;
 
         .feedback-page__avatar {
           --avatar-size: 50px;
@@ -50,7 +50,6 @@
           justify-content: center;
           align-items: center;
           flex: 0 1 var(--avatar-size);
-          background-color: $button__background--inverted;
           width: var(--avatar-size);
           height: var(--avatar-size);
           padding: 0;
@@ -60,6 +59,11 @@
           margin: 0 -5px;
           margin-right: -15px;
           color: #ffffffee;
+
+          // background: $button__background--inverted;
+          // gradient
+          background: rgb(0, 163, 162);
+          background: linear-gradient(139deg, rgba(0, 163, 162, 1) 0%, rgba(40, 194, 194, 1) 67%);
         }
 
         &::before {

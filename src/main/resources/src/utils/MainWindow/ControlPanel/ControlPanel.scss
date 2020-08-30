@@ -71,8 +71,8 @@
         }
 
         .main-window__button--filter {
-            padding: 8px 20px !important;
-            padding-right: 15px !important;
+            // padding: 8px 20px !important;
+            // padding-right: 15px !important;
             border-color: #bbbbbb;
             //test
             justify-content: space-between;
@@ -80,9 +80,10 @@
             padding-right: 5px !important;
 
             span {
-                margin-right: 6px;
+                // margin-right: 6px;
                 //test
                 margin-right: 20px;
+                font-size: 95%;
             }
 
             .main-window__img {
