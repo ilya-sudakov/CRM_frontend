@@ -145,6 +145,10 @@
           width: fit-content;
           margin-top: 5px;
           margin-left: 0;
+          span {
+            margin-top: 0;
+            margin-right: 0;
+          }
           // align-self: center;
         }
       }

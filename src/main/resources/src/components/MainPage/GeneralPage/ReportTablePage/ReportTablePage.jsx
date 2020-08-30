@@ -199,7 +199,7 @@ const ReportTablePage = (props) => {
         </div>
         <SearchBar
           fullSize
-          title="Поиск по сотрудникам"
+          // title="Поиск по сотрудникам"
           placeholder="Введите запрос для поиска по сотрудникам..."
           setSearchQuery={setSearchQuery}
         />
