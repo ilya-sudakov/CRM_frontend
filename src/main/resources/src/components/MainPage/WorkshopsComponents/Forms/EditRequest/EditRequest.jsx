@@ -288,10 +288,12 @@ const EditRequest = (props) => {
   return (
     <div className="edit-request">
       <div className="main-form">
-        <div className="main-form__title">{`Редактирование заявки ${
-          workshops[props.type].title
-        }`}</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Редактирование заявки ${
+              workshops[props.type].title
+            }`}</div>
+          </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}

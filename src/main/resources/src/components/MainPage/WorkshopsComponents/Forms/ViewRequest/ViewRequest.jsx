@@ -104,10 +104,12 @@ const ViewRequest = (props) => {
   return (
     <div className="view-request">
       <div className="main-form">
-        <div className="main-form__title">{`Просмотр заявки ${
-          workshops[props.type].name
-        }`}</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Просмотр заявки ${
+              workshops[props.type].title
+            }`}</div>
+          </div>
           <InputDate
             inputName="Дата заявки"
             selected={Date.parse(requestInputs.date)}
