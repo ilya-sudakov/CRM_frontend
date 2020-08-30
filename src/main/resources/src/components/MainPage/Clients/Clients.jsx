@@ -439,11 +439,6 @@ const Clients = (props) => {
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {itemsCount} записей
-          </div>
-        </div>
         <div className="main-window__sort-panel">
           <span>Сортировка: </span>
           <select onChange={changeSortOrder}>

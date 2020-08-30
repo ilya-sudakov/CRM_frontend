@@ -16,6 +16,7 @@ import NewClientCategory from './NewClientCategory/NewClientCategory.jsx'
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const ClientCategories = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -138,11 +139,7 @@ const ClientCategories = (props) => {
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {categories.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${categories.length} записей`} />
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название</span>

@@ -25,13 +25,23 @@
 
         .report-table-page__date {
             width: 100%;
-            max-width: 360px;
+            // max-width: 360px;
             align-self: flex-start;
-            margin-left: 30px;
+            display: flex;
+            flex-direction: row;
+            // margin-left: 30px;
+            margin-top: 15px;
             .input_date {
                 width: 100%;
+                margin-bottom: 5px;
+                .input_date__input {
+                    flex-direction: row;
+                    align-items: center;
+                    flex-wrap: nowrap !important;
+                }
                 .input_date__input_name {
                     white-space: nowrap;
+                    max-width: fit-content;
                 }
                 .react-datepicker__month-text {
                     padding: 5px 0px;
@@ -50,6 +60,9 @@
         }
     }
     .searchbar {
+        // margin-bottom: 10px;
+    }
+    .control-panel {
         margin-bottom: 10px;
     }
     &__employee-info {
@@ -250,6 +263,15 @@
     }
 
     @media (max-width: 768px) {
+        .control-panel {
+            .report-table-page__date {
+                .input_date__input {
+                    .input_date__input_name {
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
         .report-table-page__tableview {
             .main-window__list {
                 .main-window__list-item--header {

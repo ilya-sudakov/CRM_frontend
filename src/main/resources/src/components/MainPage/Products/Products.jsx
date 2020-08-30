@@ -19,6 +19,7 @@ import { deletePackagingFromProduct } from '../../../utils/RequestsAPI/Products/
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Products = (props) => {
   const [products, setProducts] = useState([])
@@ -162,11 +163,7 @@ const Products = (props) => {
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {products.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${products.length} записей`} />
         <TableView
           products={products}
           categories={categories}

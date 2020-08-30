@@ -10,6 +10,7 @@ import {
   deletePackaging,
 } from '../../../utils/RequestsAPI/Products/packaging.js'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const PackagingPage = (props) => {
   const [packages, setPackages] = useState([])
@@ -74,11 +75,7 @@ const PackagingPage = (props) => {
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {packages.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${packages.length} записей`} />
         <div className="main-window__sort-panel">
           <span>Сортировка: </span>
           <select onChange={changeSortOrder}>

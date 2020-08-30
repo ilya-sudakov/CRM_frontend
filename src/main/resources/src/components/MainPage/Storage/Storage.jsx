@@ -8,6 +8,7 @@ import {
   getStorage,
 } from '../../../utils/RequestsAPI/Workshop/LemzStorage.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Storage = (props) => {
   const [storage, setStorage] = useState([])
@@ -50,11 +51,7 @@ const Storage = (props) => {
           placeholder="Введите артикул детали для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {storage.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${storage.length} записей`} />
         <TableView
           data={storage}
           searchQuery={searchQuery}

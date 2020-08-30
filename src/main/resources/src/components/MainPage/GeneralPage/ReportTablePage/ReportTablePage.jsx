@@ -21,6 +21,7 @@ import Button from '../../../../utils/Form/Button/Button.jsx'
 import { exportReportTableExcel } from '../../../../utils/xlsxFunctions.jsx'
 import { UserContext } from '../../../../App.js'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const ReportTablePage = (props) => {
   const [date, setDate] = useState(new Date())
@@ -194,8 +195,16 @@ const ReportTablePage = (props) => {
     <div className="report-table-page">
       <div className="main-window">
         <div className="main-window__header main-window__header--full">
-          <div className="main-window__title">
-            Табель
+          <div className="main-window__title">Табель</div>
+        </div>
+        <SearchBar
+          fullSize
+          title="Поиск по сотрудникам"
+          placeholder="Введите запрос для поиска по сотрудникам..."
+          setSearchQuery={setSearchQuery}
+        />
+        <ControlPanel
+          buttons={
             <Button
               text="Скачать .xlsx"
               imgSrc={DownloadIcon}
@@ -215,25 +224,21 @@ const ReportTablePage = (props) => {
                 setIsLoading(false)
               }}
             />
-          </div>
-        </div>
-        <SearchBar
-          fullSize
-          title="Поиск по сотрудникам"
-          placeholder="Введите запрос для поиска по сотрудникам..."
-          setSearchQuery={setSearchQuery}
+          }
+          content={
+            <div className="report-table-page__date">
+              <InputDate
+                selected={Date.parse(date)}
+                inputName="Выбор месяца:"
+                handleDateChange={(date) => {
+                  // console.log(value)
+                  setDate(date)
+                }}
+                showMonthYearPicker
+              />
+            </div>
+          }
         />
-        <div className="report-table-page__date">
-          <InputDate
-            selected={Date.parse(date)}
-            inputName="Выбор месяца:"
-            handleDateChange={(date) => {
-              // console.log(value)
-              setDate(date)
-            }}
-            showMonthYearPicker
-          />
-        </div>
         {/* //Окно для вывода информации о сотруднике и его работе за день */}
         <EmployeeInfo
           // dates={dates}
