@@ -37,10 +37,6 @@ const TableView = (props) => {
     link: '',
   })
   const [labelIsHidden, setLabelIsHidden] = useState(true)
-  const [sortOrder, setSortOrder] = useState({
-    curSort: 'date',
-    date: 'desc',
-  })
   const [requests, setRequests] = useState([])
 
   const [workshopsFuncs, setWorkshopsFuncs] = useState({
@@ -100,15 +96,6 @@ const TableView = (props) => {
     }, 1500)
   }
 
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    })
-  }
-
   const handleStatusChange = (event) => {
     const status = event.target.value
     const id = event.target.getAttribute('id')
@@ -154,36 +141,6 @@ const TableView = (props) => {
       })
   }
 
-  const searchQuery = (data) => {
-    const query = props.searchQuery.toLowerCase()
-    return data.filter((item) => {
-      return item[workshopsFuncs[props.workshopName].productsName].length !==
-        0 &&
-        item[workshopsFuncs[props.workshopName].productsName][0].name !== null
-        ? item[workshopsFuncs[props.workshopName].productsName][0].name
-            .toLowerCase()
-            .includes(query) ||
-            item.id.toString().includes(query) ||
-            formatDateString(item.date).includes(query) ||
-            item.codeWord.toLowerCase().includes(query) ||
-            item.status.toLowerCase().includes(query) ||
-            item.responsible.toLowerCase().includes(query) ||
-            formatDateString(item.shippingDate).includes(query)
-        : item.status.toLowerCase().includes(query)
-    })
-  }
-  const sortRequests = (data) => {
-    return searchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-      }
-      return 0
-    })
-  }
-
   useEffect(() => {
     if (props.data) {
       setRequests(props.data)
@@ -211,7 +168,7 @@ const TableView = (props) => {
   const printRequests = (requests, displayColumns) => {
     return (
       <>
-        {sortRequests(requests).map((request, index) => (
+        {requests.map((request, index) => (
           <React.Fragment>
             <div
               className={
@@ -563,17 +520,6 @@ const TableView = (props) => {
           link={selectedProduct.link}
           isHidden={labelIsHidden}
         />
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="date desc">По дате (убыв.)</option>
-            <option value="date asc">По дате (возр.)</option>
-            <option value="codeWord asc">По клиенту (А-Я)</option>
-            <option value="codeWord desc">По клиенту (Я-А)</option>
-            <option value="shippingDate desc">По дате отгрузки (убыв.)</option>
-            <option value="shippingDate asc">По дате отгрузки (возр.)</option>
-          </select>
-        </div>
         <div className="main-window__list">
           {false ? ( //Временно sortOrder.curSort === 'date'
             <>

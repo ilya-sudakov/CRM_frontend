@@ -263,6 +263,50 @@ const Requests = (props) => {
     return newDates
   }
 
+  // * Sorting
+
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'date',
+    date: 'desc',
+  })
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase()
+    return data.filter((item) => {
+      return item.requestProducts.length !== 0 &&
+        item.requestProducts[0].name !== null
+        ? item.requestProducts[0].name.toLowerCase().includes(query) ||
+            item.id.toString().includes(query) ||
+            formatDateString(item.date).includes(query) ||
+            item.codeWord.toLowerCase().includes(query) ||
+            item.status.toLowerCase().includes(query) ||
+            item.responsible.toLowerCase().includes(query) ||
+            formatDateString(item.shippingDate).includes(query)
+        : item.status.toLowerCase().includes(query)
+    })
+  }
+
+  const sortRequests = (data) => {
+    return filterSearchQuery(data).sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      return 0
+    })
+  }
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
   return (
     <div className="requests">
       <div className="main-window">
@@ -374,22 +418,22 @@ const Requests = (props) => {
         />
         <ControlPanel
           itemsCount={`Всего: ${requests.length} записей`}
-          // sorting={
-          //   <div className="main-window__sort-panel">
-          //     <select onChange={null}>
-          //       <option value="date desc">По дате (убыв.)</option>
-          //       <option value="date asc">По дате (возр.)</option>
-          //       <option value="codeWord asc">По клиенту (А-Я)</option>
-          //       <option value="codeWord desc">По клиенту (Я-А)</option>
-          //       <option value="shippingDate desc">
-          //         По дате отгрузки (убыв.)
-          //       </option>
-          //       <option value="shippingDate asc">
-          //         По дате отгрузки (возр.)
-          //       </option>
-          //     </select>
-          //   </div>
-          // }
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="date desc">По дате (убыв.)</option>
+                <option value="date asc">По дате (возр.)</option>
+                <option value="codeWord asc">По клиенту (А-Я)</option>
+                <option value="codeWord desc">По клиенту (Я-А)</option>
+                <option value="shippingDate desc">
+                  По дате отгрузки (убыв.)
+                </option>
+                <option value="shippingDate asc">
+                  По дате отгрузки (возр.)
+                </option>
+              </select>
+            </div>
+          }
           content={
             <>
               <div className="main-window__status-panel">
@@ -459,7 +503,7 @@ const Requests = (props) => {
           }
         />
         <TableView
-          data={filterRequests(requests)}
+          data={sortRequests(filterRequests(requests))}
           requestsByDate={filterDates(requestsByDate)}
           isLoading={isLoading}
           workshopName="requests"
