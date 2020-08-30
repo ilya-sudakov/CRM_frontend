@@ -53,6 +53,10 @@
       .main-window {
         padding: 0;
         display: block;
+
+        &__list {
+          width: 100%;
+        }
       }
     }
 
