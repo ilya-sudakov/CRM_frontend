@@ -239,6 +239,44 @@ const Select = (props) => {
     [showOptions, showOverlay],
   )
 
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'name',
+    name: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    const query = searchQueryCategory.toLowerCase()
+    return data.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(query) ||
+        item.id.toString().includes(query) ||
+        item.weight.toString().includes(query) ||
+        (item.comment !== null && item.comment.toLowerCase().includes(query))
+      )
+    })
+  }
+
+  const sortProducts = (data) => {
+    return data.sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      return 0
+    })
+  }
+
   useEffect(() => {
     if (props.defaultValue !== undefined) {
       setSelected([...props.defaultValue])
@@ -292,9 +330,22 @@ const Select = (props) => {
                   placeholder="Введите название продукции для поиска..."
                   setSearchQuery={setSearchQueryCategory}
                 />
+                <div className="main-window">
+                  <div className="main-window__sort-panel">
+                    <select onChange={changeSortOrder}>
+                      <option value="name asc">По алфавиту (А-Я)</option>
+                      <option value="name desc">По алфавиту (Я-А)</option>
+                      <option value="weight desc">По весу</option>
+                    </select>
+                  </div>
+                </div>
                 <TableView
                   // products={products}
-                  products={props.products ? props.products : products}
+                  products={
+                    props.products
+                      ? sortProducts(filterSearchQuery(props.products))
+                      : sortProducts(filterSearchQuery(products))
+                  }
                   categories={categories}
                   searchQuery={searchQueryCategory}
                   deleteItem={null}
