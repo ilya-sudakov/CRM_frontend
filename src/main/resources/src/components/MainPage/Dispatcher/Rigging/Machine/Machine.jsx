@@ -10,6 +10,7 @@ import {
   deleteStamp,
   getStampsByStatus,
 } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Machine = (props) => {
   const [machines, setMachines] = useState([])
@@ -56,16 +57,16 @@ const Machine = (props) => {
   return (
     <div className="machine">
       <div className="main-window">
-        <SearchBar
-          // title="Поиск станка"
-          setSearchQuery={setSearchQuery}
-          placeholder="Введите здесь запрос для поиска..."
-        />
         <FloatingPlus
           linkTo="/dispatcher/rigging/machine/new"
           visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
-        <div className="main-window__header">
+        <SearchBar
+          fullSize
+          setSearchQuery={setSearchQuery}
+          placeholder="Введите здесь запрос для поиска..."
+        />
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__menu">
             <div
               className={
@@ -91,11 +92,7 @@ const Machine = (props) => {
             )}
           </div>
         </div>
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {machines.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${machines.length} записей`} />
         <TableView
           data={machines.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
