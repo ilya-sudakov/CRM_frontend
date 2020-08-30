@@ -76,6 +76,31 @@ const Users = (props) => {
       })
   }
 
+  // * Sorting
+
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'username',
+    username: 'asc',
+  })
+
+  const filterSearchQuery = (data) => {
+    return data.filter((item) =>
+      item.username.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
+  }
+
+  const sortUsers = (data) => {
+    return filterSearchQuery(data).sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      return 0
+    })
+  }
+
   return (
     <div className="users-manage">
       <div className="main-window">
@@ -91,6 +116,18 @@ const Users = (props) => {
         />
         <ControlPanel
           itemsCount={`Всего: ${users.length} записей`}
+          sorting={
+            <div className="main-window__sort-panel">
+              <select
+                onChange={(event) => {
+                  setSortOrder(changeSortOrder(event))
+                }}
+              >
+                <option value="username asc">По имени (А-Я)</option>
+                <option value="username desc">По имени (Я-А)</option>
+              </select>
+            </div>
+          }
           content={
             <div className="main-window__info-panel">
               <div className="main-window__filter-pick">
@@ -128,7 +165,7 @@ const Users = (props) => {
           }
         />
         <TableView
-          data={users.filter((item) => {
+          data={sortUsers(users).filter((item) => {
             let check = false
             let noActiveRoles = true
             userRoles.map((role) => {

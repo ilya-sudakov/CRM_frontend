@@ -153,7 +153,7 @@ const ProductionPage = (props) => {
     //   abortController.abort()
     // }
   }, [dataLoaded, isLoading])
-
+  
   return (
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
