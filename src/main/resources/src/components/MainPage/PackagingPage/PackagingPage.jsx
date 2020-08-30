@@ -75,15 +75,18 @@ const PackagingPage = (props) => {
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <ControlPanel itemsCount={`Всего: ${packages.length} записей`} />
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="name asc">По алфавиту (А-Я)</option>
-            <option value="name desc">По алфавиту (Я-А)</option>
-            <option value="quantity desc">По штукам</option>
-          </select>
-        </div>
+        <ControlPanel
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="name asc">По алфавиту (А-Я)</option>
+                <option value="name desc">По алфавиту (Я-А)</option>
+                <option value="quantity desc">По штукам</option>
+              </select>
+            </div>
+          }
+          itemsCount={`Всего: ${packages.length} записей`}
+        />
         <div className="main-window__list">
           <TableLoading isLoading={isLoading} />
           <div className="main-window__list-item main-window__list-item--header">
