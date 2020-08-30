@@ -108,7 +108,8 @@ const SelectClient = (props) => {
         content={
           <React.Fragment>
             <SearchBar
-              title="Поиск по клиентам"
+              // title="Поиск по клиентам"
+              fullSize
               setSearchQuery={setSearchQuery}
               placeholder="Введите название для поиска..."
               onButtonClick={(query) => {

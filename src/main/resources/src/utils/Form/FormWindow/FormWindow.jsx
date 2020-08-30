@@ -52,7 +52,9 @@ const FormWindow = (props) => {
             ></div>
           </div>
         </div>
-        {props.content}
+        <div className="form-window__body">
+          <div className="main-window">{props.content}</div>
+        </div>
       </div>
     </div>
   )

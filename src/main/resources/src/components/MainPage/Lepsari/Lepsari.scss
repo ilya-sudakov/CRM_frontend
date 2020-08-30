@@ -12,6 +12,7 @@
     &--hidden {
       transform: scaleY(0);
       height: 0;
+      margin-bottom: 0;
     }
 
     .main-window__title {

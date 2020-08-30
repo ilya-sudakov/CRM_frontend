@@ -68,7 +68,8 @@ const SelectWorkItem = (props) => {
                 content={
                     <React.Fragment>
                         <SearchBar
-                            title="Поиск по работам"
+                            // title="Поиск по работам"
+                            fullSize
                             setSearchQuery={setSearchQuery}
                             placeholder="Введите название работы для поиска..."
                         />

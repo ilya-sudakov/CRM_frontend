@@ -6,52 +6,6 @@ import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
 import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
-  const [sortOrder, setSortOrder] = useState({
-    curSort: 'lastName',
-    lastName: 'asc',
-  })
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    })
-  }
-
-  const searchQuery = (data) => {
-    const query = props.searchQuery.toLowerCase()
-    return data.filter((item) => {
-      if (item.name !== null) {
-        return (
-          item.lastName.toLowerCase().includes(query) ||
-          item.name.toLowerCase().includes(query) ||
-          item.middleName.toLowerCase().includes(query) ||
-          item.id.toString().includes(query) ||
-          item.yearOfBirth.toString().includes(query) ||
-          item.citizenship.toLowerCase().includes(query) ||
-          item.workshop.toLowerCase().includes(query) ||
-          item.position.toLowerCase().includes(query) ||
-          item.comment.toLowerCase().includes(query) ||
-          item.relevance.toLowerCase().includes(query)
-        )
-      }
-      return false
-    })
-  }
-
-  const sortEmployees = (data) => {
-    return searchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-      }
-      return 0
-    })
-  }
 
   useEffect(() => {
     props.setShowWindow && props.setShowWindow(false)
@@ -60,14 +14,6 @@ const TableView = (props) => {
   return (
     <div className="tableview-employees">
       <div className="main-window">
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="lastName asc">По алфавиту (А-Я)</option>
-            <option value="lastName desc">По алфавиту (Я-А)</option>
-            <option value="yearOfBirth asc">По дате рождения</option>
-          </select>
-        </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>ФИО</span>
@@ -86,7 +32,7 @@ const TableView = (props) => {
               items={10}
             />
           )}
-          {sortEmployees(props.data).map(
+          {props.data.map(
             (employee, employee_id) =>
               employee.relevance !== 'Уволен' && (
                 <div

@@ -15,8 +15,9 @@ import {
   getProductsByLocation,
 } from '../../../utils/RequestsAPI/Products.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import { addSpaceDelimiter } from '../../../utils/functions.jsx'
+// import { addSpaceDelimiter } from '../../../utils/functions.jsx'
 import { UserContext } from '../../../App.js'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Select = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -326,18 +327,27 @@ const Select = (props) => {
             content={
               <React.Fragment>
                 <SearchBar
-                  title="Поиск по продукции"
+                  fullSize
+                  // title="Поиск по продукции"
                   placeholder="Введите название продукции для поиска..."
                   setSearchQuery={setSearchQueryCategory}
                 />
                 <div className="main-window">
-                  <div className="main-window__sort-panel">
-                    <select onChange={changeSortOrder}>
-                      <option value="name asc">По алфавиту (А-Я)</option>
-                      <option value="name desc">По алфавиту (Я-А)</option>
-                      <option value="weight desc">По весу</option>
-                    </select>
-                  </div>
+                  <ControlPanel
+                    itemsCount={`Всего: ${products.length} записей`}
+                    sorting={
+                      <div className="main-window__sort-panel">
+                        <select
+                          className="main-window__select"
+                          onChange={changeSortOrder}
+                        >
+                          <option value="name asc">По алфавиту (А-Я)</option>
+                          <option value="name desc">По алфавиту (Я-А)</option>
+                          <option value="weight desc">По весу</option>
+                        </select>
+                      </div>
+                    }
+                  />
                 </div>
                 <TableView
                   // products={products}

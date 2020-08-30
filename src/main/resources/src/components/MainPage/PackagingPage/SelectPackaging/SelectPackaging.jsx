@@ -49,7 +49,8 @@ const SelectPackaging = (props) => {
         content={
           <React.Fragment>
             <SearchBar
-              title="Поиск по упаковкам"
+              // title="Поиск по упаковкам"
+              fullSize
               setSearchQuery={setSearchQuery}
               placeholder="Введите название упаковки для поиска..."
             />

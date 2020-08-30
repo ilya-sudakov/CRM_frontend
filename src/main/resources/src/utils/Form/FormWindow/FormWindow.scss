@@ -28,14 +28,15 @@
     height: calc(80% - var(--padding-left-right) * 2);
     // height: 80%;
     // width: 80%;
-    background-color: #eeeeee;
+    background-color: #f4f8f9;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid #999999;
-    padding: 15px;
     overflow-y: auto;
     transition: transform 200ms ease-in-out;
     transform: scale(1);
+
+    // padding: 15px;
 
     .tableview__products {
       width: 100%;
@@ -46,28 +47,78 @@
       transform: scale(0);
     }
 
+    .form-window__body {
+      padding: 15px;
+
+      .main-window {
+        padding: 0;
+        display: block;
+      }
+    }
+
+    .searchbar {
+      margin-left: -15px;
+      width: calc(100% + 30px) !important;
+      margin-top: -15px !important;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #dddddd !important;
+      background-color: #ffffff !important;
+      padding-bottom: 15px;
+    }
+
+    .control-panel {
+      margin-top: -10px;
+      width: calc(100% + 30px);
+      margin-left: -15px;
+      margin-bottom: 10px;
+    }
+
+    .main-window {
+      padding: 0;
+    }
+
     .form-window__title {
       text-align: center;
-      padding: 10px 0px;
+      padding: 15px 0px;
       font-size: 125%;
       display: flex;
       justify-content: center;
       align-items: center;
       // margin-bottom: 10px;
-      padding-bottom: 0;
       position: relative;
       min-height: 1.5rem;
       // flex-wrap: wrap;
 
+      border-bottom: 1px solid #dddddd;
+
+      background-color: #ffffff;
+      justify-content: flex-start;
+      padding-left: 25px;
+      font-size: 150%;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+
       span {
-        // margin: 0 auto;
-        // margin-right: auto;
-        // width: calc();
-        // margin-left: 25px;
+        margin-right: 10px;
       }
+
       .form-window__button {
-        // margin-left: auto;
-        // margin-left: 50px;
+        background-color: $button__background--inverted;
+        color: $secondary-text-color;
+        font-size: 60%;
+        padding: 10px 15px;
+        margin-right: 10px;
+        border-radius: 5px;
+        transition: 0.2s ease-in-out;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          background-color: lighten($button__background--inverted, 5%);
+        }
       }
     }
 
@@ -75,10 +126,12 @@
       position: absolute;
       width: 45px;
       height: 45px;
-      right: 0;
+      right: 5px;
       border-radius: 5px;
       transition: 0.2s ease-in-out;
       cursor: pointer;
+      background-color: #ffffff;
+      border-radius: 5px;
 
       &:hover {
         background-color: #cccccc;
@@ -100,26 +153,6 @@
         }
       }
     }
-
-    .searchbar {
-      width: 100%;
-    }
-
-    .form-window__button {
-      background-color: $button__background--inverted;
-      color: $secondary-text-color;
-      font-size: 60%;
-      padding: 10px 15px;
-      margin-left: 10px;
-      border-radius: 5px;
-      transition: 0.2s ease-in-out;
-      right: 50px;
-      position: absolute;
-
-      &:hover {
-        background-color: lighten($button__background--inverted, 5%);
-      }
-    }
   }
   .main-form {
     padding-bottom: 0;
@@ -129,7 +162,7 @@
     &__content {
       --padding-top-bottom: 5px;
       --padding-left-right: 5px;
-      padding: var(--padding-top-bottom) var(--padding-left-right);
+      // padding: var(--padding-top-bottom) var(--padding-left-right);
       // width: calc(100% - 30px);
       // height: calc(100% - 50px);
       width: calc(100% - var(--padding-left-right) * 2 - 10px);
@@ -139,16 +172,20 @@
         width: calc(100% - 10px);
       }
 
+      .searchbar {
+        // width: calc(100% + 20px);
+      }
+
+      .main-window {
+        width: calc(100% + 5px);
+      }
+
       .form-window__title {
-        // flex-direction: column;
-        // align-items: baseline;
         span {
-          width: 100%;
-          padding: 0 45px;
-          // margin-top: 40px;
+          // width: 100%;
+          // padding: 0 45px;
         }
         .form-window__button {
-          // position: relative;
           margin-top: 5px;
         }
         .form-window__exit {

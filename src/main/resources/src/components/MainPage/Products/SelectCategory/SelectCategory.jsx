@@ -77,7 +77,8 @@ const SelectCategory = (props) => {
                 content={
                     <React.Fragment>
                         <SearchBar
-                            title="Поиск по категориям"
+                            fullSize
+                            // title="Поиск по категориям"
                             setSearchQuery={setSearchQuery}
                             placeholder="Введите название категории для поиска..."
                         />

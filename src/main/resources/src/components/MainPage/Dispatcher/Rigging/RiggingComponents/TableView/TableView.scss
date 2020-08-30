@@ -13,6 +13,8 @@
             width: 100%;
             &-item {
                 padding: 15px 10px;
+                // border-color: #ffffff66;
+                // margin-bottom: -1px;
                 &--defect {
                     background-color: var(--defect);
                     &::before {
@@ -93,6 +95,7 @@
             .main-window__list-options {
                 .main-window__list {
                     &-item {
+                        // border-color: #ffffff66;
                         &:not(.main-window__list-item--header) {
                             span:nth-child(6) {
                                 &::before {
