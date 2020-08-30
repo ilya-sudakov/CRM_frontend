@@ -49,7 +49,13 @@ const TableView = (props) => {
             })
             .map((item) => {
               return (
-                <div className="main-window__list-item">
+                <div
+                  className="main-window__list-item"
+                  onClick={() => {
+                    props.selectCategory(item.id, item.name)
+                    props.setCloseWindow(!props.closeWindow)
+                  }}
+                >
                   <span>
                     <div className="main-window__mobile-text">Название: </div>
                     {item.name}
@@ -62,13 +68,6 @@ const TableView = (props) => {
                     <div
                       className="main-window__action"
                       title="Выбрать категорию"
-                      onClick={() => {
-                        // setEditCategory(item);
-                        // setCurForm('edit');
-                        // setShowWindow(!showWindow);
-                        props.selectCategory(item.id, item.name)
-                        props.setCloseWindow(!props.closeWindow)
-                      }}
                     >
                       <img className="main-window__img" src={okSVG} />
                     </div>

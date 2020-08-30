@@ -81,50 +81,38 @@ const ViewClient = (props) => {
   return (
     <div className="view_client">
       <div className="main-form">
-        <div className="main-form__title">{`Просмотр ${
-          clientTypes[props.type].name
-        }а`}</div>
-        <div className="main-form__header">
-          {/* {props.type === 'clients' ? (
-            <div
-              className={
-                curTab === 'requestsHistory'
-                  ? 'main-form__menu-item main-form__menu-item--active'
-                  : 'main-form__menu-item'
-              }
-              onClick={() => {
-                setCurTab('requestsHistory')
-              }}
-            >
-              История заказов
-            </div>
-          ) : null} */}
-          <div
-            className={
-              curTab === 'workHistory'
-                ? 'main-form__menu-item main-form__menu-item--active'
-                : 'main-form__menu-item'
-            }
-            onClick={() => {
-              setCurTab('workHistory')
-            }}
-          >
-            История работы
-          </div>
-          <div
-            className={
-              curTab === 'clientData'
-                ? 'main-form__menu-item main-form__menu-item--active'
-                : 'main-form__menu-item'
-            }
-            onClick={() => {
-              setCurTab('clientData')
-            }}
-          >
-            {`Данные ${clientTypes[props.type].name}а`}
-          </div>
-        </div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Просмотр ${
+              clientTypes[props.type].name
+            }а`}</div>
+            <div className="main-form__menu">
+              <div
+                className={
+                  curTab === 'workHistory'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('workHistory')
+                }}
+              >
+                История работы
+              </div>
+              <div
+                className={
+                  curTab === 'clientData'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('clientData')
+                }}
+              >
+                {`Данные ${clientTypes[props.type].name}а`}
+              </div>
+            </div>
+          </div>
           {curTab === 'workHistory' ? (
             <React.Fragment>
               {/* Добавление истории работ */}

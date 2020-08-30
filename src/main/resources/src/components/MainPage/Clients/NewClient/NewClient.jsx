@@ -275,37 +275,40 @@ const newClient = (props) => {
   return (
     <div className="new_client">
       <div className="main-form">
-        <div className="main-form__title">{`Новый ${
-          clientTypes[props.type].name
-        }`}</div>
-        {/* //Меню для перехода на разные страницы формы */}
-        <div className="main-form__header">
-          <div
-            className={
-              curTab === 'workHistory'
-                ? 'main-form__menu-item main-form__menu-item--active'
-                : 'main-form__menu-item'
-            }
-            onClick={() => {
-              setCurTab('workHistory')
-            }}
-          >
-            История работы
-          </div>
-          <div
-            className={
-              curTab === 'clientData'
-                ? 'main-form__menu-item main-form__menu-item--active'
-                : 'main-form__menu-item'
-            }
-            onClick={() => {
-              setCurTab('clientData')
-            }}
-          >
-            {`Данные ${clientTypes[props.type].name}а`}
-          </div>
-        </div>
         <form className="main-form__form">
+          {/* //Меню для перехода на разные страницы формы */}
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Новый ${
+              clientTypes[props.type].name
+            }`}</div>
+            <div className="main-form__menu">
+              {' '}
+              <div
+                className={
+                  curTab === 'workHistory'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('workHistory')
+                }}
+              >
+                История работы
+              </div>
+              <div
+                className={
+                  curTab === 'clientData'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('clientData')
+                }}
+              >
+                {`Данные ${clientTypes[props.type].name}а`}
+              </div>
+            </div>
+          </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}

@@ -1,6 +1,9 @@
 @import "../../../../../../variables.scss";
 
 .client-categories__list {
+    .main-window__list-item {
+        cursor: pointer;
+    }
     @media (max-width: 768px) {
         & {
             .main-window__actions {
