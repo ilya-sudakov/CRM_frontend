@@ -166,7 +166,8 @@ const WorkshopLEMZ = (props) => {
               text="Печать списка"
               isLoading={isLoading}
               imgSrc={PrintIcon}
-              className="main-window__button"
+              inverted
+              className="main-window__button main-window__button--inverted"
               onClick={printRequestsList}
             />
           }

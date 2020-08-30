@@ -123,9 +123,10 @@ const Transportation = (props) => {
           buttons={
             <Button
               text="Печать списка"
+              inverted
               imgSrc={PrintIcon}
               isLoading={isLoading}
-              className="main-window__button"
+              className="main-window__button main-window__button--inverted"
               onClick={printTransportationList}
             />
           }
@@ -192,7 +193,6 @@ const Transportation = (props) => {
             </div>
           }
         />
-
         <TableView
           data={transportation.filter((item) => {
             let senderCheck = false
