@@ -9,6 +9,7 @@ import {
 } from '../../../../utils/RequestsAPI/MainTasks.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+import Select from 'react-select'
 
 const GeneralTasks = (props) => {
   const [generalTasks, setGeneralTasks] = useState([])

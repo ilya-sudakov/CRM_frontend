@@ -47,7 +47,8 @@
 
                 select {
                     padding-top: 18px; //default - padding-top: 15px;
-                    padding-right: 15px;
+                    padding-right: 25px;
+                    padding-left: 9px;
                     height: 100%;
                     margin: 0;
                     box-sizing: border-box;
@@ -56,6 +57,15 @@
                     background-color: transparent;
                     // border-color: $button__background--inverted;
                     cursor: pointer;
+
+                    //custom arrow
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    background: transparent;
+                    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z'></path></svg>");
+                    background-repeat: no-repeat;
+                    background-position-x: 100%;
+                    background-position-y: calc(50% + 2px);
                 }
             }
         }
@@ -85,6 +95,21 @@
                 .main-window__img {
                     path:nth-child(1) {
                         fill: #eeeeee;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-window__control-panel-wrapper {
+            .control-panel__buttons {
+                .main-window__sort-panel {
+                    select {
+                        padding-top: 18px !important; //default - padding-top: 15px;
+                        padding-right: 25px !important;
+                        padding-left: 9px !important;
+                        max-width: 240px;
                     }
                 }
             }
