@@ -118,8 +118,10 @@ const EditPartInRigging = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Редактирование детали</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Редактирование детали</div>
+        </div>
         <div className="main-form__item">
           <div className="main-form__input_name">Название*</div>
           <div className="main-form__input_field">

@@ -141,8 +141,10 @@ const NewTask = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Новая задача</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Новая задача</div>
+        </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}

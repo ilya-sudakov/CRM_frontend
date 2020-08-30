@@ -41,10 +41,14 @@ const ViewRig = (props) => {
   return (
     <div className="view-rig">
       <div className="main-form">
-        <div className="main-form__title">{`Просмотр записи`}</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Просмотр записи`}</div>
+          </div>
           <div className="main-form__item">
-            <div className="main-form__input_name">Название оснастки(оборудования)</div>
+            <div className="main-form__input_name">
+              Название оснастки(оборудования)
+            </div>
             <div className="main-form__input_field">
               <input
                 type="text"
@@ -56,7 +60,9 @@ const ViewRig = (props) => {
             </div>
           </div>
           <div className="main-form__item">
-            <div className="main-form__input_name">Артикул оснастки(оборудования)</div>
+            <div className="main-form__input_name">
+              Артикул оснастки(оборудования)
+            </div>
             <div className="main-form__input_field">
               <input
                 type="text"

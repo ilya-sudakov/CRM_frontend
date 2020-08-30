@@ -139,7 +139,7 @@ const NewRecordWork = (props) => {
                     draft.partId,
                     draft.type,
                     draft.quantity,
-                    draft.name
+                    draft.name,
                   )
                 }),
               )
@@ -242,6 +242,11 @@ const NewRecordWork = (props) => {
     const abortController = new AbortController()
     setWrapperHeight(
       document.getElementsByClassName('main-form__wrapper')[0]?.scrollHeight +
+        ((window.innerWidth ||
+          document.documentElement.clientWidth ||
+          document.body.clientWidth) >= 768
+          ? 50
+          : 80) +
         'px',
     )
     //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
@@ -254,7 +259,6 @@ const NewRecordWork = (props) => {
   return (
     <div className="record-work">
       <div className="main-form">
-        <div className="main-form__title">Новая запись о работе</div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}
@@ -267,14 +271,23 @@ const NewRecordWork = (props) => {
               curPage !== 1
                 ? wrapperHeight
                 : document.getElementsByClassName('select-work-hours')[0]
-                    ?.scrollHeight + 'px + var(--buttons-height)'
+                    ?.scrollHeight + 'px + var(--buttons-height) + 50px'
             })`,
           }}
         >
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">Новая запись о работе</div>
+          </div>
           <div
             className="main-form__wrapper"
             style={{
-              left: `calc(-100% * ${curPage} + (20px + 15px * ${curPage}))`,
+              left: `calc(-100% * ${curPage} + (${
+                (window.innerWidth ||
+                  document.documentElement.clientWidth ||
+                  document.body.clientWidth) >= 768
+                  ? '35px'
+                  : '20px'
+              } + 15px * ${curPage}))`,
             }}
           >
             <div className="main-form__wrapper-item">

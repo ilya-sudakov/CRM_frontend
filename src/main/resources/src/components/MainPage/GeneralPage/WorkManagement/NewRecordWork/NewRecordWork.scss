@@ -14,7 +14,8 @@
     .main-form__wrapper {
       position: absolute;
       left: 20px;
-      top: 25px;
+      // top: 25px;
+      top: 70px;
       width: calc(100% * var(--page-items) - 35px);
       display: flex;
       flex-direction: row;
@@ -24,7 +25,8 @@
       transition: 200ms ease-in-out;
 
       .main-form__wrapper-item {
-        width: calc(100% / var(--page-items));
+        width: calc(100% / var(--page-items) - 50px);
+        margin-right: 50px;
 
         .select__options {
           max-height: 120px;
@@ -48,6 +50,19 @@
   @media (max-width: 768px) {
     --min-height: 725px;
     --item-height: 180px;
-    --buttons-height: 150px;
+    // --buttons-height: 150px;
+    --buttons-height: 200px;
+
+    .main-form__form {
+      .main-form__title {
+        font-size: 140%;
+      }
+      .main-form__wrapper {
+        .main-form__wrapper-item {
+          width: calc(100% / var(--page-items) - 35px);
+          margin-right: 35px;
+        }
+      }
+    }
   }
 }

@@ -138,10 +138,12 @@ const NewRig = (props) => {
   return (
     <div className="new-rig">
       <div className="main-form">
-        <div className="main-form__title">{`Новый ${
-          rigTypes[props.type].name
-        }`}</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Новый ${
+              rigTypes[props.type].name
+            }`}</div>
+          </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}

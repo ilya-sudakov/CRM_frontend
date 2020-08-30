@@ -158,8 +158,10 @@ const NewProduct = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Новая продукция</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Новая продукция</div>
+        </div>
         {productInputs.photo && (
           <div className="main-form__item">
             <div className="main-form__input_name">Фотография</div>

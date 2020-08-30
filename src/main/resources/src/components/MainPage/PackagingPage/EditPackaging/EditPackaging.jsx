@@ -127,8 +127,10 @@ const EditPackaging = (props) => {
   return (
     <div className="new-packaging">
       <div className="main-form">
-        <div className="main-form__title">Редактирование упаковки</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">Редактирование упаковки</div>
+          </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}

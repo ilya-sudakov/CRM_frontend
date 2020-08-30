@@ -191,8 +191,10 @@ const EditRig = (props) => {
   return (
     <div className="edit-rig">
       <div className="main-form">
-        <div className="main-form__title">Редактирование записи</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">Редактирование записи</div>
+          </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}

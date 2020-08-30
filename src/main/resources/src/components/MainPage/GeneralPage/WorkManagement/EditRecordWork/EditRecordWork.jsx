@@ -21,7 +21,6 @@ import {
   deleteDraftFromRecordedWork,
   addDraftToRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 
 const EditRecordWork = (props) => {
@@ -385,8 +384,10 @@ const EditRecordWork = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Редактирование записи о работе</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Редактирование записи о работе</div>
+        </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}

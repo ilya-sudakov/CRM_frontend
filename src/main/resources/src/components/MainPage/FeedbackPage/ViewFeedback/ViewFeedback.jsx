@@ -140,8 +140,10 @@ const ViewFeedback = (props) => {
   return (
     <div className="view-feedback">
       <div className="main-form">
-        <div className="main-form__title">Просмотр обсуждения</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">Просмотр обсуждения</div>
+          </div>
           {/* <InputDate
                         inputName="Дата"
                         readOnly

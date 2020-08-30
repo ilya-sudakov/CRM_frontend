@@ -79,8 +79,10 @@ const ViewEmployee = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Просмотр сотрудника</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Просмотр сотрудника</div>
+        </div>
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Имя сотрудника</div>
           <div className="main-form__item">

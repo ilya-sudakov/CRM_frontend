@@ -60,8 +60,10 @@ const ViewProduct = (props) => {
   return (
     <div className="view-product">
       <div className="main-form">
-        <div className="main-form__title">Просмотр продукта</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">Просмотр продукции</div>
+          </div>
           <div className="main-form__item">
             <div className="main-form__input_name">Фотография</div>
             <div className="main-form__product_img">

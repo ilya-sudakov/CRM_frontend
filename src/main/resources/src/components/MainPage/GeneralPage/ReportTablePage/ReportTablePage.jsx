@@ -318,7 +318,7 @@ export const TableView = (props) => {
               {props.isLoading ? (
                 <PlaceholderLoading
                   itemClassName="main-window__list-item"
-                  minHeight="35px"
+                  minHeight="45px"
                   items={3}
                 />
               ) : (
@@ -456,7 +456,7 @@ export const TableView = (props) => {
               {props.isLoading ? (
                 <PlaceholderLoading
                   itemClassName="main-window__list-item"
-                  minHeight="35px"
+                  minHeight="45px"
                   items={3}
                 />
               ) : (

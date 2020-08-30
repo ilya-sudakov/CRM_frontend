@@ -183,8 +183,10 @@ const EditProduct = (props) => {
   }, [])
   return (
     <div className="main-form">
-      <div className="main-form__title">Редактирование продукта</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Редактирование продукции</div>
+        </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}
