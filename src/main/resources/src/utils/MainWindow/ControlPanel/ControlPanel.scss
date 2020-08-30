@@ -12,6 +12,8 @@
 
             .main-window__button {
                 margin-top: 5px;
+                padding: 8px 10px;
+                font-size: 85%;
             }
 
             .main-window__amount_table {
@@ -22,9 +24,8 @@
         }
 
         .main-window__button--filter {
-            padding: 5px 20px;
-            padding-right: 15px;
-            font-size: 85%;
+            padding: 8px 20px !important;
+            padding-right: 15px !important;
 
             span {
                 margin-right: 6px;

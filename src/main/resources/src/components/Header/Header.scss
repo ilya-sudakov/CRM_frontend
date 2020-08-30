@@ -368,6 +368,15 @@
               &::before {
                 background-color: $button__background--inverted;
               }
+              color: #eeeeee;
+
+              &:hover {
+                color: #ffffff;
+              }
+
+              & .header__img {
+                filter: brightness(2);
+              }
             }
 
             &:hover {
