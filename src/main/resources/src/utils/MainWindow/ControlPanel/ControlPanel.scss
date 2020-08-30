@@ -73,10 +73,16 @@
         .main-window__button--filter {
             padding: 8px 20px !important;
             padding-right: 15px !important;
-            border-color: #bbbbbb; //test
+            border-color: #bbbbbb;
+            //test
+            justify-content: space-between;
+            padding: 8px 5px !important;
+            padding-right: 5px !important;
 
             span {
                 margin-right: 6px;
+                //test
+                margin-right: 20px;
             }
 
             .main-window__img {
@@ -104,6 +110,8 @@
 
     @media (max-width: 768px) {
         .main-window__control-panel-wrapper {
+            padding-left: 15px;
+            padding-right: 15px;
             .control-panel__buttons {
                 .main-window__sort-panel {
                     select {
