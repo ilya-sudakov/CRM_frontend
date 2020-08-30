@@ -374,6 +374,22 @@ const Requests = (props) => {
         />
         <ControlPanel
           itemsCount={`Всего: ${requests.length} записей`}
+          // sorting={
+          //   <div className="main-window__sort-panel">
+          //     <select onChange={null}>
+          //       <option value="date desc">По дате (убыв.)</option>
+          //       <option value="date asc">По дате (возр.)</option>
+          //       <option value="codeWord asc">По клиенту (А-Я)</option>
+          //       <option value="codeWord desc">По клиенту (Я-А)</option>
+          //       <option value="shippingDate desc">
+          //         По дате отгрузки (убыв.)
+          //       </option>
+          //       <option value="shippingDate asc">
+          //         По дате отгрузки (возр.)
+          //       </option>
+          //     </select>
+          //   </div>
+          // }
           content={
             <>
               <div className="main-window__status-panel">

@@ -77,6 +77,46 @@ const GeneralTasks = (props) => {
     deleteMainTask(id).then(() => loadTasks())
   }
 
+  //Sorting
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'dateCreated',
+    dateCreated: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase()
+    return data.filter(
+      (item) =>
+        item.id.toString().includes(query) ||
+        item.description.toLowerCase().includes(query) ||
+        item.responsible.toLowerCase().includes(query) ||
+        item.status.toLowerCase().includes(query) ||
+        formatDateString(item.dateCreated).includes(query) ||
+        formatDateString(item.dateControl).includes(query),
+    )
+  }
+
+  const sortTasks = (data) => {
+    return filterSearchQuery(data).sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      return 0
+    })
+  }
+
   return (
     <div className="general_tasks">
       <div className="main-window">
@@ -117,6 +157,24 @@ const GeneralTasks = (props) => {
         />
         <ControlPanel
           itemsCount={`Всего: ${generalTasks.length} записей`}
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="dateCreated asc">
+                  По дате постановки (убыв.)
+                </option>
+                <option value="dateCreated desc">
+                  По дате постановки (возр.)
+                </option>
+                <option value="dateControl asc">
+                  По дате контроля (убыв.)
+                </option>
+                <option value="dateControl desc">
+                  По дате контроля (возр.)
+                </option>
+              </select>
+            </div>
+          }
           content={
             <div className="main-window__info-panel">
               <div className="main-window__status-panel">
@@ -154,7 +212,7 @@ const GeneralTasks = (props) => {
           }
         />
         <TableView
-          data={generalTasks.filter((item) => {
+          data={sortTasks(generalTasks).filter((item) => {
             if (
               (curPage === 'В процессе' && item.condition !== 'Выполнено') ||
               (curPage === 'Завершено' && item.condition === 'Выполнено')

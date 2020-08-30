@@ -1,3 +1,5 @@
+@import "../../../variables.scss";
+
 .control-panel {
     width: 100%;
 
@@ -20,6 +22,41 @@
                 color: #666666;
                 align-self: center;
                 margin-top: 5px;
+            }
+
+            .main-window__sort-panel {
+                width: fit-content;
+                margin-bottom: 0;
+                margin-right: 10px;
+                box-sizing: border-box;
+                padding-top: calc(5px);
+                position: relative;
+                background-color: #ffffff;
+
+                &::before {
+                    width: 100%;
+                    height: 20px;
+                    position: absolute;
+                    content: "Сортировка";
+                    top: 8px;
+                    left: 10px;
+                    z-index: 0;
+                    color: #777777;
+                    font-size: 95%;
+                }
+
+                select {
+                    padding-top: 18px; //default - padding-top: 15px;
+                    padding-right: 15px;
+                    height: 100%;
+                    margin: 0;
+                    box-sizing: border-box;
+                    min-width: 150px;
+                    z-index: 0;
+                    background-color: transparent;
+                    // border-color: $button__background--inverted;
+                    cursor: pointer;
+                }
             }
         }
 

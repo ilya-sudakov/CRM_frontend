@@ -8,10 +8,6 @@ import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg'
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
-  const [sortOrder, setSortOrder] = useState({
-    curSort: 'dateCreated',
-    dateCreated: 'asc',
-  })
   // const [statuses, setStatuses] = {
   //   Проблема: {
   //     className: 'problem',
@@ -30,40 +26,6 @@ const TableView = (props) => {
   //   },
   // }
   const [isLoading, setIsLoading] = useState(true)
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    })
-  }
-
-  const searchQuery = (data) => {
-    const query = props.searchQuery.toLowerCase()
-    return data.filter(
-      (item) =>
-        item.id.toString().includes(query) ||
-        item.description.toLowerCase().includes(query) ||
-        item.responsible.toLowerCase().includes(query) ||
-        item.status.toLowerCase().includes(query) ||
-        formatDateString(item.dateCreated).includes(query) ||
-        formatDateString(item.dateControl).includes(query),
-    )
-  }
-
-  const sortTasks = (data) => {
-    return searchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-      }
-      return 0
-    })
-  }
 
   const handleConditionChange = (event) => {
     const condition = event.target.value
@@ -89,15 +51,6 @@ const TableView = (props) => {
   return (
     <div className="tableview_general_tasks">
       <div className="main-window">
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="dateCreated asc">По дате постановки (убыв.)</option>
-            <option value="dateCreated desc">По дате постановки (возр.)</option>
-            <option value="dateControl asc">По дате контроля (убыв.)</option>
-            <option value="dateControl desc">По дате контроля (возр.)</option>
-          </select>
-        </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Дата постановки</span>
@@ -115,7 +68,7 @@ const TableView = (props) => {
               items={10}
             />
           )}
-          {sortTasks(props.data).map(
+          {props.data.map(
             (task, task_id) =>
               (props.userHasAccess(['ROLE_ADMIN']) ||
                 props.userData.username === task.responsible) && (

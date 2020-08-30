@@ -9,6 +9,7 @@ const ControlPanel = (props) => {
     <div className="control-panel">
       <div className="main-window__control-panel-wrapper">
         <div className="control-panel__buttons">
+          {props.sorting || null}
           {props.content ? (
             <div
               className="main-window__button main-window__button--inverted main-window__button--filter"
@@ -23,7 +24,6 @@ const ControlPanel = (props) => {
             </div>
           ) : null}
           {props.buttons || null}
-          {props.sorting || null}
           {props.itemsCount ? (
             <div className="main-window__amount_table">{props.itemsCount}</div>
           ) : null}
