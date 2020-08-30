@@ -97,6 +97,46 @@ const Products = (props) => {
       })
   }
 
+  // * SORTING
+
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'name',
+    name: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase()
+    return data.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(query) ||
+        item.id.toString().includes(query) ||
+        item.weight.toString().includes(query) ||
+        (item.comment !== null && item.comment.toLowerCase().includes(query))
+      )
+    })
+  }
+
+  const sortProducts = (data) => {
+    return data.sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      return 0
+    })
+  }
+
   return (
     <div className="products">
       <div className="main-window">
@@ -163,9 +203,20 @@ const Products = (props) => {
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <ControlPanel itemsCount={`Всего: ${products.length} записей`} />
+        <ControlPanel
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="name asc">По алфавиту (А-Я)</option>
+                <option value="name desc">По алфавиту (Я-А)</option>
+                <option value="weight desc">По весу</option>
+              </select>
+            </div>
+          }
+          itemsCount={`Всего: ${products.length} записей`}
+        />
         <TableView
-          products={products}
+          products={sortProducts(filterSearchQuery(products))}
           categories={categories}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}

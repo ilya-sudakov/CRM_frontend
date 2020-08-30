@@ -10,59 +10,15 @@ import deleteSVG from '../../../../../../../../../assets/tableview/delete.svg'
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
-  const [sortOrder, setSortOrder] = useState({
-    curSort: 'date',
-    date: 'asc',
-  })
   const [isLoading, setIsLoading] = useState(true)
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    })
-  }
-
-  const searchQuery = (data) => {
-    const query = props.searchQuery.toLowerCase()
-    return data.filter(
-      (item) =>
-        item.cargo.toLowerCase().includes(query) ||
-        formatDateString(item.date).includes(query) ||
-        item.sender.toLowerCase().includes(query) ||
-        item.recipient.toLowerCase().includes(query) ||
-        item.driver.toLowerCase().includes(query) ||
-        item.id.toString().includes(query),
-    )
-  }
 
   useEffect(() => {
     props.data.length > 0 && setIsLoading(false)
   }, [props.data])
 
-  const sortTransportations = (data) => {
-    return searchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-      }
-      return 0
-    })
-  }
-
   return (
     <div className="tableview_transportation">
       <div className="main-window">
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="date asc">По дате</option>
-          </select>
-        </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Дата</span>
@@ -80,7 +36,7 @@ const TableView = (props) => {
               items={15}
             />
           )}
-          {sortTransportations(props.data).map(
+          {props.data.map(
             (transportation, transportation_id) => (
               <div key={transportation_id} className="main-window__list-item">
                 <span>

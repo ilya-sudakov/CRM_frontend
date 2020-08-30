@@ -103,6 +103,47 @@ const Transportation = (props) => {
     deleteTransportation(id).then(() => loadTransportation())
   }
 
+  // * SORTING
+
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'date',
+    date: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase()
+    return data.filter(
+      (item) =>
+        item.cargo.toLowerCase().includes(query) ||
+        formatDateString(item.date).includes(query) ||
+        item.sender.toLowerCase().includes(query) ||
+        item.recipient.toLowerCase().includes(query) ||
+        item.driver.toLowerCase().includes(query) ||
+        item.id.toString().includes(query),
+    )
+  }
+
+  const sortTransportations = (data) => {
+    return filterSearchQuery(data).sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      return 0
+    })
+  }
+
   return (
     <div className="transportation">
       <div className="main-window">
@@ -129,6 +170,16 @@ const Transportation = (props) => {
               className="main-window__button main-window__button--inverted"
               onClick={printTransportationList}
             />
+          }
+          sorting={
+            <div className="main-window__sort-panel">
+              <select
+                className="main-window__select"
+                onChange={changeSortOrder}
+              >
+                <option value="date asc">По дате</option>
+              </select>
+            </div>
           }
           itemsCount={`Всего: ${transportation.length} записей`}
           content={
@@ -194,7 +245,7 @@ const Transportation = (props) => {
           }
         />
         <TableView
-          data={transportation.filter((item) => {
+          data={sortTransportations(transportation).filter((item) => {
             let senderCheck = false
             let recipientCheck = false
             workshops.map((workshop) => {

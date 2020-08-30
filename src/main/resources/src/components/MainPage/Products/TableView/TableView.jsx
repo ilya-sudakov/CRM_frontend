@@ -17,45 +17,8 @@ import {
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
-  const [sortOrder, setSortOrder] = useState({
-    curSort: 'name',
-    name: 'asc',
-  })
   const [isLoading, setIsLoading] = useState(true)
   const [productsVisible, setProductsVisible] = useState([])
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    })
-  }
-
-  const searchQuery = (data) => {
-    const query = props.searchQuery.toLowerCase()
-    return data.filter((item) => {
-      return (
-        item.name.toLowerCase().includes(query) ||
-        item.id.toString().includes(query) ||
-        item.weight.toString().includes(query) ||
-        (item.comment !== null && item.comment.toLowerCase().includes(query))
-      )
-    })
-  }
-
-  const sortProducts = (data) => {
-    return data.sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-      }
-      return 0
-    })
-  }
 
   const checkProduct = (index) => {
     index = Number.parseInt(index)
@@ -98,14 +61,6 @@ const TableView = (props) => {
   return (
     <div className="tableview_products">
       <div className="main-window">
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="name asc">По алфавиту (А-Я)</option>
-            <option value="name desc">По алфавиту (Я-А)</option>
-            <option value="weight desc">По весу</option>
-          </select>
-        </div>
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название категории</span>
@@ -181,7 +136,7 @@ const TableView = (props) => {
                       items={8}
                     />
                   )}
-                  {sortProducts(searchQuery(props.products)).map(
+                  {props.products.map(
                     (product, product_id) =>
                       product.category === category.category && (
                         <div
