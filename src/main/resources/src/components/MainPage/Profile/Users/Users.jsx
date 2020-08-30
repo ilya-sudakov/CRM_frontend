@@ -83,6 +83,15 @@ const Users = (props) => {
     username: 'asc',
   })
 
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
   const filterSearchQuery = (data) => {
     return data.filter((item) =>
       item.username.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -118,11 +127,7 @@ const Users = (props) => {
           itemsCount={`Всего: ${users.length} записей`}
           sorting={
             <div className="main-window__sort-panel">
-              <select
-                onChange={(event) => {
-                  setSortOrder(changeSortOrder(event))
-                }}
-              >
+              <select onChange={changeSortOrder}>
                 <option value="username asc">По имени (А-Я)</option>
                 <option value="username desc">По имени (Я-А)</option>
               </select>
