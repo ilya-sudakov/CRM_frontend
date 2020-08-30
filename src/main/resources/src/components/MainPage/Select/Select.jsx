@@ -332,23 +332,21 @@ const Select = (props) => {
                   placeholder="Введите название продукции для поиска..."
                   setSearchQuery={setSearchQueryCategory}
                 />
-                <div className="main-window">
-                  <ControlPanel
-                    itemsCount={`Всего: ${products.length} записей`}
-                    sorting={
-                      <div className="main-window__sort-panel">
-                        <select
-                          className="main-window__select"
-                          onChange={changeSortOrder}
-                        >
-                          <option value="name asc">По алфавиту (А-Я)</option>
-                          <option value="name desc">По алфавиту (Я-А)</option>
-                          <option value="weight desc">По весу</option>
-                        </select>
-                      </div>
-                    }
-                  />
-                </div>
+                <ControlPanel
+                  itemsCount={`Всего: ${products.length} записей`}
+                  sorting={
+                    <div className="main-window__sort-panel">
+                      <select
+                        className="main-window__select"
+                        onChange={changeSortOrder}
+                      >
+                        <option value="name asc">По алфавиту (А-Я)</option>
+                        <option value="name desc">По алфавиту (Я-А)</option>
+                        <option value="weight desc">По весу</option>
+                      </select>
+                    </div>
+                  }
+                />
                 <TableView
                   // products={products}
                   products={

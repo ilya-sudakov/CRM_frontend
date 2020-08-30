@@ -258,7 +258,8 @@ const SelectDraft = (props) => {
             content={
               <React.Fragment>
                 <SearchBar
-                  title="Поиск по чертежам"
+                  // title="Поиск по чертежам"
+                  fullSize
                   placeholder="Введите артикул чертежа для поиска..."
                   setSearchQuery={setSearchQueryCategory}
                 />
