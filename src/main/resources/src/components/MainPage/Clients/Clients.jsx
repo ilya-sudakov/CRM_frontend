@@ -35,6 +35,7 @@ import { exportClientsEmailsCSV } from '../../../utils/xlsxFunctions.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import { getSuppliersByCategoryAndType } from '../../../utils/RequestsAPI/Clients/Suppliers'
 import PlaceholderLoading from '../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Clients = (props) => {
   const [clients, setClients] = useState([])
@@ -439,14 +440,19 @@ const Clients = (props) => {
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="name asc">По алфавиту (А-Я)</option>
-            <option value="name desc">По алфавиту (Я-А)</option>
-            <option value="nextDateContact asc">По дате след. контакта</option>
-          </select>
-        </div>
+        <ControlPanel
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="name asc">По алфавиту (А-Я)</option>
+                <option value="name desc">По алфавиту (Я-А)</option>
+                <option value="nextDateContact asc">
+                  По дате след. контакта
+                </option>
+              </select>
+            </div>
+          }
+        />
         <div className="main-window__list">
           {/* <TableLoading isLoading={isLoading} /> */}
           <div className="main-window__list-item main-window__list-item--header">
