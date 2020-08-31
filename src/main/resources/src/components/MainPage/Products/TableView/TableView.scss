@@ -17,7 +17,7 @@
     margin-top: 10px;
     .main-window__list-item {
       span {
-        font-size: 110%;
+        font-size: 105%;
         &:nth-child(1) {
           flex: 0 1 80%;
         }
@@ -70,6 +70,7 @@
         .main-window__list-item {
           padding: 5px 10px;
           span {
+            font-size: 110%;
             cursor: auto;
             padding: 5px 10px;
             font-weight: normal;
