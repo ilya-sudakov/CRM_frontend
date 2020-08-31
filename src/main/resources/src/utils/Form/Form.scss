@@ -546,6 +546,7 @@
       .main-form__buttons {
         margin: 0 auto;
         width: calc(100% - 50px) !important;
+        max-width: 300px;
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
