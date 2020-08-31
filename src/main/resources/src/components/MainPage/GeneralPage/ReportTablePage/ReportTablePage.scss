@@ -177,6 +177,7 @@
                 justify-content: flex-start;
                 margin: 15px 10px;
                 width: calc(100% - 20px);
+                background-color: #dddddd;
                 span {
                     padding: 2.5px 10px;
                     font-size: 12px !important;
@@ -205,7 +206,7 @@
                     }
                     &:not(:last-child) {
                         border: 1px solid transparent;
-                        border-right: 1px solid #999999;
+                        border-right: 1px solid #dddddd;
                     }
                     &:last-child {
                         border-right: 1px solid transparent;

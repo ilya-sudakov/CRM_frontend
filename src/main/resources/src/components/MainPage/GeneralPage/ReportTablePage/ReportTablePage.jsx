@@ -583,7 +583,7 @@ export const EmployeeInfo = (props) => {
   return (
     <div className="report-table-page__employee-info">
       <FormWindow
-        // title="Отчет работника"
+        title="Отчет работника"
         showWindow={props.showWindow}
         setShowWindow={props.setShowWindow}
         content={

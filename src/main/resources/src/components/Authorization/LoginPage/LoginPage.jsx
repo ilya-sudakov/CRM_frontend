@@ -88,7 +88,7 @@ const LoginPage = (props) => {
               <input
                 type="text"
                 onChange={(e) => setUserName(e.target.value)}
-                placeholder="Введите логин..."
+                placeholder="Логин"
                 defaultValue=""
                 onKeyDown={(event) => {
                   if (event.key === 'Enter') {
@@ -127,7 +127,7 @@ const LoginPage = (props) => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Введите пароль..."
+                placeholder="Пароль"
                 onKeyDown={(event) => {
                   if (event.key === 'Enter') {
                     handleLogin()

@@ -33,10 +33,11 @@
 
     .authorization__title-text {
       color: #333333;
-      font-size: 75%;
+      font-size: 85%;
       margin-right: auto;
       // margin: 0 5px;
-      margin-top: 15px;
+      margin-top: 5px;
+      margin-bottom: -10px;
     }
   }
   .authorization__img {
@@ -51,6 +52,11 @@
     margin-top: 0;
     filter: none;
     margin-bottom: 5px;
+
+    //test
+    // min-width: 125px;
+    // margin-right: auto;
+    // margin-left: 5px;
   }
 
   .authorization__img--mirrored {
@@ -62,16 +68,18 @@
     max-width: 280px;
     border-radius: 5px;
     padding: 10px 30px;
-    // margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    background-color: rgba(#ffffff, 0.4);
-    // backdrop-filter: blur(10px);
+    background-color: rgba(#ffffff, 0.8);
 
-    //dark-theme
+    // dark-theme
     // background-color: rgba(#333333, 0.7);
+
+    //test
+    // background-color: #ffffff;
+    // backdrop-filter: blur(10px);
 
     .authorization__field_name {
       align-self: flex-start;
@@ -107,8 +115,17 @@
         // border: 1px solid #555555;
         // color: #bbbbbb;
 
+        //test
+        // border: none;
+        // border-bottom: 1px solid #dddddd;
+        // background-color: transparent;
+        // border-radius: 0;
+
         &:focus {
-          border: 1px solid $button__background--inverted;
+          // border: 1px solid $button__background--inverted;
+
+          //test
+          // border-bottom: 1px solid $button__background--inverted;
         }
       }
       & .authorization__line {
