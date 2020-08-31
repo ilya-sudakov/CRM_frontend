@@ -174,6 +174,7 @@ const NewRecordWork = (props) => {
             'ROLE_DISPATCHER',
             'ROLE_ENGINEER',
             'ROLE_MANAGER',
+            'ROLE_WORKSHOP', //temp
           ])
         ) {
           Promise.all(
