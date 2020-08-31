@@ -20,8 +20,8 @@ import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.js
 import Button from '../../../utils/Form/Button/Button.jsx'
 // import { Link } from 'react-router-dom'
 import {
-  // formatDateString,
   sortRequestsByDates,
+  formatDateString,
 } from '../../../utils/functions.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
@@ -278,7 +278,7 @@ const Requests = (props) => {
         ? item.requestProducts[0].name.toLowerCase().includes(query) ||
             item.id.toString().includes(query) ||
             formatDateString(item.date).includes(query) ||
-            item.codeWord.toLowerCase().includes(query) ||
+            (item.codeWord || '').toLowerCase().includes(query) ||
             item.status.toLowerCase().includes(query) ||
             item.responsible.toLowerCase().includes(query) ||
             formatDateString(item.shippingDate).includes(query)

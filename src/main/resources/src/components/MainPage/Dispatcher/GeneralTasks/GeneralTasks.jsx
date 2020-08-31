@@ -10,6 +10,7 @@ import {
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 import Select from 'react-select'
+import { formatDateString } from '../../../../utils/functions.jsx'
 
 const GeneralTasks = (props) => {
   const [generalTasks, setGeneralTasks] = useState([])
