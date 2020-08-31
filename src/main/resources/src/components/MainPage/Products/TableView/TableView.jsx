@@ -76,19 +76,26 @@ const TableView = (props) => {
               >
                 <span>
                   <div className="main-window__mobile-text">Категория:</div>
-                  {category.category +
-                    ' (' +
-                    props.products.filter(
-                      (product) => product.category === category.category,
-                    ).length +
-                    ' ' +
-                    numberToString(
+                  {category.category}
+                  <span className="tableview_products__items-count">
+                    {/* {' (' +
                       props.products.filter(
                         (product) => product.category === category.category,
-                      ).length,
-                      ['запись', 'записи', 'записей'],
-                    ) +
-                    ')'}
+                      ).length +
+                      ' ' +
+                      numberToString(
+                        props.products.filter(
+                          (product) => product.category === category.category,
+                        ).length,
+                        ['запись', 'записи', 'записей'],
+                      ) +
+                      ')'} */}
+                    {`${
+                      props.products.filter(
+                        (product) => product.category === category.category,
+                      ).length
+                    }`}
+                  </span>
                 </span>
                 <div className="main-window__actions">
                   {props.userHasAccess &&

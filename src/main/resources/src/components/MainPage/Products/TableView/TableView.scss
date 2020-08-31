@@ -17,21 +17,38 @@
     margin-top: 10px;
     .main-window__list-item {
       span {
+        font-size: 115%;
         &:nth-child(1) {
           flex: 0 1 80%;
         }
       }
 
       .main-window__actions {
+        font-size: 115%;
         flex: 0 1 10%;
         flex-direction: row;
       }
     }
 
     .main-window__list-item:not(.main-window__list-item--header) span {
-      font-weight: bold;
       padding: 20px 10px;
       cursor: pointer;
+
+      // font-weight: bold;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      line-height: 3rem;
+      padding: 5px 10px;
+
+      .tableview_products__items-count {
+        font-size: 90%;
+        align-self: flex-start;
+        padding: 0;
+        line-height: 1rem;
+        margin-left: 10px;
+      }
 
       .main-window__mobile-text {
         font-weight: normal;
@@ -48,6 +65,7 @@
             cursor: auto;
             padding: 5px 10px;
             font-weight: normal;
+            line-height: unset;
             &:nth-child(1) {
               flex: 0 1 10%;
               min-width: 90px;
