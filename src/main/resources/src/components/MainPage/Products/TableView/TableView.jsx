@@ -76,7 +76,7 @@ const TableView = (props) => {
               >
                 <span>
                   <div className="main-window__mobile-text">Категория:</div>
-                  {category.category}
+                  <span>{category.category}</span>
                   <span className="tableview_products__items-count">
                     {/* {' (' +
                       props.products.filter(
