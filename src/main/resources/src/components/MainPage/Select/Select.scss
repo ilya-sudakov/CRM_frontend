@@ -233,12 +233,13 @@
 
       .select__selected_quantity,
       .select__selected_packaging {
-        width: 50%;
+        width: 40%;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
         font-size: 80%;
+        padding-right: 10px;
 
         input[type="text"],
         input[type="number"],
@@ -259,6 +260,7 @@
           //   width: fit-content;
           align-items: center;
           transition: 100ms ease-in-out;
+          // flex: 0 1 10%;
 
           &:hover {
             border-color: #888888;
@@ -278,6 +280,10 @@
         input[type="number"] {
           -moz-appearance: textfield;
         }
+      }
+
+      .select__selected_quantity {
+        flex: 0 1 60%;
       }
     }
 
@@ -331,6 +337,8 @@
             // width: 100%;
             span {
               min-width: 50px;
+              width: 100%;
+              max-width: 80px;
             }
             input {
               width: 100% !important;
