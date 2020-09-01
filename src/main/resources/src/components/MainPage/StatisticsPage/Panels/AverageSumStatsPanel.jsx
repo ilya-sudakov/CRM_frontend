@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SmallPanel from './SmallPanel.jsx'
 import MoneyIcon from '../../../../../../../../assets/etc/bx-ruble.inline.svg'
-import {
-  addSpaceDelimiter,
-} from '../../../../utils/functions.jsx'
+import { addSpaceDelimiter } from '../../../../utils/functions.jsx'
 
 const AverageSumStatsPanel = (props) => {
   const [stats, setStats] = useState({
@@ -51,8 +49,10 @@ const AverageSumStatsPanel = (props) => {
       }
     })
 
-    curMonthAverage = curMonthAverage / curMonthLength
-    prevMonthAverage = prevMonthAverage / prevMonthLength
+    curMonthAverage =
+      curMonthAverage / (curMonthLength !== 0 ? curMonthLength : 1)
+    prevMonthAverage =
+      prevMonthAverage / (prevMonthLength !== 0 ? prevMonthLength : 1)
 
     setStats((stats) => ({
       ...stats,

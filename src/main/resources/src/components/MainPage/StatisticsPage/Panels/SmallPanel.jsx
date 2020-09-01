@@ -24,7 +24,7 @@ const SmallPanel = (props) => {
             : 'positive'
         }`}
       >
-        {props.value || ''}
+        {props.value || 0}
         <span>
           {props.isLoaded
             ? `${props.difference < 0 ? '' : '+'}${
