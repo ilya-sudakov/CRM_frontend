@@ -64,14 +64,14 @@ const ReportTablePage = (props) => {
         //это помогает  для избегания излишних циклов
         res.map((workItem) => {
           if (employeesWorkList[workItem.employee.id] === undefined) {
-            console.log(workItem)
+            // console.log(workItem)
             employeesWorkList = Object.assign({
               ...employeesWorkList,
               [workItem.employee.id]: {
                 employee: workItem.employee,
                 workArray: [
                   {
-                    workId123: workItem.id,
+                    workId: workItem.id,
                     workControlProduct: workItem.workControlProduct,
                     partsWorks: workItem.partsWorks,
                     workList: workItem.workList,
@@ -89,7 +89,7 @@ const ReportTablePage = (props) => {
                 workArray: [
                   ...employeesWorkList[workItem.employee.id].workArray,
                   {
-                    workId123: workItem.id,
+                    workId: workItem.id,
                     workControlProduct: workItem.workControlProduct,
                     partsWorks: workItem.partsWorks,
                     workList: workItem.workList,
@@ -101,7 +101,7 @@ const ReportTablePage = (props) => {
             })
           }
         })
-        console.log('newArr:', employeesWorkList)
+        // console.log('newArr:', employeesWorkList)
         // return setWorkList({ ...employeesWorkList })
       })
       .then(() => {
@@ -121,7 +121,7 @@ const ReportTablePage = (props) => {
                     ...newWorkList[item.employee.id].works,
                     [workItem.day]: [
                       {
-                        workId123: workItem.workId123,
+                        workId: workItem.workId,
                         workControlProduct: workItem.workControlProduct,
                         partsWorks: workItem.partsWorks,
                         workList: workItem.workList,
@@ -142,7 +142,7 @@ const ReportTablePage = (props) => {
                     [workItem.day]: [
                       ...newWorkList[item.employee.id].works[workItem.day],
                       {
-                        workId123: workItem.workId123,
+                        workId: workItem.workId,
                         workControlProduct: workItem.workControlProduct,
                         partsWorks: workItem.partsWorks,
                         workList: workItem.workList,
@@ -156,7 +156,7 @@ const ReportTablePage = (props) => {
             }
           })
         })
-        console.log('newnewnew: ', newWorkList)
+        // console.log('newnewnew: ', newWorkList)
         employeesWorkList = newWorkList
       })
       .then(() => {
@@ -180,7 +180,7 @@ const ReportTablePage = (props) => {
             }
           })
         })
-        console.log(newWorkList)
+        // console.log(newWorkList)
         setIsLoading(false)
         return setWorkList({ ...newWorkList })
       })
@@ -370,7 +370,7 @@ export const TableView = (props) => {
                               return (
                                 <span
                                   onClick={() => {
-                                    console.log(workItem)
+                                    // console.log(workItem)
                                     if (workItem.length > 0) {
                                       props.setSelectedInfo({
                                         employeeId: work.employee.id,
@@ -634,12 +634,12 @@ export const EmployeeInfo = (props) => {
                 <div>Нет учтенной работы</div>
               ) : (
                 props.selectedInfo?.works?.map((item) => {
-                  console.log(item)
+                  {/* console.log(item) */}
                   return (
                     <div className="report-table-page__employee-works-item">
                       <span>
                         <Link
-                          to={`/work-management/record-time/edit/${item.workId123}`}
+                          to={`/work-management/record-time/edit/${item.workId}`}
                         >
                           {item.workList.work}
                           <img

@@ -146,7 +146,9 @@ const SideMenu = (props) => {
           pathname: '/lemz/workshop-lemz',
           link: '/lemz/workshop-lemz',
           // icon: playListImg,
-          renderIcon: () => <PlayListImg className="sidemenu__img sidemenu__img--request" />,
+          renderIcon: () => (
+            <PlayListImg className="sidemenu__img sidemenu__img--request" />
+          ),
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
@@ -181,6 +183,12 @@ const SideMenu = (props) => {
       addButtonName: 'Добавить план производства',
     },
     {
+      pathname: '/report-table',
+      mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
+      addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
+      addButtonName: 'Учесть рабочее время',
+    },
+    {
       pathname: '/lepsari/',
       linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
         ? '/lepsari/workshop-orders'
@@ -196,7 +204,9 @@ const SideMenu = (props) => {
           name: 'Очередь производства',
           pathname: '/lepsari/workshop-lepsari',
           link: '/lepsari/workshop-lepsari',
-          renderIcon: () => <PlayListImg className="sidemenu__img sidemenu__img--request" />,
+          renderIcon: () => (
+            <PlayListImg className="sidemenu__img sidemenu__img--request" />
+          ),
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
         },
         {

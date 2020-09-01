@@ -27,12 +27,19 @@
     position: relative;
     transition: 0.2s ease-in-out;
 
+    //test
+    background-color: rgba(#bbbbbb, 0.3);
+    border: 1px solid #dddddd;
+
     &--minimized {
       width: calc(100% - 80px);
     }
 
     &:hover {
       background-color: darken(#dddddd, 10%);
+
+      //test
+      background-color: rgba(#bbbbbb, 0.5);
     }
 
     .select_parts__img {
