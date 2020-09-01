@@ -547,7 +547,7 @@ const SideMenu = (props) => {
                 if (
                   (window.innerWidth ||
                     document.documentElement.clientWidth ||
-                    document.body.clientWidth) < 1366 &&
+                    document.body.clientWidth) <= 1366 &&
                   item.dropdownMenu === undefined
                 ) {
                   props.setSideMenu(!props.hidden)
@@ -585,7 +585,7 @@ const SideMenu = (props) => {
                   if (
                     (window.innerWidth ||
                       document.documentElement.clientWidth ||
-                      document.body.clientWidth) < 1366 &&
+                      document.body.clientWidth) <= 1366 &&
                     item.dropdownMenu === undefined
                   ) {
                     props.setSideMenu(!props.hidden)
@@ -605,7 +605,7 @@ const SideMenu = (props) => {
                       if (
                         (window.innerWidth ||
                           document.documentElement.clientWidth ||
-                          document.body.clientWidth) < 1366
+                          document.body.clientWidth) <= 1366
                       ) {
                         props.setSideMenu(!props.hidden)
                       }
@@ -639,7 +639,7 @@ const SideMenu = (props) => {
                             if (
                               (window.innerWidth ||
                                 document.documentElement.clientWidth ||
-                                document.body.clientWidth) < 1366
+                                document.body.clientWidth) <= 1366
                             ) {
                               props.setSideMenu(!props.hidden)
                             }

@@ -86,7 +86,7 @@ class MainPage extends React.Component {
     if (
       (window.innerWidth ||
         document.documentElement.clientWidth ||
-        document.body.clientWidth) > 1220
+        document.body.clientWidth) > 1366
     ) {
       this.setSideMenu(false)
     }
@@ -108,7 +108,7 @@ class MainPage extends React.Component {
             />
             {(window.innerWidth ||
               document.documentElement.clientWidth ||
-              document.body.clientWidth) < 1220 && (
+              document.body.clientWidth) <= 1366 && (
               <div
                 className={
                   this.state.sidemenu_hidden
@@ -119,7 +119,7 @@ class MainPage extends React.Component {
                   if (
                     (window.innerWidth ||
                       document.documentElement.clientWidth ||
-                      document.body.clientWidth) < 1220
+                      document.body.clientWidth) <= 1366
                   ) {
                     this.setSideMenu(!this.state.sidemenu_hidden)
                   }

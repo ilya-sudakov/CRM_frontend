@@ -4,7 +4,7 @@
     position: relative;
     .main-window {
         position: relative;
-        min-height: 600px;
+        // min-height: 600px;
 
         .main-window__title {
             .main-window__button {
@@ -127,6 +127,25 @@
                     &:last-child {
                         .main-window__list {
                             margin-bottom: 0;
+                        }
+                    }
+
+                    a {
+                        color: #000000;
+                        display: inline-block;
+                        flex-direction: row;
+                        align-items: center;
+                        width: fit-content;
+                        cursor: pointer;
+                        line-height: 1.5rem;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+
+                        .report-table-page__img {
+                            margin-bottom: -6px;
+                            margin-left: 5px;
                         }
                     }
 
