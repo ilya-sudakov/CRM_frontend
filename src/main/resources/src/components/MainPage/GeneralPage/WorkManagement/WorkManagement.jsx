@@ -96,11 +96,13 @@ const WorkManagement = (props) => {
 
   useEffect(() => {
     let abortController = new AbortController()
+    let date = new Date()
+    date.setDate(date.getDate() - 1)
     setIsLoading(true)
     recordedWork.length === 0 &&
       getRecordedWorkByDay(
-        new Date().getMonth() + 1,
-        new Date().getDate() - 1,
+        date.getMonth() + 1,
+        date.getDate(),
         abortController.signal,
       )
         .then((res) => res.json())
@@ -119,6 +121,7 @@ const WorkManagement = (props) => {
       abortController.abort()
     }
   }, [])
+
   return (
     <div className="work-management">
       <div className="work-management__title">
