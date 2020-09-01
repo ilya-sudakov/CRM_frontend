@@ -30,6 +30,9 @@
     z-index: 999;
     transition: 100ms ease-in-out;
 
+    //new dimensions
+    // width: 320px;
+
     &::after {
         position: absolute;
         bottom: -40px;
@@ -76,7 +79,7 @@
 
         .header__box {
             border: 1px solid #222222;
-            width: 70px;
+            min-width: 70px;
             height: 80px;
             border-radius: 10px;
         }
