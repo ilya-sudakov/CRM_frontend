@@ -113,9 +113,7 @@
     &--full {
       margin-top: -10px;
       background-color: #ffffff;
-      // background-color: #dddddd;
       flex-direction: column;
-      padding-top: 15px;
       border-bottom: 1px solid #dddddd;
       margin-bottom: 5px;
       // position: sticky;
@@ -123,15 +121,19 @@
       // z-index: 999;
       // top: 0px;
 
+      // padding-top: 15px;
+      padding-top: 10px; //test
+
       .main-window__title {
         text-align: left;
         width: calc(100% - 10px);
         margin-left: 10px;
-        margin-bottom: 10px !important;
         padding: 0 25px;
         box-sizing: border-box;
         // font-size: 170%;
         font-size: 150%;
+
+        margin-bottom: 10px !important;
 
         .main-window__button {
           // font-size: 50% !important;
@@ -142,6 +144,8 @@
       .main-window__menu {
         width: calc(100% - 5px);
         margin-left: 0px;
+
+        margin-top: -10px; //test
       }
     }
   }
