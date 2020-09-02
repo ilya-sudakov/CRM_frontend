@@ -9,6 +9,7 @@ import StatsIcon from '../../../../../../../assets/statistics/stats-alt.inline.s
 import calenderIcon from '../../../../../../../assets/tableview/calendar.svg'
 import { exportReportTableExcel } from '../../../utils/xlsxFunctions.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const GeneralPage = (props) => {
   const [date, setDate] = useState(new Date())
@@ -54,50 +55,57 @@ const GeneralPage = (props) => {
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Главная страница</div>
         </div>
-        <div className="main-window__control-panel-wrapper">
+        <ControlPanel
+          buttons={
+            <>
+              {props.userHasAccess([
+                'ROLE_ADMIN',
+                'ROLE_DISPATCHER',
+                'ROLE_MANAGER',
+                'ROLE_WORKSHOP',
+                'ROLE_ENGINEER',
+              ]) && (
+                <Link
+                  className="main-window__button"
+                  to="/work-management/record-time/new"
+                >
+                  Учесть рабочее время
+                </Link>
+              )}
+              {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
+                <Link className="main-window__button" to="/report-table">
+                  <img className="main-window__img" src={calenderIcon} />
+                  Интерактивный табель
+                </Link>
+              )}
+              {props.userHasAccess(['ROLE_ADMIN']) && (
+                <Link className="main-window__button" to="/graphs">
+                  <img className="main-window__img" src={graphIcon} />
+                  Графики
+                </Link>
+              )}
+              {props.userHasAccess(['ROLE_ADMIN']) && (
+                <Link className="main-window__button" to="/statistics">
+                  <StatsIcon className="main-window__img" />
+                  Статистика
+                </Link>
+              )}
+              <Button
+                text="Скачать Табель"
+                imgSrc={DownloadIcon}
+                className="main-window__button main-window__button--inverted"
+                inverted
+                isLoading={isLoading}
+                onClick={testExcelJSLibrary}
+              />
+            </>
+          }
+        />
+        {/* <div className="main-window__control-panel-wrapper">
           <div className="main-window__control-panel">
-            {props.userHasAccess([
-              'ROLE_ADMIN',
-              'ROLE_DISPATCHER',
-              'ROLE_MANAGER',
-              'ROLE_WORKSHOP',
-              'ROLE_ENGINEER',
-            ]) && (
-              <Link
-                className="main-window__button"
-                to="/work-management/record-time/new"
-              >
-                Учесть рабочее время
-              </Link>
-            )}
-            {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
-              <Link className="main-window__button" to="/report-table">
-                <img className="main-window__img" src={calenderIcon} />
-                Интерактивный табель
-              </Link>
-            )}
-            {props.userHasAccess(['ROLE_ADMIN']) && (
-              <Link className="main-window__button" to="/graphs">
-                <img className="main-window__img" src={graphIcon} />
-                Графики
-              </Link>
-            )}
-            {props.userHasAccess(['ROLE_ADMIN']) && (
-              <Link className="main-window__button" to="/statistics">
-                <StatsIcon className="main-window__img" />
-                Статистика
-              </Link>
-            )}
-            <Button
-              text="Скачать Табель"
-              imgSrc={DownloadIcon}
-              className="main-window__button main-window__button--inverted"
-              inverted
-              isLoading={isLoading}
-              onClick={testExcelJSLibrary}
-            />
+            
           </div>
-        </div>
+        </div> */}
         <div className="main-window__content">
           {props.userHasAccess([
             'ROLE_ADMIN',
