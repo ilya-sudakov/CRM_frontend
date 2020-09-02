@@ -135,6 +135,7 @@ class App extends React.Component {
                 userHasAccess: this.userHasAccess,
                 newNotifications: this.state.newNotifications,
                 lastNotification: this.state.lastNotification,
+                isAuthorized: this.state.isAuthorized,
                 setLastNotification: this.state.setLastNotification,
               }}
             >

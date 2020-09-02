@@ -107,7 +107,7 @@ const WorkManagement = (props) => {
       )
         .then((res) => res.json())
         .then((res) => {
-          // console.log(res);
+          // console.log(res)
           setRecordedWork(res)
           combineWorkHoursForSamePeople(res)
           getAllEmployees(res)
