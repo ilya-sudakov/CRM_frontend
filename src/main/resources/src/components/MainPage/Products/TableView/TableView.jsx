@@ -63,7 +63,7 @@ const TableView = (props) => {
       <div className="main-window">
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
-            <span>Название категории</span>
+            <span>Категория</span>
             <div className="main-window__actions">Действия</div>
           </div>
           {props.categories.map((category, category_id) => (
