@@ -63,7 +63,8 @@
                     background-color: transparent;
                     // border-color: $button__background--inverted;
                     cursor: pointer;
-                    border: 1px solid #bbbbbb;
+                    // border: 1px solid #bbbbbb;
+                    border: 1px solid #cccccc;
 
                     //custom arrow
                     -webkit-appearance: none;
@@ -78,10 +79,8 @@
         }
 
         .main-window__button--filter {
-            // padding: 8px 20px !important;
-            // padding-right: 15px !important;
-            border-color: #bbbbbb;
-            //test
+            // border-color: #bbbbbb;
+            border-color: #cccccc;
             justify-content: space-between;
             padding: 8px 8px !important;
             padding-right: 5px !important;
