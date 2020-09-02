@@ -24,17 +24,19 @@ const PrivateRoute = ({
       render={(props) =>
         localStorage.getItem('refreshToken') ? (
           allowedRoles !== undefined ? (
-            userContext.userHasAccess(allowedRoles) &&
-            userContext.isAuthorized ? (
-              <Component
-                {...rest}
-                {...props}
-                userData={userData}
-                userHasAccess={userContext.userHasAccess}
-              />
-            ) : (
-              <NotAllowedPage />
-            )
+            userContext.userData.username !== '' ? (
+              userContext.userHasAccess(allowedRoles) &&
+              userContext.isAuthorized ? (
+                <Component
+                  {...rest}
+                  {...props}
+                  userData={userData}
+                  userHasAccess={userContext.userHasAccess}
+                />
+              ) : (
+                <NotAllowedPage />
+              )
+            ) : null
           ) : (
             <Component
               {...rest}
