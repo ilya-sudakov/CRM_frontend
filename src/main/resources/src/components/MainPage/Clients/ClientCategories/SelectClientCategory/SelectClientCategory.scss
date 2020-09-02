@@ -115,6 +115,10 @@
     }
   }
 
+  .searchbar {
+    padding-bottom: 10px;
+  }
+
   @media (max-width: 768px) {
     .select-client-category__input {
       flex-wrap: wrap;
