@@ -51,6 +51,9 @@
     white-space: nowrap;
     margin-right: 5px;
 
+    //testing
+    // padding-left: 12px;
+
     &::before {
       content: "";
       position: absolute;
@@ -61,15 +64,16 @@
       background-color: transparent;
 
       //testing
-      width: 5px;
-      
+      width: 4px;
+      // border-radius: 15px;
+      // left: 4px;
+      // top: 1px;
+      // height: calc(100% - 2px);
     }
 
     .sidemenu__img {
       min-width: 25px;
-      // height: 25px;
       filter: brightness(1.8);
-      // transition: 200ms ease-in-out;
 
       path:first-child {
         fill: #6e7b8c77;
