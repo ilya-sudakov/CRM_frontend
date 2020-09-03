@@ -15,6 +15,9 @@ import ProductQuantityInRequest from './Panels/ProductQuantityInRequest.jsx'
 import ClientTypeDistributionInRequests from './Graphs/ClientTypeDistributionInRequests.jsx'
 import RiggingItemsQuantityForType from './Graphs/RiggingItemsQuantityForType.jsx'
 import { getStamp } from '../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import ProductQuantityProduced from './Panels/ProductQuantityProduced.jsx'
+import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import useFetch from '../../../utils/hooks/useFetch.js'
 
 const StatisticsPage = () => {
   const [curPage, setCurPage] = useState('requests')
@@ -153,9 +156,28 @@ const ProductionPage = (props) => {
     //   abortController.abort()
     // }
   }, [dataLoaded, isLoading])
-  
+
+  const { status, data } = useFetch(() => {
+    let curMonday = new Date()
+    let prevMonday = new Date()
+    prevMonday = new Date(
+      prevMonday.setDate(
+        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7) - 7,
+      ),
+    )
+    return getRecordedWorkByDateRange(
+      prevMonday.getDate(),
+      prevMonday.getMonth() + 1,
+      curMonday.getDate(),
+      curMonday.getMonth() + 1,
+    )
+  })
+
   return (
     <div className="statistics__page-wrapper">
+      <div className="statistics__row">
+        <ProductQuantityProduced data={data} />
+      </div>
       <div className="statistics__row">
         <RiggingItemsQuantityForType data={drafts} />
       </div>

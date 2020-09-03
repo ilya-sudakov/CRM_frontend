@@ -11,7 +11,7 @@ const RiggingItemsQuantityForType = (props) => {
   const [canvasLoaded, setCanvasLoaded] = useState(false)
 
   const [stats, setStats] = useState({
-    category: 'Кол-во деталей в производстве',
+    category: 'Кол-во деталей оснастки в производстве',
     isLoaded: false,
     chartName: 'rigging-items-quantity-graph',
     timePeriod: 'За все время',
@@ -136,7 +136,7 @@ const RiggingItemsQuantityForType = (props) => {
   }
 
   useEffect(() => {
-    console.log(statuses)
+    // console.log(statuses)
     if (stats.isLoaded || props.data.length === 0 || isLoading) {
       return
     }
