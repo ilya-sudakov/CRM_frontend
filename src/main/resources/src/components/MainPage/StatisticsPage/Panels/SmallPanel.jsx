@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { addSpaceDelimiter } from '../../../../utils/functions.jsx'
 
 const SmallPanel = (props) => {
   return (
@@ -27,9 +28,9 @@ const SmallPanel = (props) => {
         {props.isLoaded ? props.value || 0 : null}
         <span>
           {props.isLoaded
-            ? `${props.difference < 0 ? '' : '+'}${
-                Math.floor(props.difference * 100) / 100
-              }`
+            ? `${props.difference < 0 ? '' : '+'}${addSpaceDelimiter(
+                Math.floor(props.difference * 100) / 100,
+              )}`
             : ''}
         </span>
       </div>

@@ -40,7 +40,7 @@ const ProductQuantityProduced = (props) => {
         dateDiffInDays(
           new Date(workItem.year, workItem.month - 1, workItem.day),
           curMonday,
-        ) >= 7
+        ) > 7
       ) {
         prevWeekQuantity += productCount
       } else {

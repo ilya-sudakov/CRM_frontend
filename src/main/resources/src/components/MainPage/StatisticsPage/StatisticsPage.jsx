@@ -157,6 +157,7 @@ const ProductionPage = (props) => {
     // }
   }, [dataLoaded, isLoading])
 
+  //запрашиваем данные за пред. и тек. недели
   const { status, data } = useFetch(() => {
     let curMonday = new Date()
     let prevMonday = new Date()
