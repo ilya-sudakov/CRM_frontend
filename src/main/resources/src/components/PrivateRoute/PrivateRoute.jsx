@@ -14,7 +14,7 @@ const PrivateRoute = ({
   ...rest
 }) => {
   const userContext = useContext(UserContext)
-  console.log(userContext)
+  // console.log(userContext)
   //Если пользователь не авторизован и у него нет токена
   //доступа, то редирект на /login, иначе - рендер
   //передаваемого компонента

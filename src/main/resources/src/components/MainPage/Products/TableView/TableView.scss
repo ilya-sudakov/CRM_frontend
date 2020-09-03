@@ -175,16 +175,18 @@
             flex: 0 1 100% !important;
             max-width: fit-content;
             margin-left: auto;
-            line-height: 3rem !important;
+            line-height: normal !important;
           }
           .tableview_products__items-count {
             max-width: fit-content;
             margin-left: 0;
-            line-height: 1rem !important;
+            font-size: 100% !important;
+            align-self: center !important;
+            color: #aaaaaa !important;
+            // line-height: 1rem !important;
           }
           .main-window__mobile-text {
-            // display: none; //test
-            line-height: normal;
+            // line-height: normal;
           }
         }
       }
