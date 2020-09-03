@@ -972,6 +972,12 @@
           margin-top: -10px;
           // margin-left: 5px;
           width: 100%;
+
+          .main-window__item {
+            &:first-child {
+              margin-left: 16px;
+            }
+          }
         }
       }
     }
