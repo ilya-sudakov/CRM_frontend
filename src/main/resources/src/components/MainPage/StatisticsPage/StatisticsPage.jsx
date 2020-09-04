@@ -20,7 +20,8 @@ import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManag
 import useFetch from '../../../utils/hooks/useFetch.js'
 
 const StatisticsPage = () => {
-  const [curPage, setCurPage] = useState('requests')
+  // const [curPage, setCurPage] = useState('requests')
+  const [curPage, setCurPage] = useState('production')
   const pages = {
     requests: () => <RequestsPage />,
     production: () => <ProductionPage />,
