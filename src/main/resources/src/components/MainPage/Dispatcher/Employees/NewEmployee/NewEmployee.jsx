@@ -101,10 +101,18 @@ const NewEmployee = (props) => {
     }
   }
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
     setIsLoading(true)
-    // console.log(employeeInputs);
+    //form data test
+    // let formData = new FormData()
+    // Object.entries(employeeInputs).map((formItem) => {
+    //   formData.append(formItem[0], formItem[1])
+    // })
+
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ' - ' + pair[1])
+    // }
+
     formIsValid() &&
       addEmployee(employeeInputs)
         .then(() => props.history.push('/dispatcher/employees'))
@@ -144,6 +152,7 @@ const NewEmployee = (props) => {
   useEffect(() => {
     document.title = 'Добавление сотрудника'
   }, [])
+
   return (
     <div className="main-form">
       <form className="main-form__form">
@@ -248,6 +257,7 @@ const NewEmployee = (props) => {
           <FileUploader
             regex={/.+\.(jpeg|jpg|png|img)/}
             uniqueId={0}
+            // type="fileOnly"
             onChange={(result) => {
               setEmployeeInputs({
                 ...employeeInputs,

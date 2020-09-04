@@ -6,9 +6,9 @@ import {
   dateDiffInDays,
 } from '../../../../utils/functions.jsx'
 
-const ProductQuantityProduced = (props) => {
+const AverageProductQuantityProduced = (props) => {
   const [stats, setStats] = useState({
-    category: 'Кол-во произведенной продукции',
+    category: 'Сред. кол-во произведенной продукции в день',
     percentage: 0,
     value: null,
     linkTo: '/work-management',
@@ -48,6 +48,19 @@ const ProductQuantityProduced = (props) => {
       }
     })
 
+    curMonday = new Date(
+      new Date().setDate(
+        new Date().getDate() +
+          (new Date().getDay() > 0 ? new Date().getDay() : 6),
+      ),
+    )
+    //получаем средние значения
+    prevWeekQuantity = Math.floor((prevWeekQuantity / 5) * 100) / 100
+    curWeekQuantity =
+      Math.floor(
+        (curWeekQuantity / dateDiffInDays(new Date(), curMonday)) * 100,
+      ) / 100
+
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
@@ -72,4 +85,4 @@ const ProductQuantityProduced = (props) => {
   return <SmallPanel {...stats} />
 }
 
-export default ProductQuantityProduced
+export default AverageProductQuantityProduced

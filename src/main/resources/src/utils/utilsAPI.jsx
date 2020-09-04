@@ -1,6 +1,6 @@
-export const request = (options, isLogin) => {
+export const request = (options, contentType = 'application/json') => {
   const headers = new Headers({
-    'Content-Type': 'application/json',
+    'Content-Type': contentType,
   })
 
   if (
@@ -19,14 +19,6 @@ export const request = (options, isLogin) => {
 
   return (
     fetch(options.url, options)
-      // .then(response =>
-      //     response.json().then(json => {
-      //         if (!response.ok) {
-      //             return Promise.reject(json);
-      //         }
-      //         return json;
-      //     })
-      // );
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(response.error)

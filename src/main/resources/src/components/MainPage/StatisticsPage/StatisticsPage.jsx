@@ -18,10 +18,11 @@ import { getStamp } from '../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import ProductQuantityProduced from './Panels/ProductQuantityProduced.jsx'
 import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import useFetch from '../../../utils/hooks/useFetch.js'
+import AverageProductQuantityProduced from './Panels/AverageProductQuantityProduced.jsx'
 
 const StatisticsPage = () => {
-  // const [curPage, setCurPage] = useState('requests')
-  const [curPage, setCurPage] = useState('production')
+  const [curPage, setCurPage] = useState('requests')
+  // const [curPage, setCurPage] = useState('production')
   const pages = {
     requests: () => <RequestsPage />,
     production: () => <ProductionPage />,
@@ -179,6 +180,7 @@ const ProductionPage = (props) => {
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
         <ProductQuantityProduced data={data} />
+        <AverageProductQuantityProduced data={data} />
       </div>
       <div className="statistics__row">
         <RiggingItemsQuantityForType data={drafts} />
