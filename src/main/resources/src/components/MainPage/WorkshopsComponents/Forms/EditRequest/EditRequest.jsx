@@ -411,15 +411,17 @@ const EditRequest = (props) => {
             defaultValue={requestInputs.comment}
             handleInputChange={handleInputChange}
           />
-          <InputText
-            inputName="Цена"
-            name="sum"
-            type="number"
-            defaultValue={requestInputs.sum}
-            handleInputChange={handleInputChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          />
+          {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
+            <InputText
+              inputName="Цена"
+              name="sum"
+              type="number"
+              defaultValue={requestInputs.sum}
+              handleInputChange={handleInputChange}
+              errorsArr={requestErrors}
+              setErrorsArr={setRequestErrors}
+            />
+          ) : null}
           <SelectClient
             inputName="Клиент"
             userHasAccess={userContext.userHasAccess}

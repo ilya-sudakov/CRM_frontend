@@ -179,17 +179,19 @@ const ViewRequest = (props) => {
               />
             </div>
           </div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Цена</div>
-            <div className="main-form__input_field">
-              <input
-                type="number"
-                name="sum"
-                value={requestInputs.sum}
-                readOnly
-              />
+          {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
+            <div className="main-form__item">
+              <div className="main-form__input_name">Цена</div>
+              <div className="main-form__input_field">
+                <input
+                  type="number"
+                  name="sum"
+                  value={requestInputs.sum}
+                  readOnly
+                />
+              </div>
             </div>
-          </div>
+          ) : null}
           <div className="main-form__buttons">
             <input
               className="main-form__submit"

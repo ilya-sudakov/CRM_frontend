@@ -14,6 +14,7 @@ import html2canvas from 'html2canvas'
 import {
   editRequestStatus,
   editProductStatusToRequest,
+  editRequest,
 } from '../../../../utils/RequestsAPI/Requests.jsx'
 
 import {
@@ -99,31 +100,52 @@ const TableView = (props) => {
   const handleStatusChange = (event) => {
     const status = event.target.value
     const id = event.target.getAttribute('id')
+    const index = event.target.getAttribute('index')
     const sum = Number.parseFloat(event.target.getAttribute('sum'))
-    if (
-      (sum !== 0 &&
+
+    //проверяем, указана ли положительная сумма
+    if (status === 'Завершено') {
+      if (
+        sum !== 0 &&
         sum !== null &&
         !Number.isNaN(sum) &&
-        sum !== undefined &&
-        status === 'Завершено') ||
-      status !== 'Завершено'
-    ) {
-      return workshopsFuncs[props.workshopName]
-        .request(
-          {
-            status: status,
-          },
-          id,
-        )
-        .then(() => {
-          props.loadData()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    } else {
-      return alert('Введите сумму заказа для изменения статуса!')
+        sum !== undefined
+      ) {
+        return changeStatus(status, id)
+      } else {
+        return alert('Введите сумму заказа для изменения статуса!')
+      }
     }
+
+    //Если статус-отгружено, тогда ставим дату отгрузки - сегодняшнее число
+    if (status === 'Отгружено') {
+      return editRequest(
+        {
+          ...requests[index],
+          shippingDate: new Date(),
+        },
+        id,
+      ).then(() => changeStatus(status, id))
+    }
+
+    //default изменение, если пред. не совпало
+    return changeStatus(status, id)
+  }
+
+  const changeStatus = (status, id) => {
+    return workshopsFuncs[props.workshopName]
+      .request(
+        {
+          status: status,
+        },
+        id,
+      )
+      .then(() => {
+        props.loadData()
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const handleProductStatusChange = (productId, status) => {
@@ -359,6 +381,7 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Статус заявки:</div>
                   <select
                     id={request.id}
+                    index={index}
                     sum={request.sum}
                     className="main-window__status_select"
                     value={request.status}

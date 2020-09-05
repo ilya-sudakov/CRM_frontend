@@ -96,7 +96,7 @@ const WorkshopLepsari = (props) => {
   }, [])
 
   const printRequestsList = () => {
-    let dd = getProductsFromRequestsListPdfText(productsQuantities, 'ЦехЛЭМЗ')
+    let dd = getProductsFromRequestsListPdfText(productsQuantities, 'ЦехЛепсари')
     pdfMake.createPdf(dd).print()
   }
 

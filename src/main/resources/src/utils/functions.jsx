@@ -364,7 +364,7 @@ export const createLabelForProduct = (product) => {
 export const getQuantityOfProductsFromRequests = (requests) => {
   let products = {}
   requests.map((request) => {
-    if (request.status !== 'Завершено' || request.status !== 'completed') {
+    if (request.status !== 'Завершено' && request.status !== 'completed') {
       return request.requestProducts.map((product) => {
         if (product.status !== 'completed') {
           return (products = {
