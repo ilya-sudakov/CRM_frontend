@@ -3,7 +3,7 @@ importScripts('https://www.gstatic.com/firebasejs/5.9.4/firebase-app.js')
 importScripts('https://www.gstatic.com/firebasejs/5.9.4/firebase-messaging.js')
 
 firebase.initializeApp({
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  messagingSenderId: '735601754535',
 })
 
 if (firebase.messaging.isSupported()) {
