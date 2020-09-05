@@ -48,17 +48,19 @@ const AverageProductQuantityProduced = (props) => {
       }
     })
 
+    //Получаем понедельник текущей недели
     curMonday = new Date(
       new Date().setDate(
-        new Date().getDate() +
-          (new Date().getDay() > 0 ? new Date().getDay() : 6),
+        new Date().getDate() -
+          (new Date().getDay() > 0 ? new Date().getDay() - 1 : 6),
       ),
     )
+
     //получаем средние значения
     prevWeekQuantity = Math.floor((prevWeekQuantity / 5) * 100) / 100
     curWeekQuantity =
       Math.floor(
-        (curWeekQuantity / dateDiffInDays(new Date(), curMonday)) * 100,
+        (curWeekQuantity / dateDiffInDays(curMonday, new Date())) * 100,
       ) / 100
 
     setStats((stats) => ({
