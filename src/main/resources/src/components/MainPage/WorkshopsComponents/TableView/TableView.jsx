@@ -103,6 +103,7 @@ const TableView = (props) => {
     if (
       (sum !== 0 &&
         sum !== null &&
+        !Number.isNaN(sum) &&
         sum !== undefined &&
         status === 'Завершено') ||
       status !== 'Завершено'

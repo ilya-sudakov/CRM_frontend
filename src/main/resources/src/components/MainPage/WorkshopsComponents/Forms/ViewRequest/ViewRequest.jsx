@@ -185,7 +185,7 @@ const ViewRequest = (props) => {
               <input
                 type="number"
                 name="sum"
-                defaultValue={requestInputs.sum}
+                value={requestInputs.sum}
                 readOnly
               />
             </div>
