@@ -16,12 +16,13 @@ import {
 import {
   sortRequestsByDates,
   getQuantityOfProductsFromRequests,
+  getDatesFromRequests,
 } from '../../../utils/functions.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const WorkshopLepsari = (props) => {
   const [requestLepsari, setRequestLepsari] = useState([])
-  const [requestsByDate, setRequestsByDate] = useState([])
+  const [dates, setDates] = useState([])
   const [productsQuantities, setProductsQuantities] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -96,7 +97,10 @@ const WorkshopLepsari = (props) => {
   }, [])
 
   const printRequestsList = () => {
-    let dd = getProductsFromRequestsListPdfText(productsQuantities, 'ЦехЛепсари')
+    let dd = getProductsFromRequestsListPdfText(
+      productsQuantities,
+      'ЦехЛепсари',
+    )
     pdfMake.createPdf(dd).print()
   }
 
@@ -108,7 +112,7 @@ const WorkshopLepsari = (props) => {
         // console.log(requests);
         setRequestLepsari(requests)
         setProductsQuantities(getQuantityOfProductsFromRequests(requests))
-        setRequestsByDate(sortRequestsByDates(requests))
+        setDates(getDatesFromRequests(requests))
         setIsLoading(false)
       })
   }
@@ -307,7 +311,15 @@ const WorkshopLepsari = (props) => {
           workshopName="lepsari"
           isLoading={isLoading}
           loadData={loadRequestLepsari}
-          requestsByDate={requestsByDate}
+          dates={dates.sort((a, b) => {
+            if (a < b) {
+              return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+            }
+            if (a > b) {
+              return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+            }
+            return 0
+          })}
           deleteItem={deleteItem}
           // copyRequest={copyRequest}
           searchQuery={searchQuery}

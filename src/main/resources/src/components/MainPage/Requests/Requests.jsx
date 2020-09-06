@@ -140,8 +140,6 @@ const Requests = (props) => {
         setIsLoading(false)
         // console.log(temp)
         setRequests(temp)
-        // getClientsFromRequests(temp)
-        // setRequestsByDate(sortRequestsByDates(temp))
         setDates(getDatesFromRequests(temp))
       })
       .catch((error) => {
@@ -412,14 +410,14 @@ const Requests = (props) => {
               <select onChange={changeSortOrder}>
                 <option value="date desc">По дате (убыв.)</option>
                 <option value="date asc">По дате (возр.)</option>
-                {/* <option value="codeWord asc">По клиенту (А-Я)</option>
+                <option value="codeWord asc">По клиенту (А-Я)</option>
                 <option value="codeWord desc">По клиенту (Я-А)</option>
                 <option value="shippingDate desc">
                   По дате отгрузки (убыв.)
                 </option>
                 <option value="shippingDate asc">
                   По дате отгрузки (возр.)
-                </option> */}
+                </option>
               </select>
             </div>
           }
@@ -493,7 +491,6 @@ const Requests = (props) => {
         />
         <TableView
           data={sortRequests(filterRequests(requests))}
-          // requestsByDate={filterDates(requestsByDate)}
           dates={dates.sort((a, b) => {
             if (a < b) {
               return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1

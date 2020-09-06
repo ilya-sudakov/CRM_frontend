@@ -18,12 +18,13 @@ import {
   sortRequestsByDates,
   getQuantityOfProductsFromRequests,
   formatDateString,
+  getDatesFromRequests,
 } from '../../../utils/functions.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([])
-  const [requestsByDate, setRequestsByDate] = useState([])
+  const [dates, setDates] = useState([])
   const [productsQuantities, setProductsQuantities] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -67,7 +68,7 @@ const WorkshopLEMZ = (props) => {
       .then((requests) => {
         setRequestsLEMZ(requests)
         setProductsQuantities(getQuantityOfProductsFromRequests(requests))
-        setRequestsByDate(sortRequestsByDates(requests))
+        setDates(getDatesFromRequests(requests))
         setIsLoading(false)
       })
   }
@@ -308,7 +309,15 @@ const WorkshopLEMZ = (props) => {
           workshopName="lemz"
           isLoading={isLoading}
           loadData={loadRequestsLEMZ}
-          requestsByDate={requestsByDate}
+          dates={dates.sort((a, b) => {
+            if (a < b) {
+              return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+            }
+            if (a > b) {
+              return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+            }
+            return 0
+          })}
           deleteItem={deleteItem}
           // copyRequest={copyRequest}
           searchQuery={searchQuery}
