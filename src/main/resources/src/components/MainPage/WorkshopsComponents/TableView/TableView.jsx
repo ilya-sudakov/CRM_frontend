@@ -455,6 +455,18 @@ const TableView = (props) => {
                         )}
                       </div>
                     </div>
+                  ) : new Date(request.shippingDate) < new Date() ? (
+                    <div className="main-window__reminder main-window__reminder--info">
+                      <div>&#x1f56d;</div>
+                      <div>
+                        {formatDateString(
+                          request.shippingDate === null ||
+                            request.shippingDate === undefined
+                            ? new Date()
+                            : request.shippingDate,
+                        )}
+                      </div>
+                    </div>
                   ) : (
                     <div className="main-window__date">
                       {formatDateString(
