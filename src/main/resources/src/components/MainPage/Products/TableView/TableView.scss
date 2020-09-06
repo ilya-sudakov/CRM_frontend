@@ -46,9 +46,11 @@
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
-      line-height: 3rem;
-      padding: 1px 10px;
       margin-bottom: 0;
+
+      // padding: 1px 10px;
+      // line-height: 3rem;
+      padding: 5px 10px;
 
       span {
         width: fit-content;
@@ -61,10 +63,14 @@
         font-size: 90%;
         align-self: flex-start;
         padding: 0;
-        line-height: 1rem;
         // margin-left: 10px;
         color: #888888;
         transition: 100ms ease-in-out;
+
+        //straight row test
+        // line-height: 1rem;
+        font-size: 100%;
+        align-self: center;
       }
 
       .main-window__mobile-text {
@@ -195,11 +201,6 @@
           .main-window__list-item {
             span {
               &:nth-child(1) {
-                width: 100% !important;
-                flex: 0 1 100% !important;
-                max-width: 100% !important;
-                justify-content: center !important;
-                align-items: center;
                 .main-window__mobile-text {
                   margin-right: auto;
                 }

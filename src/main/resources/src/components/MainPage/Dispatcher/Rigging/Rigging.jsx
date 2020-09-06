@@ -21,7 +21,7 @@ const Rigging = (props) => {
   })
 
   useEffect(() => {
-    console.log('cached: ', cachedItems)
+    // console.log('cached: ', cachedItems)
   }, [cachedItems])
 
   return (
