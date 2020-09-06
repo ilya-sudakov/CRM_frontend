@@ -287,16 +287,17 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #df8787;
-    color: #9c1515;
+    background-color: #edc8c5;
+    color: #af4e4b;
     border-radius: 5px;
     padding: 0px 2.5px;
     font-size: 90%;
+    border: 1px solid #b08f8f;
 
     div {
       &:nth-child(1) {
         font-size: 20px;
-        color: #ac0f0f;
+        color: #af3230;
       }
       &:nth-child(2) {
         width: 100%;
@@ -305,11 +306,12 @@
     }
 
     &--positive {
-      background-color: #9ad49a;
-      color: #098d09;
+      background-color: #a7daa7;
+      color: #0a800a;
+      border: 1px solid #72c772;
       div {
         &:nth-child(1) {
-          color: #068006;
+          color: #037903;
           font-size: 20px;
         }
       }
