@@ -8,9 +8,9 @@
   align-items: center;
   justify-content: center;
 
-  --completed: #bdebc6;
-  --defect: #e29893;
-  --production: #e3e4cb;
+  --completed: #c7e9ce;
+  --defect: #ebbdba;
+  --production: #eaebde;
 
   .select-product__color_overlay {
     // background-color: red;
@@ -69,8 +69,9 @@
       width: 100%;
       padding: 2.5px 0px;
       text-align: center;
-      transition: 0.2s ease-in-out;
+      transition: 100ms ease-in-out;
       cursor: pointer;
+      color: #444444;
 
       &:first-child {
         border-top-left-radius: 5px;
@@ -79,6 +80,9 @@
       &:last-child {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
+      }
+      &:hover {
+        color: #999999;
       }
       &--completed {
         background-color: var(--completed);
