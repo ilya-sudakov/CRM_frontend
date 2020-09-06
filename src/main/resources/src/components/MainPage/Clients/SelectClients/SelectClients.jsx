@@ -82,7 +82,7 @@ const SelectClient = (props) => {
                 props.defaultValue && name === '' ? props.defaultValue : name
               }
               placeholder="Выберите клиента, нажав на кнопку 'Выбрать клиента'"
-              readOnly={props.readOnly}
+              disabled
             />
           </div>
         </div>

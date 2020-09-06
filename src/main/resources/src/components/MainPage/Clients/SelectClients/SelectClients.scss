@@ -71,9 +71,7 @@
       border: 1px solid #bbbbbb;
       width: 100%;
       padding: 5px 10px;
-      // border-radius: 10px;
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
+      border-radius: 5px;
       z-index: 0;
       transition: 100ms ease-in-out;
 
@@ -95,8 +93,7 @@
       flex: 0 1 15%;
       background-color: $button__background--inverted;
       color: $secondary-text-color;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
+      border-radius: 5px;
       outline: none;
       cursor: pointer;
       padding: 5px 10px;
