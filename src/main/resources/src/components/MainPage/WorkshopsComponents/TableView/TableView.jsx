@@ -412,13 +412,6 @@ const TableView = (props) => {
                   </select>
                 </span>
               )}
-              {console.log(
-                dateDiffInDays(
-                  new Date(request.date),
-                  new Date(request.shippingDate),
-                ),
-                request,
-              )}
               {displayColumns['date-shipping'].visible && (
                 <span className="requests__column--date-shipping">
                   <div className="main-window__mobile-text">Дата отгрузки:</div>
@@ -442,7 +435,7 @@ const TableView = (props) => {
                           new Date(request.shippingDate),
                         ),
                       ) > 7 ? (
-                        <div>!</div>
+                        <div>&#x2713;</div>
                       ) : (
                         <div>&#x2713;</div>
                       )}
@@ -457,7 +450,7 @@ const TableView = (props) => {
                     </div>
                   ) : new Date(request.shippingDate) < new Date() ? (
                     <div className="main-window__reminder main-window__reminder--info">
-                      <div>&#x1f56d;</div>
+                      <div>!</div>
                       <div>
                         {formatDateString(
                           request.shippingDate === null ||
@@ -585,136 +578,70 @@ const TableView = (props) => {
           isHidden={labelIsHidden}
         />
         <div className="main-window__list">
-          {false ? ( //Временно sortOrder.curSort === 'date'
-            <>
-              <div className="main-window__list-item main-window__list-item--header">
-                {/* {displayColumns['date'].visible && (
-                  <span className="requests__column--date">Дата</span>
-                )} */}
-                <div className="main-window__list-col">
-                  <div className="main-window__list-col-row">
-                    <span>Продукция</span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-                <span className="requests__column--client">Кодовое слово</span>
-                <span className="requests__column--responsible">
-                  Ответственный
-                </span>
-                <span className="requests__column--status">Статус заявки</span>
-                <span className="requests__column--date-shipping">
-                  Дата отгрузки
-                </span>
-                <span className="requests__column--comment">Комментарий</span>
-                <div className="main-window__actions">Действия</div>
+          <div className="main-window__list-item main-window__list-item--header">
+            <div className="main-window__list-col">
+              <div className="main-window__list-col-row">
+                <span>Продукция</span>
+                <span></span>
+                <span></span>
               </div>
-              {props.isLoading && (
-                <PlaceholderLoading
-                  itemClassName="main-window__list-item"
-                  minHeight="3rem"
-                  items={15}
-                />
-              )}
-              {Object.entries(props.requestsByDate)
-                .sort((a, b) => {
-                  a = new Date(a[0])
-                  b = new Date(b[0])
-                  if (a < b) {
-                    return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-                  }
-                  if (a > b) {
-                    return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-                  }
-                  return 0
-                })
-                .map((date) =>
-                  date[1].length > 0 ? (
-                    <>
-                      <div className="main-window__table-date">
-                        {formatDateString(date[0])}
-                      </div>
-                      {printRequests(date[1], {
-                        date: {
-                          visible: false,
-                        },
-                        client: {
-                          visible: true,
-                        },
-                        responsible: {
-                          visible: true,
-                        },
-                        status: {
-                          visible: true,
-                        },
-                        'date-shipping': {
-                          visible: true,
-                        },
-                        comment: {
-                          visible: true,
-                        },
-                        price: {
-                          visible: props.workshopName === 'requests',
-                        },
-                      })}
-                    </>
-                  ) : null,
-                )}
-            </>
-          ) : (
-            <>
-              <div className="main-window__list-item main-window__list-item--header">
-                <span className="requests__column--date">Дата</span>
-                <div className="main-window__list-col">
-                  <div className="main-window__list-col-row">
-                    <span>Продукция</span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-                <span className="requests__column--client">Кодовое слово</span>
-                <span className="requests__column--responsible">
-                  Ответственный
-                </span>
-                <span className="requests__column--status">Статус заявки</span>
-                <span className="requests__column--date-shipping">
-                  Дата отгрузки
-                </span>
-                <span className="requests__column--comment">Комментарий</span>
-                <div className="main-window__actions">Действия</div>
-              </div>
-              {props.isLoading && (
-                <PlaceholderLoading
-                  itemClassName="main-window__list-item"
-                  minHeight="3rem"
-                  items={15}
-                />
-              )}
-              {printRequests(requests, {
-                date: {
-                  visible: true,
-                },
-                client: {
-                  visible: true,
-                },
-                responsible: {
-                  visible: true,
-                },
-                status: {
-                  visible: true,
-                },
-                'date-shipping': {
-                  visible: true,
-                },
-                comment: {
-                  visible: true,
-                },
-                price: {
-                  visible: props.workshopName === 'requests',
-                },
-              })}
-            </>
+            </div>
+            <span className="requests__column--client">Кодовое слово</span>
+            <span className="requests__column--responsible">Ответственный</span>
+            <span className="requests__column--status">Статус заявки</span>
+            <span className="requests__column--date-shipping">
+              Дата отгрузки
+            </span>
+            <span className="requests__column--comment">Комментарий</span>
+            <div className="main-window__actions">Действия</div>
+          </div>
+          {props.isLoading && (
+            <PlaceholderLoading
+              itemClassName="main-window__list-item"
+              minHeight="3rem"
+              items={15}
+            />
           )}
+          {props.dates.map((date) => {
+            let filteredReqs = requests.filter(
+              (request) =>
+                formatDateString(new Date(request.date)) ===
+                formatDateString(new Date(date)),
+            )
+
+            if (filteredReqs.length > 0) {
+              return (
+                <>
+                  <div className="main-window__table-date">
+                    {formatDateString(new Date(date))}
+                  </div>
+                  {printRequests(filteredReqs, {
+                    date: {
+                      visible: false,
+                    },
+                    client: {
+                      visible: true,
+                    },
+                    responsible: {
+                      visible: true,
+                    },
+                    status: {
+                      visible: true,
+                    },
+                    'date-shipping': {
+                      visible: true,
+                    },
+                    comment: {
+                      visible: true,
+                    },
+                    price: {
+                      visible: props.workshopName === 'requests',
+                    },
+                  })}
+                </>
+              )
+            }
+          })}
         </div>
       </div>
     </div>

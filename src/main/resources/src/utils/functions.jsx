@@ -354,6 +354,20 @@ export const sortRequestsByDates = (requests) => {
   return dates
 }
 
+export const getDatesFromRequests = (requests) => {
+  let dates = []
+  requests.map((request) => {
+    const curDate = formatDateString(request.date)
+    if (
+      dates.find((date) => formatDateString(date) === curDate) === undefined
+    ) {
+      dates.push(request.date)
+    }
+  })
+  console.log(dates)
+  return dates
+}
+
 export const createLabelForProduct = (product) => {
   // we create a canvas element
   var canvas = document.createElement('canvas')

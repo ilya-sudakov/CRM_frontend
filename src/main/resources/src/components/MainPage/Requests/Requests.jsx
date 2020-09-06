@@ -22,6 +22,7 @@ import Button from '../../../utils/Form/Button/Button.jsx'
 import {
   sortRequestsByDates,
   formatDateString,
+  getDatesFromRequests,
 } from '../../../utils/functions.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
@@ -33,7 +34,7 @@ const Requests = (props) => {
   const [toWorkshop, setToWorkshop] = useState('lemz') //Название цеха для переноса заявки
   //id заявки, использующийся при ее дальнейшем копировании или переносе в цеха
   const [requestId, setRequestId] = useState(0)
-  const [requestsByDate, setRequestsByDate] = useState([])
+  const [dates, setDates] = useState([])
   const [clients, setClients] = useState([]) //Массив клиентов
   const [curPage, setCurPage] = useState('Открытые') //Текущая страница
   //Статусы заявок
@@ -140,7 +141,8 @@ const Requests = (props) => {
         // console.log(temp)
         setRequests(temp)
         // getClientsFromRequests(temp)
-        setRequestsByDate(sortRequestsByDates(temp))
+        // setRequestsByDate(sortRequestsByDates(temp))
+        setDates(getDatesFromRequests(temp))
       })
       .catch((error) => {
         setIsLoading(false)
@@ -250,19 +252,6 @@ const Requests = (props) => {
         return check
       })
   }
-
-  const filterDates = (dates) => {
-    console.log(requestsByDate)
-    let newDates = dates
-    Object.entries(dates).map((item) => {
-      // console.log(item[0], item[1], filterRequests(item[1]));
-      let temp = filterRequests(item[1])
-      newDates[item[0]] = temp
-    })
-    // console.log(newDates)
-    return newDates
-  }
-
   // * Sorting
 
   const [sortOrder, setSortOrder] = useState({
@@ -423,14 +412,14 @@ const Requests = (props) => {
               <select onChange={changeSortOrder}>
                 <option value="date desc">По дате (убыв.)</option>
                 <option value="date asc">По дате (возр.)</option>
-                <option value="codeWord asc">По клиенту (А-Я)</option>
+                {/* <option value="codeWord asc">По клиенту (А-Я)</option>
                 <option value="codeWord desc">По клиенту (Я-А)</option>
                 <option value="shippingDate desc">
                   По дате отгрузки (убыв.)
                 </option>
                 <option value="shippingDate asc">
                   По дате отгрузки (возр.)
-                </option>
+                </option> */}
               </select>
             </div>
           }
@@ -504,7 +493,16 @@ const Requests = (props) => {
         />
         <TableView
           data={sortRequests(filterRequests(requests))}
-          requestsByDate={filterDates(requestsByDate)}
+          // requestsByDate={filterDates(requestsByDate)}
+          dates={dates.sort((a, b) => {
+            if (a < b) {
+              return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+            }
+            if (a > b) {
+              return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+            }
+            return 0
+          })}
           isLoading={isLoading}
           workshopName="requests"
           loadData={loadRequests}

@@ -298,10 +298,12 @@
       &:nth-child(1) {
         font-size: 20px;
         color: #af3230;
+        padding-right: 2.5px;
       }
       &:nth-child(2) {
         width: 100%;
         text-align: center;
+        padding-right: 2.5px;
       }
     }
 
@@ -377,8 +379,8 @@
     margin-right: 100%;
     margin-bottom: 5px;
     padding: 0 5px;
-    color: #333333;
-    border-bottom: 1.5px solid #aaaaaa;
+    color: #666666;
+    border-bottom: 1.5px solid #bbbbbb;
     font-size: 90%;
     width: fit-content;
     white-space: nowrap;
