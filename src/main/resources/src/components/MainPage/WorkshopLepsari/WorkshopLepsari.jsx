@@ -19,6 +19,7 @@ import {
   getDatesFromRequests,
 } from '../../../utils/functions.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.jsx'
 
 const WorkshopLepsari = (props) => {
   const [requestLepsari, setRequestLepsari] = useState([])
@@ -97,11 +98,35 @@ const WorkshopLepsari = (props) => {
   }, [])
 
   const printRequestsList = () => {
-    let dd = getProductsFromRequestsListPdfText(
-      productsQuantities,
-      'ЦехЛепсари',
-    )
-    pdfMake.createPdf(dd).print()
+    let categories = {}
+    //получаем список категорий продукций для категоризации
+    //в pdf файле
+    getCategories()
+      .then((res) => res.json())
+      .then((res) => {
+        res.map((category) => {
+          if (categories[category.category] === undefined) {
+            categories = { ...categories, [category.category]: {} }
+          }
+          Object.entries(productsQuantities).map((product) => {
+            category.products.map((categoryProduct) => {
+              if (product[0] === categoryProduct.name) {
+                categories = {
+                  ...categories,
+                  [category.category]: {
+                    ...categories[category.category],
+                    [product[0]]: product[1],
+                  },
+                }
+              }
+            })
+          })
+        })
+      })
+      .then(() => {
+        let dd = getProductsFromRequestsListPdfText(categories, 'ЦехЛепсари')
+        pdfMake.createPdf(dd).print()
+      })
   }
 
   const loadRequestLepsari = (signal) => {

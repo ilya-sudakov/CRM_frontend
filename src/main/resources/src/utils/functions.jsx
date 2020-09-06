@@ -364,7 +364,6 @@ export const getDatesFromRequests = (requests) => {
       dates.push(request.date)
     }
   })
-  console.log(dates)
   return dates
 }
 

@@ -14,6 +14,7 @@ import {
   deleteRequest,
   getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
+import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.jsx'
 import {
   sortRequestsByDates,
   getQuantityOfProductsFromRequests,
@@ -48,8 +49,35 @@ const WorkshopLEMZ = (props) => {
   }
 
   const printRequestsList = () => {
-    let dd = getProductsFromRequestsListPdfText(productsQuantities, 'ЦехЛЭМЗ')
-    pdfMake.createPdf(dd).print()
+    let categories = {}
+    //получаем список категорий продукций для категоризации
+    //в pdf файле
+    getCategories()
+      .then((res) => res.json())
+      .then((res) => {
+        res.map((category) => {
+          if (categories[category.category] === undefined) {
+            categories = { ...categories, [category.category]: {} }
+          }
+          Object.entries(productsQuantities).map((product) => {
+            category.products.map((categoryProduct) => {
+              if (product[0] === categoryProduct.name) {
+                categories = {
+                  ...categories,
+                  [category.category]: {
+                    ...categories[category.category],
+                    [product[0]]: product[1],
+                  },
+                }
+              }
+            })
+          })
+        })
+      })
+      .then(() => {
+        let dd = getProductsFromRequestsListPdfText(categories, 'ЦехЛЭМЗ')
+        pdfMake.createPdf(dd).print()
+      })
   }
 
   useEffect(() => {
