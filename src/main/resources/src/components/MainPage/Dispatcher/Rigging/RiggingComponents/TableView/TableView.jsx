@@ -59,17 +59,17 @@ const TableView = (props) => {
     // console.log(props.data);
     let temp = []
     props.data.map((element, index) => {
-      if (cacheElements[element.id] === undefined) {
-        setCacheElements({
-          ...cacheElements,
+      if (props.cachedItems[element.id] === undefined) {
+        props.setCachedItems({
+          ...props.cachedItems,
           [element.id]: true,
         })
       }
       return temp.push({
         id: element.id,
         hidden:
-          cacheElements[element.id] !== undefined
-            ? cacheElements[element.id]
+          props.cachedItems[element.id] !== undefined
+            ? props.cachedItems[element.id]
             : true,
       })
     })
@@ -81,8 +81,8 @@ const TableView = (props) => {
     index = Number.parseInt(index)
     return partsVisible.map((element, element_index) => {
       if (element.id == index) {
-        setCacheElements({
-          ...cacheElements,
+        props.setCachedItems({
+          ...props.cachedItems,
           [index]: !element.hidden,
         })
         let temp2 = Object.assign({

@@ -110,6 +110,8 @@ const Stamp = (props) => {
           userHasAccess={props.userHasAccess}
           loadData={loadStamps}
           deleteItem={deleteItem}
+          cachedItems={props.cachedItems}
+          setCachedItems={(items) => props.setCachedItems(items)}
           isLoading={isLoading}
           type="stamp"
         />

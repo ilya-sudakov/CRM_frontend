@@ -108,6 +108,8 @@ const Parts = (props) => {
           })}
           isLoading={isLoading}
           searchQuery={searchQuery}
+          cachedItems={props.cachedItems}
+          setCachedItems={(items) => props.setCachedItems(items)}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
           loadData={loadData}

@@ -108,7 +108,9 @@ const PressForm = (props) => {
           })}
           searchQuery={searchQuery}
           isLoading={isLoading}
+          setCachedItems={(items) => props.setCachedItems(items)}
           userHasAccess={props.userHasAccess}
+          cachedItems={props.cachedItems}
           deleteItem={deleteItem}
           loadData={loadData}
           type="pressForm"
