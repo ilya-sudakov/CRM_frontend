@@ -21,6 +21,7 @@ import {
   formatDateString,
   addSpaceDelimiter,
   createLabelForProduct,
+  dateDiffInDays,
 } from '../../../../utils/functions.jsx'
 import {
   requestStatuses,
@@ -411,13 +412,40 @@ const TableView = (props) => {
                   </select>
                 </span>
               )}
+              {console.log(
+                dateDiffInDays(
+                  new Date(request.date),
+                  new Date(request.shippingDate),
+                ),
+                request,
+              )}
               {displayColumns['date-shipping'].visible && (
                 <span className="requests__column--date-shipping">
                   <div className="main-window__mobile-text">Дата отгрузки:</div>
-                  {new Date(request.shippingDate) < new Date() &&
-                  request.status !== 'Завершено' ? (
-                    <div className="main-window__reminder">
-                      <div>!</div>
+                  {request.status === 'Отгружено' ||
+                  request.status === 'Завершено' ? (
+                    <div
+                      className={`main-window__reminder ${
+                        Math.abs(
+                          dateDiffInDays(
+                            new Date(request.date),
+                            new Date(request.shippingDate),
+                          ),
+                        ) > 7
+                          ? ''
+                          : 'main-window__reminder--positive'
+                      }`}
+                    >
+                      {Math.abs(
+                        dateDiffInDays(
+                          new Date(request.date),
+                          new Date(request.shippingDate),
+                        ),
+                      ) > 7 ? (
+                        <div>!</div>
+                      ) : (
+                        <div>&#x2713;</div>
+                      )}
                       <div>
                         {formatDateString(
                           request.shippingDate === null ||

@@ -287,19 +287,31 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #c23e3e;
-    color: #eeeeee;
+    background-color: #df8787;
+    color: #9c1515;
     border-radius: 5px;
     padding: 0px 2.5px;
     font-size: 90%;
 
     div {
       &:nth-child(1) {
-        font-size: 26px;
+        font-size: 20px;
+        color: #ac0f0f;
       }
       &:nth-child(2) {
         width: 100%;
         text-align: center;
+      }
+    }
+
+    &--positive {
+      background-color: #9ad49a;
+      color: #098d09;
+      div {
+        &:nth-child(1) {
+          color: #068006;
+          font-size: 20px;
+        }
       }
     }
   }

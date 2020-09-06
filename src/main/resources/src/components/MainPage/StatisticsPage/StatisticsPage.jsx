@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './StatisticsPage.scss'
 
 import { getRequests } from '../../../utils/RequestsAPI/Requests.jsx'
+import { getStamp } from '../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import useFetch from '../../../utils/hooks/useFetch.js'
 
 import RequestsQuantityPanel from './Panels/RequestsQuantityPanel.jsx'
 import IncomeStatsPanel from './Panels/IncomeStatsPanel.jsx'
@@ -14,10 +17,7 @@ import RequestsAverageTimeCompletionPanel from './Panels/RequestsAverageTimeComp
 import ProductQuantityInRequest from './Panels/ProductQuantityInRequest.jsx'
 import ClientTypeDistributionInRequests from './Graphs/ClientTypeDistributionInRequests.jsx'
 import RiggingItemsQuantityForType from './Graphs/RiggingItemsQuantityForType.jsx'
-import { getStamp } from '../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import ProductQuantityProduced from './Panels/ProductQuantityProduced.jsx'
-import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import useFetch from '../../../utils/hooks/useFetch.js'
 import AverageProductQuantityProduced from './Panels/AverageProductQuantityProduced.jsx'
 
 const StatisticsPage = () => {
