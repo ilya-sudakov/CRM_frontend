@@ -464,7 +464,7 @@ const Select = (props) => {
                 defaultValue={item.quantity != 0 ? item.quantity : 0}
                 value={item.quantity}
                 onChange={handleParamChange}
-                readOnly={props.readOnly}
+                disabled={props.readOnly || props.workshop}
               />
             </div>
             {!props.noPackaging && (
@@ -481,7 +481,7 @@ const Select = (props) => {
                   defaultValue={item.packaging}
                   value={item.packaging}
                   onChange={handleParamChange}
-                  readOnly={props.readOnly || props.workshop}
+                  disabled={props.readOnly || props.workshop}
                 />
               </div>
             )}

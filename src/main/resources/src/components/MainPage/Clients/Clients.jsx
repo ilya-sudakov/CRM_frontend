@@ -521,7 +521,7 @@ const Clients = (props) => {
                       href={
                         item.site.split('//').length > 1
                           ? item.site
-                          : 'http://' + item.site
+                          : 'https://' + item.site
                       }
                       target="_blank"
                     >

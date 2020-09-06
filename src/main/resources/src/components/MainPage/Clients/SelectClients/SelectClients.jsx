@@ -188,7 +188,7 @@ const TableView = (props) => {
                     href={
                       client.site.split('//').length > 1
                         ? client.site
-                        : 'http://' + client.site
+                        : 'https://' + client.site
                     }
                     target="_blank"
                   >
