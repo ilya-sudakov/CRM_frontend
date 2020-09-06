@@ -99,6 +99,7 @@ const WorkshopLepsari = (props) => {
 
   const printRequestsList = () => {
     let categories = {}
+    setIsLoading(true)
     //получаем список категорий продукций для категоризации
     //в pdf файле
     getCategories()
@@ -124,8 +125,13 @@ const WorkshopLepsari = (props) => {
         })
       })
       .then(() => {
+        setIsLoading(false)
         let dd = getProductsFromRequestsListPdfText(categories, 'ЦехЛепсари')
         pdfMake.createPdf(dd).print()
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
       })
   }
 

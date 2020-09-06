@@ -52,6 +52,7 @@ const WorkshopLEMZ = (props) => {
     let categories = {}
     //получаем список категорий продукций для категоризации
     //в pdf файле
+    setIsLoading(true)
     getCategories()
       .then((res) => res.json())
       .then((res) => {
@@ -75,8 +76,13 @@ const WorkshopLEMZ = (props) => {
         })
       })
       .then(() => {
+        setIsLoading(false)
         let dd = getProductsFromRequestsListPdfText(categories, 'ЦехЛЭМЗ')
         pdfMake.createPdf(dd).print()
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
       })
   }
 
