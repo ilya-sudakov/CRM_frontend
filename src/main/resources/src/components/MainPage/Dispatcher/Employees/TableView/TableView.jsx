@@ -93,6 +93,15 @@ const TableView = (props) => {
     setWorkshopsVisible([...checkWorkshop(id)])
   }
 
+  const filterEmployees = (data, workshopItem) => {
+    return data.filter(
+      (employee) =>
+        (workshopItem === employee.workshop &&
+          employee.relevance !== 'Уволен') ||
+        (workshopItem === 'Уволенные' && employee.relevance === 'Уволен'),
+    )
+  }
+
   useEffect(() => {
     if (workshopsVisible.length === 0) {
       let temp = []
@@ -123,19 +132,16 @@ const TableView = (props) => {
               <span>
                 <div className="main-window__mobile-text">Подразделение:</div>
                 {item}
+                <span className="main-window__items-count">
+                  {filterEmployees(props.data, item).length}
+                </span>
               </span>
               <div className="main-window__actions">
                 <div
                   className="main-window__action"
                   onClick={() => {
                     let dd = getEmployeesByWorkshopListPdfText(
-                      sortEmployees(props.data).filter(
-                        (employee) =>
-                          (item === employee.workshop &&
-                            employee.relevance !== 'Уволен') ||
-                          (item === 'Уволенные' &&
-                            employee.relevance === 'Уволен'),
-                      ),
+                      sortEmployees(filterEmployees(props.data, item)),
                       item,
                     )
                     pdfMake.createPdf(dd).print()
@@ -173,90 +179,83 @@ const TableView = (props) => {
                     items={8}
                   />
                 )}
-                {sortEmployees(props.data).map(
-                  (employee, employee_id) =>
-                    ((item === employee.workshop &&
-                      employee.relevance !== 'Уволен') ||
-                      (item === 'Уволенные' &&
-                        employee.relevance === 'Уволен')) && (
-                      <div
-                        key={employee_id}
-                        className={'main-window__list-item'}
-                      >
-                        <span>
-                          <div className="main-window__mobile-text">ФИО:</div>
-                          {employee.lastName +
-                            ' ' +
-                            employee.name +
-                            ' ' +
-                            employee.middleName}
-                        </span>
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Дата рождения:
-                          </div>
-                          {formatDateString(employee.yearOfBirth)}
-                        </span>
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Гражданство:
-                          </div>
-                          {employee.citizenship}
-                        </span>
-                        {/* <span>{employee.workshop}</span> */}
-                        <span>
-                          <div className="main-window__mobile-text">
-                            Должность:
-                          </div>
-                          {employee.position}
-                        </span>
-                        {/* <span>{employee.comment}</span> */}
-                        {/* <span>
+                {sortEmployees(filterEmployees(props.data, item)).map(
+                  (employee, employee_id) => (
+                    <div key={employee_id} className={'main-window__list-item'}>
+                      <span>
+                        <div className="main-window__mobile-text">ФИО:</div>
+                        {employee.lastName +
+                          ' ' +
+                          employee.name +
+                          ' ' +
+                          employee.middleName}
+                      </span>
+                      <span>
+                        <div className="main-window__mobile-text">
+                          Дата рождения:
+                        </div>
+                        {formatDateString(employee.yearOfBirth)}
+                      </span>
+                      <span>
+                        <div className="main-window__mobile-text">
+                          Гражданство:
+                        </div>
+                        {employee.citizenship}
+                      </span>
+                      {/* <span>{employee.workshop}</span> */}
+                      <span>
+                        <div className="main-window__mobile-text">
+                          Должность:
+                        </div>
+                        {employee.position}
+                      </span>
+                      {/* <span>{employee.comment}</span> */}
+                      {/* <span>
                           <div className="main-window__mobile-text">
                             Актуальность:
                           </div>
                           {employee.relevance}
                         </span> */}
-                        <div className="main-window__actions">
-                          <Link
-                            to={'/dispatcher/employees/view/' + employee.id}
+                      <div className="main-window__actions">
+                        <Link
+                          to={'/dispatcher/employees/view/' + employee.id}
+                          className="main-window__action"
+                          title="Просмотр"
+                        >
+                          <img
+                            className="main-window__img"
+                            src={viewIcon}
+                            alt=""
+                          />
+                        </Link>
+                        <Link
+                          to={'/dispatcher/employees/edit/' + employee.id}
+                          className="main-window__action"
+                          title="Редактирование"
+                        >
+                          <img
+                            className="main-window__img"
+                            src={editIcon}
+                            alt=""
+                          />
+                        </Link>
+                        {props.userHasAccess(['ROLE_ADMIN']) && (
+                          <div
+                            data-id={employee.id}
                             className="main-window__action"
-                            title="Просмотр"
+                            onClick={props.deleteItem}
+                            title="Удалить"
                           >
                             <img
                               className="main-window__img"
-                              src={viewIcon}
+                              src={deleteIcon}
                               alt=""
                             />
-                          </Link>
-                          <Link
-                            to={'/dispatcher/employees/edit/' + employee.id}
-                            className="main-window__action"
-                            title="Редактирование"
-                          >
-                            <img
-                              className="main-window__img"
-                              src={editIcon}
-                              alt=""
-                            />
-                          </Link>
-                          {props.userHasAccess(['ROLE_ADMIN']) && (
-                            <div
-                              data-id={employee.id}
-                              className="main-window__action"
-                              onClick={props.deleteItem}
-                              title="Удалить"
-                            >
-                              <img
-                                className="main-window__img"
-                                src={deleteIcon}
-                                alt=""
-                              />
-                            </div>
-                          )}
-                        </div>
+                          </div>
+                        )}
                       </div>
-                    ),
+                    </div>
+                  ),
                 )}
               </div>
             </div>

@@ -211,24 +211,6 @@ const TableView = (props) => {
               : '')
           }
           data-msg="Напоминание! Заявка не перенесена в один из цехов"
-          // onClick={(event) => {
-          //   if (
-          //     !event.target.classList.contains('main-window__status_select') &&
-          //     !event.target.classList.contains('main-window__img') &&
-          //     !event.target.classList.contains('main-window__action')
-          //   ) {
-          //     let temp = requests
-          //     temp.splice(
-          //       temp.indexOf(temp.find((item) => item.id === request.id)),
-          //       1,
-          //       {
-          //         ...request,
-          //         open: !request.open,
-          //       },
-          //     )
-          //     setRequests([...temp])
-          //   }
-          // }}
           key={request.id}
           style={{
             paddingBottom:

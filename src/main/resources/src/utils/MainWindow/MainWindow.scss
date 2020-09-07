@@ -415,6 +415,17 @@
     }
   }
 
+  &__items-count {
+    align-self: flex-start;
+    padding: 0;
+    color: #888888;
+    transition: 100ms ease-in-out;
+    font-size: 100%;
+    align-self: center;
+    margin-left: 5px;
+    transition: 100ms ease-in-out;
+  }
+
   // BUTTONS
 
   &__button {
@@ -541,6 +552,10 @@
 
       .main-window__link {
         color: #ffffff;
+      }
+
+      .main-window__items-count {
+        color: #dddddd;
       }
 
       .main-window__actions .main-window__action {
