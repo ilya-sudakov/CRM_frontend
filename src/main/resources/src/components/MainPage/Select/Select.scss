@@ -8,6 +8,8 @@
   --defect: #ebbdba;
   --production: #eaebde;
 
+  // OVERLAY
+
   .select__overlay {
     width: 100vw;
     height: 100vh;
@@ -21,6 +23,8 @@
       display: none;
     }
   }
+
+  // ERROR BAR
 
   &__error {
     width: calc(100% - 20px);
@@ -39,10 +43,13 @@
     }
   }
 
+  // SEARCHBAR
+
   &__searchbar {
     display: flex;
     flex-direction: column;
     position: relative;
+    margin-bottom: 12px;
     .select__input {
       border: 1px solid #bbbbbb;
       width: 100%;
@@ -91,6 +98,8 @@
       width: 100%;
     }
   }
+
+  // DROPDOWN OPTIONS MENU
 
   &__options {
     position: absolute;
@@ -143,6 +152,8 @@
     }
   }
 
+  // SELECTED ITEMS LIST
+
   &__selected {
     font-size: 90%;
     display: flex;
@@ -167,6 +178,10 @@
       flex-direction: row;
       justify-content: space-between;
       margin-top: 12px;
+
+      &:first-of-type {
+        margin-top: 0px;
+      }
 
       .select__selected_item {
         display: flex;
@@ -204,7 +219,8 @@
           padding: 10px 10px;
         }
       }
-
+      
+      //мини версия элемента списка, с отсутствующей кнопкой удаления
       &--minimized {
         .select__selected_item {
           width: calc(50% - 30px);
@@ -218,6 +234,8 @@
           display: none;
         }
       }
+
+      // INPUTS
 
       .select__selected_quantity,
       .select__selected_packaging {
@@ -300,6 +318,8 @@
       background-color: var(--production);
     }
   }
+
+  // MOBILE SCREENS ( <= 768px) 
 
   @media (max-width: 768px) {
     & {

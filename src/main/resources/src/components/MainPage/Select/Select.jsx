@@ -156,6 +156,7 @@ const Select = (props) => {
         name: value,
         quantity: 0,
         packaging: '',
+        // packaging: null,
         status: 'production',
         productId: productId,
       },
@@ -167,6 +168,7 @@ const Select = (props) => {
         name: value,
         quantity: 0,
         packaging: '',
+        // packaging: null,
         status: 'production',
         productId: productId,
       },
@@ -181,6 +183,7 @@ const Select = (props) => {
         name: value,
         quantity: 0,
         packaging: '',
+        // packaging: null,
         status: 'production',
         productId: productId,
       },
@@ -192,6 +195,7 @@ const Select = (props) => {
         name: value,
         quantity: 0,
         packaging: '',
+        // packaging: null,
         status: 'production',
         productId: productId,
       },
@@ -492,7 +496,14 @@ const Select = (props) => {
                   onChange={handleParamChange}
                   disabled={props.readOnly || props.workshop}
                 />
-                {/* <select>
+                {/* <select
+                  onChange={handleParamChange}
+                  packaging_id={index}
+                  name="packaging"
+                  defaultValue={item.packaging}
+                  value={item.packaging}
+                  disabled={props.readOnly || props.workshop}
+                >
                   {products
                     .find(
                       (product) =>

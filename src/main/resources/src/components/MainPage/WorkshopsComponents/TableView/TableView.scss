@@ -30,6 +30,7 @@
       .main-window__list-item {
         position: relative;
         &--header {
+          margin-top: -20px;
           margin-bottom: -20px;
         }
         &--multiple-items:not(.main-window__list-item--header) {

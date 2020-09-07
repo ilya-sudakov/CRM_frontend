@@ -128,7 +128,6 @@ const EditRequest = (props) => {
 
   const handleSubmit = () => {
     setIsLoading(true)
-    // console.log(requestInputs);
     formIsValid() &&
       editRequest(requestInputs, requestId)
         .then(() => {
