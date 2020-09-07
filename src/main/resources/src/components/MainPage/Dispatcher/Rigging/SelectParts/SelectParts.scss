@@ -56,9 +56,13 @@
 
       .select_parts__selected_name {
         flex: 0 1 33.3%;
+        display: flex;
+        font-size: 90%;
+        flex-direction: column;
 
-        span {
-          font-size: 70%;
+        span:first-child {
+          font-size: 90%;
+          color: #666666;
         }
       }
     }
@@ -131,20 +135,31 @@
   }
 
   @media (max-width: 768px) {
-    & {
-      width: 100% !important;
-
-      .select_parts__item {
-        flex-direction: column !important;
-        width: 100% !important;
-        margin-top: 10px !important;
-
-        .select_parts__input_name {
-          width: 100%;
-          padding-right: 0 !important;
+    width: 100% !important;
+    .select_parts__selected {
+      .select_parts__selected_item {
+        .select_parts__selected_header {
+          .select_parts__selected_name {
+            &:not(:first-child) {
+              display: none;
+            }
+          }
         }
-        .select_parts__input_field {
-          width: 100%;
+
+        .select_parts__selected_form {
+          .select_parts__item {
+            flex-direction: column;
+            width: 100%;
+            margin-top: 10px;
+
+            .select_parts__input_name {
+              width: 100%;
+              padding-right: 0;
+            }
+            .select_parts__input_field {
+              width: 100%;
+            }
+          }
         }
       }
     }

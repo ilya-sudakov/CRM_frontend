@@ -119,21 +119,24 @@ const Select = (props) => {
                 setProducts([...productsArr])
               })
           }
-          Promise.all(temp).then(() => {
-            //Загружаем картинки по отдельности для каждой продукции
-            const temp = productsArr.map((item, index) => {
-              getProductById(item.id)
-                .then((res) => res.json())
-                .then((res) => {
-                  // console.log(res);
-                  productsArr.splice(index, 1, res)
-                  setProducts([...productsArr])
-                })
+          Promise.all(temp)
+            .then(() => {
+              //Загружаем картинки по отдельности для каждой продукции
+              return Promise.all(
+                productsArr.map((item, index) => {
+                  getProductById(item.id)
+                    .then((res) => res.json())
+                    .then((res) => {
+                      // console.log(res);
+                      productsArr.splice(index, 1, res)
+                      setProducts([...productsArr])
+                    })
+                }),
+              )
             })
-            Promise.all(temp).then(() => {
+            .then(() => {
               // console.log('all images downloaded');
             })
-          })
         })
         .catch((error) => {
           console.log(error)
@@ -144,7 +147,7 @@ const Select = (props) => {
   const clickOnOption = (event) => {
     const value = event.currentTarget.getAttribute('name')
     const id = event.currentTarget.getAttribute('id')
-    // console.log(value, id);
+    const productId = event.currentTarget.getAttribute('productId')
     clickOnInput()
     setSelected([
       ...selected,
@@ -154,6 +157,7 @@ const Select = (props) => {
         quantity: 0,
         packaging: '',
         status: 'production',
+        productId: productId,
       },
     ])
     props.onChange([
@@ -164,11 +168,12 @@ const Select = (props) => {
         quantity: 0,
         packaging: '',
         status: 'production',
+        productId: productId,
       },
     ])
   }
 
-  const selectProduct = (id, value) => {
+  const selectProduct = (id, value, productId) => {
     setSelected([
       ...selected,
       {
@@ -177,6 +182,7 @@ const Select = (props) => {
         quantity: 0,
         packaging: '',
         status: 'production',
+        productId: productId,
       },
     ])
     props.onChange([
@@ -187,6 +193,7 @@ const Select = (props) => {
         quantity: 0,
         packaging: '',
         status: 'production',
+        productId: productId,
       },
     ])
   }
@@ -203,6 +210,7 @@ const Select = (props) => {
     const value = event.target.value
     const name = event.target.getAttribute('name')
     const id = event.target.getAttribute(name + '_id')
+    const productId = event.target.getAttribute(productId)
     let newSelected = selected
     newSelected = newSelected.map((item, index) => {
       return {
@@ -405,6 +413,7 @@ const Select = (props) => {
             <div
               id={item.id}
               optionId={index}
+              productId={item.id}
               name={item.name}
               className="select__option_item"
               onClick={clickOnOption}
@@ -483,6 +492,18 @@ const Select = (props) => {
                   onChange={handleParamChange}
                   disabled={props.readOnly || props.workshop}
                 />
+                {/* <select>
+                  {products
+                    .find(
+                      (product) =>
+                        product.id === Number.parseInt(item.productId),
+                    )
+                    ?.packings?.map((packagingItem) => (
+                      <option value={packagingItem.id}>
+                        {packagingItem.name}
+                      </option>
+                    ))}
+                </select> */}
               </div>
             )}
           </div>

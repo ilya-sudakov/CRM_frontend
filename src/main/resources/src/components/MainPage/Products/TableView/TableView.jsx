@@ -226,6 +226,7 @@ const TableView = (props) => {
                                     props.selectProduct(
                                       product.id,
                                       product.name,
+                                      product.id,
                                     )
                                   }}
                                 >
@@ -243,6 +244,7 @@ const TableView = (props) => {
                                     props.selectProduct(
                                       product.id,
                                       product.name,
+                                      product.id,
                                     )
                                     props.setCloseWindow(!props.closeWindow)
                                   }}

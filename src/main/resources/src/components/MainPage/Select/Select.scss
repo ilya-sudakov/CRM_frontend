@@ -159,20 +159,14 @@
       margin-top: 5px;
       font-size: 95%;
       color: lighten($primary-text-color, 40%);
-      // display: none;
+      display: none;
     }
 
     &_row {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      // align-items: center;
-      // flex-wrap: wrap;
       margin-top: 12px;
-
-      &:first-of-type {
-        margin-top: 10px;
-      }
 
       .select__selected_item {
         display: flex;
@@ -249,7 +243,8 @@
 
         input[type="text"],
         input[type="number"],
-        textarea {
+        textarea,
+        select {
           border: 1px solid #bbbbbb;
           font-size: 110%;
           width: 100%;
