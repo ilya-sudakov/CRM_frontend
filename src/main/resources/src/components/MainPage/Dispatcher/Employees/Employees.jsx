@@ -49,9 +49,14 @@ const Employees = (props) => {
           setEmployees([...emplArr])
         })
     })
-    Promise.all(temp).then(() => {
-      setIsLoading(false)
-    })
+    Promise.all(temp)
+      .then(() => {
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
+      })
   }
 
   const printEmployeesList = () => {
@@ -106,6 +111,7 @@ const Employees = (props) => {
         <TableView
           data={employees}
           searchQuery={searchQuery}
+          isLoading={isLoading}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
         />

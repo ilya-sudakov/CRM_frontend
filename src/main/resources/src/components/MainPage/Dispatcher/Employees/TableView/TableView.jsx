@@ -21,7 +21,6 @@ const TableView = (props) => {
     'Уволенные',
   ])
   const [workshopsVisible, setWorkshopsVisible] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
   const [sortOrder, setSortOrder] = useState({
     curSort: 'lastName',
     date: 'desc',
@@ -113,7 +112,6 @@ const TableView = (props) => {
       )
       setWorkshopsVisible([...temp])
     }
-    props.data.length > 0 && setIsLoading(false)
   }, [props.data])
 
   return (
@@ -133,7 +131,7 @@ const TableView = (props) => {
                 <div className="main-window__mobile-text">Подразделение:</div>
                 {item}
                 <span className="main-window__items-count">
-                  {filterEmployees(props.data, item).length}
+                  {searchQuery(filterEmployees(props.data, item)).length}
                 </span>
               </span>
               <div className="main-window__actions">
@@ -172,7 +170,7 @@ const TableView = (props) => {
                   {/* <span>Актуальность</span> */}
                   <div className="main-window__actions">Действия</div>
                 </div>
-                {isLoading && (
+                {props.isLoading && (
                   <PlaceholderLoading
                     itemClassName="main-window__list-item"
                     minHeight="35px"
