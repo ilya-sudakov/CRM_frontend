@@ -208,7 +208,7 @@ const ViewEmployee = (props) => {
             />
           </div>
         </div>
-        <div className="main-form__buttons">
+        <div className="main-form__buttons main-form__buttons--full">
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"

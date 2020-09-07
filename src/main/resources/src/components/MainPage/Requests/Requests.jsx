@@ -363,7 +363,7 @@ const Requests = (props) => {
                       </select>
                     </div>
                   </div>
-                  <div className="main-form__buttons">
+                  <div className="main-form__buttons main-form__buttons--full">
                     <Button
                       className="main-form__submit"
                       isLoading={isLoading}

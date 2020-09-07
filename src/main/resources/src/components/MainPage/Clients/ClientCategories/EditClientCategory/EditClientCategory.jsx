@@ -137,7 +137,7 @@ const EditClientCategory = (props) => {
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>
-          <div className="main-form__buttons">
+          <div className="main-form__buttons main-form__buttons--full">
             <Button
               text="Редактировать категорию"
               isLoading={isLoading}

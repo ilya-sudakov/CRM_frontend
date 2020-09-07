@@ -18,7 +18,7 @@ const RecordAction = (props) => {
                 <div className="main-form__form">
                     {curForm == '' && <React.Fragment>
                         <div className="main-form__title">Выберите совершенное действие:</div>
-                        <div className="main-form__buttons">
+                        <div className="main-form__buttons main-form__buttons--full">
                             <input className="main-form__submit" type="submit" onClick={() => {
                                 setCurForm('Исходящий звонок');
                             }} value="Исходящий звонок" />
@@ -44,7 +44,7 @@ const RecordAction = (props) => {
                                     : curForm === 'Другое'
                                     && <MiscellaneousForm />
                     }
-                    <div className="main-form__buttons">
+                    <div className="main-form__buttons main-form__buttons--full">
                         <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => {
                             // props.setShowWindow(!props.showWindow);
                             // props.setCloseWindow(!props.closeWindow);

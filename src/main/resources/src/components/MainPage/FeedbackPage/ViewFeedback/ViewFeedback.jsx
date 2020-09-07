@@ -273,7 +273,7 @@ const ViewFeedback = (props) => {
               }}
             />
           </div>
-          <div className="main-form__buttons">
+          <div className="main-form__buttons main-form__buttons--full">
             <Button
               text="Вернуться назад"
               isLoading={isLoading}
