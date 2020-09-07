@@ -210,10 +210,10 @@ const SelectParts = (props) => {
                     autoComplete="off"
                     onChange={handleInputChange}
                     defaultValue={item.cuttingDimensions}
+                    readOnly={props.readOnly}
                     disabled={
-                      props.readOnly
-                        ? true
-                        : !checkRiggingTypesInputs(item, 'cuttingDimensions')
+                      !props.readOnly &&
+                      !checkRiggingTypesInputs(item, 'cuttingDimensions')
                     }
                   />
                 </div>
@@ -230,10 +230,9 @@ const SelectParts = (props) => {
                     autoComplete="off"
                     onChange={handleInputChange}
                     defaultValue={item.milling}
+                    readOnly={props.readOnly}
                     disabled={
-                      props.readOnly
-                        ? true
-                        : !checkRiggingTypesInputs(item, 'milling')
+                      !props.readOnly && !checkRiggingTypesInputs(item, 'milling')
                     }
                   />
                 </div>
@@ -248,10 +247,9 @@ const SelectParts = (props) => {
                     autoComplete="off"
                     onChange={handleInputChange}
                     defaultValue={item.harding}
+                    readOnly={props.readOnly}
                     disabled={
-                      props.readOnly
-                        ? true
-                        : !checkRiggingTypesInputs(item, 'harding')
+                      !props.readOnly && !checkRiggingTypesInputs(item, 'harding')
                     }
                   />
                 </div>
@@ -266,10 +264,9 @@ const SelectParts = (props) => {
                     autoComplete="off"
                     onChange={handleInputChange}
                     defaultValue={item.grinding}
+                    readOnly={props.readOnly}
                     disabled={
-                      props.readOnly
-                        ? true
-                        : !checkRiggingTypesInputs(item, 'grinding')
+                      !props.readOnly && !checkRiggingTypesInputs(item, 'grinding')
                     }
                   />
                 </div>
@@ -284,10 +281,9 @@ const SelectParts = (props) => {
                     autoComplete="off"
                     onChange={handleInputChange}
                     defaultValue={item.erosion}
+                    readOnly={props.readOnly}
                     disabled={
-                      props.readOnly
-                        ? true
-                        : !checkRiggingTypesInputs(item, 'erosion')
+                      !props.readOnly && !checkRiggingTypesInputs(item, 'erosion')
                     }
                   />
                 </div>
@@ -302,10 +298,9 @@ const SelectParts = (props) => {
                     autoComplete="off"
                     onChange={handleInputChange}
                     defaultValue={item.controll}
+                    readOnly={props.readOnly}
                     disabled={
-                      props.readOnly
-                        ? true
-                        : !checkRiggingTypesInputs(item, 'controll')
+                      !props.readOnly && !checkRiggingTypesInputs(item, 'controll')
                     }
                   />
                 </div>
