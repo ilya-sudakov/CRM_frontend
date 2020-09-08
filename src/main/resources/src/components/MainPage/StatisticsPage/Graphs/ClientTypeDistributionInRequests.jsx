@@ -107,7 +107,7 @@ const ClientTypeDistributionInRequests = ({ data, curDate }) => {
 
   //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && data.length > 1 && getStats(data)
+    !stats.isLoaded && data.length > 1 && getStats(data, curDate)
   }, [data, stats])
 
   //При обновлении тек. даты

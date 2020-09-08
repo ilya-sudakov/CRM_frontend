@@ -41,15 +41,14 @@ const RequestsQuantityGraphPanel = ({ data, curDate }) => {
         curDate.getMonth() - 1,
         item,
       )
+
       let curSum = 0
       let prevSum = 0
       data.map((request) => {
         if (formatDateString(request.date) === formatDateString(curMonthDate)) {
-          //   curMonthData.push()
           return curSum++
         }
         if (formatDateString(request.date) === formatDateString(prevDate)) {
-          //   curMonthData.push()
           return prevSum++
         }
       })
@@ -162,12 +161,12 @@ const RequestsQuantityGraphPanel = ({ data, curDate }) => {
 
   //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && data.length > 1 && getStats(data)
+    !stats.isLoaded && data.length > 1 && getStats(data, curDate)
   }, [data, stats])
 
   //При обновлении тек. даты
   useEffect(() => {
-    if (!stats.isLoading && data.length > 1) {
+    if (!stats.isLoading && data.length > 0) {
       setCanvasLoaded(false)
       setStats((stats) => ({
         ...stats,
