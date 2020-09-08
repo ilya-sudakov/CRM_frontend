@@ -16,6 +16,21 @@ export const formatDateString = (dateString) => {
   )
 }
 
+export const formatDateStringNoDate = (dateString) => {
+  // const testDate = new Date(Date.parse(dateString));
+  const temp = new Date(dateString)
+  const testDate = new Date(
+    temp.getFullYear() + '/' + (temp.getMonth() + 1) + '/' + temp.getDate(),
+  )
+  return (
+    (testDate.getMonth() + 1 < 10
+      ? '0' + (testDate.getMonth() + 1)
+      : testDate.getMonth() + 1) +
+    '.' +
+    testDate.getFullYear()
+  )
+}
+
 export const formatDateStringNoYear = (dateString) => {
   // console.log(dateString);
   const temp = new Date(dateString)

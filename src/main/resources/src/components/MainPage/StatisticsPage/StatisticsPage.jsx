@@ -5,6 +5,8 @@ import { getRequests } from '../../../utils/RequestsAPI/Requests.jsx'
 import { getStamp } from '../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import useFetch from '../../../utils/hooks/useFetch.js'
+import { formatDateStringNoDate } from '../../../utils/functions.jsx'
+import { months } from '../../../utils/dataObjects.js'
 
 import RequestsQuantityPanel from './Panels/RequestsQuantityPanel.jsx'
 import IncomeStatsPanel from './Panels/IncomeStatsPanel.jsx'
@@ -13,7 +15,7 @@ import NewClientsStatsPanel from './Panels/NewClientsStatsPanel.jsx'
 import RequestsQuantityGraphPanel from './Graphs/RequestsQuantityGraphPanel.jsx'
 import ManagerEfficiencyGraphPanel from './Graphs/ManagerEfficiencyGraphPanel.jsx'
 import ManagerMoneyGraphPanel from './Graphs/ManagerMoneyGraphPanel.jsx'
-import RequestsAverageTimeCompletionPanel from './Panels/RequestsAverageTimeCompletionPanel.jsx'
+import RequestsAverageTimeCompletion from './Panels/RequestsAverageTimeCompletionPanel.jsx'
 import ProductQuantityInRequest from './Panels/ProductQuantityInRequest.jsx'
 import ClientTypeDistributionInRequests from './Graphs/ClientTypeDistributionInRequests.jsx'
 import RiggingItemsQuantityForType from './Graphs/RiggingItemsQuantityForType.jsx'
@@ -21,13 +23,22 @@ import ProductQuantityProduced from './Panels/ProductQuantityProduced.jsx'
 import AverageProductQuantityProduced from './Panels/AverageProductQuantityProduced.jsx'
 import OnTimeRequestsDistribution from './Panels/OnTimeRequestsDistribution.jsx'
 
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+
 const StatisticsPage = () => {
   const [curPage, setCurPage] = useState('requests')
   // const [curPage, setCurPage] = useState('production')
+
+  const [curDate, setCurDate] = useState(new Date())
+
   const pages = {
-    requests: () => <RequestsPage />,
+    requests: () => <RequestsPage curDate={curDate} />,
     production: () => <ProductionPage />,
   }
+
+  useEffect(() => {
+    // console.log(curDate)
+  }, [curDate])
 
   return (
     <div className="statistics">
@@ -53,6 +64,27 @@ const StatisticsPage = () => {
             </div>
           </div>
         </div>
+        <ControlPanel
+          buttons={
+            <>
+              <div
+                className="main-window__button main-window__button--inverted"
+                onClick={() =>
+                  setCurDate((curDate) => new Date(curDate.setDate(0)))
+                }
+              >
+                Пред. месяц
+              </div>
+              <div
+                className="main-window__button main-window__button--inverted"
+                onClick={() => setCurDate(new Date())}
+              >
+                {`${months[new Date().getMonth()]}`}
+              </div>
+            </>
+          }
+          itemsCount={`Выбранный период: ${formatDateStringNoDate(curDate)}`}
+        />
         {pages[curPage]()}
       </div>
     </div>
@@ -61,7 +93,7 @@ const StatisticsPage = () => {
 
 export default StatisticsPage
 
-const RequestsPage = (props) => {
+const RequestsPage = ({ curDate }) => {
   const [requests, setRequests] = useState([])
   const [requestsLoaded, setRequestsLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -95,23 +127,23 @@ const RequestsPage = (props) => {
   return (
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
-        <RequestsQuantityPanel requests={requests} />
-        <IncomeStatsPanel requests={requests} />
-        <AverageSumStatsPanel requests={requests} />
-        <RequestsAverageTimeCompletionPanel requests={requests} />
+        <RequestsQuantityPanel curDate={curDate} requests={requests} />
+        <IncomeStatsPanel curDate={curDate} requests={requests} />
+        <AverageSumStatsPanel curDate={curDate} requests={requests} />
+        <RequestsAverageTimeCompletion curDate={curDate} requests={requests} />
       </div>
       <div className="statistics__row">
-        <ManagerEfficiencyGraphPanel data={requests} />
-        <ManagerMoneyGraphPanel data={requests} />
+        <ManagerEfficiencyGraphPanel curDate={curDate} data={requests} />
+        <ManagerMoneyGraphPanel curDate={curDate} data={requests} />
       </div>
       <div className="statistics__row">
-        <NewClientsStatsPanel requests={requests} />
-        <ProductQuantityInRequest requests={requests} />
-        <OnTimeRequestsDistribution requests={requests} />
+        <NewClientsStatsPanel curDate={curDate} requests={requests} />
+        <ProductQuantityInRequest curDate={curDate} requests={requests} />
+        <OnTimeRequestsDistribution curDate={curDate} requests={requests} />
       </div>
       <div className="statistics__row">
-        <RequestsQuantityGraphPanel data={requests} />
-        <ClientTypeDistributionInRequests data={requests} />
+        <RequestsQuantityGraphPanel curDate={curDate} data={requests} />
+        <ClientTypeDistributionInRequests curDate={curDate} data={requests} />
       </div>
     </div>
   )

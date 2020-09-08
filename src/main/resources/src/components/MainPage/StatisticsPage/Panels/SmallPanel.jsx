@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { addSpaceDelimiter } from '../../../../utils/functions.jsx'
 
 const SmallPanel = (props) => {
+  useEffect(() => {}, [props.isLoaded])
+
   return (
     <Link
       className={`panel ${props.isLoaded ? '' : 'panel--placeholder'}`}
