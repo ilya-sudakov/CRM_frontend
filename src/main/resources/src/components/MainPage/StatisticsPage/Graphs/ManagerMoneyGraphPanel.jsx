@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react'
 import GraphPanel from './GraphPanel.jsx'
 import MoneyIcon from '../../../../../../../../assets/etc/bx-ruble.inline.svg'
 import { months } from '../../../../utils/dataObjects'
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
+import { formatDateStringNoDate } from '../../../../utils/functions.jsx'
 
-const ManagerMoneyGraphPanel = (props) => {
+const ManagerMoneyGraphPanel = ({ data, curDate }) => {
   const [graph, setGraph] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
@@ -16,11 +17,12 @@ const ManagerMoneyGraphPanel = (props) => {
     renderIcon: () => <MoneyIcon className="panel__img panel__img--list" />,
   })
 
-  const getStats = (data) => {
+  const getStats = (data, curDate = new Date()) => {
     let managers = {}
     data.map((request) => {
       if (
-        new Date(request.date).getMonth() === new Date().getMonth() &&
+        formatDateStringNoDate(request.date) ===
+          formatDateStringNoDate(curDate) &&
         request.status === 'Завершено'
       ) {
         managers = {
@@ -101,9 +103,23 @@ const ManagerMoneyGraphPanel = (props) => {
     }, 150)
   }
 
+  //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && props.data.length > 1 && getStats(props.data)
-  }, [props.data, stats])
+    !stats.isLoaded && data.length > 1 && getStats(data)
+  }, [data, stats])
+
+  //При обновлении тек. даты
+  useEffect(() => {
+    if (!stats.isLoading && data.length > 1) {
+      setCanvasLoaded(false)
+      setStats((stats) => ({
+        ...stats,
+        timePeriod: `${months[curDate.getMonth()]}`,
+      }))
+      graph.destroy()
+      getStats(data, curDate)
+    }
+  }, [curDate])
 
   return <GraphPanel {...stats} />
 }
