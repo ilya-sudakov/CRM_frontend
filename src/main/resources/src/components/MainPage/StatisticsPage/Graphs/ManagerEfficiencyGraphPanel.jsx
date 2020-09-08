@@ -104,12 +104,12 @@ const ManagerEfficiencyGraphPanel = ({ data, curDate }) => {
 
   //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && data.length > 1 && getStats(data, curDate)
+    !stats.isLoaded && data.length > 0 && getStats(data, curDate)
   }, [data, stats])
 
   //При обновлении тек. даты
   useEffect(() => {
-    if (!stats.isLoading && data.length > 1) {
+    if (!stats.isLoading && data.length > 0) {
       setCanvasLoaded(false)
       setStats((stats) => ({
         ...stats,

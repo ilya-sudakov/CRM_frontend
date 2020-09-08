@@ -59,7 +59,9 @@ const IncomeStatsPanel = ({ requests, curDate }) => {
       ...stats,
       isLoaded: true,
       isLoading: false,
-      value: `${addSpaceDelimiter(curMonthIncome)} руб.`,
+      value: `${addSpaceDelimiter(
+        Math.floor(curMonthIncome * 100) / 100,
+      )} руб.`,
       difference: curMonthIncome - prevMonthIncome,
       percentage:
         Math.floor(
