@@ -178,7 +178,7 @@ const SelectParts = (props) => {
                     name="location"
                     onChange={handleInputChange}
                     value={item.location}
-                    readOnly={props.readOnly}
+                    disabled={props.readOnly}
                   >
                     {Object.entries(workshopsLocations).map((workshop) => (
                       <option value={workshop[0]}>{workshop[1].name}</option>
@@ -232,7 +232,8 @@ const SelectParts = (props) => {
                     defaultValue={item.milling}
                     readOnly={props.readOnly}
                     disabled={
-                      !props.readOnly && !checkRiggingTypesInputs(item, 'milling')
+                      !props.readOnly &&
+                      !checkRiggingTypesInputs(item, 'milling')
                     }
                   />
                 </div>
@@ -249,7 +250,8 @@ const SelectParts = (props) => {
                     defaultValue={item.harding}
                     readOnly={props.readOnly}
                     disabled={
-                      !props.readOnly && !checkRiggingTypesInputs(item, 'harding')
+                      !props.readOnly &&
+                      !checkRiggingTypesInputs(item, 'harding')
                     }
                   />
                 </div>
@@ -266,7 +268,8 @@ const SelectParts = (props) => {
                     defaultValue={item.grinding}
                     readOnly={props.readOnly}
                     disabled={
-                      !props.readOnly && !checkRiggingTypesInputs(item, 'grinding')
+                      !props.readOnly &&
+                      !checkRiggingTypesInputs(item, 'grinding')
                     }
                   />
                 </div>
@@ -283,7 +286,8 @@ const SelectParts = (props) => {
                     defaultValue={item.erosion}
                     readOnly={props.readOnly}
                     disabled={
-                      !props.readOnly && !checkRiggingTypesInputs(item, 'erosion')
+                      !props.readOnly &&
+                      !checkRiggingTypesInputs(item, 'erosion')
                     }
                   />
                 </div>
@@ -300,7 +304,8 @@ const SelectParts = (props) => {
                     defaultValue={item.controll}
                     readOnly={props.readOnly}
                     disabled={
-                      !props.readOnly && !checkRiggingTypesInputs(item, 'controll')
+                      !props.readOnly &&
+                      !checkRiggingTypesInputs(item, 'controll')
                     }
                   />
                 </div>

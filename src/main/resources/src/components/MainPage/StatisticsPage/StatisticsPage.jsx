@@ -19,6 +19,7 @@ import ClientTypeDistributionInRequests from './Graphs/ClientTypeDistributionInR
 import RiggingItemsQuantityForType from './Graphs/RiggingItemsQuantityForType.jsx'
 import ProductQuantityProduced from './Panels/ProductQuantityProduced.jsx'
 import AverageProductQuantityProduced from './Panels/AverageProductQuantityProduced.jsx'
+import OnTimeRequestsDistribution from './Panels/OnTimeRequestsDistribution.jsx'
 
 const StatisticsPage = () => {
   const [curPage, setCurPage] = useState('requests')
@@ -97,15 +98,16 @@ const RequestsPage = (props) => {
         <RequestsQuantityPanel requests={requests} />
         <IncomeStatsPanel requests={requests} />
         <AverageSumStatsPanel requests={requests} />
+        <RequestsAverageTimeCompletionPanel requests={requests} />
       </div>
       <div className="statistics__row">
         <ManagerEfficiencyGraphPanel data={requests} />
         <ManagerMoneyGraphPanel data={requests} />
       </div>
       <div className="statistics__row">
-        <RequestsAverageTimeCompletionPanel requests={requests} />
         <NewClientsStatsPanel requests={requests} />
         <ProductQuantityInRequest requests={requests} />
+        <OnTimeRequestsDistribution requests={requests} />
       </div>
       <div className="statistics__row">
         <RequestsQuantityGraphPanel data={requests} />
@@ -152,6 +154,7 @@ const ProductionPage = (props) => {
       return
     }
     loadDrafts()
+    //!нужно пофиксить
     // const abortController = new AbortController()
     // loadDrafts(abortController.signal)
     // return function cancel() {
