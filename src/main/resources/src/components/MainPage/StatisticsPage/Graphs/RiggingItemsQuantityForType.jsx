@@ -5,7 +5,7 @@ import { months } from '../../../../utils/dataObjects'
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
 import { checkRiggingTypesInputs } from '../../Dispatcher/Rigging/RiggingComponents/rigsVariables.js'
 
-const RiggingItemsQuantityForType = (props) => {
+const RiggingItemsQuantityForType = ({ data }) => {
   const [graph, setGraph] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
@@ -137,11 +137,11 @@ const RiggingItemsQuantityForType = (props) => {
 
   useEffect(() => {
     // console.log(statuses)
-    if (stats.isLoaded || props.data.length === 0 || isLoading) {
+    if (stats.isLoaded || data.length === 0 || isLoading) {
       return
     }
-    getStats(props.data)
-  }, [props.data, stats, statuses])
+    getStats(data)
+  }, [data, stats, statuses])
 
   return <GraphPanel {...stats} />
 }

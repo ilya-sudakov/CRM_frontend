@@ -6,24 +6,31 @@ import {
   dateDiffInDays,
 } from '../../../../utils/functions.jsx'
 
-const ProductQuantityProduced = (props) => {
+const ProductQuantityProduced = ({ data, curDate }) => {
   const [stats, setStats] = useState({
     category: 'Кол-во произведенной продукции',
     percentage: 0,
     value: null,
     linkTo: '/work-management',
     isLoaded: false,
+    isLoading: false,
     timePeriod: 'От прошлой недели',
     difference: 0,
     renderIcon: () => <BoxIcon className="panel__img panel__img--default" />,
   })
 
-  const getStats = (data) => {
+  const getStats = (data, curDate = new Date()) => {
+    setStats((stats) => ({
+      ...stats,
+      isLoading: true,
+      isLoaded: false,
+    }))
+
     let prevWeekQuantity = 0
     let curWeekQuantity = 0
 
     //получаем след. понедельник
-    let curMonday = new Date()
+    let curMonday = curDate
     curMonday = new Date(
       curMonday.setDate(
         curMonday.getDate() - ((curMonday.getDay() + 6) % 7) + 7,
@@ -51,6 +58,7 @@ const ProductQuantityProduced = (props) => {
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
+      isLoading: false,
       value: `${addSpaceDelimiter(curWeekQuantity)} ед.`,
       difference: curWeekQuantity - prevWeekQuantity,
       percentage:
@@ -64,10 +72,21 @@ const ProductQuantityProduced = (props) => {
   }
 
   useEffect(() => {
-    if (stats.isLoaded || props.data.length === 0 || props.data === undefined)
+    if (
+      stats.isLoaded ||
+      stats.isLoading ||
+      data.length === 0 ||
+      data === undefined
+    )
       return
-    getStats(props.data)
-  }, [props.data, stats])
+    getStats(data)
+  }, [data, stats])
+
+  //При обновлении тек. даты
+  useEffect(() => {
+    if (!stats.isLoaded && data.length === 0) return
+    getStats(data)
+  }, [curDate])
 
   return <SmallPanel {...stats} />
 }

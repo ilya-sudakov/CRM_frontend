@@ -27,13 +27,12 @@ import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.js
 
 const StatisticsPage = () => {
   const [curPage, setCurPage] = useState('requests')
-  // const [curPage, setCurPage] = useState('production')
 
   const [curDate, setCurDate] = useState(new Date())
 
   const pages = {
     requests: () => <RequestsPage curDate={curDate} />,
-    production: () => <ProductionPage />,
+    production: () => <ProductionPage curDate={curDate} />,
   }
 
   useEffect(() => {
@@ -149,7 +148,7 @@ const RequestsPage = ({ curDate }) => {
   )
 }
 
-const ProductionPage = (props) => {
+const ProductionPage = ({ curDate }) => {
   const [drafts, setDrafts] = useState([])
   const [dataLoaded, setDataLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -194,28 +193,43 @@ const ProductionPage = (props) => {
     // }
   }, [dataLoaded, isLoading])
 
-  //запрашиваем данные за пред. и тек. недели
-  const { status, data } = useFetch(() => {
-    let curMonday = new Date()
-    let prevMonday = new Date()
+  const [workData, setWorkData] = useState([])
+
+  const getDataForTwoWeeks = (signal) => {
+    let curMonday = curDate
+    let prevMonday = curDate
+
     prevMonday = new Date(
       prevMonday.setDate(
         prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7) - 7,
       ),
     )
-    return getRecordedWorkByDateRange(
+    getRecordedWorkByDateRange(
       prevMonday.getDate(),
       prevMonday.getMonth() + 1,
       curMonday.getDate(),
       curMonday.getMonth() + 1,
+      signal,
     )
-  })
+      .then((res) => res.json())
+      .then((res) => {
+        setWorkData([...res])
+      })
+  }
+
+  useEffect(() => {
+    const abortController = new AbortController()
+    getDataForTwoWeeks(abortController.signal)
+    return function cancel() {
+      abortController.abort()
+    }
+  }, [curDate])
 
   return (
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
-        <ProductQuantityProduced data={data} />
-        <AverageProductQuantityProduced data={data} />
+        <ProductQuantityProduced data={workData} curDate={curDate} />
+        <AverageProductQuantityProduced data={workData} curDate={curDate} />
       </div>
       <div className="statistics__row">
         <RiggingItemsQuantityForType data={drafts} />
