@@ -24,10 +24,12 @@ const OnTimeRequestsDistribution = (props) => {
     //check prev month
     let temp = requests.filter((request) => {
       const date = new Date(request.date)
-      if (date.getMonth() === new Date(new Date().setDate(0)).getMonth()) {
+      if (
+        date.getMonth() === new Date(new Date().setDate(0)).getMonth() &&
+        (request.status === 'Завершено' || request.status === 'Отгружено')
+      ) {
         //если заказ отгружен вовремя
         if (
-          (request.status === 'Завершено' || request.status === 'Отгружено') &&
           Math.abs(
             dateDiffInDays(
               new Date(request.date),
@@ -46,11 +48,12 @@ const OnTimeRequestsDistribution = (props) => {
     //check cur month
     temp.map((request) => {
       const date = new Date(request.date)
-      if (date.getMonth() === new Date().getMonth()) {
-        curMonthAllQuantity++
+      if (
+        date.getMonth() === new Date().getMonth() &&
+        (request.status === 'Завершено' || request.status === 'Отгружено')
+      ) {
         //если заказ отгружен вовремя
         if (
-          (request.status === 'Завершено' || request.status === 'Отгружено') &&
           Math.abs(
             dateDiffInDays(
               new Date(request.date),
@@ -60,6 +63,7 @@ const OnTimeRequestsDistribution = (props) => {
         ) {
           curMonthOnTimeQuantity++
         }
+        curMonthAllQuantity++
       }
     })
 
