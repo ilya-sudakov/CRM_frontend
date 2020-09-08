@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import SmallPanel from './SmallPanel.jsx'
 import PlaylistIcon from '../../../../../../../../assets/sidemenu/play_list.inline.svg'
+import { formatDateStringNoDate } from '../../../../utils/functions.jsx'
 
-const ProductQuantityInRequest = (props) => {
+const ProductQuantityInRequest = ({ requests, curDate }) => {
   const [stats, setStats] = useState({
     category: 'Среднее кол-во позиций в заказе',
     percentage: 0,
     value: null,
     linkTo: '/requests',
     isLoaded: false,
+    isLoading: false,
     timePeriod: 'От прошлого месяца',
     difference: 0,
     renderIcon: () => (
@@ -16,7 +18,13 @@ const ProductQuantityInRequest = (props) => {
     ),
   })
 
-  const getStats = (requests) => {
+  const getStats = (requests, curDate = new Date()) => {
+    setStats((stats) => ({
+      ...stats,
+      isLoading: true,
+      isLoaded: false,
+    }))
+
     let curMonthAverage = 0
     let prevMonthAverage = 0
     let curMonthQuantity = 0
@@ -24,9 +32,8 @@ const ProductQuantityInRequest = (props) => {
 
     //check prev month
     let temp = requests.filter((request) => {
-      const date = new Date(request.date)
-      if (date.getMonth() === new Date(new Date().setDate(0)).getMonth()) {
-        // console.log(request, request.requestProducts.length)
+      const date = formatDateStringNoDate(request.date)
+      if (date === formatDateStringNoDate(new Date(curDate).setDate(0))) {
         prevMonthAverage += request.requestProducts.length
         prevMonthQuantity++
         return false
@@ -35,8 +42,8 @@ const ProductQuantityInRequest = (props) => {
     })
 
     temp.map((request) => {
-      const date = new Date(request.date)
-      if (date.getMonth() === new Date().getMonth()) {
+      const date = formatDateStringNoDate(request.date)
+      if (date === formatDateStringNoDate(curDate)) {
         curMonthAverage += request.requestProducts.length
         curMonthQuantity++
       }
@@ -50,6 +57,7 @@ const ProductQuantityInRequest = (props) => {
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
+      isLoading: false,
       value: Math.floor(curMonthAverage * 100) / 100,
       difference: curMonthAverage - prevMonthAverage,
       percentage:
@@ -59,9 +67,17 @@ const ProductQuantityInRequest = (props) => {
     }))
   }
 
+  //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && props.requests.length > 1 && getStats(props.requests)
-  }, [props.requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
+  }, [requests, stats])
+
+  //При обновлении тек. даты
+  useEffect(() => {
+    if (!stats.isLoading && requests.length > 1) {
+      getStats(requests, curDate)
+    }
+  }, [curDate])
 
   return <SmallPanel {...stats} />
 }

@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import SmallPanel from './SmallPanel.jsx'
 import ClockIcon from '../../../../../../../../assets/etc/time.inline.svg'
-import { dateDiffInDays } from '../../../../utils/functions.jsx'
+import {
+  dateDiffInDays,
+  formatDateStringNoDate,
+} from '../../../../utils/functions.jsx'
 
-const OnTimeRequestsDistribution = (props) => {
+const OnTimeRequestsDistribution = ({ requests, curDate }) => {
   const [stats, setStats] = useState({
     category: 'Вовремя выполненные заказы',
     percentage: 0,
     value: null,
     linkTo: '/requests',
     isLoaded: false,
+    isLoading: false,
     timePeriod: 'От прошлого месяца',
     difference: 0,
     renderIcon: () => <ClockIcon className="panel__img panel__img--time" />,
   })
 
-  const getStats = (requests) => {
+  const getStats = (requests, curDate = new Date()) => {
+    setStats((stats) => ({
+      ...stats,
+      isLoading: true,
+      isLoaded: false,
+    }))
+
     let curMonthOnTimeQuantity = 0
     let curMonthAllQuantity = 0
     let prevMonthOnTimeQuantity = 0
@@ -25,7 +35,8 @@ const OnTimeRequestsDistribution = (props) => {
     let temp = requests.filter((request) => {
       const date = new Date(request.date)
       if (
-        date.getMonth() === new Date(new Date().setDate(0)).getMonth() &&
+        formatDateStringNoDate(date) ===
+          formatDateStringNoDate(new Date(curDate).setDate(0)) &&
         (request.status === 'Завершено' || request.status === 'Отгружено')
       ) {
         //если заказ отгружен вовремя
@@ -49,7 +60,7 @@ const OnTimeRequestsDistribution = (props) => {
     temp.map((request) => {
       const date = new Date(request.date)
       if (
-        date.getMonth() === new Date().getMonth() &&
+        formatDateStringNoDate(date) === formatDateStringNoDate(curDate) &&
         (request.status === 'Завершено' || request.status === 'Отгружено')
       ) {
         //если заказ отгружен вовремя
@@ -86,6 +97,7 @@ const OnTimeRequestsDistribution = (props) => {
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
+      isLoading: false,
       value: `${Math.floor(curMonthValue * 100 * 100) / 100}%`,
       difference:
         Math.floor((curMonthValue - prevMonthValue) * 100 * 100) / 100,
@@ -96,9 +108,17 @@ const OnTimeRequestsDistribution = (props) => {
     }))
   }
 
+  //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && props.requests.length > 1 && getStats(props.requests)
-  }, [props.requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
+  }, [requests, stats])
+
+  //При обновлении тек. даты
+  useEffect(() => {
+    if (!stats.isLoading && requests.length > 1) {
+      getStats(requests, curDate)
+    }
+  }, [curDate])
 
   return <SmallPanel {...stats} />
 }

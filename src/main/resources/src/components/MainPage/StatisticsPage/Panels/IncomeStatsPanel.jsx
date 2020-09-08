@@ -80,7 +80,6 @@ const IncomeStatsPanel = ({ requests, curDate }) => {
   useEffect(() => {
     if (!stats.isLoading && requests.length > 1) {
       getStats(requests, curDate)
-      console.log('updated through date', curDate)
     }
   }, [curDate])
 
