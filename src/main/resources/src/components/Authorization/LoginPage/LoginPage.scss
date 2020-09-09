@@ -115,6 +115,8 @@
 
       //test
       padding-top: 15px;
+      margin-bottom: 3;
+      margin-top: 0;
 
       &:last-child {
         margin-top: 5px;
@@ -147,14 +149,14 @@
         }
       }
       & .authorization__line {
-        width: 25px;
+        width: 22px;
         height: 2px;
         // background-color: red;
         background-color: #000000;
         border-radius: 999px;
         position: absolute;
         right: 5px;
-        top: calc(25px + 0.5rem);
+        top: calc(24px + 0.5rem);
         transform-origin: 50% 100%;
         transform: scaleX(1);
         transform: rotate(-45deg);
@@ -191,7 +193,9 @@
       &.authorization__img--eye {
         left: auto;
         right: 5px;
+        top: calc(0.5rem + 15px);
         cursor: pointer;
+        max-width: 22px;
 
         //dark-theme
         // filter:  invert(1) brightness(1);
