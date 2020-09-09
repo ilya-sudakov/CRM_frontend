@@ -114,7 +114,7 @@ const ShipRequest = (props) => {
                 Number.parseFloat(selected.quantity) -
                 Number.parseFloat(selected.quantityNew)
 
-              editProductsToRequest(
+              return editProductsToRequest(
                 {
                   requestId: requestId,
                   quantity: diff < 0 ? 0 : diff,
