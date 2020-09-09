@@ -347,7 +347,7 @@ const SelectDraft = (props) => {
               )}
             </div>
             <div className="select-draft__selected_quantity">
-              <span className="select-draft__input-name">Кол-во{!props.readOnly && '*'}</span>
+              <span className="select-draft__input-name">Кол-во (шт.){!props.readOnly && '*'}</span>
               <input
                 quantity_id={index}
                 // type="text"

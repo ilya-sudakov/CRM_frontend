@@ -325,6 +325,7 @@
         &_row {
           flex-direction: column;
           // margin-left: -25px;
+          margin-top: 20px;
 
           .select-draft__selected_item {
             width: calc(100% - 40px);
@@ -334,7 +335,7 @@
           .select-draft__selected_quantity {
             // margin-right: 0;
             margin-top: 12.5px;
-            width: 50%;
+            width: 100%;
             input {
               width: 100%;
             }
