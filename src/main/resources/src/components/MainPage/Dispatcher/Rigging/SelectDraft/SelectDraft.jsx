@@ -318,11 +318,11 @@ const SelectDraft = (props) => {
         </div>
       )}
       <div className="select-draft__selected">
-        {selected.length !== 0 && (
+        {/* {selected.length !== 0 && (
           <span className="select-draft__selected_title">
             Выбранные чертежи:
           </span>
-        )}
+        )} */}
         {selected.map((item, index) => (
           <div className="select-draft__selected_row">
             <div className="select-draft__selected_item">
@@ -347,7 +347,7 @@ const SelectDraft = (props) => {
               )}
             </div>
             <div className="select-draft__selected_quantity">
-              Кол-во{!props.readOnly && '*'}
+              <span className="select-draft__input-name">Кол-во{!props.readOnly && '*'}</span>
               <input
                 quantity_id={index}
                 // type="text"
