@@ -3,14 +3,20 @@
 .tableview-workshops {
   width: 100%;
   --shipped: #d4dbbf;
-  --priority: #e29c9c;
-  --completed: #98dda6;
-  --ready: #7fd192;
-  --in-production: #e3e4cb;
-  --waiting: #95ddc5;
+  // --priority: #e29c9c;
+  --priority: #ebbdba; //pastel
+  // --completed: #98dda6;
+  --completed: #c7e9ce; //pastel
+  // --ready: #7fd192;
+  --ready: #ace7ba; //pastel
+  // --in-production: #e3e4cb;
+  --in-production: #eaebde; //pastel
+  // --waiting: #95ddc5;
+  --waiting: #b7ebda; //pastel
   --problem: #d6574e;
-  --materials: #dfc38b;
-  --shipped-in-parts: #ebcab4;
+  // --materials: #dfc38b;
+  --materials: #ebddc2; //pastel
+  --shipped-in-parts: #f0d2be;
 
   .main-window {
     display: flex;

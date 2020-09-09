@@ -118,7 +118,7 @@ const ShipRequest = (props) => {
                 {
                   requestId: requestId,
                   quantity: diff < 0 ? 0 : diff,
-                  status: diff === 0 ? 'completed' : selected.status,
+                  status: diff <= 0 ? 'completed' : selected.status,
                   packaging: selected.packaging,
                   name: selected.name,
                 },
