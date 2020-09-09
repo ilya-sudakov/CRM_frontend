@@ -119,6 +119,8 @@
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     transform-origin: 0 0;
 
+    margin-top: -12px;
+
     &--hidden {
       transform: scaleY(0);
       // display: none;
@@ -242,6 +244,7 @@
           background-color: #ffffff;
           padding: 0 5px;
           color: #777777;
+          white-space: nowrap;
         }
 
         input[type="text"],
@@ -305,6 +308,10 @@
         }
         .select__img {
           display: none;
+        }
+
+        div:last-child {
+          margin-right: 0;
         }
       }
     }

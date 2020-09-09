@@ -24,15 +24,7 @@ const Lepsari = (props) => {
   return (
     <div className="requests-lepsari">
       <div className="main-window">
-        <div
-          className={
-            props.history.location.pathname.includes('new') ||
-            props.history.location.pathname.includes('edit') ||
-            props.history.location.pathname.includes('view')
-              ? 'main-window__header main-window__header--hidden'
-              : 'main-window__header main-window__header--full'
-          }
-        >
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Цех Лепсари</div>
           <div className="main-window__menu">
             <Link

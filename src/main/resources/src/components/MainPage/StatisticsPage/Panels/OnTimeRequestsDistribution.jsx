@@ -103,7 +103,10 @@ const OnTimeRequestsDistribution = ({ requests, curDate }) => {
         Math.floor((curMonthValue - prevMonthValue) * 100 * 100) / 100,
       percentage:
         Math.floor(
-          ((curMonthValue - prevMonthValue) / prevMonthValue) * 100 * 100,
+          ((curMonthValue - prevMonthValue) /
+            (prevMonthValue !== 0 ? prevMonthValue : 1)) *
+            100 *
+            100,
         ) / 100,
     }))
   }

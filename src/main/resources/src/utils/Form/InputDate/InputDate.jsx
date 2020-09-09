@@ -20,17 +20,10 @@ const InputDate = (props) => {
           }
         >
           <DatePicker
-            selected={props.selected}
-            dateFormat={props.showMonthYearPicker ? 'MM.yyyy' : 'dd.MM.yyyy'}
-            onChange={props.handleDateChange}
+            {...props}
             disabledKeyboardNavigation
+            dateFormat={props.showMonthYearPicker ? 'MM.yyyy' : 'dd.MM.yyyy'}
             locale={ru}
-            readOnly={props.readOnly}
-            showMonthYearPicker={props.showMonthYearPicker}
-            selectsEnd={props.selectsEnd}
-            selectsStart={props.selectsStart}
-            startDate={props.startDate}
-            endDate={props.endDate}
           />
         </div>
       </div>

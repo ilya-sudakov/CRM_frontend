@@ -100,18 +100,13 @@ const Select = (props) => {
                   setProducts([...productsArr])
                 })
             })
-          } else if (userContext.userHasAccess(['ROLE_LEMZ'])) {
+          } else if (userContext.userHasAccess(['ROLE_WORKSHOP'])) {
             temp = getProductsByLocation({
-              productionLocation: 'ЦехЛЭМЗ',
-            })
-              .then((res) => res.json())
-              .then((res) => {
-                res.map((item) => productsArr.push(item))
-                setProducts([...productsArr])
-              })
-          } else if (userContext.userHasAccess(['ROLE_LEPSARI'])) {
-            temp = getProductsByLocation({
-              productionLocation: 'ЦехЛепсари',
+              productionLocation: userContext.userHasAccess(['ROLE_LEMZ'])
+                ? 'ЦехЛЭМЗ'
+                : userContext.userHasAccess(['ROLE_LEPSARI'])
+                ? 'ЦехЛепсари'
+                : 'ЦехЛЭМЗ',
             })
               .then((res) => res.json())
               .then((res) => {
@@ -155,6 +150,7 @@ const Select = (props) => {
         id: id,
         name: value,
         quantity: 0,
+        quantityNew: 0,
         packaging: '',
         // packaging: null,
         status: 'production',
@@ -167,6 +163,7 @@ const Select = (props) => {
         id: id,
         name: value,
         quantity: 0,
+        quantityNew: 0,
         packaging: '',
         // packaging: null,
         status: 'production',
@@ -182,6 +179,7 @@ const Select = (props) => {
         id: id,
         name: value,
         quantity: 0,
+        quantityNew: 0,
         packaging: '',
         // packaging: null,
         status: 'production',
@@ -194,6 +192,7 @@ const Select = (props) => {
         id: id,
         name: value,
         quantity: 0,
+        quantityNew: 0,
         packaging: '',
         // packaging: null,
         status: 'production',
@@ -301,6 +300,146 @@ const Select = (props) => {
     }
   }, [props.defaultValue, props.categories, showOptions, showOverlay])
 
+  // LAYOUT OPTIONS, RENDER FUNCTIONS
+
+  const customLayoutOptions = {
+    productName: {
+      render: (index, item, options) =>
+        renderSelectedItemName(index, item, options),
+    },
+    quantity: {
+      render: (index, item, options) => renderQuantity(index, item, options),
+    },
+    newQuantity: {
+      render: (index, item, options) => renderNewQuantity(index, item, options),
+    },
+    packaging: {
+      render: (index, item, options) => renderPackaging(index, item, options),
+    },
+    selectPackaging: {
+      render: (index, item, options) =>
+        renderSelectPackaging(index, item, options),
+    },
+  }
+
+  const renderQuantity = (
+    index,
+    item,
+    options = {
+      customName: `Кол-во (шт.)${!props.readOnly && '*'}`,
+      readOnly: false,
+    },
+  ) => {
+    return (
+      <div className="select__selected_quantity">
+        <span>{options.customName}</span>
+        <input
+          quantity_id={index}
+          type={props.numberInput ? 'number' : 'text'}
+          name="quantity"
+          autoComplete="off"
+          defaultValue={item.quantity != 0 ? item.quantity : 0}
+          value={item.quantity}
+          onChange={handleParamChange}
+          disabled={props.readOnly || props.workshop || options.readOnly}
+        />
+      </div>
+    )
+  }
+
+  const renderNewQuantity = (index, item) => {
+    return (
+      <div className="select__selected_quantity">
+        <span>Отгружено*</span>
+        <input
+          quantityNew_id={index}
+          type="number"
+          name="quantityNew"
+          autoComplete="off"
+          defaultValue={0}
+          value={item.quantityNew}
+          onChange={handleParamChange}
+        />
+      </div>
+    )
+  }
+
+  const renderPackaging = (index, item) => {
+    return (
+      <div className="select__selected_packaging">
+        <span>
+          Фасовка
+          {!props.readOnly && '*'}
+        </span>
+        <input
+          packaging_id={index}
+          type="text"
+          name="packaging"
+          autoComplete="off"
+          defaultValue={item.packaging}
+          value={item.packaging}
+          onChange={handleParamChange}
+          disabled={props.readOnly || props.workshop}
+        />
+      </div>
+    )
+  }
+
+  const renderSelectPackaging = (index, item) => {
+    return (
+      <select
+        onChange={handleParamChange}
+        packaging_id={index}
+        name="packaging"
+        defaultValue={item.packaging}
+        value={item.packaging}
+        disabled={props.readOnly || props.workshop}
+      >
+        {products
+          .find((product) => product.id === Number.parseInt(item.productId))
+          ?.packings?.map((packagingItem) => (
+            <option value={packagingItem.id}>{packagingItem.name}</option>
+          ))}
+      </select>
+    )
+  }
+
+  const renderSelectedItemName = (
+    index,
+    item,
+    options = {
+      readOnly: false,
+      showColorPicker: true,
+      showDelete: true,
+    },
+  ) => {
+    return (
+      <div
+        className={
+          'select__selected_item select__selected_item--' +
+          (item.status ? item.status : 'production')
+        }
+      >
+        {!props.readOnly && options.showColorPicker ? (
+          <ColorPicker
+            defaultName={item.name}
+            id={item.id}
+            handleStatusChange={handleStatusChange}
+          />
+        ) : (
+          <div className="select__selected_name">{item.name}</div>
+        )}
+        <img
+          id={index}
+          className="select__img"
+          src={deleteSVG}
+          alt=""
+          onClick={clickOnSelected}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="select">
       <div
@@ -311,84 +450,78 @@ const Select = (props) => {
         }
         onClick={clickOverlay}
       ></div>
-      {!props.readOnly && !props.workshop && (
-        <div className="select__searchbar">
-          <button
-            className="select__search_button"
-            onClick={(e) => {
-              e.preventDefault()
-              setShowWindow(!showWindow)
-            }}
-          >
-            Добавить продукцию
-          </button>
-          <input
-            type="text"
-            className={
-              props.error === true
-                ? 'select__input select__input--error'
-                : 'select__input'
-            }
-            onChange={handleInputChange}
-            onClick={!props.readOnly ? clickOnInput : null}
-            placeholder={props.searchPlaceholder}
-            readOnly={props.readOnly || props.workshop}
-          />
-          <FormWindow
-            title="Выбор продукции"
-            content={
-              <React.Fragment>
-                <SearchBar
-                  fullSize
-                  // title="Поиск по продукции"
-                  placeholder="Введите название продукции для поиска..."
-                  setSearchQuery={setSearchQueryCategory}
-                />
-                <ControlPanel
-                  itemsCount={`Всего: ${products.length} записей`}
-                  sorting={
-                    <div className="main-window__sort-panel">
-                      <select
-                        className="main-window__select"
-                        onChange={changeSortOrder}
-                      >
-                        <option value="name asc">По алфавиту (А-Я)</option>
-                        <option value="name desc">По алфавиту (Я-А)</option>
-                        <option value="weight desc">По весу</option>
-                      </select>
-                    </div>
-                  }
-                />
-                <TableView
-                  // products={products}
-                  products={
-                    props.products
-                      ? sortProducts(filterSearchQuery(props.products))
-                      : sortProducts(filterSearchQuery(products))
-                  }
-                  categories={categories}
-                  searchQuery={searchQueryCategory}
-                  deleteItem={null}
-                  selectProduct={selectProduct}
-                  closeWindow={closeWindow}
-                  setCloseWindow={setCloseWindow}
-                  setShowWindow={setShowWindow}
-                />
-              </React.Fragment>
-            }
-            // headerButton={
-            //   userContext.userHasAccess(['ROLE_ADMIN'])
-            //     ? {
-            //         name: 'Создать продукцию',
-            //         path: '/products/new',
-            //       }
-            //     : null
-            // }
-            showWindow={showWindow}
-            setShowWindow={setShowWindow}
-          />
-        </div>
-      )}
+      {!props.readOnly &&
+        !props.workshop &&
+        props.customSearch?.display !== false && (
+          <div className="select__searchbar">
+            <button
+              className="select__search_button"
+              onClick={(e) => {
+                e.preventDefault()
+                setShowWindow(!showWindow)
+              }}
+            >
+              Добавить продукцию
+            </button>
+            <input
+              type="text"
+              className={
+                props.error === true
+                  ? 'select__input select__input--error'
+                  : 'select__input'
+              }
+              onChange={handleInputChange}
+              onClick={!props.readOnly ? clickOnInput : null}
+              placeholder={props.searchPlaceholder}
+              readOnly={props.readOnly || props.workshop}
+            />
+            <FormWindow
+              title="Выбор продукции"
+              content={
+                <React.Fragment>
+                  <SearchBar
+                    fullSize
+                    // title="Поиск по продукции"
+                    placeholder="Введите название продукции для поиска..."
+                    setSearchQuery={setSearchQueryCategory}
+                  />
+                  <ControlPanel
+                    itemsCount={`Всего: ${products.length} записей`}
+                    sorting={
+                      <div className="main-window__sort-panel">
+                        <select
+                          className="main-window__select"
+                          onChange={changeSortOrder}
+                        >
+                          <option value="name asc">По алфавиту (А-Я)</option>
+                          <option value="name desc">По алфавиту (Я-А)</option>
+                          <option value="weight desc">По весу</option>
+                        </select>
+                      </div>
+                    }
+                  />
+                  <TableView
+                    // products={products}
+                    products={
+                      props.products
+                        ? sortProducts(filterSearchQuery(props.products))
+                        : sortProducts(filterSearchQuery(products))
+                    }
+                    categories={categories}
+                    searchQuery={searchQueryCategory}
+                    deleteItem={null}
+                    selectProduct={selectProduct}
+                    closeWindow={closeWindow}
+                    setCloseWindow={setCloseWindow}
+                    setShowWindow={setShowWindow}
+                  />
+                </React.Fragment>
+              }
+              showWindow={showWindow}
+              setShowWindow={setShowWindow}
+            />
+          </div>
+        )}
       {props.error === true && (
         <div
           className="select__error"
@@ -435,88 +568,31 @@ const Select = (props) => {
         {selected.map((item, index) => (
           <div
             className={
-              !props.readOnly && !props.workshop
+              !props.readOnly &&
+              !props.workshop &&
+              props.customSelectedItem?.isMinimized !== true
                 ? 'select__selected_row'
                 : 'select__selected_row select__selected_row--minimized'
             }
           >
-            {/* <img className="select__selected_photo" src={item.product ? item.product.photo : null} alt="" /> */}
-            <div
-              className={
-                'select__selected_item select__selected_item--' +
-                (item.status ? item.status : 'production')
-              }
-            >
-              {!props.readOnly ? (
-                <ColorPicker
-                  defaultName={item.name}
-                  id={item.id}
-                  handleStatusChange={handleStatusChange}
-                />
-              ) : (
-                <div className="select__selected_name">{item.name}</div>
-              )}
-              <img
-                id={index}
-                className="select__img"
-                src={deleteSVG}
-                alt=""
-                onClick={clickOnSelected}
-              />
-            </div>
-            <div className="select__selected_quantity">
-              <span>
-                Кол-во (шт.)
-                {!props.readOnly && '*'}
-              </span>
-              <input
-                quantity_id={index}
-                type={props.numberInput ? 'number' : 'text'}
-                name="quantity"
-                autoComplete="off"
-                defaultValue={item.quantity != 0 ? item.quantity : 0}
-                value={item.quantity}
-                onChange={handleParamChange}
-                disabled={props.readOnly || props.workshop}
-              />
-            </div>
-            {!props.noPackaging && (
-              <div className="select__selected_packaging">
-                <span>
-                  Фасовка
-                  {!props.readOnly && '*'}
-                </span>
-                <input
-                  packaging_id={index}
-                  type="text"
-                  name="packaging"
-                  autoComplete="off"
-                  defaultValue={item.packaging}
-                  value={item.packaging}
-                  onChange={handleParamChange}
-                  disabled={props.readOnly || props.workshop}
-                />
-                {/* <select
-                  onChange={handleParamChange}
-                  packaging_id={index}
-                  name="packaging"
-                  defaultValue={item.packaging}
-                  value={item.packaging}
-                  disabled={props.readOnly || props.workshop}
-                >
-                  {products
-                    .find(
-                      (product) =>
-                        product.id === Number.parseInt(item.productId),
-                    )
-                    ?.packings?.map((packagingItem) => (
-                      <option value={packagingItem.id}>
-                        {packagingItem.name}
-                      </option>
-                    ))}
-                </select> */}
-              </div>
+            {props.customLayout ? (
+              <>
+                {Object.entries(props.customLayout).map((layoutOption) => {
+                  return customLayoutOptions[layoutOption[0]].render(
+                    index,
+                    item,
+                    layoutOption[1],
+                  )
+                })}
+              </>
+            ) : (
+              <>
+                {renderSelectedItemName(index, item)}
+                {renderQuantity(index, item)}
+                {!props.noPackaging && renderPackaging(index, item)}
+              </>
             )}
+            {/* {!props.noPackaging && renderSelectPackaging(index, item, products)} */}
           </div>
         ))}
       </div>
