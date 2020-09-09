@@ -67,6 +67,7 @@ import PageNotFound from './PageNotFound/PageNotFound.jsx'
 import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx'
 import PageLoading from './PageLoading/PageLoading.jsx'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary.jsx'
+import ShipRequest from './WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx'
 
 class MainPage extends React.Component {
   state = {
@@ -321,6 +322,12 @@ class MainPage extends React.Component {
                   <PrivateRoute
                     path="/requests/edit/"
                     component={EditRequest}
+                    type="requests"
+                    allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  />
+                  <PrivateRoute
+                    path="/requests/ship/"
+                    component={ShipRequest}
                     type="requests"
                     allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                   />

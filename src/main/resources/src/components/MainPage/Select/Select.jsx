@@ -326,7 +326,7 @@ const Select = (props) => {
     index,
     item,
     options = {
-      customName: `Кол-во (шт.)${!props.readOnly && '*'}`,
+      customName: `Кол-во (шт.)${!props.readOnly ? '*' : ''}`,
       readOnly: false,
     },
   ) => {
@@ -347,10 +347,17 @@ const Select = (props) => {
     )
   }
 
-  const renderNewQuantity = (index, item) => {
+  const renderNewQuantity = (
+    index,
+    item,
+    options = {
+      customName: `Отгружено (шт.)${!props.readOnly ? '*' : ''}`,
+      readOnly: false,
+    },
+  ) => {
     return (
       <div className="select__selected_quantity">
-        <span>Отгружено*</span>
+        <span>{options.customName}</span>
         <input
           quantityNew_id={index}
           type="number"
@@ -359,6 +366,7 @@ const Select = (props) => {
           defaultValue={0}
           value={item.quantityNew}
           onChange={handleParamChange}
+          disabled={options.readOnly}
         />
       </div>
     )

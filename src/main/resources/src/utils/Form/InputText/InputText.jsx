@@ -14,6 +14,7 @@ const InputText = (props) => {
                             onChange={props.handleInputChange}
                             value={props.defaultValue}
                             readOnly={props.readOnly}
+                            disabled={props.disabled}
                         ></textarea>
                         : <input type={props.type ? props.type : "text"}
                             name={props.name}
@@ -21,6 +22,7 @@ const InputText = (props) => {
                             onChange={props.handleInputChange}
                             value={props.defaultValue}
                             readOnly={props.readOnly}
+                            disabled={props.disabled}
                         />}
                 </div>
             </div>

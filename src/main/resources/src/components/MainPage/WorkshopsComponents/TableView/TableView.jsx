@@ -7,6 +7,7 @@ import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
 import downloadSVG from '../../../../../../../../assets/download.svg'
 import copySVG from '../../../../../../../../assets/tableview/copy.svg'
 import transferSVG from '../../../../../../../../assets/tableview/transfer.svg'
+import TruckSVG from '../../../../../../../../assets/sidemenu/truck.inline.svg'
 import './TableView.scss'
 import pdfMake from 'pdfmake'
 import html2canvas from 'html2canvas'
@@ -464,6 +465,18 @@ const TableView = (props) => {
                 <img className="main-window__img" src={printSVG} />
               </div>
             )}
+            <Link
+              to={
+                props.workshopName === 'requests'
+                  ? `/requests/ship/${request.id}`
+                  : `/${props.workshopName}/workshop-${props.workshopName}/ship/${request.id}`
+              }
+              className="main-window__action"
+              title="Отгрузить продукцию"
+            >
+              {/* <img className="main-window__img" src={viewSVG} /> */}
+              <TruckSVG className="main-window__img" />
+            </Link>
             <Link
               to={
                 props.workshopName === 'requests'

@@ -92,7 +92,7 @@ const ShipRequest = (props) => {
 
   const handleSubmit = () => {
     setIsLoading(true)
-    return console.log(selectedProducts)
+    // return console.log(selectedProducts)
     formIsValid() &&
       editRequest(
         {
@@ -102,19 +102,30 @@ const ShipRequest = (props) => {
         requestId,
       )
         .then(() => {
-          //PUT if edited, POST if product is new
-          const productsArr = selectedProducts.map((selected) => {
-            editProductsToRequest(
-              {
-                requestId: requestId,
-                quantity: selected.quantity,
-                status: selected.status,
-                packaging: selected.packaging,
-                name: selected.name,
-              },
-              selected.id,
-            )
-          })
+          return Promise.all(
+            selectedProducts.map((selected) => {
+              if (
+                Number.parseFloat(selected.quantityNew) === 0 ||
+                selected.quantityNew === undefined
+              )
+                return
+
+              const diff =
+                Number.parseFloat(selected.quantity) -
+                Number.parseFloat(selected.quantityNew)
+
+              editProductsToRequest(
+                {
+                  requestId: requestId,
+                  quantity: diff < 0 ? 0 : diff,
+                  status: diff === 0 ? 'completed' : selected.status,
+                  packaging: selected.packaging,
+                  name: selected.name,
+                },
+                selected.id,
+              )
+            }),
+          )
         })
         .then(() => props.history.push(workshops[props.type].redirectURL))
         .catch((error) => {
@@ -200,7 +211,7 @@ const ShipRequest = (props) => {
           <InputDate
             inputName="Дата заявки"
             selected={Date.parse(requestInputs.date)}
-            readOnly
+            disabled
           />
           <InputProducts
             inputName="Продукция"
@@ -219,25 +230,28 @@ const ShipRequest = (props) => {
             }}
             customLayout={{
               productName: {
+                showColorPicker: true,
                 readOnly: true,
               },
               quantity: {
                 customName: 'Исх. кол-во (шт.)',
                 readOnly: true,
               },
-              newQuantity: { showColorPicker: false },
+              newQuantity: {
+                customName: 'Отгружено (шт.)',
+              },
             }}
           />
           <InputDate
             inputName="Дата отгрузки"
             name="shippingDate"
             selected={Date.parse(new Date())}
-            readOnly
+            disabled
           />
           <InputText
             inputName="Комментарий"
             name="comment"
-            readOnly
+            disabled
             defaultValue={requestInputs.comment}
             handleInputChange={handleInputChange}
           />

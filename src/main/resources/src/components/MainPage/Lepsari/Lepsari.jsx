@@ -19,6 +19,7 @@ import {
 import NewRequest from '../WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
 import EditRequest from '../WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
 import ViewRequest from '../WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx'
+import ShipRequest from '../WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx'
 
 const Lepsari = (props) => {
   return (
@@ -144,6 +145,12 @@ const Lepsari = (props) => {
                 component={EditStorageLepsari}
                 userHasAccess={props.userHasAccess}
                 userData={props.userData}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']}
+              />
+              <PrivateRoute
+                path="/lepsari/workshop-lepsari/ship/"
+                component={ShipRequest}
+                type="lepsari"
                 allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']}
               />
               <PrivateRoute

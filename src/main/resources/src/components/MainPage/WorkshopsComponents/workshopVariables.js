@@ -43,6 +43,11 @@ export const requestStatuses = [
     access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
   },
   {
+    name: 'Частично отгружено',
+    className: 'shipped-in-parts',
+    access: [],
+  },
+  {
     name: 'Готово к отгрузке',
     oldName: 'Готово',
     className: 'ready',

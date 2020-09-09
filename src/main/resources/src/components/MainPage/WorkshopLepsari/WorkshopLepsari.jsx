@@ -306,13 +306,18 @@ const WorkshopLepsari = (props) => {
               if (curPage === 'Завершено' && item.status === 'Завершено') {
                 return true
               }
-              if (curPage === 'Отгружено' && item.status === 'Отгружено') {
+              if (
+                curPage === 'Отгружено' &&
+                (item.status === 'Отгружено' ||
+                  item.status === 'Частично отгружено')
+              ) {
                 return true
               }
               if (
                 curPage === 'Открытые' &&
                 item.status !== 'Завершено' &&
-                item.status !== 'Отгружено'
+                item.status !== 'Отгружено' &&
+                item.status !== 'Частично отгружено'
               ) {
                 return true
               }
