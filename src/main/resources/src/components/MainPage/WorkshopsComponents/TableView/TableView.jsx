@@ -465,7 +465,7 @@ const TableView = (props) => {
                 <img className="main-window__img" src={printSVG} />
               </div>
             )}
-            <Link
+            {request.status !== 'Завершено' && request.status !== 'Отгружено' ? <Link
               to={
                 props.workshopName === 'requests'
                   ? `/requests/ship/${request.id}`
@@ -474,9 +474,8 @@ const TableView = (props) => {
               className="main-window__action"
               title="Отгрузить продукцию"
             >
-              {/* <img className="main-window__img" src={viewSVG} /> */}
               <TruckSVG className="main-window__img" />
-            </Link>
+            </Link> : null}
             <Link
               to={
                 props.workshopName === 'requests'
