@@ -199,7 +199,7 @@ const TableView = (props) => {
                   >
                     <img className="main-window__img" src={editIcon} alt="" />
                   </Link>
-                  {props.userHasAccess(['ROLE_ADMIN']) && (
+                  {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
                     <div
                       data-id={stamp.id}
                       className="main-window__action"
