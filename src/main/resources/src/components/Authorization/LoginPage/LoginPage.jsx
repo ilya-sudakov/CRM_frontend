@@ -103,7 +103,6 @@ const LoginPage = (props) => {
               <input
                 type="text"
                 onChange={(e) => setUserName(e.target.value)}
-                placeholder=""
                 onAnimationStart={handleAutoFill}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
@@ -153,7 +152,6 @@ const LoginPage = (props) => {
                 type={showPassword ? 'text' : 'password'}
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
-                placeholder=""
                 onAnimationStart={handleAutoFill}
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}

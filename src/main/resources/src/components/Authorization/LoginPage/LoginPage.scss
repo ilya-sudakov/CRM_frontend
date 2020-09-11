@@ -135,13 +135,17 @@
         border-radius: 5px;
         padding-left: var(--padding-left);
         background-color: transparent;
-        
 
         //dark-theme
         // background-color: rgba(#333333, 0.3);
         // border: 1px solid #555555;
         // color: #bbbbbb;
 
+        //test
+        // border: none;
+        // border-bottom: 1px solid #dddddd;
+        // background-color: transparent;
+        // border-radius: 0;
 
         //check for autofill
         &:-webkit-autofill {

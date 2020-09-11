@@ -21,6 +21,7 @@ const InputDate = (props) => {
         >
           <DatePicker
             {...props}
+            onChange={props.handleDateChange}
             disabledKeyboardNavigation
             dateFormat={props.showMonthYearPicker ? 'MM.yyyy' : 'dd.MM.yyyy'}
             locale={ru}
