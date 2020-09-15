@@ -132,16 +132,10 @@
             }
           }
           .main-window__list-col-row:not(.main-window__list-col-row--header) {
-            border-radius: 5px;
             position: relative;
             border: 1px solid #bbbbbbcc;
             border-radius: 8px;
-
-            //test
-            // margin-bottom: 5px;
-            &:not(:last-child) {
-              border-bottom: none;
-            }
+            margin-bottom: 5px;
 
             &::before {
               content: "";
