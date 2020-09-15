@@ -96,7 +96,8 @@
               border-bottom-left-radius: 2.5px;
               background-color: #cccccc;
               height: calc(100% - 2px);
-              border: 1px solid #777777;
+              // border: 1px solid #777777;
+              border: 1px solid #aaaaaa;
             }
           }
 
@@ -143,7 +144,7 @@
               position: absolute;
               background-color: #99999966 !important;
               height: 100%;
-              width: 7px;
+              width: 6px;
               left: 0;
               top: 0;
               border: 0;
@@ -172,7 +173,8 @@
                   border-bottom-left-radius: 2.5px;
                   background-color: #cccccc;
                   height: calc(100% - 2px);
-                  border: 1px solid #777777;
+                  // border: 1px solid #777777;
+                  border: 1px solid #aaaaaa;
                 }
               }
             }
@@ -302,6 +304,7 @@
           padding-left: 10px;
           // max-width: fit-content;
           max-width: 110px;
+          border: 1px solid #aaaaaa;
         }
 
         .main-window__status_select--color {
@@ -368,7 +371,7 @@
                 flex: 0 1 80%;
                 margin-top: 0;
                 align-self: center;
-                padding-left: 15px;
+                padding-left: 17px;
               }
               &:nth-child(2) {
                 flex: 0 1 50%;
