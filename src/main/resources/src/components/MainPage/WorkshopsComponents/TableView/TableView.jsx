@@ -465,17 +465,20 @@ const TableView = (props) => {
                 <img className="main-window__img" src={printSVG} />
               </div>
             )}
-            {request.status !== 'Завершено' && request.status !== 'Отгружено' ? <Link
-              to={
-                props.workshopName === 'requests'
-                  ? `/requests/ship/${request.id}`
-                  : `/${props.workshopName}/workshop-${props.workshopName}/ship/${request.id}`
-              }
-              className="main-window__action"
-              title="Отгрузить продукцию"
-            >
-              <TruckSVG className="main-window__img" />
-            </Link> : null}
+            {request.status !== 'Завершено' &&
+            request.status !== 'Отгружено' ? (
+              <Link
+                to={
+                  props.workshopName === 'requests'
+                    ? `/requests/ship/${request.id}`
+                    : `/${props.workshopName}/workshop-${props.workshopName}/ship/${request.id}`
+                }
+                className="main-window__action"
+                title="Отгрузить продукцию"
+              >
+                <TruckSVG className="main-window__img" />
+              </Link>
+            ) : null}
             <Link
               to={
                 props.workshopName === 'requests'
