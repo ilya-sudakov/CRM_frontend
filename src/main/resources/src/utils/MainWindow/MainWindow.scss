@@ -768,7 +768,9 @@
 
     // message  - это информационное сообщение под элементов списка
     &--message {
-      margin-bottom: calc(1.5rem + 18px);
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      margin-bottom: calc(1.5rem + 18px) !important;
       position: relative;
       &::after {
         position: absolute;
@@ -1106,7 +1108,7 @@
       }
 
       &--message {
-        margin-bottom: 60px;
+        margin-bottom: 60px !important;
         &::after {
           min-height: 30px;
           height: fit-content;

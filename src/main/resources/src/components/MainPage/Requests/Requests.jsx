@@ -384,11 +384,7 @@ const Requests = (props) => {
                           .then((res) => {
                             setIsLoading(false)
                             props.history.push(
-                              toWorkshop +
-                                '/workshop-' +
-                                toWorkshop +
-                                '/edit/' +
-                                res.id,
+                              `${toWorkshop}/workshop-${toWorkshop}`,
                             )
                           })
                           .catch((error) => {

@@ -3,6 +3,7 @@ import './PlaceholderLoading.scss'
 
 const PlaceholderLoading = (props) => {
   const [elements, setElements] = useState([])
+
   useEffect(() => {
     let temp = []
     const count = props.items || 3
@@ -16,6 +17,21 @@ const PlaceholderLoading = (props) => {
     }
     setElements([...temp])
   }, [])
+
+  if (props.placeholderContent) {
+    return (
+      <div className={`placeholder-loading ${props.wrapperClassName}`}>
+        {elements.map((item) => (
+          <div
+            className={` ${props.itemClassName}`}
+            style={{ minHeight: `${props.minHeight || '1.5rem'}` }}
+          >
+            {props.placeholderContent}
+          </div>
+        ))}
+      </div>
+    )
+  }
   return (
     <div className={`placeholder-loading ${props.wrapperClassName}`}>
       {elements.map((item) => item)}

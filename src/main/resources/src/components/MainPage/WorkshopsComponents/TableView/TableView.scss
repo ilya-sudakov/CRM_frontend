@@ -3,19 +3,13 @@
 .tableview-workshops {
   width: 100%;
   --shipped: #d4dbbf;
-  // --priority: #e29c9c;
-  --priority: #ebbdba; //pastel
-  // --completed: #98dda6;
-  --completed: #c7e9ce; //pastel
-  // --ready: #7fd192;
-  --ready: #ace7ba; //pastel
-  // --in-production: #e3e4cb;
-  --in-production: #eaebde; //pastel
-  // --waiting: #95ddc5;
-  --waiting: #b9e2d5; //pastel
+  --priority: #f1d1ce; 
+  --completed: #c7e9ce;
+  --ready: #ace7ba;
+  --in-production: #eaebde;
+  --waiting: #b9e2d5; 
   --problem: #d6574e;
-  // --materials: #dfc38b;
-  --materials: #ebddc2; //pastel
+  --materials: #ebddc2;
   --shipped-in-parts: #f0d2be;
 
   .main-window {
@@ -38,7 +32,6 @@
         }
         &--multiple-items:not(.main-window__list-item--header) {
           --padding-top: 25px;
-          // span {
           .requests__column--date {
             margin-top: var(--padding-top);
             align-self: flex-start;
@@ -56,12 +49,10 @@
             align-self: flex-start;
           }
           .requests__column--date-shipping {
-            // margin-top: var(--padding-top);
             align-self: flex-start;
 
             .main-window__reminder {
               margin-top: calc(var(--padding-top) - 5px);
-              // margin-top: 0;
             }
 
             .main-window__date {
@@ -73,7 +64,6 @@
             align-self: flex-start;
             -webkit-line-clamp: 6;
           }
-          // }
           .main-window__actions {
             margin-top: calc(var(--padding-top) - 6px);
             align-self: flex-start;
@@ -84,6 +74,9 @@
           // border-color: #ffffffaa;
           border-color: #ffffff66;
           color: #111111 !important;
+
+          margin-bottom: 5px;
+          border-radius: 5px;
 
           .requests__column--status {
             &::before {
@@ -96,16 +89,7 @@
               border-bottom-left-radius: 2.5px;
               background-color: #cccccc;
               height: calc(100% - 2px);
-              // border: 1px solid #777777;
               border: 1px solid #66666655;
-
-              //test
-              // border: none;
-              // border-radius: 999px;
-              // width: 8px;
-              // height: 8px;
-              // top: calc(50% - 3px);
-              // left: 9px;
             }
           }
 
@@ -185,14 +169,6 @@
                   background-color: #cccccc;
                   height: calc(100% - 2px);
                   border: 1px solid #66666655;
-
-                  //test
-                  // border: none;
-                  // border-radius: 999px;
-                  // width: 8px;
-                  // height: 8px;
-                  // top: calc(50% - 4.5px);
-                  // left: 9px;
                 }
               }
             }
@@ -379,7 +355,7 @@
               padding-bottom: 5px;
               font-size: 95%;
               span {
-                color: #333333 !important;
+                color: #00000088 !important;
               }
             }
 
