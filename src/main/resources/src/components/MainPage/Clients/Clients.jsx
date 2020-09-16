@@ -463,206 +463,207 @@ const Clients = (props) => {
             <span>Дата след. контакта</span>
             <div className="main-window__actions">Действие</div>
           </div>
-          {isLoading && (
+          {isLoading ? (
             <PlaceholderLoading
               itemClassName="main-window__list-item"
-              minHeight="40px"
+              minHeight="60px"
               items={itemsPerPage}
             />
-          )}
-          {clients
-            //.filter(item => {
-            //    return (
-            //        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            //        item.site.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            //        item.comment.toLowerCase().includes(searchQuery.toLowerCase())
-            //    )
-            //})
-            .sort((a, b) => {
-              if (searchQuery !== '') {
-                if (sortOrder.curSort === 'nextDateContact') {
-                  if (
-                    new Date(a[sortOrder.curSort]) <
-                    new Date(b[sortOrder.curSort])
-                  ) {
-                    return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+          ) : (
+            clients
+              //.filter(item => {
+              //    return (
+              //        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              //        item.site.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              //        item.comment.toLowerCase().includes(searchQuery.toLowerCase())
+              //    )
+              //})
+              .sort((a, b) => {
+                if (searchQuery !== '') {
+                  if (sortOrder.curSort === 'nextDateContact') {
+                    if (
+                      new Date(a[sortOrder.curSort]) <
+                      new Date(b[sortOrder.curSort])
+                    ) {
+                      return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+                    }
+                    if (
+                      new Date(a[sortOrder.curSort]) >
+                      new Date(b[sortOrder.curSort])
+                    ) {
+                      return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+                    }
+                    return 0
+                  } else {
+                    if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+                      return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+                    }
+                    if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+                      return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+                    }
+                    return 0
                   }
-                  if (
-                    new Date(a[sortOrder.curSort]) >
-                    new Date(b[sortOrder.curSort])
-                  ) {
-                    return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-                  }
-                  return 0
-                } else {
-                  if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                    return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-                  }
-                  if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                    return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-                  }
-                  return 0
                 }
-              }
-            })
-            .map((item, index) => {
-              return (
-                <div className="main-window__list-item">
-                  <span>
-                    <div className="main-window__mobile-text">Название: </div>
-                    {item.name}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Сайт: </div>
-                    {/* {item.site} */}
-                    <a
-                      className="main-window__link"
-                      title={item.site}
-                      href={
-                        item.site.split('//').length > 1
-                          ? item.site
-                          : 'https://' + item.site
-                      }
-                      target="_blank"
-                    >
-                      {item.site.split('//').length > 1
-                        ? item.site.split('//')[1]
-                        : item.site}
-                    </a>
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">
-                      Контактное лицо:{' '}
-                    </div>
-                    {item.contacts?.length > 0
-                      ? (item.contacts[0].name !== ''
-                          ? item.contacts[0].name + ', '
-                          : '') + item.contacts[0].phoneNumber
-                      : 'Не указаны контакт. данные'}
-                  </span>
-                  <span title={item.comment}>
-                    <div className="main-window__mobile-text">
-                      Комментарий:{' '}
-                    </div>
-                    {item.comment}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">
-                      Дата след. контакта:{' '}
-                    </div>
-                    {/* {formatDateString(item.nextDateContact)} */}
-                    {new Date(item.nextDateContact) < new Date() ? (
-                      <div className="main-window__reminder">
-                        <div>!</div>
-                        <div>{formatDateString(item.nextDateContact)}</div>
+              })
+              .map((item, index) => {
+                return (
+                  <div className="main-window__list-item">
+                    <span>
+                      <div className="main-window__mobile-text">Название: </div>
+                      {item.name}
+                    </span>
+                    <span>
+                      <div className="main-window__mobile-text">Сайт: </div>
+                      {/* {item.site} */}
+                      <a
+                        className="main-window__link"
+                        title={item.site}
+                        href={
+                          item.site.split('//').length > 1
+                            ? item.site
+                            : 'https://' + item.site
+                        }
+                        target="_blank"
+                      >
+                        {item.site.split('//').length > 1
+                          ? item.site.split('//')[1]
+                          : item.site}
+                      </a>
+                    </span>
+                    <span>
+                      <div className="main-window__mobile-text">
+                        Контактное лицо:{' '}
                       </div>
-                    ) : (
-                      formatDateString(item.nextDateContact)
-                    )}
-                  </span>
-                  <div className="main-window__actions">
-                    {/* <div className="main-window__mobile-text">Действия:</div> */}
-                    {props.userHasAccess(['ROLE_ADMIN']) && (
-                      <div
-                        className="main-window__action"
-                        title="Добавить в избранных клиентов"
-                        onClick={() => {
-                          let temp = clients
-                          //   console.log(item);
-                          let newClient = Object.assign({
-                            type: item.type,
-                            categoryId: item.category.id,
-                            check: item.check,
-                            clientType: item.clientType,
-                            comment: item.comment,
-                            manager: item.manager,
-                            name: item.name,
-                            nextDateContact:
-                              new Date(item.nextDateContact).getTime() / 1000,
-                            price: item.price,
-                            site: item.site,
-                            storageAddress: item.storageAddress,
-                            workCondition: item.workCondition,
-                            favorite: !item.favorite,
-                          })
-                          clientTypes[props.type]
-                            .editItemFunction(newClient, item.id)
-                            .then(() => {
-                              temp.splice(index, 1, {
-                                ...item,
-                                favorite: !item.favorite,
+                      {item.contacts?.length > 0
+                        ? (item.contacts[0].name !== ''
+                            ? item.contacts[0].name + ', '
+                            : '') + item.contacts[0].phoneNumber
+                        : 'Не указаны контакт. данные'}
+                    </span>
+                    <span title={item.comment}>
+                      <div className="main-window__mobile-text">
+                        Комментарий:{' '}
+                      </div>
+                      {item.comment}
+                    </span>
+                    <span>
+                      <div className="main-window__mobile-text">
+                        Дата след. контакта:{' '}
+                      </div>
+                      {/* {formatDateString(item.nextDateContact)} */}
+                      {new Date(item.nextDateContact) < new Date() ? (
+                        <div className="main-window__reminder">
+                          <div>!</div>
+                          <div>{formatDateString(item.nextDateContact)}</div>
+                        </div>
+                      ) : (
+                        formatDateString(item.nextDateContact)
+                      )}
+                    </span>
+                    <div className="main-window__actions">
+                      {/* <div className="main-window__mobile-text">Действия:</div> */}
+                      {props.userHasAccess(['ROLE_ADMIN']) && (
+                        <div
+                          className="main-window__action"
+                          title="Добавить в избранных клиентов"
+                          onClick={() => {
+                            let temp = clients
+                            //   console.log(item);
+                            let newClient = Object.assign({
+                              type: item.type,
+                              categoryId: item.category.id,
+                              check: item.check,
+                              clientType: item.clientType,
+                              comment: item.comment,
+                              manager: item.manager,
+                              name: item.name,
+                              nextDateContact:
+                                new Date(item.nextDateContact).getTime() / 1000,
+                              price: item.price,
+                              site: item.site,
+                              storageAddress: item.storageAddress,
+                              workCondition: item.workCondition,
+                              favorite: !item.favorite,
+                            })
+                            clientTypes[props.type]
+                              .editItemFunction(newClient, item.id)
+                              .then(() => {
+                                temp.splice(index, 1, {
+                                  ...item,
+                                  favorite: !item.favorite,
+                                })
+                                //   loadData(item.categoryName, item.clientType);
+                                setClients([...temp])
                               })
-                              //   loadData(item.categoryName, item.clientType);
-                              setClients([...temp])
-                            })
-                            .catch((error) => {
-                              console.log(error)
-                            })
-                        }}
-                      >
-                        <img
-                          className="main-window__img"
-                          src={item.favorite ? starSVG : starBorderedSVG}
-                        />
-                      </div>
-                    )}
-                    <div
-                      className="main-window__action"
-                      title="Совершить действие"
-                      onClick={() => {
-                        setCloseWindow(false)
-                        setSelectedItem(item)
-                        setShowWindow(true)
-                        setCurForm('workHistory')
-                      }}
-                    >
-                      <img className="main-window__img" src={phoneSVG} />
-                    </div>
-                    <div
-                      className="main-window__action"
-                      title="Дата следующего контакта"
-                      onClick={() => {
-                        setCloseWindow(false)
-                        setSelectedItem(item)
-                        setShowWindow(true)
-                        setCurForm('nextContactDate')
-                      }}
-                    >
-                      <img className="main-window__img" src={calendarSVG} />
-                    </div>
-                    <div
-                      className="main-window__action"
-                      title="Просмотр клиента"
-                      onClick={() => {
-                        props.history.push(`/${props.type}/view/${item.id}`)
-                      }}
-                    >
-                      <img className="main-window__img" src={viewSVG} />
-                    </div>
-                    <div
-                      className="main-window__action"
-                      title="Редактирование клиента"
-                      onClick={() => {
-                        props.history.push(`/${props.type}/edit/${item.id}`)
-                      }}
-                    >
-                      <img className="main-window__img" src={editSVG} />
-                    </div>
-                    {props.userHasAccess(['ROLE_ADMIN']) && (
+                              .catch((error) => {
+                                console.log(error)
+                              })
+                          }}
+                        >
+                          <img
+                            className="main-window__img"
+                            src={item.favorite ? starSVG : starBorderedSVG}
+                          />
+                        </div>
+                      )}
                       <div
                         className="main-window__action"
-                        title="Удаление клиента"
+                        title="Совершить действие"
                         onClick={() => {
-                          deleteItem(item.id, index)
+                          setCloseWindow(false)
+                          setSelectedItem(item)
+                          setShowWindow(true)
+                          setCurForm('workHistory')
                         }}
                       >
-                        <img className="main-window__img" src={deleteSVG} />
+                        <img className="main-window__img" src={phoneSVG} />
                       </div>
-                    )}
+                      <div
+                        className="main-window__action"
+                        title="Дата следующего контакта"
+                        onClick={() => {
+                          setCloseWindow(false)
+                          setSelectedItem(item)
+                          setShowWindow(true)
+                          setCurForm('nextContactDate')
+                        }}
+                      >
+                        <img className="main-window__img" src={calendarSVG} />
+                      </div>
+                      <div
+                        className="main-window__action"
+                        title="Просмотр клиента"
+                        onClick={() => {
+                          props.history.push(`/${props.type}/view/${item.id}`)
+                        }}
+                      >
+                        <img className="main-window__img" src={viewSVG} />
+                      </div>
+                      <div
+                        className="main-window__action"
+                        title="Редактирование клиента"
+                        onClick={() => {
+                          props.history.push(`/${props.type}/edit/${item.id}`)
+                        }}
+                      >
+                        <img className="main-window__img" src={editSVG} />
+                      </div>
+                      {props.userHasAccess(['ROLE_ADMIN']) && (
+                        <div
+                          className="main-window__action"
+                          title="Удаление клиента"
+                          onClick={() => {
+                            deleteItem(item.id, index)
+                          }}
+                        >
+                          <img className="main-window__img" src={deleteSVG} />
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })
+          )}
         </div>
         <div className="main-window__pagination">
           <div className="main-window__sort-panel">

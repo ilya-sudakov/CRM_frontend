@@ -22,10 +22,12 @@
           position: relative;
 
           .main-window__menu-item-amount {
-            position: absolute;
-            left: calc(100% + 5px);
-            top: -7.5px;
-            font-size: 85%;
+            // position: absolute;
+            // left: calc(100% + 5px);
+            // top: -7.5px;
+            font-size: 95%;
+            margin-left: 5px;
+            color: #aaaaaa;
           }
         }
       }
@@ -74,7 +76,7 @@
       }
       .main-window__actions {
         // flex: ;
-        max-width: 225px;
+        max-width: 125px;
       }
     }
   }
@@ -140,8 +142,6 @@
       .main-window__title {
         flex-wrap: wrap;
         margin-bottom: 5px !important;
-        // flex-direction: column;
-        // align-items: flex-start;
         span {
           margin-right: 10px;
         }
