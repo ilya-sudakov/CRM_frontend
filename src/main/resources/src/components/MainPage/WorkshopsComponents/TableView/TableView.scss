@@ -2,15 +2,14 @@
 
 .tableview-workshops {
   width: 100%;
-  --shipped: #d4dbbf;
-  --priority: #f1d1ce; 
-  --completed: #c7e9ce;
-  --ready: #ace7ba;
-  --in-production: #eaebde;
-  --waiting: #b9e2d5; 
-  --problem: #d6574e;
-  --materials: #ebddc2;
-  --shipped-in-parts: #f0d2be;
+  --shipped: #e3e7d6;
+  --priority: #f0dedc; 
+  --completed: #d5ebda;
+  --ready: #d5ebda;
+  --in-production: #e7f1ee;
+  --waiting: #d8e9e3; 
+  --materials: #ebe3d4;
+  --shipped-in-parts: #e9ddd6;
 
   .main-window {
     display: flex;
