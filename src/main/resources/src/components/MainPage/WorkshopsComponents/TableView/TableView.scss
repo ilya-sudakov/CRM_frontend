@@ -3,11 +3,11 @@
 .tableview-workshops {
   width: 100%;
   --shipped: #e3e7d6;
-  --priority: #f0dedc; 
+  --priority: #f0dedc;
   --completed: #d5ebda;
-  --ready: #d5ebda;
+  --ready: #c9e9d1;
   --in-production: #e7f1ee;
-  --waiting: #d8e9e3; 
+  --waiting: #d8e9e3;
   --materials: #ebe3d4;
   --shipped-in-parts: #e9ddd6;
 
@@ -328,6 +328,11 @@
           flex-direction: column;
           flex: 0 1 50%;
           padding: 5px 5px;
+
+          // padding: 10px 10px;
+          // background-color: rgba(#000000, 0.055);
+          // border: 1px solid #cccccc;
+          // border-radius: 5px;
           .main-window__list-col-row {
             width: 100%;
             flex: 0 1 100%;
@@ -353,6 +358,7 @@
               padding: 0;
               padding-bottom: 5px;
               font-size: 95%;
+              // display: none;
               span {
                 color: #00000088 !important;
               }

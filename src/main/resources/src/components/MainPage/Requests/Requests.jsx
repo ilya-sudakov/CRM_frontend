@@ -341,7 +341,6 @@ const Requests = (props) => {
           </div>
         </div>
         <SearchBar
-          // title="Поиск по заявкам"
           fullSize
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
@@ -405,6 +404,15 @@ const Requests = (props) => {
         />
         <ControlPanel
           itemsCount={`Всего: ${requests.length} записей`}
+          // buttons={
+          //   <>
+          //     <SearchBar
+          //       // fullSize
+          //       placeholder="Введите название продукции для поиска..."
+          //       setSearchQuery={setSearchQuery}
+          //     />
+          //   </>
+          // }
           sorting={
             <div className="main-window__sort-panel">
               <select onChange={changeSortOrder}>

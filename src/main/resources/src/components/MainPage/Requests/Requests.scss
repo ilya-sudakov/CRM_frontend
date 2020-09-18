@@ -48,15 +48,11 @@
   }
 
   .main-window {
-    // padding-top: 0;
     &__list {
       width: calc(100% - 30px) !important;
     }
     &__header {
-      .main-window__title {
-        // margin-top: 10px;
-        // margin-bottom: 5px !important;
-      }
+      // margin-bottom: 0;
     }
   }
 
