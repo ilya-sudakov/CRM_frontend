@@ -22,7 +22,7 @@ import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.js
 import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.jsx'
 
 const WorkshopLepsari = (props) => {
-  const [requestLepsari, setRequestLepsari] = useState([])
+  const [requestsLepsari, setrequestsLepsari] = useState([])
   const [dates, setDates] = useState([])
   const [productsQuantities, setProductsQuantities] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
@@ -80,7 +80,7 @@ const WorkshopLepsari = (props) => {
           return deleteProductsToRequest(product.id)
         })
         Promise.all(productsArr).then(() => {
-          deleteRequest(id).then(() => loadRequestLepsari())
+          deleteRequest(id).then(() => loadrequestsLepsari())
         })
       })
       .catch((error) => {
@@ -91,7 +91,7 @@ const WorkshopLepsari = (props) => {
   useEffect(() => {
     document.title = 'Заявки - Лепсари'
     const abortController = new AbortController()
-    loadRequestLepsari(abortController.signal)
+    loadrequestsLepsari(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
@@ -135,17 +135,75 @@ const WorkshopLepsari = (props) => {
       })
   }
 
-  const loadRequestLepsari = (signal) => {
+  const loadrequestsLepsari = (signal) => {
     setIsLoading(true)
     getRequestsByWorkshop('lepsari', signal)
       .then((res) => res.json())
       .then((requests) => {
         // console.log(requests);
-        setRequestLepsari(requests)
+        setrequestsLepsari(requests)
         setProductsQuantities(getQuantityOfProductsFromRequests(requests))
         setDates(getDatesFromRequests(requests))
         setIsLoading(false)
       })
+  }
+
+  // * Filtering
+
+  const filterRequestsByPage = (data, page) => {
+    return data.filter((item) => {
+      if (page === 'Завершено' && item.status === 'Завершено') {
+        return true
+      }
+      if (
+        page === 'Отгружено' &&
+        (item.status === 'Отгружено' || item.status === 'Частично отгружено')
+      ) {
+        return true
+      }
+      if (
+        page === 'Открытые' &&
+        item.status !== 'Завершено' &&
+        item.status !== 'Отгружено' &&
+        item.status !== 'Частично отгружено'
+      ) {
+        return true
+      }
+      return false
+    })
+  }
+
+  const filterRequestsByWorkshop = (data) => {
+    return data.filter((item) => item.factory === 'lepsari')
+  }
+
+  const filterRequestsByStatuses = (data) => {
+    return data.filter((item) => {
+      let check = false
+      let noActiveStatuses = true
+      requestStatuses.map((status) => {
+        requestStatuses.map((status) => {
+          if (status.visible) {
+            noActiveStatuses = false
+          }
+        })
+        if (
+          noActiveStatuses === true ||
+          (status.visible &&
+            (status.name === item.status || status.oldName === item.status))
+        ) {
+          check = true
+          return
+        }
+      })
+      return check
+    })
+  }
+
+  const filterRequests = (requestsLepsari) => {
+    return filterRequestsByStatuses(
+      filterRequestsByPage(filterRequestsByWorkshop(requestsLepsari), curPage),
+    )
   }
 
   // * Sorting
@@ -215,6 +273,14 @@ const WorkshopLepsari = (props) => {
               onClick={() => setCurPage('Открытые')}
             >
               Открытые
+              <span className="main-window__items-count">
+                {
+                  filterRequestsByPage(
+                    filterRequestsByWorkshop(requestsLepsari),
+                    'Открытые',
+                  ).length
+                }
+              </span>
             </div>
             <div
               className={
@@ -225,6 +291,14 @@ const WorkshopLepsari = (props) => {
               onClick={() => setCurPage('Отгружено')}
             >
               Отгружено
+              <span className="main-window__items-count">
+                {
+                  filterRequestsByPage(
+                    filterRequestsByWorkshop(requestsLepsari),
+                    'Отгружено',
+                  ).length
+                }
+              </span>
             </div>
             <div
               className={
@@ -239,7 +313,7 @@ const WorkshopLepsari = (props) => {
           </div>
         </div>
         <ControlPanel
-          itemsCount={`Всего: ${requestLepsari.length} записей`}
+          itemsCount={`Всего: ${requestsLepsari.length} записей`}
           buttons={
             <Button
               text="Печать списка"
@@ -301,52 +375,10 @@ const WorkshopLepsari = (props) => {
           }
         />
         <TableView
-          data={sortRequests(requestLepsari)
-            .filter((item) => {
-              if (curPage === 'Завершено' && item.status === 'Завершено') {
-                return true
-              }
-              if (
-                curPage === 'Отгружено' &&
-                (item.status === 'Отгружено' ||
-                  item.status === 'Частично отгружено')
-              ) {
-                return true
-              }
-              if (
-                curPage === 'Открытые' &&
-                item.status !== 'Завершено' &&
-                item.status !== 'Отгружено' &&
-                item.status !== 'Частично отгружено'
-              ) {
-                return true
-              }
-              return false
-            })
-            .filter((item) => {
-              let check = false
-              let noActiveStatuses = true
-              requestStatuses.map((status) => {
-                requestStatuses.map((status) => {
-                  if (status.visible) {
-                    noActiveStatuses = false
-                  }
-                })
-                if (
-                  noActiveStatuses === true ||
-                  (status.visible &&
-                    (status.name === item.status ||
-                      status.oldName === item.status))
-                ) {
-                  check = true
-                  return
-                }
-              })
-              return check
-            })}
+          data={sortRequests(filterRequests(requestsLepsari))}
           workshopName="lepsari"
           isLoading={isLoading}
-          loadData={loadRequestLepsari}
+          loadData={loadrequestsLepsari}
           dates={dates.sort((a, b) => {
             if (a < b) {
               return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1

@@ -149,6 +149,62 @@ const WorkshopLEMZ = (props) => {
     },
   ])
 
+  const filterRequestsByPage = (data, page) => {
+    return data.filter((item) => {
+      if (page === 'Завершено' && item.status === 'Завершено') {
+        return true
+      }
+      if (
+        page === 'Отгружено' &&
+        (item.status === 'Отгружено' || item.status === 'Частично отгружено')
+      ) {
+        return true
+      }
+      if (
+        page === 'Открытые' &&
+        item.status !== 'Завершено' &&
+        item.status !== 'Отгружено' &&
+        item.status !== 'Частично отгружено'
+      ) {
+        return true
+      }
+      return false
+    })
+  }
+
+  const filterRequestsByWorkshop = (data) => {
+    return data.filter((item) => item.factory === 'lemz')
+  }
+
+  const filterRequestsByStatuses = (data) => {
+    return data.filter((item) => {
+      let check = false
+      let noActiveStatuses = true
+      requestStatuses.map((status) => {
+        requestStatuses.map((status) => {
+          if (status.visible) {
+            noActiveStatuses = false
+          }
+        })
+        if (
+          noActiveStatuses === true ||
+          (status.visible &&
+            (status.name === item.status || status.oldName === item.status))
+        ) {
+          check = true
+          return
+        }
+      })
+      return check
+    })
+  }
+
+  const filterRequests = (requestsLEMZ) => {
+    return filterRequestsByStatuses(
+      filterRequestsByPage(filterRequestsByWorkshop(requestsLEMZ), curPage),
+    )
+  }
+
   // * Sorting
 
   const [sortOrder, setSortOrder] = useState({
@@ -216,6 +272,14 @@ const WorkshopLEMZ = (props) => {
               onClick={() => setCurPage('Открытые')}
             >
               Открытые
+              <span className="main-window__items-count">
+                {
+                  filterRequestsByPage(
+                    filterRequestsByWorkshop(requestsLEMZ),
+                    'Открытые',
+                  ).length
+                }
+              </span>
             </div>
             <div
               className={
@@ -226,6 +290,14 @@ const WorkshopLEMZ = (props) => {
               onClick={() => setCurPage('Отгружено')}
             >
               Отгружено
+              <span className="main-window__items-count">
+                {
+                  filterRequestsByPage(
+                    filterRequestsByWorkshop(requestsLEMZ),
+                    'Отгружено',
+                  ).length
+                }
+              </span>
             </div>
             <div
               className={
@@ -302,49 +374,7 @@ const WorkshopLEMZ = (props) => {
           }
         />
         <TableView
-          data={sortRequests(requestsLEMZ)
-            .filter((item) => {
-              if (curPage === 'Завершено' && item.status === 'Завершено') {
-                return true
-              }
-              if (
-                curPage === 'Отгружено' &&
-                (item.status === 'Отгружено' ||
-                  item.status === 'Частично отгружено')
-              ) {
-                return true
-              }
-              if (
-                curPage === 'Открытые' &&
-                item.status !== 'Завершено' &&
-                item.status !== 'Отгружено' &&
-                item.status !== 'Частично отгружено'
-              ) {
-                return true
-              }
-              return false
-            })
-            .filter((item) => {
-              let check = false
-              let noActiveStatuses = true
-              requestStatuses.map((status) => {
-                requestStatuses.map((status) => {
-                  if (status.visible) {
-                    noActiveStatuses = false
-                  }
-                })
-                if (
-                  noActiveStatuses === true ||
-                  (status.visible &&
-                    (status.name === item.status ||
-                      status.oldName === item.status))
-                ) {
-                  check = true
-                  return
-                }
-              })
-              return check
-            })}
+          data={sortRequests(filterRequests(requestsLEMZ))}
           workshopName="lemz"
           isLoading={isLoading}
           loadData={loadRequestsLEMZ}

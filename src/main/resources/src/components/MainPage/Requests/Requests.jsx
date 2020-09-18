@@ -198,62 +198,74 @@ const Requests = (props) => {
       })
   }
 
-  const filterRequests = (requests) => {
-    return requests
-      .filter((item) => {
-        const selectedWorkshop = workshops.find((workshop) => workshop.visible)
-        if (selectedWorkshop === undefined) {
-          return false
-        }
-        let check = false
-        selectedWorkshop.filter.map((type) => {
-          if (type === item.factory) {
-            return (check = true)
-          }
-        })
-        return check
-      })
-      .filter((item) => {
-        if (curPage === 'Завершено' && item.status === 'Завершено') {
-          return true
-        }
-        if (
-          curPage === 'Отгружено' &&
-          (item.status === 'Отгружено' || item.status === 'Частично отгружено')
-        ) {
-          return true
-        }
-        if (
-          curPage === 'Открытые' &&
-          item.status !== 'Завершено' &&
-          item.status !== 'Отгружено' &&
-          item.status !== 'Частично отгружено'
-        ) {
-          return true
-        }
-        return false
-      })
-      .filter((item) => {
-        let check = false
-        let noActiveStatuses = true
-        requestStatuses.map((status) => {
-          requestStatuses.map((status) => {
-            if (status.visible) {
-              noActiveStatuses = false
-            }
-          })
-          if (
-            noActiveStatuses === true ||
-            (status.visible &&
-              (status.name === item.status || status.oldName === item.status))
-          ) {
-            check = true
-            return
-          }
-        })
-        return check
-      })
+  const filterRequestsByPage = (data, page) => {
+    return data.filter((item) => {
+      if (page === 'Завершено' && item.status === 'Завершено') {
+        return true
+      }
+      if (
+        page === 'Отгружено' &&
+        (item.status === 'Отгружено' || item.status === 'Частично отгружено')
+      ) {
+        return true
+      }
+      if (
+        page === 'Открытые' &&
+        item.status !== 'Завершено' &&
+        item.status !== 'Отгружено' &&
+        item.status !== 'Частично отгружено'
+      ) {
+        return true
+      }
+      return false
+    })
   }
+
+  const filterRequestsByWorkshop = (data) => {
+    return data.filter((item) => {
+      const selectedWorkshop = workshops.find((workshop) => workshop.visible)
+      if (selectedWorkshop === undefined) {
+        return false
+      }
+      let check = false
+      selectedWorkshop.filter.map((type) => {
+        if (type === item.factory) {
+          return (check = true)
+        }
+      })
+      return check
+    })
+  }
+
+  const filterRequestsByStatuses = (data) => {
+    return data.filter((item) => {
+      let check = false
+      let noActiveStatuses = true
+      requestStatuses.map((status) => {
+        requestStatuses.map((status) => {
+          if (status.visible) {
+            noActiveStatuses = false
+          }
+        })
+        if (
+          noActiveStatuses === true ||
+          (status.visible &&
+            (status.name === item.status || status.oldName === item.status))
+        ) {
+          check = true
+          return
+        }
+      })
+      return check
+    })
+  }
+
+  const filterRequests = (requests) => {
+    return filterRequestsByStatuses(
+      filterRequestsByPage(filterRequestsByWorkshop(requests), curPage),
+    )
+  }
+
   // * Sorting
 
   const [sortOrder, setSortOrder] = useState({
@@ -317,6 +329,14 @@ const Requests = (props) => {
               onClick={() => setCurPage('Открытые')}
             >
               Открытые
+              <span className="main-window__items-count">
+                {
+                  filterRequestsByPage(
+                    filterRequestsByWorkshop(requests),
+                    'Открытые',
+                  ).length
+                }
+              </span>
             </div>
             <div
               className={
@@ -327,6 +347,14 @@ const Requests = (props) => {
               onClick={() => setCurPage('Отгружено')}
             >
               Отгружено
+              <span className="main-window__items-count">
+                {
+                  filterRequestsByPage(
+                    filterRequestsByWorkshop(requests),
+                    'Отгружено',
+                  ).length
+                }
+              </span>
             </div>
             <div
               className={
