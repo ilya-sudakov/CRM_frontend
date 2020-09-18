@@ -120,15 +120,16 @@ const TableView = (props) => {
     }
 
     //Если статус-отгружено, тогда ставим дату отгрузки - сегодняшнее число
-    if (status === 'Отгружено') {
-      return editRequest(
-        {
-          ...requests[index],
-          shippingDate: new Date(),
-        },
-        id,
-      ).then(() => changeStatus(status, id))
-    }
+    // if (status === 'Отгружено') {
+    //   console.log(requests[index])
+    //   return editRequest(
+    //     {
+    //       ...requests[index],
+    //       shippingDate: new Date(),
+    //     },
+    //     id,
+    //   ).then(() => changeStatus(status, id))
+    // }
 
     //default изменение, если пред. не совпало
     return changeStatus(status, id)

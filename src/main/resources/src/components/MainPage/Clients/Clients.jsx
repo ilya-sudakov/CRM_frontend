@@ -507,7 +507,7 @@ const Clients = (props) => {
               })
               .map((item, index) => {
                 return (
-                  <div className="main-window__list-item">
+                  <div className="main-window__list-item" key={index}>
                     <span>
                       <div className="main-window__mobile-text">Название: </div>
                       {item.name}
