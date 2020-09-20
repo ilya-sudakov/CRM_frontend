@@ -242,11 +242,14 @@ const FeedbackPage = (props) => {
               ) {
                 return (
                   <Link
-                    className={
-                      'main-window__list-item' +
-                      ' main-window__list-item--' +
+                    className={`main-window__list-item main-window__list-item--${
                       item.status
-                    }
+                    } ${
+                      item.isRead === false
+                        ? 'main-window__list-item--unread'
+                        : ''
+                    }`}
+                    key={index}
                     to={'/feedback/view/' + item.id}
                   >
                     <span

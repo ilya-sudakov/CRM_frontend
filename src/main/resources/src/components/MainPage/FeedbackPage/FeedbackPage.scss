@@ -36,6 +36,30 @@
       padding-left: 25px;
       position: relative;
       margin-bottom: 6px;
+
+      &--unread {
+        background-color: #eaf3f5;
+
+        .main-window__list-col {
+          span {
+            &:nth-child(1) {
+              color: #249b9b;
+            }
+          }
+        }
+
+        &:hover {
+          background-color: #55b3c9;
+          .main-window__list-col {
+            span {
+              &:nth-child(1) {
+                color: #c8dfdf;
+              }
+            }
+          }
+        }
+      }
+
       &:not(.main-window__list-item--header) {
         border-right: 1px solid #aaaaaa;
         border-top: 1px solid #aaaaaa;
