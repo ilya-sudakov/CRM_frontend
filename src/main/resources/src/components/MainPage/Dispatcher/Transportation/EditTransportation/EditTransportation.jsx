@@ -158,7 +158,9 @@ const EditTransportation = (props) => {
     <div className="main-form">
       <form className="main-form__form">
         <div className="main-form__header main-form__header--full">
-          <div className="main-form__title">Редактирование записи транспортировки</div>
+          <div className="main-form__title">
+            Редактирование записи транспортировки
+          </div>
         </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
@@ -194,32 +196,34 @@ const EditTransportation = (props) => {
             defaultValue={transportationInputs.quantity}
             handleInputChange={handleInputChange}
           />
-          <div className="main-form__item">
-            <div className="main-form__input_name">Откуда*</div>
-            <div className="main-form__input_field">
-              <select
-                name="sender"
-                onChange={handleInputChange}
-                value={transportationInputs.sender}
-              >
-                <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
-                <option value="ЦехЛепсари">ЦехЛепсари</option>
-                <option value="ЦехЛиговский">ЦехЛиговский</option>
-              </select>
+          <div className="main-form__row">
+            <div className="main-form__item">
+              <div className="main-form__input_name">Откуда*</div>
+              <div className="main-form__input_field">
+                <select
+                  name="sender"
+                  onChange={handleInputChange}
+                  value={transportationInputs.sender}
+                >
+                  <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
+                  <option value="ЦехЛепсари">ЦехЛепсари</option>
+                  <option value="ЦехЛиговский">ЦехЛиговский</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Куда*</div>
-            <div className="main-form__input_field">
-              <select
-                name="recipient"
-                onChange={handleInputChange}
-                value={transportationInputs.recipient}
-              >
-                <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
-                <option value="ЦехЛепсари">ЦехЛепсари</option>
-                <option value="ЦехЛиговский">ЦехЛиговский</option>
-              </select>
+            <div className="main-form__item">
+              <div className="main-form__input_name">Куда*</div>
+              <div className="main-form__input_field">
+                <select
+                  name="recipient"
+                  onChange={handleInputChange}
+                  value={transportationInputs.recipient}
+                >
+                  <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
+                  <option value="ЦехЛепсари">ЦехЛепсари</option>
+                  <option value="ЦехЛиговский">ЦехЛиговский</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>

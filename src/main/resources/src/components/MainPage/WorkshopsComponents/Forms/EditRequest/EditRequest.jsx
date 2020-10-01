@@ -298,23 +298,33 @@ const EditRequest = (props) => {
             showError={showError}
             setShowError={setShowError}
           />
-          {userContext.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_MANAGER',
-            'ROLE_WORKSHOP',
-          ]) && (
+          <div className="main-form__row">
+            {userContext.userHasAccess([
+              'ROLE_ADMIN',
+              'ROLE_MANAGER',
+              'ROLE_WORKSHOP',
+            ]) && (
+              <InputDate
+                inputName="Дата заявки"
+                required
+                error={requestErrors.date}
+                name="date"
+                selected={Date.parse(requestInputs.date)}
+                handleDateChange={handleDateChange}
+                errorsArr={requestErrors}
+                setErrorsArr={setRequestErrors}
+                readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+              />
+            )}
             <InputDate
-              inputName="Дата заявки"
-              required
-              error={requestErrors.date}
-              name="date"
-              selected={Date.parse(requestInputs.date)}
-              handleDateChange={handleDateChange}
+              inputName="Дата отгрузки"
+              name="shippingDate"
+              selected={Date.parse(requestInputs.shippingDate)}
+              handleDateChange={handleDateShippedChange}
               errorsArr={requestErrors}
               setErrorsArr={setRequestErrors}
-              readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
             />
-          )}
+          </div>
           {userContext.userHasAccess([
             'ROLE_ADMIN',
             'ROLE_MANAGER',
@@ -396,14 +406,6 @@ const EditRequest = (props) => {
               </select>
             </div>
           </div>
-          <InputDate
-            inputName="Дата отгрузки"
-            name="shippingDate"
-            selected={Date.parse(requestInputs.shippingDate)}
-            handleDateChange={handleDateShippedChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          />
           <InputText
             inputName="Комментарий"
             name="comment"

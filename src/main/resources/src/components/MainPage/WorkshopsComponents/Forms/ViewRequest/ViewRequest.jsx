@@ -110,11 +110,18 @@ const ViewRequest = (props) => {
               workshops[props.type].title
             }`}</div>
           </div>
-          <InputDate
-            inputName="Дата заявки"
-            selected={Date.parse(requestInputs.date)}
-            readOnly
-          />
+          <div className="main-form__row">
+            <InputDate
+              inputName="Дата заявки"
+              selected={Date.parse(requestInputs.date)}
+              readOnly
+            />
+            <InputDate
+              inputName="Дата отгрузки"
+              selected={Date.parse(requestInputs.shippingDate)}
+              readOnly
+            />
+          </div>
           <InputProducts
             inputName="Продукция"
             userHasAccess={userContext.userHasAccess}
@@ -163,11 +170,6 @@ const ViewRequest = (props) => {
               />
             </div>
           </div>
-          <InputDate
-            inputName="Дата отгрузки"
-            selected={Date.parse(requestInputs.shippingDate)}
-            readOnly
-          />
           <div className="main-form__item">
             <div className="main-form__input_name">Комментарий</div>
             <div className="main-form__input_field">

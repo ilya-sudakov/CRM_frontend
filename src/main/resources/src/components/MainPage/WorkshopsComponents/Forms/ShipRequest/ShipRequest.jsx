@@ -208,11 +208,19 @@ const ShipRequest = (props) => {
             showError={showError}
             setShowError={setShowError}
           />
-          <InputDate
-            inputName="Дата заявки"
-            selected={Date.parse(requestInputs.date)}
-            disabled
-          />
+          <div className="main-form__row">
+            <InputDate
+              inputName="Дата заявки"
+              selected={Date.parse(requestInputs.date)}
+              disabled
+            />
+            <InputDate
+              inputName="Дата отгрузки"
+              name="shippingDate"
+              selected={Date.parse(new Date())}
+              disabled
+            />
+          </div>
           <InputProducts
             inputName="Продукция"
             userHasAccess={userContext.userHasAccess}
@@ -241,12 +249,6 @@ const ShipRequest = (props) => {
                 customName: 'Отгружено (шт.)',
               },
             }}
-          />
-          <InputDate
-            inputName="Дата отгрузки"
-            name="shippingDate"
-            selected={Date.parse(new Date())}
-            disabled
           />
           <InputText
             inputName="Комментарий"

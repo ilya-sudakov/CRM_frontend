@@ -227,16 +227,26 @@ const NewRequest = (props) => {
             showError={showError}
             setShowError={setShowError}
           />
-          <InputDate
-            inputName="Дата заявки"
-            required
-            error={requestErrors.date}
-            name="date"
-            selected={Date.parse(requestInputs.date)}
-            handleDateChange={handleDateChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          />
+          <div className="main-form__row">
+            <InputDate
+              inputName="Дата заявки"
+              required
+              error={requestErrors.date}
+              name="date"
+              selected={Date.parse(requestInputs.date)}
+              handleDateChange={handleDateChange}
+              errorsArr={requestErrors}
+              setErrorsArr={setRequestErrors}
+            />
+            <InputDate
+              inputName="Дата отгрузки"
+              name="shippingDate"
+              selected={requestInputs.shippingDate}
+              handleDateChange={handleDateShippedChange}
+              errorsArr={requestErrors}
+              setErrorsArr={setRequestErrors}
+            />
+          </div>
           <InputProducts
             inputName="Продукция"
             userHasAccess={userContext.userHasAccess}
@@ -250,16 +260,6 @@ const NewRequest = (props) => {
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
           />
-          {/* <InputText
-            inputName="Кодовое слово"
-            required
-            error={requestErrors.codeWord}
-            name="codeWord"
-            handleInputChange={handleInputChange}
-            defaultValue={requestInputs.codeWord}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          /> */}
           <InputUser
             inputName="Ответственный"
             userData={userContext.userData}
@@ -302,14 +302,6 @@ const NewRequest = (props) => {
               </select>
             </div>
           </div>
-          <InputDate
-            inputName="Дата отгрузки"
-            name="shippingDate"
-            selected={requestInputs.shippingDate}
-            handleDateChange={handleDateShippedChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          />
           <InputText
             inputName="Комментарий"
             name="comment"
