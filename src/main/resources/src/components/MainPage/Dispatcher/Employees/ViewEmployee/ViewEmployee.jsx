@@ -85,30 +85,32 @@ const ViewEmployee = (props) => {
         </div>
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Имя сотрудника</div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Имя</div>
-            <div className="main-form__input_field">
-              <input
-                type="text"
-                name="name"
-                autoComplete="off"
-                onChange={handleInputChange}
-                defaultValue={employeeInputs.name}
-                readOnly
-              />
+          <div className="main-form__row">
+            <div className="main-form__item">
+              <div className="main-form__input_name">Имя</div>
+              <div className="main-form__input_field">
+                <input
+                  type="text"
+                  name="name"
+                  autoComplete="off"
+                  onChange={handleInputChange}
+                  defaultValue={employeeInputs.name}
+                  readOnly
+                />
+              </div>
             </div>
-          </div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Фамилия</div>
-            <div className="main-form__input_field">
-              <input
-                type="text"
-                name="lastName"
-                autoComplete="off"
-                onChange={handleInputChange}
-                defaultValue={employeeInputs.lastName}
-                readOnly
-              />
+            <div className="main-form__item">
+              <div className="main-form__input_name">Фамилия</div>
+              <div className="main-form__input_field">
+                <input
+                  type="text"
+                  name="lastName"
+                  autoComplete="off"
+                  onChange={handleInputChange}
+                  defaultValue={employeeInputs.lastName}
+                  readOnly
+                />
+              </div>
             </div>
           </div>
           <div className="main-form__item">
@@ -125,50 +127,55 @@ const ViewEmployee = (props) => {
             </div>
           </div>
         </div>
-        <InputDate
-          inputName="Дата рождения"
-          required
-          selected={Date.parse(employeeInputs.yearOfBirth)}
-          readOnly
-        />
-        <div className="main-form__item">
-          <div className="main-form__input_name">Гражданство</div>
-          <div className="main-form__input_field">
-            <input
-              type="text"
-              name="citizenship"
-              autoComplete="off"
-              onChange={handleInputChange}
-              defaultValue={employeeInputs.citizenship}
-              readOnly
-            />
-          </div>
-        </div>
-        <div className="main-form__fieldset">
-          <div className="main-form__group-name">Подразделение</div>
+        <div className="main-form__row">
+          <InputDate
+            inputName="Дата рождения"
+            required
+            selected={Date.parse(employeeInputs.yearOfBirth)}
+            readOnly
+          />
           <div className="main-form__item">
-            <div className="main-form__input_name">Цех</div>
+            <div className="main-form__input_name">Гражданство</div>
             <div className="main-form__input_field">
               <input
                 type="text"
-                name="workshop"
+                name="citizenship"
+                autoComplete="off"
                 onChange={handleInputChange}
-                value={employeeInputs.workshop}
+                defaultValue={employeeInputs.citizenship}
                 readOnly
               />
             </div>
           </div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Должность</div>
-            <div className="main-form__input_field">
-              <input
-                type="text"
-                name="position"
-                autoComplete="off"
-                onChange={handleInputChange}
-                defaultValue={employeeInputs.position}
-                readOnly
-              />
+        </div>
+        <div className="main-form__fieldset">
+          <div className="main-form__group-name">Подразделение</div>
+
+          <div className="main-form__row">
+            <div className="main-form__item">
+              <div className="main-form__input_name">Цех</div>
+              <div className="main-form__input_field">
+                <input
+                  type="text"
+                  name="workshop"
+                  onChange={handleInputChange}
+                  value={employeeInputs.workshop}
+                  readOnly
+                />
+              </div>
+            </div>
+            <div className="main-form__item">
+              <div className="main-form__input_name">Должность</div>
+              <div className="main-form__input_field">
+                <input
+                  type="text"
+                  name="position"
+                  autoComplete="off"
+                  onChange={handleInputChange}
+                  defaultValue={employeeInputs.position}
+                  readOnly
+                />
+              </div>
             </div>
           </div>
         </div>

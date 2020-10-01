@@ -193,26 +193,28 @@ const EditEmployee = (props) => {
         />
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Имя сотрудника</div>
-          <InputText
-            inputName="Имя"
-            required
-            error={employeeErrors.name}
-            defaultValue={employeeInputs.name}
-            name="name"
-            errorsArr={employeeErrors}
-            setErrorsArr={setEmployeeErrors}
-            handleInputChange={handleInputChange}
-          />
-          <InputText
-            inputName="Фамилия"
-            required
-            error={employeeErrors.lastName}
-            defaultValue={employeeInputs.lastName}
-            errorsArr={employeeErrors}
-            setErrorsArr={setEmployeeErrors}
-            name="lastName"
-            handleInputChange={handleInputChange}
-          />
+          <div className="main-form__row">
+            <InputText
+              inputName="Имя"
+              required
+              error={employeeErrors.name}
+              defaultValue={employeeInputs.name}
+              name="name"
+              errorsArr={employeeErrors}
+              setErrorsArr={setEmployeeErrors}
+              handleInputChange={handleInputChange}
+            />
+            <InputText
+              inputName="Фамилия"
+              required
+              error={employeeErrors.lastName}
+              defaultValue={employeeInputs.lastName}
+              errorsArr={employeeErrors}
+              setErrorsArr={setEmployeeErrors}
+              name="lastName"
+              handleInputChange={handleInputChange}
+            />
+          </div>
           <InputText
             inputName="Отчество"
             required
@@ -224,54 +226,58 @@ const EditEmployee = (props) => {
             handleInputChange={handleInputChange}
           />
         </div>
-        <InputDate
-          inputName="Дата рождения"
-          required
-          error={employeeErrors.yearOfBirth}
-          name="yearOfBirth"
-          selected={Date.parse(employeeInputs.yearOfBirth)}
-          handleDateChange={handleDateChange}
-          errorsArr={employeeErrors}
-          setErrorsArr={setEmployeeErrors}
-        />
-        <InputText
-          inputName="Гражданство"
-          required
-          error={employeeErrors.citizenship}
-          name="citizenship"
-          errorsArr={employeeErrors}
-          setErrorsArr={setEmployeeErrors}
-          defaultValue={employeeInputs.citizenship}
-          handleInputChange={handleInputChange}
-        />
-        <div className="main-form__fieldset">
-          <div className="main-form__group-name">Подразделение</div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Цех*</div>
-            <div className="main-form__input_field">
-              <select
-                name="workshop"
-                onChange={handleInputChange}
-                value={employeeInputs.workshop}
-              >
-                <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
-                <option value="ЦехЛепсари">ЦехЛепсари</option>
-                <option value="ЦехЛиговский">ЦехЛиговский</option>
-                <option value="Офис">Офис</option>
-                <option value="Уволенные">Уволенные</option>
-              </select>
-            </div>
-          </div>
-          <InputText
-            inputName="Должность"
+        <div className="main-form__row">
+          <InputDate
+            inputName="Дата рождения"
             required
-            error={employeeErrors.position}
-            name="position"
-            defaultValue={employeeInputs.position}
+            error={employeeErrors.yearOfBirth}
+            name="yearOfBirth"
+            selected={Date.parse(employeeInputs.yearOfBirth)}
+            handleDateChange={handleDateChange}
             errorsArr={employeeErrors}
             setErrorsArr={setEmployeeErrors}
+          />
+          <InputText
+            inputName="Гражданство"
+            required
+            error={employeeErrors.citizenship}
+            name="citizenship"
+            errorsArr={employeeErrors}
+            setErrorsArr={setEmployeeErrors}
+            defaultValue={employeeInputs.citizenship}
             handleInputChange={handleInputChange}
           />
+        </div>
+        <div className="main-form__fieldset">
+          <div className="main-form__group-name">Подразделение</div>
+          <div className="main-form__row">
+            <div className="main-form__item">
+              <div className="main-form__input_name">Цех*</div>
+              <div className="main-form__input_field">
+                <select
+                  name="workshop"
+                  onChange={handleInputChange}
+                  value={employeeInputs.workshop}
+                >
+                  <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
+                  <option value="ЦехЛепсари">ЦехЛепсари</option>
+                  <option value="ЦехЛиговский">ЦехЛиговский</option>
+                  <option value="Офис">Офис</option>
+                  <option value="Уволенные">Уволенные</option>
+                </select>
+              </div>
+            </div>
+            <InputText
+              inputName="Должность"
+              required
+              error={employeeErrors.position}
+              name="position"
+              defaultValue={employeeInputs.position}
+              errorsArr={employeeErrors}
+              setErrorsArr={setEmployeeErrors}
+              handleInputChange={handleInputChange}
+            />
+          </div>
         </div>
         {employeeInputs.passportScan1 && (
           <div className="main-form__item">
