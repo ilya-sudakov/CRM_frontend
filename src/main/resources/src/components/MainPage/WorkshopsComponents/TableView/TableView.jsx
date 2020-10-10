@@ -220,6 +220,7 @@ const TableView = (props) => {
         }
         data-msg="Напоминание! Заявка не перенесена в один из цехов"
         key={request.id}
+        id={request.id}
         style={{
           paddingBottom:
             props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) &&

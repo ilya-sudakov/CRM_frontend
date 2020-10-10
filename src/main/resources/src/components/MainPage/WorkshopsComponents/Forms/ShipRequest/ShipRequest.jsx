@@ -263,18 +263,14 @@ const ShipRequest = (props) => {
                 showColorPicker: true,
                 readOnly: true,
               },
-              quantity: {
-                customName: 'Исх. кол-во (шт.)',
-                readOnly: true,
-              },
-              quantity: {
-                customName: 'Исх. кол-во (шт.)',
-                readOnly: true,
-              },
               packaging: {
                 customName: 'Фасовка',
                 readOnly: true,
                 marginRight: '10px',
+              },
+              quantity: {
+                customName: 'Исх. кол-во (шт.)',
+                readOnly: true,
               },
               newQuantity: {
                 customName: 'Отгружено (шт.)',
