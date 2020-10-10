@@ -372,13 +372,21 @@ const Select = (props) => {
     )
   }
 
-  const renderPackaging = (index, item) => {
+  const renderPackaging = (
+    index,
+    item,
+    options = {
+      customName: `Фасовка${!props.readOnly ? '*' : ''}`,
+      readOnly: false,
+      marginRight: '0px',
+    },
+  ) => {
     return (
-      <div className="select__selected_packaging">
-        <span>
-          Фасовка
-          {!props.readOnly && '*'}
-        </span>
+      <div
+        className="select__selected_packaging"
+        style={{ marginRight: options.marginRight }}
+      >
+        <span>{options.customName}</span>
         <input
           packaging_id={index}
           type="text"
@@ -387,7 +395,7 @@ const Select = (props) => {
           defaultValue={item.packaging}
           value={item.packaging}
           onChange={handleParamChange}
-          disabled={props.readOnly || props.workshop}
+          disabled={options.readOnly || props.workshop}
         />
       </div>
     )

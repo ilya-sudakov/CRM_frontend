@@ -267,6 +267,15 @@ const ShipRequest = (props) => {
                 customName: 'Исх. кол-во (шт.)',
                 readOnly: true,
               },
+              quantity: {
+                customName: 'Исх. кол-во (шт.)',
+                readOnly: true,
+              },
+              packaging: {
+                customName: 'Фасовка',
+                readOnly: true,
+                marginRight: '10px',
+              },
               newQuantity: {
                 customName: 'Отгружено (шт.)',
               },
