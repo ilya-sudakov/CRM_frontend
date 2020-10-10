@@ -90,14 +90,29 @@ const ShipRequest = (props) => {
     }
   }
 
+  const checkIfAllProductsAreShipped = (products) => {
+    let check = true
+    products.map((product) => {
+      if (
+        Number.parseFloat(product.quantityNew) -
+          Number.parseFloat(product.quantity) !==
+        0
+      ) {
+        return (check = false)
+      }
+    })
+    return check
+  }
+
   const handleSubmit = () => {
     setIsLoading(true)
-    // return console.log(selectedProducts)
     formIsValid() &&
       editRequest(
         {
           ...requestInputs,
-          status: 'Частично отгружено',
+          status: checkIfAllProductsAreShipped(selectedProducts)
+            ? 'Отгружено'
+            : 'Частично отгружено',
         },
         requestId,
       )
@@ -186,7 +201,14 @@ const ShipRequest = (props) => {
             clientId: oldRequest.client ? oldRequest.client.id : 0,
           })
           oldRequest.client && validateField('clientId', oldRequest.client.id)
-          setSelectedProducts(oldRequest.requestProducts)
+          setSelectedProducts(
+            oldRequest.requestProducts.map((product) => {
+              return {
+                ...product,
+                quantityNew: product.quantity,
+              }
+            }),
+          )
         })
         .catch((error) => {
           console.log(error)
