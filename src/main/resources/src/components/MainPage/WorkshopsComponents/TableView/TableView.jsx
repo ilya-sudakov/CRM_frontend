@@ -121,21 +121,26 @@ const TableView = (props) => {
 
     //Если статус-отгружено, тогда ставим дату отгрузки - сегодняшнее число
     if (status === 'Отгружено') {
-      // console.log(requests[index])
-      return editRequest(
-        {
-          ...requests[index],
-          status: status,
-          shippingDate: new Date(),
-        },
-        id,
+      const selectedItem = requests.find(
+        (item) => item.id === Number.parseInt(id),
       )
-        .then(() => {
-          props.loadData()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      console.log(selectedItem)
+      if (selectedItem) {
+        return editRequest(
+          {
+            ...selectedItem,
+            status: status,
+            shippingDate: new Date(),
+          },
+          id,
+        )
+          .then(() => {
+            props.loadData()
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
     }
 
     //default изменение, если пред. не совпало
