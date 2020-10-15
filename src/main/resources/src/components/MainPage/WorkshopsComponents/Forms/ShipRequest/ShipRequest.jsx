@@ -299,9 +299,10 @@ const ShipRequest = (props) => {
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() => {
-                console.log(props.type)
-                props.history.push(workshops[props.type].redirectURL)
+              onClick={(event) => {
+                event.preventDefault()
+                const id = props.history.location.pathname.split('ship/')[1]
+                props.history.push(`${workshops[props.type].redirectURL}#${id}`)
               }}
               value="Вернуться назад"
             />

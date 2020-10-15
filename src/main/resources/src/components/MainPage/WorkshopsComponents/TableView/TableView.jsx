@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Link, withRouter } from 'react-router-dom'
 import viewSVG from '../../../../../../../../assets/tableview/view.svg'
 import editSVG from '../../../../../../../../assets/tableview/edit.svg'
 import printSVG from '../../../../../../../../assets/tableview/print.svg'
@@ -35,6 +35,7 @@ import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/P
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true)
+  const [scrolledToPrev, setScrolledToPrev] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState({
     name: '',
     link: '',
@@ -187,6 +188,26 @@ const TableView = (props) => {
       })
   }
 
+  const prevRef = useCallback(
+    (node) => {
+      const id = Number.parseInt(props.history.location.hash.split('#')[1])
+      if (
+        !props.data ||
+        scrolledToPrev ||
+        props.data.find((item) => item.id === id) === undefined
+      )
+        return
+      if (node !== null && props.data) {
+        node.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+        setScrolledToPrev(true)
+      }
+    },
+    [props.data],
+  )
+
   useEffect(() => {
     if (props.data) {
       setRequests(props.data)
@@ -234,6 +255,12 @@ const TableView = (props) => {
         data-msg="Напоминание! Заявка не перенесена в один из цехов"
         key={request.id}
         id={request.id}
+        ref={
+          Number.parseInt(props.history.location.hash.split('#')[1]) ===
+          request.id
+            ? prevRef
+            : null
+        }
         style={{
           paddingBottom:
             props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) &&
@@ -645,4 +672,4 @@ const TableView = (props) => {
   )
 }
 
-export default TableView
+export default withRouter(TableView)

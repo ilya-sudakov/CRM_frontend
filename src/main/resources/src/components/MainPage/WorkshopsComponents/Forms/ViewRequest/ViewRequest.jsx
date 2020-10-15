@@ -34,7 +34,8 @@ const ViewRequest = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    props.history.push(workshops[props.type].redirectURL)
+    const id = props.history.location.pathname.split('view/')[1]
+    props.history.push(`${workshops[props.type].redirectURL}#${id}`)
   }
 
   useEffect(() => {
