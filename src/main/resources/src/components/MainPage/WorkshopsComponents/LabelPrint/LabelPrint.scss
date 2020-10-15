@@ -29,10 +29,10 @@
 
     //new dimensions
     width: 220px;
-    height: 226px;
-    // height: fit-content;
-    // min-height: 226px;
-    // overflow: hidden;
+    // height: 226px;
+    height: fit-content;
+    min-height: 226px;
+    overflow: hidden;
 
     &--hidden {
         left: 2000px;
@@ -83,7 +83,7 @@
         position: relative;
         height: 100%;
         width: 100%;
-        // margin-top: auto;
+        margin-top: auto;
 
         .content__description {
             font-size: 0.8rem;
