@@ -11,7 +11,7 @@ const LabelPrint = (props) => {
   }, [props])
 
   const workshopNames = {
-    null: 'Ли',
+    null: 'Цех не указан',
     ligovskiy: 'Ли',
     lemz: 'ЛЭ',
     lepsari: 'Ле',
@@ -23,9 +23,7 @@ const LabelPrint = (props) => {
       className={`label-print ${props.isHidden ? 'label-print--hidden' : ''}`}
     >
       <div className="label-print__header">
-        <div className="header__name">
-          {props.name || 'Нет наименования'}
-        </div>
+        <div className="header__name">{props.name || 'Нет наименования'}</div>
         <div className="header__box"></div>
       </div>
       <div className="label-print__content">
@@ -39,7 +37,7 @@ const LabelPrint = (props) => {
         <div className="content__bar-code">
           <QRCode
             value={props.link || 'https://osfix.ru/katalog-produkczii'}
-            size={150}
+            size={100}
           />
         </div>
       </div>

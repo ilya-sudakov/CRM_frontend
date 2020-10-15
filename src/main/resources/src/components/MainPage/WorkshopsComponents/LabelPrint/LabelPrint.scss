@@ -11,9 +11,6 @@
         }
     }
 
-    width: 600px;
-    // height: 520px;
-    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -21,31 +18,22 @@
     border: 1px solid #222222;
     border-radius: 10px;
     box-sizing: border-box;
-    padding: 25px;
+    padding: 5px 5px;
 
     position: fixed;
-    top: 100px;
-    left: 600px;
+    top: 50%;
+    left: 50%;
     background-color: #ffffff;
     z-index: 999;
     transition: 100ms ease-in-out;
+    // transform: translate3d(-50%, -50%, 0);
 
     //new dimensions
-    // width: 320px;
-
-    // &::after {
-    //     position: absolute;
-    //     bottom: -40px;
-    //     left: 0;
-    //     width: 100%;
-    //     box-sizing: border-box;
-    //     border: 1px solid #bbbbbb;
-    //     content: "Идет скачивание...";
-    //     background-color: #ffffff;
-    //     border-radius: 15px;
-    //     padding: 5px 15px;
-    //     animation: pulse 1s infinite ease-in-out;
-    // }
+    width: 220px;
+    height: 226px;
+    // height: fit-content;
+    // min-height: 226px;
+    // overflow: hidden;
 
     &--hidden {
         left: 2000px;
@@ -58,20 +46,22 @@
         align-items: center;
         width: 100%;
         position: relative;
-        padding-bottom: 25px;
+        box-sizing: border-box;
+        padding-bottom: 8px;
 
         &::after {
-            width: calc(100% + 50px);
+            width: calc(100% + 10px);
+            box-sizing: border-box;
             content: "";
             position: absolute;
             bottom: 0;
-            left: -25px;
+            left: -5px;
             border-bottom: 1px dashed #000;
         }
 
         .header__name {
-            flex: 0 1 calc(100% - 80px);
-            font-size: 200%;
+            flex: 0 1 calc(100% - 55px);
+            font-size: 1rem;
             text-align: left;
             font-weight: 600;
             text-transform: uppercase;
@@ -79,17 +69,25 @@
 
         .header__box {
             border: 1px solid #222222;
-            min-width: 70px;
-            height: 80px;
+            min-width: 50px;
+            height: 50px;
             border-radius: 10px;
         }
     }
 
     &__content {
-        padding-top: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-top: 5px;
         position: relative;
-        // padding-bottom: 150px;
+        height: 100%;
+        width: 100%;
+        // margin-top: auto;
+
         .content__description {
+            font-size: 0.8rem;
             margin-bottom: 10px;
             &:last-child {
                 margin-bottom: 0;
@@ -99,10 +97,8 @@
             }
         }
         .content__bar-code {
-            // position: absolute;
-            // bottom: -100px;
-            align-self: flex-end;
-            justify-self: flex-end;
+            // align-self: flex-end;
+            // justify-self: flex-end;
         }
     }
 }

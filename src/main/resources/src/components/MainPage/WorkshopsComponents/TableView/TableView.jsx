@@ -84,6 +84,13 @@ const TableView = (props) => {
     setLabelIsHidden(false)
     const element = document.getElementById('label')
     setTimeout(async () => {
+      console.log(
+        element,
+        element.scrollWidth,
+        element.scrollHeight,
+        element.clientWidth,
+        element.clientHeight,
+      )
       await html2canvas(element, {
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight,
