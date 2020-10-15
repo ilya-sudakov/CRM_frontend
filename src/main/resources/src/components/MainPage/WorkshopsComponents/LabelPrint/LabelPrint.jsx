@@ -7,8 +7,15 @@ import QRCode from 'react-qr-code'
 
 const LabelPrint = (props) => {
   useEffect(() => {
-    // console.log(props.name)
+    // console.log(props)
   }, [props])
+
+  const workshopNames = {
+    null: 'Ли',
+    ligovskiy: 'Ли',
+    lemz: 'ЛЭ',
+    lepsari: 'Ле',
+  }
 
   return (
     <div
@@ -17,18 +24,18 @@ const LabelPrint = (props) => {
     >
       <div className="label-print__header">
         <div className="header__name">
-          {props.name || 'ДПК Стандарт 6,5/3 (AISI430, 1мм)'}
+          {props.name || 'Нет наименования'}
         </div>
         <div className="header__box"></div>
       </div>
       <div className="label-print__content">
-        <div className="content__description">{`Дата изготовления ${formatDateString(
+        <div className="content__description">{`Изготовлено ${formatDateString(
           new Date(),
-        )}`}</div>
-        <div className="content__description content__description--address">
+        )}/${workshopNames[props.workshop]}`}</div>
+        {/* <div className="content__description content__description--address">
           Расфасовано в ООО "Osfix" 191040, г. Санкт-Петербург, Лиговский пр.,
           д. 52
-        </div>
+        </div> */}
         <div className="content__bar-code">
           <QRCode
             value={props.link || 'https://osfix.ru/katalog-produkczii'}

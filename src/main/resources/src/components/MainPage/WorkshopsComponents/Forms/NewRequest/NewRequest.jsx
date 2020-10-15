@@ -311,7 +311,7 @@ const NewRequest = (props) => {
             setErrorsArr={setRequestErrors}
           />
           <InputText
-            inputName="Цена"
+            inputName="Сумма"
             name="sum"
             type="number"
             defaultValue={requestInputs.sum}

@@ -183,7 +183,7 @@ const ViewRequest = (props) => {
           </div>
           {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
             <div className="main-form__item">
-              <div className="main-form__input_name">Цена</div>
+              <div className="main-form__input_name">Сумма</div>
               <div className="main-form__input_field">
                 <input
                   type="number"

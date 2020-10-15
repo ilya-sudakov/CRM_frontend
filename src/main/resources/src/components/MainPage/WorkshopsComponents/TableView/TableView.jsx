@@ -76,9 +76,10 @@ const TableView = (props) => {
     )
   }
 
-  const downloadImage = async (product) => {
+  const downloadImage = async (product, workshop) => {
     setSelectedProduct({
       ...product,
+      workshop: workshop,
     })
     setLabelIsHidden(false)
     const element = document.getElementById('label')
@@ -316,7 +317,7 @@ const TableView = (props) => {
                     </select>
                   </span>
                   <span
-                    onClick={() => downloadImage(product)}
+                    onClick={() => downloadImage(product, request.factory)}
                     title="Скачать этикетку"
                   >
                     <div className="main-window__mobile-text">
@@ -564,6 +565,7 @@ const TableView = (props) => {
           name={selectedProduct.name}
           link={selectedProduct.link}
           isHidden={labelIsHidden}
+          workshop={selectedProduct.workshop}
         />
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">

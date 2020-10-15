@@ -33,19 +33,19 @@
     //new dimensions
     // width: 320px;
 
-    &::after {
-        position: absolute;
-        bottom: -40px;
-        left: 0;
-        width: 100%;
-        box-sizing: border-box;
-        border: 1px solid #bbbbbb;
-        content: "Идет скачивание...";
-        background-color: #ffffff;
-        border-radius: 15px;
-        padding: 5px 15px;
-        animation: pulse 1s infinite ease-in-out;
-    }
+    // &::after {
+    //     position: absolute;
+    //     bottom: -40px;
+    //     left: 0;
+    //     width: 100%;
+    //     box-sizing: border-box;
+    //     border: 1px solid #bbbbbb;
+    //     content: "Идет скачивание...";
+    //     background-color: #ffffff;
+    //     border-radius: 15px;
+    //     padding: 5px 15px;
+    //     animation: pulse 1s infinite ease-in-out;
+    // }
 
     &--hidden {
         left: 2000px;

@@ -414,7 +414,7 @@ const EditRequest = (props) => {
           />
           {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
             <InputText
-              inputName="Цена"
+              inputName="Сумма"
               name="sum"
               type="number"
               defaultValue={requestInputs.sum}
