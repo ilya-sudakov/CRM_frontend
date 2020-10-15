@@ -134,20 +134,20 @@ const TableView = (props) => {
       )
       console.log(selectedItem)
       if (selectedItem) {
-        return editRequest(
-          {
-            ...selectedItem,
-            status: status,
-            shippingDate: new Date(),
-          },
-          id,
-        )
-          .then(() => {
-            props.loadData()
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+        // return editRequest(
+        //   {
+        //     ...selectedItem,
+        //     status: status,
+        //     shippingDate: new Date(),
+        //   },
+        //   id,
+        // )
+        //   .then(() => {
+        //     props.loadData()
+        //   })
+        //   .catch((error) => {
+        //     console.log(error)
+        //   })
       }
     }
 

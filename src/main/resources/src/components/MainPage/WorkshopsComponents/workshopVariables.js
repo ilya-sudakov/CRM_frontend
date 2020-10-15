@@ -40,7 +40,7 @@ export const requestStatuses = [
   {
     name: 'Отгружено',
     className: 'shipped',
-    access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+    access: ['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_MANAGER'],
   },
   {
     name: 'Частично отгружено',
