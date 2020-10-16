@@ -5,6 +5,7 @@ import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.js
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import SelectEmployeeNew from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployeeNew.jsx'
 import SelectWork from '../SelectWork/SelectWork.jsx'
+import ChevronImg from '../../../../../../../../../assets/tableview/chevron-down.inline.svg'
 import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx'
 import {
   getProductById,
@@ -28,11 +29,65 @@ const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
     employee: null,
-    works: [],
+    works: [{}],
     originalWorks: [],
-    lemz: [],
-    lepsari: [],
-    ligovskiy: [],
+    lemz: [
+      {
+        isMinimized: true,
+        employee: null,
+        works: [
+          {
+            product: [],
+            draft: [],
+            workName: '',
+            workType: '',
+            workId: null,
+            hours: 0,
+            comment: '',
+          },
+        ],
+        originalWorks: [],
+        totalHours: 0,
+      },
+    ],
+    lepsari: [
+      {
+        isMinimized: true,
+        employee: null,
+        works: [
+          {
+            product: [],
+            draft: [],
+            workName: '',
+            workType: '',
+            workId: null,
+            hours: 0,
+            comment: '',
+          },
+        ],
+        originalWorks: [],
+        totalHours: 0,
+      },
+    ],
+    ligovskiy: [
+      {
+        isMinimized: true,
+        employee: null,
+        works: [
+          {
+            product: [],
+            draft: [],
+            workName: '',
+            workType: '',
+            workId: null,
+            hours: 0,
+            comment: '',
+          },
+        ],
+        originalWorks: [],
+        totalHours: 0,
+      },
+    ],
     office: [],
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
@@ -109,7 +164,8 @@ const ProductionJournal = (props) => {
   }
 
   const handleSubmit = () => {
-    setIsLoading(true)
+    // setIsLoading(true)
+    alert('Тест формы')
   }
 
   const handleInputChange = (e) => {
@@ -230,7 +286,7 @@ const ProductionJournal = (props) => {
   return (
     <div className="production-journal">
       <div className="main-form">
-        <form className="main-form__form main-form__form--full">
+        <form className="main-form__form">
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Журнал производства</div>
           </div>
@@ -241,9 +297,9 @@ const ProductionJournal = (props) => {
           />
           <InputDate
             inputName="Дата"
-            required
             error={Date.parse(workTimeErrors.date)}
             name="date"
+            disabled
             selected={worktimeInputs.date}
             handleDateChange={(date) => {
               validateField('date', date)
@@ -266,80 +322,35 @@ const ProductionJournal = (props) => {
               </div>
               <div className="production-journal__list">
                 {worktimeInputs[workshop[1]].map((workItem, workIndex) => (
-                  <div className="main-form__row" key={workIndex}>
-                    {/* Список сотрудников */}
-                    <SelectEmployeeNew
-                      required
-                      error={workTimeErrors.employee}
-                      userHasAccess={props.userHasAccess}
-                      defaultValue={worktimeInputs.employeeName}
-                      employees={employees.filter(
-                        (item) =>
-                          item.workshop === workshop[0] &&
-                          item.relevance !== 'Уволен',
-                      )}
-                      windowName="select-employee"
-                      name="employee"
-                      handleEmployeeChange={(value) => {
-                        validateField('employee', value)
-                        setWorkTimeInputs({
-                          ...worktimeInputs,
-                          employeeId: value,
-                        })
-                        setWorkTimeErrors({
-                          ...workTimeErrors,
-                          employee: false,
-                        })
-                      }}
-                      errorsArr={workTimeErrors}
-                      setErrorsArr={setWorkTimeErrors}
-                      readOnly
-                    />
-                    {/* Создание работы */}
-                    <div className="main-form__item">
-                      <div className="main-form__input_field">
-                        <SelectWork
-                          handleWorkChange={(value) => {
-                            validateField('works', value)
-                            setWorkTimeInputs({
-                              ...worktimeInputs,
-                              works: value,
-                            })
-                            setWorkTimeErrors({
-                              ...workTimeErrors,
-                              works: false,
-                            })
-                          }}
-                          userHasAccess={props.userHasAccess}
-                          categories={categories}
-                          products={products}
-                          defaultValue={worktimeInputs.works}
-                        />
-                      </div>
+                  <>
+                    <div className="main-form__row" key={workIndex}>
+                      <FormRow
+                        workTimeErrors={workTimeErrors}
+                        setWorkTimeErrors={setWorkTimeErrors}
+                        setWorkTimeInputs={setWorkTimeInputs}
+                        worktimeInputs={worktimeInputs}
+                        employees={employees}
+                        workItem={workItem}
+                        workshop={workshop}
+                        workIndex={workIndex}
+                      />
                     </div>
-                  </div>
+                    {!workItem.isMinimized ? (
+                      <JournalForm
+                        setWorkTimeInputs={setWorkTimeInputs}
+                        worktimeInputs={worktimeInputs}
+                        workItem={workItem}
+                        workshop={workshop}
+                        workIndex={workIndex}
+                      />
+                    ) : null}
+                  </>
                 ))}
               </div>
-              <div
-                className="main-form__button main-form__button--inverted"
-                onClick={() => {
-                  setWorkTimeInputs((worktimeInputs) => {
-                    let oldArray = worktimeInputs[workshop[1]]
-                    oldArray.push({
-                      date: new Date(),
-                      employee: null,
-                      works: [],
-                      originalWorks: [],
-                    })
-                    return {
-                      ...worktimeInputs,
-                      [worktimeInputs[workshop[1]]]: oldArray,
-                    }
-                  })
-                }}
-              >
-                Добавить
-              </div>
+              <AddEmployeeButton
+                setWorkTimeInputs={setWorkTimeInputs}
+                workshop={workshop}
+              />
             </>
           ))}
 
@@ -353,10 +364,8 @@ const ProductionJournal = (props) => {
               onClick={() => props.history.push('/work-management')}
               value="Вернуться назад"
             />
-            {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
-                    {isLoading && <ImgLoader />} */}
             <Button
-              text="Редактировать запись"
+              text="Сохранить данные"
               isLoading={isLoading}
               className="main-form__submit"
               onClick={handleSubmit}
@@ -369,3 +378,147 @@ const ProductionJournal = (props) => {
 }
 
 export default ProductionJournal
+
+const FormRow = ({
+  workTimeErrors,
+  setWorkTimeErrors,
+  setWorkTimeInputs,
+  worktimeInputs,
+  employees,
+  workItem,
+  workshop,
+  workIndex,
+}) => {
+  return (
+    <>
+      {/* Список сотрудников */}
+      <SelectEmployeeNew
+        required
+        error={workTimeErrors.employee}
+        // userHasAccess={props.userHasAccess}
+        defaultValue={workItem.employee}
+        employees={employees.filter(
+          (item) =>
+            item.workshop === workshop[0] && item.relevance !== 'Уволен',
+        )}
+        name="employee"
+        handleEmployeeChange={(value) => {
+          // validateField('employee', value)
+          setWorkTimeInputs({
+            ...worktimeInputs,
+            employeeId: value,
+          })
+          setWorkTimeErrors({
+            ...workTimeErrors,
+            employee: false,
+          })
+        }}
+        errorsArr={workTimeErrors}
+        setErrorsArr={setWorkTimeErrors}
+      />
+      <div
+        className="main-form__button main-form__button--inverted"
+        style={{ borderColor: 'transparent' }}
+        onClick={() => {
+          setWorkTimeInputs((worktimeInputs) => {
+            let oldArray = worktimeInputs[workshop[1]]
+            oldArray.splice(workIndex, 1, {
+              ...workItem,
+              isMinimized: !workItem.isMinimized,
+            })
+            return {
+              ...worktimeInputs,
+              [worktimeInputs[workshop[1]]]: oldArray,
+            }
+          })
+        }}
+      >
+        <span>{workItem.isMinimized ? 'Развернуть' : 'Свернуть'}</span>
+        <ChevronImg className="production-journal__img production-journal__img--chevron" />
+      </div>
+    </>
+  )
+}
+
+const JournalForm = ({ setWorkTimeInputs, workItem, workshop, workIndex }) => {
+  return (
+    <div className="production-journal__form">
+      {/* Создание работы */}
+      <div className="main-form__item">
+        <div className="main-form__input_field">
+          <SelectWork
+            handleWorkChange={(value) => {
+              setWorkTimeInputs((worktimeInputs) => {
+                let oldArray = worktimeInputs[workshop[1]]
+                oldArray.splice(workIndex, 1, {
+                  ...workItem,
+                  works: value,
+                })
+                return {
+                  ...worktimeInputs,
+                  [worktimeInputs[workshop[1]]]: oldArray,
+                }
+              })
+            }}
+            totalHours={workItem.totalHours}
+            newSelectWork
+            defaultConfig={[
+              {
+                product: [],
+                draft: [],
+                workName: '',
+                workType: '',
+                workId: null,
+                hours: 0,
+                comment: '',
+              },
+            ]}
+            setTotalHours={(value) => {
+              setWorkTimeInputs((worktimeInputs) => {
+                let oldArray = worktimeInputs[workshop[1]]
+                oldArray.splice(workIndex, 1, {
+                  ...workItem,
+                  totalHours: value,
+                })
+                return {
+                  ...worktimeInputs,
+                  [worktimeInputs[workshop[1]]]: oldArray,
+                }
+              })
+            }}
+            userHasAccess={props.userHasAccess}
+            categories={categories}
+            products={products}
+            defaultValue={workItem.works}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const AddEmployeeButton = ({ setWorkTimeInputs, workshop }) => {
+  return (
+    <div
+      className="main-form__button main-form__button--inverted"
+      style={{ marginBottom: '25px' }}
+      onClick={() => {
+        setWorkTimeInputs((worktimeInputs) => {
+          let oldArray = worktimeInputs[workshop[1]]
+          oldArray.push({
+            employee: null,
+            works: [],
+            originalWorks: [],
+            isMinimized: true,
+          })
+          return {
+            ...worktimeInputs,
+            [worktimeInputs[workshop[1]]]: oldArray,
+          }
+        })
+      }}
+    >
+      Добавить
+    </div>
+  )
+}

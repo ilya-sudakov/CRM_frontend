@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import deleteSVG from '../../../../../../../../../assets/select/delete.svg'
 import './SelectWork.scss'
 import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx'
+import SelectWorkItemNew from '../../../Work/SelectWorkItem/SelectWorkItemNew.jsx'
 import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
 
 const SelectWork = (props) => {
-  const [selected, setSelected] = useState([])
+  const [selected, setSelected] = useState(props.defaultConfig ?? [])
   const [options, setOptions] = useState([])
   const [curItemsType, setCurItemsType] = useState('')
 
@@ -56,10 +57,6 @@ const SelectWork = (props) => {
         comment: '',
       },
     ])
-    // const form = document.getElementsByClassName("select-work__selected_form")[0];
-    // console.log(form);
-
-    // form.classList.remove("select-work__selected_form--hidden");
   }
 
   const deletePart = (e) => {
@@ -139,28 +136,52 @@ const SelectWork = (props) => {
             key={index}
           >
             <div className="select-work__selected_form">
-              <SelectWorkItem
-                inputName="Выбор работы"
-                required
-                defaultValue={item.workName}
-                id={index}
-                handleWorkItemChange={(name, id, type) => {
-                  console.log(name, id, type)
-                  let temp = selected
-                  let originalItem = selected[index]
-                  temp.splice(index, 1, {
-                    ...originalItem,
-                    workType: type,
-                    workName: name,
-                    workId: id,
-                  })
-                  setCurItemsType(type)
-                  setSelected([...temp])
-                  props.handleWorkChange([...temp])
-                }}
-                userHasAccess={props.userHasAccess}
-                readOnly
-              />
+              {props.newSelectWork ? (
+                <SelectWorkItemNew
+                  inputName="Выбор работы"
+                  required
+                  defaultValue={item.workName}
+                  handleWorkItemChange={(name, id, type) => {
+                    console.log(name, id, type)
+                    let temp = selected
+                    let originalItem = selected[index]
+                    temp.splice(index, 1, {
+                      ...originalItem,
+                      workType: type,
+                      workName: name,
+                      workId: id,
+                    })
+                    setCurItemsType(type)
+                    setSelected([...temp])
+                    props.handleWorkChange([...temp])
+                  }}
+                  userHasAccess={props.userHasAccess}
+                  readOnly
+                />
+              ) : (
+                <SelectWorkItem
+                  inputName="Выбор работы"
+                  required
+                  defaultValue={item.workName}
+                  id={index}
+                  handleWorkItemChange={(name, id, type) => {
+                    console.log(name, id, type)
+                    let temp = selected
+                    let originalItem = selected[index]
+                    temp.splice(index, 1, {
+                      ...originalItem,
+                      workType: type,
+                      workName: name,
+                      workId: id,
+                    })
+                    setCurItemsType(type)
+                    setSelected([...temp])
+                    props.handleWorkChange([...temp])
+                  }}
+                  userHasAccess={props.userHasAccess}
+                  readOnly
+                />
+              )}
               {/* Вставить InputProducts, только вместо фасовки сделать 
                                 единицу измерения(или просто кол-во оставить) */}
               {selected[index].workType === 'Продукция' ||
