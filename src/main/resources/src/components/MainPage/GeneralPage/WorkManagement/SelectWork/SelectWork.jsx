@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import deleteSVG from '../../../../../../../../../assets/select/delete.svg'
 import './SelectWork.scss'
 import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx'
 import SelectWorkItemNew from '../../../Work/SelectWorkItem/SelectWorkItemNew.jsx'
 import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
+import { UserContext } from '../../../../../App.js'
 
 const SelectWork = (props) => {
   const [selected, setSelected] = useState(props.defaultConfig ?? [])
   const [options, setOptions] = useState([])
   const [curItemsType, setCurItemsType] = useState('')
+  const userContext = useContext(UserContext)
 
   useEffect(() => {
     if (props.defaultValue !== undefined) {
@@ -155,7 +157,7 @@ const SelectWork = (props) => {
                     setSelected([...temp])
                     props.handleWorkChange([...temp])
                   }}
-                  userHasAccess={props.userHasAccess}
+                  userHasAccess={userContext.userHasAccess}
                   readOnly
                 />
               ) : (
@@ -178,7 +180,7 @@ const SelectWork = (props) => {
                     setSelected([...temp])
                     props.handleWorkChange([...temp])
                   }}
-                  userHasAccess={props.userHasAccess}
+                  userHasAccess={userContext.userHasAccess}
                   readOnly
                 />
               )}
@@ -207,9 +209,9 @@ const SelectWork = (props) => {
                     setSelected([...temp])
                     props.handleWorkChange([...temp])
                   }}
-                  userHasAccess={props.userHasAccess}
+                  userHasAccess={userContext.userHasAccess}
                   searchPlaceholder="Введите название продукта для поиска..."
-                  // workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
+                  // workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
                 />
               ) : selected[index].workType === 'Чертеж' ? (
                 <div className="select-work__item">
@@ -231,7 +233,7 @@ const SelectWork = (props) => {
                       searchPlaceholder={
                         "Добавьте чертеж нажав на кнопку 'Добавить чертеж'"
                       }
-                      userHasAccess={props.userHasAccess}
+                      userHasAccess={userContext.userHasAccess}
                     />
                   </div>
                 </div>

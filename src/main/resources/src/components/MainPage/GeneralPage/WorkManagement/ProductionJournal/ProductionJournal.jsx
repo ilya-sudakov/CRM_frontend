@@ -12,16 +12,6 @@ import {
   getProductsByCategory,
   getProductsByLocation,
 } from '../../../../../utils/RequestsAPI/Products.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import {
-  getRecordedWorkById,
-  editRecordedWork,
-  deleteProductFromRecordedWork,
-  addProductToRecordedWork,
-  addRecordedWork,
-  deleteDraftFromRecordedWork,
-  addDraftToRecordedWork,
-} from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx'
 
@@ -29,8 +19,6 @@ const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
     employee: null,
-    works: [{}],
-    originalWorks: [],
     lemz: [
       {
         isMinimized: true,
@@ -165,6 +153,7 @@ const ProductionJournal = (props) => {
 
   const handleSubmit = () => {
     // setIsLoading(true)
+    console.log(worktimeInputs)
     alert('Тест формы')
   }
 
@@ -342,6 +331,8 @@ const ProductionJournal = (props) => {
                         workItem={workItem}
                         workshop={workshop}
                         workIndex={workIndex}
+                        categories={categories}
+                        products={products}
                       />
                     ) : null}
                   </>
@@ -395,7 +386,6 @@ const FormRow = ({
       <SelectEmployeeNew
         required
         error={workTimeErrors.employee}
-        // userHasAccess={props.userHasAccess}
         defaultValue={workItem.employee}
         employees={employees.filter(
           (item) =>
@@ -403,10 +393,16 @@ const FormRow = ({
         )}
         name="employee"
         handleEmployeeChange={(value) => {
-          // validateField('employee', value)
-          setWorkTimeInputs({
-            ...worktimeInputs,
-            employeeId: value,
+          setWorkTimeInputs((worktimeInputs) => {
+            let oldArray = worktimeInputs[workshop[1]]
+            oldArray.splice(workIndex, 1, {
+              ...workItem,
+              employee: value.value,
+            })
+            return {
+              ...worktimeInputs,
+              [workshop[1]]: oldArray,
+            }
           })
           setWorkTimeErrors({
             ...workTimeErrors,
@@ -428,7 +424,7 @@ const FormRow = ({
             })
             return {
               ...worktimeInputs,
-              [worktimeInputs[workshop[1]]]: oldArray,
+              [workshop[1]]: oldArray,
             }
           })
         }}
@@ -440,7 +436,14 @@ const FormRow = ({
   )
 }
 
-const JournalForm = ({ setWorkTimeInputs, workItem, workshop, workIndex }) => {
+const JournalForm = ({
+  setWorkTimeInputs,
+  workItem,
+  workshop,
+  workIndex,
+  products,
+  categories,
+}) => {
   return (
     <div className="production-journal__form">
       {/* Создание работы */}
@@ -456,7 +459,7 @@ const JournalForm = ({ setWorkTimeInputs, workItem, workshop, workIndex }) => {
                 })
                 return {
                   ...worktimeInputs,
-                  [worktimeInputs[workshop[1]]]: oldArray,
+                  [workshop[1]]: oldArray,
                 }
               })
             }}
@@ -482,11 +485,10 @@ const JournalForm = ({ setWorkTimeInputs, workItem, workshop, workIndex }) => {
                 })
                 return {
                   ...worktimeInputs,
-                  [worktimeInputs[workshop[1]]]: oldArray,
+                  [workshop[1]]: oldArray,
                 }
               })
             }}
-            userHasAccess={props.userHasAccess}
             categories={categories}
             products={products}
             defaultValue={workItem.works}
@@ -510,10 +512,11 @@ const AddEmployeeButton = ({ setWorkTimeInputs, workshop }) => {
             works: [],
             originalWorks: [],
             isMinimized: true,
+            totalHours: 0,
           })
           return {
             ...worktimeInputs,
-            [worktimeInputs[workshop[1]]]: oldArray,
+            [workshop[1]]: oldArray,
           }
         })
       }}
