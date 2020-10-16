@@ -57,6 +57,7 @@ import {
   EditPackaging,
   ReportTablePage,
   RiggingList,
+  ProductionJournal,
   StatisticsPage,
 } from './lazyImports.jsx'
 import NewRequest from './WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
@@ -619,6 +620,19 @@ class MainPage extends React.Component {
                   <PrivateRoute
                     path="/work-management/record-time/edit/"
                     component={EditRecordWork}
+                    userHasAccess={this.props.userHasAccess}
+                    userData={this.props.userData}
+                    allowedRoles={[
+                      'ROLE_ADMIN',
+                      'ROLE_MANAGER',
+                      'ROLE_WORKSHOP',
+                      'ROLE_DISPATCHER',
+                      'ROLE_ENGINEER',
+                    ]}
+                  />
+                  <PrivateRoute
+                    path="/work-management/journal/"
+                    component={ProductionJournal}
                     userHasAccess={this.props.userHasAccess}
                     userData={this.props.userData}
                     allowedRoles={[

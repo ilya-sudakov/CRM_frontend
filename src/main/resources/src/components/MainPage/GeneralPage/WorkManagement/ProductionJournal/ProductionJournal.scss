@@ -1,0 +1,33 @@
+@import "../../../../../variables.scss";
+
+.production-journal {
+    .main-form__row {
+        // align-items: center;
+        .select-employee {
+            flex: 0 1 40%;
+            padding-right: 10px;
+        }
+        .main-form__item {
+            padding-left: 10px;
+            margin-bottom: 5px;
+            flex: 0 1 60%;
+        }
+        .select-employee-new {
+            margin-bottom: 5px;
+        }
+    }
+    .main-form__button {
+        margin-right: auto;
+        margin-left: 10px;
+        margin-top: 0px;
+        margin-bottom: 25px;
+    }
+    &__list {
+        width: calc(100% - 20px);
+    }
+    &__workshop-name {
+        width: calc(100% - 20px);
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+}

@@ -128,43 +128,28 @@ const SelectEmployee = (props) => {
   }
 
   return (
-    <div className="select-employee">
-      <div className="select-employee__input">
+    <div className="select-employee-new">
+      <div className="select-employee-new__input">
         {props.inputName ? (
-          <div className="select-employee__input_name">
+          <div className="select-employee-new__input_name">
             {props.inputName + (props.required ? '*' : '')}
           </div>
         ) : null}
-        <div className={'select-employee__input_field'}>
-          <button
-            className="select-employee__button"
-            onClick={(e) => {
-              e.preventDefault()
-              setShowWindow(!showWindow)
-            }}
-          >
-            Выбрать сотрудника
-          </button>
-          <div className="select-employee__searchbar">
-            <input
-              type="text"
-              className={
-                props.error === true
-                  ? 'select-employee__input select-employee__input--error'
-                  : 'select-employee__input'
+        <div className={'select-employee-new__input_field'}>
+          <Select
+            options={employees.map((employee) => {
+              return {
+                value: employee.id,
+                label: `${employee.lastName} ${employee.name} ${employee.middleName}`,
               }
-              // onChange={props.handleInputChange}
-              defaultValue={props.defaultValue ? props.defaultValue : fullName}
-              // onClick={!props.readOnly ? clickOnInput : null}
-              placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
-              readOnly={props.readOnly}
-            />
-          </div>
+            })}
+            placeholder="Выберите сотрудника..."
+          />
         </div>
       </div>
       {props.error === true && (
         <div
-          className="select-employee__error"
+          className="select-employee-new__error"
           onClick={
             props.setErrorsArr
               ? () =>
@@ -178,44 +163,6 @@ const SelectEmployee = (props) => {
           Поле не заполнено!
         </div>
       )}
-      <FormWindow
-        title="Выбор сотрудника"
-        windowName="select-employee-window"
-        content={
-          <React.Fragment>
-            <SearchBar
-              // title="Поиск по сотрудникам"
-              fullSize
-              setSearchQuery={setSearchQuery}
-              placeholder="Введите ФИО сотрудника для поиска..."
-            />
-            <ControlPanel
-              sorting={
-                <div className="main-window__sort-panel">
-                  <select onChange={changeSortOrder}>
-                    <option value="lastName asc">По алфавиту (А-Я)</option>
-                    <option value="lastName desc">По алфавиту (Я-А)</option>
-                    <option value="yearOfBirth asc">По дате рождения</option>
-                  </select>
-                </div>
-              }
-              itemsCount={`Всего: ${employees.length} записей`}
-            />
-            <TableView
-              data={sortEmployees(employees)}
-              searchQuery={searchQuery}
-              userHasAccess={props.userHasAccess}
-              selectEmployee={clickEmployee}
-              setCloseWindow={setCloseWindow}
-              closeWindow={closeWindow}
-              setShowWindow={setShowWindow}
-              isLoading={isLoading}
-            />
-          </React.Fragment>
-        }
-        showWindow={showWindow}
-        setShowWindow={setShowWindow}
-      />
     </div>
   )
 }

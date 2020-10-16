@@ -18,6 +18,7 @@ const SelectWork = (props) => {
         (sum, cur) => sum + Number.parseFloat(cur.hours),
         0,
       )
+      if (!props.setTotalHours) return
       if (isNaN(total)) {
         props.setTotalHours(0)
       } else props.setTotalHours(total)
@@ -70,6 +71,7 @@ const SelectWork = (props) => {
       (sum, cur) => sum + Number.parseFloat(cur.hours),
       0,
     )
+    if (!props.setTotalHours) return
     if (isNaN(total)) {
       props.setTotalHours(0)
     } else props.setTotalHours(total)
@@ -107,6 +109,7 @@ const SelectWork = (props) => {
       ...originalItem,
       [name]: value,
     })
+    if (!props.setTotalHours) return
     if (name === 'hours') {
       if (isNaN(curSum)) {
         props.setTotalHours(0)
@@ -135,14 +138,6 @@ const SelectWork = (props) => {
             }
             key={index}
           >
-            {/* <div className="select-work__selected_header" index={index} onClick={clickOnForm}>
-                            <div className="select-work__selected_name">
-                                <span>Работа: </span> {item.workName}
-                            </div>
-                            <div className="select-work__selected_name">
-                                <span>Продукция: </span> {(item.product.length > 0) && item.product.reduce((sum, item) => sum + item.name + ', ', '')}
-                            </div>
-                        </div> */}
             <div className="select-work__selected_form">
               <SelectWorkItem
                 inputName="Выбор работы"
