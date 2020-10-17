@@ -50,6 +50,7 @@ const SelectWorkItem = (props) => {
           {props.inputName + (props.required ? '*' : '')}
         </div>
         <Select
+          value={props.defaultValue.value === '' ? null : props.defaultValue}
           className="select-work-item__input_field"
           options={works}
           placeholder="Выберите вид работы..."

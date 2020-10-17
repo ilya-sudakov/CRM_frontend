@@ -142,7 +142,11 @@ const SelectWork = (props) => {
                 <SelectWorkItemNew
                   inputName="Выбор работы"
                   required
-                  defaultValue={item.workName}
+                  defaultValue={{
+                    value: item.workName,
+                    label: item.workId,
+                    typeOfWork: item.workType,
+                  }}
                   handleWorkItemChange={(name, id, type) => {
                     console.log(name, id, type)
                     let temp = selected

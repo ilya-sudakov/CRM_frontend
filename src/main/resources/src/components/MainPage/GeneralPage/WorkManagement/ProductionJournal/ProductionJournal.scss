@@ -3,9 +3,10 @@
 .production-journal {
     .main-form__row {
         font-size: 0.9rem;
+        width: 100%;
         // align-items: center;
         .select-employee-new {
-            flex: 0 1 70%;
+            flex: 0 1 100%;
             padding-right: 10px;
         }
         .main-form__item {
@@ -16,6 +17,18 @@
         }
         .select-employee-new {
             margin-bottom: 5px;
+        }
+        .main-form__button {
+            margin-right: 0;
+            margin-left: 0;
+            min-width: 100px;
+            padding-right: 0;
+
+            &:hover {
+                background-color: transparent;
+                box-shadow: none;
+                color: #777777;
+            }
         }
     }
     .main-form__button {
@@ -44,6 +57,7 @@
         padding: 10px 10px;
         margin-top: 5px;
         margin-bottom: 8px;
+        padding-bottom: 0;
 
         .main-form__item {
             width: 100%;

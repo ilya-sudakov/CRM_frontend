@@ -76,7 +76,25 @@ const ProductionJournal = (props) => {
         totalHours: 0,
       },
     ],
-    office: [],
+    office: [
+      {
+        isMinimized: true,
+        employee: null,
+        works: [
+          {
+            product: [],
+            draft: [],
+            workName: '',
+            workType: '',
+            workId: null,
+            hours: 0,
+            comment: '',
+          },
+        ],
+        originalWorks: [],
+        totalHours: 0,
+      },
+    ],
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -387,10 +405,20 @@ const FormRow = ({
         required
         error={workTimeErrors.employee}
         defaultValue={workItem.employee}
-        employees={employees.filter(
-          (item) =>
-            item.workshop === workshop[0] && item.relevance !== 'Уволен',
-        )}
+        employees={employees
+          .filter(
+            (item) =>
+              item.workshop === workshop[0] && item.relevance !== 'Уволен',
+          )
+          .sort((a, b) => {
+            if (a.lastName < b.lastName) {
+              return -1
+            }
+            if (a.lastName > b.lastName) {
+              return 1
+            }
+            return 0
+          })}
         name="employee"
         handleEmployeeChange={(value) => {
           setWorkTimeInputs((worktimeInputs) => {
@@ -457,6 +485,7 @@ const JournalForm = ({
                   ...workItem,
                   works: value,
                 })
+                console.log(oldArray)
                 return {
                   ...worktimeInputs,
                   [workshop[1]]: oldArray,
@@ -509,7 +538,17 @@ const AddEmployeeButton = ({ setWorkTimeInputs, workshop }) => {
           let oldArray = worktimeInputs[workshop[1]]
           oldArray.push({
             employee: null,
-            works: [],
+            works: [
+              {
+                product: [],
+                draft: [],
+                workName: '',
+                workType: '',
+                workId: null,
+                hours: 0,
+                comment: '',
+              },
+            ],
             originalWorks: [],
             isMinimized: true,
             totalHours: 0,
