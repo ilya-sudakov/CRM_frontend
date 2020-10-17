@@ -18,7 +18,6 @@ import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx'
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
-    employee: null,
     lemz: [
       {
         isMinimized: true,
@@ -420,21 +419,18 @@ const FormRow = ({
             return 0
           })}
         name="employee"
-        handleEmployeeChange={(value) => {
+        handleEmployeeChange={(employee) => {
           setWorkTimeInputs((worktimeInputs) => {
             let oldArray = worktimeInputs[workshop[1]]
             oldArray.splice(workIndex, 1, {
               ...workItem,
-              employee: value.value,
+              isMinimized: false,
+              employee: employee.value,
             })
             return {
               ...worktimeInputs,
               [workshop[1]]: oldArray,
             }
-          })
-          setWorkTimeErrors({
-            ...workTimeErrors,
-            employee: false,
           })
         }}
         errorsArr={workTimeErrors}
