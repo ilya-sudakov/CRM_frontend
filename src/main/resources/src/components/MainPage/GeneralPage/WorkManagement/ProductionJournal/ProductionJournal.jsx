@@ -356,6 +356,12 @@ const ProductionJournal = (props) => {
                 ))}
               </div>
               <AddEmployeeButton
+                employees={employees.filter(
+                  (item) =>
+                    item.workshop === workshop[0] &&
+                    item.relevance !== 'Уволен',
+                )}
+                data={worktimeInputs[workshop[1]]}
                 setWorkTimeInputs={setWorkTimeInputs}
                 workshop={workshop}
               />
@@ -524,7 +530,13 @@ const JournalForm = ({
   )
 }
 
-const AddEmployeeButton = ({ setWorkTimeInputs, workshop }) => {
+const AddEmployeeButton = ({
+  setWorkTimeInputs,
+  workshop,
+  employees,
+  data,
+}) => {
+  if (data.length === employees.length) return null
   return (
     <div
       className="main-form__button main-form__button--inverted"
