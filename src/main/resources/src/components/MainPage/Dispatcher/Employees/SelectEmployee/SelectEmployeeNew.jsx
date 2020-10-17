@@ -59,7 +59,7 @@ const SelectEmployee = (props) => {
   }
 
   const clickEmployee = (employee) => {
-    props.handleEmployeeChange(employee.value, employee.label)
+    props.handleEmployeeChange(employee)
   }
 
   return (
