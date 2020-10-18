@@ -130,9 +130,11 @@ const TableView = (props) => {
               <span>
                 <div className="main-window__mobile-text">Подразделение:</div>
                 {item}
-                <span className="main-window__items-count">
-                  {searchQuery(filterEmployees(props.data, item)).length}
-                </span>
+                {item !== 'Уволенные' ? (
+                  <span className="main-window__items-count">
+                    {searchQuery(filterEmployees(props.data, item)).length}
+                  </span>
+                ) : null}
               </span>
               <div className="main-window__actions">
                 <div

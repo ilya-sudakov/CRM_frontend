@@ -97,6 +97,7 @@ const TableView = (props) => {
         windowHeight: element.scrollHeight,
         scrollY: 0,
         scrollX: 0,
+        scale: window.devicePixelRatio * 5,
       }).then((canvas) => {
         setLabelIsHidden(true)
         // saveCanvas(canvas)
