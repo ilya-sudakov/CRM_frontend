@@ -513,7 +513,7 @@ const TableView = (props) => {
               <img className="main-window__img" src={printSVG} />
             </div>
           )}
-          {request.status !== 'Завершено' && request.status !== 'Отгружено' ? (
+          {/* {request.status !== 'Завершено' && request.status !== 'Отгружено' ? (
             <Link
               to={
                 props.workshopName === 'requests'
@@ -525,7 +525,7 @@ const TableView = (props) => {
             >
               <TruckSVG className="main-window__img" />
             </Link>
-          ) : null}
+          ) : null} */}
           <Link
             to={
               props.workshopName === 'requests'
