@@ -18,82 +18,10 @@ import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx'
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
-    lemz: [
-      {
-        isMinimized: true,
-        employee: null,
-        works: [
-          {
-            product: [],
-            draft: [],
-            workName: '',
-            workType: '',
-            workId: null,
-            hours: 0,
-            comment: '',
-          },
-        ],
-        originalWorks: [],
-        totalHours: 0,
-      },
-    ],
-    lepsari: [
-      {
-        isMinimized: true,
-        employee: null,
-        works: [
-          {
-            product: [],
-            draft: [],
-            workName: '',
-            workType: '',
-            workId: null,
-            hours: 0,
-            comment: '',
-          },
-        ],
-        originalWorks: [],
-        totalHours: 0,
-      },
-    ],
-    ligovskiy: [
-      {
-        isMinimized: true,
-        employee: null,
-        works: [
-          {
-            product: [],
-            draft: [],
-            workName: '',
-            workType: '',
-            workId: null,
-            hours: 0,
-            comment: '',
-          },
-        ],
-        originalWorks: [],
-        totalHours: 0,
-      },
-    ],
-    office: [
-      {
-        isMinimized: true,
-        employee: null,
-        works: [
-          {
-            product: [],
-            draft: [],
-            workName: '',
-            workType: '',
-            workId: null,
-            hours: 0,
-            comment: '',
-          },
-        ],
-        originalWorks: [],
-        totalHours: 0,
-      },
-    ],
+    lemz: {},
+    lepsari: {},
+    ligovskiy: {},
+    office: {},
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -110,7 +38,6 @@ const ProductionJournal = (props) => {
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
   const [employees, setEmployees] = useState([])
-  const [itemId, setItemId] = useState(0)
   const [workshops, setWorkshops] = useState({
     ЦехЛЭМЗ: 'lemz',
     ЦехЛепсари: 'lepsari',
@@ -200,6 +127,8 @@ const ProductionJournal = (props) => {
     }
   }, [])
 
+  useEffect(() => {}, [worktimeInputs])
+
   const loadProducts = (signal) => {
     getCategoriesNames(signal) //Только категории
       .then((res) => res.json())
@@ -276,12 +205,55 @@ const ProductionJournal = (props) => {
       })
   }
 
-  const loadEmployees = (signal) => {
-    return getEmployees(signal)
+  const loadEmployees = async (signal) => {
+    return await getEmployees(signal)
       .then((res) => res.json())
       .then((res) => {
         setIsLoading(false)
         setEmployees(res)
+        let newWorkshopEmployees = {}
+        Promise.all(
+          Object.entries(workshops).map((workshop) => {
+            let filteredEmployees = {}
+            res
+              .filter(
+                (item) =>
+                  item.workshop === workshop[0] && item.relevance !== 'Уволен',
+              )
+              .map((employee) => {
+                // console.log(employee)
+                return (filteredEmployees = {
+                  ...filteredEmployees,
+                  [employee.id]: {
+                    isMinimized: true,
+                    employee: employee,
+                    works: [
+                      {
+                        product: [],
+                        draft: [],
+                        workName: '',
+                        workType: '',
+                        workId: null,
+                        hours: 0,
+                        comment: '',
+                      },
+                    ],
+                    originalWorks: [],
+                    totalHours: 0,
+                  },
+                })
+              })
+            return (newWorkshopEmployees = {
+              ...newWorkshopEmployees,
+              [workshop[1]]: filteredEmployees,
+            })
+          }),
+        ).then(() => {
+          return setWorkTimeInputs({
+            ...worktimeInputs,
+            ...newWorkshopEmployees,
+          })
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -327,44 +299,36 @@ const ProductionJournal = (props) => {
                 <span>{workshop[0]}</span>
               </div>
               <div className="production-journal__list">
-                {worktimeInputs[workshop[1]].map((workItem, workIndex) => (
-                  <>
-                    <div className="main-form__row" key={workIndex}>
-                      <FormRow
-                        workTimeErrors={workTimeErrors}
-                        setWorkTimeErrors={setWorkTimeErrors}
-                        setWorkTimeInputs={setWorkTimeInputs}
-                        worktimeInputs={worktimeInputs}
-                        employees={employees}
-                        workItem={workItem}
-                        workshop={workshop}
-                        workIndex={workIndex}
-                      />
-                    </div>
-                    {!workItem.isMinimized ? (
-                      <JournalForm
-                        setWorkTimeInputs={setWorkTimeInputs}
-                        worktimeInputs={worktimeInputs}
-                        workItem={workItem}
-                        workshop={workshop}
-                        workIndex={workIndex}
-                        categories={categories}
-                        products={products}
-                      />
-                    ) : null}
-                  </>
-                ))}
-              </div>
-              <AddEmployeeButton
-                employees={employees.filter(
-                  (item) =>
-                    item.workshop === workshop[0] &&
-                    item.relevance !== 'Уволен',
+                {Object.entries(worktimeInputs[workshop[1]]).map(
+                  (workItem, workIndex) => (
+                    <>
+                      <div className="main-form__row" key={workIndex}>
+                        <FormRow
+                          workTimeErrors={workTimeErrors}
+                          setWorkTimeErrors={setWorkTimeErrors}
+                          worktimeInputs={worktimeInputs}
+                          setWorkTimeInputs={setWorkTimeInputs}
+                          employees={employees}
+                          workItem={workItem[1]}
+                          workshop={workshop}
+                          workIndex={workIndex}
+                        />
+                      </div>
+                      {!workItem[1].isMinimized ? (
+                        <JournalForm
+                          setWorkTimeInputs={setWorkTimeInputs}
+                          worktimeInputs={worktimeInputs}
+                          workItem={workItem[1]}
+                          workshop={workshop}
+                          workIndex={workIndex}
+                          categories={categories}
+                          products={products}
+                        />
+                      ) : null}
+                    </>
+                  ),
                 )}
-                data={worktimeInputs[workshop[1]]}
-                setWorkTimeInputs={setWorkTimeInputs}
-                workshop={workshop}
-              />
+              </div>
             </>
           ))}
 
@@ -397,64 +361,37 @@ const FormRow = ({
   workTimeErrors,
   setWorkTimeErrors,
   setWorkTimeInputs,
-  worktimeInputs,
-  employees,
   workItem,
   workshop,
-  workIndex,
 }) => {
   return (
     <>
       {/* Список сотрудников */}
-      <SelectEmployeeNew
-        required
-        error={workTimeErrors.employee}
-        defaultValue={workItem.employee}
-        employees={employees
-          .filter(
-            (item) =>
-              item.workshop === workshop[0] && item.relevance !== 'Уволен',
-          )
-          .sort((a, b) => {
-            if (a.lastName < b.lastName) {
-              return -1
-            }
-            if (a.lastName > b.lastName) {
-              return 1
-            }
-            return 0
-          })}
-        name="employee"
-        handleEmployeeChange={(employee) => {
-          setWorkTimeInputs((worktimeInputs) => {
-            let oldArray = worktimeInputs[workshop[1]]
-            oldArray.splice(workIndex, 1, {
-              ...workItem,
-              isMinimized: false,
-              employee: employee.value,
-            })
-            return {
-              ...worktimeInputs,
-              [workshop[1]]: oldArray,
-            }
-          })
-        }}
-        errorsArr={workTimeErrors}
-        setErrorsArr={setWorkTimeErrors}
-      />
+      <div
+        className="main-form__item main-form__item--employee"
+        data-position={workItem.employee.position}
+      >
+        <input
+          type="text"
+          className="main-form__input_field"
+          value={`${workItem.employee.lastName} ${workItem.employee.name} ${workItem.employee.middleName}`}
+          readOnly
+        ></input>
+      </div>
       <div
         className="main-form__button main-form__button--inverted"
         style={{ borderColor: 'transparent' }}
         onClick={() => {
           setWorkTimeInputs((worktimeInputs) => {
-            let oldArray = worktimeInputs[workshop[1]]
-            oldArray.splice(workIndex, 1, {
-              ...workItem,
-              isMinimized: !workItem.isMinimized,
-            })
             return {
               ...worktimeInputs,
-              [workshop[1]]: oldArray,
+              [workshop[1]]: {
+                ...worktimeInputs[workshop[1]],
+                [workItem.employee.id]: {
+                  ...workItem,
+                  isMinimized: !workItem.isMinimized,
+                },
+              },
             }
           })
         }}
@@ -470,7 +407,6 @@ const JournalForm = ({
   setWorkTimeInputs,
   workItem,
   workshop,
-  workIndex,
   products,
   categories,
 }) => {
@@ -479,18 +415,19 @@ const JournalForm = ({
       {/* Создание работы */}
       <div className="main-form__item">
         <div className="main-form__input_field">
+          {/* {console.log(workItem)} */}
           <SelectWork
             handleWorkChange={(value) => {
               setWorkTimeInputs((worktimeInputs) => {
-                let oldArray = worktimeInputs[workshop[1]]
-                oldArray.splice(workIndex, 1, {
-                  ...workItem,
-                  works: value,
-                })
-                console.log(oldArray)
                 return {
                   ...worktimeInputs,
-                  [workshop[1]]: oldArray,
+                  [workshop[1]]: {
+                    ...worktimeInputs[workshop[1]],
+                    [workItem.employee.id]: {
+                      ...workItem,
+                      works: value,
+                    },
+                  },
                 }
               })
             }}
@@ -509,14 +446,15 @@ const JournalForm = ({
             ]}
             setTotalHours={(value) => {
               setWorkTimeInputs((worktimeInputs) => {
-                let oldArray = worktimeInputs[workshop[1]]
-                oldArray.splice(workIndex, 1, {
-                  ...workItem,
-                  totalHours: value,
-                })
                 return {
                   ...worktimeInputs,
-                  [workshop[1]]: oldArray,
+                  [workshop[1]]: {
+                    ...worktimeInputs[workshop[1]],
+                    [workItem.employee.id]: {
+                      ...workItem,
+                      totalHours: value,
+                    },
+                  },
                 }
               })
             }}

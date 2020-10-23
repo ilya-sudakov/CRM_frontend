@@ -14,6 +14,31 @@
             margin-bottom: 5px;
             // flex: 0 1 60%;
             font-size: 1.1rem;
+
+            &--employee {
+                flex: 0 1 100%;
+                padding-left: 0;
+                padding-right: 10px;
+                position: relative;
+                margin-bottom: 8px;
+                margin-top: 5px;
+
+                input {
+                    height: 1.5rem;
+                    padding-top: 5px;
+                }
+
+                &::after {
+                    position: absolute;
+                    left: 6px;
+                    top: -10px;
+                    content: attr(data-position);
+                    font-size: 0.8rem;
+                    padding: 2px 5px;
+                    background-color: #ffffff;
+                    color: #777777;
+                }
+            }
         }
         .select-employee-new {
             margin-bottom: 5px;
@@ -62,10 +87,13 @@
         .main-form__item {
             width: 100%;
         }
+        .select-work-item__input_field {
+            font-size: 0.8rem !important;
+        }
     }
     &__workshop-name {
         width: calc(100% - 20px);
         font-size: 1.1rem;
-        margin-bottom: 5px;
+        margin-bottom: 15px;
     }
 }
