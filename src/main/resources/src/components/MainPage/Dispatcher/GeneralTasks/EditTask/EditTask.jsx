@@ -255,6 +255,7 @@ const EditTask = (props) => {
         <InputText
           inputName="Состояние"
           name="status"
+          type="textarea"
           handleInputChange={handleInputChange}
           defaultValue={taskInputs.status}
         />

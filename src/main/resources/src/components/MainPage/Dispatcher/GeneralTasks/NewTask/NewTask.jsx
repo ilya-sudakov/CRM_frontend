@@ -217,6 +217,7 @@ const NewTask = (props) => {
         <InputText
           inputName="Состояние"
           name="status"
+          type="textarea"
           handleInputChange={handleInputChange}
         />
         <div className="main-form__input_hint">

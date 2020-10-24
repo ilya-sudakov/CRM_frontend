@@ -39,6 +39,10 @@
             margin-top: var(--padding-top);
             align-self: flex-start;
           }
+          // .requests__column--id {
+          //   margin-top: var(--padding-top);
+          //   align-self: flex-start;
+          // }
           .requests__column--responsible {
             margin-top: var(--padding-top);
             align-self: flex-start;
@@ -232,6 +236,18 @@
         .requests__column--date {
           flex: 0 1 8%;
           max-width: 75px;
+        }
+        .requests__column--id {
+          // flex: 0 1 8%;
+          // max-width: 50px;
+          white-space: nowrap;
+          color: #222222aa;
+
+          position: absolute;
+          left: 5px;
+          top: 10px;
+          font-size: 0.85rem;
+          padding-left: 10px;
         }
         // &:nth-child(2) {
         //   flex: 0 1 20%;

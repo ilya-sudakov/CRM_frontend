@@ -268,8 +268,13 @@ const TableView = (props) => {
             props.workshopName === 'requests'
               ? '30px'
               : '5px',
+          paddingTop: '35px',
         }}
       >
+        {/* <div className="requests__text--id">{request.id}</div> */}
+        {displayColumns['id'].visible && (
+          <span className="requests__column--id">{`Заявка #${request.id}`}</span>
+        )}
         {displayColumns['date'].visible && (
           <span className="requests__column--date">
             <div className="main-window__mobile-text">Дата:</div>
@@ -641,6 +646,9 @@ const TableView = (props) => {
                     {formatDateString(new Date(date))}
                   </div>
                   {printRequests(filteredReqs, {
+                    id: {
+                      visible: true,
+                    },
                     date: {
                       visible: false,
                     },
