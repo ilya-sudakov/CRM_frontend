@@ -29,7 +29,11 @@ const LabelPrint = (props) => {
       <div className="label-print__content">
         <div className="content__description">{`Изготовлено ${formatDateString(
           new Date(),
-        )}/${workshopNames[props.workshop]}`}</div>
+        )}${
+          workshopNames[props.workshop]
+            ? `/${workshopNames[props.workshop]}`
+            : ''
+        }`}</div>
         {/* <div className="content__description content__description--address">
           Расфасовано в ООО "Osfix" 191040, г. Санкт-Петербург, Лиговский пр.,
           д. 52
@@ -37,7 +41,7 @@ const LabelPrint = (props) => {
         <div className="content__bar-code">
           <QRCode
             value={props.link || 'https://osfix.ru/katalog-produkczii'}
-            size={100}
+            size={180}
           />
         </div>
       </div>

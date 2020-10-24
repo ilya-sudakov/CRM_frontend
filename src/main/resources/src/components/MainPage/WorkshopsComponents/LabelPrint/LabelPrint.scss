@@ -18,7 +18,7 @@
     border: 1px solid #222222;
     border-radius: 10px;
     box-sizing: border-box;
-    padding: 5px 5px;
+    padding: 5px 10px;
 
     position: fixed;
     top: 200px;
@@ -28,14 +28,13 @@
     transition: 100ms ease-in-out;
 
     //new dimensions
-    width: 220px;
-    // height: 226px;
+    width: 350px; //orig - 220px
     height: fit-content;
-    min-height: 226px;
+    min-height: 359.5px; // orig - 226px
     overflow: hidden;
 
     &--hidden {
-        left: 2000px;
+        // left: 2000px;
     }
 
     &__header {
@@ -46,21 +45,21 @@
         width: 100%;
         position: relative;
         box-sizing: border-box;
-        padding-bottom: 8px;
+        padding-bottom: 6px;
 
         &::after {
-            width: calc(100% + 10px);
+            width: calc(100% + 30px);
             box-sizing: border-box;
             content: "";
             position: absolute;
             bottom: 0;
-            left: -5px;
+            left: -15px;
             border-bottom: 1px dashed #000;
         }
 
         .header__name {
-            flex: 0 1 calc(100% - 55px);
-            font-size: 1rem;
+            flex: 0 1 calc(100% - 65px);
+            font-size: 1.2rem;
             text-align: left;
             font-weight: 600;
             text-transform: uppercase;
@@ -68,8 +67,8 @@
 
         .header__box {
             border: 1px solid #222222;
-            min-width: 50px;
-            height: 50px;
+            min-width: 60px;
+            height: 60px;
             border-radius: 10px;
         }
     }
@@ -86,7 +85,7 @@
         margin-top: auto;
 
         .content__description {
-            font-size: 0.8rem;
+            font-size: 1rem;
             margin-bottom: 10px;
             &:last-child {
                 margin-bottom: 0;
