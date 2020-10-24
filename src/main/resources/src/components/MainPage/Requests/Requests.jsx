@@ -411,7 +411,7 @@ const Requests = (props) => {
                           .then((res) => {
                             setIsLoading(false)
                             props.history.push(
-                              `${toWorkshop}/workshop-${toWorkshop}`,
+                              `${toWorkshop}/workshop-${toWorkshop}#${request.id}`,
                             )
                           })
                           .catch((error) => {
