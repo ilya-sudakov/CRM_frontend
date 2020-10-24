@@ -179,7 +179,10 @@ const EditRequest = (props) => {
             return connectClientToRequest(requestId, requestInputs.clientId)
           }
         })
-        .then(() => props.history.push(workshops[props.type].redirectURL))
+        .then(() => {
+          const id = props.history.location.pathname.split('edit/')[1]
+          props.history.push(`${workshops[props.type].redirectURL}#${id}`)
+        })
         .catch((error) => {
           setIsLoading(false)
           console.log(error)

@@ -226,8 +226,8 @@ const TableView = (props) => {
     let dd = getRequestPdfText(
       request.date,
       request.requestProducts,
-      request.client ? request.client.name : request.codeWord,
-      workshops[props.workshopName].name,
+      request.client?.name ?? request.codeWord,
+      workshops[request.factory].name,
       request.id,
     )
     pdfMake.createPdf(dd).print()

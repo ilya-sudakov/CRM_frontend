@@ -630,24 +630,24 @@ const Clients = (props) => {
                       >
                         <img className="main-window__img" src={calendarSVG} />
                       </div>
-                      <div
+                      <a
                         className="main-window__action"
                         title="Просмотр клиента"
-                        onClick={() => {
-                          props.history.push(`/${props.type}/view/${item.id}`)
-                        }}
+                        href={`/${props.type}/view/${item.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         <img className="main-window__img" src={viewSVG} />
-                      </div>
-                      <div
+                      </a>
+                      <a
                         className="main-window__action"
                         title="Редактирование клиента"
-                        onClick={() => {
-                          props.history.push(`/${props.type}/edit/${item.id}`)
-                        }}
+                        href={`/${props.type}/edit/${item.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         <img className="main-window__img" src={editSVG} />
-                      </div>
+                      </a>
                       {props.userHasAccess(['ROLE_ADMIN']) && (
                         <div
                           className="main-window__action"

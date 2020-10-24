@@ -60,6 +60,7 @@ const ViewRequest = (props) => {
             sum: oldRequest.sum,
             client: oldRequest.client,
             clientId: oldRequest.client?.id,
+            factory: oldRequest.factory,
           })
         })
         .catch((error) => {
@@ -75,8 +76,8 @@ const ViewRequest = (props) => {
     let dd = getRequestPdfText(
       requestInputs.date,
       requestInputs.requestProducts,
-      requestInputs.codeWord,
-      workshops[props.type].name,
+      requestInputs.client?.name ?? requestInputs.codeWord,
+      workshops[requestInputs.factory].name,
       itemId,
     )
     pdfMake.createPdf(dd).print()
@@ -87,8 +88,8 @@ const ViewRequest = (props) => {
     let dd = getRequestPdfText(
       requestInputs.date,
       requestInputs.requestProducts,
-      requestInputs.codeWord,
-      workshops[props.type].name,
+      requestInputs.client?.name ?? requestInputs.codeWord,
+      workshops[requestInputs.factory].name,
       itemId,
     )
     pdfMake
