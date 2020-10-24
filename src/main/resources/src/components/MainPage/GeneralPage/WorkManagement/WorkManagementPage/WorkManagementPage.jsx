@@ -12,6 +12,7 @@ import {
   getAllProductsFromWorkCount,
   getAllDraftsFromWorkCount,
   getDatesAndWorkItems,
+  formatDateString,
 } from '../../../../../utils/functions.jsx'
 import { getRecordedWorkByDateRange } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx'
@@ -79,10 +80,7 @@ const WorkManagementPage = (props) => {
   ])
   const userContext = useContext(UserContext)
   const [dates, setDates] = useState({
-    // start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
-    // end: new Date()
     start: new Date(new Date().setDate(new Date().getDate() - 1)),
-    // start: new Date(),
     end: new Date(),
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -300,6 +298,42 @@ const WorkManagementPage = (props) => {
         />
         <ControlPanel
           itemsCount={`Всего: ${workItems.length} записей`}
+          buttons={
+            <>
+              <Button
+                text="Пред. день"
+                isLoading={isLoading}
+                className="main-window__button"
+                onClick={() => {
+                  setDates({
+                    ...dates,
+                    start: new Date(
+                      new Date(dates.start).setDate(dates.start.getDate() - 1),
+                    ),
+                  })
+                  loadWorks()
+                }}
+              />
+              {formatDateString(dates.end) < formatDateString(new Date()) ? (
+                <Button
+                  text="Cлед. день"
+                  isLoading={isLoading}
+                  className="main-window__button"
+                  onClick={() => {
+                    setDates({
+                      ...dates,
+                      start: new Date(
+                        new Date(dates.start).setDate(
+                          dates.start.getDate() + 1,
+                        ),
+                      ),
+                    })
+                    loadWorks()
+                  }}
+                />
+              ) : null}
+            </>
+          }
           content={
             <div className="main-window__info-panel">
               <div className="work-management-page__date-pick">
