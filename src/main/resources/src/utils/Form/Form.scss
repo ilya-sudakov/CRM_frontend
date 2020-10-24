@@ -240,6 +240,17 @@
       align-items: flex-start;
       margin-bottom: 20px;
 
+      &--placeholder {
+        width: 100%;
+        min-height: 2rem !important;
+        border: 1px solid #000000;
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 10px;
+        }
+      }
+
       .main-form__input_name {
         color: lighten($primary-text-color, 40%);
         margin-bottom: 5px;

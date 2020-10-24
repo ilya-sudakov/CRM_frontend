@@ -14,6 +14,7 @@ import {
 } from '../../../../../utils/RequestsAPI/Products.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -206,6 +207,7 @@ const ProductionJournal = (props) => {
   }
 
   const loadEmployees = async (signal) => {
+    setIsLoading(true)
     return await getEmployees(signal)
       .then((res) => res.json())
       .then((res) => {
@@ -249,6 +251,7 @@ const ProductionJournal = (props) => {
             })
           }),
         ).then(() => {
+          setIsLoading(false)
           return setWorkTimeInputs({
             ...worktimeInputs,
             ...newWorkshopEmployees,
@@ -256,6 +259,7 @@ const ProductionJournal = (props) => {
         })
       })
       .catch((error) => {
+        setIsLoading(false)
         console.log(error)
         setIsLoading(false)
       })
@@ -298,37 +302,46 @@ const ProductionJournal = (props) => {
               <div className="production-journal__workshop-name">
                 <span>{workshop[0]}</span>
               </div>
-              <div className="production-journal__list">
-                {Object.entries(worktimeInputs[workshop[1]]).map(
-                  (workItem, workIndex) => (
-                    <>
-                      <div className="main-form__row" key={workIndex}>
-                        <FormRow
-                          workTimeErrors={workTimeErrors}
-                          setWorkTimeErrors={setWorkTimeErrors}
-                          worktimeInputs={worktimeInputs}
-                          setWorkTimeInputs={setWorkTimeInputs}
-                          employees={employees}
-                          workItem={workItem[1]}
-                          workshop={workshop}
-                          workIndex={workIndex}
-                        />
-                      </div>
-                      {!workItem[1].isMinimized ? (
-                        <JournalForm
-                          setWorkTimeInputs={setWorkTimeInputs}
-                          worktimeInputs={worktimeInputs}
-                          workItem={workItem[1]}
-                          workshop={workshop}
-                          workIndex={workIndex}
-                          categories={categories}
-                          products={products}
-                        />
-                      ) : null}
-                    </>
-                  ),
-                )}
-              </div>
+              {isLoading ? (
+                <PlaceholderLoading
+                  wrapperClassName="production-journal__list"
+                  itemClassName="main-form__item--placeholder"
+                  minHeight="1.5rem"
+                  items={5}
+                />
+              ) : (
+                <div className="production-journal__list">
+                  {Object.entries(worktimeInputs[workshop[1]]).map(
+                    (workItem, workIndex) => (
+                      <>
+                        <div className="main-form__row" key={workIndex}>
+                          <FormRow
+                            workTimeErrors={workTimeErrors}
+                            setWorkTimeErrors={setWorkTimeErrors}
+                            worktimeInputs={worktimeInputs}
+                            setWorkTimeInputs={setWorkTimeInputs}
+                            employees={employees}
+                            workItem={workItem[1]}
+                            workshop={workshop}
+                            workIndex={workIndex}
+                          />
+                        </div>
+                        {!workItem[1].isMinimized ? (
+                          <JournalForm
+                            setWorkTimeInputs={setWorkTimeInputs}
+                            worktimeInputs={worktimeInputs}
+                            workItem={workItem[1]}
+                            workshop={workshop}
+                            workIndex={workIndex}
+                            categories={categories}
+                            products={products}
+                          />
+                        ) : null}
+                      </>
+                    ),
+                  )}
+                </div>
+              )}
             </>
           ))}
 
