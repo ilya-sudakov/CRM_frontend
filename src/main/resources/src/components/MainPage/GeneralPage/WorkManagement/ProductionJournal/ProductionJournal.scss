@@ -8,8 +8,8 @@
         font-size: 0.9rem;
         width: 100%;
         // padding: 10px 0;
-        border-bottom: 1px solid #dddddd;
-        margin-bottom: 10px;
+        // border-bottom: 1px solid #dddddd;
+        // margin-bottom: 10px;
         // align-items: center;
         .production-journal__form {
             flex: 0 1 100%;
@@ -130,11 +130,14 @@
                     margin-top: 0 !important;
                     padding: 0;
                     width: calc(100% - 30px);
-                    margin-bottom: 10px;
+                    margin-bottom: 12px;
+                    border-radius: 0px;
+                    border-bottom: 1px solid #dddddd;
                     // width: fit-content;
                     // min-width: 300px;
 
                     &:last-child {
+                        border-bottom: none;
                         margin-bottom: 0;
                     }
 
@@ -151,8 +154,9 @@
 
                         .select-work-item--new {
                             padding-right: 10px;
-                            flex: 0 1 50%;
-                            max-width: 300px;
+                            flex: 0 1 300px;
+                            min-width: 250px;
+                            max-width: 250px;
                         }
 
                         .select-work__item {
