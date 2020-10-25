@@ -44,7 +44,7 @@ const SelectWorkItem = (props) => {
   }
 
   return (
-    <div className="select-work-item">
+    <div className="select-work-item select-work-item--new">
       <div className="select-work-item__input">
         <div className="select-work-item__input_name">
           {props.inputName + (props.required ? '*' : '')}
@@ -53,6 +53,14 @@ const SelectWorkItem = (props) => {
           value={props.defaultValue.value === '' ? null : props.defaultValue}
           className="select-work-item__input_field"
           options={works}
+          styles={{
+            menu: (styles) => {
+              return {
+                ...styles,
+                zIndex: 999,
+              }
+            },
+          }}
           placeholder="Выберите вид работы..."
           onChange={clickWork}
         />

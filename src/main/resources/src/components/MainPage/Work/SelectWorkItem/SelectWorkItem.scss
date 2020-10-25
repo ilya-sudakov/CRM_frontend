@@ -6,12 +6,26 @@
   flex-direction: column;
   justify-content: space-between;
   // margin-bottom: 25px;
+  &--new {
+    .select-work-item__input_name {
+      position: absolute;
+      top: -11px;
+      left: 6px;
+      z-index: 1;
+      font-size: 0.8rem !important;
+      background-color: #ffffff;
+      width: fit-content !important;
+      padding: 2px 5px;
+    }
+  }
+
   .select-work-item__input {
     display: flex;
     width: calc(100% - 0px);
     // flex-direction: row;
     // align-items: center;
     justify-content: space-between;
+    position: relative;
 
     //column direction
     flex-direction: column;

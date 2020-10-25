@@ -6,6 +6,7 @@ import SelectWorkItemNew from '../../../Work/SelectWorkItem/SelectWorkItemNew.js
 import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
 import { UserContext } from '../../../../../App.js'
+import SelectDraftNew from '../../../Dispatcher/Rigging/SelectDraft/SelectDraftNew.jsx'
 
 const SelectWork = (props) => {
   const [selected, setSelected] = useState(props.defaultConfig ?? [])
@@ -138,7 +139,7 @@ const SelectWork = (props) => {
             key={index}
           >
             <div className="select-work__selected_form">
-              {props.newSelectWork ? (
+              {props.newDesign ? (
                 <SelectWorkItemNew
                   inputName="Выбор работы"
                   required
@@ -218,29 +219,51 @@ const SelectWork = (props) => {
                   // workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
                 />
               ) : selected[index].workType === 'Чертеж' ? (
-                <div className="select-work__item">
-                  <div className="select-work__input_name">Чертежи</div>
-                  <div className="select-work__input_field">
-                    <SelectDraft
-                      options
-                      defaultValue={item.draft}
-                      onChange={(value) => {
-                        let temp = selected
-                        let originalItem = selected[index]
-                        temp.splice(index, 1, {
-                          ...originalItem,
-                          draft: value,
-                        })
-                        setSelected([...temp])
-                        props.handleWorkChange([...temp])
-                      }}
-                      searchPlaceholder={
-                        "Добавьте чертеж нажав на кнопку 'Добавить чертеж'"
-                      }
-                      userHasAccess={userContext.userHasAccess}
-                    />
+                props.newDesign ? (
+                  <div className="select-work__item">
+                    <div className="select-work__input_field">
+                      <SelectDraftNew
+                        options
+                        defaultValue={item.draft}
+                        onChange={(value) => {
+                          let temp = selected
+                          let originalItem = selected[index]
+                          temp.splice(index, 1, {
+                            ...originalItem,
+                            draft: value,
+                          })
+                          setSelected([...temp])
+                          props.handleWorkChange([...temp])
+                        }}
+                        userHasAccess={userContext.userHasAccess}
+                      />
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="select-work__item">
+                    <div className="select-work__input_name">Чертежи</div>
+                    <div className="select-work__input_field">
+                      <SelectDraft
+                        options
+                        defaultValue={item.draft}
+                        onChange={(value) => {
+                          let temp = selected
+                          let originalItem = selected[index]
+                          temp.splice(index, 1, {
+                            ...originalItem,
+                            draft: value,
+                          })
+                          setSelected([...temp])
+                          props.handleWorkChange([...temp])
+                        }}
+                        searchPlaceholder={
+                          "Добавьте чертеж нажав на кнопку 'Добавить чертеж'"
+                        }
+                        userHasAccess={userContext.userHasAccess}
+                      />
+                    </div>
+                  </div>
+                )
               ) : null}
               {/* <div className="select-work__item">
                 <div className="select-work__input_name">Комментарий</div>

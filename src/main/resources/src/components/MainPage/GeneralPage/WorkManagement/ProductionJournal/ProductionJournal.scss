@@ -1,13 +1,15 @@
 @import "../../../../../variables.scss";
 
 .production-journal {
+    .main-form__form--full {
+        max-width: none;
+    }
     .main-form__row {
         font-size: 0.9rem;
         width: 100%;
         // align-items: center;
-        .select-employee-new {
+        .production-journal__form {
             flex: 0 1 100%;
-            padding-right: 10px;
         }
         .main-form__item {
             padding-left: 10px;
@@ -22,6 +24,9 @@
                 position: relative;
                 margin-bottom: 8px;
                 margin-top: 5px;
+                flex: 0 1 50%;
+                padding-right: 10px;
+                max-width: 33.33%;
 
                 input {
                     height: 1.5rem;
@@ -46,8 +51,11 @@
         .main-form__button {
             margin-right: 0;
             margin-left: 0;
-            min-width: 100px;
+            padding-top: 0;
+            // min-width: 100px;
             padding-right: 0;
+            margin-right: 5px;
+            // margin-right: auto;
 
             &:hover {
                 background-color: transparent;
@@ -75,20 +83,105 @@
         width: calc(100% - 20px);
         margin-bottom: 2.5px;
     }
+    &__works-list {
+        width: 100%;
+        flex: 0 1 100% !important;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding-left: 10px;
+        // justify-content: flex-start;
+    }
     &__form {
-        border: 1px solid #dddddd;
-        background-color: #fbfbfb;
         border-radius: 5px;
-        padding: 10px 10px;
+        // padding: 0px 10px;
         margin-top: 5px;
-        margin-bottom: 8px;
-        padding-bottom: 0;
+        // margin-bottom: 8px;
+        // padding-bottom: 0;
 
         .main-form__item {
             width: 100%;
+            box-sizing: border-box;
         }
         .select-work-item__input_field {
             font-size: 0.8rem !important;
+        }
+
+        .select-work {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+
+            &__button {
+                white-space: nowrap;
+                margin-right: 100%;
+                display: none;
+            }
+
+            &__selected {
+                width: 100%;
+
+                &_item {
+                    background-color: transparent;
+                    border: none;
+                    margin-top: 0 !important;
+                    padding: 0;
+                    width: calc(100% - 30px);
+                    margin-bottom: 10px;
+                    // width: fit-content;
+                    // min-width: 300px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    &:hover,
+                    &:focus,
+                    &:focus-within {
+                        background-color: transparent !important;
+                    }
+                    .select-work__selected_form {
+                        display: flex;
+                        flex-direction: row;
+                        padding: 0;
+                        width: 100%;
+
+                        .select-work-item--new {
+                            padding-right: 10px;
+                            flex: 0 1 50%;
+                            max-width: 300px;
+                        }
+
+                        .select-work__item {
+                            margin-top: 0;
+                            position: relative;
+                            .select-work__input_name {
+                                position: absolute;
+                                top: -11px;
+                                left: 6px;
+                                // z-index: 1;
+                                font-size: 0.8rem !important;
+                                background-color: #ffffff;
+                                width: fit-content !important;
+                                padding: 2px 5px;
+                            }
+                            .select-work__input_field {
+                                input {
+                                    border-radius: 3px;
+                                    height: 1.5rem;
+                                    border-color: #bbbbbb;
+                                }
+                            }
+
+                            &:last-child {
+                                max-width: 70px;
+                                margin-left: 0;
+                                margin-right: auto;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     &__workshop-name {

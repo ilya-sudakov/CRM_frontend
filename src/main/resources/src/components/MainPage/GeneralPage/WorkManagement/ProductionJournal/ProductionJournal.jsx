@@ -268,7 +268,7 @@ const ProductionJournal = (props) => {
   return (
     <div className="production-journal">
       <div className="main-form">
-        <form className="main-form__form">
+        <form className="main-form__form main-form__form--full">
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Журнал производства</div>
           </div>
@@ -324,19 +324,10 @@ const ProductionJournal = (props) => {
                             workItem={workItem[1]}
                             workshop={workshop}
                             workIndex={workIndex}
-                          />
-                        </div>
-                        {!workItem[1].isMinimized ? (
-                          <JournalForm
-                            setWorkTimeInputs={setWorkTimeInputs}
-                            worktimeInputs={worktimeInputs}
-                            workItem={workItem[1]}
-                            workshop={workshop}
-                            workIndex={workIndex}
                             categories={categories}
                             products={products}
                           />
-                        ) : null}
+                        </div>
                       </>
                     ),
                   )}
@@ -374,6 +365,9 @@ const FormRow = ({
   workTimeErrors,
   setWorkTimeErrors,
   setWorkTimeInputs,
+  products,
+  categories,
+  worktimeInputs,
   workItem,
   workshop,
 }) => {
@@ -391,26 +385,50 @@ const FormRow = ({
           readOnly
         ></input>
       </div>
-      <div
-        className="main-form__button main-form__button--inverted"
-        style={{ borderColor: 'transparent' }}
-        onClick={() => {
-          setWorkTimeInputs((worktimeInputs) => {
-            return {
-              ...worktimeInputs,
-              [workshop[1]]: {
-                ...worktimeInputs[workshop[1]],
-                [workItem.employee.id]: {
-                  ...workItem,
-                  isMinimized: !workItem.isMinimized,
+      <div className="production-journal__works-list">
+        <div
+          className="main-form__button main-form__button--inverted"
+          style={{
+            borderColor: 'transparent',
+            fontSize: '30px',
+            color: '#555555',
+          }}
+          onClick={() => {
+            setWorkTimeInputs((worktimeInputs) => {
+              return {
+                ...worktimeInputs,
+                [workshop[1]]: {
+                  ...worktimeInputs[workshop[1]],
+                  [workItem.employee.id]: {
+                    ...workItem,
+                    works: [
+                      ...workItem.works,
+                      {
+                        product: [],
+                        draft: [],
+                        workName: '',
+                        workType: '',
+                        workId: null,
+                        hours: 0,
+                        comment: '',
+                      },
+                    ],
+                  },
                 },
-              },
-            }
-          })
-        }}
-      >
-        <span>{workItem.isMinimized ? 'Развернуть' : 'Свернуть'}</span>
-        <ChevronImg className="production-journal__img production-journal__img--chevron" />
+              }
+            })
+          }}
+        >
+          +
+        </div>
+        <JournalForm
+          setWorkTimeInputs={setWorkTimeInputs}
+          worktimeInputs={worktimeInputs}
+          workItem={workItem}
+          workshop={workshop}
+          categories={categories}
+          products={products}
+        />
       </div>
     </>
   )
@@ -445,7 +463,7 @@ const JournalForm = ({
               })
             }}
             totalHours={workItem.totalHours}
-            newSelectWork
+            newDesign
             defaultConfig={[
               {
                 product: [],

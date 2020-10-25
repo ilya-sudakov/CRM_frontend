@@ -296,6 +296,43 @@
     }
   }
 
+  &--new {
+    padding-right: 10px;
+    box-sizing: border-box;
+    margin-top: 0;
+    margin-bottom: 0 !important;
+    .select-draft__input_name {
+      position: absolute;
+      top: -11px;
+      left: 6px;
+      z-index: 1;
+      color: #555555;
+      font-size: 0.8rem !important;
+      background-color: #ffffff;
+      width: fit-content !important;
+      padding: 2px 5px;
+    }
+
+    .select-draft__selected {
+      margin-top: 0px;
+      margin-bottom: 10px;
+
+      .select-draft__selected_row {
+        margin-top: 10px;
+      }
+    }
+
+    .select-draft__selected_quantity {
+      input {
+        height: auto !important;
+      }
+    }
+
+    .select-draft__input_field {
+      font-size: 0.9rem;
+    }
+  }
+
   @media (max-width: 768px) {
     & {
       width: 100% !important;
