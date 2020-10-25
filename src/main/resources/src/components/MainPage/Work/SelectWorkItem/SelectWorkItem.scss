@@ -17,6 +17,11 @@
       width: fit-content !important;
       padding: 2px 5px;
     }
+
+    input {
+      max-width: none !important;
+      min-width: 0 !important;
+    }
   }
 
   .select-work-item__input {

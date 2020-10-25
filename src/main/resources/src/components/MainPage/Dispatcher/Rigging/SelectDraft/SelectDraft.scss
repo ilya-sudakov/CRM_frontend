@@ -313,6 +313,11 @@
       padding: 2px 5px;
     }
 
+    input {
+      max-width: none !important;
+      min-width: 0 !important;
+    }
+
     .select-draft__selected {
       margin-top: 0px;
       margin-bottom: 10px;
@@ -325,7 +330,9 @@
     .select-draft__selected_item {
       width: 100%;
     }
-
+    .select-draft__img {
+      max-width: 22px;
+    }
     .select-draft__selected_quantity {
       margin-right: 0;
       width: calc(30%);

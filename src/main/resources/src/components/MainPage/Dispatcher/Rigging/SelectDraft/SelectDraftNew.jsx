@@ -201,49 +201,51 @@ const SelectDraftNew = (props) => {
           Поле не заполнено!
         </div>
       )}
-      <div className="select-draft__selected">
-        {selected.map((item, index) => (
-          <div className="select-draft__selected_row">
-            <div className="select-draft__selected_item">
-              <input
-                type="text"
-                className="select-draft__selected_name"
-                name_id={index}
-                name="name"
-                autoComplete="off"
-                readOnly
-                value={`${item.number || ''}, ${item.name}`}
-                onChange={item.type === 'new' ? handleParamChange : null}
-              />
-              {!props.readOnly && !props.workshop && (
-                <img
-                  id={index}
-                  className="select-draft__img"
-                  src={deleteSVG}
-                  alt=""
-                  onClick={clickOnSelected}
+      {selected.length > 0 ? (
+        <div className="select-draft__selected">
+          {selected.map((item, index) => (
+            <div className="select-draft__selected_row">
+              <div className="select-draft__selected_item">
+                <input
+                  type="text"
+                  className="select-draft__selected_name"
+                  name_id={index}
+                  name="name"
+                  autoComplete="off"
+                  readOnly
+                  value={`${item.number || ''}, ${item.name}`}
+                  onChange={item.type === 'new' ? handleParamChange : null}
                 />
-              )}
+                {!props.readOnly && !props.workshop && (
+                  <img
+                    id={index}
+                    className="select-draft__img"
+                    src={deleteSVG}
+                    alt=""
+                    onClick={clickOnSelected}
+                  />
+                )}
+              </div>
+              <div className="select-draft__selected_quantity">
+                <span className="select-draft__input-name">
+                  Кол-во (шт.){!props.readOnly && '*'}
+                </span>
+                <input
+                  quantity_id={index}
+                  // type="text"
+                  type="number"
+                  name="quantity"
+                  autoComplete="off"
+                  defaultValue={item.quantity != 0 ? item.quantity : 0}
+                  value={item.quantity}
+                  onChange={handleParamChange}
+                  readOnly={props.readOnly}
+                />
+              </div>
             </div>
-            <div className="select-draft__selected_quantity">
-              <span className="select-draft__input-name">
-                Кол-во (шт.){!props.readOnly && '*'}
-              </span>
-              <input
-                quantity_id={index}
-                // type="text"
-                type="number"
-                name="quantity"
-                autoComplete="off"
-                defaultValue={item.quantity != 0 ? item.quantity : 0}
-                value={item.quantity}
-                onChange={handleParamChange}
-                readOnly={props.readOnly}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }

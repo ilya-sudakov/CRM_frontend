@@ -122,6 +122,13 @@
             flex-wrap: wrap;
             flex-direction: row;
 
+            &__img {
+                max-width: 22px;
+                // right: -20px !important;
+                // position: relative !important;
+                // right: -10px !important;
+            }
+
             &__button {
                 white-space: nowrap;
                 margin-right: 100%;
@@ -140,6 +147,8 @@
                     margin-bottom: 12px;
                     border-radius: 0px;
                     border-bottom: 1px solid #dddddd;
+                    // display: flex;
+                    // flex-direction: row;
                     // width: fit-content;
                     // min-width: 300px;
 
@@ -186,12 +195,11 @@
                                     border-color: #bbbbbb;
                                 }
                             }
-
-                            &:last-child {
-                                max-width: 70px;
-                                margin-left: 0;
-                                margin-right: auto;
-                            }
+                        }
+                        .select-work__item--time {
+                            max-width: 70px;
+                            margin-left: 0;
+                            margin-right: auto;
                         }
                     }
                 }

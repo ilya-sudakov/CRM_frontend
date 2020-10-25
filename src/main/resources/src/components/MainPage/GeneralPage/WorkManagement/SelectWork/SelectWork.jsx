@@ -304,7 +304,7 @@ const SelectWork = (props) => {
                 </div>
               </div> */}
               {!props.noTime && (
-                <div className="select-work__item">
+                <div className="select-work__item select-work__item--time">
                   <div className="select-work__input_name">Часы</div>
                   <div className="select-work__input_field">
                     <input
