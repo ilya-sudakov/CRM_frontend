@@ -46,9 +46,7 @@ const SelectWorkItem = (props) => {
   return (
     <div className="select-work-item select-work-item--new">
       <div className="select-work-item__input">
-        <div className="select-work-item__input_name">
-          {props.inputName + (props.required ? '*' : '')}
-        </div>
+        <div className="select-work-item__input_name">Вид работы</div>
         <Select
           value={props.defaultValue.value === '' ? null : props.defaultValue}
           className="select-work-item__input_field"
@@ -61,7 +59,10 @@ const SelectWorkItem = (props) => {
               }
             },
           }}
-          placeholder="Выберите вид работы..."
+          placeholder={
+            works.length > 0 ? 'Выберите вид работы...' : 'Идет загрузка...'
+          }
+          isDisabled={works.length === 0}
           onChange={clickWork}
         />
       </div>

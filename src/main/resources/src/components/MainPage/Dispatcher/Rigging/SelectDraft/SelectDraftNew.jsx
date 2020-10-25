@@ -178,7 +178,10 @@ const SelectDraftNew = (props) => {
               }
             },
           }}
-          placeholder="Выберите чертеж..."
+          placeholder={
+            drafts.length > 0 ? 'Выберите чертеж...' : 'Идет загрузка...'
+          }
+          isDisabled={drafts.length === 0}
           onChange={(value) => clickOnOption(value)}
         />
       </div>

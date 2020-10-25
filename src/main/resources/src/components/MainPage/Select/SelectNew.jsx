@@ -425,7 +425,10 @@ const SelectNew = (props) => {
               }
             },
           }}
-          placeholder="Выберите продукцию..."
+          placeholder={
+            products.length > 0 ? 'Выберите продукцию...' : 'Идет загрузка...'
+          }
+          isDisabled={products.length === 0}
           onChange={(value) => clickOnOption(value)}
         />
       </div>
