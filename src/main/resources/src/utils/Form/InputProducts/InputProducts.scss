@@ -16,6 +16,10 @@
     }
   }
 
+  &--new {
+    margin: 0 !important;
+  }
+
   .input_products__error {
     align-self: flex-end;
     width: calc(80%);

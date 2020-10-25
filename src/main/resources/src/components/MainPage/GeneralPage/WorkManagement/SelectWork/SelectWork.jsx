@@ -7,6 +7,7 @@ import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
 import { UserContext } from '../../../../../App.js'
 import SelectDraftNew from '../../../Dispatcher/Rigging/SelectDraft/SelectDraftNew.jsx'
+import InputProductsNew from '../../../../../utils/Form/InputProducts/InputProductsNew.jsx'
 
 const SelectWork = (props) => {
   const [selected, setSelected] = useState(props.defaultConfig ?? [])
@@ -194,30 +195,53 @@ const SelectWork = (props) => {
               {selected[index].workType === 'Продукция' ||
               selected[index].workType === undefined ||
               selected[index].typeOfWork === 'Продукция' ? (
-                <InputProducts
-                  inputName="Продукция"
-                  options
-                  defaultValue={item.product}
-                  categories={props.categories}
-                  products={props.products}
-                  numberInput
-                  name="product"
-                  noPackaging
-                  onChange={(value) => {
-                    // console.log(value)
-                    let temp = selected
-                    let originalItem = selected[index]
-                    temp.splice(index, 1, {
-                      ...originalItem,
-                      product: value,
-                    })
-                    setSelected([...temp])
-                    props.handleWorkChange([...temp])
-                  }}
-                  userHasAccess={userContext.userHasAccess}
-                  searchPlaceholder="Введите название продукта для поиска..."
-                  // workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
-                />
+                props.newDesign ? (
+                  <InputProductsNew
+                    options
+                    defaultValue={item.product}
+                    categories={props.categories}
+                    products={props.products}
+                    numberInput
+                    name="product"
+                    noPackaging
+                    onChange={(value) => {
+                      // console.log(value)
+                      let temp = selected
+                      let originalItem = selected[index]
+                      temp.splice(index, 1, {
+                        ...originalItem,
+                        product: value,
+                      })
+                      setSelected([...temp])
+                      props.handleWorkChange([...temp])
+                    }}
+                  />
+                ) : (
+                  <InputProducts
+                    inputName="Продукция"
+                    options
+                    defaultValue={item.product}
+                    categories={props.categories}
+                    products={props.products}
+                    numberInput
+                    name="product"
+                    noPackaging
+                    onChange={(value) => {
+                      // console.log(value)
+                      let temp = selected
+                      let originalItem = selected[index]
+                      temp.splice(index, 1, {
+                        ...originalItem,
+                        product: value,
+                      })
+                      setSelected([...temp])
+                      props.handleWorkChange([...temp])
+                    }}
+                    userHasAccess={userContext.userHasAccess}
+                    searchPlaceholder="Введите название продукта для поиска..."
+                    // workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+                  />
+                )
               ) : selected[index].workType === 'Чертеж' ? (
                 props.newDesign ? (
                   <div className="select-work__item">
