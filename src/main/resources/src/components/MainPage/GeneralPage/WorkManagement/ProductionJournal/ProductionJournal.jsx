@@ -390,8 +390,8 @@ const FormRow = ({
           className="main-form__button main-form__button--inverted"
           style={{
             borderColor: 'transparent',
-            fontSize: '30px',
-            color: '#555555',
+            fontSize: '28px',
+            color: '#888888',
           }}
           title="Добавить запись о работе"
           onClick={() => {
@@ -426,7 +426,6 @@ const FormRow = ({
           className="main-form__button main-form__button--inverted"
           style={{
             borderColor: 'transparent',
-            fontSize: '30px',
             color: '#555555',
           }}
           title={`${

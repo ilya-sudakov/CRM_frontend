@@ -78,6 +78,7 @@
         border-radius: 3px;
         max-width: fit-content;
         flex: none !important;
+        padding-left: 2px;
 
         .main-window__img--rotated {
             transition: transform 100ms ease-in-out;
@@ -85,7 +86,7 @@
         }
     }
     &__img {
-        margin-top: 0.8rem;
+        margin-top: 0.7rem;
         // margin-left: 5px;
     }
     &__list {
