@@ -28,7 +28,7 @@ const SelectDraftNew = (props) => {
               newDrafts.push({
                 ...stamp,
                 value: stamp.id,
-                label: stamp.name,
+                label: `${stamp.number}, ${stamp.name}`,
                 type: 'Stamp',
               })
             })
@@ -46,7 +46,7 @@ const SelectDraftNew = (props) => {
                   newDrafts.push({
                     ...stamp,
                     value: stamp.id,
-                    label: stamp.name,
+                    label: `${stamp.number}, ${stamp.name}`,
                     type: 'Press',
                   })
                 })
@@ -63,7 +63,7 @@ const SelectDraftNew = (props) => {
                       newDrafts.push({
                         ...stamp,
                         value: stamp.id,
-                        label: stamp.name,
+                        label: `${stamp.number}, ${stamp.name}`,
                         type: 'Bench',
                       })
                     })
@@ -83,7 +83,7 @@ const SelectDraftNew = (props) => {
                   newDrafts.push({
                     ...stamp,
                     value: stamp.id,
-                    label: stamp.name,
+                    label: `${stamp.number}, ${stamp.name}`,
                     type: 'Detail',
                   })
                 })
@@ -212,7 +212,7 @@ const SelectDraftNew = (props) => {
                 name="name"
                 autoComplete="off"
                 readOnly
-                value={item.name}
+                value={`${item.number || ''}, ${item.name}`}
                 onChange={item.type === 'new' ? handleParamChange : null}
               />
               {!props.readOnly && !props.workshop && (

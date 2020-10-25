@@ -65,7 +65,7 @@ const SelectNew = (props) => {
         ...props.products.map((product) => {
           return {
             ...product,
-            label: product.name,
+            label: `#${product.id}, ${product.name}`,
             value: product.id,
           }
         }),
@@ -167,35 +167,6 @@ const SelectNew = (props) => {
     ])
   }
 
-  const selectProduct = (id, value, productId) => {
-    setSelected([
-      ...selected,
-      {
-        id: id,
-        name: value,
-        quantity: 0,
-        quantityNew: 0,
-        packaging: '',
-        // packaging: null,
-        status: 'production',
-        productId: productId,
-      },
-    ])
-    props.onChange([
-      ...selected,
-      {
-        id: id,
-        name: value,
-        quantity: 0,
-        quantityNew: 0,
-        packaging: '',
-        // packaging: null,
-        status: 'production',
-        productId: productId,
-      },
-    ])
-  }
-
   const clickOnSelected = (event) => {
     const id = event.target.getAttribute('id')
     let newSelected = selected
@@ -232,19 +203,6 @@ const SelectNew = (props) => {
     // console.log(color, id, newSelected);
     props.onChange([...newSelected])
   }
-
-  const pressEscKey = useCallback(
-    (event) => {
-      if (event.keyCode === 27) {
-        console.log(showOptions, showOverlay)
-
-        if (showOptions) {
-          return clickOnInput()
-        }
-      }
-    },
-    [showOptions, showOverlay],
-  )
 
   useEffect(() => {
     if (props.defaultValue !== undefined) {
