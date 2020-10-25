@@ -199,6 +199,10 @@ const TableView = (props) => {
       )
         return
       if (node !== null && props.data) {
+        console.log(
+          node,
+          props.data.find((item) => item.id === id),
+        )
         node.scrollIntoView({
           behavior: 'smooth',
           block: 'start',
