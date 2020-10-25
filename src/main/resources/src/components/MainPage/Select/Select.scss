@@ -341,7 +341,7 @@
       width: 100% !important;
     }
     .select__input_field {
-      font-size: 0.85rem !important;
+      font-size: 0.8rem !important;
     }
     .select__input_name {
       position: absolute;
@@ -366,6 +366,11 @@
 
     .select__selected_item {
       width: calc(100%);
+      font-size: 0.8rem;
+
+      .select-product__color_name {
+        padding: 5px 5px;
+      }
     }
     .select__selected_quantity {
       margin-right: 0;
