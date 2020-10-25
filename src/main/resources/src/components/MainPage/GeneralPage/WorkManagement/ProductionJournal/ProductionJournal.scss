@@ -78,9 +78,15 @@
         border-radius: 3px;
         max-width: fit-content;
         flex: none !important;
+
+        .main-window__img--rotated {
+            transition: transform 100ms ease-in-out;
+            transform: rotate(180deg) !important;
+        }
     }
     &__img {
-        margin-left: 5px;
+        margin-top: 0.8rem;
+        // margin-left: 5px;
     }
     &__list {
         width: calc(100% - 20px);
@@ -188,6 +194,26 @@
                         }
                     }
                 }
+            }
+        }
+
+        .select-draft__selected,
+        .select__selected {
+            transform-origin: top;
+            transition: transform 200ms ease-in-out;
+        }
+        &--minimized {
+            .select-draft__selected {
+                margin: 0;
+                padding: 0;
+                max-height: 0;
+                transform: scaleY(0);
+            }
+            .select__selected {
+                margin: 0;
+                padding: 0;
+                max-height: 0;
+                transform: scaleY(0);
             }
         }
     }
