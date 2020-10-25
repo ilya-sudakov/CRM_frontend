@@ -311,8 +311,19 @@ const ProductionJournal = (props) => {
                 />
               ) : (
                 <div className="production-journal__list">
-                  {Object.entries(worktimeInputs[workshop[1]]).map(
-                    (workItem, workIndex) => (
+                  {Object.entries(worktimeInputs[workshop[1]])
+                    .sort((a, b) => {
+                      a = a[1]
+                      b = b[1]
+                      if (a.employee.lastName < b.employee.lastName) {
+                        return -1
+                      }
+                      if (a.employee.lastName > b.employee.lastName) {
+                        return 1
+                      }
+                      return 0
+                    })
+                    .map((workItem, workIndex) => (
                       <>
                         <div className="main-form__row" key={workIndex}>
                           <FormRow
@@ -329,8 +340,7 @@ const ProductionJournal = (props) => {
                           />
                         </div>
                       </>
-                    ),
-                  )}
+                    ))}
                 </div>
               )}
             </>
