@@ -323,12 +323,18 @@
       margin-bottom: 10px;
 
       .select-draft__selected_row {
-        margin-top: 10px;
+        margin-top: 8px;
+        align-items: flex-start;
       }
     }
 
     .select-draft__selected_item {
       width: 100%;
+
+      input {
+        font-size: 0.8rem;
+        max-height: 1.25rem !important;
+      }
     }
     .select-draft__img {
       max-width: 22px;
@@ -340,7 +346,7 @@
       max-width: 125px;
       input {
         min-width: 100% !important;
-        height: auto !important;
+        height: 2rem !important;
         box-sizing: border-box;
         border-radius: 5px !important;
       }
