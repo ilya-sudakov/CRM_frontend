@@ -149,7 +149,7 @@ const SelectWork = (props) => {
                     label: item.workName,
                     typeOfWork: item.workType,
                   }}
-                  handleWorkItemChange={(name, id, type) => {
+                  handleWorkItemChange={(id, name, type) => {
                     console.log(name, id, type)
                     let temp = selected
                     let originalItem = selected[index]

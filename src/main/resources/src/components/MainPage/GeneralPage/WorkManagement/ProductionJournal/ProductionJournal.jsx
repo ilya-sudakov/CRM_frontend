@@ -15,7 +15,12 @@ import {
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx'
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
-import { getRecordedWorkByDay } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import {
+  addDraftToRecordedWork,
+  addProductToRecordedWork,
+  addRecordedWork,
+  getRecordedWorkByDay,
+} from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -159,42 +164,44 @@ const ProductionJournal = (props) => {
 
           if (!item.isOld && item.workId !== null && item.isOld !== undefined) {
             console.log('adding item', item)
+            return addRecordedWork(temp)
+              .then((res) => res.json())
+              .then((res) => {
+                return Promise.all(
+                  item.product.map((product) => {
+                    return addProductToRecordedWork(
+                      res.id,
+                      product.id,
+                      product.quantity,
+                      {
+                        name: product.name,
+                      },
+                    )
+                  }),
+                )
+              })
+              .then(() => {
+                return Promise.all(
+                  item.draft.map((draft) => {
+                    return addDraftToRecordedWork(
+                      itemId,
+                      draft.partId,
+                      draft.type,
+                      draft.quantity,
+                    )
+                  }),
+                )
+              })
+              .then(() => {
+                props.history.push('/')
+              })
+              .catch((error) => {
+                alert('Ошибка при добавлении записи')
+                setIsLoading(false)
+                // setShowError(true);
+                console.log(error)
+              })
           }
-
-          // return addRecordedWork(temp)
-          //   .then((res) => res.json())
-          //   .then((res) => {
-          //     const productsArr = item.product.map((product) => {
-          //       addProductToRecordedWork(
-          //         res.id,
-          //         product.id,
-          //         product.quantity,
-          //         {
-          //           name: product.name,
-          //         },
-          //       )
-          //     })
-          //     Promise.all(productsArr)
-          //       .then(() => {
-          //         const productsArr = item.draft.map((draft) => {
-          //           addDraftToRecordedWork(
-          //             itemId,
-          //             draft.partId,
-          //             draft.type,
-          //             draft.quantity,
-          //           )
-          //         })
-          //       })
-          //       .then(() => {
-          //         props.history.push('/')
-          //       })
-          //   })
-          //   .catch((error) => {
-          //     alert('Ошибка при добавлении записи')
-          //     setIsLoading(false)
-          //     // setShowError(true);
-          //     console.log(error)
-          //   })
 
           // Promise.all(editedInputs).then(() => {})
         })
