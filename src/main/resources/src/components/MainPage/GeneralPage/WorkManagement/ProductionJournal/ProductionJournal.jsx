@@ -77,7 +77,129 @@ const ProductionJournal = (props) => {
   const handleSubmit = () => {
     // setIsLoading(true)
     console.log(worktimeInputs)
-    alert('Тест формы')
+    // alert('Тест формы')
+
+    setIsLoading(true)
+    // console.log(worktimeInputs);
+    Object.entries(workshops).map((workshop) => {
+      const employeesList = Object.entries(worktimeInputs[workshop[1]])
+      employeesList.map((employee) => {
+        const editedInputs = employee[1].works.map((item, index) => {
+          // console.log('works');
+          const temp = Object.assign({
+            day: worktimeInputs.date.getDate(),
+            month: worktimeInputs.date.getMonth() + 1,
+            year: worktimeInputs.date.getFullYear(),
+            employeeId: employee[1].employee.id,
+            workListId: item.workId,
+            hours: item.hours,
+          })
+          // console.log(temp)
+          //if formIsValid()
+          if (item.isOld) {
+            console.log('editing item', item)
+            // return editRecordedWork(temp, itemId)
+            //   .then(() => {
+            //     // console.log(res);
+            //     const oldProductsArr = worktimeInputs.originalWorks[0].product.map(
+            //       (product) => {
+            //         console.log(product.id)
+            //         deleteProductFromRecordedWork(itemId, product.id)
+            //       },
+            //     )
+            //     return Promise.all(oldProductsArr).then(() => {
+            //       const productsArr = item.product.map((product) => {
+            //         addProductToRecordedWork(
+            //           itemId,
+            //           product.id,
+            //           product.quantity,
+            //           {
+            //             name: product.name,
+            //           },
+            //         )
+            //       })
+            //       Promise.all(productsArr)
+            //     })
+            //   })
+            //   .then(() => {
+            //     // console.log(res);
+            //     const oldProductsArr = worktimeInputs.originalWorks[0].draft.map(
+            //       (draft) => {
+            //         deleteDraftFromRecordedWork(
+            //           itemId,
+            //           draft.partId,
+            //           draft.type,
+            //         )
+            //       },
+            //     )
+            //     Promise.all(oldProductsArr).then(() => {
+            //       return Promise.all(
+            //         item.draft.map((draft) => {
+            //           addDraftToRecordedWork(
+            //             itemId,
+            //             draft.partId,
+            //             draft.type,
+            //             draft.quantity,
+            //             draft.name,
+            //           )
+            //         }),
+            //       )
+            //     })
+            //   })
+            //   .then(() => {
+            //     props.history.push('/work-management')
+            //   })
+            //   .catch((error) => {
+            //     alert('Ошибка при добавлении записи')
+            //     setIsLoading(false)
+            //     // setShowError(true);
+            //     console.log(error)
+            //   })
+          }
+
+          if (!item.isOld && item.workId !== null && item.isOld !== undefined) {
+            console.log('adding item', item)
+          }
+
+          // return addRecordedWork(temp)
+          //   .then((res) => res.json())
+          //   .then((res) => {
+          //     const productsArr = item.product.map((product) => {
+          //       addProductToRecordedWork(
+          //         res.id,
+          //         product.id,
+          //         product.quantity,
+          //         {
+          //           name: product.name,
+          //         },
+          //       )
+          //     })
+          //     Promise.all(productsArr)
+          //       .then(() => {
+          //         const productsArr = item.draft.map((draft) => {
+          //           addDraftToRecordedWork(
+          //             itemId,
+          //             draft.partId,
+          //             draft.type,
+          //             draft.quantity,
+          //           )
+          //         })
+          //       })
+          //       .then(() => {
+          //         props.history.push('/')
+          //       })
+          //   })
+          //   .catch((error) => {
+          //     alert('Ошибка при добавлении записи')
+          //     setIsLoading(false)
+          //     // setShowError(true);
+          //     console.log(error)
+          //   })
+
+          // Promise.all(editedInputs).then(() => {})
+        })
+      })
+    })
   }
 
   useEffect(() => {
@@ -156,6 +278,7 @@ const ProductionJournal = (props) => {
                 {
                   ...work,
                   ...workList,
+                  isOld: true,
                   product: work.workControlProduct.map((product) => {
                     return {
                       ...product,
@@ -319,6 +442,7 @@ const ProductionJournal = (props) => {
                     employee: employee,
                     works: [
                       {
+                        isOld: false,
                         product: [],
                         draft: [],
                         workName: '',
@@ -506,6 +630,7 @@ const FormRow = ({
                       ...workItem.works,
                       {
                         product: [],
+                        isOld: false,
                         draft: [],
                         workName: '',
                         workType: '',

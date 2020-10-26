@@ -21,38 +21,9 @@ const SelectNew = (props) => {
   const [showOverlay, setShowOverlay] = useState(false)
   const userContext = useContext(UserContext)
 
-  const search = () => {
-    // console.log(products);
-    let searchArr = searchQuery.split(' ')
-    return (props.products ? props.products : products).filter((item) => {
-      let check = true
-      searchArr.map((searchWord) => {
-        if (
-          item.name.toLowerCase().includes(searchWord.toLowerCase()) === false
-        )
-          check = false
-      })
-      if (check === true) {
-        return true
-      } else {
-        return false
-      }
-    })
-  }
-
-  const handleInputChange = (event) => {
-    setSearchQuery(event.target.value)
-  }
-
   const clickOnInput = () => {
     setShowOverlay(!showOverlay)
     return setShowOptions(!showOptions)
-  }
-
-  const clickOverlay = () => {
-    if (showOverlay) {
-      clickOnInput()
-    }
   }
 
   async function loadCategories() {
@@ -149,7 +120,7 @@ const SelectNew = (props) => {
         packaging: '',
         // packaging: null,
         status: 'production',
-        productId: productId,
+        productId: id,
       },
     ])
     props.onChange([
@@ -162,7 +133,7 @@ const SelectNew = (props) => {
         packaging: '',
         // packaging: null,
         status: 'production',
-        productId: productId,
+        productId: id,
       },
     ])
   }
