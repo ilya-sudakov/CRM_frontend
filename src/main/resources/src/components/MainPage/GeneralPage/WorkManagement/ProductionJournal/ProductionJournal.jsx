@@ -90,12 +90,10 @@ const ProductionJournal = (props) => {
     loadEmployees(abortController.signal)
       .then((res) => {
         employees = res
-        let date = new Date()
-        // date.setDate(date.getDate() - 1)
         setIsLoading(true)
         return getRecordedWorkByDay(
-          date.getMonth() + 1,
-          date.getDate(),
+          worktimeInputs.date.getMonth() + 1,
+          worktimeInputs.date.getDate(),
           abortController.signal,
         )
       })
@@ -114,7 +112,7 @@ const ProductionJournal = (props) => {
     return function cancel() {
       abortController.abort()
     }
-  }, [])
+  }, [worktimeInputs.date])
 
   const combineWorksForSamePeople = (works) => {
     // let newEmployeesWorkMap = [];
@@ -372,7 +370,7 @@ const ProductionJournal = (props) => {
             inputName="Дата"
             error={Date.parse(workTimeErrors.date)}
             name="date"
-            disabled
+            // disabled
             selected={worktimeInputs.date}
             handleDateChange={(date) => {
               validateField('date', date)
