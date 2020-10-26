@@ -448,16 +448,17 @@ const ProductionJournal = (props) => {
                     isMinimized: false,
                     employee: employee,
                     works: [
-                      {
-                        isOld: false,
-                        product: [],
-                        draft: [],
-                        workName: '',
-                        workType: '',
-                        workId: null,
-                        hours: 0,
-                        comment: '',
-                      },
+                      //uncomment to get one work as a default
+                      // {
+                      //   isOld: false,
+                      //   product: [],
+                      //   draft: [],
+                      //   workName: '',
+                      //   workType: '',
+                      //   workId: null,
+                      //   hours: 0,
+                      //   comment: '',
+                      // },
                     ],
                     originalWorks: [],
                     totalHours: 0,
@@ -735,6 +736,7 @@ const JournalForm = ({
             newDesign
             defaultConfig={[
               {
+                isOld: false,
                 product: [],
                 draft: [],
                 workName: '',

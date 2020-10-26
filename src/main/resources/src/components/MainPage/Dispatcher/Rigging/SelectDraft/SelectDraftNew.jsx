@@ -213,9 +213,7 @@ const SelectDraftNew = (props) => {
                   name="name"
                   autoComplete="off"
                   readOnly
-                  value={`${item.number ? `${item.number}, ` : ''} ${
-                    item.name
-                  }`}
+                  value={`${item.number ? `${item.number}, ` : ''}${item.name}`}
                   onChange={item.type === 'new' ? handleParamChange : null}
                 />
                 {!props.readOnly && !props.workshop && (
