@@ -22,27 +22,35 @@ const GeneralPage = (props) => {
   ])
   const [isLoading, setIsLoading] = useState(false)
 
-  async function testExcelJSLibrary() {
-    setIsLoading(true)
-    let filteredWorkshops = []
+  const getFilteredWorkshops = () => {
     if (
       props.userHasAccess(['ROLE_ADMIN']) ||
       props.userHasAccess(['ROLE_DISPATCHER'])
     ) {
-      filteredWorkshops = workshops
-    } else if (props.userHasAccess(['ROLE_LEMZ'])) {
-      filteredWorkshops = ['ЦехЛЭМЗ']
-    } else if (props.userHasAccess(['ROLE_LEPSARI'])) {
-      filteredWorkshops = ['ЦехЛепсари']
-    } else if (props.userHasAccess(['ROLE_LIGOVSKIY'])) {
-      filteredWorkshops = ['ЦехЛиговский']
-    } else if (props.userHasAccess(['ROLE_ENGINEER'])) {
-      filteredWorkshops = ['Офис']
-    } else if (props.userHasAccess(['ROLE_MANAGER'])) {
-      filteredWorkshops = ['Офис']
+      return workshops
     }
+    if (props.userHasAccess(['ROLE_LEMZ'])) {
+      return ['ЦехЛЭМЗ']
+    }
+    if (props.userHasAccess(['ROLE_LEPSARI'])) {
+      return ['ЦехЛепсари']
+    }
+    if (props.userHasAccess(['ROLE_LIGOVSKIY'])) {
+      return ['ЦехЛиговский']
+    }
+    if (props.userHasAccess(['ROLE_ENGINEER'])) {
+      return ['Офис']
+    }
+    if (props.userHasAccess(['ROLE_MANAGER'])) {
+      return ['Офис']
+    }
+  }
+
+  async function testExcelJSLibrary() {
+    setIsLoading(true)
+    const filteredWorkshops = getFilteredWorkshops()
     await exportReportTableExcel(new Date(), filteredWorkshops)
-    setIsLoading(false)
+    return setIsLoading(false)
   }
 
   useEffect(() => {

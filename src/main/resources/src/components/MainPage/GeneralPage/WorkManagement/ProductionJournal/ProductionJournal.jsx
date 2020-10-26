@@ -15,6 +15,7 @@ import {
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx'
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import { getRecordedWorkByDay } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -39,6 +40,8 @@ const ProductionJournal = (props) => {
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
   const [employees, setEmployees] = useState([])
+  const [recordedWork, setRecordedWork] = useState([])
+  const [employeesMap, setEmployeesMap] = useState({})
   const [workshops, setWorkshops] = useState({
     ЦехЛЭМЗ: 'lemz',
     ЦехЛепсари: 'lepsari',
@@ -71,62 +74,149 @@ const ProductionJournal = (props) => {
     }
   }
 
-  const formIsValid = () => {
-    let check = true
-    let newErrors = Object.assign({
-      date: false,
-      employee: false,
-      works: false,
-    })
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        })
-      }
-    }
-    setWorkTimeErrors(newErrors)
-    if (check === true) {
-      return true
-    } else {
-      setShowError(true)
-      return false
-    }
-  }
-
   const handleSubmit = () => {
     // setIsLoading(true)
     console.log(worktimeInputs)
     alert('Тест формы')
   }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
-    setWorkTimeInputs({
-      ...worktimeInputs,
-      [name]: value,
-    })
-    setWorkTimeErrors({
-      ...workTimeErrors,
-      [name]: false,
-    })
-  }
-
   useEffect(() => {
     document.title = 'Журнал производства'
     const abortController = new AbortController()
-    // .then(() => {
-    loadEmployees(abortController.signal)
+
+    let employees = []
+
     loadProducts(abortController.signal)
-    // })
+    loadEmployees(abortController.signal)
+      .then((res) => {
+        employees = res
+        let date = new Date()
+        // date.setDate(date.getDate() - 1)
+        setIsLoading(true)
+        return getRecordedWorkByDay(
+          date.getMonth() + 1,
+          date.getDate(),
+          abortController.signal,
+        )
+      })
+      .then((res) => res.json())
+      .then(async (res) => {
+        setRecordedWork(res)
+        const combinedWorks = await combineWorksForSamePeople(res)
+        combineOriginalAndNewWorks(combinedWorks, employees)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
+      })
 
     return function cancel() {
       abortController.abort()
     }
   }, [])
+
+  const combineWorksForSamePeople = (works) => {
+    // let newEmployeesWorkMap = [];
+    let newEmployeesMap = {}
+    return Promise.all(
+      works.map((work) => {
+        const { id } = work.employee
+        const workList = {
+          workId: work.workList.id,
+          workType: work.workList.typeOfWork,
+          workName: work.workList.work,
+        }
+        if (newEmployeesMap[id] !== undefined) {
+          return (newEmployeesMap = Object.assign({
+            ...newEmployeesMap,
+            [id]: {
+              ...newEmployeesMap[id],
+              works: [
+                ...newEmployeesMap[id].works,
+                {
+                  ...work,
+                  ...workList,
+                  product: work.workControlProduct.map((product) => {
+                    return {
+                      ...product,
+                      name: product.product.name,
+                      status: product.product.status,
+                    }
+                  }),
+                  draft: work.partsWorks,
+                },
+              ],
+            },
+          }))
+        } else {
+          return (newEmployeesMap = Object.assign({
+            ...newEmployeesMap,
+            [id]: {
+              employee: work.employee,
+              works: [
+                {
+                  ...work,
+                  ...workList,
+                  product: work.workControlProduct.map((product) => {
+                    return {
+                      ...product,
+                      name: product.product.name,
+                      status: product.product.status,
+                    }
+                  }),
+                  draft: work.partsWorks,
+                },
+              ],
+            },
+          }))
+        }
+      }),
+    ).then(() => {
+      console.log(newEmployeesMap)
+      setEmployeesMap(newEmployeesMap)
+      return newEmployeesMap
+    })
+  }
+
+  const combineOriginalAndNewWorks = (works, employees) => {
+    setIsLoading(true)
+    let newWorkshops = {}
+    Object.entries(workshops).map((workshop) => {
+      let newWorkshopValues = {}
+      const curWorkshopEmployees = Object.entries(employees[workshop[1]])
+      curWorkshopEmployees.map((employee) => {
+        // console.log(employee[0])
+        if (works[employee[0]] !== undefined) {
+          return (newWorkshopValues = {
+            ...newWorkshopValues,
+            [employee[0]]: {
+              ...employee[1],
+              originalWorks: works[employee[0]].works,
+              works: works[employee[0]].works,
+            },
+          })
+        }
+        return (newWorkshopValues = {
+          ...newWorkshopValues,
+          [employee[0]]: {
+            ...employee[1],
+            works: employees[workshop[1]][employee[0]].works,
+          },
+        })
+      })
+      return (newWorkshops = {
+        ...newWorkshops,
+        [workshop[1]]: newWorkshopValues,
+      })
+    })
+    setIsLoading(false)
+    console.log(newWorkshops)
+    setWorkTimeInputs({
+      ...worktimeInputs,
+      ...newWorkshops,
+    })
+  }
 
   useEffect(() => {}, [worktimeInputs])
 
@@ -214,7 +304,7 @@ const ProductionJournal = (props) => {
         setIsLoading(false)
         setEmployees(res)
         let newWorkshopEmployees = {}
-        Promise.all(
+        return Promise.all(
           Object.entries(workshops).map((workshop) => {
             let filteredEmployees = {}
             res
@@ -252,16 +342,17 @@ const ProductionJournal = (props) => {
           }),
         ).then(() => {
           setIsLoading(false)
-          return setWorkTimeInputs({
+          setWorkTimeInputs({
             ...worktimeInputs,
             ...newWorkshopEmployees,
           })
+          return newWorkshopEmployees
         })
       })
       .catch((error) => {
         setIsLoading(false)
         console.log(error)
-        setIsLoading(false)
+        return setIsLoading(false)
       })
   }
 
@@ -337,6 +428,7 @@ const ProductionJournal = (props) => {
                             workIndex={workIndex}
                             categories={categories}
                             products={products}
+                            employeesMap={employeesMap}
                           />
                         </div>
                       </>
@@ -380,10 +472,10 @@ const FormRow = ({
   worktimeInputs,
   workItem,
   workshop,
+  employeesMap,
 }) => {
   return (
     <>
-      {/* Список сотрудников */}
       <div
         className="main-form__item main-form__item--employee"
         data-position={workItem.employee.position}
@@ -469,6 +561,7 @@ const FormRow = ({
           workshop={workshop}
           categories={categories}
           products={products}
+          employeesMap={employeesMap}
         />
       </div>
     </>
@@ -481,6 +574,7 @@ const JournalForm = ({
   workshop,
   products,
   categories,
+  employeesMap,
 }) => {
   return (
     <div

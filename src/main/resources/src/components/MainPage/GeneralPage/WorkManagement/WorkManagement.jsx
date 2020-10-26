@@ -11,9 +11,9 @@ import { UserContext } from '../../../../App.js'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const WorkManagement = (props) => {
-  const [recordedWork, setRecordedWork] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [recordedWork, setRecordedWork] = useState([])
   const [employeesMap, setEmployeesMap] = useState({})
   const [employees, setEmployees] = useState({})
   const userContext = useContext(UserContext)
