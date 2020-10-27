@@ -96,235 +96,244 @@ const ProductionJournal = (props) => {
     // console.log(worktimeInputs);
     Object.entries(workshops).map((workshop) => {
       const employeesList = Object.entries(worktimeInputs[workshop[1]])
-      employeesList.map((employee) => {
-        employee[1].works.map(async (item, index) => {
-          const temp = Object.assign({
-            day: worktimeInputs.date.getDate(),
-            month: worktimeInputs.date.getMonth() + 1,
-            year: worktimeInputs.date.getFullYear(),
-            employeeId: employee[1].employee.id,
-            workListId: item.workId,
-            hours: item.hours,
-          })
+      Promise.all(
+        employeesList.map((employee) => {
+          return employee[1].works.map(async (item, index) => {
+            const temp = Object.assign({
+              day: worktimeInputs.date.getDate(),
+              month: worktimeInputs.date.getMonth() + 1,
+              year: worktimeInputs.date.getFullYear(),
+              employeeId: employee[1].employee.id,
+              workListId: item.workId,
+              hours: item.hours,
+            })
 
-          //Удаление элементов
-          await Promise.all(
-            employee[1].originalWorks.map((originalWork) => {
-              const item = employee[1].works.find(
-                (workItem) => workItem.id === originalWork.id,
+            //Удаление элементов
+            await Promise.all(
+              employee[1].originalWorks.map((originalWork) => {
+                const item = employee[1].works.find(
+                  (workItem) => workItem.id === originalWork.id,
+                )
+                if (originalWork.id && item === undefined) {
+                  console.log('deleting element', employee[1])
+                  return Promise.all(
+                    originalWork.product.map((product) => {
+                      return deleteProductFromRecordedWork(
+                        originalWork.id,
+                        product.id,
+                      )
+                    }),
+                  )
+                    .then(() => {
+                      return Promise.all(
+                        originalWork.draft.map((draft) => {
+                          return deleteDraftFromRecordedWork(
+                            originalWork.id,
+                            draft.partId,
+                            draft.partType,
+                          )
+                        }),
+                      )
+                    })
+                    .then(() => deleteRecordedWork(originalWork.id))
+                }
+              }),
+            )
+
+            if (item.isOld) {
+              //если часы не совпадают, то редактируем
+              const originalItem = employee[1].originalWorks.find(
+                (originalWork) => item.id === originalWork.id,
               )
-              if (originalWork.id && item === undefined) {
-                console.log('deleting element', employee[1])
-                return Promise.all(
-                  originalWork.product.map((product) => {
-                    return deleteProductFromRecordedWork(
-                      originalWork.id,
-                      product.id,
-                    )
-                  }),
-                )
-                  .then(() => {
-                    return Promise.all(
-                      originalWork.draft.map((draft) => {
-                        return deleteDraftFromRecordedWork(
-                          originalWork.id,
-                          draft.partId,
-                          draft.partType,
-                        )
-                      }),
-                    )
-                  })
-                  .then(() => deleteRecordedWork(originalWork.id))
+
+              if (originalItem && item.hours !== originalItem.hours) {
+                await editRecordedWork(temp, item.id)
               }
-            }),
-          )
 
-          if (item.isOld) {
-            //если часы не совпадают, то редактируем
-            const originalItem = employee[1].originalWorks.find(
-              (originalWork) => item.id === originalWork.id,
-            )
-
-            if (originalItem && item.hours !== originalItem.hours) {
-              await editRecordedWork(temp, item.id)
-            }
-
-            //Продукция
-            //delete removed products
-            Promise.all(
-              originalItem.product.map((originalProduct) => {
-                if (
-                  item.product.find(
-                    (product) => product.id === originalProduct.id,
-                  ) === undefined
-                ) {
-                  console.log('delete product', originalProduct)
-                  return deleteProductFromRecordedWork(
-                    item.id,
-                    originalProduct.product.id,
-                  )
-                }
-              }),
-            )
-
-            //add new products
-            Promise.all(
-              item.product.map((product) => {
-                if (
-                  originalItem.product.find(
-                    (originalProduct) => product.id === originalProduct.id,
-                  ) === undefined
-                ) {
-                  console.log('add product', product)
-                  return addProductToRecordedWork(
-                    item.id,
-                    product.id,
-                    product.quantity,
-                    {
-                      name: product.name,
-                    },
-                  )
-                }
-              }),
-            )
-
-            //update edited products
-            Promise.all(
-              originalItem.product.map((originalProduct) => {
-                const product = item.product.find(
-                  (product) => product.id === originalProduct.id,
-                )
-                if (
-                  product !== undefined &&
-                  (originalProduct.quantity !== product.quantity ||
-                    originalProduct.name !== product.name)
-                ) {
-                  console.log('edit product', product)
-                  return deleteProductFromRecordedWork(
-                    item.id,
-                    originalProduct.product.id,
-                  ).then(() =>
-                    addProductToRecordedWork(
+              //Продукция
+              //delete removed products
+              Promise.all(
+                originalItem.product.map((originalProduct) => {
+                  if (
+                    item.product.find(
+                      (product) => product.id === originalProduct.id,
+                    ) === undefined
+                  ) {
+                    console.log('delete product', originalProduct)
+                    return deleteProductFromRecordedWork(
                       item.id,
-                      product.product.id,
+                      originalProduct.product.id,
+                    )
+                  }
+                }),
+              )
+
+              //add new products
+              Promise.all(
+                item.product.map((product) => {
+                  if (
+                    originalItem.product.find(
+                      (originalProduct) => product.id === originalProduct.id,
+                    ) === undefined
+                  ) {
+                    console.log('add product', product)
+                    return addProductToRecordedWork(
+                      item.id,
+                      product.id,
                       product.quantity,
                       {
                         name: product.name,
                       },
-                    ),
-                  )
-                }
-              }),
-            )
+                    )
+                  }
+                }),
+              )
 
-            //Чертежи
-            //delete removed drafts
-            Promise.all(
-              originalItem.draft.map((originalDraft) => {
-                if (
-                  item.draft.find((draft) => draft.id === originalDraft.id) ===
-                  undefined
-                ) {
-                  console.log('delete draft', originalDraft)
-                  return deleteDraftFromRecordedWork(
-                    item.id,
-                    originalDraft.partId,
-                    originalDraft.partType,
+              //update edited products
+              Promise.all(
+                originalItem.product.map((originalProduct) => {
+                  const product = item.product.find(
+                    (product) => product.id === originalProduct.id,
                   )
-                }
-              }),
-            )
+                  if (
+                    product !== undefined &&
+                    (originalProduct.quantity !== product.quantity ||
+                      originalProduct.name !== product.name)
+                  ) {
+                    console.log('edit product', product)
+                    return deleteProductFromRecordedWork(
+                      item.id,
+                      originalProduct.product.id,
+                    ).then(() =>
+                      addProductToRecordedWork(
+                        item.id,
+                        product.product.id,
+                        product.quantity,
+                        {
+                          name: product.name,
+                        },
+                      ),
+                    )
+                  }
+                }),
+              )
 
-            //add new drafts
-            Promise.all(
-              item.draft.map((draft) => {
-                if (
-                  originalItem.draft.find(
-                    (originalDraft) => draft.id === originalDraft.id,
-                  ) === undefined
-                ) {
-                  console.log('add draft', draft)
-                  return addDraftToRecordedWork(
-                    item.id,
-                    draft.partId,
-                    draft.partType,
-                    draft.quantity,
-                    draft.name,
-                  )
-                }
-              }),
-            )
+              //Чертежи
+              //delete removed drafts
+              Promise.all(
+                originalItem.draft.map((originalDraft) => {
+                  if (
+                    item.draft.find(
+                      (draft) => draft.id === originalDraft.id,
+                    ) === undefined
+                  ) {
+                    console.log('delete draft', originalDraft)
+                    return deleteDraftFromRecordedWork(
+                      item.id,
+                      originalDraft.partId,
+                      originalDraft.partType,
+                    )
+                  }
+                }),
+              )
 
-            //update edited drafts
-            Promise.all(
-              originalItem.draft.map((originalDraft) => {
-                const draft = item.draft.find(
-                  (draft) => draft.id === originalDraft.id,
-                )
-                if (
-                  draft !== undefined &&
-                  originalDraft.quantity !== draft.quantity
-                ) {
-                  console.log('edit draft', draft)
-                  return deleteDraftFromRecordedWork(
-                    item.id,
-                    draft.partId,
-                    draft.partType,
-                  ).then(() =>
-                    addDraftToRecordedWork(
+              //add new drafts
+              Promise.all(
+                item.draft.map((draft) => {
+                  if (
+                    originalItem.draft.find(
+                      (originalDraft) => draft.id === originalDraft.id,
+                    ) === undefined
+                  ) {
+                    console.log('add draft', draft)
+                    return addDraftToRecordedWork(
                       item.id,
                       draft.partId,
                       draft.partType,
                       draft.quantity,
                       draft.name,
-                    ),
+                    )
+                  }
+                }),
+              )
+
+              //update edited drafts
+              Promise.all(
+                originalItem.draft.map((originalDraft) => {
+                  const draft = item.draft.find(
+                    (draft) => draft.id === originalDraft.id,
                   )
-                }
-              }),
-            )
-          }
-
-          //if item is new, then just add it
-          if (!item.isOld && item.workId !== null && item.isOld !== undefined) {
-            console.log('adding item', item)
-            return addRecordedWork(temp)
-              .then((res) => res.json())
-              .then((res) => {
-                return Promise.all(
-                  item.product.map((product) => {
-                    return addProductToRecordedWork(
-                      res.id,
-                      product.id,
-                      product.quantity,
-                      {
-                        name: product.name,
-                      },
-                    )
-                  }),
-                )
-              })
-              .then(() => {
-                return Promise.all(
-                  item.draft.map((draft) => {
-                    return addDraftToRecordedWork(
-                      itemId,
+                  if (
+                    draft !== undefined &&
+                    originalDraft.quantity !== draft.quantity
+                  ) {
+                    console.log('edit draft', draft)
+                    return deleteDraftFromRecordedWork(
+                      item.id,
                       draft.partId,
-                      draft.type,
-                      draft.quantity,
+                      draft.partType,
+                    ).then(() =>
+                      addDraftToRecordedWork(
+                        item.id,
+                        draft.partId,
+                        draft.partType,
+                        draft.quantity,
+                        draft.name,
+                      ),
                     )
-                  }),
-                )
-              })
-              .catch((error) => {
-                alert('Ошибка при добавлении записи')
-                setIsLoading(false)
-                // setShowError(true);
-                console.log(error)
-              })
-          }
+                  }
+                }),
+              )
+            }
 
-          // Promise.all(editedInputs).then(() => {})
-        })
+            //if item is new, then just add it
+            if (
+              !item.isOld &&
+              item.workId !== null &&
+              item.isOld !== undefined
+            ) {
+              console.log('adding item', item)
+              return addRecordedWork(temp)
+                .then((res) => res.json())
+                .then((res) => {
+                  return Promise.all(
+                    item.product.map((product) => {
+                      return addProductToRecordedWork(
+                        res.id,
+                        product.id,
+                        product.quantity,
+                        {
+                          name: product.name,
+                        },
+                      )
+                    }),
+                  )
+                })
+                .then(() => {
+                  return Promise.all(
+                    item.draft.map((draft) => {
+                      return addDraftToRecordedWork(
+                        itemId,
+                        draft.partId,
+                        draft.type,
+                        draft.quantity,
+                      )
+                    }),
+                  )
+                })
+                .catch((error) => {
+                  alert('Ошибка при добавлении записи')
+                  setIsLoading(false)
+                  // setShowError(true);
+                  console.log(error)
+                })
+            }
+
+            // Promise.all(editedInputs).then(() => {})
+          })
+        }),
+      ).then(() => {
+        props.history.push('/work-management')
       })
     })
   }
