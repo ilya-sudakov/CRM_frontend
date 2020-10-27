@@ -96,7 +96,7 @@ const ProductionJournal = (props) => {
     Object.entries(workshops).map((workshop) => {
       const employeesList = Object.entries(worktimeInputs[workshop[1]])
       employeesList.map((employee) => {
-        const editedInputs = employee[1].works.map((item, index) => {
+        employee[1].works.map((item, index) => {
           const temp = Object.assign({
             day: worktimeInputs.date.getDate(),
             month: worktimeInputs.date.getMonth() + 1,
@@ -106,12 +106,34 @@ const ProductionJournal = (props) => {
             hours: item.hours,
           })
 
+          //Удаление элементов
+          employee[1].originalWorks.map((originalWork) => {
+            const item = employee[1].works.find((workItem) => workItem.id === originalWork.id)
+            if (originalWork.id && item === undefined) {
+              console.log('deleting element',employee[1])
+              return Promise.all(
+                      originalWork.product.map((product) => {
+                        console.log('product', originalWork.id, product.id)
+                        // return deleteProductFromRecordedWork(originalWork.id, product.id)
+                      })
+                    ).then(() => {
+                      return Promise.all(
+                        originalWork.draft.map((draft) => {
+                          console.log('draft', originalWork.id, draft.partId, draft.partType)
+                          // return deleteDraftFromRecordedWork(originalWork.id, draft.partId, draft.partType)
+                        })
+                      )
+                    })
+                    // .then(() => deleteRecordedWork(originalWork.id))
+            }
+          })
+
           if (item.isOld) {
             console.log('editing item', item)
             // return editRecordedWork(temp, item.id)
             //   .then(() => {
             //     return Promise.all(
-            //       worktimeInputs.originalWorks[0].product.map((product) => {
+            //       employee[1].originalWorks[0].product.map((product) => {
             //         console.log(product.id)
             //         return deleteProductFromRecordedWork(item.id, product.id)
             //       }),
@@ -133,7 +155,7 @@ const ProductionJournal = (props) => {
             //   })
             //   .then(() => {
             //     return Promise.all(
-            //       worktimeInputs.originalWorks[0].draft.map((draft) => {
+            //       employee[1].originalWorks[0].draft.map((draft) => {
             //         return deleteDraftFromRecordedWork(
             //           item.id,
             //           draft.partId,
@@ -215,7 +237,7 @@ const ProductionJournal = (props) => {
   }
 
   useEffect(() => {
-    document.title = 'Журнал производства'
+    document.title = 'Дневник производства'
     const abortController = new AbortController()
 
     let employees = []
@@ -570,7 +592,7 @@ const ProductionJournal = (props) => {
       <div className="main-form">
         <form className="main-form__form main-form__form--full">
           <div className="main-form__header main-form__header--full">
-            <div className="main-form__title">Журнал производства</div>
+            <div className="main-form__title">Дневник производства</div>
           </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
