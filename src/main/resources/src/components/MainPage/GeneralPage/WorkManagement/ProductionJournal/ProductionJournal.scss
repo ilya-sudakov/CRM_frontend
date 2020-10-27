@@ -51,7 +51,7 @@
 
                 &::before {
                     position: absolute;
-                    right: 12px;
+                    right: 13px;
                     top: calc(50% - 0.8rem);
                     content: attr(data-hours);
                     font-size: 0.8rem;
@@ -167,15 +167,17 @@
                     margin-top: 0 !important;
                     padding: 0;
                     width: calc(100% - 30px);
-                    margin-bottom: 12px;
+                    margin-bottom: 11px;
                     border-radius: 0px;
-                    border-bottom: 1px solid #dddddd;
+                    padding-bottom: 3px;
+                    border-bottom: 1px solid #cccccc;
                     // display: flex;
                     // flex-direction: row;
                     // width: fit-content;
                     // min-width: 300px;
 
                     &:last-child {
+                        padding-bottom: 0;
                         border-bottom: none;
                         margin-bottom: 0;
                     }
@@ -233,6 +235,9 @@
         .select__selected {
             transform-origin: top;
             transition: transform 200ms ease-in-out;
+        }
+        .select-work__selected_form {
+            // margin-bottom: 5px;
         }
         &--minimized {
             .select-work__item--drafts {
