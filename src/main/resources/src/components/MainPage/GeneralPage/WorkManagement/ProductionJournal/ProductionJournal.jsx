@@ -238,7 +238,6 @@ const ProductionJournal = (props) => {
         setRecordedWork(res)
         const combinedWorks = await combineWorksForSamePeople(res)
         combineOriginalAndNewWorks(combinedWorks, employees)
-        setIsLoading(false)
       })
       .catch((error) => {
         console.log(error)
@@ -311,6 +310,10 @@ const ProductionJournal = (props) => {
       console.log(newEmployeesMap)
       setEmployeesMap(newEmployeesMap)
       return newEmployeesMap
+    })
+    .catch((error) => {
+      console.log(error)
+      setIsLoading(false)
     })
   }
 
@@ -507,7 +510,6 @@ const ProductionJournal = (props) => {
     return await getEmployees(signal)
       .then((res) => res.json())
       .then((res) => {
-        setIsLoading(false)
         setEmployees(res)
         let newWorkshopEmployees = {}
         return Promise.all(
@@ -549,7 +551,6 @@ const ProductionJournal = (props) => {
             })
           }),
         ).then(() => {
-          setIsLoading(false)
           setWorkTimeInputs({
             ...worktimeInputs,
             ...newWorkshopEmployees,
