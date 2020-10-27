@@ -38,7 +38,7 @@
 
     .select-work-item__input_name {
       color: lighten($primary-text-color, 40%);
-      font-size: 80%;
+      font-size: 0.8rem;
       flex: 0 1 20%;
 
       //column direction
@@ -50,6 +50,7 @@
 
       //column direction
       width: 100%;
+      font-size: 0.85rem !important;
     }
   }
 
