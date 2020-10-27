@@ -108,23 +108,31 @@ const ProductionJournal = (props) => {
 
           //Удаление элементов
           employee[1].originalWorks.map((originalWork) => {
-            const item = employee[1].works.find((workItem) => workItem.id === originalWork.id)
+            const item = employee[1].works.find(
+              (workItem) => workItem.id === originalWork.id,
+            )
             if (originalWork.id && item === undefined) {
-              console.log('deleting element',employee[1])
+              console.log('deleting element', employee[1])
               return Promise.all(
-                      originalWork.product.map((product) => {
-                        console.log('product', originalWork.id, product.id)
-                        // return deleteProductFromRecordedWork(originalWork.id, product.id)
-                      })
-                    ).then(() => {
-                      return Promise.all(
-                        originalWork.draft.map((draft) => {
-                          console.log('draft', originalWork.id, draft.partId, draft.partType)
-                          // return deleteDraftFromRecordedWork(originalWork.id, draft.partId, draft.partType)
-                        })
+                originalWork.product.map((product) => {
+                  return deleteProductFromRecordedWork(
+                    originalWork.id,
+                    product.id,
+                  )
+                }),
+              )
+                .then(() => {
+                  return Promise.all(
+                    originalWork.draft.map((draft) => {
+                      return deleteDraftFromRecordedWork(
+                        originalWork.id,
+                        draft.partId,
+                        draft.partType,
                       )
-                    })
-                    // .then(() => deleteRecordedWork(originalWork.id))
+                    }),
+                  )
+                })
+                .then(() => deleteRecordedWork(originalWork.id))
             }
           })
 

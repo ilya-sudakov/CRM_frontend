@@ -196,55 +196,63 @@ const SelectWork = (props) => {
               selected[index].workType === undefined ||
               selected[index].typeOfWork === 'Продукция' ? (
                 props.newDesign ? (
-                  <InputProductsNew
-                    options
-                    defaultValue={item.product}
-                    categories={props.categories}
-                    products={props.products}
-                    numberInput
-                    name="product"
-                    noPackaging
-                    onChange={(value) => {
-                      // console.log(value)
-                      let temp = selected
-                      let originalItem = selected[index]
-                      temp.splice(index, 1, {
-                        ...originalItem,
-                        product: value,
-                      })
-                      setSelected([...temp])
-                      props.handleWorkChange([...temp])
-                    }}
-                  />
+                  <div className="select-work__item select-work__item--products">
+                    <div className="select-work__input_field">
+                      <InputProductsNew
+                        options
+                        defaultValue={item.product}
+                        categories={props.categories}
+                        products={props.products}
+                        numberInput
+                        name="product"
+                        noPackaging
+                        onChange={(value) => {
+                          // console.log(value)
+                          let temp = selected
+                          let originalItem = selected[index]
+                          temp.splice(index, 1, {
+                            ...originalItem,
+                            product: value,
+                          })
+                          setSelected([...temp])
+                          props.handleWorkChange([...temp])
+                        }}
+                      />
+                    </div>
+                  </div>
                 ) : (
-                  <InputProducts
-                    inputName="Продукция"
-                    options
-                    defaultValue={item.product}
-                    categories={props.categories}
-                    products={props.products}
-                    numberInput
-                    name="product"
-                    noPackaging
-                    onChange={(value) => {
-                      // console.log(value)
-                      let temp = selected
-                      let originalItem = selected[index]
-                      temp.splice(index, 1, {
-                        ...originalItem,
-                        product: value,
-                      })
-                      setSelected([...temp])
-                      props.handleWorkChange([...temp])
-                    }}
-                    userHasAccess={userContext.userHasAccess}
-                    searchPlaceholder="Введите название продукта для поиска..."
-                    // workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
-                  />
+                  <div className="select-work__item select-work__item--products">
+                    <div className="select-work__input_field">
+                      <InputProducts
+                        inputName="Продукция"
+                        options
+                        defaultValue={item.product}
+                        categories={props.categories}
+                        products={props.products}
+                        numberInput
+                        name="product"
+                        noPackaging
+                        onChange={(value) => {
+                          // console.log(value)
+                          let temp = selected
+                          let originalItem = selected[index]
+                          temp.splice(index, 1, {
+                            ...originalItem,
+                            product: value,
+                          })
+                          setSelected([...temp])
+                          props.handleWorkChange([...temp])
+                        }}
+                        userHasAccess={userContext.userHasAccess}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        // workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+                      />
+                    </div>
+                  </div>
                 )
               ) : selected[index].workType === 'Чертеж' ? (
                 props.newDesign ? (
-                  <div className="select-work__item">
+                  <div className="select-work__item select-work__item--drafts">
                     <div className="select-work__input_field">
                       <SelectDraftNew
                         options
@@ -265,7 +273,7 @@ const SelectWork = (props) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="select-work__item">
+                  <div className="select-work__item  select-work__item--drafts">
                     <div className="select-work__input_name">Чертежи</div>
                     <div className="select-work__input_field">
                       <SelectDraft

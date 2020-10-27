@@ -60,7 +60,7 @@
                     background-color: #ffffff;
                     // border: 1px solid $button__background--inverted;
                     border: 1px solid #cccccc;
-                    border-radius: 3px;
+                    border-radius: 5px;
                     color: #777777;
                 }
             }
@@ -235,18 +235,24 @@
             transition: transform 200ms ease-in-out;
         }
         &--minimized {
-            .select-draft__selected {
-                margin: 0;
-                padding: 0;
-                max-height: 0;
-                transform: scaleY(0);
+            .select-work__item--drafts {
+                display: none !important;
             }
-            .select__selected {
-                margin: 0;
-                padding: 0;
-                max-height: 0;
-                transform: scaleY(0);
+            .select-work__item--products {
+                display: none !important;
             }
+            // .select-draft__selected {
+            //     margin: 0;
+            //     padding: 0;
+            //     max-height: 0;
+            //     transform: scaleY(0);
+            // }
+            // .select__selected {
+            //     margin: 0;
+            //     padding: 0;
+            //     max-height: 0;
+            //     transform: scaleY(0);
+            // }
         }
     }
     &__workshop-name {
