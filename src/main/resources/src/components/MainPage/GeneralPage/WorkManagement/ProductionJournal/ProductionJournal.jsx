@@ -607,8 +607,13 @@ const FormRow = ({
   return (
     <>
       <div
-        className="main-form__item main-form__item--employee"
+        className={`main-form__item main-form__item--employee ${
+          workItem.totalHours === 0 ? 'main-form__item--error' : ''
+        }`}
         data-position={workItem.employee.position}
+        data-hours={
+          workItem.totalHours > 0 ? `${workItem.totalHours} ч` : `Нет записи!`
+        }
       >
         <input
           type="text"

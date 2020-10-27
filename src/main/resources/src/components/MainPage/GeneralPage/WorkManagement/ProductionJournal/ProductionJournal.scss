@@ -30,10 +30,12 @@
                 flex: 0 1 50%;
                 padding-right: 10px;
                 max-width: 33.33%;
+                height: fit-content;
 
-                input {
+                .main-form__input_field {
                     height: 1.5rem;
                     padding-top: 5px;
+                    cursor: pointer;
                 }
 
                 &::after {
@@ -45,6 +47,27 @@
                     padding: 2px 5px;
                     background-color: #ffffff;
                     color: #777777;
+                }
+
+                &::before {
+                    position: absolute;
+                    right: 12px;
+                    top: calc(50% - 0.8rem);
+                    content: attr(data-hours);
+                    font-size: 0.8rem;
+                    padding: 2px 5px;
+                    height: 1.2rem;
+                    background-color: #ffffff;
+                    // border: 1px solid $button__background--inverted;
+                    border: 1px solid #cccccc;
+                    border-radius: 3px;
+                    color: #777777;
+                }
+            }
+
+            &--error {
+                &::before {
+                    border: 1px solid #eda3a3;
                 }
             }
         }
