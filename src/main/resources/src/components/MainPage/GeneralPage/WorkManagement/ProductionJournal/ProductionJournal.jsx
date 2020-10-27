@@ -908,36 +908,38 @@ const FormRow = ({
         >
           +
         </div>
-        <div
-          className="main-form__button main-form__button--inverted"
-          style={{
-            borderColor: 'transparent',
-            color: '#555555',
-          }}
-          title={`${
-            workItem.isMinimized ? 'Раскрыть' : 'Скрыть'
-          } продукцию и чертежи`}
-          onClick={() => {
-            setWorkTimeInputs((worktimeInputs) => {
-              return {
-                ...worktimeInputs,
-                [workshop[1]]: {
-                  ...worktimeInputs[workshop[1]],
-                  [workItem.employee.id]: {
-                    ...workItem,
-                    isMinimized: !workItem.isMinimized,
+        {workItem.works.length > 0 ? (
+          <div
+            className="main-form__button main-form__button--inverted"
+            style={{
+              borderColor: 'transparent',
+              color: '#555555',
+            }}
+            title={`${
+              workItem.isMinimized ? 'Раскрыть' : 'Скрыть'
+            } продукцию и чертежи`}
+            onClick={() => {
+              setWorkTimeInputs((worktimeInputs) => {
+                return {
+                  ...worktimeInputs,
+                  [workshop[1]]: {
+                    ...worktimeInputs[workshop[1]],
+                    [workItem.employee.id]: {
+                      ...workItem,
+                      isMinimized: !workItem.isMinimized,
+                    },
                   },
-                },
-              }
-            })
-          }}
-        >
-          <ChevronImg
-            className={`production-journal__img production-journal__img--chevron ${
-              workItem.isMinimized ? 'main-window__img--rotated' : ''
-            }`}
-          />
-        </div>
+                }
+              })
+            }}
+          >
+            <ChevronImg
+              className={`production-journal__img production-journal__img--chevron ${
+                workItem.isMinimized ? 'main-window__img--rotated' : ''
+              }`}
+            />
+          </div>
+        ) : null}
         <JournalForm
           setWorkTimeInputs={setWorkTimeInputs}
           worktimeInputs={worktimeInputs}
