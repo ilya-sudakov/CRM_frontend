@@ -88,6 +88,10 @@
       right: -35px;
       cursor: pointer;
       top: 25%;
+
+      &--new {
+        right: -30px;
+      }
     }
 
     .select-work__selected_header {

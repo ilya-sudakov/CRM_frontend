@@ -326,10 +326,20 @@ const SelectWork = (props) => {
                       readOnly={props.readOnly}
                     />
                   </div>
+                  {!props.readOnly &&
+                    props.newDesign &&
+                    selected.length > 1 && (
+                      <img
+                        index={index}
+                        onClick={deletePart}
+                        className="select-work__img select-work__img--new"
+                        src={deleteSVG}
+                      />
+                    )}
                 </div>
               )}
             </div>
-            {!props.readOnly && selected.length > 1 && (
+            {!props.readOnly && !props.newDesign && selected.length > 1 && (
               <img
                 index={index}
                 onClick={deletePart}
