@@ -249,6 +249,7 @@ const SelectWork = (props) => {
                       <SelectDraftNew
                         options
                         defaultValue={item.draft}
+                        drafts={props.drafts}
                         onChange={(value) => {
                           let temp = selected
                           let originalItem = selected[index]

@@ -21,6 +21,10 @@ import {
   addRecordedWork,
   getRecordedWorkByDay,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
+import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
+import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
 
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -44,6 +48,7 @@ const ProductionJournal = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
+  const [drafts, setDrafts] = useState([])
   const [employees, setEmployees] = useState([])
   const [recordedWork, setRecordedWork] = useState([])
   const [employeesMap, setEmployeesMap] = useState({})
@@ -162,6 +167,7 @@ const ProductionJournal = (props) => {
             //   })
           }
 
+          //if item is new, then just add it
           if (!item.isOld && item.workId !== null && item.isOld !== undefined) {
             console.log('adding item', item)
             return addRecordedWork(temp)
@@ -216,6 +222,7 @@ const ProductionJournal = (props) => {
     let employees = []
 
     loadProducts(abortController.signal)
+    loadDrafts(abortController.signal)
     loadEmployees(abortController.signal)
       .then((res) => {
         employees = res
@@ -424,6 +431,77 @@ const ProductionJournal = (props) => {
       })
   }
 
+  async function loadDrafts(signal) {
+    let newDrafts = []
+    getStamp(signal)
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response);
+        response.map((item) => {
+          return item.stampParts.map((stamp) => {
+            return newDrafts.push({
+              ...stamp,
+              value: stamp.id,
+              label: `${stamp.number}, ${stamp.name}`,
+              type: 'Stamp',
+            })
+          })
+        })
+        // console.log(newDrafts);
+        return setDrafts([...newDrafts])
+      })
+      .then(() => getPressForm(signal))
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response);
+        response.map((item) => {
+          return item.pressParts.map((stamp) => {
+            return newDrafts.push({
+              ...stamp,
+              value: stamp.id,
+              label: `${stamp.number}, ${stamp.name}`,
+              type: 'Press',
+            })
+          })
+        })
+        return setDrafts([...newDrafts])
+      })
+      .then(() => getMachine(signal))
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response)
+        response.map((item) => {
+          return item.benchParts.map((stamp) => {
+            return newDrafts.push({
+              ...stamp,
+              value: stamp.id,
+              label: `${stamp.number}, ${stamp.name}`,
+              type: 'Bench',
+            })
+          })
+        })
+        return setDrafts([...newDrafts])
+        // console.log(newDrafts)
+      })
+      .then(() => getParts(signal))
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res)
+        res.map((item) => {
+          return item.detailParts.map((stamp) => {
+            return newDrafts.push({
+              ...stamp,
+              value: stamp.id,
+              label: `${stamp.number}, ${stamp.name}`,
+              type: 'Detail',
+            })
+          })
+        })
+        console.log(newDrafts)
+        return setDrafts([...newDrafts])
+      })
+  }
+
   const loadEmployees = async (signal) => {
     setIsLoading(true)
     return await getEmployees(signal)
@@ -558,6 +636,7 @@ const ProductionJournal = (props) => {
                             workIndex={workIndex}
                             categories={categories}
                             products={products}
+                            drafts={drafts}
                             employeesMap={employeesMap}
                           />
                         </div>
@@ -599,6 +678,7 @@ const FormRow = ({
   setWorkTimeInputs,
   products,
   categories,
+  drafts,
   worktimeInputs,
   workItem,
   workshop,
@@ -710,6 +790,7 @@ const JournalForm = ({
   workshop,
   products,
   categories,
+  drafts,
   employeesMap,
 }) => {
   return (
@@ -767,6 +848,7 @@ const JournalForm = ({
             }}
             categories={categories}
             products={products}
+            drafts={drafts}
             defaultValue={workItem.works}
           />
         </div>
