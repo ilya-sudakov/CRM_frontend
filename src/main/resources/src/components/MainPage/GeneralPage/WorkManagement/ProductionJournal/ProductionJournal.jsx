@@ -19,6 +19,8 @@ import {
   addDraftToRecordedWork,
   addProductToRecordedWork,
   addRecordedWork,
+  deleteDraftFromRecordedWork,
+  editRecordedWork,
   getRecordedWorkByDay,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
@@ -95,7 +97,6 @@ const ProductionJournal = (props) => {
       const employeesList = Object.entries(worktimeInputs[workshop[1]])
       employeesList.map((employee) => {
         const editedInputs = employee[1].works.map((item, index) => {
-          // console.log('works');
           const temp = Object.assign({
             day: worktimeInputs.date.getDate(),
             month: worktimeInputs.date.getMonth() + 1,
@@ -104,67 +105,65 @@ const ProductionJournal = (props) => {
             workListId: item.workId,
             hours: item.hours,
           })
-          // console.log(temp)
-          //if formIsValid()
+
           if (item.isOld) {
             console.log('editing item', item)
-            // return editRecordedWork(temp, itemId)
+            // return editRecordedWork(temp, item.id)
             //   .then(() => {
-            //     // console.log(res);
-            //     const oldProductsArr = worktimeInputs.originalWorks[0].product.map(
-            //       (product) => {
+            //     return Promise.all(
+            //       worktimeInputs.originalWorks[0].product.map((product) => {
             //         console.log(product.id)
-            //         deleteProductFromRecordedWork(itemId, product.id)
-            //       },
+            //         return deleteProductFromRecordedWork(item.id, product.id)
+            //       }),
             //     )
-            //     return Promise.all(oldProductsArr).then(() => {
-            //       const productsArr = item.product.map((product) => {
-            //         addProductToRecordedWork(
-            //           itemId,
+            //   })
+            //   .then(() => {
+            //     return Promise.all(
+            //       item.product.map((product) => {
+            //         return addProductToRecordedWork(
+            //           item.id,
             //           product.id,
             //           product.quantity,
             //           {
             //             name: product.name,
             //           },
             //         )
-            //       })
-            //       Promise.all(productsArr)
-            //     })
+            //       }),
+            //     )
             //   })
             //   .then(() => {
-            //     // console.log(res);
-            //     const oldProductsArr = worktimeInputs.originalWorks[0].draft.map(
-            //       (draft) => {
-            //         deleteDraftFromRecordedWork(
-            //           itemId,
+            //     return Promise.all(
+            //       worktimeInputs.originalWorks[0].draft.map((draft) => {
+            //         return deleteDraftFromRecordedWork(
+            //           item.id,
             //           draft.partId,
             //           draft.type,
             //         )
-            //       },
+            //       }),
             //     )
-            //     Promise.all(oldProductsArr).then(() => {
-            //       return Promise.all(
-            //         item.draft.map((draft) => {
-            //           addDraftToRecordedWork(
-            //             itemId,
-            //             draft.partId,
-            //             draft.type,
-            //             draft.quantity,
-            //             draft.name,
-            //           )
-            //         }),
-            //       )
-            //     })
             //   })
             //   .then(() => {
-            //     props.history.push('/work-management')
+            //     return Promise.all(
+            //       item.draft.map((draft) => {
+            //         return addDraftToRecordedWork(
+            //           item.id,
+            //           draft.partId,
+            //           draft.type,
+            //           draft.quantity,
+            //           draft.name,
+            //         )
+            //       }),
+            //     )
             //   })
-            //   .catch((error) => {
-            //     alert('Ошибка при добавлении записи')
-            //     setIsLoading(false)
-            //     // setShowError(true);
-            //     console.log(error)
-            //   })
+            // .then(() => {
+            //   props.history.push('/work-management')
+            // })
+            // .catch((error) => {
+            //   alert('Ошибка при добавлении записи')
+            //   setIsLoading(false)
+            //   // setShowError(true);
+            //   console.log(error)
+            // })
           }
 
           //if item is new, then just add it
@@ -306,15 +305,16 @@ const ProductionJournal = (props) => {
           }))
         }
       }),
-    ).then(() => {
-      console.log(newEmployeesMap)
-      setEmployeesMap(newEmployeesMap)
-      return newEmployeesMap
-    })
-    .catch((error) => {
-      console.log(error)
-      setIsLoading(false)
-    })
+    )
+      .then(() => {
+        console.log(newEmployeesMap)
+        setEmployeesMap(newEmployeesMap)
+        return newEmployeesMap
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
+      })
   }
 
   const combineOriginalAndNewWorks = (works, employees) => {
