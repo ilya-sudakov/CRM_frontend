@@ -139,7 +139,7 @@ const SelectNew = (props) => {
   }
 
   const clickOnSelected = (event) => {
-    const id = event.target.getAttribute('id')
+    const id = Number.parseInt(event.target.getAttribute('id'))
     let newSelected = selected
     newSelected.splice(id, 1)
     setSelected([...newSelected])
