@@ -259,5 +259,23 @@
         width: calc(100% - 20px);
         font-size: 1.1rem;
         margin-bottom: 15px;
+        display: flex;
+        flex-direction: row;
+
+        .main-form__button {
+            margin: 0 !important;
+            padding: 0 !important;
+
+            &:hover {
+                background-color: transparent;
+                box-shadow: none;
+                color: #777777;
+            }
+
+            .production-journal__img--chevron {
+                margin-top: 3px !important;
+                margin-left: 4px;
+            }
+        }
     }
 }

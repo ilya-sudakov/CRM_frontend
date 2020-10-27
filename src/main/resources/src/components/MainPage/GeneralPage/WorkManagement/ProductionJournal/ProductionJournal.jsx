@@ -726,6 +726,48 @@ const ProductionJournal = (props) => {
             <>
               <div className="production-journal__workshop-name">
                 <span>{workshop[0]}</span>
+                <div
+                  className="main-form__button main-form__button--inverted"
+                  style={{
+                    borderColor: 'transparent',
+                    color: '#555555',
+                  }}
+                  title={`${
+                    Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
+                      ? 'Раскрыть'
+                      : 'Скрыть'
+                  } продукцию и чертежи`}
+                  onClick={() => {
+                    setWorkTimeInputs((worktimeInputs) => {
+                      const isFirstObjectMinimized = Object.values(
+                        worktimeInputs[workshop[1]],
+                      )[0].isMinimized
+
+                      let newWorkshopData = worktimeInputs[workshop[1]]
+                      Object.entries(worktimeInputs[workshop[1]]).map(
+                        (employee) => {
+                          newWorkshopData[
+                            employee[0]
+                          ].isMinimized = !isFirstObjectMinimized
+                        },
+                      )
+                      return {
+                        ...worktimeInputs,
+                        [workshop[1]]: {
+                          ...newWorkshopData,
+                        },
+                      }
+                    })
+                  }}
+                >
+                  <ChevronImg
+                    className={`production-journal__img production-journal__img--chevron ${
+                      Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
+                        ? 'main-window__img--rotated'
+                        : ''
+                    }`}
+                  />
+                </div>
               </div>
               {isLoading ? (
                 <PlaceholderLoading
