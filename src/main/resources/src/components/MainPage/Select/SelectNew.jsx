@@ -32,7 +32,7 @@ const SelectNew = (props) => {
       // console.log('already have loaded products');
       // console.log(props.products);
       setCategories([...props.categories])
-      setProducts([
+      return setProducts([
         ...props.products.map((product) => {
           return {
             ...product,

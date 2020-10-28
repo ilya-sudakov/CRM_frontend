@@ -803,7 +803,7 @@ const ProductionJournal = (props) => {
                   <span>
                     {Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
                       ? 'Раскрыть'
-                      : 'Скрыть'}
+                      : 'Скрыть продукцию и чертежи'}
                   </span>
                 </div>
               </div>

@@ -419,3 +419,9 @@ export const dateDiffInDays = (a, b) => {
 
   return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
+
+export const scrollToElement = (elem, offset = 0) =>
+  window.scrollTo({
+    top: elem.offsetTop - offset,
+    behavior: 'smooth',
+  })

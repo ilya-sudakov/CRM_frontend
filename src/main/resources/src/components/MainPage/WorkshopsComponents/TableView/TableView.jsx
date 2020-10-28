@@ -23,6 +23,7 @@ import {
   addSpaceDelimiter,
   createLabelForProduct,
   dateDiffInDays,
+  scrollToElement,
 } from '../../../../utils/functions.jsx'
 import {
   requestStatuses,
@@ -203,10 +204,11 @@ const TableView = (props) => {
           node,
           props.data.find((item) => item.id === id),
         )
-        node.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
+        // node.scrollIntoView({
+        //   behavior: 'smooth',
+        //   block: 'start',
+        // })
+        scrollToElement(node)
         setScrolledToPrev(true)
       }
     },
