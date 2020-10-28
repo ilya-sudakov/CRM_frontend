@@ -47,6 +47,7 @@
                     padding: 2px 5px;
                     background-color: #ffffff;
                     color: #777777;
+                    white-space: nowrap;
                 }
 
                 &::before {
@@ -278,6 +279,246 @@
             .production-journal__img--chevron {
                 margin-top: 3px !important;
                 margin-left: 4px;
+            }
+        }
+    }
+
+    @media (max-width: 1366px) {
+        .main-form__row {
+            .main-form__item {
+                &--employee {
+                    max-width: 25%;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .select {
+            .select__selected {
+                &_row {
+                    flex-direction: column;
+
+                    .select__selected_item {
+                        width: calc(100% - 30px);
+                    }
+
+                    .select__selected_quantity {
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+
+        .select-draft {
+            .select-draft__selected {
+                &_row {
+                    flex-direction: column;
+
+                    .select-draft__selected_item {
+                        width: calc(100% - 30px);
+                    }
+
+                    .select-draft__selected_quantity {
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .main-form__row {
+            flex-direction: column;
+            .main-form__item {
+                &--employee {
+                    width: 100%;
+                    max-width: 350px;
+                }
+            }
+            .production-journal__works-list {
+                position: relative;
+                .main-form__button {
+                    position: absolute;
+                    top: -3rem;
+
+                    &:nth-child(1) {
+                        left: 360px;
+                    }
+                    &:nth-child(2) {
+                        left: 380px;
+                    }
+                }
+
+                .production-journal__form {
+                    .main-form__item {
+                        padding-left: 0;
+                    }
+                }
+            }
+
+            .select {
+                .select__selected {
+                    &_row {
+                        flex-direction: column;
+
+                        .select__selected_quantity {
+                            margin-top: 0px;
+                        }
+                    }
+                }
+            }
+
+            .select-draft {
+                .select-draft__selected {
+                    &_row {
+                        flex-direction: column;
+
+                        .select-draft__selected_quantity {
+                            margin-top: 0px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-form__row {
+            .select {
+                .select__selected {
+                    &_row {
+                        .select__selected_quantity {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+
+            .select-draft {
+                .select-draft__selected {
+                    &_row {
+                        .select-draft__selected_quantity {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+
+            .select-work__item--time {
+                input {
+                    max-height: 1rem !important;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 650px) {
+        .main-form__row {
+            .select-work__selected_form {
+                flex-direction: column;
+
+                .select-work-item--new {
+                    margin-top: 5px;
+                    flex: none;
+                }
+            }
+            .select {
+                margin-top: 5px;
+                .select__selected {
+                    &_row {
+                        flex-direction: row;
+                        .select__selected_quantity {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+
+            .select-draft {
+                margin-top: 5px;
+                .select-draft__selected {
+                    &_row {
+                        flex-direction: row;
+                        .select-draft__selected_quantity {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+
+            .select-work__item--time {
+                input {
+                    max-height: 1rem !important;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        .main-form__row {
+            flex-direction: column;
+            .main-form__item {
+                &--employee {
+                    width: 100%;
+                    max-width: 270px;
+                }
+            }
+            .production-journal__works-list {
+                flex-wrap: wrap;
+                .main-form__button {
+                    margin-bottom: -10px;
+                    position: relative;
+                    left: auto !important;
+                    top: auto !important;
+                    background-color: transparent;
+                    // max-height: 1.5rem !important;
+                    &:nth-child(2) {
+                        margin-right: auto;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 400px) {
+        .main-form__row {
+            .select {
+                .select__selected {
+                    &_row {
+                        flex-direction: column;
+                    }
+                }
+            }
+
+            .select-draft {
+                .select-draft__selected {
+                    &_row {
+                        flex-direction: column;
+                    }
+                }
+            }
+
+            .main-form__item--employee {
+                max-width: none;
+                margin-bottom: -10px;
+            }
+
+            .select-work__selected_item {
+                width: 100%;
+
+                .select-work-item--new {
+                    width: 100%;
+                    max-width: none;
+                }
+
+                .select-draft--new {
+                    padding: 0;
+                }
+
+                .select--new {
+                    padding: 0;
+                }
             }
         }
     }
