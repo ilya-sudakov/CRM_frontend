@@ -28,6 +28,7 @@ import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
 import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
 import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
+import { getWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
 
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -36,6 +37,7 @@ const ProductionJournal = (props) => {
     lepsari: {},
     ligovskiy: {},
     office: {},
+    readonly: false,
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -53,7 +55,7 @@ const ProductionJournal = (props) => {
   const [products, setProducts] = useState([])
   const [drafts, setDrafts] = useState([])
   const [employees, setEmployees] = useState([])
-  const [recordedWork, setRecordedWork] = useState([])
+  const [works, setWorks] = useState([])
   const [employeesMap, setEmployeesMap] = useState({})
   const [workshops, setWorkshops] = useState({
     ЦехЛЭМЗ: 'lemz',
@@ -344,8 +346,15 @@ const ProductionJournal = (props) => {
 
     let employees = []
 
-    loadProducts(abortController.signal)
-    loadDrafts(abortController.signal)
+    if (works.length === 0) {
+      loadWorkItems(abortController.signal)
+    }
+    if (products.length === 0) {
+      loadProducts(abortController.signal)
+    }
+    if (drafts.length === 0) {
+      loadDrafts(abortController.signal)
+    }
     loadEmployees(abortController.signal)
       .then((res) => {
         employees = res
@@ -358,7 +367,6 @@ const ProductionJournal = (props) => {
       })
       .then((res) => res.json())
       .then(async (res) => {
-        setRecordedWork(res)
         const combinedWorks = await combineWorksForSamePeople(res)
         combineOriginalAndNewWorks(combinedWorks, employees)
       })
@@ -690,6 +698,28 @@ const ProductionJournal = (props) => {
       })
   }
 
+  const loadWorkItems = async (signal) => {
+    setIsLoading(true)
+    return getWork(signal)
+      .then((res) => res.json())
+      .then((res) => {
+        return setWorks(
+          res.map((work) => {
+            return {
+              // work.work, work.id, work.typeOfWork
+              value: work.id,
+              label: work.work,
+              typeOfWork: work.typeOfWork,
+            }
+          }),
+        )
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        console.log(error)
+      })
+  }
+
   return (
     <div className="production-journal">
       <div className="main-form">
@@ -805,6 +835,7 @@ const ProductionJournal = (props) => {
                             categories={categories}
                             products={products}
                             drafts={drafts}
+                            works={works}
                             employeesMap={employeesMap}
                           />
                         </div>
@@ -847,6 +878,7 @@ const FormRow = ({
   products,
   categories,
   drafts,
+  works,
   worktimeInputs,
   workItem,
   workshop,
@@ -947,6 +979,8 @@ const FormRow = ({
           workshop={workshop}
           categories={categories}
           products={products}
+          works={works}
+          drafts={drafts}
           employeesMap={employeesMap}
         />
       </div>
@@ -961,6 +995,7 @@ const JournalForm = ({
   products,
   categories,
   drafts,
+  works,
   employeesMap,
 }) => {
   return (
@@ -1019,6 +1054,7 @@ const JournalForm = ({
             categories={categories}
             products={products}
             drafts={drafts}
+            workItems={works}
             defaultValue={workItem.works}
           />
         </div>

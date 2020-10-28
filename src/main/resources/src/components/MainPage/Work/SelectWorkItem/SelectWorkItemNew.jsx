@@ -8,6 +8,7 @@ const SelectWorkItem = (props) => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    if (props.workItems) return setWorks([...props.workItems])
     works.length === 0 && loadWorks()
   }, [])
 
