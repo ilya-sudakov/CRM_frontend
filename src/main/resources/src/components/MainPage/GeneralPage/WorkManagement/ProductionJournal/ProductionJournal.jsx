@@ -29,6 +29,7 @@ import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm
 import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
 import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
 import { getWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
+import { dateDiffInDays } from '../../../../../utils/functions.jsx'
 
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -37,7 +38,7 @@ const ProductionJournal = (props) => {
     lepsari: {},
     ligovskiy: {},
     office: {},
-    readOnly: true,
+    readOnly: false,
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -739,10 +740,12 @@ const ProductionJournal = (props) => {
             // disabled
             selected={worktimeInputs.date}
             handleDateChange={(date) => {
+              const readOnly = Math.abs(dateDiffInDays(new Date(), date)) > 3
               validateField('date', date)
               setWorkTimeInputs({
                 ...worktimeInputs,
                 date: date,
+                readOnly: readOnly,
               })
               setWorkTimeErrors({
                 ...workTimeErrors,
