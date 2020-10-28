@@ -103,6 +103,7 @@
         max-width: fit-content;
         flex: none !important;
         padding-left: 2px;
+        position: relative;
 
         .main-window__img--rotated {
             transition: transform 100ms ease-in-out;

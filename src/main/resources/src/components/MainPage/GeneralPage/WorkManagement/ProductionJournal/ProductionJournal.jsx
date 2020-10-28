@@ -800,6 +800,11 @@ const ProductionJournal = (props) => {
                         : ''
                     }`}
                   />
+                  <span>
+                    {Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
+                      ? 'Раскрыть'
+                      : 'Скрыть'}
+                  </span>
                 </div>
               </div>
               {isLoading ? (
