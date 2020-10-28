@@ -339,27 +339,33 @@ const SelectNew = (props) => {
   }
 
   return (
-    <div className="select select--new">
+    <div
+      className={`select select--new ${
+        props.readOnly ? 'select--readonly' : ''
+      }`}
+    >
       <div className="select__input">
         <div className="select__input_name">Продукция</div>
-        <Select
-          // value={props.defaultValue.value === '' ? null : props.defaultValue}
-          className="select__input_field"
-          options={products}
-          styles={{
-            menu: (styles) => {
-              return {
-                ...styles,
-                zIndex: 999,
-              }
-            },
-          }}
-          placeholder={
-            products.length > 0 ? 'Выберите продукцию...' : 'Идет загрузка...'
-          }
-          isDisabled={products.length === 0}
-          onChange={(value) => clickOnOption(value)}
-        />
+        {!props.readOnly ? (
+          <Select
+            // value={props.defaultValue.value === '' ? null : props.defaultValue}
+            className="select__input_field"
+            options={products}
+            styles={{
+              menu: (styles) => {
+                return {
+                  ...styles,
+                  zIndex: 999,
+                }
+              },
+            }}
+            placeholder={
+              products.length > 0 ? 'Выберите продукцию...' : 'Идет загрузка...'
+            }
+            isDisabled={products.length === 0 || props.readOnly}
+            onChange={(value) => clickOnOption(value)}
+          />
+        ) : null}
       </div>
       {props.error === true && (
         <div

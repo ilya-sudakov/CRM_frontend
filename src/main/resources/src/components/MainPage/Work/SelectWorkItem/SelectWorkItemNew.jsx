@@ -63,7 +63,7 @@ const SelectWorkItem = (props) => {
           placeholder={
             works.length > 0 ? 'Выберите вид работы...' : 'Идет загрузка...'
           }
-          isDisabled={works.length === 0}
+          isDisabled={works.length === 0 || props.readOnly}
           onChange={clickWork}
         />
       </div>

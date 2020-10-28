@@ -357,6 +357,33 @@
     }
   }
 
+  &--readonly {
+    .select-draft__input {
+      .select-draft__input_name {
+        border-radius: 5px;
+      }
+    }
+    .select-draft__selected {
+      .select-draft__selected_row {
+        &:first-child {
+          margin-top: 0px !important;
+        }
+        .select-draft__selected_item {
+          .select-draft__selected_name {
+            height: 3rem !important;
+            max-height: 1.5rem !important;
+          }
+        }
+        .select-draft__selected_quantity {
+          input {
+            height: 3rem !important;
+            max-height: 2.3rem !important;
+          }
+        }
+      }
+    }
+  }
+
   @media (max-width: 768px) {
     & {
       width: 100% !important;

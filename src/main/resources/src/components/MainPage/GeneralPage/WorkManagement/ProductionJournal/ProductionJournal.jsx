@@ -37,7 +37,7 @@ const ProductionJournal = (props) => {
     lepsari: {},
     ligovskiy: {},
     office: {},
-    readonly: false,
+    readOnly: true,
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -835,6 +835,7 @@ const ProductionJournal = (props) => {
                             categories={categories}
                             products={products}
                             drafts={drafts}
+                            readOnly={worktimeInputs.readOnly}
                             works={works}
                             employeesMap={employeesMap}
                           />
@@ -872,8 +873,6 @@ const ProductionJournal = (props) => {
 export default ProductionJournal
 
 const FormRow = ({
-  workTimeErrors,
-  setWorkTimeErrors,
   setWorkTimeInputs,
   products,
   categories,
@@ -883,6 +882,7 @@ const FormRow = ({
   workItem,
   workshop,
   employeesMap,
+  readOnly,
 }) => {
   return (
     <>
@@ -903,43 +903,45 @@ const FormRow = ({
         ></input>
       </div>
       <div className="production-journal__works-list">
-        <div
-          className="main-form__button main-form__button--inverted"
-          style={{
-            borderColor: 'transparent',
-            fontSize: '28px',
-            color: '#888888',
-          }}
-          title="Добавить запись о работе"
-          onClick={() => {
-            setWorkTimeInputs((worktimeInputs) => {
-              return {
-                ...worktimeInputs,
-                [workshop[1]]: {
-                  ...worktimeInputs[workshop[1]],
-                  [workItem.employee.id]: {
-                    ...workItem,
-                    works: [
-                      ...workItem.works,
-                      {
-                        product: [],
-                        isOld: false,
-                        draft: [],
-                        workName: '',
-                        workType: '',
-                        workId: null,
-                        hours: 0,
-                        comment: '',
-                      },
-                    ],
+        {!readOnly ? (
+          <div
+            className="main-form__button main-form__button--inverted"
+            style={{
+              borderColor: 'transparent',
+              fontSize: '28px',
+              color: '#888888',
+            }}
+            title="Добавить запись о работе"
+            onClick={() => {
+              setWorkTimeInputs((worktimeInputs) => {
+                return {
+                  ...worktimeInputs,
+                  [workshop[1]]: {
+                    ...worktimeInputs[workshop[1]],
+                    [workItem.employee.id]: {
+                      ...workItem,
+                      works: [
+                        ...workItem.works,
+                        {
+                          product: [],
+                          isOld: false,
+                          draft: [],
+                          workName: '',
+                          workType: '',
+                          workId: null,
+                          hours: 0,
+                          comment: '',
+                        },
+                      ],
+                    },
                   },
-                },
-              }
-            })
-          }}
-        >
-          +
-        </div>
+                }
+              })
+            }}
+          >
+            +
+          </div>
+        ) : null}
         {workItem.works.length > 0 ? (
           <div
             className="main-form__button main-form__button--inverted"
@@ -981,6 +983,7 @@ const FormRow = ({
           products={products}
           works={works}
           drafts={drafts}
+          readOnly={readOnly}
           employeesMap={employeesMap}
         />
       </div>
@@ -997,6 +1000,7 @@ const JournalForm = ({
   drafts,
   works,
   employeesMap,
+  readOnly,
 }) => {
   return (
     <div
@@ -1056,6 +1060,7 @@ const JournalForm = ({
             drafts={drafts}
             workItems={works}
             defaultValue={workItem.works}
+            readOnly={readOnly}
           />
         </div>
       </div>

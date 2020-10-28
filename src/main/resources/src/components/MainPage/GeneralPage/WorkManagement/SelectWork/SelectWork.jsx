@@ -165,7 +165,7 @@ const SelectWork = (props) => {
                   }}
                   userHasAccess={userContext.userHasAccess}
                   workItems={props.workItems}
-                  readOnly
+                  readOnly={props.readOnly}
                 />
               ) : (
                 <SelectWorkItem
@@ -219,6 +219,7 @@ const SelectWork = (props) => {
                           setSelected([...temp])
                           props.handleWorkChange([...temp])
                         }}
+                        readOnly={props.readOnly}
                       />
                     </div>
                   </div>
@@ -270,6 +271,7 @@ const SelectWork = (props) => {
                           setSelected([...temp])
                           props.handleWorkChange([...temp])
                         }}
+                        readOnly={props.readOnly}
                         userHasAccess={userContext.userHasAccess}
                       />
                     </div>

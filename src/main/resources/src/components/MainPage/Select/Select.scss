@@ -402,6 +402,32 @@
     }
   }
 
+  &--readonly {
+    .select__input {
+      .select__input_name {
+        border-radius: 5px;
+      }
+    }
+    .select__selected {
+      .select__selected_row {
+        &:first-child {
+          margin-top: 0px !important;
+        }
+        .select__selected_item {
+          .select__selected_name {
+            max-height: 1rem;
+          }
+        }
+        .select__selected_quantity {
+          input {
+            height: 3rem !important;
+            max-height: 2.3rem !important;
+          }
+        }
+      }
+    }
+  }
+
   // MOBILE SCREENS ( <= 768px)
 
   @media (max-width: 768px) {

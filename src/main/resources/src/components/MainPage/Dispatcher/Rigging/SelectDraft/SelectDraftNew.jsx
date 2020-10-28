@@ -157,27 +157,33 @@ const SelectDraftNew = (props) => {
   }, [props.defaultValue, props.categories, showOptions])
 
   return (
-    <div className="select-draft select-draft--new">
+    <div
+      className={`select-draft select-draft--new ${
+        props.readOnly ? 'select-draft--readonly' : ''
+      }`}
+    >
       <div className="select-draft__input">
         <div className="select-draft__input_name">Чертежи</div>
-        <Select
-          // value={props.defaultValue.value === '' ? null : props.defaultValue}
-          className="select-draft__input_field"
-          options={drafts}
-          styles={{
-            menu: (styles) => {
-              return {
-                ...styles,
-                zIndex: 999,
-              }
-            },
-          }}
-          placeholder={
-            drafts.length > 0 ? 'Выберите чертеж...' : 'Идет загрузка...'
-          }
-          isDisabled={drafts.length === 0}
-          onChange={(value) => clickOnOption(value)}
-        />
+        {!props.readOnly ? (
+          <Select
+            // value={props.defaultValue.value === '' ? null : props.defaultValue}
+            className="select-draft__input_field"
+            options={drafts}
+            styles={{
+              menu: (styles) => {
+                return {
+                  ...styles,
+                  zIndex: 999,
+                }
+              },
+            }}
+            placeholder={
+              drafts.length > 0 ? 'Выберите чертеж...' : 'Идет загрузка...'
+            }
+            isDisabled={drafts.length === 0 || props.readOnly}
+            onChange={(value) => clickOnOption(value)}
+          />
+        ) : null}
       </div>
       {props.error === true && (
         <div
