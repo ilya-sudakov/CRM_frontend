@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './ProductionJournal.scss'
 import '../../../../../utils/Form/Form.scss'
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
@@ -30,6 +30,7 @@ import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx
 import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
 import { getWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
 import { dateDiffInDays } from '../../../../../utils/functions.jsx'
+import { UserContext } from '../../../../../App.js'
 
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -58,12 +59,43 @@ const ProductionJournal = (props) => {
   const [employees, setEmployees] = useState([])
   const [works, setWorks] = useState([])
   const [employeesMap, setEmployeesMap] = useState({})
-  const [workshops, setWorkshops] = useState({
+  const userContext = useContext(UserContext)
+
+  const ROLE_LEMZ = {
+    ЦехЛЭМЗ: 'lemz',
+  }
+  const isLemz = userContext.userHasAccess(['ROLE_LEMZ'])
+
+  const ROLE_LEPSARI = {
+    ЦехЛепсари: 'lepsari',
+  }
+  const isLepsari = userContext.userHasAccess(['ROLE_LEPSARI'])
+
+  const ROLE_LIGOVSKIY = {
+    ЦехЛиговский: 'ligovskiy',
+  }
+  const isLigovskiy = userContext.userHasAccess(['ROLE_LIGOVSKIY'])
+  const isAdmin =
+    userContext.userHasAccess(['ROLE_ADMIN']) ||
+    userContext.userHasAccess(['ROLE_DISPATCHER'])
+  const ROLE_ADMIN = {
     ЦехЛЭМЗ: 'lemz',
     ЦехЛепсари: 'lepsari',
     ЦехЛиговский: 'ligovskiy',
     Офис: 'office',
-  })
+  }
+
+  const [workshops, setWorkshops] = useState(
+    isAdmin
+      ? ROLE_ADMIN
+      : isLemz
+      ? ROLE_LEMZ
+      : isLepsari
+      ? ROLE_LEPSARI
+      : isLigovskiy
+      ? ROLE_LIGOVSKIY
+      : ROLE_ADMIN,
+  )
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
@@ -500,7 +532,7 @@ const ProductionJournal = (props) => {
         setCategories(res)
         let productsArr = []
         if (
-          props.userHasAccess([
+          userContext.userHasAccess([
             'ROLE_ADMIN',
             'ROLE_DISPATCHER',
             'ROLE_ENGINEER',
@@ -538,11 +570,11 @@ const ProductionJournal = (props) => {
         } else {
           getProductsByLocation(
             {
-              productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
+              productionLocation: userContext.userHasAccess(['ROLE_LIGOVSKIY'])
                 ? 'ЦехЛиговский'
-                : props.userHasAccess(['ROLE_LEMZ'])
+                : userContext.userHasAccess(['ROLE_LEMZ'])
                 ? 'ЦехЛЭМЗ'
-                : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
+                : userContext.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
             },
             signal,
           )
