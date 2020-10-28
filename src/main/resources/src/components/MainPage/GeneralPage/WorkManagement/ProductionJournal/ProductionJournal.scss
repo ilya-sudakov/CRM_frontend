@@ -263,7 +263,7 @@
     &__workshop-name {
         width: calc(100% - 20px);
         font-size: 1.1rem;
-        margin-bottom: 15px;
+        margin-bottom: 7px;
         display: flex;
         flex-direction: row;
 
@@ -284,6 +284,7 @@
 
             span {
                 color: #777777;
+                margin-top: 1px;
             }
         }
     }
