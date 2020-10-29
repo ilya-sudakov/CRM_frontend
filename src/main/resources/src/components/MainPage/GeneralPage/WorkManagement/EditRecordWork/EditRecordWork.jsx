@@ -216,6 +216,10 @@ const EditRecordWork = (props) => {
     })
   }
 
+  const isNewDate = (date) => {
+    return Math.abs(dateDiffInDays(date, new Date())) <= 3 && date <= new Date()
+  }
+
   useEffect(() => {
     document.title = 'Редактирование заявки'
     const abortController = new AbortController()
@@ -399,6 +403,7 @@ const EditRecordWork = (props) => {
           error={Date.parse(workTimeErrors.date)}
           name="date"
           selected={worktimeInputs.date}
+          filterDate={isNewDate}
           handleDateChange={(date) => {
             validateField('date', date)
             setWorkTimeInputs({

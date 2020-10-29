@@ -20,6 +20,7 @@ import {
 // import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
 import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
+import { dateDiffInDays } from '../../../../../utils/functions.jsx'
 
 const NewRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -257,6 +258,10 @@ const NewRecordWork = (props) => {
     }
   }, [worktimeInputs])
 
+  const isNewDate = (date) => {
+    return Math.abs(dateDiffInDays(date, new Date())) <= 3 && date <= new Date()
+  }
+
   return (
     <div className="record-work">
       <div className="main-form">
@@ -297,6 +302,7 @@ const NewRecordWork = (props) => {
                 required
                 error={workTimeErrors.date}
                 name="date"
+                filterDate={isNewDate}
                 selected={worktimeInputs.date}
                 handleDateChange={(date) => {
                   validateField('date', date)

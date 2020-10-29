@@ -368,7 +368,7 @@ const ProductionJournal = (props) => {
           })
         }),
       ).then(() => {
-        props.history.push('/work-management')
+        props.history.push('/')
       })
     })
   }
