@@ -420,8 +420,15 @@ export const dateDiffInDays = (a, b) => {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY)
 }
 
-export const scrollToElement = (elem, offset = 0) =>
+export const scrollToElement = (element, offset = 0) => {
+  const headerOffset = 70
+  //default header offset is 60 px
+  const elementPosition = element.offsetTop
+  console.log(elementPosition)
+  const offsetPosition = elementPosition - offset - headerOffset
+
   window.scrollTo({
-    top: elem.offsetTop - offset,
+    top: offsetPosition,
     behavior: 'smooth',
   })
+}

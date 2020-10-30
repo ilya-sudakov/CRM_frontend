@@ -208,7 +208,7 @@ const TableView = (props) => {
         //   behavior: 'smooth',
         //   block: 'start',
         // })
-        scrollToElement(node)
+        scrollToElement(node, props.workshopName === 'requests' ? 0 : 340)
         setScrolledToPrev(true)
       }
     },

@@ -232,8 +232,8 @@ const ProductionJournal = (props) => {
                   )
                   if (
                     product !== undefined &&
-                    (originalProduct.quantity !== product.quantity ||
-                      originalProduct.name !== product.name)
+                    originalProduct.quantity !==
+                      Number.parseFloat(product.quantity)
                   ) {
                     console.log('edit product', product)
                     return deleteProductFromRecordedWork(
@@ -298,15 +298,17 @@ const ProductionJournal = (props) => {
                   const draft = item.draft.find(
                     (draft) => draft.id === originalDraft.id,
                   )
+                  console.log('edit draft', originalDraft, draft)
                   if (
                     draft !== undefined &&
-                    originalDraft.quantity !== draft.quantity
+                    originalDraft.quantity !== Number.parseFloat(draft.quantity)
                   ) {
                     console.log('edit draft', draft)
                     return deleteDraftFromRecordedWork(
                       item.id,
-                      draft.partId,
-                      draft.partType,
+                      originalDraft.partId,
+                      originalDraft.partType ??
+                        drafts.find((item) => draft.partId === item.id)?.type,
                     ).then(() =>
                       addDraftToRecordedWork(
                         item.id,
@@ -368,7 +370,8 @@ const ProductionJournal = (props) => {
           })
         }),
       ).then(() => {
-        props.history.push('/')
+        // props.history.push('/')
+        // window.location.reload()
       })
     })
   }
