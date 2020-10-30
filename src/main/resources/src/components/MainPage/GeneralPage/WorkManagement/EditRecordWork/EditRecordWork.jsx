@@ -403,7 +403,7 @@ const EditRecordWork = (props) => {
           error={Date.parse(workTimeErrors.date)}
           name="date"
           selected={worktimeInputs.date}
-          filterDate={isNewDate}
+          // filterDate={isNewDate}
           handleDateChange={(date) => {
             validateField('date', date)
             setWorkTimeInputs({

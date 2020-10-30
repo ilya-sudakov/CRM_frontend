@@ -302,7 +302,7 @@ const NewRecordWork = (props) => {
                 required
                 error={workTimeErrors.date}
                 name="date"
-                filterDate={isNewDate}
+                // filterDate={isNewDate}
                 selected={worktimeInputs.date}
                 handleDateChange={(date) => {
                   validateField('date', date)
