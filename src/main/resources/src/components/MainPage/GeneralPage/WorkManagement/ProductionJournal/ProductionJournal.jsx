@@ -991,6 +991,13 @@ const FormRow = ({
             style={{
               borderColor: 'transparent',
               color: '#555555',
+              visibility:
+                workItem.works.reduce(
+                  (prev, cur) => prev + cur.product.length + cur.draft.length,
+                  0,
+                ) > 0
+                  ? 'visible'
+                  : 'hidden',
             }}
             title={`${
               workItem.isMinimized ? 'Раскрыть' : 'Скрыть'
