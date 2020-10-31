@@ -177,6 +177,7 @@ const NewTask = (props) => {
           <InputText
             inputName="Описание"
             required
+            type="textarea"
             error={taskErrors.description}
             name="description"
             handleInputChange={handleInputChange}

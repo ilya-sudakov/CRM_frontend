@@ -786,7 +786,10 @@ const ProductionJournal = (props) => {
             // disabled
             selected={worktimeInputs.date}
             handleDateChange={(date) => {
-              const readOnly = Math.abs(dateDiffInDays(new Date(), date)) > 3
+              //readonly для записей старше чем 3 дня
+              //const readOnly = Math.abs(dateDiffInDays(new Date(), date)) > 3
+              const readOnly = false
+
               validateField('date', date)
               setWorkTimeInputs({
                 ...worktimeInputs,

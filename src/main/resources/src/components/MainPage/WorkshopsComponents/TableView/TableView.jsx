@@ -279,7 +279,11 @@ const TableView = (props) => {
       >
         {/* <div className="requests__text--id">{request.id}</div> */}
         {displayColumns['id'].visible && (
-          <span className="requests__column--id">{`Заявка #${request.id}`}</span>
+          <span className="requests__column--id">{`${
+            props.workshopName === 'requests'
+              ? 'Заявка'
+              : 'Очередь производства'
+          } #${request.id}`}</span>
         )}
         {displayColumns['date'].visible && (
           <span className="requests__column--date">
