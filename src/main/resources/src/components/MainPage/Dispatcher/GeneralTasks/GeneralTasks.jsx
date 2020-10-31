@@ -45,6 +45,8 @@ const GeneralTasks = (props) => {
       visible: false,
     },
   ])
+  //Уникальные пользователи
+  const [taskUsers, setTaskUsers] = useState({})
 
   useEffect(() => {
     document.title = 'Основные задачи'
@@ -52,6 +54,7 @@ const GeneralTasks = (props) => {
     //при переходе на другие страницы
     let abortController = new AbortController()
     loadTasks(abortController.signal)
+
     return function cancel() {
       abortController.abort()
     }
@@ -65,6 +68,7 @@ const GeneralTasks = (props) => {
       .then((res) => {
         // console.log(res);
         setIsLoading(false)
+        getUsers(res)
         setGeneralTasks(res)
       })
       .catch((error) => {
@@ -72,6 +76,19 @@ const GeneralTasks = (props) => {
         setIsLoading(false)
         console.log(error)
       })
+  }
+
+  const getUsers = (tasks) => {
+    let users = {}
+    tasks.map((task) => {
+      if (users[task.responsible] === undefined) {
+        users = {
+          ...users,
+          [task.responsible]: false,
+        }
+      }
+    })
+    setTaskUsers(users)
   }
 
   //Удаление задачи
@@ -117,6 +134,42 @@ const GeneralTasks = (props) => {
       }
       return 0
     })
+  }
+
+  const filterTasks = (tasks) => {
+    const filteredCompletedTasks = filterCompletedTasks(tasks)
+    const filteredUsers = filterTasksUsers(filteredCompletedTasks)
+    return filteredUsers
+  }
+
+  const filterTasksUsers = (tasks) => {
+    return tasks.filter((item) => {
+      let check = false
+      let noActiveStatuses = true
+      Object.entries(taskUsers).map((user) => {
+        Object.entries(taskUsers).map((user) => {
+          if (user[1]) {
+            noActiveStatuses = false
+          }
+        })
+        if (
+          noActiveStatuses === true ||
+          (user[1] && user[0] === item.responsible)
+        ) {
+          check = true
+          return
+        }
+      })
+      return check
+    })
+  }
+
+  const filterCompletedTasks = (tasks) => {
+    return tasks.filter(
+      (task) =>
+        (curPage === 'В процессе' && task.condition !== 'Выполнено') ||
+        (curPage === 'Завершено' && task.condition === 'Выполнено'),
+    )
   }
 
   return (
@@ -179,33 +232,41 @@ const GeneralTasks = (props) => {
           }
           content={
             <div className="main-window__info-panel">
-              <div className="main-window__status-panel">
-                <div>Фильтр по статусам: </div>
-                {taskStatuses.map((status, index) => {
+              <div className="main-window__filter-pick">
+                <div>Фильтр по пользователям: </div>
+                {Object.entries(taskUsers).map((user) => {
                   return (
                     <div
                       className={
-                        (status.visible
+                        user[1]
                           ? 'main-window__button'
-                          : 'main-window__button main-window__button--inverted') +
-                        ' main-window__list-item--' +
-                        status.className
+                          : 'main-window__button main-window__button--inverted'
                       }
                       onClick={() => {
-                        let temp = taskStatuses.map((status) => {
+                        return setTaskUsers((taskUsers) => {
+                          //Выбор нескольких пользователей
+                          // return {
+                          //   ...taskUsers,
+                          //   [user[0]]: !user[1],
+                          // }
+
+                          //Выбор только одного пользователя
+                          let newUsers = taskUsers
+                          Object.entries(taskUsers).map((oldTask) => {
+                            newUsers = {
+                              ...newUsers,
+                              [oldTask[0]]: false,
+                            }
+                          })
+
                           return {
-                            ...status,
-                            visible: false,
+                            ...newUsers,
+                            [user[0]]: user[1] ? false : true,
                           }
                         })
-                        temp.splice(index, 1, {
-                          ...status,
-                          visible: !status.visible,
-                        })
-                        setTaskStatuses([...temp])
                       }}
                     >
-                      {status.name}
+                      {user[0]}
                     </div>
                   )
                 })}
@@ -214,30 +275,7 @@ const GeneralTasks = (props) => {
           }
         />
         <TableView
-          data={sortTasks(generalTasks).filter((item) => {
-            if (
-              (curPage === 'В процессе' && item.condition !== 'Выполнено') ||
-              (curPage === 'Завершено' && item.condition === 'Выполнено')
-            ) {
-              let check = false
-              let noActiveStatuses = true
-              taskStatuses.map((status) => {
-                taskStatuses.map((status) => {
-                  if (status.visible) {
-                    noActiveStatuses = false
-                  }
-                })
-                if (
-                  noActiveStatuses === true ||
-                  (status.visible && status.name === item.condition)
-                ) {
-                  check = true
-                  return
-                }
-              })
-              return check
-            }
-          })}
+          data={filterTasks(sortTasks(generalTasks))}
           searchQuery={searchQuery}
           userData={props.userData}
           userHasAccess={props.userHasAccess}

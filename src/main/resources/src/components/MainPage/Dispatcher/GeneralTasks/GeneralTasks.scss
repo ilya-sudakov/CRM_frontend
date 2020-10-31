@@ -29,6 +29,10 @@
         margin-bottom: 0;
     }
 
+    .main-window__filter-pick {
+        margin-top: 12px;
+    }
+
     .main-window__status-panel {
         .main-window__list-item--completed::before {
             background-color: var(--completed);
