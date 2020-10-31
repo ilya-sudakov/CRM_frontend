@@ -53,6 +53,20 @@ const SideMenu = (props) => {
       renderIcon: () => <HomeImg className="sidemenu__img" />,
     },
     {
+      pathname: '/dispatcher/general-tasks',
+      name: 'Основные задачи',
+      mainRoles: [
+        'ROLE_ADMIN',
+        'ROLE_DISPATCHER',
+        'ROLE_ENGINEER',
+        'ROLE_MANAGER',
+        'ROLE_WORKSHOP',
+      ],
+      addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+      addButtonName: 'Добавить задачу',
+      renderIcon: () => <TasksImg className="sidemenu__img" />,
+    },
+    {
       pathname: '/clients',
       linkTo: props.location.pathname,
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
@@ -321,20 +335,6 @@ const SideMenu = (props) => {
       addButtonName: 'Добавить пользователя',
     },
     {
-      pathname: '/dispatcher/general-tasks',
-      name: 'Основные задачи',
-      mainRoles: [
-        'ROLE_ADMIN',
-        'ROLE_DISPATCHER',
-        'ROLE_ENGINEER',
-        'ROLE_MANAGER',
-        'ROLE_WORKSHOP',
-      ],
-      addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-      addButtonName: 'Добавить задачу',
-      renderIcon: () => <TasksImg className="sidemenu__img" />,
-    },
-    {
       pathname: '/dispatcher/employees',
       name: 'Сотрудники',
       mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
@@ -400,9 +400,10 @@ const SideMenu = (props) => {
         .then((res) => res.json())
         .then((res) => {
           // console.log(res);
+          const clientsIndex = 2
           let temp = sidemenuItems
-          temp.splice(1, 1, {
-            ...temp[1],
+          temp.splice(clientsIndex, 1, {
+            ...temp[clientsIndex],
             linkTo: `/clients/${
               res.length > 0
                 ? 'category/' + res[res.length - 1].name + '/active'
@@ -461,9 +462,10 @@ const SideMenu = (props) => {
         .then((res) => res.json())
         .then((res) => {
           // console.log(res);
+          const suppliersIndex = 3
           let temp = sidemenuItems
-          temp.splice(2, 1, {
-            ...temp[2],
+          temp.splice(suppliersIndex, 1, {
+            ...temp[suppliersIndex],
             linkTo: `/suppliers/${
               res.length > 0
                 ? 'category/' + res[res.length - 1].name + '/active'
@@ -528,7 +530,7 @@ const SideMenu = (props) => {
         })
     }
 
-    if (sidemenuItems[1].dropdownMenu.length === 0) {
+    if (sidemenuItems[2].dropdownMenu.length === 0) {
       loadClientCategories() //client categories are loaded
         .then((temp) => {
           loadSuppliersCategories(temp) //suppliers categories are loaded
