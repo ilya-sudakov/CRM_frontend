@@ -914,7 +914,7 @@ const ProductionJournal = (props) => {
             <Button
               text="Сохранить данные"
               isLoading={isLoading}
-              className="main-form__submit"
+              className="main-form__submit main-form__submit--floating"
               onClick={handleSubmit}
             />
           </div>
