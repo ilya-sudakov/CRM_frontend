@@ -81,7 +81,11 @@ const GeneralTasks = (props) => {
   const getUsers = (tasks) => {
     let users = {}
     tasks.map((task) => {
-      if (users[task.responsible] === undefined) {
+      if (
+        users[task.responsible] === undefined &&
+        task.responsible !== '' &&
+        task.responsible !== null
+      ) {
         users = {
           ...users,
           [task.responsible]: false,
