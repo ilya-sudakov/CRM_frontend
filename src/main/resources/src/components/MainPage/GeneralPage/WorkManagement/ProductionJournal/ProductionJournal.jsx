@@ -382,7 +382,7 @@ const ProductionJournal = (props) => {
           })
         }),
       ).then(() => {
-        // props.history.push('/')
+        props.history.push('/')
         // window.location.reload()
       })
     })
