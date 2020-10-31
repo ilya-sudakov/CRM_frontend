@@ -21,6 +21,7 @@ import {
   addRecordedWork,
   deleteDraftFromRecordedWork,
   deleteProductFromRecordedWork,
+  deleteRecordedWork,
   editRecordedWork,
   getRecordedWorkByDay,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
@@ -164,7 +165,7 @@ const ProductionJournal = (props) => {
                     originalWork.product.map((product) => {
                       return deleteProductFromRecordedWork(
                         originalWork.id,
-                        product.id,
+                        product.product.id,
                       )
                     }),
                   )
@@ -382,7 +383,7 @@ const ProductionJournal = (props) => {
         }),
       ).then(() => {
         // props.history.push('/')
-        window.location.reload()
+        // window.location.reload()
       })
     })
   }
