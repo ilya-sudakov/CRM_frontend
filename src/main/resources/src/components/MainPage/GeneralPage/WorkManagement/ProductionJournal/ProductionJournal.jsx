@@ -333,7 +333,7 @@ const ProductionJournal = (props) => {
               return addRecordedWork(temp)
                 .then((res) => res.json())
                 .then((res) => {
-                  return Promise.all(
+                  Promise.all(
                     item.product.map((product) => {
                       return addProductToRecordedWork(
                         res.id,
@@ -345,15 +345,17 @@ const ProductionJournal = (props) => {
                       )
                     }),
                   )
+                  return res.id
                 })
-                .then(() => {
+                .then((id) => {
                   return Promise.all(
                     item.draft.map((draft) => {
                       return addDraftToRecordedWork(
-                        itemId,
+                        id,
                         draft.partId,
                         draft.type,
                         draft.quantity,
+                        draft.name,
                       )
                     }),
                   )
@@ -371,7 +373,7 @@ const ProductionJournal = (props) => {
         }),
       ).then(() => {
         // props.history.push('/')
-        // window.location.reload()
+        window.location.reload()
       })
     })
   }
