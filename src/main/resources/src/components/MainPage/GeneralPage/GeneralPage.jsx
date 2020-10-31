@@ -112,14 +112,14 @@ const GeneralPage = (props) => {
                   Статистика
                 </Link>
               )}
-              <Button
+              {/* <Button
                 text="Скачать Табель"
                 imgSrc={DownloadIcon}
                 className="main-window__button main-window__button--inverted"
                 inverted
                 isLoading={isLoading}
                 onClick={testExcelJSLibrary}
-              />
+              /> */}
             </>
           }
         />
