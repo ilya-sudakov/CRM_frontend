@@ -75,9 +75,16 @@ const ProductionJournal = (props) => {
     ЦехЛиговский: 'ligovskiy',
   }
   const isLigovskiy = userContext.userHasAccess(['ROLE_LIGOVSKIY'])
+
+  const ROLE_MANAGER = {
+    Офис: 'office',
+  }
+  const isManager = userContext.userHasAccess(['ROLE_MANAGER'])
+
   const isAdmin =
     userContext.userHasAccess(['ROLE_ADMIN']) ||
-    userContext.userHasAccess(['ROLE_DISPATCHER'])
+    userContext.userHasAccess(['ROLE_DISPATCHER']) ||
+    userContext.userHasAccess(['ROLE_ENGINEER'])
   const ROLE_ADMIN = {
     ЦехЛЭМЗ: 'lemz',
     ЦехЛепсари: 'lepsari',
@@ -94,6 +101,8 @@ const ProductionJournal = (props) => {
       ? ROLE_LEPSARI
       : isLigovskiy
       ? ROLE_LIGOVSKIY
+      : isManager
+      ? ROLE_MANAGER
       : ROLE_ADMIN,
   )
 
