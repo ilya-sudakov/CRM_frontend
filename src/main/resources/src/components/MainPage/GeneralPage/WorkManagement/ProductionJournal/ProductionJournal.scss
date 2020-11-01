@@ -244,6 +244,7 @@
                             }
                         }
                         .select-work__item--time {
+                            min-width: 70px;
                             max-width: 70px;
                             margin-left: 0;
                             margin-right: auto;
@@ -260,6 +261,11 @@
         }
         .select-work__selected_form {
             // margin-bottom: 5px;
+        }
+        .select-work__item--drafts {
+        }
+        .select-work__item--products {
+            // max-width: 60%;
         }
         &--minimized {
             .select-work__item--drafts {
