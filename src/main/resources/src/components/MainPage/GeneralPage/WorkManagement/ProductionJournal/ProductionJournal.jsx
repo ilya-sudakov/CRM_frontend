@@ -575,7 +575,17 @@ const ProductionJournal = (props) => {
                   .then((res) => {
                     // console.log(res);
                     productsArr.splice(index, 1, res)
-                    setProducts([...productsArr])
+                    setProducts([
+                      ...productsArr.sort((a, b) => {
+                        if (a.name < b.name) {
+                          return -1
+                        }
+                        if (a.name > b.name) {
+                          return 1
+                        }
+                        return 0
+                      }),
+                    ])
                   })
               }),
             ).then(() => {
@@ -604,7 +614,17 @@ const ProductionJournal = (props) => {
                     .then((res) => {
                       // console.log(res);
                       productsArr.splice(index, 1, res)
-                      setProducts([...productsArr])
+                      setProducts([
+                        ...productsArr.sort((a, b) => {
+                          if (a.name < b.name) {
+                            return -1
+                          }
+                          if (a.name > b.name) {
+                            return 1
+                          }
+                          return 0
+                        }),
+                      ])
                     })
                 }),
               ).then(() => {
@@ -682,7 +702,17 @@ const ProductionJournal = (props) => {
           })
         })
         // console.log(newDrafts)
-        return setDrafts([...newDrafts])
+        return setDrafts([
+          ...newDrafts.sort((a, b) => {
+            if (a.name < b.name) {
+              return -1
+            }
+            if (a.name > b.name) {
+              return 1
+            }
+            return 0
+          }),
+        ])
       })
   }
 
@@ -752,14 +782,24 @@ const ProductionJournal = (props) => {
       .then((res) => res.json())
       .then((res) => {
         return setWorks(
-          res.map((work) => {
-            return {
-              // work.work, work.id, work.typeOfWork
-              value: work.id,
-              label: work.work,
-              typeOfWork: work.typeOfWork,
-            }
-          }),
+          res
+            .sort((a, b) => {
+              if (a.work < b.work) {
+                return -1
+              }
+              if (a.work > b.work) {
+                return 1
+              }
+              return 0
+            })
+            .map((work) => {
+              return {
+                // work.work, work.id, work.typeOfWork
+                value: work.id,
+                label: work.work,
+                typeOfWork: work.typeOfWork,
+              }
+            }),
         )
       })
       .catch((error) => {
