@@ -47,7 +47,7 @@ const LoginPage = (props) => {
       .then((response) => {
         setIsLoading(false)
         localStorage.setItem('rememberUser', rememberUser)
-        props.setUserData(true, response.user)
+        props.setUserData(true, response)
         localStorage.setItem('accessToken', response.accessToken)
         localStorage.setItem('refreshToken', response.refreshToken)
         props.history.push('/')

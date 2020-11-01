@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './GeneralTasks.scss'
 import '../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
@@ -11,8 +11,10 @@ import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus
 import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 import Select from 'react-select'
 import { formatDateString } from '../../../../utils/functions.jsx'
+import { UserContext } from '../../../../App.js'
 
 const GeneralTasks = (props) => {
+  const userContext = useContext(UserContext)
   const [generalTasks, setGeneralTasks] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -235,47 +237,49 @@ const GeneralTasks = (props) => {
             </div>
           }
           content={
-            <div className="main-window__info-panel">
-              <div className="main-window__filter-pick">
-                <div>Фильтр по пользователям: </div>
-                {Object.entries(taskUsers).map((user) => {
-                  return (
-                    <div
-                      className={
-                        user[1]
-                          ? 'main-window__button'
-                          : 'main-window__button main-window__button--inverted'
-                      }
-                      onClick={() => {
-                        return setTaskUsers((taskUsers) => {
-                          //Выбор нескольких пользователей
-                          // return {
-                          //   ...taskUsers,
-                          //   [user[0]]: !user[1],
-                          // }
+            userContext.userHasAccess(['ROLE_ADMIN']) ? (
+              <div className="main-window__info-panel">
+                <div className="main-window__filter-pick">
+                  <div>Фильтр по пользователям: </div>
+                  {Object.entries(taskUsers).map((user) => {
+                    return (
+                      <div
+                        className={
+                          user[1]
+                            ? 'main-window__button'
+                            : 'main-window__button main-window__button--inverted'
+                        }
+                        onClick={() => {
+                          return setTaskUsers((taskUsers) => {
+                            //Выбор нескольких пользователей
+                            // return {
+                            //   ...taskUsers,
+                            //   [user[0]]: !user[1],
+                            // }
 
-                          //Выбор только одного пользователя
-                          let newUsers = taskUsers
-                          Object.entries(taskUsers).map((oldTask) => {
-                            newUsers = {
+                            //Выбор только одного пользователя
+                            let newUsers = taskUsers
+                            Object.entries(taskUsers).map((oldTask) => {
+                              newUsers = {
+                                ...newUsers,
+                                [oldTask[0]]: false,
+                              }
+                            })
+
+                            return {
                               ...newUsers,
-                              [oldTask[0]]: false,
+                              [user[0]]: user[1] ? false : true,
                             }
                           })
-
-                          return {
-                            ...newUsers,
-                            [user[0]]: user[1] ? false : true,
-                          }
-                        })
-                      }}
-                    >
-                      {user[0]}
-                    </div>
-                  )
-                })}
+                        }}
+                      >
+                        {user[0]}
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            </div>
+            ) : null
           }
         />
         <TableView
