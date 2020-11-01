@@ -52,6 +52,7 @@ const SelectWorkItem = (props) => {
           value={props.defaultValue.value ? props.defaultValue : null}
           className="select-work-item__input_field"
           options={works}
+          noOptionsMessage={() => 'Не найдено работ с таким названием'}
           styles={{
             menu: (styles) => {
               return {

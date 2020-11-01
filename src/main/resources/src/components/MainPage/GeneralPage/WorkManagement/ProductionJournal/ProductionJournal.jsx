@@ -563,7 +563,17 @@ const ProductionJournal = (props) => {
                 .then((res) => res.json())
                 .then((res) => {
                   res.map((item) => productsArr.push(item))
-                  setProducts([...productsArr])
+                  setProducts([
+                    ...productsArr.sort((a, b) => {
+                      if (a.name < b.name) {
+                        return -1
+                      }
+                      if (a.name > b.name) {
+                        return 1
+                      }
+                      return 0
+                    }),
+                  ])
                 })
             }),
           ).then(() => {

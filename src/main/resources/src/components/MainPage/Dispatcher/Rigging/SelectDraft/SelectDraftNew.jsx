@@ -169,6 +169,7 @@ const SelectDraftNew = (props) => {
             // value={props.defaultValue.value === '' ? null : props.defaultValue}
             className="select-draft__input_field"
             options={drafts}
+            noOptionsMessage={() => 'Не найдено чертежей с таким названием'}
             styles={{
               menu: (styles) => {
                 return {

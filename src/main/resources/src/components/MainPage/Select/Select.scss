@@ -367,12 +367,23 @@
 
     .select__selected_item {
       width: calc(100%);
+      max-width: calc(70%);
       font-size: 0.8rem;
 
       .select-product__color_name {
         padding: 5px 5px;
         height: 3rem !important;
         max-height: 1.25rem !important;
+      }
+
+      .select__selected_name {
+        padding: 5px 5px;
+        height: 3rem !important;
+        max-height: 1.25rem !important;
+        white-space: nowrap;
+        overflow-x: hidden;
+        background-color: #ffffff;
+        border-radius: 5px;
       }
     }
     .select__img {

@@ -307,7 +307,7 @@ const SelectNew = (props) => {
     item,
     options = {
       readOnly: false,
-      showColorPicker: true,
+      showColorPicker: false,
       showDelete: true,
     },
   ) => {
@@ -323,6 +323,10 @@ const SelectNew = (props) => {
             defaultName={item.name}
             id={item.id}
             handleStatusChange={handleStatusChange}
+            // style={{
+            //   whiteSpace: 'nowrap',
+            //   overflowX: 'hidden',
+            // }}
           />
         ) : (
           <div className="select__selected_name">{item.name}</div>
@@ -351,6 +355,7 @@ const SelectNew = (props) => {
             // value={props.defaultValue.value === '' ? null : props.defaultValue}
             className="select__input_field"
             options={products}
+            noOptionsMessage={() => 'Не найдено продукции с таким названием'}
             styles={{
               menu: (styles) => {
                 return {
