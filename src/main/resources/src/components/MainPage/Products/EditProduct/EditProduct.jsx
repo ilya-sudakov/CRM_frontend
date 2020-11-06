@@ -266,8 +266,7 @@ const EditProduct = (props) => {
             type="text"
             handleInputChange={handleInputChange}
           />
-
-          {/* <InputText
+          <InputText
             inputName="Описание"
             type="text"
             defaultValue={productInputs.description}
@@ -276,11 +275,11 @@ const EditProduct = (props) => {
           />
           <InputText
             inputName="Штрихкод"
-            type="number"
+            type="text"
             defaultValue={productInputs.barcode}
             name="barcode"
             handleInputChange={handleInputChange}
-          /> */}
+          />
 
           {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения*</div>

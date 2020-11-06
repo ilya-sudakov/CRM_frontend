@@ -215,8 +215,8 @@ const NewProduct = (props) => {
             errorsArr={productErrors}
             setErrorsArr={setProductErrors}
           />
-          
-          {/* <InputText
+
+          <InputText
             inputName="Описание"
             type="text"
             name="description"
@@ -224,10 +224,10 @@ const NewProduct = (props) => {
           />
           <InputText
             inputName="Штрихкод"
-            type="number"
+            type="text"
             name="barcode"
             handleInputChange={handleInputChange}
-          /> */}
+          />
 
           {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения*</div>
