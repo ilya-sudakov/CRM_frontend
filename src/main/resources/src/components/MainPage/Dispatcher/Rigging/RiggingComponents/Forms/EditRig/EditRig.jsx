@@ -253,7 +253,9 @@ const EditRig = (props) => {
               className="main-form__submit main-form__submit--inverted"
               type="submit"
               onClick={() =>
-                props.history.push(rigTypes[props.type].redirectURL)
+                props.history.push(
+                  `${rigTypes[props.type].redirectURL}#${rigInputs.id}`,
+                )
               }
               value="Вернуться назад"
             />

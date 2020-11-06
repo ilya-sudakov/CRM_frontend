@@ -1,3 +1,5 @@
+import { animateScroll as scroll } from 'react-scroll'
+
 //Получение строки типа 'дд.мм.ГГГГ' из объекта Date
 export const formatDateString = (dateString) => {
   // const testDate = new Date(Date.parse(dateString));
@@ -421,14 +423,27 @@ export const dateDiffInDays = (a, b) => {
 }
 
 export const scrollToElement = (element, offset = 0) => {
-  const headerOffset = 70
+  const headerOffset = -70
   //default header offset is 60 px
   const elementPosition = element.offsetTop
-  console.log(elementPosition)
-  const offsetPosition = elementPosition - offset - headerOffset
+  const offsetPosition = elementPosition - (offset + headerOffset)
+  const y =
+    element.getBoundingClientRect().top +
+    window.pageYOffset +
+    headerOffset +
+    offset
 
-  window.scrollTo({
-    top: offsetPosition,
-    behavior: 'smooth',
-  })
+  console.log(
+    offsetPosition,
+    y,
+    element.getBoundingClientRect().top,
+    window.pageYOffset,
+    offset,
+  )
+
+  // window.scrollTo({
+  //   top: y,
+  //   behavior: 'smooth',
+  // })
+  scroll.scrollTo(y)
 }

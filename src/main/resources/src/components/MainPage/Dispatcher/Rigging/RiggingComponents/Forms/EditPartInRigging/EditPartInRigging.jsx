@@ -289,7 +289,7 @@ const EditPartInRigging = (props) => {
                 ? 'pressForm'
                 : props.location.pathname.includes('/parts') && 'parts'
               // window.location.href = rigTypes[type].redirectURL
-              props.history.push(rigTypes[type].redirectURL)
+              props.history.push(`${rigTypes[type].redirectURL}#${rigId}`)
             }}
           />
           <Button

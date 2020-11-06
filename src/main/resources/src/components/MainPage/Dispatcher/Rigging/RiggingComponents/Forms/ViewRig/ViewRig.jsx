@@ -17,7 +17,7 @@ const ViewRig = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    props.history.push(rigTypes[props.type].redirectURL)
+    props.history.push(`${rigTypes[props.type].redirectURL}#${rigInputs.id}`)
   }
 
   useEffect(() => {
