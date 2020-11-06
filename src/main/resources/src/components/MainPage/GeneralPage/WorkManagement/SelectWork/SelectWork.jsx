@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import deleteSVG from '../../../../../../../../../assets/select/delete.svg'
 import './SelectWork.scss'
 import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx'
+import SelectWorkItemNew from '../../../Work/SelectWorkItem/SelectWorkItemNew.jsx'
 import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
+import { UserContext } from '../../../../../App.js'
+import SelectDraftNew from '../../../Dispatcher/Rigging/SelectDraft/SelectDraftNew.jsx'
+import InputProductsNew from '../../../../../utils/Form/InputProducts/InputProductsNew.jsx'
 
 const SelectWork = (props) => {
-  const [selected, setSelected] = useState([])
+  const [selected, setSelected] = useState(props.defaultConfig ?? [])
   const [options, setOptions] = useState([])
   const [curItemsType, setCurItemsType] = useState('')
+  const userContext = useContext(UserContext)
 
   useEffect(() => {
     if (props.defaultValue !== undefined) {
@@ -18,6 +23,7 @@ const SelectWork = (props) => {
         (sum, cur) => sum + Number.parseFloat(cur.hours),
         0,
       )
+      if (!props.setTotalHours) return
       if (isNaN(total)) {
         props.setTotalHours(0)
       } else props.setTotalHours(total)
@@ -55,10 +61,6 @@ const SelectWork = (props) => {
         comment: '',
       },
     ])
-    // const form = document.getElementsByClassName("select-work__selected_form")[0];
-    // console.log(form);
-
-    // form.classList.remove("select-work__selected_form--hidden");
   }
 
   const deletePart = (e) => {
@@ -70,6 +72,7 @@ const SelectWork = (props) => {
       (sum, cur) => sum + Number.parseFloat(cur.hours),
       0,
     )
+    if (!props.setTotalHours) return
     if (isNaN(total)) {
       props.setTotalHours(0)
     } else props.setTotalHours(total)
@@ -107,6 +110,7 @@ const SelectWork = (props) => {
       ...originalItem,
       [name]: value,
     })
+    if (!props.setTotalHours) return
     if (name === 'hours') {
       if (isNaN(curSum)) {
         props.setTotalHours(0)
@@ -135,90 +139,168 @@ const SelectWork = (props) => {
             }
             key={index}
           >
-            {/* <div className="select-work__selected_header" index={index} onClick={clickOnForm}>
-                            <div className="select-work__selected_name">
-                                <span>Работа: </span> {item.workName}
-                            </div>
-                            <div className="select-work__selected_name">
-                                <span>Продукция: </span> {(item.product.length > 0) && item.product.reduce((sum, item) => sum + item.name + ', ', '')}
-                            </div>
-                        </div> */}
             <div className="select-work__selected_form">
-              <SelectWorkItem
-                inputName="Выбор работы"
-                required
-                defaultValue={item.workName}
-                id={index}
-                handleWorkItemChange={(name, id, type) => {
-                  console.log(name, id, type)
-                  let temp = selected
-                  let originalItem = selected[index]
-                  temp.splice(index, 1, {
-                    ...originalItem,
-                    workType: type,
-                    workName: name,
-                    workId: id,
-                  })
-                  setCurItemsType(type)
-                  setSelected([...temp])
-                  props.handleWorkChange([...temp])
-                }}
-                userHasAccess={props.userHasAccess}
-                readOnly
-              />
+              {props.newDesign ? (
+                <SelectWorkItemNew
+                  inputName="Выбор работы"
+                  required
+                  defaultValue={{
+                    value: item.workId,
+                    label: item.workName,
+                    typeOfWork: item.workType,
+                  }}
+                  handleWorkItemChange={(id, name, type) => {
+                    console.log(name, id, type)
+                    let temp = selected
+                    let originalItem = selected[index]
+                    temp.splice(index, 1, {
+                      ...originalItem,
+                      workType: type,
+                      workName: name,
+                      workId: id,
+                    })
+                    setCurItemsType(type)
+                    setSelected([...temp])
+                    props.handleWorkChange([...temp])
+                  }}
+                  userHasAccess={userContext.userHasAccess}
+                  workItems={props.workItems}
+                  readOnly={props.readOnly}
+                />
+              ) : (
+                <SelectWorkItem
+                  inputName="Выбор работы"
+                  required
+                  defaultValue={item.workName}
+                  id={index}
+                  handleWorkItemChange={(name, id, type) => {
+                    console.log(name, id, type)
+                    let temp = selected
+                    let originalItem = selected[index]
+                    temp.splice(index, 1, {
+                      ...originalItem,
+                      workType: type,
+                      workName: name,
+                      workId: id,
+                    })
+                    setCurItemsType(type)
+                    setSelected([...temp])
+                    props.handleWorkChange([...temp])
+                  }}
+                  userHasAccess={userContext.userHasAccess}
+                  workItems={props.workItems}
+                  readOnly
+                />
+              )}
               {/* Вставить InputProducts, только вместо фасовки сделать 
                                 единицу измерения(или просто кол-во оставить) */}
               {selected[index].workType === 'Продукция' ||
               selected[index].workType === undefined ||
               selected[index].typeOfWork === 'Продукция' ? (
-                <InputProducts
-                  inputName="Продукция"
-                  options
-                  defaultValue={item.product}
-                  categories={props.categories}
-                  products={props.products}
-                  numberInput
-                  name="product"
-                  noPackaging
-                  onChange={(value) => {
-                    // console.log(value)
-                    let temp = selected
-                    let originalItem = selected[index]
-                    temp.splice(index, 1, {
-                      ...originalItem,
-                      product: value,
-                    })
-                    setSelected([...temp])
-                    props.handleWorkChange([...temp])
-                  }}
-                  userHasAccess={props.userHasAccess}
-                  searchPlaceholder="Введите название продукта для поиска..."
-                  // workshop={props.userHasAccess(['ROLE_WORKSHOP'])}
-                />
-              ) : selected[index].workType === 'Чертеж' ? (
-                <div className="select-work__item">
-                  <div className="select-work__input_name">Чертежи</div>
-                  <div className="select-work__input_field">
-                    <SelectDraft
-                      options
-                      defaultValue={item.draft}
-                      onChange={(value) => {
-                        let temp = selected
-                        let originalItem = selected[index]
-                        temp.splice(index, 1, {
-                          ...originalItem,
-                          draft: value,
-                        })
-                        setSelected([...temp])
-                        props.handleWorkChange([...temp])
-                      }}
-                      searchPlaceholder={
-                        "Добавьте чертеж нажав на кнопку 'Добавить чертеж'"
-                      }
-                      userHasAccess={props.userHasAccess}
-                    />
+                props.newDesign ? (
+                  <div className="select-work__item select-work__item--products">
+                    <div className="select-work__input_field">
+                      <InputProductsNew
+                        options
+                        defaultValue={item.product}
+                        categories={props.categories}
+                        products={props.products}
+                        numberInput
+                        name="product"
+                        noPackaging
+                        onChange={(value) => {
+                          // console.log(value)
+                          let temp = selected
+                          let originalItem = selected[index]
+                          temp.splice(index, 1, {
+                            ...originalItem,
+                            product: value,
+                          })
+                          setSelected([...temp])
+                          props.handleWorkChange([...temp])
+                        }}
+                        readOnly={props.readOnly}
+                      />
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="select-work__item select-work__item--products">
+                    <div className="select-work__input_field">
+                      <InputProducts
+                        inputName="Продукция"
+                        options
+                        defaultValue={item.product}
+                        categories={props.categories}
+                        products={props.products}
+                        numberInput
+                        name="product"
+                        noPackaging
+                        onChange={(value) => {
+                          // console.log(value)
+                          let temp = selected
+                          let originalItem = selected[index]
+                          temp.splice(index, 1, {
+                            ...originalItem,
+                            product: value,
+                          })
+                          setSelected([...temp])
+                          props.handleWorkChange([...temp])
+                        }}
+                        userHasAccess={userContext.userHasAccess}
+                        searchPlaceholder="Введите название продукта для поиска..."
+                        // workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+                      />
+                    </div>
+                  </div>
+                )
+              ) : selected[index].workType === 'Чертеж' ? (
+                props.newDesign ? (
+                  <div className="select-work__item select-work__item--drafts">
+                    <div className="select-work__input_field">
+                      <SelectDraftNew
+                        options
+                        defaultValue={item.draft}
+                        drafts={props.drafts}
+                        onChange={(value) => {
+                          let temp = selected
+                          let originalItem = selected[index]
+                          temp.splice(index, 1, {
+                            ...originalItem,
+                            draft: value,
+                          })
+                          setSelected([...temp])
+                          props.handleWorkChange([...temp])
+                        }}
+                        readOnly={props.readOnly}
+                        userHasAccess={userContext.userHasAccess}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="select-work__item  select-work__item--drafts">
+                    <div className="select-work__input_name">Чертежи</div>
+                    <div className="select-work__input_field">
+                      <SelectDraft
+                        options
+                        defaultValue={item.draft}
+                        onChange={(value) => {
+                          let temp = selected
+                          let originalItem = selected[index]
+                          temp.splice(index, 1, {
+                            ...originalItem,
+                            draft: value,
+                          })
+                          setSelected([...temp])
+                          props.handleWorkChange([...temp])
+                        }}
+                        searchPlaceholder={
+                          "Добавьте чертеж нажав на кнопку 'Добавить чертеж'"
+                        }
+                        userHasAccess={userContext.userHasAccess}
+                      />
+                    </div>
+                  </div>
+                )
               ) : null}
               {/* <div className="select-work__item">
                 <div className="select-work__input_name">Комментарий</div>
@@ -235,7 +317,7 @@ const SelectWork = (props) => {
                 </div>
               </div> */}
               {!props.noTime && (
-                <div className="select-work__item">
+                <div className="select-work__item select-work__item--time">
                   <div className="select-work__input_name">Часы</div>
                   <div className="select-work__input_field">
                     <input
@@ -248,10 +330,20 @@ const SelectWork = (props) => {
                       readOnly={props.readOnly}
                     />
                   </div>
+                  {!props.readOnly &&
+                    props.newDesign &&
+                    selected.length > 1 && (
+                      <img
+                        index={index}
+                        onClick={deletePart}
+                        className="select-work__img select-work__img--new"
+                        src={deleteSVG}
+                      />
+                    )}
                 </div>
               )}
             </div>
-            {!props.readOnly && selected.length > 1 && (
+            {!props.readOnly && !props.newDesign && selected.length > 1 && (
               <img
                 index={index}
                 onClick={deletePart}

@@ -118,8 +118,10 @@ const EditPartInRigging = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Редактирование детали</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Редактирование детали</div>
+        </div>
         <div className="main-form__item">
           <div className="main-form__input_name">Название*</div>
           <div className="main-form__input_field">
@@ -197,7 +199,7 @@ const EditPartInRigging = (props) => {
               name="cuttingDimensions"
               autoComplete="off"
               onChange={handleInputChange}
-              readOnly={
+              disabled={
                 !checkRiggingTypesInputs(partInputs, 'cuttingDimensions')
               }
               defaultValue={partInputs.cuttingDimensions}
@@ -212,7 +214,7 @@ const EditPartInRigging = (props) => {
               name="milling"
               autoComplete="off"
               onChange={handleInputChange}
-              readOnly={!checkRiggingTypesInputs(partInputs, 'milling')}
+              disabled={!checkRiggingTypesInputs(partInputs, 'milling')}
               defaultValue={partInputs.milling}
             />
           </div>
@@ -225,7 +227,7 @@ const EditPartInRigging = (props) => {
               name="harding"
               autoComplete="off"
               onChange={handleInputChange}
-              readOnly={!checkRiggingTypesInputs(partInputs, 'harding')}
+              disabled={!checkRiggingTypesInputs(partInputs, 'harding')}
               defaultValue={partInputs.harding}
             />
           </div>
@@ -238,7 +240,7 @@ const EditPartInRigging = (props) => {
               name="grinding"
               autoComplete="off"
               onChange={handleInputChange}
-              readOnly={!checkRiggingTypesInputs(partInputs, 'grinding')}
+              disabled={!checkRiggingTypesInputs(partInputs, 'grinding')}
               defaultValue={partInputs.grinding}
             />
           </div>
@@ -251,7 +253,7 @@ const EditPartInRigging = (props) => {
               name="erosion"
               autoComplete="off"
               onChange={handleInputChange}
-              readOnly={!checkRiggingTypesInputs(partInputs, 'erosion')}
+              disabled={!checkRiggingTypesInputs(partInputs, 'erosion')}
               defaultValue={partInputs.erosion}
             />
           </div>
@@ -264,7 +266,7 @@ const EditPartInRigging = (props) => {
               name="controll"
               autoComplete="off"
               onChange={handleInputChange}
-              readOnly={!checkRiggingTypesInputs(partInputs, 'controll')}
+              disabled={!checkRiggingTypesInputs(partInputs, 'controll')}
               defaultValue={partInputs.controll}
             />
           </div>
@@ -272,7 +274,7 @@ const EditPartInRigging = (props) => {
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
-        <div className="main-form__buttons">
+        <div className="main-form__buttons main-form__buttons--full">
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
@@ -287,7 +289,7 @@ const EditPartInRigging = (props) => {
                 ? 'pressForm'
                 : props.location.pathname.includes('/parts') && 'parts'
               // window.location.href = rigTypes[type].redirectURL
-              props.history.push(rigTypes[type].redirectURL)
+              props.history.push(`${rigTypes[type].redirectURL}#${rigId}`)
             }}
           />
           <Button

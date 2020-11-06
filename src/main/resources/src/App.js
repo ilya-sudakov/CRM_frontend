@@ -45,10 +45,11 @@ class App extends React.Component {
   }
 
   //Метод для обновления состояния данных пользователя
-  setUserData = (isAuthorized, userData) => {
+  setUserData = (isAuthorized, data) => {
     this.setState({
       isAuthorized: isAuthorized,
-      userData: userData,
+      userData: data?.user,
+      expiredIn: data?.expiredIn,
     })
   }
 
@@ -80,7 +81,7 @@ class App extends React.Component {
       refreshToken(refreshTokenObject)
         .then((res) => res.json())
         .then((response) => {
-          this.setUserData(true, response.user)
+          this.setUserData(true, response)
           localStorage.setItem('accessToken', response.accessToken)
           localStorage.setItem('refreshToken', response.refreshToken)
         })
@@ -135,6 +136,8 @@ class App extends React.Component {
                 userHasAccess: this.userHasAccess,
                 newNotifications: this.state.newNotifications,
                 lastNotification: this.state.lastNotification,
+                expiredIn: this.state.expiredIn,
+                isAuthorized: this.state.isAuthorized,
                 setLastNotification: this.state.setLastNotification,
               }}
             >

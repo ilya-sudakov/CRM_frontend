@@ -10,9 +10,9 @@ import {
   deleteTransportation,
 } from '../../../../utils/RequestsAPI/Transportation.jsx'
 import { getTransportationListPdfText } from '../../../../utils/pdfFunctions.jsx'
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Transportation = (props) => {
   const [transportation, setTransportation] = useState([])
@@ -103,118 +103,149 @@ const Transportation = (props) => {
     deleteTransportation(id).then(() => loadTransportation())
   }
 
+  // * SORTING
+
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'date',
+    date: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase()
+    return data.filter(
+      (item) =>
+        item.cargo.toLowerCase().includes(query) ||
+        formatDateString(item.date).includes(query) ||
+        item.sender.toLowerCase().includes(query) ||
+        item.recipient.toLowerCase().includes(query) ||
+        item.driver.toLowerCase().includes(query) ||
+        item.id.toString().includes(query),
+    )
+  }
+
+  const sortTransportations = (data) => {
+    return filterSearchQuery(data).sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      return 0
+    })
+  }
+
   return (
     <div className="transportation">
       <div className="main-window">
-        <div className="main-window__title">Реестр транспортировок</div>
         <FloatingPlus
           linkTo="/dispatcher/transportation/new"
           visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
         />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Реестр транспортировок</div>
+        </div>
         <SearchBar
+          fullSize
           // title="Поиск по транспортировкам"
           placeholder="Введите название товара для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="transportation__container">
-            <span>Фильтр по подразделениям</span>
-            <div className="main-window__filter-pick">
-              <span className="transportation__text">Откуда: </span>
-              {workshops.map((item, index) => {
-                if (props.userHasAccess(item.visibility)) {
-                  return (
-                    <div
-                      className={
-                        item.senderActive
-                          ? 'main-window__button'
-                          : 'main-window__button main-window__button--inverted'
-                      }
-                      onClick={() => {
-                        let temp = workshops
-                        temp.splice(index, 1, {
-                          ...temp[index],
-                          name: item.name,
-                          senderActive: !item.senderActive,
-                        })
-                        setWorkshops([...temp])
-                      }}
-                    >
-                      {item.name}
-                    </div>
-                  )
-                }
-              })}
-              {/* <CheckBox
-                text="Выделить все"
-                onChange={(value) => {
-                  let temp = workshops.map((item) => {
-                    return {
-                      ...item,
-                      senderActive: value,
-                    }
-                  })
-                  setWorkshops([...temp])
-                }}
-                defaultChecked={true}
-                uniqueId={0}
-              /> */}
+        <ControlPanel
+          buttons={
+            <Button
+              text="Печать списка"
+              inverted
+              imgSrc={PrintIcon}
+              isLoading={isLoading}
+              className="main-window__button main-window__button--inverted"
+              onClick={printTransportationList}
+            />
+          }
+          sorting={
+            <div className="main-window__sort-panel">
+              <select
+                className="main-window__select"
+                onChange={changeSortOrder}
+              >
+                <option value="date asc">По дате</option>
+              </select>
             </div>
-            <div className="main-window__filter-pick">
-              <span className="transportation__text">Куда: </span>
-              {workshops.map((item, index) => {
-                if (props.userHasAccess(item.visibility)) {
-                  return (
-                    <div
-                      className={
-                        item.recipientActive
-                          ? 'main-window__button'
-                          : 'main-window__button main-window__button--inverted'
-                      }
-                      onClick={() => {
-                        let temp = workshops
-                        temp.splice(index, 1, {
-                          ...temp[index],
-                          name: item.name,
-                          recipientActive: !item.recipientActive,
-                        })
-                        setWorkshops([...temp])
-                      }}
-                    >
-                      {item.name}
-                    </div>
-                  )
-                }
-              })}
-              {/* <CheckBox
-                text="Выделить все"
-                onChange={(value) => {
-                  let temp = workshops.map((item) => {
-                    return {
-                      ...item,
-                      recipientActive: value,
+          }
+          itemsCount={`Всего: ${transportation.length} записей`}
+          content={
+            <div className="main-window__info-panel">
+              <div className="transportation__container">
+                <span>Фильтр по подразделениям</span>
+                <div className="main-window__filter-pick">
+                  <span className="transportation__text">Откуда: </span>
+                  {workshops.map((item, index) => {
+                    if (props.userHasAccess(item.visibility)) {
+                      return (
+                        <div
+                          className={
+                            item.senderActive
+                              ? 'main-window__button'
+                              : 'main-window__button main-window__button--inverted'
+                          }
+                          onClick={() => {
+                            let temp = workshops
+                            temp.splice(index, 1, {
+                              ...temp[index],
+                              name: item.name,
+                              senderActive: !item.senderActive,
+                            })
+                            setWorkshops([...temp])
+                          }}
+                        >
+                          {item.name}
+                        </div>
+                      )
                     }
-                  })
-                  setWorkshops([...temp])
-                }}
-                defaultChecked={true}
-                uniqueId={1}
-              /> */}
+                  })}
+                </div>
+                <div className="main-window__filter-pick">
+                  <span className="transportation__text">Куда: </span>
+                  {workshops.map((item, index) => {
+                    if (props.userHasAccess(item.visibility)) {
+                      return (
+                        <div
+                          className={
+                            item.recipientActive
+                              ? 'main-window__button'
+                              : 'main-window__button main-window__button--inverted'
+                          }
+                          onClick={() => {
+                            let temp = workshops
+                            temp.splice(index, 1, {
+                              ...temp[index],
+                              name: item.name,
+                              recipientActive: !item.recipientActive,
+                            })
+                            setWorkshops([...temp])
+                          }}
+                        >
+                          {item.name}
+                        </div>
+                      )
+                    }
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
-          <Button
-            text="Печать списка"
-            imgSrc={PrintIcon}
-            isLoading={isLoading}
-            className="main-window__button"
-            onClick={printTransportationList}
-          />
-          <div className="main-window__amount_table">
-            Всего: {transportation.length} записей
-          </div>
-        </div>
+          }
+        />
         <TableView
-          data={transportation.filter((item) => {
+          data={sortTransportations(transportation).filter((item) => {
             let senderCheck = false
             let recipientCheck = false
             workshops.map((workshop) => {

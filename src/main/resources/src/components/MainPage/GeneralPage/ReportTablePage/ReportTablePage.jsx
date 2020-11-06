@@ -2,11 +2,8 @@ import React, { useEffect, useState, useContext } from 'react'
 import { months } from '../../../../utils/dataObjects.js' //Список месяцев
 import './ReportTablePage.scss'
 import DownloadIcon from '../../../../../../../../assets/download.svg'
-import { getEmployeesByWorkshop } from '../../../../utils/RequestsAPI/Employees.jsx'
-import {
-  getWorkReportByEmployee,
-  getRecordedWorkByMonth,
-} from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
+import editIcon from '../../../../../../../../assets/tableview/edit.svg'
+import { getRecordedWorkByMonth } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx'
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx'
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
@@ -21,6 +18,9 @@ import Button from '../../../../utils/Form/Button/Button.jsx'
 import { exportReportTableExcel } from '../../../../utils/xlsxFunctions.jsx'
 import { UserContext } from '../../../../App.js'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+import { Link } from 'react-router-dom'
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 
 const ReportTablePage = (props) => {
   const [date, setDate] = useState(new Date())
@@ -64,12 +64,14 @@ const ReportTablePage = (props) => {
         //это помогает  для избегания излишних циклов
         res.map((workItem) => {
           if (employeesWorkList[workItem.employee.id] === undefined) {
+            // console.log(workItem)
             employeesWorkList = Object.assign({
               ...employeesWorkList,
               [workItem.employee.id]: {
                 employee: workItem.employee,
                 workArray: [
                   {
+                    workId: workItem.id,
                     workControlProduct: workItem.workControlProduct,
                     partsWorks: workItem.partsWorks,
                     workList: workItem.workList,
@@ -87,6 +89,7 @@ const ReportTablePage = (props) => {
                 workArray: [
                   ...employeesWorkList[workItem.employee.id].workArray,
                   {
+                    workId: workItem.id,
                     workControlProduct: workItem.workControlProduct,
                     partsWorks: workItem.partsWorks,
                     workList: workItem.workList,
@@ -98,7 +101,7 @@ const ReportTablePage = (props) => {
             })
           }
         })
-        // console.log(employeesWorkList)
+        // console.log('newArr:', employeesWorkList)
         // return setWorkList({ ...employeesWorkList })
       })
       .then(() => {
@@ -118,6 +121,7 @@ const ReportTablePage = (props) => {
                     ...newWorkList[item.employee.id].works,
                     [workItem.day]: [
                       {
+                        workId: workItem.workId,
                         workControlProduct: workItem.workControlProduct,
                         partsWorks: workItem.partsWorks,
                         workList: workItem.workList,
@@ -138,6 +142,7 @@ const ReportTablePage = (props) => {
                     [workItem.day]: [
                       ...newWorkList[item.employee.id].works[workItem.day],
                       {
+                        workId: workItem.workId,
                         workControlProduct: workItem.workControlProduct,
                         partsWorks: workItem.partsWorks,
                         workList: workItem.workList,
@@ -151,7 +156,7 @@ const ReportTablePage = (props) => {
             }
           })
         })
-        // console.log(newWorkList)
+        // console.log('newnewnew: ', newWorkList)
         employeesWorkList = newWorkList
       })
       .then(() => {
@@ -175,7 +180,7 @@ const ReportTablePage = (props) => {
             }
           })
         })
-        console.log(newWorkList)
+        // console.log(newWorkList)
         setIsLoading(false)
         return setWorkList({ ...newWorkList })
       })
@@ -193,44 +198,55 @@ const ReportTablePage = (props) => {
   return (
     <div className="report-table-page">
       <div className="main-window">
-        <div className="main-window__title">
-          Табель
-          <Button
-            text="Скачать .xlsx"
-            imgSrc={DownloadIcon}
-            className="main-window__button main-window__button--inverted"
-            inverted
-            isLoading={isLoading}
-            onClick={async () => {
-              setIsLoading(true)
-              const filteredWorkshops = [
-                'ЦехЛЭМЗ',
-                'ЦехЛепсари',
-                'ЦехЛиговский',
-                'Офис',
-                'Уволенные',
-              ]
-              await exportReportTableExcel(new Date(date), filteredWorkshops)
-              setIsLoading(false)
-            }}
-          />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Табель</div>
         </div>
+        <FloatingPlus
+          linkTo="/work-management/record-time/new"
+          visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+        />
         <SearchBar
-          title="Поиск по сотрудникам"
+          fullSize
+          // title="Поиск по сотрудникам"
           placeholder="Введите запрос для поиска по сотрудникам..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="report-table-page__date">
-          <InputDate
-            selected={Date.parse(date)}
-            inputName="Выбор месяца:"
-            handleDateChange={(date) => {
-              // console.log(value)
-              setDate(date)
-            }}
-            showMonthYearPicker
-          />
-        </div>
+        <ControlPanel
+          buttons={
+            <Button
+              text="Скачать .xlsx"
+              imgSrc={DownloadIcon}
+              className="main-window__button main-window__button--inverted"
+              inverted
+              isLoading={isLoading}
+              onClick={async () => {
+                setIsLoading(true)
+                const filteredWorkshops = [
+                  'ЦехЛЭМЗ',
+                  'ЦехЛепсари',
+                  'ЦехЛиговский',
+                  'Офис',
+                  'Уволенные',
+                ]
+                await exportReportTableExcel(new Date(date), filteredWorkshops)
+                setIsLoading(false)
+              }}
+            />
+          }
+          content={
+            <div className="report-table-page__date">
+              <InputDate
+                selected={Date.parse(date)}
+                inputName="Выбор месяца:"
+                handleDateChange={(date) => {
+                  // console.log(value)
+                  setDate(date)
+                }}
+                showMonthYearPicker
+              />
+            </div>
+          }
+        />
         {/* //Окно для вывода информации о сотруднике и его работе за день */}
         <EmployeeInfo
           // dates={dates}
@@ -310,7 +326,7 @@ export const TableView = (props) => {
               {props.isLoading ? (
                 <PlaceholderLoading
                   itemClassName="main-window__list-item"
-                  minHeight="35px"
+                  minHeight="45px"
                   items={3}
                 />
               ) : (
@@ -354,6 +370,7 @@ export const TableView = (props) => {
                               return (
                                 <span
                                   onClick={() => {
+                                    // console.log(workItem)
                                     if (workItem.length > 0) {
                                       props.setSelectedInfo({
                                         employeeId: work.employee.id,
@@ -448,7 +465,7 @@ export const TableView = (props) => {
               {props.isLoading ? (
                 <PlaceholderLoading
                   itemClassName="main-window__list-item"
-                  minHeight="35px"
+                  minHeight="45px"
                   items={3}
                 />
               ) : (
@@ -575,7 +592,7 @@ export const EmployeeInfo = (props) => {
   return (
     <div className="report-table-page__employee-info">
       <FormWindow
-        // title="Отчет работника"
+        title="Отчет работника"
         showWindow={props.showWindow}
         setShowWindow={props.setShowWindow}
         content={
@@ -617,10 +634,21 @@ export const EmployeeInfo = (props) => {
                 <div>Нет учтенной работы</div>
               ) : (
                 props.selectedInfo?.works?.map((item) => {
-                  console.log(item.workList.work)
+                  {/* console.log(item) */}
                   return (
                     <div className="report-table-page__employee-works-item">
-                      <span>{item.workList.work}</span>
+                      <span>
+                        <Link
+                          to={`/work-management/record-time/edit/${item.workId}`}
+                        >
+                          {item.workList.work}
+                          <img
+                            className="report-table-page__img"
+                            src={editIcon}
+                            alt=""
+                          />
+                        </Link>
+                      </span>
                       <span className="report-table-page__employee-hours">
                         {item.hours +
                           ' ' +

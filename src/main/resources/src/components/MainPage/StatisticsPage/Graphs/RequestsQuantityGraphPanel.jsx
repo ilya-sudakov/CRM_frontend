@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react'
 import GraphPanel from './GraphPanel.jsx'
 import ListIcon from '../../../../../../../../assets/sidemenu/list.inline.svg'
 import { months } from '../../../../utils/dataObjects'
 import { formatDateString } from '../../../../utils/functions.jsx'
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
 
-
-const RequestsQuantityGraphPanel = (props) => {
+const RequestsQuantityGraphPanel = ({ data, curDate }) => {
   const [graph, setGraph] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
@@ -14,36 +13,42 @@ const RequestsQuantityGraphPanel = (props) => {
     category: 'Заказы',
     isLoaded: false,
     chartName: 'income-graph',
-    timePeriod: `${months[new Date().getMonth() - 1]} - ${
-      months[new Date().getMonth()]
+    timePeriod: `${months[curDate.getMonth() - 1]} - ${
+      months[curDate.getMonth()]
     }`,
     renderIcon: () => <ListIcon className="panel__img panel__img--list" />,
   })
 
-  const getStats = (data) => {
+  const getStats = (data, curDate = new Date()) => {
     let curMonthData = []
     let prevMonthData = []
-    const date = new Date()
     let dates = []
     for (
       let i = 1;
-      i <= new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+      i <= new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate();
       i++
     ) {
       dates.push(i)
     }
     dates.map((item) => {
-      const curDate = new Date(date.getFullYear(), date.getMonth(), item)
-      const prevDate = new Date(date.getFullYear(), date.getMonth() - 1, item)
+      const curMonthDate = new Date(
+        curDate.getFullYear(),
+        curDate.getMonth(),
+        item,
+      )
+      const prevDate = new Date(
+        curDate.getFullYear(),
+        curDate.getMonth() - 1,
+        item,
+      )
+
       let curSum = 0
       let prevSum = 0
       data.map((request) => {
-        if (formatDateString(request.date) === formatDateString(curDate)) {
-          //   curMonthData.push()
+        if (formatDateString(request.date) === formatDateString(curMonthDate)) {
           return curSum++
         }
         if (formatDateString(request.date) === formatDateString(prevDate)) {
-          //   curMonthData.push()
           return prevSum++
         }
       })
@@ -55,13 +60,13 @@ const RequestsQuantityGraphPanel = (props) => {
       datasets: [
         {
           data: prevMonthData,
-          label: months[new Date().getMonth() - 1],
+          label: months[curDate.getMonth() - 1],
           borderColor: '#3e95cd',
           backgroundColor: 'rgba(62, 149, 205, 0.2)',
         },
         {
           data: curMonthData,
-          label: months[new Date().getMonth()],
+          label: months[curDate.getMonth()],
           borderColor: '#8e5ea2',
           backgroundColor: 'rgba(142, 94, 162, 0.2)',
         },
@@ -154,9 +159,25 @@ const RequestsQuantityGraphPanel = (props) => {
     }, 150)
   }
 
+  //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && props.data.length > 1 && getStats(props.data)
-  }, [props.data, stats])
+    !stats.isLoaded && data.length > 1 && getStats(data, curDate)
+  }, [data, stats])
+
+  //При обновлении тек. даты
+  useEffect(() => {
+    if (!stats.isLoading && data.length > 0) {
+      setCanvasLoaded(false)
+      setStats((stats) => ({
+        ...stats,
+        timePeriod: `${months[curDate.getMonth() - 1]} - ${
+          months[curDate.getMonth()]
+        }`,
+      }))
+      graph.destroy()
+      getStats(data, curDate)
+    }
+  }, [curDate])
 
   return <GraphPanel {...stats} />
 }

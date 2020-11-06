@@ -31,6 +31,8 @@ import SelectClientCategory from '../ClientCategories/SelectClientCategory/Selec
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx'
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import ViewRequests from '../ViewRequests/ViewRequests.jsx'
+import { getRequests } from '../../../../utils/RequestsAPI/Requests.jsx'
 
 const EditClient = (props) => {
   const [clientInputs, setClientInputs] = useState({
@@ -369,36 +371,50 @@ const EditClient = (props) => {
   return (
     <div className="edit_client">
       <div className="main-form">
-        <div className="main-form__title">{`Редактирование ${
-          clientTypes[props.type].name
-        }а`}</div>
-        <div className="main-form__header">
-          <div
-            className={
-              curTab === 'workHistory'
-                ? 'main-form__menu-item main-form__menu-item--active'
-                : 'main-form__menu-item'
-            }
-            onClick={() => {
-              setCurTab('workHistory')
-            }}
-          >
-            История работы
-          </div>
-          <div
-            className={
-              curTab === 'clientData'
-                ? 'main-form__menu-item main-form__menu-item--active'
-                : 'main-form__menu-item'
-            }
-            onClick={() => {
-              setCurTab('clientData')
-            }}
-          >
-            {`Данные ${clientTypes[props.type].name}а`}
-          </div>
-        </div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Редактирование ${
+              clientTypes[props.type].name
+            }а`}</div>
+            <div className="main-form__menu">
+              <div
+                className={
+                  curTab === 'workHistory'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('workHistory')
+                }}
+              >
+                История работы
+              </div>
+              <div
+                className={
+                  curTab === 'requestsHistory'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('requestsHistory')
+                }}
+              >
+                Заказы
+              </div>
+              <div
+                className={
+                  curTab === 'clientData'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('clientData')
+                }}
+              >
+                {`Данные ${clientTypes[props.type].name}а`}
+              </div>
+            </div>
+          </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}
@@ -424,6 +440,8 @@ const EditClient = (props) => {
                 </div>
               </div>
             </React.Fragment>
+          ) : curTab === 'requestsHistory' ? (
+            <RequestHistory id={clientInputs.id} />
           ) : (
             <React.Fragment>
               <InputText
@@ -592,7 +610,7 @@ const EditClient = (props) => {
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>
-          <div className="main-form__buttons">
+          <div className="main-form__buttons main-form__buttons--full">
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
@@ -626,3 +644,31 @@ const EditClient = (props) => {
 }
 
 export default EditClient
+
+{
+  /* История заявок */
+}
+const RequestHistory = ({ id }) => {
+  const [requests, setRequests] = useState([])
+  const [isLoading, setIsLoading] = useState([])
+
+  useEffect(() => {
+    setIsLoading(true)
+    getRequests()
+      .then((res) => res.json())
+      .then((res) => {
+        setIsLoading(false)
+        const filteredData = res.filter((request) => request.client?.id === id)
+        setRequests([...filteredData])
+      })
+  }, [])
+
+  return (
+    <div className="main-form__item">
+      <div className="main-form__input_name">История заявок</div>
+      <div className="main-form__input_field">
+        <ViewRequests isLoading={isLoading} requests={requests} />
+      </div>
+    </div>
+  )
+}

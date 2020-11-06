@@ -1,5 +1,20 @@
 @import "../../../../variables.scss";
 
 .users-manage {
-  
+  .searchbar {
+    // margin-bottom: 10px;
+  }
+  .control-panel {
+    // .main-window__button {
+    //   margin-bottom: 10px;
+    // }
+    .main-window__info-panel {
+      margin-bottom: 0;
+      margin-top: 10px;
+
+      .main-window__filter-pick {
+        margin-bottom: 0;
+      }
+    }
+  }
 }

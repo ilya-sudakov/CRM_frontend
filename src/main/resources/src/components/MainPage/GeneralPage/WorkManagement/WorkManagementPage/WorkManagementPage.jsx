@@ -12,6 +12,7 @@ import {
   getAllProductsFromWorkCount,
   getAllDraftsFromWorkCount,
   getDatesAndWorkItems,
+  formatDateString,
 } from '../../../../../utils/functions.jsx'
 import { getRecordedWorkByDateRange } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx'
@@ -21,6 +22,7 @@ import { UserContext } from '../../../../../App.js'
 import TableView from './TableView/TableView.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -78,10 +80,7 @@ const WorkManagementPage = (props) => {
   ])
   const userContext = useContext(UserContext)
   const [dates, setDates] = useState({
-    // start: new Date(new Date().setMonth((new Date()).getMonth() - 1)),
-    // end: new Date()
     start: new Date(new Date().setDate(new Date().getDate() - 1)),
-    // start: new Date(),
     end: new Date(),
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -259,20 +258,15 @@ const WorkManagementPage = (props) => {
         <div className="main-window__title">
           {/* <span>Отчет производства</span> */}
         </div>
-        {(props.userHasAccess(['ROLE_ADMIN']) ||
-          props.userHasAccess(['ROLE_WORKSHOP'])) && (
-          <PartsStatistic
-            data={partsStatistics}
-            drafts={draftsStatistics}
-            isLoading={isLoading}
-          />
-        )}
-        <div className="main-window__header">
-          <SearchBar
-            // title="Поиск по сотрудникам"
-            placeholder="Введите запрос для поиска..."
-            setSearchQuery={setSearchQuery}
-          />
+        <div className="main-window__header main-window__header--full">
+          {(props.userHasAccess(['ROLE_ADMIN']) ||
+            props.userHasAccess(['ROLE_WORKSHOP'])) && (
+            <PartsStatistic
+              data={partsStatistics}
+              drafts={draftsStatistics}
+              isLoading={isLoading}
+            />
+          )}
           <div className="main-window__menu">
             {/* <div
               className={
@@ -296,78 +290,122 @@ const WorkManagementPage = (props) => {
             </div>
           </div>
         </div>
-        <div className="main-window__info-panel">
-          <div className="work-management-page__date-pick">
-            <div>
-              <div className="work-management-page__date">
-                <InputDate
-                  inputName="Начало:"
-                  selected={Date.parse(dates.start)}
-                  startDate={Date.parse(dates.start)}
-                  endDate={Date.parse(dates.end)}
-                  selectsStart
-                  handleDateChange={(value) => {
+        <SearchBar
+          fullSize
+          // title="Поиск по сотрудникам"
+          placeholder="Введите запрос для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
+        <ControlPanel
+          itemsCount={`Всего: ${workItems.length} записей`}
+          buttons={
+            <>
+              <Button
+                text="Пред. день"
+                isLoading={isLoading}
+                className="main-window__button"
+                onClick={() => {
+                  setDates({
+                    ...dates,
+                    start: new Date(
+                      new Date(dates.start).setDate(dates.start.getDate() - 1),
+                    ),
+                  })
+                  loadWorks()
+                }}
+              />
+              {formatDateString(dates.end) < formatDateString(new Date()) ? (
+                <Button
+                  text="Cлед. день"
+                  isLoading={isLoading}
+                  className="main-window__button"
+                  onClick={() => {
                     setDates({
                       ...dates,
-                      start: value,
+                      start: new Date(
+                        new Date(dates.start).setDate(
+                          dates.start.getDate() + 1,
+                        ),
+                      ),
                     })
+                    loadWorks()
                   }}
                 />
-              </div>
-              <div className="work-management-page__date">
-                <InputDate
-                  inputName="Конец:"
-                  selected={Date.parse(dates.end)}
-                  selectsEnd
-                  startDate={Date.parse(dates.start)}
-                  endDate={Date.parse(dates.end)}
-                  handleDateChange={(value) => {
-                    setDates({
-                      ...dates,
-                      end: value,
-                    })
-                  }}
-                />
-              </div>
-            </div>
-            <Button
-              text="Применить"
-              isLoading={isLoading}
-              imgSrc={okIcon}
-              className="main-window__button"
-              onClick={loadWorks}
-            />
-          </div>
-          <div className="work-management-page__workshop-pick">
-            {workshops.map((item, index) => {
-              if (props.userHasAccess(item.visibility)) {
-                return (
-                  <div
-                    className={
-                      item.active
-                        ? 'main-window__button '
-                        : 'main-window__button main-window__button--inverted '
-                    }
-                    onClick={() => {
-                      let temp = workshops
-                      temp.splice(index, 1, {
-                        ...temp[index],
-                        name: item.name,
-                        active: !item.active,
-                      })
-                      setWorkshops([...temp])
-                    }}
-                  >
-                    {item.name}
+              ) : null}
+            </>
+          }
+          content={
+            <div className="main-window__info-panel">
+              <div className="work-management-page__date-pick">
+                <div>
+                  <div className="work-management-page__date">
+                    <InputDate
+                      inputName="Начало:"
+                      selected={Date.parse(dates.start)}
+                      startDate={Date.parse(dates.start)}
+                      endDate={Date.parse(dates.end)}
+                      selectsStart
+                      handleDateChange={(value) => {
+                        setDates({
+                          ...dates,
+                          start: value,
+                        })
+                      }}
+                    />
                   </div>
-                )
-              }
-            })}
-            <div className="main-window__amount_table">
-              Всего: {workItems.length} записей
+                  <div className="work-management-page__date">
+                    <InputDate
+                      inputName="Конец:"
+                      selected={Date.parse(dates.end)}
+                      selectsEnd
+                      startDate={Date.parse(dates.start)}
+                      endDate={Date.parse(dates.end)}
+                      handleDateChange={(value) => {
+                        setDates({
+                          ...dates,
+                          end: value,
+                        })
+                      }}
+                    />
+                  </div>
+                </div>
+                <Button
+                  text="Применить"
+                  isLoading={isLoading}
+                  imgSrc={okIcon}
+                  className="main-window__button"
+                  onClick={loadWorks}
+                />
+              </div>
+              <div className="work-management-page__workshop-pick">
+                {workshops.map((item, index) => {
+                  if (props.userHasAccess(item.visibility)) {
+                    return (
+                      <div
+                        className={
+                          item.active
+                            ? 'main-window__button '
+                            : 'main-window__button main-window__button--inverted '
+                        }
+                        onClick={() => {
+                          let temp = workshops
+                          temp.splice(index, 1, {
+                            ...temp[index],
+                            name: item.name,
+                            active: !item.active,
+                          })
+                          setWorkshops([...temp])
+                        }}
+                      >
+                        {item.name}
+                      </div>
+                    )
+                  }
+                })}
+              </div>
             </div>
-          </div>
-        </div>
+          }
+        />
         <div
           className={
             isOneColumn

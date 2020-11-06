@@ -1,7 +1,8 @@
 @import "../../../../variables.scss";
 
 .work-management {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 10px rgba(0, 0, 0, 0.24);
+  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 10px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(59, 53, 53, 0.12), 0 1px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   margin-bottom: 15px;
   width: 100%;
@@ -12,7 +13,7 @@
   margin-right: 15px;
   background-color: rgba(#ffffff, 1);
   backdrop-filter: blur(10px);
-  
+
   &__title {
     display: flex;
     flex-direction: row;
@@ -121,7 +122,7 @@
       color: #666666;
       border-bottom: 1.5px solid #aaaaaa;
       font-size: 85%;
-      width: fit-content;
+      width: max-content;
       white-space: nowrap;
       // margin-top: 15px;
       margin-bottom: 5px;
@@ -135,7 +136,8 @@
     padding: 5px 10px;
     margin-bottom: 5px;
     // border: 1px solid $button__background--inverted;
-    border: 1px solid #999999;
+    // border: 1px solid #999999;
+    border: 1px solid #cccccc;
     border-radius: 5px;
     width: calc(100% - 20px);
     // box-sizing: border-box;

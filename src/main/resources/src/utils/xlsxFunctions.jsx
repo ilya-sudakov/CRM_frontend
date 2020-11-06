@@ -1249,7 +1249,9 @@ export async function exportReportTableExcel(
         filteredWorkshops.map((workshop) => {
           if (
             employeesWorksList.filter(
-              (employee) => employee.employee.workshop === workshop,
+              (employee) =>
+                employee.employee.workshop === workshop &&
+                employee.employee.relevance !== 'Уволен',
             ).length > 0
           ) {
             const titleRow = workSheet.addRow([workshop])

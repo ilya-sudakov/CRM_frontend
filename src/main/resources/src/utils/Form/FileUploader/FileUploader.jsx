@@ -22,6 +22,8 @@ const FileUploader = (props) => {
           //необходимому формату
           let file = event.target.files[0]
           if (file.name.match(props.regex) !== null) {
+            //Возвращаем именно File
+            if (props.type === 'fileOnly') return props.onChange(file)
             setImgName(file.name) //Устанавливаем имя файла
             let reader = new FileReader()
             reader.onloadend = () => {
@@ -40,6 +42,7 @@ const FileUploader = (props) => {
           }
         }}
       />
+      {/* Крестик для отмены загруженного файла */}
       <div
         className="file-uploader__remove"
         onClick={() => {

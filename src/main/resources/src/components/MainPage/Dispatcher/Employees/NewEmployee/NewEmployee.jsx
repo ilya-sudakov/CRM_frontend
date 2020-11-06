@@ -101,10 +101,18 @@ const NewEmployee = (props) => {
     }
   }
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
     setIsLoading(true)
-    // console.log(employeeInputs);
+    //form data test
+    // let formData = new FormData()
+    // Object.entries(employeeInputs).map((formItem) => {
+    //   formData.append(formItem[0], formItem[1])
+    // })
+
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ' - ' + pair[1])
+    // }
+
     formIsValid() &&
       addEmployee(employeeInputs)
         .then(() => props.history.push('/dispatcher/employees'))
@@ -144,10 +152,13 @@ const NewEmployee = (props) => {
   useEffect(() => {
     document.title = 'Добавление сотрудника'
   }, [])
+
   return (
     <div className="main-form">
-      <div className="main-form__title">Новый сотрудник</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Новый сотрудник</div>
+        </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}
@@ -155,24 +166,26 @@ const NewEmployee = (props) => {
         />
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Имя сотрудника</div>
-          <InputText
-            inputName="Имя"
-            required
-            name="name"
-            handleInputChange={handleInputChange}
-            error={employeeErrors.name}
-            errorsArr={employeeErrors}
-            setErrorsArr={setEmployeeErrors}
-          />
-          <InputText
-            inputName="Фамилия"
-            required
-            error={employeeErrors.lastName}
-            name="lastName"
-            handleInputChange={handleInputChange}
-            errorsArr={employeeErrors}
-            setErrorsArr={setEmployeeErrors}
-          />
+          <div className="main-form__row">
+            <InputText
+              inputName="Имя"
+              required
+              name="name"
+              handleInputChange={handleInputChange}
+              error={employeeErrors.name}
+              errorsArr={employeeErrors}
+              setErrorsArr={setEmployeeErrors}
+            />
+            <InputText
+              inputName="Фамилия"
+              required
+              error={employeeErrors.lastName}
+              name="lastName"
+              handleInputChange={handleInputChange}
+              errorsArr={employeeErrors}
+              setErrorsArr={setEmployeeErrors}
+            />
+          </div>
           <InputText
             inputName="Отчество"
             required
@@ -183,52 +196,56 @@ const NewEmployee = (props) => {
             setErrorsArr={setEmployeeErrors}
           />
         </div>
-        <InputDate
-          inputName="Дата рождения"
-          required
-          error={employeeErrors.yearOfBirth}
-          name="yearOfBirth"
-          selected={employeeInputs.yearOfBirth}
-          handleDateChange={handleDateChange}
-          errorsArr={employeeErrors}
-          setErrorsArr={setEmployeeErrors}
-        />
-        <InputText
-          inputName="Гражданство"
-          required
-          error={employeeErrors.citizenship}
-          name="citizenship"
-          handleInputChange={handleInputChange}
-          errorsArr={employeeErrors}
-          setErrorsArr={setEmployeeErrors}
-        />
-        <div className="main-form__fieldset">
-          <div className="main-form__group-name">Подразделение</div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Цех*</div>
-            <div className="main-form__input_field">
-              <select
-                name="workshop"
-                onChange={handleInputChange}
-                defaultValue={employeeInputs.workshop}
-              >
-                <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
-                <option value="ЦехЛепсари">ЦехЛепсари</option>
-                <option value="ЦехЛиговский">ЦехЛиговский</option>
-                <option value="Офис">Офис</option>
-                <option value="Уволенные">Уволенные</option>
-              </select>
-            </div>
-          </div>
-          <InputText
-            inputName="Должность"
+        <div className="main-form__row">
+          <InputDate
+            inputName="Дата рождения"
             required
-            error={employeeErrors.position}
-            name="position"
+            error={employeeErrors.yearOfBirth}
+            name="yearOfBirth"
+            selected={employeeInputs.yearOfBirth}
+            handleDateChange={handleDateChange}
+            errorsArr={employeeErrors}
+            setErrorsArr={setEmployeeErrors}
+          />
+          <InputText
+            inputName="Гражданство"
+            required
+            error={employeeErrors.citizenship}
+            name="citizenship"
             handleInputChange={handleInputChange}
             errorsArr={employeeErrors}
             setErrorsArr={setEmployeeErrors}
           />
+        </div>
+        <div className="main-form__fieldset">
+          <div className="main-form__group-name">Подразделение</div>
+          <div className="main-form__row">
+            <div className="main-form__item">
+              <div className="main-form__input_name">Цех*</div>
+              <div className="main-form__input_field">
+                <select
+                  name="workshop"
+                  onChange={handleInputChange}
+                  defaultValue={employeeInputs.workshop}
+                >
+                  <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
+                  <option value="ЦехЛепсари">ЦехЛепсари</option>
+                  <option value="ЦехЛиговский">ЦехЛиговский</option>
+                  <option value="Офис">Офис</option>
+                  <option value="Уволенные">Уволенные</option>
+                </select>
+              </div>
+            </div>
+            <InputText
+              inputName="Должность"
+              required
+              error={employeeErrors.position}
+              name="position"
+              handleInputChange={handleInputChange}
+              errorsArr={employeeErrors}
+              setErrorsArr={setEmployeeErrors}
+            />
+          </div>
         </div>
         {employeeInputs.passportScan1 !== '' && (
           <div className="main-form__item">
@@ -246,6 +263,7 @@ const NewEmployee = (props) => {
           <FileUploader
             regex={/.+\.(jpeg|jpg|png|img)/}
             uniqueId={0}
+            // type="fileOnly"
             onChange={(result) => {
               setEmployeeInputs({
                 ...employeeInputs,
@@ -279,7 +297,7 @@ const NewEmployee = (props) => {
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
-        <div className="main-form__buttons">
+        <div className="main-form__buttons main-form__buttons--full">
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"

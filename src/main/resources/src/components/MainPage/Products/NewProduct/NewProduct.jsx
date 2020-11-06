@@ -158,8 +158,10 @@ const NewProduct = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Новая продукция</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Новая продукция</div>
+        </div>
         {productInputs.photo && (
           <div className="main-form__item">
             <div className="main-form__input_name">Фотография</div>
@@ -277,7 +279,7 @@ const NewProduct = (props) => {
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
-        <div className="main-form__buttons">
+        <div className="main-form__buttons main-form__buttons--full">
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"

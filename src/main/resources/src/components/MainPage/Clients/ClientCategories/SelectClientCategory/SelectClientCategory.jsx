@@ -114,7 +114,8 @@ const SelectClientCategory = (props) => {
         content={
           <React.Fragment>
             <SearchBar
-              title="Поиск по категориям"
+              // title="Поиск по категориям"
+              fullSize
               setSearchQuery={setSearchQuery}
               placeholder="Введите запрос для поиска..."
             />

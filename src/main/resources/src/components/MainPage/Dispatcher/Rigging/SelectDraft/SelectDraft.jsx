@@ -61,64 +61,66 @@ const SelectDraft = (props) => {
           // console.log(response);
           response.map((item) => {
             return item.stampParts.map((stamp) => {
-              newDrafts.push({
+              return newDrafts.push({
                 ...stamp,
+                value: stamp.id,
+                label: `${stamp.number}, ${stamp.name}`,
                 type: 'Stamp',
               })
             })
           })
           // console.log(newDrafts);
-          setDrafts([...newDrafts])
+          return setDrafts([...newDrafts])
         })
-        .then(() => {
-          getPressForm()
-            .then((response) => response.json())
-            .then((response) => {
-              // console.log(response);
-              response.map((item) => {
-                return item.pressParts.map((stamp) => {
-                  newDrafts.push({
-                    ...stamp,
-                    type: 'Press',
-                  })
-                })
+        .then(() => getPressForm())
+        .then((response) => response.json())
+        .then((response) => {
+          // console.log(response);
+          response.map((item) => {
+            return item.pressParts.map((stamp) => {
+              return newDrafts.push({
+                ...stamp,
+                value: stamp.id,
+                label: `${stamp.number}, ${stamp.name}`,
+                type: 'Press',
               })
-              setDrafts([...newDrafts])
             })
-            .then(() => {
-              getMachine()
-                .then((response) => response.json())
-                .then((response) => {
-                  // console.log(response)
-                  response.map((item) => {
-                    return item.benchParts.map((stamp) => {
-                      newDrafts.push({
-                        ...stamp,
-                        type: 'Bench',
-                      })
-                    })
-                  })
-                  setDrafts([...newDrafts])
-                  // console.log(newDrafts)
-                })
-            })
+          })
+          return setDrafts([...newDrafts])
         })
-        .then(() => {
-          getParts()
-            .then((res) => res.json())
-            .then((res) => {
-              // console.log(res)
-              res.map((item) => {
-                return item.detailParts.map((stamp) => {
-                  newDrafts.push({
-                    ...stamp,
-                    type: 'Detail',
-                  })
-                })
+        .then(() => getMachine())
+        .then((response) => response.json())
+        .then((response) => {
+          // console.log(response)
+          response.map((item) => {
+            return item.benchParts.map((stamp) => {
+              return newDrafts.push({
+                ...stamp,
+                value: stamp.id,
+                label: `${stamp.number}, ${stamp.name}`,
+                type: 'Bench',
               })
-              setDrafts([...newDrafts])
-              console.log(newDrafts)
             })
+          })
+          return setDrafts([...newDrafts])
+          // console.log(newDrafts)
+        })
+        .then(() => getParts())
+        .then((res) => res.json())
+        .then((res) => {
+          // console.log(res)
+          res.map((item) => {
+            return item.detailParts.map((stamp) => {
+              return newDrafts.push({
+                ...stamp,
+                value: stamp.id,
+                label: `${stamp.number}, ${stamp.name}`,
+                type: 'Detail',
+              })
+            })
+          })
+          console.log(newDrafts)
+          return setDrafts([...newDrafts])
         })
     }
   }
@@ -258,7 +260,8 @@ const SelectDraft = (props) => {
             content={
               <React.Fragment>
                 <SearchBar
-                  title="Поиск по чертежам"
+                  // title="Поиск по чертежам"
+                  fullSize
                   placeholder="Введите артикул чертежа для поиска..."
                   setSearchQuery={setSearchQueryCategory}
                 />
@@ -317,11 +320,11 @@ const SelectDraft = (props) => {
         </div>
       )}
       <div className="select-draft__selected">
-        {selected.length !== 0 && (
+        {/* {selected.length !== 0 && (
           <span className="select-draft__selected_title">
             Выбранные чертежи:
           </span>
-        )}
+        )} */}
         {selected.map((item, index) => (
           <div className="select-draft__selected_row">
             <div className="select-draft__selected_item">
@@ -332,7 +335,7 @@ const SelectDraft = (props) => {
                 name="name"
                 autoComplete="off"
                 readOnly
-                value={`${item.number}, ${item.name}`}
+                value={`${item.number || ''}, ${item.name}`}
                 onChange={item.type === 'new' ? handleParamChange : null}
               />
               {!props.readOnly && !props.workshop && (
@@ -346,7 +349,9 @@ const SelectDraft = (props) => {
               )}
             </div>
             <div className="select-draft__selected_quantity">
-              Кол-во{!props.readOnly && '*'}
+              <span className="select-draft__input-name">
+                Кол-во (шт.){!props.readOnly && '*'}
+              </span>
               <input
                 quantity_id={index}
                 // type="text"

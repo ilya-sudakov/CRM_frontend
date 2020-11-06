@@ -4,25 +4,33 @@ import ClientsIcon from '../../../../../../../../assets/sidemenu/client.inline.s
 import {
   addSpaceDelimiter,
   formatDateString,
+  formatDateStringNoDate,
 } from '../../../../utils/functions.jsx'
 
-const NewClientsStatsPanel = (props) => {
+const NewClientsStatsPanel = ({ requests, curDate }) => {
   const [stats, setStats] = useState({
     category: 'Новые клиенты',
     percentage: 0,
     value: null,
     linkTo: '/clients/categories',
     isLoaded: false,
+    isLoading: false,
     timePeriod: 'От прошлого месяца',
     difference: 0,
     renderIcon: () => <ClientsIcon className="panel__img panel__img--money" />,
   })
 
-  const getStats = (requests) => {
+  const getStats = (requests, curDate = new Date()) => {
+    setStats((stats) => ({
+      ...stats,
+      isLoading: true,
+      isLoaded: false,
+    }))
+
     let clients = {}
-    //find all clients except once from cur and prev month
-    const oneMonthAgo = new Date(new Date().setDate(0)).getMonth()
-    const curMonth = new Date().getMonth()
+    //filter all clients except once from cur and prev month
+    const curMonth = formatDateStringNoDate(curDate)
+    const oneMonthAgo = formatDateStringNoDate(new Date(curDate).setDate(0))
 
     let prevMonthNewClients = 0
     let curMonthNewClients = 0
@@ -30,8 +38,9 @@ const NewClientsStatsPanel = (props) => {
     requests.filter((request) => {
       if (
         request.client !== null &&
-        new Date(request.date).getMonth() !== oneMonthAgo &&
-        new Date(request.date).getMonth() !== curMonth &&
+        formatDateStringNoDate(request.date) !== oneMonthAgo &&
+        formatDateStringNoDate(request.date) !== curMonth &&
+        formatDateStringNoDate(request.date) < curMonth &&
         clients[request.client.id] === undefined
       ) {
         clients = {
@@ -42,10 +51,12 @@ const NewClientsStatsPanel = (props) => {
       }
       return true
     })
+
+    //find new clients from prev month
     requests.filter((request) => {
       if (
         request.client !== null &&
-        new Date(request.date).getMonth() === oneMonthAgo &&
+        formatDateStringNoDate(request.date) === oneMonthAgo &&
         clients[request.client.id] === undefined
       ) {
         prevMonthNewClients++
@@ -60,10 +71,12 @@ const NewClientsStatsPanel = (props) => {
       }
       return true
     })
+
+    //find new clients from cur month
     requests.map((request) => {
       if (
         request.client !== null &&
-        new Date(request.date).getMonth() === curMonth &&
+        formatDateStringNoDate(request.date) === curMonth &&
         clients[request.client.id] === undefined
       ) {
         curMonthNewClients++
@@ -73,9 +86,11 @@ const NewClientsStatsPanel = (props) => {
         }
       }
     })
+
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
+      isLoading: false,
       value: addSpaceDelimiter(Math.floor(curMonthNewClients * 100) / 100),
       difference: curMonthNewClients - prevMonthNewClients,
       percentage:
@@ -88,9 +103,17 @@ const NewClientsStatsPanel = (props) => {
     }))
   }
 
+  //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && props.requests.length > 1 && getStats(props.requests)
-  }, [props.requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
+  }, [requests, stats])
+
+  //При обновлении тек. даты
+  useEffect(() => {
+    if (!stats.isLoading && requests.length > 1) {
+      getStats(requests, curDate)
+    }
+  }, [curDate])
 
   return <SmallPanel {...stats} />
 }

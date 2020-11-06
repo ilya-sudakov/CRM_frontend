@@ -11,9 +11,9 @@ import { UserContext } from '../../../../App.js'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const WorkManagement = (props) => {
-  const [recordedWork, setRecordedWork] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [recordedWork, setRecordedWork] = useState([])
   const [employeesMap, setEmployeesMap] = useState({})
   const [employees, setEmployees] = useState({})
   const userContext = useContext(UserContext)
@@ -96,16 +96,18 @@ const WorkManagement = (props) => {
 
   useEffect(() => {
     let abortController = new AbortController()
+    let date = new Date()
+    date.setDate(date.getDate() - 1)
     setIsLoading(true)
     recordedWork.length === 0 &&
       getRecordedWorkByDay(
-        new Date().getMonth() + 1,
-        new Date().getDate() - 1,
+        date.getMonth() + 1,
+        date.getDate(),
         abortController.signal,
       )
         .then((res) => res.json())
         .then((res) => {
-          // console.log(res);
+          // console.log(res)
           setRecordedWork(res)
           combineWorkHoursForSamePeople(res)
           getAllEmployees(res)
@@ -119,6 +121,7 @@ const WorkManagement = (props) => {
       abortController.abort()
     }
   }, [])
+
   return (
     <div className="work-management">
       <div className="work-management__title">

@@ -51,6 +51,9 @@
     white-space: nowrap;
     margin-right: 5px;
 
+    //testing
+    // padding-left: 12px;
+
     &::before {
       content: "";
       position: absolute;
@@ -59,14 +62,18 @@
       width: 3px;
       height: 100%;
       background-color: transparent;
-      // transition: 100ms ease-in-out;
+
+      //testing
+      width: 4px;
+      // border-radius: 15px;
+      // left: 4px;
+      // top: 1px;
+      // height: calc(100% - 2px);
     }
 
     .sidemenu__img {
       min-width: 25px;
-      // height: 25px;
       filter: brightness(1.8);
-      // transition: 200ms ease-in-out;
 
       path:first-child {
         fill: #6e7b8c77;
@@ -78,6 +85,12 @@
           stroke: #6e7b8c77;
         }
         path:nth-child(2) {
+          fill: #6e7b8c77;
+        }
+      }
+
+      &--request {
+        g {
           fill: #6e7b8c77;
         }
       }
@@ -95,31 +108,39 @@
     }
 
     &:hover {
-      background-color: darken($side_menu__background, 5%);
+      //testing
+      // background-color: darken($side_menu__background, 5%);
+      --hover-icon-fill: #6e7b8cdd;
       .sidemenu__img {
         path:first-child {
-          fill: #6e7b8cdd;
+          fill: var(--hover-icon-fill);
         }
 
         &--price {
           path:first-child {
             fill: transparent;
-            stroke: #6e7b8cdd;
+            stroke: var(--hover-icon-fill);
           }
         }
 
         &--employees {
           g {
-            fill: #6e7b8cdd;
+            fill: var(--hover-icon-fill);
           }
         }
 
         &--factory {
           path:first-child {
-            fill: #6e7b8cdd;
+            fill: var(--hover-icon-fill);
           }
           path:nth-child(2) {
-            fill: #6e7b8cdd;
+            fill: var(--hover-icon-fill);
+          }
+        }
+
+        &--request {
+          g {
+            fill: var(--hover-icon-fill);
           }
         }
       }
@@ -128,17 +149,21 @@
       }
       .sidemenu__link {
         span {
-          color: #b0c0d4 !important;
+          //testing
+          // color: #b0c0d4 !important;
+          color: #eeeeee !important;
         }
       }
     }
 
     &--active {
-      background-color: $button__background--inverted;
-      // background-color: darken($side_menu__background, 20%);
+      //testing
+      // background-color: $button__background--inverted;
 
       &::before {
-        background-color: $secondary-text-color;
+        //testing
+        // background-color: $secondary-text-color;
+        background-color: $button__background--inverted;
       }
 
       & .sidemenu__img {
@@ -152,6 +177,12 @@
           path:first-child {
             fill: transparent;
             stroke: #6e7b8cff;
+          }
+        }
+
+        &--request {
+          g {
+            fill: #6e7b8cff;
           }
         }
 
@@ -172,13 +203,38 @@
         color: $secondary-text-color !important;
       }
 
+      .sidemenu__dropdown-menu {
+        .sidemenu__item {
+          .sidemenu__link {
+            color: #bbbbbb !important;
+          }
+          &:hover {
+            .sidemenu__link {
+              color: #eeeeee !important;
+            }
+          }
+          &--active {
+            .sidemenu__link {
+              color: #ffffff !important;
+            }
+          }
+        }
+      }
+
       & .sidemenu__addButton {
-        background-color: lighten($button__background--inverted, 5%) !important;
+        // background-color: lighten($button__background--inverted, 5%) !important;
+
+        .sidemenu__img {
+          path:first-child {
+            // fill: #ffffff;
+            fill: #ffffffff !important;
+          }
+        }
       }
 
       &:hover {
-        background-color: darken($button__background--inverted, 5%);
-        // background-color: darken($side_menu__background, 30%);
+        //testing
+        // background-color: darken($button__background--inverted, 5%);
         .sidemenu__link {
           span {
             color: #ffffff !important;
@@ -268,7 +324,6 @@
     }
 
     .sidemenu__addButton {
-      background-color: $button__background--inverted;
       color: $secondary-text-color;
       font-size: 25px;
       // margin-left: 10px;
@@ -277,25 +332,36 @@
       display: flex;
       align-items: center;
       transition: filter 0.5s ease-in-out;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
       transform: translate3d(-1px, -1px, 0);
       border: solid 1px transparent;
-      border-width: 1px 0 0 1px;
+      // border-width: 1px 0 0 1px;
+      // border-radius: 999px;
+      // background-color: $secondary-text-color;
       // transition: all 100ms ease-in-out;
 
-      path:first-child {
-        fill: #6e7b8cee;
-      }
+      // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      // background-color: $button__background--inverted;
 
       &:hover {
-        background-color: lighten($button__background--inverted, 5%);
+        // background-color: lighten($button__background--inverted, 5%);
+        // border: 1px solid #b0c0d4;
+        .sidemenu__img {
+          margin: 0;
+          padding: 0;
+          path:first-child {
+            // fill: #ffffff;
+            fill: #ffffffff;
+          }
+        }
       }
 
       .sidemenu__img {
-        max-width: 21px;
+        min-width: 20px;
+        max-width: 20px;
         // filter: brightness(3);
         path:first-child {
-          fill: #ffffff;
+          // fill: #ffffff;
+          fill: #ffffff99;
         }
         // transition: 0.2s ease-in-out;
       }
@@ -339,7 +405,10 @@
       padding: 0 0px;
       border-radius: 5px;
       &::before {
-        display: none;
+        // display: none;
+        left: -1px;
+        border-radius: 15px;
+        // width: 4px;
       }
       &:hover {
         .sidemenu__img--icon {
@@ -351,10 +420,16 @@
       }
     }
 
-    .sidemenu__link {
-      padding-left: 10px;
-      width: calc(100%);
-      color: #dddddd;
+    .sidemenu__item {
+      .sidemenu__link {
+        padding-left: 10px;
+        width: calc(100%);
+      }
+      &:hover {
+        .sidemenu__link {
+          color: #eeeeee;
+        }
+      }
     }
   }
 
@@ -402,7 +477,7 @@
       padding: 0 5px;
       box-sizing: border-box;
       min-width: 0 !important;
-      max-width: 50px !important;
+      max-width: 60px !important;
       margin-right: 0;
       // position: static;
 
@@ -418,8 +493,8 @@
       }
 
       .sidemenu__link {
-        min-width: 35px;
-        max-width: 35px;
+        min-width: 50px;
+        max-width: 50px;
         width: 100%;
         padding-right: 0;
         justify-content: center;

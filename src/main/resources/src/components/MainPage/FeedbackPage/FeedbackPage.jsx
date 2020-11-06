@@ -19,6 +19,7 @@ import {
 } from '../../../utils/RequestsAPI/Feedback/messages.js'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import PlaceholderLoading from '../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const FeedbackPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -101,7 +102,6 @@ const FeedbackPage = (props) => {
   return (
     <div className="feedback-page">
       <div className="main-window">
-        <div className="main-window__title">Обратная связь</div>
         <FloatingPlus
           linkTo="/feedback/new"
           visibility={[
@@ -111,74 +111,82 @@ const FeedbackPage = (props) => {
             'ROLE_MANAGER',
           ]}
         />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Обратная связь</div>
+        </div>
         <SearchBar
           // title="Обратная связь"
+          fullSize
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__status-panel">
-            <div>Фильтр по статусам: </div>
-            {statuses.map((status, index) => {
-              return (
-                <div
-                  className={
-                    (status.visible
-                      ? 'main-window__button'
-                      : 'main-window__button main-window__button--inverted') +
-                    ' main-window__list-item--' +
-                    status.className
-                  }
-                  onClick={() => {
-                    let temp = statuses
-                    temp.splice(index, 1, {
-                      ...status,
-                      visible: !status.visible,
-                    })
-                    setStatuses([...temp])
-                  }}
-                >
-                  {status.name}
+        <ControlPanel
+          itemsCount={`Всего: ${messages.length} записей`}
+          content={
+            <>
+              <div className="main-window__info-panel">
+                <div className="main-window__status-panel">
+                  <div>Фильтр по статусам: </div>
+                  {statuses.map((status, index) => {
+                    return (
+                      <div
+                        className={
+                          (status.visible
+                            ? 'main-window__button'
+                            : 'main-window__button main-window__button--inverted') +
+                          ' main-window__list-item--' +
+                          status.className
+                        }
+                        onClick={() => {
+                          let temp = statuses
+                          temp.splice(index, 1, {
+                            ...status,
+                            visible: !status.visible,
+                          })
+                          setStatuses([...temp])
+                        }}
+                      >
+                        {status.name}
+                      </div>
+                    )
+                  })}
                 </div>
-              )
-            })}
-          </div>
-          <div className="main-window__amount_table">
-            Всего: {messages.length} записей
-          </div>
-        </div>
-        <div className="main-window__filter-pick">
-          <div>Фильтр по категориям: </div>
-          {userCategories.map((category, index) => {
-            return (
-              <div
-                className={
-                  category.active
-                    ? 'main-window__button'
-                    : 'main-window__button main-window__button--inverted'
-                }
-                onClick={() => {
-                  let temp = userCategories
-                  temp = userCategories.map((item, tempIndex) => {
-                    if (index === tempIndex) {
-                      return {
-                        ...item,
-                        active: true,
-                      }
-                    }
-                    return {
-                      ...item,
-                      active: false,
-                    }
-                  })
-                  setUserCategories([...temp])
-                }}
-              >
-                {category.name}
               </div>
-            )
-          })}
-        </div>
+              <div className="main-window__filter-pick">
+                <div>Фильтр по категориям: </div>
+                {userCategories.map((category, index) => {
+                  return (
+                    <div
+                      className={
+                        category.active
+                          ? 'main-window__button'
+                          : 'main-window__button main-window__button--inverted'
+                      }
+                      onClick={() => {
+                        let temp = userCategories
+                        temp = userCategories.map((item, tempIndex) => {
+                          if (index === tempIndex) {
+                            return {
+                              ...item,
+                              active: true,
+                            }
+                          }
+                          return {
+                            ...item,
+                            active: false,
+                          }
+                        })
+                        setUserCategories([...temp])
+                      }}
+                    >
+                      {category.name}
+                    </div>
+                  )
+                })}
+              </div>
+            </>
+          }
+        />
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             {/* <span>Обсуждения</span>
@@ -234,11 +242,14 @@ const FeedbackPage = (props) => {
               ) {
                 return (
                   <Link
-                    className={
-                      'main-window__list-item' +
-                      ' main-window__list-item--' +
+                    className={`main-window__list-item main-window__list-item--${
                       item.status
-                    }
+                    } ${
+                      item.isRead === false
+                        ? 'main-window__list-item--unread'
+                        : ''
+                    }`}
+                    key={index}
                     to={'/feedback/view/' + item.id}
                   >
                     <span

@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import SmallPanel from './SmallPanel.jsx'
 import TimeIcon from '../../../../../../../../assets/etc/time.inline.svg'
+import {
+  dateDiffInDays,
+  formatDateStringNoDate,
+} from '../../../../utils/functions.jsx'
 
-const RequestsAverageTimeCompletionPanel = (props) => {
+const RequestsAverageTimeCompletionPanel = ({ requests, curDate }) => {
   const [stats, setStats] = useState({
     category: 'Средняя прод. выполнения заказа',
     percentage: 0,
     value: null,
     linkTo: '/requests',
     isLoaded: false,
+    isLoading: false,
     timePeriod: 'От прошлого месяца',
     difference: 0,
     invertedStats: true,
     renderIcon: () => <TimeIcon className="panel__img panel__img--time" />,
   })
 
-  const dateDiffInDays = (a, b) => {
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24
-    // Discard the time and time-zone information.
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
+  const getStats = (requests, curDate = new Date()) => {
+    setStats((stats) => ({
+      ...stats,
+      isLoading: true,
+      isLoaded: false,
+    }))
 
-    return Math.floor((utc2 - utc1) / _MS_PER_DAY)
-  }
-
-  const getRequestQuantityStats = (requests) => {
     let curMonthQuantity = 0
     let prevMonthQuantity = 0
     let curMonthAverage = 0
@@ -34,7 +36,8 @@ const RequestsAverageTimeCompletionPanel = (props) => {
     let temp = requests.filter((request) => {
       const date = new Date(request.date)
       if (
-        date.getMonth() === new Date(new Date().setDate(0)).getMonth() &&
+        formatDateStringNoDate(date) ===
+          formatDateStringNoDate(new Date(curDate).setDate(0)) &&
         request.status === 'Завершено'
       ) {
         prevMonthAverage += dateDiffInDays(
@@ -49,7 +52,7 @@ const RequestsAverageTimeCompletionPanel = (props) => {
     temp.map((request) => {
       const date = new Date(request.date)
       if (
-        date.getMonth() === new Date().getMonth() &&
+        formatDateStringNoDate(date) === formatDateStringNoDate(curDate) &&
         request.status === 'Завершено'
       ) {
         curMonthAverage += dateDiffInDays(
@@ -68,20 +71,38 @@ const RequestsAverageTimeCompletionPanel = (props) => {
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
-      value: `${Math.floor(curMonthAverage * 100) / 100} дн.`,
-      difference: curMonthAverage - prevMonthAverage,
+      isLoading: false,
+      value:
+        Math.floor(curMonthAverage * 100) / 100 === 0
+          ? 'Нет данных'
+          : `${Math.floor(curMonthAverage * 100) / 100} дн.`,
+      difference:
+        Math.floor(curMonthAverage * 100) / 100 === 0
+          ? 0
+          : curMonthAverage - prevMonthAverage,
       percentage:
-        Math.floor(
-          ((curMonthAverage - prevMonthAverage) / prevMonthAverage) * 100 * 100,
-        ) / 100,
+        Math.floor(curMonthAverage * 100) / 100 === 0
+          ? 0
+          : Math.floor(
+              ((curMonthAverage - prevMonthAverage) /
+                (prevMonthAverage !== 0 ? prevMonthAverage : 1)) *
+                100 *
+                100,
+            ) / 100,
     }))
   }
 
+  //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded &&
-      props.requests.length > 1 &&
-      getRequestQuantityStats(props.requests)
-  }, [props.requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
+  }, [requests, stats])
+
+  //При обновлении тек. даты
+  useEffect(() => {
+    if (!stats.isLoading && requests.length > 1) {
+      getStats(requests, curDate)
+    }
+  }, [curDate])
 
   return <SmallPanel {...stats} />
 }

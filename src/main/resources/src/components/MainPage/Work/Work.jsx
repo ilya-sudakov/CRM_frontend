@@ -8,6 +8,7 @@ import {
 } from '../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
 import '../../../utils/MainWindow/MainWindow.scss'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Work = (props) => {
   const [work, setWork] = useState([])
@@ -41,18 +42,17 @@ const Work = (props) => {
   return (
     <div className="work">
       <div className="main-window">
-        <div className="main-window__title">Работы</div>
         <FloatingPlus linkTo="/work-list/new" visibility={['ROLE_ADMIN']} />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Работы</div>
+        </div>
         <SearchBar
+          fullSize
           // title="Поиск работы"
           placeholder="Введите название работы для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {work.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${work.length} записей`} />
         <TableView
           data={work}
           searchQuery={searchQuery}

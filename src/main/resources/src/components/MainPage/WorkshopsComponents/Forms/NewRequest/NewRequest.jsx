@@ -216,25 +216,37 @@ const NewRequest = (props) => {
   return (
     <div className="new-request">
       <div className="main-form">
-        <div className="main-form__title">{`Новая заявка ${
-          workshops[props.type].title
-        }`}</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Новая заявка ${
+              workshops[props.type].title
+            }`}</div>
+          </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}
             setShowError={setShowError}
           />
-          <InputDate
-            inputName="Дата заявки"
-            required
-            error={requestErrors.date}
-            name="date"
-            selected={Date.parse(requestInputs.date)}
-            handleDateChange={handleDateChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          />
+          <div className="main-form__row">
+            <InputDate
+              inputName="Дата заявки"
+              required
+              error={requestErrors.date}
+              name="date"
+              selected={Date.parse(requestInputs.date)}
+              handleDateChange={handleDateChange}
+              errorsArr={requestErrors}
+              setErrorsArr={setRequestErrors}
+            />
+            <InputDate
+              inputName="Дата отгрузки"
+              name="shippingDate"
+              selected={requestInputs.shippingDate}
+              handleDateChange={handleDateShippedChange}
+              errorsArr={requestErrors}
+              setErrorsArr={setRequestErrors}
+            />
+          </div>
           <InputProducts
             inputName="Продукция"
             userHasAccess={userContext.userHasAccess}
@@ -248,16 +260,6 @@ const NewRequest = (props) => {
             errorsArr={requestErrors}
             setErrorsArr={setRequestErrors}
           />
-          {/* <InputText
-            inputName="Кодовое слово"
-            required
-            error={requestErrors.codeWord}
-            name="codeWord"
-            handleInputChange={handleInputChange}
-            defaultValue={requestInputs.codeWord}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          /> */}
           <InputUser
             inputName="Ответственный"
             userData={userContext.userData}
@@ -300,14 +302,6 @@ const NewRequest = (props) => {
               </select>
             </div>
           </div>
-          <InputDate
-            inputName="Дата отгрузки"
-            name="shippingDate"
-            selected={requestInputs.shippingDate}
-            handleDateChange={handleDateShippedChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          />
           <InputText
             inputName="Комментарий"
             name="comment"
@@ -317,7 +311,7 @@ const NewRequest = (props) => {
             setErrorsArr={setRequestErrors}
           />
           <InputText
-            inputName="Цена"
+            inputName="Сумма"
             name="sum"
             type="number"
             defaultValue={requestInputs.sum}
@@ -348,7 +342,7 @@ const NewRequest = (props) => {
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>
-          <div className="main-form__buttons">
+          <div className="main-form__buttons main-form__buttons--full">
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"

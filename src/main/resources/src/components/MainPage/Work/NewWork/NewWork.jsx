@@ -102,8 +102,10 @@ const NewWork = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Создание работы</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Создание работы</div>
+        </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}
@@ -148,7 +150,7 @@ const NewWork = (props) => {
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
-        <div className="main-form__buttons">
+        <div className="main-form__buttons main-form__buttons--full">
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"

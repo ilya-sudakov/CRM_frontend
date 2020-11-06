@@ -1,9 +1,18 @@
-@import '../../../variables.scss';
+@import "../../../variables.scss";
 
 .packaging-page {
+    .main-window {
+        &__header {
+        }
+        .searchbar {
+            // margin-bottom: 10px;
+        }
+        .control-panel {
+            margin-bottom: 10px;
+        }
+    }
     .main-window__list {
         &-item {
-
         }
 
         .main-window__actions {

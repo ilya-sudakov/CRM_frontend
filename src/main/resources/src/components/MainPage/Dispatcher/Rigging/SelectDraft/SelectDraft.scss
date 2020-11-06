@@ -148,8 +148,10 @@
     }
   }
 
+  // SELECTED ITEMS LIST
+
   &__selected {
-    font-size: 80%;
+    // font-size: 80%;
     display: flex;
     flex-direction: column;
 
@@ -170,31 +172,34 @@
     &_row {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      // align-items: center;
       justify-content: space-between;
       // flex-wrap: wrap;
-      margin-top: 5px;
+      margin-top: 12px;
+      font-size: 0.9rem;
 
       &:first-of-type {
-        margin-top: 5px;
+        margin-top: 12px;
       }
 
       .select-draft__selected_item {
         display: flex;
-        padding: 2.5px 0px;
-        border-radius: 2.5px;
-        width: 50%;
-        margin-right: 30px;
+        padding: 0px 0px;
+        border-radius: 5px;
+        width: calc(60% - 30px);
+        margin-right: 50px;
         position: relative;
-        font-size: 100%;
-        //   width: fit-content;
+        font-size: 90%;
         align-items: center;
-        color: $primary-text-color;
-        // border: 1px solid $button__background--inverted;
-        border: 1px solid #777777;
-        transition: 0.2s ease-in-out;
+        border: 1px solid #bbbbbb;
+        transition: 100ms ease-in-out;
         cursor: pointer;
         background-color: #ffffff;
+        color: #333333;
+
+        &:hover {
+          border-color: #999999;
+        }
 
         &:last-child {
           margin-bottom: 0;
@@ -211,10 +216,8 @@
           width: 100%;
           height: fit-content;
           padding: 10px 5px;
-          // text-decoration: underline;
           border: none !important;
           cursor: pointer;
-          font-size: 85%;
         }
 
         &:hover {
@@ -224,30 +227,47 @@
 
       .select-draft__selected_quantity,
       .select-draft__selected_packaging {
-        width: 50%;
+        width: calc(40% - 0px);
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: flex-start;
         align-items: center;
+        font-size: 90%;
+        box-sizing: border-box;
+        position: relative;
+
+        .select-draft__input-name {
+          position: absolute;
+          top: -7px;
+          left: 6px;
+          z-index: 1;
+          background-color: #ffffff;
+          padding: 0 5px;
+          color: #777777;
+          white-space: nowrap;
+          border-radius: 3px;
+        }
 
         input[type="text"],
         input[type="number"],
         textarea {
           border: 1px solid #bbbbbb;
-          font-size: 80%;
-          margin-left: 10px;
-          width: 50% !important;
-          min-width: 50% !important;
+          font-size: 110%;
+          width: 100%;
+          min-width: 100px;
           display: flex;
           padding: 10px 10px;
-          border-radius: 2.5px;
-          min-height: 1rem;
-          height: calc(1rem + 0px);
-          // height: fit-content;
+          border-radius: 5px;
           outline: none;
           position: relative;
-          //   width: fit-content;
           align-items: center;
+          transition: 100ms ease-in-out;
+          z-index: 0;
+          padding-top: 10px;
+          box-sizing: border-box;
+          color: #333333;
+          height: auto;
+          max-width: none;
 
           &:focus {
             border: 1px solid $button__background--inverted;
@@ -276,19 +296,134 @@
     }
   }
 
+  &--new {
+    padding-right: 10px;
+    box-sizing: border-box;
+    margin-top: 0;
+    margin-bottom: 0 !important;
+    .select-draft__input_name {
+      position: absolute;
+      top: -11px;
+      left: 6px;
+      z-index: 1;
+      color: #555555;
+      font-size: 0.8rem !important;
+      background-color: #ffffff;
+      width: fit-content !important;
+      padding: 2px 5px;
+    }
+
+    input {
+      max-width: none !important;
+      min-width: 0 !important;
+    }
+
+    .select-draft__selected {
+      margin-top: 0px;
+      margin-bottom: 10px;
+
+      .select-draft__selected_row {
+        margin-top: 8px;
+        align-items: flex-start;
+      }
+    }
+
+    .select-draft__selected_item {
+      width: 100%;
+
+      input {
+        font-size: 0.9rem !important;
+        max-height: 1.25rem !important;
+      }
+    }
+    .select-draft__img {
+      max-width: 21px;
+    }
+    .select-draft__selected_quantity {
+      margin-right: 0;
+      width: calc(30%);
+      min-width: 110px;
+      max-width: 125px;
+      input {
+        min-width: 100% !important;
+        height: 2rem !important;
+        box-sizing: border-box;
+        border-radius: 3px !important;
+      }
+    }
+
+    .select-draft__input_field {
+      font-size: 0.85rem;
+    }
+  }
+
+  &--readonly {
+    .select-draft__input {
+      .select-draft__input_name {
+        border-radius: 5px;
+      }
+    }
+    .select-draft__selected {
+      .select-draft__selected_row {
+        &:first-child {
+          margin-top: 0px !important;
+        }
+        .select-draft__selected_item {
+          .select-draft__selected_name {
+            height: 3rem !important;
+            max-height: 1.5rem !important;
+          }
+        }
+        .select-draft__selected_quantity {
+          input {
+            height: 3rem !important;
+            max-height: 2.3rem !important;
+          }
+        }
+      }
+    }
+  }
+
   @media (max-width: 768px) {
     & {
       width: 100% !important;
       &__selected {
         &_row {
-          flex-direction: column;
-          margin-left: -25px;
+          // flex-direction: column;
+          // margin-left: -25px;
           .select-draft__selected_item,
           .select-draft__selected_packaging,
           .select-draft__selected_quantity {
-            margin-right: 0;
-            margin-bottom: 5px;
-            width: calc(100% - 80px) !important;
+            // margin-right: 0;
+            // margin-bottom: 5px;
+            // width: calc(100% - 80px) !important;
+            // input {
+            //   width: 100%;
+            // }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    & {
+      width: 100% !important;
+      &__selected {
+        &_row {
+          flex-direction: column;
+          // margin-left: -25px;
+          margin-top: 20px;
+
+          .select-draft__selected_item {
+            width: calc(100% - 40px);
+          }
+
+          .select-draft__selected_packaging,
+          .select-draft__selected_quantity {
+            // margin-right: 0;
+            margin-top: 12.5px;
+            width: 100%;
             input {
               width: 100%;
             }

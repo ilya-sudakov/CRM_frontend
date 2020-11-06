@@ -1,66 +1,75 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { addSpaceDelimiter } from '../../../../utils/functions.jsx'
 
-const SmallPanel = (props) => {
+const SmallPanel = ({
+  isLoaded,
+  renderIcon,
+  value,
+  category,
+  invertedStats,
+  difference,
+  percentage,
+  timePeriod,
+  linkTo,
+}) => {
+  useEffect(() => {}, [isLoaded])
+
   return (
     <Link
-      className={`panel ${props.isLoaded ? '' : 'panel--placeholder'}`}
-      to={props.linkTo || '/'}
+      className={`panel ${isLoaded ? '' : 'panel--placeholder'}`}
+      to={linkTo || '/'}
     >
       <div className="panel__category">
-        <span>{props.category || 'Категория'}</span>
-        {props.renderIcon ? (
-          <div className="panel__icon">{props.renderIcon()}</div>
-        ) : null}
+        <span>{category || 'Категория'}</span>
+        {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
       </div>
       <div
         className={`panel__value panel__value--${
-          props.invertedStats === true
-            ? props.difference >= 0
+          invertedStats === true
+            ? difference >= 0
               ? 'negative'
               : 'positive'
-            : props.difference < 0
+            : difference < 0
             ? 'negative'
             : 'positive'
         }`}
       >
-        {props.value || ''}
+        {isLoaded ? value || 0 : null}
         <span>
-          {props.isLoaded
-            ? `${props.difference < 0 ? '' : '+'}${
-                Math.floor(props.difference * 100) / 100
-              }`
+          {isLoaded
+            ? `${difference < 0 ? '' : '+'}${addSpaceDelimiter(
+                Math.floor(difference * 100) / 100,
+              )}`
             : ''}
         </span>
       </div>
       <div
         className={`panel__difference panel__difference--${
-          props.invertedStats === true
-            ? props.percentage === 0 || !props.isLoaded
+          invertedStats === true
+            ? percentage === 0 || !isLoaded
               ? 'equal'
-              : props.percentage >= 0
+              : percentage >= 0
               ? 'negative'
               : 'positive'
-            : props.percentage === 0 || !props.isLoaded
+            : percentage === 0 || !isLoaded
             ? 'equal'
-            : props.percentage < 0
+            : percentage < 0
             ? 'negative'
             : 'positive'
         }`}
       >
         <div className="panel__arrow"></div>
         <div className="panel__percentage">
-          {props.isLoaded ? `${Math.abs(props.percentage)}%` : ''}
+          {isLoaded ? `${Math.abs(percentage)}%` : ''}
         </div>
-        <div className="panel__time-period">
-          {props.isLoaded ? props.timePeriod : ''}
-        </div>
+        <div className="panel__time-period">{isLoaded ? timePeriod : ''}</div>
       </div>
       <div
         className={`panel__difference panel__difference--${
-          props.percentage === 0 || !props.isLoaded
+          percentage === 0 || !isLoaded
             ? 'equal'
-            : props.percentage < 0
+            : percentage < 0
             ? 'negative'
             : 'positive'
         }`}

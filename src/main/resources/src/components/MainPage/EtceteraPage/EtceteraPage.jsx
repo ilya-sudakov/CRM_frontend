@@ -97,9 +97,11 @@ const EtceteraPage = (props) => {
   return (
     <div className="etcetera-page">
       <div className="main-window">
-        <div className="main-window__title">Остальное</div>
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Остальное</div>
+        </div>
         <div className="etcetera-page__buttons">
-          {console.log(Object.entries(menuItems))}
+          {/* {console.log(Object.entries(menuItems))} */}
           {Object.entries(menuItems).map((category) => {
             return (
               <div className="excetera-page__category">

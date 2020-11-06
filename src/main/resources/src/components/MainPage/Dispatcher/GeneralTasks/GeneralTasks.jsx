@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './GeneralTasks.scss'
 import '../../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../../SearchBar/SearchBar.jsx'
@@ -8,8 +8,13 @@ import {
   deleteMainTask,
 } from '../../../../utils/RequestsAPI/MainTasks.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+import Select from 'react-select'
+import { formatDateString } from '../../../../utils/functions.jsx'
+import { UserContext } from '../../../../App.js'
 
 const GeneralTasks = (props) => {
+  const userContext = useContext(UserContext)
   const [generalTasks, setGeneralTasks] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -42,6 +47,8 @@ const GeneralTasks = (props) => {
       visible: false,
     },
   ])
+  //Уникальные пользователи
+  const [taskUsers, setTaskUsers] = useState({})
 
   useEffect(() => {
     document.title = 'Основные задачи'
@@ -49,6 +56,7 @@ const GeneralTasks = (props) => {
     //при переходе на другие страницы
     let abortController = new AbortController()
     loadTasks(abortController.signal)
+
     return function cancel() {
       abortController.abort()
     }
@@ -62,6 +70,7 @@ const GeneralTasks = (props) => {
       .then((res) => {
         // console.log(res);
         setIsLoading(false)
+        getUsers(res)
         setGeneralTasks(res)
       })
       .catch((error) => {
@@ -71,25 +80,113 @@ const GeneralTasks = (props) => {
       })
   }
 
+  const getUsers = (tasks) => {
+    let users = {}
+    tasks.map((task) => {
+      if (
+        users[task.responsible] === undefined &&
+        task.responsible !== '' &&
+        task.responsible !== null
+      ) {
+        users = {
+          ...users,
+          [task.responsible]: false,
+        }
+      }
+    })
+    setTaskUsers(users)
+  }
+
   //Удаление задачи
   const deleteItem = (id) => {
     deleteMainTask(id).then(() => loadTasks())
   }
 
+  //Sorting
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'dateCreated',
+    dateCreated: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase()
+    return data.filter(
+      (item) =>
+        item.id.toString().includes(query) ||
+        item.description.toLowerCase().includes(query) ||
+        item.responsible.toLowerCase().includes(query) ||
+        item.status.toLowerCase().includes(query) ||
+        formatDateString(item.dateCreated).includes(query) ||
+        formatDateString(item.dateControl).includes(query),
+    )
+  }
+
+  const sortTasks = (data) => {
+    return filterSearchQuery(data).sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      return 0
+    })
+  }
+
+  const filterTasks = (tasks) => {
+    const filteredCompletedTasks = filterCompletedTasks(tasks)
+    const filteredUsers = filterTasksUsers(filteredCompletedTasks)
+    return filteredUsers
+  }
+
+  const filterTasksUsers = (tasks) => {
+    return tasks.filter((item) => {
+      let check = false
+      let noActiveStatuses = true
+      Object.entries(taskUsers).map((user) => {
+        Object.entries(taskUsers).map((user) => {
+          if (user[1]) {
+            noActiveStatuses = false
+          }
+        })
+        if (
+          noActiveStatuses === true ||
+          (user[1] && user[0] === item.responsible)
+        ) {
+          check = true
+          return
+        }
+      })
+      return check
+    })
+  }
+
+  const filterCompletedTasks = (tasks) => {
+    return tasks.filter(
+      (task) =>
+        (curPage === 'В процессе' && task.condition !== 'Выполнено') ||
+        (curPage === 'Завершено' && task.condition === 'Выполнено'),
+    )
+  }
+
   return (
     <div className="general_tasks">
       <div className="main-window">
-        <div className="main-window__title">Основные задачи</div>
         <FloatingPlus
           linkTo="/dispatcher/general-tasks/new"
           visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
         />
-        <div className="main-window__header">
-          <SearchBar
-            // title="Основные задачи"
-            placeholder="Введите описание задачи для поиска..."
-            setSearchQuery={setSearchQuery}
-          />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Основные задачи</div>
           <div className="main-window__menu">
             <div
               className={
@@ -113,67 +210,80 @@ const GeneralTasks = (props) => {
             </div>
           </div>
         </div>
-        <div className="main-window__info-panel">
-          <div className="main-window__status-panel">
-            <div>Фильтр по статусам: </div>
-            {taskStatuses.map((status, index) => {
-              return (
-                <div
-                  className={
-                    (status.visible
-                      ? 'main-window__button'
-                      : 'main-window__button main-window__button--inverted') +
-                    ' main-window__list-item--' +
-                    status.className
-                  }
-                  onClick={() => {
-                    let temp = taskStatuses.map((status) => {
-                      return {
-                        ...status,
-                        visible: false,
-                      }
-                    })
-                    temp.splice(index, 1, {
-                      ...status,
-                      visible: !status.visible,
-                    })
-                    setTaskStatuses([...temp])
-                  }}
-                >
-                  {status.name}
+        <SearchBar
+          // title="Основные задачи"
+          placeholder="Введите описание задачи для поиска..."
+          setSearchQuery={setSearchQuery}
+          fullSize
+        />
+        <ControlPanel
+          itemsCount={`Всего: ${generalTasks.length} записей`}
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="dateCreated asc">
+                  По дате постановки (убыв.)
+                </option>
+                <option value="dateCreated desc">
+                  По дате постановки (возр.)
+                </option>
+                <option value="dateControl asc">
+                  По дате контроля (убыв.)
+                </option>
+                <option value="dateControl desc">
+                  По дате контроля (возр.)
+                </option>
+              </select>
+            </div>
+          }
+          content={
+            userContext.userHasAccess(['ROLE_ADMIN']) ? (
+              <div className="main-window__info-panel">
+                <div className="main-window__filter-pick">
+                  <div>Фильтр по пользователям: </div>
+                  {Object.entries(taskUsers).map((user) => {
+                    return (
+                      <div
+                        className={
+                          user[1]
+                            ? 'main-window__button'
+                            : 'main-window__button main-window__button--inverted'
+                        }
+                        onClick={() => {
+                          return setTaskUsers((taskUsers) => {
+                            //Выбор нескольких пользователей
+                            // return {
+                            //   ...taskUsers,
+                            //   [user[0]]: !user[1],
+                            // }
+
+                            //Выбор только одного пользователя
+                            let newUsers = taskUsers
+                            Object.entries(taskUsers).map((oldTask) => {
+                              newUsers = {
+                                ...newUsers,
+                                [oldTask[0]]: false,
+                              }
+                            })
+
+                            return {
+                              ...newUsers,
+                              [user[0]]: user[1] ? false : true,
+                            }
+                          })
+                        }}
+                      >
+                        {user[0]}
+                      </div>
+                    )
+                  })}
                 </div>
-              )
-            })}
-          </div>
-          <div className="main-window__amount_table">
-            Всего: {generalTasks.length} записей
-          </div>
-        </div>
+              </div>
+            ) : null
+          }
+        />
         <TableView
-          data={generalTasks.filter((item) => {
-            if (
-              (curPage === 'В процессе' && item.condition !== 'Выполнено') ||
-              (curPage === 'Завершено' && item.condition === 'Выполнено')
-            ) {
-              let check = false
-              let noActiveStatuses = true
-              taskStatuses.map((status) => {
-                taskStatuses.map((status) => {
-                  if (status.visible) {
-                    noActiveStatuses = false
-                  }
-                })
-                if (
-                  noActiveStatuses === true ||
-                  (status.visible && status.name === item.condition)
-                ) {
-                  check = true
-                  return
-                }
-              })
-              return check
-            }
-          })}
+          data={filterTasks(sortTasks(generalTasks))}
           searchQuery={searchQuery}
           userData={props.userData}
           userHasAccess={props.userHasAccess}

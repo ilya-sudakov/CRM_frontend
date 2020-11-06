@@ -2,10 +2,10 @@
 
 .general_tasks {
     --completed: #52d66c;
-    --in-progress: #ca077f;
-    --delayed: #00b7ff;
-    --problem: #d6574e;
-    --materials: #d49a27;
+    --in-progress: #94bbe2;
+    --delayed: #e79ecb;
+    --problem: #da756e;
+    --materials: #d4ad5e;
     .main-window {
         &__title {
             text-align: left;
@@ -15,19 +15,10 @@
             margin-bottom: 0px;
         }
     }
-    .main-window__header {
-        flex-direction: column;
-        .main-window__menu {
-            // border-bottom-left-radius: 5px;
-            // border-bottom-right-radius: 5px;
-            border-radius: 2.5px;
-            // background-color: #ffffff;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.1);
-        }
-    }
     .searchbar {
         // background-color: $secondary-text-color;
         width: calc(100% - 25px);
+        // padding-top: 10px;
         text-align: left;
         // border-bottom-left-radius: 0;
         // border-bottom-right-radius: 0;
@@ -36,6 +27,10 @@
 
     .main-window__info-panel {
         margin-bottom: 0;
+    }
+
+    .main-window__filter-pick {
+        margin-top: 12px;
     }
 
     .main-window__status-panel {

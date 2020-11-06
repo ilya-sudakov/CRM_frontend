@@ -8,6 +8,7 @@ import {
   getStorage,
 } from '../../../utils/RequestsAPI/Workshop/LemzStorage.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Storage = (props) => {
   const [storage, setStorage] = useState([])
@@ -41,20 +42,16 @@ const Storage = (props) => {
   return (
     <div className="storage">
       <div className="main-window">
+        <FloatingPlus
+          linkTo="/lemz/workshop-storage/new"
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP']}
+        />
         <SearchBar
           // title="Поиск по складу"
           placeholder="Введите артикул детали для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <FloatingPlus
-          linkTo="/lemz/workshop-storage/new"
-          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP']}
-        />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {storage.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${storage.length} записей`} />
         <TableView
           data={storage}
           searchQuery={searchQuery}

@@ -3,7 +3,7 @@
 .main_page {
   width: 100%;
   height: 100%;
-
+  
   &__content {
     display: flex;
     flex-direction: row;
@@ -26,8 +26,7 @@
       width: 100%;
       overflow-y: auto;
       overflow-x: auto;
-      // background-color: #f6f5f8;
-      background-color: #f8f9fc;
+      background-color: #f4f8f9;
 
       //dark-theme
       // background-color: darken($side_menu__background, 10%);
@@ -43,7 +42,7 @@
     }
   }
 
-  @media (min-width: 1220px) {
+  @media (min-width: 1367px) {
     .main_page__overlay {
       display: none;
     }

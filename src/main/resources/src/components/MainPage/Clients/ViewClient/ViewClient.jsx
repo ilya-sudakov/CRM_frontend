@@ -9,6 +9,7 @@ import SelectContacts from '../SelectContacts/SelectContacts.jsx'
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx'
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx'
 import ViewRequests from '../ViewRequests/ViewRequests.jsx'
+import { getRequests } from '../../../../utils/RequestsAPI/Requests.jsx'
 
 const ViewClient = (props) => {
   const [clientInputs, setClientInputs] = useState({
@@ -57,6 +58,7 @@ const ViewClient = (props) => {
         .then((res) => {
           console.log(res)
           setClientInputs({
+            id: res.id,
             name: res.name,
             site: res.site,
             comment: res.comment,
@@ -81,50 +83,50 @@ const ViewClient = (props) => {
   return (
     <div className="view_client">
       <div className="main-form">
-        <div className="main-form__title">{`Просмотр ${
-          clientTypes[props.type].name
-        }а`}</div>
-        <div className="main-form__header">
-          {/* {props.type === 'clients' ? (
-            <div
-              className={
-                curTab === 'requestsHistory'
-                  ? 'main-form__menu-item main-form__menu-item--active'
-                  : 'main-form__menu-item'
-              }
-              onClick={() => {
-                setCurTab('requestsHistory')
-              }}
-            >
-              История заказов
-            </div>
-          ) : null} */}
-          <div
-            className={
-              curTab === 'workHistory'
-                ? 'main-form__menu-item main-form__menu-item--active'
-                : 'main-form__menu-item'
-            }
-            onClick={() => {
-              setCurTab('workHistory')
-            }}
-          >
-            История работы
-          </div>
-          <div
-            className={
-              curTab === 'clientData'
-                ? 'main-form__menu-item main-form__menu-item--active'
-                : 'main-form__menu-item'
-            }
-            onClick={() => {
-              setCurTab('clientData')
-            }}
-          >
-            {`Данные ${clientTypes[props.type].name}а`}
-          </div>
-        </div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Просмотр ${
+              clientTypes[props.type].name
+            }а`}</div>
+            <div className="main-form__menu">
+              <div
+                className={
+                  curTab === 'workHistory'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('workHistory')
+                }}
+              >
+                История работы
+              </div>
+              <div
+                className={
+                  curTab === 'requestsHistory'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('requestsHistory')
+                }}
+              >
+                Заказы
+              </div>
+              <div
+                className={
+                  curTab === 'clientData'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
+                }
+                onClick={() => {
+                  setCurTab('clientData')
+                }}
+              >
+                {`Данные ${clientTypes[props.type].name}а`}
+              </div>
+            </div>
+          </div>
           {curTab === 'workHistory' ? (
             <React.Fragment>
               {/* Добавление истории работ */}
@@ -147,15 +149,10 @@ const ViewClient = (props) => {
               </div>
             </React.Fragment>
           ) : curTab === 'requestsHistory' ? (
-            <React.Fragment>
-              {/* История заявок */}
-              <div className="main-form__item">
-                <div className="main-form__input_name">История заявок</div>
-                <div className="main-form__input_field">
-                  <ViewRequests requests={clientInputs.requests} />
-                </div>
-              </div>
-            </React.Fragment>
+            <RequestHistory
+              requests={clientInputs.requests}
+              id={clientInputs.id}
+            />
           ) : (
             <React.Fragment>
               <InputText
@@ -255,7 +252,7 @@ const ViewClient = (props) => {
               </div>
             </React.Fragment>
           )}
-          <div className="main-form__buttons">
+          <div className="main-form__buttons main-form__buttons--full">
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
@@ -283,3 +280,31 @@ const ViewClient = (props) => {
 }
 
 export default ViewClient
+
+{
+  /* История заявок */
+}
+const RequestHistory = ({ id }) => {
+  const [requests, setRequests] = useState([])
+  const [isLoading, setIsLoading] = useState([])
+
+  useEffect(() => {
+    setIsLoading(true)
+    getRequests()
+      .then((res) => res.json())
+      .then((res) => {
+        setIsLoading(false)
+        const filteredData = res.filter((request) => request.client?.id === id)
+        setRequests([...filteredData])
+      })
+  }, [])
+
+  return (
+    <div className="main-form__item">
+      <div className="main-form__input_name">История заявок</div>
+      <div className="main-form__input_field">
+        <ViewRequests isLoading={isLoading} requests={requests} />
+      </div>
+    </div>
+  )
+}

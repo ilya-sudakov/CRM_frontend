@@ -4,20 +4,13 @@ import './Stamp.scss'
 import '../../../../../utils/MainWindow/MainWindow.scss'
 import TableView from '../RiggingComponents/TableView/TableView.jsx'
 import {
-  getStamp,
   getStampById,
   deletePartsFromStamp,
   deleteStamp,
-  addStamp,
-  addPartsToStamp,
   getStampsByStatus,
-  editStamp,
 } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
-import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
-import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
-import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
+import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Stamp = (props) => {
   const [stamps, setStamps] = useState([])
@@ -67,16 +60,17 @@ const Stamp = (props) => {
   return (
     <div className="stamp">
       <div className="main-window">
-        <SearchBar
-          // title="Поиск штампа"
-          setSearchQuery={setSearchQuery}
-          placeholder="Введите здесь запрос для поиска..."
-        />
         <FloatingPlus
           linkTo="/dispatcher/rigging/stamp/new"
           visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
-        <div className="main-window__header">
+        <SearchBar
+          fullSize
+          // title="Поиск штампа"
+          setSearchQuery={setSearchQuery}
+          placeholder="Введите здесь запрос для поиска..."
+        />
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__menu">
             <div
               className={
@@ -102,11 +96,7 @@ const Stamp = (props) => {
             )}
           </div>
         </div>
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {stamps.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${stamps.length} записей`} />
         <TableView
           data={stamps.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
@@ -120,6 +110,8 @@ const Stamp = (props) => {
           userHasAccess={props.userHasAccess}
           loadData={loadStamps}
           deleteItem={deleteItem}
+          cachedItems={props.cachedItems}
+          setCachedItems={(items) => props.setCachedItems(items)}
           isLoading={isLoading}
           type="stamp"
         />

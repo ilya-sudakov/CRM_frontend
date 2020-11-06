@@ -34,7 +34,8 @@ const ViewRequest = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    props.history.push(workshops[props.type].redirectURL)
+    const id = props.history.location.pathname.split('view/')[1]
+    props.history.push(`${workshops[props.type].redirectURL}#${id}`)
   }
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const ViewRequest = (props) => {
             sum: oldRequest.sum,
             client: oldRequest.client,
             clientId: oldRequest.client?.id,
+            factory: oldRequest.factory,
           })
         })
         .catch((error) => {
@@ -74,8 +76,8 @@ const ViewRequest = (props) => {
     let dd = getRequestPdfText(
       requestInputs.date,
       requestInputs.requestProducts,
-      requestInputs.codeWord,
-      workshops[props.type].name,
+      requestInputs.client?.name ?? requestInputs.codeWord,
+      workshops[requestInputs.factory].name,
       itemId,
     )
     pdfMake.createPdf(dd).print()
@@ -86,8 +88,8 @@ const ViewRequest = (props) => {
     let dd = getRequestPdfText(
       requestInputs.date,
       requestInputs.requestProducts,
-      requestInputs.codeWord,
-      workshops[props.type].name,
+      requestInputs.client?.name ?? requestInputs.codeWord,
+      workshops[requestInputs.factory].name,
       itemId,
     )
     pdfMake
@@ -104,15 +106,24 @@ const ViewRequest = (props) => {
   return (
     <div className="view-request">
       <div className="main-form">
-        <div className="main-form__title">{`Просмотр заявки ${
-          workshops[props.type].name
-        }`}</div>
         <form className="main-form__form">
-          <InputDate
-            inputName="Дата заявки"
-            selected={Date.parse(requestInputs.date)}
-            readOnly
-          />
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Просмотр заявки ${
+              workshops[props.type].title
+            }`}</div>
+          </div>
+          <div className="main-form__row">
+            <InputDate
+              inputName="Дата заявки"
+              selected={Date.parse(requestInputs.date)}
+              readOnly
+            />
+            <InputDate
+              inputName="Дата отгрузки"
+              selected={Date.parse(requestInputs.shippingDate)}
+              readOnly
+            />
+          </div>
           <InputProducts
             inputName="Продукция"
             userHasAccess={userContext.userHasAccess}
@@ -161,11 +172,6 @@ const ViewRequest = (props) => {
               />
             </div>
           </div>
-          <InputDate
-            inputName="Дата отгрузки"
-            selected={Date.parse(requestInputs.shippingDate)}
-            readOnly
-          />
           <div className="main-form__item">
             <div className="main-form__input_name">Комментарий</div>
             <div className="main-form__input_field">
@@ -177,18 +183,20 @@ const ViewRequest = (props) => {
               />
             </div>
           </div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Цена</div>
-            <div className="main-form__input_field">
-              <input
-                type="number"
-                name="sum"
-                defaultValue={requestInputs.sum}
-                readOnly
-              />
+          {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
+            <div className="main-form__item">
+              <div className="main-form__input_name">Сумма</div>
+              <div className="main-form__input_field">
+                <input
+                  type="number"
+                  name="sum"
+                  value={requestInputs.sum}
+                  readOnly
+                />
+              </div>
             </div>
-          </div>
-          <div className="main-form__buttons">
+          ) : null}
+          <div className="main-form__buttons main-form__buttons--full">
             <input
               className="main-form__submit"
               type="submit"

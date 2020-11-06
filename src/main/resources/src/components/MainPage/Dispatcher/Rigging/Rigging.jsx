@@ -13,19 +13,30 @@ import EditRig from './RiggingComponents/Forms/EditRig/EditRig.jsx'
 import EditPartInRigging from './RiggingComponents/Forms/EditPartInRigging/EditPartInRigging.jsx'
 
 const Rigging = (props) => {
+  const [cachedItems, setCachedItems] = useState({
+    stamp: {},
+    press: {},
+    machine: {},
+    parts: {},
+  })
+
+  useEffect(() => {
+    // console.log('cached: ', cachedItems)
+  }, [cachedItems])
+
   return (
     <div className="rigging">
       <div className="main-window">
-        <div className="main-window__title">Оснастка</div>
         <div
           className={
             props.history.location.pathname.includes('new') ||
             props.history.location.pathname.includes('edit') ||
             props.history.location.pathname.includes('view')
               ? 'main-window__header main-window__header--hidden'
-              : 'main-window__header'
+              : 'main-window__header main-window__header--full'
           }
         >
+          <div className="main-window__title">Оснастка</div>
           <div className="main-window__menu">
             <Link
               to="/dispatcher/rigging/stamp"
@@ -100,6 +111,12 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/stamp"
                 component={Stamp}
+                cachedItems={cachedItems['stamp']}
+                setCachedItems={(items) => {
+                  setCachedItems((cachedItems) => {
+                    return { ...cachedItems, stamp: { ...items } }
+                  })
+                }}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -146,6 +163,12 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/machine"
                 component={Machine}
+                cachedItems={cachedItems['machine']}
+                setCachedItems={(items) => {
+                  setCachedItems((cachedItems) => {
+                    return { ...cachedItems, machine: { ...items } }
+                  })
+                }}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -193,6 +216,12 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/press-form"
                 component={PressForm}
+                cachedItems={cachedItems['press']}
+                setCachedItems={(items) => {
+                  setCachedItems((cachedItems) => {
+                    return { ...cachedItems, press: { ...items } }
+                  })
+                }}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',
@@ -240,6 +269,12 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/parts"
                 component={Parts}
+                cachedItems={cachedItems['parts']}
+                setCachedItems={(items) => {
+                  setCachedItems((cachedItems) => {
+                    return { ...cachedItems, parts: { ...items } }
+                  })
+                }}
                 allowedRoles={[
                   'ROLE_ADMIN',
                   'ROLE_DISPATCHER',

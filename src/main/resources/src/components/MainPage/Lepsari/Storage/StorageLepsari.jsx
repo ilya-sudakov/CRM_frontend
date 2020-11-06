@@ -8,6 +8,7 @@ import {
   getStorage,
 } from '../../../../utils/RequestsAPI/Workshop/LepsariStorage.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const StorageLepsari = (props) => {
   const [storage, setStorage] = useState([])
@@ -41,27 +42,25 @@ const StorageLepsari = (props) => {
   return (
     <div className="storage-lepsari">
       {/* <div className="main-window__title">Склад</div> */}
-      <SearchBar
-        // title="Поиск по складу"
-        placeholder="Введите артикул детали для поиска..."
-        setSearchQuery={setSearchQuery}
-      />
-      <FloatingPlus
-        linkTo="/lepsari/workshop-storage/new"
-        visibility={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
-      />
-      <div className="main-window__info-panel">
-        <div className="main-window__amount_table">
-          Всего: {storage.length} записей
-        </div>
+      <div className="main-window">
+        <FloatingPlus
+          linkTo="/lepsari/workshop-storage/new"
+          visibility={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+        />
+        <SearchBar
+          // title="Поиск по складу"
+          placeholder="Введите артикул детали для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
+        <ControlPanel itemsCount={`Всего: ${storage.length} записей`} />
+        <TableViewNew
+          data={storage}
+          searchQuery={searchQuery}
+          userHasAccess={props.userHasAccess}
+          deleteItem={deleteItem}
+          workshopName="lepsari"
+        />
       </div>
-      <TableViewNew
-        data={storage}
-        searchQuery={searchQuery}
-        userHasAccess={props.userHasAccess}
-        deleteItem={deleteItem}
-        workshopName="lepsari"
-      />
     </div>
   )
 }

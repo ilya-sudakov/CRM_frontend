@@ -22,6 +22,14 @@
     margin-bottom: 15px;
   }
 
+  .select-work-item {
+    margin-bottom: 5px;
+  }
+
+  .select-work-item__input_field {
+    font-size: 0.9rem;
+  }
+
   .input_products {
     width: 100%;
     margin-top: 10px;
@@ -55,6 +63,10 @@
     position: relative;
     transition: 0.2s ease-in-out;
 
+    //test
+    background-color: rgba(#bbbbbb, 0.3);
+    border: 1px solid #dddddd;
+
     &--minimized {
       width: calc(100% - 80px);
     }
@@ -66,6 +78,9 @@
     &:focus-within,
     &:hover {
       background-color: darken(#dddddd, 5%);
+
+      //test
+      background-color: rgba(#bbbbbb, 0.5);
     }
 
     .select-work__img {
@@ -73,6 +88,10 @@
       right: -35px;
       cursor: pointer;
       top: 25%;
+
+      &--new {
+        right: -30px;
+      }
     }
 
     .select-work__selected_header {
@@ -124,6 +143,7 @@
           color: #666666;
           flex: 0 1 20%;
           font-size: 85%;
+          margin-bottom: 3px;
 
           //column direction
           width: 100%;

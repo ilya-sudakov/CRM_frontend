@@ -6,8 +6,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding-top: 25vh;
+    justify-content: flex-start;
+    padding-top: 100px;
     --max-width: 50%;
 
     &__title {

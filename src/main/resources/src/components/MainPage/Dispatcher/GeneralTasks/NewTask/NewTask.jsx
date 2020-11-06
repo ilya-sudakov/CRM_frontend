@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './NewTask.scss'
 import '../../../../../utils/Form/Form.scss'
 import { addMainTask } from '../../../../../utils/RequestsAPI/MainTasks.jsx'
@@ -8,12 +8,14 @@ import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx'
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
+import { UserContext } from '../../../../../App.js'
 
 const NewTask = (props) => {
+  const userContext = useContext(UserContext)
   const [taskInputs, setTaskInputs] = useState({
     dateCreated: new Date(),
     description: '',
-    responsible: '',
+    responsible: userContext.userData.username,
     dateControl: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу,
     status: '',
     condition: 'В процессе',
@@ -29,7 +31,7 @@ const NewTask = (props) => {
   const [validInputs, setValidInputs] = useState({
     dateCreated: true,
     description: false,
-    responsible: props.userHasAccess(['ROLE_ADMIN']) ? false : true,
+    responsible: true,
     dateControl: true,
     // status: false
   })
@@ -141,8 +143,10 @@ const NewTask = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Новая задача</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Новая задача</div>
+        </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}
@@ -173,6 +177,7 @@ const NewTask = (props) => {
           <InputText
             inputName="Описание"
             required
+            type="textarea"
             error={taskErrors.description}
             name="description"
             handleInputChange={handleInputChange}
@@ -184,6 +189,7 @@ const NewTask = (props) => {
             userData={props.userData}
             required
             error={taskErrors.responsible}
+            defaultValue={taskInputs.responsible}
             name="responsible"
             options={users}
             errorsArr={taskErrors}
@@ -215,12 +221,13 @@ const NewTask = (props) => {
         <InputText
           inputName="Состояние"
           name="status"
+          type="textarea"
           handleInputChange={handleInputChange}
         />
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
-        <div className="main-form__buttons">
+        <div className="main-form__buttons main-form__buttons--full">
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"

@@ -2,13 +2,18 @@
 
 .searchbar {
   width: calc(100% - 0px);
-  border-radius: 10px;
+  // border-radius: 10px;
+  --border-radius: 15px;
   padding: 10px 0;
-  // background-color: $side_menu__background;
-  // background-color: $primary-background-color;
-  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-  // margin-bottom: 15px;
 
+  &--full-size {
+    margin-top: -5px;
+    width: calc(100% + 0px) !important;
+    background-color: #ffffff;
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 10px;
+    padding-top: 5px;
+  }
 
   .searchbar__title {
     padding-left: 25px;
@@ -20,11 +25,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    // align-items: center;
     align-items: stretch;
     padding: 0 15px;
     position: relative;
-    // max-width: 700px;
+    //centered and 1000px max
+    // max-width: 1000px;
     // margin: 0 auto;
 
     .searchbar__img {
@@ -36,8 +41,6 @@
     }
 
     .searchbar__input {
-      // margin-left: 10px;
-      // flex: 0 1 calc(80% - 25px);
       flex: 0 1 calc(100% - 15px);
       position: relative;
 
@@ -66,7 +69,7 @@
         width: calc(100% - 20px - 35px);
         padding: 5px 10px;
         padding-left: 45px;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
         transition: 200ms ease-in-out;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
@@ -130,9 +133,15 @@
       justify-content: center;
       align-items: center;
       padding: 5px 25px;
-      border-radius: 5px;
-      background-color: $button__background--inverted;
+      border-radius: var(--border-radius);
       color: $secondary-text-color;
+      background-color: $button__background--inverted;
+
+      //test
+      // background-color: #ffffff;
+      // border: 1px solid #bbbbbb;
+      // color: #444444;
+
       transition: 0.2s ease-in-out;
       cursor: pointer;
       //для кнопки внутри searchbar input

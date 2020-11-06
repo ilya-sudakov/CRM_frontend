@@ -82,7 +82,7 @@ const SelectClient = (props) => {
                 props.defaultValue && name === '' ? props.defaultValue : name
               }
               placeholder="Выберите клиента, нажав на кнопку 'Выбрать клиента'"
-              readOnly={props.readOnly}
+              disabled
             />
           </div>
         </div>
@@ -108,7 +108,8 @@ const SelectClient = (props) => {
         content={
           <React.Fragment>
             <SearchBar
-              title="Поиск по клиентам"
+              // title="Поиск по клиентам"
+              fullSize
               setSearchQuery={setSearchQuery}
               placeholder="Введите название для поиска..."
               onButtonClick={(query) => {
@@ -187,7 +188,7 @@ const TableView = (props) => {
                     href={
                       client.site.split('//').length > 1
                         ? client.site
-                        : 'http://' + client.site
+                        : 'https://' + client.site
                     }
                     target="_blank"
                   >

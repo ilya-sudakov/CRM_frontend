@@ -10,6 +10,7 @@ import {
   deletePackaging,
 } from '../../../utils/RequestsAPI/Products/packaging.js'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const PackagingPage = (props) => {
   const [packages, setPackages] = useState([])
@@ -64,29 +65,28 @@ const PackagingPage = (props) => {
   return (
     <div className="packaging-page">
       <div className="main-window">
-        <div className="main-window__title">Упаковки</div>
-        <FloatingPlus
-          linkTo="/packaging/new"
-          visibility={['ROLE_ADMIN']}
-        />
+        <FloatingPlus linkTo="/packaging/new" visibility={['ROLE_ADMIN']} />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Упаковки</div>
+        </div>
         <SearchBar
-          title="Поиск по упаковкам"
+          fullSize
+          // title="Поиск по упаковкам"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {packages.length} записей
-          </div>
-        </div>
-        <div className="main-window__sort-panel">
-          <span>Сортировка: </span>
-          <select onChange={changeSortOrder}>
-            <option value="name asc">По алфавиту (А-Я)</option>
-            <option value="name desc">По алфавиту (Я-А)</option>
-            <option value="quantity desc">По штукам</option>
-          </select>
-        </div>
+        <ControlPanel
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="name asc">По алфавиту (А-Я)</option>
+                <option value="name desc">По алфавиту (Я-А)</option>
+                <option value="quantity desc">По штукам</option>
+              </select>
+            </div>
+          }
+          itemsCount={`Всего: ${packages.length} записей`}
+        />
         <div className="main-window__list">
           <TableLoading isLoading={isLoading} />
           <div className="main-window__list-item main-window__list-item--header">

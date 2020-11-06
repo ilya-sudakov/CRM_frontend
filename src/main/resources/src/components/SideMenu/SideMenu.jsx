@@ -53,6 +53,20 @@ const SideMenu = (props) => {
       renderIcon: () => <HomeImg className="sidemenu__img" />,
     },
     {
+      pathname: '/dispatcher/general-tasks',
+      name: 'Основные задачи',
+      mainRoles: [
+        'ROLE_ADMIN',
+        'ROLE_DISPATCHER',
+        'ROLE_ENGINEER',
+        'ROLE_MANAGER',
+        'ROLE_WORKSHOP',
+      ],
+      addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+      addButtonName: 'Добавить задачу',
+      renderIcon: () => <TasksImg className="sidemenu__img" />,
+    },
+    {
       pathname: '/clients',
       linkTo: props.location.pathname,
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
@@ -109,7 +123,9 @@ const SideMenu = (props) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addButtonName: 'Добавить заявку',
-      renderIcon: () => <PlayListImg className="sidemenu__img" />,
+      renderIcon: () => (
+        <PlayListImg className="sidemenu__img sidemenu__img--request" />
+      ),
     },
     {
       pathname: '/products',
@@ -134,7 +150,9 @@ const SideMenu = (props) => {
         : '/lemz/workshop-lemz',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
-      renderIcon: () => <FactoryIcon className="sidemenu__img sidemenu__img--factory" />,
+      renderIcon: () => (
+        <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+      ),
       iconClassName: 'sidemenu__img',
       dropdownMenu: [
         {
@@ -142,7 +160,9 @@ const SideMenu = (props) => {
           pathname: '/lemz/workshop-lemz',
           link: '/lemz/workshop-lemz',
           // icon: playListImg,
-          renderIcon: () => <PlayListImg className="sidemenu__img" />,
+          renderIcon: () => (
+            <PlayListImg className="sidemenu__img sidemenu__img--request" />
+          ),
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
         },
         {
@@ -177,6 +197,12 @@ const SideMenu = (props) => {
       addButtonName: 'Добавить план производства',
     },
     {
+      pathname: '/report-table',
+      mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
+      addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
+      addButtonName: 'Учесть рабочее время',
+    },
+    {
       pathname: '/lepsari/',
       linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
         ? '/lepsari/workshop-orders'
@@ -192,7 +218,9 @@ const SideMenu = (props) => {
           name: 'Очередь производства',
           pathname: '/lepsari/workshop-lepsari',
           link: '/lepsari/workshop-lepsari',
-          renderIcon: () => <PlayListImg className="sidemenu__img" />,
+          renderIcon: () => (
+            <PlayListImg className="sidemenu__img sidemenu__img--request" />
+          ),
           mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
         },
         {
@@ -307,20 +335,6 @@ const SideMenu = (props) => {
       addButtonName: 'Добавить пользователя',
     },
     {
-      pathname: '/dispatcher/general-tasks',
-      name: 'Основные задачи',
-      mainRoles: [
-        'ROLE_ADMIN',
-        'ROLE_DISPATCHER',
-        'ROLE_ENGINEER',
-        'ROLE_MANAGER',
-        'ROLE_WORKSHOP',
-      ],
-      addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-      addButtonName: 'Добавить задачу',
-      renderIcon: () => <TasksImg className="sidemenu__img" />,
-    },
-    {
       pathname: '/dispatcher/employees',
       name: 'Сотрудники',
       mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
@@ -386,9 +400,10 @@ const SideMenu = (props) => {
         .then((res) => res.json())
         .then((res) => {
           // console.log(res);
+          const clientsIndex = 2
           let temp = sidemenuItems
-          temp.splice(1, 1, {
-            ...temp[1],
+          temp.splice(clientsIndex, 1, {
+            ...temp[clientsIndex],
             linkTo: `/clients/${
               res.length > 0
                 ? 'category/' + res[res.length - 1].name + '/active'
@@ -447,9 +462,10 @@ const SideMenu = (props) => {
         .then((res) => res.json())
         .then((res) => {
           // console.log(res);
+          const suppliersIndex = 3
           let temp = sidemenuItems
-          temp.splice(2, 1, {
-            ...temp[2],
+          temp.splice(suppliersIndex, 1, {
+            ...temp[suppliersIndex],
             linkTo: `/suppliers/${
               res.length > 0
                 ? 'category/' + res[res.length - 1].name + '/active'
@@ -514,7 +530,7 @@ const SideMenu = (props) => {
         })
     }
 
-    if (sidemenuItems[1].dropdownMenu.length === 0) {
+    if (sidemenuItems[2].dropdownMenu.length === 0) {
       loadClientCategories() //client categories are loaded
         .then((temp) => {
           loadSuppliersCategories(temp) //suppliers categories are loaded
@@ -543,7 +559,7 @@ const SideMenu = (props) => {
                 if (
                   (window.innerWidth ||
                     document.documentElement.clientWidth ||
-                    document.body.clientWidth) < 1366 &&
+                    document.body.clientWidth) <= 1366 &&
                   item.dropdownMenu === undefined
                 ) {
                   props.setSideMenu(!props.hidden)
@@ -581,7 +597,7 @@ const SideMenu = (props) => {
                   if (
                     (window.innerWidth ||
                       document.documentElement.clientWidth ||
-                      document.body.clientWidth) < 1366 &&
+                      document.body.clientWidth) <= 1366 &&
                     item.dropdownMenu === undefined
                   ) {
                     props.setSideMenu(!props.hidden)
@@ -601,7 +617,7 @@ const SideMenu = (props) => {
                       if (
                         (window.innerWidth ||
                           document.documentElement.clientWidth ||
-                          document.body.clientWidth) < 1366
+                          document.body.clientWidth) <= 1366
                       ) {
                         props.setSideMenu(!props.hidden)
                       }
@@ -635,7 +651,7 @@ const SideMenu = (props) => {
                             if (
                               (window.innerWidth ||
                                 document.documentElement.clientWidth ||
-                                document.body.clientWidth) < 1366
+                                document.body.clientWidth) <= 1366
                             ) {
                               props.setSideMenu(!props.hidden)
                             }

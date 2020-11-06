@@ -7,11 +7,11 @@ import PrintIcon from '../../../../../../../../assets/print.png'
 import pdfMake from 'pdfmake'
 import { getEmployeesListPdfText } from '../../../../utils/pdfFunctions.jsx'
 import {
-  getEmployees,
   deleteEmployee,
   getEmployeesByWorkshop,
 } from '../../../../utils/RequestsAPI/Employees.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Employees = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -49,19 +49,14 @@ const Employees = (props) => {
           setEmployees([...emplArr])
         })
     })
-    Promise.all(temp).then(() => {
-      setIsLoading(false)
-    })
-    //Стандартный способ
-    // getEmployees()
-    //     .then(res => res.json())
-    //     .then(res => {
-    //         // console.log(res);
-    //         setEmployees(res);
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     })
+    Promise.all(temp)
+      .then(() => {
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
+      })
   }
 
   const printEmployeesList = () => {
@@ -84,36 +79,39 @@ const Employees = (props) => {
   return (
     <div className="employees">
       <div className="main-window">
-        <div className="main-window__title">Сотрудники</div>
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Сотрудники</div>
+        </div>
         <SearchBar
+          fullSize
           // title="Поиск сотрудников"
           placeholder="Введите фамилию сотрудника для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <Button
-            text="Печать списка"
-            isLoading={isLoading}
-            imgSrc={PrintIcon}
-            className="main-window__button"
-            onClick={printEmployeesList}
-          />
-          <div className="main-window__amount_table">
-            Всего:{' '}
-            {
-              employees.filter((employee) => {
-                return (
-                  employee.relevance !== 'Уволен' &&
-                  employee.workshop !== 'Уволенные'
-                )
-              }).length
-            }{' '}
-            записей
-          </div>
-        </div>
+        <ControlPanel
+          buttons={
+            <Button
+              text="Печать списка"
+              isLoading={isLoading}
+              imgSrc={PrintIcon}
+              inverted
+              className="main-window__button main-window__button--inverted"
+              onClick={printEmployeesList}
+            />
+          }
+          itemsCount={`Всего: ${
+            employees.filter((employee) => {
+              return (
+                employee.relevance !== 'Уволен' &&
+                employee.workshop !== 'Уволенные'
+              )
+            }).length
+          } записей`}
+        />
         <TableView
           data={employees}
           searchQuery={searchQuery}
+          isLoading={isLoading}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
         />

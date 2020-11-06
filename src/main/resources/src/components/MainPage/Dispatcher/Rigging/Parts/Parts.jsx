@@ -10,6 +10,7 @@ import {
   deleteStamp,
   getStampsByStatus,
 } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Parts = (props) => {
   const [parts, setParts] = useState([])
@@ -59,16 +60,17 @@ const Parts = (props) => {
   return (
     <div className="parts">
       <div className="main-window">
-        <SearchBar
-          // title="Поиск запчастей"
-          placeholder="Введите артикул запчасти для поиска..."
-          setSearchQuery={setSearchQuery}
-        />
         <FloatingPlus
           linkTo="/dispatcher/rigging/parts/new"
           visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
-        <div className="main-window__header">
+        <SearchBar
+          fullSize
+          // title="Поиск запчастей"
+          placeholder="Введите артикул запчасти для поиска..."
+          setSearchQuery={setSearchQuery}
+        />
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__menu">
             <div
               className={
@@ -94,11 +96,7 @@ const Parts = (props) => {
             )}
           </div>
         </div>
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {parts.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${parts.length} записей`} />
         <TableView
           data={parts.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
@@ -110,6 +108,8 @@ const Parts = (props) => {
           })}
           isLoading={isLoading}
           searchQuery={searchQuery}
+          cachedItems={props.cachedItems}
+          setCachedItems={(items) => props.setCachedItems(items)}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
           loadData={loadData}

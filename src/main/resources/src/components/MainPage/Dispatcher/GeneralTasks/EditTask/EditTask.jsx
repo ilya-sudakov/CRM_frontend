@@ -173,8 +173,10 @@ const EditTask = (props) => {
   }, [])
   return (
     <div className="main-form">
-      <div className="main-form__title">Редактирование задачи</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Редактирование задачи</div>
+        </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}
@@ -206,6 +208,7 @@ const EditTask = (props) => {
           <InputText
             inputName="Описание"
             required
+            type="textarea"
             error={taskErrors.description}
             name="description"
             handleInputChange={handleInputChange}
@@ -253,6 +256,7 @@ const EditTask = (props) => {
         <InputText
           inputName="Состояние"
           name="status"
+          type="textarea"
           handleInputChange={handleInputChange}
           defaultValue={taskInputs.status}
         />
@@ -275,7 +279,7 @@ const EditTask = (props) => {
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
-        <div className="main-form__buttons">
+        <div className="main-form__buttons main-form__buttons--full">
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"

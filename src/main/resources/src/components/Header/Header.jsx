@@ -7,7 +7,7 @@ import employeeSVG from '../../../../../../assets/header/employee.svg'
 import newLogoSVG from '../../../../../../assets/header/header__new_logo.png'
 import mobileLogoSVG from '../../../../../../assets/header/header__mobile_logo.png'
 import notificationBellSVG from '../../../../../../assets/notifications/notification_bell.svg'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import './Header.scss'
 import { UserContext } from '../../App.js'
 
@@ -121,7 +121,11 @@ const Header = (props) => {
                 >
                   <Link
                     to="/profile/users"
-                    className="header__profile_item"
+                    className={`header__profile_item ${
+                      props.location.pathname.includes('/profile/users')
+                        ? 'header__profile_item--active'
+                        : ''
+                    }`}
                     onClick={() => setShowProfileMenu(!showProfileMenu)}
                   >
                     <img className="header__img" src={employeeSVG} alt="" />
@@ -129,7 +133,11 @@ const Header = (props) => {
                   </Link>
                   <Link
                     to="/profile/login-history"
-                    className="header__profile_item"
+                    className={`header__profile_item ${
+                      props.location.pathname.includes('/profile/login-history')
+                        ? 'header__profile_item--active'
+                        : ''
+                    }`}
                     onClick={() => setShowProfileMenu(!showProfileMenu)}
                   >
                     <img className="header__img" src={exitSVG} alt="" />
@@ -148,4 +156,4 @@ const Header = (props) => {
   )
 }
 
-export default Header
+export default withRouter(Header)

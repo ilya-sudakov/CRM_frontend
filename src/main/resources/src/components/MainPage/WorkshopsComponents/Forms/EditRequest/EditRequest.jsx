@@ -128,7 +128,6 @@ const EditRequest = (props) => {
 
   const handleSubmit = () => {
     setIsLoading(true)
-    // console.log(requestInputs);
     formIsValid() &&
       editRequest(requestInputs, requestId)
         .then(() => {
@@ -180,7 +179,10 @@ const EditRequest = (props) => {
             return connectClientToRequest(requestId, requestInputs.clientId)
           }
         })
-        .then(() => props.history.push(workshops[props.type].redirectURL))
+        .then(() => {
+          const id = props.history.location.pathname.split('edit/')[1]
+          props.history.push(`${workshops[props.type].redirectURL}#${id}`)
+        })
         .catch((error) => {
           setIsLoading(false)
           console.log(error)
@@ -288,32 +290,44 @@ const EditRequest = (props) => {
   return (
     <div className="edit-request">
       <div className="main-form">
-        <div className="main-form__title">{`Редактирование заявки ${
-          workshops[props.type].title
-        }`}</div>
         <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">{`Редактирование заявки ${
+              workshops[props.type].title
+            }`}</div>
+          </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}
             setShowError={setShowError}
           />
-          {userContext.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_MANAGER',
-            'ROLE_WORKSHOP',
-          ]) && (
+          <div className="main-form__row">
+            {userContext.userHasAccess([
+              'ROLE_ADMIN',
+              'ROLE_MANAGER',
+              'ROLE_WORKSHOP',
+            ]) && (
+              <InputDate
+                inputName="Дата заявки"
+                required
+                error={requestErrors.date}
+                name="date"
+                selected={Date.parse(requestInputs.date)}
+                handleDateChange={handleDateChange}
+                errorsArr={requestErrors}
+                setErrorsArr={setRequestErrors}
+                readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+              />
+            )}
             <InputDate
-              inputName="Дата заявки"
-              required
-              error={requestErrors.date}
-              name="date"
-              selected={Date.parse(requestInputs.date)}
-              handleDateChange={handleDateChange}
+              inputName="Дата отгрузки"
+              name="shippingDate"
+              selected={Date.parse(requestInputs.shippingDate)}
+              handleDateChange={handleDateShippedChange}
               errorsArr={requestErrors}
               setErrorsArr={setRequestErrors}
-              readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
             />
-          )}
+          </div>
           {userContext.userHasAccess([
             'ROLE_ADMIN',
             'ROLE_MANAGER',
@@ -395,29 +409,23 @@ const EditRequest = (props) => {
               </select>
             </div>
           </div>
-          <InputDate
-            inputName="Дата отгрузки"
-            name="shippingDate"
-            selected={Date.parse(requestInputs.shippingDate)}
-            handleDateChange={handleDateShippedChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          />
           <InputText
             inputName="Комментарий"
             name="comment"
             defaultValue={requestInputs.comment}
             handleInputChange={handleInputChange}
           />
-          <InputText
-            inputName="Цена"
-            name="sum"
-            type="number"
-            defaultValue={requestInputs.sum}
-            handleInputChange={handleInputChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
-          />
+          {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
+            <InputText
+              inputName="Сумма"
+              name="sum"
+              type="number"
+              defaultValue={requestInputs.sum}
+              handleInputChange={handleInputChange}
+              errorsArr={requestErrors}
+              setErrorsArr={setRequestErrors}
+            />
+          ) : null}
           <SelectClient
             inputName="Клиент"
             userHasAccess={userContext.userHasAccess}
@@ -444,13 +452,14 @@ const EditRequest = (props) => {
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>
-          <div className="main-form__buttons">
+          <div className="main-form__buttons main-form__buttons--full">
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() => {
-                console.log(props.type)
-                props.history.push(workshops[props.type].redirectURL)
+              onClick={(event) => {
+                event.preventDefault()
+                const id = props.history.location.pathname.split('edit/')[1]
+                props.history.push(`${workshops[props.type].redirectURL}#${id}`)
               }}
               value="Вернуться назад"
             />

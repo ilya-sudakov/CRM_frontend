@@ -23,6 +23,8 @@ const LoginPage = (props) => {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [rememberUser, setRememberUser] = useState(true)
+  const [hide, setHide] = useState(false)
+  const [focus, setFocus] = useState(false)
 
   useEffect(() => {
     document.title = 'Авторизация'
@@ -45,7 +47,7 @@ const LoginPage = (props) => {
       .then((response) => {
         setIsLoading(false)
         localStorage.setItem('rememberUser', rememberUser)
-        props.setUserData(true, response.user)
+        props.setUserData(true, response)
         localStorage.setItem('accessToken', response.accessToken)
         localStorage.setItem('refreshToken', response.refreshToken)
         props.history.push('/')
@@ -63,6 +65,10 @@ const LoginPage = (props) => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
     props.setUserData(false, null)
+  }
+
+  const handleAutoFill = (e) => {
+    setHide(e.animationName === 'onAutoFillStart')
   }
 
   return (
@@ -84,11 +90,23 @@ const LoginPage = (props) => {
               setShowError={setShowError}
             />
             <div className="authorization__field_input">
+              <div
+                className={`authorization__field_name ${
+                  username !== '' || password !== '' || hide || focus
+                    ? 'authorization__field_name--focused'
+                    : ''
+                }`}
+              >
+                Логин
+              </div>
               <img className="authorization__img" src={profileSVG} alt="" />
               <input
                 type="text"
                 onChange={(e) => setUserName(e.target.value)}
-                placeholder="Введите логин..."
+                onAnimationStart={handleAutoFill}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
+                id="login"
                 defaultValue=""
                 onKeyDown={(event) => {
                   if (event.key === 'Enter') {
@@ -97,10 +115,16 @@ const LoginPage = (props) => {
                 }}
               />
             </div>
-            {/* <div className="authorization__field_name">
-                            Пароль
-                        </div> */}
             <div className="authorization__field_input">
+              <div
+                className={`authorization__field_name  ${
+                  username !== '' || password !== '' || hide || focus
+                    ? 'authorization__field_name--focused'
+                    : ''
+                }`}
+              >
+                Пароль
+              </div>
               <img
                 className="authorization__img authorization__img--eye"
                 onClick={() => {
@@ -127,7 +151,10 @@ const LoginPage = (props) => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Введите пароль..."
+                id="password"
+                onAnimationStart={handleAutoFill}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter') {
                     handleLogin()

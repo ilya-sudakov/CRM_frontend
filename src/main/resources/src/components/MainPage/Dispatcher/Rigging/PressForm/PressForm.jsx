@@ -10,6 +10,7 @@ import {
   deletePartsFromStamp,
   deleteStamp,
 } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
+import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const PressForm = (props) => {
   const [pressForm, setPressForms] = useState([])
@@ -61,6 +62,7 @@ const PressForm = (props) => {
       <div className="main-window">
         <SearchBar
           // title="Поиск пресс-формы"
+          fullSize
           setSearchQuery={setSearchQuery}
           placeholder="Введите здесь запрос для поиска..."
         />
@@ -68,7 +70,7 @@ const PressForm = (props) => {
           linkTo="/dispatcher/rigging/press-form/new"
           visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
         />
-        <div className="main-window__header">
+        <div className="main-window__header main-window__header--full">
           <div className="main-window__menu">
             <div
               className={
@@ -94,11 +96,7 @@ const PressForm = (props) => {
             )}
           </div>
         </div>
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {pressForm.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${pressForm.length} записей`} />
         <TableView
           data={pressForm.filter((item) => {
             if (item.color === 'completed' && curPage === 'Завершено') {
@@ -110,7 +108,9 @@ const PressForm = (props) => {
           })}
           searchQuery={searchQuery}
           isLoading={isLoading}
+          setCachedItems={(items) => props.setCachedItems(items)}
           userHasAccess={props.userHasAccess}
+          cachedItems={props.cachedItems}
           deleteItem={deleteItem}
           loadData={loadData}
           type="pressForm"

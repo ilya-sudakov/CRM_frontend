@@ -363,7 +363,7 @@ const NewPriceList = (props) => {
               }}
             />
           </div>
-          <div className="main-form__buttons">
+          <div className="main-form__buttons main-form__buttons--full">
             {/* <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={() => props.history.push('/')} value="Вернуться назад" /> */}
             {/* {priceList.length > 0 && <input className="main-form__submit main-form__submit--inverted" type="submit" onClick={(event) => {
                             event.preventDefault();
@@ -461,7 +461,7 @@ const NewPriceList = (props) => {
             )}
           </div>
           {priceList.length > 0 && (
-            <div className="main-form__buttons">
+            <div className="main-form__buttons main-form__buttons--full">
               <div className="new-price-item__checkbox-container">
                 <CheckBox
                   text="Выделить все категории"

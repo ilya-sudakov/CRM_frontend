@@ -2,7 +2,7 @@
 
 .header {
   height: 60px;
-  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15), 0 0px 1px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15), 0 0px 3px rgba(0, 0, 0, 0.3);
   background-color: $secondary-text-color;
   // border-bottom: 2px solid #dddddd;
   padding: 0 25px;
@@ -332,12 +332,25 @@
             display: flex;
             align-items: center;
             // color: $primary-text-color;
-            color: #dddddd;
+            color: #bbbbbb;
             padding: 10px 0px;
             border-radius: 5px;
-            transition: 0.2s ease-in-out;
+            transition: 100ms ease-in-out;
             margin-bottom: 5px;
             text-align: left;
+            position: relative;
+
+            &::before {
+              content: "";
+              position: absolute;
+              top: 5px;
+              left: 0px;
+              height: calc(100% - 10px);
+              border-radius: 15px;
+              background-color: transparent;
+              width: 5px;
+            }
+
             & span {
               width: calc(100% - 30px);
             }
@@ -345,15 +358,33 @@
             & .header__img {
               width: 25px;
               margin: 0 10px;
-              filter: brightness(2);
+              filter: brightness(1.7);
             }
 
             &:last-child {
               margin: 0;
             }
+            &--active {
+              &::before {
+                background-color: $button__background--inverted;
+              }
+              color: #eeeeee;
+
+              &:hover {
+                color: #ffffff;
+              }
+
+              & .header__img {
+                filter: brightness(2);
+              }
+            }
 
             &:hover {
-              background-color: darken($side_menu__background, 10%);
+              color: #eeeeee;
+
+              & .header__img {
+                filter: brightness(2);
+              }
             }
           }
           &--hidden {
@@ -448,7 +479,7 @@
     }
   }
 
-  @media (max-width: 1220px) {
+  @media (max-width: 1366px) {
     & {
       .header__company {
         .header__sidemenu {

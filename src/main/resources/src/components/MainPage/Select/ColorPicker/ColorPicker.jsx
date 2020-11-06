@@ -32,6 +32,10 @@ const ColorPicker = (props) => {
       <div
         className="select-product__color_name"
         onClick={() => setShowColorPicker(!showColorPicker)}
+        // style={{
+        //   whiteSpace: 'nowrap'
+        // }}
+        // style={props.style}
       >
         {props.defaultName}
         <img className="tableview__img" src={chevronDownIcon} />

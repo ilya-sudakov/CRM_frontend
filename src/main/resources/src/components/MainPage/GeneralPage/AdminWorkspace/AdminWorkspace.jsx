@@ -90,25 +90,17 @@ const AdminWorkspace = (props) => {
     )
       .then((res) => res.json())
       .then((res) => {
-        // console.log(res);
+        // console.log(res, week)
         week.map((day) => {
           return workshops.map((workshop, index) => {
             let temp = workshops
             let oldData = workshop.data
             oldData.push(
               res.reduce((sum, cur) => {
-                // console.log(
-                //   new Date(day).getDate(),
-                //   new Date(cur.year, cur.month, cur.day).getDate(),
-                //   new Date(day).getDate() ===
-                //     new Date(cur.year, cur.month, cur.day).getDate(),
-                //   day.getDate(),
-                //   cur.day,
-                // )
                 if (
                   workshop.label === cur.employee.workshop &&
                   new Date(day).getDate() ===
-                    new Date(cur.year, cur.month, cur.day).getDate()
+                    new Date(cur.year, cur.month - 1, cur.day).getDate()
                 ) {
                   return Math.ceil((sum + cur.hours) * 10) / 10
                 } else return sum

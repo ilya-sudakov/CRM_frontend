@@ -21,7 +21,6 @@ import {
   deleteDraftFromRecordedWork,
   addDraftToRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 
 const EditRecordWork = (props) => {
@@ -217,6 +216,10 @@ const EditRecordWork = (props) => {
     })
   }
 
+  const isNewDate = (date) => {
+    return Math.abs(dateDiffInDays(date, new Date())) <= 3 && date <= new Date()
+  }
+
   useEffect(() => {
     document.title = 'Редактирование заявки'
     const abortController = new AbortController()
@@ -385,8 +388,10 @@ const EditRecordWork = (props) => {
 
   return (
     <div className="main-form">
-      <div className="main-form__title">Редактирование записи о работе</div>
       <form className="main-form__form">
+        <div className="main-form__header main-form__header--full">
+          <div className="main-form__title">Редактирование записи о работе</div>
+        </div>
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}
@@ -398,6 +403,7 @@ const EditRecordWork = (props) => {
           error={Date.parse(workTimeErrors.date)}
           name="date"
           selected={worktimeInputs.date}
+          // filterDate={isNewDate}
           handleDateChange={(date) => {
             validateField('date', date)
             setWorkTimeInputs({
@@ -465,7 +471,7 @@ const EditRecordWork = (props) => {
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
-        <div className="main-form__buttons">
+        <div className="main-form__buttons main-form__buttons--full">
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"

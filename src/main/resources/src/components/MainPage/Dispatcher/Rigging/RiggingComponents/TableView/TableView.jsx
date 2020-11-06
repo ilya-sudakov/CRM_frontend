@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import viewIcon from '../../../../../../../../../../assets/tableview/view.svg'
 import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'
 import deleteIcon from '../../../../../../../../../../assets/tableview/delete.svg'
 import './TableView.scss'
-import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx'
+import {
+  addSpaceDelimiter,
+  scrollToElement,
+} from '../../../../../../utils/functions.jsx'
 import { rigStatuses, rigTypes, workshopsLocations } from '../rigsVariables'
 import {
   editStampColor,
@@ -18,15 +21,7 @@ const TableView = (props) => {
     date: 'desc',
   })
   const [partsVisible, setPartsVisible] = useState([])
-  const [cacheElements, setCacheElements] = useState({})
-
-  const changeSortOrder = (event) => {
-    const name = event.target.getAttribute('name')
-    setSortOrder({
-      curSort: name,
-      [name]: sortOrder[name] === 'desc' ? 'asc' : 'desc',
-    })
-  }
+  const [scrolledToPrev, setScrolledToPrev] = useState(false)
 
   const searchQuery = (data) => {
     let re = /[.,\s]/gi
@@ -59,17 +54,17 @@ const TableView = (props) => {
     // console.log(props.data);
     let temp = []
     props.data.map((element, index) => {
-      if (cacheElements[element.id] === undefined) {
-        setCacheElements({
-          ...cacheElements,
+      if (props.cachedItems[element.id] === undefined) {
+        props.setCachedItems({
+          ...props.cachedItems,
           [element.id]: true,
         })
       }
       return temp.push({
         id: element.id,
         hidden:
-          cacheElements[element.id] !== undefined
-            ? cacheElements[element.id]
+          props.cachedItems[element.id] !== undefined
+            ? props.cachedItems[element.id]
             : true,
       })
     })
@@ -81,8 +76,8 @@ const TableView = (props) => {
     index = Number.parseInt(index)
     return partsVisible.map((element, element_index) => {
       if (element.id == index) {
-        setCacheElements({
-          ...cacheElements,
+        props.setCachedItems({
+          ...props.cachedItems,
           [index]: !element.hidden,
         })
         let temp2 = Object.assign({
@@ -114,6 +109,31 @@ const TableView = (props) => {
       setPartsVisible([...checkPart(id)])
   }
 
+  const prevRef = useCallback(
+    (node) => {
+      const id = Number.parseInt(props.history.location.hash.split('#')[1])
+      if (
+        !props.data ||
+        scrolledToPrev ||
+        props.data.find((item) => item.id === id) === undefined
+      )
+        return
+      if (node !== null && props.data) {
+        console.log(
+          node,
+          props.data.find((item) => item.id === id),
+        )
+        // node.scrollIntoView({
+        //   behavior: 'smooth',
+        //   block: 'start',
+        // })
+        scrollToElement(node, -400)
+        setScrolledToPrev(true)
+      }
+    },
+    [props.data],
+  )
+
   return (
     <div className="rigging-tableview">
       <div className="main-window">
@@ -137,6 +157,12 @@ const TableView = (props) => {
             <React.Fragment>
               <div
                 id={stamp.id}
+                ref={
+                  Number.parseInt(props.history.location.hash.split('#')[1]) ===
+                  stamp.id
+                    ? prevRef
+                    : null
+                }
                 className={
                   'main-window__list-item main-window__list-item--' +
                   (stamp.color || 'production')
@@ -199,7 +225,7 @@ const TableView = (props) => {
                   >
                     <img className="main-window__img" src={editIcon} alt="" />
                   </Link>
-                  {props.userHasAccess(['ROLE_ADMIN']) && (
+                  {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
                     <div
                       data-id={stamp.id}
                       className="main-window__action"

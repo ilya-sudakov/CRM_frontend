@@ -3,8 +3,9 @@ import GraphPanel from './GraphPanel.jsx'
 import EmployeeIcon from '../../../../../../../../assets/sidemenu/employee.inline.svg'
 import { months } from '../../../../utils/dataObjects'
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
+import { formatDateStringNoDate } from '../../../../utils/functions.jsx'
 
-const ManagerEfficiencyGraphPanel = (props) => {
+const ManagerEfficiencyGraphPanel = ({ data, curDate }) => {
   const [graph, setGraph] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [canvasLoaded, setCanvasLoaded] = useState(false)
@@ -12,14 +13,18 @@ const ManagerEfficiencyGraphPanel = (props) => {
     category: 'Статистика по менеджерам (заказы)',
     isLoaded: false,
     chartName: 'manager-efficiency-graph',
-    timePeriod: `${months[new Date().getMonth()]}`,
-    renderIcon: () => <EmployeeIcon className="panel__img panel__img--employee" />,
+    timePeriod: `${months[curDate.getMonth()]}`,
+    renderIcon: () => (
+      <EmployeeIcon className="panel__img panel__img--employee" />
+    ),
   })
 
-  const getStats = (data) => {
+  const getStats = (data, curDate = new Date()) => {
     let managers = {}
     data.map((request) => {
-      if (new Date(request.date).getMonth() === new Date().getMonth()) {
+      if (
+        formatDateStringNoDate(request.date) === formatDateStringNoDate(curDate)
+      ) {
         managers = {
           ...managers,
           [request.responsible]:
@@ -97,9 +102,23 @@ const ManagerEfficiencyGraphPanel = (props) => {
     }, 150)
   }
 
+  //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && props.data.length > 1 && getStats(props.data)
-  }, [props.data, stats])
+    !stats.isLoaded && data.length > 0 && getStats(data, curDate)
+  }, [data, stats])
+
+  //При обновлении тек. даты
+  useEffect(() => {
+    if (!stats.isLoading && data.length > 0) {
+      setCanvasLoaded(false)
+      setStats((stats) => ({
+        ...stats,
+        timePeriod: `${months[curDate.getMonth()]}`,
+      }))
+      graph.destroy()
+      getStats(data, curDate)
+    }
+  }, [curDate])
 
   return <GraphPanel {...stats} />
 }

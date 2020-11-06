@@ -200,7 +200,7 @@ export const getRequestPdfText = (
 }
 
 export const getProductsFromRequestsListPdfText = (products, workshopName) => {
-  const productsFormatted = [
+  const formatProducts = (products) => [
     {
       table: {
         margin: [0, 5, 0, 5],
@@ -262,16 +262,50 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
             ],
           }
         : '\n',
-      {
-        text: [
-          {
-            text: 'Продукция: \n',
-            style: 'regularText',
-            margin: [0, 5, 0, 5],
-          },
-        ],
-      },
-      ...productsFormatted,
+      // {
+      //   text: [
+      //     {
+      //       text: 'Продукция: \n',
+      //       style: 'regularText',
+      //       margin: [0, 5, 0, 5],
+      //     },
+      //   ],
+      // },
+      Object.entries(products)
+        .sort((a, b) => {
+          if (
+            a[0].localeCompare(b[0], undefined, {
+              numeric: true,
+            }) < 0
+          ) {
+            return -1
+          }
+          if (
+            a[0].localeCompare(b[0], undefined, {
+              numeric: true,
+            }) > 0
+          ) {
+            return 1
+          }
+          return 0
+        })
+        .map((category) => {
+          if (Object.values(category[1]).length > 0) {
+            return [
+              {
+                text: [
+                  {
+                    text: `${category[0]} \n`,
+                    style: 'regularText',
+                    margin: [5, 5, 5, 5],
+                  },
+                ],
+              },
+              ...formatProducts(category[1]),
+              '\n',
+            ]
+          }
+        }),
     ],
     styles: {
       header: {

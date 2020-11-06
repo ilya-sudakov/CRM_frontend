@@ -16,6 +16,7 @@ import NewClientCategory from './NewClientCategory/NewClientCategory.jsx'
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const ClientCategories = (props) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -87,21 +88,21 @@ const ClientCategories = (props) => {
           }}
           visibility={clientTypes[props.type].visibility}
         />
-        <div className="main-window__header">
-          <div className="main-window__title">{`Категории ${
-            clientTypes[props.type].name
-          }ов`}</div>
-          {props.userHasAccess(clientTypes[props.type].visibility) && (
-            <div
-              className="main-window__button"
-              onClick={() => {
-                setCurForm('new')
-                setShowWindow(!showWindow)
-              }}
-            >
-              Создать категорию
-            </div>
-          )}
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">
+            <span>{`Категории ${clientTypes[props.type].name}ов`}</span>
+            {props.userHasAccess(clientTypes[props.type].visibility) && (
+              <div
+                className="main-window__button"
+                onClick={() => {
+                  setCurForm('new')
+                  setShowWindow(!showWindow)
+                }}
+              >
+                Создать категорию
+              </div>
+            )}
+          </div>
         </div>
         <FormWindow
           title={
@@ -133,15 +134,12 @@ const ClientCategories = (props) => {
           setShowWindow={setShowWindow}
         />
         <SearchBar
+          fullSize
           // title="Поиск по категориям клиентов"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {categories.length} записей
-          </div>
-        </div>
+        <ControlPanel itemsCount={`Всего: ${categories.length} записей`} />
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название</span>

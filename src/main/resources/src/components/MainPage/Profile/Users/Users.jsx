@@ -5,6 +5,7 @@ import SearchBar from '../../SearchBar/SearchBar.jsx'
 import TableView from './TableView/TableView.jsx'
 import { getUsers, deleteUser } from '../../../../utils/RequestsAPI/Users.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Users = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -75,54 +76,101 @@ const Users = (props) => {
       })
   }
 
+  // * Sorting
+
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'username',
+    username: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    return data.filter((item) =>
+      item.username.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
+  }
+
+  const sortUsers = (data) => {
+    return filterSearchQuery(data).sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      return 0
+    })
+  }
+
   return (
     <div className="users-manage">
       <div className="main-window">
-        <div className="main-window__title">Управление пользователями</div>
+        <FloatingPlus linkTo="/profile/users/new" visibility={['ROLE_ADMIN']} />
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">Управление пользователями</div>
+        </div>
         <SearchBar
+          fullSize
           // title="Поиск пользователя"
           placeholder="Введите имя пользователя для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <FloatingPlus linkTo="/profile/users/new" visibility={['ROLE_ADMIN']} />
-        <div className="main-window__info-panel">
-          <div className="main-window__filter-pick">
-            <div>Фильтр по ролям: </div>
-            {userRoles.map((role, index) => {
-              return (
-                <div
-                  className={
-                    (role.visible
-                      ? 'main-window__button'
-                      : 'main-window__button main-window__button--inverted') +
-                    ' main-window__list-item--' +
-                    role.className
-                  }
-                  onClick={() => {
-                    let temp = userRoles.map((role) => {
-                      return {
-                        ...role,
-                        visible: false,
+        <ControlPanel
+          itemsCount={`Всего: ${users.length} записей`}
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="username asc">По имени (А-Я)</option>
+                <option value="username desc">По имени (Я-А)</option>
+              </select>
+            </div>
+          }
+          content={
+            <div className="main-window__info-panel">
+              <div className="main-window__filter-pick">
+                <div>Фильтр по ролям: </div>
+                {userRoles.map((role, index) => {
+                  return (
+                    <div
+                      className={
+                        (role.visible
+                          ? 'main-window__button'
+                          : 'main-window__button main-window__button--inverted') +
+                        ' main-window__list-item--' +
+                        role.className
                       }
-                    })
-                    temp.splice(index, 1, {
-                      ...role,
-                      visible: !role.visible,
-                    })
-                    setUserRoles([...temp])
-                  }}
-                >
-                  {role.name}
-                </div>
-              )
-            })}
-          </div>
-          <div className="main-window__amount_table">
-            Всего: {users.length} записей
-          </div>
-        </div>
+                      onClick={() => {
+                        let temp = userRoles.map((role) => {
+                          return {
+                            ...role,
+                            visible: false,
+                          }
+                        })
+                        temp.splice(index, 1, {
+                          ...role,
+                          visible: !role.visible,
+                        })
+                        setUserRoles([...temp])
+                      }}
+                    >
+                      {role.name}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          }
+        />
         <TableView
-          data={users.filter((item) => {
+          data={sortUsers(users).filter((item) => {
             let check = false
             let noActiveRoles = true
             userRoles.map((role) => {

@@ -19,6 +19,7 @@ import { deletePackagingFromProduct } from '../../../utils/RequestsAPI/Products/
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Products = (props) => {
   const [products, setProducts] = useState([])
@@ -93,35 +94,47 @@ const Products = (props) => {
             })
           })
         }
-        // else {
-        //   getProductsByLocation(
-        //     {
-        //       productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
-        //         ? 'ЦехЛиговский'
-        //         : props.userHasAccess(['ROLE_LEMZ'])
-        //         ? 'ЦехЛЭМЗ'
-        //         : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
-        //     },
-        //     signal,
-        //   )
-        //     .then((res) => res.json())
-        //     .then((res) => {
-        //       res.map((item) => productsArr.push(item))
-        //       setProducts([...productsArr])
-        //       Promise.all(
-        //         productsArr.map((item, index) => {
-        //           getProductById(item.id, signal)
-        //             .then((res) => res.json())
-        //             .then((res) => {
-        //               // console.log(res);
-        //               productsArr.splice(index, 1, res)
-        //               setProducts([...productsArr])
-        //             })
-        //         }),
-        //       ).then(() => console.log('all images downloaded'))
-        //     })
-        // }
       })
+  }
+
+  // * SORTING
+
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'name',
+    name: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase()
+    return data.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(query) ||
+        item.id.toString().includes(query) ||
+        item.weight.toString().includes(query) ||
+        (item.comment !== null && item.comment.toLowerCase().includes(query))
+      )
+    })
+  }
+
+  const sortProducts = (data) => {
+    return data.sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      return 0
+    })
   }
 
   return (
@@ -131,28 +144,30 @@ const Products = (props) => {
           linkTo="/products/new"
           visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
         />
-        <div className="main-window__header">
-          <div className="main-window__title">Продукция</div>
-          {props.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_MANAGER',
-            'ROLE_ENGINEER',
-          ]) && (
-            <div
-              className="main-window__button"
-              onClick={() => setShowWindow(!showWindow)}
-            >
-              Категории
-            </div>
-          )}
-          {props.userHasAccess(['ROLE_ADMIN']) && (
-            <div
-              className="main-window__button"
-              onClick={() => props.history.push('/packaging')}
-            >
-              Упаковки
-            </div>
-          )}
+        <div className="main-window__header main-window__header--full">
+          <div className="main-window__title">
+            <span>Продукция</span>
+            {props.userHasAccess([
+              'ROLE_ADMIN',
+              'ROLE_MANAGER',
+              'ROLE_ENGINEER',
+            ]) && (
+              <div
+                className="main-window__button"
+                onClick={() => setShowWindow(!showWindow)}
+              >
+                Категории
+              </div>
+            )}
+            {props.userHasAccess(['ROLE_ADMIN']) && (
+              <div
+                className="main-window__button"
+                onClick={() => props.history.push('/packaging')}
+              >
+                Упаковки
+              </div>
+            )}
+          </div>
         </div>
         <FormWindow
           title="Категории продукции"
@@ -183,17 +198,25 @@ const Products = (props) => {
           setShowWindow={setShowWindow}
         />
         <SearchBar
+          fullSize
           // title="Поиск продукции"
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__info-panel">
-          <div className="main-window__amount_table">
-            Всего: {products.length} записей
-          </div>
-        </div>
+        <ControlPanel
+          sorting={
+            <div className="main-window__sort-panel">
+              <select onChange={changeSortOrder}>
+                <option value="name asc">По алфавиту (А-Я)</option>
+                <option value="name desc">По алфавиту (Я-А)</option>
+                <option value="weight desc">По весу</option>
+              </select>
+            </div>
+          }
+          itemsCount={`Всего: ${products.length} записей`}
+        />
         <TableView
-          products={products}
+          products={sortProducts(filterSearchQuery(products))}
           categories={categories}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}

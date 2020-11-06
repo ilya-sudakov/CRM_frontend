@@ -1,3 +1,5 @@
+import { animateScroll as scroll } from 'react-scroll'
+
 //Получение строки типа 'дд.мм.ГГГГ' из объекта Date
 export const formatDateString = (dateString) => {
   // const testDate = new Date(Date.parse(dateString));
@@ -8,6 +10,21 @@ export const formatDateString = (dateString) => {
   return (
     (testDate.getDate() < 10 ? '0' + testDate.getDate() : testDate.getDate()) +
     '.' +
+    (testDate.getMonth() + 1 < 10
+      ? '0' + (testDate.getMonth() + 1)
+      : testDate.getMonth() + 1) +
+    '.' +
+    testDate.getFullYear()
+  )
+}
+
+export const formatDateStringNoDate = (dateString) => {
+  // const testDate = new Date(Date.parse(dateString));
+  const temp = new Date(dateString)
+  const testDate = new Date(
+    temp.getFullYear() + '/' + (temp.getMonth() + 1) + '/' + temp.getDate(),
+  )
+  return (
     (testDate.getMonth() + 1 < 10
       ? '0' + (testDate.getMonth() + 1)
       : testDate.getMonth() + 1) +
@@ -354,6 +371,19 @@ export const sortRequestsByDates = (requests) => {
   return dates
 }
 
+export const getDatesFromRequests = (requests) => {
+  let dates = []
+  requests.map((request) => {
+    const curDate = formatDateString(request.date)
+    if (
+      dates.find((date) => formatDateString(date) === curDate) === undefined
+    ) {
+      dates.push(request.date)
+    }
+  })
+  return dates
+}
+
 export const createLabelForProduct = (product) => {
   // we create a canvas element
   var canvas = document.createElement('canvas')
@@ -364,7 +394,7 @@ export const createLabelForProduct = (product) => {
 export const getQuantityOfProductsFromRequests = (requests) => {
   let products = {}
   requests.map((request) => {
-    if (request.status !== 'Завершено' || request.status !== 'completed') {
+    if (request.status !== 'Завершено' && request.status !== 'completed') {
       return request.requestProducts.map((product) => {
         if (product.status !== 'completed') {
           return (products = {
@@ -381,4 +411,39 @@ export const getQuantityOfProductsFromRequests = (requests) => {
   })
   // console.log(products)
   return products
+}
+
+export const dateDiffInDays = (a, b) => {
+  const _MS_PER_DAY = 1000 * 60 * 60 * 24
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate())
+  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate())
+
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY)
+}
+
+export const scrollToElement = (element, offset = 0) => {
+  const headerOffset = -70
+  //default header offset is 60 px
+  const elementPosition = element.offsetTop
+  const offsetPosition = elementPosition - (offset + headerOffset)
+  const y =
+    element.getBoundingClientRect().top +
+    window.pageYOffset +
+    headerOffset +
+    offset
+
+  console.log(
+    offsetPosition,
+    y,
+    element.getBoundingClientRect().top,
+    window.pageYOffset,
+    offset,
+  )
+
+  // window.scrollTo({
+  //   top: y,
+  //   behavior: 'smooth',
+  // })
+  scroll.scrollTo(y)
 }

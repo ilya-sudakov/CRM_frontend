@@ -3,16 +3,18 @@
 .img-loader {
   @keyframes pulse {
     0% {
-      border-color: #dddddd;
-      background-color: #dddddd;
+      border-color: #dbdbdb;
+      background-color: #dbdbdb;
     }
     50% {
-      border-color: #f7f7f7;
-      background-color: #f7f7f7;
+      // border-color: #f7f7f7;
+      // background-color: #f7f7f7;
+      border-color: #c5c5c5;
+      background-color: #c5c5c5;
     }
     100% {
-      border-color: #dddddd;
-      background-color: #dddddd;
+      border-color: #dbdbdb;
+      background-color: #dbdbdb;
     }
   }
 

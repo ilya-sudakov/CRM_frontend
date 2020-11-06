@@ -2,6 +2,17 @@
 
 .general-page {
   .main-window {
+    &__header {
+      margin-bottom: 0;
+    }
+    .main-window__control-panel-wrapper {
+      // padding-top: 10px;
+      // margin-bottom: 5px;
+
+      .main-window__control-panel {
+        width: 100%;
+      }
+    }
     &__content {
       width: calc(100% - 25px);
       height: 100%;
