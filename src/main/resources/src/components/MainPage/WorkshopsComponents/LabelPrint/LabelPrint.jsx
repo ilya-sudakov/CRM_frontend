@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 import html2canvas from 'html2canvas'
 import './LabelPrint.scss'
+import Barcode from 'react-barcode'
 import { formatDateString } from '../../../../utils/functions.jsx'
 import QRCode from 'react-qr-code'
 
@@ -27,21 +28,26 @@ const LabelPrint = (props) => {
         <div className="header__box"></div>
       </div>
       <div className="label-print__content">
-        <div className="content__description">{`Изготовлено ${formatDateString(
-          new Date(),
-        )}${
-          workshopNames[props.workshop]
-            ? `/${workshopNames[props.workshop]}`
-            : ''
-        }`}</div>
-        {/* <div className="content__description content__description--address">
-          Расфасовано в ООО "Osfix" 191040, г. Санкт-Петербург, Лиговский пр.,
-          д. 52
-        </div> */}
-        <div className="content__bar-code">
-          <QRCode
-            value={props.link || 'https://osfix.ru/katalog-produkczii'}
-            size={180}
+        <div className="content__description">
+          <div>{`Изготовлено ${formatDateString(new Date())}${
+            workshopNames[props.workshop]
+              ? `/${workshopNames[props.workshop]}`
+              : ''
+          }`}</div>
+          <div className="content__bar-code content__bar-code--qr">
+            <QRCode
+              value={props.link || 'https://osfix.ru/katalog-produkczii'}
+              size={70}
+            />
+          </div>
+        </div>
+        <div className="content__bar-code content__bar-code--bar">
+          <Barcode
+            value="123456789012"
+            fontSize={20}
+            format="CODE39"
+            width={1.4}
+            // height={150}
           />
         </div>
       </div>

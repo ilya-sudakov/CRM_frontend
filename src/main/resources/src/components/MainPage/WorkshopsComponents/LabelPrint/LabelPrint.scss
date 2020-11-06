@@ -34,7 +34,7 @@
     overflow: hidden;
 
     &--hidden {
-        left: 9999px;
+        // left: 9999px;
     }
 
     &__header {
@@ -82,11 +82,16 @@
         position: relative;
         height: 100%;
         width: 100%;
-        margin-top: auto;
 
         .content__description {
             font-size: 1rem;
             margin-bottom: 10px;
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            // align-items: flex-end;
             &:last-child {
                 margin-bottom: 0;
             }
@@ -95,6 +100,11 @@
             }
         }
         .content__bar-code {
+            &--bar {
+                margin: 0 auto;
+                margin-top: 10px;
+                margin-bottom: -10px;
+            }
             // align-self: flex-end;
             // justify-self: flex-end;
         }
