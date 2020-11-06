@@ -43,11 +43,11 @@ const LabelPrint = (props) => {
         </div>
         <div className="content__bar-code content__bar-code--bar">
           <Barcode
-            value="123456789012"
+            value={props.product?.barcode ?? '123456789012'}
             fontSize={20}
             format="CODE39"
             width={1.4}
-            // height={150}
+            height={80}
           />
         </div>
       </div>

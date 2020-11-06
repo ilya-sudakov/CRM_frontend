@@ -23,6 +23,8 @@ const EditProduct = (props) => {
     name: '',
     item: '',
     weight: '',
+    description: '',
+    barcode: '',
     productionLocation: 'ЦехЛЭМЗ',
     group: '',
     unit: 0,
@@ -167,6 +169,8 @@ const EditProduct = (props) => {
             weight: oldProduct.weight,
             unit: oldProduct.unit,
             packages: oldProduct.packings,
+            description: oldProduct.description,
+            barcode: oldProduct.barcode,
             vendor: oldProduct.vendor,
             productionLocation: oldProduct.productionLocation,
             category: oldProduct.category,
@@ -262,6 +266,22 @@ const EditProduct = (props) => {
             type="text"
             handleInputChange={handleInputChange}
           />
+
+          {/* <InputText
+            inputName="Описание"
+            type="text"
+            defaultValue={productInputs.description}
+            name="description"
+            handleInputChange={handleInputChange}
+          />
+          <InputText
+            inputName="Штрихкод"
+            type="number"
+            defaultValue={productInputs.barcode}
+            name="barcode"
+            handleInputChange={handleInputChange}
+          /> */}
+
           {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения*</div>
           <div className="main-form__input_field">

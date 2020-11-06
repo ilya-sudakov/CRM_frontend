@@ -17,6 +17,8 @@ const NewProduct = (props) => {
     category: null,
     comment: null,
     vendor: null,
+    description: null,
+    barcode: null,
     packages: [],
     photo: '',
     unit: 0,
@@ -213,6 +215,20 @@ const NewProduct = (props) => {
             errorsArr={productErrors}
             setErrorsArr={setProductErrors}
           />
+          
+          {/* <InputText
+            inputName="Описание"
+            type="text"
+            name="description"
+            handleInputChange={handleInputChange}
+          />
+          <InputText
+            inputName="Штрихкод"
+            type="number"
+            name="barcode"
+            handleInputChange={handleInputChange}
+          /> */}
+
           {/* <div className="main-form__item">
           <div className="main-form__input_name">Единица измерения*</div>
           <div className="main-form__input_field">
