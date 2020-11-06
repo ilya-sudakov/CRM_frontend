@@ -279,7 +279,7 @@ const ViewFeedback = (props) => {
               isLoading={isLoading}
               inverted
               className="main-form__submit main-form__submit--inverted"
-              onClick={() => props.history.push('/feedback')}
+              onClick={() => props.history.push(`/feedback#${feedbackId}`)}
             />
             {props.userHasAccess(['ROLE_ADMIN']) && (
               <Button

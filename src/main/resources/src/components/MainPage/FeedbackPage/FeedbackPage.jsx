@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import './FeedbackPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import {
   formatDateString,
   formatDateStringWithTime,
+  scrollToElement,
 } from '../../../utils/functions.jsx'
 import {
   getFeedback,
@@ -25,6 +26,7 @@ const FeedbackPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [messages, setMessages] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [scrolledToPrev, setScrolledToPrev] = useState(false)
   const [statuses, setStatuses] = useState([
     {
       className: 'waiting',
@@ -98,6 +100,31 @@ const FeedbackPage = (props) => {
         setIsLoading(false)
       })
   }
+
+  const prevRef = useCallback(
+    (node) => {
+      const id = Number.parseInt(props.history.location.hash.split('#')[1])
+      if (
+        !messages ||
+        scrolledToPrev ||
+        messages.find((item) => item.id === id) === undefined
+      )
+        return
+      if (node !== null && messages) {
+        console.log(
+          node,
+          messages.find((item) => item.id === id),
+        )
+        // node.scrollIntoView({
+        //   behavior: 'smooth',
+        //   block: 'start',
+        // })
+        scrollToElement(node, -800)
+        setScrolledToPrev(true)
+      }
+    },
+    [messages],
+  )
 
   return (
     <div className="feedback-page">
@@ -250,6 +277,14 @@ const FeedbackPage = (props) => {
                         : ''
                     }`}
                     key={index}
+                    id={item.id}
+                    ref={
+                      Number.parseInt(
+                        props.history.location.hash.split('#')[1],
+                      ) === item.id
+                        ? prevRef
+                        : null
+                    }
                     to={'/feedback/view/' + item.id}
                   >
                     <span
