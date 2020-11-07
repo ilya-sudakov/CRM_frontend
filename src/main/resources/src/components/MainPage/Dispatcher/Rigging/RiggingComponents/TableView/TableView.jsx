@@ -127,7 +127,8 @@ const TableView = (props) => {
         //   behavior: 'smooth',
         //   block: 'start',
         // })
-        scrollToElement(node, -400)
+        setTimeout(() => scrollToElement(node, -200), 600)
+        // scrollToElement(node, -200)
         setScrolledToPrev(true)
       }
     },
