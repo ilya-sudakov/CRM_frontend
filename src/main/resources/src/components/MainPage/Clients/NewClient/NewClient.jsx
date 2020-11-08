@@ -37,10 +37,10 @@ const newClient = (props) => {
     clientType: 'Активные',
     categoryId: 0,
     users: {
-      [userContext.userData.id]: {
-        ...userContext.userData,
-        selected: true,
-      },
+      // [userContext.userData.id]: {
+      //   ...userContext.userData,
+      //   selected: true,
+      // },
     },
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
@@ -473,15 +473,17 @@ const newClient = (props) => {
                 handleInputChange={handleInputChange}
                 defaultValue={clientInputs.check}
               />
-              <UsersVisibility
-                name="users"
-                handleInputChange={handleInputChange}
-                defaultValue={clientInputs.users}
-                userContext={userContext}
-                handleInputChange={(value) =>
-                  handleInputValueChange(value, 'users')
-                }
-              />
+              {/* {userContext.userHasAccess(['ROLE_ADMIN']) && (
+                <UsersVisibility
+                  name="users"
+                  handleInputChange={handleInputChange}
+                  defaultValue={clientInputs.users}
+                  userContext={userContext}
+                  handleInputChange={(value) =>
+                    handleInputValueChange(value, 'users')
+                  }
+                />
+              )} */}
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Категория</div>
                 <div className="main-form__item">
@@ -558,7 +560,6 @@ const UsersVisibility = (props) => {
   const [allChecked, setAllChecked] = useState(true)
 
   useEffect(() => {
-    if (!props.userContext.userHasAccess(['ROLE_ADMIN'])) return
     loadUsers()
   }, [])
 
