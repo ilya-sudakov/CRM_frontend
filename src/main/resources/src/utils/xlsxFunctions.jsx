@@ -1105,6 +1105,7 @@ export async function exportReportTableExcel(
       )
     })
     .then(() => {
+      console.log(employeesWorksList)
       return Promise.all(
         filteredWorkshops.map((workshop) => {
           if (
@@ -1245,6 +1246,7 @@ export async function exportReportTableExcel(
           }
         }
       }
+      //2nd month
       return Promise.all(
         filteredWorkshops.map((workshop) => {
           if (
@@ -1267,7 +1269,11 @@ export async function exportReportTableExcel(
             titleRow.height = 30
           }
           return employeesWorksList
-            .filter((employee) => employee.employee.workshop === workshop)
+            .filter(
+              (employee) =>
+                employee.employee.workshop === workshop &&
+                employee.employee.relevance !== 'Уволен',
+            )
             .sort((a, b) => {
               if (a.employee.lastName < b.employee.lastName) {
                 return -1
