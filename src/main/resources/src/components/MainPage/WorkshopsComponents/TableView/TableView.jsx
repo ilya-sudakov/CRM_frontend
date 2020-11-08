@@ -382,7 +382,7 @@ const TableView = (props) => {
               <Link
                 target="_blank"
                 className="main-window__link"
-                to={`/clients/view/${request.client.id}`}
+                to={`/clients/edit/${request.client.id}`}
               >
                 {request.client.name}
               </Link>
