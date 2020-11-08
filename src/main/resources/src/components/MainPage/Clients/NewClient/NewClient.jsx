@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './NewClient.scss'
 import '../../../../utils/Form/Form.scss'
 import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx'
@@ -15,14 +15,17 @@ import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx'
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx'
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
+import { UserContext } from '../../../../App.js'
 
 const newClient = (props) => {
+  const userContext = useContext(UserContext)
   const [clientInputs, setClientInputs] = useState({
     name: '',
     legalEntity: [],
     contacts: [],
-    managerName: props.userData.username,
-    managerId: props.userData.id,
+    managerName: userContext.userData.username,
+    managerId: userContext.userData.id,
     workHistory: [],
     site: '',
     comment: '',
@@ -329,7 +332,7 @@ const newClient = (props) => {
                       })
                     }}
                     defaultValue={clientInputs.workHistory}
-                    userHasAccess={props.userHasAccess}
+                    userHasAccess={userContext.userHasAccess}
                   />
                 </div>
               </div>
@@ -359,7 +362,7 @@ const newClient = (props) => {
                       })
                     }}
                     defaultValue={clientInputs.legalEntity}
-                    userHasAccess={props.userHasAccess}
+                    userHasAccess={userContext.userHasAccess}
                   />
                 </div>
               </div>
@@ -378,7 +381,7 @@ const newClient = (props) => {
                         })
                       }}
                       defaultValue={clientInputs.contacts}
-                      userHasAccess={props.userHasAccess}
+                      userHasAccess={userContext.userHasAccess}
                     />
                   </div>
                 </div>
@@ -431,7 +434,7 @@ const newClient = (props) => {
               />
               <InputUser
                 inputName="Ответственный менеджер"
-                userData={props.userData}
+                userData={userContext.userData}
                 filteredRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                 required
                 name="manager"
@@ -450,6 +453,12 @@ const newClient = (props) => {
                 name="check"
                 handleInputChange={handleInputChange}
                 defaultValue={clientInputs.check}
+              />
+              <UsersVisibility
+                name="users"
+                handleInputChange={handleInputChange}
+                defaultValue={clientInputs.users}
+                userContext={userContext}
               />
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Категория</div>
@@ -474,7 +483,7 @@ const newClient = (props) => {
                   required
                   error={formErrors.category}
                   type={props.type}
-                  userHasAccess={props.userHasAccess}
+                  userHasAccess={userContext.userHasAccess}
                   name="categoryId"
                   handleCategoryChange={(value, name) => {
                     validateField('categoryId', value)
@@ -521,3 +530,62 @@ const newClient = (props) => {
 }
 
 export default newClient
+
+const UsersVisibility = (props) => {
+  const [users, setUsers] = useState({})
+
+  useEffect(() => {
+    getUsers()
+      .then((res) => res.json())
+      .then((res) => {
+        let newUsers = {}
+        res
+          .filter(
+            (user) =>
+              user.roles.find(
+                (role) =>
+                  role.name === 'ROLE_ADMIN' || role.name === 'ROLE_MANAGER',
+              ) !== undefined,
+          )
+          .map((user) => {
+            return (newUsers = {
+              ...newUsers,
+              [user.id]: {
+                ...user,
+                selected: true,
+              },
+            })
+          })
+        return setUsers({ ...newUsers })
+      })
+  }, [])
+
+  return (
+    <div className="main-form__item">
+      <div className="main-form__input_name">Видимость для пользователей</div>
+      <div className="main-form__input_field">
+        <CheckBox text="Выбрать всех" checked={true} onChange={(value) => {}} />
+      </div>
+      {Object.entries(users).map((user) => (
+        <div className="main-form__input_field">
+          <CheckBox
+            text={user[1].username}
+            checked={user[1].selected}
+            disabled={user[1].username === props.userContext.userData.username}
+            onChange={(value) => {
+              setUsers((prev) => {
+                return {
+                  ...prev,
+                  [user[1].id]: {
+                    ...user[1],
+                    selected: value,
+                  },
+                }
+              })
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
