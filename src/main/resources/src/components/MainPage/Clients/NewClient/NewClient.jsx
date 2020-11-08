@@ -36,6 +36,12 @@ const newClient = (props) => {
     check: '',
     clientType: 'Активные',
     categoryId: 0,
+    users: {
+      [userContext.userData.id]: {
+        ...userContext.userData,
+        selected: true,
+      },
+    },
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
   })
@@ -228,6 +234,19 @@ const newClient = (props) => {
   //При изменении данных в поле - обновляем состояние
   const handleInputChange = (e) => {
     const { name, value } = e.target
+    validateField(name, value)
+    setClientInputs({
+      ...clientInputs,
+      [name]: value,
+    })
+    setFormErrors({
+      ...formErrors,
+      [name]: false,
+    })
+  }
+
+  //При изменении данных в поле - обновляем состояние
+  const handleInputValueChange = (value, name) => {
     validateField(name, value)
     setClientInputs({
       ...clientInputs,
@@ -459,6 +478,9 @@ const newClient = (props) => {
                 handleInputChange={handleInputChange}
                 defaultValue={clientInputs.users}
                 userContext={userContext}
+                handleInputChange={(value) =>
+                  handleInputValueChange(value, 'users')
+                }
               />
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Категория</div>
@@ -532,9 +554,15 @@ const newClient = (props) => {
 export default newClient
 
 const UsersVisibility = (props) => {
-  const [users, setUsers] = useState({})
+  const [users, setUsers] = useState(props.defaultValue || {})
+  const [allChecked, setAllChecked] = useState(true)
 
   useEffect(() => {
+    if (!props.userContext.userHasAccess(['ROLE_ADMIN'])) return
+    loadUsers()
+  }, [])
+
+  const loadUsers = () => {
     getUsers()
       .then((res) => res.json())
       .then((res) => {
@@ -556,15 +584,38 @@ const UsersVisibility = (props) => {
               },
             })
           })
+        props.handleInputChange(newUsers)
         return setUsers({ ...newUsers })
       })
-  }, [])
+  }
 
   return (
     <div className="main-form__item">
       <div className="main-form__input_name">Видимость для пользователей</div>
       <div className="main-form__input_field">
-        <CheckBox text="Выбрать всех" checked={true} onChange={(value) => {}} />
+        <CheckBox
+          text="Выбрать всех"
+          checked={allChecked}
+          onChange={(value) => {
+            setAllChecked(value)
+            let newUsers = {}
+            Object.entries(users).map((user) => {
+              console.log(user)
+              return (newUsers = {
+                ...newUsers,
+                [user[0]]: {
+                  ...user[1],
+                  selected:
+                    user[1].username === props.userContext.userData.username
+                      ? true
+                      : value,
+                },
+              })
+            })
+            props.handleInputChange(newUsers)
+            setUsers({ ...newUsers })
+          }}
+        />
       </div>
       {Object.entries(users).map((user) => (
         <div className="main-form__input_field">

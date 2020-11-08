@@ -46,8 +46,6 @@ const ProductionJournal = lazy(() =>
 
 const newClient = lazy(() => import('./Clients/NewClient/NewClient.jsx'))
 
-const ViewClient = lazy(() => import('./Clients/ViewClient/ViewClient.jsx'))
-
 const EditClient = lazy(() => import('./Clients/EditClient/EditClient.jsx'))
 
 const ClientCategories = lazy(() =>
@@ -233,7 +231,6 @@ const StatisticsPage = lazy(() => import('./StatisticsPage/StatisticsPage.jsx'))
 export {
   Clients,
   newClient,
-  ViewClient,
   EditClient,
   ClientCategories,
   Contracts,

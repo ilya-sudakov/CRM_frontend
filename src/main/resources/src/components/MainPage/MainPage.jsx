@@ -45,7 +45,7 @@ import {
   NewPriceList,
   // ViewPriceList,
   ClientCategories,
-  ViewClient,
+  // ViewClient,
   EditClient,
   FeedbackPage,
   NewFeedback,
@@ -203,14 +203,6 @@ class MainPage extends React.Component {
                     allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                   />
                   <PrivateRoute
-                    path="/clients/view/"
-                    component={ViewClient}
-                    type="clients"
-                    userHasAccess={this.props.userHasAccess}
-                    userData={this.props.userData}
-                    allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
-                  />
-                  <PrivateRoute
                     path="/clients/edit/"
                     component={EditClient}
                     type="clients"
@@ -251,20 +243,6 @@ class MainPage extends React.Component {
                     exact
                     path="/suppliers/new"
                     component={newClient}
-                    type="suppliers"
-                    userHasAccess={this.props.userHasAccess}
-                    userData={this.props.userData}
-                    allowedRoles={[
-                      'ROLE_ADMIN',
-                      'ROLE_MANAGER',
-                      'ROLE_DISPATCHER',
-                      'ROLE_ENGINEER',
-                      'ROLE_WORKSHOP',
-                    ]}
-                  />
-                  <PrivateRoute
-                    path="/suppliers/view/"
-                    component={ViewClient}
                     type="suppliers"
                     userHasAccess={this.props.userHasAccess}
                     userData={this.props.userData}
