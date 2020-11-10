@@ -26,8 +26,6 @@
     background-color: #ffffff;
     z-index: 999;
     transition: 100ms ease-in-out;
-
-    //new dimensions
     width: 350px; //orig - 220px
     height: fit-content;
     min-height: 359.5px; // orig - 226px
@@ -85,18 +83,29 @@
 
         .content__description {
             font-size: 1rem;
-            margin-bottom: 10px;
-            margin-top: 20px;
+            margin-top: 5px;
             width: 100%;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            box-sizing: border-box;
+            padding: 0 10px;
             // align-items: flex-end;
+            // align-items: center;
+
             &:last-child {
                 margin-bottom: 0;
             }
             &--address {
                 font-size: 95%;
+            }
+            &--small {
+                color: #666666;
+                font-size: 0.95rem;
+            }
+            &--production-info {
+                margin-top: 20px;
+                margin-bottom: 0px;
             }
         }
         .content__bar-code {
@@ -104,6 +113,7 @@
                 margin: 0 auto;
                 margin-top: 10px;
                 margin-bottom: -10px;
+                margin-left: -2px;
             }
             // align-self: flex-end;
             // justify-self: flex-end;

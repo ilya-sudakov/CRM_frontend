@@ -634,6 +634,13 @@ const UsersVisibility = (props) => {
                   },
                 }
               })
+              props.handleInputChange({
+                ...users,
+                [user[1].id]: {
+                  ...user[1],
+                  selected: value,
+                },
+              })
             }}
           />
         </div>

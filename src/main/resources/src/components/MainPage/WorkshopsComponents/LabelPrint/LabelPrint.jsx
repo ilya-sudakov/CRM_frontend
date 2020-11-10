@@ -28,7 +28,11 @@ const LabelPrint = (props) => {
         <div className="header__box"></div>
       </div>
       <div className="label-print__content">
-        <div className="content__description">
+        <div className="content__description content__description--small">
+          {props.description ??
+            'Описание продукции lorem ipsum lorem ipsum lorem ipsum lorem ipsum'}
+        </div>
+        <div className="content__description  content__description--production-info">
           <div>{`Изготовлено ${formatDateString(new Date())}${
             workshopNames[props.workshop]
               ? `/${workshopNames[props.workshop]}`

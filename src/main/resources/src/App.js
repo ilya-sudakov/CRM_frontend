@@ -106,12 +106,15 @@ class App extends React.Component {
     return refreshToken(refreshTokenObject)
       .then((res) => res.json())
       .then((response) => {
+        //Сохраняем данные пользователя
         this.setUserData(true, response)
+        //Функция обработки токена, если он устареет
         this.refreshExpiredToken(response.expiredIn)
         localStorage.setItem('accessToken', response.accessToken)
         localStorage.setItem('refreshToken', response.refreshToken)
       })
       .catch((error) => {
+        //При ошибке очищаем localStorage
         console.log(error)
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
