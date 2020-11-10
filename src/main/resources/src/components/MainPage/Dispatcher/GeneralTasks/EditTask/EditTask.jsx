@@ -101,7 +101,7 @@ const EditTask = (props) => {
     setIsLoading(true)
     formIsValid() &&
       editMainTask(taskInputs, taskId)
-        .then(() => props.history.push('/dispatcher/general-tasks'))
+        .then(() => props.history.push(`/dispatcher/general-tasks#${taskId}`))
         .catch((error) => {
           setIsLoading(false)
           alert('Ошибка при добавлении записи')
