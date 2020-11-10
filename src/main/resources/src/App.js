@@ -80,6 +80,7 @@ class App extends React.Component {
     this.initFirebase()
   }
 
+  //Обработка устаревшего токена
   refreshExpiredToken = (expiredIn = new Date()) => {
     const curDateMS = new Date().getTime()
     const expiredInDateMS = new Date(expiredIn * 1000).getTime()
@@ -97,6 +98,7 @@ class App extends React.Component {
     }
   }
 
+  //Обновление токена доступа
   refreshOldToken = () => {
     const refreshTokenObject = Object.assign({
       refreshToken: localStorage.getItem('refreshToken'),
@@ -117,6 +119,7 @@ class App extends React.Component {
       })
   }
 
+  //Инициализация Firebase
   initFirebase = () => {
     // !FIREBASE
     if (messaging !== null) {
