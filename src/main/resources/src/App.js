@@ -75,23 +75,49 @@ class App extends React.Component {
       localStorage.getItem('refreshToken') &&
       this.state.isAuthorized === false
     ) {
-      const refreshTokenObject = Object.assign({
-        refreshToken: localStorage.getItem('refreshToken'),
-      })
-      refreshToken(refreshTokenObject)
-        .then((res) => res.json())
-        .then((response) => {
-          this.setUserData(true, response)
-          localStorage.setItem('accessToken', response.accessToken)
-          localStorage.setItem('refreshToken', response.refreshToken)
-        })
-        .catch((error) => {
-          console.log(error)
-          localStorage.removeItem('accessToken')
-          localStorage.removeItem('refreshToken')
-          window.location.reload()
-        })
+      this.refreshOldToken()
     }
+    this.initFirebase()
+  }
+
+  refreshExpiredToken = (expiredIn = new Date()) => {
+    const curDateMS = new Date().getTime()
+    const expiredInDateMS = new Date(expiredIn * 1000).getTime()
+
+    if (expiredInDateMS > curDateMS) {
+      const timeDifference = expiredInDateMS - curDateMS
+      return setTimeout(() => {
+        console.log('refreshing old token')
+        return this.refreshOldToken()
+      }, timeDifference)
+    }
+    if (expiredInDateMS <= curDateMS) {
+      console.log('refreshing old token')
+      return this.refreshOldToken()
+    }
+  }
+
+  refreshOldToken = () => {
+    const refreshTokenObject = Object.assign({
+      refreshToken: localStorage.getItem('refreshToken'),
+    })
+    return refreshToken(refreshTokenObject)
+      .then((res) => res.json())
+      .then((response) => {
+        this.setUserData(true, response)
+        this.refreshExpiredToken(response.expiredIn)
+        localStorage.setItem('accessToken', response.accessToken)
+        localStorage.setItem('refreshToken', response.refreshToken)
+      })
+      .catch((error) => {
+        console.log(error)
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        window.location.reload()
+      })
+  }
+
+  initFirebase = () => {
     // !FIREBASE
     if (messaging !== null) {
       messaging
