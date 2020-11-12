@@ -34,6 +34,7 @@ const ReportTablePage = (props) => {
     },
   ])
   const [isLoading, setIsLoading] = useState(false)
+  const [excelIsLoading, setExcelIsLoading] = useState(false)
   const [workData, setWorkData] = useState([])
   const [dates, setDates] = useState([])
   const [workList, setWorkList] = useState({})
@@ -109,51 +110,32 @@ const ReportTablePage = (props) => {
         let newWorkList = employeesWorkList
         Object.values(employeesWorkList).map((item) => {
           item.workArray.map((workItem) => {
-            if (
+            const prevWorks =
               newWorkList[item.employee.id].works === undefined ||
               newWorkList[item.employee.id]?.works[workItem.day] === undefined
-            ) {
-              newWorkList = Object.assign({
-                ...newWorkList,
-                [item.employee.id]: {
-                  ...newWorkList[item.employee.id],
-                  works: {
-                    ...newWorkList[item.employee.id].works,
-                    [workItem.day]: [
-                      {
-                        workId: workItem.workId,
-                        workControlProduct: workItem.workControlProduct,
-                        partsWorks: workItem.partsWorks,
-                        workList: workItem.workList,
-                        day: workItem.day,
-                        hours: workItem.hours,
-                      },
-                    ],
-                  },
+                ? []
+                : newWorkList[item.employee.id].works[workItem.day]
+
+            newWorkList = Object.assign({
+              ...newWorkList,
+              [item.employee.id]: {
+                ...newWorkList[item.employee.id],
+                works: {
+                  ...newWorkList[item.employee.id].works,
+                  [workItem.day]: [
+                    ...prevWorks,
+                    {
+                      workId: workItem.workId,
+                      workControlProduct: workItem.workControlProduct,
+                      partsWorks: workItem.partsWorks,
+                      workList: workItem.workList,
+                      day: workItem.day,
+                      hours: workItem.hours,
+                    },
+                  ],
                 },
-              })
-            } else {
-              newWorkList = Object.assign({
-                ...newWorkList,
-                [item.employee.id]: {
-                  ...newWorkList[item.employee.id],
-                  works: {
-                    ...newWorkList[item.employee.id].works,
-                    [workItem.day]: [
-                      ...newWorkList[item.employee.id].works[workItem.day],
-                      {
-                        workId: workItem.workId,
-                        workControlProduct: workItem.workControlProduct,
-                        partsWorks: workItem.partsWorks,
-                        workList: workItem.workList,
-                        day: workItem.day,
-                        hours: workItem.hours,
-                      },
-                    ],
-                  },
-                },
-              })
-            }
+              },
+            })
           })
         })
         // console.log('newnewnew: ', newWorkList)
@@ -218,9 +200,9 @@ const ReportTablePage = (props) => {
               imgSrc={DownloadIcon}
               className="main-window__button main-window__button--inverted"
               inverted
-              isLoading={isLoading}
+              isLoading={isLoading || excelIsLoading}
               onClick={async () => {
-                setIsLoading(true)
+                setExcelIsLoading(true)
                 const filteredWorkshops = [
                   'ЦехЛЭМЗ',
                   'ЦехЛепсари',
@@ -229,7 +211,7 @@ const ReportTablePage = (props) => {
                   'Уволенные',
                 ]
                 await exportReportTableExcel(new Date(date), filteredWorkshops)
-                setIsLoading(false)
+                setExcelIsLoading(false)
               }}
             />
           }

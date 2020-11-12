@@ -593,31 +593,33 @@ const UsersVisibility = (props) => {
   return (
     <div className="main-form__item">
       <div className="main-form__input_name">Видимость для пользователей</div>
-      <div className="main-form__input_field">
-        <CheckBox
-          text="Выбрать всех"
-          checked={allChecked}
-          onChange={(value) => {
-            setAllChecked(value)
-            let newUsers = {}
-            Object.entries(users).map((user) => {
-              console.log(user)
-              return (newUsers = {
-                ...newUsers,
-                [user[0]]: {
-                  ...user[1],
-                  selected:
-                    user[1].username === props.userContext.userData.username
-                      ? true
-                      : value,
-                },
+      {props.userContext.userHasAccess(['ROLE_ADMIN']) ? (
+        <div className="main-form__input_field">
+          <CheckBox
+            text="Выбрать всех"
+            checked={allChecked}
+            onChange={(value) => {
+              setAllChecked(value)
+              let newUsers = {}
+              Object.entries(users).map((user) => {
+                console.log(user)
+                return (newUsers = {
+                  ...newUsers,
+                  [user[0]]: {
+                    ...user[1],
+                    selected:
+                      user[1].username === props.userContext.userData.username
+                        ? true
+                        : value,
+                  },
+                })
               })
-            })
-            props.handleInputChange(newUsers)
-            setUsers({ ...newUsers })
-          }}
-        />
-      </div>
+              props.handleInputChange(newUsers)
+              setUsers({ ...newUsers })
+            }}
+          />
+        </div>
+      ) : null}
       {Object.entries(users).map((user) => (
         <div className="main-form__input_field">
           <CheckBox
