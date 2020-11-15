@@ -112,22 +112,16 @@ const TableView = (props) => {
   const prevRef = useCallback(
     (node) => {
       const id = Number.parseInt(props.history.location.hash.split('#')[1])
+
       if (
         !props.data ||
         scrolledToPrev ||
         props.data.find((item) => item.id === id) === undefined
       )
         return
+
       if (node !== null && props.data) {
-        console.log(
-          node,
-          props.data.find((item) => item.id === id),
-        )
-        // node.scrollIntoView({
-        //   behavior: 'smooth',
-        //   block: 'start',
-        // })
-        scrollToElement(node, -400)
+        setTimeout(() => scrollToElement(node, -200), 600)
         setScrolledToPrev(true)
       }
     },

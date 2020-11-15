@@ -15,6 +15,8 @@ const ViewProduct = (props) => {
     vendor: '',
     category: '',
     unit: '',
+    description: '',
+    barcode: '',
     productionLocation: '',
     packaging: [],
     comment: '',
@@ -42,6 +44,8 @@ const ViewProduct = (props) => {
             item: oldProduct.item,
             weight: oldProduct.weight,
             category: oldProduct.category,
+            description: oldProduct.description,
+            barcode: oldProduct.barcode,
             vendor: oldProduct.vendor,
             productionLocation: oldProduct.productionLocation,
             unit: oldProduct.unit,
@@ -146,6 +150,32 @@ const ViewProduct = (props) => {
                 />
               </div>
             </div>
+            {productInputs.description ? (
+              <div className="main-form__item">
+                <div className="main-form__input_name">Описание</div>
+                <div className="main-form__input_field">
+                  <textarea
+                    type="text"
+                    name="description"
+                    defaultValue={productInputs.description}
+                    readOnly
+                  />
+                </div>
+              </div>
+            ) : null}
+            {productInputs.barcode ? (
+              <div className="main-form__item">
+                <div className="main-form__input_name">Штрих-код</div>
+                <div className="main-form__input_field">
+                  <input
+                    type="text"
+                    name="barcode"
+                    defaultValue={productInputs.barcode}
+                    readOnly
+                  />
+                </div>
+              </div>
+            ) : null}
             {/* <div className="main-form__item">
                     <div className="main-form__input_name">Упаковка</div>
                     <div className="main-form__input_field">
