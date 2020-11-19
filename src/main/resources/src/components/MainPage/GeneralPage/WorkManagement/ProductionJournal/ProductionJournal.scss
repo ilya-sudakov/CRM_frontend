@@ -33,6 +33,10 @@
         // border-bottom: 1px solid #dddddd;
         // margin-bottom: 10px;
         // align-items: center;
+        border-bottom: 1px solid #cccccc;
+        margin-bottom: 10px;
+        // min-height: 200px;
+
         .production-journal__form {
             flex: 0 1 100%;
         }
@@ -92,6 +96,10 @@
                 &::before {
                     border: 1px solid #eda3a3 !important;
                 }
+            }
+
+            &--readonly {
+                
             }
         }
         .select-employee-new {
@@ -201,7 +209,6 @@
                     &:last-child {
                         padding-bottom: 3px;
                         margin-bottom: 1px;
-                        border-bottom: 1px solid #cccccc;
                     }
 
                     &:hover,

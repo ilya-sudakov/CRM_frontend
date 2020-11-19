@@ -40,7 +40,7 @@ const ProductionJournal = (props) => {
     lepsari: {},
     ligovskiy: {},
     office: {},
-    readOnly: false,
+    readOnly: true,
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -818,6 +818,43 @@ const ProductionJournal = (props) => {
       })
   }
 
+  const handleMinimizeAllWorkshopItems = () => {
+    setWorkTimeInputs((worktimeInputs) => {
+      const isFirstObjectMinimized = Object.values(
+        worktimeInputs[workshop[1]],
+      )[0].isMinimized
+
+      let newWorkshopData = worktimeInputs[workshop[1]]
+      Object.entries(worktimeInputs[workshop[1]]).map((employee) => {
+        newWorkshopData[employee[0]].isMinimized = !isFirstObjectMinimized
+      })
+      return {
+        ...worktimeInputs,
+        [workshop[1]]: {
+          ...newWorkshopData,
+        },
+      }
+    })
+  }
+
+  const sortEmployees = (employees) => {
+    return employees.sort((a, b) => {
+      a = a[1]
+      b = b[1]
+      if (a.employee.lastName < b.employee.lastName) {
+        return -1
+      }
+      if (a.employee.lastName > b.employee.lastName) {
+        return 1
+      }
+      return 0
+    })
+  }
+
+  const areWorkshopItemsMinimized = (workshopItems) => {
+    return Object.values(workshopItems)[0]?.isMinimized
+  }
+
   return (
     <div className="production-journal">
       <div className="main-form">
@@ -866,36 +903,15 @@ const ProductionJournal = (props) => {
                     color: '#555555',
                   }}
                   title={`${
-                    Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
+                    areWorkshopItemsMinimized(worktimeInputs[workshop[1]])
                       ? 'Раскрыть'
                       : 'Скрыть'
                   } продукцию и чертежи`}
-                  onClick={() => {
-                    setWorkTimeInputs((worktimeInputs) => {
-                      const isFirstObjectMinimized = Object.values(
-                        worktimeInputs[workshop[1]],
-                      )[0].isMinimized
-
-                      let newWorkshopData = worktimeInputs[workshop[1]]
-                      Object.entries(worktimeInputs[workshop[1]]).map(
-                        (employee) => {
-                          newWorkshopData[
-                            employee[0]
-                          ].isMinimized = !isFirstObjectMinimized
-                        },
-                      )
-                      return {
-                        ...worktimeInputs,
-                        [workshop[1]]: {
-                          ...newWorkshopData,
-                        },
-                      }
-                    })
-                  }}
+                  onClick={handleMinimizeAllWorkshopItems}
                 >
                   <ChevronImg
                     className={`production-journal__img production-journal__img--chevron ${
-                      Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
+                      areWorkshopItemsMinimized(worktimeInputs[workshop[1]])
                         ? 'main-window__img--rotated'
                         : ''
                     }`}
@@ -916,40 +932,30 @@ const ProductionJournal = (props) => {
                 />
               ) : (
                 <div className="production-journal__list">
-                  {Object.entries(worktimeInputs[workshop[1]])
-                    .sort((a, b) => {
-                      a = a[1]
-                      b = b[1]
-                      if (a.employee.lastName < b.employee.lastName) {
-                        return -1
-                      }
-                      if (a.employee.lastName > b.employee.lastName) {
-                        return 1
-                      }
-                      return 0
-                    })
-                    .map((workItem, workIndex) => (
-                      <>
-                        <div className="main-form__row" key={workIndex}>
-                          <FormRow
-                            workTimeErrors={workTimeErrors}
-                            setWorkTimeErrors={setWorkTimeErrors}
-                            worktimeInputs={worktimeInputs}
-                            setWorkTimeInputs={setWorkTimeInputs}
-                            employees={employees}
-                            workItem={workItem[1]}
-                            workshop={workshop}
-                            workIndex={workIndex}
-                            categories={categories}
-                            products={products}
-                            drafts={drafts}
-                            readOnly={worktimeInputs.readOnly}
-                            works={works}
-                            employeesMap={employeesMap}
-                          />
-                        </div>
-                      </>
-                    ))}
+                  {sortEmployees(
+                    Object.entries(worktimeInputs[workshop[1]]),
+                  ).map((workItem, workIndex) => (
+                    <>
+                      <div className="main-form__row" key={workIndex}>
+                        <EmployeeData
+                          workTimeErrors={workTimeErrors}
+                          setWorkTimeErrors={setWorkTimeErrors}
+                          worktimeInputs={worktimeInputs}
+                          setWorkTimeInputs={setWorkTimeInputs}
+                          employees={employees}
+                          workItem={workItem[1]}
+                          workshop={workshop}
+                          workIndex={workIndex}
+                          categories={categories}
+                          products={products}
+                          drafts={drafts}
+                          readOnly={worktimeInputs.readOnly}
+                          works={works}
+                          employeesMap={employeesMap}
+                        />
+                      </div>
+                    </>
+                  ))}
                 </div>
               )}
             </>
@@ -980,7 +986,7 @@ const ProductionJournal = (props) => {
 
 export default ProductionJournal
 
-const FormRow = ({
+const EmployeeData = ({
   setWorkTimeInputs,
   products,
   categories,
@@ -992,12 +998,54 @@ const FormRow = ({
   employeesMap,
   readOnly,
 }) => {
+  const handleAddNewWork = () => {
+    setWorkTimeInputs((worktimeInputs) => {
+      return {
+        ...worktimeInputs,
+        [workshop[1]]: {
+          ...worktimeInputs[workshop[1]],
+          [workItem.employee.id]: {
+            ...workItem,
+            works: [
+              ...workItem.works,
+              {
+                product: [],
+                isOld: false,
+                draft: [],
+                workName: '',
+                workType: '',
+                workId: null,
+                hours: 0,
+                comment: '',
+              },
+            ],
+          },
+        },
+      }
+    })
+  }
+
+  const handleMinimizeWorkItem = () => {
+    setWorkTimeInputs((worktimeInputs) => {
+      return {
+        ...worktimeInputs,
+        [workshop[1]]: {
+          ...worktimeInputs[workshop[1]],
+          [workItem.employee.id]: {
+            ...workItem,
+            isMinimized: !workItem.isMinimized,
+          },
+        },
+      }
+    })
+  }
+
   return (
     <>
       <div
         className={`main-form__item main-form__item--employee ${
           workItem.totalHours === 0 ? 'main-form__item--error' : ''
-        }`}
+        } ${readOnly ? 'main-form__item--readonly' : ''}`}
         data-position={workItem.employee.position}
         data-hours={
           workItem.totalHours > 0 ? `${workItem.totalHours} ч` : `Нет записи!`
@@ -1020,32 +1068,7 @@ const FormRow = ({
               color: '#888888',
             }}
             title="Добавить запись о работе"
-            onClick={() => {
-              setWorkTimeInputs((worktimeInputs) => {
-                return {
-                  ...worktimeInputs,
-                  [workshop[1]]: {
-                    ...worktimeInputs[workshop[1]],
-                    [workItem.employee.id]: {
-                      ...workItem,
-                      works: [
-                        ...workItem.works,
-                        {
-                          product: [],
-                          isOld: false,
-                          draft: [],
-                          workName: '',
-                          workType: '',
-                          workId: null,
-                          hours: 0,
-                          comment: '',
-                        },
-                      ],
-                    },
-                  },
-                }
-              })
-            }}
+            onClick={handleAddNewWork}
           >
             +
           </div>
@@ -1067,20 +1090,7 @@ const FormRow = ({
             title={`${
               workItem.isMinimized ? 'Раскрыть' : 'Скрыть'
             } продукцию и чертежи`}
-            onClick={() => {
-              setWorkTimeInputs((worktimeInputs) => {
-                return {
-                  ...worktimeInputs,
-                  [workshop[1]]: {
-                    ...worktimeInputs[workshop[1]],
-                    [workItem.employee.id]: {
-                      ...workItem,
-                      isMinimized: !workItem.isMinimized,
-                    },
-                  },
-                }
-              })
-            }}
+            onClick={handleMinimizeWorkItem}
           >
             <ChevronImg
               className={`production-journal__img production-journal__img--chevron ${
@@ -1089,7 +1099,7 @@ const FormRow = ({
             />
           </div>
         ) : null}
-        <JournalForm
+        <WorksForm
           setWorkTimeInputs={setWorkTimeInputs}
           worktimeInputs={worktimeInputs}
           workItem={workItem}
@@ -1106,7 +1116,7 @@ const FormRow = ({
   )
 }
 
-const JournalForm = ({
+const WorksForm = ({
   setWorkTimeInputs,
   workItem,
   workshop,
@@ -1114,9 +1124,51 @@ const JournalForm = ({
   categories,
   drafts,
   works,
-  employeesMap,
   readOnly,
 }) => {
+  const defaultConfig = [
+    {
+      isOld: false,
+      product: [],
+      draft: [],
+      workName: '',
+      workType: '',
+      workId: null,
+      hours: 0,
+      comment: '',
+    },
+  ]
+
+  const handleWorkChange = (value) => {
+    setWorkTimeInputs((worktimeInputs) => {
+      return {
+        ...worktimeInputs,
+        [workshop[1]]: {
+          ...worktimeInputs[workshop[1]],
+          [workItem.employee.id]: {
+            ...workItem,
+            works: value,
+          },
+        },
+      }
+    })
+  }
+
+  const handleTotalHoursChange = (value) => {
+    setWorkTimeInputs((worktimeInputs) => {
+      return {
+        ...worktimeInputs,
+        [workshop[1]]: {
+          ...worktimeInputs[workshop[1]],
+          [workItem.employee.id]: {
+            ...workItem,
+            totalHours: value,
+          },
+        },
+      }
+    })
+  }
+
   return (
     <div
       className={`production-journal__form ${
@@ -1128,48 +1180,11 @@ const JournalForm = ({
         <div className="main-form__input_field">
           {/* {console.log(workItem)} */}
           <SelectWork
-            handleWorkChange={(value) => {
-              setWorkTimeInputs((worktimeInputs) => {
-                return {
-                  ...worktimeInputs,
-                  [workshop[1]]: {
-                    ...worktimeInputs[workshop[1]],
-                    [workItem.employee.id]: {
-                      ...workItem,
-                      works: value,
-                    },
-                  },
-                }
-              })
-            }}
+            handleWorkChange={handleWorkChange}
             totalHours={workItem.totalHours}
             newDesign
-            defaultConfig={[
-              {
-                isOld: false,
-                product: [],
-                draft: [],
-                workName: '',
-                workType: '',
-                workId: null,
-                hours: 0,
-                comment: '',
-              },
-            ]}
-            setTotalHours={(value) => {
-              setWorkTimeInputs((worktimeInputs) => {
-                return {
-                  ...worktimeInputs,
-                  [workshop[1]]: {
-                    ...worktimeInputs[workshop[1]],
-                    [workItem.employee.id]: {
-                      ...workItem,
-                      totalHours: value,
-                    },
-                  },
-                }
-              })
-            }}
+            defaultConfig={defaultConfig}
+            setTotalHours={handleTotalHoursChange}
             categories={categories}
             products={products}
             drafts={drafts}
