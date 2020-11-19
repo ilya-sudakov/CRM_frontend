@@ -336,9 +336,12 @@
     box-sizing: border-box;
     margin-top: 0;
     margin-bottom: 0 !important;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
 
     .select__input {
-      width: 100% !important;
+      width: fit-content !important;
     }
     .select__input_field {
       font-size: 0.85rem !important;
@@ -355,13 +358,29 @@
       padding: 2px 5px;
     }
 
+    button {
+      border-color: transparent;
+      font-size: 28px;
+      color: rgb(136, 136, 136);
+      cursor: pointer;
+      background-color: transparent;
+      line-height: 1rem;
+      margin-top: 4px;
+    }
+
     .select__selected {
       margin-top: 0px;
+      width: 100%;
       margin-bottom: 10px;
+      margin-right: 6px;
 
       .select__selected_row {
-        margin-top: 8px;
+        margin-top: 0;
         align-items: flex-start;
+
+        &:not(:first-child) {
+          margin-top: 8px;
+        }
       }
     }
 
@@ -373,13 +392,13 @@
       .select-product__color_name {
         padding: 5px 5px;
         height: 3rem !important;
-        max-height: 1.25rem !important;
+        max-height: 1.5rem !important;
       }
 
       .select__selected_name {
         padding: 5px 5px;
         height: 3rem !important;
-        max-height: 1.25rem !important;
+        max-height: 1.6rem !important;
         white-space: nowrap;
         overflow-x: hidden;
         background-color: #ffffff;
@@ -403,8 +422,8 @@
       input {
         min-width: 100% !important;
         box-sizing: border-box;
-        height: 2rem !important;
-        max-height: 2rem !important;
+        height: 3rem !important;
+        max-height: 2.25rem !important;
       }
     }
 

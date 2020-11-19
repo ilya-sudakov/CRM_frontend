@@ -206,7 +206,7 @@ const ProductionJournal = (props) => {
                     console.log('delete product', originalProduct)
                     return deleteProductFromRecordedWork(
                       item.id,
-                      originalProduct.product.id,
+                      originalProduct.id,
                     )
                   }
                 }),
