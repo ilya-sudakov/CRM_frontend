@@ -59,7 +59,7 @@ const EmployeeData = ({
 
   return (
     <>
-      <div
+      <a
         className={`main-form__item main-form__item--employee ${
           workItem.totalHours === 0 ? 'main-form__item--error' : ''
         }`}
@@ -67,6 +67,8 @@ const EmployeeData = ({
         data-hours={
           workItem.totalHours > 0 ? `${workItem.totalHours} ч` : `Нет записи!`
         }
+        href={`/dispatcher/employees/view/${workItem.employee.id}`}
+        target="_blank"
       >
         <input
           type="text"
@@ -74,7 +76,7 @@ const EmployeeData = ({
           value={`${workItem.employee.lastName} ${workItem.employee.name} ${workItem.employee.middleName}`}
           readOnly
         ></input>
-      </div>
+      </a>
       <div className="production-journal__works-list">
         {!readOnly && !readOnlyMode ? (
           <div
@@ -251,13 +253,13 @@ const ReadOnlyWorksForm = ({ workItem }) => {
                   {work.product.map((product) => (
                     <div className="main-form__work-data main-form__work-data--products">
                       <span>{product.name}</span>
-                      <span>{`${product.quantity} шт`}</span>
+                      <span>{`${product.quantity} шт.`}</span>
                     </div>
                   ))}
                   {work.draft.map((draft) => (
                     <div className="main-form__work-data main-form__work-data--products">
                       <span>{draft.name}</span>
-                      <span>{`${draft.quantity} шт`}</span>
+                      <span>{`${draft.quantity} шт.`}</span>
                     </div>
                   ))}
                 </div>
