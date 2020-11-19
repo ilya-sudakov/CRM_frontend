@@ -271,7 +271,7 @@ const ProductionJournal = (props) => {
                       (draft) => draft.id === originalDraft.id,
                     ) === undefined
                   ) {
-                    console.log('delete draft', originalDraft)
+                    console.log('delete draft', originalDraft, originalItem)
                     return deleteDraftFromRecordedWork(
                       item.id,
                       originalDraft.partId,
@@ -293,7 +293,7 @@ const ProductionJournal = (props) => {
                     return addDraftToRecordedWork(
                       item.id,
                       draft.partId,
-                      draft.partType,
+                      draft.type,
                       draft.quantity,
                       draft.name,
                     )
@@ -307,12 +307,12 @@ const ProductionJournal = (props) => {
                   const draft = item.draft.find(
                     (draft) => draft.id === originalDraft.id,
                   )
-                  console.log('edit draft', originalDraft, draft)
+                  console.log('edit draft opportunity', originalDraft, draft)
                   if (
                     draft !== undefined &&
                     originalDraft.quantity !== Number.parseFloat(draft.quantity)
                   ) {
-                    console.log('edit draft', draft)
+                    console.log('edit draft success', draft)
                     return deleteDraftFromRecordedWork(
                       item.id,
                       originalDraft.partId,
