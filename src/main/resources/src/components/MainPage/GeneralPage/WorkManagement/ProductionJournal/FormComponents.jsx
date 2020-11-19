@@ -232,26 +232,36 @@ const ReadOnlyWorksForm = ({ workItem }) => {
       <div className="main-form__item">
         <div className="main-form__input_field">
           <div className="main-form__work-list">
-            {workItem.works.map((work) => (
-              <div className="main-form__work-item">
-                <div className="main-form__work-data main-form__work-data--hours">
-                  <span>{work.workName}</span>
-                  <span>{`${work.hours} ч`}</span>
+            {workItem.works
+              .sort((a, b) => {
+                if (a.hours < b.hours) {
+                  return 1
+                }
+                if (a.hours > b.hours) {
+                  return -1
+                }
+                return 0
+              })
+              .map((work) => (
+                <div className="main-form__work-item">
+                  <div className="main-form__work-data main-form__work-data--hours">
+                    <span>{work.workName}</span>
+                    <span>{`${work.hours} ч`}</span>
+                  </div>
+                  {work.product.map((product) => (
+                    <div className="main-form__work-data main-form__work-data--products">
+                      <span>{product.name}</span>
+                      <span>{`${product.quantity} шт`}</span>
+                    </div>
+                  ))}
+                  {work.draft.map((draft) => (
+                    <div className="main-form__work-data main-form__work-data--products">
+                      <span>{draft.name}</span>
+                      <span>{`${draft.quantity} шт`}</span>
+                    </div>
+                  ))}
                 </div>
-                {work.product.map((product) => (
-                  <div className="main-form__work-data main-form__work-data--products">
-                    <span>{product.name}</span>
-                    <span>{`${product.quantity} шт`}</span>
-                  </div>
-                ))}
-                {work.draft.map((draft) => (
-                  <div className="main-form__work-data main-form__work-data--products">
-                    <span>{draft.name}</span>
-                    <span>{`${draft.quantity} шт`}</span>
-                  </div>
-                ))}
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>

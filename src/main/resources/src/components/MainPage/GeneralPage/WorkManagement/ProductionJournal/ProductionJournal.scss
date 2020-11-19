@@ -62,6 +62,7 @@
                     height: 1.5rem;
                     padding-top: 5px;
                     cursor: pointer;
+                    border-color: #dddddd;
                 }
 
                 &::after {
@@ -303,6 +304,8 @@
         &--readonly {
             width: 100%;
             margin-bottom: 5px;
+            min-height: 150px;
+            padding-left: 20px;
             .main-form__work-list {
                 display: flex;
                 flex-direction: column;
@@ -366,6 +369,9 @@
                     }
                 }
             }
+        }
+        &--minimized {
+            min-height: 100px !important;
         }
     }
     &__workshop-name {
