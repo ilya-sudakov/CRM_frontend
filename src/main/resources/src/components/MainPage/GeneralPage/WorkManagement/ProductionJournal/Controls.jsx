@@ -1,5 +1,6 @@
 import React from 'react'
 import ChevronImg from '../../../../../../../../../assets/tableview/chevron-down.inline.svg'
+import Switch from '../../../../../utils/Form/Switch/Switch.jsx'
 
 export const WorkshopControls = ({
   workshop,
@@ -40,12 +41,11 @@ export const ReadOnlyModeControls = ({
   handleChangeReadOnlyMode,
 }) => {
   return (
-    <div
-      className="main-form__button main-form__button--inverted"
-      title={readOnlyMode ? 'Раскрыть' : 'Скрыть'}
-      onClick={handleChangeReadOnlyMode}
-    >
-      {readOnlyMode ? 'Режим чтения' : 'Режим редактирования'}
-    </div>
+    <Switch
+      checked={readOnlyMode}
+      handleChange={handleChangeReadOnlyMode}
+      text="Режим чтения"
+      styles={{ marginRight: 'auto', marginLeft: '10px', marginBottom: '20px' }}
+    />
   )
 }

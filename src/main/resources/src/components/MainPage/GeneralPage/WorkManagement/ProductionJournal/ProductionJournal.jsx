@@ -888,7 +888,7 @@ const ProductionJournal = (props) => {
             readOnlyMode={worktimeInputs.readOnlyMode}
             handleChangeReadOnlyMode={handleChangeReadOnlyMode}
           />
-          {Object.entries(workshops).map((workshop, index) => (
+          {Object.entries(workshops).map((workshop) => (
             <>
               <WorkshopControls
                 workshop={workshop}
@@ -909,27 +909,25 @@ const ProductionJournal = (props) => {
                   {sortEmployees(
                     Object.entries(worktimeInputs[workshop[1]]),
                   ).map((workItem, workIndex) => (
-                    <>
-                      <div className="main-form__row" key={workIndex}>
-                        <EmployeeData
-                          workTimeErrors={workTimeErrors}
-                          setWorkTimeErrors={setWorkTimeErrors}
-                          worktimeInputs={worktimeInputs}
-                          setWorkTimeInputs={setWorkTimeInputs}
-                          employees={employees}
-                          workItem={workItem[1]}
-                          workshop={workshop}
-                          workIndex={workIndex}
-                          categories={categories}
-                          products={products}
-                          drafts={drafts}
-                          readOnly={worktimeInputs.readOnly}
-                          readOnlyMode={worktimeInputs.readOnlyMode}
-                          works={works}
-                          employeesMap={employeesMap}
-                        />
-                      </div>
-                    </>
+                    <div className="main-form__row" key={workIndex}>
+                      <EmployeeData
+                        workTimeErrors={workTimeErrors}
+                        setWorkTimeErrors={setWorkTimeErrors}
+                        worktimeInputs={worktimeInputs}
+                        setWorkTimeInputs={setWorkTimeInputs}
+                        employees={employees}
+                        workItem={workItem[1]}
+                        workshop={workshop}
+                        workIndex={workIndex}
+                        categories={categories}
+                        products={products}
+                        drafts={drafts}
+                        readOnly={worktimeInputs.readOnly}
+                        readOnlyMode={worktimeInputs.readOnlyMode}
+                        works={works}
+                        employeesMap={employeesMap}
+                      />
+                    </div>
                   ))}
                 </div>
               )}
