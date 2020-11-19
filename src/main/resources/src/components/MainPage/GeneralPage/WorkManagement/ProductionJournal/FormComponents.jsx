@@ -199,6 +199,9 @@ const WorksForm = ({
       className={`production-journal__form production-journal__form--readonly ${
         workItem.isMinimized ? 'production-journal__form--minimized' : ''
       }`}
+      style={{
+        minHeight: workItem.works.length > 0 ? '150px' : '0',
+      }}
     >
       {/* Создание работы */}
       <div className="main-form__item">
@@ -224,46 +227,50 @@ const WorksForm = ({
 }
 
 const ReadOnlyWorksForm = ({ workItem }) => {
+  const renderProductItem = ({ name, quantity }) => {
+    return (
+      <div className="main-form__work-data main-form__work-data--products">
+        <span>{name}</span>
+        <span>{`${quantity} шт.`}</span>
+      </div>
+    )
+  }
+
+  const sortWorksByHours = (works) => {
+    return works.sort((a, b) => {
+      if (a.hours < b.hours) {
+        return 1
+      }
+      if (a.hours > b.hours) {
+        return -1
+      }
+      return 0
+    })
+  }
+
   return (
     <div
       className={`production-journal__form production-journal__form--readonly ${
         workItem.isMinimized ? 'production-journal__form--minimized' : ''
       }`}
+      style={{
+        minHeight: workItem.works.length > 0 ? '150px' : '0',
+      }}
     >
       {/* Создание работы */}
       <div className="main-form__item">
         <div className="main-form__input_field">
           <div className="main-form__work-list">
-            {workItem.works
-              .sort((a, b) => {
-                if (a.hours < b.hours) {
-                  return 1
-                }
-                if (a.hours > b.hours) {
-                  return -1
-                }
-                return 0
-              })
-              .map((work) => (
-                <div className="main-form__work-item">
-                  <div className="main-form__work-data main-form__work-data--hours">
-                    <span>{work.workName}</span>
-                    <span>{`${work.hours} ч`}</span>
-                  </div>
-                  {work.product.map((product) => (
-                    <div className="main-form__work-data main-form__work-data--products">
-                      <span>{product.name}</span>
-                      <span>{`${product.quantity} шт.`}</span>
-                    </div>
-                  ))}
-                  {work.draft.map((draft) => (
-                    <div className="main-form__work-data main-form__work-data--products">
-                      <span>{draft.name}</span>
-                      <span>{`${draft.quantity} шт.`}</span>
-                    </div>
-                  ))}
+            {sortWorksByHours(workItem.works).map((work) => (
+              <div className="main-form__work-item">
+                <div className="main-form__work-data main-form__work-data--hours">
+                  <span>{work.workName}</span>
+                  <span>{`${work.hours} ч`}</span>
                 </div>
-              ))}
+                {work.product.map((product) => renderProductItem(product))}
+                {work.draft.map((draft) => renderProductItem(draft))}
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -35,7 +35,6 @@
         // align-items: center;
         border-bottom: 1px solid #cccccc;
         margin-bottom: 10px;
-        // min-height: 200px;
 
         .production-journal__form {
             flex: 0 1 100%;
@@ -304,7 +303,7 @@
         &--readonly {
             width: 100%;
             margin-bottom: 5px;
-            min-height: 150px;
+            // min-height: 150px;
             padding-left: 20px;
             .main-form__work-list {
                 display: flex;
