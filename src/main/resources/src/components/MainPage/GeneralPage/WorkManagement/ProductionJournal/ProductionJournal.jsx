@@ -40,7 +40,8 @@ const ProductionJournal = (props) => {
     lepsari: {},
     ligovskiy: {},
     office: {},
-    readOnly: true,
+    readOnly: false,
+    readOnlyMode: true,
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -818,19 +819,18 @@ const ProductionJournal = (props) => {
       })
   }
 
-  const handleMinimizeAllWorkshopItems = () => {
+  const handleMinimizeAllWorkshopItems = (workshop) => {
     setWorkTimeInputs((worktimeInputs) => {
-      const isFirstObjectMinimized = Object.values(
-        worktimeInputs[workshop[1]],
-      )[0].isMinimized
+      const isFirstObjectMinimized = Object.values(worktimeInputs[workshop])[0]
+        .isMinimized
 
-      let newWorkshopData = worktimeInputs[workshop[1]]
-      Object.entries(worktimeInputs[workshop[1]]).map((employee) => {
+      let newWorkshopData = worktimeInputs[workshop]
+      Object.entries(worktimeInputs[workshop]).map((employee) => {
         newWorkshopData[employee[0]].isMinimized = !isFirstObjectMinimized
       })
       return {
         ...worktimeInputs,
-        [workshop[1]]: {
+        [workshop]: {
           ...newWorkshopData,
         },
       }
@@ -853,6 +853,15 @@ const ProductionJournal = (props) => {
 
   const areWorkshopItemsMinimized = (workshopItems) => {
     return Object.values(workshopItems)[0]?.isMinimized
+  }
+
+  const handleChangeReadOnlyMode = () => {
+    setWorkTimeInputs((worktimeInputs) => {
+      return {
+        ...worktimeInputs,
+        readOnlyMode: !worktimeInputs.readOnlyMode,
+      }
+    })
   }
 
   return (
@@ -892,37 +901,35 @@ const ProductionJournal = (props) => {
             errorsArr={workTimeErrors}
             setErrorsArr={setWorkTimeErrors}
           />
+          <div
+            className="main-form__button main-form__button--inverted"
+            style={{
+              borderColor: 'transparent',
+              color: '#555555',
+            }}
+            title={worktimeInputs.readOnlyMode ? 'Раскрыть' : 'Скрыть'}
+            onClick={handleChangeReadOnlyMode}
+          >
+            <ChevronImg
+              className={`production-journal__img production-journal__img--chevron ${
+                worktimeInputs.readOnlyMode ? 'main-window__img--rotated' : ''
+              }`}
+            />
+            <span>
+              {worktimeInputs.readOnlyMode
+                ? 'Режим чтения'
+                : 'Режим редактирования'}
+            </span>
+          </div>
           {Object.entries(workshops).map((workshop, index) => (
             <>
-              <div className="production-journal__workshop-name">
-                <span>{workshop[0]}</span>
-                <div
-                  className="main-form__button main-form__button--inverted"
-                  style={{
-                    borderColor: 'transparent',
-                    color: '#555555',
-                  }}
-                  title={`${
-                    areWorkshopItemsMinimized(worktimeInputs[workshop[1]])
-                      ? 'Раскрыть'
-                      : 'Скрыть'
-                  } продукцию и чертежи`}
-                  onClick={handleMinimizeAllWorkshopItems}
-                >
-                  <ChevronImg
-                    className={`production-journal__img production-journal__img--chevron ${
-                      areWorkshopItemsMinimized(worktimeInputs[workshop[1]])
-                        ? 'main-window__img--rotated'
-                        : ''
-                    }`}
-                  />
-                  <span>
-                    {Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
-                      ? 'Раскрыть'
-                      : 'Скрыть продукцию и чертежи'}
-                  </span>
-                </div>
-              </div>
+              <WorkshopControls
+                workshop={workshop}
+                areWorkshopItemsMinimized={areWorkshopItemsMinimized(
+                  worktimeInputs[workshop[1]],
+                )}
+                handleMinimizeAllWorkshopItems={handleMinimizeAllWorkshopItems}
+              />
               {isLoading ? (
                 <PlaceholderLoading
                   wrapperClassName="production-journal__list"
@@ -950,6 +957,7 @@ const ProductionJournal = (props) => {
                           products={products}
                           drafts={drafts}
                           readOnly={worktimeInputs.readOnly}
+                          readOnlyMode={worktimeInputs.readOnlyMode}
                           works={works}
                           employeesMap={employeesMap}
                         />
@@ -997,6 +1005,7 @@ const EmployeeData = ({
   workshop,
   employeesMap,
   readOnly,
+  readOnlyMode,
 }) => {
   const handleAddNewWork = () => {
     setWorkTimeInputs((worktimeInputs) => {
@@ -1045,7 +1054,7 @@ const EmployeeData = ({
       <div
         className={`main-form__item main-form__item--employee ${
           workItem.totalHours === 0 ? 'main-form__item--error' : ''
-        } ${readOnly ? 'main-form__item--readonly' : ''}`}
+        }`}
         data-position={workItem.employee.position}
         data-hours={
           workItem.totalHours > 0 ? `${workItem.totalHours} ч` : `Нет записи!`
@@ -1059,7 +1068,7 @@ const EmployeeData = ({
         ></input>
       </div>
       <div className="production-journal__works-list">
-        {!readOnly ? (
+        {!readOnly && !readOnlyMode ? (
           <div
             className="main-form__button main-form__button--inverted"
             style={{
@@ -1073,7 +1082,7 @@ const EmployeeData = ({
             +
           </div>
         ) : null}
-        {workItem.works.length > 0 ? (
+        {workItem.works.length > 0 && !readOnlyMode ? (
           <div
             className="main-form__button main-form__button--inverted"
             style={{
@@ -1099,18 +1108,22 @@ const EmployeeData = ({
             />
           </div>
         ) : null}
-        <WorksForm
-          setWorkTimeInputs={setWorkTimeInputs}
-          worktimeInputs={worktimeInputs}
-          workItem={workItem}
-          workshop={workshop}
-          categories={categories}
-          products={products}
-          works={works}
-          drafts={drafts}
-          readOnly={readOnly}
-          employeesMap={employeesMap}
-        />
+        {readOnlyMode ? (
+          <ReadOnlyWorksForm workItem={workItem} workshop={workshop} />
+        ) : (
+          <WorksForm
+            setWorkTimeInputs={setWorkTimeInputs}
+            worktimeInputs={worktimeInputs}
+            workItem={workItem}
+            workshop={workshop}
+            categories={categories}
+            products={products}
+            works={works}
+            drafts={drafts}
+            readOnly={readOnly}
+            employeesMap={employeesMap}
+          />
+        )}
       </div>
     </>
   )
@@ -1171,7 +1184,7 @@ const WorksForm = ({
 
   return (
     <div
-      className={`production-journal__form ${
+      className={`production-journal__form production-journal__form--readonly ${
         workItem.isMinimized ? 'production-journal__form--minimized' : ''
       }`}
     >
@@ -1193,6 +1206,78 @@ const WorksForm = ({
             readOnly={readOnly}
           />
         </div>
+      </div>
+    </div>
+  )
+}
+
+const ReadOnlyWorksForm = ({ workItem }) => {
+  return (
+    <div
+      className={`production-journal__form production-journal__form--readonly ${
+        workItem.isMinimized ? 'production-journal__form--minimized' : ''
+      }`}
+    >
+      {/* Создание работы */}
+      <div className="main-form__item">
+        <div className="main-form__input_field">
+          <div className="main-form__work-list">
+            {workItem.works.map((work) => (
+              <div className="main-form__work-item">
+                <div className="main-form__work-data main-form__work-data--hours">
+                  <span>{work.workName}</span>
+                  <span>{`${work.hours} ч`}</span>
+                </div>
+                {work.product.map((product) => (
+                  <div className="main-form__work-data main-form__work-data--products">
+                    <span>{product.name}</span>
+                    <span>{`${product.quantity} шт`}</span>
+                  </div>
+                ))}
+                {work.draft.map((draft) => (
+                  <div className="main-form__work-data main-form__work-data--products">
+                    <span>{draft.name}</span>
+                    <span>{`${draft.quantity} шт`}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const WorkshopControls = ({
+  workshop,
+  areWorkshopItemsMinimized,
+  handleMinimizeAllWorkshopItems,
+}) => {
+  return (
+    <div className="production-journal__workshop-name">
+      <span>{workshop[0]}</span>
+      <div
+        className="main-form__button main-form__button--inverted"
+        style={{
+          borderColor: 'transparent',
+          color: '#555555',
+        }}
+        title={`${
+          areWorkshopItemsMinimized ? 'Раскрыть' : 'Скрыть'
+        } продукцию и чертежи`}
+        onClick={() => handleMinimizeAllWorkshopItems(workshop[1])}
+      >
+        <ChevronImg
+          className={`production-journal__img production-journal__img--chevron ${
+            areWorkshopItemsMinimized ? 'main-window__img--rotated' : ''
+          }`}
+        />
+        <span>
+          {areWorkshopItemsMinimized
+            ? 'Раскрыть'
+            : 'Скрыть продукцию и чертежи'}
+        </span>
       </div>
     </div>
   )

@@ -97,10 +97,6 @@
                     border: 1px solid #eda3a3 !important;
                 }
             }
-
-            &--readonly {
-                
-            }
         }
         .select-employee-new {
             margin-bottom: 5px;
@@ -293,6 +289,83 @@
             //     max-height: 0;
             //     transform: scaleY(0);
             // }
+            .main-form__work-list {
+                .main-form__work-item {
+                    .main-form__work-data {
+                        &--products {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        &--readonly {
+            width: 100%;
+            margin-bottom: 5px;
+            .main-form__work-list {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+
+                .main-form__work-item {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+
+                    &:not(:last-child) {
+                        margin-bottom: 10px;
+                    }
+
+                    // &:last-child {
+                    //     .main-form__work-data {
+                    //         &--hours {
+                    //             margin-bottom: 0 !important;
+                    //         }
+                    //         &--products {
+                    //             margin-bottom: 0 !important;
+                    //         }
+                    //     }
+                    // }
+
+                    .main-form__work-data {
+                        font-size: 1rem;
+                        margin-bottom: 3px;
+                        &--hours {
+                            margin-bottom: 5px;
+                            span {
+                                &:nth-child(2) {
+                                    border: 1px solid #dddddd;
+                                    border-radius: 3px;
+                                    margin-left: 10px;
+                                    padding: 2px 10px;
+                                    font-size: 0.85rem;
+                                    color: #777777;
+                                }
+                            }
+                        }
+                        &--products {
+                            margin-top: 2px;
+                            padding-left: 20px;
+                            margin-bottom: 7px;
+                            span {
+                                color: #555555;
+                                &:nth-child(1) {
+                                    font-size: 0.9rem;
+                                }
+                                &:nth-child(2) {
+                                    border-left: 1px solid #dddddd;
+                                    // border-radius: 5px;
+                                    margin-left: 10px;
+                                    padding: 2px 10px;
+                                    font-size: 0.85rem;
+                                    color: #888888;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     &__workshop-name {
