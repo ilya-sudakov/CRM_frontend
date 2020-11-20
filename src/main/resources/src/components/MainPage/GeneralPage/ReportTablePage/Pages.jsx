@@ -110,9 +110,7 @@ const EmployeeInfo = ({ selectedInfo }) => {
                   {selectedInfo?.works?.filter(
                     (item) => item.day === date.getDate(),
                   ).length > 0 && (
-                    <div
-                      className="report-table-page__employee-title report-table-page__employee-title--date"
-                    >
+                    <div className="report-table-page__employee-title report-table-page__employee-title--date">
                       {formatDateStringNoYear(date)}
                     </div>
                   )}
@@ -125,7 +123,11 @@ const EmployeeInfo = ({ selectedInfo }) => {
                       return (
                         <div
                           className="report-table-page__employee-works-item"
-                          style={{ marginBottom: '15px', marginTop: '5px' }}
+                          style={{
+                            marginBottom: '15px',
+                            marginTop: '5px',
+                            marginLeft: '15px',
+                          }}
                         >
                           <span>
                             <Link
@@ -205,13 +207,23 @@ const EmployeeInfo = ({ selectedInfo }) => {
         <div className="report-table-page__employee-title">
           Всего:{' '}
           {selectedInfo?.works?.length > 0
-            ? selectedInfo?.works?.reduce((sum, cur) => sum + cur.hours, 0) +
+            ? selectedInfo?.works?.reduce(
+                (sum, cur) =>
+                  dates.find((date) => date.getDate() === cur.day) !== undefined
+                    ? sum + cur.hours
+                    : sum,
+                0,
+              ) +
               ' ' +
               numberToString(
                 Number.parseInt(
                   Math.floor(
                     selectedInfo?.works?.reduce(
-                      (sum, cur) => sum + cur.hours,
+                      (sum, cur) =>
+                        dates.find((date) => date.getDate() === cur.day) !==
+                        undefined
+                          ? sum + cur.hours
+                          : sum,
                       0,
                     ) * 100,
                   ) / 100,
