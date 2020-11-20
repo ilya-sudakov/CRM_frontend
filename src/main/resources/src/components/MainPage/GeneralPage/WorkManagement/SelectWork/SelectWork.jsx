@@ -302,20 +302,23 @@ const SelectWork = (props) => {
                   </div>
                 )
               ) : null}
-              <div className="select-work__item">
-                <div className="select-work__input_name">Комментарий</div>
-                <div className="select-work__input_field">
-                  <textarea
-                    type="text"
-                    name="comment"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.comment}
-                    readOnly={props.readOnly}
-                  />
+              {!props.noComment && (
+                <div className="select-work__item select-work__item--comment">
+                  <div className="select-work__input_name">Комментарий</div>
+                  <div className="select-work__input_field">
+                    <textarea
+                      type="text"
+                      name="comment"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.comment}
+                      readOnly={props.readOnly}
+                      placeholder="Вы можете добавить комментарий для более точного описания работы... (необязательно)"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
               {!props.noTime && (
                 <div className="select-work__item select-work__item--time">
                   <div className="select-work__input_name">Часы</div>

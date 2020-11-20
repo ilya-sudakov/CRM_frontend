@@ -224,6 +224,7 @@ const WorksForm = ({
             workItems={works}
             defaultValue={workItem.works}
             readOnly={readOnly}
+            noComment
           />
         </div>
       </div>
