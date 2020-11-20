@@ -200,7 +200,12 @@ const WorksForm = ({
         workItem.isMinimized ? 'production-journal__form--minimized' : ''
       }`}
       style={{
-        minHeight: workItem.works.length > 0 ? '150px' : '0',
+        minHeight:
+          workItem.works.length > 0
+            ? workItem.isMinimized
+              ? '100px'
+              : '150px'
+            : '0',
       }}
     >
       {/* Создание работы */}

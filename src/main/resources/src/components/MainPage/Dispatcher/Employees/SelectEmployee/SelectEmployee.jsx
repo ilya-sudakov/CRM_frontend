@@ -157,7 +157,7 @@ const SelectEmployee = (props) => {
               defaultValue={props.defaultValue ? props.defaultValue : fullName}
               // onClick={!props.readOnly ? clickOnInput : null}
               placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
-              readOnly={props.readOnly}
+              readOnly
             />
           </div>
         </div>

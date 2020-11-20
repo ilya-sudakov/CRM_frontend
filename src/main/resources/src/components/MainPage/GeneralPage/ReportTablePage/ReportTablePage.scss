@@ -171,6 +171,13 @@
             }
         }
     }
+    .employee-page {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 5px 30px;
+        box-sizing: border-box;
+    }
     &__tableview {
         width: calc(100% - 30px);
 
