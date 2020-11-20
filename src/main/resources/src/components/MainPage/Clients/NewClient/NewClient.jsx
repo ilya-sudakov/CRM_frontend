@@ -29,6 +29,7 @@ const newClient = (props) => {
     workHistory: [],
     site: '',
     comment: '',
+    city: '',
     storageAddress: '',
     workCondition: '',
     price: '',
@@ -153,6 +154,7 @@ const newClient = (props) => {
           name: clientInputs.name,
           price: clientInputs.price,
           site: clientInputs.site,
+          city: clientInputs.city,
           storageAddress: clientInputs.storageAddress,
           workCondition: clientInputs.workCondition,
           check: clientInputs.check,
@@ -443,6 +445,12 @@ const newClient = (props) => {
                 inputName="Условия работы"
                 name="workCondition"
                 defaultValue={clientInputs.workCondition}
+                handleInputChange={handleInputChange}
+              />
+              <InputText
+                inputName="Город"
+                name="city"
+                defaultValue={clientInputs.city}
                 handleInputChange={handleInputChange}
               />
               <InputText

@@ -33,7 +33,7 @@ const ReportTablePage = (props) => {
   const [selectedInfo, setSelectedInfo] = useState({})
   const [searchQuery, setSearchQuery] = useState('')
   const userContext = useContext(UserContext)
-  const [curPage, setCurPage] = useState('employee') //Текущая страница
+  const [curPage, setCurPage] = useState('summary') //Текущая страница
 
   const getAllEmployeesWorkData = (date, signal) => {
     setIsLoading(true)
@@ -189,11 +189,34 @@ const ReportTablePage = (props) => {
       />
     ),
     employee: () => (
-      <EmployeePage
-        userContext={userContext}
-        workList={workList}
-        isLoading={isLoading}
-      />
+      <>
+        {/* <ControlPanel
+          styles={{ marginTop: '-5px' }}
+          buttons={
+            <Button
+              text="Пред. неделя"
+              className="main-window__button main-window__button--inverted"
+              inverted
+              isLoading={isLoading || excelIsLoading}
+              onClick={() => {
+                const newDate = new Date(
+                  new Date(date).setTime(
+                    date.getTime() - 7 * 24 * 60 * 60 * 1000,
+                  ),
+                )
+                console.log(date, newDate)
+                return setDate(newDate)
+              }}
+            />
+          }
+        /> */}
+        <EmployeePage
+          userContext={userContext}
+          workList={workList}
+          isLoading={isLoading}
+          date={date}
+        />
+      </>
     ),
   }
 

@@ -11,7 +11,7 @@ import {
 import editIcon from '../../../../../../../../assets/tableview/edit.svg'
 import { Link } from 'react-router-dom'
 
-export const EmployeePage = ({ userContext, workList, isLoading }) => {
+export const EmployeePage = ({ userContext, workList, isLoading, date }) => {
   const [selectedEmployee, setSelectedEmployee] = useState(null)
   const [selectedInfo, setSelectedInfo] = useState(null)
 
@@ -45,14 +45,14 @@ export const EmployeePage = ({ userContext, workList, isLoading }) => {
         }}
       />
       {selectedEmployee && !isLoading ? (
-        <EmployeeInfo selectedInfo={selectedInfo} />
+        <EmployeeInfo selectedInfo={selectedInfo} date={date} />
       ) : null}
     </div>
   )
 }
 
 //Окно для вывода информации о сотруднике и его работе за неделю
-const EmployeeInfo = ({ selectedInfo }) => {
+const EmployeeInfo = ({ selectedInfo, date }) => {
   const getWeekDays = (curDate) => {
     let week = []
 
@@ -62,15 +62,15 @@ const EmployeeInfo = ({ selectedInfo }) => {
       week.push(day)
     }
 
-    console.log(week)
+    console.log(curDate, week)
     return week
   }
 
   const [dates, setDates] = useState([])
 
   useEffect(() => {
-    setDates(getWeekDays(new Date()))
-  }, [selectedInfo])
+    setDates(getWeekDays(date))
+  }, [selectedInfo, date])
 
   return (
     <div className="report-table-page__employee-info">
@@ -85,7 +85,7 @@ const EmployeeInfo = ({ selectedInfo }) => {
           )}
         </div> */}
         <div className="report-table-page__employee-title">
-          Данные сотрудника
+          Данные сотрудника за рабочую неделю
         </div>
         <div className="report-table-page__employee-general">
           <div className="report-table-page__full-name">

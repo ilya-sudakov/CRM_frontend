@@ -6,7 +6,7 @@ const ControlPanel = (props) => {
   const [isHidden, setIsHidden] = useState(true)
 
   return (
-    <div className="control-panel">
+    <div className="control-panel" style={{ ...(props.styles ?? {}) }}>
       <div className="main-window__control-panel-wrapper">
         <div className="control-panel__buttons">
           {props.sorting || null}
