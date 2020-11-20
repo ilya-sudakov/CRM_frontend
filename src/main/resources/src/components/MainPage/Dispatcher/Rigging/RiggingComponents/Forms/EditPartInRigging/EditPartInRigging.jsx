@@ -70,7 +70,7 @@ const EditPartInRigging = (props) => {
         .then(() => {
           setIsLoading(false)
           // window.location.href = rigTypes[type].redirectURL
-          props.history.push(rigTypes[type].redirectURL)
+          props.history.push(`${rigTypes[type].redirectURL}#${rigId}`)
         })
         .catch((error) => {
           setIsLoading(false)

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './NewClient.scss'
 import '../../../../utils/Form/Form.scss'
 import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx'
@@ -15,17 +15,21 @@ import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx'
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx'
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
+import { UserContext } from '../../../../App.js'
 
 const newClient = (props) => {
+  const userContext = useContext(UserContext)
   const [clientInputs, setClientInputs] = useState({
     name: '',
     legalEntity: [],
     contacts: [],
-    managerName: props.userData.username,
-    managerId: props.userData.id,
+    managerName: userContext.userData.username,
+    managerId: userContext.userData.id,
     workHistory: [],
     site: '',
     comment: '',
+    city: '',
     storageAddress: '',
     workCondition: '',
     price: '',
@@ -33,6 +37,12 @@ const newClient = (props) => {
     check: '',
     clientType: 'Активные',
     categoryId: 0,
+    users: {
+      // [userContext.userData.id]: {
+      //   ...userContext.userData,
+      //   selected: true,
+      // },
+    },
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
   })
@@ -144,6 +154,7 @@ const newClient = (props) => {
           name: clientInputs.name,
           price: clientInputs.price,
           site: clientInputs.site,
+          city: clientInputs.city,
           storageAddress: clientInputs.storageAddress,
           workCondition: clientInputs.workCondition,
           check: clientInputs.check,
@@ -225,6 +236,19 @@ const newClient = (props) => {
   //При изменении данных в поле - обновляем состояние
   const handleInputChange = (e) => {
     const { name, value } = e.target
+    validateField(name, value)
+    setClientInputs({
+      ...clientInputs,
+      [name]: value,
+    })
+    setFormErrors({
+      ...formErrors,
+      [name]: false,
+    })
+  }
+
+  //При изменении данных в поле - обновляем состояние
+  const handleInputValueChange = (value, name) => {
     validateField(name, value)
     setClientInputs({
       ...clientInputs,
@@ -329,7 +353,7 @@ const newClient = (props) => {
                       })
                     }}
                     defaultValue={clientInputs.workHistory}
-                    userHasAccess={props.userHasAccess}
+                    userHasAccess={userContext.userHasAccess}
                   />
                 </div>
               </div>
@@ -359,7 +383,7 @@ const newClient = (props) => {
                       })
                     }}
                     defaultValue={clientInputs.legalEntity}
-                    userHasAccess={props.userHasAccess}
+                    userHasAccess={userContext.userHasAccess}
                   />
                 </div>
               </div>
@@ -378,7 +402,7 @@ const newClient = (props) => {
                         })
                       }}
                       defaultValue={clientInputs.contacts}
-                      userHasAccess={props.userHasAccess}
+                      userHasAccess={userContext.userHasAccess}
                     />
                   </div>
                 </div>
@@ -424,6 +448,12 @@ const newClient = (props) => {
                 handleInputChange={handleInputChange}
               />
               <InputText
+                inputName="Город"
+                name="city"
+                defaultValue={clientInputs.city}
+                handleInputChange={handleInputChange}
+              />
+              <InputText
                 inputName="Прайс"
                 name="price"
                 defaultValue={clientInputs.price}
@@ -431,7 +461,7 @@ const newClient = (props) => {
               />
               <InputUser
                 inputName="Ответственный менеджер"
-                userData={props.userData}
+                userData={userContext.userData}
                 filteredRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                 required
                 name="manager"
@@ -451,6 +481,17 @@ const newClient = (props) => {
                 handleInputChange={handleInputChange}
                 defaultValue={clientInputs.check}
               />
+              {/* {userContext.userHasAccess(['ROLE_ADMIN']) && (
+                <UsersVisibility
+                  name="users"
+                  handleInputChange={handleInputChange}
+                  defaultValue={clientInputs.users}
+                  userContext={userContext}
+                  handleInputChange={(value) =>
+                    handleInputValueChange(value, 'users')
+                  }
+                />
+              )} */}
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Категория</div>
                 <div className="main-form__item">
@@ -474,7 +515,7 @@ const newClient = (props) => {
                   required
                   error={formErrors.category}
                   type={props.type}
-                  userHasAccess={props.userHasAccess}
+                  userHasAccess={userContext.userHasAccess}
                   name="categoryId"
                   handleCategoryChange={(value, name) => {
                     validateField('categoryId', value)
@@ -521,3 +562,99 @@ const newClient = (props) => {
 }
 
 export default newClient
+
+const UsersVisibility = (props) => {
+  const [users, setUsers] = useState(props.defaultValue || {})
+  const [allChecked, setAllChecked] = useState(true)
+
+  useEffect(() => {
+    loadUsers()
+  }, [])
+
+  const loadUsers = () => {
+    getUsers()
+      .then((res) => res.json())
+      .then((res) => {
+        let newUsers = {}
+        res
+          .filter(
+            (user) =>
+              user.roles.find(
+                (role) =>
+                  role.name === 'ROLE_ADMIN' || role.name === 'ROLE_MANAGER',
+              ) !== undefined,
+          )
+          .map((user) => {
+            return (newUsers = {
+              ...newUsers,
+              [user.id]: {
+                ...user,
+                selected: true,
+              },
+            })
+          })
+        props.handleInputChange(newUsers)
+        return setUsers({ ...newUsers })
+      })
+  }
+
+  return (
+    <div className="main-form__item">
+      <div className="main-form__input_name">Видимость для пользователей</div>
+      {props.userContext.userHasAccess(['ROLE_ADMIN']) ? (
+        <div className="main-form__input_field">
+          <CheckBox
+            text="Выбрать всех"
+            checked={allChecked}
+            onChange={(value) => {
+              setAllChecked(value)
+              let newUsers = {}
+              Object.entries(users).map((user) => {
+                console.log(user)
+                return (newUsers = {
+                  ...newUsers,
+                  [user[0]]: {
+                    ...user[1],
+                    selected:
+                      user[1].username === props.userContext.userData.username
+                        ? true
+                        : value,
+                  },
+                })
+              })
+              props.handleInputChange(newUsers)
+              setUsers({ ...newUsers })
+            }}
+          />
+        </div>
+      ) : null}
+      {Object.entries(users).map((user) => (
+        <div className="main-form__input_field">
+          <CheckBox
+            text={user[1].username}
+            checked={user[1].selected}
+            disabled={user[1].username === props.userContext.userData.username}
+            onChange={(value) => {
+              setUsers((prev) => {
+                return {
+                  ...prev,
+                  [user[1].id]: {
+                    ...user[1],
+                    selected: value,
+                  },
+                }
+              })
+              props.handleInputChange({
+                ...users,
+                [user[1].id]: {
+                  ...user[1],
+                  selected: value,
+                },
+              })
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  )
+}

@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import deleteSVG from '../../../../../../../../../assets/select/delete.svg'
 import './SelectDraft.scss'
+import TableView from './TableView/TableView.jsx'
+import SearchBar from '../../../SearchBar/SearchBar.jsx'
+import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx'
 import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
 import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
@@ -9,8 +12,11 @@ import Select from 'react-select'
 
 const SelectDraftNew = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
+  const [searchQueryCategory, setSearchQueryCategory] = useState('')
   const [selected, setSelected] = useState([])
   const [drafts, setDrafts] = useState([])
+  const [showWindow, setShowWindow] = useState(false)
+  const [closeWindow, setCloseWindow] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
   const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
 
@@ -89,15 +95,13 @@ const SelectDraftNew = (props) => {
     }
   }
 
-  const clickOnOption = (selectedItem) => {
-    const { name, id, type, number } = selectedItem
-    setShowOptions(!showOptions)
+  const clickOnOption = (id, name, type) => {
+    // const { name, id, type, number } = selectedItem
     setSelected([
       ...selected,
       {
         partId: id,
         name: name,
-        number: number,
         type: type,
         quantity: 0,
       },
@@ -106,9 +110,8 @@ const SelectDraftNew = (props) => {
       ...selected,
       {
         partId: id,
-        type: type,
-        number: number,
         name: name,
+        type: type,
         quantity: 0,
       },
     ])
@@ -137,24 +140,13 @@ const SelectDraftNew = (props) => {
     props.onChange([...newSelected])
   }
 
-  const pressEscKey = useCallback((event) => {
-    if (event.keyCode === 27) {
-      setShowOptions(!showOptions)
-    }
-  }, [])
-
   useEffect(() => {
     if (props.defaultValue !== undefined && !defaultValueLoaded) {
       setSelected([...props.defaultValue])
       setDefaultValueLoaded(true)
     }
-    document.addEventListener('keydown', pressEscKey, false)
     drafts.length === 0 && loadDrafts()
-    // loadDrafts();
-    return () => {
-      document.removeEventListener('keydown', pressEscKey, false)
-    }
-  }, [props.defaultValue, props.categories, showOptions])
+  }, [props.defaultValue, props.categories])
 
   return (
     <div
@@ -163,26 +155,41 @@ const SelectDraftNew = (props) => {
       }`}
     >
       <div className="select-draft__input">
-        <div className="select-draft__input_name">Чертежи</div>
-        {!props.readOnly ? (
-          <Select
-            // value={props.defaultValue.value === '' ? null : props.defaultValue}
-            className="select-draft__input_field"
-            options={drafts}
-            noOptionsMessage={() => 'Не найдено чертежей с таким названием'}
-            styles={{
-              menu: (styles) => {
-                return {
-                  ...styles,
-                  zIndex: 999,
-                }
-              },
+        <div className="select-draft__buttons">
+          <button
+            className="select-draft__search_button"
+            onClick={(e) => {
+              e.preventDefault()
+              setShowWindow(!showWindow)
             }}
-            placeholder={
-              drafts.length > 0 ? 'Выберите чертеж...' : 'Идет загрузка...'
+            title="Добавить чертеж"
+          >
+            +
+          </button>
+        </div>
+        {!props.readOnly ? (
+          <FormWindow
+            title="Выбор чертежа"
+            content={
+              <React.Fragment>
+                <SearchBar
+                  // title="Поиск по чертежам"
+                  fullSize
+                  placeholder="Введите артикул чертежа для поиска..."
+                  setSearchQuery={setSearchQueryCategory}
+                />
+                <TableView
+                  drafts={drafts}
+                  searchQuery={searchQueryCategory}
+                  selectDraft={clickOnOption}
+                  closeWindow={closeWindow}
+                  setCloseWindow={setCloseWindow}
+                  setShowWindow={setShowWindow}
+                />
+              </React.Fragment>
             }
-            isDisabled={drafts.length === 0 || props.readOnly}
-            onChange={(value) => clickOnOption(value)}
+            showWindow={showWindow}
+            setShowWindow={setShowWindow}
           />
         ) : null}
       </div>

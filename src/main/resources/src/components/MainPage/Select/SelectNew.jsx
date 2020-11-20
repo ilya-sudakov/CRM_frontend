@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
 import deleteSVG from '../../../../../../../assets/select/delete.svg'
 import './Select.scss'
+import SearchBar from '../SearchBar/SearchBar.jsx'
+import TableView from '../Products/TableView/TableView.jsx'
 import { getCategoriesNames } from '../../../utils/RequestsAPI/Products/Categories.jsx'
+import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import ColorPicker from './ColorPicker/ColorPicker.jsx'
 import {
   getProductsByCategory,
@@ -10,13 +13,16 @@ import {
 } from '../../../utils/RequestsAPI/Products.jsx'
 // import { addSpaceDelimiter } from '../../../utils/functions.jsx'
 import { UserContext } from '../../../App.js'
-import Select from 'react-select'
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const SelectNew = (props) => {
   const [searchQuery, setSearchQuery] = useState('')
+  const [searchQueryCategory, setSearchQueryCategory] = useState('')
   const [selected, setSelected] = useState([])
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
+  const [showWindow, setShowWindow] = useState(false)
+  const [closeWindow, setCloseWindow] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
   const [showOverlay, setShowOverlay] = useState(false)
   const userContext = useContext(UserContext)
@@ -108,8 +114,46 @@ const SelectNew = (props) => {
     }
   }
 
-  const clickOnOption = (selectedItem) => {
-    const { name, id, productId } = selectedItem
+  const [sortOrder, setSortOrder] = useState({
+    curSort: 'name',
+    name: 'asc',
+  })
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(' ')[0]
+    const order = event.target.value.split(' ')[1]
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    })
+  }
+
+  const filterSearchQuery = (data) => {
+    const query = searchQueryCategory.toLowerCase()
+    return data.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(query) ||
+        item.id.toString().includes(query) ||
+        item.weight.toString().includes(query) ||
+        (item.comment !== null && item.comment.toLowerCase().includes(query))
+      )
+    })
+  }
+
+  const sortProducts = (data) => {
+    return data.sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+      }
+      return 0
+    })
+  }
+
+  const clickOnOption = (id, name) => {
+    // const { name, id } = selectedItem
     setSelected([
       ...selected,
       {
@@ -349,26 +393,61 @@ const SelectNew = (props) => {
       }`}
     >
       <div className="select__input">
-        <div className="select__input_name">Продукция</div>
+        <button
+          className="select__search_button"
+          onClick={(e) => {
+            e.preventDefault()
+            setShowWindow(!showWindow)
+          }}
+          title="Добавить продукцию"
+        >
+          +
+        </button>
         {!props.readOnly ? (
-          <Select
-            // value={props.defaultValue.value === '' ? null : props.defaultValue}
-            className="select__input_field"
-            options={products}
-            noOptionsMessage={() => 'Не найдено продукции с таким названием'}
-            styles={{
-              menu: (styles) => {
-                return {
-                  ...styles,
-                  zIndex: 999,
-                }
-              },
-            }}
-            placeholder={
-              products.length > 0 ? 'Выберите продукцию...' : 'Идет загрузка...'
+          <FormWindow
+            title="Выбор продукции"
+            content={
+              <React.Fragment>
+                <SearchBar
+                  fullSize
+                  // title="Поиск по продукции"
+                  placeholder="Введите название продукции для поиска..."
+                  setSearchQuery={setSearchQueryCategory}
+                />
+                <ControlPanel
+                  itemsCount={`Всего: ${products.length} записей`}
+                  sorting={
+                    <div className="main-window__sort-panel">
+                      <select
+                        className="main-window__select"
+                        onChange={changeSortOrder}
+                      >
+                        <option value="name asc">По алфавиту (А-Я)</option>
+                        <option value="name desc">По алфавиту (Я-А)</option>
+                        <option value="weight desc">По весу</option>
+                      </select>
+                    </div>
+                  }
+                />
+                <TableView
+                  // products={products}
+                  products={
+                    props.products
+                      ? sortProducts(filterSearchQuery(props.products))
+                      : sortProducts(filterSearchQuery(products))
+                  }
+                  categories={categories}
+                  searchQuery={searchQueryCategory}
+                  deleteItem={null}
+                  selectProduct={clickOnOption}
+                  closeWindow={closeWindow}
+                  setCloseWindow={setCloseWindow}
+                  setShowWindow={setShowWindow}
+                />
+              </React.Fragment>
             }
-            isDisabled={products.length === 0 || props.readOnly}
-            onChange={(value) => clickOnOption(value)}
+            showWindow={showWindow}
+            setShowWindow={setShowWindow}
           />
         ) : null}
       </div>

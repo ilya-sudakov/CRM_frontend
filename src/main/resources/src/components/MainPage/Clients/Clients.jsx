@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import './Clients.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import '../../../utils/Form/Form.scss'
-import viewSVG from '../../../../../../../assets/tableview/view.svg'
 import editSVG from '../../../../../../../assets/tableview/edit.svg'
 import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
 import starSVG from '../../../../../../../assets/tableview/star.svg'
@@ -630,15 +629,6 @@ const Clients = (props) => {
                       >
                         <img className="main-window__img" src={calendarSVG} />
                       </div>
-                      <a
-                        className="main-window__action"
-                        title="Просмотр клиента"
-                        href={`/${props.type}/view/${item.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img className="main-window__img" src={viewSVG} />
-                      </a>
                       <a
                         className="main-window__action"
                         title="Редактирование клиента"

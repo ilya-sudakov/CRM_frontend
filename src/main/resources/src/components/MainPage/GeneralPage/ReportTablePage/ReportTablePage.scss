@@ -100,6 +100,16 @@
                     top: calc(100% + 3px);
                     left: 0;
                 }
+
+                &--date {
+                    font-size: 1rem;
+
+                    &::after {
+                        height: 2px;
+                        top: calc(100% + 1px);
+                        width: 100%;
+                    }
+                }
             }
 
             .report-table-page__employee-hours {
@@ -169,6 +179,29 @@
                     }
                 }
             }
+        }
+    }
+    .employee-page {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 5px 30px;
+        box-sizing: border-box;
+
+        .select-employee {
+            margin-bottom: 15px;
+            &__input {
+                .select-employee__input_name {
+                    display: none;
+                }
+            }
+            &__searchbar {
+                display: none;
+            }
+        }
+
+        .report-table-page__employee-wrapper {
+            padding-left: 0;
         }
     }
     &__tableview {

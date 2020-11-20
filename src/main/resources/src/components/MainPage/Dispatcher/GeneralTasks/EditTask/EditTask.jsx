@@ -101,7 +101,7 @@ const EditTask = (props) => {
     setIsLoading(true)
     formIsValid() &&
       editMainTask(taskInputs, taskId)
-        .then(() => props.history.push('/dispatcher/general-tasks'))
+        .then(() => props.history.push(`/dispatcher/general-tasks#${taskId}`))
         .catch((error) => {
           setIsLoading(false)
           alert('Ошибка при добавлении записи')
@@ -283,7 +283,9 @@ const EditTask = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => props.history.push('/dispatcher/general-tasks')}
+            onClick={() =>
+              props.history.push(`/dispatcher/general-tasks#${taskId}`)
+            }
             value="Вернуться назад"
           />
           <Button

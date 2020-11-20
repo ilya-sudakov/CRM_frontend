@@ -75,23 +75,55 @@ class App extends React.Component {
       localStorage.getItem('refreshToken') &&
       this.state.isAuthorized === false
     ) {
-      const refreshTokenObject = Object.assign({
-        refreshToken: localStorage.getItem('refreshToken'),
-      })
-      refreshToken(refreshTokenObject)
-        .then((res) => res.json())
-        .then((response) => {
-          this.setUserData(true, response)
-          localStorage.setItem('accessToken', response.accessToken)
-          localStorage.setItem('refreshToken', response.refreshToken)
-        })
-        .catch((error) => {
-          console.log(error)
-          localStorage.removeItem('accessToken')
-          localStorage.removeItem('refreshToken')
-          window.location.reload()
-        })
+      this.refreshOldToken()
     }
+    this.initFirebase()
+  }
+
+  //Обработка устаревшего токена
+  refreshExpiredToken = (expiredIn = new Date()) => {
+    const curDateMS = new Date().getTime()
+    const expiredInDateMS = new Date(expiredIn * 1000).getTime()
+
+    if (expiredInDateMS > curDateMS) {
+      const timeDifference = expiredInDateMS - curDateMS
+      return setTimeout(() => {
+        console.log('refreshing old token')
+        return this.refreshOldToken()
+      }, timeDifference)
+    }
+    if (expiredInDateMS <= curDateMS) {
+      console.log('refreshing old token')
+      return this.refreshOldToken()
+    }
+  }
+
+  //Обновление токена доступа
+  refreshOldToken = () => {
+    const refreshTokenObject = Object.assign({
+      refreshToken: localStorage.getItem('refreshToken'),
+    })
+    return refreshToken(refreshTokenObject)
+      .then((res) => res.json())
+      .then((response) => {
+        //Сохраняем данные пользователя
+        this.setUserData(true, response)
+        //Функция обработки токена, если он устареет
+        this.refreshExpiredToken(response.expiredIn)
+        localStorage.setItem('accessToken', response.accessToken)
+        localStorage.setItem('refreshToken', response.refreshToken)
+      })
+      .catch((error) => {
+        //При ошибке очищаем localStorage
+        console.log(error)
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        window.location.reload()
+      })
+  }
+
+  //Инициализация Firebase
+  initFirebase = () => {
     // !FIREBASE
     if (messaging !== null) {
       messaging

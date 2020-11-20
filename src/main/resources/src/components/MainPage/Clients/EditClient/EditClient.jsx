@@ -48,6 +48,7 @@ const EditClient = (props) => {
     site: '',
     comment: '',
     storageAddress: '',
+    city: '',
     workCondition: '',
     price: '',
     discount: '',
@@ -139,6 +140,7 @@ const EditClient = (props) => {
           name: clientInputs.name,
           price: clientInputs.price,
           site: clientInputs.site,
+          city: clientInputs.city,
           storageAddress: clientInputs.storageAddress,
           workCondition: clientInputs.workCondition,
           check: clientInputs.check,
@@ -350,6 +352,7 @@ const EditClient = (props) => {
             workCondition: res.workCondition,
             price: res.price,
             check: res.check,
+            city: res.city,
             clientType: res.clientType,
             managerName: res.manager,
             nextContactDate: res.nextDateContact,
@@ -529,6 +532,12 @@ const EditClient = (props) => {
                 inputName="Условия работы"
                 name="workCondition"
                 defaultValue={clientInputs.workCondition}
+                handleInputChange={handleInputChange}
+              />
+              <InputText
+                inputName="Город"
+                name="city"
+                defaultValue={clientInputs.city}
                 handleInputChange={handleInputChange}
               />
               <InputText

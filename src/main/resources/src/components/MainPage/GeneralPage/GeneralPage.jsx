@@ -3,12 +3,16 @@ import { AdminWorkspace } from '../lazyImports.jsx'
 import { Link } from 'react-router-dom'
 import './GeneralPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
+import DownloadIcon from '../../../../../../../assets/download.svg'
 import graphIcon from '../../../../../../../assets/graph-icon.svg'
 import StatsIcon from '../../../../../../../assets/statistics/stats-alt.inline.svg'
 import calenderIcon from '../../../../../../../assets/tableview/calendar.svg'
+import { exportReportTableExcel } from '../../../utils/xlsxFunctions.jsx'
+import Button from '../../../utils/Form/Button/Button.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const GeneralPage = (props) => {
+  const [date, setDate] = useState(new Date())
   const [workshops, setWorkshops] = useState([
     'ЦехЛЭМЗ',
     'ЦехЛепсари',
@@ -40,6 +44,13 @@ const GeneralPage = (props) => {
     if (props.userHasAccess(['ROLE_MANAGER'])) {
       return ['Офис']
     }
+  }
+
+  async function testExcelJSLibrary() {
+    setIsLoading(true)
+    const filteredWorkshops = getFilteredWorkshops()
+    await exportReportTableExcel(new Date(), filteredWorkshops)
+    return setIsLoading(false)
   }
 
   useEffect(() => {
@@ -83,12 +94,10 @@ const GeneralPage = (props) => {
                   Дневник производства
                 </Link>
               )}
-              {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
-                <Link className="main-window__button" to="/report-table">
-                  <img className="main-window__img" src={calenderIcon} />
-                  Интерактивный табель
-                </Link>
-              )}
+              <Link className="main-window__button" to="/report-table">
+                <img className="main-window__img" src={calenderIcon} />
+                Табель
+              </Link>
               {props.userHasAccess(['ROLE_ADMIN']) && (
                 <Link className="main-window__button" to="/graphs">
                   <img className="main-window__img" src={graphIcon} />
@@ -101,14 +110,14 @@ const GeneralPage = (props) => {
                   Статистика
                 </Link>
               )}
-              {/* <Button
+              <Button
                 text="Скачать Табель"
                 imgSrc={DownloadIcon}
                 className="main-window__button main-window__button--inverted"
                 inverted
                 isLoading={isLoading}
                 onClick={testExcelJSLibrary}
-              /> */}
+              />
             </>
           }
         />

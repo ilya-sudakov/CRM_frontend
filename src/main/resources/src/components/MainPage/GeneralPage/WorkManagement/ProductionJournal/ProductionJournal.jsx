@@ -3,17 +3,7 @@ import './ProductionJournal.scss'
 import '../../../../../utils/Form/Form.scss'
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import SelectEmployeeNew from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployeeNew.jsx'
-import SelectWork from '../SelectWork/SelectWork.jsx'
-import ChevronImg from '../../../../../../../../../assets/tableview/chevron-down.inline.svg'
-import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx'
-import {
-  getProductById,
-  getProductsByCategory,
-  getProductsByLocation,
-} from '../../../../../utils/RequestsAPI/Products.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
-import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx'
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 import {
   addDraftToRecordedWork,
@@ -25,13 +15,21 @@ import {
   editRecordedWork,
   getRecordedWorkByDay,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
-import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
-import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
-import { getWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
-import { dateDiffInDays } from '../../../../../utils/functions.jsx'
 import { UserContext } from '../../../../../App.js'
+import { ReadOnlyModeControls, WorkshopControls } from './Controls.jsx'
+import EmployeeData from './FormComponents.jsx'
+import {
+  sortEmployees,
+  areWorkshopItemsMinimized,
+  combineOriginalAndNewWorks,
+  combineWorksForSamePeople,
+} from './helpers.js'
+import {
+  loadDrafts,
+  loadEmployees,
+  loadProducts,
+  loadWorkItems,
+} from './fetchData.js'
 
 const ProductionJournal = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -41,6 +39,7 @@ const ProductionJournal = (props) => {
     ligovskiy: {},
     office: {},
     readOnly: false,
+    readOnlyMode: false,
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -207,7 +206,7 @@ const ProductionJournal = (props) => {
                     console.log('delete product', originalProduct)
                     return deleteProductFromRecordedWork(
                       item.id,
-                      originalProduct.product.id,
+                      originalProduct.id,
                     )
                   }
                 }),
@@ -272,7 +271,7 @@ const ProductionJournal = (props) => {
                       (draft) => draft.id === originalDraft.id,
                     ) === undefined
                   ) {
-                    console.log('delete draft', originalDraft)
+                    console.log('delete draft', originalDraft, originalItem)
                     return deleteDraftFromRecordedWork(
                       item.id,
                       originalDraft.partId,
@@ -294,7 +293,7 @@ const ProductionJournal = (props) => {
                     return addDraftToRecordedWork(
                       item.id,
                       draft.partId,
-                      draft.partType,
+                      draft.type,
                       draft.quantity,
                       draft.name,
                     )
@@ -308,12 +307,12 @@ const ProductionJournal = (props) => {
                   const draft = item.draft.find(
                     (draft) => draft.id === originalDraft.id,
                   )
-                  console.log('edit draft', originalDraft, draft)
+                  console.log('edit draft opportunity', originalDraft, draft)
                   if (
                     draft !== undefined &&
                     originalDraft.quantity !== Number.parseFloat(draft.quantity)
                   ) {
-                    console.log('edit draft', draft)
+                    console.log('edit draft success', draft)
                     return deleteDraftFromRecordedWork(
                       item.id,
                       originalDraft.partId,
@@ -382,8 +381,8 @@ const ProductionJournal = (props) => {
           })
         }),
       ).then(() => {
-        // props.history.push('/')
-        window.location.reload()
+        props.history.push('/')
+        // window.location.reload()
       })
     })
   }
@@ -395,15 +394,27 @@ const ProductionJournal = (props) => {
     let employees = []
 
     if (works.length === 0) {
-      loadWorkItems(abortController.signal)
+      loadWorkItems(abortController.signal, setIsLoading, setWorks)
     }
     if (products.length === 0) {
-      loadProducts(abortController.signal)
+      loadProducts(
+        abortController.signal,
+        userContext,
+        setCategories,
+        setProducts,
+      )
     }
     if (drafts.length === 0) {
-      loadDrafts(abortController.signal)
+      loadDrafts(abortController.signal, setDrafts)
     }
-    loadEmployees(abortController.signal)
+    loadEmployees(
+      abortController.signal,
+      setIsLoading,
+      setEmployees,
+      setWorkTimeInputs,
+      worktimeInputs,
+      workshops,
+    )
       .then((res) => {
         employees = res
         setIsLoading(true)
@@ -415,8 +426,19 @@ const ProductionJournal = (props) => {
       })
       .then((res) => res.json())
       .then(async (res) => {
-        const combinedWorks = await combineWorksForSamePeople(res)
-        combineOriginalAndNewWorks(combinedWorks, employees)
+        const combinedWorks = await combineWorksForSamePeople(
+          res,
+          setEmployeesMap,
+          setIsLoading,
+        )
+        combineOriginalAndNewWorks(
+          combinedWorks,
+          employees,
+          setIsLoading,
+          workshops,
+          setWorkTimeInputs,
+          worktimeInputs,
+        )
       })
       .catch((error) => {
         console.log(error)
@@ -428,394 +450,50 @@ const ProductionJournal = (props) => {
     }
   }, [worktimeInputs.date])
 
-  const combineWorksForSamePeople = (works) => {
-    // let newEmployeesWorkMap = [];
-    let newEmployeesMap = {}
-    return Promise.all(
-      works.map((work) => {
-        const { id } = work.employee
-        const workList = {
-          workId: work.workList.id,
-          workType: work.workList.typeOfWork,
-          workName: work.workList.work,
-        }
-        if (newEmployeesMap[id] !== undefined) {
-          return (newEmployeesMap = Object.assign({
-            ...newEmployeesMap,
-            [id]: {
-              ...newEmployeesMap[id],
-              works: [
-                ...newEmployeesMap[id].works,
-                {
-                  ...work,
-                  ...workList,
-                  isOld: true,
-                  product: work.workControlProduct.map((product) => {
-                    return {
-                      ...product,
-                      name: product.product.name,
-                      status: product.product.status,
-                    }
-                  }),
-                  draft: work.partsWorks,
-                },
-              ],
-            },
-          }))
-        } else {
-          return (newEmployeesMap = Object.assign({
-            ...newEmployeesMap,
-            [id]: {
-              employee: work.employee,
-              works: [
-                {
-                  ...work,
-                  ...workList,
-                  isOld: true,
-                  product: work.workControlProduct.map((product) => {
-                    return {
-                      ...product,
-                      name: product.product.name,
-                      status: product.product.status,
-                    }
-                  }),
-                  draft: work.partsWorks,
-                },
-              ],
-            },
-          }))
-        }
-      }),
-    )
-      .then(() => {
-        console.log(newEmployeesMap)
-        setEmployeesMap(newEmployeesMap)
-        return newEmployeesMap
-      })
-      .catch((error) => {
-        console.log(error)
-        setIsLoading(false)
-      })
-  }
-
-  const combineOriginalAndNewWorks = (works, employees) => {
-    setIsLoading(true)
-    let newWorkshops = {}
-    Object.entries(workshops).map((workshop) => {
-      let newWorkshopValues = {}
-      const curWorkshopEmployees = Object.entries(employees[workshop[1]])
-      curWorkshopEmployees.map((employee) => {
-        // console.log(employee[0])
-        if (works[employee[0]] !== undefined) {
-          return (newWorkshopValues = {
-            ...newWorkshopValues,
-            [employee[0]]: {
-              ...employee[1],
-              originalWorks: works[employee[0]].works,
-              works: works[employee[0]].works,
-            },
-          })
-        }
-        return (newWorkshopValues = {
-          ...newWorkshopValues,
-          [employee[0]]: {
-            ...employee[1],
-            works: employees[workshop[1]][employee[0]].works,
-          },
-        })
-      })
-      return (newWorkshops = {
-        ...newWorkshops,
-        [workshop[1]]: newWorkshopValues,
-      })
-    })
-    setIsLoading(false)
-    console.log(newWorkshops)
-    setWorkTimeInputs({
-      ...worktimeInputs,
-      ...newWorkshops,
-    })
-  }
-
   useEffect(() => {}, [worktimeInputs])
 
-  const loadProducts = (signal) => {
-    getCategoriesNames(signal) //Только категории
-      .then((res) => res.json())
-      .then((res) => {
-        const categoriesArr = res
-        setCategories(res)
-        let productsArr = []
-        if (
-          userContext.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_DISPATCHER',
-            'ROLE_ENGINEER',
-            'ROLE_MANAGER',
-          ])
-        ) {
-          Promise.all(
-            categoriesArr.map((item) => {
-              let category = {
-                category: item.category,
-              }
-              return getProductsByCategory(category, signal) //Продукция по категории
-                .then((res) => res.json())
-                .then((res) => {
-                  res.map((item) => productsArr.push(item))
-                  setProducts([
-                    ...productsArr.sort((a, b) => {
-                      if (a.name < b.name) {
-                        return -1
-                      }
-                      if (a.name > b.name) {
-                        return 1
-                      }
-                      return 0
-                    }),
-                  ])
-                })
-            }),
-          ).then(() => {
-            //Загружаем картинки по отдельности для каждой продукции
-            Promise.all(
-              productsArr.map((item, index) => {
-                getProductById(item.id, signal)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    // console.log(res);
-                    productsArr.splice(index, 1, res)
-                    setProducts([
-                      ...productsArr.sort((a, b) => {
-                        if (a.name < b.name) {
-                          return -1
-                        }
-                        if (a.name > b.name) {
-                          return 1
-                        }
-                        return 0
-                      }),
-                    ])
-                  })
-              }),
-            ).then(() => {
-              console.log('all images downloaded')
-            })
-          })
-        } else {
-          getProductsByLocation(
-            {
-              productionLocation: userContext.userHasAccess(['ROLE_LIGOVSKIY'])
-                ? 'ЦехЛиговский'
-                : userContext.userHasAccess(['ROLE_LEMZ'])
-                ? 'ЦехЛЭМЗ'
-                : userContext.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
-            },
-            signal,
-          )
-            .then((res) => res.json())
-            .then((res) => {
-              res.map((item) => productsArr.push(item))
-              setProducts([...productsArr])
-              Promise.all(
-                productsArr.map((item, index) => {
-                  getProductById(item.id, signal)
-                    .then((res) => res.json())
-                    .then((res) => {
-                      // console.log(res);
-                      productsArr.splice(index, 1, res)
-                      setProducts([
-                        ...productsArr.sort((a, b) => {
-                          if (a.name < b.name) {
-                            return -1
-                          }
-                          if (a.name > b.name) {
-                            return 1
-                          }
-                          return 0
-                        }),
-                      ])
-                    })
-                }),
-              ).then(() => {
-                console.log('all images downloaded')
-              })
-            })
-        }
+  const handleMinimizeAllWorkshopItems = (workshop) => {
+    setWorkTimeInputs((worktimeInputs) => {
+      const isFirstObjectMinimized = Object.values(worktimeInputs[workshop])[0]
+        .isMinimized
+
+      let newWorkshopData = worktimeInputs[workshop]
+      Object.entries(worktimeInputs[workshop]).map((employee) => {
+        newWorkshopData[employee[0]].isMinimized = !isFirstObjectMinimized
       })
+      return {
+        ...worktimeInputs,
+        [workshop]: {
+          ...newWorkshopData,
+        },
+      }
+    })
   }
 
-  async function loadDrafts(signal) {
-    let newDrafts = []
-    getStamp(signal)
-      .then((response) => response.json())
-      .then((response) => {
-        // console.log(response);
-        response.map((item) => {
-          return item.stampParts.map((stamp) => {
-            return newDrafts.push({
-              ...stamp,
-              value: stamp.id,
-              label: `${stamp.number}, ${stamp.name}`,
-              type: 'Stamp',
-            })
-          })
-        })
-        // console.log(newDrafts);
-        return setDrafts([...newDrafts])
-      })
-      .then(() => getPressForm(signal))
-      .then((response) => response.json())
-      .then((response) => {
-        // console.log(response);
-        response.map((item) => {
-          return item.pressParts.map((stamp) => {
-            return newDrafts.push({
-              ...stamp,
-              value: stamp.id,
-              label: `${stamp.number}, ${stamp.name}`,
-              type: 'Press',
-            })
-          })
-        })
-        return setDrafts([...newDrafts])
-      })
-      .then(() => getMachine(signal))
-      .then((response) => response.json())
-      .then((response) => {
-        // console.log(response)
-        response.map((item) => {
-          return item.benchParts.map((stamp) => {
-            return newDrafts.push({
-              ...stamp,
-              value: stamp.id,
-              label: `${stamp.number}, ${stamp.name}`,
-              type: 'Bench',
-            })
-          })
-        })
-        return setDrafts([...newDrafts])
-        // console.log(newDrafts)
-      })
-      .then(() => getParts(signal))
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res)
-        res.map((item) => {
-          return item.detailParts.map((stamp) => {
-            return newDrafts.push({
-              ...stamp,
-              value: stamp.id,
-              label: `${stamp.number}, ${stamp.name}`,
-              type: 'Detail',
-            })
-          })
-        })
-        // console.log(newDrafts)
-        return setDrafts([
-          ...newDrafts.sort((a, b) => {
-            if (a.name < b.name) {
-              return -1
-            }
-            if (a.name > b.name) {
-              return 1
-            }
-            return 0
-          }),
-        ])
-      })
+  const handleChangeReadOnlyMode = () => {
+    setWorkTimeInputs((worktimeInputs) => {
+      return {
+        ...worktimeInputs,
+        readOnlyMode: !worktimeInputs.readOnlyMode,
+      }
+    })
   }
 
-  const loadEmployees = async (signal) => {
-    setIsLoading(true)
-    return await getEmployees(signal)
-      .then((res) => res.json())
-      .then((res) => {
-        setEmployees(res)
-        let newWorkshopEmployees = {}
-        return Promise.all(
-          Object.entries(workshops).map((workshop) => {
-            let filteredEmployees = {}
-            res
-              .filter(
-                (item) =>
-                  item.workshop === workshop[0] && item.relevance !== 'Уволен',
-              )
-              .map((employee) => {
-                // console.log(employee)
-                return (filteredEmployees = {
-                  ...filteredEmployees,
-                  [employee.id]: {
-                    isMinimized: false,
-                    employee: employee,
-                    works: [
-                      //uncomment to get one work as a default
-                      // {
-                      //   isOld: false,
-                      //   product: [],
-                      //   draft: [],
-                      //   workName: '',
-                      //   workType: '',
-                      //   workId: null,
-                      //   hours: 0,
-                      //   comment: '',
-                      // },
-                    ],
-                    originalWorks: [],
-                    totalHours: 0,
-                  },
-                })
-              })
-            return (newWorkshopEmployees = {
-              ...newWorkshopEmployees,
-              [workshop[1]]: filteredEmployees,
-            })
-          }),
-        ).then(() => {
-          setWorkTimeInputs({
-            ...worktimeInputs,
-            ...newWorkshopEmployees,
-          })
-          return newWorkshopEmployees
-        })
-      })
-      .catch((error) => {
-        setIsLoading(false)
-        console.log(error)
-        return setIsLoading(false)
-      })
-  }
+  const handleDateChange = (date) => {
+    //readonly для записей старше чем 3 дня
+    //const readOnly = Math.abs(dateDiffInDays(new Date(), date)) > 3
+    const readOnly = false
 
-  const loadWorkItems = async (signal) => {
-    setIsLoading(true)
-    return getWork(signal)
-      .then((res) => res.json())
-      .then((res) => {
-        return setWorks(
-          res
-            .sort((a, b) => {
-              if (a.work < b.work) {
-                return -1
-              }
-              if (a.work > b.work) {
-                return 1
-              }
-              return 0
-            })
-            .map((work) => {
-              return {
-                // work.work, work.id, work.typeOfWork
-                value: work.id,
-                label: work.work,
-                typeOfWork: work.typeOfWork,
-              }
-            }),
-        )
-      })
-      .catch((error) => {
-        setIsLoading(false)
-        console.log(error)
-      })
+    validateField('date', date)
+    setWorkTimeInputs({
+      ...worktimeInputs,
+      date: date,
+      readOnly: readOnly,
+    })
+    setWorkTimeErrors({
+      ...workTimeErrors,
+      date: false,
+    })
   }
 
   return (
@@ -836,77 +514,23 @@ const ProductionJournal = (props) => {
             name="date"
             // disabled
             selected={worktimeInputs.date}
-            handleDateChange={(date) => {
-              //readonly для записей старше чем 3 дня
-              //const readOnly = Math.abs(dateDiffInDays(new Date(), date)) > 3
-              const readOnly = false
-
-              validateField('date', date)
-              setWorkTimeInputs({
-                ...worktimeInputs,
-                date: date,
-                readOnly: readOnly,
-              })
-              setWorkTimeErrors({
-                ...workTimeErrors,
-                date: false,
-              })
-            }}
+            handleDateChange={handleDateChange}
             errorsArr={workTimeErrors}
             setErrorsArr={setWorkTimeErrors}
           />
-          {Object.entries(workshops).map((workshop, index) => (
+          <ReadOnlyModeControls
+            readOnlyMode={worktimeInputs.readOnlyMode}
+            handleChangeReadOnlyMode={handleChangeReadOnlyMode}
+          />
+          {Object.entries(workshops).map((workshop) => (
             <>
-              <div className="production-journal__workshop-name">
-                <span>{workshop[0]}</span>
-                <div
-                  className="main-form__button main-form__button--inverted"
-                  style={{
-                    borderColor: 'transparent',
-                    color: '#555555',
-                  }}
-                  title={`${
-                    Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
-                      ? 'Раскрыть'
-                      : 'Скрыть'
-                  } продукцию и чертежи`}
-                  onClick={() => {
-                    setWorkTimeInputs((worktimeInputs) => {
-                      const isFirstObjectMinimized = Object.values(
-                        worktimeInputs[workshop[1]],
-                      )[0].isMinimized
-
-                      let newWorkshopData = worktimeInputs[workshop[1]]
-                      Object.entries(worktimeInputs[workshop[1]]).map(
-                        (employee) => {
-                          newWorkshopData[
-                            employee[0]
-                          ].isMinimized = !isFirstObjectMinimized
-                        },
-                      )
-                      return {
-                        ...worktimeInputs,
-                        [workshop[1]]: {
-                          ...newWorkshopData,
-                        },
-                      }
-                    })
-                  }}
-                >
-                  <ChevronImg
-                    className={`production-journal__img production-journal__img--chevron ${
-                      Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
-                        ? 'main-window__img--rotated'
-                        : ''
-                    }`}
-                  />
-                  <span>
-                    {Object.values(worktimeInputs[workshop[1]])[0]?.isMinimized
-                      ? 'Раскрыть'
-                      : 'Скрыть продукцию и чертежи'}
-                  </span>
-                </div>
-              </div>
+              <WorkshopControls
+                workshop={workshop}
+                areWorkshopItemsMinimized={areWorkshopItemsMinimized(
+                  worktimeInputs[workshop[1]],
+                )}
+                handleMinimizeAllWorkshopItems={handleMinimizeAllWorkshopItems}
+              />
               {isLoading ? (
                 <PlaceholderLoading
                   wrapperClassName="production-journal__list"
@@ -916,40 +540,29 @@ const ProductionJournal = (props) => {
                 />
               ) : (
                 <div className="production-journal__list">
-                  {Object.entries(worktimeInputs[workshop[1]])
-                    .sort((a, b) => {
-                      a = a[1]
-                      b = b[1]
-                      if (a.employee.lastName < b.employee.lastName) {
-                        return -1
-                      }
-                      if (a.employee.lastName > b.employee.lastName) {
-                        return 1
-                      }
-                      return 0
-                    })
-                    .map((workItem, workIndex) => (
-                      <>
-                        <div className="main-form__row" key={workIndex}>
-                          <FormRow
-                            workTimeErrors={workTimeErrors}
-                            setWorkTimeErrors={setWorkTimeErrors}
-                            worktimeInputs={worktimeInputs}
-                            setWorkTimeInputs={setWorkTimeInputs}
-                            employees={employees}
-                            workItem={workItem[1]}
-                            workshop={workshop}
-                            workIndex={workIndex}
-                            categories={categories}
-                            products={products}
-                            drafts={drafts}
-                            readOnly={worktimeInputs.readOnly}
-                            works={works}
-                            employeesMap={employeesMap}
-                          />
-                        </div>
-                      </>
-                    ))}
+                  {sortEmployees(
+                    Object.entries(worktimeInputs[workshop[1]]),
+                  ).map((workItem, workIndex) => (
+                    <div className="main-form__row" key={workIndex}>
+                      <EmployeeData
+                        workTimeErrors={workTimeErrors}
+                        setWorkTimeErrors={setWorkTimeErrors}
+                        worktimeInputs={worktimeInputs}
+                        setWorkTimeInputs={setWorkTimeInputs}
+                        employees={employees}
+                        workItem={workItem[1]}
+                        workshop={workshop}
+                        workIndex={workIndex}
+                        categories={categories}
+                        products={products}
+                        drafts={drafts}
+                        readOnly={worktimeInputs.readOnly}
+                        readOnlyMode={worktimeInputs.readOnlyMode}
+                        works={works}
+                        employeesMap={employeesMap}
+                      />
+                    </div>
+                  ))}
                 </div>
               )}
             </>
@@ -979,206 +592,3 @@ const ProductionJournal = (props) => {
 }
 
 export default ProductionJournal
-
-const FormRow = ({
-  setWorkTimeInputs,
-  products,
-  categories,
-  drafts,
-  works,
-  worktimeInputs,
-  workItem,
-  workshop,
-  employeesMap,
-  readOnly,
-}) => {
-  return (
-    <>
-      <div
-        className={`main-form__item main-form__item--employee ${
-          workItem.totalHours === 0 ? 'main-form__item--error' : ''
-        }`}
-        data-position={workItem.employee.position}
-        data-hours={
-          workItem.totalHours > 0 ? `${workItem.totalHours} ч` : `Нет записи!`
-        }
-      >
-        <input
-          type="text"
-          className="main-form__input_field"
-          value={`${workItem.employee.lastName} ${workItem.employee.name} ${workItem.employee.middleName}`}
-          readOnly
-        ></input>
-      </div>
-      <div className="production-journal__works-list">
-        {!readOnly ? (
-          <div
-            className="main-form__button main-form__button--inverted"
-            style={{
-              borderColor: 'transparent',
-              fontSize: '28px',
-              color: '#888888',
-            }}
-            title="Добавить запись о работе"
-            onClick={() => {
-              setWorkTimeInputs((worktimeInputs) => {
-                return {
-                  ...worktimeInputs,
-                  [workshop[1]]: {
-                    ...worktimeInputs[workshop[1]],
-                    [workItem.employee.id]: {
-                      ...workItem,
-                      works: [
-                        ...workItem.works,
-                        {
-                          product: [],
-                          isOld: false,
-                          draft: [],
-                          workName: '',
-                          workType: '',
-                          workId: null,
-                          hours: 0,
-                          comment: '',
-                        },
-                      ],
-                    },
-                  },
-                }
-              })
-            }}
-          >
-            +
-          </div>
-        ) : null}
-        {workItem.works.length > 0 ? (
-          <div
-            className="main-form__button main-form__button--inverted"
-            style={{
-              borderColor: 'transparent',
-              color: '#555555',
-              visibility:
-                workItem.works.reduce(
-                  (prev, cur) => prev + cur.product.length + cur.draft.length,
-                  0,
-                ) > 0
-                  ? 'visible'
-                  : 'hidden',
-            }}
-            title={`${
-              workItem.isMinimized ? 'Раскрыть' : 'Скрыть'
-            } продукцию и чертежи`}
-            onClick={() => {
-              setWorkTimeInputs((worktimeInputs) => {
-                return {
-                  ...worktimeInputs,
-                  [workshop[1]]: {
-                    ...worktimeInputs[workshop[1]],
-                    [workItem.employee.id]: {
-                      ...workItem,
-                      isMinimized: !workItem.isMinimized,
-                    },
-                  },
-                }
-              })
-            }}
-          >
-            <ChevronImg
-              className={`production-journal__img production-journal__img--chevron ${
-                workItem.isMinimized ? 'main-window__img--rotated' : ''
-              }`}
-            />
-          </div>
-        ) : null}
-        <JournalForm
-          setWorkTimeInputs={setWorkTimeInputs}
-          worktimeInputs={worktimeInputs}
-          workItem={workItem}
-          workshop={workshop}
-          categories={categories}
-          products={products}
-          works={works}
-          drafts={drafts}
-          readOnly={readOnly}
-          employeesMap={employeesMap}
-        />
-      </div>
-    </>
-  )
-}
-
-const JournalForm = ({
-  setWorkTimeInputs,
-  workItem,
-  workshop,
-  products,
-  categories,
-  drafts,
-  works,
-  employeesMap,
-  readOnly,
-}) => {
-  return (
-    <div
-      className={`production-journal__form ${
-        workItem.isMinimized ? 'production-journal__form--minimized' : ''
-      }`}
-    >
-      {/* Создание работы */}
-      <div className="main-form__item">
-        <div className="main-form__input_field">
-          {/* {console.log(workItem)} */}
-          <SelectWork
-            handleWorkChange={(value) => {
-              setWorkTimeInputs((worktimeInputs) => {
-                return {
-                  ...worktimeInputs,
-                  [workshop[1]]: {
-                    ...worktimeInputs[workshop[1]],
-                    [workItem.employee.id]: {
-                      ...workItem,
-                      works: value,
-                    },
-                  },
-                }
-              })
-            }}
-            totalHours={workItem.totalHours}
-            newDesign
-            defaultConfig={[
-              {
-                isOld: false,
-                product: [],
-                draft: [],
-                workName: '',
-                workType: '',
-                workId: null,
-                hours: 0,
-                comment: '',
-              },
-            ]}
-            setTotalHours={(value) => {
-              setWorkTimeInputs((worktimeInputs) => {
-                return {
-                  ...worktimeInputs,
-                  [workshop[1]]: {
-                    ...worktimeInputs[workshop[1]],
-                    [workItem.employee.id]: {
-                      ...workItem,
-                      totalHours: value,
-                    },
-                  },
-                }
-              })
-            }}
-            categories={categories}
-            products={products}
-            drafts={drafts}
-            workItems={works}
-            defaultValue={workItem.works}
-            readOnly={readOnly}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}

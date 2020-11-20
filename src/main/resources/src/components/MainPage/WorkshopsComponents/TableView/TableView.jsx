@@ -204,10 +204,6 @@ const TableView = (props) => {
           node,
           props.data.find((item) => item.id === id),
         )
-        // node.scrollIntoView({
-        //   behavior: 'smooth',
-        //   block: 'start',
-        // })
         scrollToElement(node, props.workshopName === 'requests' ? -200 : -1000)
         setScrolledToPrev(true)
       }
@@ -386,7 +382,7 @@ const TableView = (props) => {
               <Link
                 target="_blank"
                 className="main-window__link"
-                to={`/clients/view/${request.client.id}`}
+                to={`/clients/edit/${request.client.id}`}
               >
                 {request.client.name}
               </Link>
@@ -612,6 +608,7 @@ const TableView = (props) => {
     <div className="tableview-workshops">
       <div className="main-window">
         <LabelPrint
+          product={selectedProduct}
           name={selectedProduct.name}
           link={selectedProduct.link}
           isHidden={labelIsHidden}

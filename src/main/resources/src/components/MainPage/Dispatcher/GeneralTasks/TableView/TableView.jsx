@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { formatDateString } from '../../../../../utils/functions.jsx'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import {
+  formatDateString,
+  scrollToElement,
+} from '../../../../../utils/functions.jsx'
 import './TableView.scss'
 import { editTaskStatus } from '../../../../../utils/RequestsAPI/MainTasks.jsx'
 import editSVG from '../../../../../../../../../assets/tableview/edit.svg'
@@ -25,6 +28,7 @@ const TableView = (props) => {
   //     className: 'delayed',
   //   },
   // }
+  const [scrolledToPrev, setScrolledToPrev] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   const handleConditionChange = (event) => {
@@ -47,6 +51,31 @@ const TableView = (props) => {
   useEffect(() => {
     props.data.length > 0 && setIsLoading(false)
   }, [props.data])
+
+  const prevRef = useCallback(
+    (node) => {
+      const id = Number.parseInt(props.history.location.hash.split('#')[1])
+      if (
+        !props.data ||
+        scrolledToPrev ||
+        props.data.find((item) => item.id === id) === undefined
+      )
+        return
+      if (node !== null && props.data) {
+        console.log(
+          node,
+          props.data.find((item) => item.id === id),
+        )
+        // node.scrollIntoView({
+        //   behavior: 'smooth',
+        //   block: 'start',
+        // })
+        scrollToElement(node, 0)
+        setScrolledToPrev(true)
+      }
+    },
+    [props.data],
+  )
 
   return (
     <div className="tableview_general_tasks">
@@ -79,6 +108,14 @@ const TableView = (props) => {
                     props.taskStatuses.find(
                       (status) => status.name === task.condition,
                     )?.className
+                  }
+                  id={task.id}
+                  ref={
+                    Number.parseInt(
+                      props.history.location.hash.split('#')[1],
+                    ) === task.id
+                      ? prevRef
+                      : null
                   }
                 >
                   <span>
@@ -174,4 +211,4 @@ const TableView = (props) => {
   )
 }
 
-export default TableView
+export default withRouter(TableView)

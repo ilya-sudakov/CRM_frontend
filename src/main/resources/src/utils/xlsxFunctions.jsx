@@ -1105,13 +1105,18 @@ export async function exportReportTableExcel(
       )
     })
     .then(() => {
+      console.log(employeesWorksList)
       return Promise.all(
         filteredWorkshops.map((workshop) => {
           if (
             employeesWorksList.filter(
               (employee) =>
                 employee.employee.workshop === workshop &&
-                employee.employee.relevance !== 'Уволен',
+                (employee.employee.relevance !== 'Уволен' ||
+                  employee.days.reduce((prev, cur) => {
+                    if (cur.hours !== null || cur.day !== null) return prev + 1
+                    return prev
+                  }, 0) > 0),
             ).length > 0
           ) {
             const titleRow = workSheet.addRow([workshop])
@@ -1130,7 +1135,11 @@ export async function exportReportTableExcel(
             .filter(
               (employee) =>
                 employee.employee.workshop === workshop &&
-                employee.employee.relevance !== 'Уволен',
+                (employee.employee.relevance !== 'Уволен' ||
+                  employee.days.reduce((prev, cur) => {
+                    if (cur.hours !== null || cur.day !== null) return prev + 1
+                    return prev
+                  }, 0) > 0),
             )
             .sort((a, b) => {
               if (a.employee.lastName < b.employee.lastName) {
@@ -1245,13 +1254,18 @@ export async function exportReportTableExcel(
           }
         }
       }
+      //2nd month
       return Promise.all(
         filteredWorkshops.map((workshop) => {
           if (
             employeesWorksList.filter(
               (employee) =>
                 employee.employee.workshop === workshop &&
-                employee.employee.relevance !== 'Уволен',
+                (employee.employee.relevance !== 'Уволен' ||
+                  employee.days.reduce((prev, cur) => {
+                    if (cur.hours !== null || cur.day !== null) return prev + 1
+                    return prev
+                  }, 0) > 0),
             ).length > 0
           ) {
             const titleRow = workSheet.addRow([workshop])
@@ -1267,7 +1281,11 @@ export async function exportReportTableExcel(
             titleRow.height = 30
           }
           return employeesWorksList
-            .filter((employee) => employee.employee.workshop === workshop)
+            .filter(
+              (employee) =>
+                employee.employee.workshop === workshop &&
+                employee.employee.relevance !== 'Уволен',
+            )
             .sort((a, b) => {
               if (a.employee.lastName < b.employee.lastName) {
                 return -1

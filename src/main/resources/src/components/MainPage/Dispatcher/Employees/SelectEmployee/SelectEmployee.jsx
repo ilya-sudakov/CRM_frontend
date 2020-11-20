@@ -71,10 +71,10 @@ const SelectEmployee = (props) => {
         })
   }
 
-  const clickEmployee = (employeeName, employeeId) => {
+  const clickEmployee = (employeeName, employeeId, employee) => {
     setId(employeeId)
     setFullName(employeeName)
-    props.handleEmployeeChange(employeeId, employeeName)
+    props.handleEmployeeChange(employeeId, employeeName, employee)
     setShowWindow(!showWindow)
   }
 
@@ -157,7 +157,7 @@ const SelectEmployee = (props) => {
               defaultValue={props.defaultValue ? props.defaultValue : fullName}
               // onClick={!props.readOnly ? clickOnInput : null}
               placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
-              readOnly={props.readOnly}
+              readOnly
             />
           </div>
         </div>

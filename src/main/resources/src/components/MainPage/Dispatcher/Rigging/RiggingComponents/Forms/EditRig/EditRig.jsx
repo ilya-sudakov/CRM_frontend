@@ -129,7 +129,9 @@ const EditRig = (props) => {
               return deleted === true && deletePartsFromStamp(item.id)
             })
             Promise.all(partsArr).then(() => {
-              props.history.push(rigTypes[props.type].redirectURL)
+              props.history.push(
+                `${rigTypes[props.type].redirectURL}#${stampId}`,
+              )
             })
           })
         })
