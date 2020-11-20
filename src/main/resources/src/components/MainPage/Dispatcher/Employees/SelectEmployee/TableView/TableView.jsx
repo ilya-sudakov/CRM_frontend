@@ -6,7 +6,6 @@ import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
 import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
 const TableView = (props) => {
-
   useEffect(() => {
     props.setShowWindow && props.setShowWindow(false)
   }, [props.closeWindow])
@@ -46,6 +45,7 @@ const TableView = (props) => {
                         ' ' +
                         employee.middleName,
                       employee.id,
+                      employee,
                     )
                     props.setCloseWindow(!props.closeWindow)
                   }}
@@ -89,6 +89,7 @@ const TableView = (props) => {
                             ' ' +
                             employee.middleName,
                           employee.id,
+                          employee,
                         )
                         props.setCloseWindow(!props.closeWindow)
                       }}

@@ -6,6 +6,7 @@ import {
   numberToString,
   addSpaceDelimiter,
   formatDateString,
+  formatDateStringNoYear,
 } from '../../../../utils/functions.jsx'
 import editIcon from '../../../../../../../../assets/tableview/edit.svg'
 import { Link } from 'react-router-dom'
@@ -25,15 +26,15 @@ export const EmployeePage = ({ userContext, workList, isLoading }) => {
         userHasAccess={userContext.userHasAccess}
         inputName="Выбор сотрудника"
         name="employee"
-        handleEmployeeChange={(value, name) => {
+        handleEmployeeChange={(value, name, employee) => {
           setSelectedEmployee({
-            id: value,
-            name: name,
+            ...employee,
           })
           setSelectedInfo({
             // workList[SelectEmployee.id]
             employeeId: value,
-            employee: name,
+            employeeName: name,
+            employee: employee,
             worksId: workList[value]?.workArray
               ? workList[value]?.workArray.map((item) => {
                   return item.workList.id
@@ -52,7 +53,24 @@ export const EmployeePage = ({ userContext, workList, isLoading }) => {
 
 //Окно для вывода информации о сотруднике и его работе за неделю
 const EmployeeInfo = ({ selectedInfo }) => {
-  useEffect(() => {}, [selectedInfo])
+  const getWeekDays = (curDate) => {
+    let week = []
+
+    for (let i = 1; i <= 7; i++) {
+      const first = curDate.getDate() - curDate.getDay() + i
+      const day = new Date(curDate.setDate(first))
+      week.push(day)
+    }
+
+    console.log(week)
+    return week
+  }
+
+  const [dates, setDates] = useState([])
+
+  useEffect(() => {
+    setDates(getWeekDays(new Date()))
+  }, [selectedInfo])
 
   return (
     <div className="report-table-page__employee-info">
@@ -71,7 +89,7 @@ const EmployeeInfo = ({ selectedInfo }) => {
         </div>
         <div className="report-table-page__employee-general">
           <div className="report-table-page__full-name">
-            {selectedInfo?.employee}
+            {selectedInfo?.employeeName}
           </div>
           <div className="report-table-page__workshop">
             {selectedInfo?.employee?.workshop}
@@ -86,78 +104,100 @@ const EmployeeInfo = ({ selectedInfo }) => {
           {selectedInfo?.works?.length === undefined ? (
             <div>Нет учтенной работы</div>
           ) : (
-            selectedInfo?.works?.map((item) => {
-              {
-                /* console.log(item) */
-              }
+            dates.map((date) => {
               return (
-                <div className="report-table-page__employee-works-item">
-                  <span>
-                    <Link
-                      to={`/work-management/record-time/edit/${item.workId}`}
+                <>
+                  {selectedInfo?.works?.filter(
+                    (item) => item.day === date.getDate(),
+                  ).length > 0 && (
+                    <div
+                      className="report-table-page__employee-title report-table-page__employee-title--date"
                     >
-                      {item.workList.work}
-                      <img
-                        className="report-table-page__img"
-                        src={editIcon}
-                        alt=""
-                      />
-                    </Link>
-                  </span>
-                  <span className="report-table-page__employee-hours">
-                    {item.hours +
-                      ' ' +
-                      numberToString(
-                        Number.parseInt(Math.floor(item.hours * 100) / 100),
-                        ['час', 'часа', 'часов'],
-                      )}
-                  </span>
-                  {(item.workControlProduct.length > 0 ||
-                    item?.partsWorks.length > 0) && (
-                    <div className="main-window__list">
-                      <div className="main-window__list-item main-window__list-item--header">
-                        <span>Название</span>
-                        <span>Кол-во</span>
-                      </div>
-                      {item.workControlProduct.map((product) => {
-                        return (
-                          <div className="main-window__list-item">
-                            <span>
-                              <div className="main-window__mobile-text">
-                                Название:
-                              </div>
-                              {product.product.name}
-                            </span>
-                            <span>
-                              <div className="main-window__mobile-text">
-                                Кол-во:
-                              </div>
-                              {addSpaceDelimiter(product.quantity)}
-                            </span>
-                          </div>
-                        )
-                      })}
-                      {item.partsWorks.map((draft) => {
-                        return (
-                          <div className="main-window__list-item">
-                            <span>
-                              <div className="main-window__mobile-text">
-                                Название:
-                              </div>
-                              {draft.name}
-                            </span>
-                            <span>
-                              <div className="main-window__mobile-text">
-                                Кол-во:
-                              </div>
-                              {addSpaceDelimiter(draft.quantity)}
-                            </span>
-                          </div>
-                        )
-                      })}
+                      {formatDateStringNoYear(date)}
                     </div>
                   )}
-                </div>
+                  {selectedInfo?.works
+                    ?.filter((item) => item.day === date.getDate())
+                    ?.map((item) => {
+                      {
+                        /* console.log(item) */
+                      }
+                      return (
+                        <div
+                          className="report-table-page__employee-works-item"
+                          style={{ marginBottom: '15px', marginTop: '5px' }}
+                        >
+                          <span>
+                            <Link
+                              to={`/work-management/record-time/edit/${item.workId}`}
+                            >
+                              {item.workList.work}
+                              <img
+                                className="report-table-page__img"
+                                src={editIcon}
+                                alt=""
+                              />
+                            </Link>
+                          </span>
+                          <span className="report-table-page__employee-hours">
+                            {item.hours +
+                              ' ' +
+                              numberToString(
+                                Number.parseInt(
+                                  Math.floor(item.hours * 100) / 100,
+                                ),
+                                ['час', 'часа', 'часов'],
+                              )}
+                          </span>
+                          {(item.workControlProduct.length > 0 ||
+                            item?.partsWorks.length > 0) && (
+                            <div className="main-window__list">
+                              <div className="main-window__list-item main-window__list-item--header">
+                                <span>Название</span>
+                                <span>Кол-во</span>
+                              </div>
+                              {item.workControlProduct.map((product) => {
+                                return (
+                                  <div className="main-window__list-item">
+                                    <span>
+                                      <div className="main-window__mobile-text">
+                                        Название:
+                                      </div>
+                                      {product.product.name}
+                                    </span>
+                                    <span>
+                                      <div className="main-window__mobile-text">
+                                        Кол-во:
+                                      </div>
+                                      {addSpaceDelimiter(product.quantity)}
+                                    </span>
+                                  </div>
+                                )
+                              })}
+                              {item.partsWorks.map((draft) => {
+                                return (
+                                  <div className="main-window__list-item">
+                                    <span>
+                                      <div className="main-window__mobile-text">
+                                        Название:
+                                      </div>
+                                      {draft.name}
+                                    </span>
+                                    <span>
+                                      <div className="main-window__mobile-text">
+                                        Кол-во:
+                                      </div>
+                                      {addSpaceDelimiter(draft.quantity)}
+                                    </span>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                </>
               )
             })
           )}

@@ -71,10 +71,10 @@ const SelectEmployee = (props) => {
         })
   }
 
-  const clickEmployee = (employeeName, employeeId) => {
+  const clickEmployee = (employeeName, employeeId, employee) => {
     setId(employeeId)
     setFullName(employeeName)
-    props.handleEmployeeChange(employeeId, employeeName)
+    props.handleEmployeeChange(employeeId, employeeName, employee)
     setShowWindow(!showWindow)
   }
 
