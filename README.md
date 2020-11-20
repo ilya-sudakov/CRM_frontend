@@ -20,11 +20,18 @@
 
         npm run mkdir-built
 
+- Для остальных платформ - необходимо вручную создать папку:
+
+        /src/main/resources/static/build
+
 - После этих действий в корне фронтэнд проекта / запустите команду:
 
         npm install
 
-- После установки зависимостей, для запуска production версии, введите
-  npm run prod
-- Для запуска в режиме development, введите
-  npm start
+- После установки зависимостей, для запуска production версии, введите:
+
+         npm run prod
+
+- Для запуска в режиме development, введите:
+        
+        npm start
