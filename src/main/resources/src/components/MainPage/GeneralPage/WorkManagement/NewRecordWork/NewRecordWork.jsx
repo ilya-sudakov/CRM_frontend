@@ -110,6 +110,7 @@ const NewRecordWork = (props) => {
           month: worktimeInputs.date.getMonth() + 1,
           year: worktimeInputs.date.getFullYear(),
           employeeId: worktimeInputs.employeeId,
+          comment: item.comment,
           workListId: item.workId,
           hours: item.hours,
         })

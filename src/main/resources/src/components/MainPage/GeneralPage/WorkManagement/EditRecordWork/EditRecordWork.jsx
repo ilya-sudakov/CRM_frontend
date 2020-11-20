@@ -108,6 +108,7 @@ const EditRecordWork = (props) => {
         month: worktimeInputs.date.getMonth() + 1,
         year: worktimeInputs.date.getFullYear(),
         employeeId: worktimeInputs.employeeId,
+        comment: item.comment,
         workListId: item.workId,
         hours: item.hours,
       })
@@ -250,6 +251,7 @@ const EditRecordWork = (props) => {
                 workId: res.workList.id,
                 workType: res.workList.typeOfWork,
                 hours: res.hours,
+                comment: res.comment,
                 product: [
                   ...res.workControlProduct.map((item) =>
                     Object.assign({
@@ -277,6 +279,7 @@ const EditRecordWork = (props) => {
                 workName: res.workList.work,
                 workId: res.workList.id,
                 hours: res.hours,
+                comment: res.comment,
                 product: [
                   ...res.workControlProduct.map((item) =>
                     Object.assign({

@@ -302,7 +302,7 @@ const SelectWork = (props) => {
                   </div>
                 )
               ) : null}
-              {/* <div className="select-work__item">
+              <div className="select-work__item">
                 <div className="select-work__input_name">Комментарий</div>
                 <div className="select-work__input_field">
                   <textarea
@@ -315,7 +315,7 @@ const SelectWork = (props) => {
                     readOnly={props.readOnly}
                   />
                 </div>
-              </div> */}
+              </div>
               {!props.noTime && (
                 <div className="select-work__item select-work__item--time">
                   <div className="select-work__input_name">Часы</div>
