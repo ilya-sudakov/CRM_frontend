@@ -32,6 +32,15 @@ import {
 } from './fetchData.js'
 
 const ProductionJournal = (props) => {
+  const [showError, setShowError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [categories, setCategories] = useState([])
+  const [products, setProducts] = useState([])
+  const [drafts, setDrafts] = useState([])
+  const [employees, setEmployees] = useState([])
+  const [works, setWorks] = useState([])
+  const [employeesMap, setEmployeesMap] = useState({})
+  const userContext = useContext(UserContext)
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
     lemz: {},
@@ -39,7 +48,7 @@ const ProductionJournal = (props) => {
     ligovskiy: {},
     office: {},
     readOnly: false,
-    readOnlyMode: false,
+    readOnlyMode: userContext.userHasAccess(['ROLE_ADMIN']) ? true : false,
   })
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
@@ -51,15 +60,6 @@ const ProductionJournal = (props) => {
     employee: true,
     works: true,
   })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState([])
-  const [drafts, setDrafts] = useState([])
-  const [employees, setEmployees] = useState([])
-  const [works, setWorks] = useState([])
-  const [employeesMap, setEmployeesMap] = useState({})
-  const userContext = useContext(UserContext)
 
   const ROLE_LEMZ = {
     ЦехЛЭМЗ: 'lemz',
