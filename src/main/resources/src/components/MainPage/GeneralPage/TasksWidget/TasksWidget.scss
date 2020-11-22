@@ -1,15 +1,79 @@
 .tasks-widget {
     font-size: 1rem;
+    --completed: #52d66c;
+    --in-progress: #94bbe2;
+    --delayed: #e79ecb;
+    --problem: #da756e;
+    --materials: #d4ad5e;
+
     &__content {
         width: 100%;
     }
+
     &__list {
         width: 100%;
-        .tasks-widget__list-item {
+        .list__item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             min-width: 100%;
             padding: 5px 0px;
             box-sizing: border-box;
             margin-bottom: 5px;
+            padding-left: 25px;
+            position: relative;
+
+            &::before {
+                content: "";
+                background-color: #bbbbbb;
+                border-radius: 999px;
+                width: 10px;
+                height: 10px;
+                position: absolute;
+                left: 0;
+                top: calc(50% - 5px);
+            }
+
+            &--in-progress::before {
+                background-color: var(--in-progress) !important;
+            }
+            &--completed::before {
+                background-color: var(--completed) !important;
+            }
+            &--delayed::before {
+                background-color: var(--delayed) !important;
+            }
+            &--problem::before {
+                background-color: var(--problem) !important;
+            }
+            &--materials::before {
+                background-color: var(--materials) !important;
+            }
+
+            .list-item {
+                &__general-info {
+                    display: flex;
+                    flex-direction: column;
+                    color: #000000;
+                    width: fit-content;
+
+                    &:hover {
+                        .list-item__description {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                &__condition {
+                    font-size: 0.9rem;
+                    color: #888888;
+                }
+
+                &__description {
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+            }
         }
     }
 }

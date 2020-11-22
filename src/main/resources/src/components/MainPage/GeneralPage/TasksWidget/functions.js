@@ -4,6 +4,10 @@ export const filterTasks = (tasks) => {
   return tasks.filter((task) => task.condition !== 'Выполнено')
 }
 
+export const filterTasksByUser = (tasks, userRole = 'admin') => {
+  return tasks.filter((task) => task.responsible === userRole)
+}
+
 export const getTasksList = async () => {
   let tasks = []
   await getMainTasks()

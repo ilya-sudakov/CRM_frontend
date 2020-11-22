@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import openWidget from '../../../../../../../../assets/tableview/bx-window-open.svg'
 import './Widget.scss'
 import Button from '../../../../utils/Form/Button/Button.jsx'
 import { withRouter } from 'react-router-dom'
@@ -15,13 +14,12 @@ const Widget = ({ title, className, content, history, linkTo, subTitle }) => {
           <Button
             className="main-window__button main-window__button--inverted"
             inverted
-            imgSrc={openWidget}
+            text={linkTo.text}
+            imgSrc={linkTo.img ?? null}
             onClick={() => {
               history.push(linkTo.address)
             }}
-          >
-            {linkTo.text}
-          </Button>
+          ></Button>
         ) : null}
       </div>
       <div className="widget__content">{content}</div>
