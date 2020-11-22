@@ -12,8 +12,8 @@ const RiggingList = lazy(() =>
   import('./Dispatcher/Rigging/RiggingList/RiggingList.jsx'),
 )
 
-const AdminWorkspace = lazy(() =>
-  import('./GeneralPage/AdminWorkspace/AdminWorkspace.jsx'),
+const MainPageWorkspace = lazy(() =>
+  import('./GeneralPage/MainPageWorkspace/MainPageWorkspace.jsx'),
 )
 
 const Notifications = lazy(() =>
@@ -236,7 +236,7 @@ export {
   Contracts,
   Requests,
   GeneralPage,
-  AdminWorkspace,
+  MainPageWorkspace,
   Notifications,
   WorkManagement,
   NewRecordWork,
