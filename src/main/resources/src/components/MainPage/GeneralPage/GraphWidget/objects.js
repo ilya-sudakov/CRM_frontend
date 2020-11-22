@@ -1,3 +1,8 @@
+const lemz = '#1b4e6bbb'
+const lepsari = '#5c63a2bb'
+const ligovskiy = '#c068a8bb'
+const office = '#ec7176bb'
+
 export const workshopsDefaultValue = [
   {
     label: 'ЦехЛЭМЗ',
@@ -26,11 +31,6 @@ export const workshopsDefaultValue = [
 ]
 
 export const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
-
-const lemz = '#1b4e6bbb'
-const lepsari = '#5c63a2bb'
-const ligovskiy = '#c068a8bb'
-const office = '#ec7176bb'
 
 export const graphOptions = {
   cornerRadius: 2.5,

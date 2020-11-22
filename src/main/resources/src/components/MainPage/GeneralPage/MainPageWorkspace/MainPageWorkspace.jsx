@@ -6,9 +6,9 @@ import GraphWidget from '../GraphWidget/GraphWidget.jsx'
 
 const MainPageWorkspace = (props) => {
   return (
-    <div className="admin-workspace">
-      <WorkManagement />
+    <div className="main-page-workspace">
       <TasksWidget />
+      <WorkManagement />
       {props.userHasAccess(['ROLE_ADMIN']) && <GraphWidget />}
     </div>
   )

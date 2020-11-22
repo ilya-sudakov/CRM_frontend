@@ -68,8 +68,8 @@ const GraphWidget = (props) => {
         if (userContext.userHasAccess(['ROLE_ADMIN'])) {
           !canvasLoaded &&
             loadCanvas(
-              'admin-workspace__chart-wrapper',
-              'admin-workspace__chart',
+              'main-page-workspace__chart-wrapper',
+              'main-page-workspace__chart',
             )
           setCanvasLoaded(true)
           const options = {
@@ -102,19 +102,19 @@ const GraphWidget = (props) => {
   }, [weekOffset, workshops])
 
   return (
-    <div className="admin-workspace__chart-wrapper">
+    <div className="main-page-workspace__chart-wrapper">
       <TableLoading isLoading={isLoading} />
       <div className="main-window__mobile-text">
-        <span className="admin-workspace__date">
+        <span className="main-page-workspace__date">
           {formatDateStringNoYear(getDateFromWeekdayIndex(1, weekOffset)) +
             ' - ' +
             formatDateStringNoYear(getDateFromWeekdayIndex(7, weekOffset))}
         </span>
         Сводка за неделю
       </div>
-      <div className="admin-workspace__header">
-        <div className="admin-workspace__title">
-          <span className="admin-workspace__date">
+      <div className="main-page-workspace__header">
+        <div className="main-page-workspace__title">
+          <span className="main-page-workspace__date">
             {formatDateStringNoYear(getDateFromWeekdayIndex(1, weekOffset)) +
               ' - ' +
               formatDateStringNoYear(getDateFromWeekdayIndex(7, weekOffset))}
@@ -123,14 +123,14 @@ const GraphWidget = (props) => {
         </div>
         <Button
           text="Пред. неделя"
-          className="admin-workspace__button"
+          className="main-page-workspace__button"
           isLoading={weekOffset === 0 ? false : isLoading}
           onClick={() => setWeekOffset(weekOffset + 1)}
           inverted
         />
         <Button
           text="Тек. неделя"
-          className="admin-workspace__button"
+          className="main-page-workspace__button"
           isLoading={weekOffset !== 0 ? false : isLoading}
           onClick={() => setWeekOffset(0)}
           inverted
