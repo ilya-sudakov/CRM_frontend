@@ -55,5 +55,10 @@
         max-width: none;
         width: 100%;
         margin-right: 0;
+        padding: 15px 20px;
+        padding-bottom: 10px;
+    }
+
+    @media (max-width: 500px) {
     }
 }
