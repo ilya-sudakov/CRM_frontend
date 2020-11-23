@@ -1,13 +1,21 @@
 .tasks-widget {
     font-size: 1rem;
-    --completed: #52d66c;
-    --in-progress: #94bbe2;
-    --delayed: #e79ecb;
-    --problem: #da756e;
-    --materials: #d4ad5e;
+    $completed: #52d66c;
+    $in-progress: #94bbe2;
+    $delayed: #e79ecb;
+    $problem: #da756e;
+    $materials: #d4ad5e;
 
     &__content {
         width: 100%;
+    }
+
+    &__date {
+        font-size: 0.85rem;
+        color: #888888;
+        display: flex;
+        flex-direction: row;
+        max-width: 100%;
     }
 
     &__list {
@@ -34,20 +42,55 @@
                 top: calc(50% - 5px);
             }
 
-            &--in-progress::before {
-                background-color: var(--in-progress) !important;
+            &--in-progress {
+                &::before {
+                    background-color: $in-progress;
+                }
+                .list-item__conditions {
+                    span:first-child {
+                        color: darken($in-progress, 35%);
+                    }
+                }
             }
-            &--completed::before {
-                background-color: var(--completed) !important;
+            &--completed {
+                &::before {
+                    background-color: $completed;
+                }
+                .list-item__conditions {
+                    span:first-child {
+                        color: darken($completed, 35%);
+                    }
+                }
             }
-            &--delayed::before {
-                background-color: var(--delayed) !important;
+            &--delayed {
+                &::before {
+                    background-color: $delayed;
+                }
+                .list-item__conditions {
+                    span:first-child {
+                        color: darken($delayed, 30%);
+                    }
+                }
             }
-            &--problem::before {
-                background-color: var(--problem) !important;
+            &--problem {
+                &::before {
+                    background-color: $problem;
+                }
+                .list-item__conditions {
+                    span:first-child {
+                        color: darken($problem, 25%);
+                    }
+                }
             }
-            &--materials::before {
-                background-color: var(--materials) !important;
+            &--materials {
+                &::before {
+                    background-color: $materials;
+                }
+                .list-item__conditions {
+                    span:first-child {
+                        color: darken($materials, 25%);
+                    }
+                }
             }
 
             .list-item {
@@ -56,6 +99,7 @@
                     flex-direction: column;
                     color: #000000;
                     width: fit-content;
+                    max-width: 100%;
 
                     &:hover {
                         .list-item__description {
@@ -64,9 +108,34 @@
                     }
                 }
 
-                &__condition {
-                    font-size: 0.9rem;
+                &__conditions {
+                    font-size: 0.85rem;
                     color: #888888;
+                    display: flex;
+                    flex-direction: row;
+                    max-width: 100%;
+
+                    span {
+                        position: relative;
+                        white-space: nowrap;
+                        &:first-child {
+                            &::before {
+                                content: "";
+                                background-color: #dddddd;
+                                // border-radius: 999px;
+                                width: 2px;
+                                height: 100%;
+                                position: absolute;
+                                right: -10px;
+                                // top: calc(50% - 3px);
+                            }
+                        }
+                        &:not(:first-child) {
+                            margin-left: 15px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
                 }
 
                 &__description {

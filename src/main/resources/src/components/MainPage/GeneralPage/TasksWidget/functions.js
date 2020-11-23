@@ -1,4 +1,5 @@
 import { getMainTasks } from '../../../../utils/RequestsAPI/MainTasks.jsx'
+import { formatDateStringNoYear } from '../../../../utils/functions.jsx'
 
 export const filterTasks = (tasks) => {
   return tasks.filter((task) => task.condition !== 'Выполнено')
@@ -19,4 +20,20 @@ export const getTasksList = async () => {
       return console.error(err)
     })
   return tasks
+}
+
+export const getTasksControlDatesList = (tasks) => {
+  let controlDates = {}
+  tasks.map((task) => {
+    const curDate = formatDateStringNoYear(task.dateControl)
+
+    return (controlDates = {
+      ...controlDates,
+      [curDate]:
+        controlDates[curDate] === undefined
+          ? [task]
+          : [...controlDates[curDate], task],
+    })
+  })
+  return controlDates
 }
