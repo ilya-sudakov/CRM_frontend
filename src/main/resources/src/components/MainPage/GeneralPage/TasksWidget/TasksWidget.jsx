@@ -28,7 +28,7 @@ const TasksWidget = () => {
       )
 
       //get dates object from tasks
-      const controlDates = getTasksControlDatesList(tasks)
+      const controlDates = getTasksControlDatesList(filteredTasksByUser)
       setControlDates(controlDates)
 
       setTasks([...filteredTasksByUser])
