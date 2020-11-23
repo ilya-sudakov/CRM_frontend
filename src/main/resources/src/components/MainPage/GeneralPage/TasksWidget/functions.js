@@ -35,7 +35,12 @@ export const getTasksControlDatesList = (tasks) => {
       return 0
     })
     .map((task) => {
-      const curDate = formatDateStringNoYear(task.dateControl)
+      let curDate = new Date(task.dateControl)
+      curDate = new Date(
+        curDate.getFullYear(),
+        curDate.getMonth(),
+        curDate.getDate(),
+      )
 
       return (controlDates = {
         ...controlDates,

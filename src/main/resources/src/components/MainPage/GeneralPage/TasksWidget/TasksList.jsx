@@ -1,6 +1,9 @@
 import React from 'react'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
-import { formatDateStringNoYear } from '../../../../utils/functions.jsx'
+import {
+  formatDateString,
+  formatDateStringNoYear,
+} from '../../../../utils/functions.jsx'
 import { conditions } from './objects.js'
 import { Link } from 'react-router-dom'
 
@@ -15,7 +18,7 @@ const TasksList = ({ tasks, isLoading, controlDates }) => {
         />
       ) : (
         Object.entries(controlDates).map((date, index) => {
-          const isExpired = date[0] < formatDateStringNoYear(new Date())
+          const isExpired = new Date(date[0]) < new Date()
           return (
             <ListWrapper
               isExpired={isExpired}
@@ -44,12 +47,12 @@ const ListWrapper = ({ isExpired, index, date, tasks }) => {
         className={`tasks-widget__date ${
           isExpired ? 'tasks-widget__date--expired' : ''
         }`}
-      >{`до ${date[0]}`}</div>
+      >{`до ${formatDateStringNoYear(date[0])}`}</div>
       {tasks
-        .filter((task) => {
-          const curDate = formatDateStringNoYear(task.dateControl)
-          return curDate === date[0]
-        })
+        .filter(
+          (task) =>
+            formatDateString(task.dateControl) === formatDateString(date[0]),
+        )
         .map((task) => (
           <ListItem task={task} />
         ))}
