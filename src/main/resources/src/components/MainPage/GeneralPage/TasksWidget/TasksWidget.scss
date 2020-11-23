@@ -16,6 +16,24 @@
         display: flex;
         flex-direction: row;
         max-width: 100%;
+
+        &--expired {
+            color: #9b0909;
+        }
+    }
+
+    &__date-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        &--expired {
+            border: 1px solid #dd8f8f;
+            background-color: #fdf6f6;
+            border-radius: 5px;
+            padding: 5px 15px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
     }
 
     &__list {

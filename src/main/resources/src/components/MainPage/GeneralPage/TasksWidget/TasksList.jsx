@@ -14,25 +14,48 @@ const TasksList = ({ tasks, isLoading, controlDates }) => {
           items={3}
         />
       ) : (
-        Object.entries(controlDates).map((date) => (
-          <>
-            <div className="tasks-widget__date">{`до ${date[0]}`}</div>
-            {tasks
-              .filter((task) => {
-                const curDate = formatDateStringNoYear(task.dateControl)
-                return curDate === date[0]
-              })
-              .map((task) => (
-                <ListItem task={task} />
-              ))}
-          </>
-        ))
+        Object.entries(controlDates).map((date, index) => {
+          const isExpired = date[0] < formatDateStringNoYear(new Date())
+          return (
+            <ListWrapper
+              isExpired={isExpired}
+              index={index}
+              date={date}
+              tasks={tasks}
+            />
+          )
+        })
       )}
     </div>
   )
 }
 
 export default TasksList
+
+const ListWrapper = ({ isExpired, index, date, tasks }) => {
+  return (
+    <div
+      className={`tasks-widget__date-wrapper ${
+        isExpired ? 'tasks-widget__date-wrapper--expired' : ''
+      }`}
+      key={index}
+    >
+      <div
+        className={`tasks-widget__date ${
+          isExpired ? 'tasks-widget__date--expired' : ''
+        }`}
+      >{`до ${date[0]}`}</div>
+      {tasks
+        .filter((task) => {
+          const curDate = formatDateStringNoYear(task.dateControl)
+          return curDate === date[0]
+        })
+        .map((task) => (
+          <ListItem task={task} />
+        ))}
+    </div>
+  )
+}
 
 const ListItem = ({ task }) => {
   return (

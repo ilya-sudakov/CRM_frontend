@@ -24,16 +24,26 @@ export const getTasksList = async () => {
 
 export const getTasksControlDatesList = (tasks) => {
   let controlDates = {}
-  tasks.map((task) => {
-    const curDate = formatDateStringNoYear(task.dateControl)
-
-    return (controlDates = {
-      ...controlDates,
-      [curDate]:
-        controlDates[curDate] === undefined
-          ? [task]
-          : [...controlDates[curDate], task],
+  tasks
+    .sort((a, b) => {
+      if (a.dateControl < b.dateControl) {
+        return -1
+      }
+      if (a.dateControl > b.dateControl) {
+        return 1
+      }
+      return 0
     })
-  })
+    .map((task) => {
+      const curDate = formatDateStringNoYear(task.dateControl)
+
+      return (controlDates = {
+        ...controlDates,
+        [curDate]:
+          controlDates[curDate] === undefined
+            ? [task]
+            : [...controlDates[curDate], task],
+      })
+    })
   return controlDates
 }
