@@ -17,6 +17,7 @@ import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
 import { UserContext } from '../../../../App.js'
 import UsersVisibility from '../FormComponents/UsersVisibility.jsx'
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 
 const newClient = (props) => {
   const userContext = useContext(UserContext)
@@ -39,6 +40,7 @@ const newClient = (props) => {
     categoryId: 0,
     // users: {
     // },
+    visibility: true,
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
   })
@@ -151,6 +153,7 @@ const newClient = (props) => {
           price: clientInputs.price,
           site: clientInputs.site,
           city: clientInputs.city,
+          // visibility: clientInputs.visibility,
           storageAddress: clientInputs.storageAddress,
           workCondition: clientInputs.workCondition,
           check: clientInputs.check,
@@ -477,6 +480,7 @@ const newClient = (props) => {
                 handleInputChange={handleInputChange}
                 defaultValue={clientInputs.check}
               />
+              {/* Выбор конкретных пользователей */}
               {/* {userContext.userHasAccess(['ROLE_ADMIN']) && (
                 <UsersVisibility
                   name="users"
@@ -488,6 +492,22 @@ const newClient = (props) => {
                   }
                 />
               )} */}
+
+              {/* Временно - бинарный выбор, виден ли клиент всем пользователям */}
+              {/* <div className="main-form__item">
+                <div className="main-form__input_name">Видимость*</div>
+                <div className="main-form__input_field">
+                  <CheckBox
+                    text="Запись видна всем пользователям"
+                    name="visibility"
+                    checked={clientInputs.visibility}
+                    readOnly={userContext.userHasAccess(['ROLE_ADMIN'])}
+                    onChange={(value) =>
+                      handleInputValueChange(value, 'visibility')
+                    }
+                  />
+                </div>
+              </div> */}
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Категория</div>
                 <div className="main-form__item">
