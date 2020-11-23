@@ -40,7 +40,7 @@ const TasksWidget = () => {
     loadTasks()
   }, [])
 
-  return (
+  return tasks.length > 0 || isLoading ? (
     <Widget
       className="tasks-widget"
       title="Ваши задачи"
@@ -58,7 +58,7 @@ const TasksWidget = () => {
         />
       }
     />
-  )
+  ) : null
 }
 
 export default TasksWidget
