@@ -3,6 +3,7 @@ import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/P
 import {
   formatDateString,
   formatDateStringNoYear,
+  dateDiffInDays,
 } from '../../../../utils/functions.jsx'
 import { conditions } from './objects.js'
 import { Link } from 'react-router-dom'
@@ -47,7 +48,11 @@ const ListWrapper = ({ isExpired, index, date, tasks }) => {
         className={`tasks-widget__date ${
           isExpired ? 'tasks-widget__date--expired' : ''
         }`}
-      >{`до ${formatDateStringNoYear(date[0])}`}</div>
+      >{`до ${formatDateStringNoYear(date[0])} ${
+        isExpired
+          ? `- ${dateDiffInDays(new Date(date[0]), new Date())} дн. опоздание`
+          : ''
+      }`}</div>
       {tasks
         .filter(
           (task) =>
