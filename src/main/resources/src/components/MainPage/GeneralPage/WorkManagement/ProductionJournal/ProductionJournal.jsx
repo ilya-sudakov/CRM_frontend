@@ -517,6 +517,7 @@ const ProductionJournal = (props) => {
             handleDateChange={handleDateChange}
             errorsArr={workTimeErrors}
             setErrorsArr={setWorkTimeErrors}
+            readOnly={isLoading}
           />
           <ReadOnlyModeControls
             readOnlyMode={worktimeInputs.readOnlyMode}
