@@ -87,7 +87,7 @@ const WorkListWidget = (props) => {
         recordedWork.length === 0 ? (
           isLoading ? (
             <PlaceholderLoading
-              minHeight="1rem"
+              minHeight="2rem"
               wrapperClassName="work-list-widget__list work-list-widget__list--placeholder"
               itemClassName="work-list-widget__item"
             />
