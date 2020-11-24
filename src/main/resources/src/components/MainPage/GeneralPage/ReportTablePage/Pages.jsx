@@ -10,6 +10,8 @@ import {
 } from '../../../../utils/functions.jsx'
 import editIcon from '../../../../../../../../assets/tableview/edit.svg'
 import { Link } from 'react-router-dom'
+import Button from '../../../../utils/Form/Button/Button.jsx'
+import { days } from '../../../../utils/dataObjects.js'
 
 export const EmployeePage = ({ userContext, workList, isLoading, date }) => {
   const [selectedEmployee, setSelectedEmployee] = useState(null)
@@ -18,32 +20,41 @@ export const EmployeePage = ({ userContext, workList, isLoading, date }) => {
   useEffect(() => {
     console.log(workList)
     if (selectedEmployee === null) return
-  }, [selectedEmployee, workList])
+  }, [selectedEmployee, workList, isLoading])
 
   return (
     <div className="employee-page">
-      <SelectEmployee
-        userHasAccess={userContext.userHasAccess}
-        inputName="Выбор сотрудника"
-        name="employee"
-        handleEmployeeChange={(value, name, employee) => {
-          setSelectedEmployee({
-            ...employee,
-          })
-          setSelectedInfo({
-            // workList[SelectEmployee.id]
-            employeeId: value,
-            employeeName: name,
-            employee: employee,
-            worksId: workList[value]?.workArray
-              ? workList[value]?.workArray.map((item) => {
-                  return item.workList.id
-                })
-              : [],
-            works: workList[value]?.workArray ?? [],
-          })
-        }}
-      />
+      {!isLoading ? (
+        <SelectEmployee
+          userHasAccess={userContext.userHasAccess}
+          inputName="Выбор сотрудника"
+          name="employee"
+          handleEmployeeChange={(value, name, employee) => {
+            setSelectedEmployee({
+              ...employee,
+            })
+            setSelectedInfo({
+              // workList[SelectEmployee.id]
+              employeeId: value,
+              employeeName: name,
+              employee: employee,
+              worksId: workList[value]?.workArray
+                ? workList[value]?.workArray.map((item) => {
+                    return item.workList.id
+                  })
+                : [],
+              works: workList[value]?.workArray ?? [],
+            })
+          }}
+        />
+      ) : (
+        <Button
+          text=""
+          className="main-window__button"
+          // inverted
+          isLoading={true}
+        />
+      )}
       {selectedEmployee && !isLoading ? (
         <EmployeeInfo selectedInfo={selectedInfo} date={date} />
       ) : null}
@@ -111,7 +122,9 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
                     (item) => item.day === date.getDate(),
                   ).length > 0 && (
                     <div className="report-table-page__employee-title report-table-page__employee-title--date">
-                      {formatDateStringNoYear(date)}
+                      {`${formatDateStringNoYear(date)} - ${
+                        days[date.getDay()]
+                      }`}
                     </div>
                   )}
                   {selectedInfo?.works

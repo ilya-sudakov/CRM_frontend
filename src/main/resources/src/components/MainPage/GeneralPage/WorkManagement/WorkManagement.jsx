@@ -10,6 +10,52 @@ import {
 import { UserContext } from '../../../../App.js'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 
+const workshopsList = [
+  {
+    name: 'ЦехЛЭМЗ',
+    visibility: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
+    active: true,
+  },
+  {
+    name: 'ЦехЛепсари',
+    visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
+    active: true,
+  },
+  {
+    name: 'ЦехЛиговский',
+    visibility: [
+      'ROLE_ADMIN',
+      'ROLE_LIGOVSKIY',
+      'ROLE_DISPATCHER',
+      'ROLE_MANAGER',
+    ],
+    active: true,
+  },
+  {
+    name: 'Офис',
+    visibility: [
+      'ROLE_ADMIN',
+      'ROLE_DISPATCHER',
+      'ROLE_MANAGER',
+      'ROLE_ENGINEER',
+    ],
+    active: true,
+  },
+]
+
+const getAllEmployees = (works) => {
+  let newEmployees = {}
+  works.map((work) => {
+    if (newEmployees[work.employee.id] === undefined) {
+      return (newEmployees = Object.assign({
+        ...newEmployees,
+        [work.employee.id]: work.employee,
+      }))
+    }
+  })
+  return newEmployees
+}
+
 const WorkManagement = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -17,38 +63,7 @@ const WorkManagement = (props) => {
   const [employeesMap, setEmployeesMap] = useState({})
   const [employees, setEmployees] = useState({})
   const userContext = useContext(UserContext)
-  const [workshops, setWorkshops] = useState([
-    {
-      name: 'ЦехЛЭМЗ',
-      visibility: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
-      active: true,
-    },
-    {
-      name: 'ЦехЛепсари',
-      visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
-      active: true,
-    },
-    {
-      name: 'ЦехЛиговский',
-      visibility: [
-        'ROLE_ADMIN',
-        'ROLE_LIGOVSKIY',
-        'ROLE_DISPATCHER',
-        'ROLE_MANAGER',
-      ],
-      active: true,
-    },
-    {
-      name: 'Офис',
-      visibility: [
-        'ROLE_ADMIN',
-        'ROLE_DISPATCHER',
-        'ROLE_MANAGER',
-        'ROLE_ENGINEER',
-      ],
-      active: true,
-    },
-  ])
+  const [workshops] = useState(workshopsList)
 
   const combineWorkHoursForSamePeople = (works) => {
     // let newEmployeesWorkMap = [];
@@ -80,20 +95,6 @@ const WorkManagement = (props) => {
     })
   }
 
-  const getAllEmployees = (works) => {
-    let newEmployees = {}
-    works.map((work) => {
-      if (newEmployees[work.employee.id] === undefined) {
-        return (newEmployees = Object.assign({
-          ...newEmployees,
-          [work.employee.id]: work.employee,
-        }))
-      }
-    })
-    // console.log(newEmployees)
-    setEmployees(newEmployees)
-  }
-
   useEffect(() => {
     let abortController = new AbortController()
     let date = new Date()
@@ -110,7 +111,8 @@ const WorkManagement = (props) => {
           // console.log(res)
           setRecordedWork(res)
           combineWorkHoursForSamePeople(res)
-          getAllEmployees(res)
+          const allEmployeesObject = getAllEmployees(res)
+          setEmployees(allEmployeesObject)
           setIsLoading(false)
         })
         .catch((error) => {

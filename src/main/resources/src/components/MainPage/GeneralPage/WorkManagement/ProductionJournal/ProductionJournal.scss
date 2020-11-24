@@ -20,6 +20,7 @@
             right: 20px;
             bottom: 25px;
             animation: pulse 2s infinite ease-in-out;
+            background-color: $button__background--inverted !important;
         }
     }
     .main-form__form--full {

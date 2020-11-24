@@ -15,8 +15,9 @@ import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx'
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx'
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 import { UserContext } from '../../../../App.js'
+import UsersVisibility from '../FormComponents/UsersVisibility.jsx'
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 
 const newClient = (props) => {
   const userContext = useContext(UserContext)
@@ -37,12 +38,9 @@ const newClient = (props) => {
     check: '',
     clientType: 'Активные',
     categoryId: 0,
-    users: {
-      // [userContext.userData.id]: {
-      //   ...userContext.userData,
-      //   selected: true,
-      // },
-    },
+    // users: {
+    // },
+    visibility: true,
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
   })
@@ -155,6 +153,7 @@ const newClient = (props) => {
           price: clientInputs.price,
           site: clientInputs.site,
           city: clientInputs.city,
+          // visibility: clientInputs.visibility,
           storageAddress: clientInputs.storageAddress,
           workCondition: clientInputs.workCondition,
           check: clientInputs.check,
@@ -481,6 +480,7 @@ const newClient = (props) => {
                 handleInputChange={handleInputChange}
                 defaultValue={clientInputs.check}
               />
+              {/* Выбор конкретных пользователей */}
               {/* {userContext.userHasAccess(['ROLE_ADMIN']) && (
                 <UsersVisibility
                   name="users"
@@ -492,6 +492,22 @@ const newClient = (props) => {
                   }
                 />
               )} */}
+
+              {/* Временно - бинарный выбор, виден ли клиент всем пользователям */}
+              {/* <div className="main-form__item">
+                <div className="main-form__input_name">Видимость*</div>
+                <div className="main-form__input_field">
+                  <CheckBox
+                    text="Запись видна всем пользователям"
+                    name="visibility"
+                    checked={clientInputs.visibility}
+                    readOnly={userContext.userHasAccess(['ROLE_ADMIN'])}
+                    onChange={(value) =>
+                      handleInputValueChange(value, 'visibility')
+                    }
+                  />
+                </div>
+              </div> */}
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Категория</div>
                 <div className="main-form__item">
@@ -562,99 +578,3 @@ const newClient = (props) => {
 }
 
 export default newClient
-
-const UsersVisibility = (props) => {
-  const [users, setUsers] = useState(props.defaultValue || {})
-  const [allChecked, setAllChecked] = useState(true)
-
-  useEffect(() => {
-    loadUsers()
-  }, [])
-
-  const loadUsers = () => {
-    getUsers()
-      .then((res) => res.json())
-      .then((res) => {
-        let newUsers = {}
-        res
-          .filter(
-            (user) =>
-              user.roles.find(
-                (role) =>
-                  role.name === 'ROLE_ADMIN' || role.name === 'ROLE_MANAGER',
-              ) !== undefined,
-          )
-          .map((user) => {
-            return (newUsers = {
-              ...newUsers,
-              [user.id]: {
-                ...user,
-                selected: true,
-              },
-            })
-          })
-        props.handleInputChange(newUsers)
-        return setUsers({ ...newUsers })
-      })
-  }
-
-  return (
-    <div className="main-form__item">
-      <div className="main-form__input_name">Видимость для пользователей</div>
-      {props.userContext.userHasAccess(['ROLE_ADMIN']) ? (
-        <div className="main-form__input_field">
-          <CheckBox
-            text="Выбрать всех"
-            checked={allChecked}
-            onChange={(value) => {
-              setAllChecked(value)
-              let newUsers = {}
-              Object.entries(users).map((user) => {
-                console.log(user)
-                return (newUsers = {
-                  ...newUsers,
-                  [user[0]]: {
-                    ...user[1],
-                    selected:
-                      user[1].username === props.userContext.userData.username
-                        ? true
-                        : value,
-                  },
-                })
-              })
-              props.handleInputChange(newUsers)
-              setUsers({ ...newUsers })
-            }}
-          />
-        </div>
-      ) : null}
-      {Object.entries(users).map((user) => (
-        <div className="main-form__input_field">
-          <CheckBox
-            text={user[1].username}
-            checked={user[1].selected}
-            disabled={user[1].username === props.userContext.userData.username}
-            onChange={(value) => {
-              setUsers((prev) => {
-                return {
-                  ...prev,
-                  [user[1].id]: {
-                    ...user[1],
-                    selected: value,
-                  },
-                }
-              })
-              props.handleInputChange({
-                ...users,
-                [user[1].id]: {
-                  ...user[1],
-                  selected: value,
-                },
-              })
-            }}
-          />
-        </div>
-      ))}
-    </div>
-  )
-}

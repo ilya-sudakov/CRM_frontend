@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AdminWorkspace } from '../lazyImports.jsx'
+import { MainPageWorkspace } from '../lazyImports.jsx'
 import { Link } from 'react-router-dom'
 import './GeneralPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
@@ -135,7 +135,7 @@ const GeneralPage = (props) => {
             'ROLE_LEMZ',
             'ROLE_LEPSARI',
             'ROLE_ENGINEER',
-          ]) && <AdminWorkspace userHasAccess={props.userHasAccess} />}
+          ]) && <MainPageWorkspace userHasAccess={props.userHasAccess} />}
         </div>
       </div>
     </div>
