@@ -21,11 +21,13 @@ const TasksWidget = () => {
     setIsLoading(true)
     return await getTasksList().then((tasks) => {
       //filter received tasks
-      const filteredTasks = filterTasks(tasks)
-      const filteredTasksByUser = filterTasksByUser(
-        filteredTasks,
-        userContext.userData.username,
-      )
+      const filteredCompletedTasks = filterTasks(tasks)
+      const filteredTasksByUser = userContext.userHasAccess(['ROLE_ADMIN'])
+        ? filteredCompletedTasks
+        : filterTasksByUser(
+            filteredCompletedTasks,
+            userContext.userData.username,
+          )
 
       //get dates object from tasks
       const controlDates = getTasksControlDatesList(filteredTasksByUser)
