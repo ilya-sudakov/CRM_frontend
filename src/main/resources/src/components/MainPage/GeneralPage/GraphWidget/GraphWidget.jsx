@@ -5,12 +5,14 @@ import Button from '../../../../utils/Form/Button/Button.jsx'
 import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
 import { UserContext } from '../../../../App.js'
+import './GraphWidget.scss'
 
 import {
   getDateFromWeekdayIndex,
   getWeekdaysListWithOffset,
 } from './functions.js'
 import { graphOptions, weekdays, workshopsDefaultValue } from './objects.js'
+import Widget from '../Widget/Widget.jsx'
 
 const GraphWidget = (props) => {
   const [weekOffset, setWeekOffset] = useState(0)
@@ -67,10 +69,7 @@ const GraphWidget = (props) => {
         console.log(workshops)
         if (userContext.userHasAccess(['ROLE_ADMIN'])) {
           !canvasLoaded &&
-            loadCanvas(
-              'main-page-workspace__chart-wrapper',
-              'main-page-workspace__chart',
-            )
+            loadCanvas('graph-widget__chart-wrapper', 'graph-widget__chart')
           setCanvasLoaded(true)
           const options = {
             type:
@@ -102,41 +101,49 @@ const GraphWidget = (props) => {
   }, [weekOffset, workshops])
 
   return (
-    <div className="main-page-workspace__chart-wrapper">
-      <TableLoading isLoading={isLoading} />
-      <div className="main-window__mobile-text">
-        <span className="main-page-workspace__date">
-          {formatDateStringNoYear(getDateFromWeekdayIndex(1, weekOffset)) +
-            ' - ' +
-            formatDateStringNoYear(getDateFromWeekdayIndex(7, weekOffset))}
-        </span>
-        Сводка за неделю
-      </div>
-      <div className="main-page-workspace__header">
-        <div className="main-page-workspace__title">
-          <span className="main-page-workspace__date">
-            {formatDateStringNoYear(getDateFromWeekdayIndex(1, weekOffset)) +
-              ' - ' +
-              formatDateStringNoYear(getDateFromWeekdayIndex(7, weekOffset))}
-          </span>
-          Сводка за неделю
+    <Widget
+      className="graph-widget"
+      customHeader={
+        <div className="graph-widget__header">
+          <div className="graph-widget__title">
+            <span className="graph-widget__date">
+              {formatDateStringNoYear(getDateFromWeekdayIndex(1, weekOffset)) +
+                ' - ' +
+                formatDateStringNoYear(getDateFromWeekdayIndex(7, weekOffset))}
+            </span>
+            Сводка за неделю
+          </div>
+          <Button
+            text="Пред. неделя"
+            className="graph-widget__button"
+            isLoading={weekOffset === 0 ? false : isLoading}
+            onClick={() => setWeekOffset(weekOffset + 1)}
+            inverted
+          />
+          <Button
+            text="Тек. неделя"
+            className="graph-widget__button"
+            isLoading={weekOffset !== 0 ? false : isLoading}
+            onClick={() => setWeekOffset(0)}
+            inverted
+          />
         </div>
-        <Button
-          text="Пред. неделя"
-          className="main-page-workspace__button"
-          isLoading={weekOffset === 0 ? false : isLoading}
-          onClick={() => setWeekOffset(weekOffset + 1)}
-          inverted
-        />
-        <Button
-          text="Тек. неделя"
-          className="main-page-workspace__button"
-          isLoading={weekOffset !== 0 ? false : isLoading}
-          onClick={() => setWeekOffset(0)}
-          inverted
-        />
-      </div>
-    </div>
+      }
+      content={
+        <>
+          <div className="main-window__mobile-text">
+            <span className="graph-widget__date">
+              {formatDateStringNoYear(getDateFromWeekdayIndex(1, weekOffset)) +
+                ' - ' +
+                formatDateStringNoYear(getDateFromWeekdayIndex(7, weekOffset))}
+            </span>
+            Сводка за неделю
+          </div>
+          <TableLoading isLoading={isLoading} />
+          <div className="graph-widget__chart-wrapper"></div>
+        </>
+      }
+    />
   )
 }
 
