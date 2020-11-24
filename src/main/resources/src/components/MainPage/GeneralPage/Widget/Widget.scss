@@ -60,5 +60,18 @@
     }
 
     @media (max-width: 500px) {
+        &__title {
+            .widget__sub-title {
+                margin-bottom: 5px;
+            }
+            .main-window__button {
+                position: absolute;
+                right: 0;
+                top: -5px;
+                margin-top: 0;
+                font-size: 0.8rem;
+                padding: 2.5px 10px;
+            }
+        }
     }
 }

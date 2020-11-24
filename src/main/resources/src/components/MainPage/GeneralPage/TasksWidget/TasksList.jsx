@@ -50,7 +50,7 @@ const ListWrapper = ({ isExpired, index, date, tasks }) => {
         }`}
       >{`до ${formatDateStringNoYear(date[0])} ${
         isExpired
-          ? `- ${dateDiffInDays(new Date(date[0]), new Date())} дн. опоздание`
+          ? `- опоздание ${dateDiffInDays(new Date(date[0]), new Date())} дн.`
           : ''
       }`}</div>
       {tasks
