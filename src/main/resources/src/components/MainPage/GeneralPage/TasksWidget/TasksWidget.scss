@@ -60,6 +60,12 @@
                 top: calc(50% - 5px);
             }
 
+            &--placeholder {
+                &::before {
+                    left: 10px;
+                }
+            }
+
             &--in-progress {
                 &::before {
                     background-color: $in-progress;

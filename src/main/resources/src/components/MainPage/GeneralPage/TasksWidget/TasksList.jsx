@@ -13,7 +13,7 @@ const TasksList = ({ tasks, isLoading, controlDates }) => {
     <div className="tasks-widget__list">
       {isLoading ? (
         <PlaceholderLoading
-          itemClassName="list__item"
+          itemClassName="list__item list__item--placeholder"
           minHeight="2rem"
           items={3}
         />
