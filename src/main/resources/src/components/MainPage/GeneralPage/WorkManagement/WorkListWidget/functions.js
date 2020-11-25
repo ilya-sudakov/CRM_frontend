@@ -1,7 +1,3 @@
-export const roundUpWorkHours = (hours) => {
-  return Math.floor(hours * 100) / 100
-}
-
 export const sortEmployeesObject = (employees) => {
   return employees.sort((a, b) => {
     if (a[1].lastName < b[1].lastName) {

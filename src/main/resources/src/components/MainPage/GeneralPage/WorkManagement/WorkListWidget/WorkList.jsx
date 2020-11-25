@@ -1,11 +1,10 @@
 import React from 'react'
 import './WorkListWidget.scss'
-import { numberToString } from '../../../../../utils/functions.jsx'
 import {
-  filterEmployeesObject,
+  numberToString,
   roundUpWorkHours,
-  sortEmployeesObject,
-} from './functions.js'
+} from '../../../../../utils/functions.jsx'
+import { filterEmployeesObject, sortEmployeesObject } from './functions.js'
 
 const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
   return (

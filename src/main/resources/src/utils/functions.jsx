@@ -447,3 +447,7 @@ export const scrollToElement = (element, offset = 0) => {
   // })
   scroll.scrollTo(y)
 }
+
+export const roundUpWorkHours = (hours) => {
+  return Math.floor(hours * 100) / 100
+}
