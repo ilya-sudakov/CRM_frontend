@@ -241,7 +241,7 @@ const ReportTablePage = (props) => {
               }
               onClick={() => setCurPage('employee')}
             >
-              Просмотр сотрудника
+              Отчет сотрудника
             </div>
           </div>
         </div>

@@ -472,6 +472,7 @@
                 }
 
                 .production-journal__form {
+                    padding-left: 0;
                     .main-form__item {
                         padding-left: 0;
                     }
@@ -483,8 +484,12 @@
                     &_row {
                         flex-direction: column;
 
+                        .select__selected_item {
+                            max-width: none;
+                        }
+
                         .select__selected_quantity {
-                            margin-top: 0px;
+                            // margin-top: 0px;
                         }
                     }
                 }
@@ -496,7 +501,7 @@
                         flex-direction: column;
 
                         .select-draft__selected_quantity {
-                            margin-top: 0px;
+                            // margin-top: 0px;
                         }
                     }
                 }
