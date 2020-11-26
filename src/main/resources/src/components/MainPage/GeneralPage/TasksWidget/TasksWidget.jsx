@@ -53,7 +53,7 @@ const TasksWidget = () => {
       subTitle={userContext.userData.username}
       linkTo={{
         address: '/dispatcher/general-tasks',
-        text: 'Перейти',
+        text: 'Открыть',
         img: openWidget,
       }}
       content={
