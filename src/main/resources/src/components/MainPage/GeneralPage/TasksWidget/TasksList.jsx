@@ -74,7 +74,15 @@ const ListItem = ({ task }) => {
       >
         <span className="list-item__description">{task.description}</span>
         <span className="list-item__conditions">
-          <span>{task.condition}</span>
+          <span
+            className={`${
+              task.status === '' || task.status === null
+                ? 'condition--hidden'
+                : ''
+            }`}
+          >
+            {task.condition}
+          </span>
           <span>{task.status}</span>
         </span>
       </Link>

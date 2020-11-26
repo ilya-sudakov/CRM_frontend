@@ -162,6 +162,12 @@
                             text-overflow: ellipsis;
                         }
                     }
+
+                    .condition--hidden {
+                        &::before {
+                            display: none;
+                        }
+                    }
                 }
 
                 &__description {
