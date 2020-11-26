@@ -266,7 +266,7 @@ const EditTask = (props) => {
             <select
               name="condition"
               onChange={handleInputChange}
-              defaultValue={taskInputs.condition}
+              value={taskInputs.condition}
             >
               <option>Выполнено</option>
               <option>Отложено</option>
