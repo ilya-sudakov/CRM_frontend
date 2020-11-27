@@ -153,7 +153,7 @@ const newClient = (props) => {
           price: clientInputs.price,
           site: clientInputs.site,
           city: clientInputs.city,
-          // visibility: clientInputs.visibility,
+          isClosed: !clientInputs.visibility,
           storageAddress: clientInputs.storageAddress,
           workCondition: clientInputs.workCondition,
           check: clientInputs.check,
@@ -494,20 +494,20 @@ const newClient = (props) => {
               )} */}
 
               {/* Временно - бинарный выбор, виден ли клиент всем пользователям */}
-              {/* <div className="main-form__item">
+              <div className="main-form__item">
                 <div className="main-form__input_name">Видимость*</div>
                 <div className="main-form__input_field">
                   <CheckBox
                     text="Запись видна всем пользователям"
                     name="visibility"
                     checked={clientInputs.visibility}
-                    readOnly={userContext.userHasAccess(['ROLE_ADMIN'])}
+                    disabled={!userContext.userHasAccess(['ROLE_ADMIN'])}
                     onChange={(value) =>
                       handleInputValueChange(value, 'visibility')
                     }
                   />
                 </div>
-              </div> */}
+              </div>
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Категория</div>
                 <div className="main-form__item">
