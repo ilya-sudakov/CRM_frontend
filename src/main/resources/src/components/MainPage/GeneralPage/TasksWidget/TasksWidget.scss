@@ -139,33 +139,34 @@
                     flex-direction: row;
                     max-width: 100%;
 
-                    span {
+                    .condition {
                         position: relative;
                         white-space: nowrap;
-                        &:first-child {
-                            &::before {
-                                content: "";
-                                background-color: #dddddd;
-                                // border-radius: 999px;
-                                width: 2px;
-                                height: 80%;
-                                position: absolute;
-                                right: -10px;
-                                top: 15%;
-                                border-radius: 999px;
-                                // top: calc(50% - 3px);
-                            }
+                        margin-left: 15px;
+                        &::before {
+                            content: "";
+                            background-color: #dddddd;
+                            // border-radius: 999px;
+                            width: 2px;
+                            height: 80%;
+                            position: absolute;
+                            right: -10px;
+                            top: 15%;
+                            border-radius: 999px;
+                            // top: calc(50% - 3px);
                         }
-                        &:not(:first-child) {
-                            margin-left: 15px;
+                        &:first-child {
+                            margin-left: 0;
+                        }
+                        &--description {
                             overflow: hidden;
                             text-overflow: ellipsis;
                         }
-                    }
 
-                    .condition--hidden {
-                        &::before {
-                            display: none;
+                        &--hidden {
+                            &::before {
+                                display: none;
+                            }
                         }
                     }
                 }
