@@ -57,7 +57,10 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
               return (
                 <>
                   {selectedInfo?.works?.filter(
-                    (item) => item.day === date.getDate(),
+                    (item) =>
+                      item.day === date.getDate() &&
+                      item.month === date.getMonth() + 1 &&
+                      item.year === date.getFullYear(),
                   ).length > 0 && (
                     <div className="report-table-page__employee-title report-table-page__employee-title--date">
                       {`${formatDateStringNoYear(date)} - ${
@@ -66,7 +69,12 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
                     </div>
                   )}
                   {selectedInfo?.works
-                    ?.filter((item) => item.day === date.getDate())
+                    ?.filter(
+                      (item) =>
+                        item.day === date.getDate() &&
+                        item.month === date.getMonth() + 1 &&
+                        item.year === date.getFullYear(),
+                    )
                     ?.map((item) => (
                       <WorksItem item={item} />
                     ))}
@@ -148,7 +156,12 @@ const WeekSummary = ({ selectedInfo, dates }) => {
       {selectedInfo?.works?.length > 0
         ? selectedInfo?.works?.reduce(
             (sum, cur) =>
-              dates.find((date) => date.getDate() === cur.day) !== undefined
+              dates.find(
+                (date) =>
+                  cur.day === date.getDate() &&
+                  cur.month === date.getMonth() + 1 &&
+                  cur.year === date.getFullYear(),
+              ) !== undefined
                 ? sum + cur.hours
                 : sum,
             0,
@@ -159,8 +172,12 @@ const WeekSummary = ({ selectedInfo, dates }) => {
               roundUpWorkHours(
                 selectedInfo?.works?.reduce(
                   (sum, cur) =>
-                    dates.find((date) => date.getDate() === cur.day) !==
-                    undefined
+                    dates.find(
+                      (date) =>
+                        cur.day === date.getDate() &&
+                        cur.month === date.getMonth() + 1 &&
+                        cur.year === date.getFullYear(),
+                    ) !== undefined
                       ? sum + cur.hours
                       : sum,
                   0,

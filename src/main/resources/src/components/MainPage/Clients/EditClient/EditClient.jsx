@@ -49,6 +49,7 @@ const EditClient = (props) => {
     comment: '',
     storageAddress: '',
     city: '',
+    visibility: null,
     workCondition: '',
     price: '',
     discount: '',
@@ -571,6 +572,21 @@ const EditClient = (props) => {
                 // setErrorsArr={setFormErrors}
               />
 
+              {/* Временно - бинарный выбор, виден ли клиент всем пользователям */}
+              {/* <div className="main-form__item">
+                <div className="main-form__input_name">Видимость*</div>
+                <div className="main-form__input_field">
+                  <CheckBox
+                    text="Запись видна всем пользователям"
+                    name="visibility"
+                    checked={clientInputs.visibility}
+                    disabled={!userContext.userHasAccess(['ROLE_ADMIN'])}
+                    onChange={(value) =>
+                      handleInputValueChange(value, 'visibility')
+                    }
+                  />
+                </div>
+              </div> */}
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Категория </div>
                 <div className="main-form__item">
