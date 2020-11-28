@@ -34,9 +34,9 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
     <div className="report-table-page__employee-info">
       <div className="report-table-page__employee-wrapper">
         <div className="report-table-page__employee-title">
-          {`Данные сотрудника за рабочую неделю ${formatDateStringNoYear(
+          {`Данные сотрудника за рабочую неделю (${formatDateStringNoYear(
             getWeekDays(date)[0],
-          )} - ${formatDateStringNoYear(getWeekDays(date)[6])}`}
+          )} - ${formatDateStringNoYear(getWeekDays(date)[6])})`}
         </div>
         <div className="report-table-page__employee-general">
           <div className="report-table-page__full-name">
@@ -110,20 +110,10 @@ const WorksItem = ({ item }) => {
         </Link>
       </span>
       <span className="report-table-page__employee-hours">
-        {item.hours +
-          ' ' +
-          numberToString(Number.parseInt(roundUpWorkHours(item.hours)), [
-            'час',
-            'часа',
-            'часов',
-          ])}
+        {`${item.hours} ч`}
       </span>
       {(item.workControlProduct.length > 0 || item?.partsWorks.length > 0) && (
-        <div className="main-window__list">
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>Название</span>
-            <span>Кол-во</span>
-          </div>
+        <div className="report-table-page__list">
           {item.workControlProduct.map((product) => (
             <ProductItem item={product} />
           ))}
@@ -138,14 +128,14 @@ const WorksItem = ({ item }) => {
 
 const ProductItem = ({ item }) => {
   return (
-    <div className="main-window__list-item">
+    <div className="report-table-page__list-item">
       <span>
         <div className="main-window__mobile-text">Название:</div>
         {item.name ?? item.product.name}
       </span>
       <span>
         <div className="main-window__mobile-text">Кол-во:</div>
-        {addSpaceDelimiter(item.quantity)}
+        {`${addSpaceDelimiter(item.quantity)} шт`}
       </span>
     </div>
   )
