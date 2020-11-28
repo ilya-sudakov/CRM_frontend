@@ -34,7 +34,9 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
     <div className="report-table-page__employee-info">
       <div className="report-table-page__employee-wrapper">
         <div className="report-table-page__employee-title">
-          Данные сотрудника за рабочую неделю
+          {`Данные сотрудника за рабочую неделю ${formatDateStringNoYear(
+            getWeekDays(date)[0],
+          )} - ${formatDateStringNoYear(getWeekDays(date)[6])}`}
         </div>
         <div className="report-table-page__employee-general">
           <div className="report-table-page__full-name">
