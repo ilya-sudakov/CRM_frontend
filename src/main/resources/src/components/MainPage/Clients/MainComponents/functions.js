@@ -1,3 +1,6 @@
+import { exportClientsEmailsCSV } from '../../../../utils/xlsxFunctions.jsx'
+import { getClients } from '../../../../utils/RequestsAPI/Clients.jsx'
+
 export const sortClients = (clients, searchQuery, sortOrder) => {
   return clients.sort((a, b) => {
     if (searchQuery !== '') {
@@ -20,4 +23,24 @@ export const sortClients = (clients, searchQuery, sortOrder) => {
       }
     }
   })
+}
+
+export const getEmailsExcel = () => {
+  let totalClients = 1
+  let clients = []
+  return getClients(1)
+    .then((res) => res.json())
+    .then((res) => {
+      totalClients = res.totalElements
+      return getClients(totalClients)
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      clients = res.content
+      console.log(clients)
+      exportClientsEmailsCSV(clients)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }

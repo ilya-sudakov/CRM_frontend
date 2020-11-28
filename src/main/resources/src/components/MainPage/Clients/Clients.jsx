@@ -2,34 +2,20 @@ import React, { useState, useEffect, useContext } from 'react'
 import './Clients.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import '../../../utils/Form/Form.scss'
-import {
-  getClients,
-  deleteClient,
-  getClientsByCategoryAndType,
-  editNextContactDateClient,
-  searchClients,
-  editClient,
-} from '../../../utils/RequestsAPI/Clients.jsx'
+import { searchClients } from '../../../utils/RequestsAPI/Clients.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import { Link } from 'react-router-dom'
-import { deleteClientLegalEntity } from '../../../utils/RequestsAPI/Clients/LegalEntity.jsx'
-import { deleteClientContact } from '../../../utils/RequestsAPI/Clients/Contacts.jsx'
-import {
-  deleteClientWorkHistory,
-  editClientWorkHistory,
-  addClientWorkHistory,
-} from '../../../utils/RequestsAPI/Clients/WorkHistory.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
-import { exportClientsEmailsCSV } from '../../../utils/xlsxFunctions.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
-import { getSuppliersByCategoryAndType } from '../../../utils/RequestsAPI/Clients/Suppliers'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 import EditWorkHistory from './MainComponents/EditWorkHistory.jsx'
 import EditNextContactDate from './MainComponents/EditContactDay.jsx'
 import Pagination from './MainComponents/Pagination.jsx'
 import ClientsList from './MainComponents/ClientsList.jsx'
 import { UserContext } from '../../../App.js'
+import { getEmailsExcel } from './MainComponents/functions.js'
+import { clientTypes } from './MainComponents/objects.js'
 
 const Clients = (props) => {
   const [clients, setClients] = useState([])
@@ -49,38 +35,41 @@ const Clients = (props) => {
   const [selectedItem, setSelectedItem] = useState({})
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const userContext = useContext(UserContext)
+  
   const [sortOrder, setSortOrder] = useState({
     curSort: 'name',
     name: 'asc',
     nextDateContact: 'asc',
   })
 
-  const deleteItem = (clientId, index) => {
-    Promise.all(
-      clients[index].legalEntities.map((item) => {
-        return clientTypes[props.type].deleteLegalEntityFunction(item.id)
-      }),
+  const deleteItem = async (clientId, index) => {
+    return Promise.all(
+      clients[index].legalEntities.map((item) =>
+        clientTypes[props.type].deleteLegalEntityFunction(item.id),
+      ),
     )
-      .then(() => {
+      .then(() =>
         Promise.all(
           clients[index].contacts.map((item) => {
             return clientTypes[props.type].deleteContactsFunction(item.id)
           }),
-        ).then(() => {
-          Promise.all(
-            clients[index].histories.map((item) => {
-              return clientTypes[props.type].deleteWorkHistoryFunction(item.id)
-            }),
-          ).then(() => {
-            clientTypes[props.type].deleteItemFunction(clientId).then(() => {
-              let temp = clients
-              temp.splice(index, 1)
-              setClients([...temp])
-              // console.log('deleted successfully');
-            })
-          })
-        })
-      })
+        ),
+      )
+      .then(() =>
+        Promise.all(
+          clients[index].histories.map((item) => {
+            return clientTypes[props.type].deleteWorkHistoryFunction(item.id)
+          }),
+        ),
+      )
+      .then(() =>
+        clientTypes[props.type].deleteItemFunction(clientId).then(() => {
+          let temp = clients
+          temp.splice(index, 1)
+          setClients([...temp])
+          // console.log('deleted successfully');
+        }),
+      )
       .catch((error) => {
         alert('Ошибка при удалении')
         console.log(error)
@@ -156,9 +145,7 @@ const Clients = (props) => {
       .then((res) => {
         console.log(res)
         setClients(res.content)
-        // console.log(Math.ceil(res.totalElements / itemsPerPage));
         if (curPage < 5 && searchQuery === '') {
-          // setItemsCount(res.length);
           setItemsCount(res.totalElements)
           let temp = []
           let i = 1
@@ -181,94 +168,7 @@ const Clients = (props) => {
     })
   }
 
-  const clientTypes = {
-    clients: {
-      name: 'клиент',
-      title: 'Клиенты',
-      type: null,
-      loadItemsByCategory: (
-        category,
-        curPage,
-        itemsPerPage,
-        sortOrder,
-        signal,
-      ) =>
-        getClientsByCategoryAndType(
-          category,
-          curPage,
-          itemsPerPage,
-          sortOrder,
-          signal,
-        ),
-      editItemFunction: (newClient, id) => editClient(newClient, id),
-      deleteItemFunction: (id) => deleteClient(id),
-      editWorkHistoryFunction: (newWorkHistory, id) =>
-        editClientWorkHistory(newWorkHistory, id),
-      editNextContactDateFunction: (date) => editNextContactDateClient(date),
-      addWorkHistoryFunction: (newWorkHistory) =>
-        addClientWorkHistory(newWorkHistory),
-      deleteWorkHistoryFunction: (id) => deleteClientWorkHistory(id),
-      deleteContactsFunction: (id) => deleteClientContact(id),
-      deleteLegalEntityFunction: (id) => deleteClientLegalEntity(id),
-    },
-    suppliers: {
-      name: 'поставщик',
-      title: 'Поставщики',
-      type: 'supplier',
-      loadItemsByCategory: (
-        category,
-        curPage,
-        itemsPerPage,
-        sortOrder,
-        signal,
-      ) =>
-        getSuppliersByCategoryAndType(
-          category,
-          curPage,
-          itemsPerPage,
-          sortOrder,
-          signal,
-        ),
-      editItemFunction: (newClient, id) => editClient(newClient, id),
-      deleteItemFunction: (id) => deleteClient(id),
-      editWorkHistoryFunction: (newWorkHistory, id) =>
-        editClientWorkHistory(newWorkHistory, id),
-      editNextContactDateFunction: (date) => editNextContactDateClient(date),
-      addWorkHistoryFunction: (newWorkHistory) =>
-        addClientWorkHistory(newWorkHistory),
-      deleteWorkHistoryFunction: (id) => deleteClientWorkHistory(id),
-      deleteContactsFunction: (id) => deleteClientContact(id),
-      deleteLegalEntityFunction: (id) => deleteClientLegalEntity(id),
-    },
-  }
-
-  const getEmailsExcel = () => {
-    setIsLoading(true)
-    let totalClients = 1
-    let clients = []
-    getClients(1)
-      .then((res) => res.json())
-      .then((res) => {
-        totalClients = res.totalElements
-        return getClients(totalClients)
-      })
-      .then((res) => res.json())
-      .then((res) => {
-        clients = res.content
-        console.log(clients)
-        exportClientsEmailsCSV(clients)
-      })
-      .then(() => setIsLoading(false))
-      .catch((error) => {
-        console.log(error)
-        setIsLoading(false)
-      })
-  }
-
-  useEffect(() => {
-    document.title = clientTypes[props.type].title
-    const abortController = new AbortController()
-    // console.log(curPage);
+  const initialLoad = (signal) => {
     const curCategoryTemp = props.location.pathname
       .split('/category/')[1]
       .split('/')[0]
@@ -285,8 +185,17 @@ const Clients = (props) => {
     setCurClientType(curClientTypeTemp)
     if (searchQuery === '') {
       loadClientsTotalByType(curCategoryTemp)
-      loadData(curCategoryTemp, curClientTypeTemp, abortController.signal)
+      return loadData(curCategoryTemp, curClientTypeTemp, signal)
     }
+    return
+  }
+
+  useEffect(() => {
+    document.title = clientTypes[props.type].title
+    const abortController = new AbortController()
+
+    initialLoad(abortController.signal)
+
     return function cancel() {
       abortController.abort()
     }
@@ -307,7 +216,12 @@ const Clients = (props) => {
               isLoading={isLoading}
               className="main-window__button main-window__button--inverted"
               inverted
-              onClick={getEmailsExcel}
+              onClick={async () => {
+                setIsLoading(true)
+                getEmailsExcel().then(() => {
+                  setIsLoading(false)
+                })
+              }}
             />
           </div>
           <div className="main-window__menu">
