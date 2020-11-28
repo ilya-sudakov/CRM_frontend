@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './Clients.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import '../../../utils/Form/Form.scss'
-import editSVG from '../../../../../../../assets/tableview/edit.svg'
-import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
-import starSVG from '../../../../../../../assets/tableview/star.svg'
-import starBorderedSVG from '../../../../../../../assets/tableview/star_border.svg'
-import phoneSVG from '../../../../../../../assets/tableview/phone.svg'
-import calendarSVG from '../../../../../../../assets/tableview/calendar.svg'
 import {
   getClients,
   deleteClient,
@@ -18,7 +12,6 @@ import {
 } from '../../../utils/RequestsAPI/Clients.jsx'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import { Link } from 'react-router-dom'
-import { formatDateString } from '../../../utils/functions.jsx'
 import { deleteClientLegalEntity } from '../../../utils/RequestsAPI/Clients/LegalEntity.jsx'
 import { deleteClientContact } from '../../../utils/RequestsAPI/Clients/Contacts.jsx'
 import {
@@ -27,14 +20,16 @@ import {
   addClientWorkHistory,
 } from '../../../utils/RequestsAPI/Clients/WorkHistory.jsx'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
-import InputDate from '../../../utils/Form/InputDate/InputDate.jsx'
-import SelectWorkHistory from './SelectWorkHistory/SelectWorkHistory.jsx'
 import Button from '../../../utils/Form/Button/Button.jsx'
 import { exportClientsEmailsCSV } from '../../../utils/xlsxFunctions.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import { getSuppliersByCategoryAndType } from '../../../utils/RequestsAPI/Clients/Suppliers'
-import PlaceholderLoading from '../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+import EditWorkHistory from './MainComponents/EditWorkHistory.jsx'
+import EditNextContactDate from './MainComponents/EditContactDay.jsx'
+import Pagination from './MainComponents/Pagination.jsx'
+import ClientsList from './MainComponents/ClientsList.jsx'
+import { UserContext } from '../../../App.js'
 
 const Clients = (props) => {
   const [clients, setClients] = useState([])
@@ -53,6 +48,7 @@ const Clients = (props) => {
   const [closeWindow, setCloseWindow] = useState(false)
   const [selectedItem, setSelectedItem] = useState({})
   const [itemsPerPage, setItemsPerPage] = useState(10)
+  const userContext = useContext(UserContext)
   const [sortOrder, setSortOrder] = useState({
     curSort: 'name',
     name: 'asc',
@@ -422,7 +418,7 @@ const Clients = (props) => {
                   setShowWindow={setShowWindow}
                   setCloseWindow={setCloseWindow}
                   closeWindow={closeWindow}
-                  userHasAccess={props.userHasAccess}
+                  userHasAccess={userContext.userHasAccess}
                   addWorkHistory={
                     clientTypes[props.type].addWorkHistoryFunction
                   }
@@ -452,601 +448,34 @@ const Clients = (props) => {
             </div>
           }
         />
-        <div className="main-window__list">
-          {/* <TableLoading isLoading={isLoading} /> */}
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>Название</span>
-            <span>Сайт</span>
-            <span>Контакты</span>
-            <span>Комментарий</span>
-            <span>Дата след. контакта</span>
-            <div className="main-window__actions">Действие</div>
-          </div>
-          {isLoading ? (
-            <PlaceholderLoading
-              itemClassName="main-window__list-item"
-              minHeight="60px"
-              items={itemsPerPage}
-            />
-          ) : (
-            clients
-              //.filter(item => {
-              //    return (
-              //        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              //        item.site.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              //        item.comment.toLowerCase().includes(searchQuery.toLowerCase())
-              //    )
-              //})
-              .sort((a, b) => {
-                if (searchQuery !== '') {
-                  if (sortOrder.curSort === 'nextDateContact') {
-                    if (
-                      new Date(a[sortOrder.curSort]) <
-                      new Date(b[sortOrder.curSort])
-                    ) {
-                      return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-                    }
-                    if (
-                      new Date(a[sortOrder.curSort]) >
-                      new Date(b[sortOrder.curSort])
-                    ) {
-                      return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-                    }
-                    return 0
-                  } else {
-                    if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                      return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-                    }
-                    if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                      return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-                    }
-                    return 0
-                  }
-                }
-              })
-              .map((item, index) => {
-                return (
-                  <div className="main-window__list-item" key={index}>
-                    <span>
-                      <div className="main-window__mobile-text">Название: </div>
-                      {item.name}
-                    </span>
-                    <span>
-                      <div className="main-window__mobile-text">Сайт: </div>
-                      {/* {item.site} */}
-                      <a
-                        className="main-window__link"
-                        title={item.site}
-                        href={
-                          item.site.split('//').length > 1
-                            ? item.site
-                            : 'https://' + item.site
-                        }
-                        target="_blank"
-                      >
-                        {item.site.split('//').length > 1
-                          ? item.site.split('//')[1]
-                          : item.site}
-                      </a>
-                    </span>
-                    <span>
-                      <div className="main-window__mobile-text">
-                        Контактное лицо:{' '}
-                      </div>
-                      {item.contacts?.length > 0
-                        ? (item.contacts[0].name !== ''
-                            ? item.contacts[0].name + ', '
-                            : '') + item.contacts[0].phoneNumber
-                        : 'Не указаны контакт. данные'}
-                    </span>
-                    <span title={item.comment}>
-                      <div className="main-window__mobile-text">
-                        Комментарий:{' '}
-                      </div>
-                      {item.comment}
-                    </span>
-                    <span>
-                      <div className="main-window__mobile-text">
-                        Дата след. контакта:{' '}
-                      </div>
-                      {/* {formatDateString(item.nextDateContact)} */}
-                      {new Date(item.nextDateContact) < new Date() ? (
-                        <div className="main-window__reminder">
-                          <div>!</div>
-                          <div>{formatDateString(item.nextDateContact)}</div>
-                        </div>
-                      ) : (
-                        formatDateString(item.nextDateContact)
-                      )}
-                    </span>
-                    <div className="main-window__actions">
-                      {/* <div className="main-window__mobile-text">Действия:</div> */}
-                      {props.userHasAccess(['ROLE_ADMIN']) && (
-                        <div
-                          className="main-window__action"
-                          title="Добавить в избранных клиентов"
-                          onClick={() => {
-                            let temp = clients
-                            //   console.log(item);
-                            let newClient = Object.assign({
-                              type: item.type,
-                              categoryId: item.category.id,
-                              check: item.check,
-                              clientType: item.clientType,
-                              comment: item.comment,
-                              manager: item.manager,
-                              name: item.name,
-                              nextDateContact:
-                                new Date(item.nextDateContact).getTime() / 1000,
-                              price: item.price,
-                              site: item.site,
-                              storageAddress: item.storageAddress,
-                              workCondition: item.workCondition,
-                              favorite: !item.favorite,
-                            })
-                            clientTypes[props.type]
-                              .editItemFunction(newClient, item.id)
-                              .then(() => {
-                                temp.splice(index, 1, {
-                                  ...item,
-                                  favorite: !item.favorite,
-                                })
-                                //   loadData(item.categoryName, item.clientType);
-                                setClients([...temp])
-                              })
-                              .catch((error) => {
-                                console.log(error)
-                              })
-                          }}
-                        >
-                          <img
-                            className="main-window__img"
-                            src={item.favorite ? starSVG : starBorderedSVG}
-                          />
-                        </div>
-                      )}
-                      <div
-                        className="main-window__action"
-                        title="Совершить действие"
-                        onClick={() => {
-                          setCloseWindow(false)
-                          setSelectedItem(item)
-                          setShowWindow(true)
-                          setCurForm('workHistory')
-                        }}
-                      >
-                        <img className="main-window__img" src={phoneSVG} />
-                      </div>
-                      <div
-                        className="main-window__action"
-                        title="Дата следующего контакта"
-                        onClick={() => {
-                          setCloseWindow(false)
-                          setSelectedItem(item)
-                          setShowWindow(true)
-                          setCurForm('nextContactDate')
-                        }}
-                      >
-                        <img className="main-window__img" src={calendarSVG} />
-                      </div>
-                      <a
-                        className="main-window__action"
-                        title="Редактирование клиента"
-                        href={`/${props.type}/edit/${item.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img className="main-window__img" src={editSVG} />
-                      </a>
-                      {props.userHasAccess(['ROLE_ADMIN']) && (
-                        <div
-                          className="main-window__action"
-                          title="Удаление клиента"
-                          onClick={() => {
-                            deleteItem(item.id, index)
-                          }}
-                        >
-                          <img className="main-window__img" src={deleteSVG} />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )
-              })
-          )}
-        </div>
-        <div className="main-window__pagination">
-          <div className="main-window__sort-panel">
-            <span>Кол-во элем. на странице: </span>
-            <select
-              value={itemsPerPage}
-              onChange={(event) => {
-                const value = event.target.value
-                setItemsPerPage(value)
-              }}
-            >
-              <option>20</option>
-              <option>15</option>
-              <option>10</option>
-            </select>
-          </div>
-          <div
-            className="main-window__page-number main-window__page-number--skip"
-            onClick={() => {
-              if (curPage > 1) {
-                const item = curPage - 1
-                setCurPage(item)
-                if (Math.floor(itemsCount / itemsPerPage) > 5) {
-                  if (pagination.indexOf(item) === 0 && item !== 1) {
-                    let temp = []
-                    for (
-                      let i = pagination[0] - 1;
-                      i <= Math.floor(itemsCount / itemsPerPage) &&
-                      i <= pagination[pagination.length - 1] - 1;
-                      i++
-                    ) {
-                      temp.push(i)
-                    }
-                    return setPagination(temp)
-                  }
-                  if (
-                    pagination.indexOf(item) === pagination.length - 1 &&
-                    item !== Math.floor(itemsCount / itemsPerPage)
-                  ) {
-                    let temp = []
-                    for (
-                      let i = pagination[0] + 1;
-                      i <= Math.floor(itemsCount / itemsPerPage) &&
-                      i <= pagination[pagination.length - 1] + 1;
-                      i++
-                    ) {
-                      temp.push(i)
-                    }
-                    return setPagination(temp)
-                  }
-                }
-              }
-            }}
-          >
-            Пред
-          </div>
-          {curPage >= 5 && searchQuery === '' && (
-            <React.Fragment>
-              <div
-                className="main-window__page-number"
-                onClick={() => {
-                  const item = 1
-                  setCurPage(item)
-                  if (Math.floor(itemsCount / itemsPerPage) > 5) {
-                    if (pagination.indexOf(item) === 0 && item !== 1) {
-                      let temp = []
-                      for (
-                        let i = pagination[0] - 1;
-                        i <= Math.floor(itemsCount / itemsPerPage) &&
-                        i <= pagination[pagination.length - 1] - 1;
-                        i++
-                      ) {
-                        temp.push(i)
-                      }
-                      return setPagination(temp)
-                    }
-                    if (
-                      pagination.indexOf(item) === pagination.length - 1 &&
-                      item !== Math.floor(itemsCount / itemsPerPage)
-                    ) {
-                      let temp = []
-                      for (
-                        let i = pagination[0] + 1;
-                        i <= Math.floor(itemsCount / itemsPerPage) &&
-                        i <= pagination[pagination.length - 1] + 1;
-                        i++
-                      ) {
-                        temp.push(i)
-                      }
-                      return setPagination(temp)
-                    }
-                  }
-                }}
-              >
-                1
-              </div>
-              <span>...</span>
-            </React.Fragment>
-          )}
-          {pagination.map((item, index) => {
-            return (
-              <div
-                className={
-                  curPage == item
-                    ? 'main-window__page-number main-window__page-number--active'
-                    : 'main-window__page-number'
-                }
-                onClick={() => {
-                  setCurPage(item)
-                  if (Math.floor(itemsCount / itemsPerPage) > 5) {
-                    if (pagination.indexOf(item) === 0 && item !== 1) {
-                      let temp = []
-                      for (
-                        let i = pagination[0] - 1;
-                        i <= Math.floor(itemsCount / itemsPerPage) &&
-                        i <= pagination[pagination.length - 1] - 1;
-                        i++
-                      ) {
-                        temp.push(i)
-                      }
-                      return setPagination(temp)
-                    }
-                    if (
-                      pagination.indexOf(item) === pagination.length - 1 &&
-                      item !== Math.ceil(itemsCount / itemsPerPage)
-                    ) {
-                      let temp = []
-                      for (
-                        let i = pagination[0] + 1;
-                        i <= Math.ceil(itemsCount / itemsPerPage) &&
-                        i <= pagination[pagination.length - 1] + 1;
-                        i++
-                      ) {
-                        temp.push(i)
-                      }
-                      return setPagination(temp)
-                    }
-                  }
-                }}
-              >
-                {item}
-                <div className="main-window__mobile-text">
-                  из {Math.ceil(itemsCount / itemsPerPage)}
-                </div>
-              </div>
-            )
-          })}
-          {curPage <= Math.ceil(itemsCount / itemsPerPage) - 2 &&
-            Math.ceil(itemsCount / itemsPerPage) > 5 &&
-            pagination.find(
-              (item) => item === Math.ceil(itemsCount / itemsPerPage),
-            ) === undefined &&
-            searchQuery === '' && (
-              <React.Fragment>
-                <span>...</span>
-                {/* {console.log(pagination.find(item => item === Math.ceil(itemsCount / itemsPerPage)))} */}
-                <div
-                  className="main-window__page-number"
-                  onClick={() => {
-                    const item = Math.ceil(itemsCount / itemsPerPage)
-                    setCurPage(item)
-                    console.log(item)
-                    if (Math.ceil(itemsCount / itemsPerPage) > 5) {
-                      let temp = []
-                      for (
-                        let i = item - 5;
-                        i <= Math.ceil(itemsCount / itemsPerPage);
-                        i++
-                      ) {
-                        temp.push(i)
-                      }
-                      return setPagination(temp)
-                    }
-                  }}
-                >
-                  {Math.ceil(itemsCount / itemsPerPage)}
-                </div>
-              </React.Fragment>
-            )}
-          <div
-            className="main-window__page-number main-window__page-number--skip"
-            onClick={() => {
-              if (curPage < Math.ceil(itemsCount / itemsPerPage)) {
-                const item = curPage + 1
-                setCurPage(item)
-                if (Math.ceil(itemsCount / itemsPerPage) >= 5) {
-                  if (pagination.indexOf(item) === 0 && item !== 1) {
-                    let temp = []
-                    for (
-                      let i = pagination[0] - 1;
-                      i <= Math.ceil(itemsCount / itemsPerPage) &&
-                      i <= pagination[pagination.length - 1] - 1;
-                      i++
-                    ) {
-                      temp.push(i)
-                    }
-                    return setPagination(temp)
-                  }
-                  if (
-                    pagination.indexOf(item) === pagination.length - 1 &&
-                    item !== Math.ceil(itemsCount / itemsPerPage)
-                  ) {
-                    let temp = []
-                    for (
-                      let i = pagination[0] + 1;
-                      i <= Math.ceil(itemsCount / itemsPerPage) &&
-                      i <= pagination[pagination.length - 1] + 1;
-                      i++
-                    ) {
-                      temp.push(i)
-                    }
-                    return setPagination(temp)
-                  }
-                }
-              }
-            }}
-          >
-            След
-          </div>
-        </div>
+        <ClientsList
+          isLoading={isLoading}
+          itemsPerPage={itemsPerPage}
+          clients={clients}
+          searchQuery={searchQuery}
+          sortOrder={sortOrder}
+          deleteItem={deleteItem}
+          setClients={setClients}
+          type={props.type}
+          userContext={userContext}
+          setCloseWindow={setCloseWindow}
+          setSelectedItem={setSelectedItem}
+          setShowWindow={setShowWindow}
+          setCurForm={setCurForm}
+          editItemFunction={clientTypes[props.type].editItemFunction}
+        />
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+          curPage={curPage}
+          setCurPage={setCurPage}
+          itemsCount={itemsCount}
+          pagination={pagination}
+          setPagination={setPagination}
+          searchQuery={searchQuery}
+        />
       </div>
     </div>
   )
 }
 export default Clients
-
-const EditNextContactDate = (props) => {
-  const [date, setDate] = useState(new Date())
-  const [isLoading, setIsLoading] = useState(false)
-
-  const handleSubmit = () => {
-    setIsLoading(true)
-    props
-      .editNextContactDate({
-        nextDateContact: new Date(date).getTime() / 1000,
-        id: props.selectedItem.id,
-      })
-      .then(() => {
-        setIsLoading(false)
-        props.loadData(
-          props.selectedItem.category.name,
-          props.selectedItem.clientType === 'Активные'
-            ? 'active'
-            : props.selectedItem.clientType === 'Потенциальные'
-            ? 'potential'
-            : 'in-progress',
-        )
-        props.setCloseWindow(!props.closeWindow)
-      })
-  }
-
-  useEffect(() => {
-    if (
-      props.selectedItem.nextDateContact &&
-      props.setShowWindow &&
-      props.closeWindow === true
-    ) {
-      props.setShowWindow(false)
-    } else {
-      setDate(props.selectedItem.nextDateContact)
-    }
-  }, [props.selectedItem, props.closeWindow])
-
-  return (
-    <div className="main-form">
-      <form className="main-form__form">
-        <InputDate
-          inputName="Дата след. контакта"
-          name="nextContactDate"
-          selected={Date.parse(date)}
-          handleDateChange={(value) => {
-            setDate(value)
-          }}
-        />
-        <div className="main-form__buttons main-form__buttons--full">
-          <input
-            className="main-form__submit main-form__submit--inverted"
-            type="submit"
-            onClick={() => {
-              props.setCloseWindow(!props.closeWindow)
-            }}
-            value="Закрыть"
-          />
-          <Button
-            text="Изменить дату"
-            isLoading={isLoading}
-            className="main-form__submit"
-            onClick={handleSubmit}
-          />
-        </div>
-      </form>
-    </div>
-  )
-}
-
-const EditWorkHistory = (props) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [workHistory, setWorkHistory] = useState([])
-  const [workHistoryNew, setWorkHistoryNew] = useState([])
-  const [clientId, setClientId] = useState(0)
-
-  const handleSubmit = () => {
-    setIsLoading(true)
-    //PUT if edited, POST if item is new
-    const itemsArr = workHistoryNew.map((selected) => {
-      let edited = false
-      workHistory.map((item) => {
-        if (item.id === selected.id) {
-          edited = true
-          return
-        }
-      })
-      return edited === true
-        ? props.editWorkHistory(
-            {
-              date: selected.date,
-              action: selected.action,
-              result: selected.result,
-              comment: selected.comment,
-              clientId: clientId,
-            },
-            selected.id,
-          )
-        : props.addWorkHistory({
-            date: selected.date,
-            action: selected.action,
-            result: selected.result,
-            comment: selected.comment,
-            clientId: clientId,
-          })
-    })
-    Promise.all(itemsArr).then(() => {
-      //DELETE items removed by user
-      const itemsArr = workHistory.map((item) => {
-        let deleted = true
-        workHistoryNew.map((selected) => {
-          if (selected.id === item.id) {
-            deleted = false
-            return
-          }
-        })
-        return deleted === true && props.deleteWorkHistory(item.id)
-      })
-      Promise.all(itemsArr).then(() => {
-        setIsLoading(false)
-        props.setCloseWindow(!props.closeWindow)
-      })
-    })
-  }
-
-  useEffect(() => {
-    if (
-      props.selectedItem &&
-      props.setShowWindow &&
-      props.closeWindow === true
-    ) {
-      props.setShowWindow(false)
-    } else {
-      setClientId(props.selectedItem.id)
-      setWorkHistory(props.selectedItem.histories)
-      setWorkHistoryNew(props.selectedItem.histories)
-    }
-  }, [props.selectedItem, props.closeWindow])
-
-  return (
-    <div className="main-form">
-      <form className="main-form__form">
-        <div className="main-form__item">
-          <SelectWorkHistory
-            defaultValue={workHistory}
-            userHasAccess={props.userHasAccess}
-            handleWorkHistoryChange={(value) => {
-              setWorkHistoryNew(value)
-            }}
-          />
-        </div>
-        <div className="main-form__buttons main-form__buttons--full">
-          <input
-            className="main-form__submit main-form__submit--inverted"
-            type="submit"
-            onClick={() => {
-              props.setCloseWindow(!props.closeWindow)
-            }}
-            value="Закрыть"
-          />
-          <Button
-            text="Сохранить"
-            isLoading={isLoading}
-            className="main-form__submit"
-            onClick={handleSubmit}
-          />
-        </div>
-      </form>
-    </div>
-  )
-}

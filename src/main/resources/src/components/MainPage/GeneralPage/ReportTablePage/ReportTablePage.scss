@@ -89,6 +89,7 @@
                 flex-direction: column;
                 margin-top: 10px;
                 padding-left: 20px;
+                font-size: 1rem;
 
                 &-item {
                     color: #555555;
@@ -129,7 +130,7 @@
                 margin-bottom: 10px;
 
                 &--date {
-                    font-size: 1rem;
+                    font-size: 1.1rem;
                     border-bottom: 1px solid #bbbbbb;
 
                     &::after {
