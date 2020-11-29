@@ -21,11 +21,15 @@ const TasksWidget = () => {
     setIsLoading(true)
     return await getTasksList().then((tasks) => {
       //filter received tasks
-      const filteredTasks = filterTasks(tasks)
-      const filteredTasksByUser = filterTasksByUser(
-        filteredTasks,
-        userContext.userData.username,
-      )
+      const filteredCompletedTasks = filterTasks(tasks)
+
+      //admin sees every active task, everyone else only task they're responsible for
+      const filteredTasksByUser = userContext.userHasAccess(['ROLE_ADMIN'])
+        ? filteredCompletedTasks
+        : filterTasksByUser(
+            filteredCompletedTasks,
+            userContext.userData.username,
+          )
 
       //get dates object from tasks
       const controlDates = getTasksControlDatesList(filteredTasksByUser)
@@ -43,11 +47,13 @@ const TasksWidget = () => {
   return tasks.length > 0 || isLoading ? (
     <Widget
       className="tasks-widget"
-      title="Ваши задачи"
+      title={
+        userContext.userHasAccess(['ROLE_ADMIN']) ? 'Все задачи' : 'Ваши задачи'
+      }
       subTitle={userContext.userData.username}
       linkTo={{
         address: '/dispatcher/general-tasks',
-        text: 'Перейти',
+        text: 'Открыть',
         img: openWidget,
       }}
       content={

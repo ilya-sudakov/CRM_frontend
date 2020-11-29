@@ -84,6 +84,43 @@
                 color: #777777;
                 // text-align: center;
             }
+            .report-table-page__list {
+                display: flex;
+                flex-direction: column;
+                margin-top: 10px;
+                padding-left: 20px;
+                font-size: 1rem;
+
+                &-item {
+                    color: #555555;
+                    margin-bottom: 10px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                    span {
+                        position: relative;
+                        margin-left: 15px;
+                        &:nth-child(1) {
+                            &::before {
+                                content: "";
+                                background-color: #dddddd;
+                                // border-radius: 999px;
+                                width: 2px;
+                                height: 80%;
+                                position: absolute;
+                                right: -10px;
+                                top: 15%;
+                                border-radius: 999px;
+                                // top: calc(50% - 3px);
+                            }
+                        }
+                        &:first-child {
+                            margin-left: 0;
+                        }
+                    }
+                }
+            }
             .report-table-page__employee-title {
                 font-size: 20px;
                 color: #333333;
@@ -91,18 +128,10 @@
                 text-align: left;
                 width: fit-content;
                 margin-bottom: 10px;
-                &::after {
-                    content: "";
-                    position: absolute;
-                    width: calc(100% + 5px);
-                    background-color: #cccccc;
-                    height: 3px;
-                    top: calc(100% + 3px);
-                    left: 0;
-                }
 
                 &--date {
-                    font-size: 1rem;
+                    font-size: 1.1rem;
+                    border-bottom: 1px solid #bbbbbb;
 
                     &::after {
                         height: 2px;
@@ -113,14 +142,14 @@
             }
 
             .report-table-page__employee-hours {
-                padding: 5px 10px;
-                border-radius: 999px;
-                background-color: $button__background--inverted;
-                color: $secondary-text-color;
+                padding: 3px 8px;
+                border-radius: 3px;
+                border: 1px solid #bbbbbb;
+                background-color: #ffffff;
                 margin: 10px 0;
                 margin-left: 10px;
                 white-space: nowrap;
-                // font-size: 12px;
+                cursor: pointer;
                 font-size: 80%;
             }
             .report-table-page__employee-works-wrapper {
@@ -154,8 +183,9 @@
                         }
 
                         .report-table-page__img {
-                            margin-bottom: -6px;
+                            margin-bottom: -5px;
                             margin-left: 5px;
+                            max-width: 22px;
                         }
                     }
 

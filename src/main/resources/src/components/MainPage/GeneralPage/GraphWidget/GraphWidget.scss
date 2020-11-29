@@ -1,0 +1,114 @@
+@import "../../../../variables.scss";
+
+.graph-widget {
+    &__date {
+        color: #777777;
+        font-size: 0.8rem;
+        width: 100%;
+        text-align: left;
+    }
+
+    &__button {
+        padding: 5px 10px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+
+        &:first-child {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        //
+        &:last-child {
+            margin-right: 0;
+            // margin-left: 15px;
+        }
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 10px;
+        .graph-widget__title {
+            font-size: 20px;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            // margin: 0 10px;
+            margin-right: auto;
+            width: fit-content;
+            transition: 100ms ease-in-out;
+        }
+    }
+
+    &__chart-wrapper {
+        &--placeholder {
+            .graph-widget__loading-panel {
+                height: 250px;
+                width: 100%;
+                border-radius: 5px;
+                animation: pulse 1s infinite ease-in-out;
+                margin-bottom: 10px;
+            }
+        }
+
+        .graph-widget__chart {
+            height: 100%;
+            min-height: 225px;
+            max-height: 300px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        max-height: fit-content;
+        &__chart-wrapper {
+            .graph-widget__header {
+                .graph-widget__button {
+                    padding: 5px 5px;
+                }
+            }
+        }
+        .main-window__mobile-text {
+            // font-size: 125%;
+            // margin-bottom: 15px;
+            // margin-right: auto;
+            // margin-left: 5px;
+            display: none;
+        }
+    }
+
+    @media (max-width: 500px) {
+        &__header {
+            justify-content: flex-end;
+            justify-content: center;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            .graph-widget__title {
+                display: none;
+            }
+        }
+        .main-window__mobile-text {
+            display: flex !important;
+            width: 100%;
+            margin: 0;
+            font-size: 120%;
+            flex-wrap: wrap;
+            margin-bottom: 5px;
+            // margin-left: 15px !important;
+        }
+        &__chart-wrapper {
+            width: 100%;
+            padding: 5px 0px;
+            padding-top: 15px;
+            padding-bottom: 60px;
+            max-height: 380px;
+            .graph-widget__chart {
+                max-height: 300px;
+            }
+        }
+    }
+}

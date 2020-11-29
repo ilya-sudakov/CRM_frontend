@@ -21,7 +21,7 @@ const Notifications = lazy(() =>
 )
 
 const WorkManagement = lazy(() =>
-  import('./GeneralPage/WorkManagement/WorkManagement.jsx'),
+  import('./GeneralPage/WorkManagement/WorkListWidget/WorkListWidget.jsx'),
 )
 
 const WorkManagementPage = lazy(() =>

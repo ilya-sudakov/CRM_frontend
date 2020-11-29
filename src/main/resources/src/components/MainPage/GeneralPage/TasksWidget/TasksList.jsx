@@ -13,7 +13,7 @@ const TasksList = ({ tasks, isLoading, controlDates }) => {
     <div className="tasks-widget__list">
       {isLoading ? (
         <PlaceholderLoading
-          itemClassName="list__item"
+          itemClassName="list__item list__item--placeholder"
           minHeight="2rem"
           items={3}
         />
@@ -50,7 +50,7 @@ const ListWrapper = ({ isExpired, index, date, tasks }) => {
         }`}
       >{`до ${formatDateStringNoYear(date[0])} ${
         isExpired
-          ? `- ${dateDiffInDays(new Date(date[0]), new Date())} дн. опоздание`
+          ? `- опоздание ${dateDiffInDays(new Date(date[0]), new Date())} дн.`
           : ''
       }`}</div>
       {tasks
@@ -74,8 +74,15 @@ const ListItem = ({ task }) => {
       >
         <span className="list-item__description">{task.description}</span>
         <span className="list-item__conditions">
-          <span>{task.condition}</span>
-          <span>{task.status}</span>
+          <span className="condition condition--status">{task.condition}</span>
+          <span
+            className={`condition condition--date ${
+              task.status === '' || task.status === null
+                ? 'condition--hidden'
+                : ''
+            }`}
+          >{`от ${formatDateStringNoYear(task.dateCreated)}`}</span>
+          <span className="condition condition--description">{task.status}</span>
         </span>
       </Link>
     </div>
