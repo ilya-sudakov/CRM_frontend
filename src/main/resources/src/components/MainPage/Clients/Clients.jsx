@@ -35,12 +35,30 @@ const Clients = (props) => {
   const [selectedItem, setSelectedItem] = useState({})
   const [itemsPerPage, setItemsPerPage] = useState(10)
   const userContext = useContext(UserContext)
-  
+
   const [sortOrder, setSortOrder] = useState({
     curSort: 'name',
     name: 'asc',
     nextDateContact: 'asc',
   })
+
+  const menuItems = [
+    {
+      link: 'active',
+      name: 'Активные',
+      count: itemsActiveCount,
+    },
+    {
+      link: 'potential',
+      name: 'Потенциальные',
+      count: itemsPotentialCount,
+    },
+    {
+      link: 'in-progress',
+      name: 'В разработке',
+      count: itemsProgressCount,
+    },
+  ]
 
   const deleteItem = async (clientId, index) => {
     return Promise.all(
@@ -225,53 +243,14 @@ const Clients = (props) => {
             />
           </div>
           <div className="main-window__menu">
-            <Link
-              to={'/' + props.type + '/category/' + curCategory + '/active'}
-              className={
-                props.location.pathname.includes('active') === true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
-              }
-            >
-              <div>
-                Активные
-                <span className="main-window__menu-item-amount">
-                  {itemsActiveCount}
-                </span>
-              </div>
-            </Link>
-            <Link
-              to={'/' + props.type + '/category/' + curCategory + '/potential'}
-              className={
-                props.location.pathname.includes('potential') === true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
-              }
-            >
-              <div>
-                Потенциальные
-                <span className="main-window__menu-item-amount">
-                  {itemsPotentialCount}
-                </span>
-              </div>
-            </Link>
-            <Link
-              to={
-                '/' + props.type + '/category/' + curCategory + '/in-progress'
-              }
-              className={
-                props.location.pathname.includes('in-progress') === true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
-              }
-            >
-              <div>
-                В разработке
-                <span className="main-window__menu-item-amount">
-                  {itemsProgressCount}
-                </span>
-              </div>
-            </Link>
+            {menuItems.map((menuItem) => (
+              <MenuItem
+                type={props.type}
+                curCategory={curCategory}
+                location={props.location}
+                item={menuItem}
+              />
+            ))}
           </div>
         </div>
         <SearchBar
@@ -393,3 +372,21 @@ const Clients = (props) => {
   )
 }
 export default Clients
+
+const MenuItem = ({ type, curCategory, item, location }) => {
+  return (
+    <Link
+      to={`/${type}/category/${curCategory}/${item.link}`}
+      className={
+        location.pathname.includes(item.link) === true
+          ? 'main-window__item--active main-window__item'
+          : 'main-window__item'
+      }
+    >
+      <div>
+        {item.name}
+        <span className="main-window__menu-item-amount">{item.count}</span>
+      </div>
+    </Link>
+  )
+}

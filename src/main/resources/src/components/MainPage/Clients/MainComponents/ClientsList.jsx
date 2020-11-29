@@ -139,6 +139,7 @@ const ListItem = ({
         })
         //   loadData(item.categoryName, item.clientType);
         setClients([...temp])
+        alert('Клиент успешно скрыт')
       })
       .catch((error) => {
         console.log(error)
