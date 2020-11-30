@@ -165,7 +165,7 @@ const LoginPage = (props) => {
             <CheckBox
               text="Запомнить меня"
               checked={rememberUser}
-              onChange={(value) => {
+              onChange={() => {
                 setRememberUser(!rememberUser)
               }}
             />

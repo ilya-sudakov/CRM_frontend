@@ -21,29 +21,12 @@ module.exports = {
   mode: 'development',
   module: {
     rules: [
-      // {
-      //   test: /\.json$/,
-      //   loader: 'file-loader',
-      //   type: 'javascript/auto',
-      //   exclude: /node_modules/,
-      //   options: {
-      //     name: 'public/[name].[ext]',
-      //     esModule: false,
-      //   },
-      // },
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: [
           {
             loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-react', '@babel/preset-env'],
-              plugins: [
-                '@babel/plugin-proposal-class-properties',
-                '@babel/plugin-transform-runtime',
-              ],
-            },
           },
         ],
       },
@@ -97,17 +80,6 @@ module.exports = {
     new Dotenv({
       path: './.env',
     }),
-    // new WriteFilePlugin(),
-    // new CopyPlugin([
-    //   {
-    //     patterns: [
-    //       {
-    //         from: './src/main/resources/templates/manifest.json',
-    //         to: './src/main/resources/static/built/manifest.json',
-    //       },
-    //     ],
-    //   },
-    // ]),
   ],
   node: {
     fs: 'empty',

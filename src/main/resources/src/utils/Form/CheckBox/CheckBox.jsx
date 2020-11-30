@@ -19,11 +19,11 @@ const CheckBox = (props) => {
             props.onChange(value, name, id)
           }}
           checked={props.checked && props.checked}
-          defaultChecked={
-            props.defaultChecked !== undefined ? props.defaultChecked : true
-          }
+          // defaultChecked={
+          //   props.defaultChecked !== undefined ? props.defaultChecked : true
+          // }
         />
-        <div class="checkbox__checkmark"></div>
+        <div className="checkbox__checkmark"></div>
       </label>
     </div>
   )
