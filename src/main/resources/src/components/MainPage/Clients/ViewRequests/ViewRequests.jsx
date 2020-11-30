@@ -1,11 +1,20 @@
 import React from 'react'
 import './ViewRequests.scss'
-import {
-  formatDateString,
-  formatDateStringNoYear,
-} from '../../../../utils/functions.jsx'
+import { formatDateStringNoYear } from '../../../../utils/functions.jsx'
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 import { Link } from 'react-router-dom'
+
+const sortRequests = (requests) => {
+  return requests.sort((a, b) => {
+    if (a.date < b.date) {
+      return 1
+    }
+    if (a.date > b.date) {
+      return -1
+    }
+    return 0
+  })
+}
 
 const ViewRequests = (props) => {
   return (
@@ -34,37 +43,9 @@ const ViewRequests = (props) => {
               items={3}
             />
           ) : (
-            props.requests
-              .sort((a, b) => {
-                if (a.date < b.date) {
-                  return 1
-                }
-                if (a.date > b.date) {
-                  return -1
-                }
-                return 0
-              })
-              .map((item, index) => (
-                <div className="main-window__list-item" key={index}>
-                  <span className="main-window__col main-window__col--date">
-                    {formatDateStringNoYear(item.date)}
-                  </span>
-                  <span className="main-window__col main-window__col--id">
-                    <Link
-                      to={`/requests/view/${item.id}`}
-                    >{`ID #${item.id}`}</Link>
-                  </span>
-                  <span className="main-window__col main-window__col--status">
-                    {item.status}
-                  </span>
-                  <span className="main-window__col main-window__col--comment">
-                    {item.comment}
-                  </span>
-                  <span className="main-window__col main-window__col--sum">
-                    {`${item.sum ?? 0} руб.`}
-                  </span>
-                </div>
-              ))
+            sortRequests(props.requests).map((item, index) => (
+              <ListItem item={item} index={index} />
+            ))
           )}
         </div>
       </div>
@@ -73,3 +54,25 @@ const ViewRequests = (props) => {
 }
 
 export default ViewRequests
+
+const ListItem = ({ item, index }) => {
+  return (
+    <div className="main-window__list-item" key={index}>
+      <span className="main-window__col main-window__col--date">
+        {formatDateStringNoYear(item.date)}
+      </span>
+      <span className="main-window__col main-window__col--id">
+        <Link to={`/requests/view/${item.id}`}>{`ID #${item.id}`}</Link>
+      </span>
+      <span className="main-window__col main-window__col--status">
+        {item.status}
+      </span>
+      <span className="main-window__col main-window__col--comment">
+        {item.comment}
+      </span>
+      <span className="main-window__col main-window__col--sum">
+        {`${item.sum ?? 0} руб.`}
+      </span>
+    </div>
+  )
+}

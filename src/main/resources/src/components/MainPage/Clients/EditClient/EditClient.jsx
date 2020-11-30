@@ -305,11 +305,7 @@ const EditClient = (props) => {
         .then(() => {
           setIsLoading(false)
           props.history.push(
-            '/' +
-              props.type +
-              '/category/' +
-              clientInputs.categoryName +
-              '/active',
+            `/${props.type}/category/${clientInputs.categoryName}/active`,
           )
         })
         .catch((error) => {

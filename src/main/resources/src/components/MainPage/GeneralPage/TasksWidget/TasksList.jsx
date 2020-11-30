@@ -7,6 +7,7 @@ import {
 } from '../../../../utils/functions.jsx'
 import { conditions } from './objects.js'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const TasksList = ({ tasks, isLoading, controlDates }) => {
   return (
@@ -35,6 +36,12 @@ const TasksList = ({ tasks, isLoading, controlDates }) => {
 }
 
 export default TasksList
+
+TasksList.propTypes = {
+  tasks: PropTypes.array,
+  isLoading: PropTypes.bool,
+  controlDates: PropTypes.object,
+}
 
 const ListWrapper = ({ isExpired, index, date, tasks }) => {
   return (
@@ -65,6 +72,13 @@ const ListWrapper = ({ isExpired, index, date, tasks }) => {
   )
 }
 
+ListWrapper.propTypes = {
+  tasks: PropTypes.array,
+  index: PropTypes.number,
+  isExpired: PropTypes.bool,
+  date: PropTypes.object,
+}
+
 const ListItem = ({ task }) => {
   return (
     <div className={`list__item list__item--${conditions[task.condition]}`}>
@@ -82,9 +96,15 @@ const ListItem = ({ task }) => {
                 : ''
             }`}
           >{`от ${formatDateStringNoYear(task.dateCreated)}`}</span>
-          <span className="condition condition--description">{task.status}</span>
+          <span className="condition condition--description">
+            {task.status}
+          </span>
         </span>
       </Link>
     </div>
   )
+}
+
+ListItem.propTypes = {
+  task: PropTypes.Object,
 }

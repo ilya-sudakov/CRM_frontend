@@ -7,13 +7,10 @@ import {
   Clients,
   Contracts,
   Requests,
-  // NewRequest,
   GeneralPage,
   newClient,
   Products,
   NewProduct,
-  // EditRequest,
-  // ViewRequest,
   Users,
   EditUser,
   NewUser,
@@ -41,11 +38,8 @@ import {
   LoginHistory,
   EditRecordWork,
   WorkManagementPage,
-  // PriceList,
   NewPriceList,
-  // ViewPriceList,
   ClientCategories,
-  // ViewClient,
   EditClient,
   FeedbackPage,
   NewFeedback,
@@ -84,7 +78,6 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.state.transferState, this.state.transferData);
     if (
       (window.innerWidth ||
         document.documentElement.clientWidth ||
@@ -180,7 +173,6 @@ class MainPage extends React.Component {
                     path="/clients/category/"
                     component={Clients}
                     type="clients"
-                    userHasAccess={this.props.userHasAccess}
                     userData={this.props.userData}
                     allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                   />
@@ -313,26 +305,11 @@ class MainPage extends React.Component {
                   <PrivateRoute
                     exact
                     path="/price-list"
-                    // component={PriceList}
                     component={NewPriceList}
                     userHasAccess={this.props.userHasAccess}
                     userData={this.props.userData}
                     allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                   />
-                  {/* <PrivateRoute
-                                    exact path="/price-list/new"
-                                    component={NewPriceList}
-                                    userHasAccess={this.props.userHasAccess}
-                                    userData={this.props.userData}
-                                    allowedRoles={["ROLE_ADMIN"]}
-                                /> */}
-                  {/* <PrivateRoute
-                  path="/price-list/view/"
-                  component={ViewPriceList}
-                  userHasAccess={this.props.userHasAccess}
-                  userData={this.props.userData}
-                  allowedRoles={['ROLE_ADMIN']}
-                /> */}
                   <PrivateRoute
                     exact
                     path="/products"
