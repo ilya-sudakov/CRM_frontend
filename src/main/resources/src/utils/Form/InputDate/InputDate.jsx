@@ -1,5 +1,6 @@
 import React from 'react'
 import DatePicker from 'react-datepicker'
+import PropTypes from 'prop-types'
 import ru from 'date-fns/locale/ru'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css'
@@ -49,3 +50,17 @@ const InputDate = (props) => {
 }
 
 export default InputDate
+
+InputDate.propTypes = {
+  inputName: PropTypes.string,
+  required: PropTypes.bool,
+  error: PropTypes.bool,
+  type: PropTypes.string,
+  name: PropTypes.string,
+  handleDateChange: PropTypes.func,
+  selected: PropTypes.instanceOf(Date),
+  readOnly: PropTypes.bool,
+  showMonthYearPicker: PropTypes.bool,
+  setErrorsArr: PropTypes.func,
+  errorsArr: PropTypes.object,
+}
