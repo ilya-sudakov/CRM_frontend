@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history'
 
 import PrivateRoute from './PrivateRoute.jsx'
 import UserContext from '../../App.js'
-import { App } from '../../App/App.js'
+import { App } from '../../App.js'
 
 const renderWithContext = (component) => {
   return {

@@ -152,12 +152,12 @@ export const App = () => {
           <UserContext.Provider
             value={{
               userData: user,
-              isAuthorized: isAuthorized,
-              expiredIn: expiredIn,
-              userHasAccess: userHasAccess,
-              newNotifications: newNotifications,
-              lastNotification: lastNotification,
-              setLastNotification: setLastNotification,
+              isAuthorized,
+              expiredIn,
+              userHasAccess,
+              newNotifications,
+              lastNotification,
+              setLastNotification,
             }}
           >
             <PrivateRoute path="/" component={MainPage} />
