@@ -1,15 +1,15 @@
 import React from 'react'
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 import {
   formatDateString,
   formatDateStringNoYear,
   dateDiffInDays,
-} from '../../../../utils/functions.jsx'
-import { conditions } from './objects.js'
+} from '../../../../../utils/functions.jsx'
+import { conditions } from '../objects.js'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const TasksList = ({ tasks, isLoading, controlDates }) => {
+const TasksList = ({ tasks = [], isLoading = false, controlDates = {} }) => {
   return (
     <div className="tasks-widget__list">
       {isLoading ? (
@@ -43,7 +43,12 @@ TasksList.propTypes = {
   controlDates: PropTypes.object,
 }
 
-const ListWrapper = ({ isExpired, index, date, tasks }) => {
+const ListWrapper = ({
+  isExpired = false,
+  index = 0,
+  date = new Date(),
+  tasks = [],
+}) => {
   return (
     <div
       className={`tasks-widget__date-wrapper ${
@@ -79,7 +84,7 @@ ListWrapper.propTypes = {
   date: PropTypes.object,
 }
 
-const ListItem = ({ task }) => {
+const ListItem = ({ task = {} }) => {
   return (
     <div className={`list__item list__item--${conditions[task.condition]}`}>
       <Link

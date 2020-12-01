@@ -55,7 +55,7 @@ class App extends React.Component {
 
   //Метод для проверки на принадлежность пользователя
   //к одной из ролей из переданного массива ролей
-  userHasAccess = (rolesNeeded) => {
+  userHasAccess = (rolesNeeded = []) => {
     let check = false
     this.state.userData.roles.map((item) => {
       for (let i = 0; i < rolesNeeded.length; i++) {
@@ -165,21 +165,15 @@ class App extends React.Component {
             <UserContext.Provider
               value={{
                 userData: { ...this.state.userData },
+                isAuthorized: this.state.isAuthorized,
+                expiredIn: this.state.expiredIn,
                 userHasAccess: this.userHasAccess,
                 newNotifications: this.state.newNotifications,
                 lastNotification: this.state.lastNotification,
-                expiredIn: this.state.expiredIn,
-                isAuthorized: this.state.isAuthorized,
                 setLastNotification: this.state.setLastNotification,
               }}
             >
-              <PrivateRoute
-                path="/"
-                isAuthorized={this.state.isAuthorized}
-                userData={this.state.userData}
-                component={MainPage}
-                userHasAccess={this.userHasAccess}
-              />
+              <PrivateRoute path="/" component={MainPage} />
             </UserContext.Provider>
           </Suspense>
         </Switch>

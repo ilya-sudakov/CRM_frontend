@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TasksList component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="tasks-widget__list"
+  />
+</DocumentFragment>
+`;

@@ -6,7 +6,7 @@ const Button = ({
   inverted = false,
   className = '',
   isLoading = false,
-  imgSrc = null,
+  imgSrc = '',
   type = 'button',
   text = 'Нажмите',
   onClick = null,
@@ -40,7 +40,7 @@ const Button = ({
       >
         {text}
       </span>
-      {isLoading && <div class="button__circle"></div>}
+      {isLoading && <div className="button__circle"></div>}
     </button>
   )
 }
@@ -51,7 +51,7 @@ Button.propTypes = {
   inverted: PropTypes.bool,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
-  imgSrc: PropTypes.string,
+  imgSrc: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   type: PropTypes.string,
   text: PropTypes.string,
   onClick: PropTypes.func,

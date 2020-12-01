@@ -9,7 +9,7 @@ import {
 } from './functions.js'
 import openWidget from '../../../../../../../../assets/tableview/bx-window-open.svg'
 import { UserContext } from '../../../../App.js'
-import TasksList from './TasksList.jsx'
+import TasksList from './TasksList/TasksList.jsx'
 
 const TasksWidget = () => {
   const [tasks, setTasks] = useState([])

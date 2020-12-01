@@ -14,17 +14,15 @@ const renderWithContext = (component) => {
   }
 }
 
-afterEach(cleanup)
+describe('App component', () => {
+  afterEach(cleanup)
 
-it('matches snapshot', () => {
-  const { asFragment } = render(<App />)
-  expect(asFragment()).toMatchSnapshot()
+  it('matches snapshot', () => {
+    const { asFragment } = render(<App />)
+    expect(asFragment()).toMatchSnapshot()
+  })
+
+  it('renders w/ context', () => {
+    renderWithContext(<App />)
+  })
 })
-
-it('renders w/ context', () => {
-  renderWithContext(<App />)
-})
-
-//successive login if accessToken cached (Header)
-
-//redirect to LoginPage if token is not stored
