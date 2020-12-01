@@ -16,7 +16,7 @@ import {
 } from '../../../utils/RequestsAPI/Products.jsx'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 // import { addSpaceDelimiter } from '../../../utils/functions.jsx'
-import { UserContext } from '../../../App.js'
+import UserContext from '../../../App.js'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const Select = (props) => {

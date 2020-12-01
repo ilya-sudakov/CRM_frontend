@@ -12,7 +12,7 @@ import { getRequestPdfText } from '../../../../../utils/pdfFunctions.jsx'
 import { getRequestById } from '../../../../../utils/RequestsAPI/Requests.jsx'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import { workshops } from '../../workshopVariables.js'
-import { UserContext } from '../../../../../App.js'
+import UserContext from '../../../../../App.js'
 import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx'
 
 const ViewRequest = (props) => {

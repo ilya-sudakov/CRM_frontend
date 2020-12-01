@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import './EtceteraPage.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 // import { Link } from 'react-router-dom'
-import { UserContext } from '../../../App.js'
+import UserContext from '../../../App.js'
 
 import tasksImg from '../../../../../../../assets/sidemenu/tasks.svg'
 import clientImg from '../../../../../../../assets/sidemenu/client.svg'

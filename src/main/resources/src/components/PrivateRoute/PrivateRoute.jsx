@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import NotAllowedPage from '../MainPage/NotAllowedPage/NotAllowedPage.jsx'
 import PropTypes from 'prop-types'
-import { UserContext } from '../../App.js'
+import UserContext from '../../App.js'
 
 const PrivateRoute = ({
   component: Component = <></>,

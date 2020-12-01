@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import './FloatingPlus.scss'
 import plusIcon from '../../../../../../../assets/sidemenu/plus.svg'
 import { Link } from 'react-router-dom'
-import { UserContext } from '../../../App.js'
+import UserContext from '../../../App.js'
 
 const FloatingPlus = (props) => {
   const userContext = useContext(UserContext)

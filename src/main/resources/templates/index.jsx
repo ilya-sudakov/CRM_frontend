@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import './index.scss'
-import App from '../src/App.js'
+import { App } from '../src/App.js'
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker

@@ -8,7 +8,7 @@ import {
 } from '../../../../../../utils/functions.jsx'
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
 import TableLoading from '../../../../../../utils/TableView/TableLoading/TableLoading.jsx'
-import { UserContext } from '../../../../../../App.js'
+import UserContext from '../../../../../../App.js'
 
 const PartsStatistic = (props) => {
   const [graph, setGraph] = useState(null)

@@ -4,7 +4,7 @@ import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.
 import Button from '../../../../utils/Form/Button/Button.jsx'
 import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
-import { UserContext } from '../../../../App.js'
+import UserContext from '../../../../App.js'
 import './GraphWidget.scss'
 
 import {

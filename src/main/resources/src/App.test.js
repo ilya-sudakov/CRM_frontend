@@ -1,8 +1,8 @@
 import React from 'react'
 import { render, cleanup } from '@testing-library/react'
 
-import App from './App.js'
-import { UserContext } from './App'
+import { App } from './App.js'
+import UserContext from './App'
 
 const renderWithContext = (component) => {
   return {

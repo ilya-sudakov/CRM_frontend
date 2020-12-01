@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import './TableView.scss'
-import { UserContext } from '../../../../../../App.js'
+import UserContext from '../../../../../../App.js'
 
 import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
 import editIcon from '../../../../../../../../../../assets/tableview/edit.svg'

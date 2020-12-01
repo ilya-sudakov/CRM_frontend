@@ -7,7 +7,7 @@ import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx'
 import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
-import { UserContext } from '../../../../../App.js'
+import UserContext from '../../../../../App.js'
 import {
   editRequest,
   editProductsToRequest,
