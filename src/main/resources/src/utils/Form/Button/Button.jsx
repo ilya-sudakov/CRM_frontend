@@ -1,45 +1,58 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import './Button.scss'
 
-const Button = (props) => {
-  const [className, setClassName] = useState('button')
+const Button = ({
+  inverted = false,
+  className = '',
+  isLoading = false,
+  imgSrc = null,
+  type = 'button',
+  text = 'Нажмите',
+  onClick = null,
+}) => {
+  const [newClassName] = useState(
+    `button ${inverted ? ` button--inverted` : ''}`,
+  )
 
-  useEffect(() => {
-    if (props.inverted) {
-      setClassName(className + ' button--inverted')
+  const handleClick = (event) => {
+    event.preventDefault()
+    if (!isLoading) {
+      return onClick()
     }
-  }, [])
+  }
 
   return (
     <button
-      className={className + (props.className ? ' ' + props.className : '')}
-      onClick={(event) => {
-        event.preventDefault()
-        if (!props.isLoading) {
-          props.onClick()
-        }
-      }}
-      type={props.type ? props.type : 'button'}
+      className={`${newClassName} ${className ?? ''}`}
+      onClick={handleClick}
+      type={type ? type : 'button'}
     >
-      {props.imgSrc && (
+      {imgSrc && (
         <img
-          className={
-            props.isLoading ? 'button__img button__img--hidden' : 'button__img'
-          }
-          src={props.imgSrc}
+          className={`button__img ${isLoading ? 'button__img--hidden' : ''}`}
+          src={imgSrc}
           alt=""
         />
       )}
       <span
-        className={
-          props.isLoading ? 'button__text button__text--hidden' : 'button__text'
-        }
+        className={`button__text ${isLoading ? 'button__text--hidden' : ''}`}
       >
-        {props.text ?? 'Нажмите'}
+        {text}
       </span>
-      {props.isLoading && <div class="button__circle"></div>}
+      {isLoading && <div class="button__circle"></div>}
     </button>
   )
 }
 
 export default Button
+
+Button.propTypes = {
+  inverted: PropTypes.bool,
+  className: PropTypes.string,
+  isLoading: PropTypes.bool,
+  imgSrc: PropTypes.string,
+  type: PropTypes.string,
+  text: PropTypes.string,
+  onClick: PropTypes.func,
+}

@@ -117,16 +117,16 @@ exports[`matches snapshot 1`] = `
         </label>
       </div>
       <button
-        class="button authorization__submit"
+        class="button  authorization__submit"
         type="submit"
       >
         <img
           alt=""
-          class="button__img"
+          class="button__img "
           src="[object Object]"
         />
         <span
-          class="button__text"
+          class="button__text "
         >
           Войти
         </span>

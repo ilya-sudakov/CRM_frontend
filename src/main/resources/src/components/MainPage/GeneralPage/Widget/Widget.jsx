@@ -2,20 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './Widget.scss'
 import Button from '../../../../utils/Form/Button/Button.jsx'
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const Widget = ({
   title = '',
   className = '',
   content = null,
-  history,
   linkTo = {
     text: '',
     address: '/',
   },
   subTitle = '',
-  customHeader,
+  customHeader = null,
 }) => {
+  let history = useHistory()
+
   return (
     <div className={`widget ${className ?? ''}`}>
       {customHeader ?? (
@@ -28,9 +29,7 @@ const Widget = ({
               inverted
               text={linkTo.text}
               imgSrc={linkTo.img ?? null}
-              onClick={() => {
-                history.push(linkTo.address)
-              }}
+              onClick={() => history.push(linkTo.address)}
             ></Button>
           ) : null}
         </div>
@@ -40,11 +39,12 @@ const Widget = ({
   )
 }
 
-export default withRouter(Widget)
+export default Widget
 
 Widget.proptypes = {
   title: PropTypes.string,
   className: PropTypes.string,
   linkTo: PropTypes.object,
   subTitle: PropTypes.string,
+  customHeader: PropTypes.object,
 }
