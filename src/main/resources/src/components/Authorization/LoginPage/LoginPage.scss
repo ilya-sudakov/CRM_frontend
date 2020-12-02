@@ -229,33 +229,17 @@
       filter: brightness(3);
     }
 
-    .authorization__submit {
-      // width: 80%;
-      display: flex;
-      max-width: 300px;
-      justify-content: center;
-      margin: 10px 0;
-      width: calc(100% + 2px);
-      align-items: center;
-      color: $secondary-text-color;
-      background-color: $button__background--inverted;
-      // margin: 0;
-      // padding: 0;
-      border: 0;
-      padding: 15px 10px;
-      border-radius: 5px;
-      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.24);
-      transition: 0.2s ease-in-out;
-      cursor: pointer;
-
-      &:hover {
-        background-color: lighten($button__background--inverted, 5%);
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-      }
+    .main-window__button {
+      width: 100%;
+      box-sizing: border-box;
+      margin-right: 0;
+      margin-bottom: 10px;
+      padding-top: 12px;
+      padding-bottom: 12px;
     }
-    .authorization__submit .authorization__img {
-      width: 25px;
-      margin-left: 5px;
+    .main-window__button .button__img {
+      // width: 25px;
+      // margin-left: 5px;
     }
   }
   & .checkbox {

@@ -430,7 +430,7 @@
 
   &__button {
     background-color: $button__background--inverted;
-    color: $secondary-text-color;
+    color: transparentize($secondary-text-color, 0.05);
     border-radius: 3px;
     padding: 10px 10px;
     cursor: pointer;
