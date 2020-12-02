@@ -8,8 +8,8 @@ import {
   getTasksList,
 } from './functions.js'
 import openWidget from '../../../../../../../../assets/tableview/bx-window-open.svg'
-import { UserContext } from '../../../../App.js'
-import TasksList from './TasksList.jsx'
+import UserContext from '../../../../App.js'
+import TasksList from './TasksList/TasksList.jsx'
 
 const TasksWidget = () => {
   const [tasks, setTasks] = useState([])
@@ -34,6 +34,8 @@ const TasksWidget = () => {
       //get dates object from tasks
       const controlDates = getTasksControlDatesList(filteredTasksByUser)
       setControlDates(controlDates)
+
+      console.log(tasks, controlDates)
 
       setTasks([...filteredTasksByUser])
       return setIsLoading(false)

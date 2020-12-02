@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Widget component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="widget "
+  >
+    <div
+      class="widget__title"
+    >
+      <div
+        class="widget__sub-title"
+      />
+      <span />
+      <button
+        class="button  button--inverted main-window__button main-window__button--inverted"
+        type="button"
+      >
+        <span
+          class="button__text "
+        />
+      </button>
+    </div>
+    <div
+      class="widget__content"
+    />
+  </div>
+</DocumentFragment>
+`;

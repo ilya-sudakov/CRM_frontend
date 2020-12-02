@@ -9,7 +9,7 @@ import mobileLogoSVG from '../../../../../../assets/header/header__mobile_logo.p
 import notificationBellSVG from '../../../../../../assets/notifications/notification_bell.svg'
 import { Link, withRouter } from 'react-router-dom'
 import './Header.scss'
-import { UserContext } from '../../App.js'
+import UserContext from '../../App.js'
 
 const Header = (props) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false)

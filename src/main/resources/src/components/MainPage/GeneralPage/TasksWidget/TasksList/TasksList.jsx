@@ -1,15 +1,15 @@
 import React from 'react'
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
 import {
   formatDateString,
   formatDateStringNoYear,
   dateDiffInDays,
-} from '../../../../utils/functions.jsx'
-import { conditions } from './objects.js'
-import { Link } from 'react-router-dom'
+} from '../../../../../utils/functions.jsx'
+import { conditions } from '../objects.js'
+import { Link, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const TasksList = ({ tasks, isLoading, controlDates }) => {
+const TasksList = ({ tasks = [], isLoading = false, controlDates = {} }) => {
   return (
     <div className="tasks-widget__list">
       {isLoading ? (
@@ -19,16 +19,9 @@ const TasksList = ({ tasks, isLoading, controlDates }) => {
           items={3}
         />
       ) : (
-        Object.entries(controlDates).map((date, index) => {
+        Object.entries(controlDates).map((date) => {
           const isExpired = new Date(date[0]) < new Date()
-          return (
-            <ListWrapper
-              isExpired={isExpired}
-              index={index}
-              date={date}
-              tasks={tasks}
-            />
-          )
+          return <ListWrapper isExpired={isExpired} date={date} tasks={tasks} />
         })
       )}
     </div>
@@ -43,13 +36,16 @@ TasksList.propTypes = {
   controlDates: PropTypes.object,
 }
 
-const ListWrapper = ({ isExpired, index, date, tasks }) => {
+const ListWrapper = ({
+  isExpired = false,
+  date = [new Date()],
+  tasks = [],
+}) => {
   return (
     <div
       className={`tasks-widget__date-wrapper ${
         isExpired ? 'tasks-widget__date-wrapper--expired' : ''
       }`}
-      key={index}
     >
       <div
         className={`tasks-widget__date ${
@@ -76,15 +72,31 @@ ListWrapper.propTypes = {
   tasks: PropTypes.array,
   index: PropTypes.number,
   isExpired: PropTypes.bool,
-  date: PropTypes.object,
+  date: PropTypes.array,
 }
 
-const ListItem = ({ task }) => {
+const ListItem = ({
+  task = {
+    id: 1,
+    description: '',
+    condition: '',
+    status: '',
+    dateCreated: new Date(),
+    dateControl: new Date(),
+  },
+}) => {
+  const history = useHistory()
+
   return (
-    <div className={`list__item list__item--${conditions[task.condition]}`}>
-      <Link
+    <div
+      className={`list__item list__item--${conditions[task.condition]}`}
+      key={task.id}
+    >
+      <div
         className="list-item__general-info"
-        to={`/dispatcher/general-tasks/edit/${task.id}`}
+        onClick={() =>
+          history.push(`/dispatcher/general-tasks/edit/${task.id}`)
+        }
       >
         <span className="list-item__description">{task.description}</span>
         <span className="list-item__conditions">
@@ -100,11 +112,11 @@ const ListItem = ({ task }) => {
             {task.status}
           </span>
         </span>
-      </Link>
+      </div>
     </div>
   )
 }
 
 ListItem.propTypes = {
-  task: PropTypes.Object,
+  task: PropTypes.object,
 }

@@ -5,7 +5,7 @@ import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx'
 import SelectWorkItemNew from '../../../Work/SelectWorkItem/SelectWorkItemNew.jsx'
 import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
-import { UserContext } from '../../../../../App.js'
+import UserContext from '../../../../../App.js'
 import SelectDraftNew from '../../../Dispatcher/Rigging/SelectDraft/SelectDraftNew.jsx'
 import InputProductsNew from '../../../../../utils/Form/InputProducts/InputProductsNew.jsx'
 

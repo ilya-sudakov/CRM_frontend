@@ -15,7 +15,7 @@ import {
   editRecordedWork,
   getRecordedWorkByDay,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import { UserContext } from '../../../../../App.js'
+import UserContext from '../../../../../App.js'
 import { ReadOnlyModeControls, WorkshopControls } from './Controls.jsx'
 import EmployeeData from './FormComponents.jsx'
 import {

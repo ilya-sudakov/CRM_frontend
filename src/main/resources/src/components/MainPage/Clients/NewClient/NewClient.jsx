@@ -15,7 +15,7 @@ import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx'
 import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx'
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx'
 import Button from '../../../../utils/Form/Button/Button.jsx'
-import { UserContext } from '../../../../App.js'
+import UserContext from '../../../../App.js'
 import UsersVisibility from '../FormComponents/UsersVisibility.jsx'
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
 

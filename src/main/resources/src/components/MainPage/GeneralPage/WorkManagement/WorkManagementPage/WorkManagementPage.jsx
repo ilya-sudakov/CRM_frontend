@@ -18,7 +18,7 @@ import { getRecordedWorkByDateRange } from '../../../../../utils/RequestsAPI/Wor
 import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx'
-import { UserContext } from '../../../../../App.js'
+import UserContext from '../../../../../App.js'
 import TableView from './TableView/TableView.jsx'
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
@@ -303,7 +303,8 @@ const WorkManagementPage = (props) => {
               <Button
                 text="Пред. день"
                 isLoading={isLoading}
-                className="main-window__button"
+                inverted
+                className="main-window__button main-window__button--inverted"
                 onClick={() => {
                   setDates({
                     ...dates,
@@ -318,7 +319,8 @@ const WorkManagementPage = (props) => {
                 <Button
                   text="Cлед. день"
                   isLoading={isLoading}
-                  className="main-window__button"
+                  inverted
+                  className="main-window__button main-window__button--inverted"
                   onClick={() => {
                     setDates({
                       ...dates,

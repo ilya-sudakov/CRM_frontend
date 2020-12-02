@@ -1,6 +1,11 @@
 @import "../../../../../variables.scss";
 
 .work-list-widget {
+  &__info {
+    font-size: 1rem;
+    margin-top: 5px;
+    color: #666666;
+  }
   .work-list-widget__list {
     display: flex;
     height: 100%;
@@ -32,7 +37,7 @@
     margin-bottom: 5px;
     border: 1px solid #cccccc;
     border-radius: 5px;
-    width: 100%;
+    width: calc(100% - 5px);
     font-size: 85%;
     cursor: pointer;
     display: flex;

@@ -12,7 +12,7 @@ import {
   getProductsByLocation,
 } from '../../../utils/RequestsAPI/Products.jsx'
 // import { addSpaceDelimiter } from '../../../utils/functions.jsx'
-import { UserContext } from '../../../App.js'
+import UserContext from '../../../App.js'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const SelectNew = (props) => {

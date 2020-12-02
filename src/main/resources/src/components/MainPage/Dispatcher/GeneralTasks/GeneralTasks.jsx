@@ -11,7 +11,7 @@ import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus
 import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 import Select from 'react-select'
 import { formatDateString } from '../../../../utils/functions.jsx'
-import { UserContext } from '../../../../App.js'
+import UserContext from '../../../../App.js'
 
 const GeneralTasks = (props) => {
   const userContext = useContext(UserContext)

@@ -21,7 +21,6 @@ export const EmployeeInfo = (props) => {
         content={
           <div className="report-table-page__employee-wrapper">
             <div className="report-table-page__employee-date">
-              {/* Отчет за{' '} */}
               {formatDateString(
                 new Date(
                   props.selectedInfo?.year,
@@ -84,47 +83,13 @@ export const EmployeeInfo = (props) => {
                       </span>
                       {(item.workControlProduct.length > 0 ||
                         item?.partsWorks.length > 0) && (
-                        <div className="main-window__list">
-                          <div className="main-window__list-item main-window__list-item--header">
-                            <span>Название</span>
-                            <span>Кол-во</span>
-                          </div>
-                          {item.workControlProduct.map((product) => {
-                            return (
-                              <div className="main-window__list-item">
-                                <span>
-                                  <div className="main-window__mobile-text">
-                                    Название:
-                                  </div>
-                                  {product.product.name}
-                                </span>
-                                <span>
-                                  <div className="main-window__mobile-text">
-                                    Кол-во:
-                                  </div>
-                                  {addSpaceDelimiter(product.quantity)}
-                                </span>
-                              </div>
-                            )
-                          })}
-                          {item.partsWorks.map((draft) => {
-                            return (
-                              <div className="main-window__list-item">
-                                <span>
-                                  <div className="main-window__mobile-text">
-                                    Название:
-                                  </div>
-                                  {draft.name}
-                                </span>
-                                <span>
-                                  <div className="main-window__mobile-text">
-                                    Кол-во:
-                                  </div>
-                                  {addSpaceDelimiter(draft.quantity)}
-                                </span>
-                              </div>
-                            )
-                          })}
+                        <div className="report-table-page__list">
+                          {item.workControlProduct.map((product) => (
+                            <ProductItem item={product} />
+                          ))}
+                          {item.partsWorks.map((draft) => (
+                            <ProductItem item={draft} />
+                          ))}
                         </div>
                       )}
                     </div>
@@ -156,6 +121,21 @@ export const EmployeeInfo = (props) => {
           </div>
         }
       />
+    </div>
+  )
+}
+
+const ProductItem = ({ item }) => {
+  return (
+    <div className="report-table-page__list-item">
+      <span>
+        <div className="main-window__mobile-text">Название:</div>
+        {item.name ?? item.product.name}
+      </span>
+      <span>
+        <div className="main-window__mobile-text">Кол-во:</div>
+        {`${addSpaceDelimiter(item.quantity)} шт`}
+      </span>
     </div>
   )
 }

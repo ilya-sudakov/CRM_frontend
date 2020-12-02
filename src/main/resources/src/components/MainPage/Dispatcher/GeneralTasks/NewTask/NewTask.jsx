@@ -8,7 +8,7 @@ import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx'
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
-import { UserContext } from '../../../../../App.js'
+import UserContext from '../../../../../App.js'
 
 const NewTask = (props) => {
   const userContext = useContext(UserContext)

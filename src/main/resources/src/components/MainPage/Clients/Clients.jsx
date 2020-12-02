@@ -13,7 +13,7 @@ import EditWorkHistory from './MainComponents/EditWorkHistory.jsx'
 import EditNextContactDate from './MainComponents/EditContactDay.jsx'
 import Pagination from './MainComponents/Pagination.jsx'
 import ClientsList from './MainComponents/ClientsList.jsx'
-import { UserContext } from '../../../App.js'
+import UserContext from '../../../App.js'
 import { getEmailsExcel } from './MainComponents/functions.js'
 import { clientTypes } from './MainComponents/objects.js'
 

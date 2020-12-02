@@ -5,7 +5,7 @@ export const request = (options, contentType = 'application/json') => {
 
   if (
     localStorage.getItem('accessToken') &&
-    options.url.includes('refreshToken') !== true
+    !options.url.includes('refreshToken')
   ) {
     headers.append(
       'Authorization',
@@ -17,15 +17,12 @@ export const request = (options, contentType = 'application/json') => {
 
   options = Object.assign({}, defaults, options)
 
-  return (
-    fetch(options.url, options)
-      .then((response) => {
-        if (!response.ok) {
-          return Promise.reject(response.error)
-        }
-        return response
-      })
-  )
+  return fetch(options.url, options).then((response) => {
+    if (!response.ok) {
+      return Promise.reject(response.error)
+    }
+    return response
+  })
 }
 
 export const requestINN = (options) => {

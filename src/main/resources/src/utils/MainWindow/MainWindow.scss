@@ -430,8 +430,8 @@
 
   &__button {
     background-color: $button__background--inverted;
-    color: $secondary-text-color;
-    border-radius: 5px;
+    color: transparentize($secondary-text-color, 0.05);
+    border-radius: 3px;
     padding: 10px 10px;
     cursor: pointer;
     font-size: 90%;
@@ -452,14 +452,14 @@
     &:hover {
       background-color: lighten($button__background--inverted, 5%);
       color: #ffffff !important;
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
     }
   }
 
   &__button--inverted {
     background-color: $secondary-text-color;
-    color: $primary-text-color;
-    border: 1px solid $button__background--inverted;
+    color: #333333;
+    border: 1px solid #bbbbbb;
 
     .main-window__img,
     .button__img {
@@ -467,7 +467,8 @@
     }
 
     &:hover {
-      color: $secondary-text-color;
+      color: #000000 !important;
+      background-color: $secondary-text-color;
     }
   }
 

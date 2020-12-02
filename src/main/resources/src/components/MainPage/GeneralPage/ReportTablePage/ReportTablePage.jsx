@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import './ReportTablePage.scss'
 import { getRecordedWorkByMonth } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import { UserContext } from '../../../../App.js'
+import UserContext from '../../../../App.js'
 import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import EmployeePage from './EmployeePage.jsx'

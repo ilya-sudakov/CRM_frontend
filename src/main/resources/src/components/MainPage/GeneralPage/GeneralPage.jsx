@@ -12,7 +12,6 @@ import Button from '../../../utils/Form/Button/Button.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 
 const GeneralPage = (props) => {
-  const [date, setDate] = useState(new Date())
   const [workshops, setWorkshops] = useState([
     'ЦехЛЭМЗ',
     'ЦехЛепсари',
@@ -55,7 +54,7 @@ const GeneralPage = (props) => {
 
   useEffect(() => {
     document.title = 'Главная страница'
-  })
+  }, [])
 
   return (
     <div className="general-page">
