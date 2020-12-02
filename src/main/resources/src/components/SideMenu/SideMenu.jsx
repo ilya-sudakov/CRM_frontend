@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
 import HomeImg from '../../../../../../assets/sidemenu/home.inline.svg'
@@ -24,8 +24,10 @@ import {
   getClientCategories,
   getSupplierCategories,
 } from '../../utils/RequestsAPI/Clients/Categories.jsx'
+import UserContext from '../../App.js'
 
 const SideMenu = (props) => {
+  const userContext = useContext(UserContext)
   const [curPath, setCurPath] = useState('/')
   const [sidemenuItems, setSidemenuItems] = useState([
     {
@@ -145,7 +147,7 @@ const SideMenu = (props) => {
     },
     {
       pathname: '/lemz/',
-      linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
+      linkTo: userContext.userHasAccess(['ROLE_DISPATCHER'])
         ? '/lemz/workshop-orders'
         : '/lemz/workshop-lemz',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
@@ -204,7 +206,7 @@ const SideMenu = (props) => {
     },
     {
       pathname: '/lepsari/',
-      linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
+      linkTo: userContext.userHasAccess(['ROLE_DISPATCHER'])
         ? '/lepsari/workshop-orders'
         : '/lepsari/workshop-lepsari',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
@@ -250,7 +252,7 @@ const SideMenu = (props) => {
     },
     {
       pathname: '/ligovskiy/',
-      // linkTo: props.userHasAccess(['ROLE_DISPATCHER'])
+      // linkTo: userContext.userHasAccess(['ROLE_DISPATCHER'])
       //   ? '/ligovskiy/orders'
       //   : '/ligovskiy/workshop',
       // linkTo: '/dispatcher/rigging/parts',
@@ -546,7 +548,7 @@ const SideMenu = (props) => {
             <Link
               className={
                 item.addButtonName &&
-                props.userHasAccess(item.addButtonRoles) &&
+                userContext.userHasAccess(item.addButtonRoles) &&
                 props.location.pathname.includes(item.pathname) &&
                 item.pathname !== '/'
                   ? 'sidemenu__item--add'
@@ -578,7 +580,7 @@ const SideMenu = (props) => {
       </div>
       {sidemenuItems.map((item) => {
         return (
-          props.userHasAccess(item.mainRoles) &&
+          userContext.userHasAccess(item.mainRoles) &&
           item.name && (
             <div
               className={
@@ -610,7 +612,7 @@ const SideMenu = (props) => {
               </Link>
               {item.addButtonName &&
                 item.pathname !== '/' &&
-                props.userHasAccess(item.addButtonRoles) && (
+                userContext.userHasAccess(item.addButtonRoles) && (
                   <Link
                     to={item.pathname + '/new'}
                     onClick={() => {
@@ -631,7 +633,7 @@ const SideMenu = (props) => {
               {item.dropdownMenu && (
                 <div className="sidemenu__dropdown-menu">
                   {item.dropdownMenu.map((dropdownMenuItem) => {
-                    if (props.userHasAccess(dropdownMenuItem.mainRoles)) {
+                    if (userContext.userHasAccess(dropdownMenuItem.mainRoles)) {
                       return (
                         <Link
                           className={

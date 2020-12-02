@@ -83,11 +83,7 @@ const MainPage = () => {
       <Header sideMenu={sidemenuHidden} setSideMenu={setSidemenuHidden} />
       <div className="main_page__content">
         <ErrorBoundary componentName={`компоненте "Главная страница"`}>
-          <SideMenu
-            userHasAccess={userContext.userHasAccess}
-            hidden={sidemenuHidden}
-            setSideMenu={setSidemenuHidden}
-          />
+          <SideMenu hidden={sidemenuHidden} setSideMenu={setSidemenuHidden} />
           {userScreenWidth <= 1366 && (
             <div
               className={
@@ -109,8 +105,6 @@ const MainPage = () => {
                   exact
                   path="/"
                   component={GeneralPage}
-                  userHasAccess={userContext.userHasAccess}
-                  userData={userContext.userData}
                   allowedRoles={[
                     'ROLE_ADMIN',
                     'ROLE_WORKSHOP',
