@@ -97,7 +97,7 @@ describe('PrivateRoute component', () => {
     )
   })
 
-  it('renders component if no restrictions are provided', () => {
+  it('renders component if user is allowed', () => {
     renderWithRouter(
       <UserContext.Provider
         value={{
