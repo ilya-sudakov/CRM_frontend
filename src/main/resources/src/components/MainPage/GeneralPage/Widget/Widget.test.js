@@ -1,16 +1,8 @@
 import React from 'react'
-import { MemoryRouter } from 'react-router-dom'
 import Widget from './Widget.jsx'
 import { render, cleanup, fireEvent, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import { createMemoryHistory } from 'history'
-
-const renderWithRouter = (component) => {
-  const history = createMemoryHistory()
-  return {
-    ...render(<MemoryRouter history={history}>{component}</MemoryRouter>),
-  }
-}
+import { renderWithRouter } from '../../../../utils/testing/functions.js'
 
 const mockHistoryPush = jest.fn()
 

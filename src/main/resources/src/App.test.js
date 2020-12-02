@@ -2,17 +2,7 @@ import React from 'react'
 import { render, cleanup } from '@testing-library/react'
 
 import { App } from './App.js'
-import UserContext from './App'
-
-const renderWithContext = (component) => {
-  return {
-    ...render(
-      <UserContext.Provider value={UserContext}>
-        {component}
-      </UserContext.Provider>,
-    ),
-  }
-}
+import { renderWithContext } from './utils/testing/functions.js'
 
 describe('App component', () => {
   afterEach(cleanup)

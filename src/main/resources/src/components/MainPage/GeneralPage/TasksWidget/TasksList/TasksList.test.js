@@ -2,28 +2,11 @@ import React from 'react'
 import TasksList from './TasksList.jsx'
 import { render, cleanup, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import { MemoryRouter } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
 import {
   dateDiffInDays,
   formatDateStringNoYear,
 } from '../../../../../utils/functions.jsx'
-
-const mockHistoryPush = jest.fn()
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
-}))
-
-const renderWithRouter = (component) => {
-  const history = createMemoryHistory()
-  return {
-    ...render(<MemoryRouter history={history}>{component}</MemoryRouter>),
-  }
-}
+import { renderWithRouter } from '../../../../../utils/testing/functions.js'
 
 describe('TasksList component', () => {
   afterEach(cleanup)

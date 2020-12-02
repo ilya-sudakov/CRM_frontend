@@ -1,37 +1,10 @@
 import React from 'react'
-import { render, cleanup } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
-
+import { cleanup } from '@testing-library/react'
 import PrivateRoute from './PrivateRoute.jsx'
-import UserContext from '../../App.js'
-import { App } from '../../App.js'
-
-const renderWithContext = (component) => {
-  return {
-    ...render(<App value={UserContext}>{component}</App>),
-  }
-}
-
-const renderWithRouterAndContext = (component) => {
-  const history = createMemoryHistory()
-  return {
-    ...render(
-      <MemoryRouter history={history}>
-        {<App value={UserContext}>{component}</App>}
-      </MemoryRouter>,
-    ),
-  }
-}
-
-const mockHistoryPush = jest.fn()
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
-}))
+import {
+  renderWithContext,
+  renderWithRouterAndContext,
+} from '../../utils/testing/functions.js'
 
 describe('PrivateRoute component', () => {
   afterEach(cleanup)
