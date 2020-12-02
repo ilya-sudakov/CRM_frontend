@@ -80,7 +80,10 @@ const MainPage = () => {
 
   return (
     <div className="main_page">
-      <Header sideMenu={sidemenuHidden} setSideMenu={setSidemenuHidden} />
+      <Header
+        sidemenuHidden={sidemenuHidden}
+        setSidemenuHidden={setSidemenuHidden}
+      />
       <div className="main_page__content">
         <ErrorBoundary componentName={`компоненте "Главная страница"`}>
           <SideMenu hidden={sidemenuHidden} setSideMenu={setSidemenuHidden} />

@@ -11,7 +11,7 @@ import { workshopsList } from './objects.js'
 import WorkList from './WorkList.jsx'
 import Widget from '../../Widget/Widget.jsx'
 
-const WorkListWidget = (props) => {
+const WorkListWidget = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [recordedWork, setRecordedWork] = useState([])
   const [employeesMap, setEmployeesMap] = useState({})

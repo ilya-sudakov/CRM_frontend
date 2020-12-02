@@ -8,12 +8,14 @@ import notificationBellSVG from '../../../../../../assets/notifications/notifica
 import { Link, withRouter } from 'react-router-dom'
 import './Header.scss'
 import UserContext from '../../App.js'
+import PropTypes from 'prop-types'
 
 const Header = (props) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false)
   const userContext = useContext(UserContext)
 
-  const sideMenuClickDesktop = () => props.setSideMenu(!props.sideMenu)
+  const sideMenuClickDesktop = () =>
+    props.setSidemenuHidden(!props.sidemenuHidden)
 
   useEffect(() => {}, [])
 
@@ -22,7 +24,7 @@ const Header = (props) => {
       <div className="header__company">
         <div
           className={
-            !props.sideMenu
+            !props.sidemenuHidden
               ? 'header__sidemenu header__sidemenu--hidden'
               : 'header__sidemenu'
           }
@@ -141,3 +143,9 @@ const Header = (props) => {
 }
 
 export default withRouter(Header)
+
+Header.propTypes = {
+  sidemenuHidden: PropTypes.bool,
+  setSidemenuHidden: PropTypes.func,
+  location: PropTypes.object,
+}
