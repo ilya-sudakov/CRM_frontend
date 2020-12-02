@@ -28,7 +28,6 @@ import UserContext from '../../App.js'
 
 const SideMenu = (props) => {
   const userContext = useContext(UserContext)
-  const [curPath, setCurPath] = useState('/')
   const [sidemenuItems, setSidemenuItems] = useState([
     {
       pathname: '/',
@@ -459,7 +458,7 @@ const SideMenu = (props) => {
         })
     }
 
-    async function loadSuppliersCategories(temp) {
+    async function loadSuppliersCategories() {
       getSupplierCategories()
         .then((res) => res.json())
         .then((res) => {
