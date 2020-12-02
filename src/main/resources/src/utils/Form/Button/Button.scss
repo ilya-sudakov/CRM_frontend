@@ -30,8 +30,8 @@
   &--inverted {
     background-color: $secondary-text-color;
     color: $primary-text-color;
-    border: 1px solid $button__background--inverted;
-    // border: 1px solid #999999 !important;  //test
+    // border: 1px solid $button__background--inverted;
+    border: 1px solid #bbbbbb; //test
 
     &__img {
       max-width: 20px;
