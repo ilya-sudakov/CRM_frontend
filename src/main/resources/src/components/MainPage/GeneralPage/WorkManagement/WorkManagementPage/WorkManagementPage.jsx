@@ -303,7 +303,8 @@ const WorkManagementPage = (props) => {
               <Button
                 text="Пред. день"
                 isLoading={isLoading}
-                className="main-window__button"
+                inverted
+                className="main-window__button main-window__button--inverted"
                 onClick={() => {
                   setDates({
                     ...dates,
@@ -318,7 +319,8 @@ const WorkManagementPage = (props) => {
                 <Button
                   text="Cлед. день"
                   isLoading={isLoading}
-                  className="main-window__button"
+                  inverted
+                  className="main-window__button main-window__button--inverted"
                   onClick={() => {
                     setDates({
                       ...dates,
