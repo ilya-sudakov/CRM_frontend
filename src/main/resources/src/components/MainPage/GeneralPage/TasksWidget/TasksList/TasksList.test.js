@@ -1,8 +1,13 @@
 import React from 'react'
 import TasksList from './TasksList.jsx'
-import { render, cleanup, fireEvent, screen } from '@testing-library/react'
+import { render, cleanup, screen } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import { MemoryRouter } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
+import {
+  dateDiffInDays,
+  formatDateStringNoYear,
+} from '../../../../../utils/functions.jsx'
 
 const mockHistoryPush = jest.fn()
 
@@ -39,27 +44,50 @@ describe('TasksList component', () => {
         description: 'asd',
         condition: '',
         status: '',
-        dateControl: new Date(),
-        dateCreated: new Date(),
+        dateControl: new Date(2019, 10, 12),
+        dateCreated: new Date(2020, 10, 12),
       },
       {
         id: 2,
         description: '123',
         condition: '',
         status: '',
-        dateControl: new Date(),
-        dateCreated: new Date(),
+        dateControl: new Date(2019, 10, 12),
+        dateCreated: new Date(2020, 10, 12),
       },
     ]
 
-    const controlDates = { [new Date()]: [...tasks] }
+    const controlDates = { [new Date(2019, 10, 12)]: [...tasks] }
 
-    // renderWithRouter(<TasksList controlDates={controlDates} tasks={tasks} />)
-    // expect(await screen.findByText('asd')).toBeInTheDocument()
-    // expect(await screen.findByText('123')).toBeInTheDocument()
+    renderWithRouter(<TasksList controlDates={controlDates} tasks={tasks} />)
+    expect(await screen.findByText('asd')).toBeInTheDocument()
+    expect(await screen.findByText('123')).toBeInTheDocument()
   })
 
-  it('renders expired task', () => {
-    // render(<TasksList />)
+  it('renders expired task', async () => {
+    const tasks = [
+      {
+        id: 1,
+        description: 'asd',
+        condition: '',
+        status: '',
+        dateControl: new Date(2019, 10, 12),
+        dateCreated: new Date(2020, 10, 12),
+      },
+    ]
+
+    const controlDates = { [new Date(2019, 10, 12)]: [...tasks] }
+
+    renderWithRouter(<TasksList controlDates={controlDates} tasks={tasks} />)
+    expect(
+      await screen.findByText(
+        `до ${formatDateStringNoYear(
+          new Date(2019, 10, 12),
+        )} - опоздание ${dateDiffInDays(
+          new Date(2019, 10, 12),
+          new Date(),
+        )} дн.`,
+      ),
+    ).toBeInTheDocument()
   })
 })

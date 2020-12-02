@@ -19,16 +19,9 @@ const TasksList = ({ tasks = [], isLoading = false, controlDates = {} }) => {
           items={3}
         />
       ) : (
-        Object.entries(controlDates).map((date, index) => {
+        Object.entries(controlDates).map((date) => {
           const isExpired = new Date(date[0]) < new Date()
-          return (
-            <ListWrapper
-              isExpired={isExpired}
-              index={index}
-              date={date}
-              tasks={tasks}
-            />
-          )
+          return <ListWrapper isExpired={isExpired} date={date} tasks={tasks} />
         })
       )}
     </div>
@@ -45,13 +38,11 @@ TasksList.propTypes = {
 
 const ListWrapper = ({
   isExpired = false,
-  index = 0,
   date = [new Date()],
   tasks = [],
 }) => {
   return (
     <div
-      key={index}
       className={`tasks-widget__date-wrapper ${
         isExpired ? 'tasks-widget__date-wrapper--expired' : ''
       }`}
@@ -70,8 +61,8 @@ const ListWrapper = ({
           (task) =>
             formatDateString(task.dateControl) === formatDateString(date[0]),
         )
-        .map((task, index) => (
-          <ListItem task={task} index={index} />
+        .map((task) => (
+          <ListItem task={task} />
         ))}
     </div>
   )
@@ -93,14 +84,13 @@ const ListItem = ({
     dateCreated: new Date(),
     dateControl: new Date(),
   },
-  index = 0,
 }) => {
   const history = useHistory()
 
   return (
     <div
       className={`list__item list__item--${conditions[task.condition]}`}
-      key={index}
+      key={task.id}
     >
       <div
         className="list-item__general-info"
@@ -128,6 +118,5 @@ const ListItem = ({
 }
 
 ListItem.propTypes = {
-  task: PropTypes.Object,
-  key: PropTypes.number,
+  task: PropTypes.object,
 }
