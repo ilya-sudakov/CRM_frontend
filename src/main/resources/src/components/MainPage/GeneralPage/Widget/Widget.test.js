@@ -2,6 +2,7 @@ import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import Widget from './Widget.jsx'
 import { render, cleanup, fireEvent, screen } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 import { createMemoryHistory } from 'history'
 
 const renderWithRouter = (component) => {
@@ -43,5 +44,10 @@ describe('Widget component', () => {
     )
     fireEvent.click(screen.getByRole('button'))
     expect(mockHistoryPush).toHaveBeenCalledWith('/requests')
+  })
+
+  it('renders content', async () => {
+    renderWithRouter(<Widget content="Pirog" />)
+    expect(await screen.findByText(/Pirog/)).toBeInTheDocument()
   })
 })

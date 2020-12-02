@@ -35,37 +35,37 @@ const SummaryPage = ({
       />
       <ControlPanel
         buttons={
-          <Button
-            text="Скачать .xlsx"
-            imgSrc={DownloadIcon}
-            className="main-window__button main-window__button--inverted"
-            inverted
-            isLoading={isLoading || excelIsLoading}
-            onClick={async () => {
-              setExcelIsLoading(true)
-              const filteredWorkshops = [
-                'ЦехЛЭМЗ',
-                'ЦехЛепсари',
-                'ЦехЛиговский',
-                'Офис',
-                'Уволенные',
-              ]
-              await exportReportTableExcel(new Date(date), filteredWorkshops)
-              setExcelIsLoading(false)
-            }}
-          />
-        }
-        content={
-          <div className="report-table-page__date">
-            <InputDate
-              selected={Date.parse(date)}
-              inputName="Выбор месяца:"
-              handleDateChange={(date) => {
-                setDate(date)
+          <>
+            <div className="report-table-page__date">
+              <InputDate
+                selected={Date.parse(date)}
+                inputName="Выбор месяца:"
+                handleDateChange={(date) => {
+                  setDate(date)
+                }}
+                showMonthYearPicker
+              />
+            </div>
+            <Button
+              text="Скачать .xlsx"
+              imgSrc={DownloadIcon}
+              className="main-window__button main-window__button--inverted"
+              inverted
+              isLoading={isLoading || excelIsLoading}
+              onClick={async () => {
+                setExcelIsLoading(true)
+                const filteredWorkshops = [
+                  'ЦехЛЭМЗ',
+                  'ЦехЛепсари',
+                  'ЦехЛиговский',
+                  'Офис',
+                  'Уволенные',
+                ]
+                await exportReportTableExcel(new Date(date), filteredWorkshops)
+                setExcelIsLoading(false)
               }}
-              showMonthYearPicker
             />
-          </div>
+          </>
         }
       />
       {/* //Окно для вывода информации о сотруднике и его работе за день */}

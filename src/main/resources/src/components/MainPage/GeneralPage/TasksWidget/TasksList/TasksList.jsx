@@ -6,7 +6,7 @@ import {
   dateDiffInDays,
 } from '../../../../../utils/functions.jsx'
 import { conditions } from '../objects.js'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 const TasksList = ({ tasks = [], isLoading = false, controlDates = {} }) => {
@@ -46,15 +46,15 @@ TasksList.propTypes = {
 const ListWrapper = ({
   isExpired = false,
   index = 0,
-  date = new Date(),
+  date = [new Date()],
   tasks = [],
 }) => {
   return (
     <div
+      key={index}
       className={`tasks-widget__date-wrapper ${
         isExpired ? 'tasks-widget__date-wrapper--expired' : ''
       }`}
-      key={index}
     >
       <div
         className={`tasks-widget__date ${
@@ -70,8 +70,8 @@ const ListWrapper = ({
           (task) =>
             formatDateString(task.dateControl) === formatDateString(date[0]),
         )
-        .map((task) => (
-          <ListItem task={task} />
+        .map((task, index) => (
+          <ListItem task={task} index={index} />
         ))}
     </div>
   )
@@ -81,15 +81,32 @@ ListWrapper.propTypes = {
   tasks: PropTypes.array,
   index: PropTypes.number,
   isExpired: PropTypes.bool,
-  date: PropTypes.object,
+  date: PropTypes.array,
 }
 
-const ListItem = ({ task = {} }) => {
+const ListItem = ({
+  task = {
+    id: 1,
+    description: '',
+    condition: '',
+    status: '',
+    dateCreated: new Date(),
+    dateControl: new Date(),
+  },
+  index = 0,
+}) => {
+  const history = useHistory()
+
   return (
-    <div className={`list__item list__item--${conditions[task.condition]}`}>
-      <Link
+    <div
+      className={`list__item list__item--${conditions[task.condition]}`}
+      key={index}
+    >
+      <div
         className="list-item__general-info"
-        to={`/dispatcher/general-tasks/edit/${task.id}`}
+        onClick={() =>
+          history.push(`/dispatcher/general-tasks/edit/${task.id}`)
+        }
       >
         <span className="list-item__description">{task.description}</span>
         <span className="list-item__conditions">
@@ -105,11 +122,12 @@ const ListItem = ({ task = {} }) => {
             {task.status}
           </span>
         </span>
-      </Link>
+      </div>
     </div>
   )
 }
 
 ListItem.propTypes = {
   task: PropTypes.Object,
+  key: PropTypes.number,
 }

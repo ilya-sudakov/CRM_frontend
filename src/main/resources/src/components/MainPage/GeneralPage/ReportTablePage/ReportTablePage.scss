@@ -13,17 +13,26 @@
             }
         }
 
+        .control-panel__buttons {
+            align-items: center;
+            padding-top: 5px;
+        }
+
         .report-table-page__date {
-            width: 100%;
+            width: fit-content;
             // max-width: 360px;
             align-self: flex-start;
             display: flex;
             flex-direction: row;
+            margin-right: 15px;
             // margin-left: 30px;
-            margin-top: 15px;
+            margin-top: 5px;
+            font-size: 1rem;
+
             .input_date {
                 width: 100%;
-                margin-bottom: 5px;
+                margin-bottom: 0px;
+                min-width: 200px;
                 .input_date__input {
                     flex-direction: row;
                     align-items: center;
@@ -32,6 +41,12 @@
                 .input_date__input_name {
                     white-space: nowrap;
                     max-width: fit-content;
+                }
+                .input_date__input_field {
+                    // min-width: 250px;
+                }
+                .react-datepicker {
+                    min-width: 217px;
                 }
                 .react-datepicker__month-text {
                     padding: 5px 0px;
@@ -54,6 +69,10 @@
     }
     .control-panel {
         margin-bottom: 10px;
+
+        .main-window__button {
+            margin-top: 0 !important;
+        }
     }
     &__employee-info {
         .form-window__content {

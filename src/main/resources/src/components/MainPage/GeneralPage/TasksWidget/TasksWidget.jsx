@@ -35,6 +35,8 @@ const TasksWidget = () => {
       const controlDates = getTasksControlDatesList(filteredTasksByUser)
       setControlDates(controlDates)
 
+      console.log(tasks, controlDates)
+
       setTasks([...filteredTasksByUser])
       return setIsLoading(false)
     })
