@@ -5,12 +5,6 @@ import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.js
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx'
 import SelectWork from '../SelectWork/SelectWork.jsx'
-import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.js'
-import {
-  getProductById,
-  getProductsByCategory,
-  getProductsByLocation,
-} from '../../../../../utils/RequestsAPI/Products.js'
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
 import {
   getRecordedWorkById,
@@ -22,6 +16,8 @@ import {
   addDraftToRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
+import useProductsList from '../../../../../utils/hooks/useProductsList/useProductsList.js'
+import { useHistory } from 'react-router-dom'
 
 const EditRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -42,10 +38,10 @@ const EditRecordWork = (props) => {
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState([])
+  const { products, categories, isLoadingProducts } = useProductsList()
   const [totalHours, setTotalHours] = useState(0)
   const [itemId, setItemId] = useState(0)
+  const history = useHistory()
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
@@ -160,7 +156,7 @@ const EditRecordWork = (props) => {
               })
             })
             .then(() => {
-              props.history.push('/work-management')
+              history.push('/work-management')
             })
             .catch((error) => {
               alert('Ошибка при добавлении записи')
@@ -189,7 +185,7 @@ const EditRecordWork = (props) => {
                   })
                 })
                 .then(() => {
-                  props.history.push('/')
+                  history.push('/')
                 })
             })
             .catch((error) => {
@@ -224,12 +220,12 @@ const EditRecordWork = (props) => {
   useEffect(() => {
     document.title = 'Редактирование заявки'
     const abortController = new AbortController()
-    const id = props.history.location.pathname.split(
+    const id = history.location.pathname.split(
       '/work-management/record-time/edit/',
     )[1]
     if (isNaN(Number.parseInt(id))) {
       alert('Неправильный индекс работы!')
-      props.history.push('/')
+      history.push('/')
     } else {
       setItemId(id)
       getRecordedWorkById(id)
@@ -304,90 +300,11 @@ const EditRecordWork = (props) => {
             ],
           })
         })
-        .then(() => {
-          return loadProducts(abortController.signal)
-        })
     }
     return function cancel() {
       abortController.abort()
     }
   }, [])
-
-  const loadProducts = (signal) => {
-    getCategoriesNames(signal) //Только категории
-      .then((res) => res.json())
-      .then((res) => {
-        const categoriesArr = res
-        setCategories(res)
-        let productsArr = []
-        if (
-          props.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_DISPATCHER',
-            'ROLE_ENGINEER',
-            'ROLE_MANAGER',
-          ])
-        ) {
-          Promise.all(
-            categoriesArr.map((item) => {
-              let category = {
-                category: item.category,
-              }
-              return getProductsByCategory(category, signal) //Продукция по категории
-                .then((res) => res.json())
-                .then((res) => {
-                  res.map((item) => productsArr.push(item))
-                  setProducts([...productsArr])
-                })
-            }),
-          ).then(() => {
-            //Загружаем картинки по отдельности для каждой продукции
-            Promise.all(
-              productsArr.map((item, index) => {
-                getProductById(item.id, signal)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    // console.log(res);
-                    productsArr.splice(index, 1, res)
-                    setProducts([...productsArr])
-                  })
-              }),
-            ).then(() => {
-              console.log('all images downloaded')
-            })
-          })
-        } else {
-          getProductsByLocation(
-            {
-              productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
-                ? 'ЦехЛиговский'
-                : props.userHasAccess(['ROLE_LEMZ'])
-                ? 'ЦехЛЭМЗ'
-                : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
-            },
-            signal,
-          )
-            .then((res) => res.json())
-            .then((res) => {
-              res.map((item) => productsArr.push(item))
-              setProducts([...productsArr])
-              Promise.all(
-                productsArr.map((item, index) => {
-                  getProductById(item.id, signal)
-                    .then((res) => res.json())
-                    .then((res) => {
-                      // console.log(res);
-                      productsArr.splice(index, 1, res)
-                      setProducts([...productsArr])
-                    })
-                }),
-              ).then(() => {
-                console.log('all images downloaded')
-              })
-            })
-        }
-      })
-  }
 
   return (
     <div className="main-form">
@@ -478,11 +395,9 @@ const EditRecordWork = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => props.history.push('/work-management')}
+            onClick={() => history.push('/work-management')}
             value="Вернуться назад"
           />
-          {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Редактировать запись" />
-                    {isLoading && <ImgLoader />} */}
           <Button
             text="Редактировать запись"
             isLoading={isLoading}

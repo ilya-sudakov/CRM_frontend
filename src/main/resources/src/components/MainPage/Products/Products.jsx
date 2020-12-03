@@ -3,38 +3,23 @@ import './Products.scss'
 import '../../../utils/MainWindow/MainWindow.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import TableView from './TableView/TableView.jsx'
-import {
-  getProducts,
-  deleteProduct,
-  getProductsByCategory,
-  getProductById,
-  getProductsByLocation,
-} from '../../../utils/RequestsAPI/Products.js'
-import {
-  getCategories,
-  deleteCategory,
-  getCategoriesNames,
-} from '../../../utils/RequestsAPI/Products/Categories.js'
+import { deleteProduct } from '../../../utils/RequestsAPI/Products.js'
+import { deleteCategory } from '../../../utils/RequestsAPI/Products/Categories.js'
 import { deletePackagingFromProduct } from '../../../utils/RequestsAPI/Products/packaging.js'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx'
 import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+import useProductsList from '../../../utils/hooks/useProductsList/useProductsList.js'
 
 const Products = (props) => {
-  const [products, setProducts] = useState([])
-  const [categories, setCategories] = useState([])
+  const { products, categories, isProductsLoading } = useProductsList()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchQueryCategory, setSearchQueryCategory] = useState('')
   const [showWindow, setShowWindow] = useState(false)
 
   useEffect(() => {
     document.title = 'Продукция'
-    const abortController = new AbortController()
-    categories.length === 0 && loadCategories(abortController.signal)
-    return function cancel() {
-      abortController.abort()
-    }
   }, [])
 
   const deleteItem = (event) => {
@@ -47,54 +32,6 @@ const Products = (props) => {
   const deleteItemCategory = (event) => {
     const id = event.target.dataset.id
     deleteCategory(id).then(() => loadCategories())
-  }
-
-  const loadCategories = (signal) => {
-    let categoriesArr = []
-    let productsArr = []
-    return getCategoriesNames(signal) //Только категории
-      .then((res) => res.json())
-      .then((res) => {
-        setCategories([...res])
-        //Загрузка по местоположению
-        if (
-          props.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_DISPATCHER',
-            'ROLE_ENGINEER',
-            'ROLE_MANAGER',
-            'ROLE_WORKSHOP', //temp
-          ])
-        ) {
-          categoriesArr = res
-          // console.log(categoriesArr);
-          Promise.all(
-            categoriesArr.map((item) => {
-              return getProductsByCategory({ category: item.category }, signal) //Продукция по категории
-                .then((res) => res.json())
-                .then((res) => {
-                  res.map((item) => productsArr.push(item))
-                  setProducts([...productsArr])
-                })
-            }),
-          ).then(() => {
-            Promise.all(
-              productsArr.map((item, index) => {
-                return getProductById(item.id, signal)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    //   console.log(res);
-                    productsArr.splice(index, 1, res)
-                    setProducts([...productsArr])
-                  })
-              }),
-            ).then(() => {
-              //   console.log(productsArr);
-              return console.log('all images downloaded')
-            })
-          })
-        }
-      })
   }
 
   // * SORTING
@@ -219,6 +156,7 @@ const Products = (props) => {
           products={sortProducts(filterSearchQuery(products))}
           categories={categories}
           searchQuery={searchQuery}
+          isLoading={isProductsLoading}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
         />

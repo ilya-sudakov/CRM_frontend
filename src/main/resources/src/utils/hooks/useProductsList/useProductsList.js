@@ -10,11 +10,11 @@ import UserContext from '../../../App.js'
 const useProductsList = () => {
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true)
   const userContext = useContext(UserContext)
 
   const loadData = () => {
-    setIsLoading(true)
+    setIsLoadingProducts(true)
     return getCategoriesNames() //Только категории
       .then((res) => res.json())
       .then(async (res) => {
@@ -82,21 +82,24 @@ const useProductsList = () => {
         ),
       )
       .then(() => {
-        setIsLoading(false)
+        setIsLoadingProducts(false)
       })
       .catch((error) => {
-        setIsLoading(false)
+        setIsLoadingProducts(false)
         console.error(error)
       })
   }
 
-  useEffect(async () => {
-    await loadData()
+  useEffect(() => {
+    const abortController = new AbortController()
+    loadData(abortController.signal)
+
+    return function cancel() {
+      abortController.abort()
+    }
   }, [])
 
-  useEffect(() => {}, [products, categories, isLoading])
-
-  return { products, categories, isLoading }
+  return { products, categories, isLoadingProducts }
 }
 
 export default useProductsList

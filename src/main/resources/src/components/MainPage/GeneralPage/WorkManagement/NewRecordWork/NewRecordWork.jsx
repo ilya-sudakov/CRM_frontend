@@ -5,13 +5,6 @@ import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.js
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx'
 import SelectWork from '../SelectWork/SelectWork.jsx'
-// import SelectWorkNew from '../SelectWorkNew/SelectWorkNew.jsx'
-import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.js'
-import {
-  getProductById,
-  getProductsByCategory,
-  getProductsByLocation,
-} from '../../../../../utils/RequestsAPI/Products.js'
 import {
   addRecordedWork,
   addProductToRecordedWork,
@@ -21,6 +14,7 @@ import {
 import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import { dateDiffInDays } from '../../../../../utils/functions.jsx'
+import useProductsList from '../../../../../utils/hooks/useProductsList/useProductsList.js'
 
 const NewRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -40,8 +34,7 @@ const NewRecordWork = (props) => {
   })
   const [showError, setShowError] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState([])
+  const { products, categories, isLoadingProducts } = useProductsList()
   const [totalHours, setTotalHours] = useState(0)
   const [curPage, setCurPage] = useState(0)
   const [wrapperHeight, setWrapperHeight] = useState('0px')
@@ -163,83 +156,6 @@ const NewRecordWork = (props) => {
     }
   }
 
-  const loadProducts = (signal) => {
-    getCategoriesNames(signal) //Только категории
-      .then((res) => res.json())
-      .then((res) => {
-        const categoriesArr = res
-        setCategories(res)
-        let productsArr = []
-        if (
-          props.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_DISPATCHER',
-            'ROLE_ENGINEER',
-            'ROLE_MANAGER',
-            'ROLE_WORKSHOP', //temp
-          ])
-        ) {
-          Promise.all(
-            categoriesArr.map((item) => {
-              let category = {
-                category: item.category,
-              }
-              return getProductsByCategory(category, signal) //Продукция по категории
-                .then((res) => res.json())
-                .then((res) => {
-                  res.map((item) => productsArr.push(item))
-                  setProducts([...productsArr])
-                })
-            }),
-          ).then(() => {
-            //Загружаем картинки по отдельности для каждой продукции
-            Promise.all(
-              productsArr.map((item, index) => {
-                getProductById(item.id, signal)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    // console.log(res);
-                    productsArr.splice(index, 1, res)
-                    setProducts([...productsArr])
-                  })
-              }),
-            ).then(() => {
-              console.log('all images downloaded')
-            })
-          })
-        } else {
-          getProductsByLocation(
-            {
-              productionLocation: props.userHasAccess(['ROLE_LIGOVSKIY'])
-                ? 'ЦехЛиговский'
-                : props.userHasAccess(['ROLE_LEMZ'])
-                ? 'ЦехЛЭМЗ'
-                : props.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
-            },
-            signal,
-          )
-            .then((res) => res.json())
-            .then((res) => {
-              res.map((item) => productsArr.push(item))
-              setProducts([...productsArr])
-              Promise.all(
-                productsArr.map((item, index) => {
-                  getProductById(item.id, signal)
-                    .then((res) => res.json())
-                    .then((res) => {
-                      // console.log(res);
-                      productsArr.splice(index, 1, res)
-                      setProducts([...productsArr])
-                    })
-                }),
-              ).then(() => {
-                console.log('all images downloaded')
-              })
-            })
-        }
-      })
-  }
-
   useEffect(() => {
     document.title = 'Создание заявки'
     const abortController = new AbortController()
@@ -252,8 +168,6 @@ const NewRecordWork = (props) => {
           : 80) +
         'px',
     )
-    //Загружаем продукцию один раз, чтобы не загружать её в каждом окошке SelectWork
-    products.length === 0 && loadProducts(abortController.signal)
     return function cancel() {
       abortController.abort()
     }
@@ -441,8 +355,6 @@ const NewRecordWork = (props) => {
                   }}
                   value="Вернуться назад"
                 />
-                {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Создать запись" />
-                                {isLoading && <ImgLoader />} */}
                 <Button
                   text="Создать запись"
                   isLoading={isLoading}

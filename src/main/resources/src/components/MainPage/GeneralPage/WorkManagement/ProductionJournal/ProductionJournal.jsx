@@ -32,11 +32,7 @@ const ProductionJournal = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   // const [categories, setCategories] = useState([])
   // const [products, setProducts] = useState([])
-  const {
-    products,
-    categories,
-    areProductsLoading = isLoading,
-  } = useProductsList()
+  const { products, categories, isLoadingProducts } = useProductsList()
   const [drafts, setDrafts] = useState([])
   const [employees, setEmployees] = useState([])
   const [works, setWorks] = useState([])
@@ -510,7 +506,7 @@ const ProductionJournal = (props) => {
             handleDateChange={handleDateChange}
             errorsArr={workTimeErrors}
             setErrorsArr={setWorkTimeErrors}
-            readOnly={isLoading || areProductsLoading}
+            readOnly={isLoading || isLoadingProducts}
           />
           <ReadOnlyModeControls
             readOnlyMode={worktimeInputs.readOnlyMode}
@@ -525,7 +521,7 @@ const ProductionJournal = (props) => {
                 )}
                 handleMinimizeAllWorkshopItems={handleMinimizeAllWorkshopItems}
               />
-              {isLoading || areProductsLoading ? (
+              {isLoading || isLoadingProducts ? (
                 <PlaceholderLoading
                   wrapperClassName="production-journal__list"
                   itemClassName="main-form__item--placeholder"
@@ -574,7 +570,7 @@ const ProductionJournal = (props) => {
             />
             <Button
               text="Сохранить данные"
-              isLoading={isLoading || areProductsLoading}
+              isLoading={isLoading || isLoadingProducts}
               className="main-form__submit main-form__submit--floating"
               onClick={handleSubmit}
             />
