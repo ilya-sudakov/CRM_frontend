@@ -58,11 +58,6 @@ exports[`MainPage component matches snapshot 1`] = `
         >
           Логин
         </div>
-        <img
-          alt=""
-          class="authorization__img"
-          src="[object Object]"
-        />
         <input
           id="login"
           type="text"
@@ -84,11 +79,6 @@ exports[`MainPage component matches snapshot 1`] = `
         />
         <div
           class="authorization__line authorization__line--hidden"
-        />
-        <img
-          alt=""
-          class="authorization__img authorization__img--password"
-          src="[object Object]"
         />
         <input
           id="password"
