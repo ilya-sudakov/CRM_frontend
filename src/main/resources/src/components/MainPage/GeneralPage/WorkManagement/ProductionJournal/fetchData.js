@@ -1,41 +1,4 @@
-import { getWork } from "../../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx";
 import { getEmployees } from "../../../../../utils/RequestsAPI/Employees.jsx";
-import { getStamp } from "../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
-import { getPressForm } from "../../../../../utils/RequestsAPI/Rigging/PressForm.jsx";
-import { getMachine } from "../../../../../utils/RequestsAPI/Rigging/Machine.jsx";
-import { getParts } from "../../../../../utils/RequestsAPI/Parts.jsx";
-
-export const loadWorkItems = async (signal, setIsLoading, setWorks) => {
-  setIsLoading(true);
-  return getWork(signal)
-    .then((res) => res.json())
-    .then((res) => {
-      return setWorks(
-        res
-          .sort((a, b) => {
-            if (a.work < b.work) {
-              return -1;
-            }
-            if (a.work > b.work) {
-              return 1;
-            }
-            return 0;
-          })
-          .map((work) => {
-            return {
-              // work.work, work.id, work.typeOfWork
-              value: work.id,
-              label: work.work,
-              typeOfWork: work.typeOfWork,
-            };
-          })
-      );
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      console.log(error);
-    });
-};
 
 export const loadEmployees = async (
   signal,

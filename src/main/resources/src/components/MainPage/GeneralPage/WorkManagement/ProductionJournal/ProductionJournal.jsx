@@ -24,19 +24,18 @@ import {
   combineOriginalAndNewWorks,
   combineWorksForSamePeople,
 } from "./helpers.js";
-import { loadEmployees, loadWorkItems } from "./fetchData.js";
+import { loadEmployees } from "./fetchData.js";
 import useProductsList from "../../../../../utils/hooks/useProductsList/useProductsList.js";
 import useDraftsList from "../../../../../utils/hooks/useDraftsList";
+import useWorkItemsList from "../../../../../utils/hooks/useWorkItemsList";
 
 const ProductionJournal = (props) => {
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const [categories, setCategories] = useState([])
-  // const [products, setProducts] = useState([])
   const { products, categories, isLoadingProducts } = useProductsList();
   const { drafts, isLoadingDrafts } = useDraftsList();
+  const { works, isLoadingWorkItems } = useWorkItemsList();
   const [employees, setEmployees] = useState([]);
-  const [works, setWorks] = useState([]);
   const [employeesMap, setEmployeesMap] = useState({});
   const userContext = useContext(UserContext);
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -391,9 +390,6 @@ const ProductionJournal = (props) => {
 
     let employees = [];
 
-    if (works.length === 0) {
-      loadWorkItems(abortController.signal, setIsLoading, setWorks);
-    }
     loadEmployees(
       abortController.signal,
       setIsLoading,
@@ -483,6 +479,9 @@ const ProductionJournal = (props) => {
     });
   };
 
+  const isDataLoading =
+    isLoading || isLoadingProducts || isLoadingDrafts || isLoadingWorkItems;
+
   return (
     <div className="production-journal">
       <div className="main-form">
@@ -504,7 +503,7 @@ const ProductionJournal = (props) => {
             handleDateChange={handleDateChange}
             errorsArr={workTimeErrors}
             setErrorsArr={setWorkTimeErrors}
-            readOnly={isLoading || isLoadingProducts}
+            readOnly={isDataLoading}
           />
           <ReadOnlyModeControls
             readOnlyMode={worktimeInputs.readOnlyMode}
@@ -519,7 +518,7 @@ const ProductionJournal = (props) => {
                 )}
                 handleMinimizeAllWorkshopItems={handleMinimizeAllWorkshopItems}
               />
-              {isLoading || isLoadingProducts ? (
+              {isDataLoading ? (
                 <PlaceholderLoading
                   wrapperClassName="production-journal__list"
                   itemClassName="main-form__item--placeholder"
@@ -568,7 +567,7 @@ const ProductionJournal = (props) => {
             />
             <Button
               text="Сохранить данные"
-              isLoading={isLoading || isLoadingProducts}
+              isLoading={isDataLoading}
               className="main-form__submit main-form__submit--floating"
               onClick={handleSubmit}
             />
