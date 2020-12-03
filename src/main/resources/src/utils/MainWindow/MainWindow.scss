@@ -548,7 +548,7 @@
     }
     &:hover {
       color: #000000;
-      background-color: #e1e1e1;
+      background-color: #efefef;
     }
   }
 
@@ -592,12 +592,12 @@
     overflow-y: hidden;
     border-bottom-left-radius: 2.5px;
     border-bottom-right-radius: 2.5px;
-    background-color: #cfcfcf;
+    background-color: #dddddd;
     padding: 10px 10px;
     transition: 100ms ease-in-out;
 
     &:hover {
-      background-color: #cfcfcf;
+      background-color: #dddddd;
     }
 
     .main-window__list-item:not(.main-window__list-item--header):hover {
