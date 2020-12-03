@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import ChevronSVG from '../../../../../../../assets/tableview/chevron-down.inline.svg'
-import './ControlPanel.scss'
+import React, { useState } from "react";
+import ChevronSVG from "../../../../../../../assets/tableview/chevron-down.inline.svg";
+import "./ControlPanel.scss";
 
 const ControlPanel = (props) => {
-  const [isHidden, setIsHidden] = useState(true)
+  const [isHidden, setIsHidden] = useState(true);
 
   return (
     <div className="control-panel" style={{ ...(props.styles ?? {}) }}>
@@ -15,10 +15,10 @@ const ControlPanel = (props) => {
               className="main-window__button main-window__button--inverted main-window__button--filter"
               onClick={() => setIsHidden((isHidden) => !isHidden)}
             >
-              <span>{props.panelName || 'Фильтры'}</span>
+              <span>{props.panelName || "Фильтры"}</span>
               <ChevronSVG
                 className={`main-window__img ${
-                  isHidden ? '' : 'main-window__img--rotated'
+                  isHidden ? "" : "main-window__img--rotated"
                 }`}
               />
             </div>
@@ -31,7 +31,7 @@ const ControlPanel = (props) => {
         {!isHidden ? props.content : null}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ControlPanel
+export default ControlPanel;

@@ -401,7 +401,7 @@
       cursor: pointer;
       font-size: 90%;
       margin-right: 10px;
-      transition: 0.2s ease-in-out;
+      transition: 100ms ease-in-out;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -498,7 +498,7 @@
       font-size: 80%;
       background-color: $button__background--inverted;
       color: transparentize($secondary-text-color, 0.05);
-      transition: 0.2s ease-in-out;
+      transition: 100ms ease-in-out;
       margin-right: 10px;
       outline: none;
       display: flex;
@@ -509,21 +509,22 @@
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
         color: #ffffff;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
+        // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
       }
       & .main-form__img {
         width: 25px;
         margin-right: 5px;
       }
-    }
-    .main-form__submit--inverted {
-      background-color: $secondary-text-color;
-      color: #333333;
-      border: 1px solid #bbbbbb;
 
-      &:hover {
-        color: #000000 !important;
+      &--inverted {
         background-color: $secondary-text-color;
+        color: #333333;
+        border: 1px solid #bbbbbb;
+
+        &:hover {
+          color: #000000 !important;
+          background-color: #f2f2f2;
+        }
       }
     }
   }
