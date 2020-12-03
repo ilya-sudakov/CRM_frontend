@@ -3,9 +3,9 @@ import {
   getProductsByCategory,
   getProductsByLocation,
   getProductById,
-} from '../RequestsAPI/Products.js'
-import { getCategoriesNames } from '../RequestsAPI/Products/Categories.js'
-import UserContext from '../../App.js'
+} from '../../RequestsAPI/Products.js'
+import { getCategoriesNames } from '../../RequestsAPI/Products/Categories.js'
+import UserContext from '../../../App.js'
 
 const useProductsList = () => {
   const [products, setProducts] = useState([])
@@ -13,9 +13,9 @@ const useProductsList = () => {
   const [isLoading, setIsLoading] = useState(true)
   const userContext = useContext(UserContext)
 
-  async function loadData() {
+  const loadData = () => {
     setIsLoading(true)
-    getCategoriesNames() //Только категории
+    return getCategoriesNames() //Только категории
       .then((res) => res.json())
       .then(async (res) => {
         let productsArr = []
@@ -45,23 +45,23 @@ const useProductsList = () => {
                 })
             }),
           )
-        }
+        } else if (userContext.userHasAccess(['ROLE_WORKSHOP'])) {
+          const usersWorkshop = userContext.userHasAccess(['ROLE_LEMZ'])
+            ? 'ЦехЛЭМЗ'
+            : userContext.userHasAccess(['ROLE_LEPSARI'])
+            ? 'ЦехЛепсари'
+            : userContext.userHasAccess(['ROLE_LIGOSVKIY'])
+            ? 'ЦехЛиговский'
+            : 'ЦехЛЭМЗ'
 
-        //Временно цеха видят всю продукцию
-        if (userContext.userHasAccess(['ROLE_WORKSHOP'])) {
-          temp = getProductsByLocation({
-            productionLocation: userContext.userHasAccess(['ROLE_LEMZ'])
-              ? 'ЦехЛЭМЗ'
-              : userContext.userHasAccess(['ROLE_LEPSARI'])
-              ? 'ЦехЛепсари'
-              : userContext.userHasAccess(['ROLE_LIGOSVKIY'])
-              ? 'ЦехЛиговский'
-              : 'ЦехЛЭМЗ',
+          await getProductsByLocation({
+            productionLocation: usersWorkshop,
           })
             .then((res) => res.json())
             .then((res) => {
               res.map((item) => productsArr.push(item))
               setProducts([...productsArr])
+              return
             })
         }
 
@@ -90,9 +90,11 @@ const useProductsList = () => {
       })
   }
 
-  useEffect(() => {
-    loadData()
+  useEffect(async () => {
+    await loadData()
   }, [])
+
+  useEffect(() => {}, [products, categories, isLoading])
 
   return { products, categories, isLoading }
 }

@@ -24,13 +24,8 @@ import {
   combineOriginalAndNewWorks,
   combineWorksForSamePeople,
 } from './helpers.js'
-import {
-  loadDrafts,
-  loadEmployees,
-  loadProducts,
-  loadWorkItems,
-} from './fetchData.js'
-import useProductsList from '../../../../../utils/hooks/useProductsList.js'
+import { loadDrafts, loadEmployees, loadWorkItems } from './fetchData.js'
+import useProductsList from '../../../../../utils/hooks/useProductsList/useProductsList.js'
 
 const ProductionJournal = (props) => {
   const [showError, setShowError] = useState(false)
@@ -41,7 +36,7 @@ const ProductionJournal = (props) => {
     products,
     categories,
     areProductsLoading = isLoading,
-  } = useProductsList
+  } = useProductsList()
   const [drafts, setDrafts] = useState([])
   const [employees, setEmployees] = useState([])
   const [works, setWorks] = useState([])
@@ -402,14 +397,6 @@ const ProductionJournal = (props) => {
     if (works.length === 0) {
       loadWorkItems(abortController.signal, setIsLoading, setWorks)
     }
-    // if (products.length === 0) {
-    //   loadProducts(
-    //     abortController.signal,
-    //     userContext,
-    //     setCategories,
-    //     setProducts,
-    //   )
-    // }
     if (drafts.length === 0) {
       loadDrafts(abortController.signal, setDrafts)
     }
