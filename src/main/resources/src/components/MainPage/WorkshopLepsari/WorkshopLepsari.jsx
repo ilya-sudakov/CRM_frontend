@@ -19,7 +19,7 @@ import {
   getDatesFromRequests,
 } from '../../../utils/functions.jsx'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
-import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.jsx'
+import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.js'
 
 const WorkshopLepsari = (props) => {
   const [requestsLepsari, setrequestsLepsari] = useState([])

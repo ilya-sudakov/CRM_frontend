@@ -3,7 +3,7 @@ import './NewClientCategory.scss'
 import '../../../../../utils/Form/Form.scss'
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import { addClientCategory } from '../../../../../utils/RequestsAPI/Clients/Categories.jsx'
+import { addClientCategory } from '../../../../../utils/RequestsAPI/Clients/Categories.js'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 
 const NewClientCategory = (props) => {

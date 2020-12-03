@@ -14,7 +14,7 @@ import {
   deleteRequest,
   getRequestsByWorkshop,
 } from '../../../utils/RequestsAPI/Requests.jsx'
-import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.jsx'
+import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.js'
 import {
   sortRequestsByDates,
   getQuantityOfProductsFromRequests,

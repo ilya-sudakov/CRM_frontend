@@ -1,11 +1,5 @@
 import { getWork } from '../../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
 import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx'
-import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx'
-import {
-  getProductById,
-  getProductsByCategory,
-  getProductsByLocation,
-} from '../../../../../utils/RequestsAPI/Products.jsx'
 import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
 import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
 import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
@@ -107,117 +101,6 @@ export const loadEmployees = async (
       setIsLoading(false)
       console.log(error)
       return setIsLoading(false)
-    })
-}
-
-export const loadProducts = (
-  signal,
-  userContext,
-  setCategories,
-  setProducts,
-) => {
-  getCategoriesNames(signal) //Только категории
-    .then((res) => res.json())
-    .then((res) => {
-      const categoriesArr = res
-      setCategories(res)
-      let productsArr = []
-      if (
-        userContext.userHasAccess([
-          'ROLE_ADMIN',
-          'ROLE_DISPATCHER',
-          'ROLE_ENGINEER',
-          'ROLE_MANAGER',
-        ])
-      ) {
-        Promise.all(
-          categoriesArr.map((item) => {
-            let category = {
-              category: item.category,
-            }
-            return getProductsByCategory(category, signal) //Продукция по категории
-              .then((res) => res.json())
-              .then((res) => {
-                res.map((item) => productsArr.push(item))
-                setProducts([
-                  ...productsArr.sort((a, b) => {
-                    if (a.name < b.name) {
-                      return -1
-                    }
-                    if (a.name > b.name) {
-                      return 1
-                    }
-                    return 0
-                  }),
-                ])
-              })
-          }),
-        ).then(() => {
-          //Загружаем картинки по отдельности для каждой продукции
-          Promise.all(
-            productsArr.map((item, index) => {
-              getProductById(item.id, signal)
-                .then((res) => res.json())
-                .then((res) => {
-                  // console.log(res);
-                  productsArr.splice(index, 1, res)
-                  setProducts([
-                    ...productsArr.sort((a, b) => {
-                      if (a.name < b.name) {
-                        return -1
-                      }
-                      if (a.name > b.name) {
-                        return 1
-                      }
-                      return 0
-                    }),
-                  ])
-                })
-            }),
-          ).then(() => {
-            console.log('all images downloaded')
-          })
-        })
-      } else {
-        getProductsByLocation(
-          {
-            productionLocation: userContext.userHasAccess(['ROLE_LIGOVSKIY'])
-              ? 'ЦехЛиговский'
-              : userContext.userHasAccess(['ROLE_LEMZ'])
-              ? 'ЦехЛЭМЗ'
-              : userContext.userHasAccess(['ROLE_LEPSARI']) && 'ЦехЛепсари',
-          },
-          signal,
-        )
-          .then((res) => res.json())
-          .then((res) => {
-            res.map((item) => productsArr.push(item))
-            setProducts([...productsArr])
-            Promise.all(
-              productsArr.map((item, index) => {
-                getProductById(item.id, signal)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    // console.log(res);
-                    productsArr.splice(index, 1, res)
-                    setProducts([
-                      ...productsArr.sort((a, b) => {
-                        if (a.name < b.name) {
-                          return -1
-                        }
-                        if (a.name > b.name) {
-                          return 1
-                        }
-                        return 0
-                      }),
-                    ])
-                  })
-              }),
-            ).then(() => {
-              console.log('all images downloaded')
-            })
-          })
-      }
     })
 }
 

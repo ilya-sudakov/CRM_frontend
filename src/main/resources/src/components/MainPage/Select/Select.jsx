@@ -6,14 +6,14 @@ import TableView from '../Products/TableView/TableView.jsx'
 import {
   getCategories,
   getCategoriesNames,
-} from '../../../utils/RequestsAPI/Products/Categories.jsx'
+} from '../../../utils/RequestsAPI/Products/Categories.js'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import ColorPicker from './ColorPicker/ColorPicker.jsx'
 import {
   getProductsByCategory,
   getProductById,
   getProductsByLocation,
-} from '../../../utils/RequestsAPI/Products.jsx'
+} from '../../../utils/RequestsAPI/Products.js'
 import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
 // import { addSpaceDelimiter } from '../../../utils/functions.jsx'
 import UserContext from '../../../App.js'

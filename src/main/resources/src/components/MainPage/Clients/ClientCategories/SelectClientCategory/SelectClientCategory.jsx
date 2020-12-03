@@ -6,7 +6,7 @@ import TableView from './TableView/TableView.jsx'
 import {
   getClientCategories,
   getSupplierCategories,
-} from '../../../../../utils/RequestsAPI/Clients/Categories.jsx'
+} from '../../../../../utils/RequestsAPI/Clients/Categories.js'
 
 const SelectClientCategory = (props) => {
   const [showWindow, setShowWindow] = useState(false)

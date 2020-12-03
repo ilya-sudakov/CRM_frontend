@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './NewProduct.scss'
 import '../../../../utils/Form/Form.scss'
-import { addProduct } from '../../../../utils/RequestsAPI/Products.jsx'
+import { addProduct } from '../../../../utils/RequestsAPI/Products.js'
 import InputText from '../../../../utils/Form/InputText/InputText.jsx'
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import SelectCategory from '../SelectCategory/SelectCategory.jsx'

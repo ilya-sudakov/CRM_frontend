@@ -3,14 +3,14 @@ import deleteSVG from '../../../../../../../assets/select/delete.svg'
 import './Select.scss'
 import SearchBar from '../SearchBar/SearchBar.jsx'
 import TableView from '../Products/TableView/TableView.jsx'
-import { getCategoriesNames } from '../../../utils/RequestsAPI/Products/Categories.jsx'
+import { getCategoriesNames } from '../../../utils/RequestsAPI/Products/Categories.js'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import ColorPicker from './ColorPicker/ColorPicker.jsx'
 import {
   getProductsByCategory,
   getProductById,
   getProductsByLocation,
-} from '../../../utils/RequestsAPI/Products.jsx'
+} from '../../../utils/RequestsAPI/Products.js'
 // import { addSpaceDelimiter } from '../../../utils/functions.jsx'
 import UserContext from '../../../App.js'
 import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'

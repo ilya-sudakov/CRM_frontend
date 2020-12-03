@@ -23,7 +23,7 @@ import './SideMenu.scss'
 import {
   getClientCategories,
   getSupplierCategories,
-} from '../../utils/RequestsAPI/Clients/Categories.jsx'
+} from '../../utils/RequestsAPI/Clients/Categories.js'
 import UserContext from '../../App.js'
 
 const SideMenu = (props) => {

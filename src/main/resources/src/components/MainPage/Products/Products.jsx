@@ -9,12 +9,12 @@ import {
   getProductsByCategory,
   getProductById,
   getProductsByLocation,
-} from '../../../utils/RequestsAPI/Products.jsx'
+} from '../../../utils/RequestsAPI/Products.js'
 import {
   getCategories,
   deleteCategory,
   getCategoriesNames,
-} from '../../../utils/RequestsAPI/Products/Categories.jsx'
+} from '../../../utils/RequestsAPI/Products/Categories.js'
 import { deletePackagingFromProduct } from '../../../utils/RequestsAPI/Products/packaging.js'
 import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx'

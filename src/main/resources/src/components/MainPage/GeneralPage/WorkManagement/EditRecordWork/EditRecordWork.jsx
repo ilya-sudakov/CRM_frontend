@@ -5,12 +5,12 @@ import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.js
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx'
 import SelectWork from '../SelectWork/SelectWork.jsx'
-import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.jsx'
+import { getCategoriesNames } from '../../../../../utils/RequestsAPI/Products/Categories.js'
 import {
   getProductById,
   getProductsByCategory,
   getProductsByLocation,
-} from '../../../../../utils/RequestsAPI/Products.jsx'
+} from '../../../../../utils/RequestsAPI/Products.js'
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
 import {
   getRecordedWorkById,

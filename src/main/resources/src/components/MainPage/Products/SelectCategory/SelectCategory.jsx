@@ -3,7 +3,7 @@ import './SelectCategory.scss';
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableViewCategory from '../CategoryManagement/TableView/TableViewCategory.jsx';
-import { getCategories, getCategoriesNames } from '../../../../utils/RequestsAPI/Products/Categories.jsx';
+import { getCategories, getCategoriesNames } from '../../../../utils/RequestsAPI/Products/Categories.js';
 
 const SelectCategory = (props) => {
     const [showWindow, setShowWindow] = useState(false);
