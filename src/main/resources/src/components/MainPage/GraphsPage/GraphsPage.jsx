@@ -1,51 +1,51 @@
-import React, { useEffect, useState } from 'react'
-import './GraphsPage.scss'
-import '../../../utils/MainWindow/MainWindow.scss'
-import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx'
+import React, { useEffect, useState } from "react";
+import "./GraphsPage.scss";
+import "../../../utils/MainWindow/MainWindow.scss";
+import TableLoading from "../../../utils/TableView/TableLoading/TableLoading.jsx";
 // import Chart from 'chart.js';
-import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import { formatDateStringNoYear } from '../../../utils/functions.jsx'
-import { createGraph, loadCanvas } from '../../../utils/graphs.js'
-import Button from '../../../utils/Form/Button/Button.jsx'
+import { getRecordedWorkByDateRange } from "../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
+import { formatDateStringNoYear } from "../../../utils/functions.jsx";
+import { createGraph, loadCanvas } from "../../../utils/graphs.js";
+import Button from "../../../utils/Form/Button/Button.jsx";
 
 const GraphsPage = (props) => {
-  const lemz = '#1b4e6b'
-  const lepsari = '#5c63a2'
-  const ligovskiy = '#c068a8'
-  const office = '#ec7176'
-  const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
-  const [curWeek, setCurWeek] = useState([])
-  const [weekOffset, setWeekOffset] = useState(0)
-  const [graph, setGraph] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [canvasLoaded, setCanvasLoaded] = useState(false)
-  const [curGraph, setCurGraph] = useState('workControlWeeky')
+  const lemz = "#1b4e6b";
+  const lepsari = "#5c63a2";
+  const ligovskiy = "#c068a8";
+  const office = "#ec7176";
+  const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  const [curWeek, setCurWeek] = useState([]);
+  const [weekOffset, setWeekOffset] = useState(0);
+  const [graph, setGraph] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
+  const [curGraph, setCurGraph] = useState("workControlWeeky");
   const [workshops, setWorkshops] = useState([
     {
-      label: 'ЦехЛЭМЗ',
+      label: "ЦехЛЭМЗ",
       backgroundColor: lemz,
       data: [],
       borderWidth: 1,
     },
     {
-      label: 'ЦехЛепсари',
+      label: "ЦехЛепсари",
       backgroundColor: lepsari,
       data: [],
       borderWidth: 1,
     },
     {
-      label: 'ЦехЛиговский',
+      label: "ЦехЛиговский",
       backgroundColor: ligovskiy,
       data: [],
       borderWidth: 1,
     },
     {
-      label: 'Офис',
+      label: "Офис",
       backgroundColor: office,
       data: [],
       borderWidth: 1,
     },
-  ])
+  ]);
 
   const loadWorkControl = (week, signal) => {
     getRecordedWorkByDateRange(
@@ -53,15 +53,15 @@ const GraphsPage = (props) => {
       week[0].getMonth() + 1,
       week[6].getDate(),
       week[6].getMonth() + 1,
-      signal,
+      signal
     )
       .then((res) => res.json())
       .then((res) => {
         // console.log(res);
         week.map((day) => {
           workshops.map((workshop, index) => {
-            let temp = workshops
-            let oldData = workshop.data
+            let temp = workshops;
+            let oldData = workshop.data;
             oldData.push(
               res.reduce((sum, cur) => {
                 if (
@@ -69,33 +69,33 @@ const GraphsPage = (props) => {
                   new Date(day).getDate() ===
                     new Date(cur.year, cur.month, cur.day).getDate()
                 ) {
-                  return Math.ceil((sum + cur.hours) * 10) / 10
-                } else return sum
-              }, 0),
-            )
+                  return Math.ceil((sum + cur.hours) * 10) / 10;
+                } else return sum;
+              }, 0)
+            );
             temp.splice(index, 1, {
               ...workshop,
               data: oldData,
-            })
-          })
-        })
-        console.log(workshops)
-        if (props.userHasAccess(['ROLE_ADMIN'])) {
+            });
+          });
+        });
+        console.log(workshops);
+        if (props.userHasAccess(["ROLE_ADMIN"])) {
           !canvasLoaded &&
-            loadCanvas('graphs-page__chart-wrapper', 'graphs-page__chart')
-          setCanvasLoaded(true)
+            loadCanvas("graphs-page__chart-wrapper", "graphs-page__chart");
+          setCanvasLoaded(true);
           const options = {
             type:
               (window.innerWidth ||
                 document.documentElement.clientWidth ||
                 document.body.clientWidth) > 500
-                ? 'bar'
-                : 'horizontalBar',
+                ? "bar"
+                : "horizontalBar",
             data: {
               labels: [
                 ...week.map(
                   (day, index) =>
-                    weekdays[index] + ' ' + formatDateStringNoYear(day),
+                    weekdays[index] + " " + formatDateStringNoYear(day)
                 ),
               ],
               datasets: [...workshops],
@@ -111,10 +111,10 @@ const GraphsPage = (props) => {
                   ? true
                   : false,
               animation: {
-                easing: 'easeInOutCirc',
+                easing: "easeInOutCirc",
               },
               tooltips: {
-                mode: 'index',
+                mode: "index",
               },
               scales: {
                 yAxes: [
@@ -125,8 +125,8 @@ const GraphsPage = (props) => {
                     stacked: true,
                     scaleLabel: {
                       display: false,
-                      labelString: 'Часы',
-                      fontStyle: 'italic',
+                      labelString: "Часы",
+                      fontStyle: "italic",
                     },
                   },
                 ],
@@ -138,37 +138,37 @@ const GraphsPage = (props) => {
                     stacked: true,
                     scaleLabel: {
                       display: false,
-                      labelString: 'Дни недели',
-                      fontStyle: 'italic',
+                      labelString: "Дни недели",
+                      fontStyle: "italic",
                     },
                   },
                 ],
               },
             },
-          }
+          };
           setTimeout(() => {
-            setIsLoading(false)
-            canvasLoaded && graph.destroy()
-            setGraph(createGraph(options))
-          }, 150)
+            setIsLoading(false);
+            canvasLoaded && graph.destroy();
+            setGraph(createGraph(options));
+          }, 150);
         }
-      })
-  }
+      });
+  };
 
   const loadProductAnalysis = (signal) => {
-    !canvasLoaded && loadCanvas('graphs-page__chart-wrapper')
-    setCanvasLoaded(true)
+    !canvasLoaded && loadCanvas("graphs-page__chart-wrapper");
+    setCanvasLoaded(true);
     const options = {
       type:
         (window.innerWidth ||
           document.documentElement.clientWidth ||
           document.body.clientWidth) > 500
-          ? 'bar'
-          : 'horizontalBar',
+          ? "bar"
+          : "horizontalBar",
       data: {
         labels: [
           ...week.map(
-            (day, index) => weekdays[index] + ' ' + formatDateStringNoYear(day),
+            (day, index) => weekdays[index] + " " + formatDateStringNoYear(day)
           ),
         ],
         datasets: [...workshops],
@@ -182,10 +182,10 @@ const GraphsPage = (props) => {
             ? true
             : false,
         animation: {
-          easing: 'easeInOutCirc',
+          easing: "easeInOutCirc",
         },
         tooltips: {
-          mode: 'index',
+          mode: "index",
         },
         scales: {
           yAxes: [
@@ -196,8 +196,8 @@ const GraphsPage = (props) => {
               stacked: true,
               scaleLabel: {
                 display: true,
-                labelString: 'Часы',
-                fontStyle: 'italic',
+                labelString: "Часы",
+                fontStyle: "italic",
               },
             },
           ],
@@ -213,48 +213,48 @@ const GraphsPage = (props) => {
           ],
         },
       },
-    }
+    };
     setTimeout(() => {
-      setIsLoading(false)
-      canvasLoaded && graph.destroy()
-      setGraph(createGraph(options))
-    }, 150)
-  }
+      setIsLoading(false);
+      canvasLoaded && graph.destroy();
+      setGraph(createGraph(options));
+    }, 150);
+  };
 
   useEffect(() => {
-    let abortController = new AbortController()
+    let abortController = new AbortController();
     const curDay = new Date(
-      new Date().setDate(new Date().getDate() + -7 * weekOffset),
-    )
-    let week = []
+      new Date().setDate(new Date().getDate() + -7 * weekOffset)
+    );
+    let week = [];
     for (let i = 1; i <= 7; i++) {
-      let first = curDay.getDate() - curDay.getDay() + i
-      let day = new Date(curDay.setDate(first))
-      week.push(day)
+      let first = curDay.getDate() - curDay.getDay() + i;
+      let day = new Date(curDay.setDate(first));
+      week.push(day);
     }
     workshops.map((workshop, index) => {
-      let temp = workshops
+      let temp = workshops;
       temp.splice(index, 1, {
         ...workshop,
         data: [],
-      })
-    })
-    setCurWeek(week)
-    console.log(week)
+      });
+    });
+    setCurWeek(week);
+    console.log(week);
 
-    setIsLoading(true)
+    setIsLoading(true);
     switch (curGraph) {
-      case 'workControlWeeky':
-        loadWorkControl(week, abortController.signal)
-        break
-      case 'productAnalysis':
-        loadProductAnalysis(abortController.signal)
-        break
+      case "workControlWeeky":
+        loadWorkControl(week, abortController.signal);
+        break;
+      case "productAnalysis":
+        loadProductAnalysis(abortController.signal);
+        break;
     }
     return function cancel() {
-      abortController.abort()
-    }
-  }, [weekOffset, workshops, curGraph])
+      abortController.abort();
+    };
+  }, [weekOffset, workshops, curGraph]);
 
   return (
     <div className="graphs-page">
@@ -264,7 +264,7 @@ const GraphsPage = (props) => {
           <span>Выбрать график: </span>
           <select
             onChange={(event) => {
-              setCurGraph(event.target.value)
+              setCurGraph(event.target.value);
             }}
           >
             <option value="workControlWeeky">Сводка за неделю</option>
@@ -286,27 +286,23 @@ const GraphsPage = (props) => {
         </div>
         <div className="main-window__control-panel">
           <Button
-            className="graphs-page__button"
-            text="Пред. неделя"
-            isLoading={weekOffset === 0 ? false : isLoading}
-            onClick={(event) => {
-              setWeekOffset(weekOffset + 1)
-            }}
             inverted
+            className="main-window__button main-window__button--inverted"
+            text="Пред. неделя"
+            isLoading={isLoading}
+            onClick={() => setWeekOffset(weekOffset + 1)}
           />
           <Button
-            className="graphs-page__button"
-            text="Тек. неделя"
-            isLoading={weekOffset !== 0 ? false : isLoading}
-            onClick={() => {
-              setWeekOffset(0)
-            }}
             inverted
+            className="main-window__button main-window__button--inverted"
+            text="Тек. неделя"
+            isLoading={isLoading}
+            onClick={() => setWeekOffset(0)}
           />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GraphsPage
+export default GraphsPage;

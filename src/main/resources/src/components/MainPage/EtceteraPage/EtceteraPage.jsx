@@ -1,98 +1,104 @@
-import React, { useState, useEffect, useContext } from 'react'
-import './EtceteraPage.scss'
-import '../../../utils/MainWindow/MainWindow.scss'
+import React, { useState, useEffect, useContext } from "react";
+import "./EtceteraPage.scss";
+import "../../../utils/MainWindow/MainWindow.scss";
 // import { Link } from 'react-router-dom'
-import UserContext from '../../../App.js'
+import UserContext from "../../../App.js";
 
-import tasksImg from '../../../../../../../assets/sidemenu/tasks.svg'
-import clientImg from '../../../../../../../assets/sidemenu/client.svg'
-import listImg from '../../../../../../../assets/sidemenu/list.svg'
-import boxImg from '../../../../../../../assets/sidemenu/box.svg'
-import playListImg from '../../../../../../../assets/sidemenu/play_list.svg'
-import supplierIcon from '../../../../../../../assets/sidemenu/supplier_icon.svg'
-import workTimeIcon from '../../../../../../../assets/sidemenu/work_time_icon.svg'
-import graphIcon from '../../../../../../../assets/graph-icon.svg'
-import statsIcon from '../../../../../../../assets/statistics/stats-alt.svg'
+import tasksImg from "../../../../../../../assets/sidemenu/tasks.svg";
+import clientImg from "../../../../../../../assets/sidemenu/client.svg";
+import listImg from "../../../../../../../assets/sidemenu/list.svg";
+import boxImg from "../../../../../../../assets/sidemenu/box.svg";
+import playListImg from "../../../../../../../assets/sidemenu/play_list.svg";
+import supplierIcon from "../../../../../../../assets/sidemenu/supplier_icon.svg";
+import workTimeIcon from "../../../../../../../assets/sidemenu/work_time_icon.svg";
+import graphIcon from "../../../../../../../assets/graph-icon.svg";
+import statsIcon from "../../../../../../../assets/statistics/stats-alt.svg";
 
-import Button from '../../../utils/Form/Button/Button.jsx'
+import Button from "../../../utils/Form/Button/Button.jsx";
 
 const EtceteraPage = (props) => {
-  const userContext = useContext(UserContext)
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
-    document.title = 'Разное'
-  }, [])
+    document.title = "Разное";
+  }, []);
 
   const [menuItems, setMenuItems] = useState({
     Клиенты: [
       {
-        linkTo: '/clients/categories',
-        name: 'Категории клиентов',
-        access: ['ROLE_ADMIN'],
+        linkTo: "/clients/categories",
+        name: "Категории клиентов",
+        access: ["ROLE_ADMIN"],
         icon: clientImg,
       },
       {
-        linkTo: '/clients/categories',
-        name: 'Категории поставщиков',
-        access: ['ROLE_ADMIN'],
+        linkTo: "/clients/categories",
+        name: "Категории поставщиков",
+        access: ["ROLE_ADMIN"],
         icon: supplierIcon,
       },
     ],
-    'Учет времени': [
+    "Учет времени": [
       {
-        linkTo: '/work-management',
-        name: 'Отчет производства',
+        linkTo: "/work-management",
+        name: "Отчет производства",
         access: [
-          'ROLE_ADMIN',
-          'ROLE_WORKSHOP',
-          'ROLE_DISPATCHER',
-          'ROLE_ENGINEER',
-          'ROLE_MANAGER',
+          "ROLE_ADMIN",
+          "ROLE_WORKSHOP",
+          "ROLE_DISPATCHER",
+          "ROLE_ENGINEER",
+          "ROLE_MANAGER",
         ],
         icon: workTimeIcon,
       },
       {
-        linkTo: '/report-table',
-        name: 'Интерактивный табель',
-        access: ['ROLE_ADMIN'],
+        linkTo: "/report-table",
+        name: "Табель",
+        access: [
+          "ROLE_ADMIN",
+          "ROLE_DISPATCHER",
+          "ROLE_MANAGER",
+          "ROLE_WORKSHOP",
+          "ROLE_ENGINEER",
+        ],
         icon: tasksImg,
       },
     ],
     Производство: [
       {
-        linkTo: '/packaging',
-        name: 'Упаковка',
-        access: ['ROLE_ADMIN'],
+        linkTo: "/packaging",
+        name: "Упаковка",
+        access: ["ROLE_ADMIN"],
         icon: boxImg,
       },
       {
-        linkTo: '/rigging-list',
-        name: 'Очередь инстр. производства',
-        access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+        linkTo: "/rigging-list",
+        name: "Очередь инстр. производства",
+        access: ["ROLE_ADMIN", "ROLE_WORKSHOP"],
         icon: listImg,
       },
       {
-        linkTo: '/work-list',
-        name: 'Виды работ',
-        access: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+        linkTo: "/work-list",
+        name: "Виды работ",
+        access: ["ROLE_ADMIN", "ROLE_DISPATCHER", "ROLE_ENGINEER"],
         icon: playListImg,
       },
     ],
     Статистика: [
       {
-        linkTo: '/statistics',
-        name: 'Статистика',
-        access: ['ROLE_ADMIN'],
+        linkTo: "/statistics",
+        name: "Статистика",
+        access: ["ROLE_ADMIN"],
         icon: statsIcon,
       },
       {
-        linkTo: '/graphs',
-        name: 'Графики',
-        access: ['ROLE_ADMIN'],
+        linkTo: "/graphs",
+        name: "Графики",
+        access: ["ROLE_ADMIN"],
         icon: graphIcon,
       },
     ],
-  })
+  });
 
   return (
     <div className="etcetera-page">
@@ -113,22 +119,22 @@ const EtceteraPage = (props) => {
                     return (
                       <Button
                         onClick={() => {
-                          props.history.push(item.linkTo)
+                          props.history.push(item.linkTo);
                         }}
                         imgSrc={item.icon}
                         text={item.name}
                         className="main-window__button"
                       />
-                    )
+                    );
                   }
                 })}
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EtceteraPage
+export default EtceteraPage;
