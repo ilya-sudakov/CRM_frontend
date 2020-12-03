@@ -1,27 +1,27 @@
-import React, { useEffect, useState, useContext } from 'react'
-import './WorkListWidget.scss'
-import { withRouter } from 'react-router-dom'
-import openWidget from '../../../../../../../../../assets/tableview/bx-window-open.svg'
-import { getRecordedWorkByDay } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import { formatDateString } from '../../../../../utils/functions.jsx'
-import UserContext from '../../../../../App.js'
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
-import { getAllEmployees } from './functions.js'
-import { workshopsList } from './objects.js'
-import WorkList from './WorkList.jsx'
-import Widget from '../../Widget/Widget.jsx'
+import React, { useEffect, useState, useContext } from "react";
+import "./WorkListWidget.scss";
+import { withRouter } from "react-router-dom";
+import openWidget from "../../../../../../../../../assets/tableview/bx-window-open.svg";
+import { getRecordedWorkByDay } from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
+import { formatDateString } from "../../../../../utils/functions.jsx";
+import UserContext from "../../../../../App.js";
+import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import { getAllEmployees } from "./functions.js";
+import { workshopsList } from "./objects.js";
+import WorkList from "./WorkList.jsx";
+import Widget from "../../Widget/Widget.jsx";
+import useEmployeesList from "../../../../../utils/hooks/useEmployeesList.js";
 
 const WorkListWidget = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [recordedWork, setRecordedWork] = useState([])
-  const [employeesMap, setEmployeesMap] = useState({})
-  const [employees, setEmployees] = useState({})
-  const userContext = useContext(UserContext)
-  const [workshops] = useState(workshopsList)
+  const [isLoading, setIsLoading] = useState(false);
+  const [recordedWork, setRecordedWork] = useState([]);
+  const [employeesMap, setEmployeesMap] = useState({});
+  const { employees } = useEmployeesList();
+  const userContext = useContext(UserContext);
 
   const combineWorkHoursForSamePeople = (works) => {
     // let newEmployeesWorkMap = [];
-    let newEmployeesMap = {}
+    let newEmployeesMap = {};
     Promise.all(
       works.map(
         (work) =>
@@ -34,53 +34,54 @@ const WorkListWidget = () => {
                     Number.parseInt(work.hours)
                   : [work.hours],
             },
-          })),
-      ),
+          }))
+      )
     ).then(() => {
       // console.log(newEmployeesMap)
-      setEmployeesMap(newEmployeesMap)
-    })
-  }
+      setEmployeesMap(newEmployeesMap);
+    });
+  };
 
   useEffect(() => {
-    let abortController = new AbortController()
-    let date = new Date()
-    date.setDate(date.getDate() - 1)
-    setIsLoading(true)
+    let abortController = new AbortController();
+    let date = new Date();
+    date.setDate(date.getDate() - 1);
+    setIsLoading(true);
     recordedWork.length === 0 &&
       getRecordedWorkByDay(
         date.getMonth() + 1,
         date.getDate(),
-        abortController.signal,
+        abortController.signal
       )
         .then((res) => res.json())
         .then((res) => {
           // console.log(res)
-          setRecordedWork(res)
-          combineWorkHoursForSamePeople(res)
-          const allEmployeesObject = getAllEmployees(res)
-          setEmployees(allEmployeesObject)
-          setIsLoading(false)
+          setRecordedWork(res);
+          combineWorkHoursForSamePeople(res);
+          // const allEmployeesObject = getAllEmployees(res);
+          // console.log(allEmployeesObject);
+          // setEmployees(allEmployeesObject);
+          setIsLoading(false);
         })
         .catch((error) => {
-          console.log(error)
-          setIsLoading(false)
-        })
+          console.log(error);
+          setIsLoading(false);
+        });
     return function cancel() {
-      abortController.abort()
-    }
-  }, [])
+      abortController.abort();
+    };
+  }, []);
 
   return (
     <Widget
       className="work-list-widget"
       title="Отчет производства"
       subTitle={formatDateString(
-        new Date(new Date().setDate(new Date().getDate() - 1)),
+        new Date(new Date().setDate(new Date().getDate() - 1))
       )}
       linkTo={{
-        address: '/work-management',
-        text: 'Открыть',
+        address: "/work-management",
+        text: "Открыть",
         img: openWidget,
       }}
       content={
@@ -98,7 +99,7 @@ const WorkListWidget = () => {
           )
         ) : (
           <WorkList
-            workshops={workshops}
+            workshops={workshopsList}
             employees={employees}
             employeesMap={employeesMap}
             userContext={userContext}
@@ -106,7 +107,7 @@ const WorkListWidget = () => {
         )
       }
     />
-  )
-}
+  );
+};
 
-export default withRouter(WorkListWidget)
+export default withRouter(WorkListWidget);

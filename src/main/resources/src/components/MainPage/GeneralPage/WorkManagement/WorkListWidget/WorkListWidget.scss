@@ -51,6 +51,21 @@
       background-color: #efefef;
     }
 
+    &--no-data {
+      background-color: #fdf6f6;
+      border-color: #d2c2c3;
+      color: #555555;
+
+      .work-list-widget__info-message {
+        font-size: 0.85rem;
+        color: #a4746a;
+      }
+
+      &:hover {
+        background-color: #e3d6d7;
+      }
+    }
+
     > div {
       &:nth-child(1) {
         flex: 0 1 100%;
