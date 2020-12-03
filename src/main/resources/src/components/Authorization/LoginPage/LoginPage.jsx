@@ -1,74 +1,74 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import './LoginPage.scss'
+import React, { useState, useEffect, useCallback } from "react";
+import { Link, Redirect } from "react-router-dom";
+import "./LoginPage.scss";
 import {
   login,
   refreshToken,
-} from '../../../utils/RequestsAPI/Authorization.jsx'
-import profileSVG from '../../../../../../../assets/header/profile1.svg'
+} from "../../../utils/RequestsAPI/Authorization.jsx";
+import profileSVG from "../../../../../../../assets/header/profile1.svg";
 // import companyLogo from '../../../../../../../assets/priceList/osfix_logo.png'
-import PasswordIcon from '../../../../../../../assets/loginPage/password.png'
-import eyeIcon from '../../../../../../../assets/loginPage/eye.png'
+import PasswordIcon from "../../../../../../../assets/loginPage/password.png";
+import eyeIcon from "../../../../../../../assets/loginPage/eye.png";
 // import newCompanyIcon from '../../../../../../../assets/loginPage/login__new_logo.png'
-import newCompanyIcon from '../../../../../../../assets/loginPage/login__new_logo.png'
-import ErrorMessage from '../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import exitSVG from '../../../../../../../assets/header/exit.svg'
-import CheckBox from '../../../utils/Form/CheckBox/CheckBox.jsx'
-import Button from '../../../utils/Form/Button/Button.jsx'
+import newCompanyIcon from "../../../../../../../assets/loginPage/login__new_logo.png";
+import ErrorMessage from "../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import exitSVG from "../../../../../../../assets/header/exit.svg";
+import CheckBox from "../../../utils/Form/CheckBox/CheckBox.jsx";
+import Button from "../../../utils/Form/Button/Button.jsx";
 
 const LoginPage = (props) => {
-  const [username, setUserName] = useState('')
-  const [password, setPassword] = useState('')
-  const [showError, setShowError] = useState(false)
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [rememberUser, setRememberUser] = useState(true)
-  const [hide, setHide] = useState(false)
-  const [focus, setFocus] = useState(false)
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [showError, setShowError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [rememberUser, setRememberUser] = useState(true);
+  const [hide, setHide] = useState(false);
+  const [focus, setFocus] = useState(false);
 
   useEffect(() => {
-    document.title = 'Авторизация'
-    if (localStorage.getItem('rememberUser')) {
-      setRememberUser(localStorage.getItem('rememberUser'))
+    document.title = "Авторизация";
+    if (localStorage.getItem("rememberUser")) {
+      setRememberUser(localStorage.getItem("rememberUser"));
     } else {
-      setRememberUser(true)
+      setRememberUser(true);
     }
-  }, [])
+  }, []);
 
   const handleLogin = () => {
     // event.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     const loginRequest = Object.assign({
       username: username,
       password: password,
-    })
+    });
     login(loginRequest)
       .then((res) => res.json())
       .then((response) => {
-        setIsLoading(false)
-        localStorage.setItem('rememberUser', rememberUser)
-        props.setUserData(true, response)
-        localStorage.setItem('accessToken', response.accessToken)
-        localStorage.setItem('refreshToken', response.refreshToken)
-        props.history.push('/')
+        setIsLoading(false);
+        localStorage.setItem("rememberUser", rememberUser);
+        props.setUserData(true, response);
+        localStorage.setItem("accessToken", response.accessToken);
+        localStorage.setItem("refreshToken", response.refreshToken);
+        props.history.push("/");
       })
       .catch((error) => {
-        console.log(error)
-        setShowError(true)
-        setIsLoading(false)
-      })
-  }
+        console.log(error);
+        setShowError(true);
+        setIsLoading(false);
+      });
+  };
 
   const handleSignOut = () => {
-    localStorage.removeItem('username')
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-    props.setUserData(false, null)
-  }
+    localStorage.removeItem("username");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    props.setUserData(false, null);
+  };
 
   const handleAutoFill = (e) => {
-    setHide(e.animationName === 'onAutoFillStart')
-  }
+    setHide(e.animationName === "onAutoFillStart");
+  };
 
   return (
     <div className="authorization">
@@ -90,14 +90,13 @@ const LoginPage = (props) => {
           <div className="authorization__field_input">
             <div
               className={`authorization__field_name ${
-                username !== '' || password !== '' || hide || focus
-                  ? 'authorization__field_name--focused'
-                  : ''
+                username !== "" || password !== "" || hide || focus
+                  ? "authorization__field_name--focused"
+                  : ""
               }`}
             >
               Логин
             </div>
-            <img className="authorization__img" src={profileSVG} alt="" />
             <input
               type="text"
               onChange={(e) => setUserName(e.target.value)}
@@ -107,8 +106,8 @@ const LoginPage = (props) => {
               id="login"
               defaultValue=""
               onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  handleLogin()
+                if (event.key === "Enter") {
+                  handleLogin();
                 }
               }}
             />
@@ -116,9 +115,9 @@ const LoginPage = (props) => {
           <div className="authorization__field_input">
             <div
               className={`authorization__field_name  ${
-                username !== '' || password !== '' || hide || focus
-                  ? 'authorization__field_name--focused'
-                  : ''
+                username !== "" || password !== "" || hide || focus
+                  ? "authorization__field_name--focused"
+                  : ""
               }`}
             >
               Пароль
@@ -126,7 +125,7 @@ const LoginPage = (props) => {
             <img
               className="authorization__img authorization__img--eye"
               onClick={() => {
-                setShowPassword(!showPassword)
+                setShowPassword(!showPassword);
               }}
               src={eyeIcon}
               alt=""
@@ -134,28 +133,23 @@ const LoginPage = (props) => {
             <div
               className={
                 showPassword
-                  ? 'authorization__line'
-                  : 'authorization__line authorization__line--hidden'
+                  ? "authorization__line"
+                  : "authorization__line authorization__line--hidden"
               }
               onClick={() => {
-                setShowPassword(!showPassword)
+                setShowPassword(!showPassword);
               }}
             ></div>
-            <img
-              className="authorization__img authorization__img--password"
-              src={PasswordIcon}
-              alt=""
-            />
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
               id="password"
               onAnimationStart={handleAutoFill}
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}
               onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  handleLogin()
+                if (event.key === "Enter") {
+                  handleLogin();
                 }
               }}
             />
@@ -164,7 +158,7 @@ const LoginPage = (props) => {
             text="Запомнить меня"
             checked={rememberUser}
             onChange={() => {
-              setRememberUser(!rememberUser)
+              setRememberUser(!rememberUser);
             }}
           />
           <Button
@@ -201,7 +195,7 @@ const LoginPage = (props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
