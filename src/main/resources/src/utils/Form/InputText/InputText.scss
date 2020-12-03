@@ -7,14 +7,13 @@
   margin-bottom: 20px;
 
   .input_text__error {
-    align-self: flex-end;
-    width: calc(100% - 20px);
+    width: 100%;
     margin-top: 1px;
     font-size: 0.75rem;
-    // position: absolute;
-    // top: 2rem;
-    background-color: #f73434;
-    color: #ffffff;
+    box-sizing: border-box;
+    border: 1px solid #c03737;
+    background-color: #e69494;
+    color: #ad1c1c;
     border-radius: 3px;
     padding: 5px 10px;
     transition: 0.2s ease-in-out;
@@ -58,11 +57,11 @@
       input[type="number"],
       textarea {
         border: 1px solid #bbbbbb;
-        // border: 1px solid #cccccc;
-        width: calc(100% - 20px);
+        width: 100%;
         padding: 5px 10px;
         border-radius: 3px;
         transition: 100ms ease-in-out;
+        box-sizing: border-box;
 
         &:hover {
           border-color: #888888;
@@ -95,9 +94,10 @@
 
       &--error {
         input[type="text"],
+        input[type="number"],
         input[type="password"],
         textarea {
-          border: 1px solid #f73434 !important;
+          border: 1px solid #c03737 !important;
         }
       }
     }
@@ -124,7 +124,6 @@
     }
 
     .input_text__error {
-      width: calc(100% - 20px);
     }
   }
 }

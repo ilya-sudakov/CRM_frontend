@@ -27,14 +27,15 @@
   // ERROR BAR
 
   &__error {
-    width: calc(100% - 20px);
+    width: 100%;
+    box-sizing: border-box;
     margin-top: 1px;
     font-size: 0.75rem;
-    // position: absolute;
-    // top: 2rem;
-    background-color: #f73434;
-    color: #ffffff;
-    border-radius: 5px;
+    margin-top: -11px;
+    border: 1px solid #c03737;
+    background-color: #e69494;
+    color: #ad1c1c;
+    border-radius: 3px;
     padding: 5px 10px;
     transition: 0.2s ease-in-out;
 
@@ -55,6 +56,7 @@
       width: 100%;
       padding: 5px 10px;
       border-radius: 3px;
+      box-sizing: border-box;
       // border-radius: 10px;
       // border-top-left-radius: 10px;
       // border-bottom-left-radius: 10px;
@@ -70,7 +72,7 @@
       }
 
       &--error {
-        border: 1px solid #f73434 !important;
+        border: 1px solid #c03737 !important;
       }
     }
 

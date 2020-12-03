@@ -8,15 +8,14 @@
   margin-bottom: 20px;
 
   .input_date__error {
-    align-self: flex-end;
-    width: calc(100% - 20px);
+    width: 100%;
+    box-sizing: border-box;
     margin-top: 1px;
     font-size: 0.75rem;
-    // position: absolute;
-    // top: 2rem;
-    background-color: #f73434;
-    color: #ffffff;
-    border-radius: 5px;
+    border: 1px solid #c03737;
+    background-color: #e69494;
+    color: #ad1c1c;
+    border-radius: 3px;
     padding: 5px 10px;
     transition: 0.2s ease-in-out;
     cursor: pointer;
@@ -52,7 +51,6 @@
       justify-content: center;
       width: calc(90% - 20px);
       position: relative;
-      height: 2rem;
 
       //column direction
       width: 100%;
@@ -70,10 +68,10 @@
       input[type="text"],
       input[type="password"] {
         border: 1px solid #bbbbbb;
-        width: calc(100% - 20px);
+        width: 100%;
         padding: 5px 10px;
         border-radius: 3px;
-        // transition: 0.2s ease-in-out;
+        box-sizing: border-box;
         transition: 100ms ease-in-out;
 
         &:hover {
@@ -88,7 +86,7 @@
       &--error {
         input[type="text"],
         input[type="password"] {
-          border: 1px solid #f73434 !important;
+          border: 1px solid #c03737 !important;
         }
       }
 
@@ -116,10 +114,6 @@
           padding: 10px !important;
         }
       }
-    }
-
-    .input_date__error {
-      width: calc(100% - 20px);
     }
   }
 }
