@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
-import './ProductionJournal.scss'
-import '../../../../../utils/Form/Form.scss'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import React, { useState, useEffect, useContext } from "react";
+import "./ProductionJournal.scss";
+import "../../../../../utils/Form/Form.scss";
+import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import {
   addDraftToRecordedWork,
   addProductToRecordedWork,
@@ -14,30 +14,30 @@ import {
   deleteRecordedWork,
   editRecordedWork,
   getRecordedWorkByDay,
-} from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import UserContext from '../../../../../App.js'
-import { ReadOnlyModeControls, WorkshopControls } from './Controls.jsx'
-import EmployeeData from './FormComponents.jsx'
+} from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
+import UserContext from "../../../../../App.js";
+import { ReadOnlyModeControls, WorkshopControls } from "./Controls.jsx";
+import EmployeeData from "./FormComponents.jsx";
 import {
   sortEmployees,
   areWorkshopItemsMinimized,
   combineOriginalAndNewWorks,
   combineWorksForSamePeople,
-} from './helpers.js'
-import { loadDrafts, loadEmployees, loadWorkItems } from './fetchData.js'
-import useProductsList from '../../../../../utils/hooks/useProductsList/useProductsList.js'
+} from "./helpers.js";
+import { loadDrafts, loadEmployees, loadWorkItems } from "./fetchData.js";
+import useProductsList from "../../../../../utils/hooks/useProductsList/useProductsList.js";
 
 const ProductionJournal = (props) => {
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   // const [categories, setCategories] = useState([])
   // const [products, setProducts] = useState([])
-  const { products, categories, isLoadingProducts } = useProductsList()
-  const [drafts, setDrafts] = useState([])
-  const [employees, setEmployees] = useState([])
-  const [works, setWorks] = useState([])
-  const [employeesMap, setEmployeesMap] = useState({})
-  const userContext = useContext(UserContext)
+  const { products, categories, isLoadingProducts } = useProductsList();
+  const [drafts, setDrafts] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [works, setWorks] = useState([]);
+  const [employeesMap, setEmployeesMap] = useState({});
+  const userContext = useContext(UserContext);
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
     lemz: {},
@@ -45,49 +45,49 @@ const ProductionJournal = (props) => {
     ligovskiy: {},
     office: {},
     readOnly: false,
-    readOnlyMode: userContext.userHasAccess(['ROLE_ADMIN']) ? true : false,
-  })
+    readOnlyMode: userContext.userHasAccess(["ROLE_ADMIN"]) ? true : false,
+  });
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
     employee: false,
     works: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     date: true,
     employee: true,
     works: true,
-  })
+  });
 
   const ROLE_LEMZ = {
-    ЦехЛЭМЗ: 'lemz',
-  }
-  const isLemz = userContext.userHasAccess(['ROLE_LEMZ'])
+    ЦехЛЭМЗ: "lemz",
+  };
+  const isLemz = userContext.userHasAccess(["ROLE_LEMZ"]);
 
   const ROLE_LEPSARI = {
-    ЦехЛепсари: 'lepsari',
-  }
-  const isLepsari = userContext.userHasAccess(['ROLE_LEPSARI'])
+    ЦехЛепсари: "lepsari",
+  };
+  const isLepsari = userContext.userHasAccess(["ROLE_LEPSARI"]);
 
   const ROLE_LIGOVSKIY = {
-    ЦехЛиговский: 'ligovskiy',
-  }
-  const isLigovskiy = userContext.userHasAccess(['ROLE_LIGOVSKIY'])
+    ЦехЛиговский: "ligovskiy",
+  };
+  const isLigovskiy = userContext.userHasAccess(["ROLE_LIGOVSKIY"]);
 
   const ROLE_MANAGER = {
-    Офис: 'office',
-  }
-  const isManager = userContext.userHasAccess(['ROLE_MANAGER'])
+    Офис: "office",
+  };
+  const isManager = userContext.userHasAccess(["ROLE_MANAGER"]);
 
   const isAdmin =
-    userContext.userHasAccess(['ROLE_ADMIN']) ||
-    userContext.userHasAccess(['ROLE_DISPATCHER']) ||
-    userContext.userHasAccess(['ROLE_ENGINEER'])
+    userContext.userHasAccess(["ROLE_ADMIN"]) ||
+    userContext.userHasAccess(["ROLE_DISPATCHER"]) ||
+    userContext.userHasAccess(["ROLE_ENGINEER"]);
   const ROLE_ADMIN = {
-    ЦехЛЭМЗ: 'lemz',
-    ЦехЛепсари: 'lepsari',
-    ЦехЛиговский: 'ligovskiy',
-    Офис: 'office',
-  }
+    ЦехЛЭМЗ: "lemz",
+    ЦехЛепсари: "lepsari",
+    ЦехЛиговский: "ligovskiy",
+    Офис: "office",
+  };
 
   const [workshops, setWorkshops] = useState(
     isAdmin
@@ -100,43 +100,43 @@ const ProductionJournal = (props) => {
       ? ROLE_LIGOVSKIY
       : isManager
       ? ROLE_MANAGER
-      : ROLE_ADMIN,
-  )
+      : ROLE_ADMIN
+  );
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case 'date':
+      case "date":
         setValidInputs({
           ...validInputs,
           date: value !== null,
-        })
-        break
-      case 'works':
+        });
+        break;
+      case "works":
         setValidInputs({
           ...validInputs,
           works: value !== null,
-        })
-        break
+        });
+        break;
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const handleSubmit = () => {
     // setIsLoading(true)
-    console.log(worktimeInputs)
+    console.log(worktimeInputs);
     // alert('Тест формы')
 
-    setIsLoading(true)
+    setIsLoading(true);
     // console.log(worktimeInputs);
     Object.entries(workshops).map((workshop) => {
-      const employeesList = Object.entries(worktimeInputs[workshop[1]])
+      const employeesList = Object.entries(worktimeInputs[workshop[1]]);
       Promise.all(
         employeesList.map((employee) => {
           return employee[1].works.map(async (item, index) => {
@@ -147,23 +147,23 @@ const ProductionJournal = (props) => {
               employeeId: employee[1].employee.id,
               workListId: item.workId,
               hours: item.hours,
-            })
+            });
 
             //Удаление элементов
             await Promise.all(
               employee[1].originalWorks.map((originalWork) => {
                 const item = employee[1].works.find(
-                  (workItem) => workItem.id === originalWork.id,
-                )
+                  (workItem) => workItem.id === originalWork.id
+                );
                 if (originalWork.id && item === undefined) {
-                  console.log('deleting element', employee[1])
+                  console.log("deleting element", employee[1]);
                   return Promise.all(
                     originalWork.product.map((product) => {
                       return deleteProductFromRecordedWork(
                         originalWork.id,
-                        product.product.id,
-                      )
-                    }),
+                        product.product.id
+                      );
+                    })
                   )
                     .then(() => {
                       return Promise.all(
@@ -171,24 +171,24 @@ const ProductionJournal = (props) => {
                           return deleteDraftFromRecordedWork(
                             originalWork.id,
                             draft.partId,
-                            draft.partType,
-                          )
-                        }),
-                      )
+                            draft.partType
+                          );
+                        })
+                      );
                     })
-                    .then(() => deleteRecordedWork(originalWork.id))
+                    .then(() => deleteRecordedWork(originalWork.id));
                 }
-              }),
-            )
+              })
+            );
 
             if (item.isOld) {
               //если часы не совпадают, то редактируем
               const originalItem = employee[1].originalWorks.find(
-                (originalWork) => item.id === originalWork.id,
-              )
+                (originalWork) => item.id === originalWork.id
+              );
 
               if (originalItem && item.hours !== originalItem.hours) {
-                await editRecordedWork(temp, item.id)
+                await editRecordedWork(temp, item.id);
               }
 
               //Продукция
@@ -197,54 +197,54 @@ const ProductionJournal = (props) => {
                 originalItem.product.map((originalProduct) => {
                   if (
                     item.product.find(
-                      (product) => product.id === originalProduct.id,
+                      (product) => product.id === originalProduct.id
                     ) === undefined
                   ) {
-                    console.log('delete product', originalProduct)
+                    console.log("delete product", originalProduct);
                     return deleteProductFromRecordedWork(
                       item.id,
-                      originalProduct.id,
-                    )
+                      originalProduct.id
+                    );
                   }
-                }),
-              )
+                })
+              );
 
               //add new products
               Promise.all(
                 item.product.map((product) => {
                   if (
                     originalItem.product.find(
-                      (originalProduct) => product.id === originalProduct.id,
+                      (originalProduct) => product.id === originalProduct.id
                     ) === undefined
                   ) {
-                    console.log('add product', product)
+                    console.log("add product", product);
                     return addProductToRecordedWork(
                       item.id,
                       product.id,
                       product.quantity,
                       {
                         name: product.name,
-                      },
-                    )
+                      }
+                    );
                   }
-                }),
-              )
+                })
+              );
 
               //update edited products
               Promise.all(
                 originalItem.product.map((originalProduct) => {
                   const product = item.product.find(
-                    (product) => product.id === originalProduct.id,
-                  )
+                    (product) => product.id === originalProduct.id
+                  );
                   if (
                     product !== undefined &&
                     originalProduct.quantity !==
                       Number.parseFloat(product.quantity)
                   ) {
-                    console.log('edit product', product)
+                    console.log("edit product", product);
                     return deleteProductFromRecordedWork(
                       item.id,
-                      originalProduct.product.id,
+                      originalProduct.product.id
                     ).then(() =>
                       addProductToRecordedWork(
                         item.id,
@@ -252,12 +252,12 @@ const ProductionJournal = (props) => {
                         product.quantity,
                         {
                           name: product.name,
-                        },
-                      ),
-                    )
+                        }
+                      )
+                    );
                   }
-                }),
-              )
+                })
+              );
 
               //Чертежи
               //delete removed drafts
@@ -265,68 +265,68 @@ const ProductionJournal = (props) => {
                 originalItem.draft.map((originalDraft) => {
                   if (
                     item.draft.find(
-                      (draft) => draft.id === originalDraft.id,
+                      (draft) => draft.id === originalDraft.id
                     ) === undefined
                   ) {
-                    console.log('delete draft', originalDraft, originalItem)
+                    console.log("delete draft", originalDraft, originalItem);
                     return deleteDraftFromRecordedWork(
                       item.id,
                       originalDraft.partId,
-                      originalDraft.partType,
-                    )
+                      originalDraft.partType
+                    );
                   }
-                }),
-              )
+                })
+              );
 
               //add new drafts
               Promise.all(
                 item.draft.map((draft) => {
                   if (
                     originalItem.draft.find(
-                      (originalDraft) => draft.id === originalDraft.id,
+                      (originalDraft) => draft.id === originalDraft.id
                     ) === undefined
                   ) {
-                    console.log('add draft', draft)
+                    console.log("add draft", draft);
                     return addDraftToRecordedWork(
                       item.id,
                       draft.partId,
                       draft.type,
                       draft.quantity,
-                      draft.name,
-                    )
+                      draft.name
+                    );
                   }
-                }),
-              )
+                })
+              );
 
               //update edited drafts
               Promise.all(
                 originalItem.draft.map((originalDraft) => {
                   const draft = item.draft.find(
-                    (draft) => draft.id === originalDraft.id,
-                  )
-                  console.log('edit draft opportunity', originalDraft, draft)
+                    (draft) => draft.id === originalDraft.id
+                  );
+                  console.log("edit draft opportunity", originalDraft, draft);
                   if (
                     draft !== undefined &&
                     originalDraft.quantity !== Number.parseFloat(draft.quantity)
                   ) {
-                    console.log('edit draft success', draft)
+                    console.log("edit draft success", draft);
                     return deleteDraftFromRecordedWork(
                       item.id,
                       originalDraft.partId,
                       originalDraft.partType ??
-                        drafts.find((item) => draft.partId === item.id)?.type,
+                        drafts.find((item) => draft.partId === item.id)?.type
                     ).then(() =>
                       addDraftToRecordedWork(
                         item.id,
                         draft.partId,
                         draft.partType,
                         draft.quantity,
-                        draft.name,
-                      ),
-                    )
+                        draft.name
+                      )
+                    );
                   }
-                }),
-              )
+                })
+              );
             }
 
             //if item is new, then just add it
@@ -335,7 +335,7 @@ const ProductionJournal = (props) => {
               item.workId !== null &&
               item.isOld !== undefined
             ) {
-              console.log('adding item', item)
+              console.log("adding item", item);
               return addRecordedWork(temp)
                 .then((res) => res.json())
                 .then((res) => {
@@ -347,11 +347,11 @@ const ProductionJournal = (props) => {
                         product.quantity,
                         {
                           name: product.name,
-                        },
-                      )
-                    }),
-                  )
-                  return res.id
+                        }
+                      );
+                    })
+                  );
+                  return res.id;
                 })
                 .then((id) => {
                   return Promise.all(
@@ -361,40 +361,40 @@ const ProductionJournal = (props) => {
                         draft.partId,
                         draft.type,
                         draft.quantity,
-                        draft.name,
-                      )
-                    }),
-                  )
+                        draft.name
+                      );
+                    })
+                  );
                 })
                 .catch((error) => {
-                  alert('Ошибка при добавлении записи')
-                  setIsLoading(false)
+                  alert("Ошибка при добавлении записи");
+                  setIsLoading(false);
                   // setShowError(true);
-                  console.log(error)
-                })
+                  console.log(error);
+                });
             }
 
             // Promise.all(editedInputs).then(() => {})
-          })
-        }),
+          });
+        })
       ).then(() => {
-        props.history.push('/')
+        props.history.push("/");
         // window.location.reload()
-      })
-    })
-  }
+      });
+    });
+  };
 
   useEffect(() => {
-    document.title = 'Дневник производства'
-    const abortController = new AbortController()
+    document.title = "Дневник производства";
+    const abortController = new AbortController();
 
-    let employees = []
+    let employees = [];
 
     if (works.length === 0) {
-      loadWorkItems(abortController.signal, setIsLoading, setWorks)
+      loadWorkItems(abortController.signal, setIsLoading, setWorks);
     }
     if (drafts.length === 0) {
-      loadDrafts(abortController.signal, setDrafts)
+      loadDrafts(abortController.signal, setDrafts);
     }
     loadEmployees(
       abortController.signal,
@@ -402,88 +402,88 @@ const ProductionJournal = (props) => {
       setEmployees,
       setWorkTimeInputs,
       worktimeInputs,
-      workshops,
+      workshops
     )
       .then((res) => {
-        employees = res
-        setIsLoading(true)
+        employees = res;
+        setIsLoading(true);
         return getRecordedWorkByDay(
           worktimeInputs.date.getMonth() + 1,
           worktimeInputs.date.getDate(),
-          abortController.signal,
-        )
+          abortController.signal
+        );
       })
       .then((res) => res.json())
       .then(async (res) => {
         const combinedWorks = await combineWorksForSamePeople(
           res,
           setEmployeesMap,
-          setIsLoading,
-        )
+          setIsLoading
+        );
         combineOriginalAndNewWorks(
           combinedWorks,
           employees,
           setIsLoading,
           workshops,
           setWorkTimeInputs,
-          worktimeInputs,
-        )
+          worktimeInputs
+        );
       })
       .catch((error) => {
-        console.log(error)
-        setIsLoading(false)
-      })
+        console.log(error);
+        setIsLoading(false);
+      });
 
     return function cancel() {
-      abortController.abort()
-    }
-  }, [worktimeInputs.date])
+      abortController.abort();
+    };
+  }, [worktimeInputs.date]);
 
-  useEffect(() => {}, [worktimeInputs])
+  useEffect(() => {}, [worktimeInputs]);
 
   const handleMinimizeAllWorkshopItems = (workshop) => {
     setWorkTimeInputs((worktimeInputs) => {
       const isFirstObjectMinimized = Object.values(worktimeInputs[workshop])[0]
-        .isMinimized
+        .isMinimized;
 
-      let newWorkshopData = worktimeInputs[workshop]
+      let newWorkshopData = worktimeInputs[workshop];
       Object.entries(worktimeInputs[workshop]).map((employee) => {
-        newWorkshopData[employee[0]].isMinimized = !isFirstObjectMinimized
-      })
+        newWorkshopData[employee[0]].isMinimized = !isFirstObjectMinimized;
+      });
       return {
         ...worktimeInputs,
         [workshop]: {
           ...newWorkshopData,
         },
-      }
-    })
-  }
+      };
+    });
+  };
 
   const handleChangeReadOnlyMode = () => {
     setWorkTimeInputs((worktimeInputs) => {
       return {
         ...worktimeInputs,
         readOnlyMode: !worktimeInputs.readOnlyMode,
-      }
-    })
-  }
+      };
+    });
+  };
 
   const handleDateChange = (date) => {
     //readonly для записей старше чем 3 дня
     //const readOnly = Math.abs(dateDiffInDays(new Date(), date)) > 3
-    const readOnly = false
+    const readOnly = false;
 
-    validateField('date', date)
+    validateField("date", date);
     setWorkTimeInputs({
       ...worktimeInputs,
       date: date,
       readOnly: readOnly,
-    })
+    });
     setWorkTimeErrors({
       ...workTimeErrors,
       date: false,
-    })
-  }
+    });
+  };
 
   return (
     <div className="production-journal">
@@ -517,7 +517,7 @@ const ProductionJournal = (props) => {
               <WorkshopControls
                 workshop={workshop}
                 areWorkshopItemsMinimized={areWorkshopItemsMinimized(
-                  worktimeInputs[workshop[1]],
+                  worktimeInputs[workshop[1]]
                 )}
                 handleMinimizeAllWorkshopItems={handleMinimizeAllWorkshopItems}
               />
@@ -531,7 +531,7 @@ const ProductionJournal = (props) => {
               ) : (
                 <div className="production-journal__list">
                   {sortEmployees(
-                    Object.entries(worktimeInputs[workshop[1]]),
+                    Object.entries(worktimeInputs[workshop[1]])
                   ).map((workItem, workIndex) => (
                     <div className="main-form__row" key={workIndex}>
                       <EmployeeData
@@ -565,7 +565,7 @@ const ProductionJournal = (props) => {
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() => props.history.push('/work-management')}
+              onClick={() => props.history.push("/work-management")}
               value="Вернуться назад"
             />
             <Button
@@ -578,7 +578,7 @@ const ProductionJournal = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductionJournal
+export default ProductionJournal;

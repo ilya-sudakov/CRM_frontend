@@ -1,13 +1,13 @@
-import React from 'react'
-import './ReportTablePage.scss'
-import DownloadIcon from '../../../../../../../../assets/download.svg'
-import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx'
-import SearchBar from '../../SearchBar/SearchBar.jsx'
-import Button from '../../../../utils/Form/Button/Button.jsx'
-import { exportReportTableExcel } from '../../../../utils/xlsxFunctions.jsx'
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
-import TableView from './TableView.jsx'
-import { EmployeeInfo } from './InfoComponents.jsx'
+import React from "react";
+import "./ReportTablePage.scss";
+import DownloadIcon from "../../../../../../../../assets/download.svg";
+import InputDate from "../../../../utils/Form/InputDate/InputDate.jsx";
+import SearchBar from "../../SearchBar/SearchBar.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import { exportReportTableExcel } from "../../../../utils/xlsxFunctions.jsx";
+import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import TableView from "./TableView.jsx";
+import { EmployeeInfo } from "./InfoComponents.jsx";
 
 const SummaryPage = ({
   setSearchQuery,
@@ -41,7 +41,7 @@ const SummaryPage = ({
                 selected={Date.parse(date)}
                 inputName="Выбор месяца:"
                 handleDateChange={(date) => {
-                  setDate(date)
+                  setDate(date);
                 }}
                 showMonthYearPicker
               />
@@ -53,16 +53,16 @@ const SummaryPage = ({
               inverted
               isLoading={isLoading || excelIsLoading}
               onClick={async () => {
-                setExcelIsLoading(true)
+                setExcelIsLoading(true);
                 const filteredWorkshops = [
-                  'ЦехЛЭМЗ',
-                  'ЦехЛепсари',
-                  'ЦехЛиговский',
-                  'Офис',
-                  'Уволенные',
-                ]
-                await exportReportTableExcel(new Date(date), filteredWorkshops)
-                setExcelIsLoading(false)
+                  "ЦехЛЭМЗ",
+                  "ЦехЛепсари",
+                  "ЦехЛиговский",
+                  "Офис",
+                  "Уволенные",
+                ];
+                await exportReportTableExcel(new Date(date), filteredWorkshops);
+                setExcelIsLoading(false);
               }}
             />
           </>
@@ -86,7 +86,7 @@ const SummaryPage = ({
         searchQuery={searchQuery}
       />
     </>
-  )
-}
+  );
+};
 
-export default SummaryPage
+export default SummaryPage;
