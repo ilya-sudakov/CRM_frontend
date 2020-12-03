@@ -1,8 +1,8 @@
-import React from 'react'
-import './PageLoading.scss'
+import React from "react";
+import "./PageLoading.scss";
 
-import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import logo from '../../../../../../../assets/header/header__mobile_logo.png'
+import ImgLoader from "../../../utils/TableView/ImgLoader/ImgLoader.jsx";
+import logo from "../../../../../../../assets/header/header__mobile_logo.png";
 
 const PageLoading = () => {
   return (
@@ -16,7 +16,7 @@ const PageLoading = () => {
         <div className="page-loading__circle"></div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PageLoading
+export default PageLoading;
