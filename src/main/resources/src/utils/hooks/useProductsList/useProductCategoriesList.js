@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getCategoriesNames } from '../../RequestsAPI/Products/Categories.js'
 
-const useCategoriesList = () => {
+const useProductCategoriesList = () => {
   const [categories, setCategories] = useState([])
   const [isLoadingCategories, setIsLoadingCategories] = useState(true)
 
@@ -33,4 +33,4 @@ const useCategoriesList = () => {
   return { categories, isLoadingCategories }
 }
 
-export default useCategoriesList
+export default useProductCategoriesList
