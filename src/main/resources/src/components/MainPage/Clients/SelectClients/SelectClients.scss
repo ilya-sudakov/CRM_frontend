@@ -45,21 +45,8 @@
     }
   }
 
-  &__button {
-    border: 0;
-    cursor: pointer;
-    outline: none;
-    font-size: 70%;
-    padding: 10px 10px;
-    border-radius: 5px;
-    background-color: $button__background--inverted;
-    color: #ffffff;
-    transition: 0.2s ease-in-out;
-
-    &:hover {
-      background-color: lighten($button__background--inverted, 5%);
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    }
+  .main-form__button {
+    font-size: 0.8rem;
   }
 
   .select-client__searchbar {
@@ -71,7 +58,7 @@
       border: 1px solid #bbbbbb;
       width: 100%;
       padding: 5px 10px;
-      border-radius: 5px;
+      border-radius: 3px;
       z-index: 0;
       transition: 100ms ease-in-out;
 

@@ -274,19 +274,24 @@
             //     margin-bottom: 50px;
             // }
             min-height: 100px;
-            .main-window__list-item--header {
-                margin-left: -1px;
-            }
-            .main-window__list-item--divider {
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                margin: 15px 10px;
-                width: calc(100% - 20px);
-                background-color: #dddddd;
-                span {
-                    padding: 2.5px 10px;
-                    font-size: 12px !important;
+            &-item {
+                &:not(.main-window__list-item--header):hover {
+                    background-color: #eeeeee;
+                }
+                &--header {
+                    margin-left: -1px;
+                }
+                &--divider {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    margin: 15px 10px;
+                    width: calc(100% - 20px);
+                    background-color: #dddddd;
+                    span {
+                        padding: 2.5px 10px;
+                        font-size: 12px !important;
+                    }
                 }
             }
             .main-window__list-item:not(.main-window__list-item--divider) {
@@ -296,7 +301,7 @@
                     // flex: 0 1 40px;
                     max-width: 30px;
                     min-width: 30px;
-                    min-height: 30px;
+                    min-height: 35px;
                     // padding: 0 !important;
                     padding: 5px 10px;
                     // box-sizing: border-box;
@@ -325,6 +330,8 @@
             }
 
             .main-window__list-item:not(.main-window__list-item--header) span {
+                display: flex;
+                align-items: center;
                 .report-table-report__date-hint {
                     color: #777777;
                     transform: scaleY(0);

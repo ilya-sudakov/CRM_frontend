@@ -353,7 +353,7 @@
         border: 1px solid #bbbbbb;
         width: 100%;
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 3px;
         outline: none;
         background-color: $primary-background-color;
         transition: 100ms ease-in-out;
@@ -396,7 +396,7 @@
     .main-form__button {
       background-color: $button__background--inverted;
       color: transparentize($secondary-text-color, 0.05);
-      border-radius: 5px;
+      border-radius: 3px;
       padding: 10px 10px;
       cursor: pointer;
       font-size: 90%;
@@ -412,6 +412,7 @@
       -khtml-user-select: none;
       -webkit-user-select: none;
       user-select: none;
+      width: fit-content;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
@@ -523,7 +524,7 @@
 
         &:hover {
           color: #000000 !important;
-          background-color: #f2f2f2;
+          background-color: #f0f0f0;
         }
       }
     }

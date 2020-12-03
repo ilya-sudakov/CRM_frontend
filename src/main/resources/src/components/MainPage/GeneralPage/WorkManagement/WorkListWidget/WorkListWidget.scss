@@ -36,7 +36,7 @@
     padding: 5px 10px;
     margin-bottom: 5px;
     border: 1px solid #cccccc;
-    border-radius: 5px;
+    border-radius: 3px;
     width: calc(100% - 5px);
     font-size: 85%;
     cursor: pointer;
@@ -48,8 +48,7 @@
     box-sizing: border-box;
 
     &:hover {
-      background-color: $button__background--inverted;
-      color: $secondary-text-color;
+      background-color: #e1e1e1;
     }
 
     > div {

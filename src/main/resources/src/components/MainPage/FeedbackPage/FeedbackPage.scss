@@ -49,11 +49,11 @@
         }
 
         &:hover {
-          background-color: #55b3c9;
+          background-color: #c9e0e6;
           .main-window__list-col {
             span {
               &:nth-child(1) {
-                color: #c8dfdf;
+                // color: #c8dfdf;
               }
             }
           }
@@ -119,7 +119,7 @@
         .main-window__list-col {
           span {
             &:nth-child(3) {
-              color: #dddddd;
+              // color: #dddddd;
             }
           }
         }

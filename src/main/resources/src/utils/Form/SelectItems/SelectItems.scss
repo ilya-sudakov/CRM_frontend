@@ -19,7 +19,7 @@
   &__button {
     border: 0;
     // flex: 0 1 15%;
-    border-radius: 5px;
+    border-radius: 3px;
     width: fit-content;
     background-color: $button__background--inverted;
     color: $secondary-text-color;
@@ -92,7 +92,7 @@
         border: 1px solid #bbbbbb;
         width: calc(100% - 20px);
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 3px;
         transition: 100ms ease-in-out;
         height: 1.5rem;
         -moz-appearance: textfield;

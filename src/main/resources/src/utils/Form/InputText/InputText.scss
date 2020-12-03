@@ -15,7 +15,7 @@
     // top: 2rem;
     background-color: #f73434;
     color: #ffffff;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 5px 10px;
     transition: 0.2s ease-in-out;
     cursor: pointer;
@@ -61,7 +61,7 @@
         // border: 1px solid #cccccc;
         width: calc(100% - 20px);
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 3px;
         transition: 100ms ease-in-out;
 
         &:hover {

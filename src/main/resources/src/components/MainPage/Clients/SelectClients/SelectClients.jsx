@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import './SelectClients.scss'
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
-import SearchBar from '../../SearchBar/SearchBar.jsx'
-import { searchClients } from '../../../../utils/RequestsAPI/Clients.jsx'
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import React, { useState, useEffect } from "react";
+import "./SelectClients.scss";
+import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
+import SearchBar from "../../SearchBar/SearchBar.jsx";
+import { searchClients } from "../../../../utils/RequestsAPI/Clients.jsx";
+import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const SelectClient = (props) => {
-  const [showWindow, setShowWindow] = useState(false)
-  const [closeWindow, setCloseWindow] = useState(false)
-  const [clients, setClients] = useState([])
-  const [searchQuery, setSearchQuery] = useState('')
-  const [id, setId] = useState(0)
-  const [name, setName] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  const [showWindow, setShowWindow] = useState(false);
+  const [closeWindow, setCloseWindow] = useState(false);
+  const [clients, setClients] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [id, setId] = useState(0);
+  const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (event) => {
-    setSearchQuery(event.target.value)
-  }
+    setSearchQuery(event.target.value);
+  };
 
-  useEffect(() => {}, [])
+  useEffect(() => {}, []);
 
   const loadClients = (query) => {
-    setIsLoading(true)
+    setIsLoading(true);
     searchClients({
       name: query,
       type: null,
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response)
-        setIsLoading(false)
-        setClients(response)
+        console.log(response);
+        setIsLoading(false);
+        setClients(response);
       })
       .catch((error) => {
-        setIsLoading(false)
-        console.log(error)
-      })
-  }
+        setIsLoading(false);
+        console.log(error);
+      });
+  };
 
   // const deleteItemCategory = (event) => {
   //     const id = event.target.dataset.id;
@@ -45,26 +45,26 @@ const SelectClient = (props) => {
   // }
 
   const clickClient = (clientId, clientName) => {
-    setId(clientId)
-    setName(clientName)
-    console.log(clientId)
-    props.onChange(clientId)
-    setShowWindow(!showWindow)
-  }
+    setId(clientId);
+    setName(clientName);
+    console.log(clientId);
+    props.onChange(clientId);
+    setShowWindow(!showWindow);
+  };
 
   return (
     <div className="select-client">
       <div className="select-client__input">
         <div className="select-client__input_name">
-          {props.inputName + (props.required ? '*' : '')}
+          {props.inputName + (props.required ? "*" : "")}
         </div>
-        <div className={'select-client__input_field'}>
+        <div className={"select-client__input_field"}>
           {!props.readOnly && (
             <button
-              className="select-client__button"
+              className="main-form__button"
               onClick={(e) => {
-                e.preventDefault()
-                setShowWindow(!showWindow)
+                e.preventDefault();
+                setShowWindow(!showWindow);
               }}
             >
               Выбрать клиента
@@ -75,11 +75,11 @@ const SelectClient = (props) => {
               type="text"
               className={
                 props.error === true
-                  ? 'select-client__input select-client__input--error'
-                  : 'select-client__input'
+                  ? "select-client__input select-client__input--error"
+                  : "select-client__input"
               }
               value={
-                props.defaultValue && name === '' ? props.defaultValue : name
+                props.defaultValue && name === "" ? props.defaultValue : name
               }
               placeholder="Выберите клиента, нажав на кнопку 'Выбрать клиента'"
               disabled
@@ -114,11 +114,11 @@ const SelectClient = (props) => {
               placeholder="Введите название для поиска..."
               onButtonClick={(query) => {
                 // console.log(query);
-                if (query === '') {
-                  setClients([])
+                if (query === "") {
+                  setClients([]);
                 }
                 if (query.length > 2) {
-                  loadClients(query)
+                  loadClients(query);
                 }
               }}
             />
@@ -137,15 +137,15 @@ const SelectClient = (props) => {
         setShowWindow={setShowWindow}
       />
     </div>
-  )
-}
+  );
+};
 
-export default SelectClient
+export default SelectClient;
 
 const TableView = (props) => {
   useEffect(() => {
-    props.setShowWindow && props.setShowWindow(false)
-  }, [props.data, props.closeWindow])
+    props.setShowWindow && props.setShowWindow(false);
+  }, [props.data, props.closeWindow]);
 
   return (
     <div className="main-window">
@@ -172,8 +172,8 @@ const TableView = (props) => {
                 className="main-window__list-item"
                 key={index}
                 onClick={() => {
-                  props.clickClient(client.id, client.name)
-                  props.setCloseWindow(!props.closeWindow)
+                  props.clickClient(client.id, client.name);
+                  props.setCloseWindow(!props.closeWindow);
                 }}
               >
                 <span>
@@ -186,24 +186,24 @@ const TableView = (props) => {
                     className="main-window__link"
                     title={client.site}
                     href={
-                      client.site.split('//').length > 1
+                      client.site.split("//").length > 1
                         ? client.site
-                        : 'https://' + client.site
+                        : "https://" + client.site
                     }
                     target="_blank"
                   >
-                    {client.site.split('//').length > 1
-                      ? client.site.split('//')[1]
+                    {client.site.split("//").length > 1
+                      ? client.site.split("//")[1]
                       : client.site}
                   </a>
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Контакты:</div>
                   {client.contacts?.length > 0
-                    ? (client.contacts[0].name !== ''
-                        ? client.contacts[0].name + ', '
-                        : '') + client.contacts[0].phoneNumber
-                    : 'Не указаны контакт. данные'}
+                    ? (client.contacts[0].name !== ""
+                        ? client.contacts[0].name + ", "
+                        : "") + client.contacts[0].phoneNumber
+                    : "Не указаны контакт. данные"}
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Комментарий:</div>
@@ -218,5 +218,5 @@ const TableView = (props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};

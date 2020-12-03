@@ -20,16 +20,25 @@
                     &::before {
                         background-color: var(--defect) !important;
                     }
+                    &:hover {
+                        background-color: var(--defect) !important;
+                    }
                 }
                 &--completed {
                     background-color: var(--completed);
                     &::before {
                         background-color: var(--completed) !important;
                     }
+                    &:hover {
+                        background-color: var(--completed) !important;
+                    }
                 }
                 &--production {
                     background-color: var(--production);
                     &::before {
+                        background-color: var(--production) !important;
+                    }
+                    &:hover {
                         background-color: var(--production) !important;
                     }
                 }

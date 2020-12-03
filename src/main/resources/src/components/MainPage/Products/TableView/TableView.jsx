@@ -1,62 +1,62 @@
-import React, { useState, useEffect } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
 
-import plusIcon from '../../../../../../../../assets/tableview/add_item.png'
-import plusContIcon from '../../../../../../../../assets/tableview/add_cont.png'
-import './TableView.scss'
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import '../../../../utils/MainWindow/MainWindow.scss'
+import plusIcon from "../../../../../../../../assets/tableview/add_item.png";
+import plusContIcon from "../../../../../../../../assets/tableview/add_cont.png";
+import "./TableView.scss";
+import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
+import "../../../../utils/MainWindow/MainWindow.scss";
 
-import viewSVG from '../../../../../../../../assets/tableview/view.svg'
-import editSVG from '../../../../../../../../assets/tableview/edit.svg'
-import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
+import viewSVG from "../../../../../../../../assets/tableview/view.svg";
+import editSVG from "../../../../../../../../assets/tableview/edit.svg";
+import deleteSVG from "../../../../../../../../assets/tableview/delete.svg";
 import {
   numberToString,
   addSpaceDelimiter,
-} from '../../../../utils/functions.jsx'
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+} from "../../../../utils/functions.jsx";
+import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const TableView = (props) => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [productsVisible, setProductsVisible] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
+  const [productsVisible, setProductsVisible] = useState([]);
 
   const checkProduct = (index) => {
-    index = Number.parseInt(index)
+    index = Number.parseInt(index);
     return productsVisible.map((element, element_index) => {
       if (element.id == index) {
         let temp2 = Object.assign({
           id: index,
           hidden: !element.hidden,
-        })
-        return temp2
+        });
+        return temp2;
       }
-      return element
-    })
-  }
+      return element;
+    });
+  };
 
   const isProductsHidden = (index) => {
-    index = Number.parseInt(index)
-    let check = true
+    index = Number.parseInt(index);
+    let check = true;
     productsVisible.map((element) => {
       if (element.id === index) {
-        check = element.hidden
+        check = element.hidden;
       }
-    })
-    return check
-  }
+    });
+    return check;
+  };
 
   useEffect(() => {
-    let temp = []
+    let temp = [];
     props.categories.map((element, index) =>
       temp.push({
         id: element.id,
         hidden: true,
-      }),
-    )
-    setProductsVisible([...temp])
-    props.closeWindow && props.setShowWindow(false)
-    props.categories.length > 0 && setIsLoading(false)
-  }, [props.categories, props.closeWindow])
+      })
+    );
+    setProductsVisible([...temp]);
+    props.closeWindow && props.setShowWindow(false);
+    props.categories.length > 0 && setIsLoading(false);
+  }, [props.categories, props.closeWindow]);
 
   return (
     <div className="tableview_products">
@@ -71,7 +71,7 @@ const TableView = (props) => {
               <div
                 className="main-window__list-item"
                 onClick={() => {
-                  setProductsVisible([...checkProduct(category.id)])
+                  setProductsVisible([...checkProduct(category.id)]);
                 }}
               >
                 <span>
@@ -80,27 +80,27 @@ const TableView = (props) => {
                   <span className="tableview_products__items-count">
                     {`${
                       props.products.filter(
-                        (product) => product.category === category.category,
+                        (product) => product.category === category.category
                       ).length
                     }`}
                   </span>
                 </span>
                 <div className="main-window__actions">
                   {props.userHasAccess &&
-                    props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
+                    props.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) && (
                       <div
                         className="main-window__action"
                         title="Редактирование категории"
                         onClick={() => {
                           props.history.push(
-                            '/products/category/edit/' + category.id,
-                          )
+                            "/products/category/edit/" + category.id
+                          );
                         }}
                       >
                         <img className="main-window__img" src={editSVG} />
                       </div>
                     )}
-                  {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && (
+                  {props.userHasAccess && props.userHasAccess(["ROLE_ADMIN"]) && (
                     <div className="main-window__action" onClick={null}>
                       <img className="main-window__img" src={deleteSVG} />
                     </div>
@@ -111,8 +111,8 @@ const TableView = (props) => {
               <div
                 className={
                   isProductsHidden(category.id)
-                    ? 'main-window__list-options main-window__list-options--hidden'
-                    : 'main-window__list-options'
+                    ? "main-window__list-options main-window__list-options--hidden"
+                    : "main-window__list-options"
                 }
               >
                 <div className="main-window__list">
@@ -176,24 +176,24 @@ const TableView = (props) => {
                               title="Просмотр продукции"
                               onClick={() => {
                                 return props.history.push(
-                                  '/products/view/' + product.id,
-                                )
+                                  "/products/view/" + product.id
+                                );
                               }}
                             >
                               <img className="main-window__img" src={viewSVG} />
                             </div>
                             {props.userHasAccess &&
                               props.userHasAccess([
-                                'ROLE_ADMIN',
-                                'ROLE_MANAGER',
+                                "ROLE_ADMIN",
+                                "ROLE_MANAGER",
                               ]) && (
                                 <div
                                   className="main-window__action"
                                   title="Редактирование продукции"
                                   onClick={() => {
                                     return props.history.push(
-                                      '/products/edit/' + product.id,
-                                    )
+                                      "/products/edit/" + product.id
+                                    );
                                   }}
                                 >
                                   <img
@@ -203,7 +203,7 @@ const TableView = (props) => {
                                 </div>
                               )}
                             {props.userHasAccess &&
-                              props.userHasAccess(['ROLE_ADMIN']) && (
+                              props.userHasAccess(["ROLE_ADMIN"]) && (
                                 <div
                                   className="main-window__action"
                                   title="Удаление продукции"
@@ -226,8 +226,8 @@ const TableView = (props) => {
                                     props.selectProduct(
                                       product.id,
                                       product.name,
-                                      product.id,
-                                    )
+                                      product.id
+                                    );
                                   }}
                                 >
                                   <img
@@ -244,9 +244,9 @@ const TableView = (props) => {
                                     props.selectProduct(
                                       product.id,
                                       product.name,
-                                      product.id,
-                                    )
-                                    props.setCloseWindow(!props.closeWindow)
+                                      product.id
+                                    );
+                                    props.setCloseWindow(!props.closeWindow);
                                   }}
                                 >
                                   <img
@@ -259,7 +259,7 @@ const TableView = (props) => {
                             )}
                           </div>
                         </div>
-                      ),
+                      )
                   )}
                 </div>
               </div>
@@ -268,7 +268,7 @@ const TableView = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default withRouter(TableView)
+export default withRouter(TableView);
