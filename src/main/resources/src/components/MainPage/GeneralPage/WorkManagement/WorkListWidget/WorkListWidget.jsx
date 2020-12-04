@@ -6,7 +6,6 @@ import { getRecordedWorkByDay } from "../../../../../utils/RequestsAPI/WorkManag
 import { formatDateString } from "../../../../../utils/functions.jsx";
 import UserContext from "../../../../../App.js";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import { getAllEmployees } from "./functions.js";
 import { workshopsList } from "./objects.js";
 import WorkList from "./WorkList.jsx";
 import Widget from "../../Widget/Widget.jsx";
@@ -16,7 +15,7 @@ const WorkListWidget = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [recordedWork, setRecordedWork] = useState([]);
   const [employeesMap, setEmployeesMap] = useState({});
-  const { employees } = useEmployeesList();
+  const { employees, isLoadingEmployees } = useEmployeesList();
   const userContext = useContext(UserContext);
 
   const combineWorkHoursForSamePeople = (works) => {
@@ -85,8 +84,8 @@ const WorkListWidget = () => {
         img: openWidget,
       }}
       content={
-        recordedWork.length === 0 ? (
-          isLoading ? (
+        recordedWork.length === 0 || isLoadingEmployees ? (
+          isLoading || isLoadingEmployees ? (
             <PlaceholderLoading
               minHeight="2rem"
               wrapperClassName="work-list-widget__list work-list-widget__list--placeholder"

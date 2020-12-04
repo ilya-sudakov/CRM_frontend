@@ -16,16 +16,3 @@ export const filterEmployeesObject = (employees, workshop) => {
     if (item.workshop === workshop.name) return true;
   });
 };
-
-export const getAllEmployees = (works) => {
-  let newEmployees = {};
-  works.map((work) => {
-    if (newEmployees[work.employee.id] === undefined) {
-      return (newEmployees = Object.assign({
-        ...newEmployees,
-        [work.employee.id]: work.employee,
-      }));
-    }
-  });
-  return newEmployees;
-};

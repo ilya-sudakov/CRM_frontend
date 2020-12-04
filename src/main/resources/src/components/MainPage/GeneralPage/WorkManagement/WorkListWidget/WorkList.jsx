@@ -12,12 +12,7 @@ const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
       {workshops.map((workshop) => {
         if (
           userContext.userHasAccess(workshop.visibility) &&
-          Object.entries(employees).filter((employee) => {
-            const item = employee[1];
-            if (item.workshop === workshop.name) {
-              return true;
-            }
-          }).length > 0
+          filterEmployeesObject(Object.entries(employees), workshop).length > 0
         ) {
           return (
             <>
