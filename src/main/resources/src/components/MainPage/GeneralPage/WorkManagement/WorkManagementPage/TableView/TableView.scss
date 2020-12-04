@@ -220,17 +220,17 @@
         }
 
         &--reminder {
-            border: 1px solid #b95757;
-            background-color: #ffb9b9;
+            border: 1px solid #ca8a8a;
+            background-color: #e7d1d0;
 
             &:hover {
-                background-color: lighten(#ffb9b9, 2.5%);
+                background-color: lighten(#e7d1d0, 2.5%);
             }
 
             .work-management-page__item--header {
                 .header {
                     &--hours {
-                        border: 1px solid #d17474;
+                        border: 1px solid #b08f8f;
                         // background-color: #ffb9b9;
                         background-color: #fcdddd;
                         // background-color: $secondary-text-color;
