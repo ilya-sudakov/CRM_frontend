@@ -292,10 +292,15 @@
 
   @media (max-width: 500px) {
     &__panel {
-      max-width: 350px;
+      max-width: 300px;
       width: 90%;
       box-sizing: border-box;
-      padding: 10px 15px;
+      padding: 10px 25px;
+      padding-bottom: 20px;
+
+      .authorization__link {
+        max-width: none;
+      }
     }
   }
 }
