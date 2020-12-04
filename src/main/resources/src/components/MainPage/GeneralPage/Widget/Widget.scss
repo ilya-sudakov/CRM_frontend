@@ -66,15 +66,18 @@
     }
 
     @media (max-width: 500px) {
+        padding-bottom: 50px;
+        max-height: calc(360px + 50px);
         &__title {
             margin-top: 2px;
+            position: initial;
             .main-window__button {
                 position: absolute;
-                right: 0;
-                top: -8px;
                 margin-top: 0;
-                font-size: 0.8rem;
-                padding: 2.5px 10px;
+                // font-size: 0.8rem;
+                // padding: 2.5px 10px;
+                bottom: 9px;
+                left: 20px;
             }
         }
     }
