@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useContext } from 'react'
-import profileSVG from '../../../../../../assets/header/profile1.svg'
-import exitSVG from '../../../../../../assets/header/exit.svg'
-import employeeSVG from '../../../../../../assets/header/employee.svg'
-import newLogoSVG from '../../../../../../assets/header/header__new_logo.png'
-import mobileLogoSVG from '../../../../../../assets/header/header__mobile_logo.png'
-import notificationBellSVG from '../../../../../../assets/notifications/notification_bell.svg'
-import { Link, withRouter } from 'react-router-dom'
-import './Header.scss'
-import UserContext from '../../App.js'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect, useContext } from "react";
+import profileSVG from "../../../../../../assets/header/profile1.svg";
+import exitSVG from "../../../../../../assets/header/exit.svg";
+import employeeSVG from "../../../../../../assets/header/employee.svg";
+import newLogoSVG from "../../../../../../assets/header/header__new_year.png";
+import mobileLogoSVG from "../../../../../../assets/header/header__mobile_new_year.png";
+import notificationBellSVG from "../../../../../../assets/notifications/notification_bell.svg";
+import { Link, withRouter } from "react-router-dom";
+import "./Header.scss";
+import UserContext from "../../App.js";
+import PropTypes from "prop-types";
 
 const Header = (props) => {
-  const [showProfileMenu, setShowProfileMenu] = useState(false)
-  const userContext = useContext(UserContext)
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const userContext = useContext(UserContext);
 
   const sideMenuClickDesktop = () =>
-    props.setSidemenuHidden(!props.sidemenuHidden)
+    props.setSidemenuHidden(!props.sidemenuHidden);
 
-  useEffect(() => {}, [])
+  useEffect(() => {}, []);
 
   return (
     <div className="header">
@@ -25,8 +25,8 @@ const Header = (props) => {
         <div
           className={
             !props.sidemenuHidden
-              ? 'header__sidemenu header__sidemenu--hidden'
-              : 'header__sidemenu'
+              ? "header__sidemenu header__sidemenu--hidden"
+              : "header__sidemenu"
           }
           onClick={sideMenuClickDesktop}
         >
@@ -50,8 +50,8 @@ const Header = (props) => {
         <Link
           className={
             userContext.newNotifications > 0
-              ? 'header__item header__item--notification'
-              : 'header__item header__item--notification header__item--notification-empty'
+              ? "header__item header__item--notification"
+              : "header__item header__item--notification header__item--notification-empty"
           }
           data-notifications={userContext.newNotifications}
           // to="/notifications"
@@ -60,15 +60,15 @@ const Header = (props) => {
             userContext.setLastNotification({
               ...userContext.lastNotification,
               visible: false,
-            })
+            });
           }}
         >
           <img className="header__img" src={notificationBellSVG} alt="" />
           <div
             className={
               userContext.lastNotification.visible
-                ? 'header__notification-message'
-                : 'header__notification-message header__notification-message--hidden'
+                ? "header__notification-message"
+                : "header__notification-message header__notification-message--hidden"
             }
           >
             <span>{userContext.lastNotification.title}</span>
@@ -80,7 +80,7 @@ const Header = (props) => {
         <div
           className="header__item header__item--user"
           onClick={
-            userContext.userHasAccess(['ROLE_ADMIN'])
+            userContext.userHasAccess(["ROLE_ADMIN"])
               ? () => setShowProfileMenu(!showProfileMenu)
               : null
           }
@@ -88,8 +88,8 @@ const Header = (props) => {
           <div
             className={
               showProfileMenu
-                ? 'header__profile_overlay'
-                : 'header__profile_overlay header__profile_overlay--hidden'
+                ? "header__profile_overlay"
+                : "header__profile_overlay header__profile_overlay--hidden"
             }
             onClick={() => setShowProfileMenu(!showProfileMenu)}
           ></div>
@@ -99,20 +99,20 @@ const Header = (props) => {
             </div>
             <img className="header__userimg" src={profileSVG} alt="" />
           </div>
-          {userContext.userHasAccess(['ROLE_ADMIN']) && (
+          {userContext.userHasAccess(["ROLE_ADMIN"]) && (
             <div
               className={
                 showProfileMenu
-                  ? 'header__profile_menu'
-                  : 'header__profile_menu header__profile_menu--hidden'
+                  ? "header__profile_menu"
+                  : "header__profile_menu header__profile_menu--hidden"
               }
             >
               <Link
                 to="/profile/users"
                 className={`header__profile_item ${
-                  props.location.pathname.includes('/profile/users')
-                    ? 'header__profile_item--active'
-                    : ''
+                  props.location.pathname.includes("/profile/users")
+                    ? "header__profile_item--active"
+                    : ""
                 }`}
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
@@ -122,9 +122,9 @@ const Header = (props) => {
               <Link
                 to="/profile/login-history"
                 className={`header__profile_item ${
-                  props.location.pathname.includes('/profile/login-history')
-                    ? 'header__profile_item--active'
-                    : ''
+                  props.location.pathname.includes("/profile/login-history")
+                    ? "header__profile_item--active"
+                    : ""
                 }`}
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
@@ -139,13 +139,13 @@ const Header = (props) => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default withRouter(Header)
+export default withRouter(Header);
 
 Header.propTypes = {
   sidemenuHidden: PropTypes.bool,
   setSidemenuHidden: PropTypes.func,
   location: PropTypes.object,
-}
+};

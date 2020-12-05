@@ -47,15 +47,10 @@
 
   & .header__logo {
     width: 200px;
-    // max-width: 85px;
-    // max-height: 45px;
     max-width: 130px;
     max-height: 45px;
     margin-left: 10px;
-
-    // width: 40px;
-    // max-width: 135px;
-    // margin-left: 5px;
+    margin-bottom: 8px;
 
     &--mobile {
       display: none;
@@ -436,7 +431,8 @@
 
       &--mobile {
         display: block;
-        width: 35px;
+        width: 45px;
+        margin-bottom: 6px;
       }
     }
     .header__item--user {
@@ -466,7 +462,7 @@
       font-size: 80%;
     }
     .header__img {
-      width: 25px;
+      width: 30px;
     }
 
     &__menu {

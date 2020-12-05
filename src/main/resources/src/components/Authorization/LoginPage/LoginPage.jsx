@@ -1,16 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./LoginPage.scss";
-import {
-  login,
-  refreshToken,
-} from "../../../utils/RequestsAPI/Authorization.jsx";
-import profileSVG from "../../../../../../../assets/header/profile1.svg";
-// import companyLogo from '../../../../../../../assets/priceList/osfix_logo.png'
-import PasswordIcon from "../../../../../../../assets/loginPage/password.png";
+import { login } from "../../../utils/RequestsAPI/Authorization.jsx";
 import eyeIcon from "../../../../../../../assets/loginPage/eye.png";
-// import newCompanyIcon from '../../../../../../../assets/loginPage/login__new_logo.png'
-import newCompanyIcon from "../../../../../../../assets/loginPage/login__new_logo.png";
+import newCompanyIcon from "../../../../../../../assets/loginPage/login__new_year.png";
 import ErrorMessage from "../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import exitSVG from "../../../../../../../assets/header/exit.svg";
 import CheckBox from "../../../utils/Form/CheckBox/CheckBox.jsx";
