@@ -178,12 +178,12 @@ const ReportTablePage = (props) => {
       />
     ),
     employee: (
-        <EmployeePage
-          userContext={userContext}
-          workList={workList}
-          isLoading={isLoading}
-          date={date}
-        />
+      <EmployeePage
+        userContext={userContext}
+        workList={workList}
+        isLoading={isLoading}
+        date={date}
+      />
     ),
   };
 

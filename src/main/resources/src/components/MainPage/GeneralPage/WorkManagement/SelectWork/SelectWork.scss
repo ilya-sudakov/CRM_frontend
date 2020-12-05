@@ -49,6 +49,7 @@
       // font-size: 80%;
     }
     .select__input {
+      box-sizing: content-box;
       width: calc(100% - 20px);
       min-width: 0 !important;
     }

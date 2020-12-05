@@ -36,7 +36,7 @@ const EmployeePage = ({ userContext, date }) => {
         workData
           .filter((item) => item.employee.id === value)
           .map((item) => {
-            return item.workList.id;
+            return item.id;
           }) ?? [],
       works: workData.filter((item) => item.employee.id === value) ?? [],
     });
@@ -52,7 +52,7 @@ const EmployeePage = ({ userContext, date }) => {
           workData
             .filter((item) => item.employee.id === selectedInfo.employeeId)
             .map((item) => {
-              return item.workList.id;
+              return item.id;
             }) ?? [],
         works:
           workData.filter(

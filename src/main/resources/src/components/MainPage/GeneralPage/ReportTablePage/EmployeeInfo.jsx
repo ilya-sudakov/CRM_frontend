@@ -104,7 +104,7 @@ const WorksItem = ({ item }) => {
       }}
     >
       <span>
-        <Link to={`/work-management/record-time/edit/${item.workId}`}>
+        <Link to={`/work-management/record-time/edit/${item.id}`}>
           {item.workList.work}
           <img className="report-table-page__img" src={editIcon} alt="" />
         </Link>
