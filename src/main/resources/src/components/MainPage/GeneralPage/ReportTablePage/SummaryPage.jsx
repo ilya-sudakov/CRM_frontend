@@ -82,6 +82,7 @@ const SummaryPage = ({
         setShowWindow={setShowWindow}
         setSelectedInfo={setSelectedInfo}
         date={date}
+        setDate={setDate}
         userContext={userContext}
         searchQuery={searchQuery}
       />

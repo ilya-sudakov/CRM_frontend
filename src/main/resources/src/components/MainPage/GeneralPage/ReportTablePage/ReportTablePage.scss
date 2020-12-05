@@ -263,8 +263,17 @@
 
         .main-window__title {
             font-size: 20px;
+            display: flex;
+            align-items: center;
             justify-content: center !important;
             text-align: center;
+            padding-bottom: 10px;
+
+            .main-window__img {
+                padding: 3px 5px;
+                margin: 0 5px;
+                cursor: pointer;
+            }
         }
 
         .main-window__list {
