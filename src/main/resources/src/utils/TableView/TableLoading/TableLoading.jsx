@@ -10,9 +10,6 @@ const TableLoading = (props) => {
           : "table-loading table-loading--hidden"
       }
     >
-      {/* {props.isLoading && <div class="lds-roller">
-                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-            </div>} */}
       {props.isLoading && <div className="table-loading__circle"></div>}
     </div>
   );
