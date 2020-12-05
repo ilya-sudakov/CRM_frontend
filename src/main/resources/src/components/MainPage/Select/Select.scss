@@ -374,7 +374,7 @@
     .select__selected_item {
       width: calc(100%);
       font-size: 0.8rem;
-      max-width: calc(60%);
+      // max-width: calc(60%);
 
       .select-product__color_name {
         padding: 5px 5px;
@@ -383,7 +383,7 @@
       }
 
       .select__selected_name {
-        padding: 5px 5px;
+        padding: 5px 10px;
         height: 3rem !important;
         max-height: 1.6rem !important;
         white-space: nowrap;
@@ -392,6 +392,7 @@
         border-radius: 5px;
         display: flex;
         align-items: center;
+        font-size: 0.9rem;
       }
     }
     .select__img {
