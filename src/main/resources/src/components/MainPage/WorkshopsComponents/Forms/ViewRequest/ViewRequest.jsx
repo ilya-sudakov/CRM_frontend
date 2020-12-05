@@ -1,51 +1,56 @@
-import React, { useEffect, useState, useContext } from 'react'
-import pdfMake from 'pdfmake'
+import React, { useEffect, useState, useContext } from "react";
+import pdfMake from "pdfmake";
 
-import '../../../../../utils/Form/Form.scss'
-import './ViewRequest.scss'
+import "../../../../../utils/Form/Form.scss";
+import "./ViewRequest.scss";
 
-import PrintIcon from '../../../../../../../../../assets/print.png'
-import DownloadIcon from '../../../../../../../../../assets/download.svg'
-import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
-import { formatDateString } from '../../../../../utils/functions.jsx'
-import { getRequestPdfText } from '../../../../../utils/pdfFunctions.jsx'
-import { getRequestById } from '../../../../../utils/RequestsAPI/Requests.jsx'
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import { workshops } from '../../workshopVariables.js'
-import UserContext from '../../../../../App.js'
-import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx'
+import PrintIcon from "../../../../../../../../../assets/print.png";
+import DownloadIcon from "../../../../../../../../../assets/download.svg";
+import InputProducts from "../../../../../utils/Form/InputProducts/InputProducts.jsx";
+import { formatDateString } from "../../../../../utils/functions.jsx";
+import { getRequestPdfText } from "../../../../../utils/pdfFunctions.jsx";
+import { getRequestById } from "../../../../../utils/RequestsAPI/Requests.jsx";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import { workshops } from "../../workshopVariables.js";
+import UserContext from "../../../../../App.js";
+import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
+import { getPageByRequest } from "../../../Requests/functions.js";
 
 const ViewRequest = (props) => {
-  const userContext = useContext(UserContext)
+  const userContext = useContext(UserContext);
   const [requestInputs, setRequestInputs] = useState({
-    date: '',
-    requestProducts: '',
+    date: "",
+    requestProducts: "",
     // quantity: "",
-    codeWord: '',
-    responsible: '',
-    status: 'Не готово',
-    shippingDate: '',
-    comment: '',
+    codeWord: "",
+    responsible: "",
+    status: "Не готово",
+    shippingDate: "",
+    comment: "",
     sum: 0,
     clientId: 0,
     client: null,
-  })
-  const [itemId, setItemId] = useState(0)
+  });
+  const [itemId, setItemId] = useState(0);
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    const id = props.history.location.pathname.split('view/')[1]
-    props.history.push(`${workshops[props.type].redirectURL}#${id}`)
-  }
+    event.preventDefault();
+    const id = props.history.location.pathname.split("view/")[1];
+    props.history.push(
+      `${workshops[props.type].redirectURL}/${getPageByRequest(
+        requestInputs
+      )}#${id}`
+    );
+  };
 
   useEffect(() => {
-    document.title = 'Просмотр заявки'
-    const id = props.history.location.pathname.split('view/')[1]
+    document.title = "Просмотр заявки";
+    const id = props.history.location.pathname.split("view/")[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс заявки!')
-      props.history.push(workshops[props.type].redirectURL)
+      alert("Неправильный индекс заявки!");
+      props.history.push(workshops[props.type].redirectURL);
     } else {
-      setItemId(id)
+      setItemId(id);
       getRequestById(id)
         .then((res) => res.json())
         .then((oldRequest) => {
@@ -61,47 +66,47 @@ const ViewRequest = (props) => {
             client: oldRequest.client,
             clientId: oldRequest.client?.id,
             factory: oldRequest.factory,
-          })
+          });
         })
         .catch((error) => {
-          console.log(error)
-          alert('Неправильный индекс заявки!')
-          props.history.push(workshops[props.type].redirectURL)
-        })
+          console.log(error);
+          alert("Неправильный индекс заявки!");
+          props.history.push(workshops[props.type].redirectURL);
+        });
     }
-  }, [])
+  }, []);
 
   const PrintRequest = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     let dd = getRequestPdfText(
       requestInputs.date,
       requestInputs.requestProducts,
       requestInputs.client?.name ?? requestInputs.codeWord,
       workshops[requestInputs.factory].name,
-      itemId,
-    )
-    pdfMake.createPdf(dd).print()
-  }
+      itemId
+    );
+    pdfMake.createPdf(dd).print();
+  };
 
   const DownloadRequest = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     let dd = getRequestPdfText(
       requestInputs.date,
       requestInputs.requestProducts,
       requestInputs.client?.name ?? requestInputs.codeWord,
       workshops[requestInputs.factory].name,
-      itemId,
-    )
+      itemId
+    );
     pdfMake
       .createPdf(dd)
       .download(
-        'ПланПроизводства№' +
+        "ПланПроизводства№" +
           itemId +
-          '_' +
+          "_" +
           formatDateString(requestInputs.date) +
-          '.pdf',
-      )
-  }
+          ".pdf"
+      );
+  };
 
   return (
     <div className="view-request">
@@ -183,7 +188,7 @@ const ViewRequest = (props) => {
               />
             </div>
           </div>
-          {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
+          {userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) ? (
             <div className="main-form__item">
               <div className="main-form__input_name">Сумма</div>
               <div className="main-form__input_field">
@@ -221,7 +226,7 @@ const ViewRequest = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ViewRequest
+export default ViewRequest;

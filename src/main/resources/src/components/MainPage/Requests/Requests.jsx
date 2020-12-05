@@ -1,49 +1,49 @@
-import React, { useState, useEffect } from 'react'
-import '../../../utils/MainWindow/MainWindow.scss'
-import './Requests.scss'
-import '../../../utils/Form/Form.scss'
-import '../../../utils/MainWindow/MainWindow.scss'
+import React, { useState, useEffect } from "react";
+import "../../../utils/MainWindow/MainWindow.scss";
+import "./Requests.scss";
+import "../../../utils/Form/Form.scss";
+import "../../../utils/MainWindow/MainWindow.scss";
 import {
-  getRequests,
   deleteRequest,
   deleteProductsToRequest,
   getRequestById,
-  // copyRequest,
   addRequest,
   editRequest,
   addProductsToRequest,
-} from '../../../utils/RequestsAPI/Requests.jsx'
-import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
-import SearchBar from '../SearchBar/SearchBar.jsx'
-import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
-import Button from '../../../utils/Form/Button/Button.jsx'
+} from "../../../utils/RequestsAPI/Requests.jsx";
+import TableView from "../WorkshopsComponents/TableView/TableView.jsx";
+import SearchBar from "../SearchBar/SearchBar.jsx";
+import FormWindow from "../../../utils/Form/FormWindow/FormWindow.jsx";
+import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
+import Button from "../../../utils/Form/Button/Button.jsx";
 // import { Link } from 'react-router-dom'
 import {
-  sortRequestsByDates,
   formatDateString,
   getDatesFromRequests,
-} from '../../../utils/functions.jsx'
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+} from "../../../utils/functions.jsx";
+import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import { filterRequestsByPage } from "./functions.js";
+import { pages } from "./objects.js";
+import { Link } from "react-router-dom";
 
 const Requests = (props) => {
-  const [requests, setRequests] = useState([]) //Массив заявок
-  const [searchQuery, setSearchQuery] = useState('') //Значение строки поиска
-  const [showWindow, setShowWindow] = useState(false) //Показывать ли окно
-  const [isLoading, setIsLoading] = useState(false) //Индикатор загрузки
-  const [toWorkshop, setToWorkshop] = useState('lemz') //Название цеха для переноса заявки
+  const [requests, setRequests] = useState([]); //Массив заявок
+  const [searchQuery, setSearchQuery] = useState(""); //Значение строки поиска
+  const [showWindow, setShowWindow] = useState(false); //Показывать ли окно
+  const [isLoading, setIsLoading] = useState(false); //Индикатор загрузки
+  const [toWorkshop, setToWorkshop] = useState("lemz"); //Название цеха для переноса заявки
   //id заявки, использующийся при ее дальнейшем копировании или переносе в цеха
-  const [requestId, setRequestId] = useState(0)
-  const [dates, setDates] = useState([])
-  const [clients, setClients] = useState([]) //Массив клиентов
-  const [curPage, setCurPage] = useState('Открытые') //Текущая страница
+  const [requestId, setRequestId] = useState(0);
+  const [dates, setDates] = useState([]);
+  const [clients, setClients] = useState([]); //Массив клиентов
+  const [curPage, setCurPage] = useState("open"); //Текущая страница
   //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([
     {
-      name: 'Проблема/Материалы',
-      oldName: 'Проблема-материалы',
-      className: 'materials',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+      name: "Проблема/Материалы",
+      oldName: "Проблема-материалы",
+      className: "materials",
+      access: ["ROLE_ADMIN", "ROLE_WORKSHOP"],
       visible: false,
     },
     // {
@@ -53,80 +53,74 @@ const Requests = (props) => {
     //   visible: false,
     // },
     {
-      name: 'Готово к отгрузке',
-      oldName: 'Готово',
-      className: 'ready',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      name: "Готово к отгрузке",
+      oldName: "Готово",
+      className: "ready",
+      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
       visible: false,
     },
     {
-      name: 'В производстве',
-      className: 'in-production',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      name: "В производстве",
+      className: "in-production",
+      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
       visible: false,
     },
     {
-      name: 'Ожидание',
-      className: 'waiting',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      name: "Ожидание",
+      className: "waiting",
+      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
       visible: false,
     },
     {
-      name: 'Приоритет',
-      className: 'priority',
-      access: ['ROLE_ADMIN'],
+      name: "Приоритет",
+      className: "priority",
+      access: ["ROLE_ADMIN"],
       visible: false,
     },
-  ])
-  const pages = {
-    Открытые: {
-      getRequests: (signal) => getRequests(signal),
-    },
-    Отгружено: {
-      getRequests: (signal) => getRequests(signal),
-    },
-    Завершено: {
-      getRequests: (signal) => getRequests(signal),
-    },
-  }
+  ]);
+
   const [workshops, setWorkshops] = useState([
     {
-      filter: ['lemz', 'lepsari', null, 'requests'],
-      fullName: 'Все',
+      filter: ["lemz", "lepsari", null, "requests"],
+      fullName: "Все",
       visible: true,
     },
-    { filter: ['lemz'], fullName: 'ЦехЛЭМЗ', visible: false },
-    { filter: ['lepsari'], fullName: 'ЦехЛепсари', visible: false },
-    { filter: [null, 'requests'], fullName: 'Не перенесенные', visible: false },
-  ])
+    { filter: ["lemz"], fullName: "ЦехЛЭМЗ", visible: false },
+    { filter: ["lepsari"], fullName: "ЦехЛепсари", visible: false },
+    { filter: [null, "requests"], fullName: "Не перенесенные", visible: false },
+  ]);
 
   //Удалить заявку
   const deleteItem = (event) => {
-    const id = event.currentTarget.dataset.id
+    const id = event.currentTarget.dataset.id;
     getRequestById(id)
       .then((res) => res.json())
       .then((res) => {
         const productsArr = res.requestProducts.map((product) => {
-          return deleteProductsToRequest(product.id)
-        })
+          return deleteProductsToRequest(product.id);
+        });
         Promise.all(productsArr).then(() => {
-          deleteRequest(id).then(() => loadRequests())
-        })
-      })
-  }
+          deleteRequest(id).then(() => loadRequests());
+        });
+      });
+  };
 
   useEffect(() => {
-    document.title = 'Заявки'
-    let abortController = new AbortController()
-    requests.length === 0 && loadRequests(abortController.signal)
+    document.title = "Заявки";
+    let abortController = new AbortController();
+
+    const pageNameInURL = props.location.pathname.split("/requests/")[1];
+    setCurPage(pageNameInURL);
+
+    requests.length === 0 && loadRequests(abortController.signal);
     return function cancel() {
-      abortController.abort()
-    }
-  }, [curPage])
+      abortController.abort();
+    };
+  }, [curPage]);
 
   //GET-запрос на получение всех заявок
   const loadRequests = (signal) => {
-    setIsLoading(true)
+    setIsLoading(true);
     return pages[curPage]
       .getRequests(signal)
       .then((res) => res.json())
@@ -135,33 +129,33 @@ const Requests = (props) => {
           return {
             ...item,
             open: false,
-          }
-        })
-        setIsLoading(false)
+          };
+        });
+        setIsLoading(false);
         // console.log(temp)
-        setRequests(temp)
-        setDates(getDatesFromRequests(temp))
+        setRequests(temp);
+        setDates(getDatesFromRequests(temp));
       })
       .catch((error) => {
-        setIsLoading(false)
-        console.log(error)
-      })
-  }
+        setIsLoading(false);
+        console.log(error);
+      });
+  };
 
   //Перенести заявку
   const transferRequest = (id) => {
-    setRequestId(id)
-    setShowWindow(!showWindow)
-  }
+    setRequestId(id);
+    setShowWindow(!showWindow);
+  };
 
   //Копировать заявку
   const copySelectedRequest = (id) => {
-    setIsLoading(true)
+    setIsLoading(true);
     const requestToBeCopied = requests.find((item) => {
       if (item.id === id) {
-        return true
+        return true;
       }
-    })
+    });
     addRequest({
       date: requestToBeCopied.date,
       products: requestToBeCopied.requestProducts,
@@ -185,187 +179,170 @@ const Requests = (props) => {
             packaging: item.packaging,
             status: item.status,
             name: item.name,
-          })
-        })
+          });
+        });
         Promise.all(productsArr).then(() => {
-          setIsLoading(false)
-          loadRequests()
-        })
+          setIsLoading(false);
+          loadRequests();
+        });
       })
       .catch((error) => {
-        setIsLoading(false)
-        console.log(error)
-      })
-  }
-
-  const filterRequestsByPage = (data, page) => {
-    return data.filter((item) => {
-      if (page === 'Завершено' && item.status === 'Завершено') {
-        return true
-      }
-      if (
-        page === 'Отгружено' &&
-        (item.status === 'Отгружено' || item.status === 'Частично отгружено')
-      ) {
-        return true
-      }
-      if (
-        page === 'Открытые' &&
-        item.status !== 'Завершено' &&
-        item.status !== 'Отгружено' &&
-        item.status !== 'Частично отгружено'
-      ) {
-        return true
-      }
-      return false
-    })
-  }
+        setIsLoading(false);
+        console.log(error);
+      });
+  };
 
   const filterRequestsByWorkshop = (data) => {
     return data.filter((item) => {
-      const selectedWorkshop = workshops.find((workshop) => workshop.visible)
+      const selectedWorkshop = workshops.find((workshop) => workshop.visible);
       if (selectedWorkshop === undefined) {
-        return false
+        return false;
       }
-      let check = false
+      let check = false;
       selectedWorkshop.filter.map((type) => {
         if (type === item.factory) {
-          return (check = true)
+          return (check = true);
         }
-      })
-      return check
-    })
-  }
+      });
+      return check;
+    });
+  };
 
   const filterRequestsByStatuses = (data) => {
     return data.filter((item) => {
-      let check = false
-      let noActiveStatuses = true
+      let check = false;
+      let noActiveStatuses = true;
       requestStatuses.map((status) => {
         requestStatuses.map((status) => {
           if (status.visible) {
-            noActiveStatuses = false
+            noActiveStatuses = false;
           }
-        })
+        });
         if (
           noActiveStatuses === true ||
           (status.visible &&
             (status.name === item.status || status.oldName === item.status))
         ) {
-          check = true
-          return
+          check = true;
+          return;
         }
-      })
-      return check
-    })
-  }
+      });
+      return check;
+    });
+  };
 
   const filterRequests = (requests) => {
     return filterRequestsByStatuses(
-      filterRequestsByPage(filterRequestsByWorkshop(requests), curPage),
-    )
-  }
+      filterRequestsByPage(
+        filterRequestsByWorkshop(requests),
+        pages[curPage].name
+      )
+    );
+  };
 
   // * Sorting
 
   const [sortOrder, setSortOrder] = useState({
-    curSort: 'date',
-    date: 'desc',
-  })
+    curSort: "date",
+    date: "desc",
+  });
 
   const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase()
+    const query = searchQuery.toLowerCase();
     return data.filter((item) => {
       return item.requestProducts.length !== 0 &&
         item.requestProducts[0].name !== null
         ? item.requestProducts[0].name.toLowerCase().includes(query) ||
             item.id.toString().includes(query) ||
             formatDateString(item.date).includes(query) ||
-            (item.codeWord || '').toLowerCase().includes(query) ||
+            (item.codeWord || "").toLowerCase().includes(query) ||
             item.status.toLowerCase().includes(query) ||
             item.responsible.toLowerCase().includes(query) ||
             formatDateString(item.shippingDate).includes(query)
-        : item.status.toLowerCase().includes(query)
-    })
-  }
+        : item.status.toLowerCase().includes(query);
+    });
+  };
 
   const sortRequests = (data) => {
     return filterSearchQuery(data).sort((a, b) => {
       if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
       }
       if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
       }
-      return 0
-    })
-  }
+      return 0;
+    });
+  };
 
   const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
+    const name = event.target.value.split(" ")[0];
+    const order = event.target.value.split(" ")[1];
     setSortOrder({
       curSort: name,
       [name]: order,
-    })
-  }
+    });
+  };
 
   return (
     <div className="requests">
       <div className="main-window">
         <FloatingPlus
           linkTo="/requests/new"
-          visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
+          visibility={["ROLE_ADMIN", "ROLE_MANAGER"]}
         />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Заявки</div>
           <div className="main-window__menu">
-            <div
+            <Link
               className={
-                curPage === 'Открытые'
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                curPage === "open"
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
-              onClick={() => setCurPage('Открытые')}
+              to="/requests/open"
+              onClick={() => setCurPage("open")}
             >
               Открытые
               <span className="main-window__items-count">
                 {
                   filterRequestsByPage(
                     filterRequestsByWorkshop(requests),
-                    'Открытые',
+                    "Открытые"
                   ).length
                 }
               </span>
-            </div>
-            <div
+            </Link>
+            <Link
               className={
-                curPage === 'Отгружено'
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                curPage === "shipped"
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
-              onClick={() => setCurPage('Отгружено')}
+              to="/requests/shipped"
+              onClick={() => setCurPage("shipped")}
             >
               Отгружено
               <span className="main-window__items-count">
                 {
                   filterRequestsByPage(
                     filterRequestsByWorkshop(requests),
-                    'Отгружено',
+                    "Отгружено"
                   ).length
                 }
               </span>
-            </div>
-            <div
+            </Link>
+            <Link
               className={
-                curPage === 'Завершено'
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                curPage === "completed"
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
-              onClick={() => setCurPage('Завершено')}
+              to="/requests/completed"
+              onClick={() => setCurPage("completed")}
             >
               Завершено
-            </div>
+            </Link>
           </div>
         </div>
         <SearchBar
@@ -386,7 +363,7 @@ const Requests = (props) => {
                       <select
                         name="workshop"
                         onChange={(event) => {
-                          setToWorkshop(event.target.value)
+                          setToWorkshop(event.target.value);
                         }}
                       >
                         <option value="lemz">ЦехЛЭМЗ</option>
@@ -399,26 +376,26 @@ const Requests = (props) => {
                       className="main-form__submit"
                       isLoading={isLoading}
                       onClick={() => {
-                        setIsLoading(true)
+                        setIsLoading(true);
                         const request = requests.find(
-                          (item) => item.id === requestId,
-                        )
+                          (item) => item.id === requestId
+                        );
                         editRequest(
                           { ...request, factory: toWorkshop },
-                          request.id,
+                          request.id
                         )
                           .then((res) => res.json())
                           .then((res) => {
-                            setIsLoading(false)
+                            setIsLoading(false);
                             props.history.push(
-                              `${toWorkshop}/workshop-${toWorkshop}#${request.id}`,
-                            )
+                              `${toWorkshop}/workshop-${toWorkshop}#${request.id}`
+                            );
                           })
                           .catch((error) => {
-                            console.log(error)
-                            alert('Ошибка при копировании записи')
-                            setIsLoading(false)
-                          })
+                            console.log(error);
+                            alert("Ошибка при копировании записи");
+                            setIsLoading(false);
+                          });
                       }}
                       text="Перенести в цех"
                     />
@@ -466,9 +443,9 @@ const Requests = (props) => {
                     <div
                       className={
                         (status.visible
-                          ? 'main-window__button'
-                          : 'main-window__button main-window__button--inverted') +
-                        ' main-window__list-item--' +
+                          ? "main-window__button"
+                          : "main-window__button main-window__button--inverted") +
+                        " main-window__list-item--" +
                         status.className
                       }
                       onClick={() => {
@@ -476,23 +453,23 @@ const Requests = (props) => {
                           return {
                             ...status,
                             visible: false,
-                          }
-                        })
+                          };
+                        });
                         temp.splice(index, 1, {
                           ...status,
                           visible: !status.visible,
-                        })
-                        setRequestStatutes([...temp])
+                        });
+                        setRequestStatutes([...temp]);
                       }}
                     >
                       {status.name}
                     </div>
-                  )
+                  );
                 })}
               </div>
               <div
                 className="main-window__filter-pick"
-                style={{ marginTop: '10px' }}
+                style={{ marginTop: "10px" }}
               >
                 <div>Фильтр по цехам: </div>
                 {workshops.map((workshop, index) => {
@@ -500,26 +477,26 @@ const Requests = (props) => {
                     <div
                       className={
                         workshop.visible
-                          ? 'main-window__button'
-                          : 'main-window__button main-window__button--inverted'
+                          ? "main-window__button"
+                          : "main-window__button main-window__button--inverted"
                       }
                       onClick={() => {
                         let temp = workshops.map((tempWorkshop) => {
                           return {
                             ...tempWorkshop,
                             visible: false,
-                          }
-                        })
+                          };
+                        });
                         temp.splice(index, 1, {
                           ...workshop,
                           visible: !workshop.visible,
-                        })
-                        setWorkshops([...temp])
+                        });
+                        setWorkshops([...temp]);
                       }}
                     >
                       {workshop.fullName}
                     </div>
-                  )
+                  );
                 })}
               </div>
             </>
@@ -529,12 +506,12 @@ const Requests = (props) => {
           data={sortRequests(filterRequests(requests))}
           dates={dates.sort((a, b) => {
             if (a < b) {
-              return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+              return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
             }
             if (a > b) {
-              return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+              return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
             }
-            return 0
+            return 0;
           })}
           isLoading={isLoading}
           workshopName="requests"
@@ -547,7 +524,7 @@ const Requests = (props) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Requests
+export default Requests;

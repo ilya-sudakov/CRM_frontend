@@ -1,8 +1,8 @@
-import React, { Suspense, useContext, useEffect, useState } from 'react'
-import { Switch, Route } from 'react-router-dom'
-import './MainPage.scss'
-import '../../utils/MainWindow/MainWindow.scss'
-import Header from '../Header/Header.jsx'
+import React, { Suspense, useContext, useEffect, useState } from "react";
+import { Switch, Route } from "react-router-dom";
+import "./MainPage.scss";
+import "../../utils/MainWindow/MainWindow.scss";
+import Header from "../Header/Header.jsx";
 import {
   Clients,
   Contracts,
@@ -53,30 +53,30 @@ import {
   RiggingList,
   ProductionJournal,
   StatisticsPage,
-} from './lazyImports.jsx'
-import NewRequest from './WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
-import EditRequest from './WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
-import ViewRequest from './WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx'
-import SideMenu from '../SideMenu/SideMenu.jsx'
-import PageNotFound from './PageNotFound/PageNotFound.jsx'
-import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx'
-import PageLoading from './PageLoading/PageLoading.jsx'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary.jsx'
-import ShipRequest from './WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx'
-import UserContext from '../../App.js'
+} from "./lazyImports.jsx";
+import NewRequest from "./WorkshopsComponents/Forms/NewRequest/NewRequest.jsx";
+import EditRequest from "./WorkshopsComponents/Forms/EditRequest/EditRequest.jsx";
+import ViewRequest from "./WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx";
+import SideMenu from "../SideMenu/SideMenu.jsx";
+import PageNotFound from "./PageNotFound/PageNotFound.jsx";
+import PrivateRoute from "../PrivateRoute/PrivateRoute.jsx";
+import PageLoading from "./PageLoading/PageLoading.jsx";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary.jsx";
+import ShipRequest from "./WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx";
+import UserContext from "../../App.js";
 
 const MainPage = () => {
-  const [sidemenuHidden, setSidemenuHidden] = useState(true)
-  const userContext = useContext(UserContext)
+  const [sidemenuHidden, setSidemenuHidden] = useState(true);
+  const userContext = useContext(UserContext);
 
   const userScreenWidth =
     window.innerWidth ||
     document.documentElement.clientWidth ||
-    document.body.clientWidth
+    document.body.clientWidth;
 
   useEffect(() => {
-    if (userScreenWidth > 1366) setSidemenuHidden(false)
-  }, [])
+    if (userScreenWidth > 1366) setSidemenuHidden(false);
+  }, []);
 
   return (
     <div className="main_page">
@@ -91,12 +91,12 @@ const MainPage = () => {
             <div
               className={
                 sidemenuHidden
-                  ? 'main_page__overlay main_page__overlay--hidden'
-                  : 'main_page__overlay'
+                  ? "main_page__overlay main_page__overlay--hidden"
+                  : "main_page__overlay"
               }
               onClick={() => {
                 if (userScreenWidth <= 1366) {
-                  setSidemenuHidden(!sidemenuHidden)
+                  setSidemenuHidden(!sidemenuHidden);
                 }
               }}
             ></div>
@@ -109,11 +109,11 @@ const MainPage = () => {
                   path="/"
                   component={GeneralPage}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_WORKSHOP',
-                    'ROLE_MANAGER',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_WORKSHOP",
+                    "ROLE_MANAGER",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -122,7 +122,7 @@ const MainPage = () => {
                   component={Users}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   exact
@@ -130,14 +130,14 @@ const MainPage = () => {
                   component={NewUser}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   path="/profile/users/edit/"
                   component={EditUser}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   exact
@@ -145,14 +145,14 @@ const MainPage = () => {
                   component={LoginHistory}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   path="/clients/category/"
                   component={Clients}
                   type="clients"
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   exact
@@ -161,7 +161,7 @@ const MainPage = () => {
                   type="clients"
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   exact
@@ -170,7 +170,7 @@ const MainPage = () => {
                   type="clients"
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   path="/clients/edit/"
@@ -178,7 +178,7 @@ const MainPage = () => {
                   type="clients"
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   path="/suppliers/category/"
@@ -187,11 +187,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_DISPATCHER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_DISPATCHER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -202,11 +202,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_DISPATCHER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_DISPATCHER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -217,11 +217,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
+                    "ROLE_WORKSHOP",
                   ]}
                 />
                 <PrivateRoute
@@ -231,20 +231,12 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_DISPATCHER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_DISPATCHER",
                   ]}
                 />
                 <Route exact path="/contracts" component={Contracts} />
-                <PrivateRoute
-                  exact
-                  path="/requests"
-                  component={Requests}
-                  userHasAccess={userContext.userHasAccess}
-                  userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
-                />
                 <Route
                   path="/requests/view/"
                   render={(props) => <ViewRequest {...props} type="requests" />}
@@ -254,19 +246,26 @@ const MainPage = () => {
                   path="/requests/new"
                   component={NewRequest}
                   type="requests"
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   path="/requests/edit/"
                   component={EditRequest}
                   type="requests"
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   path="/requests/ship/"
                   component={ShipRequest}
                   type="requests"
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                />
+                <PrivateRoute
+                  path="/requests/"
+                  component={Requests}
+                  userHasAccess={userContext.userHasAccess}
+                  userData={userContext.userData}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   exact
@@ -274,7 +273,7 @@ const MainPage = () => {
                   component={NewPriceList}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   exact
@@ -282,7 +281,7 @@ const MainPage = () => {
                   component={Products}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                 />
                 <Route path="/products/view/" component={ViewProduct} />
                 <PrivateRoute
@@ -290,7 +289,7 @@ const MainPage = () => {
                   component={EditProduct}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   exact
@@ -298,7 +297,7 @@ const MainPage = () => {
                   component={NewProduct}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   path="/lemz"
@@ -306,10 +305,10 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_LEMZ',
-                    'ROLE_DISPATCHER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_LEMZ",
+                    "ROLE_DISPATCHER",
                   ]}
                 />
                 <PrivateRoute
@@ -318,10 +317,10 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_LEPSARI',
-                    'ROLE_DISPATCHER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_LEPSARI",
+                    "ROLE_DISPATCHER",
                   ]}
                 />
                 <PrivateRoute
@@ -330,10 +329,10 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
+                    "ROLE_WORKSHOP",
                   ]}
                 />
                 <PrivateRoute
@@ -342,7 +341,7 @@ const MainPage = () => {
                   component={Transportation}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
                 />
                 <PrivateRoute
                   exact
@@ -350,14 +349,14 @@ const MainPage = () => {
                   component={NewTransportation}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
                 />
                 <PrivateRoute
                   path="/dispatcher/transportation/edit/"
                   component={EditTransportation}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
                 />
                 <PrivateRoute
                   exact
@@ -367,11 +366,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_MANAGER',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_MANAGER",
                   ]}
                 />
                 <PrivateRoute
@@ -381,11 +380,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_MANAGER',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_MANAGER",
                   ]}
                 />
                 <PrivateRoute
@@ -394,10 +393,10 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
+                    "ROLE_WORKSHOP",
                   ]}
                 />
                 <PrivateRoute
@@ -406,7 +405,7 @@ const MainPage = () => {
                   component={Employees}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
                 />
                 <PrivateRoute
                   exact
@@ -414,21 +413,21 @@ const MainPage = () => {
                   component={NewEmployee}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
                 />
                 <PrivateRoute
                   path="/dispatcher/employees/edit/"
                   component={EditEmployee}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
                 />
                 <PrivateRoute
                   path="/dispatcher/employees/view/"
                   component={ViewEmployee}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
                 />
                 <PrivateRoute
                   exact
@@ -437,9 +436,9 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -449,9 +448,9 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -460,9 +459,9 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -471,14 +470,14 @@ const MainPage = () => {
                   component={NewCategory}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                 />
                 <PrivateRoute
                   path="/products/category/edit/"
                   component={EditCategory}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute
                   exact
@@ -487,11 +486,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -501,11 +500,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -514,11 +513,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -527,11 +526,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -541,11 +540,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -555,11 +554,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -568,11 +567,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_MANAGER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_MANAGER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -582,11 +581,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_MANAGER',
-                    'ROLE_ENGINEER',
-                    'ROLE_WORKSHOP',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_MANAGER",
+                    "ROLE_ENGINEER",
+                    "ROLE_WORKSHOP",
                   ]}
                 />
                 <PrivateRoute
@@ -595,7 +594,7 @@ const MainPage = () => {
                   component={GraphsPage}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   exact
@@ -603,7 +602,7 @@ const MainPage = () => {
                   component={PackagingPage}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   exact
@@ -611,14 +610,14 @@ const MainPage = () => {
                   component={NewPackaging}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   path="/packaging/edit/"
                   component={EditPackaging}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   exact
@@ -627,11 +626,11 @@ const MainPage = () => {
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_DISPATCHER',
-                    'ROLE_WORKSHOP',
-                    'ROLE_MANAGER',
-                    'ROLE_ENGINEER',
+                    "ROLE_ADMIN",
+                    "ROLE_DISPATCHER",
+                    "ROLE_WORKSHOP",
+                    "ROLE_MANAGER",
+                    "ROLE_ENGINEER",
                   ]}
                 />
                 <PrivateRoute
@@ -640,18 +639,18 @@ const MainPage = () => {
                   component={RiggingList}
                   userHasAccess={userContext.userHasAccess}
                   allowedRoles={[
-                    'ROLE_ADMIN',
-                    'ROLE_WORKSHOP',
-                    'ROLE_DISPATCHER',
-                    'ROLE_ENGINEER',
-                    'ROLE_MANAGER',
+                    "ROLE_ADMIN",
+                    "ROLE_WORKSHOP",
+                    "ROLE_DISPATCHER",
+                    "ROLE_ENGINEER",
+                    "ROLE_MANAGER",
                   ]}
                 />
                 <PrivateRoute
                   exact
                   path="/statistics"
                   component={StatisticsPage}
-                  allowedRoles={['ROLE_ADMIN']}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <Route component={PageNotFound} />
               </Switch>
@@ -660,7 +659,7 @@ const MainPage = () => {
         </ErrorBoundary>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainPage
+export default MainPage;
