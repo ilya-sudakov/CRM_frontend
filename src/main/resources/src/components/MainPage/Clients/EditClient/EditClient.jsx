@@ -342,6 +342,7 @@ const EditClient = (props) => {
           console.log(res);
           setClientInputs({
             ...clientInputs,
+            id: res.id,
             name: res.name,
             site: res.site,
             comment: res.comment,
@@ -682,6 +683,7 @@ const RequestHistory = ({ id }) => {
         const filteredData = res.filter(
           (request) => request.client !== null && request.client?.id === id
         );
+        console.log(res, filteredData, id);
         setRequests([...filteredData]);
       });
   }, []);
