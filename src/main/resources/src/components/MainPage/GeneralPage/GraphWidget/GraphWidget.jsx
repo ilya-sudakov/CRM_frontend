@@ -35,6 +35,7 @@ const GraphWidget = (props) => {
     });
     setIsLoading(true);
     // console.log(week)
+    
     getRecordedWorkByDateRange(
       week[0].getDate(),
       week[0].getMonth() + 1,

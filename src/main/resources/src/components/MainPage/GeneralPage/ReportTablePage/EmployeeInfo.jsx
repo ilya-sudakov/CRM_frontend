@@ -1,33 +1,33 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import {
   numberToString,
   addSpaceDelimiter,
   formatDateStringNoYear,
   roundUpWorkHours,
-} from '../../../../utils/functions.jsx'
-import editIcon from '../../../../../../../../assets/tableview/edit.svg'
-import { Link } from 'react-router-dom'
-import { days } from '../../../../utils/dataObjects.js'
+} from "../../../../utils/functions.jsx";
+import editIcon from "../../../../../../../../assets/tableview/edit.svg";
+import { Link } from "react-router-dom";
+import { days } from "../../../../utils/dataObjects.js";
 
 //Окно для вывода информации о сотруднике и его работе за неделю
 const EmployeeInfo = ({ selectedInfo, date }) => {
   useEffect(() => {
-    console.log(selectedInfo)
-  }, [selectedInfo])
+    console.log(selectedInfo);
+  }, [selectedInfo]);
 
   const getWeekDays = (date) => {
-    let week = []
-    let curDate = new Date(date)
+    let week = [];
+    let curDate = new Date(date);
 
     for (let i = 1; i <= 7; i++) {
-      const first = curDate.getDate() - curDate.getDay() + i
-      const day = new Date(curDate.setDate(first))
-      week.push(day)
+      const first = curDate.getDate() - curDate.getDay() + i;
+      const day = new Date(curDate.setDate(first));
+      week.push(day);
     }
 
     // console.log(curDate, week)
-    return week
-  }
+    return week;
+  };
 
   // return getWeekDays1(date).map((date) => formatDateStringNoYear(date))
   return (
@@ -35,7 +35,7 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
       <div className="report-table-page__employee-wrapper">
         <div className="report-table-page__employee-title">
           {`Данные сотрудника за рабочую неделю (${formatDateStringNoYear(
-            getWeekDays(date)[0],
+            getWeekDays(date)[0]
           )} - ${formatDateStringNoYear(getWeekDays(date)[6])})`}
         </div>
         <div className="report-table-page__employee-general">
@@ -62,7 +62,7 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
                     (item) =>
                       item.day === date.getDate() &&
                       item.month === date.getMonth() + 1 &&
-                      item.year === date.getFullYear(),
+                      item.year === date.getFullYear()
                   ).length > 0 && (
                     <div className="report-table-page__employee-title report-table-page__employee-title--date">
                       {`${formatDateStringNoYear(date)} - ${
@@ -75,32 +75,32 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
                       (item) =>
                         item.day === date.getDate() &&
                         item.month === date.getMonth() + 1 &&
-                        item.year === date.getFullYear(),
+                        item.year === date.getFullYear()
                     )
                     ?.map((item) => (
                       <WorksItem item={item} />
                     ))}
                 </>
-              )
+              );
             })
           )}
         </div>
         <WeekSummary selectedInfo={selectedInfo} dates={getWeekDays(date)} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EmployeeInfo
+export default EmployeeInfo;
 
 const WorksItem = ({ item }) => {
   return (
     <div
       className="report-table-page__employee-works-item"
       style={{
-        marginBottom: '15px',
-        marginTop: '5px',
-        marginLeft: '15px',
+        marginBottom: "15px",
+        marginTop: "5px",
+        marginLeft: "15px",
       }}
     >
       <span>
@@ -123,8 +123,8 @@ const WorksItem = ({ item }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 const ProductItem = ({ item }) => {
   return (
@@ -138,8 +138,8 @@ const ProductItem = ({ item }) => {
         {`${addSpaceDelimiter(item.quantity)} шт`}
       </span>
     </div>
-  )
-}
+  );
+};
 
 const WeekSummary = ({ selectedInfo, dates }) => {
   return (
@@ -152,13 +152,13 @@ const WeekSummary = ({ selectedInfo, dates }) => {
                 (date) =>
                   cur.day === date.getDate() &&
                   cur.month === date.getMonth() + 1 &&
-                  cur.year === date.getFullYear(),
+                  cur.year === date.getFullYear()
               ) !== undefined
                 ? sum + cur.hours
                 : sum,
-            0,
+            0
           ) +
-          ' ' +
+          " " +
           numberToString(
             Number.parseInt(
               roundUpWorkHours(
@@ -168,17 +168,17 @@ const WeekSummary = ({ selectedInfo, dates }) => {
                       (date) =>
                         cur.day === date.getDate() &&
                         cur.month === date.getMonth() + 1 &&
-                        cur.year === date.getFullYear(),
+                        cur.year === date.getFullYear()
                     ) !== undefined
                       ? sum + cur.hours
                       : sum,
-                  0,
-                ),
-              ),
+                  0
+                )
+              )
             ),
-            ['час', 'часа', 'часов'],
+            ["час", "часа", "часов"]
           )
         : 0}
     </div>
-  )
-}
+  );
+};

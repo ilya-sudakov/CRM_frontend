@@ -178,46 +178,12 @@ const ReportTablePage = (props) => {
       />
     ),
     employee: (
-      <>
-        <ControlPanel
-          styles={{ marginTop: "-5px" }}
-          itemsCount={formatDateString(date)}
-          buttons={
-            <>
-              <Button
-                text="Пред. неделя"
-                className="main-window__button main-window__button--inverted"
-                inverted
-                isLoading={isLoading || excelIsLoading}
-                onClick={() =>
-                  setDate((date) => {
-                    const newDate = new Date(
-                      new Date(date).setTime(
-                        date.getTime() - 7 * 24 * 60 * 60 * 1000
-                      )
-                    );
-                    console.log(date, newDate);
-                    return newDate;
-                  })
-                }
-              />
-              <Button
-                text="Тек. неделя"
-                className="main-window__button main-window__button--inverted"
-                inverted
-                isLoading={isLoading || excelIsLoading}
-                onClick={() => setDate(new Date())}
-              />
-            </>
-          }
-        />
         <EmployeePage
           userContext={userContext}
           workList={workList}
           isLoading={isLoading}
           date={date}
         />
-      </>
     ),
   };
 
