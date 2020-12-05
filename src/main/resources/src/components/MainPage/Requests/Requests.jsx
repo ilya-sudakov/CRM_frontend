@@ -16,7 +16,6 @@ import SearchBar from "../SearchBar/SearchBar.jsx";
 import FormWindow from "../../../utils/Form/FormWindow/FormWindow.jsx";
 import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import Button from "../../../utils/Form/Button/Button.jsx";
-// import { Link } from 'react-router-dom'
 import {
   formatDateString,
   getDatesFromRequests,
@@ -25,6 +24,7 @@ import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.js
 import { filterRequestsByPage } from "./functions.js";
 import { pages } from "./objects.js";
 import { Link } from "react-router-dom";
+import PlaceholderLoading from "../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]); //Массив заявок
@@ -35,8 +35,10 @@ const Requests = (props) => {
   //id заявки, использующийся при ее дальнейшем копировании или переносе в цеха
   const [requestId, setRequestId] = useState(0);
   const [dates, setDates] = useState([]);
-  const [clients, setClients] = useState([]); //Массив клиентов
-  const [curPage, setCurPage] = useState("open"); //Текущая страница
+  const pageNameInURL = props.location.pathname.split("/requests/")[1];
+  const [curPage, setCurPage] = useState(
+    pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
+  ); //Текущая страница
   //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([
     {
@@ -108,10 +110,6 @@ const Requests = (props) => {
   useEffect(() => {
     document.title = "Заявки";
     let abortController = new AbortController();
-
-    const pageNameInURL = props.location.pathname.split("/requests/")[1];
-    setCurPage(pageNameInURL);
-
     requests.length === 0 && loadRequests(abortController.signal);
     return function cancel() {
       abortController.abort();
