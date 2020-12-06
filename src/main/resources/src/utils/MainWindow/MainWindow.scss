@@ -660,10 +660,10 @@
   .main-window__list-item {
     &--divider {
       background-color: #cccccc;
-      // background-color: transparent;
+      background-color: transparent;
       position: relative;
       border: none;
-      height: 3px;
+      height: 2px;
       margin: 20px auto;
       padding: 0;
       justify-content: center;
@@ -671,8 +671,8 @@
       width: 95%;
 
       &:hover {
-        box-shadow: none;
-        color: $primary-text-color;
+        // box-shadow: none;
+        // color: $primary-text-color;
       }
 
       span {
@@ -683,9 +683,9 @@
         max-width: fit-content;
         text-align: center !important;
         // background-color: rgba($button__background--inverted, 0.9);
-        background-color: $secondary-text-color;
+        // background-color: $secondary-text-color;
         // border: 1px solid $button__background--inverted;
-        border: 1px solid #999999;
+        // border: 1px solid #999999;
         color: #444444;
         // color: $secondary-text-color;
         border-radius: 5px;

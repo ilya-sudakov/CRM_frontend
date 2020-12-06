@@ -36,7 +36,8 @@ const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
 export default WorkList;
 
 const ListItem = ({ item, employeesMap }) => {
-  return (
+  return employeesMap[item.id] ||
+    (new Date().getDay() !== 0 && new Date().getDay() !== 1) ? (
     <div
       index={item.id}
       className={`work-list-widget__item ${
@@ -57,5 +58,5 @@ const ListItem = ({ item, employeesMap }) => {
         )}
       </div>
     </div>
-  );
+  ) : null;
 };

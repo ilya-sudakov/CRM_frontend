@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { days } from "../../../../utils/dataObjects.js";
 
 //Окно для вывода информации о сотруднике и его работе за неделю
-const EmployeeInfo = ({ selectedInfo, date }) => {
+const EmployeeInfoPanel = ({ selectedInfo, date, header }) => {
   useEffect(() => {
     console.log(selectedInfo);
   }, [selectedInfo]);
@@ -34,13 +34,15 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
     <div className="report-table-page__employee-info">
       <div className="report-table-page__employee-wrapper">
         <div className="report-table-page__employee-title">
-          {`Данные сотрудника за рабочую неделю (${formatDateStringNoYear(
-            getWeekDays(date)[0]
-          )} - ${formatDateStringNoYear(getWeekDays(date)[6])})`}
+          {header ??
+            `Данные сотрудника за рабочую неделю (${formatDateStringNoYear(
+              getWeekDays(date)[0]
+            )} - ${formatDateStringNoYear(getWeekDays(date)[6])})`}
         </div>
         <div className="report-table-page__employee-general">
           <div className="report-table-page__full-name">
-            {selectedInfo?.employeeName}
+            {selectedInfo?.employeeName ??
+              `${selectedInfo.employee?.lastName} ${selectedInfo.employee?.name} ${selectedInfo.employee?.middleName}`}
           </div>
           <div className="report-table-page__workshop">
             {selectedInfo?.employee?.workshop}
@@ -91,7 +93,7 @@ const EmployeeInfo = ({ selectedInfo, date }) => {
   );
 };
 
-export default EmployeeInfo;
+export default EmployeeInfoPanel;
 
 const WorksItem = ({ item }) => {
   return (

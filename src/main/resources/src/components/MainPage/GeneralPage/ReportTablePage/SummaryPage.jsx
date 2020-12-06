@@ -8,6 +8,7 @@ import { exportReportTableExcel } from "../../../../utils/xlsxFunctions.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import TableView from "./TableView.jsx";
 import { EmployeeInfo } from "./InfoComponents.jsx";
+import { formatDateString } from "../../../../utils/functions.jsx";
 
 const SummaryPage = ({
   setSearchQuery,
@@ -72,6 +73,8 @@ const SummaryPage = ({
       <EmployeeInfo
         showWindow={showWindow}
         setShowWindow={setShowWindow}
+        header={formatDateString(selectedInfo.selectedDay)}
+        date={selectedInfo.selectedDay ?? new Date()}
         selectedInfo={selectedInfo}
       />
       <TableView

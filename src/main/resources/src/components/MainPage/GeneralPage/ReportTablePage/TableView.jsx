@@ -53,6 +53,7 @@ const TableView = (props) => {
             );
             props.setDate(newDate);
           }}
+          title="Пред. месяц"
           src={ChevronSVG}
         />
         <div>
@@ -67,6 +68,7 @@ const TableView = (props) => {
             );
             props.setDate(newDate);
           }}
+          title="След. месяц"
           src={ChevronSVG}
         />
       </div>
@@ -145,6 +147,13 @@ const TableView = (props) => {
                                           day: workItem[0].day,
                                           year: props.date.getFullYear(),
                                           month: props.date.getMonth() + 1,
+                                          selectedDay: new Date(
+                                            props.date.getFullYear(),
+                                            props.date.getMonth(),
+                                            workItem.length > 0
+                                              ? workItem[0].day
+                                              : workItem.day
+                                          ),
                                           worksId: workItem.map((item) => {
                                             return item.workList.id;
                                           }),
@@ -157,6 +166,13 @@ const TableView = (props) => {
                                           day: workItem.day,
                                           month: props.date.getMonth() + 1,
                                           year: props.date.getFullYear(),
+                                          selectedDay: new Date(
+                                            props.date.getFullYear(),
+                                            props.date.getMonth(),
+                                            workItem.length > 0
+                                              ? workItem[0].day
+                                              : workItem.day
+                                          ),
                                           worksId: null,
                                           works: workItem,
                                         });
@@ -186,7 +202,41 @@ const TableView = (props) => {
                               }
                             }
                           )}
-                          <span>
+                          <span
+                            onClick={() => {
+                              console.log(work);
+                              if (work.workArray.length > 0) {
+                                const filteredData = Object.values(
+                                  work.works
+                                ).filter(
+                                  (item, workItemIndex) => workItemIndex < 15
+                                );
+                                console.log(filteredData);
+                                props.setSelectedInfo({
+                                  employeeId: work.employee.id,
+                                  employee: work.employee,
+                                  // day: workItem[0].day,
+                                  // year: props.date.getFullYear(),
+                                  // month: props.date.getMonth() + 1,
+                                  worksId: filteredData.map((item) => {
+                                    return item.id;
+                                  }),
+                                  works: filteredData,
+                                });
+                              } else {
+                                props.setSelectedInfo({
+                                  employeeId: work.employee.id,
+                                  employee: work.employee,
+                                  // day: workItem.day,
+                                  // month: props.date.getMonth() + 1,
+                                  // year: props.date.getFullYear(),
+                                  worksId: null,
+                                  works: [],
+                                });
+                              }
+                              // props.setShowWindow(true);
+                            }}
+                          >
                             {Object.values(work.works).reduce(
                               (sum, item, index) => {
                                 if (item.length > 0 && index < 15) {
@@ -287,6 +337,13 @@ const TableView = (props) => {
                                           day: workItem[0].day,
                                           month: props.date.getMonth() + 1,
                                           year: props.date.getFullYear(),
+                                          selectedDay: new Date(
+                                            props.date.getFullYear(),
+                                            props.date.getMonth(),
+                                            workItem.length > 0
+                                              ? workItem[0].day
+                                              : workItem.day
+                                          ),
                                           worksId: workItem.map((item) => {
                                             return item.workList.id;
                                           }),
@@ -300,6 +357,13 @@ const TableView = (props) => {
                                           day: workItem.day,
                                           month: props.date.getMonth() + 1,
                                           year: props.date.getFullYear(),
+                                          selectedDay: new Date(
+                                            props.date.getFullYear(),
+                                            props.date.getMonth(),
+                                            workItem.length > 0
+                                              ? workItem[0].day
+                                              : workItem.day
+                                          ),
                                           worksId: null,
                                           works: workItem,
                                         });

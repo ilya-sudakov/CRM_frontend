@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SelectEmployee from "../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
-import EmployeeInfo from "./EmployeeInfo.jsx";
+import EmployeeInfoPanel from "./EmployeeInfo.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import { formatDateString } from "../../../../utils/functions.jsx";
 import useWorkReportByRange from "../../../../utils/hooks/useWorkReportByRange.js";
@@ -112,7 +112,7 @@ const EmployeePage = ({ userContext, date }) => {
           />
         )}
         {selectedInfo !== null && !isLoadingWorkData ? (
-          <EmployeeInfo selectedInfo={selectedInfo} date={selectedDate} />
+          <EmployeeInfoPanel selectedInfo={selectedInfo} date={selectedDate} />
         ) : null}
       </div>
     </>
