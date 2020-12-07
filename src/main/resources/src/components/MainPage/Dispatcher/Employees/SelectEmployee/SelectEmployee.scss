@@ -34,22 +34,9 @@
     }
   }
 
-  &__button {
-    border: 0;
-    cursor: pointer;
-    outline: none;
-    font-size: 70%;
+  .main-form__button {
+    font-size: 0.8rem;
     padding: 10px 10px;
-    border-radius: 5px;
-    background-color: $button__background--inverted;
-    color: #ffffff;
-    transition: 0.2s ease-in-out;
-    // margin-bottom: 5px;
-
-    &:hover {
-      background-color: lighten($button__background--inverted, 5%);
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    }
   }
 
   .select-employee__error {
@@ -79,11 +66,12 @@
       border: 1px solid #bbbbbb;
       width: 100%;
       padding: 5px 10px;
-      border-radius: 5px;
+      border-radius: 3px;
       // border-top-left-radius: 5px;
       // border-bottom-left-radius: 5px;
       z-index: 0;
       transition: 100ms ease-in-out;
+      margin-top: 0;
 
       &:hover {
         border-color: #888888;
