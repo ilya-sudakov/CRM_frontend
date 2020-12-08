@@ -53,6 +53,8 @@ import {
   RiggingList,
   ProductionJournal,
   StatisticsPage,
+  ReportsPage,
+  EmployeeReportPage,
 } from "./lazyImports.jsx";
 import NewRequest from "./WorkshopsComponents/Forms/NewRequest/NewRequest.jsx";
 import EditRequest from "./WorkshopsComponents/Forms/EditRequest/EditRequest.jsx";
@@ -587,6 +589,18 @@ const MainPage = () => {
                     "ROLE_ENGINEER",
                     "ROLE_WORKSHOP",
                   ]}
+                />
+                <PrivateRoute
+                  exact
+                  path="/reports"
+                  component={ReportsPage}
+                  allowedRoles={["ROLE_ADMIN"]}
+                />
+                <PrivateRoute
+                  exact
+                  path="/reports/employee"
+                  component={EmployeeReportPage}
+                  allowedRoles={["ROLE_ADMIN"]}
                 />
                 <PrivateRoute
                   exact

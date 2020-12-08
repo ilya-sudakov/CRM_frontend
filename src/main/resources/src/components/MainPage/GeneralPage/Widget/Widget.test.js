@@ -35,7 +35,7 @@ describe("Widget component", () => {
       />
     );
     fireEvent.click(screen.getByRole("button"));
-    expect(mockHistoryPush).toHaveBeenCalledWith("/requests");
+    expect(mockHistoryPush).toHaveBeenCalledWith("/requests/open");
   });
 
   it("renders content", async () => {

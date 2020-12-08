@@ -489,6 +489,23 @@
     }
   }
 
+  &__select {
+    outline: none;
+    border-radius: 3px;
+    min-width: 100px;
+    padding: 5px 5px;
+    width: fit-content;
+    border-color: #bbbbbb;
+
+    option {
+      color: #000000;
+    }
+
+    option:checked {
+      color: #777777;
+    }
+  }
+
   // LIST
 
   &__list {
