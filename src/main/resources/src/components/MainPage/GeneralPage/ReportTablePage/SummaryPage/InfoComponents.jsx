@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
-import EmployeeInfoPanel from "./EmployeeInfo.jsx";
+import FormWindow from "../../../../../utils/Form/FormWindow/FormWindow.jsx";
+import EmployeeInfoPanel from "../EmployeeInfo.jsx";
 
 //Окно для вывода информации о сотруднике и его работе за день
 export const EmployeeInfo = (props) => {

@@ -3,7 +3,7 @@ import "./ReportTablePage.scss";
 import { getRecordedWorkByMonth } from "../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
 import UserContext from "../../../../App.js";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import SummaryPage from "./SummaryPage.jsx";
+import SummaryPage from "./SummaryPage/SummaryPage.jsx";
 
 const getMonthDates = (curDate) => {
   //Получаем массив с датами месяца
