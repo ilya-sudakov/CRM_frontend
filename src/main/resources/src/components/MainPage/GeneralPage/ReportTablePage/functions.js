@@ -1,13 +1,19 @@
-export const getWeekDays = (date) => {
-  let week = [];
-  let curDate = date;
-
-  for (let i = 1; i <= 7; i++) {
-    const first = curDate.getDate() - curDate.getDay() + i;
-    const day = new Date(curDate.setDate(first));
-    week.push(day);
+export const getDaysArray = (start, end) => {
+  let arr = [];
+  for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+    arr.push(new Date(dt));
   }
+  return arr;
+};
 
-  // console.log(curDate, week)
-  return week;
+export const sortEmployees = (employees) => {
+  return employees.sort((a, b) => {
+    if (a.employee.lastName < b.employee.lastName) {
+      return -1;
+    }
+    if (a.employee.lastName > b.employee.lastName) {
+      return 1;
+    }
+    return 0;
+  });
 };

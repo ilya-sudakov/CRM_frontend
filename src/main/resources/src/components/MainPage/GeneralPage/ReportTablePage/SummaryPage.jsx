@@ -9,28 +9,7 @@ import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel
 import TableView from "./TableView.jsx";
 import { EmployeeInfo } from "./InfoComponents.jsx";
 import { formatDateString } from "../../../../utils/functions.jsx";
-
-const getWeekDays = (date) => {
-  let week = [];
-  let curDate = new Date(date);
-
-  for (let i = 1; i <= 7; i++) {
-    const first = curDate.getDate() - curDate.getDay() + i;
-    const day = new Date(curDate.setDate(first));
-    week.push(day);
-  }
-
-  // console.log(curDate, week)
-  return week;
-};
-
-const getDaysArray = (start, end) => {
-  let arr = [];
-  for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
-    arr.push(new Date(dt));
-  }
-  return arr;
-};
+import { getDaysArray } from "./functions.js";
 
 const SummaryPage = ({
   setSearchQuery,
@@ -99,7 +78,7 @@ const SummaryPage = ({
           selectedInfo?.selectedDay?.endDate
             ? `Отчет за период ${formatDateString(
                 selectedInfo.selectedDay?.startDate
-              )} - ${formatDateString(selectedInfo.selectedDay?.startDate)}`
+              )} - ${formatDateString(selectedInfo.selectedDay?.endDate)}`
             : formatDateString(selectedInfo.selectedDay?.startDate)
         }
         dates={
