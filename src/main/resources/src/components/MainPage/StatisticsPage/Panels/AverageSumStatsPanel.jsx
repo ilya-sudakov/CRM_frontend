@@ -5,9 +5,14 @@ import {
   addSpaceDelimiter,
   formatDateStringNoDate,
 } from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
+import { checkIfDateIsInRange } from "../functions.js";
 
-const AverageSumStatsPanel = ({ requests, currDate, timeText }) => {
+const AverageSumStatsPanel = ({
+  requests,
+  currDate,
+  timeText,
+  getPrevData,
+}) => {
   const [stats, setStats] = useState({
     category: "Средняя сумма заказа",
     percentage: 0,
@@ -32,10 +37,10 @@ const AverageSumStatsPanel = ({ requests, currDate, timeText }) => {
     let prevMonthLength = 0;
     let curMonthLength = 0;
 
-    //check prev month
+    //check prev data
     let temp = requests.filter((request) => {
       const date = new Date(request.date);
-      const prevMonth = getPreviousMonthDates(currDate.startDate);
+      const prevMonth = getPrevData(currDate.startDate);
       if (
         checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
         request.status === "Завершено"

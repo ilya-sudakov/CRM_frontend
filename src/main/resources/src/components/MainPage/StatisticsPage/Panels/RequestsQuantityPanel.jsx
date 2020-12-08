@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import SmallPanel from "./SmallPanel.jsx";
 import PlaylistIcon from "../../../../../../../../assets/sidemenu/play_list.inline.svg";
-import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
+import { checkIfDateIsInRange } from "../functions.js";
 
-const RequestsQuantityPanel = ({ requests, currDate, timeText }) => {
+const RequestsQuantityPanel = ({
+  requests,
+  currDate,
+  timeText,
+  getPrevData,
+}) => {
   const [stats, setStats] = useState({
     category: "Заявки",
     percentage: 0,
@@ -31,7 +36,7 @@ const RequestsQuantityPanel = ({ requests, currDate, timeText }) => {
     //check prev month
     let temp = requests.filter((request) => {
       const date = new Date(request.date);
-      const prevMonth = getPreviousMonthDates(currDate.startDate);
+      const prevMonth = getPrevData(currDate.startDate);
       if (checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate)) {
         prevMonthQuantity++;
         return false;

@@ -52,3 +52,33 @@ export const checkIfDateIsInRange = (check, from, to) => {
   }
   return false;
 };
+
+export const getPreviousWeekDays = (date, value) => {
+  let week = [];
+  let curDate = new Date(date);
+
+  switch (value) {
+    case "current":
+      for (let i = 1; i <= 7; i++) {
+        const first = curDate.getDate() - curDate.getDay() + i;
+        const day = new Date(curDate.setDate(first));
+        week.push(day);
+      }
+      break;
+    default:
+      curDate = new Date(
+        new Date(date).setTime(date.getTime() - 7 * 24 * 60 * 60 * 1000)
+      );
+      for (let i = 1; i <= 7; i++) {
+        const first = curDate.getDate() - curDate.getDay() + i;
+        const day = new Date(curDate.setDate(first));
+        week.push(day);
+      }
+      break;
+  }
+
+  // console.log(curDate, week)
+  const startDate = week[0];
+  const endDate = week[6];
+  return { startDate, endDate, week };
+};

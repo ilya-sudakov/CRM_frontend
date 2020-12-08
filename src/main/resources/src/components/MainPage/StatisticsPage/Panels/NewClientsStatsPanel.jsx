@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import SmallPanel from "./SmallPanel.jsx";
 import ClientsIcon from "../../../../../../../../assets/sidemenu/client.inline.svg";
-import {
-  addSpaceDelimiter,
-  formatDateString,
-  formatDateStringNoDate,
-} from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
+import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
+import { checkIfDateIsInRange } from "../functions.js";
 
-const NewClientsStatsPanel = ({ requests, currDate, timeText }) => {
+const NewClientsStatsPanel = ({
+  requests,
+  currDate,
+  timeText,
+  getPrevData,
+}) => {
   const [stats, setStats] = useState({
     category: "Новые клиенты",
     percentage: 0,
@@ -33,7 +34,7 @@ const NewClientsStatsPanel = ({ requests, currDate, timeText }) => {
 
     let prevMonthNewClients = 0;
     let curMonthNewClients = 0;
-    const prevMonth = getPreviousMonthDates(currDate.startDate);
+    const prevMonth = getPrevData(currDate.startDate);
 
     const filteredRequests = requests.filter((request) => {
       if (

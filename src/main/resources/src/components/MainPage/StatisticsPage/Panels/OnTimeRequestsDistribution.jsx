@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import SmallPanel from "./SmallPanel.jsx";
 import ClockIcon from "../../../../../../../../assets/etc/time.inline.svg";
-import {
-  dateDiffInDays,
-  formatDateStringNoDate,
-} from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
+import { dateDiffInDays } from "../../../../utils/functions.jsx";
+import { checkIfDateIsInRange } from "../functions.js";
 
-const OnTimeRequestsDistribution = ({ requests, currDate, timeText }) => {
+const OnTimeRequestsDistribution = ({
+  requests,
+  currDate,
+  timeText,
+  getPrevData,
+}) => {
   const [stats, setStats] = useState({
     category: "Вовремя выполненные заказы",
     percentage: 0,
@@ -35,7 +37,7 @@ const OnTimeRequestsDistribution = ({ requests, currDate, timeText }) => {
     //check prev month
     let temp = requests.filter((request) => {
       const date = new Date(request.date);
-      const prevMonth = getPreviousMonthDates(currDate.startDate);
+      const prevMonth = getPrevData(currDate.startDate);
       if (
         checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
         (request.status === "Завершено" || request.status === "Отгружено")

@@ -5,12 +5,13 @@ import {
   dateDiffInDays,
   formatDateStringNoDate,
 } from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
+import { checkIfDateIsInRange } from "../functions.js";
 
 const RequestsAverageTimeCompletionPanel = ({
   requests,
   currDate,
   timeText,
+  getPrevData,
 }) => {
   const [stats, setStats] = useState({
     category: "Средняя прод. выполнения заказа",
@@ -40,7 +41,7 @@ const RequestsAverageTimeCompletionPanel = ({
     //check prev month
     let temp = requests.filter((request) => {
       const date = new Date(request.date);
-      const prevMonth = getPreviousMonthDates(currDate.startDate);
+      const prevMonth = getPrevData(currDate.startDate);
       if (
         checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
         request.status === "Завершено"

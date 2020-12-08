@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import SmallPanel from "./SmallPanel.jsx";
 import PlaylistIcon from "../../../../../../../../assets/sidemenu/play_list.inline.svg";
-import { formatDateStringNoDate } from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
+import { checkIfDateIsInRange } from "../functions.js";
 
-const ProductQuantityInRequest = ({ requests, currDate, timeText }) => {
+const ProductQuantityInRequest = ({
+  requests,
+  currDate,
+  timeText,
+  getPrevData,
+}) => {
   const [stats, setStats] = useState({
     category: "Среднее кол-во позиций в заказе",
     percentage: 0,
@@ -34,7 +38,7 @@ const ProductQuantityInRequest = ({ requests, currDate, timeText }) => {
     //check prev month
     let temp = requests.filter((request) => {
       const date = request.date;
-      const prevMonth = getPreviousMonthDates(currDate.startDate);
+      const prevMonth = getPrevData(currDate.startDate);
       if (checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate)) {
         prevMonthAverage += request.requestProducts.length;
         prevMonthQuantity++;

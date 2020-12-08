@@ -4,7 +4,7 @@ import "./StatisticsPage.scss";
 import { getRequests } from "../../../utils/RequestsAPI/Requests.jsx";
 import { getStamp } from "../../../utils/RequestsAPI/Rigging/Stamp.jsx";
 import { getRecordedWorkByDateRange } from "../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import { formatDateStringNoDate } from "../../../utils/functions.jsx";
+import { formatDateStringNoYear } from "../../../utils/functions.jsx";
 import { months } from "../../../utils/dataObjects.js";
 
 import RequestsQuantityPanel from "./Panels/RequestsQuantityPanel.jsx";
@@ -28,6 +28,7 @@ import {
   getDaysArray,
   getMonthDates,
   getPreviousMonthDates,
+  getPreviousWeekDays,
 } from "./functions.js";
 
 const StatisticsPage = () => {
@@ -70,6 +71,41 @@ const StatisticsPage = () => {
       timeTextGraphPanel:
         months[getPreviousMonthDates(currDate.startDate).startDate.getMonth()],
       itemsCount: `${months[currDate.startDate.getMonth()]}`,
+      getPrevData: (date) => getPreviousMonthDates(date),
+    },
+    week: {
+      name: "Неделя",
+      prevButton: {
+        text: "Пред. неделя",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousWeekDays(currDate.startDate).startDate,
+            endDate: getPreviousWeekDays(currDate.startDate).endDate,
+          }),
+      },
+      nextButton: {
+        text: "Тек. неделя",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousWeekDays(new Date(), "current").startDate,
+            endDate: getPreviousWeekDays(new Date(), "current").endDate,
+          }),
+      },
+      getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
+      displayDates: () => currDate.startDate.getMonth(),
+      initData: () =>
+        setCurrDate({
+          startDate: getPreviousWeekDays(new Date(), "current").startDate,
+          endDate: getPreviousWeekDays(new Date(), "current").endDate,
+        }),
+      timeTextSmallPanel: "От прошлой недели",
+      timeTextGraphPanel: `${formatDateStringNoYear(
+        currDate.startDate
+      )} - ${formatDateStringNoYear(currDate.endDate)}`,
+      itemsCount: `${formatDateStringNoYear(
+        currDate.startDate
+      )} - ${formatDateStringNoYear(currDate.endDate)}`,
+      getPrevData: (date) => getPreviousWeekDays(date),
     },
   };
 
@@ -111,6 +147,16 @@ const StatisticsPage = () => {
         <ControlPanel
           buttons={
             <>
+              <select
+                className="main-window__select"
+                onChange={({ target }) => {
+                  setCurPeriod(target.value);
+                  timePeriod[target.value].initData();
+                }}
+              >
+                <option value="month">Месяц</option>
+                <option value="week">Неделя</option>
+              </select>
               <div
                 className="main-window__button main-window__button--inverted"
                 onClick={() => timePeriod[curPeriod].prevButton.onClick()}
@@ -173,21 +219,25 @@ const RequestsPage = ({ currDate, timePeriod }) => {
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
         />
         <IncomeStatsPanel
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
         />
         <AverageSumStatsPanel
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
         />
         <RequestsAverageTimeCompletion
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
         />
       </div>
       <div className="statistics__row">
@@ -207,16 +257,19 @@ const RequestsPage = ({ currDate, timePeriod }) => {
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
         />
         <ProductQuantityInRequest
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
         />
         <OnTimeRequestsDistribution
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
         />
       </div>
       <div className="statistics__row">
