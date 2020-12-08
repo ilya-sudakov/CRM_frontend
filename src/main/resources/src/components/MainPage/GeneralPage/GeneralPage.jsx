@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 import "./GeneralPage.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
 import DownloadIcon from "../../../../../../../assets/download.svg";
-import graphIcon from "../../../../../../../assets/graph-icon.svg";
-import StatsIcon from "../../../../../../../assets/statistics/stats-alt.inline.svg";
+import GraphIcon from "../../../../../../../assets/statistics/graph-16.inline.svg";
+import StatsIcon from "../../../../../../../assets/statistics/bar-chart-line.inline.svg";
+import ReportIcon from "../../../../../../../assets/statistics/report.svg";
 import calenderIcon from "../../../../../../../assets/tableview/calendar.svg";
 import { exportReportTableExcel } from "../../../utils/xlsxFunctions.jsx";
 import Button from "../../../utils/Form/Button/Button.jsx";
@@ -99,13 +100,13 @@ const GeneralPage = (props) => {
               </Link>
               {props.userHasAccess(["ROLE_ADMIN"]) && (
                 <Link className="main-window__button" to="/graphs">
-                  <img className="main-window__img" src={graphIcon} />
+                  <GraphIcon className="main-window__img" />
                   Графики
                 </Link>
               )}
               {props.userHasAccess(["ROLE_ADMIN"]) && (
                 <Link className="main-window__button" to="/reports">
-                  <img className="main-window__img" src={graphIcon} />
+                  <img className="main-window__img" src={ReportIcon} />
                   Отчеты
                 </Link>
               )}
