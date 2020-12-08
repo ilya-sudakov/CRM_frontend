@@ -4,32 +4,10 @@ import { getRecordedWorkByMonth } from "../../../../utils/RequestsAPI/WorkManagi
 import UserContext from "../../../../App.js";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import SummaryPage from "./SummaryPage/SummaryPage.jsx";
-
-const getMonthDates = (curDate) => {
-  //Получаем массив с датами месяца
-  let dates = [];
-  for (
-    let i = 1;
-    i <
-    new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate() + 1;
-    i++
-  )
-    dates.push(i);
-
-  return dates;
-};
+import { getMonthDates } from "./functions.js";
 
 const ReportTablePage = (props) => {
   const [date, setDate] = useState(new Date());
-  const [workshops, setWorkshops] = useState([
-    { name: "ЦехЛЭМЗ", allowedRoles: ["ROLE_ADMIN", "ROLE_LEMZ"] },
-    { name: "ЦехЛиговский", allowedRoles: ["ROLE_ADMIN", "ROLE_LIGOVSKIY"] },
-    { name: "ЦехЛепсари", allowedRoles: ["ROLE_ADMIN", "ROLE_LEPSARI"] },
-    {
-      name: "Офис",
-      allowedRoles: ["ROLE_ADMIN", "ROLE_DISPATCHER", "ROLE_MANAGER"],
-    },
-  ]);
   const [isLoading, setIsLoading] = useState(false);
   const [excelIsLoading, setExcelIsLoading] = useState(false);
   const [dates, setDates] = useState([]);
@@ -38,7 +16,6 @@ const ReportTablePage = (props) => {
   const [selectedInfo, setSelectedInfo] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const userContext = useContext(UserContext);
-  const [curPage, setCurPage] = useState("summary"); //Текущая страница
 
   const getAllEmployeesWorkData = (date, signal) => {
     setIsLoading(true);
@@ -154,50 +131,32 @@ const ReportTablePage = (props) => {
     };
   }, [date]);
 
-  const pages = {
-    summary: (
-      <SummaryPage
-        setSearchQuery={setSearchQuery}
-        isLoading={isLoading}
-        excelIsLoading={excelIsLoading}
-        setExcelIsLoading={setExcelIsLoading}
-        date={date}
-        setDate={setDate}
-        showWindow={showWindow}
-        setShowWindow={setShowWindow}
-        selectedInfo={selectedInfo}
-        dates={dates}
-        workList={workList}
-        setSelectedInfo={setSelectedInfo}
-        searchQuery={searchQuery}
-        userContext={userContext}
-      />
-    ),
-  };
-
   return (
     <div className="report-table-page">
       <div className="main-window">
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Табель</div>
-          <div className="main-window__menu">
-            <div
-              className={
-                curPage === "summary"
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-              onClick={() => setCurPage("summary")}
-            >
-              Все сотрудники
-            </div>
-          </div>
         </div>
         <FloatingPlus
           linkTo="/work-management/record-time/new"
           visibility={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
         />
-        {pages[curPage]}
+        <SummaryPage
+          setSearchQuery={setSearchQuery}
+          isLoading={isLoading}
+          excelIsLoading={excelIsLoading}
+          setExcelIsLoading={setExcelIsLoading}
+          date={date}
+          setDate={setDate}
+          showWindow={showWindow}
+          setShowWindow={setShowWindow}
+          selectedInfo={selectedInfo}
+          dates={dates}
+          workList={workList}
+          setSelectedInfo={setSelectedInfo}
+          searchQuery={searchQuery}
+          userContext={userContext}
+        />
       </div>
     </div>
   );

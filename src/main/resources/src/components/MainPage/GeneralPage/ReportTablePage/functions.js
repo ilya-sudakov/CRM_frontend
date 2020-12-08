@@ -17,3 +17,17 @@ export const sortEmployees = (employees) => {
     return 0;
   });
 };
+
+export const getMonthDates = (curDate) => {
+  //Получаем массив с датами месяца
+  let dates = [];
+  for (
+    let i = 1;
+    i <
+    new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate() + 1;
+    i++
+  )
+    dates.push(i);
+
+  return dates;
+};
