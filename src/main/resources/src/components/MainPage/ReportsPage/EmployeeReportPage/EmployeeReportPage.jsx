@@ -214,9 +214,8 @@ const EmployeeReportPage = () => {
           />
         ) : (
           <Button
-            text=""
-            className="main-window__button"
-            // inverted
+            text="Идет загрузка"
+            className="main-window__button employee-page__button--loading"
             isLoading={true}
           />
         )}
