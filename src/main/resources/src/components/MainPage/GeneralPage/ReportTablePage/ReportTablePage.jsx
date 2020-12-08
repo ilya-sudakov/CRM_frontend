@@ -2,12 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import "./ReportTablePage.scss";
 import { getRecordedWorkByMonth } from "../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
 import UserContext from "../../../../App.js";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import EmployeePage from "./EmployeePage.jsx";
 import SummaryPage from "./SummaryPage.jsx";
-import { formatDateString } from "../../../../utils/functions.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
 
 const getMonthDates = (curDate) => {
   //Получаем массив с датами месяца
@@ -177,14 +173,6 @@ const ReportTablePage = (props) => {
         userContext={userContext}
       />
     ),
-    employee: (
-      <EmployeePage
-        userContext={userContext}
-        workList={workList}
-        isLoading={isLoading}
-        date={date}
-      />
-    ),
   };
 
   return (
@@ -202,16 +190,6 @@ const ReportTablePage = (props) => {
               onClick={() => setCurPage("summary")}
             >
               Все сотрудники
-            </div>
-            <div
-              className={
-                curPage === "employee"
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-              onClick={() => setCurPage("employee")}
-            >
-              Отчет сотрудника
             </div>
           </div>
         </div>

@@ -10,6 +10,28 @@ import TableView from "./TableView.jsx";
 import { EmployeeInfo } from "./InfoComponents.jsx";
 import { formatDateString } from "../../../../utils/functions.jsx";
 
+const getWeekDays = (date) => {
+  let week = [];
+  let curDate = new Date(date);
+
+  for (let i = 1; i <= 7; i++) {
+    const first = curDate.getDate() - curDate.getDay() + i;
+    const day = new Date(curDate.setDate(first));
+    week.push(day);
+  }
+
+  // console.log(curDate, week)
+  return week;
+};
+
+const getDaysArray = (start, end) => {
+  let arr = [];
+  for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+    arr.push(new Date(dt));
+  }
+  return arr;
+};
+
 const SummaryPage = ({
   setSearchQuery,
   isLoading,
@@ -73,8 +95,21 @@ const SummaryPage = ({
       <EmployeeInfo
         showWindow={showWindow}
         setShowWindow={setShowWindow}
-        header={formatDateString(selectedInfo.selectedDay)}
-        date={selectedInfo.selectedDay ?? new Date()}
+        header={
+          selectedInfo?.selectedDay?.endDate
+            ? `Отчет за период ${formatDateString(
+                selectedInfo.selectedDay?.startDate
+              )} - ${formatDateString(selectedInfo.selectedDay?.startDate)}`
+            : formatDateString(selectedInfo.selectedDay?.startDate)
+        }
+        dates={
+          selectedInfo?.selectedDay?.endDate
+            ? getDaysArray(
+                selectedInfo.selectedDay.startDate,
+                selectedInfo.selectedDay.endDate
+              )
+            : [selectedInfo?.selectedDay?.startDate]
+        }
         selectedInfo={selectedInfo}
       />
       <TableView

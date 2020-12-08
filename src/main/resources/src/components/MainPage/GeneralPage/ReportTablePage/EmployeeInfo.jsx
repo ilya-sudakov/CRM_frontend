@@ -10,34 +10,19 @@ import { Link } from "react-router-dom";
 import { days } from "../../../../utils/dataObjects.js";
 
 //Окно для вывода информации о сотруднике и его работе за неделю
-const EmployeeInfoPanel = ({ selectedInfo, date, header }) => {
+const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
   useEffect(() => {
     console.log(selectedInfo);
   }, [selectedInfo]);
 
-  const getWeekDays = (date) => {
-    let week = [];
-    let curDate = new Date(date);
-
-    for (let i = 1; i <= 7; i++) {
-      const first = curDate.getDate() - curDate.getDay() + i;
-      const day = new Date(curDate.setDate(first));
-      week.push(day);
-    }
-
-    // console.log(curDate, week)
-    return week;
-  };
-
-  // return getWeekDays1(date).map((date) => formatDateStringNoYear(date))
   return (
     <div className="report-table-page__employee-info">
       <div className="report-table-page__employee-wrapper">
         <div className="report-table-page__employee-title">
           {header ??
-            `Данные сотрудника за рабочую неделю (${formatDateStringNoYear(
-              getWeekDays(date)[0]
-            )} - ${formatDateStringNoYear(getWeekDays(date)[6])})`}
+            `Данные сотрудника (${formatDateStringNoYear(
+              dates[0]
+            )} - ${formatDateStringNoYear(dates[dates.length - 1])})`}
         </div>
         <div className="report-table-page__employee-general">
           <div className="report-table-page__full-name">
@@ -57,15 +42,23 @@ const EmployeeInfoPanel = ({ selectedInfo, date, header }) => {
           {selectedInfo?.works?.length === undefined ? (
             <div>Нет учтенной работы</div>
           ) : (
-            getWeekDays(date).map((date) => {
+            dates.map((date) => {
               return (
                 <>
-                  {selectedInfo?.works?.filter(
-                    (item) =>
+                  {selectedInfo?.works?.filter((item) => {
+                    if (item.length > 0) {
+                      return (
+                        item[0].day === date.getDate() &&
+                        item[0].month === date.getMonth() + 1 &&
+                        item[0].year === date.getFullYear()
+                      );
+                    }
+                    return (
                       item.day === date.getDate() &&
                       item.month === date.getMonth() + 1 &&
                       item.year === date.getFullYear()
-                  ).length > 0 && (
+                    );
+                  }).length > 0 && (
                     <div className="report-table-page__employee-title report-table-page__employee-title--date">
                       {`${formatDateStringNoYear(date)} - ${
                         days[date.getDay()]
@@ -73,21 +66,33 @@ const EmployeeInfoPanel = ({ selectedInfo, date, header }) => {
                     </div>
                   )}
                   {selectedInfo?.works
-                    ?.filter(
-                      (item) =>
+                    ?.filter((item) => {
+                      if (item.length > 0) {
+                        return (
+                          item[0].day === date.getDate() &&
+                          item[0].month === date.getMonth() + 1 &&
+                          item[0].year === date.getFullYear()
+                        );
+                      }
+                      return (
                         item.day === date.getDate() &&
                         item.month === date.getMonth() + 1 &&
                         item.year === date.getFullYear()
-                    )
-                    ?.map((item) => (
-                      <WorksItem item={item} />
-                    ))}
+                      );
+                    })
+                    ?.map((item) =>
+                      item.length > 0 ? (
+                        item.map((workItem) => <WorksItem item={workItem} />)
+                      ) : (
+                        <WorksItem item={item} />
+                      )
+                    )}
                 </>
               );
             })
           )}
         </div>
-        <WeekSummary selectedInfo={selectedInfo} dates={getWeekDays(date)} />
+        <WeekSummary selectedInfo={selectedInfo} dates={dates} />
       </div>
     </div>
   );
@@ -150,13 +155,27 @@ const WeekSummary = ({ selectedInfo, dates }) => {
       {selectedInfo?.works?.length > 0
         ? selectedInfo?.works?.reduce(
             (sum, cur) =>
-              dates.find(
-                (date) =>
+              dates.find((date) => {
+                if (cur.length > 0) {
+                  return (
+                    cur[0].day === date.getDate() &&
+                    cur[0].month === date.getMonth() + 1 &&
+                    cur[0].year === date.getFullYear()
+                  );
+                }
+                return (
                   cur.day === date.getDate() &&
                   cur.month === date.getMonth() + 1 &&
                   cur.year === date.getFullYear()
-              ) !== undefined
-                ? sum + cur.hours
+                );
+              }) !== undefined
+                ? sum +
+                  (cur.length > 0
+                    ? cur.reduce(
+                        (sumInner, curInner) => sumInner + curInner.hours,
+                        0
+                      )
+                    : cur.hours)
                 : sum,
             0
           ) +
@@ -166,13 +185,27 @@ const WeekSummary = ({ selectedInfo, dates }) => {
               roundUpWorkHours(
                 selectedInfo?.works?.reduce(
                   (sum, cur) =>
-                    dates.find(
-                      (date) =>
+                    dates.find((date) => {
+                      if (cur.length > 0) {
+                        return (
+                          cur[0].day === date.getDate() &&
+                          cur[0].month === date.getMonth() + 1 &&
+                          cur[0].year === date.getFullYear()
+                        );
+                      }
+                      return (
                         cur.day === date.getDate() &&
                         cur.month === date.getMonth() + 1 &&
                         cur.year === date.getFullYear()
-                    ) !== undefined
-                      ? sum + cur.hours
+                      );
+                    }) !== undefined
+                      ? sum +
+                        (cur.length > 0
+                          ? cur.reduce(
+                              (sumInner, curInner) => sumInner + curInner.hours,
+                              0
+                            )
+                          : cur.hours)
                       : sum,
                   0
                 )
