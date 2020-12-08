@@ -71,7 +71,7 @@ const StatisticsPage = () => {
       timeTextGraphPanel:
         months[getPreviousMonthDates(currDate.startDate).startDate.getMonth()],
       itemsCount: `${months[currDate.startDate.getMonth()]}`,
-      getPrevData: (date) => getPreviousMonthDates(date),
+      getPrevData: (date, value) => getPreviousMonthDates(date, value),
     },
     week: {
       name: "Неделя",
@@ -105,7 +105,7 @@ const StatisticsPage = () => {
       itemsCount: `${formatDateStringNoYear(
         currDate.startDate
       )} - ${formatDateStringNoYear(currDate.endDate)}`,
-      getPrevData: (date) => getPreviousWeekDays(date),
+      getPrevData: (date, value) => getPreviousWeekDays(date, value),
     },
   };
 
@@ -244,12 +244,12 @@ const RequestsPage = ({ currDate, timePeriod }) => {
         <ManagerEfficiencyGraphPanel
           currDate={currDate}
           data={requests}
-          timeText={`${months[currDate.startDate.getMonth()]}`}
+          timeText={timePeriod.timeTextGraphPanel}
         />
         <ManagerMoneyGraphPanel
           currDate={currDate}
           data={requests}
-          timeText={`${months[currDate.startDate.getMonth()]}`}
+          timeText={timePeriod.timeTextGraphPanel}
         />
       </div>
       <div className="statistics__row">
@@ -276,7 +276,7 @@ const RequestsPage = ({ currDate, timePeriod }) => {
         <ClientTypeDistributionInRequests
           currDate={currDate}
           data={requests}
-          timeText={`${months[currDate.startDate.getMonth()]}`}
+          timeText={timePeriod.timeTextGraphPanel}
         />
       </div>
     </div>
