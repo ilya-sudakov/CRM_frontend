@@ -24,11 +24,46 @@ import OnTimeRequestsDistribution from "./Panels/OnTimeRequestsDistribution.jsx"
 
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import useDraftsList from "../../../utils/hooks/useDraftsList";
+import { getDaysArray, getMonthDates } from "./functions.js";
 
 const StatisticsPage = () => {
   const [curPage, setCurPage] = useState("requests");
 
   const [curDate, setCurDate] = useState(new Date());
+
+  const timePeriods = {
+    month: {
+      name: "Месяц",
+      prevButton: {
+        text: "Пред. месяц",
+        onClick: () => {
+          const newDate = new Date(
+            new Date(curDate.startDate).setMonth(curDate.getMonth() - 1)
+          );
+          setCurDate({
+            startDate: getMonthDates(newDate).startDate,
+            endDate: getMonthDates(newDate).endDate,
+          });
+        },
+      },
+      nextButton: {
+        text: "Тек. месяц",
+        onClick: () => {
+          setCurDate({
+            startDate: getMonthDates(new Date()).startDate,
+            endDate: getMonthDates(new Date()).endDate,
+          });
+        },
+      },
+      getDateList: () => getDaysArray(curDate.startDate, curDate.endDate),
+      displayDates: () => curDate.startDate.getMonth(),
+      initData: () =>
+        setCurDate({
+          startDate: getMonthDates(new Date()).startDate,
+          endDate: getMonthDates(new Date()).endDate,
+        }),
+    },
+  };
 
   const pages = {
     requests: () => <RequestsPage curDate={curDate} />,

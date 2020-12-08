@@ -6,7 +6,7 @@ import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus
 import SummaryPage from "./SummaryPage/SummaryPage.jsx";
 import { getMonthDates } from "./functions.js";
 
-const ReportTablePage = (props) => {
+const ReportTablePage = () => {
   const [date, setDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const [excelIsLoading, setExcelIsLoading] = useState(false);

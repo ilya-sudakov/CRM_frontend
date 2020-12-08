@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { formatDateString } from "../functions.jsx";
 import { getRecordedWorkByDateRange } from "../RequestsAPI/WorkManaging/WorkControl.jsx";
 
-const useWorkReportByRange = (week) => {
+const useWorkReportByRange = (datesList) => {
   const [workData, setWorkData] = useState([]);
-  const [curWeek, setCurWeek] = useState(week);
+  const [curDatesList, setCurDateList] = useState(datesList);
   const [isLoadingWorkData, setIsLoadingWorkData] = useState(true);
 
   const loadData = async (signal) => {
     setIsLoadingWorkData(true);
     return await getRecordedWorkByDateRange(
-      week[0].getDate(),
-      week[0].getMonth() + 1,
-      week[week.length - 1].getDate(),
-      week[week.length - 1].getMonth() + 1,
+      datesList[0].getDate(),
+      datesList[0].getMonth() + 1,
+      datesList[datesList.length - 1].getDate(),
+      datesList[datesList.length - 1].getMonth() + 1,
       signal
     )
       .then((res) => res.json())
@@ -39,13 +39,14 @@ const useWorkReportByRange = (week) => {
   }, []);
 
   useEffect(() => {
-    if (formatDateString(curWeek[0]) === formatDateString(week[0])) return;
+    if (formatDateString(curDatesList[0]) === formatDateString(datesList[0]))
+      return;
 
-    if (formatDateString(curWeek[0]) !== formatDateString(week[0])) {
-      setCurWeek(week);
+    if (formatDateString(curDatesList[0]) !== formatDateString(datesList[0])) {
+      setCurDateList(datesList);
       loadData();
     }
-  }, [week, curWeek]);
+  }, [datesList, curDatesList]);
 
   return [workData, isLoadingWorkData];
 };

@@ -1,39 +1,39 @@
-import React, { useState, useEffect } from 'react'
-import SmallPanel from './SmallPanel.jsx'
-import ClientsIcon from '../../../../../../../../assets/sidemenu/client.inline.svg'
+import React, { useState, useEffect } from "react";
+import SmallPanel from "./SmallPanel.jsx";
+import ClientsIcon from "../../../../../../../../assets/sidemenu/client.inline.svg";
 import {
   addSpaceDelimiter,
   formatDateString,
   formatDateStringNoDate,
-} from '../../../../utils/functions.jsx'
+} from "../../../../utils/functions.jsx";
 
 const NewClientsStatsPanel = ({ requests, curDate }) => {
   const [stats, setStats] = useState({
-    category: 'Новые клиенты',
+    category: "Новые клиенты",
     percentage: 0,
     value: null,
-    linkTo: '/clients/categories',
+    linkTo: "/clients/categories",
     isLoaded: false,
     isLoading: false,
-    timePeriod: 'От прошлого месяца',
+    timePeriod: "От прошлого месяца",
     difference: 0,
     renderIcon: () => <ClientsIcon className="panel__img panel__img--money" />,
-  })
+  });
 
   const getStats = (requests, curDate = new Date()) => {
     setStats((stats) => ({
       ...stats,
       isLoading: true,
       isLoaded: false,
-    }))
+    }));
 
-    let clients = {}
+    let clients = {};
     //filter all clients except once from cur and prev month
-    const curMonth = formatDateStringNoDate(curDate)
-    const oneMonthAgo = formatDateStringNoDate(new Date(curDate).setDate(0))
+    const curMonth = formatDateStringNoDate(curDate);
+    const oneMonthAgo = formatDateStringNoDate(new Date(curDate).setDate(0));
 
-    let prevMonthNewClients = 0
-    let curMonthNewClients = 0
+    let prevMonthNewClients = 0;
+    let curMonthNewClients = 0;
 
     requests.filter((request) => {
       if (
@@ -45,12 +45,12 @@ const NewClientsStatsPanel = ({ requests, curDate }) => {
       ) {
         clients = {
           ...clients,
-          [request.client.id]: '',
-        }
-        return false
+          [request.client.id]: "",
+        };
+        return false;
       }
-      return true
-    })
+      return true;
+    });
 
     //find new clients from prev month
     requests.filter((request) => {
@@ -59,18 +59,18 @@ const NewClientsStatsPanel = ({ requests, curDate }) => {
         formatDateStringNoDate(request.date) === oneMonthAgo &&
         clients[request.client.id] === undefined
       ) {
-        prevMonthNewClients++
+        prevMonthNewClients++;
         clients = {
           ...clients,
-          [request.client.id]: '',
-        }
-        return false
+          [request.client.id]: "",
+        };
+        return false;
       }
       if (request.client === null) {
-        return false
+        return false;
       }
-      return true
-    })
+      return true;
+    });
 
     //find new clients from cur month
     requests.map((request) => {
@@ -79,13 +79,13 @@ const NewClientsStatsPanel = ({ requests, curDate }) => {
         formatDateStringNoDate(request.date) === curMonth &&
         clients[request.client.id] === undefined
       ) {
-        curMonthNewClients++
+        curMonthNewClients++;
         clients = {
           ...clients,
-          [request.client.id]: '',
-        }
+          [request.client.id]: "",
+        };
       }
-    })
+    });
 
     setStats((stats) => ({
       ...stats,
@@ -98,24 +98,24 @@ const NewClientsStatsPanel = ({ requests, curDate }) => {
           ((curMonthNewClients - prevMonthNewClients) /
             (prevMonthNewClients === 0 ? 1 : prevMonthNewClients)) *
             100 *
-            100,
+            100
         ) / 100,
-    }))
-  }
+    }));
+  };
 
   //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
-  }, [requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate);
+  }, [requests, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
     if (!stats.isLoading && requests.length > 1) {
-      getStats(requests, curDate)
+      getStats(requests, curDate);
     }
-  }, [curDate])
+  }, [curDate]);
 
-  return <SmallPanel {...stats} />
-}
+  return <SmallPanel {...stats} />;
+};
 
-export default NewClientsStatsPanel
+export default NewClientsStatsPanel;

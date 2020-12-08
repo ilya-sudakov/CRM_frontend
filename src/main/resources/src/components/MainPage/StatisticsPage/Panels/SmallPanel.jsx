@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { addSpaceDelimiter } from '../../../../utils/functions.jsx'
+import React, { useEffect, useState } from "react";
+import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
+import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
 
 const SmallPanel = ({
   isLoaded,
@@ -13,69 +13,66 @@ const SmallPanel = ({
   timePeriod,
   linkTo,
 }) => {
-  useEffect(() => {}, [isLoaded])
+  useEffect(() => {}, [isLoaded]);
 
   return (
-    <Link
-      className={`panel ${isLoaded ? '' : 'panel--placeholder'}`}
-      to={linkTo || '/'}
-    >
+    <div className={`panel ${isLoaded ? "" : "panel--placeholder"}`}>
       <div className="panel__category">
-        <span>{category || 'Категория'}</span>
+        <span>{category || "Категория"}</span>
         {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
       </div>
       <div
         className={`panel__value panel__value--${
           invertedStats === true
             ? difference >= 0
-              ? 'negative'
-              : 'positive'
+              ? "negative"
+              : "positive"
             : difference < 0
-            ? 'negative'
-            : 'positive'
+            ? "negative"
+            : "positive"
         }`}
       >
         {isLoaded ? value || 0 : null}
         <span>
           {isLoaded
-            ? `${difference < 0 ? '' : '+'}${addSpaceDelimiter(
-                Math.floor(difference * 100) / 100,
+            ? `${difference < 0 ? "" : "+"}${addSpaceDelimiter(
+                Math.floor(difference * 100) / 100
               )}`
-            : ''}
+            : ""}
         </span>
       </div>
       <div
         className={`panel__difference panel__difference--${
           invertedStats === true
             ? percentage === 0 || !isLoaded
-              ? 'equal'
+              ? "equal"
               : percentage >= 0
-              ? 'negative'
-              : 'positive'
+              ? "negative"
+              : "positive"
             : percentage === 0 || !isLoaded
-            ? 'equal'
+            ? "equal"
             : percentage < 0
-            ? 'negative'
-            : 'positive'
+            ? "negative"
+            : "positive"
         }`}
       >
         <div className="panel__arrow"></div>
         <div className="panel__percentage">
-          {isLoaded ? `${Math.abs(percentage)}%` : ''}
+          {isLoaded ? `${Math.abs(percentage)}%` : ""}
         </div>
-        <div className="panel__time-period">{isLoaded ? timePeriod : ''}</div>
+        <div className="panel__time-period">{isLoaded ? timePeriod : ""}</div>
       </div>
       <div
         className={`panel__difference panel__difference--${
           percentage === 0 || !isLoaded
-            ? 'equal'
+            ? "equal"
             : percentage < 0
-            ? 'negative'
-            : 'positive'
+            ? "negative"
+            : "positive"
         }`}
       ></div>
-    </Link>
-  )
-}
+    </div>
+  );
+};
 
-export default SmallPanel
+export default SmallPanel;

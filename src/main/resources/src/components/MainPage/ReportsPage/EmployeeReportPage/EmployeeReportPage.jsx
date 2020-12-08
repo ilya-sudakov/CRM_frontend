@@ -7,53 +7,13 @@ import { formatDateString } from "../../../../utils/functions.jsx";
 import useWorkReportByRange from "../../../../utils/hooks/useWorkReportByRange.js";
 import UserContext from "../../../../App.js";
 import "./EmployeeReportPage.scss";
-
-const getWeekDays = (date) => {
-  let week = [];
-  let curDate = new Date(date);
-
-  for (let i = 1; i <= 7; i++) {
-    const first = curDate.getDate() - curDate.getDay() + i;
-    const day = new Date(curDate.setDate(first));
-    week.push(day);
-  }
-
-  // console.log(curDate, week)
-  const startDate = week[0];
-  const endDate = week[6];
-  return { week, startDate, endDate };
-};
-
-const getDaysArray = (start, end) => {
-  let arr = [];
-  for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
-    arr.push(new Date(dt));
-  }
-  return arr;
-};
-
-const getPreviousQuarterDates = (date, value) => {
-  let today = date;
-  const quarter = Math.floor(today.getMonth() / 3);
-  let startDate;
-  let endDate;
-
-  switch (value) {
-    case "current":
-      startDate = new Date(today.getFullYear(), quarter * 3, 1);
-      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 3, 0);
-      break;
-    default:
-      startDate = new Date(today.getFullYear(), quarter * 3 - 3, 1);
-      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 3, 0);
-      break;
-  }
-
-  return {
-    startDate,
-    endDate,
-  };
-};
+import { months } from "../../../../utils/dataObjects.js";
+import {
+  getWeekDays,
+  getPreviousMonthDates,
+  getPreviousQuarterDates,
+  getDaysArray,
+} from "./functions.js";
 
 const EmployeeReportPage = () => {
   const [selectedInfo, setSelectedInfo] = useState(null);
@@ -87,7 +47,7 @@ const EmployeeReportPage = () => {
         onClick: () =>
           setSelectedDate((selectedDate) => {
             const newDate = new Date(
-              new Date(selectedDate).setTime(
+              new Date(selectedDate.startDate).setTime(
                 selectedDate.startDate.getTime() - 7 * 24 * 60 * 60 * 1000
               )
             );
@@ -112,11 +72,39 @@ const EmployeeReportPage = () => {
           selectedDate.endDate
         )}`,
       initData: () =>
-        setSelectedDate((selectedDate) => {
-          return {
-            startDate: getWeekDays(new Date()).startDate,
-            endDate: getWeekDays(new Date()).endDate,
-          };
+        setSelectedDate({
+          startDate: getWeekDays(new Date()).startDate,
+          endDate: getWeekDays(new Date()).endDate,
+        }),
+    },
+    month: {
+      name: "Месяц",
+      prevButton: {
+        text: "Пред. месяц",
+        onClick: () =>
+          setSelectedDate((selectedDate) => {
+            return {
+              startDate: getPreviousMonthDates(selectedDate.startDate)
+                .startDate,
+              endDate: getPreviousMonthDates(selectedDate.startDate).endDate,
+            };
+          }),
+      },
+      nextButton: {
+        text: "Тек. месяц",
+        onClick: () =>
+          setSelectedDate({
+            startDate: getPreviousMonthDates(new Date(), "current").startDate,
+            endDate: getPreviousMonthDates(new Date(), "current").endDate,
+          }),
+      },
+      getDateList: () =>
+        getDaysArray(selectedDate.startDate, selectedDate.endDate),
+      displayDates: () => months[selectedDate.startDate.getMonth()],
+      initData: () =>
+        setSelectedDate({
+          startDate: getPreviousMonthDates(new Date(), "current").startDate,
+          endDate: getPreviousMonthDates(new Date(), "current").endDate,
         }),
     },
     quarter: {
@@ -159,7 +147,7 @@ const EmployeeReportPage = () => {
   );
 
   useEffect(() => {
-    console.log(workData);
+    // console.log(workData);
 
     if (selectedInfo !== null) {
       setSelectedInfo({
@@ -197,6 +185,7 @@ const EmployeeReportPage = () => {
                 }}
               >
                 <option value="week">Неделя</option>
+                <option value="month">Месяц</option>
                 <option value="quarter">Квартал</option>
               </select>
               <Button
