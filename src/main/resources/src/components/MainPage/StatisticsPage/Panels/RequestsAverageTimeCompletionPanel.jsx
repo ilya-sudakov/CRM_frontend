@@ -105,6 +105,9 @@ const RequestsAverageTimeCompletionPanel = ({
 
   //При обновлении тек. даты
   useEffect(() => {
+    setStats((stats) => {
+      return { ...stats, timePeriod: timeText };
+    });
     if (!stats.isLoading && requests.length > 1) {
       getStats(requests);
     }

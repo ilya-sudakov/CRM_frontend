@@ -82,3 +82,48 @@ export const getPreviousWeekDays = (date, value) => {
   const endDate = week[6];
   return { startDate, endDate, week };
 };
+
+export const getPreviousQuarterDates = (date, value) => {
+  let today = date;
+  const quarter = Math.floor(today.getMonth() / 3);
+  let startDate;
+  let endDate;
+
+  switch (value) {
+    case "current":
+      startDate = new Date(today.getFullYear(), quarter * 3, 1);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 3, 0);
+      break;
+    default:
+      startDate = new Date(today.getFullYear(), quarter * 3 - 3, 1);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 3, 0);
+      break;
+  }
+
+  return {
+    startDate,
+    endDate,
+  };
+};
+
+export const getPreviousYearDates = (date, value) => {
+  let today = date;
+  let startDate;
+  let endDate;
+
+  switch (value) {
+    case "current":
+      startDate = new Date(today.getFullYear(), 1, 1);
+      endDate = new Date(startDate.getFullYear() + 1, 0, 0);
+      break;
+    default:
+      startDate = new Date(today.getFullYear() - 1, 1, 1);
+      endDate = new Date(startDate.getFullYear() + 1, 0, 0);
+      break;
+  }
+
+  return {
+    startDate,
+    endDate,
+  };
+};

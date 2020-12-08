@@ -26,9 +26,10 @@ import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.js
 import useDraftsList from "../../../utils/hooks/useDraftsList";
 import {
   getDaysArray,
-  getMonthDates,
   getPreviousMonthDates,
   getPreviousWeekDays,
+  getPreviousQuarterDates,
+  getPreviousYearDates,
 } from "./functions.js";
 
 const StatisticsPage = () => {
@@ -38,7 +39,7 @@ const StatisticsPage = () => {
   const [currDate, setCurrDate] = useState({
     startDate: getPreviousMonthDates(new Date(), "current").startDate,
     endDate: getPreviousMonthDates(new Date(), "current").endDate,
-  }); //тест для перехода на любой период
+  });
   const [curPeriod, setCurPeriod] = useState("month");
 
   const timePeriod = {
@@ -107,6 +108,70 @@ const StatisticsPage = () => {
       )} - ${formatDateStringNoYear(currDate.endDate)}`,
       getPrevData: (date, value) => getPreviousWeekDays(date, value),
     },
+    quarter: {
+      name: "Квартал",
+      prevButton: {
+        text: "Пред. квартал",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousQuarterDates(currDate.startDate).startDate,
+            endDate: getPreviousQuarterDates(currDate.startDate).endDate,
+          }),
+      },
+      nextButton: {
+        text: "Тек. квартал",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousQuarterDates(new Date(), "current").startDate,
+            endDate: getPreviousQuarterDates(new Date(), "current").endDate,
+          }),
+      },
+      getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
+      displayDates: () => currDate.startDate.getMonth(),
+      initData: () =>
+        setCurrDate({
+          startDate: getPreviousQuarterDates(new Date(), "current").startDate,
+          endDate: getPreviousQuarterDates(new Date(), "current").endDate,
+        }),
+      timeTextSmallPanel: "От прошлого квартала",
+      timeTextGraphPanel: `${formatDateStringNoYear(
+        currDate.startDate
+      )} - ${formatDateStringNoYear(currDate.endDate)}`,
+      itemsCount: `${formatDateStringNoYear(
+        currDate.startDate
+      )} - ${formatDateStringNoYear(currDate.endDate)}`,
+      getPrevData: (date, value) => getPreviousQuarterDates(date, value),
+    },
+    year: {
+      name: "Год",
+      prevButton: {
+        text: "Пред. год",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousYearDates(currDate.startDate).startDate,
+            endDate: getPreviousYearDates(currDate.startDate).endDate,
+          }),
+      },
+      nextButton: {
+        text: "Тек. год",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousYearDates(new Date(), "current").startDate,
+            endDate: getPreviousYearDates(new Date(), "current").endDate,
+          }),
+      },
+      getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
+      displayDates: () => currDate.startDate.getMonth(),
+      initData: () =>
+        setCurrDate({
+          startDate: getPreviousYearDates(new Date(), "current").startDate,
+          endDate: getPreviousYearDates(new Date(), "current").endDate,
+        }),
+      timeTextSmallPanel: "От прошлого года",
+      timeTextGraphPanel: currDate.startDate.getFullYear(),
+      itemsCount: currDate.startDate.getFullYear(),
+      getPrevData: (date, value) => getPreviousYearDates(date, value),
+    },
   };
 
   const pages = {
@@ -156,6 +221,8 @@ const StatisticsPage = () => {
               >
                 <option value="month">Месяц</option>
                 <option value="week">Неделя</option>
+                <option value="quarter">Квартал</option>
+                <option value="year">Год</option>
               </select>
               <div
                 className="main-window__button main-window__button--inverted"
