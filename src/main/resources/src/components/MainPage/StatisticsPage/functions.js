@@ -18,16 +18,37 @@ export const sortEmployees = (employees) => {
   });
 };
 
-export const getMonthDates = (curDate) => {
-  //Получаем массив с датами месяца
-  let dates = [];
-  for (
-    let i = 1;
-    i <
-    new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate() + 1;
-    i++
-  )
-    dates.push(i);
+export const getPreviousMonthDates = (date, value) => {
+  let today = date;
+  const month = today.getMonth();
+  let startDate;
+  let endDate;
 
-  return dates;
+  switch (value) {
+    case "current":
+      startDate = new Date(today.getFullYear(), month, 1);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+      break;
+    default:
+      startDate = new Date(today.getFullYear(), month - 1, 1);
+      endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
+      break;
+  }
+
+  return {
+    startDate,
+    endDate,
+  };
+};
+
+export const checkIfDateIsInRange = (check, from, to) => {
+  var firstDate, lastDate, checkDate;
+  firstDate = Date.parse(from);
+  lastDate = Date.parse(to);
+  checkDate = Date.parse(check);
+
+  if (checkDate <= lastDate && checkDate >= firstDate) {
+    return true;
+  }
+  return false;
 };

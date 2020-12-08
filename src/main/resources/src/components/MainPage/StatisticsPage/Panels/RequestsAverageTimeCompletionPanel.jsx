@@ -1,72 +1,77 @@
-import React, { useState, useEffect } from 'react'
-import SmallPanel from './SmallPanel.jsx'
-import TimeIcon from '../../../../../../../../assets/etc/time.inline.svg'
+import React, { useState, useEffect } from "react";
+import SmallPanel from "./SmallPanel.jsx";
+import TimeIcon from "../../../../../../../../assets/etc/time.inline.svg";
 import {
   dateDiffInDays,
   formatDateStringNoDate,
-} from '../../../../utils/functions.jsx'
+} from "../../../../utils/functions.jsx";
+import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
 
-const RequestsAverageTimeCompletionPanel = ({ requests, curDate }) => {
+const RequestsAverageTimeCompletionPanel = ({
+  requests,
+  currDate,
+  timeText,
+}) => {
   const [stats, setStats] = useState({
-    category: 'Средняя прод. выполнения заказа',
+    category: "Средняя прод. выполнения заказа",
     percentage: 0,
     value: null,
-    linkTo: '/requests',
+    linkTo: "/requests",
     isLoaded: false,
     isLoading: false,
-    timePeriod: 'От прошлого месяца',
+    timePeriod: timeText,
     difference: 0,
     invertedStats: true,
     renderIcon: () => <TimeIcon className="panel__img panel__img--time" />,
-  })
+  });
 
-  const getStats = (requests, curDate = new Date()) => {
+  const getStats = (requests) => {
     setStats((stats) => ({
       ...stats,
       isLoading: true,
       isLoaded: false,
-    }))
+    }));
 
-    let curMonthQuantity = 0
-    let prevMonthQuantity = 0
-    let curMonthAverage = 0
-    let prevMonthAverage = 0
+    let curMonthQuantity = 0;
+    let prevMonthQuantity = 0;
+    let curMonthAverage = 0;
+    let prevMonthAverage = 0;
 
     //check prev month
     let temp = requests.filter((request) => {
-      const date = new Date(request.date)
+      const date = new Date(request.date);
+      const prevMonth = getPreviousMonthDates(currDate.startDate);
       if (
-        formatDateStringNoDate(date) ===
-          formatDateStringNoDate(new Date(curDate).setDate(0)) &&
-        request.status === 'Завершено'
+        checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
+        request.status === "Завершено"
       ) {
         prevMonthAverage += dateDiffInDays(
           new Date(request.date),
-          new Date(request.shippingDate || new Date()),
-        )
-        prevMonthQuantity++
-        return false
+          new Date(request.shippingDate || new Date())
+        );
+        prevMonthQuantity++;
+        return false;
       }
-      return true
-    })
+      return true;
+    });
     temp.map((request) => {
-      const date = new Date(request.date)
+      const date = new Date(request.date);
       if (
-        formatDateStringNoDate(date) === formatDateStringNoDate(curDate) &&
-        request.status === 'Завершено'
+        checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
+        request.status === "Завершено"
       ) {
         curMonthAverage += dateDiffInDays(
           new Date(request.date),
-          new Date(request.shippingDate || new Date()),
-        )
-        return curMonthQuantity++
+          new Date(request.shippingDate || new Date())
+        );
+        return curMonthQuantity++;
       }
-    })
+    });
 
     curMonthAverage =
-      curMonthAverage / (curMonthQuantity !== 0 ? curMonthQuantity : 1)
+      curMonthAverage / (curMonthQuantity !== 0 ? curMonthQuantity : 1);
     prevMonthAverage =
-      prevMonthAverage / (prevMonthQuantity !== 0 ? prevMonthQuantity : 1)
+      prevMonthAverage / (prevMonthQuantity !== 0 ? prevMonthQuantity : 1);
 
     setStats((stats) => ({
       ...stats,
@@ -74,7 +79,7 @@ const RequestsAverageTimeCompletionPanel = ({ requests, curDate }) => {
       isLoading: false,
       value:
         Math.floor(curMonthAverage * 100) / 100 === 0
-          ? 'Нет данных'
+          ? "Нет данных"
           : `${Math.floor(curMonthAverage * 100) / 100} дн.`,
       difference:
         Math.floor(curMonthAverage * 100) / 100 === 0
@@ -87,24 +92,24 @@ const RequestsAverageTimeCompletionPanel = ({ requests, curDate }) => {
               ((curMonthAverage - prevMonthAverage) /
                 (prevMonthAverage !== 0 ? prevMonthAverage : 1)) *
                 100 *
-                100,
+                100
             ) / 100,
-    }))
-  }
+    }));
+  };
 
   //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
-  }, [requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests);
+  }, [requests, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
     if (!stats.isLoading && requests.length > 1) {
-      getStats(requests, curDate)
+      getStats(requests);
     }
-  }, [curDate])
+  }, [currDate]);
 
-  return <SmallPanel {...stats} />
-}
+  return <SmallPanel {...stats} />;
+};
 
-export default RequestsAverageTimeCompletionPanel
+export default RequestsAverageTimeCompletionPanel;

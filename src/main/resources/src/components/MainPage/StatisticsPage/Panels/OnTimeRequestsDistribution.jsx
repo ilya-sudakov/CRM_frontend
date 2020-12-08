@@ -1,98 +1,99 @@
-import React, { useState, useEffect } from 'react'
-import SmallPanel from './SmallPanel.jsx'
-import ClockIcon from '../../../../../../../../assets/etc/time.inline.svg'
+import React, { useState, useEffect } from "react";
+import SmallPanel from "./SmallPanel.jsx";
+import ClockIcon from "../../../../../../../../assets/etc/time.inline.svg";
 import {
   dateDiffInDays,
   formatDateStringNoDate,
-} from '../../../../utils/functions.jsx'
+} from "../../../../utils/functions.jsx";
+import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
 
-const OnTimeRequestsDistribution = ({ requests, curDate }) => {
+const OnTimeRequestsDistribution = ({ requests, currDate, timeText }) => {
   const [stats, setStats] = useState({
-    category: 'Вовремя выполненные заказы',
+    category: "Вовремя выполненные заказы",
     percentage: 0,
     value: null,
-    linkTo: '/requests',
+    linkTo: "/requests",
     isLoaded: false,
     isLoading: false,
-    timePeriod: 'От прошлого месяца',
+    timePeriod: timeText,
     difference: 0,
     renderIcon: () => <ClockIcon className="panel__img panel__img--time" />,
-  })
+  });
 
-  const getStats = (requests, curDate = new Date()) => {
+  const getStats = (requests) => {
     setStats((stats) => ({
       ...stats,
       isLoading: true,
       isLoaded: false,
-    }))
+    }));
 
-    let curMonthOnTimeQuantity = 0
-    let curMonthAllQuantity = 0
-    let prevMonthOnTimeQuantity = 0
-    let prevMonthAllQuantity = 0
+    let curMonthOnTimeQuantity = 0;
+    let curMonthAllQuantity = 0;
+    let prevMonthOnTimeQuantity = 0;
+    let prevMonthAllQuantity = 0;
 
     //check prev month
     let temp = requests.filter((request) => {
-      const date = new Date(request.date)
+      const date = new Date(request.date);
+      const prevMonth = getPreviousMonthDates(currDate.startDate);
       if (
-        formatDateStringNoDate(date) ===
-          formatDateStringNoDate(new Date(curDate).setDate(0)) &&
-        (request.status === 'Завершено' || request.status === 'Отгружено')
+        checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
+        (request.status === "Завершено" || request.status === "Отгружено")
       ) {
         //если заказ отгружен вовремя
         if (
           Math.abs(
             dateDiffInDays(
               new Date(request.date),
-              new Date(request.shippingDate),
-            ),
+              new Date(request.shippingDate)
+            )
           ) <= 7
         ) {
-          prevMonthOnTimeQuantity++
+          prevMonthOnTimeQuantity++;
         }
-        prevMonthAllQuantity++
-        return false
+        prevMonthAllQuantity++;
+        return false;
       }
-      return true
-    })
+      return true;
+    });
 
     //check cur month
     temp.map((request) => {
-      const date = new Date(request.date)
+      const date = new Date(request.date);
       if (
-        formatDateStringNoDate(date) === formatDateStringNoDate(curDate) &&
-        (request.status === 'Завершено' || request.status === 'Отгружено')
+        checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
+        (request.status === "Завершено" || request.status === "Отгружено")
       ) {
         //если заказ отгружен вовремя
         if (
           Math.abs(
             dateDiffInDays(
               new Date(request.date),
-              new Date(request.shippingDate),
-            ),
+              new Date(request.shippingDate)
+            )
           ) <= 7
         ) {
-          curMonthOnTimeQuantity++
+          curMonthOnTimeQuantity++;
         }
-        curMonthAllQuantity++
+        curMonthAllQuantity++;
       }
-    })
+    });
 
     //соотношение вовремя выпол. заказов в тек. месяце
     const curMonthValue =
       Math.floor(
         (curMonthOnTimeQuantity /
           (curMonthAllQuantity !== 0 ? curMonthAllQuantity : 1)) *
-          100,
-      ) / 100
+          100
+      ) / 100;
 
     //соотношение вовремя выпол. заказов в пред. месяце
     const prevMonthValue =
       Math.floor(
         (prevMonthOnTimeQuantity /
           (prevMonthAllQuantity !== 0 ? prevMonthAllQuantity : 1)) *
-          100,
-      ) / 100
+          100
+      ) / 100;
 
     setStats((stats) => ({
       ...stats,
@@ -106,24 +107,24 @@ const OnTimeRequestsDistribution = ({ requests, curDate }) => {
           ((curMonthValue - prevMonthValue) /
             (prevMonthValue !== 0 ? prevMonthValue : 1)) *
             100 *
-            100,
+            100
         ) / 100,
-    }))
-  }
+    }));
+  };
 
   //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
-  }, [requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests);
+  }, [requests, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
     if (!stats.isLoading && requests.length > 1) {
-      getStats(requests, curDate)
+      getStats(requests);
     }
-  }, [curDate])
+  }, [currDate]);
 
-  return <SmallPanel {...stats} />
-}
+  return <SmallPanel {...stats} />;
+};
 
-export default OnTimeRequestsDistribution
+export default OnTimeRequestsDistribution;

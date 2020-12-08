@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import GraphPanel from './GraphPanel.jsx'
-import ClientIcon from '../../../../../../../../assets/sidemenu/client.inline.svg'
-import { months } from '../../../../utils/dataObjects'
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
-import { formatDateStringNoDate } from '../../../../utils/functions.jsx'
+import React, { useState, useEffect } from "react";
+import GraphPanel from "./GraphPanel.jsx";
+import ClientIcon from "../../../../../../../../assets/sidemenu/client.inline.svg";
+import { months } from "../../../../utils/dataObjects";
+import { createGraph, loadCanvas } from "../../../../utils/graphs.js";
+import { checkIfDateIsInRange } from "../functions.js";
 
-const ClientTypeDistributionInRequests = ({ data, curDate }) => {
-  const [graph, setGraph] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [canvasLoaded, setCanvasLoaded] = useState(false)
+const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
+  const [graph, setGraph] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
-    category: 'Типы клиентов по заказам',
+    category: "Типы клиентов по заказам",
     isLoaded: false,
-    chartName: 'client-type-distribution-graph',
-    timePeriod: `${months[new Date().getMonth()]}`,
+    chartName: "client-type-distribution-graph",
+    timePeriod: timeText,
     renderIcon: () => <ClientIcon className="panel__img panel__img--money" />,
-  })
+  });
 
-  const getStats = (data, curDate = new Date()) => {
+  const getStats = (data) => {
     let clientTypes = {
       Активные: 0,
       Потенциальные: 0,
-      'В разработке': 0,
-    }
+      "В разработке": 0,
+    };
     data.map((request) => {
       if (
-        formatDateStringNoDate(request.date) ===
-          formatDateStringNoDate(curDate) &&
+        checkIfDateIsInRange(
+          request.date,
+          currDate.startDate,
+          currDate.endDate
+        ) &&
         request.client !== null &&
         clientTypes[request.client.clientType] !== undefined
       ) {
@@ -34,42 +37,42 @@ const ClientTypeDistributionInRequests = ({ data, curDate }) => {
           ...clientTypes,
           [request.client.clientType]:
             clientTypes[request.client.clientType] + 1,
-        }
+        };
       }
-    })
+    });
     // console.log(clientTypes)
-    renderGraph(clientTypes)
-  }
+    renderGraph(clientTypes);
+  };
 
   const renderGraph = (dataset) => {
     if (!canvasLoaded) {
       setStats((stats) => ({
         ...stats,
         isLoaded: true,
-      }))
+      }));
       loadCanvas(
         `panel__chart-wrapper--${stats.chartName}`,
-        `panel__chart panel__chart--${stats.chartName}`,
-      )
+        `panel__chart panel__chart--${stats.chartName}`
+      );
     }
 
-    setCanvasLoaded(true)
+    setCanvasLoaded(true);
     const options = {
-      type: 'pie',
+      type: "pie",
       data: {
         labels: Object.entries(dataset).map((item) => item[0]),
         datasets: [
           {
             // label: 'Population (millions)',
             backgroundColor: [
-              '#3e95cd',
-              '#8e5ea2',
-              '#3cba9f',
-              '#e8c3b9',
-              '#c45850',
-              '#bbbbbb',
-              '#bbbbbb',
-              '#bbbbbb',
+              "#3e95cd",
+              "#8e5ea2",
+              "#3cba9f",
+              "#e8c3b9",
+              "#c45850",
+              "#bbbbbb",
+              "#bbbbbb",
+              "#bbbbbb",
             ],
             data: Object.entries(dataset).map((item) => item[1]),
           },
@@ -84,46 +87,44 @@ const ClientTypeDistributionInRequests = ({ data, curDate }) => {
             ? true
             : false,
         animation: {
-          easing: 'easeInOutCirc',
+          easing: "easeInOutCirc",
         },
         tooltips: {
-          mode: 'index',
+          mode: "index",
         },
       },
-    }
+    };
     setTimeout(() => {
-      setIsLoading(false)
-      canvasLoaded && graph.destroy()
+      setIsLoading(false);
+      canvasLoaded && graph.destroy();
       setGraph(
         createGraph(
           options,
-          document.getElementsByClassName(
-            `panel__chart--${stats.chartName}`,
-          )[0],
-        ),
-      )
-    }, 150)
-  }
+          document.getElementsByClassName(`panel__chart--${stats.chartName}`)[0]
+        )
+      );
+    }, 150);
+  };
 
   //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && data.length > 1 && getStats(data, curDate)
-  }, [data, stats])
+    !stats.isLoaded && data.length > 1 && getStats(data);
+  }, [data, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
     if (!stats.isLoading && data.length > 1) {
-      setCanvasLoaded(false)
+      setCanvasLoaded(false);
       setStats((stats) => ({
         ...stats,
-        timePeriod: `${months[curDate.getMonth()]}`,
-      }))
-      graph.destroy()
-      getStats(data, curDate)
+        timePeriod: timeText,
+      }));
+      graph.destroy();
+      getStats(data);
     }
-  }, [curDate])
+  }, [currDate]);
 
-  return <GraphPanel {...stats} />
-}
+  return <GraphPanel {...stats} />;
+};
 
-export default ClientTypeDistributionInRequests
+export default ClientTypeDistributionInRequests;

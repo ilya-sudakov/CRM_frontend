@@ -5,8 +5,9 @@ import {
   addSpaceDelimiter,
   formatDateStringNoDate,
 } from "../../../../utils/functions.jsx";
+import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
 
-const AverageSumStatsPanel = ({ requests, curDate }) => {
+const AverageSumStatsPanel = ({ requests, currDate, timeText }) => {
   const [stats, setStats] = useState({
     category: "Средняя сумма заказа",
     percentage: 0,
@@ -14,12 +15,12 @@ const AverageSumStatsPanel = ({ requests, curDate }) => {
     linkTo: "/requests",
     isLoaded: false,
     isLoading: false,
-    timePeriod: "От прошлого месяца",
+    timePeriod: timeText,
     difference: 0,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
   });
 
-  const getStats = (requests, curDate = new Date()) => {
+  const getStats = (requests) => {
     setStats((stats) => ({
       ...stats,
       isLoading: true,
@@ -34,9 +35,9 @@ const AverageSumStatsPanel = ({ requests, curDate }) => {
     //check prev month
     let temp = requests.filter((request) => {
       const date = new Date(request.date);
+      const prevMonth = getPreviousMonthDates(currDate.startDate);
       if (
-        formatDateStringNoDate(date) ===
-          formatDateStringNoDate(new Date(curDate).setDate(0)) &&
+        checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
         request.status === "Завершено"
       ) {
         prevMonthLength++;
@@ -52,7 +53,7 @@ const AverageSumStatsPanel = ({ requests, curDate }) => {
     temp.map((request) => {
       const date = new Date(request.date);
       if (
-        formatDateStringNoDate(date) === formatDateStringNoDate(curDate) &&
+        checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
         request.status === "Завершено"
       ) {
         curMonthLength++;
@@ -85,15 +86,15 @@ const AverageSumStatsPanel = ({ requests, curDate }) => {
 
   //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests, new Date());
+    !stats.isLoaded && requests.length > 1 && getStats(requests);
   }, [requests, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
     if (!stats.isLoading && requests.length > 1) {
-      getStats(requests, curDate);
+      getStats(requests);
     }
-  }, [curDate]);
+  }, [currDate]);
 
   return <SmallPanel {...stats} />;
 };
