@@ -21,10 +21,9 @@ import {
   getDatesFromRequests,
 } from "../../../utils/functions.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { filterRequestsByPage } from "./functions.js";
+import { filterRequestsByPage, getPageByRequest } from "./functions.js";
 import { pages } from "./objects.js";
 import { Link } from "react-router-dom";
-import PlaceholderLoading from "../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]); //Массив заявок
@@ -39,6 +38,7 @@ const Requests = (props) => {
   const [curPage, setCurPage] = useState(
     pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
   ); //Текущая страница
+
   //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([
     {
@@ -385,8 +385,11 @@ const Requests = (props) => {
                           .then((res) => res.json())
                           .then((res) => {
                             setIsLoading(false);
+                            setShowWindow(false);
                             props.history.push(
-                              `${toWorkshop}/workshop-${toWorkshop}#${request.id}`
+                              `/${toWorkshop}/workshop-${toWorkshop}/${getPageByRequest(
+                                request
+                              )}#${request.id}`
                             );
                           })
                           .catch((error) => {

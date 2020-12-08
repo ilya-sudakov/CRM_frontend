@@ -1,41 +1,49 @@
-import React, { useState, useEffect } from 'react'
-import pdfMake from 'pdfmake'
-import './WorkshopLepsari.scss'
-import PrintIcon from '../../../../../../../assets/print.png'
-import TableView from '../WorkshopsComponents/TableView/TableView.jsx'
-import SearchBar from '../SearchBar/SearchBar.jsx'
-import { getProductsFromRequestsListPdfText } from '../../../utils/pdfFunctions.jsx'
-import Button from '../../../utils/Form/Button/Button.jsx'
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
+import React, { useState, useEffect } from "react";
+import pdfMake from "pdfmake";
+import "./WorkshopLepsari.scss";
+import PrintIcon from "../../../../../../../assets/print.png";
+import TableView from "../WorkshopsComponents/TableView/TableView.jsx";
+import SearchBar from "../SearchBar/SearchBar.jsx";
+import { getProductsFromRequestsListPdfText } from "../../../utils/pdfFunctions.jsx";
+import Button from "../../../utils/Form/Button/Button.jsx";
+import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import {
   getRequestById,
   deleteProductsToRequest,
   deleteRequest,
   getRequestsByWorkshop,
-} from '../../../utils/RequestsAPI/Requests.jsx'
+} from "../../../utils/RequestsAPI/Requests.jsx";
 import {
   sortRequestsByDates,
   getQuantityOfProductsFromRequests,
   getDatesFromRequests,
-} from '../../../utils/functions.jsx'
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
-import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.js'
+} from "../../../utils/functions.jsx";
+import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import { getCategories } from "../../../utils/RequestsAPI/Products/Categories.js";
+import { pages } from "../Requests/objects";
+import { Link } from "react-router-dom";
 
 const WorkshopLepsari = (props) => {
-  const [requestsLepsari, setrequestsLepsari] = useState([])
-  const [dates, setDates] = useState([])
-  const [productsQuantities, setProductsQuantities] = useState({})
-  const [searchQuery, setSearchQuery] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [curPage, setCurPage] = useState('Открытые')
+  const [requestsLepsari, setrequestsLepsari] = useState([]);
+  const [dates, setDates] = useState([]);
+  const [productsQuantities, setProductsQuantities] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const pageNameInURL = props.location.pathname.split(
+    "/lepsari/workshop-lepsari/"
+  )[1];
+  const [curPage, setCurPage] = useState(
+    pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
+  ); //Текущая страница
 
   //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([
     {
-      name: 'Проблема/Материалы',
-      oldName: 'Проблема-материалы',
-      className: 'materials',
-      access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+      name: "Проблема/Материалы",
+      oldName: "Проблема-материалы",
+      className: "materials",
+      access: ["ROLE_ADMIN", "ROLE_WORKSHOP"],
       visible: false,
     },
     // {
@@ -45,61 +53,61 @@ const WorkshopLepsari = (props) => {
     //   visible: false,
     // },
     {
-      name: 'Готово к отгрузке',
-      oldName: 'Готово',
-      className: 'ready',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      name: "Готово к отгрузке",
+      oldName: "Готово",
+      className: "ready",
+      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
       visible: false,
     },
     {
-      name: 'В производстве',
-      className: 'in-production',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      name: "В производстве",
+      className: "in-production",
+      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
       visible: false,
     },
     {
-      name: 'Ожидание',
-      className: 'waiting',
-      access: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+      name: "Ожидание",
+      className: "waiting",
+      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
       visible: false,
     },
     {
-      name: 'Приоритет',
-      className: 'priority',
-      access: ['ROLE_ADMIN'],
+      name: "Приоритет",
+      className: "priority",
+      access: ["ROLE_ADMIN"],
       visible: false,
     },
-  ])
+  ]);
 
   const deleteItem = (event) => {
-    const id = event.currentTarget.dataset.id
+    const id = event.currentTarget.dataset.id;
     getRequestById(id)
       .then((res) => res.json())
       .then((res) => {
         const productsArr = res.lepsariProducts.map((product) => {
-          return deleteProductsToRequest(product.id)
-        })
+          return deleteProductsToRequest(product.id);
+        });
         Promise.all(productsArr).then(() => {
-          deleteRequest(id).then(() => loadrequestsLepsari())
-        })
+          deleteRequest(id).then(() => loadrequestsLepsari());
+        });
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
-    document.title = 'Заявки - Лепсари'
-    const abortController = new AbortController()
-    loadrequestsLepsari(abortController.signal)
+    document.title = "Заявки - Лепсари";
+    const abortController = new AbortController();
+    loadrequestsLepsari(abortController.signal);
     return function cancel() {
-      abortController.abort()
-    }
-  }, [])
+      abortController.abort();
+    };
+  }, []);
 
   const printRequestsList = () => {
-    let categories = {}
-    setIsLoading(true)
+    let categories = {};
+    setIsLoading(true);
     //получаем список категорий продукций для категоризации
     //в pdf файле
     getCategories()
@@ -107,7 +115,7 @@ const WorkshopLepsari = (props) => {
       .then((res) => {
         res.map((category) => {
           if (categories[category.category] === undefined) {
-            categories = { ...categories, [category.category]: {} }
+            categories = { ...categories, [category.category]: {} };
           }
           Object.entries(productsQuantities).map((product) => {
             category.products.map((categoryProduct) => {
@@ -118,144 +126,147 @@ const WorkshopLepsari = (props) => {
                     ...categories[category.category],
                     [product[0]]: product[1],
                   },
-                }
+                };
               }
-            })
-          })
-        })
+            });
+          });
+        });
       })
       .then(() => {
-        setIsLoading(false)
-        let dd = getProductsFromRequestsListPdfText(categories, 'ЦехЛепсари')
-        pdfMake.createPdf(dd).print()
+        setIsLoading(false);
+        let dd = getProductsFromRequestsListPdfText(categories, "ЦехЛепсари");
+        pdfMake.createPdf(dd).print();
       })
       .catch((error) => {
-        console.log(error)
-        setIsLoading(false)
-      })
-  }
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
 
   const loadrequestsLepsari = (signal) => {
-    setIsLoading(true)
-    getRequestsByWorkshop('lepsari', signal)
+    setIsLoading(true);
+    getRequestsByWorkshop("lepsari", signal)
       .then((res) => res.json())
       .then((requests) => {
         // console.log(requests);
-        setrequestsLepsari(requests)
-        setProductsQuantities(getQuantityOfProductsFromRequests(requests))
-        setDates(getDatesFromRequests(requests))
-        setIsLoading(false)
-      })
-  }
+        setrequestsLepsari(requests);
+        setProductsQuantities(getQuantityOfProductsFromRequests(requests));
+        setDates(getDatesFromRequests(requests));
+        setIsLoading(false);
+      });
+  };
 
   // * Filtering
 
   const filterRequestsByPage = (data, page) => {
     return data.filter((item) => {
-      if (page === 'Завершено' && item.status === 'Завершено') {
-        return true
+      if (page === "Завершено" && item.status === "Завершено") {
+        return true;
       }
       if (
-        page === 'Отгружено' &&
-        (item.status === 'Отгружено' || item.status === 'Частично отгружено')
+        page === "Отгружено" &&
+        (item.status === "Отгружено" || item.status === "Частично отгружено")
       ) {
-        return true
+        return true;
       }
       if (
-        page === 'Открытые' &&
-        item.status !== 'Завершено' &&
-        item.status !== 'Отгружено' &&
-        item.status !== 'Частично отгружено'
+        page === "Открытые" &&
+        item.status !== "Завершено" &&
+        item.status !== "Отгружено" &&
+        item.status !== "Частично отгружено"
       ) {
-        return true
+        return true;
       }
-      return false
-    })
-  }
+      return false;
+    });
+  };
 
   const filterRequestsByWorkshop = (data) => {
-    return data.filter((item) => item.factory === 'lepsari')
-  }
+    return data.filter((item) => item.factory === "lepsari");
+  };
 
   const filterRequestsByStatuses = (data) => {
     return data.filter((item) => {
-      let check = false
-      let noActiveStatuses = true
+      let check = false;
+      let noActiveStatuses = true;
       requestStatuses.map((status) => {
         requestStatuses.map((status) => {
           if (status.visible) {
-            noActiveStatuses = false
+            noActiveStatuses = false;
           }
-        })
+        });
         if (
           noActiveStatuses === true ||
           (status.visible &&
             (status.name === item.status || status.oldName === item.status))
         ) {
-          check = true
-          return
+          check = true;
+          return;
         }
-      })
-      return check
-    })
-  }
+      });
+      return check;
+    });
+  };
 
   const filterRequests = (requestsLepsari) => {
     return filterRequestsByStatuses(
-      filterRequestsByPage(filterRequestsByWorkshop(requestsLepsari), curPage),
-    )
-  }
+      filterRequestsByPage(
+        filterRequestsByWorkshop(requestsLepsari),
+        pages[curPage].name
+      )
+    );
+  };
 
   // * Sorting
 
   const [sortOrder, setSortOrder] = useState({
-    curSort: 'date',
-    date: 'desc',
-  })
+    curSort: "date",
+    date: "desc",
+  });
 
   const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase()
+    const query = searchQuery.toLowerCase();
     return data.filter((item) => {
       return item.requestProducts.length !== 0 &&
         item.requestProducts[0].name !== null
         ? item.requestProducts[0].name.toLowerCase().includes(query) ||
             item.id.toString().includes(query) ||
             formatDateString(item.date).includes(query) ||
-            (item.codeWord || '').toLowerCase().includes(query) ||
+            (item.codeWord || "").toLowerCase().includes(query) ||
             item.status.toLowerCase().includes(query) ||
             item.responsible.toLowerCase().includes(query) ||
             formatDateString(item.shippingDate).includes(query)
-        : item.status.toLowerCase().includes(query)
-    })
-  }
+        : item.status.toLowerCase().includes(query);
+    });
+  };
 
   const sortRequests = (data) => {
     return filterSearchQuery(data).sort((a, b) => {
       if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
       }
       if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
       }
-      return 0
-    })
-  }
+      return 0;
+    });
+  };
 
   const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
+    const name = event.target.value.split(" ")[0];
+    const order = event.target.value.split(" ")[1];
     setSortOrder({
       curSort: name,
       [name]: order,
-    })
-  }
+    });
+  };
 
   return (
     <div className="requests_lepsari">
       <div className="main-window">
         <FloatingPlus
           linkTo="/lepsari/workshop-lepsari/new"
-          visibility={['ROLE_ADMIN', 'ROLE_LEPSARI']}
+          visibility={["ROLE_ADMIN", "ROLE_LEPSARI"]}
         />
         {/* <div className="main-window__title">Заявки на производство Лепсари</div> */}
         <SearchBar
@@ -264,52 +275,55 @@ const WorkshopLepsari = (props) => {
         />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__menu">
-            <div
+            <Link
               className={
-                curPage === 'Открытые'
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                curPage === "open"
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
-              onClick={() => setCurPage('Открытые')}
+              onClick={() => setCurPage("open")}
+              to="/lepsari/workshop-lepsari/open"
             >
               Открытые
               <span className="main-window__items-count">
                 {
                   filterRequestsByPage(
                     filterRequestsByWorkshop(requestsLepsari),
-                    'Открытые',
+                    "Открытые"
                   ).length
                 }
               </span>
-            </div>
-            <div
+            </Link>
+            <Link
               className={
-                curPage === 'Отгружено'
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                curPage === "shipped"
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
-              onClick={() => setCurPage('Отгружено')}
+              onClick={() => setCurPage("shipped")}
+              to="/lepsari/workshop-lepsari/shipped"
             >
               Отгружено
               <span className="main-window__items-count">
                 {
                   filterRequestsByPage(
                     filterRequestsByWorkshop(requestsLepsari),
-                    'Отгружено',
+                    "Отгружено"
                   ).length
                 }
               </span>
-            </div>
-            <div
+            </Link>
+            <Link
               className={
-                curPage === 'Завершено'
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                curPage === "completed"
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
-              onClick={() => setCurPage('Завершено')}
+              onClick={() => setCurPage("completed")}
+              to="/lepsari/workshop-lepsari/completed"
             >
               Завершено
-            </div>
+            </Link>
           </div>
         </div>
         <ControlPanel
@@ -332,9 +346,9 @@ const WorkshopLepsari = (props) => {
                   <div
                     className={
                       (status.visible
-                        ? 'main-window__button'
-                        : 'main-window__button main-window__button--inverted') +
-                      ' main-window__list-item--' +
+                        ? "main-window__button"
+                        : "main-window__button main-window__button--inverted") +
+                      " main-window__list-item--" +
                       status.className
                     }
                     onClick={() => {
@@ -342,18 +356,18 @@ const WorkshopLepsari = (props) => {
                         return {
                           ...status,
                           visible: false,
-                        }
-                      })
+                        };
+                      });
                       temp.splice(index, 1, {
                         ...status,
                         visible: !status.visible,
-                      })
-                      setRequestStatutes([...temp])
+                      });
+                      setRequestStatutes([...temp]);
                     }}
                   >
                     {status.name}
                   </div>
-                )
+                );
               })}
             </div>
           }
@@ -381,12 +395,12 @@ const WorkshopLepsari = (props) => {
           loadData={loadrequestsLepsari}
           dates={dates.sort((a, b) => {
             if (a < b) {
-              return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+              return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
             }
             if (a > b) {
-              return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+              return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
             }
-            return 0
+            return 0;
           })}
           deleteItem={deleteItem}
           // copyRequest={copyRequest}
@@ -395,7 +409,7 @@ const WorkshopLepsari = (props) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default WorkshopLepsari
+export default WorkshopLepsari;
