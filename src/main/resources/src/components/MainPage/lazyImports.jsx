@@ -17,7 +17,7 @@ const MainPageWorkspace = lazy(() =>
 );
 
 const Notifications = lazy(() =>
-  import("./GeneralPage/Notifications/Notifications.jsx")
+  import("./GeneralPage/Notifications/NotificationsWidget.jsx")
 );
 
 const WorkManagement = lazy(() =>

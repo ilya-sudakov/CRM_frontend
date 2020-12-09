@@ -36,11 +36,11 @@ const StatisticsPage = () => {
   const [curPage, setCurPage] = useState("requests");
 
   const [curDate, setCurDate] = useState(new Date());
+  const [curPeriod, setCurPeriod] = useState("month");
   const [currDate, setCurrDate] = useState({
     startDate: getPreviousMonthDates(new Date(), "current").startDate,
     endDate: getPreviousMonthDates(new Date(), "current").endDate,
   });
-  const [curPeriod, setCurPeriod] = useState("month");
 
   const timePeriod = {
     month: {
