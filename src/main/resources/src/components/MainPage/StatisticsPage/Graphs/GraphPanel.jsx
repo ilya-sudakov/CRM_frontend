@@ -1,28 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
 
-const GraphPanel = (props) => {
+const GraphPanel = ({
+  isLoaded,
+  category,
+  renderIcon,
+  chartName,
+  timePeriod,
+  windowContent,
+}) => {
+  const [showWindow, setShowWindow] = useState(false);
+
+  useEffect(() => {}, [showWindow, setShowWindow, windowContent]);
+
   return (
     <div
-      className={`panel panel--chart ${
-        props.isLoaded ? '' : 'panel--placeholder'
-      }`}
+      className={`panel panel--chart ${isLoaded ? "" : "panel--placeholder"}`}
     >
-      <div className="panel__category">
-        <span>{props.category || 'Категория'}</span>
-        {props.renderIcon ? (
-          <div className="panel__icon">{props.renderIcon()}</div>
-        ) : null}
+      <div className="panel__category" onClick={() => setShowWindow(true)}>
+        <span>{category || "Категория"}</span>
+        {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
       </div>
+      {windowContent ? (
+        <FormWindow
+          title={category}
+          content={windowContent}
+          showWindow={showWindow}
+          setShowWindow={setShowWindow}
+        />
+      ) : null}
       <div
-        className={`panel__chart-wrapper panel__chart-wrapper--${props.chartName}`}
+        className={`panel__chart-wrapper panel__chart-wrapper--${chartName}`}
       ></div>
       <div className={`panel__difference`}>
-        <div className="panel__time-period">
-          {props.isLoaded ? props.timePeriod : ''}
-        </div>
+        <div className="panel__time-period">{isLoaded ? timePeriod : ""}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default GraphPanel
+export default GraphPanel;

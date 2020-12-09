@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import GraphPanel from "./GraphPanel.jsx";
 import EmployeeIcon from "../../../../../../../../assets/sidemenu/employee.inline.svg";
-import { months } from "../../../../utils/dataObjects";
 import { createGraph, loadCanvas } from "../../../../utils/graphs.js";
-import { checkIfDateIsInRange, getPreviousMonthDates } from "../functions.js";
+import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
@@ -21,7 +21,7 @@ const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
 
   const getStats = (data) => {
     let managers = {};
-    data.map((request) => {
+    const filteredRequests = data.filter((request) => {
       if (
         checkIfDateIsInRange(request.date, currDate.startDate, currDate.endDate)
       ) {
@@ -32,9 +32,21 @@ const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
               ? managers[request.responsible] + 1
               : 1,
         };
+        return true;
       }
+      return false;
     });
     // console.log(managers)
+    setStats((stats) => ({
+      ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
+    }));
     renderGraph(managers);
   };
 

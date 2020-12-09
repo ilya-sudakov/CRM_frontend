@@ -3,6 +3,7 @@ import SmallPanel from "./SmallPanel.jsx";
 import ClientsIcon from "../../../../../../../../assets/sidemenu/client.inline.svg";
 import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
 import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const NewClientsStatsPanel = ({
   requests,
@@ -85,7 +86,7 @@ const NewClientsStatsPanel = ({
     });
 
     //find new clients from cur month
-    requests.map((request) => {
+    const filteredRequestsNew = requests.filter((request) => {
       if (
         request.client !== null &&
         checkIfDateIsInRange(
@@ -100,11 +101,20 @@ const NewClientsStatsPanel = ({
           ...clients,
           [request.client.id]: "",
         };
+        return true;
       }
+      return false;
     });
 
     setStats((stats) => ({
       ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequestsNew}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
       isLoaded: true,
       isLoading: false,
       value: addSpaceDelimiter(Math.floor(curMonthNewClients * 100) / 100),

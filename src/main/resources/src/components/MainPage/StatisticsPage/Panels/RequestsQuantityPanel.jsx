@@ -70,7 +70,8 @@ const RequestsQuantityPanel = ({
       difference: curMonthQuantity - prevMonthQuantity,
       percentage:
         Math.floor(
-          ((curMonthQuantity - prevMonthQuantity) / prevMonthQuantity) *
+          ((curMonthQuantity - prevMonthQuantity) /
+            (prevMonthQuantity === 0 ? 1 : prevMonthQuantity)) *
             100 *
             100
         ) / 100,

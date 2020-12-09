@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SmallPanel from "./SmallPanel.jsx";
 import PlaylistIcon from "../../../../../../../../assets/sidemenu/play_list.inline.svg";
 import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const ProductQuantityInRequest = ({
   requests,
@@ -47,12 +48,14 @@ const ProductQuantityInRequest = ({
       return true;
     });
 
-    temp.map((request) => {
+    const filteredRequests = temp.filter((request) => {
       const date = request.date;
       if (checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)) {
         curMonthAverage += request.requestProducts.length;
         curMonthQuantity++;
+        return true;
       }
+      return false;
     });
 
     curMonthAverage =
@@ -62,13 +65,23 @@ const ProductQuantityInRequest = ({
 
     setStats((stats) => ({
       ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
       isLoaded: true,
       isLoading: false,
       value: Math.floor(curMonthAverage * 100) / 100,
       difference: curMonthAverage - prevMonthAverage,
       percentage:
         Math.floor(
-          ((curMonthAverage - prevMonthAverage) / prevMonthAverage) * 100 * 100
+          ((curMonthAverage - prevMonthAverage) /
+            (prevMonthAverage === 0 ? 1 : prevMonthAverage)) *
+            100 *
+            100
         ) / 100,
     }));
   };

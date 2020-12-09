@@ -4,6 +4,7 @@ import ClientIcon from "../../../../../../../../assets/sidemenu/client.inline.sv
 import { months } from "../../../../utils/dataObjects";
 import { createGraph, loadCanvas } from "../../../../utils/graphs.js";
 import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
@@ -23,7 +24,7 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
       Потенциальные: 0,
       "В разработке": 0,
     };
-    data.map((request) => {
+    const filteredRequests = data.filter((request) => {
       if (
         checkIfDateIsInRange(
           request.date,
@@ -38,9 +39,21 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
           [request.client.clientType]:
             clientTypes[request.client.clientType] + 1,
         };
+        return true;
       }
+      return false;
     });
     // console.log(clientTypes)
+    setStats((stats) => ({
+      ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
+    }));
     renderGraph(clientTypes);
   };
 

@@ -6,6 +6,7 @@ import {
   formatDateStringNoDate,
 } from "../../../../utils/functions.jsx";
 import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const AverageSumStatsPanel = ({
   requests,
@@ -55,7 +56,7 @@ const AverageSumStatsPanel = ({
       return true;
     });
 
-    temp.map((request) => {
+    const filteredRequests = temp.filter((request) => {
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
@@ -63,7 +64,9 @@ const AverageSumStatsPanel = ({
       ) {
         curMonthLength++;
         curMonthAverage += Number.parseFloat(request.sum || 0);
+        return true;
       }
+      return false;
     });
 
     curMonthAverage =
@@ -73,6 +76,13 @@ const AverageSumStatsPanel = ({
 
     setStats((stats) => ({
       ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
       isLoaded: true,
       isLoading: false,
       value: `${addSpaceDelimiter(

@@ -17,8 +17,9 @@
 
   .main-window__link {
     transition: 100ms ease-in-out;
-    color: darken($button__background--inverted, 5%);
-    text-decoration: underline;
+    color: darken($button__background--inverted, 8%);
+    cursor: pointer;
+    // text-decoration: underline;
   }
 
   // || HEADER
@@ -1034,6 +1035,10 @@
       flex-direction: row;
       justify-content: space-between;
       margin-bottom: 5px;
+
+      &:nth-child(1) {
+        padding: 0 5px !important;
+      }
     }
     .main-window__actions {
       flex-direction: row;

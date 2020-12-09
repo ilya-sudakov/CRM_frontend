@@ -3,6 +3,7 @@ import SmallPanel from "./SmallPanel.jsx";
 import ClockIcon from "../../../../../../../../assets/etc/time.inline.svg";
 import { dateDiffInDays } from "../../../../utils/functions.jsx";
 import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const OnTimeRequestsDistribution = ({
   requests,
@@ -60,7 +61,7 @@ const OnTimeRequestsDistribution = ({
     });
 
     //check cur month
-    temp.map((request) => {
+    const filteredRequests = temp.filter((request) => {
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
@@ -78,7 +79,9 @@ const OnTimeRequestsDistribution = ({
           curMonthOnTimeQuantity++;
         }
         curMonthAllQuantity++;
+        return true;
       }
+      return false;
     });
 
     //соотношение вовремя выпол. заказов в тек. месяце
@@ -99,6 +102,13 @@ const OnTimeRequestsDistribution = ({
 
     setStats((stats) => ({
       ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
       isLoaded: true,
       isLoading: false,
       value: `${Math.floor(curMonthValue * 100 * 100) / 100}%`,

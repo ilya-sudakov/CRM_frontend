@@ -4,6 +4,7 @@ import MoneyIcon from "../../../../../../../../assets/etc/bx-ruble.inline.svg";
 import { months } from "../../../../utils/dataObjects";
 import { createGraph, loadCanvas } from "../../../../utils/graphs.js";
 import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
@@ -19,7 +20,7 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
 
   const getStats = (data) => {
     let managers = {};
-    data.map((request) => {
+    const filteredRequests = data.filter((request) => {
       if (
         checkIfDateIsInRange(
           request.date,
@@ -36,8 +37,20 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
                 Number.parseFloat(request.sum || 0)
               : request.sum || 0,
         };
+        return true;
       }
+      return false;
     });
+    setStats((stats) => ({
+      ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
+    }));
     renderGraph(managers);
   };
 
