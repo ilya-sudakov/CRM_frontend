@@ -3,6 +3,7 @@ import SmallPanel from "./SmallPanel.jsx";
 import MoneyIcon from "../../../../../../../../assets/etc/bx-ruble.inline.svg";
 import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
 import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
   const [stats, setStats] = useState({
@@ -43,18 +44,29 @@ const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
       }
       return true;
     });
-    temp.map((request) => {
+
+    //check cur month
+    const filteredRequests = temp.filter((request) => {
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
         request.status === "Завершено"
       ) {
         curMonthIncome += Number.parseFloat(request.sum || 0);
+        return true;
       }
+      return false;
     });
 
     setStats((stats) => ({
       ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
       isLoaded: true,
       isLoading: false,
       value: `${addSpaceDelimiter(

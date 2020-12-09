@@ -23,26 +23,32 @@ const RequestsList = ({
   return (
     <div className="requests-list">
       <div className="main-window__title">{title}</div>
-      <div className="main-window__list">
-        <div className="main-window__list-item main-window__list-item--header">
-          <span>ID</span>
-          <span>Клиент</span>
-          <span>Статус</span>
-          <span>Сумма</span>
+      {data.length > 0 ? (
+        <div className="main-window__list">
+          <div className="main-window__list-item main-window__list-item--header">
+            <span>ID</span>
+            <span>Клиент</span>
+            <span>Статус</span>
+            <span>Сумма</span>
+          </div>
+          {sortData(data).map((request) => (
+            <Link
+              className="main-window__list-item"
+              key={request.id}
+              to={`/requests/${getPageByRequest(request)}#${request.id}`}
+            >
+              <span>{request.id}</span>
+              <span>{request?.client?.name ?? "Не указано"}</span>
+              <span>{request.status}</span>
+              <span>{request.sum}</span>
+            </Link>
+          ))}
         </div>
-        {sortData(data).map((request) => (
-          <Link
-            className="main-window__list-item"
-            key={request.id}
-            to={`/requests/${getPageByRequest(request)}#${request.id}`}
-          >
-            <span>{request.id}</span>
-            <span>{request?.client?.name ?? "Не указано"}</span>
-            <span>{request.status}</span>
-            <span>{request.sum}</span>
-          </Link>
-        ))}
-      </div>
+      ) : (
+        <div className="main-window__info-text">
+          Нет заявок за выбранный период
+        </div>
+      )}
     </div>
   );
 };

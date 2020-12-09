@@ -46,13 +46,13 @@ const RequestsQuantityPanel = ({
     });
 
     //check cur month
-    let tempMonth = [];
-    temp.map((request) => {
+    const filteredRequests = temp.filter((request) => {
       const date = new Date(request.date);
       if (checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)) {
         curMonthQuantity++;
-        tempMonth.push(request);
+        return true;
       }
+      return false;
     });
 
     setStats((stats) => ({
@@ -60,7 +60,7 @@ const RequestsQuantityPanel = ({
       windowContent: (
         <RequestsList
           title="Заявки за выбранный период"
-          data={tempMonth}
+          data={filteredRequests}
           sortBy={{ name: ["sum"], type: "DESC" }}
         />
       ),

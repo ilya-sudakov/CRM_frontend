@@ -5,6 +5,9 @@
         &__title {
             width: fit-content;
         }
+        &__info-text {
+            padding-left: 15px;
+        }
         &__list {
             &-item {
                 min-height: 2rem;
