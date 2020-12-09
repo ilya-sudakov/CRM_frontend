@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SmallPanel from "./SmallPanel.jsx";
 import PlaylistIcon from "../../../../../../../../assets/sidemenu/play_list.inline.svg";
 import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
 const RequestsQuantityPanel = ({
   requests,
@@ -45,15 +46,24 @@ const RequestsQuantityPanel = ({
     });
 
     //check cur month
+    let tempMonth = [];
     temp.map((request) => {
       const date = new Date(request.date);
       if (checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)) {
         curMonthQuantity++;
+        tempMonth.push(request);
       }
     });
 
     setStats((stats) => ({
       ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={tempMonth}
+          sortBy={{ name: ["sum"], type: "DESC" }}
+        />
+      ),
       isLoaded: true,
       isLoading: false,
       value: curMonthQuantity,

@@ -12,15 +12,31 @@ const SmallPanel = ({
   percentage,
   timePeriod,
   linkTo,
+  windowContent,
 }) => {
+  const [showWindow, setShowWindow] = useState(false);
+
   useEffect(() => {}, [isLoaded]);
 
+  useEffect(() => {}, [showWindow, setShowWindow, windowContent]);
+
   return (
-    <div className={`panel ${isLoaded ? "" : "panel--placeholder"}`}>
-      <div className="panel__category">
+    <div
+      className={`panel ${isLoaded ? "" : "panel--placeholder"}`}
+      // to={linkTo || "/"}
+    >
+      <div className="panel__category" onClick={() => setShowWindow(true)}>
         <span>{category || "Категория"}</span>
         {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
       </div>
+      {windowContent ? (
+        <FormWindow
+          title={category}
+          content={windowContent}
+          showWindow={showWindow}
+          setShowWindow={setShowWindow}
+        />
+      ) : null}
       <div
         className={`panel__value panel__value--${
           invertedStats === true
