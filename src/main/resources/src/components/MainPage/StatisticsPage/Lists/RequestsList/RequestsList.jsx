@@ -81,7 +81,9 @@ const RequestsList = ({
               </span>
               <span>
                 <div className="main-window__mobile-text">Сумма</div>
-                {`${addSpaceDelimiter(Number.parseFloat(request.sum))} руб`}
+                {`${addSpaceDelimiter(
+                  Number.parseFloat(request.sum === null ? 0 : request.sum)
+                )} руб`}
               </span>
             </Link>
           ))}
