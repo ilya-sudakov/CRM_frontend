@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./FormWindow.scss";
+import PropTypes from "prop-types";
 
-const FormWindow = (props) => {
-  useEffect(() => {
-    // console.log(props.showWindow);
-  }, [props.showWindow, props.setShowWindow]);
+const FormWindow = ({
+  showWindow = false,
+  setShowWindow,
+  title = "",
+  headerButton,
+  content = "",
+}) => {
+  useEffect(() => {}, [showWindow, setShowWindow]);
 
   const clickOnSelectWindow = (e) => {
     e.preventDefault();
@@ -14,31 +19,29 @@ const FormWindow = (props) => {
       !e.target.classList.contains("form-window__exit") &&
       !e.target.classList.contains("form-window__bar")
     ) {
-      props.setShowWindow(true);
+      setShowWindow(true);
     } else {
-      props.setShowWindow(false);
+      setShowWindow(false);
     }
   };
 
   return (
     <div
-      className={
-        props.showWindow ? "form-window" : "form-window form-window--hidden"
-      }
+      className={showWindow ? "form-window" : "form-window form-window--hidden"}
       onClick={clickOnSelectWindow}
     >
       <div
         className={
-          props.showWindow
+          showWindow
             ? "form-window__content"
             : "form-window__content form-window__content--hidden"
         }
       >
         <div className="form-window__title">
-          <span>{props.title}</span>
-          {props.headerButton && (
-            <Link to={props.headerButton.path} className="form-window__button">
-              {props.headerButton.name}
+          <span>{title}</span>
+          {headerButton && (
+            <Link to={headerButton.path} className="form-window__button">
+              {headerButton.name}
             </Link>
           )}
           <div className="form-window__exit" onClick={clickOnSelectWindow}>
@@ -53,7 +56,7 @@ const FormWindow = (props) => {
           </div>
         </div>
         <div className="form-window__body">
-          <div className="main-window">{props.content}</div>
+          <div className="main-window">{content}</div>
         </div>
       </div>
     </div>
@@ -61,3 +64,11 @@ const FormWindow = (props) => {
 };
 
 export default FormWindow;
+
+FormWindow.propTypes = {
+  showWindow: PropTypes.bool,
+  setShowWindow: PropTypes.func,
+  title: PropTypes.string,
+  headerButton: PropTypes.object,
+  content: PropTypes.any,
+};
