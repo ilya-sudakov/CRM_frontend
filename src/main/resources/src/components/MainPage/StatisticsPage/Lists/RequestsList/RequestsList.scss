@@ -27,9 +27,13 @@
                     &:nth-child(5) {
                     }
                     &:nth-child(6) {
-                        max-width: 120px;
+                        flex: 0 1 20%;
+                        max-width: 150px;
                     }
                     &:nth-child(7) {
+                        max-width: 120px;
+                    }
+                    &:nth-child(8) {
                         max-width: 150px;
                     }
                 }
@@ -76,6 +80,9 @@
                             max-width: none;
                         }
                         &:nth-child(7) {
+                            max-width: none;
+                        }
+                        &:nth-child(8) {
                             max-width: none;
                         }
                     }

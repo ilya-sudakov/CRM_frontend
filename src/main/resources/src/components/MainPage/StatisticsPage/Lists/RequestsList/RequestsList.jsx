@@ -35,6 +35,7 @@ const RequestsList = ({
             <span>Продукция</span>
             <span>Клиент</span>
             <span>Статус</span>
+            <span>Ответственный</span>
             <span>Дата отгрузки</span>
             <span>Сумма</span>
           </div>
@@ -74,6 +75,10 @@ const RequestsList = ({
               <span>
                 <div className="main-window__mobile-text">Статус</div>
                 {request.status}
+              </span>
+              <span>
+                <div className="main-window__mobile-text">Статус</div>
+                {request.responsible}
               </span>
               <span>
                 <div className="main-window__mobile-text">Дата отгрузки</div>
