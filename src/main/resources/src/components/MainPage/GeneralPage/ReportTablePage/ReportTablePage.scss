@@ -329,11 +329,11 @@
                         border-right: 1px solid #dddddd;
                     }
                     &:last-child {
-                        // border-right: 1px solid transparent;
-                        // font-weight: bold;
-                        // cursor: auto !important;
-                        // min-width: 40px;
-                        // max-width: 40px;
+                        font-weight: bold;
+
+                        .report-table-report__date-hint {
+                            font-weight: 400;
+                        }
                     }
                 }
             }
