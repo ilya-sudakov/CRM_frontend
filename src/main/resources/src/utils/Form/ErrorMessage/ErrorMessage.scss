@@ -24,14 +24,17 @@
   }
 
   &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
     width: 300px;
     min-height: 150px;
     background-color: #eeeeee;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    border-radius: 5px;
+    border: #cccccc;
+    border-radius: 3px;
     border: 1px solid #999999;
     padding: 15px;
-    padding-bottom: 50px;
     overflow-y: auto;
     position: relative;
     transform: scale(1);
@@ -53,11 +56,12 @@
       margin-bottom: 5px;
       font-size: 125%;
       display: flex;
+      width: 100%;
       justify-content: center;
       align-items: center;
       margin-bottom: 10px;
       position: relative;
-      color: #f73434;
+      color: #945555;
     }
 
     .window_error__message {
@@ -65,27 +69,15 @@
     }
 
     .window_error__button {
-      background-color: $button__background--inverted;
-      color: $secondary-text-color;
-      font-size: 60%;
-      width: 25%;
-      text-align: center;
       padding: 10px 15px;
-      border-radius: 5px;
-      transition: 0.2s ease-in-out;
-      cursor: pointer;
       margin: 0 auto;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+      margin-top: auto;
+      min-width: 100px;
 
       &--submit {
-        position: absolute;
-        bottom: 15px;
-        left: calc(30px + 25%);
-      }
-
-      &:hover {
-        background-color: lighten($button__background--inverted, 5%);
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+        // position: absolute;
+        // bottom: 15px;
+        // left: calc(30px + 25%);
       }
     }
 
@@ -93,7 +85,7 @@
       position: absolute;
       width: 45px;
       height: 45px;
-      right: 0;
+      right: -5px;
       border-radius: 5px;
       transition: 0.2s ease-in-out;
       cursor: pointer;
@@ -105,7 +97,7 @@
         height: 2px;
         width: 25px;
         content: "";
-        background-color: #000000;
+        background-color: #777777;
         position: absolute;
         right: 9px;
         bottom: 21px;
