@@ -43,11 +43,16 @@ exports[`MainPage component matches snapshot 1`] = `
           >
             Ошибка при авторизации
           </div>
-          <div
-            class="window_error__button window_error__button--submit"
+          <button
+            class="button  window_error__button window_error__button--submit"
+            type="button"
           >
-            ОК
-          </div>
+            <span
+              class="button__text "
+            >
+              ОК
+            </span>
+          </button>
         </div>
       </div>
       <div
