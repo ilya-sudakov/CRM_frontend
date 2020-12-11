@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import Button from "../Button/Button.jsx";
+import PropTypes from "prop-types";
 import "./ErrorMessage.scss";
 
 const ErrorMessage = (props) => {
@@ -70,3 +71,9 @@ const ErrorMessage = (props) => {
 };
 
 export default ErrorMessage;
+
+ErrorMessage.propTypes = {
+  showError: PropTypes.bool,
+  setShowError: PropTypes.func,
+  message: PropTypes.string,
+};
