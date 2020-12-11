@@ -54,15 +54,21 @@
 
       //column direction
       width: 100%;
+      // z-index: 999;
 
       .react-datepicker-wrapper {
         width: 100%;
+        // z-index: 999;
 
         .react-datepicker {
+          z-index: 999;
           .react-datepicker__day--selected {
             background-color: $button__background--inverted !important;
           }
         }
+      }
+      .react-datepicker-popper {
+        z-index: 999;
       }
 
       input[type="text"],

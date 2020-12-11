@@ -538,17 +538,6 @@ const TableView = (props) => {
               <TruckSVG className="main-window__img" />
             </Link>
           ) : null} */}
-          <Link
-            to={
-              props.workshopName === "requests"
-                ? `/requests/view/${request.id}`
-                : `/${props.workshopName}/workshop-${props.workshopName}/view/${request.id}`
-            }
-            className="main-window__action"
-            title="Просмотр заявки"
-          >
-            <img className="main-window__img" src={viewSVG} />
-          </Link>
           {props.userHasAccess([
             "ROLE_ADMIN",
             "ROLE_MANAGER",

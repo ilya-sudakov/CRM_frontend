@@ -15,11 +15,10 @@ import {
   ViewWorkshopOrderLepsari,
   NewWorkshopOrderLepsari,
   WorkshopOrdersLepsari,
+  NewRequest,
+  EditRequest,
+  ShipRequest,
 } from "../lazyImports.jsx";
-import NewRequest from "../WorkshopsComponents/Forms/NewRequest/NewRequest.jsx";
-import EditRequest from "../WorkshopsComponents/Forms/EditRequest/EditRequest.jsx";
-import ViewRequest from "../WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx";
-import ShipRequest from "../WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx";
 
 const Lepsari = (props) => {
   return (
@@ -86,11 +85,6 @@ const Lepsari = (props) => {
         <div className="main-window__content">
           <Suspense fallback={<PageLoading />}>
             <Switch>
-              <Route
-                path="/lepsari/workshop-lepsari/view/"
-                type="lepsari"
-                render={(props) => <ViewRequest {...props} type="lepsari" />}
-              />
               <PrivateRoute
                 exact
                 path="/lepsari/workshop-lepsari/new"

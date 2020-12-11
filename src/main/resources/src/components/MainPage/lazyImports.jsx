@@ -6,6 +6,18 @@ const Contracts = lazy(() => import("./Contracts/Contracts.jsx"));
 
 const Requests = lazy(() => import("./Requests/Requests.jsx"));
 
+const NewRequest = lazy(() =>
+  import("./WorkshopsComponents/Forms/NewRequest/NewRequest.jsx")
+);
+
+const EditRequest = lazy(() =>
+  import("./WorkshopsComponents/Forms/EditRequest/EditRequest.jsx")
+);
+
+const ShipRequest = lazy(() =>
+  import("./WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx")
+);
+
 const GeneralPage = lazy(() => import("./GeneralPage/GeneralPage.jsx"));
 
 const RiggingList = lazy(() =>
@@ -245,6 +257,9 @@ export {
   ClientCategories,
   Contracts,
   Requests,
+  NewRequest,
+  EditRequest,
+  ShipRequest,
   GeneralPage,
   MainPageWorkspace,
   Notifications,

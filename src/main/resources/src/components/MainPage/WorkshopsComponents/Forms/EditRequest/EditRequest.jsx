@@ -357,7 +357,7 @@ const EditRequest = (props) => {
             "ROLE_MANAGER",
             "ROLE_WORKSHOP",
           ]) &&
-            requestInputs.codeWord !== "" && (
+            requestInputs.client === undefined && (
               <InputText
                 inputName="Кодовое слово"
                 defaultValue={requestInputs.codeWord}

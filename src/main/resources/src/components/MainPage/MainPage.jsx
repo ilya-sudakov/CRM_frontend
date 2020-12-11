@@ -55,16 +55,15 @@ import {
   StatisticsPage,
   ReportsPage,
   EmployeeReportPage,
+  NewRequest,
+  ShipRequest,
+  EditRequest,
 } from "./lazyImports.jsx";
-import NewRequest from "./WorkshopsComponents/Forms/NewRequest/NewRequest.jsx";
-import EditRequest from "./WorkshopsComponents/Forms/EditRequest/EditRequest.jsx";
-import ViewRequest from "./WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx";
 import SideMenu from "../SideMenu/SideMenu.jsx";
 import PageNotFound from "./PageNotFound/PageNotFound.jsx";
 import PrivateRoute from "../PrivateRoute/PrivateRoute.jsx";
 import PageLoading from "./PageLoading/PageLoading.jsx";
 import ErrorBoundary from "../ErrorBoundary/ErrorBoundary.jsx";
-import ShipRequest from "./WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx";
 import UserContext from "../../App.js";
 
 const MainPage = () => {
@@ -239,10 +238,6 @@ const MainPage = () => {
                   ]}
                 />
                 <Route exact path="/contracts" component={Contracts} />
-                <Route
-                  path="/requests/view/"
-                  render={(props) => <ViewRequest {...props} type="requests" />}
-                />
                 <PrivateRoute
                   exact
                   path="/requests/new"
@@ -254,7 +249,7 @@ const MainPage = () => {
                   path="/requests/edit/"
                   component={EditRequest}
                   type="requests"
-                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"]}
                 />
                 <PrivateRoute
                   path="/requests/ship/"

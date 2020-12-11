@@ -15,11 +15,11 @@ import {
   NewWorkshopOrderLEMZ,
   ViewWorkshopOrderLEMZ,
   EditWorkshopOrderLEMZ,
+  NewRequest,
+  EditRequest,
+  // ViewRequest,
+  ShipRequest,
 } from "../lazyImports.jsx";
-import NewRequest from "../WorkshopsComponents/Forms/NewRequest/NewRequest.jsx";
-import EditRequest from "../WorkshopsComponents/Forms/EditRequest/EditRequest.jsx";
-import ViewRequest from "../WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx";
-import ShipRequest from "../WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx";
 
 const LEMZ = (props) => {
   return (
@@ -86,10 +86,6 @@ const LEMZ = (props) => {
         <div className="main-window__content">
           <Suspense fallback={<PageLoading />}>
             <Switch>
-              <Route
-                path="/lemz/workshop-lemz/view/"
-                render={(props) => <ViewRequest {...props} type="lemz" />}
-              />
               <PrivateRoute
                 exact
                 path="/lemz/workshop-lemz/new"
