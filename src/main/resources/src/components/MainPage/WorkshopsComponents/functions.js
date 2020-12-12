@@ -1,3 +1,7 @@
+import pdfMake from "pdfmake";
+import { getRequestPdfText } from "../../../utils/pdfFunctions.jsx";
+import { workshops } from "./workshopVariables.js";
+
 export const getPageByRequest = (item) => {
   if (item.status === "Завершено") {
     return "completed";
@@ -13,4 +17,15 @@ export const getPageByRequest = (item) => {
     return "open";
   }
   return "open";
+};
+
+export const printRequest = (request) => {
+  let dd = getRequestPdfText(
+    request.date,
+    request.requestProducts,
+    request.client?.name ?? request.codeWord,
+    workshops[request.factory].name,
+    request.id
+  );
+  pdfMake.createPdf(dd).print();
 };

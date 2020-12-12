@@ -522,7 +522,6 @@ const Requests = (props) => {
           deleteItem={deleteItem}
           transferRequest={transferRequest}
           copyRequest={copySelectedRequest}
-          searchQuery={searchQuery}
         />
       </div>
     </div>

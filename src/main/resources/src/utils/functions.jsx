@@ -451,3 +451,19 @@ export const scrollToElement = (element, offset = 0) => {
 export const roundUpWorkHours = (hours) => {
   return Math.floor(hours * 100) / 100;
 };
+
+export const saveCanvasAsImage = (canvas, fileName) => {
+  canvas.toBlob(
+    function (blob) {
+      // получаем содержимое как JPEG Blob
+      let link = document.createElement("a");
+      link.download = fileName;
+      link.href = URL.createObjectURL(blob);
+      link.click();
+      // удаляем ссылку на Blo
+      URL.revokeObjectURL(link.href);
+    },
+    "image/jpeg",
+    1
+  );
+};

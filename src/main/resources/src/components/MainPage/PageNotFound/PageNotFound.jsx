@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import '../ErrorPage/ErrorPage.scss'
+import React from "react";
+import { Link } from "react-router-dom";
+import "../ErrorPage/ErrorPage.scss";
 
 const PageNotFound = () => {
   return (
@@ -8,13 +8,13 @@ const PageNotFound = () => {
       <div className="error-page__title">
         <span className="error-page__error-code">404</span>
         Страница не найдена
-      </div>{' '}
+      </div>{" "}
       <div className="error-page__description">
         Вы не имеете доступа к этой странице.
         <br />
         <br />
         Если это ошибка, и запрашиваемая страница должна быть доступна для
-        просмотра - напишите об этом в{' '}
+        просмотра - напишите об этом в{" "}
         <Link className="error-page__link" to="/feedback">
           обратной связи
         </Link>
@@ -23,7 +23,7 @@ const PageNotFound = () => {
         На главную
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default PageNotFound
+export default PageNotFound;
