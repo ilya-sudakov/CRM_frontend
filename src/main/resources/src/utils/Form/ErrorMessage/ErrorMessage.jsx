@@ -63,7 +63,7 @@ const ErrorMessage = ({ showError = false, setShowError, message = "" }) => {
         <div className="window_error__message">{message}</div>
         <Button
           className="main-window__button"
-          onClick={() => setShowError(!showError)}
+          onClick={() => setShowError(false)}
           text="ОК"
         />
       </div>
