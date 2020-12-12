@@ -3,25 +3,26 @@ import Button from "../Button/Button.jsx";
 import PropTypes from "prop-types";
 import "./ErrorMessage.scss";
 
-const ErrorMessage = (props) => {
-  const clickOnErrorWindow = (e) => {
-    e.preventDefault();
+const ErrorMessage = ({ showError = false, setShowError, message = "" }) => {
+  const clickOnErrorWindow = (event) => {
+    event.preventDefault();
+    const classList = event.target.classList;
     if (
-      !(e.target.classList[0] === "window_error") &&
-      !e.target.classList.contains("window_error__exit") &&
-      !e.target.classList.contains("window_error__bar") &&
-      !e.target.classList.contains("window_error__button")
+      !(classList[0] === "window_error") &&
+      !classList.contains("window_error__exit") &&
+      !classList.contains("window_error__bar") &&
+      !classList.contains("window_error__button")
     ) {
-      props.setShowError(true);
-    } else {
-      props.setShowError(false);
+      return setShowError(true);
     }
+
+    return setShowError(false);
   };
 
   const handleCloseWindow = useCallback((event) => {
     if (event.key === "Enter" || event.key === "Escape") {
       event.preventDefault();
-      props.setShowError(false);
+      setShowError(false);
     }
   }, []);
 
@@ -35,13 +36,13 @@ const ErrorMessage = (props) => {
   return (
     <div
       className={
-        props.showError ? "window_error" : "window_error window_error--hidden"
+        showError ? "window_error" : "window_error window_error--hidden"
       }
       onClick={clickOnErrorWindow}
     >
       <div
         className={
-          props.showError
+          showError
             ? "window_error__content"
             : "window_error__content window_error__content--hidden"
         }
@@ -59,10 +60,10 @@ const ErrorMessage = (props) => {
             ></div>
           </div>
         </div>
-        <div className="window_error__message">{props.message}</div>
+        <div className="window_error__message">{message}</div>
         <Button
-          className="window_error__button window_error__button--submit"
-          onClick={clickOnErrorWindow}
+          className="main-window__button"
+          onClick={() => setShowError(!showError)}
           text="ОК"
         />
       </div>

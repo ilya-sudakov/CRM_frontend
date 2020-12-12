@@ -28,6 +28,10 @@ const LoginPage = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log(showError);
+  }, [showError, setShowError]);
+
   const handleLogin = () => {
     // event.preventDefault();
     setIsLoading(true);
@@ -140,11 +144,7 @@ const LoginPage = (props) => {
               onAnimationStart={handleAutoFill}
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleLogin();
-                }
-              }}
+              onKeyDown={(event) => event.key === "Enter" && handleLogin()}
             />
           </div>
           <CheckBox
