@@ -32,10 +32,13 @@ import {
 } from "../workshopVariables.js";
 import { getRequestPdfText } from "../../../../utils/pdfFunctions.jsx";
 import LabelPrint from "../LabelPrint/LabelPrint.jsx";
+import ErrorMessage from "../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showError, setShowError] = useState(false);
+  const [errorRequestId, setErrorRequestId] = useState(null);
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({
     name: "",
@@ -126,7 +129,9 @@ const TableView = (props) => {
       ) {
         return changeStatus(status, id);
       } else {
-        return alert("Введите сумму заказа для изменения статуса!");
+        setErrorRequestId(Number.parseInt(id));
+        setShowError(true);
+        return;
       }
     }
 
@@ -602,6 +607,23 @@ const TableView = (props) => {
           link={selectedProduct.link}
           isHidden={labelIsHidden}
           workshop={selectedProduct.workshop}
+        />
+        <ErrorMessage
+          showError={showError}
+          setShowError={setShowError}
+          message={
+            <div>
+              <div style={{ marginBottom: "15px" }}>
+                Введите сумму заказа для изменения статуса!
+              </div>
+              <Link
+                className="main-window__link-text"
+                to={`/requests/edit/${errorRequestId}`}
+              >
+                Перейти на страницу редактирования
+              </Link>
+            </div>
+          }
         />
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
