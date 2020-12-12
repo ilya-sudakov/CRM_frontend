@@ -172,18 +172,19 @@ const TableView = (props) => {
         },
         id
       )
-      .then(() => {
-        props.loadData();
+      .then(async () => {
+        await props.loadData();
         const request = requests.find(
           (item) => item.id === Number.parseInt(id)
         );
         props.history.push(
           props.workshopName === "requests"
-            ? `/requests/${getPageByRequest(request)}#${request.id}`
+            ? `/requests/${getPageByRequest({ status: status })}#${request.id}`
             : `/${props.workshopName}/workshop-${
                 props.workshopName
-              }/${getPageByRequest(request)}#${request.id}`
+              }/${getPageByRequest({ status: status })}#${request.id}`
         );
+        return window.location.reload(); //костыль чтобы загрузить правильную вкладку
       })
       .catch((error) => {
         console.log(error);

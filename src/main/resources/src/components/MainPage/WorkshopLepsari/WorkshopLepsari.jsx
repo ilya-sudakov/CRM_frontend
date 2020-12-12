@@ -145,7 +145,7 @@ const WorkshopLepsari = (props) => {
 
   const loadrequestsLepsari = (signal) => {
     setIsLoading(true);
-    getRequestsByWorkshop("lepsari", signal)
+    return getRequestsByWorkshop("lepsari", signal)
       .then((res) => res.json())
       .then((requests) => {
         // console.log(requests);
@@ -153,6 +153,7 @@ const WorkshopLepsari = (props) => {
         setProductsQuantities(getQuantityOfProductsFromRequests(requests));
         setDates(getDatesFromRequests(requests));
         setIsLoading(false);
+        return;
       });
   };
 

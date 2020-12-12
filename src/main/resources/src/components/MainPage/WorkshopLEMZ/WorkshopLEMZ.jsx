@@ -31,7 +31,7 @@ const WorkshopLEMZ = (props) => {
   const [productsQuantities, setProductsQuantities] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const pageNameInURL = props.location.pathname.split(
     "/lemz/workshop-lemz/"
   )[1];
@@ -105,13 +105,14 @@ const WorkshopLEMZ = (props) => {
 
   const loadRequestsLEMZ = (signal) => {
     setIsLoading(true);
-    getRequestsByWorkshop("lemz", signal)
+    return getRequestsByWorkshop("lemz", signal)
       .then((res) => res.json())
       .then((requests) => {
         setRequestsLEMZ(requests);
         setProductsQuantities(getQuantityOfProductsFromRequests(requests));
         setDates(getDatesFromRequests(requests));
         setIsLoading(false);
+        return;
       });
   };
 

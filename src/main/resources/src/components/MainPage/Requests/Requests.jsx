@@ -133,10 +133,12 @@ const Requests = (props) => {
         // console.log(temp)
         setRequests(temp);
         setDates(getDatesFromRequests(temp));
+        return;
       })
       .catch((error) => {
         setIsLoading(false);
         console.log(error);
+        return;
       });
   };
 
