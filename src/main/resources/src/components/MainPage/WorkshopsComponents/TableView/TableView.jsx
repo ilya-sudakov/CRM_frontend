@@ -34,6 +34,7 @@ import { getRequestPdfText } from "../../../../utils/pdfFunctions.jsx";
 import LabelPrint from "../LabelPrint/LabelPrint.jsx";
 import ErrorMessage from "../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import { getPageByRequest } from "../functions.js";
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -173,6 +174,16 @@ const TableView = (props) => {
       )
       .then(() => {
         props.loadData();
+        const request = requests.find(
+          (item) => item.id === Number.parseInt(id)
+        );
+        props.history.push(
+          props.workshopName === "requests"
+            ? `/requests/${getPageByRequest(request)}#${request.id}`
+            : `/${props.workshopName}/workshop-${
+                props.workshopName
+              }/${getPageByRequest(request)}#${request.id}`
+        );
       })
       .catch((error) => {
         console.log(error);
