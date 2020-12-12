@@ -69,8 +69,7 @@ const StatisticsPage = () => {
           endDate: getPreviousMonthDates(new Date(), "current").endDate,
         }),
       timeTextSmallPanel: "От прошлого месяца",
-      timeTextGraphPanel:
-        months[getPreviousMonthDates(currDate.startDate).startDate.getMonth()],
+      timeTextGraphPanel: months[currDate.startDate.getMonth()],
       itemsCount: `${months[currDate.startDate.getMonth()]}`,
       getPrevData: (date, value) => getPreviousMonthDates(date, value),
     },
