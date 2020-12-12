@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import viewSVG from "../../../../../../../../assets/tableview/view.svg";
 import editSVG from "../../../../../../../../assets/tableview/edit.svg";
@@ -10,7 +10,9 @@ import transferSVG from "../../../../../../../../assets/tableview/transfer.svg";
 import TruckSVG from "../../../../../../../../assets/sidemenu/truck.inline.svg";
 import "./TableView.scss";
 import pdfMake from "pdfmake";
+import PropTypes from "prop-types";
 import html2canvas from "html2canvas";
+import UserContext from "../../../../App.js";
 
 import {
   editRequestStatus,
@@ -47,6 +49,7 @@ const TableView = (props) => {
   });
   const [labelIsHidden, setLabelIsHidden] = useState(true);
   const [requests, setRequests] = useState([]);
+  const userContext = useContext(UserContext);
 
   const [workshopsFuncs, setWorkshopsFuncs] = useState({
     requests: {
@@ -283,7 +286,7 @@ const TableView = (props) => {
         }
         style={{
           paddingBottom:
-            props.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
+            userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
             props.workshopName === "requests"
               ? "30px"
               : "5px",
@@ -436,7 +439,7 @@ const TableView = (props) => {
               onChange={handleStatusChange}
             >
               {requestStatuses.map((status) => {
-                if (props.userHasAccess(status.access)) {
+                if (userContext.userHasAccess(status.access)) {
                   return (
                     <option
                       value={
@@ -459,7 +462,7 @@ const TableView = (props) => {
         )}
         {displayColumns["date-shipping"].visible && (
           <span className="requests__column--date-shipping">
-            <div className="main-window__mobile-text">Дата отгрузки:</div>
+            <div className="main-window__mobile-text">Отгрузка:</div>
             {request.status === "Отгружено" ||
             request.status === "Завершено" ? (
               <div
@@ -524,7 +527,7 @@ const TableView = (props) => {
           </span>
         )}
         {displayColumns["price"].visible &&
-          props.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) && (
+          userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) && (
             <span className="requests__column--price">
               {/* <div className="main-window__mobile-text">Цена:</div> */}
               {`Сумма заказа: ${
@@ -555,7 +558,7 @@ const TableView = (props) => {
               <TruckSVG className="main-window__img" />
             </Link>
           ) : null} */}
-          {props.userHasAccess([
+          {userContext.userHasAccess([
             "ROLE_ADMIN",
             "ROLE_MANAGER",
             "ROLE_WORKSHOP",
@@ -572,7 +575,7 @@ const TableView = (props) => {
               <img className="main-window__img" src={editSVG} />
             </Link>
           )}
-          {props.userHasAccess(["ROLE_ADMIN"]) && (
+          {userContext.userHasAccess(["ROLE_ADMIN"]) && (
             <div
               data-id={request.id}
               className="main-window__action"
@@ -582,7 +585,7 @@ const TableView = (props) => {
               <img className="main-window__img" src={deleteSVG} />
             </div>
           )}
-          {props.transferRequest && props.userHasAccess(["ROLE_ADMIN"]) && (
+          {props.transferRequest && userContext.userHasAccess(["ROLE_ADMIN"]) && (
             <div
               data-id={request.id}
               className="main-window__action"
@@ -595,7 +598,7 @@ const TableView = (props) => {
               <img className="main-window__img" src={transferSVG} />
             </div>
           )}
-          {props.copyRequest && props.userHasAccess(["ROLE_ADMIN"]) && (
+          {props.copyRequest && userContext.userHasAccess(["ROLE_ADMIN"]) && (
             <div
               data-id={request.id}
               className="main-window__action"
@@ -649,9 +652,7 @@ const TableView = (props) => {
             <span className="requests__column--client">Кодовое слово</span>
             <span className="requests__column--responsible">Ответственный</span>
             <span className="requests__column--status">Статус заявки</span>
-            <span className="requests__column--date-shipping">
-              Дата отгрузки
-            </span>
+            <span className="requests__column--date-shipping">Отгрузка</span>
             <span className="requests__column--comment">Комментарий</span>
             <div className="main-window__actions">Действия</div>
           </div>
@@ -713,3 +714,15 @@ const TableView = (props) => {
 };
 
 export default withRouter(TableView);
+
+TableView.propTypes = {
+  data: PropTypes.array,
+  isLoading: PropTypes.bool,
+  workshopName: PropTypes.string,
+  dates: PropTypes.array,
+  copyRequest: PropTypes.func,
+  loadData: PropTypes.func,
+  deleteItem: PropTypes.func,
+  transferRequest: PropTypes.func,
+  searchQuery: PropTypes.string,
+};

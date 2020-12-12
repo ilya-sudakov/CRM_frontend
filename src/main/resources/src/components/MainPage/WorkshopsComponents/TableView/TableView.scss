@@ -2,6 +2,7 @@
 
 .tableview-workshops {
   width: 100%;
+  margin-top: 5px;
   --shipped: #e3e7d6;
   --priority: #f0dedc;
   --completed: #d5ebda;
@@ -357,12 +358,14 @@
             align-items: center;
             border-radius: 3px;
 
-            &:not(.main-window__list-col-row--header):hover {
-              border-top-right-radius: 0;
-              border-bottom-right-radius: 0;
-              span {
-                &:nth-child(5) {
-                  transform: scale(1);
+            &:not(.main-window__list-col-row--header) {
+              &:hover {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                span {
+                  &:nth-child(5) {
+                    transform: scale(1);
+                  }
                 }
               }
             }

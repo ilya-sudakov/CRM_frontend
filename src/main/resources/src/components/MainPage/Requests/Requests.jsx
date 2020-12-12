@@ -523,7 +523,6 @@ const Requests = (props) => {
           transferRequest={transferRequest}
           copyRequest={copySelectedRequest}
           searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
         />
       </div>
     </div>
