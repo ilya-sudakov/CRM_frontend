@@ -19,12 +19,11 @@ import {
 
 import {
   formatDateString,
-  addSpaceDelimiter,
   createLabelForProduct,
   scrollToElement,
   saveCanvasAsImage,
 } from "../../../../utils/functions.jsx";
-import { requestStatuses, productsStatuses } from "../workshopVariables.js";
+import { requestStatuses } from "../workshopVariables.js";
 import LabelPrint from "../LabelPrint/LabelPrint.jsx";
 import ErrorMessage from "../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
@@ -73,13 +72,6 @@ const TableView = ({
     setLabelIsHidden(false);
     const element = document.getElementById("label");
     setTimeout(async () => {
-      console.log(
-        element,
-        element.scrollWidth,
-        element.scrollHeight,
-        element.clientWidth,
-        element.clientHeight
-      );
       await html2canvas(element, {
         windowWidth: element.scrollWidth,
         windowHeight: element.scrollHeight,
@@ -88,7 +80,6 @@ const TableView = ({
         scale: window.devicePixelRatio * 5,
       }).then((canvas) => {
         setLabelIsHidden(true);
-        // saveCanvas(canvas)
         saveCanvasAsImage(
           canvas,
           `${formatDateString(new Date())}_${product.name}.jpeg`
@@ -195,10 +186,6 @@ const TableView = ({
       )
         return;
       if (node !== null && data) {
-        console.log(
-          node,
-          data.find((item) => item.id === id)
-        );
         scrollToElement(node, workshopName === "requests" ? -200 : -1000);
         setScrolledToPrev(true);
       }
@@ -429,6 +416,5 @@ TableView.propTypes = {
   loadData: PropTypes.func,
   deleteItem: PropTypes.func,
   transferRequest: PropTypes.func,
-  searchQuery: PropTypes.string,
   printConfig: PropTypes.object,
 };
