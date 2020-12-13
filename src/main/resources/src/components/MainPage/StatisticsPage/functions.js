@@ -127,3 +127,20 @@ export const getPreviousYearDates = (date, value) => {
     endDate,
   };
 };
+
+export const checkRequestsForSelectedMonth = (requests, selectedDate) => {
+  return requests.filter((request) => {
+    const date = new Date(request.date);
+    if (
+      checkIfDateIsInRange(
+        date,
+        new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1),
+        new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0)
+      ) &&
+      request.status === "Завершено"
+    ) {
+      return true;
+    }
+    return false;
+  });
+};

@@ -21,6 +21,7 @@ import RiggingItemsQuantityForType from "./Graphs/RiggingItemsQuantityForType.js
 import ProductQuantityProduced from "./Panels/ProductQuantityProduced.jsx";
 import AverageProductQuantityProduced from "./Panels/AverageProductQuantityProduced.jsx";
 import OnTimeRequestsDistribution from "./Panels/OnTimeRequestsDistribution.jsx";
+import IncomeStatsBigPanel from "./BigPanels/IncomeStatsBigPanel.jsx";
 
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import useDraftsList from "../../../utils/hooks/useDraftsList";
@@ -281,6 +282,14 @@ const RequestsPage = ({ currDate, timePeriod }) => {
   return (
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
+        <IncomeStatsBigPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+      </div>
+      <div className="statistics__row">
         <RequestsQuantityPanel
           currDate={currDate}
           requests={requests}
@@ -293,13 +302,21 @@ const RequestsPage = ({ currDate, timePeriod }) => {
           timeText={timePeriod.timeTextSmallPanel}
           getPrevData={timePeriod.getPrevData}
         />
-        <AverageSumStatsPanel
+        <OnTimeRequestsDistribution
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
           getPrevData={timePeriod.getPrevData}
         />
-        <RequestsAverageTimeCompletion
+      </div>
+      <div className="statistics__row statistics__row--full">
+        <NewClientsStatsPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+        <NewOldClientsStatsPanel
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
@@ -318,26 +335,20 @@ const RequestsPage = ({ currDate, timePeriod }) => {
           timeText={timePeriod.timeTextGraphPanel}
         />
       </div>
-      <div className="statistics__row">
-        <NewClientsStatsPanel
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
-        <NewOldClientsStatsPanel
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
+      <div className="statistics__row statistics__row--full">
         <ProductQuantityInRequest
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
           getPrevData={timePeriod.getPrevData}
         />
-        <OnTimeRequestsDistribution
+        <AverageSumStatsPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+        <RequestsAverageTimeCompletion
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
