@@ -96,6 +96,9 @@ const BigPanel = ({
             : "positive"
         }`}
       ></div>
+      <div
+        className={`panel__chart-wrapper--content panel__chart-wrapper--${chartName}-content`}
+      ></div>
       {content}
     </div>
   );

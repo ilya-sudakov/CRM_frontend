@@ -4,18 +4,18 @@
     padding: 0 15px;
     box-sizing: border-box;
 
-    @keyframes pulse {
+    @keyframes pulse1 {
         0% {
-            border-color: #dddddd;
-            background-color: #dddddd;
+            border-color: #dddddd !important;
+            background-color: #dddddd !important;
         }
         50% {
-            border-color: #f7f7f7;
-            background-color: #f7f7f7;
+            border-color: #dfdfdf !important;
+            background-color: #dfdfdf !important;
         }
         100% {
-            border-color: #dddddd;
-            background-color: #dddddd;
+            border-color: #dddddd !important;
+            background-color: #dddddd !important;
         }
     }
 
@@ -384,11 +384,15 @@
                 .panel__category {
                     font-size: 1.1rem;
                 }
-                .panel__chart-wrapper {
+                .panel__chart-wrapper,
+                .panel__chart-wrapper--content {
                     margin-top: 15px;
                     width: 100%;
                     box-sizing: border-box;
                     transition: 200ms cubic-bezier(0.23, 1, 0.32, 1);
+                }
+                .panel__chart-wrapper--content {
+                    max-width: 500px;
                 }
             }
 
@@ -397,16 +401,16 @@
             &--placeholder {
                 .panel__category {
                     span {
-                        // animation: pulse 1s infinite ease-in-out;
+                        // animation: pulse1 1s infinite ease-in-out;
                     }
                 }
                 .panel__chart-wrapper {
                     height: 200px;
                     border-radius: 5px;
-                    animation: pulse 1s infinite ease-in-out;
+                    animation: pulse1 1s infinite ease-in-out;
                 }
                 .panel__value {
-                    animation: pulse 1s infinite ease-in-out;
+                    animation: pulse1 1s infinite ease-in-out;
                     content: "";
                     min-width: 200px;
                     height: 1.5rem;
@@ -414,10 +418,11 @@
                 }
                 .panel__difference {
                     .panel__arrow {
-                        animation: pulse 1s infinite ease-in-out;
+                        animation: pulse1 1s infinite ease-in-out;
+                        border-radius: 999px;
                     }
                     .panel__percentage {
-                        animation: pulse 1s infinite ease-in-out;
+                        animation: pulse1 1s infinite ease-in-out;
                         border-radius: 5px;
                         min-width: 150px;
                         height: 1.5rem;
