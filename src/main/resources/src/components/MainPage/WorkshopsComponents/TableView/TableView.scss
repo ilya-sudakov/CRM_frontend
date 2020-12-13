@@ -76,7 +76,7 @@
           color: #111111 !important;
 
           margin-bottom: 5px;
-          border-radius: 5px;
+          border-radius: 3px;
 
           .requests__column--status {
             &::before {
@@ -281,6 +281,7 @@
           font-size: 100%;
           padding-left: 10px;
           color: #222222aa;
+          white-space: nowrap;
         }
 
         .main-window__actions {
@@ -437,7 +438,7 @@
     align-items: center;
     color: lighten($primary-text-color, 100%);
     background-color: darken($table-primary__background, 10%);
-    border-radius: 5px;
+    border-radius: 3px;
     transition: 0.2s ease-in-out;
     cursor: pointer;
 

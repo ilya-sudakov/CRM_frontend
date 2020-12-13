@@ -19,7 +19,6 @@ const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
     linkTo: "/requests",
     chartName: "IncomeStatsBigPanel",
     isLoaded: false,
-    isLoading: false,
     timePeriod: timeText,
     difference: 0,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
@@ -31,7 +30,6 @@ const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
   const getStats = (requests) => {
     setStats((stats) => ({
       ...stats,
-      isLoading: true,
       isLoaded: false,
     }));
 
@@ -113,12 +111,16 @@ const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
       setStats((stats) => ({
         ...stats,
         isLoaded: true,
-        isLoading: false,
       }));
       loadCanvas(
         `panel__chart-wrapper--${stats.chartName}`,
         `panel__chart panel__chart--${stats.chartName}`
       );
+    } else {
+      setStats((stats) => ({
+        ...stats,
+        isLoaded: true,
+      }));
     }
 
     setCanvasLoaded(true);
@@ -213,15 +215,20 @@ const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
 
   //При первой загрузке
   useEffect(() => {
+    console.log("first render");
     !stats.isLoaded && requests.length > 1 && getStats(requests);
-  }, [requests, stats]);
+  }, [requests]);
 
   //При обновлении тек. даты
   useEffect(() => {
-    setStats((stats) => {
-      return { ...stats, timePeriod: timeText };
-    });
-    if (!stats.isLoading && requests.length > 1) {
+    if (canvasLoaded && requests.length > 1) {
+      console.log("second+ render");
+      setCanvasLoaded(false);
+      setStats((stats) => ({
+        ...stats,
+        timePeriod: timeText,
+      }));
+      graph.destroy();
       getStats(requests);
     }
   }, [currDate]);

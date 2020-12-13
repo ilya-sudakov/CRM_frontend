@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   addSpaceDelimiter,
+  getDatesFromRequests,
   formatDateString,
 } from "../../../../../utils/functions.jsx";
 import { getPageByRequest } from "../../../Requests/functions.js";
+import TableView from "../../../WorkshopsComponents/TableView/TableView.jsx";
 import "./RequestsList.scss";
 
 const RequestsList = ({
@@ -27,72 +29,14 @@ const RequestsList = ({
   return (
     <div className="requests-list">
       <div className="main-window__title">{title}</div>
+
       {data.length > 0 ? (
-        <div className="main-window__list">
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>ID</span>
-            <span>Дата создания</span>
-            <span>Продукция</span>
-            <span>Клиент</span>
-            <span>Статус</span>
-            <span>Ответственный</span>
-            <span>Дата отгрузки</span>
-            <span>Сумма</span>
-          </div>
-          {sortData(data).map((request) => (
-            <Link
-              className="main-window__list-item"
-              key={request.id}
-              to={`/requests/${getPageByRequest(request)}#${request.id}`}
-            >
-              <span>
-                <div className="main-window__mobile-text">ID</div>
-                {request.id}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Дата создания</div>
-                {formatDateString(request.date)}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Продукция</div>
-                {request.requestProducts.map((product) => (
-                  <div>{`${product.name} | ${product.quantity} шт`}</div>
-                ))}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Клиент</div>
-                {request?.client ? (
-                  <Link
-                    to={`/clients/edit/${request.client.id}`}
-                    className="main-window__link"
-                  >
-                    {request.client.name}
-                  </Link>
-                ) : (
-                  "Не указано"
-                )}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Статус</div>
-                {request.status}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Статус</div>
-                {request.responsible}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Дата отгрузки</div>
-                {formatDateString(request.shippingDate)}
-              </span>
-              <span>
-                <div className="main-window__mobile-text">Сумма</div>
-                {`${addSpaceDelimiter(
-                  Number.parseFloat(request.sum === null ? 0 : request.sum)
-                )} руб`}
-              </span>
-            </Link>
-          ))}
-        </div>
+        <TableView
+          data={sortData(data)}
+          isLoading={false}
+          workshopName="requests"
+          dates={getDatesFromRequests(data)}
+        />
       ) : (
         <div className="main-window__info-text">
           Нет заявок за выбранный период

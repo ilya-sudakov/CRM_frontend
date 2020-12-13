@@ -142,6 +142,10 @@
                     margin-top: 20px;
                     width: fit-content;
                 }
+                &__content {
+                    width: calc(90% - (var(--padding-left-right) * 2));
+                    height: calc(90% - (var(--padding-top-bottom) * 2));
+                }
             }
 
             // SVG STYLES

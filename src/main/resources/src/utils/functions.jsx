@@ -381,7 +381,15 @@ export const getDatesFromRequests = (requests) => {
       dates.push(request.date);
     }
   });
-  return dates;
+  return dates.sort((a, b) => {
+    if (a < b) {
+      return 1;
+    }
+    if (a > b) {
+      return -1;
+    }
+    return 0;
+  });
 };
 
 export const createLabelForProduct = (product) => {

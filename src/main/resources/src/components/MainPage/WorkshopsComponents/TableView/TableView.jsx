@@ -408,12 +408,12 @@ const TableView = ({
 export default withRouter(TableView);
 
 TableView.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.array.isRequired,
   isLoading: PropTypes.bool,
-  workshopName: PropTypes.string,
-  dates: PropTypes.array,
+  workshopName: PropTypes.string.isRequired,
+  dates: PropTypes.array.isRequired,
   copyRequest: PropTypes.func,
-  loadData: PropTypes.func,
+  loadData: PropTypes.func.isRequired,
   deleteItem: PropTypes.func,
   transferRequest: PropTypes.func,
   printConfig: PropTypes.object,

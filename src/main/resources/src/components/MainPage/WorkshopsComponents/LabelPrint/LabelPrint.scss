@@ -32,7 +32,7 @@
     overflow: hidden;
 
     &--hidden {
-        left: 9999px;
+        left: -9999px;
     }
 
     &__header {

@@ -5,90 +5,15 @@
         &__title {
             width: fit-content;
             margin-top: 0 !important;
+            margin-bottom: 20px;
         }
         &__info-text {
             padding-left: 15px;
         }
-        &__list {
-            &-item {
-                min-height: 2rem;
-
-                span {
-                    &:nth-child(1) {
-                        max-width: 50px;
-                    }
-                    &:nth-child(2) {
-                        max-width: 120px;
-                    }
-                    &:nth-child(3) {
-                        flex: 0 1 30%;
-                    }
-                    &:nth-child(4) {
-                    }
-                    &:nth-child(5) {
-                    }
-                    &:nth-child(6) {
-                        flex: 0 1 20%;
-                        max-width: 150px;
-                    }
-                    &:nth-child(7) {
-                        max-width: 120px;
-                    }
-                    &:nth-child(8) {
-                        max-width: 150px;
-                    }
-                }
-
-                &:not(.main-window__list-item--header) {
-                    span {
-                        &:nth-child(3) {
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: flex-start;
-                            align-items: flex-start;
-
-                            div:not(:last-child) {
-                                margin-bottom: 10px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
-
-    @media (max-width: 768px) {
+    .tableview-workshops {
         .main-window {
-            &__list {
-                &-item {
-                    span {
-                        &:nth-child(1) {
-                            max-width: none;
-                        }
-                        &:nth-child(2) {
-                            max-width: none;
-                        }
-                        &:nth-child(3) {
-                            max-width: none;
-                        }
-                        &:nth-child(4) {
-                            max-width: none;
-                        }
-                        &:nth-child(5) {
-                            max-width: none;
-                        }
-                        &:nth-child(6) {
-                            max-width: none;
-                        }
-                        &:nth-child(7) {
-                            max-width: none;
-                        }
-                        &:nth-child(8) {
-                            max-width: none;
-                        }
-                    }
-                }
-            }
+            padding-right: 20px;
         }
     }
 }
