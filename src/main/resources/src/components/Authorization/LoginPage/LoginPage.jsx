@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./LoginPage.scss";
+import "../../../utils/MainWindow/MainWindow.scss";
 import { login } from "../../../utils/RequestsAPI/Authorization.jsx";
 import eyeIcon from "../../../../../../../assets/loginPage/eye.png";
 import newCompanyIcon from "../../../../../../../assets/loginPage/login__new_year.png";
@@ -69,124 +70,126 @@ const LoginPage = (props) => {
 
   return (
     <div className="authorization">
-      {!props.isAuthorized ? (
-        <div className="authorization__panel">
-          <div className="authorization__title">
-            <img
-              className="authorization__img authorization__img--logo"
-              src={newCompanyIcon}
-              alt=""
-            />
-            {/* <div className="authorization__title-text">Вход в аккаунт</div> */}
-          </div>
-          <ErrorMessage
-            message="Ошибка при авторизации"
-            showError={showError}
-            setShowError={setShowError}
-          />
-          <div className="authorization__field_input">
-            <div
-              className={`authorization__field_name ${
-                username !== "" || password !== "" || hide || focus
-                  ? "authorization__field_name--focused"
-                  : ""
-              }`}
-            >
-              Логин
+      <div className="main-window">
+        {!props.isAuthorized ? (
+          <div className="authorization__panel">
+            <div className="authorization__title">
+              <img
+                className="authorization__img authorization__img--logo"
+                src={newCompanyIcon}
+                alt=""
+              />
+              {/* <div className="authorization__title-text">Вход в аккаунт</div> */}
             </div>
-            <input
-              type="text"
-              onChange={(e) => setUserName(e.target.value)}
-              onAnimationStart={handleAutoFill}
-              onFocus={() => setFocus(true)}
-              onBlur={() => setFocus(false)}
-              id="login"
-              defaultValue=""
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  handleLogin();
+            <ErrorMessage
+              message="Ошибка при авторизации"
+              showError={showError}
+              setShowError={setShowError}
+            />
+            <div className="authorization__field_input">
+              <div
+                className={`authorization__field_name ${
+                  username !== "" || password !== "" || hide || focus
+                    ? "authorization__field_name--focused"
+                    : ""
+                }`}
+              >
+                Логин
+              </div>
+              <input
+                type="text"
+                onChange={(e) => setUserName(e.target.value)}
+                onAnimationStart={handleAutoFill}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
+                id="login"
+                defaultValue=""
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleLogin();
+                  }
+                }}
+              />
+            </div>
+            <div className="authorization__field_input">
+              <div
+                className={`authorization__field_name  ${
+                  username !== "" || password !== "" || hide || focus
+                    ? "authorization__field_name--focused"
+                    : ""
+                }`}
+              >
+                Пароль
+              </div>
+              <img
+                className="authorization__img authorization__img--eye"
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+                src={eyeIcon}
+                alt=""
+              />
+              <div
+                className={
+                  showPassword
+                    ? "authorization__line"
+                    : "authorization__line authorization__line--hidden"
                 }
-              }}
-            />
-          </div>
-          <div className="authorization__field_input">
-            <div
-              className={`authorization__field_name  ${
-                username !== "" || password !== "" || hide || focus
-                  ? "authorization__field_name--focused"
-                  : ""
-              }`}
-            >
-              Пароль
+                onClick={() => {
+                  setShowPassword(!showPassword);
+                }}
+              ></div>
+              <input
+                type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+                id="password"
+                onAnimationStart={handleAutoFill}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
+                onKeyDown={(event) => event.key === "Enter" && handleLogin()}
+              />
             </div>
-            <img
-              className="authorization__img authorization__img--eye"
-              onClick={() => {
-                setShowPassword(!showPassword);
+            <CheckBox
+              text="Запомнить меня"
+              checked={rememberUser}
+              onChange={() => {
+                setRememberUser(!rememberUser);
               }}
-              src={eyeIcon}
-              alt=""
             />
-            <div
-              className={
-                showPassword
-                  ? "authorization__line"
-                  : "authorization__line authorization__line--hidden"
-              }
-              onClick={() => {
-                setShowPassword(!showPassword);
-              }}
-            ></div>
-            <input
-              type={showPassword ? "text" : "password"}
-              onChange={(e) => setPassword(e.target.value)}
-              id="password"
-              onAnimationStart={handleAutoFill}
-              onFocus={() => setFocus(true)}
-              onBlur={() => setFocus(false)}
-              onKeyDown={(event) => event.key === "Enter" && handleLogin()}
+            <Button
+              text="Войти"
+              imgSrc={exitSVG}
+              type="submit"
+              className="main-window__button"
+              isLoading={isLoading}
+              onClick={handleLogin}
             />
           </div>
-          <CheckBox
-            text="Запомнить меня"
-            checked={rememberUser}
-            onChange={() => {
-              setRememberUser(!rememberUser);
-            }}
-          />
-          <Button
-            text="Войти"
-            imgSrc={exitSVG}
-            type="submit"
-            className="main-window__button"
-            isLoading={isLoading}
-            onClick={handleLogin}
-          />
-        </div>
-      ) : (
-        <div className="authorization__panel">
-          <div className="authorization__title">
-            <img
-              className="authorization__img authorization__img--logo"
-              src={newCompanyIcon}
-              alt=""
+        ) : (
+          <div className="authorization__panel">
+            <div className="authorization__title">
+              <img
+                className="authorization__img authorization__img--logo"
+                src={newCompanyIcon}
+                alt=""
+              />
+            </div>
+            <Button
+              text="Выйти"
+              imgSrc={exitSVG}
+              type="submit"
+              className="main-window__button"
+              isLoading={isLoading}
+              onClick={handleSignOut}
             />
+            <div className="authorization__link">
+              Нажмите
+              <Link to="/">здесь</Link>
+              чтобы вернуться на главную страницу
+            </div>
           </div>
-          <Button
-            text="Выйти"
-            imgSrc={exitSVG}
-            type="submit"
-            className="main-window__button"
-            isLoading={isLoading}
-            onClick={handleSignOut}
-          />
-          <div className="authorization__link">
-            Нажмите
-            <Link to="/">здесь</Link>
-            чтобы вернуться на главную страницу
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

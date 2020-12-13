@@ -11,7 +11,7 @@ import RequestsQuantityPanel from "./Panels/RequestsQuantityPanel.jsx";
 import IncomeStatsPanel from "./Panels/IncomeStatsPanel.jsx";
 import AverageSumStatsPanel from "./Panels/AverageSumStatsPanel.jsx";
 import NewClientsStatsPanel from "./Panels/NewClientsStatsPanel.jsx";
-import RequestsQuantityGraphPanel from "./Graphs/RequestsQuantityGraphPanel.jsx";
+import NewOldClientsStatsPanel from "./Panels/NewOldClientsStatsPanel.jsx";
 import ManagerEfficiencyGraphPanel from "./Graphs/ManagerEfficiencyGraphPanel.jsx";
 import ManagerMoneyGraphPanel from "./Graphs/ManagerMoneyGraphPanel.jsx";
 import RequestsAverageTimeCompletion from "./Panels/RequestsAverageTimeCompletionPanel.jsx";
@@ -320,6 +320,12 @@ const RequestsPage = ({ currDate, timePeriod }) => {
       </div>
       <div className="statistics__row">
         <NewClientsStatsPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+        <NewOldClientsStatsPanel
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
