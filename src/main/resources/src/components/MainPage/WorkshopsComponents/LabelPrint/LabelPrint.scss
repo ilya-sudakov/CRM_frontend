@@ -1,16 +1,4 @@
 .label-print {
-    @keyframes pulse {
-        0% {
-            background-color: #dddddd;
-        }
-        50% {
-            background-color: #ffffff;
-        }
-        100% {
-            background-color: #dddddd;
-        }
-    }
-
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
