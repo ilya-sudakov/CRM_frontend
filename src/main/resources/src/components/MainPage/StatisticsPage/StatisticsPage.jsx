@@ -288,15 +288,7 @@ const RequestsPage = ({ currDate, timePeriod }) => {
           timeText={timePeriod.timeTextSmallPanel}
           getPrevData={timePeriod.getPrevData}
         />
-      </div>
-      <div className="statistics__row">
         <RequestsQuantityPanel
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
-        <IncomeStatsPanel
           currDate={currDate}
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}

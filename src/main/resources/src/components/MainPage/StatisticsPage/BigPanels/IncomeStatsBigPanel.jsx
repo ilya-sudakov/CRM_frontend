@@ -8,6 +8,7 @@ import {
   checkRequestsForSelectedMonth,
 } from "../functions.js";
 import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
+import SmallPanel from "../Panels/SmallPanel.jsx";
 import BigPanel from "./BigPanel.jsx";
 
 const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
@@ -127,22 +128,9 @@ const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
         labels: Object.entries(dataset).map((item) => item[0]),
         datasets: [
           {
-            backgroundColor: [
-              "#3e95cd",
-              "#8e5ea2",
-              "#3cba9f",
-              "#e8c3b9",
-              "#c45850",
-              "#bbbbbb",
-              "#bbbbbb",
-              "#bbbbbb",
-              "#bbbbbb",
-              "#bbbbbb",
-              "#bbbbbb",
-              "#bbbbbb",
-              "#bbbbbb",
-            ],
+            backgroundColor: "#3e95cd",
             data: Object.entries(dataset).map((item) => item[1]),
+            label: "Сумма",
           },
         ],
       },
@@ -156,6 +144,11 @@ const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
             : false,
         animation: {
           easing: "easeInOutCirc",
+        },
+        title: {
+          display: true,
+          text: "Доход за год",
+          align: "start",
         },
         tooltips: {
           mode: "index",
@@ -233,7 +226,7 @@ const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
     }
   }, [currDate]);
 
-  return <BigPanel {...stats} />;
+  return <SmallPanel {...stats} />;
 };
 
 export default IncomeStatsBigPanel;

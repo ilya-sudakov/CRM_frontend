@@ -4,6 +4,7 @@
     .main-window {
         &__title {
             width: fit-content;
+            margin-top: 0 !important;
         }
         &__info-text {
             padding-left: 15px;

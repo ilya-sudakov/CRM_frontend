@@ -13,6 +13,7 @@ const SmallPanel = ({
   timePeriod,
   linkTo,
   windowContent,
+  chartName,
 }) => {
   const [showWindow, setShowWindow] = useState(false);
 
@@ -29,10 +30,22 @@ const SmallPanel = ({
         <span>{category || "Категория"}</span>
         {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
       </div>
-      {windowContent ? (
+      {windowContent || chartName ? (
         <FormWindow
           title={category}
-          content={windowContent}
+          content={
+            <>
+              {windowContent}
+              {chartName ? (
+                <>
+                  <div className="main-window__title">Графики</div>
+                  <div
+                    className={`panel__chart-wrapper panel__chart-wrapper--${chartName}`}
+                  ></div>
+                </>
+              ) : null}
+            </>
+          }
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />

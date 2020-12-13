@@ -133,6 +133,17 @@
                 }
             }
 
+            .form-window {
+                .panel__chart-wrapper {
+                    max-width: 900px;
+                    margin-top: 10px;
+                }
+                .main-window__title {
+                    margin-top: 20px;
+                    width: fit-content;
+                }
+            }
+
             // SVG STYLES
 
             &__img {
