@@ -11,7 +11,7 @@ const ErrorMessage = ({ showError = false, setShowError, message = "" }) => {
       !(classList[0] === "window_error") &&
       !classList.contains("window_error__exit") &&
       !classList.contains("window_error__bar") &&
-      !classList.contains("window_error__button")
+      !classList.contains("main-window__button")
     ) {
       return setShowError(true);
     }
@@ -61,11 +61,9 @@ const ErrorMessage = ({ showError = false, setShowError, message = "" }) => {
           </div>
         </div>
         <div className="window_error__message">{message}</div>
-        <Button
-          className="main-window__button"
-          onClick={() => setShowError(false)}
-          text="ОК"
-        />
+        <div className="main-window__button" onClick={clickOnErrorWindow}>
+          ОК
+        </div>
       </div>
     </div>
   );
