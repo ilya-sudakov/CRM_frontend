@@ -389,10 +389,10 @@ const WorkshopLEMZ = (props) => {
           }
         />
         <TableView
-          data={sortRequests(filterRequests(requestsLEMZ))}
+          data={filterRequests(requestsLEMZ)}
           workshopName="lemz"
           isLoading={isLoading}
-          curSort={sortOrder.curSort}
+          sortOrder={sortOrder}
           loadData={loadRequestsLEMZ}
           dates={dates.sort((a, b) => {
             if (a < b) {

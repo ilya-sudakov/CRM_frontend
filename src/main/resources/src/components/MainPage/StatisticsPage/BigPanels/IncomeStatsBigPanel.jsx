@@ -94,7 +94,7 @@ const IncomeStatsBigPanel = ({
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequests}
-          sortBy={{ name: ["sum"], type: "DESC" }}
+          sortBy={{ curSort: "sum", sum: "desc" }}
           loadData={loadData}
         />
       ),

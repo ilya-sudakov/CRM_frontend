@@ -506,7 +506,7 @@ const Requests = (props) => {
           }
         />
         <TableView
-          data={sortRequests(filterRequests(requests))}
+          data={filterRequests(requests)}
           dates={dates.sort((a, b) => {
             if (a < b) {
               return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
@@ -517,7 +517,7 @@ const Requests = (props) => {
             return 0;
           })}
           isLoading={isLoading}
-          curSort={sortOrder.curSort}
+          sortOrder={sortOrder}
           workshopName="requests"
           loadData={loadRequests}
           deleteItem={deleteItem}

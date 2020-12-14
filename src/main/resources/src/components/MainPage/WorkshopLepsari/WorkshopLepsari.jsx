@@ -390,7 +390,7 @@ const WorkshopLepsari = (props) => {
           }
         />
         <TableView
-          data={sortRequests(filterRequests(requestsLepsari))}
+          data={filterRequests(requestsLepsari)}
           workshopName="lepsari"
           isLoading={isLoading}
           loadData={loadrequestsLepsari}
@@ -404,7 +404,7 @@ const WorkshopLepsari = (props) => {
             return 0;
           })}
           deleteItem={deleteItem}
-          curSort={sortOrder.curSort}
+          sortOrder={sortOrder}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />

@@ -44,15 +44,21 @@ import {
 const TableView = ({
   workshopName,
   loadData,
-  isLoading,
-  data,
+  isLoading = false,
+  data = [],
   dates,
   copyRequest,
   deleteItem,
   transferRequest,
-  printConfig,
+  printConfig = {
+    ...defaultPrintObject,
+    price: { visible: workshopName === "requests" },
+  },
   history,
-  curSort,
+  sortOrder = {
+    curSort: "id",
+    id: "desc",
+  },
 }) => {
   const [showError, setShowError] = useState(false);
   const [errorRequestId, setErrorRequestId] = useState(null);
@@ -64,6 +70,18 @@ const TableView = ({
   const [labelIsHidden, setLabelIsHidden] = useState(true);
   const [requests, setRequests] = useState([]);
   const userContext = useContext(UserContext);
+
+  const sortRequests = (data) => {
+    return data.sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
+      }
+      return 0;
+    });
+  };
 
   const downloadImage = async (product, workshop) => {
     setSelectedProduct({
@@ -356,7 +374,8 @@ const TableView = ({
             className="main-window__list-item main-window__list-item--header"
             style={{
               marginBottom:
-                curSort === "date" || curSort === "shippingDate"
+                sortOrder.curSort === "date" ||
+                sortOrder.curSort === "shippingDate"
                   ? "-20px"
                   : "0",
             }}
@@ -381,12 +400,15 @@ const TableView = ({
               minHeight="3rem"
               items={15}
             />
-          ) : curSort === "date" || curSort === "shippingDate" ? (
+          ) : sortOrder.curSort === "date" ||
+            sortOrder.curSort === "shippingDate" ? (
             dates.map((date) => {
-              let filteredReqs = requests.filter(
-                (request) =>
-                  formatDateString(new Date(request.date)) ===
-                  formatDateString(new Date(date))
+              let filteredReqs = sortRequests(
+                requests.filter(
+                  (request) =>
+                    formatDateString(new Date(request.date)) ===
+                    formatDateString(new Date(date))
+                )
               );
 
               if (filteredReqs.length > 0) {
@@ -395,27 +417,13 @@ const TableView = ({
                     <div className="main-window__table-date">
                       {formatDateString(new Date(date))}
                     </div>
-                    {printRequests(
-                      filteredReqs,
-                      printConfig ??
-                        Object.assign({
-                          ...defaultPrintObject,
-                          price: { visible: workshopName === "requests" },
-                        })
-                    )}
+                    {printRequests(filteredReqs, printConfig)}
                   </>
                 );
               }
             })
           ) : (
-            printRequests(
-              requests,
-              printConfig ??
-                Object.assign({
-                  ...defaultPrintObject,
-                  price: { visible: workshopName === "requests" },
-                })
-            )
+            printRequests(sortRequests(requests), printConfig)
           )}
         </div>
       </div>
@@ -435,5 +443,5 @@ TableView.propTypes = {
   deleteItem: PropTypes.func,
   transferRequest: PropTypes.func,
   printConfig: PropTypes.object,
-  curSort: PropTypes.string,
+  sortOrder: PropTypes.object,
 };

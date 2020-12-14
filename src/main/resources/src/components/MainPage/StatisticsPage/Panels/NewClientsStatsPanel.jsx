@@ -112,7 +112,7 @@ const NewClientsStatsPanel = ({
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequestsNew}
-          sortBy={{ name: ["sum"], type: "DESC" }}
+          sortBy={{ curSort: "sum", sum: "desc" }}
         />
       ),
       isLoaded: true,
