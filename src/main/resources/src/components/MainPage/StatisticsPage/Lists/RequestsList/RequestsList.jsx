@@ -1,11 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-  addSpaceDelimiter,
-  getDatesFromRequests,
-  formatDateString,
-} from "../../../../../utils/functions.jsx";
-import { getPageByRequest } from "../../../Requests/functions.js";
 import TableView from "../../../WorkshopsComponents/TableView/TableView.jsx";
 import "./RequestsList.scss";
 
@@ -13,6 +6,7 @@ const RequestsList = ({
   data = [],
   sortBy = { name: ["id"], type: "ASC" },
   title = "",
+  loadData,
 }) => {
   const sortData = (data) => {
     return data.sort((a, b) => {
@@ -35,8 +29,8 @@ const RequestsList = ({
           data={sortData(data)}
           isLoading={false}
           workshopName="requests"
-          dates={getDatesFromRequests(data)}
           curSort={sortBy.name}
+          loadData={loadData}
         />
       ) : (
         <div className="main-window__info-text">

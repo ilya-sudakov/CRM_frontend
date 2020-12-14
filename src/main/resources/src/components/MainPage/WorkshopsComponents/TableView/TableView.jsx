@@ -429,7 +429,7 @@ TableView.propTypes = {
   data: PropTypes.array.isRequired,
   isLoading: PropTypes.bool,
   workshopName: PropTypes.string.isRequired,
-  dates: PropTypes.array.isRequired,
+  dates: PropTypes.array,
   copyRequest: PropTypes.func,
   loadData: PropTypes.func.isRequired,
   deleteItem: PropTypes.func,

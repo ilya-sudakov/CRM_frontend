@@ -11,7 +11,13 @@ import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 import SmallPanel from "../Panels/SmallPanel.jsx";
 import BigPanel from "./BigPanel.jsx";
 
-const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
+const IncomeStatsBigPanel = ({
+  requests,
+  currDate,
+  timeText,
+  getPrevData,
+  loadData,
+}) => {
   const [stats, setStats] = useState({
     category: "Доход",
     percentage: 0,
@@ -89,6 +95,7 @@ const IncomeStatsBigPanel = ({ requests, currDate, timeText, getPrevData }) => {
           title="Заявки за выбранный период"
           data={filteredRequests}
           sortBy={{ name: ["sum"], type: "DESC" }}
+          loadData={loadData}
         />
       ),
       value: `${addSpaceDelimiter(

@@ -287,6 +287,7 @@ const RequestsPage = ({ currDate, timePeriod }) => {
           requests={requests}
           timeText={timePeriod.timeTextSmallPanel}
           getPrevData={timePeriod.getPrevData}
+          loadData={loadRequests}
         />
         <RequestsQuantityPanel
           currDate={currDate}
