@@ -17,6 +17,7 @@ const IncomeStatsBigPanel = ({
   timeText,
   getPrevData,
   loadData,
+  curPeriod,
 }) => {
   const [stats, setStats] = useState({
     category: "Доход",
@@ -27,6 +28,7 @@ const IncomeStatsBigPanel = ({
     isLoaded: false,
     timePeriod: timeText,
     difference: 0,
+    curPeriod: curPeriod,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
   });
   const [graph, setGraph] = useState(null);
@@ -101,6 +103,9 @@ const IncomeStatsBigPanel = ({
       value: `${addSpaceDelimiter(
         Math.floor(curMonthIncome * 100) / 100
       )} руб.`,
+      prevValue: `${addSpaceDelimiter(
+        Math.floor(prevMonthIncome * 100) / 100
+      )} руб.`,
       difference: curMonthIncome - prevMonthIncome,
       percentage:
         Math.floor(
@@ -120,7 +125,7 @@ const IncomeStatsBigPanel = ({
         isLoaded: true,
       }));
       loadCanvas(
-        `panel__chart-wrapper--${stats.chartName}`,
+        `panel__chart-wrapper--${stats.chartName}-content`,
         `panel__chart panel__chart--${stats.chartName}`
       );
     } else {
@@ -234,13 +239,14 @@ const IncomeStatsBigPanel = ({
       setStats((stats) => ({
         ...stats,
         timePeriod: timeText,
+        curPeriod: curPeriod,
       }));
       graph.destroy();
       getStats(requests);
     }
   }, [currDate]);
 
-  return <SmallPanel {...stats} />;
+  return <BigPanel {...stats} />;
 };
 
 export default IncomeStatsBigPanel;

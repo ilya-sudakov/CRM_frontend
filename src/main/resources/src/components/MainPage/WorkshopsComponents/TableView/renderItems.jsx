@@ -16,39 +16,39 @@ export const renderIdColumn = (request = { id: 0 }, workshopName = "") => {
   );
 };
 
-export const renderDateCreatedColumn = (request) => {
+export const renderDateCreatedColumn = ({ date }) => {
   return (
     <span className="requests__column--date">
       <div className="main-window__mobile-text">Дата:</div>
-      {formatDateString(request.date)}
+      {formatDateString(date)}
     </span>
   );
 };
 
-export const renderClientColumn = (request) => {
+export const renderClientColumn = ({ client, codeWord }) => {
   return (
     <span className="requests__column--client">
       <div className="main-window__mobile-text">Кодовое слово:</div>
-      {request.client ? (
+      {client ? (
         <Link
           target="_blank"
           className="main-window__link"
-          to={`/clients/edit/${request.client.id}`}
+          to={`/clients/edit/${client.id}`}
         >
-          {request.client.name}
+          {client.name}
         </Link>
       ) : (
-        request.codeWord
+        codeWord
       )}
     </span>
   );
 };
 
-export const renderResponsibleColumn = (request) => {
+export const renderResponsibleColumn = ({ responsible }) => {
   return (
     <span className="requests__column--responsible">
       <div className="main-window__mobile-text">Ответственный:</div>
-      {request.responsible}
+      {responsible}
     </span>
   );
 };
@@ -114,20 +114,19 @@ export const renderDateShippedColumn = (request) => {
   );
 };
 
-export const renderCommentColumn = (request) => {
+export const renderCommentColumn = ({ comment }) => {
   return (
-    <span title={request.comment} className="requests__column--comment">
+    <span title={comment} className="requests__column--comment">
       <div className="main-window__mobile-text">Комментарий:</div>
-      {request.comment}
+      {comment}
     </span>
   );
 };
 
-export const renderPriceColumn = (request) => {
+export const renderPriceColumn = ({ sum }) => {
   return (
     <span className="requests__column--price">
-      {/* <div className="main-window__mobile-text">Цена:</div> */}
-      {`Сумма заказа: ${request.sum ? addSpaceDelimiter(request.sum) : 0} руб.`}
+      {`${sum ? addSpaceDelimiter(sum) : 0} руб.`}
     </span>
   );
 };

@@ -6,6 +6,7 @@ const BigPanel = ({
   isLoaded,
   renderIcon,
   value,
+  prevValue,
   category,
   invertedStats,
   difference,
@@ -15,6 +16,7 @@ const BigPanel = ({
   chartName,
   windowContent,
   content,
+  curPeriod,
 }) => {
   const [showWindow, setShowWindow] = useState(false);
 
@@ -46,25 +48,15 @@ const BigPanel = ({
           setShowWindow={setShowWindow}
         />
       ) : null}
-      <div
-        className={`panel__value panel__value--${
-          invertedStats === true
-            ? difference >= 0
-              ? "negative"
-              : "positive"
-            : difference < 0
-            ? "negative"
-            : "positive"
-        }`}
-      >
-        {isLoaded ? value || 0 : null}
-        <span>
-          {isLoaded
-            ? `${difference < 0 ? "" : "+"}${addSpaceDelimiter(
-                Math.floor(difference * 100) / 100
-              )}`
-            : ""}
-        </span>
+      <div className="panel__values">
+        <div className={`panel__value`}>
+          <span>{`Текущ. ${curPeriod.name.toLowerCase()}`}</span>
+          {isLoaded ? value || 0 : null}
+        </div>
+        <div className={`panel__value`}>
+          <span>{`Пред. ${curPeriod.name.toLowerCase()}`}</span>
+          {isLoaded ? prevValue || 0 : null}
+        </div>
       </div>
       <div
         className={`panel__difference panel__difference--${
@@ -98,6 +90,7 @@ const BigPanel = ({
       ></div>
       <div
         className={`panel__chart-wrapper--content panel__chart-wrapper--${chartName}-content`}
+        style={{ marginTop: content ? " 15px" : "0" }}
       ></div>
       {content}
     </div>

@@ -393,6 +393,7 @@ const Requests = (props) => {
                                 request
                               )}#${request.id}`
                             );
+                            window.location.reload();
                           })
                           .catch((error) => {
                             console.log(error);

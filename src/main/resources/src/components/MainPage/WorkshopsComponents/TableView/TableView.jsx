@@ -205,6 +205,7 @@ const TableView = ({
       )
         return;
       if (node !== null && data) {
+        console.log(node);
         scrollToElement(node, workshopName === "requests" ? -200 : -1000);
         setScrolledToPrev(true);
       }
