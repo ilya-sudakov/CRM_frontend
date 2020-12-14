@@ -36,6 +36,7 @@ const RequestsList = ({
           isLoading={false}
           workshopName="requests"
           dates={getDatesFromRequests(data)}
+          curSort={sortBy.name}
         />
       ) : (
         <div className="main-window__info-text">

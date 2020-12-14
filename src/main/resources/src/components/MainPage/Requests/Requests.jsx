@@ -426,8 +426,8 @@ const Requests = (props) => {
               <select onChange={changeSortOrder}>
                 <option value="date desc">По дате (убыв.)</option>
                 <option value="date asc">По дате (возр.)</option>
-                {/* <option value="codeWord asc">По клиенту (А-Я)</option>
-                <option value="codeWord desc">По клиенту (Я-А)</option> */}
+                <option value="sum desc">По сумме (убыв.)</option>
+                <option value="sum asc">По сумме (возр.)</option>
                 <option value="shippingDate desc">
                   По дате отгрузки (убыв.)
                 </option>
@@ -517,6 +517,7 @@ const Requests = (props) => {
             return 0;
           })}
           isLoading={isLoading}
+          curSort={sortOrder.curSort}
           workshopName="requests"
           loadData={loadRequests}
           deleteItem={deleteItem}

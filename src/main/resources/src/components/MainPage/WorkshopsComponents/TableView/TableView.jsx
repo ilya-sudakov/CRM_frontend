@@ -52,6 +52,7 @@ const TableView = ({
   transferRequest,
   printConfig,
   history,
+  curSort,
 }) => {
   const [showError, setShowError] = useState(false);
   const [errorRequestId, setErrorRequestId] = useState(null);
@@ -351,7 +352,15 @@ const TableView = ({
           }
         />
         <div className="main-window__list">
-          <div className="main-window__list-item main-window__list-item--header">
+          <div
+            className="main-window__list-item main-window__list-item--header"
+            style={{
+              marginBottom:
+                curSort === "date" || curSort === "shippingDate"
+                  ? "-20px"
+                  : "0",
+            }}
+          >
             <div className="main-window__list-col">
               <div className="main-window__list-col-row">
                 <span>Продукция</span>
@@ -372,7 +381,7 @@ const TableView = ({
               minHeight="3rem"
               items={15}
             />
-          ) : (
+          ) : curSort === "date" || curSort === "shippingDate" ? (
             dates.map((date) => {
               let filteredReqs = requests.filter(
                 (request) =>
@@ -398,6 +407,15 @@ const TableView = ({
                 );
               }
             })
+          ) : (
+            printRequests(
+              requests,
+              printConfig ??
+                Object.assign({
+                  ...defaultPrintObject,
+                  price: { visible: workshopName === "requests" },
+                })
+            )
           )}
         </div>
       </div>
@@ -417,4 +435,5 @@ TableView.propTypes = {
   deleteItem: PropTypes.func,
   transferRequest: PropTypes.func,
   printConfig: PropTypes.object,
+  curSort: PropTypes.string,
 };
