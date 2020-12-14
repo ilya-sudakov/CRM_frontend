@@ -159,11 +159,11 @@ const IncomeStatsBigPanel = ({
         animation: {
           easing: "easeInOutCirc",
         },
-        title: {
-          display: true,
-          text: "Доход за год",
-          align: "start",
-        },
+        // title: {
+        //   display: true,
+        //   text: "Доход за год",
+        //   align: "start",
+        // },
         tooltips: {
           mode: "index",
         },
