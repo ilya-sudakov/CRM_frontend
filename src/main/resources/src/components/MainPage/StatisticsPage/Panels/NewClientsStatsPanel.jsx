@@ -1,94 +1,120 @@
-import React, { useState, useEffect } from 'react'
-import SmallPanel from './SmallPanel.jsx'
-import ClientsIcon from '../../../../../../../../assets/sidemenu/client.inline.svg'
-import {
-  addSpaceDelimiter,
-  formatDateString,
-  formatDateStringNoDate,
-} from '../../../../utils/functions.jsx'
+import React, { useState, useEffect } from "react";
+import SmallPanel from "./SmallPanel.jsx";
+import ClientsIcon from "../../../../../../../../assets/sidemenu/client.inline.svg";
+import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
+import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
-const NewClientsStatsPanel = ({ requests, curDate }) => {
+const NewClientsStatsPanel = ({
+  requests,
+  currDate,
+  timeText,
+  getPrevData,
+}) => {
   const [stats, setStats] = useState({
-    category: 'Новые клиенты',
+    category: "Новые клиенты",
     percentage: 0,
     value: null,
-    linkTo: '/clients/categories',
+    linkTo: "/clients/categories",
     isLoaded: false,
     isLoading: false,
-    timePeriod: 'От прошлого месяца',
+    timePeriod: timeText,
     difference: 0,
     renderIcon: () => <ClientsIcon className="panel__img panel__img--money" />,
-  })
+  });
 
-  const getStats = (requests, curDate = new Date()) => {
+  const getStats = (requests) => {
     setStats((stats) => ({
       ...stats,
       isLoading: true,
       isLoaded: false,
-    }))
+    }));
 
-    let clients = {}
+    let clients = {};
     //filter all clients except once from cur and prev month
-    const curMonth = formatDateStringNoDate(curDate)
-    const oneMonthAgo = formatDateStringNoDate(new Date(curDate).setDate(0))
 
-    let prevMonthNewClients = 0
-    let curMonthNewClients = 0
+    let prevMonthNewClients = 0;
+    let curMonthNewClients = 0;
+    const prevMonth = getPrevData(currDate.startDate);
 
-    requests.filter((request) => {
+    const filteredRequests = requests.filter((request) => {
       if (
         request.client !== null &&
-        formatDateStringNoDate(request.date) !== oneMonthAgo &&
-        formatDateStringNoDate(request.date) !== curMonth &&
-        formatDateStringNoDate(request.date) < curMonth &&
+        !checkIfDateIsInRange(
+          request.date,
+          prevMonth.startDate,
+          prevMonth.endDate
+        ) &&
+        !checkIfDateIsInRange(
+          request.date,
+          currDate.startDate,
+          currDate.endDate
+        ) &&
         clients[request.client.id] === undefined
       ) {
         clients = {
           ...clients,
-          [request.client.id]: '',
-        }
-        return false
+          [request.client.id]: "",
+        };
+        return false;
       }
-      return true
-    })
+      return true;
+    });
 
     //find new clients from prev month
-    requests.filter((request) => {
+    filteredRequests.filter((request) => {
       if (
         request.client !== null &&
-        formatDateStringNoDate(request.date) === oneMonthAgo &&
+        checkIfDateIsInRange(
+          request.date,
+          prevMonth.startDate,
+          prevMonth.endDate
+        ) &&
         clients[request.client.id] === undefined
       ) {
-        prevMonthNewClients++
+        prevMonthNewClients++;
         clients = {
           ...clients,
-          [request.client.id]: '',
-        }
-        return false
+          [request.client.id]: "",
+        };
+        return false;
       }
       if (request.client === null) {
-        return false
+        return false;
       }
-      return true
-    })
+      return true;
+    });
 
     //find new clients from cur month
-    requests.map((request) => {
+    const filteredRequestsNew = requests.filter((request) => {
       if (
         request.client !== null &&
-        formatDateStringNoDate(request.date) === curMonth &&
+        checkIfDateIsInRange(
+          request.date,
+          currDate.startDate,
+          currDate.endDate
+        ) &&
         clients[request.client.id] === undefined
       ) {
-        curMonthNewClients++
+        curMonthNewClients++;
         clients = {
           ...clients,
-          [request.client.id]: '',
-        }
+          [request.client.id]: "",
+        };
+        return true;
       }
-    })
+      return false;
+    });
 
     setStats((stats) => ({
       ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequestsNew}
+          sortBy={{ curSort: "sum", sum: "desc" }}
+        />
+      ),
       isLoaded: true,
       isLoading: false,
       value: addSpaceDelimiter(Math.floor(curMonthNewClients * 100) / 100),
@@ -98,24 +124,27 @@ const NewClientsStatsPanel = ({ requests, curDate }) => {
           ((curMonthNewClients - prevMonthNewClients) /
             (prevMonthNewClients === 0 ? 1 : prevMonthNewClients)) *
             100 *
-            100,
+            100
         ) / 100,
-    }))
-  }
+    }));
+  };
 
   //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
-  }, [requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests);
+  }, [requests, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
+    setStats((stats) => {
+      return { ...stats, timePeriod: timeText };
+    });
     if (!stats.isLoading && requests.length > 1) {
-      getStats(requests, curDate)
+      getStats(requests);
     }
-  }, [curDate])
+  }, [currDate]);
 
-  return <SmallPanel {...stats} />
-}
+  return <SmallPanel {...stats} />;
+};
 
-export default NewClientsStatsPanel
+export default NewClientsStatsPanel;

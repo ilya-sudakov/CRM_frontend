@@ -4,7 +4,7 @@ import '../../../../utils/Form/Form.scss'
 import {
   getProductById,
   editProduct,
-} from '../../../../utils/RequestsAPI/Products.jsx'
+} from '../../../../utils/RequestsAPI/Products.js'
 import InputText from '../../../../utils/Form/InputText/InputText.jsx'
 import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import SelectCategory from '../SelectCategory/SelectCategory.jsx'

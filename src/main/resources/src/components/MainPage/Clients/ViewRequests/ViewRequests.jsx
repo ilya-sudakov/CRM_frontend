@@ -1,20 +1,20 @@
-import React from 'react'
-import './ViewRequests.scss'
-import { formatDateStringNoYear } from '../../../../utils/functions.jsx'
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
-import { Link } from 'react-router-dom'
+import React from "react";
+import "./ViewRequests.scss";
+import { formatDateStringNoYear } from "../../../../utils/functions.jsx";
+import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import { Link } from "react-router-dom";
 
 const sortRequests = (requests) => {
   return requests.sort((a, b) => {
     if (a.date < b.date) {
-      return 1
+      return 1;
     }
     if (a.date > b.date) {
-      return -1
+      return -1;
     }
-    return 0
-  })
-}
+    return 0;
+  });
+};
 
 const ViewRequests = (props) => {
   return (
@@ -44,16 +44,16 @@ const ViewRequests = (props) => {
             />
           ) : (
             sortRequests(props.requests).map((item, index) => (
-              <ListItem item={item} index={index} />
+              <ListItem item={item} index={index} key={item.id} />
             ))
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ViewRequests
+export default ViewRequests;
 
 const ListItem = ({ item, index }) => {
   return (
@@ -74,5 +74,5 @@ const ListItem = ({ item, index }) => {
         {`${item.sum ?? 0} руб.`}
       </span>
     </div>
-  )
-}
+  );
+};

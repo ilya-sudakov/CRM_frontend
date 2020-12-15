@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './ViewProduct.scss'
 import '../../../../utils/Form/Form.scss'
-import { getProductById } from '../../../../utils/RequestsAPI/Products.jsx'
+import { getProductById } from '../../../../utils/RequestsAPI/Products.js'
 import { imgToBlobDownload } from '../../../../utils/functions.jsx'
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx'
 import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'

@@ -3,7 +3,7 @@ import './NewCategory.scss'
 import '../../../../../utils/Form/Form.scss'
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import { addCategory } from '../../../../../utils/RequestsAPI/Products/Categories.jsx'
+import { addCategory } from '../../../../../utils/RequestsAPI/Products/Categories.js'
 // import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 

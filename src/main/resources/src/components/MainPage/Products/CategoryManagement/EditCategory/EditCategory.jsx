@@ -7,7 +7,7 @@ import {
   addCategory,
   getCategoryById,
   editCategory,
-} from '../../../../../utils/RequestsAPI/Products/Categories.jsx'
+} from '../../../../../utils/RequestsAPI/Products/Categories.js'
 // import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 

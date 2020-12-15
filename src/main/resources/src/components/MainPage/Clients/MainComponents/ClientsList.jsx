@@ -1,14 +1,15 @@
-import React from 'react'
-import editSVG from '../../../../../../../../assets/tableview/edit.svg'
-import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
-import starSVG from '../../../../../../../../assets/tableview/star.svg'
-import starBorderedSVG from '../../../../../../../../assets/tableview/star_border.svg'
-import phoneSVG from '../../../../../../../../assets/tableview/phone.svg'
-import calendarSVG from '../../../../../../../../assets/tableview/calendar.svg'
-import LockSVG from '../../../../../../../../assets/tableview/bx-lock-alt.svg'
-import { formatDateString } from '../../../../utils/functions.jsx'
-import { sortClients } from './functions.js'
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import React from "react";
+import editSVG from "../../../../../../../../assets/tableview/edit.svg";
+import deleteSVG from "../../../../../../../../assets/tableview/delete.svg";
+import starSVG from "../../../../../../../../assets/tableview/star.svg";
+import starBorderedSVG from "../../../../../../../../assets/tableview/star_border.svg";
+import phoneSVG from "../../../../../../../../assets/tableview/phone.svg";
+import calendarSVG from "../../../../../../../../assets/tableview/calendar.svg";
+import LockSVG from "../../../../../../../../assets/tableview/bx-lock-alt.svg";
+import eyeSVG from "../../../../../../../../assets/tableview/eye-invisible-outlined.svg";
+import { formatDateString } from "../../../../utils/functions.jsx";
+import { sortClients } from "./functions.js";
+import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const ClientsList = ({
   isLoading,
@@ -61,10 +62,10 @@ const ClientsList = ({
         ))
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ClientsList
+export default ClientsList;
 
 const ListItem = ({
   item,
@@ -81,7 +82,7 @@ const ListItem = ({
   index,
 }) => {
   const handleFavouriteClick = (item, clients) => {
-    let temp = clients
+    let temp = clients;
     //   console.log(item);
     let newClient = Object.assign({
       type: item.type,
@@ -97,23 +98,23 @@ const ListItem = ({
       storageAddress: item.storageAddress,
       workCondition: item.workCondition,
       favorite: !item.favorite,
-    })
+    });
     editItemFunction(newClient, item.id)
       .then(() => {
         temp.splice(index, 1, {
           ...item,
           favorite: !item.favorite,
-        })
+        });
         //   loadData(item.categoryName, item.clientType);
-        setClients([...temp])
+        setClients([...temp]);
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   const handleHideClient = (item, clients) => {
-    let temp = clients
+    let temp = clients;
     //   console.log(item);
     let newClient = Object.assign({
       type: item.type,
@@ -130,21 +131,21 @@ const ListItem = ({
       workCondition: item.workCondition,
       favorite: !item.favorite,
       isClosed: true,
-    })
+    });
     editItemFunction(newClient, item.id)
       .then(() => {
         temp.splice(index, 1, {
           ...item,
           isClosed: true,
-        })
+        });
         //   loadData(item.categoryName, item.clientType);
-        setClients([...temp])
-        alert('Клиент успешно скрыт')
+        setClients([...temp]);
+        alert("Клиент успешно скрыт");
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   return (
     <div className="main-window__list-item" key={index}>
@@ -159,23 +160,23 @@ const ListItem = ({
           className="main-window__link"
           title={item.site}
           href={
-            item.site.split('//').length > 1
+            item.site.split("//").length > 1
               ? item.site
-              : 'https://' + item.site
+              : "https://" + item.site
           }
           target="_blank"
         >
-          {item.site.split('//').length > 1
-            ? item.site.split('//')[1]
+          {item.site.split("//").length > 1
+            ? item.site.split("//")[1]
             : item.site}
         </a>
       </span>
       <span>
         <div className="main-window__mobile-text">Контактное лицо: </div>
         {item.contacts?.length > 0
-          ? (item.contacts[0].name !== '' ? item.contacts[0].name + ', ' : '') +
+          ? (item.contacts[0].name !== "" ? item.contacts[0].name + ", " : "") +
             item.contacts[0].phoneNumber
-          : 'Не указаны контакт. данные'}
+          : "Не указаны контакт. данные"}
       </span>
       <span title={item.comment}>
         <div className="main-window__mobile-text">Комментарий: </div>
@@ -195,7 +196,7 @@ const ListItem = ({
       </span>
       <div className="main-window__actions">
         {/* <div className="main-window__mobile-text">Действия:</div> */}
-        {userContext.userHasAccess(['ROLE_ADMIN']) && (
+        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
           <div
             className="main-window__action"
             title="Добавить в избранных клиентов"
@@ -207,23 +208,23 @@ const ListItem = ({
             />
           </div>
         )}
-        {userContext.userHasAccess(['ROLE_ADMIN']) && (
+        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
           <div
             className="main-window__action"
             title="Скрыть клиента"
             onClick={() => handleHideClient(item, clients)}
           >
-            <img className="main-window__img" src={LockSVG} />
+            <img className="main-window__img" src={eyeSVG} />
           </div>
         )}
         <div
           className="main-window__action"
           title="Совершить действие"
           onClick={() => {
-            setCloseWindow(false)
-            setSelectedItem(item)
-            setShowWindow(true)
-            setCurForm('workHistory')
+            setCloseWindow(false);
+            setSelectedItem(item);
+            setShowWindow(true);
+            setCurForm("workHistory");
           }}
         >
           <img className="main-window__img" src={phoneSVG} />
@@ -232,10 +233,10 @@ const ListItem = ({
           className="main-window__action"
           title="Дата следующего контакта"
           onClick={() => {
-            setCloseWindow(false)
-            setSelectedItem(item)
-            setShowWindow(true)
-            setCurForm('nextContactDate')
+            setCloseWindow(false);
+            setSelectedItem(item);
+            setShowWindow(true);
+            setCurForm("nextContactDate");
           }}
         >
           <img className="main-window__img" src={calendarSVG} />
@@ -249,12 +250,12 @@ const ListItem = ({
         >
           <img className="main-window__img" src={editSVG} />
         </a>
-        {userContext.userHasAccess(['ROLE_ADMIN']) && (
+        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
           <div
             className="main-window__action"
             title="Удаление клиента"
             onClick={() => {
-              deleteItem(item.id, index)
+              deleteItem(item.id, index);
             }}
           >
             <img className="main-window__img" src={deleteSVG} />
@@ -262,5 +263,5 @@ const ListItem = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};

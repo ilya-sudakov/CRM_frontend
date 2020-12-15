@@ -8,7 +8,7 @@
   cursor: pointer;
   font-size: 90%;
   margin-right: 10px;
-  transition: 0.2s ease-in-out;
+  transition: 100ms ease-in-out;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -24,15 +24,31 @@
 
   &:hover {
     background-color: lighten($button__background--inverted, 5%);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
+    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
+  }
+
+  .button__circle {
+    display: block;
+    position: absolute;
+    top: calc(50% - (22px / 2));
+    left: calc(50% - (20px / 2));
+    height: 15px;
+    width: 15px;
+    // margin: -25px 0 0 -25px;
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    border-top: 4px solid #eeeeeedd;
+    border-radius: 999px;
+    transition: 200ms ease-in-out;
+    -webkit-animation: spin2 1s infinite linear;
+    animation: spin2 1s infinite linear;
   }
 
   &--inverted {
     background-color: $secondary-text-color;
     // color: $primary-text-color;
     // border: 1px solid $button__background--inverted;
-    color: #444444;
     border: 1px solid #bbbbbb; //test
+    color: #444444;
 
     &__img {
       max-width: 20px;
@@ -40,19 +56,19 @@
       filter: brightness(1) invert(0);
     }
 
-    &:hover {
-      color: #000000 !important;
-      background-color: $secondary-text-color;
-
-      .button__circle {
-        border: 4px rgba(255, 255, 255, 0.5) solid !important;
-        border-top: 4px #eeeeee solid !important;
-      }
+    .button__circle {
+      border: 4px rgba(100, 100, 100, 0.5) solid;
+      border-top: 4px #666666 solid;
     }
 
-    .button__circle {
-      border: 4px rgba(100, 100, 100, 0.5) solid !important;
-      border-top: 4px #666666 solid !important;
+    &:hover {
+      color: #000000 !important;
+      background-color: #f0f0f0;
+
+      .button__circle {
+        border: 4px rgba(100, 100, 100, 0.7) solid;
+        border-top: 4px #555555 solid;
+      }
     }
   }
 
@@ -69,22 +85,6 @@
     &--hidden {
       visibility: hidden;
     }
-  }
-
-  .button__circle {
-    display: block;
-    position: absolute;
-    top: calc(50% - (22px / 2));
-    left: calc(50% - (20px / 2));
-    height: 15px;
-    width: 15px;
-    // margin: -25px 0 0 -25px;
-    border: 4px rgba(255, 255, 255, 0.5) solid;
-    border-top: 4px #eeeeee solid;
-    border-radius: 999px;
-    transition: 200ms ease-in-out;
-    -webkit-animation: spin2 1s infinite linear;
-    animation: spin2 1s infinite linear;
   }
 
   @-webkit-keyframes spin2 {

@@ -1,43 +1,189 @@
-import React, { useEffect, useState } from 'react'
-import './StatisticsPage.scss'
+import React, { useEffect, useState } from "react";
+import "./StatisticsPage.scss";
 
-import { getRequests } from '../../../utils/RequestsAPI/Requests.jsx'
-import { getStamp } from '../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { getRecordedWorkByDateRange } from '../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import useFetch from '../../../utils/hooks/useFetch.js'
-import { formatDateStringNoDate } from '../../../utils/functions.jsx'
-import { months } from '../../../utils/dataObjects.js'
+import { getRequests } from "../../../utils/RequestsAPI/Requests.jsx";
+import { getStamp } from "../../../utils/RequestsAPI/Rigging/Stamp.jsx";
+import { getRecordedWorkByDateRange } from "../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
+import { formatDateStringNoYear } from "../../../utils/functions.jsx";
+import { months } from "../../../utils/dataObjects.js";
 
-import RequestsQuantityPanel from './Panels/RequestsQuantityPanel.jsx'
-import IncomeStatsPanel from './Panels/IncomeStatsPanel.jsx'
-import AverageSumStatsPanel from './Panels/AverageSumStatsPanel.jsx'
-import NewClientsStatsPanel from './Panels/NewClientsStatsPanel.jsx'
-import RequestsQuantityGraphPanel from './Graphs/RequestsQuantityGraphPanel.jsx'
-import ManagerEfficiencyGraphPanel from './Graphs/ManagerEfficiencyGraphPanel.jsx'
-import ManagerMoneyGraphPanel from './Graphs/ManagerMoneyGraphPanel.jsx'
-import RequestsAverageTimeCompletion from './Panels/RequestsAverageTimeCompletionPanel.jsx'
-import ProductQuantityInRequest from './Panels/ProductQuantityInRequest.jsx'
-import ClientTypeDistributionInRequests from './Graphs/ClientTypeDistributionInRequests.jsx'
-import RiggingItemsQuantityForType from './Graphs/RiggingItemsQuantityForType.jsx'
-import ProductQuantityProduced from './Panels/ProductQuantityProduced.jsx'
-import AverageProductQuantityProduced from './Panels/AverageProductQuantityProduced.jsx'
-import OnTimeRequestsDistribution from './Panels/OnTimeRequestsDistribution.jsx'
+import RequestsQuantityPanel from "./Panels/RequestsQuantityPanel.jsx";
+import IncomeStatsPanel from "./Panels/IncomeStatsPanel.jsx";
+import AverageSumStatsPanel from "./Panels/AverageSumStatsPanel.jsx";
+import NewClientsStatsPanel from "./Panels/NewClientsStatsPanel.jsx";
+import NewOldClientsStatsPanel from "./Panels/NewOldClientsStatsPanel.jsx";
+import ManagerEfficiencyGraphPanel from "./Graphs/ManagerEfficiencyGraphPanel.jsx";
+import ManagerMoneyGraphPanel from "./Graphs/ManagerMoneyGraphPanel.jsx";
+import RequestsAverageTimeCompletion from "./Panels/RequestsAverageTimeCompletionPanel.jsx";
+import ProductQuantityInRequest from "./Panels/ProductQuantityInRequest.jsx";
+import ClientTypeDistributionInRequests from "./Graphs/ClientTypeDistributionInRequests.jsx";
+import RiggingItemsQuantityForType from "./Graphs/RiggingItemsQuantityForType.jsx";
+import ProductQuantityProduced from "./Panels/ProductQuantityProduced.jsx";
+import AverageProductQuantityProduced from "./Panels/AverageProductQuantityProduced.jsx";
+import OnTimeRequestsDistribution from "./Panels/OnTimeRequestsDistribution.jsx";
+import IncomeStatsBigPanel from "./BigPanels/IncomeStatsBigPanel.jsx";
 
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import useDraftsList from "../../../utils/hooks/useDraftsList";
+import {
+  getDaysArray,
+  getPreviousMonthDates,
+  getPreviousWeekDays,
+  getPreviousQuarterDates,
+  getPreviousYearDates,
+} from "./functions.js";
 
 const StatisticsPage = () => {
-  const [curPage, setCurPage] = useState('requests')
+  const [curPage, setCurPage] = useState("requests");
 
-  const [curDate, setCurDate] = useState(new Date())
+  const [curDate, setCurDate] = useState(new Date());
+  const [curPeriod, setCurPeriod] = useState("month");
+  const [currDate, setCurrDate] = useState({
+    startDate: getPreviousMonthDates(new Date(), "current").startDate,
+    endDate: getPreviousMonthDates(new Date(), "current").endDate,
+  });
+
+  const timePeriod = {
+    month: {
+      name: "Месяц",
+      prevButton: {
+        text: "Пред. месяц",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousMonthDates(currDate.startDate).startDate,
+            endDate: getPreviousMonthDates(currDate.startDate).endDate,
+          }),
+      },
+      nextButton: {
+        text: `${months[new Date().getMonth()]}`,
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousMonthDates(new Date(), "current").startDate,
+            endDate: getPreviousMonthDates(new Date(), "current").endDate,
+          }),
+      },
+      getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
+      displayDates: () => currDate.startDate.getMonth(),
+      initData: () =>
+        setCurrDate({
+          startDate: getPreviousMonthDates(new Date(), "current").startDate,
+          endDate: getPreviousMonthDates(new Date(), "current").endDate,
+        }),
+      timeTextSmallPanel: "От прошлого месяца",
+      timeTextGraphPanel: months[currDate.startDate.getMonth()],
+      itemsCount: `${months[currDate.startDate.getMonth()]}`,
+      getPrevData: (date, value) => getPreviousMonthDates(date, value),
+    },
+    week: {
+      name: "Неделя",
+      prevButton: {
+        text: "Пред. неделя",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousWeekDays(currDate.startDate).startDate,
+            endDate: getPreviousWeekDays(currDate.startDate).endDate,
+          }),
+      },
+      nextButton: {
+        text: "Тек. неделя",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousWeekDays(new Date(), "current").startDate,
+            endDate: getPreviousWeekDays(new Date(), "current").endDate,
+          }),
+      },
+      getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
+      displayDates: () => currDate.startDate.getMonth(),
+      initData: () =>
+        setCurrDate({
+          startDate: getPreviousWeekDays(new Date(), "current").startDate,
+          endDate: getPreviousWeekDays(new Date(), "current").endDate,
+        }),
+      timeTextSmallPanel: "От прошлой недели",
+      timeTextGraphPanel: `${formatDateStringNoYear(
+        currDate.startDate
+      )} - ${formatDateStringNoYear(currDate.endDate)}`,
+      itemsCount: `${formatDateStringNoYear(
+        currDate.startDate
+      )} - ${formatDateStringNoYear(currDate.endDate)}`,
+      getPrevData: (date, value) => getPreviousWeekDays(date, value),
+    },
+    quarter: {
+      name: "Квартал",
+      prevButton: {
+        text: "Пред. квартал",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousQuarterDates(currDate.startDate).startDate,
+            endDate: getPreviousQuarterDates(currDate.startDate).endDate,
+          }),
+      },
+      nextButton: {
+        text: "Тек. квартал",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousQuarterDates(new Date(), "current").startDate,
+            endDate: getPreviousQuarterDates(new Date(), "current").endDate,
+          }),
+      },
+      getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
+      displayDates: () => currDate.startDate.getMonth(),
+      initData: () =>
+        setCurrDate({
+          startDate: getPreviousQuarterDates(new Date(), "current").startDate,
+          endDate: getPreviousQuarterDates(new Date(), "current").endDate,
+        }),
+      timeTextSmallPanel: "От прошлого квартала",
+      timeTextGraphPanel: `${formatDateStringNoYear(
+        currDate.startDate
+      )} - ${formatDateStringNoYear(currDate.endDate)}`,
+      itemsCount: `${formatDateStringNoYear(
+        currDate.startDate
+      )} - ${formatDateStringNoYear(currDate.endDate)}`,
+      getPrevData: (date, value) => getPreviousQuarterDates(date, value),
+    },
+    year: {
+      name: "Год",
+      prevButton: {
+        text: "Пред. год",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousYearDates(currDate.startDate).startDate,
+            endDate: getPreviousYearDates(currDate.startDate).endDate,
+          }),
+      },
+      nextButton: {
+        text: "Тек. год",
+        onClick: () =>
+          setCurrDate({
+            startDate: getPreviousYearDates(new Date(), "current").startDate,
+            endDate: getPreviousYearDates(new Date(), "current").endDate,
+          }),
+      },
+      getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
+      displayDates: () => currDate.startDate.getMonth(),
+      initData: () =>
+        setCurrDate({
+          startDate: getPreviousYearDates(new Date(), "current").startDate,
+          endDate: getPreviousYearDates(new Date(), "current").endDate,
+        }),
+      timeTextSmallPanel: "От прошлого года",
+      timeTextGraphPanel: currDate.startDate.getFullYear(),
+      itemsCount: currDate.startDate.getFullYear(),
+      getPrevData: (date, value) => getPreviousYearDates(date, value),
+    },
+  };
 
   const pages = {
-    requests: () => <RequestsPage curDate={curDate} />,
-    production: () => <ProductionPage curDate={curDate} />,
-  }
+    requests: () => (
+      <RequestsPage currDate={currDate} timePeriod={timePeriod[curPeriod]} />
+    ),
+    production: () => (
+      <ProductionPage curDate={curDate} timePeriod={timePeriod[curPeriod]} />
+    ),
+  };
 
-  useEffect(() => {
-    // console.log(curDate)
-  }, [curDate])
+  useEffect(() => {}, [currDate]);
 
   return (
     <div className="statistics">
@@ -47,17 +193,17 @@ const StatisticsPage = () => {
           <div className="main-window__menu">
             <div
               className={`main-window__item ${
-                curPage === 'requests' ? 'main-window__item--active' : ''
+                curPage === "requests" ? "main-window__item--active" : ""
               }`}
-              onClick={() => setCurPage('requests')}
+              onClick={() => setCurPage("requests")}
             >
               Заказы
             </div>
             <div
               className={`main-window__item ${
-                curPage === 'production' ? 'main-window__item--active' : ''
+                curPage === "production" ? "main-window__item--active" : ""
               }`}
-              onClick={() => setCurPage('production')}
+              onClick={() => setCurPage("production")}
             >
               Производство
             </div>
@@ -66,164 +212,188 @@ const StatisticsPage = () => {
         <ControlPanel
           buttons={
             <>
+              <select
+                className="main-window__select"
+                onChange={({ target }) => {
+                  setCurPeriod(target.value);
+                  timePeriod[target.value].initData();
+                }}
+              >
+                <option value="month">Месяц</option>
+                <option value="week">Неделя</option>
+                <option value="quarter">Квартал</option>
+                <option value="year">Год</option>
+              </select>
               <div
                 className="main-window__button main-window__button--inverted"
-                onClick={() =>
-                  setCurDate((curDate) => new Date(curDate.setDate(0)))
-                }
+                onClick={() => timePeriod[curPeriod].prevButton.onClick()}
               >
-                Пред. месяц
+                {timePeriod[curPeriod].prevButton.text}
               </div>
               <div
                 className="main-window__button main-window__button--inverted"
-                onClick={() => setCurDate(new Date())}
+                onClick={() => timePeriod[curPeriod].nextButton.onClick()}
               >
-                {`${months[new Date().getMonth()]}`}
+                {timePeriod[curPeriod].nextButton.text}
               </div>
             </>
           }
-          itemsCount={`Выбранный период: ${formatDateStringNoDate(curDate)}`}
+          itemsCount={timePeriod[curPeriod].itemsCount}
         />
         {pages[curPage]()}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default StatisticsPage
+export default StatisticsPage;
 
-const RequestsPage = ({ curDate }) => {
-  const [requests, setRequests] = useState([])
-  const [requestsLoaded, setRequestsLoaded] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+const RequestsPage = ({ currDate, timePeriod }) => {
+  const [requests, setRequests] = useState([]);
+  const [requestsLoaded, setRequestsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const loadRequests = (signal) => {
     if (!requestsLoaded && !isLoading) {
-      setIsLoading(true)
+      setIsLoading(true);
       getRequests(signal)
         .then((res) => res.json())
         .then((res) => {
-          setRequestsLoaded(true)
-          setRequests([...res])
-          setIsLoading(false)
+          setRequestsLoaded(true);
+          setRequests([...res]);
+          setIsLoading(false);
         })
         .catch((error) => {
-          setIsLoading(false)
-          setRequestsLoaded(true)
-          console.log(error)
-        })
+          setIsLoading(false);
+          setRequestsLoaded(true);
+          console.log(error);
+        });
     }
-  }
+  };
 
   useEffect(() => {
-    const abortController = new AbortController()
-    loadRequests(abortController.signal)
+    const abortController = new AbortController();
+    loadRequests(abortController.signal);
     return function cancel() {
-      abortController.abort()
-    }
-  }, [])
+      abortController.abort();
+    };
+  }, []);
 
   return (
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
-        <RequestsQuantityPanel curDate={curDate} requests={requests} />
-        <IncomeStatsPanel curDate={curDate} requests={requests} />
-        <AverageSumStatsPanel curDate={curDate} requests={requests} />
-        <RequestsAverageTimeCompletion curDate={curDate} requests={requests} />
+        <IncomeStatsBigPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+          loadData={loadRequests}
+          curPeriod={timePeriod}
+        />
+        <RequestsQuantityPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+        <OnTimeRequestsDistribution
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+      </div>
+      <div className="statistics__row statistics__row--full">
+        <NewClientsStatsPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+        <NewOldClientsStatsPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
       </div>
       <div className="statistics__row">
-        <ManagerEfficiencyGraphPanel curDate={curDate} data={requests} />
-        <ManagerMoneyGraphPanel curDate={curDate} data={requests} />
+        <ManagerEfficiencyGraphPanel
+          currDate={currDate}
+          data={requests}
+          timeText={timePeriod.timeTextGraphPanel}
+        />
+        <ManagerMoneyGraphPanel
+          currDate={currDate}
+          data={requests}
+          timeText={timePeriod.timeTextGraphPanel}
+        />
+      </div>
+      <div className="statistics__row statistics__row--full">
+        <ProductQuantityInRequest
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+        <AverageSumStatsPanel
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
+        <RequestsAverageTimeCompletion
+          currDate={currDate}
+          requests={requests}
+          timeText={timePeriod.timeTextSmallPanel}
+          getPrevData={timePeriod.getPrevData}
+        />
       </div>
       <div className="statistics__row">
-        <NewClientsStatsPanel curDate={curDate} requests={requests} />
-        <ProductQuantityInRequest curDate={curDate} requests={requests} />
-        <OnTimeRequestsDistribution curDate={curDate} requests={requests} />
-      </div>
-      <div className="statistics__row">
-        <RequestsQuantityGraphPanel curDate={curDate} data={requests} />
-        <ClientTypeDistributionInRequests curDate={curDate} data={requests} />
+        <ClientTypeDistributionInRequests
+          currDate={currDate}
+          data={requests}
+          timeText={timePeriod.timeTextGraphPanel}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const ProductionPage = ({ curDate }) => {
-  const [drafts, setDrafts] = useState([])
-  const [dataLoaded, setDataLoaded] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const { drafts, isLoadingDrafts } = useDraftsList();
 
-  const loadDrafts = (signal) => {
-    setIsLoading(true)
-    let newDrafts = []
-    getStamp(signal)
-      .then((response) => response.json())
-      .then((response) => {
-        // console.log(response);
-        response.map((item) => {
-          return item.stampParts
-            .filter((stamp) => stamp.color !== 'completed') //Не показываем завершенные детали
-            .map((stamp) => {
-              newDrafts.push({
-                ...stamp,
-                type: 'Stamp',
-              })
-            })
-        })
-        setDrafts([...newDrafts])
-        setIsLoading(false)
-        setDataLoaded(true)
-      })
-      .catch((error) => {
-        console.log(error)
-        setIsLoading(false)
-      })
-  }
-
-  useEffect(() => {
-    if (dataLoaded || isLoading) {
-      return
-    }
-    loadDrafts()
-    //!нужно пофиксить
-    // const abortController = new AbortController()
-    // loadDrafts(abortController.signal)
-    // return function cancel() {
-    //   abortController.abort()
-    // }
-  }, [dataLoaded, isLoading])
-
-  const [workData, setWorkData] = useState([])
+  const [workData, setWorkData] = useState([]);
 
   const getDataForTwoWeeks = (signal) => {
-    let curMonday = curDate
-    let prevMonday = curDate
+    let curMonday = curDate;
+    let prevMonday = curDate;
 
     prevMonday = new Date(
       prevMonday.setDate(
-        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7) - 7,
-      ),
-    )
+        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7) - 7
+      )
+    );
     getRecordedWorkByDateRange(
       prevMonday.getDate(),
       prevMonday.getMonth() + 1,
       curMonday.getDate(),
       curMonday.getMonth() + 1,
-      signal,
+      signal
     )
       .then((res) => res.json())
       .then((res) => {
-        setWorkData([...res])
-      })
-  }
+        setWorkData([...res]);
+      });
+  };
 
   useEffect(() => {
-    const abortController = new AbortController()
-    getDataForTwoWeeks(abortController.signal)
+    const abortController = new AbortController();
+    getDataForTwoWeeks(abortController.signal);
     return function cancel() {
-      abortController.abort()
-    }
-  }, [curDate])
+      abortController.abort();
+    };
+  }, [curDate]);
 
   return (
     <div className="statistics__page-wrapper">
@@ -235,5 +405,5 @@ const ProductionPage = ({ curDate }) => {
         <RiggingItemsQuantityForType data={drafts} />
       </div>
     </div>
-  )
-}
+  );
+};

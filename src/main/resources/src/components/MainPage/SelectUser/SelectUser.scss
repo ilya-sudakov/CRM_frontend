@@ -2,7 +2,9 @@
 
 .select_user {
   width: 100%;
+  height: max-content;
   position: relative;
+  box-sizing: border-box;
 
   .select_user__overlay {
     width: 100vw;
@@ -143,39 +145,6 @@
           width: 30px;
         }
       }
-
-      .select_user__select_usered_quantity,
-      .select_user__select_usered_packaging {
-        width: 50%;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-
-        input[type="text"],
-        input[type="number"],
-        textarea {
-          border: 1px solid #bbbbbb;
-          font-size: 80%;
-          margin-left: 10px;
-          width: 50% !important;
-          min-width: 50% !important;
-          display: flex;
-          padding: 5px 10px;
-          border-radius: 5px;
-          min-height: 1rem;
-          height: calc(1rem + 0px);
-          // height: fit-content;
-          outline: none;
-          position: relative;
-          //   width: fit-content;
-          align-items: center;
-
-          &:focus {
-            border: 1px solid $button__background--inverted;
-          }
-        }
-      }
     }
   }
 
@@ -185,15 +154,6 @@
       &__select_usered {
         &_row {
           flex-direction: column;
-          .select_user__select_usered_item,
-          .select_user__select_usered_packaging,
-          .select_user__select_usered_quantity {
-            margin-right: 0;
-            width: calc(100% - 80px) !important;
-            input {
-              width: 100% !important;
-            }
-          }
         }
       }
     }

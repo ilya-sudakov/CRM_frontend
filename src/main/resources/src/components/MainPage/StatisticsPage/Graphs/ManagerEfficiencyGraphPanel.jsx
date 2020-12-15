@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import GraphPanel from './GraphPanel.jsx'
-import EmployeeIcon from '../../../../../../../../assets/sidemenu/employee.inline.svg'
-import { months } from '../../../../utils/dataObjects'
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
-import { formatDateStringNoDate } from '../../../../utils/functions.jsx'
+import React, { useState, useEffect } from "react";
+import GraphPanel from "./GraphPanel.jsx";
+import EmployeeIcon from "../../../../../../../../assets/sidemenu/employee.inline.svg";
+import { createGraph, loadCanvas } from "../../../../utils/graphs.js";
+import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
-const ManagerEfficiencyGraphPanel = ({ data, curDate }) => {
-  const [graph, setGraph] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [canvasLoaded, setCanvasLoaded] = useState(false)
+const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
+  const [graph, setGraph] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
-    category: 'Статистика по менеджерам (заказы)',
+    category: "Статистика по менеджерам (заказы)",
     isLoaded: false,
-    chartName: 'manager-efficiency-graph',
-    timePeriod: `${months[curDate.getMonth()]}`,
+    chartName: "manager-efficiency-graph",
+    timePeriod: timeText,
     renderIcon: () => (
       <EmployeeIcon className="panel__img panel__img--employee" />
     ),
-  })
+  });
 
-  const getStats = (data, curDate = new Date()) => {
-    let managers = {}
-    data.map((request) => {
+  const getStats = (data) => {
+    let managers = {};
+    const filteredRequests = data.filter((request) => {
       if (
-        formatDateStringNoDate(request.date) === formatDateStringNoDate(curDate)
+        checkIfDateIsInRange(request.date, currDate.startDate, currDate.endDate)
       ) {
         managers = {
           ...managers,
@@ -31,42 +31,54 @@ const ManagerEfficiencyGraphPanel = ({ data, curDate }) => {
             managers[request.responsible] !== undefined
               ? managers[request.responsible] + 1
               : 1,
-        }
+        };
+        return true;
       }
-    })
+      return false;
+    });
     // console.log(managers)
-    renderGraph(managers)
-  }
+    setStats((stats) => ({
+      ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ curSort: "sum", sum: "desc" }}
+        />
+      ),
+    }));
+    renderGraph(managers);
+  };
 
   const renderGraph = (dataset) => {
     if (!canvasLoaded) {
       setStats((stats) => ({
         ...stats,
         isLoaded: true,
-      }))
+      }));
       loadCanvas(
         `panel__chart-wrapper--${stats.chartName}`,
-        `panel__chart panel__chart--${stats.chartName}`,
-      )
+        `panel__chart panel__chart--${stats.chartName}`
+      );
     }
 
-    setCanvasLoaded(true)
+    setCanvasLoaded(true);
     const options = {
-      type: 'pie',
+      type: "pie",
       data: {
         labels: Object.entries(dataset).map((item) => item[0]),
         datasets: [
           {
             // label: 'Population (millions)',
             backgroundColor: [
-              '#3e95cd',
-              '#8e5ea2',
-              '#3cba9f',
-              '#e8c3b9',
-              '#c45850',
-              '#bbbbbb',
-              '#bbbbbb',
-              '#bbbbbb',
+              "#3e95cd",
+              "#8e5ea2",
+              "#3cba9f",
+              "#e8c3b9",
+              "#c45850",
+              "#bbbbbb",
+              "#bbbbbb",
+              "#bbbbbb",
             ],
             data: Object.entries(dataset).map((item) => item[1]),
           },
@@ -81,46 +93,44 @@ const ManagerEfficiencyGraphPanel = ({ data, curDate }) => {
             ? true
             : false,
         animation: {
-          easing: 'easeInOutCirc',
+          easing: "easeInOutCirc",
         },
         tooltips: {
-          mode: 'index',
+          mode: "index",
         },
       },
-    }
+    };
     setTimeout(() => {
-      setIsLoading(false)
-      canvasLoaded && graph.destroy()
+      setIsLoading(false);
+      canvasLoaded && graph.destroy();
       setGraph(
         createGraph(
           options,
-          document.getElementsByClassName(
-            `panel__chart--${stats.chartName}`,
-          )[0],
-        ),
-      )
-    }, 150)
-  }
+          document.getElementsByClassName(`panel__chart--${stats.chartName}`)[0]
+        )
+      );
+    }, 150);
+  };
 
   //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && data.length > 0 && getStats(data, curDate)
-  }, [data, stats])
+    !stats.isLoaded && data.length > 0 && getStats(data);
+  }, [data, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
     if (!stats.isLoading && data.length > 0) {
-      setCanvasLoaded(false)
+      setCanvasLoaded(false);
       setStats((stats) => ({
         ...stats,
-        timePeriod: `${months[curDate.getMonth()]}`,
-      }))
-      graph.destroy()
-      getStats(data, curDate)
+        timePeriod: timeText,
+      }));
+      graph.destroy();
+      getStats(data);
     }
-  }, [curDate])
+  }, [currDate]);
 
-  return <GraphPanel {...stats} />
-}
+  return <GraphPanel {...stats} />;
+};
 
-export default ManagerEfficiencyGraphPanel
+export default ManagerEfficiencyGraphPanel;

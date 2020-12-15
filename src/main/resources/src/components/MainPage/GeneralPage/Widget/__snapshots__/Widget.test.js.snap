@@ -12,14 +12,6 @@ exports[`Widget component matches snapshot 1`] = `
         class="widget__sub-title"
       />
       <span />
-      <button
-        class="button  button--inverted main-window__button main-window__button--inverted"
-        type="button"
-      >
-        <span
-          class="button__text "
-        />
-      </button>
     </div>
     <div
       class="widget__content"

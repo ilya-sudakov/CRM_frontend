@@ -32,18 +32,14 @@
   &__circle {
     display: block;
     position: absolute;
-    --circle-size: 90px;
-    --border-size: 5px;
+    --circle-size: 60px;
+    --border-size: 6px;
     top: calc(50% - (var(--circle-size) / 2) - var(--border-size));
     left: calc(50% - (var(--circle-size) / 2) - var(--border-size));
     height: var(--circle-size);
     width: var(--circle-size);
-    // margin: -25px 0 0 -25px;
-    border: var(--border-size) rgba(200, 200, 200, 0.5) solid;
-    -webkit-box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.1);
-    -moz-box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.1);
-    box-shadow: 0px 0px 20px rgba(50, 50, 50, 0.1);
-    border-top: var(--border-size) solid #00a3a2;
+    border: var(--border-size) rgba(70, 93, 102, 0.2) solid;
+    border-top: var(--border-size) solid rgba(70, 93, 102, 0.5);
     border-radius: 999px;
     -webkit-animation: spin2 1s infinite linear;
     animation: spin2 1s infinite linear;

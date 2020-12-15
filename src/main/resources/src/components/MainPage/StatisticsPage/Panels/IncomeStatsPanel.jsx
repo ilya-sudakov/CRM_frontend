@@ -1,66 +1,76 @@
-import React, { useState, useEffect } from 'react'
-import SmallPanel from './SmallPanel.jsx'
-import MoneyIcon from '../../../../../../../../assets/etc/bx-ruble.inline.svg'
-import {
-  addSpaceDelimiter,
-  formatDateStringNoDate,
-} from '../../../../utils/functions.jsx'
+import React, { useState, useEffect } from "react";
+import SmallPanel from "./SmallPanel.jsx";
+import MoneyIcon from "../../../../../../../../assets/etc/bx-ruble.inline.svg";
+import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
+import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
-const IncomeStatsPanel = ({ requests, curDate }) => {
+const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
   const [stats, setStats] = useState({
-    category: 'Доход',
+    category: "Доход",
     percentage: 0,
     value: null,
-    linkTo: '/requests',
+    linkTo: "/requests",
     isLoaded: false,
     isLoading: false,
-    timePeriod: 'От прошлого месяца',
+    timePeriod: timeText,
     difference: 0,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
-  })
+  });
 
-  const getStats = (requests, curDate = new Date()) => {
+  const getStats = (requests) => {
     setStats((stats) => ({
       ...stats,
       isLoading: true,
       isLoaded: false,
-    }))
+    }));
 
-    let curMonthIncome = 0
-    let prevMonthIncome = 0
+    let curMonthIncome = 0;
+    let prevMonthIncome = 0;
 
     //check prev month
     let temp = requests.filter((request) => {
-      const date = new Date(request.date)
+      const date = new Date(request.date);
+      const prevMonth = getPrevData(currDate.startDate);
       if (
-        formatDateStringNoDate(date) ===
-          formatDateStringNoDate(new Date(curDate).setDate(0)) &&
-        request.status === 'Завершено'
+        checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
+        request.status === "Завершено"
       ) {
-        prevMonthIncome += Number.parseFloat(request.sum || 0)
-        return false
+        prevMonthIncome += Number.parseFloat(request.sum || 0);
+        return false;
       }
-      if (request.status !== 'Завершено') {
-        return false
+      if (request.status !== "Завершено") {
+        return false;
       }
-      return true
-    })
-    temp.map((request) => {
-      const date = new Date(request.date)
+      return true;
+    });
+
+    //check cur month
+    const filteredRequests = temp.filter((request) => {
+      const date = new Date(request.date);
       if (
-        formatDateStringNoDate(date) === formatDateStringNoDate(curDate) &&
-        request.status === 'Завершено'
+        checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
+        request.status === "Завершено"
       ) {
-        curMonthIncome += Number.parseFloat(request.sum || 0)
+        curMonthIncome += Number.parseFloat(request.sum || 0);
+        return true;
       }
-    })
+      return false;
+    });
 
     setStats((stats) => ({
       ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ curSort: "sum", sum: "desc" }}
+        />
+      ),
       isLoaded: true,
       isLoading: false,
       value: `${addSpaceDelimiter(
-        Math.floor(curMonthIncome * 100) / 100,
+        Math.floor(curMonthIncome * 100) / 100
       )} руб.`,
       difference: curMonthIncome - prevMonthIncome,
       percentage:
@@ -68,24 +78,27 @@ const IncomeStatsPanel = ({ requests, curDate }) => {
           ((curMonthIncome - prevMonthIncome) /
             (prevMonthIncome === 0 ? 1 : prevMonthIncome)) *
             100 *
-            100,
+            100
         ) / 100,
-    }))
-  }
+    }));
+  };
 
   //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests, curDate)
-  }, [requests, stats])
+    !stats.isLoaded && requests.length > 1 && getStats(requests);
+  }, [requests, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
+    setStats((stats) => {
+      return { ...stats, timePeriod: timeText };
+    });
     if (!stats.isLoading && requests.length > 1) {
-      getStats(requests, curDate)
+      getStats(requests);
     }
-  }, [curDate])
+  }, [currDate]);
 
-  return <SmallPanel {...stats} />
-}
+  return <SmallPanel {...stats} />;
+};
 
-export default IncomeStatsPanel
+export default IncomeStatsPanel;

@@ -1,24 +1,21 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import './Widget.scss'
-import Button from '../../../../utils/Form/Button/Button.jsx'
-import { useHistory } from 'react-router-dom'
+import React from "react";
+import PropTypes from "prop-types";
+import "./Widget.scss";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import { useHistory } from "react-router-dom";
 
 const Widget = ({
-  title = '',
-  className = '',
+  title = "",
+  className = "",
   content = null,
-  linkTo = {
-    text: '',
-    address: '/',
-  },
-  subTitle = '',
+  linkTo,
+  subTitle = "",
   customHeader = null,
 }) => {
-  let history = useHistory()
+  let history = useHistory();
 
   return (
-    <div className={`widget ${className ?? ''}`}>
+    <div className={`widget ${className ?? ""}`}>
       {customHeader ?? (
         <div className="widget__title">
           <div className="widget__sub-title">{subTitle}</div>
@@ -36,10 +33,10 @@ const Widget = ({
       )}
       <div className="widget__content">{content}</div>
     </div>
-  )
-}
+  );
+};
 
-export default Widget
+export default Widget;
 
 Widget.proptypes = {
   title: PropTypes.string,
@@ -47,4 +44,4 @@ Widget.proptypes = {
   linkTo: PropTypes.object,
   subTitle: PropTypes.string,
   customHeader: PropTypes.object,
-}
+};

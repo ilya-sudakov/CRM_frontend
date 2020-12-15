@@ -1,10 +1,10 @@
-import React from 'react'
-import './WorkListWidget.scss'
+import React from "react";
+import "./WorkListWidget.scss";
 import {
   numberToString,
   roundUpWorkHours,
-} from '../../../../../utils/functions.jsx'
-import { filterEmployeesObject, sortEmployeesObject } from './functions.js'
+} from "../../../../../utils/functions.jsx";
+import { filterEmployeesObject, sortEmployeesObject } from "./functions.js";
 
 const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
   return (
@@ -12,12 +12,7 @@ const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
       {workshops.map((workshop) => {
         if (
           userContext.userHasAccess(workshop.visibility) &&
-          Object.entries(employees).filter((employee) => {
-            const item = employee[1]
-            if (item.workshop === workshop.name) {
-              return true
-            }
-          }).length > 0
+          filterEmployeesObject(Object.entries(employees), workshop).length > 0
         ) {
           return (
             <>
@@ -25,34 +20,43 @@ const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
                 {workshop.name}
               </div>
               {sortEmployeesObject(
-                filterEmployeesObject(Object.entries(employees), workshop),
+                filterEmployeesObject(Object.entries(employees), workshop)
               ).map((employee) => {
-                const item = employee[1]
-                return <ListItem item={item} employeesMap={employeesMap} />
+                const item = employee[1];
+                return <ListItem item={item} employeesMap={employeesMap} />;
               })}
             </>
-          )
+          );
         }
       })}
     </div>
-  )
-}
+  );
+};
 
-export default WorkList
+export default WorkList;
 
 const ListItem = ({ item, employeesMap }) => {
-  return (
-    <div index={item.id} className="work-list-widget__item">
-      <div>{item.lastName + ' ' + item.name + ' ' + item.middleName}</div>
+  return employeesMap[item.id] ||
+    (new Date().getDay() !== 0 && new Date().getDay() !== 1) ? (
+    <div
+      index={item.id}
+      className={`work-list-widget__item ${
+        employeesMap[item.id] ? "" : "work-list-widget__item--no-data"
+      }`}
+    >
+      <div>{item.lastName + " " + item.name + " " + item.middleName}</div>
       <div>
-        {employeesMap !== undefined &&
+        {employeesMap[item.id] !== undefined && employeesMap !== undefined ? (
           roundUpWorkHours(employeesMap[item.id]?.hours) +
-            ' ' +
-            numberToString(
-              Number.parseInt(roundUpWorkHours(employeesMap[item.id]?.hours)),
-              ['час', 'часа', 'часов'],
-            )}
+          " " +
+          numberToString(
+            Number.parseInt(roundUpWorkHours(employeesMap[item.id]?.hours)),
+            ["час", "часа", "часов"]
+          )
+        ) : (
+          <span className="work-list-widget__info-message">Нет записи</span>
+        )}
       </div>
     </div>
-  )
-}
+  ) : null;
+};

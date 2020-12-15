@@ -1,118 +1,118 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react'
-import deleteSVG from '../../../../../../../assets/select/delete.svg'
-import './Select.scss'
-import SearchBar from '../SearchBar/SearchBar.jsx'
-import TableView from '../Products/TableView/TableView.jsx'
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import deleteSVG from "../../../../../../../assets/select/delete.svg";
+import "./Select.scss";
+import SearchBar from "../SearchBar/SearchBar.jsx";
+import TableView from "../Products/TableView/TableView.jsx";
 import {
   getCategories,
   getCategoriesNames,
-} from '../../../utils/RequestsAPI/Products/Categories.jsx'
-import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx'
-import ColorPicker from './ColorPicker/ColorPicker.jsx'
+} from "../../../utils/RequestsAPI/Products/Categories.js";
+import FormWindow from "../../../utils/Form/FormWindow/FormWindow.jsx";
+import ColorPicker from "./ColorPicker/ColorPicker.jsx";
 import {
   getProductsByCategory,
   getProductById,
   getProductsByLocation,
-} from '../../../utils/RequestsAPI/Products.jsx'
-import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx'
+} from "../../../utils/RequestsAPI/Products.js";
+import ImgLoader from "../../../utils/TableView/ImgLoader/ImgLoader.jsx";
 // import { addSpaceDelimiter } from '../../../utils/functions.jsx'
-import UserContext from '../../../App.js'
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+import UserContext from "../../../App.js";
+import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 
 const Select = (props) => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [searchQueryCategory, setSearchQueryCategory] = useState('')
-  const [selected, setSelected] = useState([])
-  const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState([])
-  const [showWindow, setShowWindow] = useState(false)
-  const [closeWindow, setCloseWindow] = useState(false)
-  const [showOptions, setShowOptions] = useState(false)
-  const [showOverlay, setShowOverlay] = useState(false)
-  const userContext = useContext(UserContext)
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQueryCategory, setSearchQueryCategory] = useState("");
+  const [selected, setSelected] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [showWindow, setShowWindow] = useState(false);
+  const [closeWindow, setCloseWindow] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const userContext = useContext(UserContext);
 
   const search = () => {
     // console.log(products);
-    let searchArr = searchQuery.split(' ')
+    let searchArr = searchQuery.split(" ");
     return (props.products ? props.products : products).filter((item) => {
-      let check = true
+      let check = true;
       searchArr.map((searchWord) => {
         if (
           item.name.toLowerCase().includes(searchWord.toLowerCase()) === false
         )
-          check = false
-      })
+          check = false;
+      });
       if (check === true) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
-    })
-  }
+    });
+  };
 
   const handleInputChange = (event) => {
-    setSearchQuery(event.target.value)
-  }
+    setSearchQuery(event.target.value);
+  };
 
   const clickOnInput = () => {
-    setShowOverlay(!showOverlay)
-    return setShowOptions(!showOptions)
-  }
+    setShowOverlay(!showOverlay);
+    return setShowOptions(!showOptions);
+  };
 
   const clickOverlay = () => {
     if (showOverlay) {
-      clickOnInput()
+      clickOnInput();
     }
-  }
+  };
 
   async function loadCategories() {
     //Динамическая загрузка продукции
     if (props.categories && props.products) {
       // console.log('already have loaded products');
       // console.log(props.products);
-      setCategories([...props.categories])
-      setProducts([...props.products])
+      setCategories([...props.categories]);
+      setProducts([...props.products]);
     } else {
       getCategoriesNames() //Только категории
         .then((res) => res.json())
         .then((res) => {
-          const categoriesArr = res
-          setCategories(res)
-          let productsArr = []
-          let temp
+          const categoriesArr = res;
+          setCategories(res);
+          let productsArr = [];
+          let temp;
           if (
             userContext.userHasAccess([
-              'ROLE_ADMIN',
-              'ROLE_DISPATCHER',
-              'ROLE_ENGINEER',
-              'ROLE_MANAGER',
-              'ROLE_WORKSHOP', //temp
+              "ROLE_ADMIN",
+              "ROLE_DISPATCHER",
+              "ROLE_ENGINEER",
+              "ROLE_MANAGER",
+              "ROLE_WORKSHOP", //temp
             ])
           ) {
             temp = categoriesArr.map((item) => {
               let category = {
                 category: item.category,
-              }
+              };
               return getProductsByCategory(category) //Продукция по категории
                 .then((res) => res.json())
                 .then((res) => {
-                  res.map((item) => productsArr.push(item))
-                  setProducts([...productsArr])
-                })
-            })
-          } else if (userContext.userHasAccess(['ROLE_WORKSHOP'])) {
+                  res.map((item) => productsArr.push(item));
+                  setProducts([...productsArr]);
+                });
+            });
+          } else if (userContext.userHasAccess(["ROLE_WORKSHOP"])) {
             temp = getProductsByLocation({
-              productionLocation: userContext.userHasAccess(['ROLE_LEMZ'])
-                ? 'ЦехЛЭМЗ'
-                : userContext.userHasAccess(['ROLE_LEPSARI'])
-                ? 'ЦехЛепсари'
-                : 'ЦехЛЭМЗ',
+              productionLocation: userContext.userHasAccess(["ROLE_LEMZ"])
+                ? "ЦехЛЭМЗ"
+                : userContext.userHasAccess(["ROLE_LEPSARI"])
+                ? "ЦехЛепсари"
+                : "ЦехЛЭМЗ",
             })
               .then((res) => res.json())
               .then((res) => {
-                res.map((item) => productsArr.push(item))
-                setProducts([...productsArr])
-              })
+                res.map((item) => productsArr.push(item));
+                setProducts([...productsArr]);
+              });
           }
           Promise.all(temp)
             .then(() => {
@@ -123,27 +123,27 @@ const Select = (props) => {
                     .then((res) => res.json())
                     .then((res) => {
                       // console.log(res);
-                      productsArr.splice(index, 1, res)
-                      setProducts([...productsArr])
-                    })
-                }),
-              )
+                      productsArr.splice(index, 1, res);
+                      setProducts([...productsArr]);
+                    });
+                })
+              );
             })
             .then(() => {
               // console.log('all images downloaded');
-            })
+            });
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     }
   }
 
   const clickOnOption = (event) => {
-    const value = event.currentTarget.getAttribute('name')
-    const id = event.currentTarget.getAttribute('id')
-    const productId = event.currentTarget.getAttribute('productId')
-    clickOnInput()
+    const value = event.currentTarget.getAttribute("name");
+    const id = event.currentTarget.getAttribute("id");
+    const productId = event.currentTarget.getAttribute("productId");
+    clickOnInput();
     setSelected([
       ...selected,
       {
@@ -151,12 +151,12 @@ const Select = (props) => {
         name: value,
         quantity: 0,
         quantityNew: 0,
-        packaging: '',
+        packaging: "",
         // packaging: null,
-        status: 'production',
+        status: "production",
         productId: productId,
       },
-    ])
+    ]);
     props.onChange([
       ...selected,
       {
@@ -164,13 +164,13 @@ const Select = (props) => {
         name: value,
         quantity: 0,
         quantityNew: 0,
-        packaging: '',
+        packaging: "",
         // packaging: null,
-        status: 'production',
+        status: "production",
         productId: productId,
       },
-    ])
-  }
+    ]);
+  };
 
   const selectProduct = (id, value, productId) => {
     setSelected([
@@ -180,12 +180,12 @@ const Select = (props) => {
         name: value,
         quantity: 0,
         quantityNew: 0,
-        packaging: '',
+        packaging: "",
         // packaging: null,
-        status: 'production',
+        status: "production",
         productId: productId,
       },
-    ])
+    ]);
     props.onChange([
       ...selected,
       {
@@ -193,112 +193,112 @@ const Select = (props) => {
         name: value,
         quantity: 0,
         quantityNew: 0,
-        packaging: '',
+        packaging: "",
         // packaging: null,
-        status: 'production',
+        status: "production",
         productId: productId,
       },
-    ])
-  }
+    ]);
+  };
 
   const clickOnSelected = (event) => {
-    const id = event.target.getAttribute('id')
-    let newSelected = selected
-    newSelected.splice(id, 1)
-    setSelected([...newSelected])
-    props.onChange([...newSelected])
-  }
+    const id = event.target.getAttribute("id");
+    let newSelected = selected;
+    newSelected.splice(id, 1);
+    setSelected([...newSelected]);
+    props.onChange([...newSelected]);
+  };
 
   const handleParamChange = (event) => {
-    const value = event.target.value
-    const name = event.target.getAttribute('name')
-    const id = event.target.getAttribute(name + '_id')
-    const productId = event.target.getAttribute(productId)
-    let newSelected = selected
+    const value = event.target.value;
+    const name = event.target.getAttribute("name");
+    const id = event.target.getAttribute(name + "_id");
+    const productId = event.target.getAttribute(productId);
+    let newSelected = selected;
     newSelected = newSelected.map((item, index) => {
       return {
         ...item,
         [name]: index == id ? value : item[name],
-      }
-    })
-    setSelected([...newSelected])
-    props.onChange([...newSelected])
-  }
+      };
+    });
+    setSelected([...newSelected]);
+    props.onChange([...newSelected]);
+  };
 
   const handleStatusChange = (color, id) => {
-    let newSelected = selected
+    let newSelected = selected;
     newSelected = newSelected.map((item, index) => {
       return {
         ...item,
         status: item.id == id ? color : item.status,
-      }
-    })
-    setSelected([...newSelected])
+      };
+    });
+    setSelected([...newSelected]);
     // console.log(color, id, newSelected);
-    props.onChange([...newSelected])
-  }
+    props.onChange([...newSelected]);
+  };
 
   const pressEscKey = useCallback(
     (event) => {
       if (event.keyCode === 27) {
-        console.log(showOptions, showOverlay)
+        console.log(showOptions, showOverlay);
 
         if (showOptions) {
-          return clickOnInput()
+          return clickOnInput();
         }
       }
     },
-    [showOptions, showOverlay],
-  )
+    [showOptions, showOverlay]
+  );
 
   const [sortOrder, setSortOrder] = useState({
-    curSort: 'name',
-    name: 'asc',
-  })
+    curSort: "name",
+    name: "asc",
+  });
 
   const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
+    const name = event.target.value.split(" ")[0];
+    const order = event.target.value.split(" ")[1];
     setSortOrder({
       curSort: name,
       [name]: order,
-    })
-  }
+    });
+  };
 
   const filterSearchQuery = (data) => {
-    const query = searchQueryCategory.toLowerCase()
+    const query = searchQueryCategory.toLowerCase();
     return data.filter((item) => {
       return (
         item.name.toLowerCase().includes(query) ||
         item.id.toString().includes(query) ||
         item.weight.toString().includes(query) ||
         (item.comment !== null && item.comment.toLowerCase().includes(query))
-      )
-    })
-  }
+      );
+    });
+  };
 
   const sortProducts = (data) => {
     return data.sort((a, b) => {
       if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
       }
       if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
       }
-      return 0
-    })
-  }
+      return 0;
+    });
+  };
 
   useEffect(() => {
     if (props.defaultValue !== undefined) {
-      setSelected([...props.defaultValue])
+      setSelected([...props.defaultValue]);
     }
-    document.addEventListener('keydown', pressEscKey, false)
-    categories.length === 0 && loadCategories()
+    document.addEventListener("keydown", pressEscKey, false);
+    categories.length === 0 && loadCategories();
     return () => {
-      document.removeEventListener('keydown', pressEscKey, false)
-    }
-  }, [props.defaultValue, props.categories, showOptions, showOverlay])
+      document.removeEventListener("keydown", pressEscKey, false);
+    };
+  }, [props.defaultValue, props.categories, showOptions, showOverlay]);
 
   // LAYOUT OPTIONS, RENDER FUNCTIONS
 
@@ -320,22 +320,22 @@ const Select = (props) => {
       render: (index, item, options) =>
         renderSelectPackaging(index, item, options),
     },
-  }
+  };
 
   const renderQuantity = (
     index,
     item,
     options = {
-      customName: `Кол-во (шт.)${!props.readOnly ? '*' : ''}`,
+      customName: `Кол-во (шт.)${!props.readOnly ? "*" : ""}`,
       readOnly: false,
-    },
+    }
   ) => {
     return (
       <div className="select__selected_quantity">
         <span>{options.customName}</span>
         <input
           quantity_id={index}
-          type={props.numberInput ? 'number' : 'text'}
+          type={props.numberInput ? "number" : "text"}
           name="quantity"
           autoComplete="off"
           defaultValue={item.quantity != 0 ? item.quantity : 0}
@@ -344,16 +344,16 @@ const Select = (props) => {
           disabled={props.readOnly || props.workshop || options.readOnly}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const renderNewQuantity = (
     index,
     item,
     options = {
-      customName: `Отгружено (шт.)${!props.readOnly ? '*' : ''}`,
+      customName: `Отгружено (шт.)${!props.readOnly ? "*" : ""}`,
       readOnly: false,
-    },
+    }
   ) => {
     return (
       <div className="select__selected_quantity">
@@ -369,17 +369,17 @@ const Select = (props) => {
           disabled={options.readOnly}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const renderPackaging = (
     index,
     item,
     options = {
-      customName: `Фасовка${!props.readOnly ? '*' : ''}`,
+      customName: `Фасовка${!props.readOnly ? "*" : ""}`,
       readOnly: false,
-      marginRight: '0px',
-    },
+      marginRight: "0px",
+    }
   ) => {
     return (
       <div
@@ -398,8 +398,8 @@ const Select = (props) => {
           disabled={options.readOnly || props.workshop}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const renderSelectPackaging = (index, item) => {
     return (
@@ -417,8 +417,8 @@ const Select = (props) => {
             <option value={packagingItem.id}>{packagingItem.name}</option>
           ))}
       </select>
-    )
-  }
+    );
+  };
 
   const renderSelectedItemName = (
     index,
@@ -427,13 +427,13 @@ const Select = (props) => {
       readOnly: false,
       showColorPicker: true,
       showDelete: true,
-    },
+    }
   ) => {
     return (
       <div
         className={
-          'select__selected_item select__selected_item--' +
-          (item.status ? item.status : 'production')
+          "select__selected_item select__selected_item--" +
+          (item.status ? item.status : "production")
         }
       >
         {!props.readOnly && options.showColorPicker ? (
@@ -453,16 +453,16 @@ const Select = (props) => {
           onClick={clickOnSelected}
         />
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="select">
       <div
         className={
           showOverlay
-            ? 'select__overlay'
-            : 'select__overlay select__overlay--hidden'
+            ? "select__overlay"
+            : "select__overlay select__overlay--hidden"
         }
         onClick={clickOverlay}
       ></div>
@@ -471,10 +471,10 @@ const Select = (props) => {
         props.customSearch?.display !== false && (
           <div className="select__searchbar">
             <button
-              className="select__search_button"
+              className="main-form__button"
               onClick={(e) => {
-                e.preventDefault()
-                setShowWindow(!showWindow)
+                e.preventDefault();
+                setShowWindow(!showWindow);
               }}
             >
               Добавить продукцию
@@ -483,8 +483,8 @@ const Select = (props) => {
               type="text"
               className={
                 props.error === true
-                  ? 'select__input select__input--error'
-                  : 'select__input'
+                  ? "select__input select__input--error"
+                  : "select__input"
               }
               onChange={handleInputChange}
               onClick={!props.readOnly ? clickOnInput : null}
@@ -558,8 +558,8 @@ const Select = (props) => {
         <div
           className={
             showOptions
-              ? 'select__options'
-              : 'select__options select__options--hidden'
+              ? "select__options"
+              : "select__options select__options--hidden"
           }
         >
           {search().map((item, index) => (
@@ -572,7 +572,7 @@ const Select = (props) => {
               onClick={clickOnOption}
             >
               <ImgLoader imgSrc={item.photo} imgClass="select__img" />
-              <div>{'№' + item.id + ', ' + item.name}</div>
+              <div>{"№" + item.id + ", " + item.name}</div>
             </div>
           ))}
         </div>
@@ -587,8 +587,8 @@ const Select = (props) => {
               !props.readOnly &&
               !props.workshop &&
               props.customSelectedItem?.isMinimized !== true
-                ? 'select__selected_row'
-                : 'select__selected_row select__selected_row--minimized'
+                ? "select__selected_row"
+                : "select__selected_row select__selected_row--minimized"
             }
           >
             {props.customLayout ? (
@@ -597,8 +597,8 @@ const Select = (props) => {
                   return customLayoutOptions[layoutOption[0]].render(
                     index,
                     item,
-                    layoutOption[1],
-                  )
+                    layoutOption[1]
+                  );
                 })}
               </>
             ) : (
@@ -613,6 +613,6 @@ const Select = (props) => {
         ))}
       </div>
     </div>
-  )
-}
-export default Select
+  );
+};
+export default Select;

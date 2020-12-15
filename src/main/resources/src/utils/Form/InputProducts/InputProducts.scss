@@ -10,14 +10,11 @@
     width: calc(90% - 20px);
     //column direction
     width: 100%;
-
-    .select__input {
-      width: calc(100% - 20px);
-    }
   }
 
   &--new {
     margin: 0 !important;
+    padding-right: 10px;
   }
 
   .input_products__error {

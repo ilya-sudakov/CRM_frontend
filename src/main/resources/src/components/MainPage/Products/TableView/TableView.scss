@@ -28,13 +28,6 @@
         flex: 0 1 10%;
         flex-direction: row;
       }
-      &:hover {
-        span {
-          .tableview_products__items-count {
-            color: #eeeeee !important;
-          }
-        }
-      }
     }
 
     .main-window__list-item:not(.main-window__list-item--header) span {
@@ -112,7 +105,8 @@
             .main-window__action--row {
               .main-window__action {
                 &:hover {
-                  padding: 7.5px;
+                  background-color: #bbbbbb;
+                  // padding: 7.5px;
                 }
               }
             }
@@ -227,10 +221,6 @@
                 width: fit-content;
                 .main-window__action {
                   padding: 10px;
-
-                  &:hover {
-                    padding: 15px !important;
-                  }
                 }
               }
             }

@@ -150,9 +150,9 @@
     flex-direction: column;
     align-items: center;
     min-width: 300px;
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: #ffffff;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+    border: 1px solid #cccccc;
     width: calc(100% - 80px);
     padding: 10px 25px;
     padding-top: 35px;
@@ -353,7 +353,7 @@
         border: 1px solid #bbbbbb;
         width: 100%;
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 3px;
         outline: none;
         background-color: $primary-background-color;
         transition: 100ms ease-in-out;
@@ -395,13 +395,13 @@
 
     .main-form__button {
       background-color: $button__background--inverted;
-      color: $secondary-text-color;
-      border-radius: 5px;
+      color: transparentize($secondary-text-color, 0.05);
+      border-radius: 3px;
       padding: 10px 10px;
       cursor: pointer;
       font-size: 90%;
       margin-right: 10px;
-      transition: 0.2s ease-in-out;
+      transition: 100ms ease-in-out;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -412,20 +412,23 @@
       -khtml-user-select: none;
       -webkit-user-select: none;
       user-select: none;
+      width: fit-content;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+        color: #ffffff;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
       }
-    }
 
-    .main-form__button--inverted {
-      background-color: $secondary-text-color;
-      color: $primary-text-color;
-      border: 1px solid $button__background--inverted;
+      &--inverted {
+        background-color: $secondary-text-color;
+        color: #333333;
+        border: 1px solid #bbbbbb;
 
-      &:hover {
-        color: $secondary-text-color;
+        &:hover {
+          color: #000000 !important;
+          background-color: $secondary-text-color;
+        }
       }
     }
 
@@ -489,14 +492,14 @@
     }
 
     .main-form__submit {
-      border: 0;
+      border: 1px solid transparent;
       cursor: pointer;
-      padding: 15px 25px;
-      border-radius: 5px;
+      padding: 10px 15px;
+      border-radius: 3px;
       font-size: 80%;
       background-color: $button__background--inverted;
-      color: $secondary-text-color;
-      transition: 0.2s ease-in-out;
+      color: transparentize($secondary-text-color, 0.05);
+      transition: 100ms ease-in-out;
       margin-right: 10px;
       outline: none;
       display: flex;
@@ -506,20 +509,23 @@
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
+        color: #ffffff;
+        // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
       }
       & .main-form__img {
         width: 25px;
         margin-right: 5px;
       }
-    }
-    .main-form__submit--inverted {
-      background-color: $secondary-text-color;
-      color: $primary-text-color;
-      border: 1px solid $button__background--inverted;
 
-      &:hover {
-        color: $secondary-text-color;
+      &--inverted {
+        background-color: $secondary-text-color;
+        color: #333333;
+        border: 1px solid #bbbbbb;
+
+        &:hover {
+          color: #000000 !important;
+          background-color: #f0f0f0;
+        }
       }
     }
   }

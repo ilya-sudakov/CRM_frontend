@@ -10,7 +10,7 @@ import {
   addClientCategory,
   editClientCategory,
   getSupplierCategories,
-} from '../../../../utils/RequestsAPI/Clients/Categories.jsx'
+} from '../../../../utils/RequestsAPI/Clients/Categories.js'
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
 import NewClientCategory from './NewClientCategory/NewClientCategory.jsx'
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx'

@@ -1,29 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import GraphPanel from './GraphPanel.jsx'
-import MoneyIcon from '../../../../../../../../assets/etc/bx-ruble.inline.svg'
-import { months } from '../../../../utils/dataObjects'
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
-import { formatDateStringNoDate } from '../../../../utils/functions.jsx'
+import React, { useState, useEffect } from "react";
+import GraphPanel from "./GraphPanel.jsx";
+import MoneyIcon from "../../../../../../../../assets/etc/bx-ruble.inline.svg";
+import { months } from "../../../../utils/dataObjects";
+import { createGraph, loadCanvas } from "../../../../utils/graphs.js";
+import { checkIfDateIsInRange } from "../functions.js";
+import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 
-const ManagerMoneyGraphPanel = ({ data, curDate }) => {
-  const [graph, setGraph] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [canvasLoaded, setCanvasLoaded] = useState(false)
+const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
+  const [graph, setGraph] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
-    category: 'Статистика по менеджерам (доходы)',
+    category: "Статистика по менеджерам (доходы)",
     isLoaded: false,
-    chartName: 'manager-money-graph',
-    timePeriod: `${months[new Date().getMonth()]}`,
+    chartName: "manager-money-graph",
+    timePeriod: timeText,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--list" />,
-  })
+  });
 
-  const getStats = (data, curDate = new Date()) => {
-    let managers = {}
-    data.map((request) => {
+  const getStats = (data) => {
+    let managers = {};
+    const filteredRequests = data.filter((request) => {
       if (
-        formatDateStringNoDate(request.date) ===
-          formatDateStringNoDate(curDate) &&
-        request.status === 'Завершено'
+        checkIfDateIsInRange(
+          request.date,
+          currDate.startDate,
+          currDate.endDate
+        ) &&
+        request.status === "Завершено"
       ) {
         managers = {
           ...managers,
@@ -32,42 +36,53 @@ const ManagerMoneyGraphPanel = ({ data, curDate }) => {
               ? managers[request.responsible] +
                 Number.parseFloat(request.sum || 0)
               : request.sum || 0,
-        }
+        };
+        return true;
       }
-    })
-    // console.log(managers)
-    renderGraph(managers)
-  }
+      return false;
+    });
+    setStats((stats) => ({
+      ...stats,
+      windowContent: (
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ curSort: "sum", sum: "desc" }}
+        />
+      ),
+    }));
+    renderGraph(managers);
+  };
 
   const renderGraph = (dataset) => {
     if (!canvasLoaded) {
       setStats((stats) => ({
         ...stats,
         isLoaded: true,
-      }))
+      }));
       loadCanvas(
         `panel__chart-wrapper--${stats.chartName}`,
-        `panel__chart panel__chart--${stats.chartName}`,
-      )
+        `panel__chart panel__chart--${stats.chartName}`
+      );
     }
 
-    setCanvasLoaded(true)
+    setCanvasLoaded(true);
     const options = {
-      type: 'pie',
+      type: "pie",
       data: {
         labels: Object.entries(dataset).map((item) => item[0]),
         datasets: [
           {
             // label: 'Population (millions)',
             backgroundColor: [
-              '#3e95cd',
-              '#8e5ea2',
-              '#3cba9f',
-              '#e8c3b9',
-              '#c45850',
-              '#bbbbbb',
-              '#bbbbbb',
-              '#bbbbbb',
+              "#3e95cd",
+              "#8e5ea2",
+              "#3cba9f",
+              "#e8c3b9",
+              "#c45850",
+              "#bbbbbb",
+              "#bbbbbb",
+              "#bbbbbb",
             ],
             data: Object.entries(dataset).map((item) => item[1]),
           },
@@ -82,46 +97,44 @@ const ManagerMoneyGraphPanel = ({ data, curDate }) => {
             ? true
             : false,
         animation: {
-          easing: 'easeInOutCirc',
+          easing: "easeInOutCirc",
         },
         tooltips: {
-          mode: 'index',
+          mode: "index",
         },
       },
-    }
+    };
     setTimeout(() => {
-      setIsLoading(false)
-      canvasLoaded && graph.destroy()
+      setIsLoading(false);
+      canvasLoaded && graph.destroy();
       setGraph(
         createGraph(
           options,
-          document.getElementsByClassName(
-            `panel__chart--${stats.chartName}`,
-          )[0],
-        ),
-      )
-    }, 150)
-  }
+          document.getElementsByClassName(`panel__chart--${stats.chartName}`)[0]
+        )
+      );
+    }, 150);
+  };
 
   //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && data.length > 1 && getStats(data, curDate)
-  }, [data, stats])
+    !stats.isLoaded && data.length > 1 && getStats(data);
+  }, [data, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
     if (!stats.isLoading && data.length > 1) {
-      setCanvasLoaded(false)
+      setCanvasLoaded(false);
       setStats((stats) => ({
         ...stats,
-        timePeriod: `${months[curDate.getMonth()]}`,
-      }))
-      graph.destroy()
-      getStats(data, curDate)
+        timePeriod: timeText,
+      }));
+      graph.destroy();
+      getStats(data);
     }
-  }, [curDate])
+  }, [currDate]);
 
-  return <GraphPanel {...stats} />
-}
+  return <GraphPanel {...stats} />;
+};
 
-export default ManagerMoneyGraphPanel
+export default ManagerMoneyGraphPanel;

@@ -3,7 +3,7 @@
 .tableview-select-employees {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 25px);
+  width: 100%;
 
   .main-window__list-item {
     cursor: pointer;
@@ -25,15 +25,11 @@
   }
 
   @media (max-width: 768px) {
-    & {
-      .main-window__list-item {
-        span {
-          &:nth-child(2) {
-            max-width: none;
-          }
-        }
-        .main-window__actions {
-          display: none;
+    width: 100%;
+    .main-window__list-item {
+      span {
+        &:nth-child(2) {
+          max-width: none;
         }
       }
     }

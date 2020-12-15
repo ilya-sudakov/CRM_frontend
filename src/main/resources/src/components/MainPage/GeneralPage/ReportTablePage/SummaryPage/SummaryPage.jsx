@@ -1,13 +1,15 @@
-import React from 'react'
-import './ReportTablePage.scss'
-import DownloadIcon from '../../../../../../../../assets/download.svg'
-import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx'
-import SearchBar from '../../SearchBar/SearchBar.jsx'
-import Button from '../../../../utils/Form/Button/Button.jsx'
-import { exportReportTableExcel } from '../../../../utils/xlsxFunctions.jsx'
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
-import TableView from './TableView.jsx'
-import { EmployeeInfo } from './InfoComponents.jsx'
+import React from "react";
+// import "./ReportTablePage.scss";
+import DownloadIcon from "../../../../../../../../../assets/download.svg";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import SearchBar from "../../../SearchBar/SearchBar.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import { exportReportTableExcel } from "../../../../../utils/xlsxFunctions.jsx";
+import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import TableView from "./TableView.jsx";
+import { EmployeeInfo } from "./InfoComponents.jsx";
+import { formatDateString } from "../../../../../utils/functions.jsx";
+import { getDaysArray } from "../functions.js";
 
 const SummaryPage = ({
   setSearchQuery,
@@ -41,7 +43,7 @@ const SummaryPage = ({
                 selected={Date.parse(date)}
                 inputName="Выбор месяца:"
                 handleDateChange={(date) => {
-                  setDate(date)
+                  setDate(date);
                 }}
                 showMonthYearPicker
               />
@@ -53,16 +55,16 @@ const SummaryPage = ({
               inverted
               isLoading={isLoading || excelIsLoading}
               onClick={async () => {
-                setExcelIsLoading(true)
+                setExcelIsLoading(true);
                 const filteredWorkshops = [
-                  'ЦехЛЭМЗ',
-                  'ЦехЛепсари',
-                  'ЦехЛиговский',
-                  'Офис',
-                  'Уволенные',
-                ]
-                await exportReportTableExcel(new Date(date), filteredWorkshops)
-                setExcelIsLoading(false)
+                  "ЦехЛЭМЗ",
+                  "ЦехЛепсари",
+                  "ЦехЛиговский",
+                  "Офис",
+                  "Уволенные",
+                ];
+                await exportReportTableExcel(new Date(date), filteredWorkshops);
+                setExcelIsLoading(false);
               }}
             />
           </>
@@ -72,6 +74,21 @@ const SummaryPage = ({
       <EmployeeInfo
         showWindow={showWindow}
         setShowWindow={setShowWindow}
+        header={
+          selectedInfo?.selectedDay?.endDate
+            ? `Отчет за период ${formatDateString(
+                selectedInfo.selectedDay?.startDate
+              )} - ${formatDateString(selectedInfo.selectedDay?.endDate)}`
+            : formatDateString(selectedInfo.selectedDay?.startDate)
+        }
+        dates={
+          selectedInfo?.selectedDay?.endDate
+            ? getDaysArray(
+                selectedInfo.selectedDay.startDate,
+                selectedInfo.selectedDay.endDate
+              )
+            : [selectedInfo?.selectedDay?.startDate]
+        }
         selectedInfo={selectedInfo}
       />
       <TableView
@@ -82,11 +99,12 @@ const SummaryPage = ({
         setShowWindow={setShowWindow}
         setSelectedInfo={setSelectedInfo}
         date={date}
+        setDate={setDate}
         userContext={userContext}
         searchQuery={searchQuery}
       />
     </>
-  )
-}
+  );
+};
 
-export default SummaryPage
+export default SummaryPage;

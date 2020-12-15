@@ -1,61 +1,61 @@
-import React, { useEffect, useState, useContext } from 'react'
-import './PartsStatistic.scss'
-import { createGraph, loadCanvas } from '../../../../../../utils/graphs.js'
+import React, { useEffect, useState, useContext } from "react";
+import "./PartsStatistic.scss";
+import { createGraph, loadCanvas } from "../../../../../../utils/graphs.js";
 import {
   getRandomColor,
   addHexColor,
   addSpaceDelimiter,
-} from '../../../../../../utils/functions.jsx'
-import chevronDownSVG from '../../../../../../../../../../assets/tableview/chevron-down.svg'
-import TableLoading from '../../../../../../utils/TableView/TableLoading/TableLoading.jsx'
-import UserContext from '../../../../../../App.js'
+} from "../../../../../../utils/functions.jsx";
+import chevronDownSVG from "../../../../../../../../../../assets/tableview/chevron-down.svg";
+import TableLoading from "../../../../../../utils/TableView/TableLoading/TableLoading.jsx";
+import UserContext from "../../../../../../App.js";
 
 const PartsStatistic = (props) => {
-  const [graph, setGraph] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [canvasLoaded, setCanvasLoaded] = useState(false)
-  const [isVisible, setIsVisible] = useState(true)
+  const [graph, setGraph] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   // const originalColor = '029b09' // ? green color, but works for big amount of elements
-  const originalColor = '00a3a2'
-  const userContext = useContext(UserContext)
-  const [curPage, setCurPage] = useState('Продукция')
+  const originalColor = "00a3a2";
+  const userContext = useContext(UserContext);
+  const [curPage, setCurPage] = useState("Продукция");
   const workshopsSwitch = {
-    ЦехЛЭМЗ: 'ROLE_LEMZ',
-    ЦехЛепсари: 'ROLE_LEPSARI',
-    ЦехЛиговский: 'ROLE_LIGOVSKIY',
-  }
+    ЦехЛЭМЗ: "ROLE_LEMZ",
+    ЦехЛепсари: "ROLE_LEPSARI",
+    ЦехЛиговский: "ROLE_LIGOVSKIY",
+  };
   const filterWorkshops = (data) => {
     return data.filter((part) => {
-      if (userContext.userHasAccess(['ROLE_ADMIN'])) {
-        return true
+      if (userContext.userHasAccess(["ROLE_ADMIN"])) {
+        return true;
       } else {
         return userContext.userHasAccess([
           workshopsSwitch[part.product.productionLocation],
-        ])
+        ]);
       }
-    })
-  }
+    });
+  };
 
   const optionsProducts = {
-    type: 'horizontalBar',
+    type: "horizontalBar",
     data: {
       labels: [
         ...filterWorkshops(Object.values(props.data))
           .sort((a, b) => {
             if (a.quantity < b.quantity) {
-              return 1
+              return 1;
             }
             if (a.quantity > b.quantity) {
-              return -1
+              return -1;
             }
-            return 0
+            return 0;
           })
           .map((product) => product.name),
       ],
       datasets: [
         {
-          barThickness: 'flex',
-          label: 'Количество ед. продукции',
+          barThickness: "flex",
+          label: "Количество ед. продукции",
           // backgroundColor: [
           //   ...Object.entries(props.data).map(
           //     (product, index) =>
@@ -65,19 +65,19 @@ const PartsStatistic = (props) => {
           // ],
           backgroundColor: [
             ...filterWorkshops(Object.values(props.data)).map(
-              () => '#' + originalColor,
+              () => "#" + originalColor
             ),
           ],
           data: [
             ...filterWorkshops(Object.values(props.data))
               .sort((a, b) => {
                 if (a.quantity < b.quantity) {
-                  return 1
+                  return 1;
                 }
                 if (a.quantity > b.quantity) {
-                  return -1
+                  return -1;
                 }
-                return 0
+                return 0;
               })
               .map((product) => product.quantity),
           ],
@@ -90,7 +90,7 @@ const PartsStatistic = (props) => {
       cornerRadius: 2.5,
       fullCornerRadius: false,
       animation: {
-        easing: 'easeInOutCirc',
+        easing: "easeInOutCirc",
       },
       scales: {
         yAxes: [
@@ -103,8 +103,8 @@ const PartsStatistic = (props) => {
             },
             scaleLabel: {
               display: false,
-              labelString: 'Название',
-              fontStyle: 'italic',
+              labelString: "Название",
+              fontStyle: "italic",
             },
           },
         ],
@@ -112,48 +112,48 @@ const PartsStatistic = (props) => {
           {
             scaleLabel: {
               display: true,
-              labelString: 'Количество (шт.)',
-              fontStyle: 'italic',
+              labelString: "Количество (шт.)",
+              fontStyle: "italic",
             },
           },
         ],
       },
     },
-  }
+  };
 
   const optionsDrafts = {
-    type: 'horizontalBar',
+    type: "horizontalBar",
     data: {
       labels: [
         ...props.drafts
           .sort((a, b) => {
             if (a.quantity < b.quantity) {
-              return 1
+              return 1;
             }
             if (a.quantity > b.quantity) {
-              return -1
+              return -1;
             }
-            return 0
+            return 0;
           })
           .map((product) => product.name),
       ],
       datasets: [
         {
-          barThickness: 'flex',
-          label: 'Количество ед. чертежей',
+          barThickness: "flex",
+          label: "Количество ед. чертежей",
           backgroundColor: [
-            ...props.drafts.map((product, index) => '#' + originalColor),
+            ...props.drafts.map((product, index) => "#" + originalColor),
           ],
           data: [
             ...props.drafts
               .sort((a, b) => {
                 if (a.quantity < b.quantity) {
-                  return 1
+                  return 1;
                 }
                 if (a.quantity > b.quantity) {
-                  return -1
+                  return -1;
                 }
-                return 0
+                return 0;
               })
               .map((product) => product.quantity),
           ],
@@ -166,7 +166,7 @@ const PartsStatistic = (props) => {
       cornerRadius: 2.5,
       fullCornerRadius: false,
       animation: {
-        easing: 'easeInOutCirc',
+        easing: "easeInOutCirc",
       },
       scales: {
         yAxes: [
@@ -179,8 +179,8 @@ const PartsStatistic = (props) => {
             },
             scaleLabel: {
               display: false,
-              labelString: 'Название',
-              fontStyle: 'italic',
+              labelString: "Название",
+              fontStyle: "italic",
             },
           },
         ],
@@ -191,27 +191,27 @@ const PartsStatistic = (props) => {
             },
             scaleLabel: {
               display: true,
-              labelString: 'Количество (шт.)',
-              fontStyle: 'italic',
+              labelString: "Количество (шт.)",
+              fontStyle: "italic",
             },
           },
         ],
       },
     },
-  }
+  };
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (
       filterWorkshops(Object.values(props.data)).length > 0 ||
       props.drafts.length > 0
     ) {
-      setIsLoading(true)
+      setIsLoading(true);
       if (!canvasLoaded) {
         // setIsLoading(true)
-        console.log('loading canvas')
-        loadCanvas('main-window__chart-wrapper', 'main-window__chart')
-        setCanvasLoaded(true)
+        console.log("loading canvas");
+        loadCanvas("main-window__chart-wrapper", "main-window__chart");
+        setCanvasLoaded(true);
       }
       setTimeout(() => {
         if (
@@ -219,24 +219,22 @@ const PartsStatistic = (props) => {
             document.documentElement.clientWidth ||
             document.body.clientWidth) > 768
         ) {
-          setIsVisible(true)
+          setIsVisible(true);
         }
-        console.log(canvasLoaded, 'destroying graph1')
-        canvasLoaded && graph.destroy()
+        console.log(canvasLoaded, "destroying graph1");
+        canvasLoaded && graph.destroy();
         setGraph(
-          createGraph(
-            curPage === 'Продукция' ? optionsProducts : optionsDrafts,
-          ),
-        )
-        setIsLoading(false)
-      }, 150)
+          createGraph(curPage === "Продукция" ? optionsProducts : optionsDrafts)
+        );
+        setIsLoading(false);
+      }, 150);
     } else {
-      setIsVisible(false)
-      console.log(canvasLoaded, 'destroying graph2')
-      canvasLoaded && graph.destroy()
-      setIsLoading(false)
+      setIsVisible(false);
+      console.log(canvasLoaded, "destroying graph2");
+      canvasLoaded && graph.destroy();
+      setIsLoading(false);
     }
-  }, [props.drafts, curPage])
+  }, [props.drafts, curPage]);
 
   return (
     <UserContext.Consumer>
@@ -249,17 +247,17 @@ const PartsStatistic = (props) => {
         >
           <div
             className="main-window__title"
-            title={isVisible ? 'Свернуть' : 'Развернуть'}
+            title={isVisible ? "Свернуть" : "Развернуть"}
             onClick={() => {
-              return setIsVisible(!isVisible)
+              return setIsVisible(!isVisible);
             }}
           >
             Отчет производства
             <img
               className={
                 !isVisible
-                  ? 'main-window__img'
-                  : 'main-window__img main-window__img--rotated'
+                  ? "main-window__img"
+                  : "main-window__img main-window__img--rotated"
               }
               src={chevronDownSVG}
             />
@@ -267,28 +265,28 @@ const PartsStatistic = (props) => {
           <div
             className={
               isVisible
-                ? 'main-window__header'
-                : 'main-window__header main-window__header--hidden'
+                ? "main-window__header"
+                : "main-window__header main-window__header--hidden"
             }
           >
             <div className="main-window__menu">
               <div
                 className={
-                  curPage === 'Продукция'
-                    ? 'main-window__item main-window__item--active'
-                    : 'main-window__item'
+                  curPage === "Продукция"
+                    ? "main-window__item main-window__item--active"
+                    : "main-window__item"
                 }
-                onClick={() => setCurPage('Продукция')}
+                onClick={() => setCurPage("Продукция")}
               >
                 Продукция
               </div>
               <div
                 className={
-                  curPage === 'Чертежи'
-                    ? 'main-window__item main-window__item--active'
-                    : 'main-window__item'
+                  curPage === "Чертежи"
+                    ? "main-window__item main-window__item--active"
+                    : "main-window__item"
                 }
-                onClick={() => setCurPage('Чертежи')}
+                onClick={() => setCurPage("Чертежи")}
               >
                 Чертежи
               </div>
@@ -297,8 +295,8 @@ const PartsStatistic = (props) => {
           <div
             className={
               isVisible
-                ? 'parts-statistic__wrapper'
-                : 'parts-statistic__wrapper parts-statistic__wrapper--hidden'
+                ? "parts-statistic__wrapper"
+                : "parts-statistic__wrapper parts-statistic__wrapper--hidden"
             }
           >
             <TableLoading isLoading={props.isLoading} />
@@ -306,7 +304,7 @@ const PartsStatistic = (props) => {
               className="main-window__chart-wrapper"
               style={{
                 height: `${
-                  curPage === 'Продукция'
+                  curPage === "Продукция"
                     ? filterWorkshops(Object.values(props.data)).length * 50
                     : props.drafts.length * 50
                 }px`,
@@ -315,32 +313,32 @@ const PartsStatistic = (props) => {
             <ProductsStatistics
               data={filterWorkshops(Object.values(props.data))}
               isLoading={isLoading}
-              isHidden={curPage !== 'Продукция'}
+              isHidden={curPage !== "Продукция"}
             />
             <DraftsStatistics
               data={props.drafts}
               isLoading={isLoading}
-              isHidden={curPage !== 'Чертежи'}
+              isHidden={curPage !== "Чертежи"}
             />
           </div>
         </div>
       )}
     </UserContext.Consumer>
-  )
-}
+  );
+};
 
-export default PartsStatistic
+export default PartsStatistic;
 
 const ProductsStatistics = (props) => {
-  useEffect(() => {}, [])
+  useEffect(() => {}, []);
 
   return (
     <>
       <div
         className={
           props.isHidden
-            ? 'main-window__list main-window__list--hidden'
-            : 'main-window__list'
+            ? "main-window__list main-window__list--hidden"
+            : "main-window__list"
         }
       >
         <div className="main-window__list-item main-window__list-item--header">
@@ -350,12 +348,12 @@ const ProductsStatistics = (props) => {
         {props.data
           .sort((a, b) => {
             if (a.quantity < b.quantity) {
-              return 1
+              return 1;
             }
             if (a.quantity > b.quantity) {
-              return -1
+              return -1;
             }
-            return 0
+            return 0;
           })
           .map((part, index) => {
             return (
@@ -369,23 +367,23 @@ const ProductsStatistics = (props) => {
                   {addSpaceDelimiter(part.quantity)}
                 </span>
               </div>
-            )
+            );
           })}
       </div>
     </>
-  )
-}
+  );
+};
 
 const DraftsStatistics = (props) => {
-  useEffect(() => {}, [])
+  useEffect(() => {}, []);
 
   return (
     <>
       <div
         className={
           props.isHidden
-            ? 'main-window__list main-window__list--hidden'
-            : 'main-window__list'
+            ? "main-window__list main-window__list--hidden"
+            : "main-window__list"
         }
       >
         <div className="main-window__list-item main-window__list-item--header">
@@ -395,12 +393,12 @@ const DraftsStatistics = (props) => {
         {props.data
           .sort((a, b) => {
             if (a.quantity < b.quantity) {
-              return 1
+              return 1;
             }
             if (a.quantity > b.quantity) {
-              return -1
+              return -1;
             }
-            return 0
+            return 0;
           })
           .map((part, index) => {
             return (
@@ -412,13 +410,13 @@ const DraftsStatistics = (props) => {
                 <span>
                   <div className="main-window__mobile-text">Количество:</div>
                   {addSpaceDelimiter(
-                    part.quantity === null ? 0 : part.quantity,
+                    part.quantity === null ? 0 : part.quantity
                   )}
                 </span>
               </div>
-            )
+            );
           })}
       </div>
     </>
-  )
-}
+  );
+};

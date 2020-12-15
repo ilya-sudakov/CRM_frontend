@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react'
-import './EditRequest.scss'
-import '../../../../../utils/Form/Form.scss'
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx'
-import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
-import UserContext from '../../../../../App.js'
+import React, { useEffect, useState, useContext } from "react";
+import "./EditRequest.scss";
+import "../../../../../utils/Form/Form.scss";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
+import InputProducts from "../../../../../utils/Form/InputProducts/InputProducts.jsx";
+import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import UserContext from "../../../../../App.js";
 import {
   editRequest,
   editProductsToRequest,
@@ -15,27 +15,28 @@ import {
   deleteProductsToRequest,
   getRequestById,
   connectClientToRequest,
-} from '../../../../../utils/RequestsAPI/Requests.jsx'
-import { requestStatuses, workshops } from '../../workshopVariables.js'
-import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx'
+} from "../../../../../utils/RequestsAPI/Requests.jsx";
+import { requestStatuses, workshops } from "../../workshopVariables.js";
+import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
+import { getPageByRequest } from "../../../Requests/functions.js";
 
 const EditRequest = (props) => {
-  const [requestId, setRequestId] = useState(1)
-  const userContext = useContext(UserContext)
-  const [selectedProducts, setSelectedProducts] = useState([])
+  const [requestId, setRequestId] = useState(1);
+  const userContext = useContext(UserContext);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const [requestInputs, setRequestInputs] = useState({
-    date: '',
+    date: "",
     products: [],
     // quantity: "",
-    codeWord: '',
-    responsible: '',
-    status: 'Не готово',
-    shippingDate: '',
-    comment: '',
+    codeWord: "",
+    responsible: "",
+    status: "Не готово",
+    shippingDate: "",
+    comment: "",
     sum: 0,
     clientId: 0,
     client: null,
-  })
+  });
   const [requestErrors, setRequestErrors] = useState({
     date: false,
     requestProducts: false,
@@ -43,7 +44,7 @@ const EditRequest = (props) => {
     clientId: false,
     responsible: false,
     shippingDate: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     date: true,
     requestProducts: true,
@@ -52,94 +53,94 @@ const EditRequest = (props) => {
     shippingDate: true,
     clientId:
       requestInputs.clientId !== 0 ||
-      userContext.userHasAccess(['ROLE_WORKSHOP'])
+      userContext.userHasAccess(["ROLE_WORKSHOP"])
         ? true
         : false,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case 'date':
+      case "date":
         setValidInputs({
           ...validInputs,
           date: value !== null,
-        })
-        break
-      case 'clientId':
+        });
+        break;
+      case "clientId":
         setValidInputs({
           ...validInputs,
           clientId: value !== 0,
-        })
-        break
-      case 'shippingDate':
+        });
+        break;
+      case "shippingDate":
         setValidInputs({
           ...validInputs,
           shippingDate: value !== null,
-        })
-        break
-      case 'requestProducts':
+        });
+        break;
+      case "requestProducts":
         setValidInputs({
           ...validInputs,
           requestProducts: value.length > 0,
-        })
-        break
+        });
+        break;
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
     // console.log(validInputs);
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       date: false,
       requestProducts: false,
       clientId: false,
       responsible: false,
       shippingDate: false,
-    })
+    });
     for (let item in validInputs) {
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setRequestErrors(newErrors)
+    setRequestErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
       // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
   const handleSubmit = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     formIsValid() &&
       editRequest(requestInputs, requestId)
         .then(() => {
           //PUT if edited, POST if product is new
           const productsArr = selectedProducts.map((selected) => {
-            let edited = false
+            let edited = false;
             requestInputs.products.map((item) => {
               if (item.id === selected.id) {
-                edited = true
-                return
+                edited = true;
+                return;
               }
-            })
+            });
             return edited === true
               ? editProductsToRequest(
                   {
@@ -149,7 +150,7 @@ const EditRequest = (props) => {
                     packaging: selected.packaging,
                     name: selected.name,
                   },
-                  selected.id,
+                  selected.id
                 )
               : addProductsToRequest({
                   requestId: requestId,
@@ -157,80 +158,84 @@ const EditRequest = (props) => {
                   packaging: selected.packaging,
                   status: selected.status,
                   name: selected.name,
-                })
-          })
+                });
+          });
           return Promise.all(productsArr).then(() => {
             //DELETE products removed by user
             const productsArr = requestInputs.products.map((item) => {
-              let deleted = true
+              let deleted = true;
               selectedProducts.map((selected) => {
                 if (selected.id === item.id) {
-                  deleted = false
-                  return
+                  deleted = false;
+                  return;
                 }
-              })
-              return deleted === true && deleteProductsToRequest(item.id)
-            })
-            return Promise.all(productsArr)
-          })
+              });
+              return deleted === true && deleteProductsToRequest(item.id);
+            });
+            return Promise.all(productsArr);
+          });
         })
         .then(() => {
           if (requestInputs.client?.id !== requestInputs.clientId) {
-            return connectClientToRequest(requestId, requestInputs.clientId)
+            return connectClientToRequest(requestId, requestInputs.clientId);
           }
         })
         .then(() => {
-          const id = props.history.location.pathname.split('edit/')[1]
-          props.history.push(`${workshops[props.type].redirectURL}#${id}`)
+          const id = props.history.location.pathname.split("edit/")[1];
+          props.history.push(
+            `${workshops[props.type].redirectURL}/${getPageByRequest(
+              requestInputs
+            )}#${id}`
+          );
         })
         .catch((error) => {
-          setIsLoading(false)
-          console.log(error)
-        })
-  }
+          setIsLoading(false);
+          console.log(error);
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setRequestInputs({
       ...requestInputs,
       [name]: value,
-    })
+    });
     setRequestErrors({
       ...requestErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   const handleDateChange = (date) => {
-    validateField('date', date)
+    validateField("date", date);
     setRequestInputs({
       ...requestInputs,
       date: date,
-    })
+    });
     setRequestErrors({
       ...requestErrors,
       date: false,
-    })
-  }
+    });
+  };
 
   const handleProductsChange = (newProducts) => {
-    validateField('requestProducts', newProducts)
-    setSelectedProducts(newProducts)
+    validateField("requestProducts", newProducts);
+    setSelectedProducts(newProducts);
     setRequestErrors({
       ...requestErrors,
       requestProducts: false,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    document.title = 'Редактирование заявки'
-    const id = props.history.location.pathname.split('edit/')[1]
+    document.title = "Редактирование заявки";
+    const id = props.history.location.pathname.split("edit/")[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс заявки!')
-      props.history.push(workshops[props.type].redirectURL)
+      alert("Неправильный индекс заявки!");
+      props.history.push(workshops[props.type].redirectURL);
     } else {
-      setRequestId(id)
+      setRequestId(id);
       getRequestById(id)
         .then((res) => res.json())
         .then((oldRequest) => {
@@ -251,41 +256,41 @@ const EditRequest = (props) => {
             sum: oldRequest.sum,
             client: oldRequest.client,
             clientId: oldRequest.client ? oldRequest.client.id : 0,
-          })
-          oldRequest.client && validateField('clientId', oldRequest.client.id)
-          setSelectedProducts(oldRequest.requestProducts)
+          });
+          oldRequest.client && validateField("clientId", oldRequest.client.id);
+          setSelectedProducts(oldRequest.requestProducts);
         })
         .catch((error) => {
-          console.log(error)
-          alert('Неправильный индекс заявки!')
-          props.history.push(workshops[props.type].redirectURL)
-        })
+          console.log(error);
+          alert("Неправильный индекс заявки!");
+          props.history.push(workshops[props.type].redirectURL);
+        });
     }
-  }, [])
+  }, []);
 
   const handleDateShippedChange = (date) => {
     // validateField("date", date);
     setRequestInputs({
       ...requestInputs,
       shippingDate: date,
-    })
+    });
     setRequestErrors({
       ...requestErrors,
       shippingDate: false,
-    })
-  }
+    });
+  };
 
   const handleResponsibleChange = (newResponsible) => {
-    validateField('responsible', newResponsible)
+    validateField("responsible", newResponsible);
     setRequestInputs({
       ...requestInputs,
       responsible: newResponsible,
-    })
+    });
     setRequestErrors({
       ...requestErrors,
       responsible: false,
-    })
-  }
+    });
+  };
 
   return (
     <div className="edit-request">
@@ -303,9 +308,9 @@ const EditRequest = (props) => {
           />
           <div className="main-form__row">
             {userContext.userHasAccess([
-              'ROLE_ADMIN',
-              'ROLE_MANAGER',
-              'ROLE_WORKSHOP',
+              "ROLE_ADMIN",
+              "ROLE_MANAGER",
+              "ROLE_WORKSHOP",
             ]) && (
               <InputDate
                 inputName="Дата заявки"
@@ -316,7 +321,7 @@ const EditRequest = (props) => {
                 handleDateChange={handleDateChange}
                 errorsArr={requestErrors}
                 setErrorsArr={setRequestErrors}
-                readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+                readOnly={userContext.userHasAccess(["ROLE_WORKSHOP"])}
               />
             )}
             <InputDate
@@ -329,9 +334,9 @@ const EditRequest = (props) => {
             />
           </div>
           {userContext.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_MANAGER',
-            'ROLE_WORKSHOP',
+            "ROLE_ADMIN",
+            "ROLE_MANAGER",
+            "ROLE_WORKSHOP",
           ]) && (
             <InputProducts
               inputName="Продукция"
@@ -344,15 +349,15 @@ const EditRequest = (props) => {
               error={requestErrors.requestProducts}
               errorsArr={requestErrors}
               setErrorsArr={setRequestErrors}
-              workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+              workshop={userContext.userHasAccess(["ROLE_WORKSHOP"])}
             />
           )}
           {userContext.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_MANAGER',
-            'ROLE_WORKSHOP',
+            "ROLE_ADMIN",
+            "ROLE_MANAGER",
+            "ROLE_WORKSHOP",
           ]) &&
-            requestInputs.codeWord !== '' && (
+            requestInputs.client === undefined && (
               <InputText
                 inputName="Кодовое слово"
                 defaultValue={requestInputs.codeWord}
@@ -361,9 +366,9 @@ const EditRequest = (props) => {
               />
             )}
           {userContext.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_MANAGER',
-            'ROLE_WORKSHOP',
+            "ROLE_ADMIN",
+            "ROLE_MANAGER",
+            "ROLE_WORKSHOP",
           ]) && (
             <InputUser
               inputName="Ответственный"
@@ -376,7 +381,7 @@ const EditRequest = (props) => {
               searchPlaceholder="Введите имя пользователя для поиска..."
               errorsArr={requestErrors}
               setErrorsArr={setRequestErrors}
-              readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+              readOnly={userContext.userHasAccess(["ROLE_WORKSHOP"])}
             />
           )}
           <div className="main-form__item">
@@ -399,11 +404,11 @@ const EditRequest = (props) => {
                       >
                         {status.name}
                       </option>
-                    )
+                    );
                   } else {
                     return (
                       <option style={{ display: `none` }}>{status.name}</option>
-                    )
+                    );
                   }
                 })}
               </select>
@@ -415,7 +420,7 @@ const EditRequest = (props) => {
             defaultValue={requestInputs.comment}
             handleInputChange={handleInputChange}
           />
-          {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
+          {userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) ? (
             <InputText
               inputName="Сумма"
               name="sum"
@@ -433,17 +438,17 @@ const EditRequest = (props) => {
               requestInputs.clientId === 0 ? false : requestInputs.client?.name
             }
             required
-            readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+            readOnly={userContext.userHasAccess(["ROLE_WORKSHOP"])}
             onChange={(value) => {
-              validateField('clientId', value)
+              validateField("clientId", value);
               setRequestInputs({
                 ...requestInputs,
                 clientId: value,
-              })
+              });
               setRequestErrors({
                 ...requestErrors,
                 clientId: value,
-              })
+              });
             }}
             error={requestErrors.clientId}
             errorsArr={requestErrors}
@@ -457,9 +462,13 @@ const EditRequest = (props) => {
               className="main-form__submit main-form__submit--inverted"
               type="submit"
               onClick={(event) => {
-                event.preventDefault()
-                const id = props.history.location.pathname.split('edit/')[1]
-                props.history.push(`${workshops[props.type].redirectURL}#${id}`)
+                event.preventDefault();
+                const id = props.history.location.pathname.split("edit/")[1];
+                props.history.push(
+                  `${workshops[props.type].redirectURL}/${getPageByRequest(
+                    requestInputs
+                  )}#${id}`
+                );
               }}
               value="Вернуться назад"
             />
@@ -473,7 +482,7 @@ const EditRequest = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditRequest
+export default EditRequest;

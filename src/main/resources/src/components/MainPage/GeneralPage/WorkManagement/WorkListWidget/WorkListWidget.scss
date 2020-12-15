@@ -36,7 +36,7 @@
     padding: 5px 10px;
     margin-bottom: 5px;
     border: 1px solid #cccccc;
-    border-radius: 5px;
+    border-radius: 3px;
     width: calc(100% - 5px);
     font-size: 85%;
     cursor: pointer;
@@ -44,12 +44,26 @@
     justify-content: space-between;
     position: relative;
     transition: 100ms ease-in-out;
-    color: $primary-text-color;
+    color: #444444;
     box-sizing: border-box;
 
     &:hover {
-      background-color: $button__background--inverted;
-      color: $secondary-text-color;
+      background-color: #efefef;
+    }
+
+    &--no-data {
+      background-color: #fdf6f6;
+      border-color: #d2c2c3;
+      color: #555555;
+
+      .work-list-widget__info-message {
+        font-size: 0.85rem;
+        color: #a4746a;
+      }
+
+      &:hover {
+        background-color: #eee0e2;
+      }
     }
 
     > div {

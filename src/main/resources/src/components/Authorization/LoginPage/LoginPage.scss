@@ -8,7 +8,6 @@
   --padding-top: 130px;
   padding-top: var(--padding-top);
   height: calc(100vh - var(--padding-top));
-  // background: linear-gradient(228deg, #bce9f8 50%, #0fe9e9 100%);
   background: url("../../../../../../../assets/loginPage/bg_crm.jpg") no-repeat center center fixed
     $button__background--inverted;
 
@@ -71,7 +70,7 @@
 
   &__panel {
     min-width: 250px;
-    max-width: 280px;
+    max-width: 250px;
     border-radius: 5px;
     padding: 10px 30px;
     display: flex;
@@ -81,31 +80,37 @@
     border: 1px solid #bbbbbb;
     background-color: rgba(#ffffff, 1);
     z-index: 0;
+    padding-bottom: 20px;
 
     // dark-theme
-    // background-color: rgba(#333333, 0.7);
+    // background-color: #333333;
+    // border-color: #444444;
 
     .authorization__field_name {
-      //test
       position: absolute;
-
       border-radius: 15px;
-      left: 35px;
+      left: 15px;
       top: calc(0.5rem + 17px);
       background-color: rgba(#ffffff, 1);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       transition: 200ms ease-in-out;
       color: #666666;
       padding: 0;
       z-index: -1;
 
+      //dark-theme
+      // background-color: transparent;
+
       &--focused {
-        top: 4px;
-        left: 15px;
+        top: 6px;
+        left: 10px;
         background-color: rgba(#ffffff, 1);
         font-size: 0.8rem;
         padding: 0 5px;
         z-index: 0;
+
+        //dark-theme
+        // background-color: #333333;
       }
     }
 
@@ -117,10 +122,8 @@
       margin-bottom: 5px;
       margin-top: 5px;
       background-color: transparent;
-
-      //test
       padding-top: 15px;
-      margin-bottom: 3;
+      margin-bottom: 3px;
       margin-top: 0;
 
       &:last-child {
@@ -131,16 +134,17 @@
       input[type="text"],
       input[type="password"] {
         border: 1px solid #cccccccc;
-        width: calc(100% - 10px - var(--padding-left));
+        width: 100%;
         padding: 10px 10px;
-        border-radius: 5px;
-        padding-left: var(--padding-left);
+        border-radius: 3px;
         background-color: transparent;
+        box-sizing: border-box;
+        padding-left: 12px;
 
         //dark-theme
         // background-color: rgba(#333333, 0.3);
         // border: 1px solid #555555;
-        // color: #bbbbbb;
+        // color: #bbbbbb !important;
 
         //test
         // border: none;
@@ -152,10 +156,12 @@
         &:-webkit-autofill {
           animation-name: onAutoFillStart;
           transition: background-color 50000s ease-in-out 0s;
+          // color: #bbbbbb !important;
         }
 
         &:not(:-webkit-autofill) {
           animation-name: onAutoFillCancel;
+          // color: #bbbbbb !important;
         }
       }
       & .authorization__line {
@@ -165,8 +171,8 @@
         background-color: #000000;
         border-radius: 999px;
         position: absolute;
-        right: 5px;
-        top: calc(24px + 0.5rem);
+        right: 8px;
+        top: calc(24px + 0.55rem);
         transform-origin: 50% 100%;
         transform: scaleX(1);
         transform: rotate(-45deg);
@@ -202,21 +208,20 @@
       }
       &.authorization__img--eye {
         left: auto;
-        right: 5px;
+        right: 10px;
         top: calc(0.5rem + 15px);
         cursor: pointer;
         max-width: 22px;
 
         //dark-theme
-        // filter:  invert(1) brightness(1);
+        // filter: invert(1) brightness(0.7);
       }
     }
 
     .authorization__link {
+      margin-top: 10px;
       font-size: 85%;
-      width: 80%;
       max-width: 250px;
-      text-align: center;
       color: #333333;
 
       a {
@@ -235,7 +240,7 @@
       width: 100%;
       box-sizing: border-box;
       margin-right: 0;
-      margin-bottom: 10px;
+      margin-bottom: 0px;
       padding-top: 12px;
       padding-bottom: 12px;
     }
@@ -247,15 +252,18 @@
   & .checkbox {
     width: calc(100% - 35px);
     margin: 0px auto 15px 0px;
-    margin-left: 5px;
+    // margin-left: 5px;
     margin-top: 5px;
     &__container {
-      padding-left: 25px;
+      padding-left: 30px;
       width: 100% !important;
+
+      //dark-theme
+      color: #777777;
 
       & input ~ .checkbox__checkmark {
         width: 20px;
-        margin-top: 2px;
+        margin-top: 2.5px;
         height: 20px;
 
         &:after {
@@ -279,16 +287,19 @@
   }
 
   @media (max-width: 768px) {
-    & {
-      background: linear-gradient(180deg, #edeec0 0%, #00a3a2 100%);
+    background: linear-gradient(180deg, #edeec0 0%, #00a3a2 100%);
+  }
 
-      .authorization__panel {
-        max-width: 250px;
-        padding: 10px 15px;
+  @media (max-width: 500px) {
+    &__panel {
+      max-width: 300px;
+      width: 90%;
+      box-sizing: border-box;
+      padding: 10px 25px;
+      padding-bottom: 20px;
 
-        .authorization__submit {
-          // max-width: 200px;
-        }
+      .authorization__link {
+        max-width: none;
       }
     }
   }

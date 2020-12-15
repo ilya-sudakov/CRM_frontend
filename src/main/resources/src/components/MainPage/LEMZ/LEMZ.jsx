@@ -1,11 +1,11 @@
-import React, { Suspense } from 'react'
-import PrivateRoute from '../../PrivateRoute/PrivateRoute.jsx'
-import { Route, Switch, Link } from 'react-router-dom'
-import plusImg from '../../../../../../../assets/sidemenu/plus.png'
-import './LEMZ.scss'
-import '../../../utils/MainWindow/MainWindow.scss'
-import PageNotFound from '../PageNotFound/PageNotFound.jsx'
-import PageLoading from '../PageLoading/PageLoading.jsx'
+import React, { Suspense } from "react";
+import PrivateRoute from "../../PrivateRoute/PrivateRoute.jsx";
+import { Route, Switch, Link } from "react-router-dom";
+import plusImg from "../../../../../../../assets/sidemenu/plus.png";
+import "./LEMZ.scss";
+import "../../../utils/MainWindow/MainWindow.scss";
+import PageNotFound from "../PageNotFound/PageNotFound.jsx";
+import PageLoading from "../PageLoading/PageLoading.jsx";
 import {
   WorkshopLEMZ,
   Storage,
@@ -15,11 +15,11 @@ import {
   NewWorkshopOrderLEMZ,
   ViewWorkshopOrderLEMZ,
   EditWorkshopOrderLEMZ,
-} from '../lazyImports.jsx'
-import NewRequest from '../WorkshopsComponents/Forms/NewRequest/NewRequest.jsx'
-import EditRequest from '../WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'
-import ViewRequest from '../WorkshopsComponents/Forms/ViewRequest/ViewRequest.jsx'
-import ShipRequest from '../WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx'
+  NewRequest,
+  EditRequest,
+  // ViewRequest,
+  ShipRequest,
+} from "../lazyImports.jsx";
 
 const LEMZ = (props) => {
   return (
@@ -31,9 +31,9 @@ const LEMZ = (props) => {
             <Link
               to="/lemz/workshop-lemz"
               className={
-                props.location.pathname.includes('/lemz/workshop-lemz') === true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                props.location.pathname.includes("/lemz/workshop-lemz") === true
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
             >
               Очередь производства
@@ -50,10 +50,10 @@ const LEMZ = (props) => {
             <Link
               to="/lemz/workshop-storage"
               className={
-                props.location.pathname.includes('/lemz/workshop-storage') ===
+                props.location.pathname.includes("/lemz/workshop-storage") ===
                 true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
             >
               Склад
@@ -67,10 +67,10 @@ const LEMZ = (props) => {
             <Link
               to="/lemz/workshop-orders"
               className={
-                props.location.pathname.includes('/lemz/workshop-orders') ===
+                props.location.pathname.includes("/lemz/workshop-orders") ===
                 true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
             >
               Комплектация Цеха
@@ -88,37 +88,28 @@ const LEMZ = (props) => {
             <Switch>
               <PrivateRoute
                 exact
-                path="/lemz/workshop-lemz"
-                component={WorkshopLEMZ}
-                userHasAccess={props.userHasAccess}
-                transferState={props.transferState}
-                transferData={props.transferData}
-                setTransferState={props.setTransferState}
-                setTransferData={props.setTransferData}
-                allowedRoles={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEMZ']}
-              />
-              <Route
-                path="/lemz/workshop-lemz/view/"
-                render={(props) => <ViewRequest {...props} type="lemz" />}
-              />
-              <PrivateRoute
-                exact
                 path="/lemz/workshop-lemz/new"
                 component={NewRequest}
                 type="lemz"
-                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
               />
               <PrivateRoute
                 path="/lemz/workshop-lemz/edit/"
                 component={EditRequest}
                 type="lemz"
-                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
               />
               <PrivateRoute
                 path="/lemz/workshop-lemz/ship/"
                 component={ShipRequest}
                 type="lemz"
-                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+              />
+              <PrivateRoute
+                path="/lemz/workshop-lemz/"
+                component={WorkshopLEMZ}
+                userHasAccess={props.userHasAccess}
+                allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
               />
               <PrivateRoute
                 exact
@@ -126,10 +117,10 @@ const LEMZ = (props) => {
                 component={Storage}
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
-                  'ROLE_ADMIN',
+                  "ROLE_ADMIN",
                   // 'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_LEMZ',
+                  "ROLE_ENGINEER",
+                  "ROLE_LEMZ",
                 ]}
               />
               <PrivateRoute
@@ -138,14 +129,14 @@ const LEMZ = (props) => {
                 component={NewStorage}
                 userHasAccess={props.userHasAccess}
                 userData={props.userData}
-                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
               />
               <PrivateRoute
                 path="/lemz/workshop-storage/edit/"
                 component={EditStorage}
                 userHasAccess={props.userHasAccess}
                 userData={props.userData}
-                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
+                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
               />
               <PrivateRoute
                 exact
@@ -153,10 +144,10 @@ const LEMZ = (props) => {
                 component={WorkshopOrdersLEMZ}
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_LEMZ',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_LEMZ",
                 ]}
               />
               <PrivateRoute
@@ -165,10 +156,10 @@ const LEMZ = (props) => {
                 component={NewWorkshopOrderLEMZ}
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
-                  'ROLE_ADMIN',
+                  "ROLE_ADMIN",
                   // 'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_LEMZ',
+                  "ROLE_ENGINEER",
+                  "ROLE_LEMZ",
                 ]}
               />
               <PrivateRoute
@@ -176,17 +167,17 @@ const LEMZ = (props) => {
                 component={ViewWorkshopOrderLEMZ}
                 userHasAccess={props.userHasAccess}
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_LEMZ',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_LEMZ",
                 ]}
               />
               <PrivateRoute
                 path="/lemz/workshop-orders/edit/"
                 component={EditWorkshopOrderLEMZ}
                 userHasAccess={props.userHasAccess}
-                allowedRoles={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
+                allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
               />
               <Route component={PageNotFound} />
             </Switch>
@@ -194,7 +185,7 @@ const LEMZ = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LEMZ
+export default LEMZ;
