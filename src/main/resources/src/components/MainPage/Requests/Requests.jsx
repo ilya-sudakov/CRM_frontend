@@ -24,6 +24,7 @@ import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.js
 import { filterRequestsByPage, getPageByRequest } from "./functions.js";
 import { pages } from "./objects.js";
 import { Link } from "react-router-dom";
+import Switch from "../../../utils/Form/Switch/Switch.jsx";
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]); //Массив заявок
@@ -38,6 +39,7 @@ const Requests = (props) => {
   const [curPage, setCurPage] = useState(
     pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
   ); //Текущая страница
+  const [isMinimized, setIsMinimized] = useState(false);
 
   //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([
@@ -232,10 +234,12 @@ const Requests = (props) => {
   };
 
   const filterRequests = (requests) => {
-    return filterRequestsByStatuses(
-      filterRequestsByPage(
-        filterRequestsByWorkshop(requests),
-        pages[curPage].name
+    return filterSearchQuery(
+      filterRequestsByStatuses(
+        filterRequestsByPage(
+          filterRequestsByWorkshop(requests),
+          pages[curPage].name
+        )
       )
     );
   };
@@ -257,21 +261,9 @@ const Requests = (props) => {
             formatDateString(item.date).includes(query) ||
             (item.codeWord || "").toLowerCase().includes(query) ||
             item.status.toLowerCase().includes(query) ||
-            item.responsible.toLowerCase().includes(query) ||
+            (item.responsible || "").toLowerCase().includes(query) ||
             formatDateString(item.shippingDate).includes(query)
         : item.status.toLowerCase().includes(query);
-    });
-  };
-
-  const sortRequests = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
     });
   };
 
@@ -438,6 +430,13 @@ const Requests = (props) => {
               </select>
             </div>
           }
+          buttons={
+            <Switch
+              checked={isMinimized}
+              handleChange={(value) => setIsMinimized(value)}
+              text="Свернуть заявки"
+            />
+          }
           content={
             <>
               <div className="main-window__status-panel">
@@ -521,6 +520,7 @@ const Requests = (props) => {
           sortOrder={sortOrder}
           workshopName="requests"
           loadData={loadRequests}
+          isMinimized={isMinimized}
           deleteItem={deleteItem}
           transferRequest={transferRequest}
           copyRequest={copySelectedRequest}

@@ -178,6 +178,19 @@ export const renderRequestStatusColumn = (
   );
 };
 
+export const renderProductsMinimizedColumn = ({ requestProducts = [] }) => {
+  return (
+    <span className="requests__column--products">
+      {`${addSpaceDelimiter(
+        requestProducts.reduce(
+          (prev, cur) => prev + Number.parseFloat(cur.quantity),
+          0
+        )
+      )} ед. продукции`}
+    </span>
+  );
+};
+
 export const renderProductsColumn = (
   request,
   downloadImage,

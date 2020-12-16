@@ -258,6 +258,9 @@
           max-width: 110px;
           position: relative;
         }
+        .requests__column--products {
+          flex: 0 1 15%;
+        }
         .requests__column--date-shipping {
           flex: 0 1 8%;
           max-width: 90px;

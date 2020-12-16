@@ -24,6 +24,7 @@ import {
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import { Link } from "react-router-dom";
 import { pages } from "../Requests/objects.js";
+import Switch from "../../../utils/Form/Switch/Switch.jsx";
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([]);
@@ -31,6 +32,7 @@ const WorkshopLEMZ = (props) => {
   const [productsQuantities, setProductsQuantities] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
 
   const pageNameInURL = props.location.pathname.split(
     "/lemz/workshop-lemz/"
@@ -209,10 +211,12 @@ const WorkshopLEMZ = (props) => {
   };
 
   const filterRequests = (requestsLEMZ) => {
-    return filterRequestsByStatuses(
-      filterRequestsByPage(
-        filterRequestsByWorkshop(requestsLEMZ),
-        pages[curPage].name
+    return filterSearchQuery(
+      filterRequestsByStatuses(
+        filterRequestsByPage(
+          filterRequestsByWorkshop(requestsLEMZ),
+          pages[curPage].name
+        )
       )
     );
   };
@@ -237,18 +241,6 @@ const WorkshopLEMZ = (props) => {
             item.responsible.toLowerCase().includes(query) ||
             formatDateString(item.shippingDate).includes(query)
         : item.status.toLowerCase().includes(query);
-    });
-  };
-
-  const sortRequests = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
     });
   };
 
@@ -329,14 +321,21 @@ const WorkshopLEMZ = (props) => {
         <ControlPanel
           itemsCount={`Всего: ${requestsLEMZ.length} записей`}
           buttons={
-            <Button
-              text="Печать списка"
-              isLoading={isLoading}
-              imgSrc={PrintIcon}
-              inverted
-              className="main-window__button main-window__button--inverted"
-              onClick={printRequestsList}
-            />
+            <>
+              <Button
+                text="Печать списка"
+                isLoading={isLoading}
+                imgSrc={PrintIcon}
+                inverted
+                className="main-window__button main-window__button--inverted"
+                onClick={printRequestsList}
+              />
+              <Switch
+                checked={isMinimized}
+                handleChange={(value) => setIsMinimized(value)}
+                text="Свернуть заявки"
+              />
+            </>
           }
           content={
             <div className="main-window__status-panel">
@@ -394,6 +393,7 @@ const WorkshopLEMZ = (props) => {
           isLoading={isLoading}
           sortOrder={sortOrder}
           loadData={loadRequestsLEMZ}
+          isMinimized={isMinimized}
           dates={dates.sort((a, b) => {
             if (a < b) {
               return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;

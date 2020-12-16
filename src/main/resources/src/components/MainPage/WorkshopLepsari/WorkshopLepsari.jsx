@@ -22,6 +22,7 @@ import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.js
 import { getCategories } from "../../../utils/RequestsAPI/Products/Categories.js";
 import { pages } from "../Requests/objects";
 import { Link } from "react-router-dom";
+import Switch from "../../../utils/Form/Switch/Switch.jsx";
 
 const WorkshopLepsari = (props) => {
   const [requestsLepsari, setrequestsLepsari] = useState([]);
@@ -29,6 +30,7 @@ const WorkshopLepsari = (props) => {
   const [productsQuantities, setProductsQuantities] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
 
   const pageNameInURL = props.location.pathname.split(
     "/lepsari/workshop-lepsari/"
@@ -210,10 +212,12 @@ const WorkshopLepsari = (props) => {
   };
 
   const filterRequests = (requestsLepsari) => {
-    return filterRequestsByStatuses(
-      filterRequestsByPage(
-        filterRequestsByWorkshop(requestsLepsari),
-        pages[curPage].name
+    return filterSearchQuery(
+      filterRequestsByStatuses(
+        filterRequestsByPage(
+          filterRequestsByWorkshop(requestsLepsari),
+          pages[curPage].name
+        )
       )
     );
   };
@@ -238,18 +242,6 @@ const WorkshopLepsari = (props) => {
             item.responsible.toLowerCase().includes(query) ||
             formatDateString(item.shippingDate).includes(query)
         : item.status.toLowerCase().includes(query);
-    });
-  };
-
-  const sortRequests = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
     });
   };
 
@@ -330,14 +322,21 @@ const WorkshopLepsari = (props) => {
         <ControlPanel
           itemsCount={`Всего: ${requestsLepsari.length} записей`}
           buttons={
-            <Button
-              text="Печать списка"
-              isLoading={isLoading}
-              imgSrc={PrintIcon}
-              inverted
-              className="main-window__button main-window__button--inverted"
-              onClick={printRequestsList}
-            />
+            <>
+              <Button
+                text="Печать списка"
+                isLoading={isLoading}
+                imgSrc={PrintIcon}
+                inverted
+                className="main-window__button main-window__button--inverted"
+                onClick={printRequestsList}
+              />
+              <Switch
+                checked={isMinimized}
+                handleChange={(value) => setIsMinimized(value)}
+                text="Свернуть заявки"
+              />
+            </>
           }
           content={
             <div className="main-window__status-panel">
@@ -394,6 +393,7 @@ const WorkshopLepsari = (props) => {
           workshopName="lepsari"
           isLoading={isLoading}
           loadData={loadrequestsLepsari}
+          isMinimized={isMinimized}
           dates={dates.sort((a, b) => {
             if (a < b) {
               return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;

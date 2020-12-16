@@ -39,6 +39,7 @@ import {
   renderRequestStatusColumn,
   renderPriceColumn,
   renderProductsColumn,
+  renderProductsMinimizedColumn,
 } from "./renderItems.jsx";
 
 const TableView = ({
@@ -50,6 +51,7 @@ const TableView = ({
   copyRequest,
   deleteItem,
   transferRequest,
+  isMinimized = false,
   printConfig = {
     ...defaultPrintObject,
     price: { visible: workshopName === "requests" },
@@ -225,7 +227,7 @@ const TableView = ({
             item.name === request.status || item.oldName === request.status
         )?.className
       } ${
-        request?.requestProducts?.length > 1
+        request?.requestProducts?.length > 1 && !isMinimized
           ? "main-window__list-item--multiple-items"
           : ""
       } ${
@@ -248,24 +250,27 @@ const TableView = ({
               : null
           }
           style={{
+            paddingTop: isMinimized ? "5px" : "35px",
             paddingBottom:
               userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
-              workshopName === "requests"
+              workshopName === "requests" &&
+              !isMinimized
                 ? "30px"
                 : "5px",
-            paddingTop: "35px",
           }}
         >
           {displayColumns["id"].visible &&
             renderIdColumn(request, workshopName)}
           {displayColumns["date"].visible && renderDateCreatedColumn(request)}
           {displayColumns["products"].visible &&
-            renderProductsColumn(
-              request,
-              downloadImage,
-              createLabelForProduct,
-              handleProductStatusChange
-            )}
+            (isMinimized
+              ? renderProductsMinimizedColumn(request)
+              : renderProductsColumn(
+                  request,
+                  downloadImage,
+                  createLabelForProduct,
+                  handleProductStatusChange
+                ))}
           {displayColumns["client"].visible && renderClientColumn(request)}
           {displayColumns["responsible"].visible &&
             renderResponsibleColumn(request)}
@@ -381,13 +386,17 @@ const TableView = ({
                   : "0",
             }}
           >
-            <div className="main-window__list-col">
-              <div className="main-window__list-col-row">
-                <span>Продукция</span>
-                <span></span>
-                <span></span>
+            {isMinimized ? (
+              <div className="requests__column--products">Продукция</div>
+            ) : (
+              <div className="main-window__list-col">
+                <div className="main-window__list-col-row">
+                  <span>Продукция</span>
+                  <span></span>
+                  <span></span>
+                </div>
               </div>
-            </div>
+            )}
             <span className="requests__column--client">Кодовое слово</span>
             <span className="requests__column--responsible">Ответственный</span>
             <span className="requests__column--status">Статус заявки</span>
@@ -445,4 +454,5 @@ TableView.propTypes = {
   transferRequest: PropTypes.func,
   printConfig: PropTypes.object,
   sortOrder: PropTypes.object,
+  isMinimized: PropTypes.bool,
 };
