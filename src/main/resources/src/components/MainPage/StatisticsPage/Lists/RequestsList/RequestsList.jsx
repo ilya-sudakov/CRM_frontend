@@ -19,6 +19,7 @@ const RequestsList = ({
           workshopName="requests"
           sortOrder={sortBy}
           loadData={loadData}
+          isMinimized={true}
         />
       ) : (
         <div className="main-window__info-text">

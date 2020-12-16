@@ -40,6 +40,8 @@ import {
   renderPriceColumn,
   renderProductsColumn,
   renderProductsMinimizedColumn,
+  renderProductsSubItem,
+  renderListHeader,
 } from "./renderItems.jsx";
 
 const TableView = ({
@@ -216,11 +218,16 @@ const TableView = ({
   );
 
   useEffect(() => {
-    data && setRequests(data);
-  }, [data, requests, isLoading, selectedProduct]);
+    const requestsWithMinimizedParam = data.map((request) => {
+      return { ...request, isMinimized: true };
+    });
+    data && setRequests(requestsWithMinimizedParam);
+  }, [data, isLoading, selectedProduct]);
 
-  const printRequests = (requests, displayColumns) => {
-    return requests.map((request) => {
+  useEffect(() => {}, [requests]);
+
+  const printRequests = (data, displayColumns) => {
+    return data.map((request) => {
       const requestClassName = `main-window__list-item main-window__list-item--${
         requestStatuses.find(
           (item) =>
@@ -236,114 +243,145 @@ const TableView = ({
         request.factory === null
           ? " main-window__list-item--message main-window__list-item--warning"
           : ""
-      }`;
+      } ${isMinimized ? "main-window__list-item--is-minimized" : ""}`;
 
       return (
-        <div
-          className={requestClassName}
-          data-msg="Напоминание! Заявка не перенесена в один из цехов"
-          key={request.id}
-          id={request.id}
-          ref={
-            Number.parseInt(history.location.hash.split("#")[1]) === request.id
-              ? prevRef
-              : null
-          }
-          style={{
-            paddingTop: isMinimized ? "5px" : "35px",
-            paddingBottom:
-              userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
-              workshopName === "requests" &&
-              !isMinimized
-                ? "30px"
-                : "5px",
-          }}
-        >
-          {displayColumns["id"].visible &&
-            renderIdColumn(request, workshopName)}
-          {displayColumns["date"].visible && renderDateCreatedColumn(request)}
-          {displayColumns["products"].visible &&
-            (isMinimized
-              ? renderProductsMinimizedColumn(request)
-              : renderProductsColumn(
-                  request,
-                  downloadImage,
-                  createLabelForProduct,
-                  handleProductStatusChange
-                ))}
-          {displayColumns["client"].visible && renderClientColumn(request)}
-          {displayColumns["responsible"].visible &&
-            renderResponsibleColumn(request)}
-          {displayColumns["status"].visible &&
-            renderRequestStatusColumn(request, userContext, handleStatusChange)}
-          {displayColumns["date-shipping"].visible &&
-            renderDateShippedColumn(request)}
-          {displayColumns["comment"].visible && renderCommentColumn(request)}
-          {displayColumns["price"].visible &&
-            userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
-            renderPriceColumn(request)}
-          <div className="main-window__actions">
-            {workshopName !== "requests" && (
-              <div
-                className="main-window__action"
-                title="Печать заявки"
-                onClick={() => printRequest(request)}
-              >
-                <img className="main-window__img" src={printSVG} />
-              </div>
-            )}
-            {userContext.userHasAccess([
-              "ROLE_ADMIN",
-              "ROLE_MANAGER",
-              "ROLE_WORKSHOP",
-            ]) && (
-              <Link
-                to={
-                  workshopName === "requests"
-                    ? `/requests/edit/${request.id}`
-                    : `/${workshopName}/workshop-${workshopName}/edit/${request.id}`
+        <>
+          <div
+            className={requestClassName}
+            data-msg="Напоминание! Заявка не перенесена в один из цехов"
+            key={request.id}
+            id={request.id}
+            onClick={() => {
+              if (!isMinimized) return;
+              let newReqs = requests;
+              let index = 0;
+              requests.find((item, idx) => {
+                if (item.id === request.id) {
+                  index = idx;
+                  return true;
                 }
-                className="main-window__action"
-                title="Редактирование заявки"
-              >
-                <img className="main-window__img" src={editSVG} />
-              </Link>
-            )}
-            {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-              <div
-                data-id={request.id}
-                className="main-window__action"
-                title="Удаление заявки"
-                onClick={(event) => deleteItem(event)}
-              >
-                <img className="main-window__img" src={deleteSVG} />
-              </div>
-            )}
-            {transferRequest && userContext.userHasAccess(["ROLE_ADMIN"]) && (
-              <div
-                data-id={request.id}
-                className="main-window__action"
-                title="Перенос заявки"
-                onClick={(event) => {
-                  event.preventDefault();
-                  transferRequest(request.id);
-                }}
-              >
-                <img className="main-window__img" src={transferSVG} />
-              </div>
-            )}
-            {copyRequest && userContext.userHasAccess(["ROLE_ADMIN"]) && (
-              <div
-                data-id={request.id}
-                className="main-window__action"
-                title="Копирование заявки"
-                onClick={() => copyRequest(request.id)}
-              >
-                <img className="main-window__img" src={copySVG} />
-              </div>
-            )}
+                return false;
+              });
+
+              newReqs.splice(index, 1, {
+                ...request,
+                isMinimized: !request.isMinimized,
+              });
+              console.log(requests, newReqs);
+              return setRequests([...newReqs]);
+            }}
+            ref={
+              Number.parseInt(history.location.hash.split("#")[1]) ===
+              request.id
+                ? prevRef
+                : null
+            }
+            style={{
+              paddingTop: isMinimized
+                ? workshopName === "requests"
+                  ? "5px"
+                  : "15px"
+                : "35px",
+              paddingBottom:
+                userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
+                workshopName === "requests" &&
+                !isMinimized
+                  ? "30px"
+                  : "5px",
+            }}
+          >
+            {displayColumns["id"].visible &&
+              renderIdColumn(request, workshopName)}
+            {displayColumns["date"].visible && renderDateCreatedColumn(request)}
+            {displayColumns["products"].visible &&
+              (isMinimized
+                ? renderProductsMinimizedColumn(request)
+                : renderProductsColumn(
+                    request,
+                    downloadImage,
+                    createLabelForProduct,
+                    handleProductStatusChange
+                  ))}
+            {displayColumns["client"].visible && renderClientColumn(request)}
+            {displayColumns["responsible"].visible &&
+              renderResponsibleColumn(request)}
+            {displayColumns["status"].visible &&
+              renderRequestStatusColumn(
+                request,
+                userContext,
+                handleStatusChange
+              )}
+            {displayColumns["date-shipping"].visible &&
+              renderDateShippedColumn(request)}
+            {displayColumns["comment"].visible && renderCommentColumn(request)}
+            {displayColumns["price"].visible &&
+              userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
+              renderPriceColumn(request)}
+            <div className="main-window__actions">
+              {workshopName !== "requests" && (
+                <div
+                  className="main-window__action"
+                  title="Печать заявки"
+                  onClick={() => printRequest(request)}
+                >
+                  <img className="main-window__img" src={printSVG} />
+                </div>
+              )}
+              {userContext.userHasAccess([
+                "ROLE_ADMIN",
+                "ROLE_MANAGER",
+                "ROLE_WORKSHOP",
+              ]) && (
+                <Link
+                  to={
+                    workshopName === "requests"
+                      ? `/requests/edit/${request.id}`
+                      : `/${workshopName}/workshop-${workshopName}/edit/${request.id}`
+                  }
+                  className="main-window__action"
+                  title="Редактирование заявки"
+                >
+                  <img className="main-window__img" src={editSVG} />
+                </Link>
+              )}
+              {userContext.userHasAccess(["ROLE_ADMIN"]) && (
+                <div
+                  data-id={request.id}
+                  className="main-window__action"
+                  title="Удаление заявки"
+                  onClick={(event) => deleteItem(event)}
+                >
+                  <img className="main-window__img" src={deleteSVG} />
+                </div>
+              )}
+              {transferRequest && userContext.userHasAccess(["ROLE_ADMIN"]) && (
+                <div
+                  data-id={request.id}
+                  className="main-window__action"
+                  title="Перенос заявки"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    transferRequest(request.id);
+                  }}
+                >
+                  <img className="main-window__img" src={transferSVG} />
+                </div>
+              )}
+              {copyRequest && userContext.userHasAccess(["ROLE_ADMIN"]) && (
+                <div
+                  data-id={request.id}
+                  className="main-window__action"
+                  title="Копирование заявки"
+                  onClick={() => copyRequest(request.id)}
+                >
+                  <img className="main-window__img" src={copySVG} />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+          {isMinimized ? renderProductsSubItem(request) : null}
+        </>
       );
     });
   };
@@ -376,34 +414,7 @@ const TableView = ({
           }
         />
         <div className="main-window__list">
-          <div
-            className="main-window__list-item main-window__list-item--header"
-            style={{
-              marginBottom:
-                sortOrder.curSort === "date" ||
-                sortOrder.curSort === "shippingDate"
-                  ? "-20px"
-                  : "0",
-            }}
-          >
-            {isMinimized ? (
-              <div className="requests__column--products">Продукция</div>
-            ) : (
-              <div className="main-window__list-col">
-                <div className="main-window__list-col-row">
-                  <span>Продукция</span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
-            )}
-            <span className="requests__column--client">Кодовое слово</span>
-            <span className="requests__column--responsible">Ответственный</span>
-            <span className="requests__column--status">Статус заявки</span>
-            <span className="requests__column--date-shipping">Отгрузка</span>
-            <span className="requests__column--comment">Комментарий</span>
-            <div className="main-window__actions">Действия</div>
-          </div>
+          {renderListHeader(sortOrder, isMinimized)}
           {isLoading ? (
             <PlaceholderLoading
               itemClassName="main-window__list-item"

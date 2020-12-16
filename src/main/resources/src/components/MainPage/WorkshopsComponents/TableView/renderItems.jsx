@@ -157,7 +157,7 @@ export const renderRequestStatusColumn = (
         onChange={handleStatusChange}
       >
         {requestStatuses.map((status) => {
-          if (userContext.userHasAccess(status.access)) {
+          if (userContext && userContext.userHasAccess(status.access)) {
             return (
               <option
                 value={
@@ -191,6 +191,79 @@ export const renderProductsMinimizedColumn = ({ requestProducts = [] }) => {
       </div>
       ед. продукции
     </span>
+  );
+};
+
+export const renderProductsSubItem = ({
+  requestProducts = [],
+  status = "",
+  id = 0,
+  isMinimized = true,
+}) => {
+  return (
+    <div
+      className={`main-window__list-options ${
+        isMinimized ? "main-window__list-options--hidden" : ""
+      }`}
+    >
+      <div className="main-window__title">Продукция</div>
+      <div className="main-window__list">
+        <div className="main-window__list-item main-window__list-item--header">
+          <span>Название</span>
+          <span>Упаковка</span>
+          <span>Кол-во</span>
+          <span className="requests__column--status">Статус</span>
+        </div>
+        {requestProducts.map((product) => (
+          <div
+            className={`main-window__list-item main-window__list-item--${
+              productsStatuses.find(
+                (item) =>
+                  item.className === product.status ||
+                  item.oldName === product.status
+              )?.className
+            }`}
+          >
+            <span>{product.name}</span>
+            <span>{product.packaging}</span>
+            <span>{product.quantity}</span>
+            {renderRequestStatusColumn({ id, status })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export const renderListHeader = (sortOrder, isMinimized) => {
+  return (
+    <div
+      className="main-window__list-item main-window__list-item--header"
+      style={{
+        marginBottom:
+          sortOrder.curSort === "date" || sortOrder.curSort === "shippingDate"
+            ? "-20px"
+            : "0",
+      }}
+    >
+      {isMinimized ? (
+        <div className="requests__column--products">Продукция</div>
+      ) : (
+        <div className="main-window__list-col">
+          <div className="main-window__list-col-row">
+            <span>Продукция</span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      )}
+      <span className="requests__column--client">Кодовое слово</span>
+      <span className="requests__column--responsible">Ответственный</span>
+      <span className="requests__column--status">Статус заявки</span>
+      <span className="requests__column--date-shipping">Отгрузка</span>
+      <span className="requests__column--comment">Комментарий</span>
+      <div className="main-window__actions">Действия</div>
+    </div>
   );
 };
 
