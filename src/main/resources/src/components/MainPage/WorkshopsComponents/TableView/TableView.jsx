@@ -309,7 +309,7 @@ const TableView = ({
             {displayColumns["status"].visible &&
               renderRequestStatusColumn(
                 request,
-                userContext,
+                userContext.userHasAccess,
                 handleStatusChange
               )}
             {displayColumns["date-shipping"].visible &&
@@ -380,7 +380,9 @@ const TableView = ({
               )}
             </div>
           </div>
-          {isMinimized ? renderProductsSubItem(request) : null}
+          {isMinimized
+            ? renderProductsSubItem(request, handleProductStatusChange)
+            : null}
         </>
       );
     });
