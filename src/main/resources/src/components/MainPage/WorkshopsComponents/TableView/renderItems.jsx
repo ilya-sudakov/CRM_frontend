@@ -189,7 +189,7 @@ export const renderProductsMinimizedColumn = ({ requestProducts = [] }) => {
           )
         )}
       </div>
-      ед. продукции
+      шт.
     </span>
   );
 };
@@ -235,7 +235,7 @@ export const renderProductsSubItem = ({
   );
 };
 
-export const renderListHeader = (sortOrder, isMinimized) => {
+export const renderListHeader = (sortOrder, isMinimized, printConfig) => {
   return (
     <div
       className="main-window__list-item main-window__list-item--header"
@@ -246,22 +246,34 @@ export const renderListHeader = (sortOrder, isMinimized) => {
             : "0",
       }}
     >
-      {isMinimized ? (
-        <span className="requests__column--products">Продукция</span>
-      ) : (
-        <div className="main-window__list-col">
-          <div className="main-window__list-col-row">
-            <span>Продукция</span>
-            <span></span>
-            <span></span>
+      {printConfig["products"].visible ? (
+        isMinimized ? (
+          <span className="requests__column--products">Продукция</span>
+        ) : (
+          <div className="main-window__list-col">
+            <div className="main-window__list-col-row">
+              <span>Продукция</span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
-        </div>
-      )}
-      <span className="requests__column--client">Кодовое слово</span>
-      <span className="requests__column--responsible">Ответственный</span>
-      <span className="requests__column--status">Статус заявки</span>
-      <span className="requests__column--date-shipping">Отгрузка</span>
-      <span className="requests__column--comment">Комментарий</span>
+        )
+      ) : null}
+      {printConfig["client"].visible ? (
+        <span className="requests__column--client">Кодовое слово</span>
+      ) : null}
+      {printConfig["responsible"].visible ? (
+        <span className="requests__column--responsible">Ответственный</span>
+      ) : null}
+      {printConfig["client"].visible ? (
+        <span className="requests__column--status">Статус заявки</span>
+      ) : null}
+      {printConfig["date-shipping"].visible ? (
+        <span className="requests__column--date-shipping">Отгрузка</span>
+      ) : null}
+      {printConfig["comment"].visible ? (
+        <span className="requests__column--comment">Комментарий</span>
+      ) : null}
       <div className="main-window__actions">Действия</div>
     </div>
   );

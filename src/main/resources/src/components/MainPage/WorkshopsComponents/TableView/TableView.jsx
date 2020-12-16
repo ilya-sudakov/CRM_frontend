@@ -414,7 +414,7 @@ const TableView = ({
           }
         />
         <div className="main-window__list">
-          {renderListHeader(sortOrder, isMinimized)}
+          {renderListHeader(sortOrder, isMinimized, printConfig)}
           {isLoading ? (
             <PlaceholderLoading
               itemClassName="main-window__list-item"
