@@ -4,7 +4,7 @@
     padding: 0 15px;
     box-sizing: border-box;
 
-    @keyframes pulse1 {
+    @keyframes pulse-statistics-page {
         0% {
             border-color: #dddddd !important;
             background-color: #dddddd !important;
@@ -425,16 +425,16 @@
             &--placeholder {
                 .panel__category {
                     span {
-                        // animation: pulse1 1s infinite ease-in-out;
+                        // animation: pulse-statistics-page 1s infinite ease-in-out;
                     }
                 }
                 .panel__chart-wrapper {
                     height: 200px;
                     border-radius: 5px;
-                    animation: pulse1 1s infinite ease-in-out;
+                    animation: pulse-statistics-page 1s infinite ease-in-out;
                 }
                 .panel__value {
-                    animation: pulse1 1s infinite ease-in-out;
+                    animation: pulse-statistics-page 1s infinite ease-in-out;
                     content: "";
                     min-width: 200px;
                     height: 1.5rem;
@@ -449,11 +449,11 @@
                 }
                 .panel__difference {
                     .panel__arrow {
-                        animation: pulse1 1s infinite ease-in-out;
+                        animation: pulse-statistics-page 1s infinite ease-in-out;
                         border-radius: 999px;
                     }
                     .panel__percentage {
-                        animation: pulse1 1s infinite ease-in-out;
+                        animation: pulse-statistics-page 1s infinite ease-in-out;
                         border-radius: 5px;
                         min-width: 150px;
                         height: 1.5rem;
