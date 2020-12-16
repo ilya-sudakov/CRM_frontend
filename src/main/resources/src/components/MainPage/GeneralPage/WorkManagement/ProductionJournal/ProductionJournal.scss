@@ -21,7 +21,7 @@
         }
     }
     .main-form__form--full {
-        max-width: none;
+        max-width: none !important;
     }
     .main-form__row {
         font-size: 0.9rem;
@@ -178,9 +178,7 @@
                 // right: -10px !important;
             }
 
-            &__button {
-                white-space: nowrap;
-                margin-right: 100%;
+            .button {
                 display: none;
             }
 

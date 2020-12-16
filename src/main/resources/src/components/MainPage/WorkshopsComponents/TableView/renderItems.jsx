@@ -133,7 +133,7 @@ export const renderPriceColumn = ({ sum }) => {
 
 export const renderRequestStatusColumn = (
   request,
-  userContext,
+  userHasAccess,
   handleStatusChange
 ) => {
   return (
@@ -157,7 +157,7 @@ export const renderRequestStatusColumn = (
         onChange={handleStatusChange}
       >
         {requestStatuses.map((status) => {
-          if (userContext && userContext.userHasAccess(status.access)) {
+          if (userHasAccess && userHasAccess(status.access)) {
             return (
               <option
                 value={
@@ -178,9 +178,48 @@ export const renderRequestStatusColumn = (
   );
 };
 
+export const renderProductStatusSelect = (
+  product,
+  handleProductStatusChange
+) => {
+  return (
+    <span
+      className={
+        "main-window__list-item--" +
+        productsStatuses.find(
+          (item) =>
+            item.className === product.status || item.oldName === product.status
+        )?.className
+      }
+    >
+      <div className="main-window__mobile-text">Статус:</div>
+      <select
+        className="main-window__status_select"
+        value={product.status}
+        onChange={({ target }) =>
+          handleProductStatusChange(product.id, target.value)
+        }
+      >
+        {productsStatuses.map((status) => (
+          <option
+            value={
+              status.oldName === product.status
+                ? status.oldName
+                : status.className
+            }
+          >
+            {status.name}
+          </option>
+        ))}
+      </select>
+    </span>
+  );
+};
+
 export const renderProductsMinimizedColumn = ({ requestProducts = [] }) => {
   return (
     <span className="requests__column--products">
+      Продукция:
       <div>
         {addSpaceDelimiter(
           requestProducts.reduce(
@@ -194,16 +233,11 @@ export const renderProductsMinimizedColumn = ({ requestProducts = [] }) => {
   );
 };
 
-export const renderProductsSubItem = ({
-  requestProducts = [],
-  status = "",
-  id = 0,
-  isMinimized = true,
-}) => {
+export const renderProductsSubItem = (request, handleStatusChange) => {
   return (
     <div
       className={`main-window__list-options ${
-        isMinimized ? "main-window__list-options--hidden" : ""
+        request.isMinimized ? "main-window__list-options--hidden" : ""
       }`}
     >
       <div className="main-window__title">Продукция</div>
@@ -214,7 +248,7 @@ export const renderProductsSubItem = ({
           <span>Кол-во</span>
           <span className="requests__column--status">Статус</span>
         </div>
-        {requestProducts.map((product) => (
+        {request?.requestProducts.map((product) => (
           <div
             className={`main-window__list-item main-window__list-item--${
               productsStatuses.find(
@@ -227,7 +261,7 @@ export const renderProductsSubItem = ({
             <span>{product.name}</span>
             <span>{product.packaging}</span>
             <span>{`${addSpaceDelimiter(product.quantity)} шт.`}</span>
-            {renderRequestStatusColumn({ id, status })}
+            {renderProductStatusSelect(product, handleStatusChange)}
           </div>
         ))}
       </div>
@@ -326,38 +360,7 @@ export const renderProductsColumn = (
                 <div className="main-window__mobile-text">Кол-во:</div>
                 {`${addSpaceDelimiter(product.quantity)} шт.`}
               </span>
-              <span
-                className={
-                  "main-window__list-item--" +
-                  productsStatuses.find(
-                    (item) =>
-                      item.className === product.status ||
-                      item.oldName === product.status
-                  )?.className
-                }
-              >
-                <div className="main-window__mobile-text">Статус:</div>
-                <select
-                  // id={product.id}
-                  className="main-window__status_select"
-                  value={product.status}
-                  onChange={({ target }) =>
-                    handleProductStatusChange(product.id, target.value)
-                  }
-                >
-                  {productsStatuses.map((status) => (
-                    <option
-                      value={
-                        status.oldName === product.status
-                          ? status.oldName
-                          : status.className
-                      }
-                    >
-                      {status.name}
-                    </option>
-                  ))}
-                </select>
-              </span>
+              {renderProductStatusSelect(product, handleProductStatusChange)}
               <span
                 onClick={() => downloadImage(product, request.factory)}
                 title="Скачать этикетку"
