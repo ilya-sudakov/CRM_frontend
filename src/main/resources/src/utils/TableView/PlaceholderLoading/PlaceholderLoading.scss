@@ -1,5 +1,5 @@
 .placeholder-loading {
-    @keyframes pulse1 {
+    @keyframes pulse-placeholder-loading {
         0% {
             border-color: #dbdbdb;
             background-color: #dbdbdb;
@@ -28,7 +28,7 @@
     &__item {
         height: 1rem;
         background-color: #dddddd;
-        animation: pulse1 1s infinite ease-in-out;
+        animation: pulse-placeholder-loading 1s infinite ease-in-out;
         margin-bottom: 5px;
         border-radius: 5px;
         position: relative;
