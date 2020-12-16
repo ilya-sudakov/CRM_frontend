@@ -62,7 +62,7 @@ const ListItem = ({ item, index }) => {
         {formatDateStringNoYear(item.date)}
       </span>
       <span className="main-window__col main-window__col--id">
-        <Link to={`/requests/view/${item.id}`}>{`ID #${item.id}`}</Link>
+        <Link to={`/requests/edit/${item.id}`}>{`ID #${item.id}`}</Link>
       </span>
       <span className="main-window__col main-window__col--status">
         {item.status}
