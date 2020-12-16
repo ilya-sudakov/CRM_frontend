@@ -226,7 +226,7 @@ export const renderProductsSubItem = ({
           >
             <span>{product.name}</span>
             <span>{product.packaging}</span>
-            <span>{product.quantity}</span>
+            <span>{`${addSpaceDelimiter(product.quantity)} шт.`}</span>
             {renderRequestStatusColumn({ id, status })}
           </div>
         ))}
@@ -247,7 +247,7 @@ export const renderListHeader = (sortOrder, isMinimized) => {
       }}
     >
       {isMinimized ? (
-        <div className="requests__column--products">Продукция</div>
+        <span className="requests__column--products">Продукция</span>
       ) : (
         <div className="main-window__list-col">
           <div className="main-window__list-col-row">
