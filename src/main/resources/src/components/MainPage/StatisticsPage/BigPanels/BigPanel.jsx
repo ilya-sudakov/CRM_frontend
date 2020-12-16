@@ -4,12 +4,12 @@ import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
 
 const BigPanel = ({
   isLoaded,
+  isLoading,
   renderIcon,
   value,
   prevValue,
   category,
   invertedStats,
-  difference,
   percentage,
   timePeriod,
   linkTo,
@@ -26,7 +26,9 @@ const BigPanel = ({
 
   return (
     <div
-      className={`panel panel--big ${isLoaded ? "" : "panel--placeholder"}`}
+      className={`panel panel--big ${
+        isLoaded && !isLoading ? "" : "panel--placeholder"
+      }`}
       // to={linkTo || "/"}
     >
       <div className="panel__category" onClick={() => setShowWindow(true)}>

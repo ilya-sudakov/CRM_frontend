@@ -11,7 +11,6 @@ const RequestsList = ({
   return (
     <div className="requests-list">
       <div className="main-window__title">{title}</div>
-
       {data.length > 0 ? (
         <TableView
           data={data}

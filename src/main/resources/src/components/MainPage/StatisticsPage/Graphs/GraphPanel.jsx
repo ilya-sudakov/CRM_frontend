@@ -3,6 +3,7 @@ import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
 
 const GraphPanel = ({
   isLoaded,
+  isLoading,
   category,
   renderIcon,
   chartName,
@@ -15,7 +16,9 @@ const GraphPanel = ({
 
   return (
     <div
-      className={`panel panel--chart ${isLoaded ? "" : "panel--placeholder"}`}
+      className={`panel panel--chart ${
+        isLoaded && !isLoading ? "" : "panel--placeholder"
+      }`}
     >
       <div className="panel__category" onClick={() => setShowWindow(true)}>
         <span>{category || "Категория"}</span>
