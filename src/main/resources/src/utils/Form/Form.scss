@@ -11,9 +11,6 @@
   padding-top: 25px;
 
   //full page view
-  // background-color: #ffffff;
-  // align-items: flex-start;
-  // padding-top: 0;
 
   &__title {
     margin-bottom: 15px;
@@ -172,12 +169,10 @@
       }
     }
 
-    &--full {
-      // box-shadow: none;
-
-      .main-form__header--full {
-        max-width: none !important;
-      }
+    .main-form__wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
     }
 
     .main-form__fieldset {
@@ -217,12 +212,52 @@
         }
       }
 
+      .main-form__group-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
       .main-form__item,
       .input_text,
       .input_date,
       .input_products,
       .select-client-category {
         margin-left: 0px;
+      }
+    }
+
+    &--full {
+      align-items: flex-start;
+      .main-form__header--full {
+        align-self: center;
+        max-width: none !important;
+      }
+      .main-form__buttons--full {
+        align-self: center;
+      }
+
+      .main-form__fieldset {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        .main-form__group-name {
+          margin-left: 0;
+          margin-right: 20px;
+          flex: 0 1 50%;
+          box-sizing: border-box;
+          max-width: 200px;
+
+          &::after {
+            display: none;
+          }
+        }
+        .main-form__group-content {
+          margin-left: 0;
+          margin-top: 3px;
+          flex: 0 1 100%;
+        }
       }
     }
 
@@ -663,37 +698,19 @@
   }
 
   @media (min-width: 1024px) {
-    // --form__max-width: 850px;
-
-    //column direction
     --form__max-width: 700px;
-
-    .main-form__title {
-      // align-self: flex-start;
-      // margin-left: calc(400px);
-      // text-align: left;
-    }
     .main-form__header {
       max-width: calc(var(--form__max-width) + 50px);
-
-      // .main-form__menu-item {
-      //   width: fit-content;
-      //   padding: 15px 80px;
-
-      //   &:not(:last-child) {
-      //     margin-right: 10px;
-      //   }
-      // }
     }
     .main-form__form {
-      // margin-left: 50px;
-      // margin-right: auto;
       max-width: var(--form__max-width);
-      // width: calc(70% - 80px);
-      // padding-right: 30%;
 
       &--full {
-        max-width: calc(var(--form__max-width) + 400px);
+        max-width: calc(var(--form__max-width) + 200px);
+
+        .main-form__wrapper {
+          max-width: calc(var(--form__max-width) + 200px);
+        }
       }
     }
   }
