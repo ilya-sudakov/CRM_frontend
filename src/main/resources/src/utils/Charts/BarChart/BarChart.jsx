@@ -69,7 +69,12 @@ const BarChart = ({
     if (chartContainer && chartContainer.current) {
       if (chartInstance !== null) chartInstance.destroy();
       const newChartInstance = new Chartjs(chartContainer.current, {
-        type: "bar",
+        type:
+          (window.innerWidth ||
+            document.documentElement.clientWidth ||
+            document.body.clientWidth) > 500
+            ? "bar"
+            : "horizontalBar",
         data: {
           labels: data.map((d) => d.label),
           datasets: [
