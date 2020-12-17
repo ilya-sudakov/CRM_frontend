@@ -12,8 +12,8 @@ const BigPanel = ({
   invertedStats,
   percentage,
   timePeriod,
-  linkTo,
-  chartName,
+  charts,
+  windowCharts,
   windowContent,
   content,
   curPeriod,
@@ -35,10 +35,20 @@ const BigPanel = ({
         <span>{category || "Категория"}</span>
         {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
       </div>
-      {windowContent || chartName ? (
+      {windowContent || windowCharts ? (
         <FormWindow
           title={category}
-          content={windowContent}
+          content={
+            <>
+              {windowContent}
+              {windowCharts ? (
+                <>
+                  <div className="main-window__title">Графики</div>
+                  {windowCharts}
+                </>
+              ) : null}
+            </>
+          }
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />

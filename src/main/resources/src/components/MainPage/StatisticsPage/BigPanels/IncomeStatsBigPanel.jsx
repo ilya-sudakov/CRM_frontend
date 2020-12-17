@@ -97,20 +97,20 @@ const IncomeStatsBigPanel = ({
       ...stats,
       isLoaded: true,
       windowContent: (
-        <>
-          <RequestsList
-            title="Заявки за выбранный период"
-            data={filteredRequests}
-            sortBy={{ curSort: "sum", sum: "desc" }}
-            loadData={loadData}
-          />
-          <BarChart
-            data={monthsIncome}
-            chartClassName="panel__chart"
-            wrapperClassName="panel__chart-wrapper"
-            title="Доход"
-          />
-        </>
+        <RequestsList
+          title="Заявки за выбранный период"
+          data={filteredRequests}
+          sortBy={{ curSort: "sum", sum: "desc" }}
+          loadData={loadData}
+        />
+      ),
+      windowCharts: (
+        <BarChart
+          data={monthsIncome}
+          chartClassName="panel__chart"
+          wrapperClassName="panel__chart-wrapper"
+          title="Доход"
+        />
       ),
       content: (
         <BarChart
