@@ -4,15 +4,13 @@ import { months } from "../../../../utils/dataObjects";
 import {
   addSpaceDelimiter,
   getRandomColor,
-  getRandomColorShades,
+  getRandomNiceColor,
 } from "../../../../utils/functions.jsx";
-import { createGraph, loadCanvas } from "../../../../utils/graphs";
 import {
   checkIfDateIsInRange,
   checkRequestsForSelectedMonth,
 } from "../functions.js";
 import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
-import SmallPanel from "../Panels/SmallPanel.jsx";
 import BigPanel from "./BigPanel.jsx";
 import BarChart from "../../../../utils/Charts/BarChart/BarChart.jsx";
 
@@ -59,7 +57,6 @@ const IncomeStatsBigPanel = ({
 
   const getIncomeByClients = (requests, currDate) => {
     let clients = {};
-    const colors = getRandomColorShades(requests.length);
 
     requests.map((request, index) => {
       const curId = request?.client?.id;
@@ -78,7 +75,7 @@ const IncomeStatsBigPanel = ({
           [curId]: {
             data: dataset,
             label: request.client.name,
-            color: colors[index],
+            color: getRandomNiceColor(),
           },
         };
       }
@@ -158,6 +155,7 @@ const IncomeStatsBigPanel = ({
             wrapperClassName="panel__chart-wrapper"
             title="Доход за год (по клиентам)"
             isStacked={true}
+            options={{ legend: { position: "right" } }}
           />
         </>
       ),

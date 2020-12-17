@@ -325,16 +325,24 @@ export const getDatesAndWorkItems = (works) => {
 
 //Получить случайный цвет формата hex
 export const getRandomColor = () => {
-  var letters = "0123456789ABCDEF";
-  var color = "#";
+  const letters = "0123456789ABCDEF";
+  let color = "#";
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 };
 
-export const randomMinMaxNumber = (min, max) => {
+export const randomMinMaxInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+//Получить случайный цвет формата HSL
+export const getRandomNiceColor = () => {
+  return `hsl(${randomMinMaxInteger(0, 360)},${randomMinMaxInteger(
+    42,
+    98
+  )}%,${randomMinMaxInteger(40, 90)}%)`;
 };
 
 export const getRandomColorShades = (numOfShades = 10) => {
@@ -342,7 +350,7 @@ export const getRandomColorShades = (numOfShades = 10) => {
   const hue = 180; //test
 
   for (var i = 0; i < numOfShades; i++) {
-    const hsl = `hsl(${Math.abs(hue - i * 2)}, 100%, 32%)`;
+    const hsl = `hsl(${Math.abs(hue - i)}, 100%, 32%)`;
     shades.push(hsl);
   }
 

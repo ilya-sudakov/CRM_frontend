@@ -27,6 +27,7 @@ const BarChart = ({
   chartClassName = "",
   wrapperClassName = "",
   isStacked = false,
+  options = {},
 }) => {
   const chartContainer = useRef(null);
   const [chartInstance, setChartInstance] = useState(null);
@@ -69,6 +70,9 @@ const BarChart = ({
         },
         options: {
           ...chartConfig,
+          legend: {
+            position: options?.legend?.position ?? "top",
+          },
           scales: {
             yAxes: [
               {
@@ -133,4 +137,5 @@ BarChart.propTypes = {
   chartClassName: PropTypes.string,
   wrapperClassName: PropTypes.string,
   color: PropTypes.string,
+  options: PropTypes.object,
 };
