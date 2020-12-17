@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import MoneyIcon from "../../../../../../../../assets/etc/bx-ruble.inline.svg";
 import { months } from "../../../../utils/dataObjects";
-import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
+import {
+  addSpaceDelimiter,
+  getRandomColor,
+  getRandomColorShades,
+} from "../../../../utils/functions.jsx";
 import { createGraph, loadCanvas } from "../../../../utils/graphs";
 import {
   checkIfDateIsInRange,
@@ -35,10 +39,11 @@ const IncomeStatsBigPanel = ({
 
   const getFullYearData = (requests, currDate) => {
     let monthsIncome = [];
+    const curYear = currDate.startDate.getFullYear();
     for (let i = 0; i < 12; i++) {
       const newRequests = checkRequestsForSelectedMonth(
         requests,
-        new Date(currDate.startDate.getFullYear(), i, 1)
+        new Date(curYear, i, 1)
       );
       const totalIncome = newRequests.reduce(
         (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
@@ -50,6 +55,36 @@ const IncomeStatsBigPanel = ({
       });
     }
     return monthsIncome;
+  };
+
+  const getIncomeByClients = (requests, currDate) => {
+    let clients = {};
+    const colors = getRandomColorShades(requests.length);
+
+    requests.map((request, index) => {
+      const curId = request?.client?.id;
+
+      if (curId && clients[curId] === undefined) {
+        const filteredRequests = requests.filter(
+          (item) => item.client?.id === curId
+        );
+
+        const dataset = getFullYearData(filteredRequests, currDate).map(
+          (item) => item.value
+        );
+
+        clients = {
+          ...clients,
+          [curId]: {
+            data: dataset,
+            label: request.client.name,
+            color: colors[index],
+          },
+        };
+      }
+    });
+
+    return clients;
   };
 
   const getStats = (requests) => {
@@ -92,6 +127,9 @@ const IncomeStatsBigPanel = ({
     });
 
     const monthsIncome = getFullYearData(requests, currDate);
+    const incomeByClients = getIncomeByClients(requests, currDate);
+
+    console.log(incomeByClients);
 
     setStats((stats) => ({
       ...stats,
@@ -105,19 +143,31 @@ const IncomeStatsBigPanel = ({
         />
       ),
       windowCharts: (
-        <BarChart
-          data={monthsIncome}
-          chartClassName="panel__chart"
-          wrapperClassName="panel__chart-wrapper"
-          title="Доход"
-        />
+        <>
+          <BarChart
+            data={monthsIncome}
+            labels={months}
+            chartClassName="panel__chart"
+            wrapperClassName="panel__chart-wrapper"
+            title="Сумма заказов за месяц"
+          />
+          <BarChart
+            data={incomeByClients}
+            labels={months}
+            chartClassName="panel__chart"
+            wrapperClassName="panel__chart-wrapper"
+            title="Сумма заказов за месяц"
+            isStacked={true}
+          />
+        </>
       ),
       content: (
         <BarChart
           data={monthsIncome}
+          labels={months}
           chartClassName="panel__chart"
           wrapperClassName="panel__chart-wrapper"
-          title="Доход"
+          title="Сумма заказов за месяц"
         />
       ),
       value: `${addSpaceDelimiter(

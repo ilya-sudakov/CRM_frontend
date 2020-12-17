@@ -16,43 +16,16 @@ const chartConfig = {
   tooltips: {
     mode: "index",
   },
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          display:
-            (window.innerWidth ||
-              document.documentElement.clientWidth ||
-              document.body.clientWidth) > 500
-              ? true
-              : true,
-          min: 0,
-          beginAtZero: true,
-        },
-      },
-    ],
-    xAxes: [
-      {
-        ticks: {
-          display:
-            (window.innerWidth ||
-              document.documentElement.clientWidth ||
-              document.body.clientWidth) > 500
-              ? true
-              : false,
-        },
-        maxBarThickness: 80,
-      },
-    ],
-  },
 };
 
 const BarChart = ({
   data = [],
+  labels = [],
   title = "",
   color = "#3e95cd",
   chartClassName = "",
   wrapperClassName = "",
+  isStacked = false,
 }) => {
   const chartContainer = useRef(null);
   const [chartInstance, setChartInstance] = useState(null);
@@ -76,16 +49,57 @@ const BarChart = ({
             ? "bar"
             : "horizontalBar",
         data: {
-          labels: data.map((d) => d.label),
-          datasets: [
-            {
-              label: title,
-              data: data.map((d) => d.value),
-              backgroundColor: color,
-            },
-          ],
+          labels: labels,
+          datasets: isStacked
+            ? Object.values(data).map((d) => {
+                return {
+                  label: d.label,
+                  data: d.data,
+                  backgroundColor: d.color,
+                };
+              })
+            : [
+                {
+                  label: title,
+                  data: data.map((d) => d.value),
+                  backgroundColor: color,
+                },
+              ],
         },
-        options: chartConfig,
+        options: {
+          ...chartConfig,
+          scales: {
+            yAxes: [
+              {
+                stacked: isStacked,
+                ticks: {
+                  display:
+                    (window.innerWidth ||
+                      document.documentElement.clientWidth ||
+                      document.body.clientWidth) > 500
+                      ? true
+                      : true,
+                  min: 0,
+                  beginAtZero: true,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                stacked: isStacked,
+                ticks: {
+                  display:
+                    (window.innerWidth ||
+                      document.documentElement.clientWidth ||
+                      document.body.clientWidth) > 500
+                      ? true
+                      : false,
+                },
+                maxBarThickness: 80,
+              },
+            ],
+          },
+        },
       });
       setChartInstance(newChartInstance);
     }
@@ -110,5 +124,9 @@ export default BarChart;
 BarChart.propTypes = {
   data: PropTypes.array,
   title: PropTypes.string,
+  labels: PropTypes.array,
+  isStacked: PropTypes.bool,
+  chartClassName: PropTypes.string,
+  wrapperClassName: PropTypes.string,
   color: PropTypes.string,
 };

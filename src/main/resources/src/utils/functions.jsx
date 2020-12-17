@@ -333,6 +333,22 @@ export const getRandomColor = () => {
   return color;
 };
 
+export const randomMinMaxNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+export const getRandomColorShades = (numOfShades = 10) => {
+  const shades = [];
+  const hue = 180; //test
+
+  for (var i = 0; i < numOfShades; i++) {
+    const hsl = `hsl(${Math.abs(hue - i * 2)}, 100%, 32%)`;
+    shades.push(hsl);
+  }
+
+  return shades;
+};
+
 //Сложить два цвета
 export const addHexColor = (color1, color2) => {
   var hexStr = (parseInt(color1, 16) + parseInt(color2, 16)).toString(16);
