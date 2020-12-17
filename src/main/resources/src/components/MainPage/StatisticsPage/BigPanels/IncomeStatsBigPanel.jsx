@@ -10,6 +10,7 @@ import {
 import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 import SmallPanel from "../Panels/SmallPanel.jsx";
 import BigPanel from "./BigPanel.jsx";
+import BarChart from "../../../../utils/Charts/BarChart/BarChart.jsx";
 
 const IncomeStatsBigPanel = ({
   requests,
@@ -31,9 +32,25 @@ const IncomeStatsBigPanel = ({
     curPeriod: curPeriod,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
   });
-  const [graph, setGraph] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [canvasLoaded, setCanvasLoaded] = useState(false);
+
+  const getFullYearData = (requests, currDate) => {
+    let monthsIncome = [];
+    for (let i = 0; i < 12; i++) {
+      const newRequests = checkRequestsForSelectedMonth(
+        requests,
+        new Date(currDate.startDate.getFullYear(), i, 1)
+      );
+      const totalIncome = newRequests.reduce(
+        (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
+        0
+      );
+      monthsIncome.push({
+        value: totalIncome,
+        label: months[i],
+      });
+    }
+    return monthsIncome;
+  };
 
   const getStats = (requests) => {
     setStats((stats) => ({
@@ -74,30 +91,33 @@ const IncomeStatsBigPanel = ({
       return false;
     });
 
-    let monthsIncome = {};
-    for (let i = 0; i < 12; i++) {
-      const newRequests = checkRequestsForSelectedMonth(
-        requests,
-        new Date(currDate.startDate.getFullYear(), i, 1)
-      );
-      const totalIncome = newRequests.reduce(
-        (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
-        0
-      );
-      monthsIncome = {
-        ...monthsIncome,
-        [months[i]]: totalIncome,
-      };
-    }
+    const monthsIncome = getFullYearData(requests, currDate);
 
     setStats((stats) => ({
       ...stats,
+      isLoaded: true,
       windowContent: (
-        <RequestsList
-          title="Заявки за выбранный период"
-          data={filteredRequests}
-          sortBy={{ curSort: "sum", sum: "desc" }}
-          loadData={loadData}
+        <>
+          <RequestsList
+            title="Заявки за выбранный период"
+            data={filteredRequests}
+            sortBy={{ curSort: "sum", sum: "desc" }}
+            loadData={loadData}
+          />
+          <BarChart
+            data={monthsIncome}
+            chartClassName="panel__chart"
+            wrapperClassName="panel__chart-wrapper"
+            title="Доход"
+          />
+        </>
+      ),
+      content: (
+        <BarChart
+          data={monthsIncome}
+          chartClassName="panel__chart"
+          wrapperClassName="panel__chart-wrapper"
+          title="Доход"
         />
       ),
       value: `${addSpaceDelimiter(
@@ -115,114 +135,6 @@ const IncomeStatsBigPanel = ({
             100
         ) / 100,
     }));
-    renderGraph(monthsIncome);
-  };
-
-  const renderGraph = (dataset) => {
-    if (!canvasLoaded) {
-      setStats((stats) => ({
-        ...stats,
-        isLoaded: true,
-      }));
-      loadCanvas(
-        `panel__chart-wrapper--${stats.chartName}-content`,
-        `panel__chart panel__chart--${stats.chartName}`
-      );
-    } else {
-      setStats((stats) => ({
-        ...stats,
-        isLoaded: true,
-      }));
-    }
-
-    setCanvasLoaded(true);
-    const options = {
-      type: "bar",
-      data: {
-        labels: Object.entries(dataset).map((item) => item[0]),
-        datasets: [
-          {
-            backgroundColor: "#3e95cd",
-            data: Object.entries(dataset).map((item) => item[1]),
-            label: "Сумма",
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio:
-          (window.innerWidth ||
-            document.documentElement.clientWidth ||
-            document.body.clientWidth) > 500
-            ? true
-            : false,
-        animation: {
-          easing: "easeInOutCirc",
-        },
-        // title: {
-        //   display: true,
-        //   text: "Доход за год",
-        //   align: "start",
-        // },
-        tooltips: {
-          mode: "index",
-        },
-        scales: {
-          yAxes: [
-            {
-              gridLines: {
-                display: true,
-              },
-              ticks: {
-                display:
-                  (window.innerWidth ||
-                    document.documentElement.clientWidth ||
-                    document.body.clientWidth) > 500
-                    ? false
-                    : true,
-                beginAtZero: true,
-              },
-              scaleLabel: {
-                display: false,
-                labelString: "Сумма - руб.",
-                fontStyle: "italic",
-              },
-            },
-          ],
-          xAxes: [
-            {
-              gridLines: {
-                display: false,
-              },
-              ticks: {
-                display:
-                  (window.innerWidth ||
-                    document.documentElement.clientWidth ||
-                    document.body.clientWidth) > 500
-                    ? true
-                    : false,
-              },
-              maxBarThickness: 80,
-              scaleLabel: {
-                display: false,
-                labelString: "Месяц",
-                fontStyle: "italic",
-              },
-            },
-          ],
-        },
-      },
-    };
-    setTimeout(() => {
-      setIsLoading(false);
-      canvasLoaded && graph.destroy();
-      setGraph(
-        createGraph(
-          options,
-          document.getElementsByClassName(`panel__chart--${stats.chartName}`)[0]
-        )
-      );
-    }, 150);
   };
 
   //При первой загрузке
@@ -233,15 +145,12 @@ const IncomeStatsBigPanel = ({
 
   //При обновлении тек. даты
   useEffect(() => {
-    if (canvasLoaded && requests.length > 1) {
-      console.log("second+ render");
-      setCanvasLoaded(false);
+    if (stats.isLoaded && requests.length > 1) {
       setStats((stats) => ({
         ...stats,
         timePeriod: timeText,
         curPeriod: curPeriod,
       }));
-      graph.destroy();
       getStats(requests);
     }
   }, [currDate]);

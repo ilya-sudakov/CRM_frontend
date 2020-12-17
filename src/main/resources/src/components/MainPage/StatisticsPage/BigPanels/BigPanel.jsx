@@ -38,14 +38,7 @@ const BigPanel = ({
       {windowContent || chartName ? (
         <FormWindow
           title={category}
-          content={
-            <>
-              {windowContent}
-              <div
-                className={`panel__chart-wrapper panel__chart-wrapper--${chartName}`}
-              ></div>
-            </>
-          }
+          content={windowContent}
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
@@ -89,10 +82,6 @@ const BigPanel = ({
             ? "negative"
             : "positive"
         }`}
-      ></div>
-      <div
-        className={`panel__chart-wrapper--content panel__chart-wrapper--${chartName}-content`}
-        style={{ marginTop: content ? " 15px" : "0" }}
       ></div>
       {content}
     </div>
