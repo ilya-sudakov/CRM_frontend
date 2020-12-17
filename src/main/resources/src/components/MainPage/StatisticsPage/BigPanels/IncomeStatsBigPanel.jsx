@@ -70,14 +70,17 @@ const IncomeStatsBigPanel = ({
           (item) => item.value
         );
 
-        clients = {
+        //dont account for requests w/ sum of 0
+        if (dataset.reduce((prev, cur) => prev + cur, 0) === 0) return;
+
+        return (clients = {
           ...clients,
           [curId]: {
             data: dataset,
             label: request.client.name,
             color: getRandomNiceColor(),
           },
-        };
+        });
       }
     });
 
