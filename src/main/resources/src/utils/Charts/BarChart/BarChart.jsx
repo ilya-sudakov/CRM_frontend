@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Chartjs from "chart.js";
+import "./BarChart.scss";
 
 const chartConfig = {
   responsive: true,
@@ -113,8 +114,11 @@ const BarChart = ({
   }, [data]);
 
   return (
-    <div className={wrapperClassName} style={{ width: "100%" }}>
-      <canvas className={chartClassName} ref={chartContainer} />
+    <div className="bar-chart">
+      {title && <div className="main-window__title">{title}</div>}
+      <div className={wrapperClassName} style={{ width: "100%" }}>
+        <canvas className={chartClassName} ref={chartContainer} />
+      </div>
     </div>
   );
 };

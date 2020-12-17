@@ -149,14 +149,14 @@ const IncomeStatsBigPanel = ({
             labels={months}
             chartClassName="panel__chart"
             wrapperClassName="panel__chart-wrapper"
-            title="Сумма заказов за месяц"
+            title="Доход за год"
           />
           <BarChart
             data={incomeByClients}
             labels={months}
             chartClassName="panel__chart"
             wrapperClassName="panel__chart-wrapper"
-            title="Сумма заказов за месяц"
+            title="Доход за год (по клиентам)"
             isStacked={true}
           />
         </>
@@ -167,7 +167,6 @@ const IncomeStatsBigPanel = ({
           labels={months}
           chartClassName="panel__chart"
           wrapperClassName="panel__chart-wrapper"
-          title="Сумма заказов за месяц"
         />
       ),
       value: `${addSpaceDelimiter(
