@@ -58,7 +58,7 @@ const IncomeStatsBigPanel = ({
   const getIncomeByClients = (requests, currDate) => {
     let clients = {};
 
-    requests.map((request, index) => {
+    requests.map((request) => {
       const curId = request?.client?.id;
 
       if (curId && clients[curId] === undefined) {

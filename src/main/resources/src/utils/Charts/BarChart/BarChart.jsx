@@ -33,7 +33,18 @@ const BarChart = ({
   const [chartInstance, setChartInstance] = useState(null);
 
   const updateDataset = (datasetIndex, newData) => {
-    const labels = newData.map((d) => d.label);
+    if (isStacked) {
+      const values = Object.values(data).map((d) => {
+        return {
+          label: d.label,
+          data: d.data,
+          backgroundColor: d.color,
+        };
+      });
+      chartInstance.data.datasets = values;
+      chartInstance.data.labels = labels;
+      return chartInstance.update();
+    }
     const values = newData.map((d) => d.value);
     chartInstance.data.datasets[datasetIndex].data = values;
     chartInstance.data.labels = labels;
@@ -58,6 +69,7 @@ const BarChart = ({
                   label: d.label,
                   data: d.data,
                   backgroundColor: d.color,
+                  maxBarThickness: 80,
                 };
               })
             : [
@@ -65,6 +77,7 @@ const BarChart = ({
                   label: title,
                   data: data.map((d) => d.value),
                   backgroundColor: color,
+                  maxBarThickness: 80,
                 },
               ],
         },
@@ -100,7 +113,6 @@ const BarChart = ({
                       ? true
                       : false,
                 },
-                maxBarThickness: 80,
               },
             ],
           },
