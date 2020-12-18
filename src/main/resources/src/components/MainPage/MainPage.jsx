@@ -26,7 +26,6 @@ import {
   Employees,
   NewEmployee,
   EditEmployee,
-  ViewEmployee,
   Work,
   NewWork,
   EditWork,
@@ -415,13 +414,6 @@ const MainPage = () => {
                 <PrivateRoute
                   path="/dispatcher/employees/edit/"
                   component={EditEmployee}
-                  userHasAccess={userContext.userHasAccess}
-                  userData={userContext.userData}
-                  allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
-                />
-                <PrivateRoute
-                  path="/dispatcher/employees/view/"
-                  component={ViewEmployee}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}

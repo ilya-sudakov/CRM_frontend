@@ -1,108 +1,108 @@
-import React, { useEffect, useState } from 'react'
-import './NewEmployee.scss'
-import '../../../../../utils/Form/Form.scss'
-import { addEmployee } from '../../../../../utils/RequestsAPI/Employees.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
+import React, { useEffect, useState } from "react";
+import "./NewEmployee.scss";
+import "../../../../../utils/Form/Form.scss";
+import { addEmployee } from "../../../../../utils/RequestsAPI/Employees.jsx";
+import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import FileUploader from "../../../../../utils/Form/FileUploader/FileUploader.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
 
 const NewEmployee = (props) => {
   const [employeeInputs, setEmployeeInputs] = useState({
-    name: '',
-    lastName: '',
-    middleName: '',
-    yearOfBirth: new Date(),
-    citizenship: '',
-    position: '',
-    workshop: 'ЦехЛЭМЗ',
-    passportScan1: '',
-    comment: '',
-    relevance: 'Работает',
-  })
+    name: "",
+    lastName: "",
+    middleName: "",
+    dateOfBirth: new Date(),
+    citizenship: "",
+    position: "",
+    workshop: "ЦехЛЭМЗ",
+    passportScan1: "",
+    comment: "",
+    relevance: "Работает",
+  });
   const [employeeErrors, setEmployeeErrors] = useState({
     name: false,
     lastName: false,
     middleName: false,
-    yearOfBirth: false,
+    dateOfBirth: false,
     citizenship: false,
     position: false,
     workshop: false,
     // passportScan1: false,
     // comment: false,
     relevance: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     name: false,
     lastName: false,
     middleName: false,
-    yearOfBirth: true,
+    dateOfBirth: true,
     citizenship: false,
     position: false,
     workshop: true,
     // passportScan1: false,
     // comment: false,
     relevance: true,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case 'yearOfBirth':
+      case "dateOfBirth":
         setValidInputs({
           ...validInputs,
-          yearOfBirth: value !== null,
-        })
-        break
+          dateOfBirth: value !== null,
+        });
+        break;
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       name: false,
       lastName: false,
       middleName: false,
-      yearOfBirth: false,
+      dateOfBirth: false,
       citizenship: false,
       position: false,
       workshop: false,
       // passportScan1: false,
       // comment: false,
       relevance: false,
-    })
+    });
     for (let item in validInputs) {
       // console.log(item, validInputs[item]);
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setEmployeeErrors(newErrors)
+    setEmployeeErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
       // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
   const handleSubmit = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     //form data test
     // let formData = new FormData()
     // Object.entries(employeeInputs).map((formItem) => {
@@ -114,44 +114,47 @@ const NewEmployee = (props) => {
     // }
 
     formIsValid() &&
-      addEmployee(employeeInputs)
-        .then(() => props.history.push('/dispatcher/employees'))
+      addEmployee({
+        ...employeeInputs,
+        dateOfBirth: employeeInputs.dateOfBirth.getTime() / 1000,
+      })
+        .then(() => props.history.push("/dispatcher/employees"))
         .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при добавлении записи')
-          console.log(error)
-        })
-  }
+          setIsLoading(false);
+          alert("Ошибка при добавлении записи");
+          console.log(error);
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setEmployeeInputs({
       ...employeeInputs,
       [name]: value,
-    })
+    });
     setEmployeeErrors({
       ...employeeErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   const handleDateChange = (date) => {
-    const regex = '(0[1-9]|[12]d|3[01]).(0[1-9]|1[0-2]).[12]d{3})'
-    validateField('yearOfBirth', date)
+    const regex = "(0[1-9]|[12]d|3[01]).(0[1-9]|1[0-2]).[12]d{3})";
+    validateField("dateOfBirth", date);
     setEmployeeInputs({
       ...employeeInputs,
-      yearOfBirth: date,
-    })
+      dateOfBirth: date,
+    });
     setEmployeeErrors({
       ...employeeErrors,
-      yearOfBirth: false,
-    })
-  }
+      dateOfBirth: false,
+    });
+  };
 
   useEffect(() => {
-    document.title = 'Добавление сотрудника'
-  }, [])
+    document.title = "Добавление сотрудника";
+  }, []);
 
   return (
     <div className="main-form">
@@ -200,9 +203,9 @@ const NewEmployee = (props) => {
           <InputDate
             inputName="Дата рождения"
             required
-            error={employeeErrors.yearOfBirth}
-            name="yearOfBirth"
-            selected={employeeInputs.yearOfBirth}
+            error={employeeErrors.dateOfBirth}
+            name="dateOfBirth"
+            selected={employeeInputs.dateOfBirth}
             handleDateChange={handleDateChange}
             errorsArr={employeeErrors}
             setErrorsArr={setEmployeeErrors}
@@ -247,7 +250,7 @@ const NewEmployee = (props) => {
             />
           </div>
         </div>
-        {employeeInputs.passportScan1 !== '' && (
+        {employeeInputs.passportScan1 !== "" && (
           <div className="main-form__item">
             <div className="main-form__input_name">Паспорт</div>
             <div className="main-form__passport_img">
@@ -268,7 +271,7 @@ const NewEmployee = (props) => {
               setEmployeeInputs({
                 ...employeeInputs,
                 passportScan1: result,
-              })
+              });
             }}
           />
         </div>
@@ -301,7 +304,7 @@ const NewEmployee = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => props.history.push('/dispatcher/employees')}
+            onClick={() => props.history.push("/dispatcher/employees")}
             value="Вернуться назад"
           />
           <Button
@@ -313,7 +316,7 @@ const NewEmployee = (props) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default NewEmployee
+export default NewEmployee;
