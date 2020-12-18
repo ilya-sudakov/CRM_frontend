@@ -17,6 +17,7 @@ const EditEmployee = (props) => {
     lastName: "",
     middleName: "",
     dateOfBirth: new Date(),
+    patentExpirationDate: new Date(),
     citizenship: "",
     position: "",
     workshop: "ЦехЛЭМЗ",
@@ -107,14 +108,16 @@ const EditEmployee = (props) => {
     }
   };
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
     setIsLoading(true);
     formIsValid() &&
       editEmployee(
         {
           ...employeeInputs,
-          dateOfBirth: employeeInputs.dateOfBirth.getTime() / 1000,
+          dateOfBirth: Math.floor(employeeInputs.dateOfBirth.getTime() / 1000),
+          patentExpirationDate: Math.floor(
+            employeeInputs.patentExpirationDate.getTime() / 1000
+          ),
         },
         employeeId
       )
@@ -157,6 +160,7 @@ const EditEmployee = (props) => {
             lastName: oldRequest.lastName,
             middleName: oldRequest.middleName,
             dateOfBirth: oldRequest.dateOfBirth ?? new Date(),
+            patentExpirationDate: oldRequest.patentExpirationDate ?? new Date(),
             citizenship: oldRequest.citizenship,
             position: oldRequest.position,
             workshop: oldRequest.workshop,
@@ -269,7 +273,6 @@ const EditEmployee = (props) => {
                   <option value="ЦехЛепсари">ЦехЛепсари</option>
                   <option value="ЦехЛиговский">ЦехЛиговский</option>
                   <option value="Офис">Офис</option>
-                  <option value="Уволенные">Уволенные</option>
                 </select>
               </div>
             </div>
@@ -309,6 +312,17 @@ const EditEmployee = (props) => {
             }}
           />
         </div>
+        <InputDate
+          inputName="Срок патента (при необходимости)"
+          name="patentExpirationDate"
+          selected={employeeInputs.patentExpirationDate}
+          handleDateChange={() =>
+            setEmployeeInputs({
+              ...employeeInputs,
+              patentExpirationDate: date,
+            })
+          }
+        />
         <InputText
           inputName="Комментарий"
           // required

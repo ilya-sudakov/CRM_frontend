@@ -14,6 +14,7 @@ const NewEmployee = (props) => {
     lastName: "",
     middleName: "",
     dateOfBirth: new Date(),
+    patentExpirationDate: new Date(),
     citizenship: "",
     position: "",
     workshop: "ЦехЛЭМЗ",
@@ -47,6 +48,7 @@ const NewEmployee = (props) => {
   });
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const validateField = (fieldName, value) => {
     switch (fieldName) {
       case "dateOfBirth":
@@ -116,7 +118,10 @@ const NewEmployee = (props) => {
     formIsValid() &&
       addEmployee({
         ...employeeInputs,
-        dateOfBirth: employeeInputs.dateOfBirth.getTime() / 1000,
+        dateOfBirth: Math.floor(employeeInputs.dateOfBirth.getTime() / 1000),
+        patentExpirationDate: Math.floor(
+          employeeInputs.patentExpirationDate.getTime() / 1000
+        ),
       })
         .then(() => props.history.push("/dispatcher/employees"))
         .catch((error) => {
@@ -235,7 +240,6 @@ const NewEmployee = (props) => {
                   <option value="ЦехЛепсари">ЦехЛепсари</option>
                   <option value="ЦехЛиговский">ЦехЛиговский</option>
                   <option value="Офис">Офис</option>
-                  <option value="Уволенные">Уволенные</option>
                 </select>
               </div>
             </div>
@@ -266,7 +270,6 @@ const NewEmployee = (props) => {
           <FileUploader
             regex={/.+\.(jpeg|jpg|png|img)/}
             uniqueId={0}
-            // type="fileOnly"
             onChange={(result) => {
               setEmployeeInputs({
                 ...employeeInputs,
@@ -283,6 +286,17 @@ const NewEmployee = (props) => {
           handleInputChange={handleInputChange}
           errorsArr={employeeErrors}
           setErrorsArr={setEmployeeErrors}
+        />
+        <InputDate
+          inputName="Срок патента (при необходимости)"
+          name="patentExpirationDate"
+          selected={employeeInputs.patentExpirationDate}
+          handleDateChange={(date) =>
+            setEmployeeInputs({
+              ...employeeInputs,
+              patentExpirationDate: date,
+            })
+          }
         />
         <div className="main-form__item">
           <div className="main-form__input_name">Актуальность*</div>
