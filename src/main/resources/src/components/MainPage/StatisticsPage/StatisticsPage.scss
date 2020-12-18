@@ -476,6 +476,13 @@
                         span {
                             display: none;
                         }
+                        div {
+                            display: none;
+
+                            &::before {
+                                display: none;
+                            }
+                        }
                     }
                 }
                 .panel__difference {
