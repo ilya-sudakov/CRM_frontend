@@ -88,14 +88,6 @@ const WorkManagementPage = (props) => {
     curSort: "lastName",
     date: "desc",
   });
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: sortOrder[name] === "desc" ? "asc" : "desc",
-    });
-  };
 
   async function loadWorks(signal) {
     setIsLoading(true);
@@ -268,16 +260,6 @@ const WorkManagementPage = (props) => {
             />
           )}
           <div className="main-window__menu">
-            {/* <div
-              className={
-                curPage === 'Работы'
-                  ? 'main-window__item main-window__item--active'
-                  : 'main-window__item'
-              }
-              onClick={() => setCurPage('Работы')}
-            >
-              Работы
-            </div> */}
             <div
               className={
                 curPage === "Сотрудники"
