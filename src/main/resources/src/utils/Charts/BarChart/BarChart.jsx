@@ -34,7 +34,7 @@ const BarChart = ({
 
   const updateDataset = (datasetIndex, newData) => {
     if (isStacked) {
-      const values = Object.values(data).map((d) => {
+      const values = data.map((d) => {
         return {
           label: d.label,
           data: d.data,
@@ -64,7 +64,7 @@ const BarChart = ({
         data: {
           labels: labels,
           datasets: isStacked
-            ? Object.values(data).map((d) => {
+            ? data.map((d) => {
                 return {
                   label: d.label,
                   data: d.data,

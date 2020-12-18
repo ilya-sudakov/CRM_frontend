@@ -84,7 +84,20 @@ const IncomeStatsBigPanel = ({
       }
     });
 
-    return clients;
+    //pick only 10 clients who provided most income
+    const newClients = Object.values(clients)
+      .sort((a, b) => {
+        const sumA = a.data.reduce((prev, cur) => prev + cur, 0);
+        const sumB = b.data.reduce((prev, cur) => prev + cur, 0);
+        if (sumA < sumB) return 1;
+        if (sumA > sumB) return -1;
+        return 0;
+      })
+      .splice(0, 10);
+
+    console.log(newClients);
+
+    return newClients;
   };
 
   const getStats = (requests) => {
