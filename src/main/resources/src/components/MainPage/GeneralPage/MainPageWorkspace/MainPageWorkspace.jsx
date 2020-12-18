@@ -11,7 +11,7 @@ const MainPageWorkspace = (props) => {
       <TasksWidget />
       <WorkManagement />
       {props.userHasAccess(["ROLE_ADMIN"]) && <GraphWidget />}
-      {/* {props.userHasAccess(["ROLE_ADMIN"]) && <Notifications />} */}
+      {props.userHasAccess(["ROLE_ADMIN"]) && <Notifications />}
     </div>
   );
 };

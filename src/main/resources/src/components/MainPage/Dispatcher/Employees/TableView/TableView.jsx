@@ -213,9 +213,8 @@ const TableView = (props) => {
                         </Link>
                         {props.userHasAccess(["ROLE_ADMIN"]) && (
                           <div
-                            data-id={employee.id}
                             className="main-window__action"
-                            onClick={props.deleteItem}
+                            onClick={() => props.deleteItem(employee.id)}
                             title="Удалить"
                           >
                             <img

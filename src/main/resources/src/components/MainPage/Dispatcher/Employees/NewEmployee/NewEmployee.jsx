@@ -15,6 +15,7 @@ const NewEmployee = (props) => {
     middleName: "",
     dateOfBirth: new Date(),
     patentExpirationDate: new Date(),
+    registrationExpirationDate: new Date(),
     citizenship: "",
     position: "",
     workshop: "ЦехЛЭМЗ",
@@ -118,8 +119,13 @@ const NewEmployee = (props) => {
     formIsValid() &&
       addEmployee({
         ...employeeInputs,
-        dateOfBirth: Math.floor(employeeInputs.dateOfBirth.getTime() / 1000),
-        patentExpirationDate: Math.floor(
+        dateOfBirth: Number.parseInt(
+          employeeInputs.dateOfBirth.getTime() / 1000
+        ),
+        patentExpirationDate: Number.parseInt(
+          employeeInputs.patentExpirationDate.getTime() / 1000
+        ),
+        registrationExpirationDate: Number.parseInt(
           employeeInputs.patentExpirationDate.getTime() / 1000
         ),
       })
@@ -295,6 +301,17 @@ const NewEmployee = (props) => {
             setEmployeeInputs({
               ...employeeInputs,
               patentExpirationDate: date,
+            })
+          }
+        />
+        <InputDate
+          inputName="Срок регистрации (при наличии)"
+          name="registrationExpirationDate"
+          selected={employeeInputs.registrationExpirationDate}
+          handleDateChange={(date) =>
+            setEmployeeInputs({
+              ...employeeInputs,
+              registrationExpirationDate: date,
             })
           }
         />

@@ -18,6 +18,7 @@ const EditEmployee = (props) => {
     middleName: "",
     dateOfBirth: new Date(),
     patentExpirationDate: new Date(),
+    registrationExpirationDate: new Date(),
     citizenship: "",
     position: "",
     workshop: "ЦехЛЭМЗ",
@@ -114,9 +115,14 @@ const EditEmployee = (props) => {
       editEmployee(
         {
           ...employeeInputs,
-          dateOfBirth: Math.floor(employeeInputs.dateOfBirth.getTime() / 1000),
-          patentExpirationDate: Math.floor(
-            employeeInputs.patentExpirationDate.getTime() / 1000
+          dateOfBirth: Number.parseInt(
+            new Date(employeeInputs.dateOfBirth).getTime() / 1000
+          ),
+          patentExpirationDate: Number.parseInt(
+            new Date(employeeInputs.patentExpirationDate).getTime() / 1000
+          ),
+          registrationExpirationDate: Number.parseInt(
+            new Date(employeeInputs.registrationExpirationDate).getTime() / 1000
           ),
         },
         employeeId
@@ -161,6 +167,8 @@ const EditEmployee = (props) => {
             middleName: oldRequest.middleName,
             dateOfBirth: oldRequest.dateOfBirth ?? new Date(),
             patentExpirationDate: oldRequest.patentExpirationDate ?? new Date(),
+            registrationExpirationDate:
+              oldRequest.registrationExpirationDate ?? new Date(),
             citizenship: oldRequest.citizenship,
             position: oldRequest.position,
             workshop: oldRequest.workshop,
@@ -313,13 +321,24 @@ const EditEmployee = (props) => {
           />
         </div>
         <InputDate
-          inputName="Срок патента (при необходимости)"
+          inputName="Срок патента (при наличии)"
           name="patentExpirationDate"
-          selected={employeeInputs.patentExpirationDate}
-          handleDateChange={() =>
+          selected={Date.parse(employeeInputs.patentExpirationDate)}
+          handleDateChange={(date) =>
             setEmployeeInputs({
               ...employeeInputs,
               patentExpirationDate: date,
+            })
+          }
+        />
+        <InputDate
+          inputName="Срок регистрации (при наличии)"
+          name="registrationExpirationDate"
+          selected={Date.parse(employeeInputs.registrationExpirationDate)}
+          handleDateChange={(date) =>
+            setEmployeeInputs({
+              ...employeeInputs,
+              registrationExpirationDate: date,
             })
           }
         />

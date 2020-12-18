@@ -71,8 +71,7 @@ const Employees = (props) => {
     pdfMake.createPdf(dd).print();
   };
 
-  const deleteItem = (event) => {
-    const id = event.target.dataset.id;
+  const deleteItem = (id) => {
     deleteEmployee(id).then(() => loadEmployees());
   };
 
