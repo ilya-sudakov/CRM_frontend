@@ -38,6 +38,7 @@ const IncomeStatsBigPanel = ({
   const getFullYearData = (requests, currDate) => {
     let monthsIncome = [];
     const curYear = currDate.startDate.getFullYear();
+    const curMonth = currDate.startDate.getMonth();
     for (let i = 0; i < 12; i++) {
       const newRequests = checkRequestsForSelectedMonth(
         requests,
@@ -50,6 +51,12 @@ const IncomeStatsBigPanel = ({
       monthsIncome.push({
         value: totalIncome,
         label: months[i],
+        color:
+          curMonth === i
+            ? "#6F7BED"
+            : curMonth - 1 === i
+            ? "#07D096"
+            : "#3e95cd",
       });
     }
     return monthsIncome;
@@ -57,6 +64,19 @@ const IncomeStatsBigPanel = ({
 
   const getIncomeByClients = (requests, currDate) => {
     let clients = {};
+
+    const colors = [
+      "#def0ef",
+      "#bee0df",
+      "#9cd1cf",
+      "#79c2c0",
+      "#50b2b1",
+      "#00a3a2",
+      "#148685",
+      "#196a69",
+      "#1a4f4e",
+      "#173635",
+    ];
 
     requests.map((request) => {
       const curId = request?.client?.id;
@@ -95,9 +115,9 @@ const IncomeStatsBigPanel = ({
       })
       .splice(0, 10);
 
-    console.log(newClients);
-
-    return newClients;
+    return newClients.map((item, index) => {
+      return { ...item, color: colors[index] };
+    });
   };
 
   const getStats = (requests) => {
@@ -160,6 +180,7 @@ const IncomeStatsBigPanel = ({
           <BarChart
             data={monthsIncome}
             labels={months}
+            color="#3e95cd"
             chartClassName="panel__chart"
             wrapperClassName="panel__chart-wrapper"
             title="Доход за год"
@@ -179,6 +200,11 @@ const IncomeStatsBigPanel = ({
         <BarChart
           data={monthsIncome}
           labels={months}
+          options={{
+            scales: {
+              xAxes: { gridLines: { display: false } },
+            },
+          }}
           chartClassName="panel__chart"
           wrapperClassName="panel__chart-wrapper"
         />

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
-import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
 
 const BigPanel = ({
   isLoaded,
@@ -54,13 +53,13 @@ const BigPanel = ({
         />
       ) : null}
       <div className="panel__values">
-        <div className={`panel__value`}>
+        <div className="panel__value panel__value--current">
           <span>{`Текущ. ${curPeriod.name.toLowerCase()}`}</span>
-          {isLoaded ? value || 0 : null}
+          <div>{isLoaded ? value || 0 : null}</div>
         </div>
-        <div className={`panel__value`}>
+        <div className="panel__value panel__value--previous">
           <span>{`Пред. ${curPeriod.name.toLowerCase()}`}</span>
-          {isLoaded ? prevValue || 0 : null}
+          <div>{isLoaded ? prevValue || 0 : null}</div>
         </div>
       </div>
       <div

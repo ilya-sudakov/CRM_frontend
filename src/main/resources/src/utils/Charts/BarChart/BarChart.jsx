@@ -3,14 +3,16 @@ import PropTypes from "prop-types";
 import Chartjs from "chart.js";
 import "./BarChart.scss";
 
+const browserScreen =
+  window.innerWidth ||
+  document.documentElement.clientWidth ||
+  document.body.clientWidth;
+
+const screenWidthLessThan500PX = browserScreen > 500;
+
 const chartConfig = {
   responsive: true,
-  maintainAspectRatio:
-    (window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth) > 500
-      ? true
-      : false,
+  maintainAspectRatio: screenWidthLessThan500PX ? true : false,
   animation: {
     easing: "easeInOutCirc",
   },
@@ -23,7 +25,7 @@ const BarChart = ({
   data = [],
   labels = [],
   title = "",
-  color = "#3e95cd",
+  color,
   chartClassName = "",
   wrapperClassName = "",
   isStacked = false,
@@ -55,12 +57,7 @@ const BarChart = ({
     if (chartContainer && chartContainer.current) {
       if (chartInstance !== null) chartInstance.destroy();
       const newChartInstance = new Chartjs(chartContainer.current, {
-        type:
-          (window.innerWidth ||
-            document.documentElement.clientWidth ||
-            document.body.clientWidth) > 500
-            ? "bar"
-            : "horizontalBar",
+        type: screenWidthLessThan500PX ? "bar" : "horizontalBar",
         data: {
           labels: labels,
           datasets: isStacked
@@ -76,7 +73,7 @@ const BarChart = ({
                 {
                   label: title,
                   data: data.map((d) => d.value),
-                  backgroundColor: color,
+                  backgroundColor: color ?? data.map((d) => d.color),
                   maxBarThickness: 80,
                 },
               ],
@@ -89,14 +86,12 @@ const BarChart = ({
           scales: {
             yAxes: [
               {
+                gridLines: {
+                  display: options?.scales?.yAxes?.gridLines?.display ?? true,
+                },
                 stacked: isStacked,
                 ticks: {
-                  display:
-                    (window.innerWidth ||
-                      document.documentElement.clientWidth ||
-                      document.body.clientWidth) > 500
-                      ? true
-                      : true,
+                  display: screenWidthLessThan500PX ? true : true,
                   min: 0,
                   beginAtZero: true,
                 },
@@ -104,14 +99,12 @@ const BarChart = ({
             ],
             xAxes: [
               {
+                gridLines: {
+                  display: options?.scales?.xAxes?.gridLines?.display ?? true,
+                },
                 stacked: isStacked,
                 ticks: {
-                  display:
-                    (window.innerWidth ||
-                      document.documentElement.clientWidth ||
-                      document.body.clientWidth) > 500
-                      ? true
-                      : false,
+                  display: screenWidthLessThan500PX ? true : false,
                 },
               },
             ],

@@ -416,6 +416,37 @@
                         span {
                             margin-left: 0;
                         }
+
+                        div {
+                            position: relative;
+
+                            &::before {
+                                content: "";
+                                position: absolute;
+                                left: -15px;
+                                border-radius: 999px;
+                                top: calc(50% - 3px);
+                                width: 10px;
+                                height: 10px;
+                                background-color: #bbbbbb;
+                            }
+                        }
+
+                        &--current {
+                            div {
+                                &::before {
+                                    background-color: #6f7bed;
+                                }
+                            }
+                        }
+
+                        &--previous {
+                            div {
+                                &::before {
+                                    background-color: #07d096;
+                                }
+                            }
+                        }
                     }
                 }
             }
