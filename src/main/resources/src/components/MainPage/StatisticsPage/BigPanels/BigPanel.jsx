@@ -53,13 +53,13 @@ const BigPanel = ({
         />
       ) : null}
       <div className="panel__values">
-        <div className="panel__value panel__value--current">
-          <span>{`Текущ. ${curPeriod.name.toLowerCase()}`}</span>
-          <div>{isLoaded ? value || 0 : null}</div>
-        </div>
         <div className="panel__value panel__value--previous">
           <span>{`Пред. ${curPeriod.name.toLowerCase()}`}</span>
           <div>{isLoaded ? prevValue || 0 : null}</div>
+        </div>
+        <div className="panel__value panel__value--current">
+          <span>{`Текущ. ${curPeriod.name.toLowerCase()}`}</span>
+          <div>{isLoaded ? value || 0 : null}</div>
         </div>
       </div>
       <div
