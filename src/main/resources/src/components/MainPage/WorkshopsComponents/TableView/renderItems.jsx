@@ -54,21 +54,25 @@ export const renderResponsibleColumn = ({ responsible }) => {
 };
 
 export const renderDateShippedColumn = (request) => {
+  const originalDateDiff = Math.abs(
+    dateDiffInDays(new Date(request.date), new Date(request.shippingDate))
+  );
+  const curDateDiff = Math.abs(
+    dateDiffInDays(new Date(), new Date(request.shippingDate))
+  );
   return (
     <span className="requests__column--date-shipping">
       <div className="main-window__mobile-text">Отгрузка:</div>
       {request.status === "Отгружено" || request.status === "Завершено" ? (
         <div
           className={`main-window__reminder ${
-            Math.abs(
-              dateDiffInDays(
-                new Date(request.date),
-                new Date(request.shippingDate)
-              )
-            ) > 7
-              ? ""
-              : "main-window__reminder--positive"
+            originalDateDiff > 7 ? "" : "main-window__reminder--positive"
           }`}
+          title={
+            originalDateDiff > 7
+              ? `Заявка отгружена с опозданием на ${originalDateDiff} дн.`
+              : `Заявка отгружена вовремя`
+          }
         >
           {Math.abs(
             dateDiffInDays(
@@ -90,7 +94,10 @@ export const renderDateShippedColumn = (request) => {
           </div>
         </div>
       ) : new Date(request.shippingDate) < new Date() ? (
-        <div className="main-window__reminder main-window__reminder--info">
+        <div
+          className="main-window__reminder main-window__reminder--info"
+          title={`Заявка опаздывает на ${curDateDiff} дн.`}
+        >
           <div>!</div>
           <div>
             {formatDateString(
@@ -102,7 +109,10 @@ export const renderDateShippedColumn = (request) => {
           </div>
         </div>
       ) : (
-        <div className="main-window__date">
+        <div
+          className="main-window__date"
+          title={`Заявка должна быть отгружена через ${curDateDiff} дн.`}
+        >
           {formatDateString(
             request.shippingDate === null || request.shippingDate === undefined
               ? new Date()
