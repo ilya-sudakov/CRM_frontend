@@ -53,10 +53,10 @@ const IncomeStatsBigPanel = ({
         label: months[i],
         color:
           curMonth === i
-            ? "#6F7BED"
+            ? "#B74F3B"
             : curMonth - 1 === i
-            ? "#07D096"
-            : "#3e95cd",
+            ? "#3BB7B6"
+            : "#cccccc",
       });
     }
     return monthsIncome;
@@ -180,6 +180,12 @@ const IncomeStatsBigPanel = ({
           <BarChart
             data={monthsIncome}
             labels={months}
+            options={{
+              legend: { display: false },
+              scales: {
+                xAxes: { gridLines: { display: false } },
+              },
+            }}
             color="#3e95cd"
             chartClassName="panel__chart"
             wrapperClassName="panel__chart-wrapper"
@@ -192,7 +198,12 @@ const IncomeStatsBigPanel = ({
             wrapperClassName="panel__chart-wrapper"
             title="Доход за год (по клиентам)"
             isStacked={true}
-            options={{ legend: { position: "right" } }}
+            options={{
+              scales: {
+                xAxes: { gridLines: { display: false } },
+              },
+              legend: { position: "right" },
+            }}
           />
         </>
       ),
@@ -201,6 +212,7 @@ const IncomeStatsBigPanel = ({
           data={monthsIncome}
           labels={months}
           options={{
+            legend: { display: false },
             scales: {
               xAxes: { gridLines: { display: false } },
             },

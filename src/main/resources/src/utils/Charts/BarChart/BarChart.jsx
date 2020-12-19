@@ -82,6 +82,7 @@ const BarChart = ({
           ...chartConfig,
           legend: {
             position: options?.legend?.position ?? "top",
+            display: options?.legend?.display ?? true,
           },
           scales: {
             yAxes: [
