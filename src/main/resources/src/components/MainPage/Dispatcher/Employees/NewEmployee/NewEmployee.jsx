@@ -14,8 +14,8 @@ const NewEmployee = (props) => {
     lastName: "",
     middleName: "",
     dateOfBirth: new Date(),
-    patentExpirationDate: new Date(),
-    registrationExpirationDate: new Date(),
+    patentExpirationDate: null,
+    registrationExpirationDate: null,
     citizenship: "",
     position: "",
     workshop: "ЦехЛЭМЗ",
@@ -122,12 +122,18 @@ const NewEmployee = (props) => {
         dateOfBirth: Number.parseInt(
           employeeInputs.dateOfBirth.getTime() / 1000
         ),
-        patentExpirationDate: Number.parseInt(
-          employeeInputs.patentExpirationDate.getTime() / 1000
-        ),
-        registrationExpirationDate: Number.parseInt(
-          employeeInputs.patentExpirationDate.getTime() / 1000
-        ),
+        patentExpirationDate:
+          employeeInputs.patentExpirationDate === null
+            ? null
+            : Number.parseInt(
+                employeeInputs.patentExpirationDate.getTime() / 1000
+              ),
+        registrationExpirationDate:
+          employeeInputs.registrationExpirationDate === null
+            ? null
+            : Number.parseInt(
+                employeeInputs.registrationExpirationDate.getTime() / 1000
+              ),
       })
         .then(() => props.history.push("/dispatcher/employees"))
         .catch((error) => {

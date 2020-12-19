@@ -17,8 +17,8 @@ const EditEmployee = (props) => {
     lastName: "",
     middleName: "",
     dateOfBirth: new Date(),
-    patentExpirationDate: new Date(),
-    registrationExpirationDate: new Date(),
+    patentExpirationDate: null,
+    registrationExpirationDate: null,
     citizenship: "",
     position: "",
     workshop: "ЦехЛЭМЗ",
@@ -118,12 +118,18 @@ const EditEmployee = (props) => {
           dateOfBirth: Number.parseInt(
             new Date(employeeInputs.dateOfBirth).getTime() / 1000
           ),
-          patentExpirationDate: Number.parseInt(
-            new Date(employeeInputs.patentExpirationDate).getTime() / 1000
-          ),
-          registrationExpirationDate: Number.parseInt(
-            new Date(employeeInputs.registrationExpirationDate).getTime() / 1000
-          ),
+          patentExpirationDate:
+            employeeInputs.patentExpirationDate === null
+              ? null
+              : Number.parseInt(
+                  employeeInputs.patentExpirationDate.getTime() / 1000
+                ),
+          registrationExpirationDate:
+            employeeInputs.registrationExpirationDate === null
+              ? null
+              : Number.parseInt(
+                  employeeInputs.registrationExpirationDate.getTime() / 1000
+                ),
         },
         employeeId
       )
@@ -166,9 +172,8 @@ const EditEmployee = (props) => {
             lastName: oldRequest.lastName,
             middleName: oldRequest.middleName,
             dateOfBirth: oldRequest.dateOfBirth ?? new Date(),
-            patentExpirationDate: oldRequest.patentExpirationDate ?? new Date(),
-            registrationExpirationDate:
-              oldRequest.registrationExpirationDate ?? new Date(),
+            patentExpirationDate: oldRequest.patentExpirationDate,
+            registrationExpirationDate: oldRequest.registrationExpirationDate,
             citizenship: oldRequest.citizenship,
             position: oldRequest.position,
             workshop: oldRequest.workshop,
