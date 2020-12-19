@@ -23,10 +23,10 @@ const useEmployeesNotifications = () => {
               description: "День рождения",
               expirationTime: item.dateOfBirth,
               read: true,
-              link: `/employees/edit/${item.id}`,
+              link: `/dispatcher/employees/edit/${item.id}`,
             };
           });
-        employeesTemp.push(filteredEmployees);
+        employeesTemp.push(...filteredEmployees);
       })
       .then(() => getEmployeesByExpiredDocuments())
       .then((res) => res.json())
@@ -40,10 +40,10 @@ const useEmployeesNotifications = () => {
               description: "Просроченные документы",
               expirationTime: item.patentExpirationDate,
               read: true,
-              link: `/employees/edit/${item.id}`,
+              link: `/dispatcher/employees/edit/${item.id}`,
             };
           });
-        employeesTemp.push(filteredEmployees);
+        employeesTemp.push(...filteredEmployees);
         setIsLoadingEmployees(false);
         return setEmployees(employeesTemp);
       })

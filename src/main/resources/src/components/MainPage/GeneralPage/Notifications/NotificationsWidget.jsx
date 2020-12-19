@@ -11,10 +11,11 @@ const NotificationsWidget = () => {
   const { employees, isLoadingEmployees } = useEmployeesNotifications();
 
   useEffect(() => {
+    console.log(employees);
     setNotifications(employees);
   }, [employees]);
 
-  return (
+  return employees.length > 0 && !isLoadingEmployees ? (
     <Widget
       className="notifications-widget"
       title="Уведомления"
@@ -31,7 +32,7 @@ const NotificationsWidget = () => {
         />
       }
     />
-  );
+  ) : null;
 };
 
 export default NotificationsWidget;
