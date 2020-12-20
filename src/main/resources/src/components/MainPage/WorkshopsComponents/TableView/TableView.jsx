@@ -287,7 +287,11 @@ const TableView = ({
                 userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
                 workshopName === "requests" &&
                 !isMinimized
-                  ? "30px"
+                  ? "35px"
+                  : userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
+                    workshopName === "requests" &&
+                    isMinimized
+                  ? "10px"
                   : "5px",
             }}
           >
@@ -362,7 +366,11 @@ const TableView = ({
                   title="Перенос заявки"
                   onClick={(event) => {
                     event.preventDefault();
-                    transferRequest(request.id);
+                    if (request.sum === null || request.sum === 0) {
+                      setErrorRequestId(Number.parseInt(request.id));
+                      return setShowError(true);
+                    }
+                    return transferRequest(request.id);
                   }}
                 >
                   <img className="main-window__img" src={transferSVG} />

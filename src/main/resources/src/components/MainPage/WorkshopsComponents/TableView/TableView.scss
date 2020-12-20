@@ -28,7 +28,7 @@
         position: relative;
         &--header {
           margin-top: -20px;
-          margin-bottom: -20px;
+          margin-bottom: -10px;
         }
         &--is-minimized {
           margin-bottom: calc(1.5rem + 23px) !important;
@@ -395,9 +395,9 @@
           position: absolute;
           left: 5px;
           bottom: 10px;
-          font-size: 100%;
+          font-size: 1rem;
           padding-left: 10px;
-          color: #222222aa;
+          color: #222222dd;
           white-space: nowrap;
         }
 

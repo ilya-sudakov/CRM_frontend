@@ -136,7 +136,7 @@ export const renderCommentColumn = ({ comment }) => {
 export const renderPriceColumn = ({ sum }) => {
   return (
     <span className="requests__column--price">
-      {`${sum ? addSpaceDelimiter(sum) : 0} руб.`}
+      {`Сумма заявки: ${sum ? addSpaceDelimiter(sum) : 0} руб.`}
     </span>
   );
 };
@@ -286,7 +286,7 @@ export const renderListHeader = (sortOrder, isMinimized, printConfig) => {
       style={{
         marginBottom:
           sortOrder.curSort === "date" || sortOrder.curSort === "shippingDate"
-            ? "-20px"
+            ? "-10px"
             : "0",
       }}
     >
