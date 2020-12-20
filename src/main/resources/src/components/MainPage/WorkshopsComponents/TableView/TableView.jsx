@@ -139,20 +139,22 @@ const TableView = ({
       );
       console.log(selectedItem);
       if (selectedItem) {
-        // return editRequest(
-        //   {
-        //     ...selectedItem,
-        //     status: status,
-        //     shippingDate: new Date(),
-        //   },
-        //   id,
-        // )
-        //   .then(() => {
-        //     loadData()
-        //   })
-        //   .catch((error) => {
-        //     console.log(error)
-        //   })
+        return editRequest(
+          {
+            sum: selectedItem.sum,
+            date: selectedItem.date,
+            responsible: selectedItem.responsible,
+            factory: selectedItem.factory,
+            comment: selectedItem.comment,
+            status: selectedItem.status,
+            shippingDate: new Date(),
+          },
+          id
+        )
+          .then(() => changeStatus(status, id))
+          .catch((error) => {
+            console.log(error);
+          });
       }
     }
 
