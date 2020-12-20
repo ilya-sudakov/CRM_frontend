@@ -16,9 +16,6 @@ const chartConfig = {
   animation: {
     easing: "easeInOutCirc",
   },
-  tooltips: {
-    mode: "index",
-  },
 };
 
 const BarChart = ({
@@ -86,6 +83,7 @@ const BarChart = ({
           },
           onClick: options?.onClick ?? function () {},
           tooltips: {
+            mode: "index",
             callbacks: {
               label:
                 options?.tooltips?.callbacks?.label ??
