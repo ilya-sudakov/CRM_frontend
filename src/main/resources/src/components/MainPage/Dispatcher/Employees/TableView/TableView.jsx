@@ -34,7 +34,7 @@ const TableView = (props) => {
         item.name.toLowerCase().includes(query) ||
         item.middleName.toLowerCase().includes(query) ||
         item.id.toString().includes(query) ||
-        item.yearOfBirth.toString().includes(query) ||
+        (item.yearOfBirth && item.yearOfBirth.toString().includes(query)) ||
         item.citizenship.toLowerCase().includes(query) ||
         item.workshop.toLowerCase().includes(query) ||
         item.position.toLowerCase().includes(query) ||
