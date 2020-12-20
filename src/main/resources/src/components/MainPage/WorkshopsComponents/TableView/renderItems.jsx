@@ -136,7 +136,8 @@ export const renderCommentColumn = ({ comment }) => {
 export const renderPriceColumn = ({ sum }) => {
   return (
     <span className="requests__column--price">
-      {`Сумма заявки: ${sum ? addSpaceDelimiter(sum) : 0} руб.`}
+      Сумма заявки:
+      <div>{`${sum ? addSpaceDelimiter(sum) : 0}`}</div>₽
     </span>
   );
 };

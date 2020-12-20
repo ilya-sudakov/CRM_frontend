@@ -393,12 +393,20 @@
         }
         .requests__column--price {
           position: absolute;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
           left: 5px;
           bottom: 10px;
-          font-size: 1rem;
           padding-left: 10px;
-          color: #222222dd;
+          color: #222222aa;
           white-space: nowrap;
+
+          div {
+            color: #111111;
+            font-size: 1rem;
+            margin: 0 5px;
+          }
         }
 
         .main-window__actions {
@@ -628,6 +636,7 @@
             max-width: none;
             position: relative;
             padding-left: 5px;
+            justify-content: flex-start;
             bottom: auto;
             left: auto;
           }
