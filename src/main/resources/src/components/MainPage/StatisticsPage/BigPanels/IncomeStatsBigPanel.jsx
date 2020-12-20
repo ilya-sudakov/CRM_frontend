@@ -45,9 +45,12 @@ const IncomeStatsBigPanel = ({
         new Date(curYear, i, 1)
       );
       const totalIncome = newRequests.reduce(
-        (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
+        (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
         0
       );
+
+      console.log(months[i], totalIncome);
+
       monthsIncome.push({
         value: totalIncome,
         label: months[i],
@@ -57,6 +60,33 @@ const IncomeStatsBigPanel = ({
             : curMonth - 1 === i
             ? "#3BB7B6"
             : "#cccccc",
+      });
+    }
+    return monthsIncome;
+  };
+
+  const getFullYearAccumilationData = (requests, currDate) => {
+    let monthsIncome = [];
+    let totalSum = 0;
+    const curYear = currDate.startDate.getFullYear();
+    for (let i = 0; i < 12; i++) {
+      const newRequests = checkRequestsForSelectedMonth(
+        requests,
+        new Date(curYear, i, 1)
+      );
+
+      const curMonthIncome = newRequests.reduce(
+        (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
+        0
+      );
+
+      totalSum += curMonthIncome;
+
+      monthsIncome.push({
+        value:
+          totalSum === 0 || i === 0 ? 0 : (curMonthIncome / totalSum) * 100,
+        label: months[i],
+        color: "#3e95cd",
       });
     }
     return monthsIncome;
@@ -160,6 +190,10 @@ const IncomeStatsBigPanel = ({
     });
 
     const monthsIncome = getFullYearData(requests, currDate);
+    const monthsAccumilationIncome = getFullYearAccumilationData(
+      requests,
+      currDate
+    );
     const incomeByClients = getIncomeByClients(requests, currDate);
 
     console.log(incomeByClients);
@@ -204,6 +238,19 @@ const IncomeStatsBigPanel = ({
               },
               legend: { position: "right" },
             }}
+          />
+          <BarChart
+            data={monthsAccumilationIncome}
+            labels={months}
+            options={{
+              legend: { display: false },
+              scales: {
+                xAxes: { gridLines: { display: false } },
+              },
+            }}
+            chartClassName="panel__chart"
+            wrapperClassName="panel__chart-wrapper"
+            title="График накопления"
           />
         </>
       ),

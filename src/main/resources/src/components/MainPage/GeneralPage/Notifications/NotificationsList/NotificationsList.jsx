@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import CakeIcon from "../../../../../../../../../assets/notifications/birthday-cake.inline.svg";
+import DocumentsIcon from "../../../../../../../../../assets/statistics/document-report.inline.svg";
 
 const NotificationsList = ({ notifications, isLoading }) => {
   return (
@@ -35,6 +37,11 @@ const ListItem = ({ item }) => {
         <Link to={item.link}>{item.name}</Link>
         <div>{item.description}</div>
       </div>
+      {item.description === "День рождения" ? (
+        <CakeIcon className="main-window__img" />
+      ) : (
+        <DocumentsIcon className="main-window__img" />
+      )}
     </div>
   );
 };
