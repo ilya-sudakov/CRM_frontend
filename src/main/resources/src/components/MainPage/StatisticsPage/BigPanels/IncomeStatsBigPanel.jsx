@@ -13,6 +13,7 @@ import {
 import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 import BigPanel from "./BigPanel.jsx";
 import BarChart from "../../../../utils/Charts/BarChart/BarChart.jsx";
+import { tooltipLabelRubles } from "../../../../utils/Charts/callbacks.js";
 
 const IncomeStatsBigPanel = ({
   requests,
@@ -218,17 +219,8 @@ const IncomeStatsBigPanel = ({
               legend: { display: false },
               tooltips: {
                 callbacks: {
-                  label: function (tooltipItem, data) {
-                    let label =
-                      data.datasets[tooltipItem.datasetIndex].label || "";
-                    if (label) label += ": ";
-                    label += `${addSpaceDelimiter(
-                      Number.parseInt(
-                        Math.round(tooltipItem.yLabel * 100) / 100
-                      )
-                    )} ₽`;
-                    return label;
-                  },
+                  label: (tooltipItem, data) =>
+                    tooltipLabelRubles(tooltipItem, data),
                 },
               },
               scales: {
@@ -263,17 +255,8 @@ const IncomeStatsBigPanel = ({
               },
               tooltips: {
                 callbacks: {
-                  label: function (tooltipItem, data) {
-                    let label =
-                      data.datasets[tooltipItem.datasetIndex].label || "";
-                    if (label) label += ": ";
-                    label += `${addSpaceDelimiter(
-                      Number.parseInt(
-                        Math.round(tooltipItem.yLabel * 100) / 100
-                      )
-                    )} ₽`;
-                    return label;
-                  },
+                  label: (tooltipItem, data) =>
+                    tooltipLabelRubles(tooltipItem, data),
                 },
               },
               legend: { position: "right" },
@@ -302,15 +285,8 @@ const IncomeStatsBigPanel = ({
             legend: { display: false },
             tooltips: {
               callbacks: {
-                label: function (tooltipItem, data) {
-                  let label =
-                    data.datasets[tooltipItem.datasetIndex].label || "";
-                  if (label) label += ": ";
-                  label += `${addSpaceDelimiter(
-                    Number.parseInt(Math.round(tooltipItem.yLabel * 100) / 100)
-                  )} ₽`;
-                  return label;
-                },
+                label: (tooltipItem, data) =>
+                  tooltipLabelRubles(tooltipItem, data),
               },
             },
             scales: {
