@@ -84,6 +84,22 @@ const BarChart = ({
             position: options?.legend?.position ?? "top",
             display: options?.legend?.display ?? true,
           },
+          tooltips: {
+            callbacks: {
+              label:
+                options?.tooltips?.callbacks?.label ??
+                function (tooltipItem, data) {
+                  var label =
+                    data.datasets[tooltipItem.datasetIndex].label || "";
+
+                  if (label) {
+                    label += ": ";
+                  }
+                  label += Math.round(tooltipItem.yLabel * 100) / 100;
+                  return label;
+                },
+            },
+          },
           scales: {
             yAxes: [
               {
@@ -93,6 +109,11 @@ const BarChart = ({
                 stacked: isStacked,
                 ticks: {
                   display: screenWidthLessThan500PX ? true : true,
+                  callback:
+                    options?.scales?.yAxes?.ticks?.callback ??
+                    function (value) {
+                      return value;
+                    },
                   min: 0,
                   beginAtZero: true,
                 },

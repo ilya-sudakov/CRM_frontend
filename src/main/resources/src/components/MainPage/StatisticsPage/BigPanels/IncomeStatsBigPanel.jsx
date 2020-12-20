@@ -216,8 +216,28 @@ const IncomeStatsBigPanel = ({
             labels={months}
             options={{
               legend: { display: false },
+              tooltips: {
+                callbacks: {
+                  label: function (tooltipItem, data) {
+                    let label =
+                      data.datasets[tooltipItem.datasetIndex].label || "";
+                    if (label) label += ": ";
+                    label += `${addSpaceDelimiter(
+                      Number.parseInt(
+                        Math.round(tooltipItem.yLabel * 100) / 100
+                      )
+                    )} ₽`;
+                    return label;
+                  },
+                },
+              },
               scales: {
                 xAxes: { gridLines: { display: false } },
+                yAxes: {
+                  ticks: {
+                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
+                  },
+                },
               },
             }}
             color="#3e95cd"
@@ -235,6 +255,26 @@ const IncomeStatsBigPanel = ({
             options={{
               scales: {
                 xAxes: { gridLines: { display: false } },
+                yAxes: {
+                  ticks: {
+                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
+                  },
+                },
+              },
+              tooltips: {
+                callbacks: {
+                  label: function (tooltipItem, data) {
+                    let label =
+                      data.datasets[tooltipItem.datasetIndex].label || "";
+                    if (label) label += ": ";
+                    label += `${addSpaceDelimiter(
+                      Number.parseInt(
+                        Math.round(tooltipItem.yLabel * 100) / 100
+                      )
+                    )} ₽`;
+                    return label;
+                  },
+                },
               },
               legend: { position: "right" },
             }}
@@ -260,8 +300,26 @@ const IncomeStatsBigPanel = ({
           labels={months}
           options={{
             legend: { display: false },
+            tooltips: {
+              callbacks: {
+                label: function (tooltipItem, data) {
+                  let label =
+                    data.datasets[tooltipItem.datasetIndex].label || "";
+                  if (label) label += ": ";
+                  label += `${addSpaceDelimiter(
+                    Number.parseInt(Math.round(tooltipItem.yLabel * 100) / 100)
+                  )} ₽`;
+                  return label;
+                },
+              },
+            },
             scales: {
               xAxes: { gridLines: { display: false } },
+              yAxes: {
+                ticks: {
+                  callback: (value) => `${addSpaceDelimiter(value)} ₽`,
+                },
+              },
             },
           }}
           chartClassName="panel__chart"
@@ -270,10 +328,10 @@ const IncomeStatsBigPanel = ({
       ),
       value: `${addSpaceDelimiter(
         Number.parseInt(Math.floor(curMonthIncome * 100) / 100)
-      )} руб.`,
+      )} ₽`,
       prevValue: `${addSpaceDelimiter(
         Number.parseInt(Math.floor(prevMonthIncome * 100) / 100)
-      )} руб.`,
+      )} ₽`,
       difference: curMonthIncome - prevMonthIncome,
       percentage:
         Math.floor(

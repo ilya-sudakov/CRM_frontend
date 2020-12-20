@@ -87,7 +87,7 @@ const AverageSumStatsPanel = ({
       isLoading: false,
       value: `${addSpaceDelimiter(
         Math.floor(curMonthAverage * 100) / 100
-      )} руб.`,
+      )} ₽`,
       difference: curMonthAverage - prevMonthAverage,
       percentage:
         Math.floor(
