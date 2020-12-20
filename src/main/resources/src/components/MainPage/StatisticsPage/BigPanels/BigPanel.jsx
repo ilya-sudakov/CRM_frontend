@@ -55,11 +55,11 @@ const BigPanel = ({
       <div className="panel__values">
         <div className="panel__value panel__value--previous">
           <span>{`Пред. ${curPeriod.name.toLowerCase()}`}</span>
-          <div>{isLoaded ? Number.parseInt(prevValue) || 0 : null}</div>
+          <div>{isLoaded ? prevValue || 0 : null}</div>
         </div>
         <div className="panel__value panel__value--current">
           <span>{`Текущ. ${curPeriod.name.toLowerCase()}`}</span>
-          <div>{isLoaded ? Number.parseInt(value) || 0 : null}</div>
+          <div>{isLoaded ? value || 0 : null}</div>
         </div>
       </div>
       <div

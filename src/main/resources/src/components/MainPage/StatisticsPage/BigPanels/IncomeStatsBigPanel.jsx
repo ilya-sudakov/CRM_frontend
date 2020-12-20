@@ -269,10 +269,10 @@ const IncomeStatsBigPanel = ({
         />
       ),
       value: `${addSpaceDelimiter(
-        Math.floor(curMonthIncome * 100) / 100
+        Number.parseInt(Math.floor(curMonthIncome * 100) / 100)
       )} руб.`,
       prevValue: `${addSpaceDelimiter(
-        Math.floor(prevMonthIncome * 100) / 100
+        Number.parseInt(Math.floor(prevMonthIncome * 100) / 100)
       )} руб.`,
       difference: curMonthIncome - prevMonthIncome,
       percentage:
