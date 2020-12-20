@@ -55,7 +55,7 @@ const StatisticsPage = () => {
           }),
       },
       nextButton: {
-        text: `${months[new Date().getMonth()]}`,
+        text: "Тек. месяц",
         onClick: () =>
           setCurrDate({
             startDate: getPreviousMonthDates(new Date(), "current").startDate,

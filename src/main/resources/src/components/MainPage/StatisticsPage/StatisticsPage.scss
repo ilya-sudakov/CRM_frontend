@@ -410,7 +410,7 @@
                         align-items: center;
 
                         &:not(:last-child) {
-                            margin-right: 30%;
+                            margin-right: 20%;
                         }
 
                         span {
@@ -419,6 +419,7 @@
 
                         div {
                             position: relative;
+                            font-size: 1.8rem;
 
                             &::before {
                                 content: "";
