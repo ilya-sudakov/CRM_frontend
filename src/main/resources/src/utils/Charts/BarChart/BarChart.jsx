@@ -84,6 +84,7 @@ const BarChart = ({
             position: options?.legend?.position ?? "top",
             display: options?.legend?.display ?? true,
           },
+          onClick: options?.onClick ?? function () {},
           tooltips: {
             callbacks: {
               label:

@@ -13,7 +13,10 @@ import {
 import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 import BigPanel from "./BigPanel.jsx";
 import BarChart from "../../../../utils/Charts/BarChart/BarChart.jsx";
-import { tooltipLabelRubles } from "../../../../utils/Charts/callbacks.js";
+import {
+  tooltipLabelRubles,
+  tooltipLabelPercent,
+} from "../../../../utils/Charts/callbacks.js";
 
 const IncomeStatsBigPanel = ({
   requests,
@@ -267,8 +270,19 @@ const IncomeStatsBigPanel = ({
             labels={months}
             options={{
               legend: { display: false },
+              tooltips: {
+                callbacks: {
+                  label: (tooltipItem, data) =>
+                    tooltipLabelPercent(tooltipItem, data),
+                },
+              },
               scales: {
                 xAxes: { gridLines: { display: false } },
+                yAxes: {
+                  ticks: {
+                    callback: (value) => `${value}%`,
+                  },
+                },
               },
             }}
             chartClassName="panel__chart"
