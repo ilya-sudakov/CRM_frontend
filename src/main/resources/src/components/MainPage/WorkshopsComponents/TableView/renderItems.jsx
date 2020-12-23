@@ -319,7 +319,7 @@ export const renderListHeader = (sortOrder, isMinimized, printConfig) => {
       {printConfig["comment"].visible ? (
         <span className="requests__column--comment">Комментарий</span>
       ) : null}
-      <div className="main-window__actions">Действия</div>
+      <div className="main-window__table-actions"></div>
     </div>
   );
 };
