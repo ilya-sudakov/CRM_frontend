@@ -19,7 +19,8 @@ const DeleteItemAction = ({ onClick, title = "Удаление элемента"
       <div
         className="main-window__action"
         title={title}
-        onClick={() => {
+        onClick={(event) => {
+          event.preventDefault();
           setShowMessage(true);
         }}
       >
