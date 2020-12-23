@@ -7,15 +7,6 @@ const DeleteItemAction = ({ onClick, title = "Удаление элемента"
   const [showMessage, setShowMessage] = useState(false);
   return (
     <>
-      <div
-        className="main-window__action"
-        title={title}
-        onClick={() => {
-          setShowMessage(true);
-        }}
-      >
-        <img className="main-window__img" src={icon ?? deleteSVG} />
-      </div>
       <MessageForUser
         showMessage={showMessage}
         setShowMessage={setShowMessage}
@@ -25,6 +16,15 @@ const DeleteItemAction = ({ onClick, title = "Удаление элемента"
           setShowMessage(false);
         }}
       />
+      <div
+        className="main-window__action"
+        title={title}
+        onClick={() => {
+          setShowMessage(true);
+        }}
+      >
+        <img className="main-window__img" src={icon ?? deleteSVG} />
+      </div>
     </>
   );
 };

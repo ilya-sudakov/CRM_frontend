@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import editSVG from "../../../../../../../../assets/tableview/edit.svg";
 import printSVG from "../../../../../../../../assets/tableview/print.svg";
-import deleteSVG from "../../../../../../../../assets/tableview/delete.svg";
 import copySVG from "../../../../../../../../assets/tableview/copy.svg";
 import transferSVG from "../../../../../../../../assets/tableview/transfer.svg";
 import TruckSVG from "../../../../../../../../assets/sidemenu/truck.inline.svg";
