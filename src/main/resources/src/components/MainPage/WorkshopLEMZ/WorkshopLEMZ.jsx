@@ -41,8 +41,7 @@ const WorkshopLEMZ = (props) => {
     pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
   ); //Текущая страница
 
-  const deleteItem = (event) => {
-    const id = event.currentTarget.dataset.id;
+  const deleteItem = (id) => {
     getRequestById(id)
       .then((res) => res.json())
       .then((res) => {

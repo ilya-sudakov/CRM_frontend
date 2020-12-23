@@ -44,6 +44,7 @@ import {
   renderListHeader,
 } from "./renderItems.jsx";
 import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
+import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
 
 const TableView = ({
   workshopName,
@@ -355,14 +356,10 @@ const TableView = ({
                     </Link>
                   )}
                   {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-                    <div
-                      data-id={request.id}
-                      className="main-window__action"
+                    <DeleteItemAction
                       title="Удаление заявки"
-                      onClick={(event) => deleteItem(event)}
-                    >
-                      <img className="main-window__img" src={deleteSVG} />
-                    </div>
+                      onClick={() => deleteItem(request.id)}
+                    />
                   )}
                   {transferRequest &&
                     userContext.userHasAccess(["ROLE_ADMIN"]) && (
@@ -395,9 +392,6 @@ const TableView = ({
                 </>
               }
             />
-            {/* <div className="main-window__actions">
-              
-            </div> */}
           </div>
           {isMinimized
             ? renderProductsSubItem(request, handleProductStatusChange)

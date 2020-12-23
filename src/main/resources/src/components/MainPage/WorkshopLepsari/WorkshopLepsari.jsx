@@ -81,8 +81,7 @@ const WorkshopLepsari = (props) => {
     },
   ]);
 
-  const deleteItem = (event) => {
-    const id = event.currentTarget.dataset.id;
+  const deleteItem = (id) => {
     getRequestById(id)
       .then((res) => res.json())
       .then((res) => {

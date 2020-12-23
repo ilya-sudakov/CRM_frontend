@@ -27,6 +27,7 @@
         z-index: 999;
         transition: transform 50ms ease-in-out;
         transform-origin: 100% 50%;
+        overflow: hidden;
 
         .main-window__action {
             margin-right: 10px;
