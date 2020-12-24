@@ -11,7 +11,7 @@ const TableActions = ({ isMinimized, actions }) => {
       className={`main-window__table-actions ${
         isHidden ? "main-window__table-actions--is-hidden" : ""
       }`}
-      onMouseOver={() => setIsHidden(false)}
+      onMouseEnter={() => setIsHidden(false)}
       onMouseLeave={() => setIsHidden(true)}
     >
       <DotsIcon
@@ -20,7 +20,6 @@ const TableActions = ({ isMinimized, actions }) => {
         width={50}
         height={30}
         alt=""
-        onClick={() => setIsHidden(!isHidden)}
       />
       <div className="table-actions__menu">{actions}</div>
     </div>
