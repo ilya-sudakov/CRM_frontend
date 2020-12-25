@@ -184,18 +184,11 @@ const TableView = (props) => {
                         <div className="main-window__mobile-text">
                           Дата рождения:
                         </div>
-                        {employee.dateOfBirth ? (
-                          <div>{formatDateString(employee.dateOfBirth)}</div>
-                        ) : (
-                          <div
-                            style={{ color: "#bbbbbb" }}
-                            title="Дата рождения в старом формате"
-                          >
-                            {`Ввести заново! ${formatDateString(
-                              employee.yearOfBirth
-                            )}`}
-                          </div>
-                        )}
+                        <div>
+                          {employee.dateOfBirth
+                            ? formatDateString(employee.dateOfBirth)
+                            : null}
+                        </div>
                       </span>
                       <span>
                         <div className="main-window__mobile-text">

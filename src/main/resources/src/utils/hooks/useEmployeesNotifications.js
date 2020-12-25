@@ -20,7 +20,7 @@ const useEmployeesNotifications = () => {
             return {
               id: item.id,
               name: `${item.lastName} ${item.name} ${item.middleName}`,
-              description: "День рождения",
+              description: "Сегодня день рождения",
               expirationTime: item.dateOfBirth,
               read: true,
               link: `/dispatcher/employees/edit/${item.id}`,

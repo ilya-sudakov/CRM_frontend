@@ -111,8 +111,8 @@ const EditEmployee = (props) => {
 
   const handleSubmit = () => {
     setIsLoading(true);
-    formIsValid() &&
-      editEmployee(
+    if (formIsValid())
+      return editEmployee(
         {
           ...employeeInputs,
           dateOfBirth: Number.parseInt(
@@ -139,6 +139,10 @@ const EditEmployee = (props) => {
           alert("Ошибка при добавлении записи");
           console.log(error);
         });
+
+    setIsLoading(false);
+    alert("Ошибка при добавлении записи");
+    console.log(error);
   };
 
   const handleInputChange = (e) => {
