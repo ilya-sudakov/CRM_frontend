@@ -84,12 +84,10 @@ const IncomeStatsBigPanel = ({
         (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
         0
       );
-
       totalSum += curMonthIncome;
 
       monthsIncome.push({
-        value:
-          totalSum === 0 || i === 0 ? 0 : (curMonthIncome / totalSum) * 100,
+        value: totalSum,
         label: months[i],
         color: "#3e95cd",
       });
@@ -272,14 +270,14 @@ const IncomeStatsBigPanel = ({
               tooltips: {
                 callbacks: {
                   label: (tooltipItem, data) =>
-                    tooltipLabelPercent(tooltipItem, data),
+                    tooltipLabelRubles(tooltipItem, data),
                 },
               },
               scales: {
                 xAxes: { gridLines: { display: false } },
                 yAxes: {
                   ticks: {
-                    callback: (value) => `${value}%`,
+                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
                   },
                 },
               },
