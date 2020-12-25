@@ -522,14 +522,12 @@
     input[type="number"],
     textarea {
       border: 1px solid #bbbbbb;
-      // border: 1px solid #cccccc;
-      width: calc(100% - 20px);
-      max-width: calc(100% - 20px);
-      min-width: calc(100% - 20px);
+      width: 100%;
+      box-sizing: border-box;
       padding: 5px 10px;
-      border-radius: 5px;
+      border-radius: 3px;
       outline: none;
-      height: 1.25rem;
+      height: 2rem;
 
       &:hover {
         border-color: #999999;

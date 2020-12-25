@@ -345,23 +345,15 @@ const TableView = ({
   return (
     <div className="tableview-workshops">
       <div className="main-window">
-        <LabelPrint
-          product={selectedProduct}
-          // name={selectedProduct.name}
-          // link={selectedProduct.link}
-          isHidden={labelIsHidden}
-          // workshop={selectedProduct.workshop}
-        />
+        <LabelPrint product={selectedProduct} isHidden={labelIsHidden} />
         <MessageForUser
           showMessage={showError}
           setShowMessage={setShowError}
-          title="Не введена сумма заказа"
+          title="Не введена сумма заказа!"
           buttonText="Сохранить"
           message={
             <div className="main-window__input-field">
-              <div style={{ marginBottom: "5px" }}>
-                Введите сумму заказа для изменения статуса!
-              </div>
+              <div style={{ marginBottom: "5px" }}>Введите сумму заказа</div>
               <input
                 type="number"
                 onChange={({ target }) => setNewSum(target.value)}
