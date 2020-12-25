@@ -41,7 +41,7 @@
             transform: scale(0);
         }
 
-        .window-message__title {
+        .window-message__header {
             text-align: left;
             padding: 0px 0px;
             margin-bottom: 10px;
@@ -53,11 +53,11 @@
             position: relative;
             min-height: 25px;
 
-            span {
+            .window-message__title {
                 width: 100%;
                 font-size: 1.1rem;
                 font-weight: 500;
-                flex: 0 1 100%;
+                flex: 0 1 100% !important;
                 padding-left: 0;
             }
         }

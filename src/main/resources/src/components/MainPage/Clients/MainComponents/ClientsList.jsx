@@ -1,15 +1,15 @@
 import React from "react";
 import editSVG from "../../../../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../../../../assets/tableview/delete.svg";
 import starSVG from "../../../../../../../../assets/tableview/star.svg";
 import starBorderedSVG from "../../../../../../../../assets/tableview/star_border.svg";
 import phoneSVG from "../../../../../../../../assets/tableview/phone.svg";
 import calendarSVG from "../../../../../../../../assets/tableview/calendar.svg";
-import LockSVG from "../../../../../../../../assets/tableview/bx-lock-alt.svg";
 import eyeSVG from "../../../../../../../../assets/tableview/eye-invisible-outlined.svg";
 import { formatDateString } from "../../../../utils/functions.jsx";
 import { sortClients } from "./functions.js";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
+import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
 
 const ClientsList = ({
   isLoading,
@@ -35,7 +35,7 @@ const ClientsList = ({
         <span>Контакты</span>
         <span>Комментарий</span>
         <span>Дата след. контакта</span>
-        <div className="main-window__actions">Действие</div>
+        <div className="main-window__table-actions"></div>
       </div>
       {isLoading ? (
         <PlaceholderLoading
@@ -155,7 +155,6 @@ const ListItem = ({
       </span>
       <span>
         <div className="main-window__mobile-text">Сайт: </div>
-        {/* {item.site} */}
         <a
           className="main-window__link"
           title={item.site}
@@ -184,7 +183,6 @@ const ListItem = ({
       </span>
       <span>
         <div className="main-window__mobile-text">Дата след. контакта: </div>
-        {/* {formatDateString(item.nextDateContact)} */}
         {new Date(item.nextDateContact) < new Date() ? (
           <div className="main-window__reminder">
             <div>!</div>
@@ -194,74 +192,72 @@ const ListItem = ({
           formatDateString(item.nextDateContact)
         )}
       </span>
-      <div className="main-window__actions">
-        {/* <div className="main-window__mobile-text">Действия:</div> */}
-        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-          <div
-            className="main-window__action"
-            title="Добавить в избранных клиентов"
-            onClick={() => handleFavouriteClick(item, clients)}
-          >
-            <img
-              className="main-window__img"
-              src={item.favorite ? starSVG : starBorderedSVG}
-            />
-          </div>
-        )}
-        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-          <div
-            className="main-window__action"
-            title="Скрыть клиента"
-            onClick={() => handleHideClient(item, clients)}
-          >
-            <img className="main-window__img" src={eyeSVG} />
-          </div>
-        )}
-        <div
-          className="main-window__action"
-          title="Совершить действие"
-          onClick={() => {
-            setCloseWindow(false);
-            setSelectedItem(item);
-            setShowWindow(true);
-            setCurForm("workHistory");
-          }}
-        >
-          <img className="main-window__img" src={phoneSVG} />
-        </div>
-        <div
-          className="main-window__action"
-          title="Дата следующего контакта"
-          onClick={() => {
-            setCloseWindow(false);
-            setSelectedItem(item);
-            setShowWindow(true);
-            setCurForm("nextContactDate");
-          }}
-        >
-          <img className="main-window__img" src={calendarSVG} />
-        </div>
-        <a
-          className="main-window__action"
-          title="Редактирование клиента"
-          href={`/${type}/edit/${item.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img className="main-window__img" src={editSVG} />
-        </a>
-        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-          <div
-            className="main-window__action"
-            title="Удаление клиента"
-            onClick={() => {
-              deleteItem(item.id, index);
-            }}
-          >
-            <img className="main-window__img" src={deleteSVG} />
-          </div>
-        )}
-      </div>
+      <TableActions
+        actions={
+          <>
+            {userContext.userHasAccess(["ROLE_ADMIN"]) && (
+              <div
+                className="main-window__action"
+                title="Добавить в избранных клиентов"
+                onClick={() => handleFavouriteClick(item, clients)}
+              >
+                <img
+                  className="main-window__img"
+                  src={item.favorite ? starSVG : starBorderedSVG}
+                />
+              </div>
+            )}
+            {userContext.userHasAccess(["ROLE_ADMIN"]) && (
+              <div
+                className="main-window__action"
+                title="Скрыть клиента"
+                onClick={() => handleHideClient(item, clients)}
+              >
+                <img className="main-window__img" src={eyeSVG} />
+              </div>
+            )}
+            <div
+              className="main-window__action"
+              title="Совершить действие"
+              onClick={() => {
+                setCloseWindow(false);
+                setSelectedItem(item);
+                setShowWindow(true);
+                setCurForm("workHistory");
+              }}
+            >
+              <img className="main-window__img" src={phoneSVG} />
+            </div>
+            <div
+              className="main-window__action"
+              title="Дата следующего контакта"
+              onClick={() => {
+                setCloseWindow(false);
+                setSelectedItem(item);
+                setShowWindow(true);
+                setCurForm("nextContactDate");
+              }}
+            >
+              <img className="main-window__img" src={calendarSVG} />
+            </div>
+            <a
+              className="main-window__action"
+              title="Редактирование клиента"
+              href={`/${type}/edit/${item.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img className="main-window__img" src={editSVG} />
+            </a>
+            {userContext.userHasAccess(["ROLE_ADMIN"]) && (
+              <DeleteItemAction
+                title="Удаление клиента"
+                onClick={() => deleteItem(item.id, index)}
+              />
+            )}
+          </>
+        }
+      />
     </div>
   );
 };

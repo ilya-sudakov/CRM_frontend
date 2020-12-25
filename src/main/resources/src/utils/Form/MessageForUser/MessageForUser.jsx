@@ -54,8 +54,8 @@ const MessageForUser = ({
             : "window-message__content window-message__content--hidden"
         }
       >
-        <div className="window-message__title">
-          <span>{title}</span>
+        <div className="window-message__header">
+          <div className="window-message__title">{title}</div>
           <div className="window-message__exit" onClick={clickOnMessageWindow}>
             <div
               className="window-message__bar"
