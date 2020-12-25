@@ -270,7 +270,7 @@ const TableView = ({
             <TableActions
               actions={
                 <>
-                  {workshopName !== "requests" && (
+                  {printRequest && workshopName !== "requests" && (
                     <div
                       className="main-window__action"
                       title="Печать заявки"
@@ -296,7 +296,7 @@ const TableView = ({
                       <img className="main-window__img" src={editSVG} />
                     </Link>
                   )}
-                  {userContext.userHasAccess(["ROLE_ADMIN"]) && (
+                  {deleteItem && userContext.userHasAccess(["ROLE_ADMIN"]) && (
                     <DeleteItemAction
                       title="Удаление заявки"
                       onClick={() => deleteItem(request.id)}
