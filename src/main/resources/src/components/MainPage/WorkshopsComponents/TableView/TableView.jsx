@@ -22,9 +22,7 @@ import {
   scrollToElement,
   saveCanvasAsImage,
 } from "../../../../utils/functions.jsx";
-import { requestStatuses } from "../workshopVariables.js";
 import LabelPrint from "../LabelPrint/LabelPrint.jsx";
-import ErrorMessage from "../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import { getPageByRequest, printRequest } from "../functions.js";
 import { defaultPrintObject } from "../objects.js";
@@ -45,6 +43,11 @@ import {
 import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
 import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
 import MessageForUser from "../../../../utils/Form/MessageForUser/MessageForUser.jsx";
+import {
+  getRequestItemClassName,
+  handleMinimizeRequestItem,
+  printRequestsByDates,
+} from "./functions.js";
 
 const TableView = ({
   workshopName,
@@ -77,18 +80,6 @@ const TableView = ({
   const [labelIsHidden, setLabelIsHidden] = useState(true);
   const [requests, setRequests] = useState([]);
   const userContext = useContext(UserContext);
-
-  const sortRequests = (data) => {
-    return data.sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
-    });
-  };
 
   const downloadImage = async (product, workshop) => {
     setSelectedProduct({
@@ -232,23 +223,7 @@ const TableView = ({
 
   const printRequests = (data, displayColumns) => {
     return data.map((request) => {
-      const requestClassName = `main-window__list-item main-window__list-item--${
-        requestStatuses.find(
-          (item) =>
-            item.name === request.status || item.oldName === request.status
-        )?.className
-      } ${
-        request?.requestProducts?.length > 1 && !isMinimized
-          ? "main-window__list-item--multiple-items"
-          : ""
-      } ${
-        request.factory === undefined ||
-        request.factory === "requests" ||
-        request.factory === null
-          ? " main-window__list-item--message main-window__list-item--warning"
-          : ""
-      } ${isMinimized ? "main-window__list-item--is-minimized" : ""}`;
-
+      const requestClassName = getRequestItemClassName(request, isMinimized);
       return (
         <>
           <div
@@ -256,25 +231,14 @@ const TableView = ({
             data-msg="Напоминание! Заявка не перенесена в один из цехов"
             key={request.id}
             id={request.id}
-            onClick={() => {
-              if (!isMinimized) return;
-              let newReqs = requests;
-              let index = 0;
-              requests.find((item, idx) => {
-                if (item.id === request.id) {
-                  index = idx;
-                  return true;
-                }
-                return false;
-              });
-
-              newReqs.splice(index, 1, {
-                ...request,
-                isMinimized: !request.isMinimized,
-              });
-              console.log(requests, newReqs);
-              return setRequests([...newReqs]);
-            }}
+            onClick={() =>
+              handleMinimizeRequestItem(
+                requests,
+                setRequests,
+                request,
+                isMinimized
+              )
+            }
             ref={
               Number.parseInt(history.location.hash.split("#")[1]) ===
               request.id
@@ -431,7 +395,6 @@ const TableView = ({
             const selectedItem = requests.find(
               (item) => item.id === Number.parseInt(errorRequestId)
             );
-            console.log(selectedItem, newSum);
             return editRequest(
               {
                 sum: Number.parseFloat(newSum),
@@ -460,28 +423,15 @@ const TableView = ({
             />
           ) : sortOrder.curSort === "date" ||
             sortOrder.curSort === "shippingDate" ? (
-            dates.map((date) => {
-              let filteredReqs = sortRequests(
-                requests.filter(
-                  (request) =>
-                    formatDateString(new Date(request.date)) ===
-                    formatDateString(new Date(date))
-                )
-              );
-
-              if (filteredReqs.length > 0) {
-                return (
-                  <>
-                    <div className="main-window__table-date">
-                      {formatDateString(new Date(date))}
-                    </div>
-                    {printRequests(filteredReqs, printConfig)}
-                  </>
-                );
-              }
-            })
+            printRequestsByDates(
+              dates,
+              requests,
+              printConfig,
+              sortOrder,
+              printRequests
+            )
           ) : (
-            printRequests(sortRequests(requests), printConfig)
+            printRequests(sortRequests(requests, sortOrder), printConfig)
           )}
         </div>
       </div>
