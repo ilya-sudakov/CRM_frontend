@@ -1,6 +1,10 @@
 import React from "react";
-import { formatDateString } from "../../../../utils/functions.jsx";
+import {
+  formatDateString,
+  saveCanvasAsImage,
+} from "../../../../utils/functions.jsx";
 import { requestStatuses } from "../workshopVariables.js";
+import html2canvas from "html2canvas";
 
 export const getRequestItemClassName = (request, isMinimized) => {
   return `main-window__list-item main-window__list-item--${
@@ -18,6 +22,35 @@ export const getRequestItemClassName = (request, isMinimized) => {
       ? " main-window__list-item--message main-window__list-item--warning"
       : ""
   } ${isMinimized ? "main-window__list-item--is-minimized" : ""}`;
+};
+
+export const downloadImage = async (
+  product,
+  workshop,
+  setSelectedProduct,
+  setLabelIsHidden
+) => {
+  setSelectedProduct({
+    ...product,
+    workshop: workshop,
+  });
+  setLabelIsHidden(false);
+  const element = document.getElementById("label");
+  setTimeout(async () => {
+    await html2canvas(element, {
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+      scrollY: 0,
+      scrollX: 0,
+      scale: window.devicePixelRatio * 5,
+    }).then((canvas) => {
+      setLabelIsHidden(true);
+      saveCanvasAsImage(
+        canvas,
+        `${formatDateString(new Date())}_${product.name}.jpeg`
+      );
+    });
+  }, 1500);
 };
 
 export const handleMinimizeRequestItem = (

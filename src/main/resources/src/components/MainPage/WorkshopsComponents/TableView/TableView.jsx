@@ -7,7 +7,6 @@ import transferSVG from "../../../../../../../../assets/tableview/transfer.svg";
 import TruckSVG from "../../../../../../../../assets/sidemenu/truck.inline.svg";
 import "./TableView.scss";
 import PropTypes from "prop-types";
-import html2canvas from "html2canvas";
 import UserContext from "../../../../App.js";
 
 import {
@@ -80,30 +79,6 @@ const TableView = ({
   const [labelIsHidden, setLabelIsHidden] = useState(true);
   const [requests, setRequests] = useState([]);
   const userContext = useContext(UserContext);
-
-  const downloadImage = async (product, workshop) => {
-    setSelectedProduct({
-      ...product,
-      workshop: workshop,
-    });
-    setLabelIsHidden(false);
-    const element = document.getElementById("label");
-    setTimeout(async () => {
-      await html2canvas(element, {
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-        scrollY: 0,
-        scrollX: 0,
-        scale: window.devicePixelRatio * 5,
-      }).then((canvas) => {
-        setLabelIsHidden(true);
-        saveCanvasAsImage(
-          canvas,
-          `${formatDateString(new Date())}_${product.name}.jpeg`
-        );
-      });
-    }, 1500);
-  };
 
   const handleStatusChange = ({ target }) => {
     const status = target.value;
@@ -271,9 +246,10 @@ const TableView = ({
                 ? renderProductsMinimizedColumn(request)
                 : renderProductsColumn(
                     request,
-                    downloadImage,
                     createLabelForProduct,
-                    handleProductStatusChange
+                    handleProductStatusChange,
+                    setSelectedProduct,
+                    setLabelIsHidden
                   ))}
             {displayColumns["client"].visible && renderClientColumn(request)}
             {displayColumns["responsible"].visible &&
@@ -370,10 +346,10 @@ const TableView = ({
       <div className="main-window">
         <LabelPrint
           product={selectedProduct}
-          name={selectedProduct.name}
-          link={selectedProduct.link}
+          // name={selectedProduct.name}
+          // link={selectedProduct.link}
           isHidden={labelIsHidden}
-          workshop={selectedProduct.workshop}
+          // workshop={selectedProduct.workshop}
         />
         <MessageForUser
           showMessage={showError}

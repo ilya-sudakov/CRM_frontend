@@ -7,6 +7,7 @@ import {
 } from "../../../../utils/functions.jsx";
 import { productsStatuses, requestStatuses } from "../workshopVariables.js";
 import downloadSVG from "../../../../../../../../assets/download.svg";
+import { downloadImage } from "./functions.js";
 
 export const renderIdColumn = (request = { id: 0 }, workshopName = "") => {
   return (
@@ -326,9 +327,10 @@ export const renderListHeader = (sortOrder, isMinimized, printConfig) => {
 
 export const renderProductsColumn = (
   request,
-  downloadImage,
   createLabelForProduct,
-  handleProductStatusChange
+  handleProductStatusChange,
+  setSelectedProduct,
+  setLabelIsHidden
 ) => {
   return (
     <div className="main-window__list-col">
@@ -373,7 +375,14 @@ export const renderProductsColumn = (
               </span>
               {renderProductStatusSelect(product, handleProductStatusChange)}
               <span
-                onClick={() => downloadImage(product, request.factory)}
+                onClick={() =>
+                  downloadImage(
+                    product,
+                    request.factory,
+                    setSelectedProduct,
+                    setLabelIsHidden
+                  )
+                }
                 title="Скачать этикетку"
               >
                 <div className="main-window__mobile-text">Скачать этикетку</div>
