@@ -46,6 +46,7 @@ import {
   getRequestItemClassName,
   handleMinimizeRequestItem,
   printRequestsByDates,
+  sortRequests,
 } from "./functions.js";
 
 const TableView = ({

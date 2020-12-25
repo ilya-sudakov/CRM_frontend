@@ -36,6 +36,7 @@ const IncomeStatsBigPanel = ({
     timePeriod: timeText,
     difference: 0,
     curPeriod: curPeriod,
+    currDate: currDate,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
   });
 
@@ -53,7 +54,7 @@ const IncomeStatsBigPanel = ({
         0
       );
 
-      console.log(months[i], totalIncome);
+      console.log(curMonth);
 
       monthsIncome.push({
         value: totalIncome,
@@ -200,8 +201,6 @@ const IncomeStatsBigPanel = ({
     );
     const incomeByClients = getIncomeByClients(requests, currDate);
 
-    console.log(incomeByClients);
-
     setStats((stats) => ({
       ...stats,
       isLoaded: true,
@@ -346,6 +345,7 @@ const IncomeStatsBigPanel = ({
         ...stats,
         timePeriod: timeText,
         curPeriod: curPeriod,
+        currDate: currDate,
       }));
       getStats(requests);
     }

@@ -45,7 +45,9 @@ const BarChart = ({
       return chartInstance.update();
     }
     const values = newData.map((d) => d.value);
+    const colors = newData.map((d) => d.color);
     chartInstance.data.datasets[datasetIndex].data = values;
+    chartInstance.data.datasets[datasetIndex].backgroundColor = color ?? colors;
     chartInstance.data.labels = labels;
     chartInstance.update();
   };

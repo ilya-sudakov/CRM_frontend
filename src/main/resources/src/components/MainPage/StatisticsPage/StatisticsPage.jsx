@@ -35,8 +35,6 @@ import {
 
 const StatisticsPage = () => {
   const [curPage, setCurPage] = useState("requests");
-
-  const [curDate, setCurDate] = useState(new Date());
   const [curPeriod, setCurPeriod] = useState("month");
   const [currDate, setCurrDate] = useState({
     startDate: getPreviousMonthDates(new Date(), "current").startDate,
@@ -179,7 +177,7 @@ const StatisticsPage = () => {
       <RequestsPage currDate={currDate} timePeriod={timePeriod[curPeriod]} />
     ),
     production: () => (
-      <ProductionPage curDate={curDate} timePeriod={timePeriod[curPeriod]} />
+      <ProductionPage curDate={new Date()} timePeriod={timePeriod[curPeriod]} />
     ),
   };
 

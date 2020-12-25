@@ -198,7 +198,11 @@ const ListItem = ({
             {userContext.userHasAccess(["ROLE_ADMIN"]) && (
               <div
                 className="main-window__action"
-                title="Добавить в избранных клиентов"
+                title={
+                  item.favorite
+                    ? "Убрать из избранных клиентов"
+                    : "Добавить в избранных клиентов"
+                }
                 onClick={() => handleFavouriteClick(item, clients)}
               >
                 <img
