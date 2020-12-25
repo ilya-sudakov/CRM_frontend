@@ -10,6 +10,7 @@ const DeleteItemAction = ({ onClick, title = "Удаление элемента"
       <MessageForUser
         showMessage={showMessage}
         setShowMessage={setShowMessage}
+        title="Подтверждение удаления"
         message="Вы уверены что хотите удалить этот элемент?"
         onClick={() => {
           onClick();

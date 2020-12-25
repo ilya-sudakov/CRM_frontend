@@ -8,6 +8,8 @@ const MessageForUser = ({
   setShowMessage,
   message = "",
   onClick,
+  title = "Сообщение",
+  buttonText = "ОК",
 }) => {
   const clickOnMessageWindow = (event) => {
     event.preventDefault();
@@ -53,6 +55,7 @@ const MessageForUser = ({
         }
       >
         <div className="window-message__title">
+          <span>{title}</span>
           <div className="window-message__exit" onClick={clickOnMessageWindow}>
             <div
               className="window-message__bar"
@@ -68,11 +71,11 @@ const MessageForUser = ({
         <div
           className="main-window__button"
           onClick={(event) => {
-            clickOnMessageWindow(event);
             onClick();
+            clickOnMessageWindow(event);
           }}
         >
-          ОК
+          {buttonText}
         </div>
       </div>
     </div>
@@ -86,4 +89,6 @@ MessageForUser.propTypes = {
   showMessage: PropTypes.bool,
   setShowMessage: PropTypes.func,
   onClick: PropTypes.func,
+  title: PropTypes.string,
+  buttonText: PropTypes.string,
 };

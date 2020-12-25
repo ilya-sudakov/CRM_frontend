@@ -24,7 +24,7 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        width: 300px;
+        width: 350px;
         min-height: 150px;
         background-color: #eeeeee;
         border: #cccccc;
@@ -42,7 +42,7 @@
         }
 
         .window-message__title {
-            text-align: center;
+            text-align: left;
             padding: 0px 0px;
             margin-bottom: 10px;
             font-size: 125%;
@@ -52,6 +52,14 @@
             align-items: center;
             position: relative;
             min-height: 25px;
+
+            span {
+                width: 100%;
+                font-size: 1.1rem;
+                font-weight: 500;
+                flex: 0 1 100%;
+                padding-left: 0;
+            }
         }
 
         .window-message__message {

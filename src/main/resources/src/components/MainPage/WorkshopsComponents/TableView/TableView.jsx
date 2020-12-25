@@ -44,6 +44,7 @@ import {
 } from "./renderItems.jsx";
 import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
 import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
+import MessageForUser from "../../../../utils/Form/MessageForUser/MessageForUser.jsx";
 
 const TableView = ({
   workshopName,
@@ -67,6 +68,7 @@ const TableView = ({
 }) => {
   const [showError, setShowError] = useState(false);
   const [errorRequestId, setErrorRequestId] = useState(null);
+  const [newSum, setNewSum] = useState(0);
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({
     name: "",
@@ -138,7 +140,6 @@ const TableView = ({
       const selectedItem = requests.find(
         (item) => item.id === Number.parseInt(id)
       );
-      console.log(selectedItem);
       if (selectedItem) {
         return editRequest(
           {
@@ -410,22 +411,44 @@ const TableView = ({
           isHidden={labelIsHidden}
           workshop={selectedProduct.workshop}
         />
-        <ErrorMessage
-          showError={showError}
-          setShowError={setShowError}
+        <MessageForUser
+          showMessage={showError}
+          setShowMessage={setShowError}
+          title="Не введена сумма заказа"
+          buttonText="Сохранить"
           message={
-            <div>
-              <div style={{ marginBottom: "15px" }}>
+            <div className="main-window__input-field">
+              <div style={{ marginBottom: "5px" }}>
                 Введите сумму заказа для изменения статуса!
               </div>
-              <Link
-                className="main-window__link-text"
-                to={`/requests/edit/${errorRequestId}`}
-              >
-                Перейти на страницу редактирования
-              </Link>
+              <input
+                type="number"
+                onChange={({ target }) => setNewSum(target.value)}
+              />
             </div>
           }
+          onClick={() => {
+            const selectedItem = requests.find(
+              (item) => item.id === Number.parseInt(errorRequestId)
+            );
+            console.log(selectedItem, newSum);
+            return editRequest(
+              {
+                sum: Number.parseFloat(newSum),
+                date: selectedItem.date,
+                responsible: selectedItem.responsible,
+                factory: selectedItem.factory,
+                comment: selectedItem.comment,
+                status: selectedItem.status,
+                shippingDate: selectedItem.shippingDate,
+              },
+              selectedItem.id
+            )
+              .then(() => changeStatus(selectedItem.status, selectedItem.id))
+              .catch((error) => {
+                console.log(error);
+              });
+          }}
         />
         <div className="main-window__list">
           {renderListHeader(sortOrder, isMinimized, printConfig)}

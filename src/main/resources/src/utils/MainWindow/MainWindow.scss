@@ -513,6 +513,43 @@
     }
   }
 
+  // INPUTS
+
+  .main-window__input-field {
+    width: 100%;
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    textarea {
+      border: 1px solid #bbbbbb;
+      // border: 1px solid #cccccc;
+      width: calc(100% - 20px);
+      max-width: calc(100% - 20px);
+      min-width: calc(100% - 20px);
+      padding: 5px 10px;
+      border-radius: 5px;
+      outline: none;
+      height: 1.25rem;
+
+      &:hover {
+        border-color: #999999;
+      }
+
+      &:focus {
+        border: 1px solid $button__background--inverted;
+      }
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+  }
+
   // LIST
 
   &__list {
