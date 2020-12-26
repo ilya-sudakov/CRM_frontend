@@ -170,6 +170,15 @@ const TableView = ({
       });
   };
 
+  const handleRequestTransfer = (event) => {
+    event.preventDefault();
+    if (request.sum === null || request.sum === 0) {
+      setErrorRequestId(Number.parseInt(request.id));
+      return setShowError(true);
+    }
+    return transferRequest(request.id);
+  };
+
   const prevRef = useCallback(
     (node) => {
       const id = Number.parseInt(history.location.hash.split("#")[1]);
@@ -268,70 +277,52 @@ const TableView = ({
               userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
               renderPriceColumn(request)}
             <TableActions
-              actions={
-                <>
-                  {printRequest && workshopName !== "requests" && (
-                    <div
-                      className="main-window__action"
-                      title="Печать заявки"
-                      onClick={() => printRequest(request)}
-                    >
-                      <img className="main-window__img" src={printSVG} />
-                    </div>
-                  )}
-                  {userContext.userHasAccess([
+              actionsList={[
+                {
+                  title: "Печать заявки",
+                  onClick: () => printRequest(request),
+                  imgSrc: printSVG,
+                  isRendered: printRequest && workshopName !== "requests",
+                },
+                {
+                  title: "Редактирование заявки",
+                  link:
+                    workshopName === "requests"
+                      ? `/requests/edit/${request.id}`
+                      : `/${workshopName}/workshop-${workshopName}/edit/${request.id}`,
+                  imgSrc: editSVG,
+                  isRendered: userContext.userHasAccess([
                     "ROLE_ADMIN",
                     "ROLE_MANAGER",
                     "ROLE_WORKSHOP",
-                  ]) && (
-                    <Link
-                      to={
-                        workshopName === "requests"
-                          ? `/requests/edit/${request.id}`
-                          : `/${workshopName}/workshop-${workshopName}/edit/${request.id}`
-                      }
-                      className="main-window__action"
-                      title="Редактирование заявки"
-                    >
-                      <img className="main-window__img" src={editSVG} />
-                    </Link>
-                  )}
-                  {deleteItem && userContext.userHasAccess(["ROLE_ADMIN"]) && (
+                  ]),
+                },
+                {
+                  customElement: (
                     <DeleteItemAction
                       title="Удаление заявки"
                       onClick={() => deleteItem(request.id)}
                     />
-                  )}
-                  {transferRequest &&
-                    userContext.userHasAccess(["ROLE_ADMIN"]) && (
-                      <div
-                        data-id={request.id}
-                        className="main-window__action"
-                        title="Перенос заявки"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          if (request.sum === null || request.sum === 0) {
-                            setErrorRequestId(Number.parseInt(request.id));
-                            return setShowError(true);
-                          }
-                          return transferRequest(request.id);
-                        }}
-                      >
-                        <img className="main-window__img" src={transferSVG} />
-                      </div>
-                    )}
-                  {copyRequest && userContext.userHasAccess(["ROLE_ADMIN"]) && (
-                    <div
-                      data-id={request.id}
-                      className="main-window__action"
-                      title="Копирование заявки"
-                      onClick={() => copyRequest(request.id)}
-                    >
-                      <img className="main-window__img" src={copySVG} />
-                    </div>
-                  )}
-                </>
-              }
+                  ),
+                  isRendered:
+                    deleteItem && userContext.userHasAccess(["ROLE_ADMIN"]),
+                },
+                {
+                  title: "Перенос заявки",
+                  onClick: (event) => handleRequestTransfer(event),
+                  imgSrc: transferSVG,
+                  isRendered:
+                    transferRequest &&
+                    userContext.userHasAccess(["ROLE_ADMIN"]),
+                },
+                {
+                  title: "Копирование заявки",
+                  onClick: () => copyRequest(request.id),
+                  imgSrc: copySVG,
+                  isRendered:
+                    copyRequest && userContext.userHasAccess(["ROLE_ADMIN"]),
+                },
+              ]}
             />
           </div>
           {isMinimized

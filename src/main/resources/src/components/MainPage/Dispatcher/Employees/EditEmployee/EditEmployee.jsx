@@ -122,13 +122,15 @@ const EditEmployee = (props) => {
             employeeInputs.patentExpirationDate === null
               ? null
               : Number.parseInt(
-                  employeeInputs.patentExpirationDate.getTime() / 1000
+                  new Date(employeeInputs.patentExpirationDate).getTime() / 1000
                 ),
           registrationExpirationDate:
             employeeInputs.registrationExpirationDate === null
               ? null
               : Number.parseInt(
-                  employeeInputs.registrationExpirationDate.getTime() / 1000
+                  new Date(
+                    employeeInputs.registrationExpirationDate
+                  ).getTime() / 1000
                 ),
         },
         employeeId

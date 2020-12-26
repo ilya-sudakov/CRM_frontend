@@ -37,7 +37,7 @@ const ListItem = ({ item }) => {
         <Link to={item.link}>{item.name}</Link>
         <div>{item.description}</div>
       </div>
-      {item.description === "День рождения" ? (
+      {item.description === "Сегодня день рождения" ? (
         <CakeIcon className="main-window__img" />
       ) : (
         <DocumentsIcon className="main-window__img" />

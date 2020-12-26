@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DotsIcon from "../../../../../../../assets/sidemenu/more.inline.svg";
 import "./TableActions.scss";
+import { Link } from "react-router-dom";
 
-const TableActions = ({ isMinimized, actions }) => {
+const TableActions = ({ actionsList = [] }) => {
   const [isHidden, setIsHidden] = useState(true);
 
   return (
@@ -21,7 +22,11 @@ const TableActions = ({ isMinimized, actions }) => {
         height={30}
         alt=""
       />
-      <div className="table-actions__menu">{actions}</div>
+      <div className="table-actions__menu">
+        {actionsList.map((item, index) => (
+          <ActionItem key={index} item={item} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -29,6 +34,35 @@ const TableActions = ({ isMinimized, actions }) => {
 export default TableActions;
 
 TableActions.propTypes = {
-  isMinimized: PropTypes.bool,
-  actions: PropTypes.any,
+  actionsList: PropTypes.array,
+};
+
+const ActionItem = ({ item }) => {
+  const isRendered = item.isRendered === undefined || item.isRendered === true;
+  if (item.customElement) return !isRendered ? null : item.customElement;
+  if (!isRendered) return null;
+  if (item.link) {
+    return (
+      <Link
+        className="main-window__action"
+        to={item.link}
+        title={item.title}
+        target={item.openInNewTab ? "_blank" : ""}
+        rel={item.openInNewTab ? "noopener noreferrer" : ""}
+      >
+        {item.text}
+        <img className="main-window__img" src={item.imgSrc} />
+      </Link>
+    );
+  }
+  return (
+    <div
+      className="main-window__action"
+      onClick={item.onClick}
+      title={item.title}
+    >
+      {item.text}
+      <img className="main-window__img" src={item.imgSrc} />
+    </div>
+  );
 };
