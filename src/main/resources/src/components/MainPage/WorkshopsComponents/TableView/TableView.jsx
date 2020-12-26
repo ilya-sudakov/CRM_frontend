@@ -197,6 +197,74 @@ const TableView = ({
     [data]
   );
 
+  const handleSumEdit = () => {
+    const selectedItem = requests.find(
+      (item) => item.id === Number.parseInt(errorRequestId)
+    );
+    return editRequest(
+      {
+        sum: Number.parseFloat(newSum),
+        date: selectedItem.date,
+        responsible: selectedItem.responsible,
+        factory: selectedItem.factory,
+        comment: selectedItem.comment,
+        status: selectedItem.status,
+        shippingDate: selectedItem.shippingDate,
+      },
+      selectedItem.id
+    )
+      .then(() => changeStatus(selectedItem.status, selectedItem.id))
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getActionsList = (request) => {
+    return [
+      {
+        title: "Печать заявки",
+        onClick: () => printRequest(request),
+        imgSrc: printSVG,
+        isRendered: printRequest && workshopName !== "requests",
+      },
+      {
+        title: "Редактирование заявки",
+        link:
+          workshopName === "requests"
+            ? `/requests/edit/${request.id}`
+            : `/${workshopName}/workshop-${workshopName}/edit/${request.id}`,
+        imgSrc: editSVG,
+        isRendered: userContext.userHasAccess([
+          "ROLE_ADMIN",
+          "ROLE_MANAGER",
+          "ROLE_WORKSHOP",
+        ]),
+      },
+      {
+        customElement: (
+          <DeleteItemAction
+            title="Удаление заявки"
+            onClick={() => deleteItem(request.id)}
+          />
+        ),
+        isRendered: deleteItem && userContext.userHasAccess(["ROLE_ADMIN"]),
+      },
+      {
+        title: "Перенос заявки",
+        onClick: (event) => handleRequestTransfer(event),
+        imgSrc: transferSVG,
+        isRendered:
+          transferRequest && userContext.userHasAccess(["ROLE_ADMIN"]),
+      },
+      {
+        title: "Копирование заявки",
+        onClick: () => copyRequest(request.id),
+        imgSrc: copySVG,
+        isRendered: copyRequest && userContext.userHasAccess(["ROLE_ADMIN"]),
+      },
+    ];
+  };
+
   useEffect(() => {
     const requestsWithMinimizedParam = data.map((request) => {
       return { ...request, isMinimized: true };
@@ -209,6 +277,7 @@ const TableView = ({
   const printRequests = (data, displayColumns) => {
     return data.map((request) => {
       const requestClassName = getRequestItemClassName(request, isMinimized);
+      const actionsList = getActionsList(request);
       return (
         <>
           <div
@@ -276,54 +345,7 @@ const TableView = ({
             {displayColumns["price"].visible &&
               userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
               renderPriceColumn(request)}
-            <TableActions
-              actionsList={[
-                {
-                  title: "Печать заявки",
-                  onClick: () => printRequest(request),
-                  imgSrc: printSVG,
-                  isRendered: printRequest && workshopName !== "requests",
-                },
-                {
-                  title: "Редактирование заявки",
-                  link:
-                    workshopName === "requests"
-                      ? `/requests/edit/${request.id}`
-                      : `/${workshopName}/workshop-${workshopName}/edit/${request.id}`,
-                  imgSrc: editSVG,
-                  isRendered: userContext.userHasAccess([
-                    "ROLE_ADMIN",
-                    "ROLE_MANAGER",
-                    "ROLE_WORKSHOP",
-                  ]),
-                },
-                {
-                  customElement: (
-                    <DeleteItemAction
-                      title="Удаление заявки"
-                      onClick={() => deleteItem(request.id)}
-                    />
-                  ),
-                  isRendered:
-                    deleteItem && userContext.userHasAccess(["ROLE_ADMIN"]),
-                },
-                {
-                  title: "Перенос заявки",
-                  onClick: (event) => handleRequestTransfer(event),
-                  imgSrc: transferSVG,
-                  isRendered:
-                    transferRequest &&
-                    userContext.userHasAccess(["ROLE_ADMIN"]),
-                },
-                {
-                  title: "Копирование заявки",
-                  onClick: () => copyRequest(request.id),
-                  imgSrc: copySVG,
-                  isRendered:
-                    copyRequest && userContext.userHasAccess(["ROLE_ADMIN"]),
-                },
-              ]}
-            />
+            <TableActions actionsList={actionsList} />
           </div>
           {isMinimized
             ? renderProductsSubItem(request, handleProductStatusChange)
@@ -351,27 +373,7 @@ const TableView = ({
               />
             </div>
           }
-          onClick={() => {
-            const selectedItem = requests.find(
-              (item) => item.id === Number.parseInt(errorRequestId)
-            );
-            return editRequest(
-              {
-                sum: Number.parseFloat(newSum),
-                date: selectedItem.date,
-                responsible: selectedItem.responsible,
-                factory: selectedItem.factory,
-                comment: selectedItem.comment,
-                status: selectedItem.status,
-                shippingDate: selectedItem.shippingDate,
-              },
-              selectedItem.id
-            )
-              .then(() => changeStatus(selectedItem.status, selectedItem.id))
-              .catch((error) => {
-                console.log(error);
-              });
-          }}
+          onClick={handleSumEdit}
         />
         <div className="main-window__list">
           {renderListHeader(sortOrder, isMinimized, printConfig)}
