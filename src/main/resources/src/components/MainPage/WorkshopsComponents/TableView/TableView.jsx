@@ -225,7 +225,8 @@ const TableView = ({
         title: "Печать заявки",
         onClick: () => printRequest(request),
         imgSrc: printSVG,
-        isRendered: printRequest && workshopName !== "requests",
+        isRendered:
+          (printRequest ? printRequest : false) && workshopName !== "requests",
       },
       {
         title: "Редактирование заявки",
@@ -247,20 +248,25 @@ const TableView = ({
             onClick={() => deleteItem(request.id)}
           />
         ),
-        isRendered: deleteItem && userContext.userHasAccess(["ROLE_ADMIN"]),
+        isRendered:
+          (deleteItem ? deleteItem : false) &&
+          userContext.userHasAccess(["ROLE_ADMIN"]),
       },
       {
         title: "Перенос заявки",
         onClick: (event) => handleRequestTransfer(event),
         imgSrc: transferSVG,
         isRendered:
-          transferRequest && userContext.userHasAccess(["ROLE_ADMIN"]),
+          (transferRequest ? transferRequest : false) &&
+          userContext.userHasAccess(["ROLE_ADMIN"]),
       },
       {
         title: "Копирование заявки",
         onClick: () => copyRequest(request.id),
         imgSrc: copySVG,
-        isRendered: copyRequest && userContext.userHasAccess(["ROLE_ADMIN"]),
+        isRendered:
+          (copyRequest ? copyRequest : false) &&
+          userContext.userHasAccess(["ROLE_ADMIN"]),
       },
     ];
   };
