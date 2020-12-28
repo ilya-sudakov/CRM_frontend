@@ -170,8 +170,8 @@ const TableView = ({
       });
   };
 
-  const handleRequestTransfer = (event) => {
-    event.preventDefault();
+  const handleRequestTransfer = (request) => {
+    console.log(request);
     if (request.sum === null || request.sum === 0) {
       setErrorRequestId(Number.parseInt(request.id));
       return setShowError(true);
@@ -254,7 +254,7 @@ const TableView = ({
       },
       {
         title: "Перенос заявки",
-        onClick: (event) => handleRequestTransfer(event),
+        onClick: () => handleRequestTransfer(request),
         imgSrc: transferSVG,
         isRendered:
           (transferRequest ? transferRequest : false) &&
