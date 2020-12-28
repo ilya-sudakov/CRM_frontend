@@ -10,6 +10,7 @@ import {
   addRequest,
   editRequest,
   addProductsToRequest,
+  connectClientToRequest,
 } from "../../../utils/RequestsAPI/Requests.jsx";
 import TableView from "../WorkshopsComponents/TableView/TableView.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
@@ -157,11 +158,13 @@ const Requests = (props) => {
         return true;
       }
     });
+    let newId = 0;
     addRequest({
       date: requestToBeCopied.date,
       products: requestToBeCopied.requestProducts,
       quantity: requestToBeCopied.quantity,
-      codeWord: requestToBeCopied.codeWord,
+      clientId: requestToBeCopied.client?.id,
+      sum: requestToBeCopied.sum,
       responsible: requestToBeCopied.responsible,
       status: requestToBeCopied.status,
       shippingDate:
@@ -173,19 +176,23 @@ const Requests = (props) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        const productsArr = requestToBeCopied.requestProducts.map((item) => {
-          return addProductsToRequest({
-            requestId: res.id,
-            quantity: item.quantity,
-            packaging: item.packaging,
-            status: item.status,
-            name: item.name,
-          });
-        });
-        Promise.all(productsArr).then(() => {
-          setIsLoading(false);
-          loadRequests();
-        });
+        newId = res.id;
+        return Promise.all(
+          requestToBeCopied.requestProducts.map((item) => {
+            return addProductsToRequest({
+              requestId: res.id,
+              quantity: item.quantity,
+              packaging: item.packaging,
+              status: item.status,
+              name: item.name,
+            });
+          })
+        );
+      })
+      .then(() => connectClientToRequest(newId, requestToBeCopied.client?.id))
+      .then(() => {
+        setIsLoading(false);
+        loadRequests();
       })
       .catch((error) => {
         setIsLoading(false);
