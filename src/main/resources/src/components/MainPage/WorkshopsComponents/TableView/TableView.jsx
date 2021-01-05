@@ -70,7 +70,7 @@ const TableView = ({
   },
 }) => {
   const [showError, setShowError] = useState(false);
-  const [errorRequestId, setErrorRequestId] = useState(null);
+  const [errorRequest, setErrorRequest] = useState({});
   const [newSum, setNewSum] = useState(0);
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({
@@ -96,7 +96,10 @@ const TableView = ({
       ) {
         return changeStatus(status, id);
       } else {
-        setErrorRequestId(Number.parseInt(id));
+        const selectedItem = requests.find(
+          (item) => item.id === Number.parseInt(id)
+        );
+        setErrorRequest({ ...selectedItem, newStatus: status });
         setShowError(true);
         return;
       }
@@ -173,7 +176,7 @@ const TableView = ({
   const handleRequestTransfer = (request) => {
     console.log(request);
     if (request.sum === null || request.sum === 0) {
-      setErrorRequestId(Number.parseInt(request.id));
+      setErrorRequest(request);
       return setShowError(true);
     }
     return transferRequest(request.id);
@@ -198,9 +201,7 @@ const TableView = ({
   );
 
   const handleSumEdit = () => {
-    const selectedItem = requests.find(
-      (item) => item.id === Number.parseInt(errorRequestId)
-    );
+    const selectedItem = errorRequest;
     return editRequest(
       {
         sum: Number.parseFloat(newSum),
@@ -213,7 +214,7 @@ const TableView = ({
       },
       selectedItem.id
     )
-      .then(() => changeStatus(selectedItem.status, selectedItem.id))
+      .then(() => changeStatus(selectedItem.newStatus, selectedItem.id))
       .catch((error) => {
         console.log(error);
       });
