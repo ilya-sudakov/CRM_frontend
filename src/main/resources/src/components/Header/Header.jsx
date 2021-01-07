@@ -4,6 +4,7 @@ import exitSVG from "../../../../../../assets/header/exit.svg";
 import employeeSVG from "../../../../../../assets/header/employee.svg";
 import newLogoSVG from "../../../../../../assets/header/header__new_year.png";
 import mobileLogoSVG from "../../../../../../assets/header/header__mobile_new_year.png";
+import ChevronSVG from "../../../../../../assets/tableview/chevron-down.inline.svg";
 import notificationBellSVG from "../../../../../../assets/notifications/notification_bell.svg";
 import { Link, withRouter } from "react-router-dom";
 import "./Header.scss";
@@ -97,7 +98,10 @@ const Header = (props) => {
             <div className="header__username">
               {userContext.userData.username}
             </div>
-            <img className="header__userimg" src={profileSVG} alt="" />
+            {/* <img className="header__userimg" src={profileSVG} alt="" /> */}
+            {userContext.userHasAccess(["ROLE_ADMIN"]) && (
+              <ChevronSVG className="header__userimg" alt="" />
+            )}
           </div>
           {userContext.userHasAccess(["ROLE_ADMIN"]) && (
             <div

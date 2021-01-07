@@ -150,11 +150,9 @@
       }
 
       &--notification {
-        margin-right: 10px;
+        margin-right: 5px;
         position: relative;
-        // border: 1px solid #9b9b9b;
-        border-radius: 999px;
-        padding: 5px 10px;
+        padding: 5px 5px;
         transition: 200ms ease-in-out;
         z-index: 999;
 
@@ -254,16 +252,12 @@
         margin-right: 10px;
         cursor: pointer;
         position: relative;
-        padding: 0px 5px;
-        padding-left: 10px;
-        border-radius: 20px;
-        min-width: 100px;
-        border: 1px solid #9b9b9b;
+        padding: 8px 15px;
+        border-radius: 5px;
+        border: 1px solid transparent;
+        // min-width: 100px;
         transition: 0.2s ease-in-out;
         z-index: 2;
-        //dark-theme
-        // background-color: lighten($side_menu__background, 0%);
-        // color: #ffffff;
 
         .header__profile_overlay {
           position: fixed;
@@ -272,17 +266,10 @@
           top: 0;
           left: 0;
           z-index: 999;
-          // background-color: red;
 
           &--hidden {
             display: none;
           }
-        }
-
-        &:hover {
-          background-color: darken($primary-background-color, 7.5%);
-          //dark-theme
-          // background-color: darken($side_menu__background, 5%);
         }
 
         .header__profile_data {
@@ -294,10 +281,8 @@
           text-align: center !important;
 
           .header__userimg {
-            width: 40px;
+            width: 20px;
             margin-left: 5px;
-            //dark-theme
-            // filter: brightness(2);
           }
 
           .header__email {
@@ -305,10 +290,13 @@
           }
 
           .header__username {
-            font-size: 90%;
-            width: calc(100% - 45px);
-            // text-align: right;
+            font-size: 1rem;
           }
+        }
+
+        &:hover {
+          background-color: #efefef;
+          border: 1px solid #dddddd;
         }
 
         .header__profile_menu {
