@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import profileSVG from "../../../../../../assets/header/profile1.svg";
 import exitSVG from "../../../../../../assets/header/exit.svg";
+import HistorySVG from "../../../../../../assets/statistics/history-outlined.inline.svg";
 import employeeSVG from "../../../../../../assets/header/employee.svg";
 import newLogoSVG from "../../../../../../assets/header/header__new_year.png";
 import mobileLogoSVG from "../../../../../../assets/header/header__mobile_new_year.png";
@@ -80,11 +80,7 @@ const Header = (props) => {
         </Link>
         <div
           className="header__item header__item--user"
-          onClick={
-            userContext.userHasAccess(["ROLE_ADMIN"])
-              ? () => setShowProfileMenu(!showProfileMenu)
-              : null
-          }
+          onClick={() => setShowProfileMenu(!showProfileMenu)}
         >
           <div
             className={
@@ -98,19 +94,21 @@ const Header = (props) => {
             <div className="header__username">
               {userContext.userData.username}
             </div>
-            {/* <img className="header__userimg" src={profileSVG} alt="" /> */}
-            {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-              <ChevronSVG className="header__userimg" alt="" />
-            )}
+            <ChevronSVG
+              className={`header__userimg ${
+                showProfileMenu ? "main-window__img--rotated" : ""
+              }`}
+              alt=""
+            />
           </div>
-          {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-            <div
-              className={
-                showProfileMenu
-                  ? "header__profile_menu"
-                  : "header__profile_menu header__profile_menu--hidden"
-              }
-            >
+          <div
+            className={
+              showProfileMenu
+                ? "header__profile_menu"
+                : "header__profile_menu header__profile_menu--hidden"
+            }
+          >
+            {userContext.userHasAccess(["ROLE_ADMIN"]) ? (
               <Link
                 to="/profile/users"
                 className={`header__profile_item ${
@@ -123,6 +121,8 @@ const Header = (props) => {
                 <img className="header__img" src={employeeSVG} alt="" />
                 <span>Управление пользователями</span>
               </Link>
+            ) : null}
+            {userContext.userHasAccess(["ROLE_ADMIN"]) ? (
               <Link
                 to="/profile/login-history"
                 className={`header__profile_item ${
@@ -132,15 +132,23 @@ const Header = (props) => {
                 }`}
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
-                <img className="header__img" src={exitSVG} alt="" />
+                <HistorySVG
+                  className="header__img header__img--history"
+                  alt=""
+                />
                 <span>История входов</span>
               </Link>
-            </div>
-          )}
+            ) : null}
+            <Link
+              to="/login"
+              className="header__profile_item"
+              onClick={() => setShowProfileMenu(!showProfileMenu)}
+            >
+              <img className="header__img" src={exitSVG} alt="" />
+              <span>Выйти из профиля</span>
+            </Link>
+          </div>
         </div>
-        <Link className="header__item" to="/login">
-          <img className="header__img" src={exitSVG} alt="" />
-        </Link>
       </div>
     </div>
   );
