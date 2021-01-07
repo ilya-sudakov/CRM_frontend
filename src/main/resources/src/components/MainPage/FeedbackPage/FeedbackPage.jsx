@@ -216,8 +216,6 @@ const FeedbackPage = (props) => {
         />
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
-            {/* <span>Обсуждения</span>
-            <div className="main-window__actions">Действие</div> */}
           </div>
           {isLoading && (
             <PlaceholderLoading
