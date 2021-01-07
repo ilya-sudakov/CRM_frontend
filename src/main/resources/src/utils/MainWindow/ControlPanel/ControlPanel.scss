@@ -126,6 +126,10 @@
         }
     }
 
+    & + .main-window__list--full {
+        margin-top: -11px;
+    }
+
     @media (max-width: 768px) {
         .main-window__control-panel-wrapper {
             padding-left: 15px;
@@ -140,6 +144,10 @@
                     }
                 }
             }
+        }
+
+        & + .main-window__list--full {
+            margin-top: -19px;
         }
     }
 }

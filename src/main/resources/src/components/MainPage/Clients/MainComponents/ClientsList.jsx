@@ -30,13 +30,13 @@ const ClientsList = ({
   const userContext = useContext(UserContext);
 
   return (
-    <div className="main-window__list">
+    <div className="main-window__list main-window__list--full">
       <div className="main-window__list-item main-window__list-item--header">
         <span>Название</span>
         <span>Сайт</span>
         <span>Контакты</span>
         <span>Комментарий</span>
-        <span>Дата след. контакта</span>
+        <span>След. контакт</span>
         <div className="main-window__table-actions"></div>
       </div>
       {isLoading ? (

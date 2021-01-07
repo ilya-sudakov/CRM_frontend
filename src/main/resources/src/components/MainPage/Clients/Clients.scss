@@ -71,7 +71,7 @@
         }
         &:nth-child(5) {
           flex: 0 1 10%;
-          max-width: 100px;
+          max-width: 110px;
         }
       }
       .main-window__actions {
@@ -103,7 +103,6 @@
   }
 
   .main-window__pagination {
-    padding: 0 15px;
     .main-window__sort-panel {
       justify-content: center;
       width: fit-content;

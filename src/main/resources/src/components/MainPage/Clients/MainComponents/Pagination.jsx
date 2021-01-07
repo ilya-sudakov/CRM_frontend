@@ -11,7 +11,7 @@ const Pagination = ({
   searchQuery,
 }) => {
   return (
-    <div className="main-window__pagination">
+    <div className="main-window__pagination main-window__pagination--full">
       <ItemsPerPage
         itemsPerPage={itemsPerPage}
         setItemsPerPage={setItemsPerPage}
