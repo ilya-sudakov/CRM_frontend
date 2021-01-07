@@ -246,7 +246,7 @@
         cursor: pointer;
         position: relative;
         padding: 8px 15px;
-        border-radius: 5px;
+        border-radius: 3px;
         border: 1px solid transparent;
         padding-right: 5px;
         transition: 0.2s ease-in-out;
@@ -299,7 +299,7 @@
 
         .header__profile_menu {
           background-color: $side_menu__background;
-          border-radius: 5px;
+          border-radius: 3px;
           font-size: 80%;
           position: absolute;
           top: 45px;
@@ -327,9 +327,11 @@
               content: "";
               position: absolute;
               top: 5px;
-              left: 0px;
+              left: -5px;
               height: calc(100% - 10px);
-              border-radius: 15px;
+              border-radius: 1px;
+              border-top-left-radius: 0;
+              border-bottom-left-radius: 0;
               background-color: transparent;
               width: 5px;
             }
