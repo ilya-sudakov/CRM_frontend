@@ -98,6 +98,10 @@
             flex-wrap: wrap;
             right: auto;
             transform: scale(1);
+            background-color: inherit;
+            border: none;
+            justify-content: flex-end;
+            padding: 5px 0;
         }
         &--is-hidden {
             .table-actions__menu {
