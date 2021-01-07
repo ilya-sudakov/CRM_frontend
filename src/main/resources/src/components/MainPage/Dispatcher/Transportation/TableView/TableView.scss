@@ -48,10 +48,11 @@
 
   @media (max-width: 768px) {
     .main-window__list {
+      margin-top: -10px;
       .main-window__list-item {
         span {
-          padding-top: 5px !important;
-          padding-bottom: 5px !important;
+          padding-top: 2px !important;
+          padding-bottom: 2px !important;
           &:nth-child(3) {
             max-width: none;
           }

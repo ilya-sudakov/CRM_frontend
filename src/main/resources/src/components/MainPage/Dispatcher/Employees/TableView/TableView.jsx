@@ -109,7 +109,7 @@ const TableView = (props) => {
 
   return (
     <div className="tableview-employees">
-      <div className="main-window__list">
+      <div className="main-window__list main-window__list--full">
         <div className="main-window__list-item main-window__list-item--header">
           <span>Подразделение</span>
           <div className="main-window__actions">Действия</div>
