@@ -319,7 +319,9 @@
       border-radius: 5px;
       &::before {
         left: -1px;
-        border-radius: 15px;
+        border-radius: 3px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
       }
       &:hover {
         .sidemenu__img--icon {
@@ -408,13 +410,19 @@
       }
     }
 
-    & .sidemenu__dropdown-menu {
+    .sidemenu__dropdown-menu {
       min-width: 200px;
       width: fit-content;
 
-      .sidemenu__link {
-        margin-right: 20px;
-        max-width: fit-content;
+      .sidemenu__item {
+        .sidemenu__link {
+          margin-right: 10px;
+          max-width: fit-content;
+
+          .sidemenu__img {
+            margin-right: 10px !important;
+          }
+        }
       }
     }
 
