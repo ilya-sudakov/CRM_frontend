@@ -140,7 +140,7 @@ const ClientCategories = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <ControlPanel itemsCount={`Всего: ${categories.length} записей`} />
-        <div className="main-window__list">
+        <div className="main-window__list main-window__list--full">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название</span>
             <span>Видимость</span>
