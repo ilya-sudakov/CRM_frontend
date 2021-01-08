@@ -270,9 +270,18 @@ export const renderProductsSubItem = (request, handleStatusChange) => {
               )?.className
             }`}
           >
-            <span>{product.name}</span>
-            <span>{product.packaging}</span>
-            <span>{`${addSpaceDelimiter(product.quantity)} шт.`}</span>
+            <span>
+              <div className="main-window__mobile-text">Название</div>
+              {product.name}
+            </span>
+            <span>
+              <div className="main-window__mobile-text">Упаковка</div>
+              {product.packaging}
+            </span>
+            <span>
+              <div className="main-window__mobile-text">Кол-во</div>
+              {`${addSpaceDelimiter(product.quantity)} шт.`}
+            </span>
             {renderProductStatusSelect(product, handleStatusChange)}
           </div>
         ))}
@@ -285,12 +294,12 @@ export const renderListHeader = (sortOrder, isMinimized, printConfig) => {
   return (
     <div
       className="main-window__list-item main-window__list-item--header"
-      style={{
-        marginBottom:
-          sortOrder.curSort === "date" || sortOrder.curSort === "shippingDate"
-            ? "-10px"
-            : "0",
-      }}
+      // style={{
+      //   marginBottom:
+      //     sortOrder.curSort === "date" || sortOrder.curSort === "shippingDate"
+      //       ? "-10px"
+      //       : "0",
+      // }}
     >
       {printConfig["products"].visible ? (
         isMinimized ? (

@@ -382,7 +382,7 @@ const TableView = ({
           }
           onClick={handleSumEdit}
         />
-        <div className="main-window__list">
+        <div className="main-window__list main-window__list--full">
           {renderListHeader(sortOrder, isMinimized, printConfig)}
           {isLoading ? (
             <PlaceholderLoading

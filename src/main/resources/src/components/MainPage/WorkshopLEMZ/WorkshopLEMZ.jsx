@@ -403,7 +403,6 @@ const WorkshopLEMZ = (props) => {
             return 0;
           })}
           deleteItem={deleteItem}
-          // copyRequest={copyRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />

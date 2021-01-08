@@ -1,8 +1,11 @@
 @import "../../../../variables.scss";
 
 .tableview-workshops {
-  width: 100%;
-  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: calc(100% + 0px);
+  margin-top: -6px;
   --shipped: #e3e7d6;
   --priority: #f0dedc;
   --completed: #d5ebda;
@@ -15,10 +18,11 @@
   .main-window {
     display: flex;
     min-width: 1200px;
+    padding: 0;
 
     .main-window__list {
       font-size: 95%;
-      width: 100%;
+      width: 100% !important;
 
       .placeholder-loading {
         margin-top: 20px;
@@ -27,17 +31,34 @@
       .main-window__list-item {
         position: relative;
         &--header {
-          margin-top: -20px;
-          margin-bottom: -10px;
+          background-color: #fff !important;
+        }
+        &--date {
+          padding: 8px 25px;
+
+          span {
+            max-width: fit-content;
+            padding-right: 3px;
+            color: #666666;
+            border-bottom: 1px solid #bbbbbb;
+            font-size: 0.9rem;
+          }
+
+          &:hover {
+            background-color: initial;
+          }
+        }
+        &--message {
+          margin-bottom: 35px !important;
         }
         &--is-minimized {
-          margin-bottom: calc(1.5rem + 23px) !important;
+          // margin-bottom: calc(1.5rem + 23px) !important;
           cursor: pointer;
           min-height: 70px;
 
           + .main-window__list-options {
-            margin-top: -12px !important;
-            margin-bottom: 5px;
+            margin-top: -8px !important;
+            margin-bottom: 0px;
             flex-direction: column;
             align-items: flex-start;
 
@@ -49,7 +70,10 @@
                 margin-bottom: 1px;
                 &--header {
                   margin-bottom: 0;
-                  margin-top: -10px;
+                  border-top-left-radius: 3px;
+                  border-top-right-radius: 3px;
+                  background-color: inherit !important;
+                  // margin-top: -10px;
                 }
               }
             }
@@ -62,11 +86,12 @@
             }
           }
 
+          margin-bottom: 43px !important;
           &:not(.main-window__list-item--message) {
-            margin-bottom: 5px !important;
+            margin-bottom: 0px !important;
 
             + .main-window__list-options {
-              margin-top: -6px !important;
+              margin-top: 0px !important;
             }
           }
 
@@ -173,12 +198,10 @@
         }
 
         &:not(.main-window__list-item--header) {
-          // border-color: #ffffffaa;
-          border-color: #ffffff66;
           color: #111111 !important;
-
-          margin-bottom: 5px;
-          border-radius: 3px;
+          border-color: #bbbbbb;
+          // margin-bottom: 5px;
+          // border-radius: 3px;
 
           .requests__column--status {
             &::before {
@@ -339,20 +362,14 @@
           max-width: 75px;
         }
         .requests__column--id {
-          // flex: 0 1 8%;
-          // max-width: 50px;
           white-space: nowrap;
           color: #222222aa;
-
           position: absolute;
-          left: 5px;
+          left: 20px;
           top: 10px;
           font-size: 0.85rem;
           padding-left: 10px;
         }
-        // &:nth-child(2) {
-        //   flex: 0 1 20%;
-        // }
         .requests__column--client {
           flex: 0 1 15%;
           max-width: 150px;
@@ -400,7 +417,7 @@
           display: flex;
           flex-direction: row;
           align-items: center;
-          left: 5px;
+          left: 20px;
           bottom: 10px;
           padding-left: 10px;
           color: #555555;
@@ -459,7 +476,8 @@
           display: flex;
           flex-direction: column;
           flex: 0 1 50%;
-          padding: 5px 5px;
+          padding: 5px 0px;
+          padding-right: 5px;
           .main-window__list-col-row {
             width: 100%;
             flex: 0 1 100%;
@@ -498,7 +516,7 @@
                 flex: 0 1 80%;
                 margin-top: 0;
                 align-self: center;
-                padding-left: 12px;
+                padding-left: 10px;
               }
               &:nth-child(2) {
                 flex: 0 1 50%;
@@ -543,6 +561,18 @@
                 }
               }
             }
+          }
+        }
+      }
+    }
+  }
+
+  .main-window__list-item--header {
+    .main-window__list-col {
+      .main-window__list-col-row {
+        span {
+          &:nth-child(1) {
+            padding-left: 5px !important;
           }
         }
       }

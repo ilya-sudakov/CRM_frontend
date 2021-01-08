@@ -108,8 +108,8 @@ export const printRequestsByDates = (
     if (filteredReqs.length > 0) {
       return (
         <>
-          <div className="main-window__table-date">
-            {formatDateString(new Date(date))}
+          <div className="main-window__list-item main-window__list-item--date">
+            <span>{formatDateString(new Date(date))}</span>
           </div>
           {printRequests(filteredReqs, printConfig)}
         </>
