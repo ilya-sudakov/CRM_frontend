@@ -32,6 +32,11 @@
         position: relative;
         &--header {
           background-color: #fff !important;
+
+          .main-window__list-col {
+            padding-bottom: 0 !important;
+            padding-top: 0 !important;
+          }
         }
         &--date {
           padding: 8px 25px;
