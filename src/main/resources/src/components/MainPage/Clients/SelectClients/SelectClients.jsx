@@ -149,7 +149,7 @@ const TableView = (props) => {
 
   return (
     <div className="main-window">
-      <div className="main-window__list">
+      <div className="main-window__list main-window__list--full">
         {props.isLoading ? (
           <PlaceholderLoading
             itemClassName="main-window__list-item"
@@ -157,7 +157,9 @@ const TableView = (props) => {
             items={3}
           />
         ) : props.clients.length === 0 ? (
-          <div>Введите не менее 3 символа для начала поиска</div>
+          <div style={{ padding: "10px 25px" }}>
+            Введите не менее 3 символа для начала поиска
+          </div>
         ) : (
           <>
             <div className="main-window__list-item main-window__list-item--header">

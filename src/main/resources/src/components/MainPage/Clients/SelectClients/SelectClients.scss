@@ -94,6 +94,9 @@
 
   .main-window__list {
     position: relative;
+    width: calc(100% + 30px) !important;
+    margin-left: -15px;
+
     .main-window__list-item {
       cursor: pointer;
       span {
@@ -123,6 +126,7 @@
 
   .searchbar {
     padding-bottom: 10px;
+    margin-bottom: -1px !important;
   }
 
   @media (max-width: 768px) {
@@ -140,6 +144,10 @@
           padding: 10px !important;
         }
       }
+    }
+
+    .searchbar {
+      margin-bottom: 20px !important;
     }
   }
 }

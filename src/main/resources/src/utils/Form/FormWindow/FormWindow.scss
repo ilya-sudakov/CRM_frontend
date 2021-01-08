@@ -55,13 +55,10 @@
       background-color: #bbbbbb;
     }
 
-    // padding: 15px;
-
     .tableview__products {
-      width: 100%;
+      width: calc(100% + 25px);
     }
     &--hidden {
-      // display: none;
       overflow: hidden;
       transform: scale(0);
     }
