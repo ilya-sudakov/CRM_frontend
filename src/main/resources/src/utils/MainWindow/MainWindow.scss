@@ -13,6 +13,10 @@
     font-size: 24px;
     text-align: center;
     padding: 0 15px;
+    font-family: "Montserrat", sans-serif;
+    * {
+      font-family: "Montserrat", sans-serif;
+    }
   }
 
   .main-window__link {
@@ -42,6 +46,10 @@
       width: calc(100% - 25px);
       background-color: $secondary-text-color;
       margin-bottom: 0px;
+
+      * {
+        font-family: "Montserrat", sans-serif;
+      }
 
       .main-window__item {
         width: fit-content;
