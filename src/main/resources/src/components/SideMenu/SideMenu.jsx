@@ -13,7 +13,8 @@ import TasksImg from "../../../../../../assets/sidemenu/tasks.inline.svg";
 import EmployeesImg from "../../../../../../assets/sidemenu/employee.inline.svg";
 import TruckImg from "../../../../../../assets/sidemenu/truck.inline.svg";
 import FactoryIcon from "../../../../../../assets/sidemenu/factory.inline.svg";
-import BoxImg from "../../../../../../assets/sidemenu/box.inline.svg";
+// import BoxImg from "../../../../../../assets/sidemenu/box.inline.svg";
+import BoxImg from "../../../../../../assets/sidemenu/product.inline.svg";
 import FeedbackImg from "../../../../../../assets/sidemenu/feedback.inline.svg";
 import ContractImg from "../../../../../../assets/sidemenu/contract.inline.svg";
 import ListImg from "../../../../../../assets/sidemenu/list.inline.svg";
@@ -135,7 +136,7 @@ const SideMenu = (props) => {
       mainRoles: ["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_WORKSHOP"],
       addButtonRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
       addButtonName: "Добавить продукцию",
-      renderIcon: () => <BoxImg className="sidemenu__img" />,
+      renderIcon: () => <BoxImg className="sidemenu__img sidemenu__img--product" />,
     },
     {
       pathname: "/price-list",
@@ -180,7 +181,7 @@ const SideMenu = (props) => {
           name: "Склад",
           pathname: "/lemz/workshop-storage",
           link: "/lemz/workshop-storage",
-          renderIcon: () => <BoxImg className="sidemenu__img" />,
+          renderIcon: () => <BoxImg className="sidemenu__img sidemenu__img--product" />,
           mainRoles: ["ROLE_ADMIN", "ROLE_LEMZ"],
         },
         {
@@ -238,7 +239,7 @@ const SideMenu = (props) => {
           name: "Склад",
           pathname: "/lepsari/workshop-storage",
           link: "/lepsari/workshop-storage",
-          renderIcon: () => <BoxImg className="sidemenu__img" />,
+          renderIcon: () => <BoxImg className="sidemenu__img sidemenu__img--product" />,
           mainRoles: ["ROLE_ADMIN", "ROLE_LEPSARI"],
         },
         {

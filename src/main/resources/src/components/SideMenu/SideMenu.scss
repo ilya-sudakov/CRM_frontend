@@ -78,6 +78,15 @@
         }
       }
 
+      &--product {
+        path:nth-child(1) {
+          fill: var(--icon-fill);
+        }
+        path:nth-child(2) {
+          fill: var(--icon-fill);
+        }
+      }
+
       &--request {
         g {
           fill: var(--icon-fill);
@@ -113,6 +122,15 @@
           path:first-child {
             fill: transparent;
             stroke: var(--active-icon-fill);
+          }
+          path:nth-child(2) {
+            fill: var(--active-icon-fill);
+          }
+        }
+
+        &--product {
+          path:nth-child(1) {
+            fill: var(--active-icon-fill);
           }
           path:nth-child(2) {
             fill: var(--active-icon-fill);
