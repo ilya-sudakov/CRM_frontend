@@ -6,9 +6,12 @@
     --defect: #e08989;
     --completed: #77c78a;
     --production: #cdceaf;
-    width: 100%;
+    width: calc(100% + 25px);
+    margin-top: -6px;
 
     .main-window {
+        padding: 0;
+        width: 100%;
         &__list {
             width: 100%;
             &-item {
@@ -160,6 +163,7 @@
     }
 
     @media (max-width: 768px) {
+        margin-top: -15px;
         .main-window {
             &__list {
                 &-item {

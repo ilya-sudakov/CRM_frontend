@@ -148,6 +148,14 @@
                             }
                         }
                     }
+
+                    &--divider {
+                        margin: 20px auto;
+
+                        span {
+                            margin-left: auto;
+                        }
+                    }
                 }
             }
         }
