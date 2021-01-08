@@ -323,6 +323,7 @@
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
             font-family: "Montserrat", sans-serif;
+            font-weight: 500;
 
             &::before {
               content: "";
@@ -366,7 +367,7 @@
               color: #eeeeee;
 
               //light theme
-              color: darken($button__background--inverted, 5%);
+              color: darken($button__background--inverted, 10%);
 
               & .header__img {
                 filter: brightness(1);

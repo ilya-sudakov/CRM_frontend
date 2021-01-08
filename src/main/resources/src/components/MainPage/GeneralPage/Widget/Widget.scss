@@ -20,6 +20,10 @@
     margin-bottom: 15px;
     margin-right: 15px;
 
+    * {
+        font-family: "Montserrat", sans-serif;
+    }
+    
     &__title {
         display: flex;
         flex-direction: row;
