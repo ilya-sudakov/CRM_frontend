@@ -3,9 +3,9 @@
 //NEW DESIGN
 
 .rigging-tableview {
-    --defect: #e08989;
-    --completed: #77c78a;
-    --production: #cdceaf;
+    --completed: #c7e9ce;
+    --defect: #ebbdba;
+    --production: #eaebde;
     width: calc(100% + 25px);
     margin-top: -6px;
 
@@ -15,9 +15,8 @@
         &__list {
             width: 100%;
             &-item {
-                padding: 15px 10px;
-                // border-color: #ffffff66;
-                // margin-bottom: -1px;
+                padding: 15px 25px;
+                border-bottom: 1px solid #bbb;
                 &--defect {
                     background-color: var(--defect);
                     &::before {
