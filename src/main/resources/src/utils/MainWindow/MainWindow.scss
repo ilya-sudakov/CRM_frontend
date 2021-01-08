@@ -590,6 +590,9 @@
     border-left: none;
     border-bottom: 1px solid #aaaaaa;
     border-color: #dddddd;
+    * {
+      font-family: "Montserrat", sans-serif;
+    }
     &:nth-child(2) {
       margin-top: 0;
       border-top-left-radius: 2.5px;

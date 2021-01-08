@@ -283,6 +283,7 @@
           .header__username {
             font-size: 1rem;
             margin-right: 5px;
+            font-family: "Montserrat", sans-serif;
           }
         }
 
@@ -321,6 +322,7 @@
             position: relative;
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
+            font-family: "Montserrat", sans-serif;
 
             &::before {
               content: "";
@@ -337,6 +339,7 @@
 
             & span {
               width: calc(100% - 30px);
+              font-family: "Montserrat", sans-serif;
             }
 
             .header__img {
@@ -463,6 +466,12 @@
         padding: 5px 15px;
         font-size: 0.9rem;
 
+        &--user {
+          .header__profile_menu {
+            top: 35px;
+          }
+        }
+
         &--notification {
           padding: 5px 10px;
           margin-right: 0;
@@ -472,53 +481,51 @@
   }
 
   @media (max-width: 1024px) {
-    & {
-      .header__company {
-        .header__sidemenu {
+    .header__company {
+      .header__sidemenu {
+        .linesWrapper {
+          position: relative;
+          width: 25px;
+          height: 20px;
+          // margin-top: 10px;
+          .line {
+            position: absolute;
+            transition: all 200ms ease-in-out;
+            margin: 0;
+            left: 0;
+            height: 2px;
+            &:nth-child(1) {
+              top: 0px;
+              transform-origin: 0 0;
+            }
+
+            &:nth-child(2) {
+              top: 8px;
+              transform-origin: 0 0;
+              // top: calc(50% - 1.5px);
+            }
+
+            &:nth-child(3) {
+              top: 16px;
+              transform-origin: 0 0;
+            }
+          }
+        }
+        &--hidden {
           .linesWrapper {
-            position: relative;
-            width: 30px;
-            height: 20px;
-            // margin-top: 10px;
             .line {
-              position: absolute;
-              transition: all 200ms ease-in-out;
-              margin: 0;
-              left: 0;
-              height: 2px;
               &:nth-child(1) {
+                transform: rotate(45deg);
                 top: 0px;
-                transform-origin: 0 0;
               }
 
               &:nth-child(2) {
-                top: 8px;
-                transform-origin: 0 0;
-                // top: calc(50% - 1.5px);
+                transform: scaleX(0);
               }
 
               &:nth-child(3) {
-                top: 16px;
-                transform-origin: 0 0;
-              }
-            }
-          }
-          &--hidden {
-            .linesWrapper {
-              .line {
-                &:nth-child(1) {
-                  transform: rotate(45deg);
-                  top: 0px;
-                }
-
-                &:nth-child(2) {
-                  transform: scaleX(0);
-                }
-
-                &:nth-child(3) {
-                  transform: rotate(-45deg);
-                  top: 18px;
-                }
+                transform: rotate(-45deg);
+                top: 18px;
               }
             }
           }

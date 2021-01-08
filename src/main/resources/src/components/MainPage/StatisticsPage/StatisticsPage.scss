@@ -3,6 +3,9 @@
 .statistics {
     padding: 0 15px;
     box-sizing: border-box;
+    * {
+        font-family: "Montserrat", sans-serif;
+    }
 
     @keyframes pulse-statistics-page {
         0% {
