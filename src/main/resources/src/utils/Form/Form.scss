@@ -392,6 +392,7 @@
         outline: none;
         background-color: $primary-background-color;
         transition: 100ms ease-in-out;
+        min-height: 2rem;
 
         &:hover {
           border-color: #888888;

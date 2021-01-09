@@ -115,9 +115,10 @@
     }
   }
 
-  .searchbar {
-    padding-bottom: 10px;
-    margin-bottom: 0px;
+  .form-window {
+    .searchbar {
+      margin-bottom: 0px;
+    }
   }
 
   @media (max-width: 768px) {
