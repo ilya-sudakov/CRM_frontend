@@ -1,4 +1,5 @@
 import Chart from "chart.js";
+Chart.defaults.global.defaultFontFamily = "Montserrat";
 
 export const loadCanvas = (className, canvasClassName) => {
   let canvas = document.createElement("canvas");
