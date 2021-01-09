@@ -115,7 +115,7 @@ const Products = (props) => {
                 visibility={["ROLE_ADMIN"]}
               />
               <SearchBar
-                // title="Поиск по категориям"
+                fullSize
                 placeholder="Введите название категории для поиска..."
                 setSearchQuery={setSearchQueryCategory}
               />

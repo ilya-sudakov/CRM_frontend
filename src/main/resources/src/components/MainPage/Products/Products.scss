@@ -18,6 +18,15 @@
                 }
             }
         }
+        .form-window {
+            &__content {
+                .form-window__body {
+                    .searchbar {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
     }
 
     @media (max-width: 768px) {

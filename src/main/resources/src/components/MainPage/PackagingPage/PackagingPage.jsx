@@ -87,7 +87,7 @@ const PackagingPage = (props) => {
           }
           itemsCount={`Всего: ${packages.length} записей`}
         />
-        <div className="main-window__list">
+        <div className="main-window__list main-window__list--full">
           <TableLoading isLoading={isLoading} />
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название</span>

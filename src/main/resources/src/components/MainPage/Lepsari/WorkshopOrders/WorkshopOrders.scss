@@ -5,12 +5,11 @@
   --completed: #399639;
   --sent: #bdbd41;
   --problem: #c23737;
-  
+
   .control-panel {
     margin-top: -10px;
     border-top: 1px solid #dddddd;
     width: calc(100% + 25px);
-    margin-bottom: 10px;
 
     .main-window__control-panel-wrapper {
       .main-window__info-panel {
@@ -59,6 +58,7 @@
   }
   .main-window {
     .main-window__list {
+      width: calc(100% + 25px) !important;
       .main-window__list-item {
         padding-left: 25px;
         position: relative;
@@ -68,23 +68,11 @@
             content: "";
             display: inline-block;
             position: absolute;
-            width: 10px;
-            // height: calc(100% - 2px);
-            height: calc(100% + 1px);
-            left: 0px;
-            // border-top-right-radius: 2.5px;
-            // border-bottom-right-radius: 2.5px;
+            width: 7px;
+            height: calc(100% - 10px);
+            left: 10px;
             background-color: #cccccc;
-          }
-          &:nth-child(2) {
-            &::before {
-              border-top-left-radius: 2.5px;
-            }
-          }
-          &:last-child {
-            &::before {
-              border-bottom-left-radius: 2.5px;
-            }
+            border-radius: 999px;
           }
         }
         &:not(.main-window__list-item--header) span:nth-child(5) {
@@ -222,11 +210,6 @@
             margin-right: 0 !important;
           }
         }
-      }
-
-      .main-window__list-item:not(.main-window__list-item--header)::before {
-        top: 0px;
-        height: calc(100% - 0px) !important;
       }
     }
   }
