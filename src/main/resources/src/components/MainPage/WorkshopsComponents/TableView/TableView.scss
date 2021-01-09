@@ -5,7 +5,6 @@
   flex-direction: row;
   justify-content: flex-start;
   width: calc(100% + 0px);
-  margin-top: -6px;
   --shipped: #e3e7d6;
   --priority: #f0dedc;
   --completed: #d5ebda;
@@ -627,7 +626,6 @@
       min-width: 0;
       .main-window__list {
         width: 100%;
-        margin-top: -9px !important;
 
         .main-window__list-item {
           padding: 20px 10px;

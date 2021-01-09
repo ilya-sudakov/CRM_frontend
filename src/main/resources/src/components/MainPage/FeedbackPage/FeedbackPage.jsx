@@ -1,130 +1,130 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import './FeedbackPage.scss'
-import '../../../utils/MainWindow/MainWindow.scss'
-import SearchBar from '../SearchBar/SearchBar.jsx'
-import unreadMessagesSVG from '../../../../../../../assets/chat/unread_messages__mail_icon.svg'
-import deleteSVG from '../../../../../../../assets/tableview/delete.svg'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, useCallback } from "react";
+import "./FeedbackPage.scss";
+import "../../../utils/MainWindow/MainWindow.scss";
+import SearchBar from "../SearchBar/SearchBar.jsx";
+import unreadMessagesSVG from "../../../../../../../assets/chat/unread_messages__mail_icon.svg";
+import deleteSVG from "../../../../../../../assets/tableview/delete.svg";
+import { Link } from "react-router-dom";
 import {
   formatDateString,
   formatDateStringWithTime,
   scrollToElement,
-} from '../../../utils/functions.jsx'
+} from "../../../utils/functions.jsx";
 import {
   getFeedback,
   deleteFeedbackById,
-} from '../../../utils/RequestsAPI/Feedback/feedback.js'
+} from "../../../utils/RequestsAPI/Feedback/feedback.js";
 import {
   getMessagesByDiscussionId,
   deleteMessage,
-} from '../../../utils/RequestsAPI/Feedback/messages.js'
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
-import PlaceholderLoading from '../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+} from "../../../utils/RequestsAPI/Feedback/messages.js";
+import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
+import PlaceholderLoading from "../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 
 const FeedbackPage = (props) => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [messages, setMessages] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [scrolledToPrev, setScrolledToPrev] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [scrolledToPrev, setScrolledToPrev] = useState(false);
   const [statuses, setStatuses] = useState([
     {
-      className: 'waiting',
-      name: 'Ожидание ответа',
+      className: "waiting",
+      name: "Ожидание ответа",
       visible: true,
     },
     {
-      className: 'in-progress',
-      name: 'В процессе',
+      className: "in-progress",
+      name: "В процессе",
       visible: true,
     },
     {
-      className: 'completed',
-      name: 'Завершенные',
+      className: "completed",
+      name: "Завершенные",
       visible: false,
     },
     {
-      className: 'urgent',
-      name: 'Срочно',
+      className: "urgent",
+      name: "Срочно",
       visible: true,
     },
     {
-      className: 'testing',
-      name: 'Тестирование',
+      className: "testing",
+      name: "Тестирование",
       visible: true,
     },
-  ])
+  ]);
 
   const [userCategories, setUserCategories] = useState([
     {
-      name: 'Все',
+      name: "Все",
       filteredRoles: [],
       active: true,
     },
     {
-      name: 'Руководитель',
-      filteredRoles: ['dev', 'Алексей', 'test'],
+      name: "Руководитель",
+      filteredRoles: ["dev", "Алексей", "test"],
       active: false,
     },
     {
-      name: 'Диспетчер',
-      filteredRoles: ['Диспетчер'],
+      name: "Диспетчер",
+      filteredRoles: ["Диспетчер"],
       active: false,
     },
     {
-      name: 'Менеджер',
-      filteredRoles: ['Иван', 'Менеджер1'],
+      name: "Менеджер",
+      filteredRoles: ["Иван", "Менеджер1"],
       active: false,
     },
     {
-      name: 'Цеха',
-      filteredRoles: ['ЦехЛЭМЗ', 'ЦехЛепсари', 'ЦехЛиговский'],
+      name: "Цеха",
+      filteredRoles: ["ЦехЛЭМЗ", "ЦехЛепсари", "ЦехЛиговский"],
       active: false,
     },
-  ])
+  ]);
 
   useEffect(() => {
-    document.title = 'Обсуждения'
-    let abortController = new AbortController()
-    loadData(abortController.signal)
+    document.title = "Обсуждения";
+    let abortController = new AbortController();
+    loadData(abortController.signal);
     return function cancel() {
-      abortController.abort()
-    }
-  }, [])
+      abortController.abort();
+    };
+  }, []);
 
   const loadData = (signal) => {
     getFeedback(signal)
       .then((res) => res.json())
       .then((res) => {
-        setMessages(res)
-        setIsLoading(false)
-      })
-  }
+        setMessages(res);
+        setIsLoading(false);
+      });
+  };
 
   const prevRef = useCallback(
     (node) => {
-      const id = Number.parseInt(props.history.location.hash.split('#')[1])
+      const id = Number.parseInt(props.history.location.hash.split("#")[1]);
       if (
         !messages ||
         scrolledToPrev ||
         messages.find((item) => item.id === id) === undefined
       )
-        return
+        return;
       if (node !== null && messages) {
         console.log(
           node,
-          messages.find((item) => item.id === id),
-        )
+          messages.find((item) => item.id === id)
+        );
         // node.scrollIntoView({
         //   behavior: 'smooth',
         //   block: 'start',
         // })
-        scrollToElement(node, -800)
-        setScrolledToPrev(true)
+        scrollToElement(node, -800);
+        setScrolledToPrev(true);
       }
     },
-    [messages],
-  )
+    [messages]
+  );
 
   return (
     <div className="feedback-page">
@@ -132,10 +132,10 @@ const FeedbackPage = (props) => {
         <FloatingPlus
           linkTo="/feedback/new"
           visibility={[
-            'ROLE_ADMIN',
-            'ROLE_WORKSHOP',
-            'ROLE_DISPATCHER',
-            'ROLE_MANAGER',
+            "ROLE_ADMIN",
+            "ROLE_WORKSHOP",
+            "ROLE_DISPATCHER",
+            "ROLE_MANAGER",
           ]}
         />
         <div className="main-window__header main-window__header--full">
@@ -159,23 +159,23 @@ const FeedbackPage = (props) => {
                       <div
                         className={
                           (status.visible
-                            ? 'main-window__button'
-                            : 'main-window__button main-window__button--inverted') +
-                          ' main-window__list-item--' +
+                            ? "main-window__button"
+                            : "main-window__button main-window__button--inverted") +
+                          " main-window__list-item--" +
                           status.className
                         }
                         onClick={() => {
-                          let temp = statuses
+                          let temp = statuses;
                           temp.splice(index, 1, {
                             ...status,
                             visible: !status.visible,
-                          })
-                          setStatuses([...temp])
+                          });
+                          setStatuses([...temp]);
                         }}
                       >
                         {status.name}
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -186,37 +186,37 @@ const FeedbackPage = (props) => {
                     <div
                       className={
                         category.active
-                          ? 'main-window__button'
-                          : 'main-window__button main-window__button--inverted'
+                          ? "main-window__button"
+                          : "main-window__button main-window__button--inverted"
                       }
                       onClick={() => {
-                        let temp = userCategories
+                        let temp = userCategories;
                         temp = userCategories.map((item, tempIndex) => {
                           if (index === tempIndex) {
                             return {
                               ...item,
                               active: true,
-                            }
+                            };
                           }
                           return {
                             ...item,
                             active: false,
-                          }
-                        })
-                        setUserCategories([...temp])
+                          };
+                        });
+                        setUserCategories([...temp]);
                       }}
                     >
                       {category.name}
                     </div>
-                  )
+                  );
                 })}
               </div>
             </>
           }
         />
         <div className="main-window__list">
-          <div className="main-window__list-item main-window__list-item--header">
-          </div>
+          {/* <div className="main-window__list-item main-window__list-item--header">
+          </div> */}
           {isLoading && (
             <PlaceholderLoading
               itemClassName="main-window__list-item"
@@ -226,11 +226,11 @@ const FeedbackPage = (props) => {
           )}
           {messages
             .filter((item) => {
-              const temp = userCategories.find((category) => category.active)
+              const temp = userCategories.find((category) => category.active);
               if (temp.filteredRoles.length === 0) {
-                return true
+                return true;
               } else {
-                return temp.filteredRoles.includes(item.author)
+                return temp.filteredRoles.includes(item.author);
               }
             })
             .filter((item) => {
@@ -241,29 +241,29 @@ const FeedbackPage = (props) => {
                   .includes(searchQuery.toLowerCase()) ||
                 item.subject.toLowerCase().includes(searchQuery.toLowerCase())
               ) {
-                let check = false
+                let check = false;
                 statuses.map((status) => {
                   if (status.visible && status.className === item.status) {
-                    check = true
-                    return
+                    check = true;
+                    return;
                   }
-                })
-                return check
+                });
+                return check;
               }
             })
             .sort((a, b) => {
               if (a.date < b.date) {
-                return 1
+                return 1;
               }
               if (a.date > b.date) {
-                return -1
+                return -1;
               }
-              return 0
+              return 0;
             })
             .map((item, index) => {
               if (
                 item.author === props.userData.username ||
-                props.userHasAccess(['ROLE_ADMIN'])
+                props.userHasAccess(["ROLE_ADMIN"])
               ) {
                 return (
                   <Link
@@ -271,19 +271,19 @@ const FeedbackPage = (props) => {
                       item.status
                     } ${
                       item.isRead === false
-                        ? 'main-window__list-item--unread'
-                        : ''
+                        ? "main-window__list-item--unread"
+                        : ""
                     }`}
                     key={index}
                     id={item.id}
                     ref={
                       Number.parseInt(
-                        props.history.location.hash.split('#')[1],
+                        props.history.location.hash.split("#")[1]
                       ) === item.id
                         ? prevRef
                         : null
                     }
-                    to={'/feedback/view/' + item.id}
+                    to={"/feedback/view/" + item.id}
                   >
                     <span
                       className="feedback-page__avatar"
@@ -300,7 +300,7 @@ const FeedbackPage = (props) => {
                       </span>
                       <span>
                         <div className="main-window__mobile-text">
-                          Пользователь:{' '}
+                          Пользователь:{" "}
                         </div>
                         {item.author}
                       </span>
@@ -332,27 +332,27 @@ const FeedbackPage = (props) => {
                       >
                         <img className="main-window__img" src={viewSVG} />
                       </div> */}
-                      {props.userHasAccess(['ROLE_ADMIN']) && (
+                      {props.userHasAccess(["ROLE_ADMIN"]) && (
                         <div
                           className="main-window__action"
                           title="Удаление чата"
                           onClick={(event) => {
-                            event.preventDefault()
+                            event.preventDefault();
                             getMessagesByDiscussionId(item.id)
                               .then((res) => res.json())
                               .then((res) => {
                                 return Promise.all(
                                   res.map((message) => {
-                                    return deleteMessage(message.id)
-                                  }),
-                                )
+                                    return deleteMessage(message.id);
+                                  })
+                                );
                               })
                               .then(() => {
-                                return deleteFeedbackById(item.id)
+                                return deleteFeedbackById(item.id);
                               })
                               .then(() => {
-                                return loadData()
-                              })
+                                return loadData();
+                              });
                           }}
                         >
                           <img className="main-window__img" src={deleteSVG} />
@@ -360,13 +360,13 @@ const FeedbackPage = (props) => {
                       )}
                     </div>
                   </Link>
-                )
+                );
               }
             })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FeedbackPage
+export default FeedbackPage;

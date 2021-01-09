@@ -4,7 +4,6 @@
   display: flex;
   width: 100%;
   .main-window__list {
-    margin-top: -1px;
     .main-window__list-item {
       &:not(.main-window__list-item--header) span {
         padding-top: 15px;

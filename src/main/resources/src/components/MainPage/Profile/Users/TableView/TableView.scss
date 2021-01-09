@@ -2,7 +2,9 @@
 
 .tableview_users {
   width: 100%;
-  margin-top: -11px;
+  .main-window {
+    padding: 0;
+  }
   .main-window__list {
     .main-window__list-item {
       span {
@@ -14,9 +16,5 @@
         }
       }
     }
-  }
-
-  @media (max-width: 768px) {
-    margin-top: -20px;
   }
 }

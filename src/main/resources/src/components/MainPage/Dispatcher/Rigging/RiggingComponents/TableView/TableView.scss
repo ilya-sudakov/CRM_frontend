@@ -7,7 +7,6 @@
     --defect: #ebbdba;
     --production: #eaebde;
     width: calc(100% + 25px);
-    margin-top: -6px;
 
     .main-window {
         padding: 0;
@@ -162,7 +161,6 @@
     }
 
     @media (max-width: 768px) {
-        margin-top: -15px;
         .main-window {
             &__list {
                 &-item {

@@ -17,18 +17,12 @@
                 margin-top: 5px;
                 padding: 8px 10px;
                 font-size: 85%;
-
-                // &--inverted {
-                //     border-color: #999999;
-                // }
             }
 
             .switch {
                 margin-top: 5px;
                 margin-right: 10px;
             }
-
-            //testing
             .searchbar {
                 max-width: 50%;
                 margin-right: auto;
@@ -41,7 +35,7 @@
                 color: #666666;
                 align-self: center;
                 margin-top: 5px;
-                margin-left: auto; //test
+                margin-left: auto; 
             }
 
             .main-window {
@@ -79,9 +73,7 @@
                     min-width: 150px;
                     z-index: 0;
                     background-color: transparent;
-                    // border-color: $button__background--inverted;
                     cursor: pointer;
-                    // border: 1px solid #bbbbbb;
                     border: 1px solid #cccccc;
                     transition: background-color 100ms ease-in-out;
 
@@ -126,10 +118,6 @@
         }
     }
 
-    & + .main-window__list--full {
-        margin-top: -11px;
-    }
-
     @media (max-width: 768px) {
         .main-window__control-panel-wrapper {
             padding-left: 15px;
@@ -144,10 +132,6 @@
                     }
                 }
             }
-        }
-
-        & + .main-window__list--full {
-            margin-top: -19px;
         }
     }
 }
