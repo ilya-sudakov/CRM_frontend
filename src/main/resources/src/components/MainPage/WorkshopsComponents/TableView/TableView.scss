@@ -56,6 +56,10 @@
           cursor: pointer;
           min-height: 70px;
 
+          .requests__column--products {
+            margin-top: 3px;
+          }
+
           + .main-window__list-options {
             margin-top: -8px !important;
             margin-bottom: 0px;
@@ -363,11 +367,11 @@
         }
         .requests__column--id {
           white-space: nowrap;
-          color: #222222aa;
+          color: #555555;
           position: absolute;
           left: 20px;
           top: 10px;
-          font-size: 0.85rem;
+          font-size: 0.9rem;
           padding-left: 10px;
         }
         .requests__column--client {
@@ -388,6 +392,7 @@
           flex-direction: row;
           white-space: nowrap;
           color: #555555;
+          font-size: 0.9rem;
 
           div {
             font-size: 1rem;
@@ -422,6 +427,7 @@
           padding-left: 10px;
           color: #555555;
           white-space: nowrap;
+          font-size: 0.9rem;
 
           div {
             color: #111111;
