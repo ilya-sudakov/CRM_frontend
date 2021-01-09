@@ -2,8 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import exitSVG from "../../../../../../assets/header/exit.svg";
 import HistorySVG from "../../../../../../assets/statistics/history-outlined.inline.svg";
 import employeeSVG from "../../../../../../assets/header/employee.svg";
-import newLogoSVG from "../../../../../../assets/header/header__new_year.png";
-import mobileLogoSVG from "../../../../../../assets/header/header__mobile_new_year.png";
+import logoMobile from "../../../../../../assets/header/header_small-logo.png";
 import ChevronSVG from "../../../../../../assets/tableview/chevron-down.inline.svg";
 import notificationBellSVG from "../../../../../../assets/notifications/notification_bell.svg";
 import { Link, withRouter } from "react-router-dom";
@@ -37,14 +36,8 @@ const Header = (props) => {
             <div className="line"></div>
           </div>
         </div>
-        {/* {console.log(userContext)} */}
         <Link className="header__link" to="/">
-          <img className="header__logo" src={newLogoSVG} alt="" />
-          <img
-            className="header__logo header__logo--mobile"
-            src={mobileLogoSVG}
-            alt=""
-          />
+          <img className="header__logo" src={logoMobile} alt="" />
         </Link>
       </div>
       <div className="header__menu">

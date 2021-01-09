@@ -2,7 +2,6 @@
 
 .header {
   height: 60px;
-  // box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15), 0 0px 3px rgba(0, 0, 0, 0.3);
   box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.12);
   background-color: $secondary-text-color;
   padding: 0 25px;
@@ -14,8 +13,6 @@
   z-index: 999;
   top: 0px;
   transition: 100ms ease-in-out;
-  //dark-theme
-  // background-color: lighten($side_menu__background, 7.5%);
 
   .header__img {
     width: 35px;
@@ -35,7 +32,7 @@
     }
   }
 
-  & .header__link {
+  .header__link {
     display: flex;
     box-sizing: content-box;
     width: 100%;
@@ -45,16 +42,10 @@
     margin-bottom: 2.5px;
   }
 
-  & .header__logo {
-    width: 200px;
-    max-width: 130px;
+  .header__logo {
+    max-width: 35px;
     max-height: 45px;
     margin-left: 10px;
-    margin-bottom: 8px;
-
-    &--mobile {
-      display: none;
-    }
   }
 
   &__company {
@@ -395,92 +386,6 @@
     }
   }
 
-  @media (max-width: 375px) {
-    & .header__link {
-      // margin-left: 0px !important;
-    }
-    .header__logo {
-      display: none;
-      // width: 100px;
-      margin-left: 0 !important;
-    }
-  }
-
-  @media (max-width: 425px) {
-    .header__link {
-      display: flex;
-      margin-left: 5px;
-      // margin-bottom: 10px;
-      // margin-bottom: 2.5px;
-    }
-    .header__logo {
-      display: none;
-      // width: 80px;
-
-      &--mobile {
-        display: block;
-        width: 45px;
-        margin-bottom: 6px;
-      }
-    }
-    .header__item--user {
-      padding: 5px 10px !important;
-      padding-right: 5px !important;
-
-      .header__profile_data {
-        .header__username {
-          font-size: 0.9rem;
-          max-width: 60px;
-          overflow-x: hidden;
-          text-overflow: ellipsis;
-        }
-      }
-    }
-    .header__profile_data {
-      .header__userimg {
-        max-width: 38px;
-      }
-    }
-  }
-
-  @media (max-width: 768px) {
-    padding: 0 10px;
-    top: 0px;
-
-    .header__name {
-      font-size: 80%;
-    }
-
-    .header__logo {
-      max-width: 135px;
-      margin-left: 5px;
-    }
-    .header__sidemenu {
-      font-size: 80%;
-    }
-    .header__img {
-      width: 30px;
-    }
-
-    &__menu {
-      .header__item {
-        padding: 5px 15px;
-        font-size: 0.9rem;
-
-        &--user {
-          .header__profile_menu {
-            top: 35px;
-          }
-        }
-
-        &--notification {
-          padding: 5px 10px;
-          margin-right: 0;
-        }
-      }
-    }
-  }
-
   @media (max-width: 1024px) {
     .header__company {
       .header__sidemenu {
@@ -532,6 +437,80 @@
           }
         }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+    top: 0px;
+
+    .header__name {
+      font-size: 80%;
+    }
+
+    .header__logo {
+      margin-left: 5px;
+    }
+    .header__sidemenu {
+      font-size: 80%;
+    }
+    .header__img {
+      width: 30px;
+    }
+
+    &__menu {
+      .header__item {
+        padding: 5px 15px;
+        font-size: 0.9rem;
+
+        &--user {
+          .header__profile_menu {
+            top: 35px;
+          }
+        }
+
+        &--notification {
+          padding: 5px 10px;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 425px) {
+    .header__link {
+      display: flex;
+      margin-left: 5px;
+    }
+    .header__item {
+      &--user {
+        padding: 5px 10px !important;
+        padding-right: 5px !important;
+
+        .header__profile_data {
+          .header__username {
+            font-size: 0.9rem;
+            max-width: 60px;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+
+      &--notification {
+        padding: 5px;
+      }
+    }
+    .header__profile_data {
+      .header__userimg {
+        max-width: 38px;
+      }
+    }
+  }
+
+  @media (max-width: 375px) {
+    .header__logo {
+      margin-left: 3px;
     }
   }
 }
