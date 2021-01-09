@@ -13,10 +13,6 @@
     font-size: 24px;
     text-align: center;
     padding: 0 15px;
-    font-family: "Montserrat", sans-serif;
-    * {
-      font-family: "Montserrat", sans-serif;
-    }
   }
 
   .main-window__link {
@@ -48,7 +44,6 @@
       margin-bottom: 0px;
 
       * {
-        font-family: "Montserrat", sans-serif;
       }
 
       .main-window__item {
@@ -463,11 +458,6 @@
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    font-family: "Montserrat", sans-serif;
-
-    * {
-      font-family: "Montserrat", sans-serif;
-    }
 
     &:hover {
       background-color: lighten($button__background--inverted, 5%);
@@ -598,9 +588,6 @@
     border-left: none;
     border-bottom: 1px solid #aaaaaa;
     border-color: #dddddd;
-    * {
-      font-family: "Montserrat", sans-serif;
-    }
     &:nth-child(2) {
       margin-top: 0;
       border-top-left-radius: 2.5px;
