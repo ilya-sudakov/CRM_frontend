@@ -224,7 +224,15 @@ const ListItem = ({
             : item.site}
         </a>
       </span>
-      <span>
+      <span
+        title={
+          item.contacts?.length > 0
+            ? (item.contacts[0].name !== ""
+                ? item.contacts[0].name + ", "
+                : "") + item.contacts[0].phoneNumber
+            : "Не указаны контакт. данные"
+        }
+      >
         <div className="main-window__mobile-text">Контактное лицо: </div>
         {item.contacts?.length > 0
           ? (item.contacts[0].name !== "" ? item.contacts[0].name + ", " : "") +
