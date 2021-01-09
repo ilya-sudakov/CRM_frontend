@@ -313,7 +313,6 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: calc(100% + 0px);
     left: calc(100% - 5px);
     top: 0;
     width: calc(100% - 10px);
@@ -321,6 +320,7 @@
     transform-origin: 0 0%;
     border-radius: 3px;
     padding: 5px;
+    padding-left: 0;
     transition: 100ms ease-in-out;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     background-color: lighten($side_menu__background, 5%);
@@ -335,12 +335,9 @@
       max-width: 100% !important;
       width: 100%;
       padding: 0 0px;
-      border-radius: 5px;
+      border-radius: 3px;
       &::before {
         left: -1px;
-        border-radius: 3px;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
       }
       &:hover {
         .sidemenu__img--icon {
@@ -356,11 +353,6 @@
       .sidemenu__link {
         padding-left: 10px;
         width: calc(100%);
-      }
-      &:hover {
-        .sidemenu__link {
-          // color: #eeeeee;
-        }
       }
     }
   }

@@ -43,9 +43,6 @@
       background-color: $secondary-text-color;
       margin-bottom: 0px;
 
-      * {
-      }
-
       .main-window__item {
         width: fit-content;
         margin-right: 2.5px;
@@ -138,16 +135,15 @@
       .main-window__title {
         text-align: left;
         width: calc(100% - 10px);
+        margin-bottom: 10px !important;
         margin-left: 10px;
         padding: 0 25px;
         box-sizing: border-box;
         font-size: 150%;
         color: #222222;
 
-        margin-bottom: 10px !important;
-
         .main-window__button {
-          font-size: 60% !important;
+          font-size: 0.9rem !important;
         }
       }
 
