@@ -344,31 +344,56 @@ const TableView = (props) => {
                           ))}
                         </select>
                       </span>
-                      <span className="main-window__list-item--border-checked">
+                      <span
+                        className="main-window__list-item--border-checked"
+                        title={part.cuttingDimensions}
+                      >
                         <div className="main-window__mobile-text">
                           Распил/габариты:
                         </div>
-                        {part.cuttingDimensions}
+                        {part.cuttingDimensions && part.cuttingDimensions !== ""
+                          ? "✔Выполнено"
+                          : ""}
                       </span>
-                      <span className="main-window__list-item--border-checked">
+                      <span
+                        className="main-window__list-item--border-checked"
+                        title={part.milling}
+                      >
                         <div className="main-window__mobile-text">
                           Фрезеровка/точение:
                         </div>
-                        {part.milling}
+                        {part.milling && part.milling !== ""
+                          ? "✔Выполнено"
+                          : ""}
                       </span>
-                      <span className="main-window__list-item--border-checked">
+                      <span
+                        className="main-window__list-item--border-checked"
+                        title={part.harding}
+                      >
                         <div className="main-window__mobile-text">Закалка:</div>
-                        {part.harding}
+                        {part.harding && part.harding !== ""
+                          ? "✔Выполнено"
+                          : ""}
                       </span>
-                      <span className="main-window__list-item--border-checked">
+                      <span
+                        className="main-window__list-item--border-checked"
+                        title={part.grinding}
+                      >
                         <div className="main-window__mobile-text">
                           Шлифовка:
                         </div>
-                        {part.grinding}
+                        {part.grinding && part.grinding !== ""
+                          ? "✔Выполнено"
+                          : ""}
                       </span>
-                      <span className="main-window__list-item--border-checked">
+                      <span
+                        className="main-window__list-item--border-checked"
+                        title={part.erosion}
+                      >
                         <div className="main-window__mobile-text">Эрозия:</div>
-                        {part.erosion}
+                        {part.erosion && part.erosion !== ""
+                          ? "✔Выполнено"
+                          : ""}
                       </span>
                       <div className="main-window__actions">
                         <Link

@@ -134,11 +134,15 @@
                             }
                             &:nth-child(3) {
                                 flex: 0 1 20%;
-                                max-width: 50px;
+                                max-width: 60px;
                             }
                             &:nth-child(4) {
                                 flex: 0 1 15%;
                                 max-width: 150px;
+                            }
+                            &:nth-child(8) {
+                                flex: 0 1 20%;
+                                max-width: 170px;
                             }
                             &:nth-child(5) {
                                 &::before {
