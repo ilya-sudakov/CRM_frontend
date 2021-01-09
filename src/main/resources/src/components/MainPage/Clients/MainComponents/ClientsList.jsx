@@ -42,7 +42,7 @@ const ClientsList = ({
       {isLoading ? (
         <PlaceholderLoading
           itemClassName="main-window__list-item"
-          minHeight="60px"
+          minHeight="50px"
           items={itemsPerPage}
         />
       ) : (
