@@ -8,12 +8,48 @@
   --padding-top: 130px;
   padding-top: var(--padding-top);
   height: calc(100vh - var(--padding-top));
-  background: url("../../../../../../../assets/loginPage/bg_crm.jpg") no-repeat center center fixed
-    $button__background--inverted;
+  background: linear-gradient(180deg, #edeec0 0%, #00a3a2 40%, #87a3a2 100%);
 
-  //dark-theme
-  // background: url("../../../../../../../assets/loginPage/bg_crm-dark-theme.jpg") no-repeat center center fixed
-  //   $button__background--inverted;
+  &__background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    .authorization__circle {
+      --circle-size: 20px;
+      content: "";
+      width: var(--circle-size);
+      height: var(--circle-size);
+      background: #ffffff;
+      position: fixed;
+      top: 50%;
+      left: 0%;
+      border-radius: 999px;
+
+      &--1 {
+        --circle-size: 80vw;
+        left: -10%;
+        top: -80%;
+        clip-path: circle();
+        background: linear-gradient(0deg, #edeec0 0%, #00a3a2 100%);
+      }
+
+      &--2 {
+        --circle-size: 50vw;
+        left: -30vw;
+        top: 20vh;
+        clip-path: circle();
+        background: linear-gradient(180deg, #edeec0 0%, #00a3a2 100%);
+      }
+
+      &--3 {
+        --circle-size: 40vw;
+        left: 60%;
+        top: 40%;
+        clip-path: circle();
+        background: linear-gradient(120deg, #ffffff 0%, #edeec0 10%, #00a3a2 90%);
+      }
+    }
+  }
 
   @keyframes onAutoFillStart {
   }
@@ -287,7 +323,26 @@
   }
 
   @media (max-width: 768px) {
-    background: linear-gradient(180deg, #edeec0 0%, #00a3a2 100%);
+    // background: linear-gradient(180deg, #edeec0 0%, #00a3a2 100%);
+    &__background {
+      .authorization__circle {
+        &--1 {
+          --circle-size: 500px;
+          top: -200px;
+          left: -150px;
+        }
+        &--2 {
+          --circle-size: 300px;
+          top: 250px;
+          left: -150px;
+        }
+        &--3 {
+          --circle-size: 300px;
+          top: 300px;
+          left: calc(100% - 150px);
+        }
+      }
+    }
   }
 
   @media (max-width: 500px) {

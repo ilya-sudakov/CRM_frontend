@@ -70,6 +70,11 @@ const LoginPage = (props) => {
 
   return (
     <div className="authorization">
+      <div className="authorization__background">
+        <div className="authorization__circle authorization__circle--1"></div>
+        <div className="authorization__circle authorization__circle--2"></div>
+        <div className="authorization__circle authorization__circle--3"></div>
+      </div>
       <div className="main-window">
         {!props.isAuthorized ? (
           <div className="authorization__panel">
