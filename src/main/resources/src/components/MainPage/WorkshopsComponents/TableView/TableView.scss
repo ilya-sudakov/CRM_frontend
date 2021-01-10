@@ -67,7 +67,7 @@
             align-items: flex-start;
 
             .main-window__list {
-              max-width: 900px;
+              max-width: Min(80%, 1200px);
 
               .main-window__list-item {
                 padding: 10px 10px;
