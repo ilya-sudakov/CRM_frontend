@@ -49,13 +49,13 @@
                             content: "";
                             display: inline-block;
                             position: absolute;
-                            width: 10px;
-                            left: 0px;
-                            border-top-left-radius: 2.5px;
-                            border-bottom-left-radius: 2.5px;
+                            width: 5px;
+                            height: 5px;
+                            left: 9px;
+                            top: calc(50% - 2.5px);
+                            border-radius: 999px;
                             background-color: #cccccc;
-                            height: calc(100% - 2px);
-                            border: 1px solid #777777;
+                            border: 1px solid #bbbbbb;
                         }
                     }
 
@@ -70,8 +70,9 @@
                     font-size: 90%;
                     border-radius: 5px;
                     outline: 0;
-                    padding-left: 10px;
+                    padding-left: 8px;
                     max-width: 110px;
+                    border-color: #bbb;
                 }
                 span {
                     &:nth-child(1) {
@@ -112,13 +113,13 @@
                                     content: "";
                                     display: inline-block;
                                     position: absolute;
-                                    width: 10px;
-                                    left: 0px;
-                                    border-top-left-radius: 2.5px;
-                                    border-bottom-left-radius: 2.5px;
+                                    width: 5px;
+                                    height: 5px;
+                                    left: 9px;
+                                    top: calc(50% - 2.5px);
+                                    border-radius: 999px;
                                     background-color: #cccccc;
-                                    height: calc(100% - 2px);
-                                    border: 1px solid #777777;
+                                    border: 1px solid #bbbbbb;
                                 }
                             }
                         }

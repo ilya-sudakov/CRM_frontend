@@ -352,7 +352,7 @@ const TableView = (props) => {
                           Распил/габариты:
                         </div>
                         {part.cuttingDimensions && part.cuttingDimensions !== ""
-                          ? "✔Выполнено"
+                          ? "🛈Указано"
                           : ""}
                       </span>
                       <span
@@ -363,7 +363,7 @@ const TableView = (props) => {
                           Фрезеровка/точение:
                         </div>
                         {part.milling && part.milling !== ""
-                          ? "✔Выполнено"
+                          ? "🛈Указано"
                           : ""}
                       </span>
                       <span
@@ -372,7 +372,7 @@ const TableView = (props) => {
                       >
                         <div className="main-window__mobile-text">Закалка:</div>
                         {part.harding && part.harding !== ""
-                          ? "✔Выполнено"
+                          ? "🛈Указано"
                           : ""}
                       </span>
                       <span
@@ -383,7 +383,7 @@ const TableView = (props) => {
                           Шлифовка:
                         </div>
                         {part.grinding && part.grinding !== ""
-                          ? "✔Выполнено"
+                          ? "🛈Указано"
                           : ""}
                       </span>
                       <span
@@ -392,7 +392,7 @@ const TableView = (props) => {
                       >
                         <div className="main-window__mobile-text">Эрозия:</div>
                         {part.erosion && part.erosion !== ""
-                          ? "✔Выполнено"
+                          ? "🛈Указано"
                           : ""}
                       </span>
                       <div className="main-window__actions">
