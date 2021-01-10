@@ -229,18 +229,23 @@ export const renderProductStatusSelect = (
 };
 
 export const renderProductsMinimizedColumn = ({ requestProducts = [] }) => {
+  const itemCount = addSpaceDelimiter(requestProducts.length);
+  const productsQuantity = addSpaceDelimiter(
+    requestProducts.reduce(
+      (prev, cur) => prev + Number.parseFloat(cur.quantity),
+      0
+    )
+  );
   return (
-    <span className="requests__column--products">
+    <span
+      className="requests__column--products"
+      title={`${itemCount} ед. продукции, всего ${productsQuantity} штук`}
+    >
       Продукция:
-      <div>
-        {addSpaceDelimiter(
-          requestProducts.reduce(
-            (prev, cur) => prev + Number.parseFloat(cur.quantity),
-            0
-          )
-        )}
-      </div>
-      шт.
+      <div>{itemCount}</div>
+      {` ед. /`}
+      <div>{productsQuantity}</div>
+      {` шт.`}
     </span>
   );
 };
