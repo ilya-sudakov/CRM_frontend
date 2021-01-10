@@ -6,17 +6,12 @@
   }
   .main-window__header {
     z-index: 1;
-    border-bottom: 1px solid #eeeeee;
-    // // margin-bottom: 5px;
+    border-bottom: 1px solid #dddddd;
 
     &--hidden {
       transform: scaleY(0);
       height: 0;
       margin-bottom: 0;
-    }
-
-    .main-window__title {
-      // margin-bottom: 0px !important;
     }
   }
 
@@ -26,7 +21,6 @@
     text-align: left;
     margin-top: -5px;
     padding-top: 5px;
-    // padding-bottom: 15px;
     width: calc(100% + 25px);
     border: 0;
   }
@@ -36,7 +30,6 @@
     padding: 5px 0;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    // z-index: 5;
     transition: 0.2s ease-in-out;
     padding-top: 0;
 
@@ -52,13 +45,8 @@
     }
 
     .main-form {
-      .main-form__title {
-        // margin-bottom: 20px;
-      }
       .main-form__form {
-        // box-shadow: none;
         width: calc(100% - 40px);
-        // padding: 0;
       }
     }
   }
