@@ -260,8 +260,8 @@ const WorkshopLepsari = (props) => {
           linkTo="/lepsari/workshop-lepsari/new"
           visibility={["ROLE_ADMIN", "ROLE_LEPSARI"]}
         />
-        {/* <div className="main-window__title">Заявки на производство Лепсари</div> */}
         <SearchBar
+          fullSize
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />

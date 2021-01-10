@@ -26,6 +26,9 @@
     }
   }
 
+  .searchbar {
+    width: calc(100% + 25px) !important;
+  }
   .main-window__status-panel {
     .main-window__button {
       &::before {

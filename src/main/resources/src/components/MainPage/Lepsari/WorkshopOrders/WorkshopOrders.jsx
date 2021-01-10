@@ -91,7 +91,7 @@ const WorkshopOrders = (props) => {
     <div className="workshop-orders">
       <div className="main-window">
         <SearchBar
-          // title="Поиск по заказам"
+          fullSize
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />

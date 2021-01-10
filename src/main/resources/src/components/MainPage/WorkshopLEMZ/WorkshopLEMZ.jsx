@@ -260,7 +260,7 @@ const WorkshopLEMZ = (props) => {
           visibility={["ROLE_ADMIN", "ROLE_LEMZ"]}
         />
         <SearchBar
-          // title="Поиск по заявкам ЛЭМЗ"
+          fullSize
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />
