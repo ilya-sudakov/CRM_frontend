@@ -40,7 +40,7 @@ const Requests = (props) => {
   const [curPage, setCurPage] = useState(
     pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
   ); //Текущая страница
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
 
   //Статусы заявок
   const [requestStatuses, setRequestStatutes] = useState([

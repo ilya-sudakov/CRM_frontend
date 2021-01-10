@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import editSVG from "../../../../../../../../assets/tableview/edit.svg";
 import printSVG from "../../../../../../../../assets/tableview/print.svg";
 import copySVG from "../../../../../../../../assets/tableview/copy.svg";
@@ -16,10 +16,8 @@ import {
 } from "../../../../utils/RequestsAPI/Requests.jsx";
 
 import {
-  formatDateString,
   createLabelForProduct,
   scrollToElement,
-  saveCanvasAsImage,
 } from "../../../../utils/functions.jsx";
 import LabelPrint from "../LabelPrint/LabelPrint.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
