@@ -150,9 +150,7 @@ const SelectEmployee = (props) => {
                   ? "select-employee__input select-employee__input--error"
                   : "select-employee__input"
               }
-              // onChange={props.handleInputChange}
               defaultValue={props.defaultValue ? props.defaultValue : fullName}
-              // onClick={!props.readOnly ? clickOnInput : null}
               placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
               readOnly
             />

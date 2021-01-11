@@ -3,7 +3,6 @@
 .select-draft {
   width: 100%;
   position: relative;
-  // display: flex;
   margin-top: 5px;
 
   &__buttons {
@@ -53,10 +52,7 @@
       border: 1px solid #bbbbbb;
       width: 100%;
       padding: 5px 10px;
-      border-radius: 5px;
-      // border-radius: 10px;
-      // border-top-left-radius: 10px;
-      // border-bottom-left-radius: 10px;
+      border-radius: 3px !important;
       z-index: 0;
       font-size: 80% !important;
 
@@ -71,13 +67,10 @@
 
     .select-draft__search_button {
       border: 0;
-      // flex: 0 1 15%;
-      border-radius: 5px;
+      border-radius: 3px;
       width: fit-content;
       background-color: $button__background--inverted;
       color: $secondary-text-color;
-      // border-top-right-radius: 10px;
-      // border-bottom-right-radius: 10px;
       outline: none;
       cursor: pointer;
       padding: 10px 10px;
@@ -146,6 +139,10 @@
       //   border-bottom-right-radius: 2.5px;
       // }
     }
+  }
+
+  .searchbar {
+    margin-bottom: 0;
   }
 
   // SELECTED ITEMS LIST
@@ -408,48 +405,28 @@
   }
 
   @media (max-width: 768px) {
-    & {
-      width: 100% !important;
-      &__selected {
-        &_row {
-          // flex-direction: column;
-          // margin-left: -25px;
-          .select-draft__selected_item,
-          .select-draft__selected_packaging,
-          .select-draft__selected_quantity {
-            // margin-right: 0;
-            // margin-bottom: 5px;
-            // width: calc(100% - 80px) !important;
-            // input {
-            //   width: 100%;
-            // }
-          }
-        }
-      }
-    }
+    width: 100% !important;
   }
 
   @media (max-width: 576px) {
-    & {
-      width: 100% !important;
-      &__selected {
-        &_row {
-          flex-direction: column;
-          // margin-left: -25px;
-          margin-top: 20px;
+    width: 100% !important;
+    &__selected {
+      &_row {
+        flex-direction: column;
+        // margin-left: -25px;
+        margin-top: 20px;
 
-          .select-draft__selected_item {
-            width: calc(100% - 40px);
-          }
+        .select-draft__selected_item {
+          width: calc(100% - 40px);
+        }
 
-          .select-draft__selected_packaging,
-          .select-draft__selected_quantity {
-            // margin-right: 0;
-            margin-top: 12.5px;
+        .select-draft__selected_packaging,
+        .select-draft__selected_quantity {
+          // margin-right: 0;
+          margin-top: 12.5px;
+          width: 100%;
+          input {
             width: 100%;
-            input {
-              width: 100%;
-            }
           }
         }
       }
