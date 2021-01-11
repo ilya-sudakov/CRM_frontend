@@ -295,17 +295,9 @@ export const renderProductsSubItem = (request, handleStatusChange) => {
   );
 };
 
-export const renderListHeader = (sortOrder, isMinimized, printConfig) => {
+export const renderListHeader = (isMinimized, printConfig, workshop) => {
   return (
-    <div
-      className="main-window__list-item main-window__list-item--header"
-      // style={{
-      //   marginBottom:
-      //     sortOrder.curSort === "date" || sortOrder.curSort === "shippingDate"
-      //       ? "-10px"
-      //       : "0",
-      // }}
-    >
+    <div className="main-window__list-item main-window__list-item--header">
       {printConfig["products"].visible ? (
         isMinimized ? (
           <span className="requests__column--products">Продукция</span>
@@ -320,7 +312,9 @@ export const renderListHeader = (sortOrder, isMinimized, printConfig) => {
         )
       ) : null}
       {printConfig["client"].visible ? (
-        <span className="requests__column--client">Кодовое слово</span>
+        <span className="requests__column--client">
+          {workshop === "requests" ? "Клиент" : "Кодовое слово"}
+        </span>
       ) : null}
       {printConfig["responsible"].visible ? (
         <span className="requests__column--responsible">Ответственный</span>
