@@ -38,12 +38,6 @@ const SelectClient = (props) => {
       });
   };
 
-  // const deleteItemCategory = (event) => {
-  //     const id = event.target.dataset.id;
-  //     deleteCategory(id)
-  //         .then(() => loadClients())
-  // }
-
   const clickClient = (clientId, clientName) => {
     setId(clientId);
     setName(clientName);
@@ -70,21 +64,23 @@ const SelectClient = (props) => {
               Выбрать клиента
             </button>
           )}
-          <div className="select-client__searchbar">
-            <input
-              type="text"
-              className={
-                props.error === true
-                  ? "select-client__input select-client__input--error"
-                  : "select-client__input"
-              }
-              value={
-                props.defaultValue && name === "" ? props.defaultValue : name
-              }
-              placeholder="Выберите клиента, нажав на кнопку 'Выбрать клиента'"
-              disabled
-            />
-          </div>
+          {id !== 0 && (
+            <div className="select-client__searchbar">
+              <input
+                type="text"
+                className={
+                  props.error === true
+                    ? "select-client__input select-client__input--error"
+                    : "select-client__input"
+                }
+                value={
+                  props.defaultValue && name === "" ? props.defaultValue : name
+                }
+                placeholder="Выберите клиента, нажав на кнопку 'Выбрать клиента'"
+                disabled
+              />
+            </div>
+          )}
         </div>
       </div>
       {props.error === true && (
@@ -108,12 +104,10 @@ const SelectClient = (props) => {
         content={
           <React.Fragment>
             <SearchBar
-              // title="Поиск по клиентам"
               fullSize
               setSearchQuery={setSearchQuery}
               placeholder="Введите название для поиска..."
               onButtonClick={(query) => {
-                // console.log(query);
                 if (query === "") {
                   setClients([]);
                 }

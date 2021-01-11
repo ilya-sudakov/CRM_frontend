@@ -6,12 +6,9 @@
   flex-direction: column;
   margin-bottom: 25px;
   .select-client-category__input {
-    display: flex;
     width: 100%;
-    // flex-direction: row;
-    // align-items: center;
+    display: flex;
     justify-content: space-between;
-    //column direction
     flex-direction: column;
     align-items: flex-start;
     margin-top: 5px;
@@ -19,15 +16,10 @@
     .select-client-category__input_name {
       color: lighten($primary-text-color, 40%);
       flex: 0 1 20%;
-
-      //column direction
       width: 100%;
       margin-bottom: 5px;
     }
     .select-client-category__input_field {
-      // width: calc(90% - 20px);
-
-      //column direction
       width: 100%;
     }
   }
@@ -38,11 +30,10 @@
     outline: none;
     font-size: 70%;
     padding: 10px 10px;
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: $button__background--inverted;
     color: #ffffff;
     transition: 0.2s ease-in-out;
-    // margin-bottom: 5px;
 
     &:hover {
       background-color: lighten($button__background--inverted, 5%);
@@ -55,8 +46,6 @@
     align-self: flex-end;
     margin-top: 1px;
     font-size: 0.75rem;
-    // position: absolute;
-    // top: 2rem;
     background-color: #f73434;
     color: #ffffff;
     border-radius: 5px;
@@ -74,12 +63,11 @@
     flex-direction: row;
     position: relative;
     .select-client-category__input {
+      min-height: 1.25rem;
       border: 1px solid #bbbbbb;
       width: 100%;
       padding: 5px 10px;
-      border-radius: 5px;
-      // border-top-left-radius: 5px;
-      // border-bottom-left-radius: 5px;
+      border-radius: 3px;
       z-index: 0;
       transition: 100ms ease-in-out;
 
@@ -93,24 +81,6 @@
 
       &--error {
         border: 1px solid #f73434 !important;
-      }
-    }
-
-    .select-client-category__search_button {
-      border: 0;
-      flex: 0 1 15%;
-      background-color: $button__background--inverted;
-      color: $secondary-text-color;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
-      outline: none;
-      cursor: pointer;
-      padding: 5px 10px;
-      font-size: 80%;
-      transition: 0.2s ease-in-out;
-
-      &:hover {
-        background-color: lighten($button__background--inverted, 5%);
       }
     }
   }
