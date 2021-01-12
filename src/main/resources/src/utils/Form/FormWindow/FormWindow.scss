@@ -25,10 +25,9 @@
   &__content {
     --padding-top-bottom: 7.5px;
     --padding-left-right: 7.5px;
-    width: calc(80% - var(--padding-left-right) * 2);
-    height: calc(80% - var(--padding-left-right) * 2);
-    // height: 80%;
-    // width: 80%;
+    --form-window__size: calc(80% - var(--padding-left-right) * 2);
+    width: var(--form-window__size);
+    height: var(--form-window__size);
     background-color: #f4f8f9;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
     border-radius: 10px;

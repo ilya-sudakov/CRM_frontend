@@ -46,7 +46,7 @@ const BigPanel = ({
               {windowCharts ? (
                 <>
                   <div className="main-window__title">Графики</div>
-                  {windowCharts}
+                  <div className="panel__charts-wrapper">{windowCharts}</div>
                 </>
               ) : null}
             </>
