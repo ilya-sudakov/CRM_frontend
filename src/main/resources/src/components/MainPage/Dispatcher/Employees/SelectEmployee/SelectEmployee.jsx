@@ -103,7 +103,8 @@ const SelectEmployee = (props) => {
           item.name.toLowerCase().includes(query) ||
           item.middleName.toLowerCase().includes(query) ||
           item.id.toString().includes(query) ||
-          item.yearOfBirth.toString().includes(query) ||
+          (item.yearOfBirth && item.yearOfBirth.toString().includes(query)) ||
+          (item.dateOfBirth && item.dateOfBirth.toString().includes(query)) ||
           item.citizenship.toLowerCase().includes(query) ||
           item.workshop.toLowerCase().includes(query) ||
           item.position.toLowerCase().includes(query) ||
@@ -149,9 +150,7 @@ const SelectEmployee = (props) => {
                   ? "select-employee__input select-employee__input--error"
                   : "select-employee__input"
               }
-              // onChange={props.handleInputChange}
               defaultValue={props.defaultValue ? props.defaultValue : fullName}
-              // onClick={!props.readOnly ? clickOnInput : null}
               placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
               readOnly
             />

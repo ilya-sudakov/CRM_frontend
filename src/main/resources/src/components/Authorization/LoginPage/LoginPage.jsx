@@ -4,7 +4,7 @@ import "./LoginPage.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
 import { login } from "../../../utils/RequestsAPI/Authorization.jsx";
 import eyeIcon from "../../../../../../../assets/loginPage/eye.png";
-import newCompanyIcon from "../../../../../../../assets/loginPage/login__new_year.png";
+import companylogo from "../../../../../../../assets/loginPage/login-page_logo.png";
 import ErrorMessage from "../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import exitSVG from "../../../../../../../assets/header/exit.svg";
 import CheckBox from "../../../utils/Form/CheckBox/CheckBox.jsx";
@@ -70,13 +70,18 @@ const LoginPage = (props) => {
 
   return (
     <div className="authorization">
+      <div className="authorization__background">
+        <div className="authorization__circle authorization__circle--1"></div>
+        <div className="authorization__circle authorization__circle--2"></div>
+        <div className="authorization__circle authorization__circle--3"></div>
+      </div>
       <div className="main-window">
         {!props.isAuthorized ? (
           <div className="authorization__panel">
             <div className="authorization__title">
               <img
                 className="authorization__img authorization__img--logo"
-                src={newCompanyIcon}
+                src={companylogo}
                 alt=""
               />
               {/* <div className="authorization__title-text">Вход в аккаунт</div> */}
@@ -170,7 +175,7 @@ const LoginPage = (props) => {
             <div className="authorization__title">
               <img
                 className="authorization__img authorization__img--logo"
-                src={newCompanyIcon}
+                src={companylogo}
                 alt=""
               />
             </div>

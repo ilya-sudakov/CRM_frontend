@@ -9,12 +9,14 @@
         .notifications__list-item {
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
             font-size: 1rem;
             margin-bottom: 5px;
             border-radius: 3px;
             box-sizing: border-box;
             padding: 5px 15px;
-            padding-right: 30px;
+            // padding-right: 30px;
             position: relative;
             transition: 100ms ease-in-out;
 
@@ -41,17 +43,25 @@
                 background-color: #efefef;
             }
 
+            .main-window__img {
+                filter: invert(0);
+                margin-right: 0;
+                width: 24px;
+            }
+
             .notifications__list-wrapper {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
 
-                div {
+                div,
+                a {
                     cursor: pointer;
                     white-space: nowrap;
                     max-width: 100%;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    color: #000000;
 
                     &:nth-child(2) {
                         color: #777777;

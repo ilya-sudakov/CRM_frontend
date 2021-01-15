@@ -2,6 +2,9 @@
 
 .tableview_users {
   width: 100%;
+  .main-window {
+    padding: 0;
+  }
   .main-window__list {
     .main-window__list-item {
       span {

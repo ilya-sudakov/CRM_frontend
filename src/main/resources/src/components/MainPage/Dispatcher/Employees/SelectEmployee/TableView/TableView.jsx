@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import './TableView.scss'
-import '../../../../../../utils/MainWindow/MainWindow.scss'
-import { formatDateString } from '../../../../../../utils/functions.jsx'
-import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
-import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import React, { useState, useEffect } from "react";
+import "./TableView.scss";
+import "../../../../../../utils/MainWindow/MainWindow.scss";
+import { formatDateString } from "../../../../../../utils/functions.jsx";
+import okSVG from "../../../../../../../../../../assets/tableview/ok.svg";
+import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const TableView = (props) => {
   useEffect(() => {
-    props.setShowWindow && props.setShowWindow(false)
-  }, [props.closeWindow])
+    props.setShowWindow && props.setShowWindow(false);
+  }, [props.closeWindow]);
 
   return (
     <div className="tableview-select-employees">
       <div className="main-window">
-        <div className="main-window__list">
+        <div className="main-window__list main-window__list--full">
           <div className="main-window__list-item main-window__list-item--header">
             <span>ФИО</span>
             <span>Дата рождения</span>
-            {/* <span>Гражданство</span> */}
             <span>Подразделение</span>
             <span>Должность</span>
-            {/* <span>Комментарий</span> */}
-            {/* <span>Актуальность</span> */}
             <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading && (
@@ -33,36 +30,38 @@ const TableView = (props) => {
           )}
           {props.data.map(
             (employee, employee_id) =>
-              employee.relevance !== 'Уволен' && (
+              employee.relevance !== "Уволен" && (
                 <div
                   className="main-window__list-item"
                   key={employee_id}
                   onClick={() => {
                     props.selectEmployee(
                       employee.lastName +
-                        ' ' +
+                        " " +
                         employee.name +
-                        ' ' +
+                        " " +
                         employee.middleName,
                       employee.id,
-                      employee,
-                    )
-                    props.setCloseWindow(!props.closeWindow)
+                      employee
+                    );
+                    props.setCloseWindow(!props.closeWindow);
                   }}
                 >
                   <span>
                     <div className="main-window__mobile-text">ФИО:</div>
                     {employee.lastName +
-                      ' ' +
+                      " " +
                       employee.name +
-                      ' ' +
+                      " " +
                       employee.middleName}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">
                       Дата рождения:
                     </div>
-                    {formatDateString(employee.yearOfBirth)}
+                    {formatDateString(
+                      employee.dateOfBirth ?? employee.yearOfBirth
+                    )}
                   </span>
                   {/* <span>{employee.citizenship}</span> */}
                   <span>
@@ -84,26 +83,26 @@ const TableView = (props) => {
                       onClick={() => {
                         props.selectEmployee(
                           employee.lastName +
-                            ' ' +
+                            " " +
                             employee.name +
-                            ' ' +
+                            " " +
                             employee.middleName,
                           employee.id,
-                          employee,
-                        )
-                        props.setCloseWindow(!props.closeWindow)
+                          employee
+                        );
+                        props.setCloseWindow(!props.closeWindow);
                       }}
                     >
                       <img className="main-window__img" src={okSVG} />
                     </div>
                   </div>
                 </div>
-              ),
+              )
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TableView
+export default TableView;

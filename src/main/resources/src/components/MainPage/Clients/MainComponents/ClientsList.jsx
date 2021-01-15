@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import editSVG from "../../../../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../../../../assets/tableview/delete.svg";
 import starSVG from "../../../../../../../../assets/tableview/star.svg";
 import starBorderedSVG from "../../../../../../../../assets/tableview/star_border.svg";
 import phoneSVG from "../../../../../../../../assets/tableview/phone.svg";
 import calendarSVG from "../../../../../../../../assets/tableview/calendar.svg";
-import LockSVG from "../../../../../../../../assets/tableview/bx-lock-alt.svg";
 import eyeSVG from "../../../../../../../../assets/tableview/eye-invisible-outlined.svg";
 import { formatDateString } from "../../../../utils/functions.jsx";
 import { sortClients } from "./functions.js";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
+import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
+import UserContext from "../../../../App.js";
 
 const ClientsList = ({
   isLoading,
@@ -19,7 +20,6 @@ const ClientsList = ({
   sortOrder,
   deleteItem,
   type,
-  userContext,
   setCloseWindow,
   setSelectedItem,
   setShowWindow,
@@ -27,20 +27,22 @@ const ClientsList = ({
   editItemFunction,
   setClients,
 }) => {
+  const userContext = useContext(UserContext);
+
   return (
-    <div className="main-window__list">
+    <div className="main-window__list main-window__list--full">
       <div className="main-window__list-item main-window__list-item--header">
         <span>Название</span>
         <span>Сайт</span>
         <span>Контакты</span>
         <span>Комментарий</span>
-        <span>Дата след. контакта</span>
-        <div className="main-window__actions">Действие</div>
+        <span>След. контакт</span>
+        <div className="main-window__table-actions"></div>
       </div>
       {isLoading ? (
         <PlaceholderLoading
           itemClassName="main-window__list-item"
-          minHeight="60px"
+          minHeight="50px"
           items={itemsPerPage}
         />
       ) : (
@@ -147,6 +149,58 @@ const ListItem = ({
       });
   };
 
+  const actionsList = [
+    {
+      title: item.favorite
+        ? "Убрать из избранных клиентов"
+        : "Добавить в избранных клиентов",
+      onClick: () => handleFavouriteClick(item, clients),
+      imgSrc: item.favorite ? starSVG : starBorderedSVG,
+      isRendered: userContext.userHasAccess(["ROLE_ADMIN"]),
+    },
+    {
+      title: "Скрыть клиента",
+      onClick: () => handleHideClient(item, clients),
+      imgSrc: eyeSVG,
+      isRendered: userContext.userHasAccess(["ROLE_ADMIN"]),
+    },
+    {
+      title: "Совершить действие",
+      onClick: () => {
+        setCloseWindow(false);
+        setSelectedItem(item);
+        setShowWindow(true);
+        setCurForm("workHistory");
+      },
+      imgSrc: phoneSVG,
+    },
+    {
+      title: "Дата следующего контакта",
+      onClick: () => {
+        setCloseWindow(false);
+        setSelectedItem(item);
+        setShowWindow(true);
+        setCurForm("nextContactDate");
+      },
+      imgSrc: calendarSVG,
+    },
+    {
+      title: "Редактирование клиента",
+      link: `/${type}/edit/${item.id}`,
+      openInNewTab: true,
+      imgSrc: editSVG,
+    },
+    {
+      customElement: (
+        <DeleteItemAction
+          title="Удаление клиента"
+          onClick={() => deleteItem(item.id, index)}
+        />
+      ),
+      isRendered: userContext.userHasAccess(["ROLE_ADMIN"]),
+    },
+  ];
+
   return (
     <div className="main-window__list-item" key={index}>
       <span>
@@ -155,7 +209,6 @@ const ListItem = ({
       </span>
       <span>
         <div className="main-window__mobile-text">Сайт: </div>
-        {/* {item.site} */}
         <a
           className="main-window__link"
           title={item.site}
@@ -171,7 +224,15 @@ const ListItem = ({
             : item.site}
         </a>
       </span>
-      <span>
+      <span
+        title={
+          item.contacts?.length > 0
+            ? (item.contacts[0].name !== ""
+                ? item.contacts[0].name + ", "
+                : "") + item.contacts[0].phoneNumber
+            : "Не указаны контакт. данные"
+        }
+      >
         <div className="main-window__mobile-text">Контактное лицо: </div>
         {item.contacts?.length > 0
           ? (item.contacts[0].name !== "" ? item.contacts[0].name + ", " : "") +
@@ -184,7 +245,6 @@ const ListItem = ({
       </span>
       <span>
         <div className="main-window__mobile-text">Дата след. контакта: </div>
-        {/* {formatDateString(item.nextDateContact)} */}
         {new Date(item.nextDateContact) < new Date() ? (
           <div className="main-window__reminder">
             <div>!</div>
@@ -194,74 +254,7 @@ const ListItem = ({
           formatDateString(item.nextDateContact)
         )}
       </span>
-      <div className="main-window__actions">
-        {/* <div className="main-window__mobile-text">Действия:</div> */}
-        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-          <div
-            className="main-window__action"
-            title="Добавить в избранных клиентов"
-            onClick={() => handleFavouriteClick(item, clients)}
-          >
-            <img
-              className="main-window__img"
-              src={item.favorite ? starSVG : starBorderedSVG}
-            />
-          </div>
-        )}
-        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-          <div
-            className="main-window__action"
-            title="Скрыть клиента"
-            onClick={() => handleHideClient(item, clients)}
-          >
-            <img className="main-window__img" src={eyeSVG} />
-          </div>
-        )}
-        <div
-          className="main-window__action"
-          title="Совершить действие"
-          onClick={() => {
-            setCloseWindow(false);
-            setSelectedItem(item);
-            setShowWindow(true);
-            setCurForm("workHistory");
-          }}
-        >
-          <img className="main-window__img" src={phoneSVG} />
-        </div>
-        <div
-          className="main-window__action"
-          title="Дата следующего контакта"
-          onClick={() => {
-            setCloseWindow(false);
-            setSelectedItem(item);
-            setShowWindow(true);
-            setCurForm("nextContactDate");
-          }}
-        >
-          <img className="main-window__img" src={calendarSVG} />
-        </div>
-        <a
-          className="main-window__action"
-          title="Редактирование клиента"
-          href={`/${type}/edit/${item.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img className="main-window__img" src={editSVG} />
-        </a>
-        {userContext.userHasAccess(["ROLE_ADMIN"]) && (
-          <div
-            className="main-window__action"
-            title="Удаление клиента"
-            onClick={() => {
-              deleteItem(item.id, index);
-            }}
-          >
-            <img className="main-window__img" src={deleteSVG} />
-          </div>
-        )}
-      </div>
+      <TableActions actionsList={actionsList} />
     </div>
   );
 };

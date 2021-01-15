@@ -7,6 +7,7 @@ import {
 } from "../../../../utils/functions.jsx";
 import { productsStatuses, requestStatuses } from "../workshopVariables.js";
 import downloadSVG from "../../../../../../../../assets/download.svg";
+import { downloadImage } from "./functions.js";
 
 export const renderIdColumn = (request = { id: 0 }, workshopName = "") => {
   return (
@@ -54,21 +55,25 @@ export const renderResponsibleColumn = ({ responsible }) => {
 };
 
 export const renderDateShippedColumn = (request) => {
+  const originalDateDiff = Math.abs(
+    dateDiffInDays(new Date(request.date), new Date(request.shippingDate))
+  );
+  const curDateDiff = Math.abs(
+    dateDiffInDays(new Date(), new Date(request.shippingDate))
+  );
   return (
     <span className="requests__column--date-shipping">
       <div className="main-window__mobile-text">Отгрузка:</div>
       {request.status === "Отгружено" || request.status === "Завершено" ? (
         <div
           className={`main-window__reminder ${
-            Math.abs(
-              dateDiffInDays(
-                new Date(request.date),
-                new Date(request.shippingDate)
-              )
-            ) > 7
-              ? ""
-              : "main-window__reminder--positive"
+            originalDateDiff > 7 ? "" : "main-window__reminder--positive"
           }`}
+          title={
+            originalDateDiff > 7
+              ? `Заявка отгружена с опозданием на ${originalDateDiff} дн.`
+              : `Заявка отгружена вовремя`
+          }
         >
           {Math.abs(
             dateDiffInDays(
@@ -90,7 +95,10 @@ export const renderDateShippedColumn = (request) => {
           </div>
         </div>
       ) : new Date(request.shippingDate) < new Date() ? (
-        <div className="main-window__reminder main-window__reminder--info">
+        <div
+          className="main-window__reminder main-window__reminder--info"
+          title={`Заявка опаздывает на ${curDateDiff} дн.`}
+        >
           <div>!</div>
           <div>
             {formatDateString(
@@ -102,7 +110,10 @@ export const renderDateShippedColumn = (request) => {
           </div>
         </div>
       ) : (
-        <div className="main-window__date">
+        <div
+          className="main-window__date"
+          title={`Заявка должна быть отгружена через ${curDateDiff} дн.`}
+        >
           {formatDateString(
             request.shippingDate === null || request.shippingDate === undefined
               ? new Date()
@@ -126,14 +137,15 @@ export const renderCommentColumn = ({ comment }) => {
 export const renderPriceColumn = ({ sum }) => {
   return (
     <span className="requests__column--price">
-      {`${sum ? addSpaceDelimiter(sum) : 0} руб.`}
+      Сумма заявки:
+      <div>{`${sum ? addSpaceDelimiter(sum) : 0}`}</div>₽
     </span>
   );
 };
 
 export const renderRequestStatusColumn = (
   request,
-  userContext,
+  userHasAccess,
   handleStatusChange
 ) => {
   return (
@@ -157,7 +169,7 @@ export const renderRequestStatusColumn = (
         onChange={handleStatusChange}
       >
         {requestStatuses.map((status) => {
-          if (userContext.userHasAccess(status.access)) {
+          if (userHasAccess && userHasAccess(status.access)) {
             return (
               <option
                 value={
@@ -178,11 +190,155 @@ export const renderRequestStatusColumn = (
   );
 };
 
+export const renderProductStatusSelect = (
+  product,
+  handleProductStatusChange
+) => {
+  return (
+    <span
+      className={
+        "main-window__list-item--" +
+        productsStatuses.find(
+          (item) =>
+            item.className === product.status || item.oldName === product.status
+        )?.className
+      }
+    >
+      <div className="main-window__mobile-text">Статус:</div>
+      <select
+        className="main-window__status_select"
+        value={product.status}
+        onChange={({ target }) =>
+          handleProductStatusChange(product.id, target.value)
+        }
+      >
+        {productsStatuses.map((status) => (
+          <option
+            value={
+              status.oldName === product.status
+                ? status.oldName
+                : status.className
+            }
+          >
+            {status.name}
+          </option>
+        ))}
+      </select>
+    </span>
+  );
+};
+
+export const renderProductsMinimizedColumn = ({ requestProducts = [] }) => {
+  const itemCount = addSpaceDelimiter(requestProducts.length);
+  const productsQuantity = addSpaceDelimiter(
+    requestProducts.reduce(
+      (prev, cur) => prev + Number.parseFloat(cur.quantity),
+      0
+    )
+  );
+  return (
+    <span
+      className="requests__column--products"
+      title={`${itemCount} ед. продукции, всего ${productsQuantity} штук`}
+    >
+      Продукция:
+      <div>{itemCount}</div>
+      {` ед. /`}
+      <div>{productsQuantity}</div>
+      {` шт.`}
+    </span>
+  );
+};
+
+export const renderProductsSubItem = (request, handleStatusChange) => {
+  return (
+    <div
+      className={`main-window__list-options ${
+        request.isMinimized ? "main-window__list-options--hidden" : ""
+      }`}
+    >
+      <div className="main-window__title">Продукция</div>
+      <div className="main-window__list">
+        <div className="main-window__list-item main-window__list-item--header">
+          <span>Название</span>
+          <span>Упаковка</span>
+          <span>Кол-во</span>
+          <span className="requests__column--status">Статус</span>
+        </div>
+        {request?.requestProducts.map((product) => (
+          <div
+            className={`main-window__list-item main-window__list-item--${
+              productsStatuses.find(
+                (item) =>
+                  item.className === product.status ||
+                  item.oldName === product.status
+              )?.className
+            }`}
+          >
+            <span>
+              <div className="main-window__mobile-text">Название</div>
+              {product.name}
+            </span>
+            <span>
+              <div className="main-window__mobile-text">Упаковка</div>
+              {product.packaging}
+            </span>
+            <span>
+              <div className="main-window__mobile-text">Кол-во</div>
+              {`${addSpaceDelimiter(product.quantity)} шт.`}
+            </span>
+            {renderProductStatusSelect(product, handleStatusChange)}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export const renderListHeader = (isMinimized, printConfig, workshop) => {
+  return (
+    <div className="main-window__list-item main-window__list-item--header">
+      {printConfig["products"].visible ? (
+        isMinimized ? (
+          <span className="requests__column--products">Продукция</span>
+        ) : (
+          <div className="main-window__list-col">
+            <div className="main-window__list-col-row">
+              <span>Продукция</span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        )
+      ) : null}
+      {printConfig["client"].visible ? (
+        <span className="requests__column--client">
+          {workshop === "requests" ? "Клиент" : "Кодовое слово"}
+        </span>
+      ) : null}
+      {printConfig["responsible"].visible ? (
+        <span className="requests__column--responsible">Ответственный</span>
+      ) : null}
+      {printConfig["client"].visible ? (
+        <span className="requests__column--status">Статус заявки</span>
+      ) : null}
+      {printConfig["date-shipping"].visible ? (
+        <span className="requests__column--date-shipping">Отгрузка</span>
+      ) : null}
+      {printConfig["comment"].visible ? (
+        <span className="requests__column--comment">Комментарий</span>
+      ) : null}
+      <div className="main-window__table-actions"></div>
+    </div>
+  );
+};
+
 export const renderProductsColumn = (
   request,
-  downloadImage,
   createLabelForProduct,
-  handleProductStatusChange
+  handleProductStatusChange,
+  setSelectedProduct,
+  setLabelIsHidden
 ) => {
   return (
     <div className="main-window__list-col">
@@ -225,40 +381,16 @@ export const renderProductsColumn = (
                 <div className="main-window__mobile-text">Кол-во:</div>
                 {`${addSpaceDelimiter(product.quantity)} шт.`}
               </span>
+              {renderProductStatusSelect(product, handleProductStatusChange)}
               <span
-                className={
-                  "main-window__list-item--" +
-                  productsStatuses.find(
-                    (item) =>
-                      item.className === product.status ||
-                      item.oldName === product.status
-                  )?.className
+                onClick={() =>
+                  downloadImage(
+                    product,
+                    request.factory,
+                    setSelectedProduct,
+                    setLabelIsHidden
+                  )
                 }
-              >
-                <div className="main-window__mobile-text">Статус:</div>
-                <select
-                  // id={product.id}
-                  className="main-window__status_select"
-                  value={product.status}
-                  onChange={({ target }) =>
-                    handleProductStatusChange(product.id, target.value)
-                  }
-                >
-                  {productsStatuses.map((status) => (
-                    <option
-                      value={
-                        status.oldName === product.status
-                          ? status.oldName
-                          : status.className
-                      }
-                    >
-                      {status.name}
-                    </option>
-                  ))}
-                </select>
-              </span>
-              <span
-                onClick={() => downloadImage(product, request.factory)}
                 title="Скачать этикетку"
               >
                 <div className="main-window__mobile-text">Скачать этикетку</div>

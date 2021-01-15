@@ -1,122 +1,115 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import sortIcon from '../../../../../../../../../assets/tableview/sort_icon.png'
-import viewIcon from '../../../../../../../../../assets/tableview/view.svg'
-import editIcon from '../../../../../../../../../assets/tableview/edit.svg'
-import deleteIcon from '../../../../../../../../../assets/tableview/delete.svg'
-import printSVG from '../../../../../../../../../assets/tableview/print.svg'
-import printIcon from '../../../../../../../../../assets/print.png'
-import pdfMake from 'pdfmake'
-import './TableView.scss'
-import { formatDateString } from '../../../../../utils/functions.jsx'
-import { getEmployeesByWorkshopListPdfText } from '../../../../../utils/pdfFunctions.jsx'
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import sortIcon from "../../../../../../../../../assets/tableview/sort_icon.png";
+import viewIcon from "../../../../../../../../../assets/tableview/view.svg";
+import editIcon from "../../../../../../../../../assets/tableview/edit.svg";
+import deleteIcon from "../../../../../../../../../assets/tableview/delete.svg";
+import printSVG from "../../../../../../../../../assets/tableview/print.svg";
+import printIcon from "../../../../../../../../../assets/print.png";
+import pdfMake from "pdfmake";
+import "./TableView.scss";
+import { formatDateString } from "../../../../../utils/functions.jsx";
+import { getEmployeesByWorkshopListPdfText } from "../../../../../utils/pdfFunctions.jsx";
+import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
-    'ЦехЛЭМЗ',
-    'ЦехЛепсари',
-    'ЦехЛиговский',
-    'Офис',
-    'Уволенные',
-  ])
-  const [workshopsVisible, setWorkshopsVisible] = useState([])
+    "ЦехЛЭМЗ",
+    "ЦехЛепсари",
+    "ЦехЛиговский",
+    "Офис",
+    "Уволенные",
+  ]);
+  const [workshopsVisible, setWorkshopsVisible] = useState([]);
   const [sortOrder, setSortOrder] = useState({
-    curSort: 'lastName',
-    date: 'desc',
-  })
-
-  const changeSortOrder = (event) => {
-    const name = event.target.getAttribute('name')
-    setSortOrder({
-      curSort: name,
-      [name]: sortOrder[name] === 'desc' ? 'asc' : 'desc',
-    })
-  }
+    curSort: "lastName",
+    date: "desc",
+  });
 
   const searchQuery = (data) => {
-    const query = props.searchQuery.toLowerCase()
+    const query = props.searchQuery.toLowerCase();
     return data.filter(
       (item) =>
         item.lastName.toLowerCase().includes(query) ||
         item.name.toLowerCase().includes(query) ||
         item.middleName.toLowerCase().includes(query) ||
         item.id.toString().includes(query) ||
-        item.yearOfBirth.toString().includes(query) ||
+        (item.yearOfBirth && item.yearOfBirth.toString().includes(query)) ||
+        (item.dateOfBirth && item.dateOfBirth.toString().includes(query)) ||
         item.citizenship.toLowerCase().includes(query) ||
         item.workshop.toLowerCase().includes(query) ||
         item.position.toLowerCase().includes(query) ||
         item.comment.toLowerCase().includes(query) ||
-        item.relevance.toLowerCase().includes(query),
-    )
-  }
+        item.relevance.toLowerCase().includes(query)
+    );
+  };
 
   const sortEmployees = (data) => {
     return searchQuery(data).sort((a, b) => {
       if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
       }
       if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
       }
-      return 0
-    })
-  }
+      return 0;
+    });
+  };
 
   const checkWorkshop = (index) => {
-    index = Number.parseInt(index)
+    index = Number.parseInt(index);
     return workshopsVisible.map((element, element_index) => {
       if (element.id == index) {
         let temp2 = Object.assign({
           id: index,
           hidden: !element.hidden,
-        })
-        return temp2
+        });
+        return temp2;
       }
-      return element
-    })
-  }
+      return element;
+    });
+  };
 
   const isWorkshopHidden = (index) => {
-    index = Number.parseInt(index)
-    let check = true
+    index = Number.parseInt(index);
+    let check = true;
     workshopsVisible.map((element) => {
       if (element.id === index) {
-        check = element.hidden
+        check = element.hidden;
       }
-    })
-    return check
-  }
+    });
+    return check;
+  };
 
   const handleClickWorkshop = (id) => {
-    setWorkshopsVisible([...checkWorkshop(id)])
-  }
+    setWorkshopsVisible([...checkWorkshop(id)]);
+  };
 
   const filterEmployees = (data, workshopItem) => {
     return data.filter(
       (employee) =>
         (workshopItem === employee.workshop &&
-          employee.relevance !== 'Уволен') ||
-        (workshopItem === 'Уволенные' && employee.relevance === 'Уволен'),
-    )
-  }
+          employee.relevance !== "Уволен") ||
+        (workshopItem === "Уволенные" && employee.relevance === "Уволен")
+    );
+  };
 
   useEffect(() => {
     if (workshopsVisible.length === 0) {
-      let temp = []
+      let temp = [];
       workshops.map((element, index) =>
         temp.push({
           id: index,
           hidden: true,
-        }),
-      )
-      setWorkshopsVisible([...temp])
+        })
+      );
+      setWorkshopsVisible([...temp]);
     }
-  }, [props.data])
+  }, [props.data]);
 
   return (
     <div className="tableview-employees">
-      <div className="main-window__list">
+      <div className="main-window__list main-window__list--full">
         <div className="main-window__list-item main-window__list-item--header">
           <span>Подразделение</span>
           <div className="main-window__actions">Действия</div>
@@ -130,7 +123,7 @@ const TableView = (props) => {
               <span>
                 <div className="main-window__mobile-text">Подразделение:</div>
                 {item}
-                {item !== 'Уволенные' ? (
+                {item !== "Уволенные" ? (
                   <span className="main-window__items-count">
                     {searchQuery(filterEmployees(props.data, item)).length}
                   </span>
@@ -142,14 +135,14 @@ const TableView = (props) => {
                   onClick={() => {
                     let dd = getEmployeesByWorkshopListPdfText(
                       sortEmployees(filterEmployees(props.data, item)),
-                      item,
-                    )
-                    pdfMake.createPdf(dd).print()
+                      item
+                    );
+                    pdfMake.createPdf(dd).print();
                   }}
                   title="Печать"
                 >
                   <img className="main-window__img" src={printSVG} alt="" />
-                  {'    '}
+                  {"    "}
                   Печать
                 </div>
               </div>
@@ -157,8 +150,8 @@ const TableView = (props) => {
             <div
               className={
                 isWorkshopHidden(index)
-                  ? 'main-window__list-options main-window__list-options--hidden'
-                  : 'main-window__list-options'
+                  ? "main-window__list-options main-window__list-options--hidden"
+                  : "main-window__list-options"
               }
             >
               <div className="main-window__list">
@@ -166,10 +159,7 @@ const TableView = (props) => {
                   <span>ФИО</span>
                   <span>Дата рождения</span>
                   <span>Гражданство</span>
-                  {/* <span>Подразделение</span> */}
                   <span>Должность</span>
-                  {/* <span>Комментарий</span> */}
-                  {/* <span>Актуальность</span> */}
                   <div className="main-window__actions">Действия</div>
                 </div>
                 {props.isLoading && (
@@ -181,20 +171,24 @@ const TableView = (props) => {
                 )}
                 {sortEmployees(filterEmployees(props.data, item)).map(
                   (employee, employee_id) => (
-                    <div key={employee_id} className={'main-window__list-item'}>
+                    <div key={employee_id} className={"main-window__list-item"}>
                       <span>
                         <div className="main-window__mobile-text">ФИО:</div>
                         {employee.lastName +
-                          ' ' +
+                          " " +
                           employee.name +
-                          ' ' +
+                          " " +
                           employee.middleName}
                       </span>
                       <span>
                         <div className="main-window__mobile-text">
                           Дата рождения:
                         </div>
-                        {formatDateString(employee.yearOfBirth)}
+                        <div>
+                          {employee.dateOfBirth
+                            ? formatDateString(employee.dateOfBirth)
+                            : null}
+                        </div>
                       </span>
                       <span>
                         <div className="main-window__mobile-text">
@@ -202,34 +196,15 @@ const TableView = (props) => {
                         </div>
                         {employee.citizenship}
                       </span>
-                      {/* <span>{employee.workshop}</span> */}
                       <span>
                         <div className="main-window__mobile-text">
                           Должность:
                         </div>
                         {employee.position}
                       </span>
-                      {/* <span>{employee.comment}</span> */}
-                      {/* <span>
-                          <div className="main-window__mobile-text">
-                            Актуальность:
-                          </div>
-                          {employee.relevance}
-                        </span> */}
                       <div className="main-window__actions">
                         <Link
-                          to={'/dispatcher/employees/view/' + employee.id}
-                          className="main-window__action"
-                          title="Просмотр"
-                        >
-                          <img
-                            className="main-window__img"
-                            src={viewIcon}
-                            alt=""
-                          />
-                        </Link>
-                        <Link
-                          to={'/dispatcher/employees/edit/' + employee.id}
+                          to={"/dispatcher/employees/edit/" + employee.id}
                           className="main-window__action"
                           title="Редактирование"
                         >
@@ -239,11 +214,10 @@ const TableView = (props) => {
                             alt=""
                           />
                         </Link>
-                        {props.userHasAccess(['ROLE_ADMIN']) && (
+                        {props.userHasAccess(["ROLE_ADMIN"]) && (
                           <div
-                            data-id={employee.id}
                             className="main-window__action"
-                            onClick={props.deleteItem}
+                            onClick={() => props.deleteItem(employee.id)}
                             title="Удалить"
                           >
                             <img
@@ -255,7 +229,7 @@ const TableView = (props) => {
                         )}
                       </div>
                     </div>
-                  ),
+                  )
                 )}
               </div>
             </div>
@@ -263,7 +237,7 @@ const TableView = (props) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TableView
+export default TableView;

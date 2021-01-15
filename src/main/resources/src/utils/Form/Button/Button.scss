@@ -24,7 +24,6 @@
 
   &:hover {
     background-color: lighten($button__background--inverted, 5%);
-    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
   }
 
   .button__circle {
@@ -34,7 +33,6 @@
     left: calc(50% - (20px / 2));
     height: 15px;
     width: 15px;
-    // margin: -25px 0 0 -25px;
     border: 4px solid rgba(255, 255, 255, 0.5);
     border-top: 4px solid #eeeeeedd;
     border-radius: 999px;
@@ -45,9 +43,7 @@
 
   &--inverted {
     background-color: $secondary-text-color;
-    // color: $primary-text-color;
-    // border: 1px solid $button__background--inverted;
-    border: 1px solid #bbbbbb; //test
+    border: 1px solid #bbbbbb;
     color: #444444;
 
     &__img {

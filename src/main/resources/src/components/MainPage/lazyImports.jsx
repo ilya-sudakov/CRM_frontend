@@ -164,10 +164,6 @@ const EditEmployee = lazy(() =>
   import("./Dispatcher/Employees/EditEmployee/EditEmployee.jsx")
 );
 
-const ViewEmployee = lazy(() =>
-  import("./Dispatcher/Employees/ViewEmployee/ViewEmployee.jsx")
-);
-
 const Work = lazy(() => import("./Work/Work.jsx"));
 
 const NewWork = lazy(() => import("./Work/NewWork/NewWork.jsx"));
@@ -301,7 +297,6 @@ export {
   Employees,
   NewEmployee,
   EditEmployee,
-  ViewEmployee,
   Stamp,
   Machine,
   PressForm,

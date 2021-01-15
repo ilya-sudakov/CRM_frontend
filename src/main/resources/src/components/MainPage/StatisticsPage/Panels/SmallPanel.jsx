@@ -4,6 +4,7 @@ import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
 
 const SmallPanel = ({
   isLoaded,
+  isLoading,
   renderIcon,
   value,
   category,
@@ -23,7 +24,7 @@ const SmallPanel = ({
 
   return (
     <div
-      className={`panel ${isLoaded ? "" : "panel--placeholder"}`}
+      className={`panel ${isLoaded && !isLoading ? "" : "panel--placeholder"}`}
       // to={linkTo || "/"}
     >
       <div className="panel__category" onClick={() => setShowWindow(true)}>

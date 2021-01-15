@@ -14,7 +14,7 @@ import {
 import { graphOptions, weekdays, workshopsDefaultValue } from "./objects.js";
 import Widget from "../Widget/Widget.jsx";
 
-const GraphWidget = (props) => {
+const GraphWidget = () => {
   const [weekOffset, setWeekOffset] = useState(0);
   const [graph, setGraph] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

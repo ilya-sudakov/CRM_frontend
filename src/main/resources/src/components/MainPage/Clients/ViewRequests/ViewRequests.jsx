@@ -3,6 +3,7 @@ import "./ViewRequests.scss";
 import { formatDateStringNoYear } from "../../../../utils/functions.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import { Link } from "react-router-dom";
+import TableView from "../../WorkshopsComponents/TableView/TableView.jsx";
 
 const sortRequests = (requests) => {
   return requests.sort((a, b) => {
@@ -17,8 +18,48 @@ const sortRequests = (requests) => {
 };
 
 const ViewRequests = (props) => {
+  const sortBy = { curSort: "sum", id: "desc" };
+
+  const printConfig = {
+    ["id"]: {
+      visible: true,
+    },
+    ["date"]: {
+      visible: false,
+    },
+    ["products"]: {
+      visible: true,
+    },
+    ["client"]: {
+      visible: false,
+    },
+    ["responsible"]: {
+      visible: true,
+    },
+    ["status"]: {
+      visible: true,
+    },
+    ["date-shipping"]: {
+      visible: true,
+    },
+    ["comment"]: {
+      visible: true,
+    },
+    ["price"]: {
+      visible: true,
+    },
+  };
+
   return (
     <div className="view-requests">
+      {/* <TableView
+        data={props.requests}
+        isLoading={props.isLoading}
+        workshopName="requests"
+        sortOrder={sortBy}
+        printConfig={printConfig}
+        isMinimized={true}
+      /> */}
       <div className="main-window">
         <div className="main-window__list">
           <div className="main-window__list-item main-window__list-item--header">
@@ -62,7 +103,7 @@ const ListItem = ({ item, index }) => {
         {formatDateStringNoYear(item.date)}
       </span>
       <span className="main-window__col main-window__col--id">
-        <Link to={`/requests/view/${item.id}`}>{`ID #${item.id}`}</Link>
+        <Link to={`/requests/edit/${item.id}`}>{`ID #${item.id}`}</Link>
       </span>
       <span className="main-window__col main-window__col--status">
         {item.status}

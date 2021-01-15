@@ -1,26 +1,24 @@
 .placeholder-loading {
-    @keyframes pulse1 {
+    @keyframes pulse-placeholder-loading {
         0% {
-            border-color: #dbdbdb;
-            background-color: #dbdbdb;
+            // border-color: #ebebeb;
+            background-color: #ebebeb;
         }
         50% {
-            border-color: #c5c5c5;
-            background-color: #c5c5c5;
+            // border-color: #d5d5d5;
+            background-color: #d5d5d5;
         }
         100% {
-            border-color: #dbdbdb;
-            background-color: #dbdbdb;
+            // border-color: #ebebeb;
+            background-color: #ebebeb;
         }
     }
 
     @keyframes load {
         from {
-            // background: linear-gradient(to right, transparent 0%, #fafafa 50%, transparent 100%);
             left: -150px;
         }
         to {
-            // background: linear-gradient(to right, transparent 0%, #e8e8e8 50%, transparent 100%);
             left: 100%;
         }
     }
@@ -28,12 +26,11 @@
     &__item {
         height: 1rem;
         background-color: #dddddd;
-        animation: pulse1 1s infinite ease-in-out;
-        margin-bottom: 5px;
-        border-radius: 5px;
+        animation: pulse-placeholder-loading 1s infinite ease-in-out;
+        // margin-bottom: 3px;
         position: relative;
         overflow: hidden;
-        // box-shadow: 0 4px 10px 0 rgba(33, 33, 33, 0.15);
+        border-bottom: 1px solid #bbbbbb;
 
         &::after {
             content: "";

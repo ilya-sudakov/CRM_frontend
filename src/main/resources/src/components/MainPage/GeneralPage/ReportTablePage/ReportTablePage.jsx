@@ -142,7 +142,6 @@ const ReportTablePage = () => {
           visibility={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
         />
         <SummaryPage
-          setSearchQuery={setSearchQuery}
           isLoading={isLoading}
           excelIsLoading={excelIsLoading}
           setExcelIsLoading={setExcelIsLoading}
@@ -155,6 +154,7 @@ const ReportTablePage = () => {
           workList={workList}
           setSelectedInfo={setSelectedInfo}
           searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
           userContext={userContext}
         />
       </div>

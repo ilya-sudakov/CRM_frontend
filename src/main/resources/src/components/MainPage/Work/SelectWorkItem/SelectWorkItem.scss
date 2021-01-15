@@ -24,6 +24,10 @@
     }
   }
 
+  .searchbar {
+    margin-bottom: 0;
+  }
+
   .select-work-item__input {
     display: flex;
     width: calc(100% - 0px);
@@ -101,10 +105,6 @@
 
   .main-form__button {
     font-size: 0.8rem;
-  }
-
-  .tableview-work {
-    width: 100%;
   }
 
   @media (max-width: 768px) {

@@ -154,7 +154,7 @@ const HalfOfTheMonthList = ({
                             .includes(searchQuery.toLowerCase()) ||
                           item.employee.middleName
                             .toLowerCase()
-                            .includes(earchQuery.toLowerCase())) &&
+                            .includes(searchQuery.toLowerCase())) &&
                         item.employee.workshop === workshop.name
                       );
                     })

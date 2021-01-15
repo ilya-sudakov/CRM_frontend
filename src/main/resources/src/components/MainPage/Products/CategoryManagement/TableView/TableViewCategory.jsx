@@ -49,7 +49,7 @@ const TableViewCategory = (props) => {
   return (
     <div className="tableview-category">
       <div className="main-window">
-        <div className="main-window__list">
+        <div className="main-window__list main-window__list--full">
           <div className="main-window__list-item main-window__list-item--header">
             <span>
               {/* <div className="main-window__mobile-text">Название:</div> */}

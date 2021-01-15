@@ -24,6 +24,7 @@ import {
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import { Link } from "react-router-dom";
 import { pages } from "../Requests/objects.js";
+import Switch from "../../../utils/Form/Switch/Switch.jsx";
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([]);
@@ -31,6 +32,7 @@ const WorkshopLEMZ = (props) => {
   const [productsQuantities, setProductsQuantities] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
 
   const pageNameInURL = props.location.pathname.split(
     "/lemz/workshop-lemz/"
@@ -39,8 +41,7 @@ const WorkshopLEMZ = (props) => {
     pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
   ); //Текущая страница
 
-  const deleteItem = (event) => {
-    const id = event.currentTarget.dataset.id;
+  const deleteItem = (id) => {
     getRequestById(id)
       .then((res) => res.json())
       .then((res) => {
@@ -209,10 +210,12 @@ const WorkshopLEMZ = (props) => {
   };
 
   const filterRequests = (requestsLEMZ) => {
-    return filterRequestsByStatuses(
-      filterRequestsByPage(
-        filterRequestsByWorkshop(requestsLEMZ),
-        pages[curPage].name
+    return filterSearchQuery(
+      filterRequestsByStatuses(
+        filterRequestsByPage(
+          filterRequestsByWorkshop(requestsLEMZ),
+          pages[curPage].name
+        )
       )
     );
   };
@@ -240,18 +243,6 @@ const WorkshopLEMZ = (props) => {
     });
   };
 
-  const sortRequests = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
-    });
-  };
-
   const changeSortOrder = (event) => {
     const name = event.target.value.split(" ")[0];
     const order = event.target.value.split(" ")[1];
@@ -269,7 +260,7 @@ const WorkshopLEMZ = (props) => {
           visibility={["ROLE_ADMIN", "ROLE_LEMZ"]}
         />
         <SearchBar
-          // title="Поиск по заявкам ЛЭМЗ"
+          fullSize
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />
@@ -329,14 +320,21 @@ const WorkshopLEMZ = (props) => {
         <ControlPanel
           itemsCount={`Всего: ${requestsLEMZ.length} записей`}
           buttons={
-            <Button
-              text="Печать списка"
-              isLoading={isLoading}
-              imgSrc={PrintIcon}
-              inverted
-              className="main-window__button main-window__button--inverted"
-              onClick={printRequestsList}
-            />
+            <>
+              <Button
+                text="Печать списка"
+                isLoading={isLoading}
+                imgSrc={PrintIcon}
+                inverted
+                className="main-window__button main-window__button--inverted"
+                onClick={printRequestsList}
+              />
+              <Switch
+                checked={isMinimized}
+                handleChange={(value) => setIsMinimized(value)}
+                text="Свернуть заявки"
+              />
+            </>
           }
           content={
             <div className="main-window__status-panel">
@@ -394,6 +392,7 @@ const WorkshopLEMZ = (props) => {
           isLoading={isLoading}
           sortOrder={sortOrder}
           loadData={loadRequestsLEMZ}
+          isMinimized={isMinimized}
           dates={dates.sort((a, b) => {
             if (a < b) {
               return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
@@ -404,7 +403,6 @@ const WorkshopLEMZ = (props) => {
             return 0;
           })}
           deleteItem={deleteItem}
-          // copyRequest={copyRequest}
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
         />

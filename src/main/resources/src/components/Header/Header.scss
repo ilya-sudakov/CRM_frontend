@@ -2,9 +2,8 @@
 
 .header {
   height: 60px;
-  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15), 0 0px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.12);
   background-color: $secondary-text-color;
-  // border-bottom: 2px solid #dddddd;
   padding: 0 25px;
   display: flex;
   justify-content: space-between;
@@ -14,8 +13,6 @@
   z-index: 999;
   top: 0px;
   transition: 100ms ease-in-out;
-  //dark-theme
-  // background-color: lighten($side_menu__background, 7.5%);
 
   .header__img {
     width: 35px;
@@ -35,7 +32,7 @@
     }
   }
 
-  & .header__link {
+  .header__link {
     display: flex;
     box-sizing: content-box;
     width: 100%;
@@ -45,16 +42,10 @@
     margin-bottom: 2.5px;
   }
 
-  & .header__logo {
-    width: 200px;
-    max-width: 130px;
+  .header__logo {
+    max-width: 35px;
     max-height: 45px;
     margin-left: 10px;
-    margin-bottom: 8px;
-
-    &--mobile {
-      display: none;
-    }
   }
 
   &__company {
@@ -75,21 +66,16 @@
 
   .header__sidemenu {
     display: flex;
-    // padding: 5px 10px;
     padding: 5px 10px;
     flex-direction: row;
     align-items: center;
-    // border: 1px solid #9b9b9b;
     border-radius: 999px;
     transition: 100ms ease-in-out;
     cursor: pointer;
-    // background-color: $button__background--inverted !important;
 
     &:active {
-      padding: 15px 10px;
+      padding: 10px 10px;
       background-color: darken($primary-background-color, 10%);
-      //dark-theme
-      // background-color: lighten($side_menu__background, 10%);
     }
 
     .header__name {
@@ -100,14 +86,13 @@
       display: flex;
       flex-direction: column;
       height: 20px;
-      // margin-right: 5px;
       transition: 0.2s ease-in-out;
 
       .line {
-        height: 3px;
-        margin-bottom: 5px;
-        width: 30px;
-        border-radius: 5px;
+        height: 2.5px;
+        margin-bottom: 4px;
+        width: 25px;
+        border-radius: 3px;
         background-color: #888888;
         transform-origin: 3px 0px;
         transition: 0.2s ease-in-out;
@@ -140,21 +125,13 @@
       text-align: center;
 
       &:last-child {
-        transition: all 200ms ease-in-out;
-        padding: 0px;
-
-        .header__img {
-          //dark-theme
-          // filter: brightness(2);
-        }
+        margin-right: 0;
       }
 
       &--notification {
         margin-right: 10px;
         position: relative;
-        // border: 1px solid #9b9b9b;
-        border-radius: 999px;
-        padding: 5px 10px;
+        padding: 5px 5px;
         transition: 200ms ease-in-out;
         z-index: 999;
 
@@ -251,19 +228,14 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin-right: 10px;
         cursor: pointer;
         position: relative;
-        padding: 0px 5px;
-        padding-left: 10px;
-        border-radius: 20px;
-        min-width: 100px;
-        border: 1px solid #9b9b9b;
+        padding: 8px 15px;
+        border-radius: 3px;
+        border: 1px solid transparent;
+        padding-right: 5px;
         transition: 0.2s ease-in-out;
         z-index: 2;
-        //dark-theme
-        // background-color: lighten($side_menu__background, 0%);
-        // color: #ffffff;
 
         .header__profile_overlay {
           position: fixed;
@@ -272,17 +244,10 @@
           top: 0;
           left: 0;
           z-index: 999;
-          // background-color: red;
 
           &--hidden {
             display: none;
           }
-        }
-
-        &:hover {
-          background-color: darken($primary-background-color, 7.5%);
-          //dark-theme
-          // background-color: darken($side_menu__background, 5%);
         }
 
         .header__profile_data {
@@ -294,10 +259,12 @@
           text-align: center !important;
 
           .header__userimg {
-            width: 40px;
-            margin-left: 5px;
-            //dark-theme
-            // filter: brightness(2);
+            width: 20px;
+            transition: transform 100ms ease-in-out;
+          }
+
+          .main-window__img--rotated {
+            transform: rotate(180deg) !important;
           }
 
           .header__email {
@@ -305,84 +272,96 @@
           }
 
           .header__username {
-            font-size: 90%;
-            width: calc(100% - 45px);
-            // text-align: right;
+            font-size: 1rem;
+            margin-right: 5px;
+            font-family: "Montserrat", sans-serif;
           }
+        }
+
+        &:hover {
+          background-color: #efefef;
+          border: 1px solid #dddddd;
         }
 
         .header__profile_menu {
           background-color: $side_menu__background;
-          border-radius: 5px;
+          border-radius: 3px;
           font-size: 80%;
           position: absolute;
           top: 45px;
-          // left: 0;
           right: 0;
-          // width: calc(100% - 10px);
           width: calc(100% + 25px);
-          min-width: 165px;
+          min-width: 180px;
           padding: 5px 5px;
           transition: 0.2s ease-in-out;
           transform-origin: 80% 0%;
           z-index: 999;
 
+          //light theme
+          background-color: #ffffff;
+          border: 1px solid #dddddd;
+
           .header__profile_item {
             display: flex;
             align-items: center;
-            // color: $primary-text-color;
-            color: #bbbbbb;
+            color: #555555;
             padding: 10px 0px;
-            border-radius: 5px;
+            padding-right: 5px;
             transition: 100ms ease-in-out;
             margin-bottom: 5px;
             text-align: left;
             position: relative;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 500;
 
             &::before {
               content: "";
               position: absolute;
-              top: 5px;
-              left: 0px;
-              height: calc(100% - 10px);
-              border-radius: 15px;
+              top: 0px;
+              left: -5px;
+              height: 100%;
+              border-radius: 1px;
+              border-top-left-radius: 0;
+              border-bottom-left-radius: 0;
               background-color: transparent;
               width: 5px;
             }
 
             & span {
               width: calc(100% - 30px);
+              font-family: "Montserrat", sans-serif;
             }
 
-            & .header__img {
+            .header__img {
               width: 25px;
               margin: 0 10px;
               filter: brightness(1.7);
+
+              //light theme
+              filter: brightness(1.5);
+
+              &--history {
+                min-width: 25px;
+              }
             }
 
             &:last-child {
               margin: 0;
             }
             &--active {
+              background-color: #eeeeee;
               &::before {
                 background-color: $button__background--inverted;
               }
               color: #eeeeee;
 
-              &:hover {
-                color: #ffffff;
-              }
+              //light theme
+              color: darken($button__background--inverted, 10%);
 
               & .header__img {
-                filter: brightness(2);
-              }
-            }
-
-            &:hover {
-              color: #eeeeee;
-
-              & .header__img {
-                filter: brightness(2);
+                filter: brightness(1);
               }
             }
           }
@@ -407,55 +386,69 @@
     }
   }
 
-  @media (max-width: 375px) {
-    & .header__link {
-      // margin-left: 0px !important;
-    }
-    .header__logo {
-      display: none;
-      // width: 100px;
-      margin-left: 0 !important;
-    }
-  }
+  @media (max-width: 1024px) {
+    .header__company {
+      .header__sidemenu {
+        .linesWrapper {
+          position: relative;
+          width: 25px;
+          height: 20px;
+          // margin-top: 10px;
+          .line {
+            position: absolute;
+            transition: all 200ms ease-in-out;
+            margin: 0;
+            left: 0;
+            height: 2px;
+            &:nth-child(1) {
+              top: 0px;
+              transform-origin: 0 0;
+            }
 
-  @media (max-width: 425px) {
-    .header__link {
-      display: flex;
-      margin-left: 5px;
-      // margin-bottom: 10px;
-      // margin-bottom: 2.5px;
-    }
-    .header__logo {
-      display: none;
-      // width: 80px;
+            &:nth-child(2) {
+              top: 8px;
+              transform-origin: 0 0;
+              // top: calc(50% - 1.5px);
+            }
 
-      &--mobile {
-        display: block;
-        width: 45px;
-        margin-bottom: 6px;
-      }
-    }
-    .header__item--user {
-      padding: 0 !important;
-    }
-    .header__profile_data {
-      .header__userimg {
-        max-width: 38px;
+            &:nth-child(3) {
+              top: 16px;
+              transform-origin: 0 0;
+            }
+          }
+        }
+        &--hidden {
+          .linesWrapper {
+            .line {
+              &:nth-child(1) {
+                transform: rotate(45deg);
+                top: 0px;
+              }
+
+              &:nth-child(2) {
+                transform: scaleX(0);
+              }
+
+              &:nth-child(3) {
+                transform: rotate(-45deg);
+                top: 18px;
+              }
+            }
+          }
+        }
       }
     }
   }
 
   @media (max-width: 768px) {
-    & {
-      padding: 0 10px;
-      top: 0px;
+    padding: 0 10px;
+    top: 0px;
 
-      .header__name {
-        font-size: 80%;
-      }
+    .header__name {
+      font-size: 80%;
     }
+
     .header__logo {
-      max-width: 135px;
       margin-left: 5px;
     }
     .header__sidemenu {
@@ -467,11 +460,13 @@
 
     &__menu {
       .header__item {
-        padding: 10px 5px;
-        font-size: 80%;
+        padding: 5px 15px;
+        font-size: 0.9rem;
+
         &--user {
-          padding: 0px 5px;
-          margin-right: 5px;
+          .header__profile_menu {
+            top: 35px;
+          }
         }
 
         &--notification {
@@ -482,59 +477,40 @@
     }
   }
 
-  @media (max-width: 1024px) {
-    & {
-      .header__company {
-        .header__sidemenu {
-          .linesWrapper {
-            position: relative;
-            width: 30px;
-            height: 20px;
-            // margin-top: 10px;
-            .line {
-              position: absolute;
-              transition: all 200ms ease-in-out;
-              margin: 0;
-              left: 0;
-              height: 2px;
-              &:nth-child(1) {
-                top: 0px;
-                transform-origin: 0 0;
-              }
+  @media (max-width: 425px) {
+    .header__link {
+      display: flex;
+      margin-left: 5px;
+    }
+    .header__item {
+      &--user {
+        padding: 5px 10px !important;
+        padding-right: 5px !important;
 
-              &:nth-child(2) {
-                top: 8px;
-                transform-origin: 0 0;
-                // top: calc(50% - 1.5px);
-              }
-
-              &:nth-child(3) {
-                top: 16px;
-                transform-origin: 0 0;
-              }
-            }
-          }
-          &--hidden {
-            .linesWrapper {
-              .line {
-                &:nth-child(1) {
-                  transform: rotate(45deg);
-                  top: -3px;
-                }
-
-                &:nth-child(2) {
-                  transform: scaleX(0);
-                }
-
-                &:nth-child(3) {
-                  transform: rotate(-45deg);
-                  top: 18px;
-                }
-              }
-            }
+        .header__profile_data {
+          .header__username {
+            font-size: 0.9rem;
+            max-width: 60px;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
           }
         }
       }
+
+      &--notification {
+        padding: 5px;
+      }
+    }
+    .header__profile_data {
+      .header__userimg {
+        max-width: 38px;
+      }
+    }
+  }
+
+  @media (max-width: 375px) {
+    .header__logo {
+      margin-left: 3px;
     }
   }
 }

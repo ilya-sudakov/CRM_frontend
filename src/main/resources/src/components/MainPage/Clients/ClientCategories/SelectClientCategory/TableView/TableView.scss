@@ -1,8 +1,16 @@
 @import "../../../../../../variables.scss";
 
 .client-categories__list {
+    width: calc(100% + 30px);
+    margin-left: -15px;
     .main-window__list-item {
         cursor: pointer;
+
+        span {
+            &:nth-child(1) {
+                flex: 0 1 50%;
+            }
+        }
     }
     @media (max-width: 768px) {
         & {

@@ -1,80 +1,79 @@
-import React, { useState, useEffect } from 'react'
-import './Employees.scss'
-import '../../../../utils/MainWindow/MainWindow.scss'
-import SearchBar from '../../SearchBar/SearchBar.jsx'
-import TableView from './TableView/TableView.jsx'
-import PrintIcon from '../../../../../../../../assets/print.png'
-import pdfMake from 'pdfmake'
-import { getEmployeesListPdfText } from '../../../../utils/pdfFunctions.jsx'
+import React, { useState, useEffect } from "react";
+import "./Employees.scss";
+import "../../../../utils/MainWindow/MainWindow.scss";
+import SearchBar from "../../SearchBar/SearchBar.jsx";
+import TableView from "./TableView/TableView.jsx";
+import PrintIcon from "../../../../../../../../assets/print.png";
+import pdfMake from "pdfmake";
+import { getEmployeesListPdfText } from "../../../../utils/pdfFunctions.jsx";
 import {
   deleteEmployee,
   getEmployeesByWorkshop,
-} from '../../../../utils/RequestsAPI/Employees.jsx'
-import Button from '../../../../utils/Form/Button/Button.jsx'
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+} from "../../../../utils/RequestsAPI/Employees.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 
 const Employees = (props) => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [employees, setEmployees] = useState([])
-  const [workshops, setWorkshops] = useState([
-    'ЦехЛЭМЗ',
-    'ЦехЛепсари',
-    'ЦехЛиговский',
-    'Офис',
-    'Уволенные',
-  ])
-  const [isLoading, setIsLoading] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("");
+  const [employees, setEmployees] = useState([]);
+  const workshops = [
+    "ЦехЛЭМЗ",
+    "ЦехЛепсари",
+    "ЦехЛиговский",
+    "Офис",
+    "Уволенные",
+  ];
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    document.title = 'Сотрудники'
-    let abortController = new AbortController()
-    loadEmployees(abortController.signal)
+    document.title = "Сотрудники";
+    let abortController = new AbortController();
+    loadEmployees(abortController.signal);
     return function cancel() {
-      abortController.abort()
-    }
-  }, [])
+      abortController.abort();
+    };
+  }, []);
 
   const loadEmployees = (signal) => {
-    setIsLoading(true)
+    setIsLoading(true);
     //Динамический
-    let emplArr = []
+    let emplArr = [];
     const temp = workshops.map((item) => {
       let workshop = {
         workshop: item,
-      }
+      };
       return getEmployeesByWorkshop(workshop, signal)
         .then((res) => res.json())
         .then((res) => {
-          res.map((item) => emplArr.push(item))
-          setEmployees([...emplArr])
-        })
-    })
+          res.map((item) => emplArr.push(item));
+          setEmployees([...emplArr]);
+        });
+    });
     Promise.all(temp)
       .then(() => {
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error)
-        setIsLoading(false)
-      })
-  }
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
 
   const printEmployeesList = () => {
     let dd = getEmployeesListPdfText(
       employees.sort((a, b) => {
         if (a.lastName < b.lastName) {
-          return -1
-        } else return 1
+          return -1;
+        } else return 1;
       }),
-      workshops,
-    )
-    pdfMake.createPdf(dd).print()
-  }
+      workshops
+    );
+    pdfMake.createPdf(dd).print();
+  };
 
-  const deleteItem = (event) => {
-    const id = event.target.dataset.id
-    deleteEmployee(id).then(() => loadEmployees())
-  }
+  const deleteItem = (id) => {
+    deleteEmployee(id).then(() => loadEmployees());
+  };
 
   return (
     <div className="employees">
@@ -102,9 +101,9 @@ const Employees = (props) => {
           itemsCount={`Всего: ${
             employees.filter((employee) => {
               return (
-                employee.relevance !== 'Уволен' &&
-                employee.workshop !== 'Уволенные'
-              )
+                employee.relevance !== "Уволен" &&
+                employee.workshop !== "Уволенные"
+              );
             }).length
           } записей`}
         />
@@ -117,7 +116,7 @@ const Employees = (props) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Employees
+export default Employees;

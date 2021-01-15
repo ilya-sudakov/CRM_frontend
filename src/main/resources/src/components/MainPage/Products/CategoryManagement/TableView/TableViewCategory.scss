@@ -1,6 +1,8 @@
 @import "../../../../../variables.scss";
 
 .tableview-category {
+  width: calc(100% + 30px);
+  margin-left: -15px;
   .main-window__list-item {
     span {
       &:nth-child(1) {

@@ -1,51 +1,51 @@
-import React, { useEffect } from 'react'
-import './TableView.scss'
-import '../../../../../../utils/MainWindow/MainWindow.scss'
-import okSVG from '../../../../../../../../../../assets/tableview/ok.svg'
+import React, { useEffect } from "react";
+import "./TableView.scss";
+import "../../../../../../utils/MainWindow/MainWindow.scss";
+import okSVG from "../../../../../../../../../../assets/tableview/ok.svg";
 
 const TableView = (props) => {
   const search = () => {
     // console.log(drafts);
-    let re = /[.,\s]/gi
-    const query = props.searchQuery.toLowerCase()
-    let searchArr = query.split(' ')
+    let re = /[.,\s]/gi;
+    const query = props.searchQuery.toLowerCase();
+    let searchArr = query.split(" ");
     return props.drafts.filter((item) => {
-      let check = true
+      let check = true;
       searchArr.map((searchWord) => {
         if (
           item.name.toLowerCase().includes(searchWord.toLowerCase()) ===
             false &&
           item.number
             .toLowerCase()
-            .replace(re, '')
-            .includes(query.replace(re, '')) === false
+            .replace(re, "")
+            .includes(query.replace(re, "")) === false
         )
-          check = false
-      })
+          check = false;
+      });
       if (check === true) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
-    })
-  }
+    });
+  };
 
   const partTypes = {
-    Bench: 'Станок',
-    Stamp: 'Штамп',
-    Press: 'Пресс-форма',
-    Detail: 'Деталь',
-  }
+    Bench: "Станок",
+    Stamp: "Штамп",
+    Press: "Пресс-форма",
+    Detail: "Деталь",
+  };
 
   useEffect(() => {
     // console.log(props.drafts);
-    props.setShowWindow(false)
-  }, [props.closeWindow])
+    props.setShowWindow(false);
+  }, [props.closeWindow]);
 
   return (
     <div className="select-drafts__list">
       <div className="main-window">
-        <div className="main-window__list">
+        <div className="main-window__list main-window__list--full">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Артикул</span>
             <span>Название</span>
@@ -64,16 +64,16 @@ const TableView = (props) => {
                   .includes(props.searchQuery.toLowerCase()) ||
                 draft.location
                   .toLowerCase()
-                  .includes(props.searchQuery.toLowerCase()),
+                  .includes(props.searchQuery.toLowerCase())
             )
             .map((draft, index) => {
               return (
                 <div
                   className="main-window__list-item"
                   onClick={() => {
-                    props.selectDraft(draft.id, draft.name, draft.type)
+                    props.selectDraft(draft.id, draft.name, draft.type);
                     // console.log(props.closeWindow)
-                    props.setCloseWindow(!props.closeWindow)
+                    props.setCloseWindow(!props.closeWindow);
                   }}
                 >
                   <span>
@@ -98,9 +98,9 @@ const TableView = (props) => {
                     <div
                       className="main-window__action"
                       onClick={() => {
-                        props.selectDraft(draft.id, draft.name, draft.type)
-                        console.log(props.closeWindow)
-                        props.setCloseWindow(!props.closeWindow)
+                        props.selectDraft(draft.id, draft.name, draft.type);
+                        console.log(props.closeWindow);
+                        props.setCloseWindow(!props.closeWindow);
                       }}
                       title="Выбрать деталь"
                     >
@@ -109,12 +109,12 @@ const TableView = (props) => {
                     </div>
                   </div>
                 </div>
-              )
+              );
             })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TableView
+export default TableView;

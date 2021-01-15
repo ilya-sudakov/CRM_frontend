@@ -35,8 +35,6 @@ import {
 
 const StatisticsPage = () => {
   const [curPage, setCurPage] = useState("requests");
-
-  const [curDate, setCurDate] = useState(new Date());
   const [curPeriod, setCurPeriod] = useState("month");
   const [currDate, setCurrDate] = useState({
     startDate: getPreviousMonthDates(new Date(), "current").startDate,
@@ -55,7 +53,7 @@ const StatisticsPage = () => {
           }),
       },
       nextButton: {
-        text: `${months[new Date().getMonth()]}`,
+        text: "Тек. месяц",
         onClick: () =>
           setCurrDate({
             startDate: getPreviousMonthDates(new Date(), "current").startDate,
@@ -179,7 +177,7 @@ const StatisticsPage = () => {
       <RequestsPage currDate={currDate} timePeriod={timePeriod[curPeriod]} />
     ),
     production: () => (
-      <ProductionPage curDate={curDate} timePeriod={timePeriod[curPeriod]} />
+      <ProductionPage curDate={new Date()} timePeriod={timePeriod[curPeriod]} />
     ),
   };
 
@@ -282,40 +280,44 @@ const RequestsPage = ({ currDate, timePeriod }) => {
   return (
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
-        <IncomeStatsBigPanel
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-          loadData={loadRequests}
-          curPeriod={timePeriod}
-        />
-        <RequestsQuantityPanel
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
-        <OnTimeRequestsDistribution
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
-      </div>
-      <div className="statistics__row statistics__row--full">
-        <NewClientsStatsPanel
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
-        <NewOldClientsStatsPanel
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
+        <div className="statistics__column" style={{ maxWidth: "700px" }}>
+          <IncomeStatsBigPanel
+            currDate={currDate}
+            requests={requests}
+            timeText={timePeriod.timeTextSmallPanel}
+            getPrevData={timePeriod.getPrevData}
+            loadData={loadRequests}
+            curPeriod={timePeriod}
+          />
+        </div>
+        <div className="statistics__column">
+          <RequestsQuantityPanel
+            currDate={currDate}
+            requests={requests}
+            timeText={timePeriod.timeTextSmallPanel}
+            getPrevData={timePeriod.getPrevData}
+          />
+          <OnTimeRequestsDistribution
+            currDate={currDate}
+            requests={requests}
+            timeText={timePeriod.timeTextSmallPanel}
+            getPrevData={timePeriod.getPrevData}
+          />
+          <div className="statistics__row statistics__row--full">
+            <NewClientsStatsPanel
+              currDate={currDate}
+              requests={requests}
+              timeText={timePeriod.timeTextSmallPanel}
+              getPrevData={timePeriod.getPrevData}
+            />
+            <NewOldClientsStatsPanel
+              currDate={currDate}
+              requests={requests}
+              timeText={timePeriod.timeTextSmallPanel}
+              getPrevData={timePeriod.getPrevData}
+            />
+          </div>
+        </div>
       </div>
       <div className="statistics__row">
         <ManagerEfficiencyGraphPanel

@@ -38,12 +38,6 @@ const SelectClient = (props) => {
       });
   };
 
-  // const deleteItemCategory = (event) => {
-  //     const id = event.target.dataset.id;
-  //     deleteCategory(id)
-  //         .then(() => loadClients())
-  // }
-
   const clickClient = (clientId, clientName) => {
     setId(clientId);
     setName(clientName);
@@ -70,21 +64,23 @@ const SelectClient = (props) => {
               Выбрать клиента
             </button>
           )}
-          <div className="select-client__searchbar">
-            <input
-              type="text"
-              className={
-                props.error === true
-                  ? "select-client__input select-client__input--error"
-                  : "select-client__input"
-              }
-              value={
-                props.defaultValue && name === "" ? props.defaultValue : name
-              }
-              placeholder="Выберите клиента, нажав на кнопку 'Выбрать клиента'"
-              disabled
-            />
-          </div>
+          {id !== 0 && (
+            <div className="select-client__searchbar">
+              <input
+                type="text"
+                className={
+                  props.error === true
+                    ? "select-client__input select-client__input--error"
+                    : "select-client__input"
+                }
+                value={
+                  props.defaultValue && name === "" ? props.defaultValue : name
+                }
+                placeholder="Выберите клиента, нажав на кнопку 'Выбрать клиента'"
+                disabled
+              />
+            </div>
+          )}
         </div>
       </div>
       {props.error === true && (
@@ -108,12 +104,10 @@ const SelectClient = (props) => {
         content={
           <React.Fragment>
             <SearchBar
-              // title="Поиск по клиентам"
               fullSize
               setSearchQuery={setSearchQuery}
               placeholder="Введите название для поиска..."
               onButtonClick={(query) => {
-                // console.log(query);
                 if (query === "") {
                   setClients([]);
                 }
@@ -149,7 +143,7 @@ const TableView = (props) => {
 
   return (
     <div className="main-window">
-      <div className="main-window__list">
+      <div className="main-window__list main-window__list--full">
         {props.isLoading ? (
           <PlaceholderLoading
             itemClassName="main-window__list-item"
@@ -157,7 +151,9 @@ const TableView = (props) => {
             items={3}
           />
         ) : props.clients.length === 0 ? (
-          <div>Введите не менее 3 символа для начала поиска</div>
+          <div style={{ padding: "10px 25px" }}>
+            Введите не менее 3 символа для начала поиска
+          </div>
         ) : (
           <>
             <div className="main-window__list-item main-window__list-item--header">

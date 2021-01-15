@@ -57,11 +57,9 @@
       padding: 5px 10px;
       border-radius: 3px !important;
       box-sizing: border-box;
-      // border-radius: 10px;
-      // border-top-left-radius: 10px;
-      // border-bottom-left-radius: 10px;
       z-index: 0;
       transition: 100ms ease-in-out;
+      min-height: 2rem;
 
       &:hover {
         border-color: #888888;
@@ -81,7 +79,8 @@
     }
 
     .tableview_products {
-      width: 100%;
+      width: calc(100% + 30px);
+      margin-left: -15px;
     }
   }
 
@@ -380,7 +379,7 @@
         padding: 5px 5px;
         height: 3rem !important;
         max-height: 1.5rem !important;
-      } 
+      }
 
       .select__selected_name {
         padding: 5px 10px;
@@ -451,42 +450,37 @@
   // MOBILE SCREENS ( <= 768px)
 
   @media (max-width: 768px) {
-    & {
-      .select__searchbar {
-        .select__input {
-          padding: 10px !important;
-        }
+    .select__searchbar {
+      .select__input {
+        padding: 10px !important;
       }
-      width: 100% !important;
-      &__selected {
-        &_row {
-          flex-wrap: wrap;
+    }
 
-          // margin-left: -25px;
+    width: 100% !important;
+    &__selected {
+      &_row {
+        flex-wrap: wrap;
+        .select__selected_item {
+          margin-right: auto !important;
+          width: calc(100% - 43px) !important;
+        }
+
+        .select__selected_packaging,
+        .select__selected_quantity {
+          width: calc(50% - 2.5px);
+          margin-top: 10px;
+          margin-right: 5px;
+        }
+        .select__selected_quantity {
+          min-width: 80px;
+        }
+        .select__selected_packaging {
+          min-width: 150px;
+        }
+        &--minimized {
+          margin-left: 0;
           .select__selected_item {
-            margin-right: auto !important;
-            width: calc(100% - 43px) !important;
-            // max-width: 300px;
-          }
-
-          .select__selected_packaging,
-          .select__selected_quantity {
-            width: calc(50% - 2.5px);
-            margin-top: 10px;
-            margin-right: 5px;
-          }
-          .select__selected_quantity {
-            min-width: 80px;
-          }
-          .select__selected_packaging {
-            min-width: 150px;
-          }
-
-          &--minimized {
-            margin-left: 0;
-            .select__selected_item {
-              width: 100% !important;
-            }
+            width: 100% !important;
           }
         }
       }

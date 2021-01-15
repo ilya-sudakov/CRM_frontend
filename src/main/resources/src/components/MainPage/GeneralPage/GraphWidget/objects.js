@@ -1,36 +1,36 @@
-const lemz = '#1b4e6bbb'
-const lepsari = '#5c63a2bb'
-const ligovskiy = '#c068a8bb'
-const office = '#ec7176bb'
+const lemz = "#1b4e6bbb";
+const lepsari = "#5c63a2bb";
+const ligovskiy = "#c068a8bb";
+const office = "#ec7176bb";
 
 export const workshopsDefaultValue = [
   {
-    label: 'ЦехЛЭМЗ',
+    label: "ЦехЛЭМЗ",
     backgroundColor: lemz,
     data: [],
     borderWidth: 1,
   },
   {
-    label: 'ЦехЛепсари',
+    label: "ЦехЛепсари",
     backgroundColor: lepsari,
     data: [],
     borderWidth: 1,
   },
   {
-    label: 'ЦехЛиговский',
+    label: "ЦехЛиговский",
     backgroundColor: ligovskiy,
     data: [],
     borderWidth: 1,
   },
   {
-    label: 'Офис',
+    label: "Офис",
     backgroundColor: office,
     data: [],
     borderWidth: 1,
   },
-]
+];
 
-export const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+export const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 export const graphOptions = {
   cornerRadius: 2.5,
@@ -43,18 +43,18 @@ export const graphOptions = {
       ? true
       : false,
   animation: {
-    easing: 'easeInOutCirc',
+    easing: "easeInOutCirc",
   },
   tooltips: {
-    mode: 'index',
+    mode: "index",
   },
   legend: {
     position:
       (window.innerWidth ||
         document.documentElement.clientWidth ||
         document.body.clientWidth) > 500
-        ? 'right'
-        : 'bottom',
+        ? "right"
+        : "bottom",
     labels: {
       usePointStyle: true,
     },
@@ -78,8 +78,8 @@ export const graphOptions = {
         stacked: true,
         scaleLabel: {
           display: false,
-          labelString: 'Часы',
-          fontStyle: 'italic',
+          labelString: "Часы",
+          fontStyle: "italic",
         },
       },
     ],
@@ -100,10 +100,10 @@ export const graphOptions = {
         stacked: true,
         scaleLabel: {
           display: false,
-          labelString: 'Дни недели',
-          fontStyle: 'italic',
+          labelString: "Дни недели",
+          fontStyle: "italic",
         },
       },
     ],
   },
-}
+};

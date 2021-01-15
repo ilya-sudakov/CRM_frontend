@@ -11,7 +11,6 @@ const RequestsList = ({
   return (
     <div className="requests-list">
       <div className="main-window__title">{title}</div>
-
       {data.length > 0 ? (
         <TableView
           data={data}
@@ -19,6 +18,7 @@ const RequestsList = ({
           workshopName="requests"
           sortOrder={sortBy}
           loadData={loadData}
+          isMinimized={true}
         />
       ) : (
         <div className="main-window__info-text">

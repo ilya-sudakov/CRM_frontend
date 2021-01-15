@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import MoneyIcon from "../../../../../../../../assets/etc/bx-ruble.inline.svg";
 import { months } from "../../../../utils/dataObjects";
-import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
-import { createGraph, loadCanvas } from "../../../../utils/graphs";
+import {
+  addSpaceDelimiter,
+  getRandomColor,
+  getRandomNiceColor,
+} from "../../../../utils/functions.jsx";
 import {
   checkIfDateIsInRange,
   checkRequestsForSelectedMonth,
 } from "../functions.js";
 import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
-import SmallPanel from "../Panels/SmallPanel.jsx";
 import BigPanel from "./BigPanel.jsx";
+import BarChart from "../../../../utils/Charts/BarChart/BarChart.jsx";
+import {
+  tooltipLabelRubles,
+  tooltipLabelPercent,
+} from "../../../../utils/Charts/callbacks.js";
 
 const IncomeStatsBigPanel = ({
   requests,
@@ -29,11 +36,122 @@ const IncomeStatsBigPanel = ({
     timePeriod: timeText,
     difference: 0,
     curPeriod: curPeriod,
+    currDate: currDate,
     renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
   });
-  const [graph, setGraph] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [canvasLoaded, setCanvasLoaded] = useState(false);
+
+  const getFullYearData = (requests, currDate) => {
+    let monthsIncome = [];
+    const curYear = currDate.startDate.getFullYear();
+    const curMonth = currDate.startDate.getMonth();
+    for (let i = 0; i < 12; i++) {
+      const newRequests = checkRequestsForSelectedMonth(
+        requests,
+        new Date(curYear, i, 1)
+      );
+      const totalIncome = newRequests.reduce(
+        (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
+        0
+      );
+
+      console.log(curMonth);
+
+      monthsIncome.push({
+        value: totalIncome,
+        label: months[i],
+        color:
+          curMonth === i
+            ? "#B74F3B"
+            : curMonth - 1 === i
+            ? "#3BB7B6"
+            : "#cccccc",
+      });
+    }
+    return monthsIncome;
+  };
+
+  const getFullYearAccumilationData = (requests, currDate) => {
+    let monthsIncome = [];
+    let totalSum = 0;
+    const curYear = currDate.startDate.getFullYear();
+    for (let i = 0; i < 12; i++) {
+      const newRequests = checkRequestsForSelectedMonth(
+        requests,
+        new Date(curYear, i, 1)
+      );
+
+      const curMonthIncome = newRequests.reduce(
+        (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
+        0
+      );
+      totalSum += curMonthIncome;
+
+      monthsIncome.push({
+        value: totalSum,
+        label: months[i],
+        color: "#3e95cd",
+      });
+    }
+    return monthsIncome;
+  };
+
+  const getIncomeByClients = (requests, currDate) => {
+    let clients = {};
+
+    const colors = [
+      "#173635",
+      "#1a4f4e",
+      "#196a69",
+      "#148685",
+      "#00a3a2",
+      "#50b2b1",
+      "#79c2c0",
+      "#9cd1cf",
+      "#bee0df",
+      "#def0ef",
+    ];
+
+    requests.map((request) => {
+      const curId = request?.client?.id;
+
+      if (curId && clients[curId] === undefined) {
+        const filteredRequests = requests.filter(
+          (item) => item.client?.id === curId
+        );
+
+        const dataset = getFullYearData(filteredRequests, currDate).map(
+          (item) => item.value
+        );
+
+        //dont account for requests w/ sum of 0
+        if (dataset.reduce((prev, cur) => prev + cur, 0) === 0) return;
+
+        return (clients = {
+          ...clients,
+          [curId]: {
+            data: dataset,
+            label: request.client.name,
+            color: getRandomNiceColor(),
+          },
+        });
+      }
+    });
+
+    //pick only 10 clients who provided most income
+    const newClients = Object.values(clients)
+      .sort((a, b) => {
+        const sumA = a.data.reduce((prev, cur) => prev + cur, 0);
+        const sumB = b.data.reduce((prev, cur) => prev + cur, 0);
+        if (sumA < sumB) return 1;
+        if (sumA > sumB) return -1;
+        return 0;
+      })
+      .splice(0, 10);
+
+    return newClients.map((item, index) => {
+      return { ...item, color: colors[index] };
+    });
+  };
 
   const getStats = (requests) => {
     setStats((stats) => ({
@@ -74,24 +192,16 @@ const IncomeStatsBigPanel = ({
       return false;
     });
 
-    let monthsIncome = {};
-    for (let i = 0; i < 12; i++) {
-      const newRequests = checkRequestsForSelectedMonth(
-        requests,
-        new Date(currDate.startDate.getFullYear(), i, 1)
-      );
-      const totalIncome = newRequests.reduce(
-        (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
-        0
-      );
-      monthsIncome = {
-        ...monthsIncome,
-        [months[i]]: totalIncome,
-      };
-    }
+    const monthsIncome = getFullYearData(requests, currDate);
+    const monthsAccumilationIncome = getFullYearAccumilationData(
+      requests,
+      currDate
+    );
+    const incomeByClients = getIncomeByClients(requests, currDate);
 
     setStats((stats) => ({
       ...stats,
+      isLoaded: true,
       windowContent: (
         <RequestsList
           title="Заявки за выбранный период"
@@ -100,12 +210,115 @@ const IncomeStatsBigPanel = ({
           loadData={loadData}
         />
       ),
+      windowCharts: (
+        <>
+          <BarChart
+            data={monthsIncome}
+            labels={months}
+            options={{
+              legend: { display: false },
+              tooltips: {
+                callbacks: {
+                  label: (tooltipItem, data) =>
+                    tooltipLabelRubles(tooltipItem, data),
+                },
+              },
+              scales: {
+                xAxes: { gridLines: { display: false } },
+                yAxes: {
+                  ticks: {
+                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
+                  },
+                },
+              },
+            }}
+            color="#3e95cd"
+            chartClassName="panel__chart"
+            wrapperClassName="panel__chart-wrapper"
+            title="Доход за год"
+          />
+          <BarChart
+            data={incomeByClients}
+            labels={months}
+            chartClassName="panel__chart"
+            wrapperClassName="panel__chart-wrapper"
+            title="Доход за год (по клиентам)"
+            isStacked={true}
+            options={{
+              scales: {
+                xAxes: { gridLines: { display: false } },
+                yAxes: {
+                  ticks: {
+                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
+                  },
+                },
+              },
+              tooltips: {
+                callbacks: {
+                  label: (tooltipItem, data) =>
+                    tooltipLabelRubles(tooltipItem, data),
+                },
+              },
+              legend: { position: "right" },
+            }}
+          />
+          <BarChart
+            data={monthsAccumilationIncome}
+            labels={months}
+            options={{
+              legend: { display: false },
+              tooltips: {
+                callbacks: {
+                  label: (tooltipItem, data) =>
+                    tooltipLabelRubles(tooltipItem, data),
+                },
+              },
+              scales: {
+                xAxes: { gridLines: { display: false } },
+                yAxes: {
+                  ticks: {
+                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
+                  },
+                },
+              },
+            }}
+            chartClassName="panel__chart"
+            wrapperClassName="panel__chart-wrapper"
+            title="График накопления"
+          />
+        </>
+      ),
+      content: (
+        <BarChart
+          data={monthsIncome}
+          labels={months}
+          options={{
+            legend: { display: false },
+            tooltips: {
+              callbacks: {
+                label: (tooltipItem, data) =>
+                  tooltipLabelRubles(tooltipItem, data),
+              },
+            },
+            scales: {
+              xAxes: { gridLines: { display: false } },
+              yAxes: {
+                ticks: {
+                  callback: (value) => `${addSpaceDelimiter(value)} ₽`,
+                },
+              },
+            },
+          }}
+          chartClassName="panel__chart"
+          wrapperClassName="panel__chart-wrapper"
+        />
+      ),
       value: `${addSpaceDelimiter(
-        Math.floor(curMonthIncome * 100) / 100
-      )} руб.`,
+        Number.parseInt(Math.floor(curMonthIncome * 100) / 100)
+      )} ₽`,
       prevValue: `${addSpaceDelimiter(
-        Math.floor(prevMonthIncome * 100) / 100
-      )} руб.`,
+        Number.parseInt(Math.floor(prevMonthIncome * 100) / 100)
+      )} ₽`,
       difference: curMonthIncome - prevMonthIncome,
       percentage:
         Math.floor(
@@ -115,114 +328,6 @@ const IncomeStatsBigPanel = ({
             100
         ) / 100,
     }));
-    renderGraph(monthsIncome);
-  };
-
-  const renderGraph = (dataset) => {
-    if (!canvasLoaded) {
-      setStats((stats) => ({
-        ...stats,
-        isLoaded: true,
-      }));
-      loadCanvas(
-        `panel__chart-wrapper--${stats.chartName}-content`,
-        `panel__chart panel__chart--${stats.chartName}`
-      );
-    } else {
-      setStats((stats) => ({
-        ...stats,
-        isLoaded: true,
-      }));
-    }
-
-    setCanvasLoaded(true);
-    const options = {
-      type: "bar",
-      data: {
-        labels: Object.entries(dataset).map((item) => item[0]),
-        datasets: [
-          {
-            backgroundColor: "#3e95cd",
-            data: Object.entries(dataset).map((item) => item[1]),
-            label: "Сумма",
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio:
-          (window.innerWidth ||
-            document.documentElement.clientWidth ||
-            document.body.clientWidth) > 500
-            ? true
-            : false,
-        animation: {
-          easing: "easeInOutCirc",
-        },
-        // title: {
-        //   display: true,
-        //   text: "Доход за год",
-        //   align: "start",
-        // },
-        tooltips: {
-          mode: "index",
-        },
-        scales: {
-          yAxes: [
-            {
-              gridLines: {
-                display: true,
-              },
-              ticks: {
-                display:
-                  (window.innerWidth ||
-                    document.documentElement.clientWidth ||
-                    document.body.clientWidth) > 500
-                    ? false
-                    : true,
-                beginAtZero: true,
-              },
-              scaleLabel: {
-                display: false,
-                labelString: "Сумма - руб.",
-                fontStyle: "italic",
-              },
-            },
-          ],
-          xAxes: [
-            {
-              gridLines: {
-                display: false,
-              },
-              ticks: {
-                display:
-                  (window.innerWidth ||
-                    document.documentElement.clientWidth ||
-                    document.body.clientWidth) > 500
-                    ? true
-                    : false,
-              },
-              maxBarThickness: 80,
-              scaleLabel: {
-                display: false,
-                labelString: "Месяц",
-                fontStyle: "italic",
-              },
-            },
-          ],
-        },
-      },
-    };
-    setTimeout(() => {
-      setIsLoading(false);
-      canvasLoaded && graph.destroy();
-      setGraph(
-        createGraph(
-          options,
-          document.getElementsByClassName(`panel__chart--${stats.chartName}`)[0]
-        )
-      );
-    }, 150);
   };
 
   //При первой загрузке
@@ -233,15 +338,13 @@ const IncomeStatsBigPanel = ({
 
   //При обновлении тек. даты
   useEffect(() => {
-    if (canvasLoaded && requests.length > 1) {
-      console.log("second+ render");
-      setCanvasLoaded(false);
+    if (stats.isLoaded && requests.length > 1) {
       setStats((stats) => ({
         ...stats,
         timePeriod: timeText,
         curPeriod: curPeriod,
+        currDate: currDate,
       }));
-      graph.destroy();
       getStats(requests);
     }
   }, [currDate]);

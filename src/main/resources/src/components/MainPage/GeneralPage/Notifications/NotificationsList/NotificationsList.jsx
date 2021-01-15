@@ -1,11 +1,25 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import CakeIcon from "../../../../../../../../../assets/notifications/birthday-cake.inline.svg";
+import DocumentsIcon from "../../../../../../../../../assets/statistics/document-report.inline.svg";
 
-const NotificationsList = ({ notifications }) => {
+const NotificationsList = ({ notifications, isLoading }) => {
   return (
     <div className="notifications__list">
-      {notifications.map((notification) => (
-        <ListItem item={notification} key={notification.id} />
-      ))}
+      {isLoading ? (
+        <PlaceholderLoading
+          minHeight="2rem"
+          itemClassName="notifications__list-item"
+        />
+      ) : notifications.length > 0 ? (
+        notifications.map((notification) => (
+          <ListItem item={notification} key={notification.id} />
+        ))
+      ) : (
+        <div className="main-window__info-text">Нет уведомлений</div>
+      )}
     </div>
   );
 };
@@ -20,9 +34,19 @@ const ListItem = ({ item }) => {
       }`}
     >
       <div className="notifications__list-wrapper">
-        <div>{item.name}</div>
+        <Link to={item.link}>{item.name}</Link>
         <div>{item.description}</div>
       </div>
+      {item.description === "Сегодня день рождения" ? (
+        <CakeIcon className="main-window__img" />
+      ) : (
+        <DocumentsIcon className="main-window__img" />
+      )}
     </div>
   );
+};
+
+NotificationsList.propTypes = {
+  notifications: PropTypes.array,
+  isLoading: PropTypes.bool,
 };

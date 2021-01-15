@@ -15,5 +15,17 @@
         .main-window {
             padding-right: 20px;
         }
+
+        // .main-window__list-item--is-minimized {
+        //     padding-top: 20px !important;
+        // }
+    }
+
+    @media (max-width: 768px) {
+        .main-window {
+            &__title {
+                margin-bottom: 40px;
+            }
+        }
     }
 }

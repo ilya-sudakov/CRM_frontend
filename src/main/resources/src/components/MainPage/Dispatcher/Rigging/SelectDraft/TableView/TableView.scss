@@ -1,6 +1,8 @@
 @import "../../../../../../variables.scss";
 
 .select-drafts__list {
+  width: calc(100% + 30px);
+  margin-left: -15px;
   .main-window__list {
     .main-window__list-item {
       cursor: pointer;
