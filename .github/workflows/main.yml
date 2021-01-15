@@ -27,3 +27,4 @@ jobs:
       - run: npm i
       - run: npm run mkdir-built
       - run: npm run test
+      - run: npm run webpack:prod
