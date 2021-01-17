@@ -43,32 +43,28 @@ const EmployeeInfoPanel = ({ selectedInfo, dates, header }) => {
             <div>Нет учтенной работы</div>
           ) : (
             dates.map((date) => {
-              return (
-                <>
-                  {selectedInfo?.works?.filter(
-                    (item) =>
-                      item.day === date.getDate() &&
-                      item.month === date.getMonth() + 1 &&
-                      item.year === date.getFullYear()
-                  ).length > 0 && (
-                    <div className="employee-page__employee-title employee-page__employee-title--date">
-                      {`${formatDateStringNoYear(date)} - ${
-                        days[date.getDay()]
-                      }`}
-                    </div>
-                  )}
-                  {selectedInfo?.works
-                    ?.filter(
-                      (item) =>
-                        item.day === date.getDate() &&
-                        item.month === date.getMonth() + 1 &&
-                        item.year === date.getFullYear()
-                    )
-                    ?.map((item) => (
+              const curDayWorks = selectedInfo?.works?.filter(
+                (item) =>
+                  item.day === date.getDate() &&
+                  item.month === date.getMonth() + 1 &&
+                  item.year === date.getFullYear()
+              );
+              if (curDayWorks.length > 0)
+                return (
+                  <div className="employee-page__day-wrapper">
+                    {curDayWorks.length > 0 && (
+                      <div className="employee-page__employee-title employee-page__employee-title--date">
+                        {`${formatDateStringNoYear(date)} - ${
+                          days[date.getDay()]
+                        }`}
+                      </div>
+                    )}
+                    {curDayWorks?.map((item) => (
                       <WorksItem item={item} />
                     ))}
-                </>
-              );
+                  </div>
+                );
+              else return null;
             })
           )}
         </div>
