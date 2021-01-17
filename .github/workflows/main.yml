@@ -16,11 +16,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12        
-      # Install all dependencies  
+      - name: Install all dependencies
       - run: npm i
-      # Create folder for generated bundles&files
+        
+      - name: Create folder for generated bundles&files
       - run: npm run mkdir-built
-      # Run all test cases 
+        
+      - name: Run all test cases 
       - run: npm run test
-      # Bundle modules w/ Webpack
+        
+      - name: Bundle modules w/ Webpack
       - run: npm run webpack:prod
