@@ -17,13 +17,10 @@ jobs:
         with:
           node-version: 12        
       - name: Install all dependencies
-      - run: npm i
-        
+        run: npm i
       - name: Create folder for generated bundles&files
-      - run: npm run mkdir-built
-        
+        run: npm run mkdir-built
       - name: Run all test cases 
-      - run: npm run test
-        
+        run: npm run test
       - name: Bundle modules w/ Webpack
-      - run: npm run webpack:prod
+        run: npm run webpack:prod
