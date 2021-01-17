@@ -69,6 +69,17 @@
                 color: #777777;
                 // text-align: center;
             }
+            .employee-page__day-wrapper {
+                display: flex;
+                flex-direction: column;
+                border: 1px solid #cccccc;
+                background-color: #ffffff;
+                margin-bottom: 15px;
+                border-radius: 3px;
+                max-width: 500px;
+                padding: 15px 25px;
+                padding-bottom: 10px;
+            }
             .employee-page__list {
                 display: flex;
                 flex-direction: column;
@@ -139,7 +150,7 @@
             }
             .employee-page__employee-works-wrapper {
                 padding: 5px;
-                padding-left: 25px;
+                padding-left: 0px;
                 margin-bottom: 20px;
 
                 .employee-page__employee-works-item {
