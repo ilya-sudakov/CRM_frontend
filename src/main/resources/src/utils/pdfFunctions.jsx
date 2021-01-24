@@ -1,57 +1,57 @@
-import font from 'pdfmake/build/vfs_fonts.js'
+import font from "pdfmake/build/vfs_fonts.js";
 // import DejaVuSans from 'pdfmake/build/vfs_fonts_new.js'
-import pdfMake from 'pdfmake'
-import testImg from '../../../../../assets/priceList/no_img.png'
-import companyLogo from '../../../../../assets/priceList/osfix_logo.png'
-import listImg from '../../../../../assets/priceList/list.png'
-import companyLogoNoSlogan from '../../../../../assets/priceList/osfix_logo__no_slogan.png'
-import contactsImg from '../../../../../assets/priceList/contacts.png'
-import linkButtonImg from '../../../../../assets/priceList/linkButton.png'
-import saleImg from '../../../../../assets/priceList/onSale.png'
+import pdfMake from "pdfmake";
+import testImg from "../../../../../assets/priceList/no_img.png";
+import companyLogo from "../../../../../assets/priceList/osfix_logo.png";
+import listImg from "../../../../../assets/priceList/list.png";
+import companyLogoNoSlogan from "../../../../../assets/priceList/osfix_logo__no_slogan.png";
+import contactsImg from "../../../../../assets/priceList/contacts.png";
+import linkButtonImg from "../../../../../assets/priceList/linkButton.png";
+import saleImg from "../../../../../assets/priceList/onSale.png";
 // import topSellerImg from '../../../../../assets/priceList/top_seller.png';
 // import newItemImg from '../../../../../assets/priceList/new_item.png';
 // import uniqueItemImg from '../../../../../assets/priceList/unique_item.png';
-import proprietaryItemImg from '../../../../../assets/priceList/rospatent.png'
-import { formatDateString, getDataUri } from './functions.jsx'
+import proprietaryItemImg from "../../../../../assets/priceList/rospatent.png";
+import { formatDateString, getDataUri } from "./functions.jsx";
 
 export const getTransportationListPdfText = (transportation) => {
-  const transportationList = []
-  let transportationInfo = []
+  const transportationList = [];
+  let transportationInfo = [];
   transportation.map((item) => {
     return transportationInfo.push([
-      { text: formatDateString(item.date), style: 'regularText' },
-      { text: item.cargo, style: 'regularText' },
-      { text: item.quantity, style: 'regularText' },
-      { text: item.sender, style: 'regularText' },
-      { text: item.recipient, style: 'regularText' },
-      { text: item.driver, style: 'regularText' },
-    ])
-  })
+      { text: formatDateString(item.date), style: "regularText" },
+      { text: item.cargo, style: "regularText" },
+      { text: item.quantity, style: "regularText" },
+      { text: item.sender, style: "regularText" },
+      { text: item.recipient, style: "regularText" },
+      { text: item.driver, style: "regularText" },
+    ]);
+  });
   transportationList.push({
     table: {
-      widths: [60, 140, 40, 80, 80, '*'],
+      widths: [60, 140, 40, 80, 80, "*"],
       body: [
         [
-          { text: 'Дата', style: 'tableHeader' },
-          { text: 'Товар', style: 'tableHeader' },
-          { text: 'Кол-во', style: 'tableHeader' },
-          { text: 'Откуда', style: 'tableHeader' },
-          { text: 'Куда', style: 'tableHeader' },
-          { text: 'Водитель', style: 'tableHeader' },
+          { text: "Дата", style: "tableHeader" },
+          { text: "Товар", style: "tableHeader" },
+          { text: "Кол-во", style: "tableHeader" },
+          { text: "Откуда", style: "tableHeader" },
+          { text: "Куда", style: "tableHeader" },
+          { text: "Водитель", style: "tableHeader" },
         ],
         ...transportationInfo,
       ],
     },
-  })
+  });
   var dd = {
     info: {
-      title: 'Реестр транспортировок',
+      title: "Реестр транспортировок",
     },
     content: [
       {
-        text: 'Реестр транспортировок\n',
-        alignment: 'center',
-        style: 'title',
+        text: "Реестр транспортировок\n",
+        alignment: "center",
+        style: "title",
         margin: [0, 0, 0, 10],
       },
       ...transportationList,
@@ -71,106 +71,106 @@ export const getTransportationListPdfText = (transportation) => {
       },
       regularText: {
         fontSize: 10,
-        alignment: 'center',
+        alignment: "center",
       },
       tableHeader: {
         fontSize: 12,
         bold: true,
         italics: true,
-        alignment: 'center',
+        alignment: "center",
       },
     },
-  }
-  pdfMake.vfs = font.pdfMake.vfs
-  return dd
-}
+  };
+  pdfMake.vfs = font.pdfMake.vfs;
+  return dd;
+};
 
 export const getRequestPdfText = (
   date,
   requestProducts,
   codeWord,
   workshopName,
-  itemId,
+  itemId
 ) => {
   let productsArr = requestProducts
     .sort((a, b) => {
       if (a.name < b.name) {
-        return -1
+        return -1;
       }
       if (a.name > b.name) {
-        return 1
+        return 1;
       }
-      return 0
+      return 0;
     })
     .map((item) => {
-      return [item.name, item.quantity, item.packaging, '', '']
-    })
+      return [item.name, item.quantity, item.packaging, "", ""];
+    });
   var dd = {
     info: {
-      title: 'Очередь производства №' + itemId,
+      title: "Очередь производства №" + itemId,
     },
     content: [
       {
-        text: 'Очередь производства  №' + itemId + '\n',
-        alignment: 'center',
-        style: 'header',
+        text: "Очередь производства  №" + itemId + "\n",
+        alignment: "center",
+        style: "header",
       },
       workshopName
         ? {
             text: [
               {
-                text: '\nПодразделение: \n',
-                style: 'regularText',
+                text: "\nПодразделение: \n",
+                style: "regularText",
               },
               {
-                text: workshopName + '\n\n',
-                style: 'subheader',
+                text: workshopName + "\n\n",
+                style: "subheader",
               },
             ],
           }
-        : '\n',
+        : "\n",
       {
         text: [
           {
-            text: 'Дата: \n',
-            style: 'regularText',
+            text: "Дата: \n",
+            style: "regularText",
           },
           {
-            text: formatDateString(date) + '\n\n',
-            style: 'subheader',
+            text: formatDateString(date) + "\n\n",
+            style: "subheader",
           },
         ],
       },
       {
-        text: 'Продукция: ',
-        style: 'regularText',
+        text: "Продукция: ",
+        style: "regularText",
         margin: [0, 0, 0, 5],
       },
       {
         table: {
-          widths: ['*', 70, 70, 70, 70],
+          widths: ["*", 70, 70, 70, 70],
           body: [
             [
-              { text: 'Название', style: 'tableHeader' },
-              { text: 'Кол-во', style: 'tableHeader' },
-              { text: 'Фасовка', style: 'tableHeader' },
-              { text: '', style: 'tableHeader' },
-              { text: '', style: 'tableHeader' },
+              { text: "Название", style: "tableHeader" },
+              { text: "Кол-во", style: "tableHeader" },
+              { text: "Фасовка", style: "tableHeader" },
+              { text: "", style: "tableHeader" },
+              { text: "", style: "tableHeader" },
             ],
             ...productsArr,
           ],
         },
       },
-      '\n',
+      "\n",
       {
         text: [
           {
-            text: 'Кодовое слово: \n',
-            style: 'regularText',
+            text: "Кодовое слово: \n",
+            style: "regularText",
           },
           {
             text: codeWord,
-            style: 'subheader',
+            style: "subheader",
           },
         ],
       },
@@ -186,31 +186,31 @@ export const getRequestPdfText = (
       },
       regularText: {
         fontSize: 14,
-        color: '#444444',
+        color: "#444444",
       },
       tableHeader: {
         fontSize: 12,
         bold: true,
-        alignment: 'left',
+        alignment: "left",
       },
     },
-  }
-  pdfMake.vfs = font.pdfMake.vfs
-  return dd
-}
+  };
+  pdfMake.vfs = font.pdfMake.vfs;
+  return dd;
+};
 
 export const getProductsFromRequestsListPdfText = (products, workshopName) => {
   const formatProducts = (products) => [
     {
       table: {
         margin: [0, 5, 0, 5],
-        widths: ['*', 100, 80, 80],
+        widths: ["*", 100, 80, 80],
         body: [
           [
-            { text: 'Название', style: 'tableHeader' },
-            { text: 'Кол-во', style: 'tableHeader' },
-            { text: '', style: 'tableHeader' },
-            { text: '', style: 'tableHeader' },
+            { text: "Название", style: "tableHeader" },
+            { text: "Кол-во", style: "tableHeader" },
+            { text: "", style: "tableHeader" },
+            { text: "", style: "tableHeader" },
           ],
           ...Object.entries(products)
             .sort((a, b) => {
@@ -219,49 +219,49 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
                   numeric: true,
                 }) < 0
               ) {
-                return -1
+                return -1;
               }
               if (
                 a[0].localeCompare(b[0], undefined, {
                   numeric: true,
                 }) > 0
               ) {
-                return 1
+                return 1;
               }
-              return 0
+              return 0;
             })
             .map((product) => {
-              return [product[0], product[1], '', '']
+              return [product[0], product[1], "", ""];
             }),
         ],
       },
     },
-  ]
+  ];
 
   var dd = {
     info: {
-      title: 'Очередь производства - список',
+      title: "Очередь производства - список",
     },
     content: [
       {
-        text: 'Очередь производства - список\n',
-        alignment: 'center',
-        style: 'title',
+        text: "Очередь производства - список\n",
+        alignment: "center",
+        style: "title",
       },
       workshopName
         ? {
             text: [
               {
-                text: '\nПодразделение: \n',
-                style: 'regularText',
+                text: "\nПодразделение: \n",
+                style: "regularText",
               },
               {
-                text: workshopName + '\n\n',
-                style: 'subheader',
+                text: workshopName + "\n\n",
+                style: "subheader",
               },
             ],
           }
-        : '\n',
+        : "\n",
       // {
       //   text: [
       //     {
@@ -278,16 +278,16 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
               numeric: true,
             }) < 0
           ) {
-            return -1
+            return -1;
           }
           if (
             a[0].localeCompare(b[0], undefined, {
               numeric: true,
             }) > 0
           ) {
-            return 1
+            return 1;
           }
-          return 0
+          return 0;
         })
         .map((category) => {
           if (Object.values(category[1]).length > 0) {
@@ -296,14 +296,14 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
                 text: [
                   {
                     text: `${category[0]} \n`,
-                    style: 'regularText',
+                    style: "regularText",
                     margin: [5, 5, 5, 5],
                   },
                 ],
               },
               ...formatProducts(category[1]),
-              '\n',
-            ]
+              "\n",
+            ];
           }
         }),
     ],
@@ -322,76 +322,76 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
       },
       regularText: {
         fontSize: 14,
-        color: '#444444',
+        color: "#444444",
       },
       tableHeader: {
         fontSize: 12,
         bold: true,
-        alignment: 'left',
+        alignment: "left",
       },
     },
-  }
-  pdfMake.vfs = font.pdfMake.vfs
-  return dd
-}
+  };
+  pdfMake.vfs = font.pdfMake.vfs;
+  return dd;
+};
 
 export const getEmployeesListPdfText = (employees, workshops) => {
-  const employeesList = []
+  const employeesList = [];
   workshops.map((workshop) => {
     employeesList.push({
       text: [
         {
-          text: '\n' + 'Подразделение: ',
-          style: 'header',
-          alignment: 'center',
+          text: "\n" + "Подразделение: ",
+          style: "header",
+          alignment: "center",
         },
         {
-          text: workshop + '\n\n',
-          style: 'regularText',
+          text: workshop + "\n\n",
+          style: "regularText",
         },
       ],
-    })
-    let employeeInfo = []
+    });
+    let employeeInfo = [];
     employees.map((employee) => {
       // if (employee.workshop === workshop) {
       if (
-        (workshop === employee.workshop && employee.relevance !== 'Уволен') ||
-        (workshop === 'Уволенные' && employee.relevance === 'Уволен')
+        (workshop === employee.workshop && employee.relevance !== "Уволен") ||
+        (workshop === "Уволенные" && employee.relevance === "Уволен")
       ) {
         employeeInfo.push([
-          employee.lastName + ' ' + employee.name + ' ' + employee.middleName,
+          employee.lastName + " " + employee.name + " " + employee.middleName,
           formatDateString(employee.yearOfBirth),
           employee.citizenship,
           employee.position,
-          '',
-        ])
+          "",
+        ]);
       }
-    })
+    });
     employeesList.push({
       table: {
-        widths: ['*', 70, 80, 120, 100],
+        widths: ["*", 70, 80, 120, 100],
         body: [
           [
-            { text: 'ФИО', style: 'tableHeader' },
-            { text: 'Дата рождения', style: 'tableHeader' },
-            { text: 'Гражданство', style: 'tableHeader' },
-            { text: 'Должность', style: 'tableHeader' },
-            { text: '', style: 'tableHeader' },
+            { text: "ФИО", style: "tableHeader" },
+            { text: "Дата рождения", style: "tableHeader" },
+            { text: "Гражданство", style: "tableHeader" },
+            { text: "Должность", style: "tableHeader" },
+            { text: "", style: "tableHeader" },
           ],
           ...employeeInfo,
         ],
       },
-    })
-  })
+    });
+  });
   var dd = {
     info: {
-      title: 'Список сотрудников',
+      title: "Список сотрудников",
     },
     content: [
       {
-        text: 'Список сотрудников\n',
-        alignment: 'center',
-        style: 'title',
+        text: "Список сотрудников\n",
+        alignment: "center",
+        style: "title",
       },
       ...employeesList,
     ],
@@ -414,50 +414,50 @@ export const getEmployeesListPdfText = (employees, workshops) => {
       tableHeader: {
         fontSize: 12,
         bold: true,
-        alignment: 'center',
+        alignment: "center",
       },
     },
-  }
-  pdfMake.vfs = font.pdfMake.vfs
-  return dd
-}
+  };
+  pdfMake.vfs = font.pdfMake.vfs;
+  return dd;
+};
 
 export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
-  const employeesList = []
-  let employeeInfo = []
+  const employeesList = [];
+  let employeeInfo = [];
   employees.map((item) => {
     employeeInfo.push([
-      item.lastName + ' ' + item.name + ' ' + item.middleName,
+      item.lastName + " " + item.name + " " + item.middleName,
       formatDateString(item.yearOfBirth),
       item.citizenship,
       item.position,
-      '',
-    ])
-  })
+      "",
+    ]);
+  });
   employeesList.push({
     table: {
-      widths: ['*', 70, 80, 120, 100],
+      widths: ["*", 70, 80, 120, 100],
       body: [
         [
-          { text: 'ФИО', style: 'tableHeader' },
-          { text: 'Дата рождения', style: 'tableHeader' },
-          { text: 'Гражданство', style: 'tableHeader' },
-          { text: 'Должность', style: 'tableHeader' },
-          { text: '', style: 'tableHeader' },
+          { text: "ФИО", style: "tableHeader" },
+          { text: "Дата рождения", style: "tableHeader" },
+          { text: "Гражданство", style: "tableHeader" },
+          { text: "Должность", style: "tableHeader" },
+          { text: "", style: "tableHeader" },
         ],
         ...employeeInfo,
       ],
     },
-  })
+  });
   var dd = {
     info: {
-      title: 'Список сотрудников - ' + workshop,
+      title: "Список сотрудников - " + workshop,
     },
     content: [
       {
-        text: 'Список сотрудников ' + workshop + '\n\n',
-        alignment: 'center',
-        style: 'title',
+        text: "Список сотрудников " + workshop + "\n\n",
+        alignment: "center",
+        style: "title",
       },
       ...employeesList,
     ],
@@ -480,13 +480,13 @@ export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
       tableHeader: {
         fontSize: 12,
         bold: true,
-        alignment: 'center',
+        alignment: "center",
       },
     },
-  }
-  pdfMake.vfs = font.pdfMake.vfs
-  return dd
-}
+  };
+  pdfMake.vfs = font.pdfMake.vfs;
+  return dd;
+};
 
 export async function getPriceListPdfText(
   categories,
@@ -494,36 +494,36 @@ export async function getPriceListPdfText(
   optionalCols,
   locationTypes,
   disclaimer,
-  titlePage,
+  titlePage
 ) {
-  let finalList = []
-  let dd
-  let linkButtonData = await getDataUri(linkButtonImg)
-  const testImgData = await getDataUri(testImg)
-  const saleImgData = await getDataUri(saleImg)
-  const companyLogoData = await getDataUri(companyLogo)
-  const companyLogoNoSloganData = await getDataUri(companyLogoNoSlogan)
-  const contactsImgData = await getDataUri(contactsImg)
-  const proprietaryItemImgData = await getDataUri(proprietaryItemImg)
-  const listImgData = await getDataUri(listImg)
-  let titlePageImg1Data, titlePageImg2Data, titlePageImg3Data
-  if (titlePage.img1 !== null && titlePage.img1 !== '') {
-    titlePageImg1Data = await getDataUri(titlePage.img1, 'jpeg', 0.3)
+  let finalList = [];
+  let dd;
+  let linkButtonData = await getDataUri(linkButtonImg);
+  const testImgData = await getDataUri(testImg);
+  const saleImgData = await getDataUri(saleImg);
+  const companyLogoData = await getDataUri(companyLogo);
+  const companyLogoNoSloganData = await getDataUri(companyLogoNoSlogan);
+  const contactsImgData = await getDataUri(contactsImg);
+  const proprietaryItemImgData = await getDataUri(proprietaryItemImg);
+  const listImgData = await getDataUri(listImg);
+  let titlePageImg1Data, titlePageImg2Data, titlePageImg3Data;
+  if (titlePage.img1 !== null && titlePage.img1 !== "") {
+    titlePageImg1Data = await getDataUri(titlePage.img1, "jpeg", 0.3);
   }
-  if (titlePage.img2 !== null && titlePage.img2 !== '') {
-    titlePageImg2Data = await getDataUri(titlePage.img2, 'jpeg', 0.3)
+  if (titlePage.img2 !== null && titlePage.img2 !== "") {
+    titlePageImg2Data = await getDataUri(titlePage.img2, "jpeg", 0.3);
   }
-  if (titlePage.img3 !== null && titlePage.img3 !== '') {
-    titlePageImg3Data = await getDataUri(titlePage.img3, 'jpeg', 0.3)
+  if (titlePage.img3 !== null && titlePage.img3 !== "") {
+    titlePageImg3Data = await getDataUri(titlePage.img3, "jpeg", 0.3);
   }
   const temp = categories.map(async (category) => {
-    let fullGroup = []
+    let fullGroup = [];
     return Promise.all(
       priceList.map(async (groupOfProducts) => {
-        let locations = []
+        let locations = [];
         if (category.name === groupOfProducts.category) {
           return Promise.all(
-            groupOfProducts.locationType.split('/').map((location) => {
+            groupOfProducts.locationType.split("/").map((location) => {
               return Promise.all(
                 locationTypes.map(async (locationType) => {
                   if (locationType.name === location) {
@@ -532,10 +532,10 @@ export async function getPriceListPdfText(
                       columns: [
                         {
                           text: location,
-                          style: 'regularText',
+                          style: "regularText",
                           fontSize: 8,
-                          color: '#e30434',
-                          alignment: 'right',
+                          color: "#e30434",
+                          alignment: "right",
                           margin: [0, 5, 1, 0],
                         },
                         {
@@ -543,73 +543,73 @@ export async function getPriceListPdfText(
                           width: 14,
                         },
                       ],
-                    })
+                    });
                   }
-                }),
-              )
-            }),
+                })
+              );
+            })
           ).then(async () => {
-            let groupImg1Data = ''
-            let groupImg2Data = ''
-            let groupImg3Data = ''
-            let groupImg4Data = ''
+            let groupImg1Data = "";
+            let groupImg2Data = "";
+            let groupImg3Data = "";
+            let groupImg4Data = "";
             if (
               groupOfProducts.groupImg1 !== null &&
-              groupOfProducts.groupImg1 !== ''
+              groupOfProducts.groupImg1 !== ""
             ) {
               groupImg1Data = await getDataUri(
                 groupOfProducts.groupImg1,
-                'jpeg',
-                0.3,
-              )
+                "jpeg",
+                0.3
+              );
               // console.log(groupOfProducts.groupImg1.length, groupImg1Data.length);
             }
             if (
               groupOfProducts.groupImg2 !== null &&
-              groupOfProducts.groupImg2 !== ''
+              groupOfProducts.groupImg2 !== ""
             ) {
               groupImg2Data = await getDataUri(
                 groupOfProducts.groupImg2,
-                'jpeg',
-                0.3,
-              )
+                "jpeg",
+                0.3
+              );
             }
             if (
               groupOfProducts.groupImg3 !== null &&
-              groupOfProducts.groupImg3 !== ''
+              groupOfProducts.groupImg3 !== ""
             ) {
               groupImg3Data = await getDataUri(
                 groupOfProducts.groupImg3,
-                'jpeg',
-                0.3,
-              )
+                "jpeg",
+                0.3
+              );
             }
             if (
               groupOfProducts.groupImg4 !== null &&
-              groupOfProducts.groupImg4 !== ''
+              groupOfProducts.groupImg4 !== ""
             ) {
               groupImg4Data = await getDataUri(
                 groupOfProducts.groupImg4,
-                'jpeg',
-                0.3,
-              )
+                "jpeg",
+                0.3
+              );
             }
             fullGroup.push({
               unbreakable: groupOfProducts.products.length <= 20 ? true : false,
               stack: [
                 {
-                  width: '*',
+                  width: "*",
                   headlineLevel: 1,
                   columns: [
                     {
                       text: [
                         {
-                          text: ' ',
-                          style: 'subheader',
+                          text: " ",
+                          style: "subheader",
                         },
                         {
                           text: groupOfProducts.name.toUpperCase(),
-                          style: 'subheader',
+                          style: "subheader",
                           fontSize: 12,
                           groupId: groupOfProducts.id,
                           link: groupOfProducts.linkAddress,
@@ -617,8 +617,8 @@ export async function getPriceListPdfText(
                           // noWrap: true
                         },
                         {
-                          text: ' ',
-                          style: 'subheader',
+                          text: " ",
+                          style: "subheader",
                         },
                       ],
                       // width: 'auto'
@@ -629,42 +629,42 @@ export async function getPriceListPdfText(
                         {
                           // text: '  ' + groupOfProducts.description,
                           text: groupOfProducts.description,
-                          style: 'regularText',
-                          color: '#666666',
+                          style: "regularText",
+                          color: "#666666",
                           fontSize: 8,
                           bold: true,
                         },
                       ],
                       margin: [10, 1, 0, 0],
                       // width: 250
-                      width: '*',
+                      width: "*",
                     },
                     {
                       stack: [
                         {
                           columns: [
                             ...locations.sort((a, b) => {
-                              if (locations.length <= 1) return 0
+                              if (locations.length <= 1) return 0;
                               else {
                                 if (
                                   a.columns[0].text.localeCompare(
                                     b.columns[0].text,
                                     undefined,
-                                    { numeric: true },
+                                    { numeric: true }
                                   ) < 0
                                 ) {
-                                  return -1
+                                  return -1;
                                 }
                                 if (
                                   a.columns[0].text.localeCompare(
                                     b.columns[0].text,
                                     undefined,
-                                    { numeric: true },
+                                    { numeric: true }
                                   ) > 0
                                 ) {
-                                  return 1
+                                  return 1;
                                 }
-                                return 0
+                                return 0;
                               }
                             }),
                           ],
@@ -673,7 +673,7 @@ export async function getPriceListPdfText(
                           width: 100,
                         },
                       ],
-                      alignment: 'right',
+                      alignment: "right",
                       // width: '*',
                       width: 100,
                     },
@@ -683,35 +683,35 @@ export async function getPriceListPdfText(
                 {
                   columns: [
                     {
-                      image: groupImg1Data !== '' ? groupImg1Data : testImgData,
+                      image: groupImg1Data !== "" ? groupImg1Data : testImgData,
                       fit: [120, 100],
                       // margin: [80, 0, 0, 5],
                       margin: [0, 0, 0, 5],
-                      alignment: 'left',
+                      alignment: "left",
                     },
                     {
-                      image: groupImg2Data !== '' ? groupImg2Data : testImgData,
+                      image: groupImg2Data !== "" ? groupImg2Data : testImgData,
                       // width: 200,
                       fit: [120, 100],
                       // margin: [70, 0, 0, 5],
                       margin: [10, 0, 0, 5],
-                      alignment: 'right',
+                      alignment: "right",
                     },
                     {
-                      image: groupImg3Data !== '' ? groupImg3Data : testImgData,
+                      image: groupImg3Data !== "" ? groupImg3Data : testImgData,
                       // width: 200,
                       fit: [120, 100],
                       // margin: [70, 0, 0, 5],
                       margin: [10, 0, 0, 5],
-                      alignment: 'right',
+                      alignment: "right",
                     },
                     {
-                      image: groupImg4Data !== '' ? groupImg4Data : testImgData,
+                      image: groupImg4Data !== "" ? groupImg4Data : testImgData,
                       // width: 200,
                       fit: [120, 100],
                       // margin: [70, 0, 0, 5],
                       margin: [11, 0, 0, 5],
-                      alignment: 'right',
+                      alignment: "right",
                     },
                   ],
                 },
@@ -723,25 +723,25 @@ export async function getPriceListPdfText(
                       table: {
                         widths: [
                           40,
-                          '*',
-                          '*',
+                          "*",
+                          "*",
                           35,
                           35,
                           35,
                           ...optionalCols.map((item, index) =>
-                            index < optionalCols.length - 1 ? 35 : 35,
+                            index < optionalCols.length - 1 ? 35 : 35
                           ),
                         ],
                         body: [
                           [
                             // { text: '', border: [false, false, false, false] },
-                            { text: '', border: [false, false, false, false] },
-                            { text: '', border: [false, false, false, false] },
-                            { text: '', border: [false, false, false, false] },
+                            { text: "", border: [false, false, false, false] },
+                            { text: "", border: [false, false, false, false] },
+                            { text: "", border: [false, false, false, false] },
                             {
                               text: groupOfProducts.priceHeader
-                                ? groupOfProducts.priceHeader + ', ₽'
-                                : 'Цена за штуку, ₽',
+                                ? groupOfProducts.priceHeader + ", ₽"
+                                : "Цена за штуку, ₽",
                               colSpan: 3 + optionalCols.length,
                               // bold: true,
                               italics: true,
@@ -756,53 +756,53 @@ export async function getPriceListPdfText(
                             //     border: [false, false, false, false]
                             // },
                             {
-                              text: 'Артикул',
+                              text: "Артикул",
                               // bold: true
                               margin: [0, 5, 0, 0],
                             },
                             {
-                              text: 'Название',
+                              text: "Название",
                               // bold: true
                               margin: [0, 5, 0, 0],
                             },
                             {
-                              text: 'Ед. изм.',
+                              text: "Ед. изм.",
                               // bold: true
                               margin: [0, 5, 0, 0],
                             },
                             {
                               text: groupOfProducts.retailName
                                 ? groupOfProducts.retailName
-                                : 'Розница',
+                                : "Розница",
                               // bold: true
                               margin: [0, 1.5, 0, 0],
                             },
                             {
                               text: groupOfProducts.firstPriceName
                                 ? groupOfProducts.firstPriceName
-                                : 'до 1500 шт.',
+                                : "до 1500 шт.",
                               // bold: true
                               margin: [0, 1.5, 0, 0],
                             },
                             {
                               text: groupOfProducts.secondPriceName
                                 ? groupOfProducts.secondPriceName
-                                : 'до 5000 шт.',
+                                : "до 5000 шт.",
                               // bold: true
                               margin: [0, 1.5, 0, 0],
                             },
                             ...optionalCols.map((column, index) => {
                               return {
                                 text:
-                                  column.property === 'partnerPrice'
+                                  column.property === "partnerPrice"
                                     ? groupOfProducts.partnerName
-                                    : column.property === 'dealerPrice'
+                                    : column.property === "dealerPrice"
                                     ? groupOfProducts.dealerName
-                                    : column.property === 'distributorPrice' &&
+                                    : column.property === "distributorPrice" &&
                                       groupOfProducts.distributorName,
                                 // bold: true
                                 margin: [0, 1.5, 0, 0],
-                              }
+                              };
                             }),
                           ],
                           ...groupOfProducts.products
@@ -812,16 +812,16 @@ export async function getPriceListPdfText(
                                   numeric: true,
                                 }) < 0
                               ) {
-                                return -1
+                                return -1;
                               }
                               if (
                                 a.number.localeCompare(b.number, undefined, {
                                   numeric: true,
                                 }) > 0
                               ) {
-                                return 1
+                                return 1;
                               }
-                              return 0
+                              return 0;
                             })
                             .map((product) => {
                               // return {
@@ -837,7 +837,7 @@ export async function getPriceListPdfText(
                                     0,
                                   ],
                                   bold: product.onSale,
-                                  color: product.onSale ? '#111111' : '#666666',
+                                  color: product.onSale ? "#111111" : "#666666",
                                 },
                                 product.onSale
                                   ? {
@@ -854,9 +854,9 @@ export async function getPriceListPdfText(
                                             0,
                                             0,
                                           ],
-                                          alignment: 'left',
+                                          alignment: "left",
                                           bold: product.onSale,
-                                          color: '#111111',
+                                          color: "#111111",
                                         },
                                       ],
                                     }
@@ -868,7 +868,7 @@ export async function getPriceListPdfText(
                                         0,
                                         0,
                                       ],
-                                      alignment: 'left',
+                                      alignment: "left",
                                     },
                                 {
                                   text: product.units,
@@ -879,15 +879,15 @@ export async function getPriceListPdfText(
                                     0,
                                   ],
                                   bold: product.onSale,
-                                  color: product.onSale ? '#111111' : '#666666',
+                                  color: product.onSale ? "#111111" : "#666666",
                                 },
                                 {
                                   text:
-                                    product.retailPrice !== '' &&
+                                    product.retailPrice !== "" &&
                                     !Number.isNaN(product.retailPrice) &&
                                     product.retailPrice !== 0
                                       ? product.retailPrice
-                                      : ' ',
+                                      : " ",
                                   margin: [
                                     0,
                                     optionalCols.length > 1 ? 4.5 : 0,
@@ -895,15 +895,15 @@ export async function getPriceListPdfText(
                                     0,
                                   ],
                                   bold: product.onSale,
-                                  color: product.onSale ? '#111111' : '#666666',
+                                  color: product.onSale ? "#111111" : "#666666",
                                 },
                                 {
                                   text:
-                                    product.lessThan1500Price !== '' &&
+                                    product.lessThan1500Price !== "" &&
                                     !Number.isNaN(product.lessThan1500Price) &&
                                     product.lessThan1500Price !== 0
                                       ? product.lessThan1500Price
-                                      : ' ',
+                                      : " ",
                                   margin: [
                                     0,
                                     optionalCols.length > 1 ? 4.5 : 0,
@@ -911,15 +911,15 @@ export async function getPriceListPdfText(
                                     0,
                                   ],
                                   bold: product.onSale,
-                                  color: product.onSale ? '#111111' : '#666666',
+                                  color: product.onSale ? "#111111" : "#666666",
                                 },
                                 {
                                   text:
-                                    product.lessThan5000Price !== '' &&
+                                    product.lessThan5000Price !== "" &&
                                     !Number.isNaN(product.lessThan5000Price) &&
                                     product.lessThan5000Price !== 0
                                       ? product.lessThan5000Price
-                                      : ' ',
+                                      : " ",
                                   margin: [
                                     0,
                                     optionalCols.length > 1 ? 4.5 : 0,
@@ -927,19 +927,19 @@ export async function getPriceListPdfText(
                                     0,
                                   ],
                                   bold: product.onSale,
-                                  color: product.onSale ? '#111111' : '#666666',
+                                  color: product.onSale ? "#111111" : "#666666",
                                 },
                                 ...optionalCols.map((column) =>
                                   product[column.property] !== undefined
                                     ? {
                                         text:
-                                          product[column.property] !== '' &&
+                                          product[column.property] !== "" &&
                                           !Number.isNaN(
-                                            product[column.property],
+                                            product[column.property]
                                           ) &&
                                           product[column.property] !== 0
                                             ? product[column.property]
-                                            : ' ',
+                                            : " ",
                                         margin: [
                                           0,
                                           optionalCols.length > 1 ? 4.5 : 0,
@@ -948,11 +948,11 @@ export async function getPriceListPdfText(
                                         ],
                                         bold: product.onSale,
                                         color: product.onSale
-                                          ? '#111111'
-                                          : '#666666',
+                                          ? "#111111"
+                                          : "#666666",
                                       }
                                     : {
-                                        text: '',
+                                        text: "",
                                         margin: [
                                           0,
                                           optionalCols.length > 1 ? 4.5 : 0,
@@ -961,32 +961,32 @@ export async function getPriceListPdfText(
                                         ],
                                         bold: product.onSale,
                                         color: product.onSale
-                                          ? '#111111'
-                                          : '#666666',
-                                      },
+                                          ? "#111111"
+                                          : "#666666",
+                                      }
                                 ),
-                              ]
+                              ];
                             }),
                         ],
                       },
                       layout: {
                         hLineWidth: function (i, node) {
-                          return 1
+                          return 1;
                         },
                         vLineWidth: function (i, node) {
-                          return 1
+                          return 1;
                         },
                         hLineColor: function (i, node) {
-                          return '#444444'
+                          return "#444444";
                         },
                         vLineColor: function (i, node) {
-                          return '#444444'
+                          return "#444444";
                         },
                       },
-                      alignment: 'center',
-                      width: '*',
+                      alignment: "center",
+                      width: "*",
                       fontSize: 8,
-                      color: '#555555',
+                      color: "#555555",
                       // margin: [10, 0, 0, 5]
                       margin: [0, 0, 0, 5],
                     },
@@ -994,8 +994,8 @@ export async function getPriceListPdfText(
                 },
                 {
                   unbreakable: true,
-                  alignment: 'justify',
-                  width: '*',
+                  alignment: "justify",
+                  width: "*",
                   margin: [0, 0, 0, 10],
                   columns: [
                     {
@@ -1004,12 +1004,12 @@ export async function getPriceListPdfText(
                           [
                             {
                               border: [true, false, false, false],
-                              style: 'regularText',
+                              style: "regularText",
                               borderColor: [
-                                '#e30434',
-                                '#e30434',
-                                '#e30434',
-                                '#e30434',
+                                "#e30434",
+                                "#e30434",
+                                "#e30434",
+                                "#e30434",
                               ],
                               text: groupOfProducts.infoText,
 
@@ -1026,7 +1026,7 @@ export async function getPriceListPdfText(
                           image: linkButtonData,
                           link: groupOfProducts.linkAddress,
                           width: 100,
-                          alignment: 'right',
+                          alignment: "right",
                         },
                         groupOfProducts.proprietaryItemText1
                           ? {
@@ -1035,18 +1035,18 @@ export async function getPriceListPdfText(
                                   image: proprietaryItemImgData,
                                   width: 65,
                                   margin: [0, 10, 9, 0],
-                                  alignment: 'right',
+                                  alignment: "right",
                                 },
                                 {
                                   text: groupOfProducts.proprietaryItemText1,
                                   margin: [0, 5, 0, 0],
-                                  alignment: 'center',
+                                  alignment: "center",
                                   fontSize: 10,
                                 },
                               ],
                             }
                           : {
-                              text: '  ',
+                              text: "  ",
                             },
                         groupOfProducts.proprietaryItemText2
                           ? {
@@ -1055,61 +1055,61 @@ export async function getPriceListPdfText(
                                   image: proprietaryItemImgData,
                                   width: 65,
                                   margin: [0, 10, 9, 0],
-                                  alignment: 'right',
+                                  alignment: "right",
                                 },
                                 {
                                   text: groupOfProducts.proprietaryItemText2,
                                   margin: [0, 5, 0, 0],
-                                  alignment: 'center',
+                                  alignment: "center",
                                   fontSize: 10,
                                 },
                               ],
                             }
                           : {
-                              text: '  ',
+                              text: "  ",
                             },
                       ],
                       width: 100,
                     },
                   ],
                 },
-                groupOfProducts.footerImg !== '' &&
+                groupOfProducts.footerImg !== "" &&
                 groupOfProducts.footerImg !== null
                   ? {
                       image: await getDataUri(
                         groupOfProducts.footerImg,
-                        'jpeg',
-                        0.3,
+                        "jpeg",
+                        0.3
                       ),
                       fit: [512, 100],
                       // width: 512,
                       // height: 100
                     }
                   : {
-                      text: '  ',
+                      text: "  ",
                     },
               ],
-            })
-          })
+            });
+          });
         }
-      }),
+      })
     ).then(async () => {
-      const tempImg = await getDataUri(category.img)
+      const tempImg = await getDataUri(category.img);
       const sortedArr = fullGroup.sort((a, b) => {
         if (
           a.stack[0].columns[0].text[1].groupId <
           b.stack[0].columns[0].text[1].groupId
         ) {
-          return -1
+          return -1;
         }
         if (
           a.stack[0].columns[0].text[1].groupId >
           b.stack[0].columns[0].text[1].groupId
         ) {
-          return 1
+          return 1;
         }
-        return 0
-      })
+        return 0;
+      });
       //Перенос категории на некст страницу если она без продукции
       fullGroup.length > 0 &&
         category.active &&
@@ -1128,23 +1128,23 @@ export async function getPriceListPdfText(
                       image: tempImg,
                       width: 510,
                       height: 50,
-                      alignment: 'center',
+                      alignment: "center",
                     },
                     {
                       text: category.name.toUpperCase(),
-                      style: 'header',
+                      style: "header",
                       fontSize: 16,
-                      color: '#ffffff',
-                      alignment: 'center',
+                      color: "#ffffff",
+                      alignment: "center",
                       relativePosition: { x: 0, y: -38 },
                     },
                     ...item.stack,
                   ],
-                }
-              } else return item
+                };
+              } else return item;
             }),
           ],
-        })
+        });
       //Без переноса категории на некст страницу если она без продукции
       // fullGroup.length > 0 && finalList.push({
       //     stack: [
@@ -1168,38 +1168,38 @@ export async function getPriceListPdfText(
       //     ],
       //     margin: [0, 10, 0, 10]
       // })
-    })
-  })
+    });
+  });
   Promise.all(temp).then(async () => {
     // console.log(finalList);
     finalList = finalList.sort((a, b) => {
       // console.log(a.stack[0], b.stack[0]);
-      if (finalList.length <= 1) return 0
+      if (finalList.length <= 1) return 0;
       else {
         if (
           a.stack[0].stack[1].text.localeCompare(
             b.stack[0].stack[1].text,
             undefined,
-            { numeric: true },
+            { numeric: true }
           ) < 0
         ) {
-          return -1
+          return -1;
         }
         if (
           a.stack[0].stack[1].text.localeCompare(
             b.stack[0].stack[1].text,
             undefined,
-            { numeric: true },
+            { numeric: true }
           ) > 0
         ) {
-          return 1
+          return 1;
         }
-        return 0
+        return 0;
       }
-    })
+    });
     dd = {
       info: {
-        title: 'Прайс-лист',
+        title: "Прайс-лист",
       },
       // defaultStyle: {
       //     font: 'DejaVuSans'
@@ -1208,80 +1208,80 @@ export async function getPriceListPdfText(
         if (currentPage !== 1 || !titlePage.active) {
           return [
             {
-              alignment: 'justify',
-              width: '*',
+              alignment: "justify",
+              width: "*",
               margin: [40, 40, 40, 0],
               columns: [
                 {
                   image: contactsImgData,
                   width: 10,
-                  alignment: 'left',
+                  alignment: "left",
                 },
                 {
                   text: [
                     {
-                      text: 'ООО «ОСФИКС»\n',
-                      link: 'https://www.osfix.ru',
+                      text: "ООО «ОСФИКС»\n",
+                      link: "https://www.osfix.ru",
                       bold: true,
                       fontSize: 10,
                       margin: [0, 0, 0, 2],
                     },
                     {
-                      text: 'Лиговский пр., 52, Санкт-Петербург, 191040\n',
-                      link: 'https://yandex.ru/maps/-/CKUrY0Ih',
+                      text: "Лиговский пр., 52, Санкт-Петербург, 191040\n",
+                      link: "https://yandex.ru/maps/-/CKUrY0Ih",
                       fontSize: 10,
                       lineHeight: 1.1,
                     },
                     {
-                      text: 'www.osfix.ru\n',
+                      text: "www.osfix.ru\n",
                       fontSize: 10,
-                      link: 'https://www.osfix.ru',
+                      link: "https://www.osfix.ru",
                       lineHeight: 1.1,
                     },
-                    { text: 'info@osfix.ru\n', fontSize: 10, lineHeight: 1.1 },
+                    { text: "info@osfix.ru\n", fontSize: 10, lineHeight: 1.1 },
                     {
-                      text: '+7 (812) 449-10-09\n',
-                      link: 'tel:+78124491009',
+                      text: "+7 (812) 449-10-09\n",
+                      link: "tel:+78124491009",
                       fontSize: 10,
                       lineHeight: 1.1,
                     },
                   ],
                   margin: [5, 0, 0, 0],
-                  alignment: 'left',
+                  alignment: "left",
                 },
                 {
                   image: companyLogoData,
                   // width: 100,
-                  link: 'https://www.osfix.ru',
+                  link: "https://www.osfix.ru",
                   fit: [100, 100],
                   margin: [0, 13, 0, 0],
-                  alignment: 'right',
+                  alignment: "right",
                 },
               ],
             },
             {
               canvas: [
                 {
-                  type: 'line',
+                  type: "line",
                   x1: 0,
                   y1: 0,
                   x2: 515,
                   y2: 0,
                   lineWidth: 2,
-                  lineColor: '#e30434',
+                  lineColor: "#e30434",
                 },
               ],
-              alignment: 'justify',
-              width: '*',
+              alignment: "justify",
+              width: "*",
               margin: [40, 5, 40, 40],
             },
-          ]
+          ];
         } else
           return [
             {
-              text: '',
+              text: "",
             },
-          ]
+          ];
       },
       // pageMargins: function (currentPage, pageCount) {
       //     if (currentPage === pageCount) {
@@ -1296,63 +1296,63 @@ export async function getPriceListPdfText(
       footer: function (currentPage, pageCount) {
         if (currentPage === 1 && titlePage.active) {
           return {
-            text: ' ',
-          }
+            text: " ",
+          };
         }
         if (currentPage === pageCount) {
           return [
             {
               canvas: [
                 {
-                  type: 'line',
+                  type: "line",
                   x1: 0,
                   y1: 0,
                   x2: 515,
                   y2: 0,
                   lineWidth: 2,
-                  lineColor: '#e30434',
+                  lineColor: "#e30434",
                 },
               ],
-              alignment: 'justify',
-              width: '*',
+              alignment: "justify",
+              width: "*",
               margin: [40, 0, 40, 10],
             },
             {
               text: [
-                { text: 'ИНН ', fontSize: 10, bold: true },
-                { text: '7842143789\t', fontSize: 10 },
-                { text: 'КПП ', fontSize: 10, bold: true },
-                { text: '784201001\t', fontSize: 10 },
-                { text: 'ОГРН ', fontSize: 10, bold: true },
-                { text: '117784736458\t', fontSize: 10 },
-                { text: 'ОКПО ', fontSize: 10, bold: true },
-                { text: '20161337\n', fontSize: 10 },
-                { text: 'Банк ', fontSize: 10, bold: true },
-                { text: 'Филиал №7806 ВТБ (ПАО)\t', fontSize: 10 },
-                { text: 'Расчетный счет № ', fontSize: 10, bold: true },
-                { text: '40702810117060000232\t', fontSize: 10 },
-                { text: 'БИК ', fontSize: 10, bold: true },
-                { text: '044030707\t', fontSize: 10 },
+                { text: "ИНН ", fontSize: 10, bold: true },
+                { text: "7842143789\t", fontSize: 10 },
+                { text: "КПП ", fontSize: 10, bold: true },
+                { text: "784201001\t", fontSize: 10 },
+                { text: "ОГРН ", fontSize: 10, bold: true },
+                { text: "117784736458\t", fontSize: 10 },
+                { text: "ОКПО ", fontSize: 10, bold: true },
+                { text: "20161337\n", fontSize: 10 },
+                { text: "Банк ", fontSize: 10, bold: true },
+                { text: "Филиал №7806 ВТБ (ПАО)\t", fontSize: 10 },
+                { text: "Расчетный счет № ", fontSize: 10, bold: true },
+                { text: "40702810117060000232\t", fontSize: 10 },
+                { text: "БИК ", fontSize: 10, bold: true },
+                { text: "044030707\t", fontSize: 10 },
               ],
-              alignment: 'left',
-              width: '*',
+              alignment: "left",
+              width: "*",
               margin: [40, 0, 40, 10],
             },
             {
-              text: 'Страница ' + currentPage.toString(),
-              alignment: 'center',
+              text: "Страница " + currentPage.toString(),
+              alignment: "center",
               fontSize: 11,
-              color: '#999999',
+              color: "#999999",
             },
-          ]
+          ];
         } else
           return {
-            text: 'Страница ' + currentPage.toString(),
-            alignment: 'center',
+            text: "Страница " + currentPage.toString(),
+            alignment: "center",
             fontSize: 11,
-            color: '#999999',
+            color: "#999999",
             margin: [0, 20, 0, 0],
-          }
+          };
       },
       // defaultStyle: {
       //     font: 'DejaVuSans'
@@ -1362,11 +1362,11 @@ export async function getPriceListPdfText(
           ? {
               stack: [
                 {
-                  alignment: 'right',
+                  alignment: "right",
                   stack: [
                     {
                       columns: [
-                        { width: '*', text: '' },
+                        { width: "*", text: "" },
                         {
                           width: 180,
                           table: {
@@ -1377,34 +1377,34 @@ export async function getPriceListPdfText(
                                   // style: 'regularText',
                                   fontSize: 13,
                                   borderColor: [
-                                    '#e30434',
-                                    '#e30434',
-                                    '#e30434',
-                                    '#e30434',
+                                    "#e30434",
+                                    "#e30434",
+                                    "#e30434",
+                                    "#e30434",
                                   ],
                                   text: titlePage.to,
-                                  alignment: 'left',
+                                  alignment: "left",
                                   margin: [2.5, 2.5, 10, 2.5],
                                 },
                               ],
                               [
                                 {
                                   text: titlePage.date,
-                                  alignment: 'right',
+                                  alignment: "right",
                                   fontSize: 11,
-                                  color: '#666666',
+                                  color: "#666666",
                                   border: [true, false, true, true],
                                   borderColor: [
-                                    '#e30434',
-                                    '#e30434',
-                                    '#e30434',
-                                    '#e30434',
+                                    "#e30434",
+                                    "#e30434",
+                                    "#e30434",
+                                    "#e30434",
                                   ],
                                 },
                               ],
                             ],
                           },
-                          alignment: 'right',
+                          alignment: "right",
                           // margin: [0, 0, 0, 10],
                         },
                       ],
@@ -1417,14 +1417,14 @@ export async function getPriceListPdfText(
                   stack: [
                     {
                       image: companyLogoNoSloganData,
-                      link: 'https://www.osfix.ru',
+                      link: "https://www.osfix.ru",
                       fit: [200, 200],
                       margin: [0, 0, 0, 0],
-                      alignment: 'center',
+                      alignment: "center",
                     },
                     {
                       text: titlePage.slogan,
-                      alignment: 'center',
+                      alignment: "center",
                       margin: [0, 5, 0, 15],
                       fontSize: 18,
                     },
@@ -1439,7 +1439,7 @@ export async function getPriceListPdfText(
                           : testImgData,
                       fit: [150, 130],
                       margin: [0, 0, 0, 5],
-                      alignment: 'right',
+                      alignment: "right",
                     },
                     {
                       image:
@@ -1448,7 +1448,7 @@ export async function getPriceListPdfText(
                           : testImgData,
                       fit: [150, 130],
                       margin: [0, 0, 0, 5],
-                      alignment: 'center',
+                      alignment: "center",
                     },
                     {
                       image:
@@ -1457,10 +1457,10 @@ export async function getPriceListPdfText(
                           : testImgData,
                       fit: [150, 130],
                       margin: [0, 0, 0, 5],
-                      alignment: 'left',
+                      alignment: "left",
                     },
                   ],
-                  alignment: 'center',
+                  alignment: "center",
                   width: 125,
                   margin: [0, 0, 0, 30],
                 },
@@ -1470,7 +1470,7 @@ export async function getPriceListPdfText(
                       return [
                         {
                           margin: [0, 10, 0, 0],
-                          alignment: 'left',
+                          alignment: "left",
                           columns: [
                             {
                               image: listImgData,
@@ -1482,21 +1482,21 @@ export async function getPriceListPdfText(
                               text: item,
                               margin: [5, 0, 0, 0],
                               fontSize: 16,
-                              alignment: 'center',
-                              width: 'auto',
+                              alignment: "center",
+                              width: "auto",
                             },
                           ],
                         },
-                      ]
+                      ];
                     }),
                   ],
                 },
               ],
-              pageBreak: 'after',
+              pageBreak: "after",
               margin: [0, -50, 0, 0],
             }
           : {
-              text: '',
+              text: "",
             },
         finalList,
         {
@@ -1507,7 +1507,7 @@ export async function getPriceListPdfText(
                 {
                   border: [true, false, false, false],
                   fontSize: 12,
-                  borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
+                  borderColor: ["#e30434", "#e30434", "#e30434", "#e30434"],
                   text: [
                     {
                       text: disclaimer,
@@ -1524,7 +1524,7 @@ export async function getPriceListPdfText(
         header: {
           fontSize: 20,
           bold: true,
-          alignment: 'center',
+          alignment: "center",
           margin: [0, 5, 0, 5],
         },
         title: {
@@ -1535,8 +1535,8 @@ export async function getPriceListPdfText(
           fontSize: 12,
           bold: true,
           margin: [0, 0, 0, 5],
-          color: 'white',
-          background: '#e30434',
+          color: "white",
+          background: "#e30434",
         },
         regularText: {
           fontSize: 10,
@@ -1545,10 +1545,10 @@ export async function getPriceListPdfText(
         tableHeader: {
           fontSize: 12,
           bold: true,
-          alignment: 'center',
+          alignment: "center",
         },
       },
-    }
+    };
     // pdfMake.fonts = {
     //     DejaVuSans: {
     //         normal: 'DejaVuSans.ttf',
@@ -1558,8 +1558,8 @@ export async function getPriceListPdfText(
     //     }
     // };
     // pdfMake.vfs = DejaVuSans.pdfMake.vfs;
-    pdfMake.vfs = font.pdfMake.vfs
-    pdfMake.createPdf(dd).open()
+    pdfMake.vfs = font.pdfMake.vfs;
+    pdfMake.createPdf(dd).open();
     // return dd;
-  })
+  });
 }

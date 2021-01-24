@@ -1,6 +1,14 @@
 @import "../../../../variables.scss";
 
 .new-price-item {
+  background-color: #fff;
+
+  .main-form__title {
+    width: 100%;
+    padding-left: 60px;
+    text-align: left;
+  }
+
   .new-price-item__checkbox-container {
     // width: 50%;
     width: fit-content;
@@ -14,10 +22,15 @@
     }
   }
   .main-form__form {
-    // background-color: #fafafa;
+    background-color: transparent;
+    border: none;
+    max-width: 1000px !important;
+    --form__max-width: 1000px;
+    margin-right: auto;
+
     .main-form__title {
       width: 100%;
-      text-align: center;
+      text-align: left;
       min-height: 70px;
       color: $secondary-text-color;
       line-height: 70px;
@@ -66,6 +79,7 @@
       .main-form__title {
         min-width: 400px;
         margin-bottom: 10px;
+        text-align: center;
       }
     }
   }
@@ -97,7 +111,7 @@
     }
   }
   .main-form__buttons {
-    margin-bottom: 15px;
+    margin-bottom: -5px;
 
     &--vertical {
       width: 100% !important;
