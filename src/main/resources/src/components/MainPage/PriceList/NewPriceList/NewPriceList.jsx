@@ -445,7 +445,7 @@ const NewPriceList = (props) => {
                   />
                 </div>
                 {titlePage.active && (
-                  <React.Fragment>
+                  <>
                     <InputText
                       inputName="Получатель"
                       name="to"
@@ -532,7 +532,7 @@ const NewPriceList = (props) => {
                         />
                       </div>
                     </div>
-                  </React.Fragment>
+                  </>
                 )}
               </div>
             </div>
