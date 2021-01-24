@@ -35,13 +35,13 @@ const GraphWidget = () => {
     });
     setIsLoading(true);
     // console.log(week)
-    
+
     getRecordedWorkByDateRange(
       week[0].getDate(),
       week[0].getMonth() + 1,
       week[week.length - 1].getDate(),
       week[week.length - 1].getMonth() + 1,
-      abortController.signal
+      abortController.signal,
     )
       .then((res) => res.json())
       .then((res) => {

@@ -404,6 +404,7 @@ const ProductionJournal = (props) => {
         return getRecordedWorkByDay(
           worktimeInputs.date.getMonth() + 1,
           worktimeInputs.date.getDate(),
+          worktimeInputs.date.getFullYear(),
           abortController.signal
         );
       })
