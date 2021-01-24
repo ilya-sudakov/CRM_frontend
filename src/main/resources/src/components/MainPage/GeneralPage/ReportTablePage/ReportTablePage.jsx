@@ -27,7 +27,11 @@ const ReportTablePage = () => {
     let employeesWorkList = {}; //Массив работ для каждого сотрудника за месяц
 
     return (
-      getRecordedWorkByMonth(curDate.getMonth() + 1, signal)
+      getRecordedWorkByMonth(
+        curDate.getMonth() + 1,
+        curDate.getFullYear(),
+        signal
+      )
         .then((res) => res.json())
         //Создаем объект с работами сотрудников, в которых их id - поля объекта,
         //это помогает  для избегания излишних циклов

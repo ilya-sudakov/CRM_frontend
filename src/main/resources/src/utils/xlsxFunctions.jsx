@@ -1095,7 +1095,7 @@ export async function exportReportTableExcel(
       // console.log(employeesList);
       return Promise.all(
         employeesList.map((item) => {
-          return getWorkReportByEmployee(item.id, curDate.getMonth() + 1)
+          return getWorkReportByEmployee(item.id, curDate.getMonth() + 1, curDate.getFullYear())
             .then((res) => res.json())
             .then((res) => {
               // console.log(res);

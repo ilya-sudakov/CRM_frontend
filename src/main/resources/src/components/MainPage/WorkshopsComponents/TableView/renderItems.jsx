@@ -5,15 +5,24 @@ import {
   dateDiffInDays,
   addSpaceDelimiter,
 } from "../../../../utils/functions.jsx";
-import { productsStatuses, requestStatuses } from "../workshopVariables.js";
+import {
+  productsStatuses,
+  requestStatuses,
+  workshops,
+} from "../workshopVariables.js";
 import downloadSVG from "../../../../../../../../assets/download.svg";
 import { downloadImage } from "./functions.js";
 
 export const renderIdColumn = (request = { id: 0 }, workshopName = "") => {
+  const fullRequests = workshopName === "requests";
   return (
     <span className="requests__column--id">{`${
-      workshopName === "requests" ? "Заявка" : "Очередь производства"
-    } #${request.id}`}</span>
+      fullRequests ? "Заявка" : "Очередь производства"
+    } #${request.id} ${
+      fullRequests && request.factory !== "requests"
+        ? ` - ${workshops[request.factory].name}`
+        : ""
+    }`}</span>
   );
 };
 
