@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import "./WorkListWidget.scss";
 import { withRouter } from "react-router-dom";
 import openWidget from "../../../../../../../../../assets/tableview/bx-window-open.svg";
 import { getRecordedWorkByDay } from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
@@ -10,6 +9,8 @@ import { workshopsList } from "./objects.js";
 import WorkList from "./WorkList.jsx";
 import Widget from "../../Widget/Widget.jsx";
 import useEmployeesList from "../../../../../utils/hooks/useEmployeesList.js";
+
+import "./WorkListWidget.scss";
 
 const WorkListWidget = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,16 +51,13 @@ const WorkListWidget = () => {
       getRecordedWorkByDay(
         date.getMonth() + 1,
         date.getDate(),
+        date.getFullYear(),
         abortController.signal
       )
         .then((res) => res.json())
         .then((res) => {
-          // console.log(res)
           setRecordedWork(res);
           combineWorkHoursForSamePeople(res);
-          // const allEmployeesObject = getAllEmployees(res);
-          // console.log(allEmployeesObject);
-          // setEmployees(allEmployeesObject);
           setIsLoading(false);
         })
         .catch((error) => {

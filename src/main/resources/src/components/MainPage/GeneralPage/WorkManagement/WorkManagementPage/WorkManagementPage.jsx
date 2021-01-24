@@ -94,8 +94,10 @@ const WorkManagementPage = (props) => {
     return getRecordedWorkByDateRange(
       dates.start.getDate(),
       dates.start.getMonth() + 1,
+      dates.start.getFullYear(),
       dates.end.getDate(),
       dates.end.getMonth() + 1,
+      dates.end.getFullYear(),
       signal
     )
       .then((res) => res.json())

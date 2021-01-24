@@ -379,8 +379,10 @@ const ProductionPage = ({ curDate }) => {
     getRecordedWorkByDateRange(
       prevMonday.getDate(),
       prevMonday.getMonth() + 1,
+      prevMonday.getFullYear(),
       curMonday.getDate(),
       curMonday.getMonth() + 1,
+      curMonday.getFullYear(),
       signal
     )
       .then((res) => res.json())
