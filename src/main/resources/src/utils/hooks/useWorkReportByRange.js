@@ -12,8 +12,10 @@ const useWorkReportByRange = (datesList) => {
     return await getRecordedWorkByDateRange(
       datesList[0].getDate(),
       datesList[0].getMonth() + 1,
+      datesList[0].getFullYear(),
       datesList[datesList.length - 1].getDate(),
       datesList[datesList.length - 1].getMonth() + 1,
+      datesList[datesList.length - 1].getFullYear(),
       signal
     )
       .then((res) => res.json())

@@ -35,16 +35,9 @@ export function getRecordedWorkByDay(
   });
 }
 
-export function getRecordedWorkByDateRange(
-  dF,
-  mF,
-  dL,
-  mL,
-  signal,
-  year = new Date().getFullYear()
-) {
+export function getRecordedWorkByDateRange(dF, mF, yF, dL, mL, yL, signal) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/range/${dF}&${mF}&${dL}&${mL}&${year}`,
+    url: `${process.env.API_BASE_URL}/api/v1/work_control/range/${dF}&${mF}${yF}&${dL}&${mL}&${yL}`,
     method: "GET",
     signal: signal,
   });
