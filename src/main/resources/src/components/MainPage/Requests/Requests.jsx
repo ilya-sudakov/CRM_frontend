@@ -26,7 +26,6 @@ import { filterRequestsByPage, getPageByRequest } from "./functions.js";
 import { pages } from "./objects.js";
 import { Link } from "react-router-dom";
 import chevronDown from "../../../../../../../assets/tableview/chevron-down.svg";
-import chevronUp from "../../../../../../../assets/tableview/chevron-up.svg";
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]); //Массив заявок
