@@ -87,13 +87,21 @@ const IncomeStatsBigPanel = ({
         (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
         0
       );
-      isFutureMonth(i) ? (totalSum = 0) : (totalSum += curMonthIncome);
 
-      monthsIncome.push({
-        value: totalSum,
-        label: months[i],
-        color: "#3e95cd",
-      });
+      if (isFutureMonth(i)) {
+        monthsIncome.push({
+          value: 0,
+          label: months[i],
+          color: "#3e95cd",
+        });
+      } else {
+        totalSum += curMonthIncome;
+        monthsIncome.push({
+          value: totalSum,
+          label: months[i],
+          color: "#3e95cd",
+        });
+      }
     }
     return monthsIncome;
   };

@@ -16,7 +16,6 @@ import {
 } from "../../../utils/RequestsAPI/Requests.jsx";
 import { getCategories } from "../../../utils/RequestsAPI/Products/Categories.js";
 import {
-  sortRequestsByDates,
   getQuantityOfProductsFromRequests,
   formatDateString,
   getDatesFromRequests,
@@ -24,7 +23,7 @@ import {
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import { Link } from "react-router-dom";
 import { pages } from "../Requests/objects.js";
-import Switch from "../../../utils/Form/Switch/Switch.jsx";
+import chevronDown from "../../../../../../../assets/tableview/chevron-down.svg";
 
 const WorkshopLEMZ = (props) => {
   const [requestsLEMZ, setRequestsLEMZ] = useState([]);
@@ -256,8 +255,11 @@ const WorkshopLEMZ = (props) => {
     <div className="requests_LEMZ">
       <div className="main-window">
         <FloatingPlus
-          linkTo="/lemz/workshop-lemz/new"
+          onClick={() => setIsMinimized(!isMinimized)}
+          iconSrc={chevronDown}
+          title="Свернуть заявки"
           visibility={["ROLE_ADMIN", "ROLE_LEMZ"]}
+          iconStyles={{ transform: isMinimized ? "rotate(180deg)" : "" }}
         />
         <SearchBar
           fullSize
@@ -328,11 +330,6 @@ const WorkshopLEMZ = (props) => {
                 inverted
                 className="main-window__button main-window__button--inverted"
                 onClick={printRequestsList}
-              />
-              <Switch
-                checked={isMinimized}
-                handleChange={(value) => setIsMinimized(value)}
-                text="Свернуть заявки"
               />
             </>
           }
