@@ -3,10 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const Dotenv = require('dotenv-webpack')
 const webpack = require('webpack')
-// const CopyPlugin = require('copy-webpack-plugin')
-// WriteFilePlugin  needed only for webpack 3-4 and webpack dev-server
-// const WriteFilePlugin = require('write-file-webpack-plugin')
-// const json = require('./assets/manifest.json')
 
 module.exports = {
   entry: [
