@@ -5,7 +5,7 @@ import {
   scrollToElement,
 } from "../../../../../utils/functions.jsx";
 import "./TableView.scss";
-import { editTaskStatus } from "../../../../../utils/RequestsAPI/MainTasks.jsx";
+import { editTaskStatus } from "../../../../../utils/RequestsAPI/MainTasks.js";
 import editSVG from "../../../../../../../../../assets/tableview/edit.svg";
 import deleteSVG from "../../../../../../../../../assets/tableview/delete.svg";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";

@@ -6,7 +6,7 @@ import TableView from './TableView/TableView.jsx'
 import {
   getMainTasks,
   deleteMainTask,
-} from '../../../../utils/RequestsAPI/MainTasks.jsx'
+} from '../../../../utils/RequestsAPI/MainTasks.js'
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
 import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
 import Select from 'react-select'

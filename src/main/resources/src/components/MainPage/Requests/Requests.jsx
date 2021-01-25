@@ -25,7 +25,7 @@ import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.js
 import { filterRequestsByPage, getPageByRequest } from "./functions.js";
 import { pages } from "./objects.js";
 import { Link } from "react-router-dom";
-import Switch from "../../../utils/Form/Switch/Switch.jsx";
+import chevronDown from "../../../../../../../assets/tableview/chevron-down.svg";
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]); //Массив заявок
@@ -286,8 +286,11 @@ const Requests = (props) => {
     <div className="requests">
       <div className="main-window">
         <FloatingPlus
-          linkTo="/requests/new"
           visibility={["ROLE_ADMIN", "ROLE_MANAGER"]}
+          onClick={() => setIsMinimized(!isMinimized)}
+          iconSrc={chevronDown}
+          iconStyles={{ transform: isMinimized ? "rotate(180deg)" : "" }}
+          title="Свернуть заявки"
         />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Заявки</div>
@@ -411,15 +414,6 @@ const Requests = (props) => {
         />
         <ControlPanel
           itemsCount={`Всего: ${requests.length} записей`}
-          // buttons={
-          //   <>
-          //     <SearchBar
-          //       // fullSize
-          //       placeholder="Введите название продукции для поиска..."
-          //       setSearchQuery={setSearchQuery}
-          //     />
-          //   </>
-          // }
           sorting={
             <div className="main-window__sort-panel">
               <select onChange={changeSortOrder}>
@@ -435,13 +429,6 @@ const Requests = (props) => {
                 </option>
               </select>
             </div>
-          }
-          buttons={
-            <Switch
-              checked={isMinimized}
-              handleChange={(value) => setIsMinimized(value)}
-              text="Свернуть заявки"
-            />
           }
           content={
             <>

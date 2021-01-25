@@ -14,7 +14,6 @@ import {
   getRequestsByWorkshop,
 } from "../../../utils/RequestsAPI/Requests.jsx";
 import {
-  sortRequestsByDates,
   getQuantityOfProductsFromRequests,
   getDatesFromRequests,
 } from "../../../utils/functions.jsx";
@@ -22,7 +21,7 @@ import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.js
 import { getCategories } from "../../../utils/RequestsAPI/Products/Categories.js";
 import { pages } from "../Requests/objects";
 import { Link } from "react-router-dom";
-import Switch from "../../../utils/Form/Switch/Switch.jsx";
+import chevronDown from "../../../../../../../assets/tableview/chevron-down.svg";
 
 const WorkshopLepsari = (props) => {
   const [requestsLepsari, setrequestsLepsari] = useState([]);
@@ -257,7 +256,10 @@ const WorkshopLepsari = (props) => {
     <div className="requests_lepsari">
       <div className="main-window">
         <FloatingPlus
-          linkTo="/lepsari/workshop-lepsari/new"
+          onClick={() => setIsMinimized(!isMinimized)}
+          iconStyles={{ transform: isMinimized ? "rotate(180deg)" : "" }}
+          iconSrc={chevronDown}
+          title="Свернуть заявки"
           visibility={["ROLE_ADMIN", "ROLE_LEPSARI"]}
         />
         <SearchBar
@@ -329,11 +331,6 @@ const WorkshopLepsari = (props) => {
                 inverted
                 className="main-window__button main-window__button--inverted"
                 onClick={printRequestsList}
-              />
-              <Switch
-                checked={isMinimized}
-                handleChange={(value) => setIsMinimized(value)}
-                text="Свернуть заявки"
               />
             </>
           }

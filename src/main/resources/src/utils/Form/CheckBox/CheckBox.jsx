@@ -1,32 +1,48 @@
-import React from 'react'
-import './CheckBox.scss'
+import React from "react";
+import PropTypes from "prop-types";
+import "./CheckBox.scss";
 
-const CheckBox = (props) => {
+const CheckBox = ({
+  name = "",
+  text = "",
+  id,
+  value,
+  disabled = false,
+  onChange,
+  checked = false,
+}) => {
   return (
     <div className="checkbox">
       <label className="checkbox__container">
-        <span className="checkbox__text">{props.text}</span>
+        <span className="checkbox__text">{text}</span>
         <input
           type="checkbox"
-          name={props.name}
-          id={props.id}
-          value={props.value}
-          disabled={props.disabled}
-          onChange={(event) => {
-            const name = event.target.name
-            const value = event.target.checked
-            const id = event.target.id
-            props.onChange(value, name, id)
+          name={name}
+          id={id}
+          value={value}
+          disabled={disabled}
+          onChange={({ target }) => {
+            const name = target.name;
+            const value = target.checked;
+            const id = target.id;
+            onChange(value, name, id);
           }}
-          checked={props.checked && props.checked}
-          // defaultChecked={
-          //   props.defaultChecked !== undefined ? props.defaultChecked : true
-          // }
+          checked={checked}
         />
         <div className="checkbox__checkmark"></div>
       </label>
     </div>
-  )
-}
+  );
+};
 
-export default CheckBox
+export default CheckBox;
+
+CheckBox.propTypes = {
+  name: PropTypes.string,
+  text: PropTypes.string,
+  id: PropTypes.number,
+  value: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  checked: PropTypes.bool,
+};
