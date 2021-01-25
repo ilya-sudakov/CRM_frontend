@@ -56,7 +56,7 @@ const FormWindow = ({
           </div>
         </div>
         <div className="form-window__body">
-          <div className="main-window">{content}</div>
+          <div className="main-window">{showWindow ? content : null}</div>
         </div>
       </div>
     </div>
