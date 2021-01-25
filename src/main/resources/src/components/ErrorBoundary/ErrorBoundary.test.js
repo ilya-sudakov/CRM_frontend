@@ -34,4 +34,17 @@ describe("ErrorBoundary component", () => {
     );
     expect(container).toHaveTextContent("Ошибка в Тестовый компонент!");
   });
+
+  it("reloads the page if user clicked 'reload' button", () => {
+    const { location } = window;
+    delete window.location;
+    window.location = { reload: jest.fn() };
+    renderWithRouter(
+      <ErrorBoundary componentName="Тестовый компонент">
+        <ErrorTestComponent />
+      </ErrorBoundary>
+    );
+    fireEvent.click(screen.getByRole("button"));
+    expect(window.location.reload).toHaveBeenCalled();
+  });
 });

@@ -35,12 +35,12 @@ export default class ErrorBoundary extends Component {
               обратной связи
             </Link>
           </div>
-          <div
+          <button
             className="error-page__button"
             onClick={() => window.location.reload()}
           >
             Перезагрузить страницу
-          </div>
+          </button>
         </div>
       );
     }
