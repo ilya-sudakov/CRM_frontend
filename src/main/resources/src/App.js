@@ -5,7 +5,7 @@ import "./variables.scss";
 const MainPage = lazy(() => import("./components/MainPage/MainPage.jsx")); //lazy-загрузка компонента MainPage
 import LoginPage from "./components/Authorization/LoginPage/LoginPage.jsx";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
-import { refreshToken } from "./utils/RequestsAPI/Authorization.jsx";
+import { refreshToken } from "./utils/RequestsAPI/Authorization.js";
 import PageLoading from "./components/MainPage/PageLoading/PageLoading.jsx";
 const UserContext = React.createContext();
 import { AppIcon__128 } from "../../../../assets/app_icon__128.png";

@@ -33,9 +33,13 @@
          npm run prod
 
 - Для запуска в режиме development, введите:
-        
+
         npm start
 
 - Для запуска тестов, введите:
-        
+
         npm run test
+
+- Для просмотра test coverage:
+
+        npm run test -- --coverage --watchAll=false

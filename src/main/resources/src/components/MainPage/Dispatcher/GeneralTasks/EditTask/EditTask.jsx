@@ -4,7 +4,7 @@ import '../../../../../utils/Form/Form.scss'
 import {
   getMainTaskById,
   editMainTask,
-} from '../../../../../utils/RequestsAPI/MainTasks.jsx'
+} from '../../../../../utils/RequestsAPI/MainTasks.js'
 import { getUsers } from '../../../../../utils/RequestsAPI/Users.jsx'
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'

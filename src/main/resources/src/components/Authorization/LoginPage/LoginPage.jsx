@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./LoginPage.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
-import { login } from "../../../utils/RequestsAPI/Authorization.jsx";
+import { login } from "../../../utils/RequestsAPI/Authorization.js";
 import eyeIcon from "../../../../../../../assets/loginPage/eye.png";
 import companylogo from "../../../../../../../assets/loginPage/login-page_logo.png";
 import ErrorMessage from "../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
