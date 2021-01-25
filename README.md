@@ -38,8 +38,8 @@
 
 - Для запуска тестов, введите:
 
-        npm run test
+        npm run test -- --silent
 
 - Для просмотра test coverage:
 
-        npm run test -- --coverage --watchAll=false
+        npm run test --  --silent --coverage --watchAll=false

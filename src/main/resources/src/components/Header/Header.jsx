@@ -17,8 +17,6 @@ const Header = (props) => {
   const sideMenuClickDesktop = () =>
     props.setSidemenuHidden(!props.sidemenuHidden);
 
-  useEffect(() => {}, []);
-
   return (
     <div className="header">
       <div className="header__company">
@@ -50,12 +48,12 @@ const Header = (props) => {
           data-notifications={userContext.newNotifications}
           // to="/notifications"
           to="/"
-          onClick={() => {
+          onClick={() =>
             userContext.setLastNotification({
               ...userContext.lastNotification,
               visible: false,
-            });
-          }}
+            })
+          }
         >
           <img className="header__img" src={notificationBellSVG} alt="" />
           <div
