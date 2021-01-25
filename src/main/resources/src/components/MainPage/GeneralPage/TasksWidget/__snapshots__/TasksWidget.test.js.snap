@@ -114,6 +114,7 @@ exports[`TasksWidget component matches snapshot 1`] = `
             </span>
             <input
               checked=""
+              name=""
               type="checkbox"
               value=""
             />
