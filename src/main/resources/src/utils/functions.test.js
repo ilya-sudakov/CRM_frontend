@@ -60,15 +60,32 @@ describe("general functions", () => {
     expect(Functions.addSpaceDelimiter(1000000)).toEqual("1 000 000");
   });
 
-  // --- IMAGES --- //
-  //   it("gets an URI from an image", () => {
-  //     expect(Functions.getDataUri(testImage));
-  //   });
+  // --- IMAGES/CANVAS --- //
+  it("gets an URI from an image", () => {
+    expect(Functions.getDataUri(testImage));
+  });
 
   //   it("downloads an image", () => {
-  //     const URI = "abc123";
-  //     expect(Functions.imgToBlobDownload(URI, "123.jpeg"));
+  //     expect(Functions.imgToBlobDownload(testImage, "123.jpeg"));
   //   });
+
+  it("creates a label for product/canvas", () => {
+    expect(Functions.createLabelForProduct());
+  });
+
+  it("saves canvas as image", () => {
+    let canvas = document.createElement("canvas");
+    canvas.id = "canvasdummy";
+    canvas.height = 100;
+    canvas.width = 100;
+    expect(Functions.saveCanvasAsImage(canvas, "123123.jpeg"));
+  });
+
+  it("scrolls to element", () => {
+    let canvas = document.createElement("canvas");
+    expect(Functions.scrollToElement(canvas));
+    expect(Functions.scrollToElement(canvas, 500));
+  });
 
   // --- SORTING --- //
   it("changes sort order", () => {
@@ -77,6 +94,20 @@ describe("general functions", () => {
       curSort: "name",
       name: "asc",
     });
+  });
+
+  it("sorts requests by dates", () => {
+    const requests = [
+      { id: 1, date: new Date(2012, 1, 1) },
+      { id: 2, date: new Date(2012, 1, 1) },
+    ];
+    const expectedReqs = {
+      "Wed Feb 01 2012 00:00:00 GMT+0400 (GMT+03:00)": [
+        { id: 1, date: new Date(2012, 1, 1) },
+        { id: 2, date: new Date(2012, 1, 1) },
+      ],
+    };
+    expect(Functions.sortRequestsByDates(requests)).toEqual(expectedReqs);
   });
 
   // --- DATA SCRAPPING FROM GIVEN OBJECTS/ARRAYS --- //
@@ -96,6 +127,218 @@ describe("general functions", () => {
     };
     expect(Functions.getAllProductsFromWorkCount(workData)).toEqual(
       expectedProductsList
+    );
+  });
+
+  it("gets drafts list from work data", () => {
+    const workData = [
+      {
+        partsWorks: [
+          { partType: "Stamp", partId: 1, name: "test", quantity: 3333 },
+          { partType: "Stamp", partId: 2, name: "qqq", quantity: 11 },
+          { partType: "Stamp", partId: 1, name: "test", quantity: 12 },
+        ],
+      },
+    ];
+    const expectedDraftsList = [
+      { partType: "Stamp", partId: 1, name: "test", quantity: 3345 },
+      { partType: "Stamp", partId: 2, name: "qqq", quantity: 11 },
+    ];
+    expect(Functions.getAllDraftsFromWorkCount(workData)).toEqual(
+      expectedDraftsList
+    );
+  });
+
+  it("gets dates and work items from work data", () => {
+    const workData = [
+      {
+        id: 1,
+        workList: {
+          work: "Документирование",
+        },
+        year: 2021,
+        month: 1,
+        day: 25,
+        hours: 1.0,
+        employee: {
+          id: 16,
+          name: "Илья",
+          lastName: "Дроздов",
+          middleName: "Викторович",
+          workshop: "ЦехЛЭМЗ",
+        },
+        workControlProduct: [],
+        partsWorks: [],
+      },
+      {
+        id: 2,
+        workList: {
+          work: "Слесарно-наладочные работы",
+        },
+        year: 2021,
+        month: 1,
+        day: 25,
+        hours: 6.0,
+        employee: {
+          id: 16,
+          name: "Илья",
+          lastName: "Дроздов",
+          middleName: "Викторович",
+          workshop: "ЦехЛЭМЗ",
+        },
+        workControlProduct: [],
+        partsWorks: [],
+      },
+      {
+        id: 3,
+        workList: {
+          work: "Документирование",
+        },
+        year: 2021,
+        month: 1,
+        day: 25,
+        hours: 1.0,
+        employee: {
+          id: 2,
+          name: "Илья",
+          lastName: "Дроздов",
+          middleName: "Викторович",
+          workshop: "ЦехЛЭМЗ",
+        },
+        workControlProduct: [],
+        partsWorks: [],
+      },
+    ];
+    const expectedDatesAndWorkItemsList = {
+      Офис: {},
+      ЦехЛЭМЗ: {
+        "Mon Jan 25 2021 00:00:00 GMT+0300 (GMT+03:00)": {
+          16: {
+            employee: {
+              id: 16,
+              name: "Илья",
+              lastName: "Дроздов",
+              middleName: "Викторович",
+              workshop: "ЦехЛЭМЗ",
+            },
+            isOpen: false,
+            works: [
+              {
+                hours: 1,
+                id: 1,
+                partsWorks: [],
+                workControlProduct: [],
+                workList: {
+                  work: "Документирование",
+                },
+              },
+              {
+                hours: 6,
+                id: 2,
+                partsWorks: [],
+                workControlProduct: [],
+                workList: {
+                  work: "Слесарно-наладочные работы",
+                },
+              },
+            ],
+            workshop: "ЦехЛЭМЗ",
+          },
+          2: {
+            employee: {
+              id: 2,
+              name: "Илья",
+              lastName: "Дроздов",
+              middleName: "Викторович",
+              workshop: "ЦехЛЭМЗ",
+            },
+            isOpen: false,
+            works: [
+              {
+                hours: 1,
+                id: 3,
+                partsWorks: [],
+                workControlProduct: [],
+                workList: {
+                  work: "Документирование",
+                },
+              },
+            ],
+            workshop: "ЦехЛЭМЗ",
+          },
+        },
+      },
+      ЦехЛепсари: {},
+      ЦехЛиговский: {},
+    };
+    expect(Functions.getDatesAndWorkItems(workData)).toEqual(
+      expectedDatesAndWorkItemsList
+    );
+  });
+
+  it("gets dates from requests ", () => {
+    const requests = [
+      { id: 1, date: new Date(2012, 1, 1) },
+      { id: 2, date: new Date(2012, 1, 1) },
+      { id: 3, date: new Date(2012, 2, 1) },
+      { id: 3, date: new Date(2012, 0, 1) },
+    ];
+    const expectedReqs = [
+      new Date(2012, 2, 1),
+      new Date(2012, 1, 1),
+      new Date(2012, 0, 1),
+    ];
+    expect(Functions.getDatesFromRequests(requests)).toEqual(expectedReqs);
+  });
+
+  it("gets quantity of products from requests ", () => {
+    const requests = [
+      {
+        id: 1,
+        date: new Date(2012, 1, 1),
+        status: "123",
+        requestProducts: [
+          { quantity: 3333, name: "123", status: "123" },
+          {
+            quantity: 11,
+            name: "234",
+            status: "completed",
+          },
+          { quantity: 1111, name: "345", status: "123" },
+        ],
+      },
+      {
+        id: 2,
+        date: new Date(2012, 1, 1),
+        requestProducts: [
+          { quantity: 3333, name: "123", status: "123" },
+          {
+            quantity: 11,
+            name: "234",
+            status: "completed",
+          },
+          { quantity: 1111, name: "345", status: "123" },
+        ],
+        status: "completed",
+      },
+      {
+        id: 3,
+        date: new Date(2012, 2, 1),
+        requestProducts: [
+          { name: "123", quantity: 3333, status: "123" },
+          {
+            name: "234",
+            quantity: 11,
+            status: "completed",
+          },
+          { name: "345", quantity: 1111, status: "123" },
+        ],
+        status: "123",
+      },
+    ];
+    const expectedReqs = { 123: 6666, 345: 2222 };
+    expect(Functions.getQuantityOfProductsFromRequests(requests)).toEqual(
+      expectedReqs
     );
   });
 
