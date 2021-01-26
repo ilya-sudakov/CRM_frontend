@@ -43,52 +43,34 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
             <div>Нет учтенной работы</div>
           ) : (
             dates.map((date) => {
-              return (
-                <>
-                  {selectedInfo?.works?.filter((item) => {
-                    if (item.length > 0) {
-                      return (
-                        item[0].day === date.getDate() &&
-                        item[0].month === date.getMonth() + 1 &&
-                        item[0].year === date.getFullYear()
-                      );
-                    }
-                    return (
-                      item.day === date.getDate() &&
-                      item.month === date.getMonth() + 1 &&
-                      item.year === date.getFullYear()
-                    );
-                  }).length > 0 && (
-                    <div className="report-table-page__employee-title report-table-page__employee-title--date">
-                      {`${formatDateStringNoYear(date)} - ${
-                        days[date.getDay()]
-                      }`}
-                    </div>
+              const filteredData = selectedInfo?.works?.filter((item) => {
+                if (item.length > 0) {
+                  return (
+                    item[0].day === date.getDate() &&
+                    item[0].month === date.getMonth() + 1 &&
+                    item[0].year === date.getFullYear()
+                  );
+                }
+                return (
+                  item.day === date.getDate() &&
+                  item.month === date.getMonth() + 1 &&
+                  item.year === date.getFullYear()
+                );
+              });
+              return filteredData.length > 0 ? (
+                <div className="report-table-page__wrapper">
+                  <div className="report-table-page__employee-title report-table-page__employee-title--date">
+                    {`${formatDateStringNoYear(date)} - ${days[date.getDay()]}`}
+                  </div>
+                  {filteredData?.map((item) =>
+                    item.length > 0 ? (
+                      item.map((workItem) => <WorksItem item={workItem} />)
+                    ) : (
+                      <WorksItem item={item} />
+                    )
                   )}
-                  {selectedInfo?.works
-                    ?.filter((item) => {
-                      if (item.length > 0) {
-                        return (
-                          item[0].day === date.getDate() &&
-                          item[0].month === date.getMonth() + 1 &&
-                          item[0].year === date.getFullYear()
-                        );
-                      }
-                      return (
-                        item.day === date.getDate() &&
-                        item.month === date.getMonth() + 1 &&
-                        item.year === date.getFullYear()
-                      );
-                    })
-                    ?.map((item) =>
-                      item.length > 0 ? (
-                        item.map((workItem) => <WorksItem item={workItem} />)
-                      ) : (
-                        <WorksItem item={item} />
-                      )
-                    )}
-                </>
-              );
+                </div>
+              ) : null;
             })
           )}
         </div>
