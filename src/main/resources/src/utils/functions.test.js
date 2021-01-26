@@ -102,7 +102,7 @@ describe("general functions", () => {
       { id: 2, date: new Date(2012, 1, 1) },
     ];
     const expectedReqs = {
-      "Wed Feb 01 2012 00:00:00 GMT+0400 (GMT+03:00)": [
+      [new Date(2012, 1, 1)]: [
         { id: 1, date: new Date(2012, 1, 1) },
         { id: 2, date: new Date(2012, 1, 1) },
       ],
@@ -212,7 +212,7 @@ describe("general functions", () => {
     const expectedDatesAndWorkItemsList = {
       Офис: {},
       ЦехЛЭМЗ: {
-        "Mon Jan 25 2021 00:00:00 GMT+0300 (GMT+03:00)": {
+        [new Date(2021, 0, 25)]: {
           16: {
             employee: {
               id: 16,

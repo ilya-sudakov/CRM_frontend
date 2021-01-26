@@ -54,7 +54,7 @@ describe("TasksWidget component", () => {
       },
     ];
     const expectedDates = {
-      "Wed Feb 01 2012 00:00:00 GMT+0400 (GMT+03:00)": [
+      [new Date(2012, 1, 1)]: [
         { condition: "Выполнено", dateControl: new Date(2012, 1, 1) },
         {
           condition: "123",
