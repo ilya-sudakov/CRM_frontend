@@ -2,7 +2,7 @@ name: CI
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows to run job manually
   workflow_dispatch:
@@ -15,12 +15,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 12        
+          node-version: 12
       - name: Install all dependencies
         run: npm i
       - name: Create folder for generated bundles&files
         run: npm run mkdir-built
-      - name: Run all test cases 
-        run: npm run test
+      - name: Run all test cases
+        run: npm run test -- --silent
       - name: Bundle modules w/ Webpack
         run: npm run webpack:prod

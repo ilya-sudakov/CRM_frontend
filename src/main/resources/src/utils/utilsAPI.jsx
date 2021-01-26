@@ -1,46 +1,46 @@
-export const request = (options, contentType = 'application/json') => {
+export const request = (options, contentType = "application/json") => {
   const headers = new Headers({
-    'Content-Type': contentType,
-  })
+    "Content-Type": contentType,
+  });
 
   if (
-    localStorage.getItem('accessToken') &&
-    !options.url.includes('refreshToken')
+    localStorage.getItem("accessToken") &&
+    !options.url.includes("refreshToken")
   ) {
     headers.append(
-      'Authorization',
-      'Bearer_' + localStorage.getItem('accessToken'),
-    )
+      "Authorization",
+      "Bearer_" + localStorage.getItem("accessToken")
+    );
   }
 
-  const defaults = { headers: headers }
+  const defaults = { headers: headers };
 
-  options = Object.assign({}, defaults, options)
+  options = Object.assign({}, defaults, options);
 
   return fetch(options.url, options).then((response) => {
     if (!response.ok) {
-      return Promise.reject(response.error)
+      return Promise.reject(response.error);
     }
-    return response
-  })
-}
+    return response;
+  });
+};
 
 export const requestINN = (options) => {
   const headers = new Headers({
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  })
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  });
 
-  headers.append('Authorization', 'Token ' + process.env.INN_TOKEN)
+  headers.append("Authorization", "Token " + process.env.INN_TOKEN);
 
-  const defaults = { headers: headers }
+  const defaults = { headers: headers };
 
-  options = Object.assign({}, defaults, options)
+  options = Object.assign({}, defaults, options);
 
   return fetch(options.url, options).then((response) => {
     if (!response.ok) {
-      return Promise.reject(response.error)
+      return Promise.reject(response.error);
     }
-    return response
-  })
-}
+    return response;
+  });
+};

@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import './ViewProduct.scss'
-import '../../../../utils/Form/Form.scss'
-import { getProductById } from '../../../../utils/RequestsAPI/Products.js'
-import { imgToBlobDownload } from '../../../../utils/functions.jsx'
-import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx'
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
+import React, { useEffect, useState } from "react";
+import "./ViewProduct.scss";
+import "../../../../utils/Form/Form.scss";
+import { getProductById } from "../../../../utils/RequestsAPI/Products.js";
+import { imgToBlobDownload } from "../../../../utils/functions.jsx";
+import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
+import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
 
 const ViewProduct = (props) => {
   const [productInputs, setProductInputs] = useState({
-    name: '',
-    item: '',
-    weight: '',
-    group: '',
-    vendor: '',
-    category: '',
-    unit: '',
-    description: '',
-    barcode: '',
-    productionLocation: '',
+    name: "",
+    item: "",
+    weight: "",
+    group: "",
+    vendor: "",
+    category: "",
+    unit: "",
+    description: "",
+    barcode: "",
+    productionLocation: "",
     packaging: [],
-    comment: '',
-  })
+    comment: "",
+  });
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    props.history.push('/products')
-  }
+    event.preventDefault();
+    props.history.push("/products");
+  };
 
   useEffect(() => {
-    document.title = 'Просмотр продукта'
-    const id = props.history.location.pathname.split('/products/view/')[1]
+    document.title = "Просмотр продукта";
+    const id = props.history.location.pathname.split("/products/view/")[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс заявки!')
-      props.history.push('/products')
+      alert("Неправильный индекс заявки!");
+      props.history.push("/products");
     } else {
       getProductById(id)
         .then((res) => res.json())
         .then((oldProduct) => {
-          console.log(oldProduct)
+          console.log(oldProduct);
           setProductInputs({
             name: oldProduct.name,
             photo: oldProduct.photo,
@@ -51,15 +51,15 @@ const ViewProduct = (props) => {
             unit: oldProduct.unit,
             packaging: oldProduct.packings,
             comment: oldProduct.comment,
-          })
+          });
         })
         .catch((error) => {
-          console.log(error)
-          alert('Неправильный индекс заявки!')
-          props.history.push('/products')
-        })
+          console.log(error);
+          alert("Неправильный индекс заявки!");
+          props.history.push("/products");
+        });
     }
-  }, [])
+  }, []);
 
   return (
     <div className="view-product">
@@ -76,13 +76,13 @@ const ViewProduct = (props) => {
                 imgSrc={productInputs.photo}
                 noPhotoTemplate
               />
-              {productInputs.photo !== '' && (
+              {productInputs.photo !== "" && (
                 <div
                   className="main-form__submit"
                   onClick={() =>
                     imgToBlobDownload(
                       productInputs.photo,
-                      productInputs.name + '.jpeg',
+                      productInputs.name + ".jpeg"
                     )
                   }
                 >
@@ -217,7 +217,7 @@ const ViewProduct = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ViewProduct
+export default ViewProduct;

@@ -4,7 +4,6 @@
     position: relative;
     .main-window {
         position: relative;
-        // min-height: 600px;
 
         .main-window__title {
             .main-window__button {
@@ -20,12 +19,10 @@
 
         .report-table-page__date {
             width: fit-content;
-            // max-width: 360px;
             align-self: flex-start;
             display: flex;
             flex-direction: row;
             margin-right: 15px;
-            // margin-left: 30px;
             margin-top: 5px;
             font-size: 1rem;
 
@@ -42,9 +39,6 @@
                     white-space: nowrap;
                     max-width: fit-content;
                 }
-                .input_date__input_field {
-                    // min-width: 250px;
-                }
                 .react-datepicker {
                     min-width: 217px;
                 }
@@ -56,16 +50,9 @@
                 input {
                     width: 100%;
                     max-width: 80px;
-
-                    &:focus {
-                        // max-width: 240px;
-                    }
                 }
             }
         }
-    }
-    .searchbar {
-        // margin-bottom: 10px;
     }
     .control-panel {
         margin-bottom: 10px;
@@ -101,7 +88,13 @@
                 margin-left: 0px;
                 margin-bottom: 10px;
                 color: #777777;
-                // text-align: center;
+            }
+            .report-table-page__wrapper {
+                border: 1px solid #cccccc;
+                border-radius: 3px;
+                background-color: #ffffff;
+                padding: 10px 20px;
+                padding-bottom: 0;
             }
             .report-table-page__list {
                 display: flex;
@@ -172,8 +165,7 @@
                 font-size: 80%;
             }
             .report-table-page__employee-works-wrapper {
-                padding: 5px;
-                padding-left: 25px;
+                padding: 5px 0;
                 margin-bottom: 20px;
 
                 .report-table-page__employee-works-item {

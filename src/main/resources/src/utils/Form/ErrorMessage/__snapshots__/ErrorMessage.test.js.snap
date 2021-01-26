@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorMessage component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="window_error window_error--hidden"
+  >
+    <div
+      class="window_error__content window_error__content--hidden"
+    >
+      <div
+        class="window_error__title"
+      >
+        Ошибка!
+        <div
+          class="window_error__exit"
+        >
+          <div
+            class="window_error__bar"
+          />
+          <div
+            class="window_error__bar"
+          />
+        </div>
+      </div>
+      <div
+        class="window_error__message"
+      />
+      <div
+        class="main-window__button"
+      >
+        ОК
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
