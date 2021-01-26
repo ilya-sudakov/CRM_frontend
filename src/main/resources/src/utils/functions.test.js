@@ -73,13 +73,13 @@ describe("general functions", () => {
     expect(Functions.createLabelForProduct());
   });
 
-  it("saves canvas as image", () => {
-    let canvas = document.createElement("canvas");
-    canvas.id = "canvasdummy";
-    canvas.height = 100;
-    canvas.width = 100;
-    expect(Functions.saveCanvasAsImage(canvas, "123123.jpeg"));
-  });
+  // it("saves canvas as image", () => {
+  //   let canvas = document.createElement("canvas");
+  //   canvas.id = "canvasdummy";
+  //   canvas.height = 100;
+  //   canvas.width = 100;
+  //   expect(Functions.saveCanvasAsImage(canvas, "123123.jpeg"));
+  // });
 
   it("scrolls to element", () => {
     let canvas = document.createElement("canvas");
