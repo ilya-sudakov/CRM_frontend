@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageNotFound component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="error-page"
+  >
+    <div
+      class="error-page__title"
+    >
+      <span
+        class="error-page__error-code"
+      >
+        404
+      </span>
+      Страница не найдена
+    </div>
+     
+    <div
+      class="error-page__description"
+    >
+      Запрашиваемая вами страница не найдена.
+      <br />
+      <br />
+      Если это ошибка, и запрашиваемая страница должна быть доступна для просмотра - напишите об этом в 
+      <a
+        class="error-page__link"
+        href="/feedback"
+      >
+        обратной связи
+      </a>
+    </div>
+    <a
+      class="error-page__button"
+      href="/"
+    >
+      На главную
+    </a>
+  </div>
+</DocumentFragment>
+`;

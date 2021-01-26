@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginPage component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="authorization"
+  >
+    <div
+      class="authorization__background"
+    >
+      <div
+        class="authorization__circle authorization__circle--1"
+      />
+      <div
+        class="authorization__circle authorization__circle--2"
+      />
+      <div
+        class="authorization__circle authorization__circle--3"
+      />
+    </div>
+    <div
+      class="main-window"
+    >
+      <div
+        class="authorization__panel"
+      >
+        <div
+          class="authorization__title"
+        >
+          <img
+            alt=""
+            class="authorization__img authorization__img--logo"
+            src="[object Object]"
+          />
+        </div>
+        <div
+          class="window_error window_error--hidden"
+        >
+          <div
+            class="window_error__content window_error__content--hidden"
+          >
+            <div
+              class="window_error__title"
+            >
+              Ошибка!
+              <div
+                class="window_error__exit"
+              >
+                <div
+                  class="window_error__bar"
+                />
+                <div
+                  class="window_error__bar"
+                />
+              </div>
+            </div>
+            <div
+              class="window_error__message"
+            >
+              Ошибка при авторизации
+            </div>
+            <div
+              class="main-window__button"
+            >
+              ОК
+            </div>
+          </div>
+        </div>
+        <div
+          class="authorization__field_input"
+        >
+          <div
+            class="authorization__field_name "
+          >
+            Логин
+          </div>
+          <input
+            id="login"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="authorization__field_input"
+        >
+          <div
+            class="authorization__field_name  "
+          >
+            Пароль
+          </div>
+          <img
+            alt=""
+            class="authorization__img authorization__img--eye"
+            src="[object Object]"
+          />
+          <div
+            class="authorization__line authorization__line--hidden"
+          />
+          <input
+            id="password"
+            type="password"
+          />
+        </div>
+        <div
+          class="checkbox"
+        >
+          <label
+            class="checkbox__container"
+          >
+            <span
+              class="checkbox__text"
+            >
+              Запомнить меня
+            </span>
+            <input
+              checked=""
+              name=""
+              type="checkbox"
+              value=""
+            />
+            <div
+              class="checkbox__checkmark"
+            />
+          </label>
+        </div>
+        <button
+          class="button  main-window__button"
+          type="submit"
+        >
+          <img
+            alt=""
+            class="button__img "
+            src="[object Object]"
+          />
+          <span
+            class="button__text "
+          >
+            Войти
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

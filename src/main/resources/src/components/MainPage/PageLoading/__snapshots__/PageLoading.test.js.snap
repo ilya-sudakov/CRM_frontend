@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageLoading component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="page-loading"
+  >
+    <div
+      class="page-loading__wrapper"
+    >
+      <div
+        class="page-loading__circle"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
