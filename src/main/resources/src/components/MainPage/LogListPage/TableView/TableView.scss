@@ -1,0 +1,19 @@
+@import "../../../../variables.scss";
+
+.main-window__list {
+  &-item {
+    span {
+      &:nth-child(1) {
+        flex: 0 1 15%;
+        max-width: 150px;
+      }
+      &:nth-child(2) {
+        flex: 0 1 15%;
+        max-width: 150px;
+      }
+      &:nth-child(3) {
+        flex: 0 1 50%;
+      }
+    }
+  }
+}

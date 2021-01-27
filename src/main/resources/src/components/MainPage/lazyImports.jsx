@@ -72,7 +72,7 @@ const EditUser = lazy(() => import("./Profile/Users/EditUser/EditUser.jsx"));
 
 const NewUser = lazy(() => import("./Profile/Users/NewUser/NewUser.jsx"));
 
-const LoginHistory = lazy(() => import("./LoginHistory/LoginHistory.jsx"));
+const LogListPage = lazy(() => import("./LogListPage/LogListPage.jsx"));
 
 const ViewProduct = lazy(() =>
   import("./Products/ViewProduct/ViewProduct.jsx")
@@ -273,7 +273,7 @@ export {
   Users,
   EditUser,
   NewUser,
-  LoginHistory,
+  LogListPage,
   WorkshopLEMZ,
   Storage,
   NewStorage,
