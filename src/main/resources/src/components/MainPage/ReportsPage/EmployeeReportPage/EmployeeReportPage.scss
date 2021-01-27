@@ -74,11 +74,15 @@
                 flex-direction: column;
                 border: 1px solid #cccccc;
                 background-color: #ffffff;
-                margin-bottom: 15px;
                 border-radius: 3px;
                 max-width: 500px;
                 padding: 15px 25px;
                 padding-bottom: 10px;
+                margin-bottom: 10px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
             }
             .employee-page__list {
                 display: flex;
