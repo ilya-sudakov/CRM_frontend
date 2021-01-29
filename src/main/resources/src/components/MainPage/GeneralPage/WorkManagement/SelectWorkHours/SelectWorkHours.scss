@@ -82,6 +82,8 @@
       background-color: $secondary-text-color;
       color: $primary-text-color;
       border: 1px solid $button__background--inverted;
+      width: fit-content;
+      white-space: nowrap;
     }
 
     .select-work-hours__line {
@@ -114,26 +116,6 @@
       width: 200%;
       // max-width: 500px;
       max-width: 400px;
-
-      &:hover,
-      &:focus-within {
-        transform: scale(1.05);
-
-        .select-work-hours__work-name {
-          color: #222222;
-        }
-        &::before {
-          border-color: $button__background--inverted;
-          left: -38px;
-        }
-
-        .select-work-hours__circle {
-          top: 1px;
-          left: -46px;
-          width: 35px;
-          height: 35px;
-        }
-      }
 
       .select-work-hours__work-name {
         font-weight: bold;
@@ -216,32 +198,28 @@
       .select-work-hours__circle {
         content: "";
         position: absolute;
-        // top: 3px;
-        // left: -52px;
-        // width: 30px;
-        // height: 30px;
         top: 4.5px;
-        left: -50px;
+        left: -45px;
         width: 27px;
         height: 27px;
         border-radius: 999px;
         background-color: #ffffff;
         z-index: 0;
-        transition: 200ms ease-in-out;
+        transition: 100ms ease-in-out;
       }
 
       &:before {
         content: "";
         position: absolute;
         top: 8px;
-        left: -47px;
+        left: -41px;
         width: 10px;
         height: 10px;
         border-radius: 999px;
-        border: 5px solid #777777;
+        border: 5px solid #999999;
         background-color: #fafafa;
         z-index: 1;
-        transition: 200ms ease-in-out;
+        transition: 100ms ease-in-out;
       }
 
       &:after {
@@ -254,6 +232,26 @@
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
         border-right: 10px solid #dedede;
+      }
+
+      &:hover,
+      &:focus-within {
+        transform: scale(1.05);
+
+        .select-work-hours__work-name {
+          color: #222222;
+        }
+        &::before {
+          border-color: $button__background--inverted;
+          left: -31px;
+        }
+
+        .select-work-hours__circle {
+          // top: 1px;
+          left: -35px;
+          // width: 35px;
+          // height: 35px;
+        }
       }
     }
   }

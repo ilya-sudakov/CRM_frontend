@@ -1,4 +1,7 @@
 @import "../../../variables.scss";
 
-.login-history {
+.log-list {
+    .main-window__header--full {
+        margin-bottom: 0 !important;
+    }
 }

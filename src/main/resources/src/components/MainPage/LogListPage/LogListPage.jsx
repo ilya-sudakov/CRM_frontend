@@ -1,56 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "./LogListPage.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
-import SearchBar from "../SearchBar/SearchBar.jsx";
 import TableView from "./TableView/TableView.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import { changeSortOrder } from "../../../utils/functions.jsx";
 import { logItemsTypes } from "./objects.js";
-import {
-  filterLogListItems,
-  filterSearchQuery,
-  sortHistory,
-} from "./functions.js";
 import Pagination from "../../../utils/MainWindow/Pagination/Pagination.jsx";
-import { getLogsList } from "../../../utils/RequestsAPI/Logs/logs.js";
+import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
 
 const LogListPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
   const [curCategory, setCurCategory] = useState("request");
 
   const [curPage, setCurPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [itemsCount, setItemsCount] = useState(0);
 
-  const [history, setHistory] = useState([
-    {
-      id: 1,
-      username: "ЦехЛепсари",
-      type: "profile",
-      date: new Date(),
-    },
-    {
-      id: 2,
-      username: "ЦехЛЭМЗ",
-      type: "request",
-      action: "Создание заявки",
-      date: new Date(),
-    },
-    {
-      id: 2,
-      username: "Алексей",
-      type: "request",
-      action: "Удаление заявки",
-      date: new Date(),
-    },
-  ]);
+  const [history, setHistory] = useState([]);
 
-  useEffect(() => {
-    loadHistory();
-  }, [itemsPerPage, curPage]);
+  const [sortOrder, setSortOrder] = useState({
+    curSort: "date",
+    date: "desc",
+  });
 
   const loadHistory = () => {
-    getLogsList(itemsPerPage, curPage - 1)
+    getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder)
       .then((res) => res.json())
       .then((res) => {
         const { content, totalElements } = res;
@@ -59,10 +32,9 @@ const LogListPage = () => {
       });
   };
 
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "id",
-    id: "desc",
-  });
+  useEffect(() => {
+    loadHistory();
+  }, [itemsPerPage, curPage, curCategory, sortOrder]);
 
   return (
     <div className="log-list">
@@ -84,25 +56,17 @@ const LogListPage = () => {
             ))}
           </div>
         </div>
-        <SearchBar
-          fullSize
-          placeholder="Введите запрос для поиска..."
-          setSearchQuery={setSearchQuery}
-          handleSearch={loadHistory}
-        />
         <ControlPanel
           sorting={
             <div className="main-window__sort-panel">
               <select onChange={(evt) => setSortOrder(changeSortOrder(evt))}>
                 <option value="date desc">По дате (убыв.)</option>
+                <option value="date asc">По дате (возр.)</option>
               </select>
             </div>
           }
         />
-        <TableView
-          data={filterLogListItems(history, curCategory)}
-          searchQuery={searchQuery}
-        />
+        <TableView data={history} />
         <Pagination
           itemsPerPage={itemsPerPage}
           setItemsPerPage={setItemsPerPage}

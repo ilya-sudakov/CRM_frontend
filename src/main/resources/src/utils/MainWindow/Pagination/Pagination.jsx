@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const Pagination = ({
-  itemsPerPage,
+  itemsPerPage = 20,
   setItemsPerPage,
-  curPage,
+  itemsCount = 0,
+  curPage = 1,
   setCurPage,
-  itemsCount,
 }) => {
   const [paginationList, setPaginationList] = useState([1]);
 
@@ -13,7 +14,6 @@ const Pagination = ({
 
   useEffect(() => {
     //initialize pagination list
-    console.log(itemsCount);
     let temp = [];
     let i = 1;
     do {
@@ -215,6 +215,14 @@ const Pagination = ({
 };
 
 export default Pagination;
+
+Pagination.propTypes = {
+  itemsPerPage: PropTypes.number,
+  setItemsPerPage: PropTypes.func,
+  curPage: PropTypes.number,
+  setCurPage: PropTypes.func,
+  itemsCount: PropTypes.number,
+};
 
 const ItemsPerPage = ({ itemsPerPage, setItemsPerPage }) => {
   return (
