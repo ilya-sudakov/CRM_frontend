@@ -7,34 +7,23 @@ import { changeSortOrder } from "../../../utils/functions.jsx";
 import { logItemsTypes } from "./objects.js";
 import Pagination from "../../../utils/MainWindow/Pagination/Pagination.jsx";
 import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
+import usePagination from "../../../utils/hooks/usePagination";
 
 const LogListPage = () => {
   const [curCategory, setCurCategory] = useState("request");
-
-  const [curPage, setCurPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
-  const [itemsCount, setItemsCount] = useState(0);
-
-  const [history, setHistory] = useState([]);
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "date",
-    date: "desc",
-  });
-
-  const loadHistory = () => {
-    getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder)
-      .then((res) => res.json())
-      .then((res) => {
-        const { content, totalElements } = res;
-        setHistory(content);
-        setItemsCount(totalElements);
-      });
-  };
-
-  useEffect(() => {
-    loadHistory();
-  }, [itemsPerPage, curPage, curCategory, sortOrder]);
+  const {
+    curPage,
+    setCurPage,
+    itemsPerPage,
+    setItemsPerPage,
+    itemsCount,
+    sortOrder,
+    setSortOrder,
+    data,
+  } = usePagination(
+    () => getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder),
+    [curCategory]
+  );
 
   return (
     <div className="log-list">
@@ -66,7 +55,7 @@ const LogListPage = () => {
             </div>
           }
         />
-        <TableView data={history} />
+        <TableView data={data} />
         <Pagination
           itemsPerPage={itemsPerPage}
           setItemsPerPage={setItemsPerPage}
