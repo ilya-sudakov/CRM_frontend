@@ -25,4 +25,14 @@
       }
     }
   }
+
+  @media (max-width: 768px) {
+    .main-window__list {
+      &-item {
+        span {
+          max-width: none !important;
+        }
+      }
+    }
+  }
 }

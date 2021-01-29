@@ -14,13 +14,13 @@ import {
 import Pagination from "../../../utils/MainWindow/Pagination/Pagination.jsx";
 import { getLogsList } from "../../../utils/RequestsAPI/Logs/logs.js";
 
-const LogListPage = (props) => {
+const LogListPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [curCategory, setCurCategory] = useState("request");
 
   const [curPage, setCurPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
-  const [itemsCount, setItemsCount] = useState(300);
+  const [itemsCount, setItemsCount] = useState(0);
 
   const [history, setHistory] = useState([
     {
@@ -47,7 +47,7 @@ const LogListPage = (props) => {
 
   useEffect(() => {
     loadHistory();
-  }, []);
+  }, [itemsPerPage, curPage]);
 
   const loadHistory = () => {
     getLogsList(itemsPerPage, curPage - 1)
@@ -88,6 +88,7 @@ const LogListPage = (props) => {
           fullSize
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
+          handleSearch={loadHistory}
         />
         <ControlPanel
           sorting={
@@ -97,7 +98,6 @@ const LogListPage = (props) => {
               </select>
             </div>
           }
-          itemsCount={`Всего: ${history.length} записей`}
         />
         <TableView
           data={filterLogListItems(history, curCategory)}

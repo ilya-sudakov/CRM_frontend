@@ -19,9 +19,9 @@ const TableView = (props) => {
           <div key={work_id} className="main-window__list-item">
             <span>
               <div className="main-window__mobile-text">Время</div>
-              {`${formatDateStringToTime(work.date)} ${formatDateStringNoYear(
+              {`${formatDateStringNoYear(work.date)} ${formatDateStringToTime(
                 work.date
-              )}`}
+              )} `}
             </span>
             <span>
               <div className="main-window__mobile-text">Пользователь</div>

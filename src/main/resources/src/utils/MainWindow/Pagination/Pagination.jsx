@@ -13,6 +13,7 @@ const Pagination = ({
 
   useEffect(() => {
     //initialize pagination list
+    console.log(itemsCount);
     let temp = [];
     let i = 1;
     do {
@@ -20,7 +21,7 @@ const Pagination = ({
       i++;
     } while (i <= Math.ceil(itemsCount / itemsPerPage) && i <= 5);
     setPaginationList(temp);
-  }, [itemsCount]);
+  }, [itemsPerPage, itemsCount]);
 
   const handlePrevPageClick = () => {
     if (curPage <= 1) return;

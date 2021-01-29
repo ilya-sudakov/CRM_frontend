@@ -905,7 +905,7 @@
       margin-top: 5px;
       padding: 5px 15px;
       background-color: $secondary-text-color;
-      color: #666666;
+      color: #555555;
       transition: 100ms ease-in-out;
       cursor: pointer;
       min-width: 50px;
@@ -937,8 +937,7 @@
     }
 
     .main-window__page-number--skip {
-      // color: #222222;
-      color: #1c5c69;
+      color: #222222;
       padding: 5px 25px;
     }
 
@@ -1157,11 +1156,11 @@
 
     .main-window__pagination {
       justify-content: center;
+      flex-wrap: wrap;
       .main-window__page-number--active {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        // min-width: 100px;
 
         .main-window__mobile-text {
           margin-left: 2.5px;
@@ -1171,6 +1170,14 @@
       .main-window__page-number:not(.main-window__page-number--active):not(.main-window__page-number--skip),
       span {
         display: none;
+      }
+      .main-window__sort-panel {
+        width: 100%;
+        margin: 0 auto;
+        justify-content: center;
+        span {
+          display: block;
+        }
       }
     }
   }

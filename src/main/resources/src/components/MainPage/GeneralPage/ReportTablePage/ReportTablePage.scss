@@ -327,6 +327,7 @@
                     }
                     &:last-child {
                         font-weight: bold;
+                        border-right: 1px solid transparent;
 
                         .report-table-report__date-hint {
                             font-weight: 400;
