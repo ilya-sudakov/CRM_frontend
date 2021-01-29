@@ -115,9 +115,9 @@ const Header = (props) => {
             ) : null}
             {userContext.userHasAccess(["ROLE_ADMIN"]) ? (
               <Link
-                to="/profile/login-history"
+                to="/profile/log-list"
                 className={`header__profile_item ${
-                  props.location.pathname.includes("/profile/login-history")
+                  props.location.pathname.includes("/profile/log-list")
                     ? "header__profile_item--active"
                     : ""
                 }`}
@@ -127,7 +127,7 @@ const Header = (props) => {
                   className="header__img header__img--history"
                   alt=""
                 />
-                <span>История входов</span>
+                <span>Логи</span>
               </Link>
             ) : null}
             <Link

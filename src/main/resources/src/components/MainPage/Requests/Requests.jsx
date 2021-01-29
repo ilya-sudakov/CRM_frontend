@@ -11,6 +11,7 @@ import {
   editRequest,
   addProductsToRequest,
   connectClientToRequest,
+  transferRequest,
 } from "../../../utils/RequestsAPI/Requests.jsx";
 import TableView from "../WorkshopsComponents/TableView/TableView.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
@@ -145,7 +146,7 @@ const Requests = (props) => {
   };
 
   //Перенести заявку
-  const transferRequest = (id) => {
+  const transferRequestId = (id) => {
     setRequestId(id);
     setShowWindow(!showWindow);
   };
@@ -381,10 +382,7 @@ const Requests = (props) => {
                         const request = requests.find(
                           (item) => item.id === requestId
                         );
-                        editRequest(
-                          { ...request, factory: toWorkshop },
-                          request.id
-                        )
+                        transferRequest(request.id, toWorkshop)
                           .then((res) => res.json())
                           .then((res) => {
                             setIsLoading(false);
@@ -515,7 +513,7 @@ const Requests = (props) => {
           loadData={loadRequests}
           isMinimized={isMinimized}
           deleteItem={deleteItem}
-          transferRequest={transferRequest}
+          transferRequest={transferRequestId}
           copyRequest={copySelectedRequest}
         />
       </div>

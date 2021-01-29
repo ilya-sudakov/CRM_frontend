@@ -204,8 +204,6 @@
         &:not(.main-window__list-item--header) {
           color: #111111 !important;
           border-color: #cccccc;
-          // margin-bottom: 5px;
-          // border-radius: 3px;
 
           .requests__column--status {
             &::before {
@@ -235,17 +233,6 @@
               cursor: pointer;
               // border-color: #ffffffaa !important;
             }
-          }
-
-          &::before {
-            content: "";
-            display: inline-block;
-            position: absolute;
-            width: 10px;
-            height: calc(100% + 2px);
-            left: -1px;
-            background-color: #cccccc;
-            display: none;
           }
           &:nth-child(2) {
             &::before {
@@ -302,6 +289,20 @@
                   border: 1px solid #66666655;
                 }
               }
+            }
+          }
+          &:not(.main-window__list-item--date) {
+            &::before {
+              content: "";
+              display: inline-block;
+              position: absolute;
+              width: 8px;
+              height: calc(100% - 10px);
+              left: 5px;
+              top: 5px;
+              border-radius: 3px;
+              background-color: #cccccc;
+              display: none;
             }
           }
         }

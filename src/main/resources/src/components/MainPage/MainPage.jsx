@@ -34,7 +34,7 @@ import {
   LEMZ,
   Lepsari,
   NewRecordWork,
-  LoginHistory,
+  LogListPage,
   EditRecordWork,
   WorkManagementPage,
   NewPriceList,
@@ -141,8 +141,8 @@ const MainPage = () => {
                 />
                 <PrivateRoute
                   exact
-                  path="/profile/login-history"
-                  component={LoginHistory}
+                  path="/profile/log-list"
+                  component={LogListPage}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={["ROLE_ADMIN"]}
