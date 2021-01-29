@@ -22,7 +22,8 @@ const LogListPage = () => {
     data,
   } = usePagination(
     () => getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder),
-    [curCategory]
+    [curCategory],
+    "dynamic"
   );
 
   return (

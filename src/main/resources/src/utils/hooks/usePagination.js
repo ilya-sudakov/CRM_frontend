@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-const usePagination = (loadFunction, changableParams = []) => {
+const usePagination = (
+  loadFunction,
+  changableParams = [],
+  type = "dynamic"
+) => {
   const [curPage, setCurPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [itemsCount, setItemsCount] = useState(0);
@@ -29,7 +33,19 @@ const usePagination = (loadFunction, changableParams = []) => {
         });
     };
 
-    fetchData();
+    const filterStaticData = () => {
+      const filteredData = loadFunction();
+      setData(filteredData);
+    };
+
+    switch (type) {
+      case "dynamic":
+        fetchData();
+      case "static":
+        filterStaticData();
+      case "default":
+        filterStaticData();
+    }
   }, [...changableParams, itemsPerPage, curPage, sortOrder]);
 
   return {
