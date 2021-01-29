@@ -58,14 +58,7 @@ export function addProductToRecordedWork(
   productName
 ) {
   return request({
-    url:
-      process.env.API_BASE_URL +
-      "/api/v1/work_control/product/" +
-      id +
-      "&" +
-      productId +
-      "&" +
-      productQuantity,
+    url: `${process.env.API_BASE_URL}/api/v1/work_control/product/${id}&${productId}&${productQuantity}`,
     method: "POST",
     body: JSON.stringify(productName),
   });
@@ -73,12 +66,7 @@ export function addProductToRecordedWork(
 
 export function deleteProductFromRecordedWork(id, productId) {
   return request({
-    url:
-      process.env.API_BASE_URL +
-      "/api/v1/work_control/product/" +
-      id +
-      "&" +
-      productId,
+    url: `${process.env.API_BASE_URL}/api/v1/work_control/product/${id}&${productId}`,
     method: "DELETE",
   });
 }
@@ -99,14 +87,7 @@ export function addDraftToRecordedWork(id, draftId, draftType, quantity, name) {
 
 export function deleteDraftFromRecordedWork(id, draftId, draftType) {
   return request({
-    url:
-      process.env.API_BASE_URL +
-      "/api/v1/work_control/part/" +
-      id +
-      "&" +
-      draftId +
-      "&" +
-      draftType,
+    url: `${process.env.API_BASE_URL}/api/v1/work_control/part/${id}&${draftId}&${draftType}`,
     method: "DELETE",
   });
 }

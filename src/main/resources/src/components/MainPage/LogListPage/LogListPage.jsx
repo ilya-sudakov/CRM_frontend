@@ -11,10 +11,16 @@ import {
   filterSearchQuery,
   sortHistory,
 } from "./functions.js";
+import Pagination from "../../../utils/MainWindow/Pagination/Pagination.jsx";
 
 const LogListPage = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [curPage, setCurPage] = useState("requests");
+  const [curCategory, setCurCategory] = useState("requests");
+
+  const [curPage, setCurPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [itemsCount, setItemsCount] = useState(300);
+
   const [history, setHistory] = useState([
     {
       id: 1,
@@ -66,11 +72,11 @@ const LogListPage = (props) => {
             {Object.values(logItemsTypes).map((item) => (
               <div
                 className={
-                  curPage === item.originalName
+                  curCategory === item.originalName
                     ? "main-window__item--active main-window__item"
                     : "main-window__item"
                 }
-                onClick={() => setCurPage(item.originalName)}
+                onClick={() => setCurCategory(item.originalName)}
               >
                 {item.name}
               </div>
@@ -95,7 +101,7 @@ const LogListPage = (props) => {
         <TableView
           data={sortHistory(
             filterSearchQuery(
-              filterLogListItems(history, curPage),
+              filterLogListItems(history, curCategory),
               searchQuery
             ),
             sortOrder
@@ -103,6 +109,13 @@ const LogListPage = (props) => {
           searchQuery={searchQuery}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
+        />
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+          curPage={curPage}
+          setCurPage={setCurPage}
+          itemsCount={itemsCount}
         />
       </div>
     </div>
