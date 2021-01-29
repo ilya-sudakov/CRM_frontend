@@ -4,6 +4,8 @@
   width: 100%;
   .main-window__list {
     &-item {
+      padding-top: 10px;
+      padding-bottom: 10px;
       span {
         &:nth-child(1) {
           flex: 0 1 15%;
@@ -14,6 +16,10 @@
           max-width: 150px;
         }
         &:nth-child(3) {
+          flex: 0 1 15%;
+          max-width: 250px;
+        }
+        &:nth-child(4) {
           flex: 0 1 50%;
         }
       }

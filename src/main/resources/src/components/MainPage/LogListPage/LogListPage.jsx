@@ -12,10 +12,11 @@ import {
   sortHistory,
 } from "./functions.js";
 import Pagination from "../../../utils/MainWindow/Pagination/Pagination.jsx";
+import { getLogsList } from "../../../utils/RequestsAPI/Logs/logs.js";
 
 const LogListPage = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [curCategory, setCurCategory] = useState("requests");
+  const [curCategory, setCurCategory] = useState("request");
 
   const [curPage, setCurPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -31,14 +32,14 @@ const LogListPage = (props) => {
     {
       id: 2,
       username: "ЦехЛЭМЗ",
-      type: "requests",
+      type: "request",
       action: "Создание заявки",
       date: new Date(),
     },
     {
       id: 2,
       username: "Алексей",
-      type: "requests",
+      type: "request",
       action: "Удаление заявки",
       date: new Date(),
     },
@@ -49,14 +50,14 @@ const LogListPage = (props) => {
   }, []);
 
   const loadHistory = () => {
-    //API
+    getLogsList(itemsPerPage, curPage - 1)
+      .then((res) => res.json())
+      .then((res) => {
+        const { content, totalElements } = res;
+        setHistory(content);
+        setItemsCount(totalElements);
+      });
   };
-
-  const deleteItem = () => {
-    //API
-  };
-
-  // * Sorting
 
   const [sortOrder, setSortOrder] = useState({
     curSort: "id",
@@ -99,16 +100,8 @@ const LogListPage = (props) => {
           itemsCount={`Всего: ${history.length} записей`}
         />
         <TableView
-          data={sortHistory(
-            filterSearchQuery(
-              filterLogListItems(history, curCategory),
-              searchQuery
-            ),
-            sortOrder
-          )}
+          data={filterLogListItems(history, curCategory)}
           searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
         />
         <Pagination
           itemsPerPage={itemsPerPage}

@@ -2,7 +2,7 @@ export const filterSearchQuery = (data, searchQuery) => {
   const query = searchQuery.toLowerCase();
   return data.filter(
     (item) =>
-      item.username.toLowerCase().includes(query) ||
+      item.author.toLowerCase().includes(query) ||
       formatDateStringWithTime(item.date).toLowerCase().includes(query) ||
       item.id.toString().includes(query)
   );

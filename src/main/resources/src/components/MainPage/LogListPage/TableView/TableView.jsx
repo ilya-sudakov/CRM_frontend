@@ -13,7 +13,7 @@ const TableView = (props) => {
           <span>Время</span>
           <span>Пользователь</span>
           <span>Действие</span>
-          <div className="main-window__actions">Действия</div>
+          <span>Описание</span>
         </div>
         {props.data.map((work, work_id) => (
           <div key={work_id} className="main-window__list-item">
@@ -25,21 +25,16 @@ const TableView = (props) => {
             </span>
             <span>
               <div className="main-window__mobile-text">Пользователь</div>
-              {work.username}
+              {work.author}
             </span>
             <span>
               <div className="main-window__mobile-text">Действие</div>
               {work.action}
             </span>
-            <div className="main-window__actions">
-              <div
-                data-id={work.id}
-                className="main-window__action"
-                onClick={props.deleteItem}
-              >
-                Удалить
-              </div>
-            </div>
+            <span>
+              <div className="main-window__mobile-text">Описание</div>
+              {work.description}
+            </span>
           </div>
         ))}
       </div>
