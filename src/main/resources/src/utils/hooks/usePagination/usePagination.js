@@ -46,7 +46,7 @@ const usePagination = (
     const filterStaticData = async () => {
       let filteredData = loadFunction();
       setItemsCount(filteredData.length);
-      if (filteredData.length === 0) {
+      if (filteredData.length === 0 || filteredData.length <= itemsPerPage) {
         setCurPage(1);
       } else setCurPage(Number.parseInt(query.get("page") ?? 1));
       const firstIndex = (curPage - 1) * itemsPerPage + 1;
