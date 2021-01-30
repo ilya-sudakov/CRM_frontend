@@ -27,6 +27,7 @@ const Clients = (props) => {
   const {
     pagination,
     curPage,
+    setCurPage,
     isLoadingPages = isLoading,
     itemsPerPage,
     sortOrder,
@@ -176,6 +177,12 @@ const Clients = (props) => {
     const curClientTypeTemp = props.location.pathname
       .split("/category/")[1]
       .split("/")[1];
+    if (
+      curCategory !== "" &&
+      curClientTypeTemp !== "" &&
+      (curCategoryTemp !== curCategory || curClientTypeTemp !== curClientType)
+    )
+      setCurPage(1);
     setCurCategory(curCategoryTemp);
     setCurClientType(curClientTypeTemp);
     loadClientsTotalByType(curCategoryTemp);

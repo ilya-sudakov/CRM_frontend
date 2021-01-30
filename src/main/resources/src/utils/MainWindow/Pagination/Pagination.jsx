@@ -11,6 +11,10 @@ const Pagination = ({
 }) => {
   const [paginationList, setPaginationList] = useState([1]);
   const history = useHistory();
+  const lastPage =
+    Math.ceil(itemsCount / itemsPerPage) !== 0
+      ? Math.ceil(itemsCount / itemsPerPage)
+      : 1;
 
   useEffect(() => {}, [curPage]);
 
@@ -219,7 +223,7 @@ const Pagination = ({
         );
       })}
       {/* {isNextPageButtonVisible && ( */}
-      {paginationList.indexOf(Math.ceil(itemsCount / itemsPerPage)) === -1 && (
+      {paginationList.indexOf(lastPage) === -1 && (
         <>
           <span>...</span>
           <div
