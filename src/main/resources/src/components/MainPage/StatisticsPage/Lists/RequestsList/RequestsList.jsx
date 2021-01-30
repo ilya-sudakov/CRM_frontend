@@ -12,7 +12,8 @@ const RequestsList = ({
   const { requests = data, pagination } = usePagination(
     () => data,
     [],
-    "static"
+    "static",
+    { size: 10 }
   );
   return (
     <div className="requests-list">
