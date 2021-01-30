@@ -1,5 +1,6 @@
 import React from "react";
 import usePagination from "../../../../../utils/hooks/usePagination/usePagination.js";
+import { sortRequests } from "../../../WorkshopsComponents/TableView/functions.js";
 import TableView from "../../../WorkshopsComponents/TableView/TableView.jsx";
 import "./RequestsList.scss";
 
@@ -9,9 +10,14 @@ const RequestsList = ({
   title = "",
   loadData,
 }) => {
-  const pages = usePagination(() => data, [data], "static", {
-    size: 10,
-  });
+  const pages = usePagination(
+    () => sortRequests(data, sortBy),
+    [data],
+    "static",
+    {
+      size: 10,
+    }
+  );
   return (
     <div className="requests-list">
       <div className="main-window__title">{title}</div>
