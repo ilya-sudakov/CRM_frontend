@@ -13,10 +13,59 @@ import { getTransportationListPdfText } from "../../../../utils/pdfFunctions.jsx
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import usePagination from "../../../../utils/hooks/usePagination/usePagination.js";
+import { formatDateString } from "../../../../utils/functions.jsx";
 
 const Transportation = (props) => {
   const [transportation, setTransportation] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase();
+    return data.filter(
+      (item) =>
+        item.cargo.toLowerCase().includes(query) ||
+        formatDateString(item.date).includes(query) ||
+        item.sender.toLowerCase().includes(query) ||
+        item.recipient.toLowerCase().includes(query) ||
+        item.driver.toLowerCase().includes(query) ||
+        item.id.toString().includes(query)
+    );
+  };
+
+  const sortTransportations = (data) => {
+    return filterSearchQuery(data).sort((a, b) => {
+      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
+      }
+      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
+      }
+      return 0;
+    });
+  };
+
+  const handleFilterData = (data) => {
+    return sortTransportations(data).filter((item) => {
+      let senderCheck = false;
+      let recipientCheck = false;
+      workshops.map((workshop) => {
+        if (workshop.senderActive && workshop.name === item.sender) {
+          senderCheck = true;
+        }
+        if (workshop.recipientActive && workshop.name === item.recipient) {
+          recipientCheck = true;
+        }
+      });
+      return recipientCheck && senderCheck;
+    });
+  };
+
+  const { pagination, data } = usePagination(
+    () => handleFilterData(transportation),
+    [transportation, searchQuery],
+    "static"
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [workshops, setWorkshops] = useState([
     {
@@ -116,31 +165,6 @@ const Transportation = (props) => {
     setSortOrder({
       curSort: name,
       [name]: order,
-    });
-  };
-
-  const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase();
-    return data.filter(
-      (item) =>
-        item.cargo.toLowerCase().includes(query) ||
-        formatDateString(item.date).includes(query) ||
-        item.sender.toLowerCase().includes(query) ||
-        item.recipient.toLowerCase().includes(query) ||
-        item.driver.toLowerCase().includes(query) ||
-        item.id.toString().includes(query)
-    );
-  };
-
-  const sortTransportations = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      return 0;
     });
   };
 
@@ -244,27 +268,13 @@ const Transportation = (props) => {
           }
         />
         <TableView
-          data={sortTransportations(transportation).filter((item) => {
-            let senderCheck = false;
-            let recipientCheck = false;
-            workshops.map((workshop) => {
-              if (workshop.senderActive && workshop.name === item.sender) {
-                senderCheck = true;
-              }
-              if (
-                workshop.recipientActive &&
-                workshop.name === item.recipient
-              ) {
-                recipientCheck = true;
-              }
-            });
-            return recipientCheck && senderCheck;
-          })}
+          data={data}
           searchQuery={searchQuery}
           isLoading={isLoading}
           userHasAccess={props.userHasAccess}
           deleteItem={deleteItem}
         />
+        {pagination}
       </div>
     </div>
   );

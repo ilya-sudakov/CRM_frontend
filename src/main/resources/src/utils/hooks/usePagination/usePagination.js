@@ -32,10 +32,10 @@ const usePagination = (
       return loadFunction()
         .then((res) => res.json())
         .then((res) => {
-          setIsLoading(false);
           const { content, totalElements } = res;
           setItemsCount(totalElements);
           setData(content);
+          setIsLoading(false);
         })
         .catch((error) => {
           setIsLoading(false);
@@ -44,8 +44,14 @@ const usePagination = (
     };
 
     const filterStaticData = async () => {
-      const filteredData = loadFunction();
-      setData(filteredData);
+      let filteredData = loadFunction();
+      setItemsCount(filteredData.length);
+      if (filteredData.length === 0) {
+        setCurPage(1);
+      } else setCurPage(Number.parseInt(query.get("page") ?? 1));
+      const firstIndex = (curPage - 1) * itemsPerPage + 1;
+      const lastIndex = curPage * itemsPerPage;
+      setData(filteredData.slice(firstIndex - 1, lastIndex - 1));
     };
 
     if (!loadFunction || loadFunction === null) return;
