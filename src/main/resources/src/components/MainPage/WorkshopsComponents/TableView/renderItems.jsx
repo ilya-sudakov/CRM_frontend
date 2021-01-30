@@ -20,7 +20,7 @@ export const renderIdColumn = (request = { id: 0 }, workshopName = "") => {
       fullRequests ? "Заявка" : "Очередь производства"
     } #${request.id} ${
       fullRequests && request.factory !== "requests"
-        ? ` - ${workshops[request.factory].name}`
+        ? ` - ${workshops[request.factory]?.name}`
         : ""
     }`}</span>
   );
