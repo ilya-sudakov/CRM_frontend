@@ -9,26 +9,23 @@ const RequestsList = ({
   title = "",
   loadData,
 }) => {
-  const { requests = data, pagination } = usePagination(
-    () => data,
-    [],
-    "static",
-    { size: 10 }
-  );
+  const pages = usePagination(() => data, [data], "static", {
+    size: 10,
+  });
   return (
     <div className="requests-list">
       <div className="main-window__title">{title}</div>
-      {requests.length > 0 ? (
+      {pages.data.length > 0 ? (
         <>
           <TableView
-            data={requests}
+            data={pages.data}
             isLoading={false}
             workshopName="requests"
             sortOrder={sortBy}
             loadData={loadData}
             isMinimized={true}
           />
-          {pagination}
+          {pages.pagination}
         </>
       ) : (
         <div className="main-window__info-text">

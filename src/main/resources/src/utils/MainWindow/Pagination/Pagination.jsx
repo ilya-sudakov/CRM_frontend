@@ -23,8 +23,9 @@ const Pagination = ({
     let temp = [];
     let i =
       curPage > 1
-        ? Math.ceil(itemsCount / itemsPerPage) - curPage === 1 ||
-          Math.ceil(itemsCount / itemsPerPage) - curPage === 0
+        ? (Math.ceil(itemsCount / itemsPerPage) - curPage === 1 ||
+            Math.ceil(itemsCount / itemsPerPage) - curPage === 0) &&
+          curPage > 4
           ? curPage - 4
           : Math.ceil(itemsCount / itemsPerPage) - curPage > 1 && curPage > 2
           ? curPage - 2

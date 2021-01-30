@@ -50,7 +50,7 @@ const TableView = (props) => {
   return (
     <div className="tableview-work">
       <div className="main-window">
-        <div className="main-window__list">
+        <div className="main-window__list main-window__list--full">
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название</span>
             <span>Тип</span>
