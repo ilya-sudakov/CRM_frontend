@@ -1,12 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Pagination from "../MainWindow/Pagination/Pagination.jsx";
-import useQuery from "./useQuery.js";
+import Pagination from "../../MainWindow/Pagination/Pagination.jsx";
+import useQuery from "../useQuery.js";
 
 const usePagination = (
   loadFunction,
   changableParams = [],
-  type = "dynamic",
+  type = "static",
   props = {} //default values
 ) => {
   const { query } = useQuery();
@@ -47,7 +47,7 @@ const usePagination = (
       const filteredData = loadFunction();
       setData(filteredData);
     };
-    
+
     if (!loadFunction || loadFunction === null) return;
     switch (type) {
       case "dynamic":

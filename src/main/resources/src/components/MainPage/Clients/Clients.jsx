@@ -16,7 +16,7 @@ import UserContext from "../../../App.js";
 import { getEmailsExcel } from "./MainComponents/functions.js";
 import { changeSortOrder } from "../../../utils/functions.jsx";
 import { clientTypes } from "./MainComponents/objects.js";
-import usePagination from "../../../utils/hooks/usePagination";
+import usePagination from "../../../utils/hooks/usePagination/usePagination";
 
 const Clients = (props) => {
   const [clients, setClients] = useState([]);

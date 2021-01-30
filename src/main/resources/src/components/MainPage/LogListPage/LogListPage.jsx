@@ -6,7 +6,7 @@ import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.js
 import { changeSortOrder } from "../../../utils/functions.jsx";
 import { logItemsTypes } from "./objects.js";
 import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
-import usePagination from "../../../utils/hooks/usePagination";
+import usePagination from "../../../utils/hooks/usePagination/usePagination";
 
 const LogListPage = () => {
   const [curCategory, setCurCategory] = useState("request");
