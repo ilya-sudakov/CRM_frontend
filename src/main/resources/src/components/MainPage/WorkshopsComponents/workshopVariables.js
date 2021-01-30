@@ -23,6 +23,12 @@ export const workshops = {
     redirectURL: "/ligovskiy/workshop",
     type: "ligovskiy",
   },
+  null: {
+    name: "Заявки",
+    title: "",
+    redirectURL: "/requests",
+    type: "requests",
+  },
 };
 
 export const requestStatuses = [

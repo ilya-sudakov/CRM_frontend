@@ -32,7 +32,7 @@ const TableView = (props) => {
           <PlaceholderLoading
             itemClassName="main-window__list-item"
             minHeight="35px"
-            items={15}
+            items={props.data.length}
           />
         )}
         {props.data.map((transportation, transportation_id) => (

@@ -11,6 +11,10 @@ const Pagination = ({
 }) => {
   const [paginationList, setPaginationList] = useState([1]);
   const history = useHistory();
+  const lastPage =
+    Math.ceil(itemsCount / itemsPerPage) !== 0
+      ? Math.ceil(itemsCount / itemsPerPage)
+      : 1;
 
   useEffect(() => {}, [curPage]);
 
@@ -19,8 +23,9 @@ const Pagination = ({
     let temp = [];
     let i =
       curPage > 1
-        ? Math.ceil(itemsCount / itemsPerPage) - curPage === 1 ||
-          Math.ceil(itemsCount / itemsPerPage) - curPage === 0
+        ? (Math.ceil(itemsCount / itemsPerPage) - curPage === 1 ||
+            Math.ceil(itemsCount / itemsPerPage) - curPage === 0) &&
+          curPage > 4
           ? curPage - 4
           : Math.ceil(itemsCount / itemsPerPage) - curPage > 1 && curPage > 2
           ? curPage - 2
@@ -35,10 +40,10 @@ const Pagination = ({
     setPaginationList(temp);
   }, [itemsPerPage, itemsCount]);
 
-  const handlePushNewURL = (item) => {
+  const handlePushNewURL = (name, value) => {
     const oldQuery = history.location.search;
     let query = new URLSearchParams(oldQuery);
-    query.set("page", item);
+    query.set(name, value);
     history.push({
       search: `?${query.toString()}`,
     });
@@ -49,7 +54,7 @@ const Pagination = ({
     const item = curPage - 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
-    handlePushNewURL(item);
+    handlePushNewURL("page", item);
     if (lastPage <= 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
       let temp = [];
@@ -80,7 +85,7 @@ const Pagination = ({
 
   const handleInBetweenPageClick = (item) => {
     setCurPage(item);
-    handlePushNewURL(item);
+    handlePushNewURL("page", item);
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     if (lastPage <= 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
@@ -115,7 +120,7 @@ const Pagination = ({
   const handleLastPageClick = () => {
     const item = Math.ceil(itemsCount / itemsPerPage);
     setCurPage(item);
-    handlePushNewURL(item);
+    handlePushNewURL("page", item);
     if (item <= 5) return;
     let temp = [];
     for (let i = item - 5; i <= item; i++) {
@@ -129,7 +134,7 @@ const Pagination = ({
     if (curPage >= maxPage) return;
     const item = curPage + 1;
     setCurPage(item);
-    handlePushNewURL(item);
+    handlePushNewURL("page", item);
     if (maxPage < 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
       let temp = [];
@@ -162,7 +167,7 @@ const Pagination = ({
     const item = 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
-    handlePushNewURL(item);
+    handlePushNewURL("page", item);
     if (lastPage <= 5) return;
     let temp = [];
     for (let i = item; i <= lastPage && i <= 5; i++) {
@@ -171,18 +176,12 @@ const Pagination = ({
     setPaginationList(temp);
   };
 
-  const isNextPageButtonVisible =
-    curPage <= Math.ceil(itemsCount / itemsPerPage) - 2 &&
-    Math.ceil(itemsCount / itemsPerPage) > 5 &&
-    paginationList.find(
-      (item) => item === Math.ceil(itemsCount / itemsPerPage)
-    ) === undefined;
-
   return (
     <div className="main-window__pagination main-window__pagination--full">
       <ItemsPerPage
         itemsPerPage={itemsPerPage}
         setItemsPerPage={setItemsPerPage}
+        history={history}
       />
       <div
         className="main-window__page-number main-window__page-number--skip"
@@ -219,7 +218,7 @@ const Pagination = ({
         );
       })}
       {/* {isNextPageButtonVisible && ( */}
-      {paginationList.indexOf(Math.ceil(itemsCount / itemsPerPage)) === -1 && (
+      {paginationList.indexOf(lastPage) === -1 && (
         <>
           <span>...</span>
           <div
@@ -250,13 +249,25 @@ Pagination.propTypes = {
   itemsCount: PropTypes.number,
 };
 
-const ItemsPerPage = ({ itemsPerPage, setItemsPerPage }) => {
+const ItemsPerPage = ({ itemsPerPage, setItemsPerPage, history }) => {
+  const handlePushNewURL = (name, value) => {
+    const oldQuery = history.location.search;
+    let query = new URLSearchParams(oldQuery);
+    query.set(name, value);
+    history.push({
+      search: `?${query.toString()}`,
+    });
+  };
+
   return (
     <div className="main-window__sort-panel">
       <span>Кол-во элем. на странице: </span>
       <select
         value={itemsPerPage}
-        onChange={({ target }) => setItemsPerPage(target.value)}
+        onChange={({ target }) => {
+          handlePushNewURL("size", target.value);
+          setItemsPerPage(target.value);
+        }}
       >
         <option>20</option>
         <option>15</option>

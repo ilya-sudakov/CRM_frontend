@@ -38,14 +38,6 @@ exports[`Pagination component matches snapshot 1`] = `
         из 0
       </div>
     </div>
-    <span>
-      ...
-    </span>
-    <div
-      class="main-window__page-number"
-    >
-      0
-    </div>
     <div
       class="main-window__page-number main-window__page-number--skip"
     >

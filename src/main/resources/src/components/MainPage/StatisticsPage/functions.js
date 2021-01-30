@@ -113,11 +113,11 @@ export const getPreviousYearDates = (date, value) => {
 
   switch (value) {
     case "current":
-      startDate = new Date(today.getFullYear(), 1, 1);
+      startDate = new Date(today.getFullYear(), 0, 1);
       endDate = new Date(startDate.getFullYear() + 1, 0, 0);
       break;
     default:
-      startDate = new Date(today.getFullYear() - 1, 1, 1);
+      startDate = new Date(today.getFullYear() - 1, 0, 1);
       endDate = new Date(startDate.getFullYear() + 1, 0, 0);
       break;
   }

@@ -5,6 +5,10 @@
   flex-direction: column;
   width: calc(100%);
 
+  .main-window {
+    padding: 0;
+  }
+
   .main-window__list-item {
     span {
       &:nth-child(1) {
