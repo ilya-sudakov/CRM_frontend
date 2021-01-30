@@ -1,4 +1,6 @@
+import React from "react";
 import { useEffect, useState } from "react";
+import Pagination from "../MainWindow/Pagination/Pagination.jsx";
 import useQuery from "./useQuery.js";
 
 const usePagination = (
@@ -53,6 +55,16 @@ const usePagination = (
     }
   }, [...changableParams, itemsPerPage, curPage, sortOrder]);
 
+  const pagination = (
+    <Pagination
+      itemsPerPage={itemsPerPage}
+      setItemsPerPage={setItemsPerPage}
+      curPage={curPage}
+      setCurPage={setCurPage}
+      itemsCount={itemsCount}
+    />
+  );
+
   return {
     isLoading,
     data,
@@ -63,6 +75,7 @@ const usePagination = (
     itemsPerPage,
     setItemsPerPage,
     itemsCount,
+    pagination,
   };
 };
 

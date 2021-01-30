@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./LogListPage.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
 import TableView from "./TableView/TableView.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import { changeSortOrder } from "../../../utils/functions.jsx";
 import { logItemsTypes } from "./objects.js";
-import Pagination from "../../../utils/MainWindow/Pagination/Pagination.jsx";
 import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
 import usePagination from "../../../utils/hooks/usePagination";
 
@@ -13,14 +12,12 @@ const LogListPage = () => {
   const [curCategory, setCurCategory] = useState("request");
   const {
     curPage,
-    setCurPage,
     itemsPerPage,
-    setItemsPerPage,
-    itemsCount,
     sortOrder,
     setSortOrder,
     data,
     isLoading,
+    pagination,
   } = usePagination(
     () => getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder),
     [curCategory],
@@ -58,13 +55,7 @@ const LogListPage = () => {
           }
         />
         <TableView data={data} isLoading={isLoading} />
-        <Pagination
-          itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage}
-          curPage={curPage}
-          setCurPage={setCurPage}
-          itemsCount={itemsCount}
-        />
+        {pagination}
       </div>
     </div>
   );
