@@ -1,4 +1,5 @@
 import React from "react";
+import usePagination from "../../../../../utils/hooks/usePagination/usePagination.js";
 import TableView from "../../../WorkshopsComponents/TableView/TableView.jsx";
 import "./RequestsList.scss";
 
@@ -8,18 +9,26 @@ const RequestsList = ({
   title = "",
   loadData,
 }) => {
+  const { requests = data, pagination } = usePagination(
+    () => data,
+    [],
+    "static"
+  );
   return (
     <div className="requests-list">
       <div className="main-window__title">{title}</div>
-      {data.length > 0 ? (
-        <TableView
-          data={data}
-          isLoading={false}
-          workshopName="requests"
-          sortOrder={sortBy}
-          loadData={loadData}
-          isMinimized={true}
-        />
+      {requests.length > 0 ? (
+        <>
+          <TableView
+            data={requests}
+            isLoading={false}
+            workshopName="requests"
+            sortOrder={sortBy}
+            loadData={loadData}
+            isMinimized={true}
+          />
+          {pagination}
+        </>
       ) : (
         <div className="main-window__info-text">
           Нет заявок за выбранный период
