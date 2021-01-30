@@ -1,40 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./LogListPage.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
 import TableView from "./TableView/TableView.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import { changeSortOrder } from "../../../utils/functions.jsx";
 import { logItemsTypes } from "./objects.js";
-import Pagination from "../../../utils/MainWindow/Pagination/Pagination.jsx";
 import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
+import usePagination from "../../../utils/hooks/usePagination/usePagination";
 
 const LogListPage = () => {
   const [curCategory, setCurCategory] = useState("request");
-
-  const [curPage, setCurPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
-  const [itemsCount, setItemsCount] = useState(0);
-
-  const [history, setHistory] = useState([]);
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "date",
-    date: "desc",
-  });
-
-  const loadHistory = () => {
-    getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder)
-      .then((res) => res.json())
-      .then((res) => {
-        const { content, totalElements } = res;
-        setHistory(content);
-        setItemsCount(totalElements);
-      });
-  };
-
-  useEffect(() => {
-    loadHistory();
-  }, [itemsPerPage, curPage, curCategory, sortOrder]);
+  const {
+    curPage,
+    itemsPerPage,
+    sortOrder,
+    setSortOrder,
+    data,
+    isLoading,
+    pagination,
+  } = usePagination(
+    () => getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder),
+    [curCategory],
+    "dynamic"
+  );
 
   return (
     <div className="log-list">
@@ -66,14 +54,8 @@ const LogListPage = () => {
             </div>
           }
         />
-        <TableView data={history} />
-        <Pagination
-          itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage}
-          curPage={curPage}
-          setCurPage={setCurPage}
-          itemsCount={itemsCount}
-        />
+        <TableView data={data} isLoading={isLoading} />
+        {pagination}
       </div>
     </div>
   );

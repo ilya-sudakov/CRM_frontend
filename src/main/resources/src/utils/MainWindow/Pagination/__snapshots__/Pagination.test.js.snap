@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="main-window__pagination main-window__pagination--full"
+  >
+    <div
+      class="main-window__sort-panel"
+    >
+      <span>
+        Кол-во элем. на странице: 
+      </span>
+      <select>
+        <option>
+          20
+        </option>
+        <option>
+          15
+        </option>
+        <option>
+          10
+        </option>
+      </select>
+    </div>
+    <div
+      class="main-window__page-number main-window__page-number--skip"
+    >
+      Пред
+    </div>
+    <div
+      class="main-window__page-number main-window__page-number--active"
+    >
+      1
+      <div
+        class="main-window__mobile-text"
+      >
+        из 0
+      </div>
+    </div>
+    <span>
+      ...
+    </span>
+    <div
+      class="main-window__page-number"
+    >
+      0
+    </div>
+    <div
+      class="main-window__page-number main-window__page-number--skip"
+    >
+      След
+    </div>
+  </div>
+</DocumentFragment>
+`;
