@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import useQuery from "./useQuery.js";
 
 const usePagination = (
   loadFunction,
   changableParams = [],
   type = "dynamic"
 ) => {
-  const [curPage, setCurPage] = useState(1);
+  const { query } = useQuery();
+  const [curPage, setCurPage] = useState(query.get("page") ?? 1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [itemsCount, setItemsCount] = useState(0);
   const [data, setData] = useState([]);

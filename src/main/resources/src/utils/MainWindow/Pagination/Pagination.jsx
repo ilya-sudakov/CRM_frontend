@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 
 const Pagination = ({
   itemsPerPage = 20,
@@ -9,6 +10,7 @@ const Pagination = ({
   setCurPage,
 }) => {
   const [paginationList, setPaginationList] = useState([1]);
+  const history = useHistory();
 
   useEffect(() => {}, [curPage]);
 
@@ -23,11 +25,21 @@ const Pagination = ({
     setPaginationList(temp);
   }, [itemsPerPage, itemsCount]);
 
+  const handlePushNewURL = (item) => {
+    const oldQuery = history.location.search;
+    let query = new URLSearchParams(oldQuery);
+    query.set("page", item);
+    history.push({
+      search: `?${query.toString()}`,
+    });
+  };
+
   const handlePrevPageClick = () => {
     if (curPage <= 1) return;
     const item = curPage - 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
+    handlePushNewURL(item);
     if (lastPage <= 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
       let temp = [];
@@ -58,6 +70,7 @@ const Pagination = ({
 
   const handleInBetweenPageClick = (item) => {
     setCurPage(item);
+    handlePushNewURL(item);
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     if (lastPage <= 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
@@ -92,6 +105,7 @@ const Pagination = ({
   const handleLastPageClick = () => {
     const item = Math.ceil(itemsCount / itemsPerPage);
     setCurPage(item);
+    handlePushNewURL(item);
     if (item <= 5) return;
     let temp = [];
     for (let i = item - 5; i <= item; i++) {
@@ -105,6 +119,7 @@ const Pagination = ({
     if (curPage >= maxPage) return;
     const item = curPage + 1;
     setCurPage(item);
+    handlePushNewURL(item);
     if (maxPage < 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
       let temp = [];
@@ -137,6 +152,7 @@ const Pagination = ({
     const item = 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
+    handlePushNewURL(item);
     if (lastPage <= 5) return;
     let temp = [];
     for (let i = item; i <= lastPage && i <= 5; i++) {

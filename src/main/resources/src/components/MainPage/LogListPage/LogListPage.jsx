@@ -9,7 +9,7 @@ import Pagination from "../../../utils/MainWindow/Pagination/Pagination.jsx";
 import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
 import usePagination from "../../../utils/hooks/usePagination";
 
-const LogListPage = () => {
+const LogListPage = (props) => {
   const [curCategory, setCurCategory] = useState("request");
   const {
     curPage,
