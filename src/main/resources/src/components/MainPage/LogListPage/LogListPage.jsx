@@ -20,6 +20,7 @@ const LogListPage = () => {
     sortOrder,
     setSortOrder,
     data,
+    isLoading,
   } = usePagination(
     () => getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder),
     [curCategory],
@@ -56,7 +57,7 @@ const LogListPage = () => {
             </div>
           }
         />
-        <TableView data={data} />
+        <TableView data={data} isLoading={isLoading} />
         <Pagination
           itemsPerPage={itemsPerPage}
           setItemsPerPage={setItemsPerPage}

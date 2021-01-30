@@ -16,7 +16,6 @@ const usePagination = (
   });
 
   useEffect(() => {
-    if (!loadFunction) return;
     const fetchData = async () => {
       setIsLoading(true);
       return loadFunction()
@@ -33,18 +32,22 @@ const usePagination = (
         });
     };
 
-    const filterStaticData = () => {
+    const filterStaticData = async () => {
       const filteredData = loadFunction();
       setData(filteredData);
     };
 
+    if (!loadFunction) return;
     switch (type) {
       case "dynamic":
         fetchData();
+        break;
       case "static":
         filterStaticData();
+        break;
       case "default":
         filterStaticData();
+        break;
     }
   }, [...changableParams, itemsPerPage, curPage, sortOrder]);
 
