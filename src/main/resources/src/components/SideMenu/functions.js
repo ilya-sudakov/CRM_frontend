@@ -191,6 +191,7 @@ export const getDefaultItems = (userContext) => {
       mainRoles: ["ROLE_ADMIN", "ROLE_DISPATCHER"],
       addButtonRoles: ["ROLE_ADMIN", "ROLE_DISPATCHER"],
       addButtonName: "Учесть рабочее время",
+      addButtonLinkTo: "/work-management/record-time/new",
     },
     {
       pathname: "/lepsari/",
