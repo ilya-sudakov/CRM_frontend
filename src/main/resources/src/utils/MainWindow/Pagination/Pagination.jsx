@@ -22,7 +22,7 @@ const Pagination = ({
         ? Math.ceil(itemsCount / itemsPerPage) - curPage === 1 ||
           Math.ceil(itemsCount / itemsPerPage) - curPage === 0
           ? curPage - 4
-          : Math.ceil(itemsCount / itemsPerPage) - curPage > 1
+          : Math.ceil(itemsCount / itemsPerPage) - curPage > 1 && curPage > 2
           ? curPage - 2
           : curPage - 1
         : curPage;
