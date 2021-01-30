@@ -11,11 +11,12 @@ import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.js
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import EditWorkHistory from "./MainComponents/EditWorkHistory.jsx";
 import EditNextContactDate from "./MainComponents/EditContactDay.jsx";
-import Pagination from "./MainComponents/Pagination.jsx";
 import ClientsList from "./MainComponents/ClientsList.jsx";
 import UserContext from "../../../App.js";
 import { getEmailsExcel } from "./MainComponents/functions.js";
+import { changeSortOrder } from "../../../utils/functions.jsx";
 import { clientTypes } from "./MainComponents/objects.js";
+import usePagination from "../../../utils/hooks/usePagination";
 
 const Clients = (props) => {
   const [clients, setClients] = useState([]);
@@ -23,9 +24,27 @@ const Clients = (props) => {
   const [curClientType, setCurClientType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [pagination, setPagination] = useState([1]);
-  const [curPage, setCurPage] = useState(1);
-  const [itemsCount, setItemsCount] = useState(0);
+  const {
+    pagination,
+    curPage,
+    isLoadingPages = isLoading,
+    itemsPerPage,
+    sortOrder,
+    data,
+    setSortOrder,
+  } = usePagination(
+    curCategory !== "" ? () => loadData(curCategory, curClientType) : null,
+    [curClientType, curCategory],
+    "dynamic",
+    {
+      sortOrder: {
+        curSort: "name",
+        name: "asc",
+        nextDateContact: "asc",
+      },
+      size: 10,
+    }
+  );
   const [itemsActiveCount, setItemsActiveCount] = useState(0);
   const [itemsPotentialCount, setItemsPotentialCount] = useState(0);
   const [itemsProgressCount, setItemsProgressCount] = useState(0);
@@ -33,14 +52,7 @@ const Clients = (props) => {
   const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
-  const [itemsPerPage, setItemsPerPage] = useState(10);
   const userContext = useContext(UserContext);
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "name",
-    name: "asc",
-    nextDateContact: "asc",
-  });
 
   const menuItems = [
     {
@@ -85,7 +97,6 @@ const Clients = (props) => {
           let temp = clients;
           temp.splice(index, 1);
           setClients([...temp]);
-          // console.log('deleted successfully');
         })
       )
       .catch((error) => {
@@ -140,84 +151,45 @@ const Clients = (props) => {
   };
 
   const loadData = (category, type, signal) => {
-    // console.log(category, type);
     setSearchQuery("");
-    setIsLoading(true);
-    clientTypes[props.type]
-      .loadItemsByCategory(
-        {
-          categoryName: category,
-          clientType:
-            type === "active"
-              ? "Активные"
-              : type === "potential"
-              ? "Потенциальные"
-              : "В разработке",
-        },
-        curPage,
-        itemsPerPage,
-        sortOrder,
-        signal
-      )
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        setClients(res.content);
-        if (curPage < 5 && searchQuery === "") {
-          setItemsCount(res.totalElements);
-          let temp = [];
-          let i = 1;
-          do {
-            temp.push(i);
-            i++;
-          } while (i <= Math.ceil(res.totalElements / itemsPerPage) && i <= 5);
-          setPagination(temp);
-        }
-        setIsLoading(false);
-      });
+    return clientTypes[props.type].loadItemsByCategory(
+      {
+        categoryName: category,
+        clientType:
+          type === "active"
+            ? "Активные"
+            : type === "potential"
+            ? "Потенциальные"
+            : "В разработке",
+      },
+      curPage,
+      itemsPerPage,
+      sortOrder,
+      signal
+    );
   };
 
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    });
-  };
-
-  const initialLoad = (signal) => {
+  const initialLoad = () => {
     const curCategoryTemp = props.location.pathname
       .split("/category/")[1]
       .split("/")[0];
     const curClientTypeTemp = props.location.pathname
       .split("/category/")[1]
       .split("/")[1];
-    if (
-      curCategoryTemp !== curCategory ||
-      curClientTypeTemp !== curClientType
-    ) {
-      setCurPage(1);
-    }
     setCurCategory(curCategoryTemp);
     setCurClientType(curClientTypeTemp);
-    if (searchQuery === "") {
-      loadClientsTotalByType(curCategoryTemp);
-      return loadData(curCategoryTemp, curClientTypeTemp, signal);
-    }
+    loadClientsTotalByType(curCategoryTemp);
     return;
   };
 
   useEffect(() => {
     document.title = clientTypes[props.type].title;
     const abortController = new AbortController();
-
     initialLoad(abortController.signal);
-
     return function cancel() {
       abortController.abort();
     };
-  }, [props.location, curPage, sortOrder, itemsPerPage, props.type]);
+  }, [props.location, props.type]);
 
   return (
     <div className="clients">
@@ -254,15 +226,14 @@ const Clients = (props) => {
           </div>
         </div>
         <SearchBar
-          // title="Поиск по клиентам"
           fullSize
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
           searchQuery={searchQuery}
           onButtonClick={(query) => {
             setIsLoading(true);
-            // console.log(query);
             if (query === "") {
+              setIsLoading(false);
               loadData(curCategory, curClientType);
             } else {
               searchClients({
@@ -271,10 +242,7 @@ const Clients = (props) => {
               })
                 .then((res) => res.json())
                 .then((res) => {
-                  // console.log(res);
                   setClients(res);
-                  setItemsCount(res.length);
-                  setPagination([1]);
                   setIsLoading(false);
                 })
                 .catch((error) => {
@@ -331,7 +299,9 @@ const Clients = (props) => {
         <ControlPanel
           sorting={
             <div className="main-window__sort-panel">
-              <select onChange={changeSortOrder}>
+              <select
+                onChange={(event) => setSortOrder(changeSortOrder(event))}
+              >
                 <option value="name asc">По алфавиту (А-Я)</option>
                 <option value="name desc">По алфавиту (Я-А)</option>
                 <option value="nextDateContact asc">
@@ -342,9 +312,9 @@ const Clients = (props) => {
           }
         />
         <ClientsList
-          isLoading={isLoading}
+          isLoading={isLoadingPages || isLoading}
           itemsPerPage={itemsPerPage}
-          clients={clients}
+          clients={searchQuery === "" ? data : clients}
           searchQuery={searchQuery}
           sortOrder={sortOrder}
           deleteItem={deleteItem}
@@ -357,16 +327,7 @@ const Clients = (props) => {
           setCurForm={setCurForm}
           editItemFunction={clientTypes[props.type].editItemFunction}
         />
-        <Pagination
-          itemsPerPage={itemsPerPage}
-          setItemsPerPage={setItemsPerPage}
-          curPage={curPage}
-          setCurPage={setCurPage}
-          itemsCount={itemsCount}
-          pagination={pagination}
-          setPagination={setPagination}
-          searchQuery={searchQuery}
-        />
+        {searchQuery === "" ? pagination : null}
       </div>
     </div>
   );

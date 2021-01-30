@@ -17,11 +17,13 @@ const Pagination = ({
   useEffect(() => {
     //initialize pagination list
     let temp = [];
-    let i = 1;
+    let i = curPage > 1 ? curPage - 1 : curPage;
+    let count = 0;
     do {
       temp.push(i);
       i++;
-    } while (i <= Math.ceil(itemsCount / itemsPerPage) && i <= 5);
+      count++;
+    } while (i <= Math.ceil(itemsCount / itemsPerPage) && count < 4);
     setPaginationList(temp);
   }, [itemsPerPage, itemsCount]);
 
@@ -180,8 +182,7 @@ const Pagination = ({
       >
         Пред
       </div>
-
-      {curPage >= 5 && (
+      {paginationList.indexOf(1) === -1 && (
         <>
           <div
             className="main-window__page-number"

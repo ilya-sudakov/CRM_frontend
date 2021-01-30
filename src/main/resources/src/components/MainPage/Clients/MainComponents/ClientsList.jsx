@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import editSVG from "../../../../../../../../assets/tableview/edit.svg";
 import starSVG from "../../../../../../../../assets/tableview/star.svg";
 import starBorderedSVG from "../../../../../../../../assets/tableview/star_border.svg";
@@ -28,6 +28,10 @@ const ClientsList = ({
   setClients,
 }) => {
   const userContext = useContext(UserContext);
+
+  useEffect(() => {
+    console.log(clients);
+  }, [clients]);
 
   return (
     <div className="main-window__list main-window__list--full">

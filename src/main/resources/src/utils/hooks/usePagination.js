@@ -6,22 +6,25 @@ import useQuery from "./useQuery.js";
 const usePagination = (
   loadFunction,
   changableParams = [],
-  type = "dynamic"
+  type = "dynamic",
+  props = {} //default values
 ) => {
   const { query } = useQuery();
   const [curPage, setCurPage] = useState(
     Number.parseInt(query.get("page") ?? 1)
   );
   const [itemsPerPage, setItemsPerPage] = useState(
-    Number.parseInt(query.get("size") ?? 20)
+    Number.parseInt(query.get("size") ?? props.size ?? 20)
   );
   const [itemsCount, setItemsCount] = useState(0);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "date",
-    date: "desc",
-  });
+  const [sortOrder, setSortOrder] = useState(
+    props.sortOrder ?? {
+      curSort: "date",
+      date: "desc",
+    }
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,8 +47,8 @@ const usePagination = (
       const filteredData = loadFunction();
       setData(filteredData);
     };
-
-    if (!loadFunction) return;
+    
+    if (!loadFunction || loadFunction === null) return;
     switch (type) {
       case "dynamic":
         fetchData();
