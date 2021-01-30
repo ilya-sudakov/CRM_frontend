@@ -17,13 +17,21 @@ const Pagination = ({
   useEffect(() => {
     //initialize pagination list
     let temp = [];
-    let i = curPage > 1 ? curPage - 1 : curPage;
+    let i =
+      curPage > 1
+        ? Math.ceil(itemsCount / itemsPerPage) - curPage === 1 ||
+          Math.ceil(itemsCount / itemsPerPage) - curPage === 0
+          ? curPage - 4
+          : Math.ceil(itemsCount / itemsPerPage) - curPage > 1
+          ? curPage - 2
+          : curPage - 1
+        : curPage;
     let count = 0;
     do {
       temp.push(i);
       i++;
       count++;
-    } while (i <= Math.ceil(itemsCount / itemsPerPage) && count < 4);
+    } while (i <= Math.ceil(itemsCount / itemsPerPage) && count <= 4);
     setPaginationList(temp);
   }, [itemsPerPage, itemsCount]);
 
@@ -210,7 +218,8 @@ const Pagination = ({
           </div>
         );
       })}
-      {isNextPageButtonVisible && (
+      {/* {isNextPageButtonVisible && ( */}
+      {paginationList.indexOf(Math.ceil(itemsCount / itemsPerPage)) === -1 && (
         <>
           <span>...</span>
           <div

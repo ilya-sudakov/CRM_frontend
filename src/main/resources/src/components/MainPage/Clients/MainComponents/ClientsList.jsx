@@ -29,10 +29,6 @@ const ClientsList = ({
 }) => {
   const userContext = useContext(UserContext);
 
-  useEffect(() => {
-    console.log(clients);
-  }, [clients]);
-
   return (
     <div className="main-window__list main-window__list--full">
       <div className="main-window__list-item main-window__list-item--header">
