@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import PrivateRoute from "../../PrivateRoute/PrivateRoute.jsx";
 import { Route, Switch, Link } from "react-router-dom";
-import plusImg from "../../../../../../../assets/sidemenu/plus.png";
+import PlusImg from "../../../../../../../assets/sidemenu/plus.inline.svg";
 import "./LEMZ.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
 import PageNotFound from "../PageNotFound/PageNotFound.jsx";
@@ -17,7 +17,6 @@ import {
   EditWorkshopOrderLEMZ,
   NewRequest,
   EditRequest,
-  // ViewRequest,
   ShipRequest,
 } from "../lazyImports.jsx";
 
@@ -41,7 +40,7 @@ const LEMZ = (props) => {
                 to="/lemz/workshop-lemz/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
             <Link
@@ -58,7 +57,7 @@ const LEMZ = (props) => {
                 to="/lemz/workshop-storage/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
             <Link
@@ -75,7 +74,7 @@ const LEMZ = (props) => {
                 to="/lemz/workshop-orders/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
           </div>
