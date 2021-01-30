@@ -9,8 +9,12 @@ const usePagination = (
   type = "dynamic"
 ) => {
   const { query } = useQuery();
-  const [curPage, setCurPage] = useState(query.get("page") ?? 1);
-  const [itemsPerPage, setItemsPerPage] = useState(query.get("size") ?? 20);
+  const [curPage, setCurPage] = useState(
+    Number.parseInt(query.get("page") ?? 1)
+  );
+  const [itemsPerPage, setItemsPerPage] = useState(
+    Number.parseInt(query.get("size") ?? 20)
+  );
   const [itemsCount, setItemsCount] = useState(0);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
