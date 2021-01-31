@@ -15,10 +15,27 @@ import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import usePagination from "../../../../utils/hooks/usePagination/usePagination.js";
 import { formatDateString } from "../../../../utils/functions.jsx";
+import { sortByField } from "../../../../utils/sorting/sorting";
 
 const Transportation = (props) => {
   const [transportation, setTransportation] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // * SORTING
+
+  const [sortOrder, setSortOrder] = useState({
+    curSort: "date",
+    date: "desc",
+  });
+
+  const changeSortOrder = (event) => {
+    const name = event.target.value.split(" ")[0];
+    const order = event.target.value.split(" ")[1];
+    setSortOrder({
+      curSort: name,
+      [name]: order,
+    });
+  };
 
   const filterSearchQuery = (data) => {
     const query = searchQuery.toLowerCase();
@@ -34,14 +51,9 @@ const Transportation = (props) => {
   };
 
   const sortTransportations = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      return 0;
+    return sortByField(filterSearchQuery(data), {
+      fieldName: sortOrder.curSort,
+      direction: sortOrder[sortOrder.curSort],
     });
   };
 
@@ -63,7 +75,7 @@ const Transportation = (props) => {
 
   const { pagination, data } = usePagination(
     () => handleFilterData(transportation),
-    [transportation, searchQuery],
+    [transportation, searchQuery, sortOrder],
     "static"
   );
   const [isLoading, setIsLoading] = useState(true);
@@ -152,22 +164,6 @@ const Transportation = (props) => {
     deleteTransportation(id).then(() => loadTransportation());
   };
 
-  // * SORTING
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "date",
-    date: "asc",
-  });
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    });
-  };
-
   return (
     <div className="transportation">
       <div className="main-window">
@@ -200,7 +196,8 @@ const Transportation = (props) => {
                 className="main-window__select"
                 onChange={changeSortOrder}
               >
-                <option value="date asc">По дате</option>
+                <option value="date desc">По дате (убыв.)</option>
+                <option value="date asc">По дате (возр.)</option>
               </select>
             </div>
           }

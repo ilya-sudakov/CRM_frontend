@@ -62,7 +62,7 @@ const usePagination = (
       case "static":
         filterStaticData();
         break;
-      case "default":
+      default:
         filterStaticData();
         break;
     }
