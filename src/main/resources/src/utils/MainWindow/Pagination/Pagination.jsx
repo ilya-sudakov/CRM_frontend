@@ -8,6 +8,7 @@ const Pagination = ({
   itemsCount = 0,
   curPage = 1,
   setCurPage,
+  ignoreURL = false,
 }) => {
   const [paginationList, setPaginationList] = useState([1]);
   const history = useHistory();
@@ -41,6 +42,7 @@ const Pagination = ({
   }, [itemsPerPage, itemsCount]);
 
   const handlePushNewURL = (name, value) => {
+    if (ignoreURL) return;
     const oldQuery = history.location.search;
     let query = new URLSearchParams(oldQuery);
     query.set(name, value);
@@ -247,6 +249,7 @@ Pagination.propTypes = {
   curPage: PropTypes.number,
   setCurPage: PropTypes.func,
   itemsCount: PropTypes.number,
+  ignoreURL: PropTypes.bool,
 };
 
 const ItemsPerPage = ({ itemsPerPage, setItemsPerPage, history }) => {
