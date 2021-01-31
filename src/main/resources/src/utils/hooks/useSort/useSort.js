@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import useQuery from "../useQuery.js";
 
 const useSort = (
-  props = {} //default values
+  props = {}, //default values
+  changableParams = []
 ) => {
   const [sortOrder, setSortOrder] = useState(
     props.sortOrder ?? {
