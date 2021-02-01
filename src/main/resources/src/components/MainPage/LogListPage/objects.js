@@ -4,3 +4,11 @@ export const logItemsTypes = {
     originalName: "request",
   },
 };
+
+export const logItemsCategories = {
+  request: {
+    name: "Заявки",
+    originalName: "request",
+    linkToView: "/requests/edit",
+  },
+};
