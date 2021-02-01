@@ -3,24 +3,17 @@ import "./LogListPage.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
 import TableView from "./TableView/TableView.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { changeSortOrder } from "../../../utils/functions.jsx";
 import { logItemsTypes } from "./objects.js";
 import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
 import usePagination from "../../../utils/hooks/usePagination/usePagination";
+import useSort from "../../../utils/hooks/useSort/useSort";
 
 const LogListPage = () => {
   const [curCategory, setCurCategory] = useState("request");
-  const {
-    curPage,
-    itemsPerPage,
-    sortOrder,
-    setSortOrder,
-    data,
-    isLoading,
-    pagination,
-  } = usePagination(
+  const { sortOrder, sortPanel } = useSort(data, {}, [data]);
+  const { curPage, itemsPerPage, data, isLoading, pagination } = usePagination(
     () => getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder),
-    [curCategory],
+    [curCategory, sortOrder],
     "dynamic"
   );
 
@@ -44,16 +37,7 @@ const LogListPage = () => {
             ))}
           </div>
         </div>
-        <ControlPanel
-          sorting={
-            <div className="main-window__sort-panel">
-              <select onChange={(evt) => setSortOrder(changeSortOrder(evt))}>
-                <option value="date desc">По дате (убыв.)</option>
-                <option value="date asc">По дате (возр.)</option>
-              </select>
-            </div>
-          }
-        />
+        <ControlPanel sorting={sortPanel} />
         <TableView data={data} isLoading={isLoading} />
         {pagination}
       </div>

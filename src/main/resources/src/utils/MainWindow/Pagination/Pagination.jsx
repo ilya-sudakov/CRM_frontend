@@ -199,9 +199,10 @@ const Pagination = ({
           >
             1
           </div>
-          <span>...</span>
+          {paginationList.indexOf(2) !== -1 ? null : <span>...</span>}
         </>
       )}
+      {console.log(paginationList, paginationList.indexOf(1))}
       {paginationList.map((item) => {
         return (
           <div
@@ -219,7 +220,6 @@ const Pagination = ({
           </div>
         );
       })}
-      {/* {isNextPageButtonVisible && ( */}
       {paginationList.indexOf(lastPage) === -1 && (
         <>
           <span>...</span>
