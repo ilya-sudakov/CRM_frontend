@@ -9,6 +9,13 @@ jest.mock("react-router-dom", () => ({
     state: null,
     key: "5nvxpbdafa",
   }),
+  useHistory: jest.fn().mockReturnValue({
+    pathname: "/another-route",
+    search: "",
+    hash: "",
+    state: null,
+    key: "5nvxpbdafa",
+  }),
 }));
 
 describe("usePagination", () => {
