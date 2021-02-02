@@ -16,6 +16,7 @@ const RequestsList = ({
     "static",
     {
       size: 10,
+      ignoreURL: true,
     }
   );
   return (

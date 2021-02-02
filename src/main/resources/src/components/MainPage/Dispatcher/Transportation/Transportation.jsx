@@ -15,10 +15,14 @@ import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import usePagination from "../../../../utils/hooks/usePagination/usePagination.js";
 import { formatDateString } from "../../../../utils/functions.jsx";
+import useSort from "../../../../utils/hooks/useSort/useSort.js";
 
 const Transportation = (props) => {
   const [transportation, setTransportation] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const { sortPanel, sortedData, sortOrder } = useSort(transportation, {}, [
+    transportation,
+  ]);
 
   const filterSearchQuery = (data) => {
     const query = searchQuery.toLowerCase();
@@ -33,20 +37,8 @@ const Transportation = (props) => {
     );
   };
 
-  const sortTransportations = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      return 0;
-    });
-  };
-
   const handleFilterData = (data) => {
-    return sortTransportations(data).filter((item) => {
+    return filterSearchQuery(data).filter((item) => {
       let senderCheck = false;
       let recipientCheck = false;
       workshops.map((workshop) => {
@@ -62,8 +54,8 @@ const Transportation = (props) => {
   };
 
   const { pagination, data } = usePagination(
-    () => handleFilterData(transportation),
-    [transportation, searchQuery],
+    () => handleFilterData(sortedData),
+    [searchQuery, sortOrder, sortedData],
     "static"
   );
   const [isLoading, setIsLoading] = useState(true);
@@ -152,22 +144,6 @@ const Transportation = (props) => {
     deleteTransportation(id).then(() => loadTransportation());
   };
 
-  // * SORTING
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "date",
-    date: "asc",
-  });
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    });
-  };
-
   return (
     <div className="transportation">
       <div className="main-window">
@@ -194,16 +170,7 @@ const Transportation = (props) => {
               onClick={printTransportationList}
             />
           }
-          sorting={
-            <div className="main-window__sort-panel">
-              <select
-                className="main-window__select"
-                onChange={changeSortOrder}
-              >
-                <option value="date asc">По дате</option>
-              </select>
-            </div>
-          }
+          sorting={sortPanel}
           itemsCount={`Всего: ${transportation.length} записей`}
           content={
             <div className="main-window__info-panel">

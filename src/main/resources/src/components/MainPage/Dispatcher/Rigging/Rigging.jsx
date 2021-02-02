@@ -1,16 +1,16 @@
-import React, { useEffect, useState, Suspense } from 'react'
-import { Stamp, Parts, Machine, PressForm } from '../../lazyImports.jsx'
-import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx'
-import { Route, Switch, Link } from 'react-router-dom'
-import plusImg from '../../../../../../../../assets/sidemenu/plus.png'
-import './Rigging.scss'
-import '../../../../utils/MainWindow/MainWindow.scss'
-import PageNotFound from '../../PageNotFound/PageNotFound.jsx'
-import PageLoading from '../../PageLoading/PageLoading.jsx'
-import NewRig from './RiggingComponents/Forms/NewRig/NewRig.jsx'
-import ViewRig from './RiggingComponents/Forms/ViewRig/ViewRig.jsx'
-import EditRig from './RiggingComponents/Forms/EditRig/EditRig.jsx'
-import EditPartInRigging from './RiggingComponents/Forms/EditPartInRigging/EditPartInRigging.jsx'
+import React, { useEffect, useState, Suspense } from "react";
+import { Stamp, Parts, Machine, PressForm } from "../../lazyImports.jsx";
+import PrivateRoute from "../../../PrivateRoute/PrivateRoute.jsx";
+import { Route, Switch, Link } from "react-router-dom";
+import PlusImg from "../../../../../../../../assets/sidemenu/plus.inline.svg";
+import "./Rigging.scss";
+import "../../../../utils/MainWindow/MainWindow.scss";
+import PageNotFound from "../../PageNotFound/PageNotFound.jsx";
+import PageLoading from "../../PageLoading/PageLoading.jsx";
+import NewRig from "./RiggingComponents/Forms/NewRig/NewRig.jsx";
+import ViewRig from "./RiggingComponents/Forms/ViewRig/ViewRig.jsx";
+import EditRig from "./RiggingComponents/Forms/EditRig/EditRig.jsx";
+import EditPartInRigging from "./RiggingComponents/Forms/EditPartInRigging/EditPartInRigging.jsx";
 
 const Rigging = (props) => {
   const [cachedItems, setCachedItems] = useState({
@@ -18,22 +18,22 @@ const Rigging = (props) => {
     press: {},
     machine: {},
     parts: {},
-  })
+  });
 
   useEffect(() => {
     // console.log('cached: ', cachedItems)
-  }, [cachedItems])
+  }, [cachedItems]);
 
   return (
     <div className="rigging">
       <div className="main-window">
         <div
           className={
-            props.history.location.pathname.includes('new') ||
-            props.history.location.pathname.includes('edit') ||
-            props.history.location.pathname.includes('view')
-              ? 'main-window__header main-window__header--hidden'
-              : 'main-window__header main-window__header--full'
+            props.history.location.pathname.includes("new") ||
+            props.history.location.pathname.includes("edit") ||
+            props.history.location.pathname.includes("view")
+              ? "main-window__header main-window__header--hidden"
+              : "main-window__header main-window__header--full"
           }
         >
           <div className="main-window__title">Оснастка</div>
@@ -41,9 +41,9 @@ const Rigging = (props) => {
             <Link
               to="/dispatcher/rigging/stamp"
               className={
-                props.location.pathname.includes('stamp') === true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                props.location.pathname.includes("stamp") === true
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
             >
               Штамп
@@ -51,15 +51,15 @@ const Rigging = (props) => {
                 to="/dispatcher/rigging/stamp/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
             <Link
               to="/dispatcher/rigging/machine"
               className={
-                props.location.pathname.includes('machine') === true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                props.location.pathname.includes("machine") === true
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
             >
               Станок
@@ -67,15 +67,15 @@ const Rigging = (props) => {
                 to="/dispatcher/rigging/machine/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
             <Link
               to="/dispatcher/rigging/press-form"
               className={
-                props.location.pathname.includes('press-form') === true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                props.location.pathname.includes("press-form") === true
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
             >
               Пресс-форма
@@ -83,15 +83,15 @@ const Rigging = (props) => {
                 to="/dispatcher/rigging/press-form/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
             <Link
               to="/dispatcher/rigging/parts"
               className={
-                props.location.pathname.includes('parts') === true
-                  ? 'main-window__item--active main-window__item'
-                  : 'main-window__item'
+                props.location.pathname.includes("parts") === true
+                  ? "main-window__item--active main-window__item"
+                  : "main-window__item"
               }
             >
               Запчасти
@@ -99,7 +99,7 @@ const Rigging = (props) => {
                 to="/dispatcher/rigging/parts/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
           </div>
@@ -111,17 +111,17 @@ const Rigging = (props) => {
                 exact
                 path="/dispatcher/rigging/stamp"
                 component={Stamp}
-                cachedItems={cachedItems['stamp']}
+                cachedItems={cachedItems["stamp"]}
                 setCachedItems={(items) => {
                   setCachedItems((cachedItems) => {
-                    return { ...cachedItems, stamp: { ...items } }
-                  })
+                    return { ...cachedItems, stamp: { ...items } };
+                  });
                 }}
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -129,9 +129,9 @@ const Rigging = (props) => {
                 path="/dispatcher/rigging/stamp/new"
                 component={NewRig}
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
                 ]}
                 type="stamp"
               />
@@ -141,10 +141,10 @@ const Rigging = (props) => {
                 component={ViewRig}
                 type="stamp"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -153,27 +153,27 @@ const Rigging = (props) => {
                 component={EditRig}
                 type="stamp"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/machine"
                 component={Machine}
-                cachedItems={cachedItems['machine']}
+                cachedItems={cachedItems["machine"]}
                 setCachedItems={(items) => {
                   setCachedItems((cachedItems) => {
-                    return { ...cachedItems, machine: { ...items } }
-                  })
+                    return { ...cachedItems, machine: { ...items } };
+                  });
                 }}
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -183,9 +183,9 @@ const Rigging = (props) => {
                 component={NewRig}
                 type="machine"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
                 ]}
               />
               <PrivateRoute
@@ -194,10 +194,10 @@ const Rigging = (props) => {
                 component={ViewRig}
                 type="machine"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -206,27 +206,27 @@ const Rigging = (props) => {
                 component={EditRig}
                 type="machine"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/press-form"
                 component={PressForm}
-                cachedItems={cachedItems['press']}
+                cachedItems={cachedItems["press"]}
                 setCachedItems={(items) => {
                   setCachedItems((cachedItems) => {
-                    return { ...cachedItems, press: { ...items } }
-                  })
+                    return { ...cachedItems, press: { ...items } };
+                  });
                 }}
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -236,9 +236,9 @@ const Rigging = (props) => {
                 component={NewRig}
                 type="pressForm"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
                 ]}
               />
               <PrivateRoute
@@ -247,10 +247,10 @@ const Rigging = (props) => {
                 component={ViewRig}
                 type="pressForm"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -259,27 +259,27 @@ const Rigging = (props) => {
                 component={EditRig}
                 type="pressForm"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/parts"
                 component={Parts}
-                cachedItems={cachedItems['parts']}
+                cachedItems={cachedItems["parts"]}
                 setCachedItems={(items) => {
                   setCachedItems((cachedItems) => {
-                    return { ...cachedItems, parts: { ...items } }
-                  })
+                    return { ...cachedItems, parts: { ...items } };
+                  });
                 }}
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -289,10 +289,10 @@ const Rigging = (props) => {
                 component={NewRig}
                 type="parts"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -301,10 +301,10 @@ const Rigging = (props) => {
                 component={EditRig}
                 type="parts"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_WORKSHOP',
-                  'ROLE_ENGINEER',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_WORKSHOP",
+                  "ROLE_ENGINEER",
                 ]}
               />
               <PrivateRoute
@@ -313,26 +313,26 @@ const Rigging = (props) => {
                 component={ViewRig}
                 type="parts"
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
-                  'ROLE_WORKSHOP',
-                  'ROLE_WORKSHOP',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_WORKSHOP",
+                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
                 path={`/dispatcher/rigging/${
-                  (props.location.pathname.includes('stamp') && 'stamp') ||
-                  (props.location.pathname.includes('machine') && 'machine') ||
-                  (props.location.pathname.includes('press-form') &&
-                    'press-form') ||
-                  (props.location.pathname.includes('parts') && 'parts')
+                  (props.location.pathname.includes("stamp") && "stamp") ||
+                  (props.location.pathname.includes("machine") && "machine") ||
+                  (props.location.pathname.includes("press-form") &&
+                    "press-form") ||
+                  (props.location.pathname.includes("parts") && "parts")
                 }/edit-part/`}
                 component={EditPartInRigging}
                 allowedRoles={[
-                  'ROLE_ADMIN',
-                  'ROLE_DISPATCHER',
-                  'ROLE_ENGINEER',
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
                 ]}
               />
               <Route component={PageNotFound} />
@@ -341,7 +341,7 @@ const Rigging = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Rigging
+export default Rigging;

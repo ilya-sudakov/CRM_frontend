@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import './EditRecordWork.scss'
-import '../../../../../utils/Form/Form.scss'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx'
-import SelectWork from '../SelectWork/SelectWork.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
+import React, { useState, useEffect } from "react";
+import "./EditRecordWork.scss";
+import "../../../../../utils/Form/Form.scss";
+import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import SelectEmployee from "../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
+import SelectWork from "../SelectWork/SelectWork.jsx";
+import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
 import {
   getRecordedWorkById,
   editRecordedWork,
@@ -14,10 +14,11 @@ import {
   addRecordedWork,
   deleteDraftFromRecordedWork,
   addDraftToRecordedWork,
-} from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
-import useProductsList from '../../../../../utils/hooks/useProductsList/useProductsList.js'
-import { useHistory } from 'react-router-dom'
+  deleteRecordedWork,
+} from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import useProductsList from "../../../../../utils/hooks/useProductsList/useProductsList.js";
+import { useHistory } from "react-router-dom";
 
 const EditRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -25,77 +26,77 @@ const EditRecordWork = (props) => {
     employee: null,
     works: [],
     originalWorks: [],
-  })
+  });
   const [workTimeErrors, setWorkTimeErrors] = useState({
     date: false,
     employee: false,
     works: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     date: true,
     employee: true,
     works: true,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const { products, categories, isLoadingProducts } = useProductsList()
-  const [totalHours, setTotalHours] = useState(0)
-  const [itemId, setItemId] = useState(0)
-  const history = useHistory()
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { products, categories, isLoadingProducts } = useProductsList();
+  const [totalHours, setTotalHours] = useState(0);
+  const [itemId, setItemId] = useState(0);
+  const history = useHistory();
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case 'date':
+      case "date":
         setValidInputs({
           ...validInputs,
           date: value !== null,
-        })
-        break
-      case 'works':
+        });
+        break;
+      case "works":
         setValidInputs({
           ...validInputs,
           works: value !== null,
-        })
-        break
+        });
+        break;
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       date: false,
       employee: false,
       works: false,
-    })
+    });
     for (let item in validInputs) {
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setWorkTimeErrors(newErrors)
+    setWorkTimeErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
-      setShowError(true)
-      return false
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
   const handleSubmit = (event) => {
     // event.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     // console.log(worktimeInputs);
     const editedInputs = worktimeInputs.works.map((item, index) => {
       // console.log('works');
@@ -107,19 +108,30 @@ const EditRecordWork = (props) => {
         comment: item.comment,
         workListId: item.workId,
         hours: item.hours,
-      })
-      console.log(temp)
+      });
+      console.log(temp);
       if (formIsValid()) {
         if (index === 0) {
+          if (temp.hours === 0)
+            return deleteRecordedWork(itemId)
+              .then(() => {
+                history.push("/work-management");
+              })
+              .catch((error) => {
+                alert("Ошибка при добавлении записи");
+                setIsLoading(false);
+                // setShowError(true);
+                console.log(error);
+              });
           return editRecordedWork(temp, itemId)
             .then(() => {
               // console.log(res);
               const oldProductsArr = worktimeInputs.originalWorks[0].product.map(
                 (product) => {
-                  console.log(product.id)
-                  deleteProductFromRecordedWork(itemId, product.id)
-                },
-              )
+                  console.log(product.id);
+                  deleteProductFromRecordedWork(itemId, product.id);
+                }
+              );
               return Promise.all(oldProductsArr).then(() => {
                 const productsArr = item.product.map((product) => {
                   addProductToRecordedWork(
@@ -128,19 +140,19 @@ const EditRecordWork = (props) => {
                     product.quantity,
                     {
                       name: product.name,
-                    },
-                  )
-                })
-                Promise.all(productsArr)
-              })
+                    }
+                  );
+                });
+                Promise.all(productsArr);
+              });
             })
             .then(() => {
               // console.log(res);
               const oldProductsArr = worktimeInputs.originalWorks[0].draft.map(
                 (draft) => {
-                  deleteDraftFromRecordedWork(itemId, draft.partId, draft.type)
-                },
-              )
+                  deleteDraftFromRecordedWork(itemId, draft.partId, draft.type);
+                }
+              );
               Promise.all(oldProductsArr).then(() => {
                 return Promise.all(
                   item.draft.map((draft) => {
@@ -149,21 +161,21 @@ const EditRecordWork = (props) => {
                       draft.partId,
                       draft.type,
                       draft.quantity,
-                      draft.name,
-                    )
-                  }),
-                )
-              })
+                      draft.name
+                    );
+                  })
+                );
+              });
             })
             .then(() => {
-              history.push('/work-management')
+              history.push("/work-management");
             })
             .catch((error) => {
-              alert('Ошибка при добавлении записи')
-              setIsLoading(false)
+              alert("Ошибка при добавлении записи");
+              setIsLoading(false);
               // setShowError(true);
-              console.log(error)
-            })
+              console.log(error);
+            });
         } else {
           return addRecordedWork(temp)
             .then((res) => res.json())
@@ -171,8 +183,8 @@ const EditRecordWork = (props) => {
               const productsArr = item.product.map((product) => {
                 addProductToRecordedWork(res.id, product.id, product.quantity, {
                   name: product.name,
-                })
-              })
+                });
+              });
               Promise.all(productsArr)
                 .then(() => {
                   const productsArr = item.draft.map((draft) => {
@@ -180,66 +192,68 @@ const EditRecordWork = (props) => {
                       itemId,
                       draft.partId,
                       draft.type,
-                      draft.quantity,
-                    )
-                  })
+                      draft.quantity
+                    );
+                  });
                 })
                 .then(() => {
-                  history.push('/')
-                })
+                  history.push("/");
+                });
             })
             .catch((error) => {
-              alert('Ошибка при добавлении записи')
-              setIsLoading(false)
+              alert("Ошибка при добавлении записи");
+              setIsLoading(false);
               // setShowError(true);
-              console.log(error)
-            })
+              console.log(error);
+            });
         }
       }
-      Promise.all(editedInputs).then(() => {})
-    })
-  }
+      Promise.all(editedInputs).then(() => {});
+    });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setWorkTimeInputs({
       ...worktimeInputs,
       [name]: value,
-    })
+    });
     setWorkTimeErrors({
       ...workTimeErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   const isNewDate = (date) => {
-    return Math.abs(dateDiffInDays(date, new Date())) <= 3 && date <= new Date()
-  }
+    return (
+      Math.abs(dateDiffInDays(date, new Date())) <= 3 && date <= new Date()
+    );
+  };
 
   useEffect(() => {
-    document.title = 'Редактирование заявки'
-    const abortController = new AbortController()
+    document.title = "Редактирование заявки";
+    const abortController = new AbortController();
     const id = history.location.pathname.split(
-      '/work-management/record-time/edit/',
-    )[1]
+      "/work-management/record-time/edit/"
+    )[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс работы!')
-      history.push('/')
+      alert("Неправильный индекс работы!");
+      history.push("/");
     } else {
-      setItemId(id)
+      setItemId(id);
       getRecordedWorkById(id)
         .then((res) => res.json())
         .then((res) => {
-          console.log(res)
+          console.log(res);
           setWorkTimeInputs({
             date: new Date(res.year, res.month - 1, res.day),
             employeeId: res.employee.id,
             employeeName:
               res.employee.lastName +
-              ' ' +
+              " " +
               res.employee.name +
-              ' ' +
+              " " +
               res.employee.middleName,
             works: [
               {
@@ -254,7 +268,7 @@ const EditRecordWork = (props) => {
                       id: item.product.id,
                       name: item.product.name,
                       quantity: item.quantity,
-                    }),
+                    })
                   ),
                 ],
                 draft: [
@@ -265,7 +279,7 @@ const EditRecordWork = (props) => {
                       name: item.name,
                       type: item.partType,
                       quantity: item.quantity,
-                    }),
+                    })
                   ),
                 ],
               },
@@ -282,7 +296,7 @@ const EditRecordWork = (props) => {
                       id: item.product.id,
                       name: item.product.name,
                       quantity: item.quantity,
-                    }),
+                    })
                   ),
                 ],
                 draft: [
@@ -293,18 +307,23 @@ const EditRecordWork = (props) => {
                       name: item.name,
                       type: item.partType,
                       quantity: item.quantity,
-                    }),
+                    })
                   ),
                 ],
               },
             ],
-          })
+          });
         })
+        .catch((error) => {
+          console.log(error);
+          alert("Ошибка при загрузке работы!");
+          history.push("/");
+        });
     }
     return function cancel() {
-      abortController.abort()
-    }
-  }, [])
+      abortController.abort();
+    };
+  }, []);
 
   return (
     <div className="main-form">
@@ -325,15 +344,15 @@ const EditRecordWork = (props) => {
           selected={worktimeInputs.date}
           // filterDate={isNewDate}
           handleDateChange={(date) => {
-            validateField('date', date)
+            validateField("date", date);
             setWorkTimeInputs({
               ...worktimeInputs,
               date: date,
-            })
+            });
             setWorkTimeErrors({
               ...workTimeErrors,
               date: false,
-            })
+            });
           }}
           errorsArr={workTimeErrors}
           setErrorsArr={setWorkTimeErrors}
@@ -348,15 +367,15 @@ const EditRecordWork = (props) => {
           windowName="select-employee"
           name="employee"
           handleEmployeeChange={(value) => {
-            validateField('employee', value)
+            validateField("employee", value);
             setWorkTimeInputs({
               ...worktimeInputs,
               employeeId: value,
-            })
+            });
             setWorkTimeErrors({
               ...workTimeErrors,
               employee: false,
-            })
+            });
           }}
           errorsArr={workTimeErrors}
           setErrorsArr={setWorkTimeErrors}
@@ -368,15 +387,15 @@ const EditRecordWork = (props) => {
           <div className="main-form__input_field">
             <SelectWork
               handleWorkChange={(value) => {
-                validateField('works', value)
+                validateField("works", value);
                 setWorkTimeInputs({
                   ...worktimeInputs,
                   works: value,
-                })
+                });
                 setWorkTimeErrors({
                   ...workTimeErrors,
                   works: false,
-                })
+                });
               }}
               userHasAccess={props.userHasAccess}
               totalHours={totalHours}
@@ -395,7 +414,7 @@ const EditRecordWork = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => history.push('/work-management')}
+            onClick={() => history.push("/work-management")}
             value="Вернуться назад"
           />
           <Button
@@ -407,7 +426,7 @@ const EditRecordWork = (props) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditRecordWork
+export default EditRecordWork;

@@ -208,24 +208,23 @@
   }
 
   .main-window__addButton {
-    background-color: $button__background--inverted;
-    color: $secondary-text-color;
     width: 20px;
     max-height: 20px;
     margin-left: 10px;
-    padding: 3px 3px;
-    border-radius: 5px;
+    padding: 0px 3px;
     display: flex;
     align-items: center;
-    transition: 0.2s ease-in-out;
+    transition: 100ms ease-in-out;
+
+    path:first-child {
+      fill: #999999;
+    }
 
     &:hover {
-      background-color: lighten($button__background--inverted, 5%);
+      path:first-child {
+        fill: #008a89;
+      }
     }
-  }
-  .main-window__addButton--text {
-    width: fit-content;
-    padding: 5px 10px;
   }
 
   .main-window__header .main-window__title {

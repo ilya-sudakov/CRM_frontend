@@ -110,10 +110,12 @@ const NewPriceList = (props) => {
     let firstSheet = wb.Sheets[firstSheetName];
     var excelRows = XLSX.utils.sheet_to_json(firstSheet);
     // console.log(excelRows);
-    if (excelRows.length === 0)
+    if (excelRows.length === 0) {
       return alert("Файл пустой либо заполнен некорректно!");
+    }
     setDisclaimer(excelRows[excelRows.length - 1].id);
     const titlePage1 = Object.assign({
+      // ...titlePage,
       to: excelRows[0].titlePage,
       date: excelRows[1].titlePage,
       slogan: excelRows[2].titlePage,
@@ -123,35 +125,11 @@ const NewPriceList = (props) => {
     setTitlePage(titlePage1);
     let newData = [];
     let tempNumber = "000";
+    let groupData = null;
     let startId = 0,
       endId = 0;
     for (let index = 3; index < excelRows.length; index++) {
       let item = excelRows[index];
-      const groupData = {
-        id: item.id,
-        groupImg1: "",
-        groupImg2: "",
-        groupImg3: "",
-        groupImg4: "",
-        footerImg: "",
-        number: item.number,
-        category: item.category,
-        name: item.groupName,
-        description: item.description,
-        infoText: item.infoText,
-        linkAddress: item.linkAddress,
-        locationType: item.locationType,
-        priceHeader: item.priceHeader,
-        retailName: item.retailName,
-        firstPriceName: item.firstPriceName,
-        secondPriceName: item.secondPriceName,
-        dealerName: item.dealerName,
-        distributorName: item.distributorName,
-        partnerName: item.partnerName,
-        active: true,
-        proprietaryItemText1: item.proprietaryItemText1,
-        proprietaryItemText2: item.proprietaryItemText2,
-      };
       if (item.id === 1) {
         startId = index;
         endId = index;
@@ -163,6 +141,31 @@ const NewPriceList = (props) => {
             active: true,
           });
         }
+        groupData = Object.assign({
+          id: item.id,
+          groupImg1: "",
+          groupImg2: "",
+          groupImg3: "",
+          groupImg4: "",
+          footerImg: "",
+          number: item.number,
+          category: item.category,
+          name: item.groupName,
+          description: item.description,
+          infoText: item.infoText,
+          linkAddress: item.linkAddress,
+          locationType: item.locationType,
+          priceHeader: item.priceHeader,
+          retailName: item.retailName,
+          firstPriceName: item.firstPriceName,
+          secondPriceName: item.secondPriceName,
+          dealerName: item.dealerName,
+          distributorName: item.distributorName,
+          partnerName: item.partnerName,
+          active: true,
+          proprietaryItemText1: item.proprietaryItemText1,
+          proprietaryItemText2: item.proprietaryItemText2,
+        });
         tempNumber = item.number.substring(0, 3);
       } else {
         let products = [];
@@ -222,6 +225,31 @@ const NewPriceList = (props) => {
             newData.push({
               ...groupData,
               products,
+            });
+            groupData = Object.assign({
+              id: item.id,
+              groupImg1: "",
+              groupImg2: "",
+              groupImg3: "",
+              groupImg4: "",
+              footerImg: "",
+              number: item.number,
+              category: item.category,
+              name: item.groupName,
+              description: item.description,
+              infoText: item.infoText,
+              linkAddress: item.linkAddress,
+              locationType: item.locationType,
+              priceHeader: item.priceHeader,
+              retailName: item.retailName,
+              firstPriceName: item.firstPriceName,
+              secondPriceName: item.secondPriceName,
+              dealerName: item.dealerName,
+              distributorName: item.distributorName,
+              partnerName: item.partnerName,
+              active: true,
+              proprietaryItemText1: item.proprietaryItemText1,
+              proprietaryItemText2: item.proprietaryItemText2,
             });
             startId = index;
             endId = index;

@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import PrivateRoute from "../../PrivateRoute/PrivateRoute.jsx";
 import { Route, Switch, Link } from "react-router-dom";
-import plusImg from "../../../../../../../assets/sidemenu/plus.png";
+import PlusImg from "../../../../../../../assets/sidemenu/plus.inline.svg";
 import "./Lepsari.scss";
 import "../../../utils/MainWindow/MainWindow.scss";
 import PageNotFound from "../PageNotFound/PageNotFound.jsx";
@@ -42,7 +42,7 @@ const Lepsari = (props) => {
                 to="/lepsari/workshop-lepsari/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
             <Link
@@ -60,7 +60,7 @@ const Lepsari = (props) => {
                 to="/lepsari/workshop-storage/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
             <Link
@@ -77,7 +77,7 @@ const Lepsari = (props) => {
                 to="/lepsari/workshop-orders/new"
                 className="main-window__addButton"
               >
-                <img className="main-window__img" src={plusImg} alt="" />
+                <PlusImg className="main-window__img" alt="" />
               </Link>
             </Link>
           </div>

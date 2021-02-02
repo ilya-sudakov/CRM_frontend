@@ -7,7 +7,10 @@ const usePagination = (
   loadFunction,
   changableParams = [],
   type = "static",
-  props = {} //default values
+  //default values
+  props = {
+    ignoreURL: false,
+  }
 ) => {
   const { query } = useQuery();
   const [curPage, setCurPage] = useState(
@@ -46,9 +49,12 @@ const usePagination = (
     const filterStaticData = async () => {
       let filteredData = loadFunction();
       setItemsCount(filteredData.length);
-      if (filteredData.length === 0) {
+      if (filteredData.length === 0 || filteredData.length <= itemsPerPage) {
         setCurPage(1);
-      } else setCurPage(Number.parseInt(query.get("page") ?? 1));
+      } else
+        setCurPage(
+          Number.parseInt(props.ignoreURL ? curPage : query.get("page") ?? 1)
+        );
       const firstIndex = (curPage - 1) * itemsPerPage + 1;
       const lastIndex = curPage * itemsPerPage;
       setData(filteredData.slice(firstIndex - 1, lastIndex - 1));
@@ -62,7 +68,7 @@ const usePagination = (
       case "static":
         filterStaticData();
         break;
-      case "default":
+      default:
         filterStaticData();
         break;
     }
@@ -75,6 +81,7 @@ const usePagination = (
       curPage={curPage}
       setCurPage={setCurPage}
       itemsCount={itemsCount}
+      ignoreURL={props.ignoreURL}
     />
   );
 
