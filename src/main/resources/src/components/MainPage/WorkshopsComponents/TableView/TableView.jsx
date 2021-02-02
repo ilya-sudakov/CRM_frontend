@@ -79,10 +79,10 @@ const TableView = ({
   const [requests, setRequests] = useState([]);
   const userContext = useContext(UserContext);
 
-  const handleStatusChange = ({ target }) => {
-    const status = target.value;
-    const id = target.getAttribute("id");
-    const sum = Number.parseFloat(target.getAttribute("sum"));
+  const handleStatusChange = (event, request) => {
+    const status = event.target.value;
+    const id = request.id;
+    const sum = Number.parseFloat(request.sum);
 
     //проверяем, указана ли положительная сумма
     if (status === "Завершено") {
@@ -116,7 +116,7 @@ const TableView = ({
             responsible: selectedItem.responsible,
             factory: selectedItem.factory,
             comment: selectedItem.comment,
-            status: selectedItem.status,
+            status: status,
             shippingDate: new Date(),
           },
           id
