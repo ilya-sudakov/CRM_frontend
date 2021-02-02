@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import useQuery from "../useQuery.js";
 import { sortByField } from "../../sorting/sorting.js";
 
@@ -11,8 +10,7 @@ const useSort = (
   }, //default values
   changableParams = []
 ) => {
-  const { query } = useQuery();
-  const history = useHistory();
+  const { query, pushParamToURL } = useQuery();
   const [sortedData, setSortedData] = useState(data);
   const sortParamInURL = query.get("sort")
     ? {
@@ -32,20 +30,10 @@ const useSort = (
       : sortParamInURL ?? defaultSort
   );
 
-  const handlePushNewURL = (name, value) => {
-    if (props.ignoreURL) return;
-    const oldQuery = history.location.search;
-    let query = new URLSearchParams(oldQuery);
-    query.set(name, value);
-    history.push({
-      search: `?${query.toString()}`,
-    });
-  };
-
   const changeSortOrder = (event) => {
     const name = event.target.value.split(" ")[0];
     const order = event.target.value.split(" ")[1];
-    handlePushNewURL("sort", `${name},${order}`);
+    pushParamToURL("sort", `${name},${order}`, props.ignoreURL);
     setSortOrder({
       curSort: name,
       [name]: order,

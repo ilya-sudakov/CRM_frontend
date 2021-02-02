@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
+import useQuery from "../../hooks/useQuery";
 
 const Pagination = ({
   itemsPerPage = 20,
@@ -11,7 +11,7 @@ const Pagination = ({
   ignoreURL = false,
 }) => {
   const [paginationList, setPaginationList] = useState([1]);
-  const history = useHistory();
+  const { pushParamToURL } = useQuery();
   const lastPage =
     Math.ceil(itemsCount / itemsPerPage) !== 0
       ? Math.ceil(itemsCount / itemsPerPage)
@@ -41,22 +41,12 @@ const Pagination = ({
     setPaginationList(temp);
   }, [itemsPerPage, itemsCount]);
 
-  const handlePushNewURL = (name, value) => {
-    if (ignoreURL) return;
-    const oldQuery = history.location.search;
-    let query = new URLSearchParams(oldQuery);
-    query.set(name, value);
-    history.push({
-      search: `?${query.toString()}`,
-    });
-  };
-
   const handlePrevPageClick = () => {
     if (curPage <= 1) return;
     const item = curPage - 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
-    handlePushNewURL("page", item);
+    pushParamToURL("page", item, ignoreURL);
     if (lastPage <= 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
       let temp = [];
@@ -87,7 +77,7 @@ const Pagination = ({
 
   const handleInBetweenPageClick = (item) => {
     setCurPage(item);
-    handlePushNewURL("page", item);
+    pushParamToURL("page", item, ignoreURL);
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     if (lastPage <= 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
@@ -122,7 +112,7 @@ const Pagination = ({
   const handleLastPageClick = () => {
     const item = Math.ceil(itemsCount / itemsPerPage);
     setCurPage(item);
-    handlePushNewURL("page", item);
+    pushParamToURL("page", item, ignoreURL);
     if (item <= 5) return;
     let temp = [];
     for (let i = item - 5; i <= item; i++) {
@@ -136,7 +126,7 @@ const Pagination = ({
     if (curPage >= maxPage) return;
     const item = curPage + 1;
     setCurPage(item);
-    handlePushNewURL("page", item);
+    pushParamToURL("page", item, ignoreURL);
     if (maxPage < 5) return;
     if (paginationList.indexOf(item) === 0 && item !== 1) {
       let temp = [];
@@ -169,7 +159,7 @@ const Pagination = ({
     const item = 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
-    handlePushNewURL("page", item);
+    pushParamToURL("page", item, ignoreURL);
     if (lastPage <= 5) return;
     let temp = [];
     for (let i = item; i <= lastPage && i <= 5; i++) {
@@ -183,7 +173,8 @@ const Pagination = ({
       <ItemsPerPage
         itemsPerPage={itemsPerPage}
         setItemsPerPage={setItemsPerPage}
-        history={history}
+        ignoreURL={ignoreURL}
+        pushParamToURL={pushParamToURL}
       />
       <div
         className="main-window__page-number main-window__page-number--skip"
@@ -202,7 +193,6 @@ const Pagination = ({
           {paginationList.indexOf(2) !== -1 ? null : <span>...</span>}
         </>
       )}
-      {console.log(paginationList, paginationList.indexOf(1))}
       {paginationList.map((item) => {
         return (
           <div
@@ -252,23 +242,19 @@ Pagination.propTypes = {
   ignoreURL: PropTypes.bool,
 };
 
-const ItemsPerPage = ({ itemsPerPage, setItemsPerPage, history }) => {
-  const handlePushNewURL = (name, value) => {
-    const oldQuery = history.location.search;
-    let query = new URLSearchParams(oldQuery);
-    query.set(name, value);
-    history.push({
-      search: `?${query.toString()}`,
-    });
-  };
-
+const ItemsPerPage = ({
+  itemsPerPage,
+  setItemsPerPage,
+  ignoreURL,
+  pushParamToURL,
+}) => {
   return (
     <div className="main-window__sort-panel">
       <span>Кол-во элем. на странице: </span>
       <select
         value={itemsPerPage}
         onChange={({ target }) => {
-          handlePushNewURL("size", target.value);
+          pushParamToURL("size", target.value, ignoreURL);
           setItemsPerPage(target.value);
         }}
       >

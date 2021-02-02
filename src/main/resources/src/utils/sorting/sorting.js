@@ -5,6 +5,10 @@ const getFieldValues = (a, b, fieldName, fieldType) => {
       firstValue = new Date(a);
       secondValue = new Date(b);
       break;
+    case "date":
+      firstValue = new Date(a);
+      secondValue = new Date(b);
+      break;
     case "object":
       firstValue = a[fieldName];
       secondValue = b[fieldName];
@@ -21,6 +25,48 @@ const getFieldValues = (a, b, fieldName, fieldType) => {
   return { firstValue, secondValue };
 };
 
+const getFieldType = (sortOptions, value) => {
+  let fieldType = sortOptions.fieldType ?? typeof value;
+  // if date string
+  if (
+    typeof value === "string" &&
+    value.length === 24 &&
+    !isNaN(Date.parse(value)) &&
+    !sortOptions.fieldType
+  ) {
+    fieldType = sortOptions.fieldType ?? "date";
+  }
+  return fieldType;
+};
+
+const sortByValues = (firstValue, secondValue, direction) => {
+  if (firstValue < secondValue) {
+    return direction === "desc" ? 1 : -1;
+  }
+  if (firstValue > secondValue) {
+    return direction === "desc" ? -1 : 1;
+  }
+  return 0;
+};
+
+const sortStrings = (firstValue, secondValue, direction) => {
+  if (
+    firstValue.localeCompare(secondValue, undefined, {
+      numeric: true,
+    }) < 0
+  ) {
+    return direction === "desc" ? -1 : 1;
+  }
+  if (
+    firstValue.localeCompare(secondValue, undefined, {
+      numeric: true,
+    }) > 0
+  ) {
+    return direction === "desc" ? 1 : -1;
+  }
+  return 0;
+};
+
 export const sortByField = (
   data = [],
   sortOptions = {
@@ -31,14 +77,15 @@ export const sortByField = (
   const direction = sortOptions.direction.toLowerCase();
   return data.sort((a, b) => {
     let firstValue, secondValue;
-    const fieldType = sortOptions.fieldType ?? typeof a;
+    let fieldType = getFieldType(sortOptions, a);
     //Если запрашиваем сортировку массива объектов по полю внутри объекта
     if (typeof a === "object" && sortOptions.fieldType !== "object") {
+      fieldType = getFieldType(sortOptions, a[sortOptions.fieldName]);
       const values = getFieldValues(
         a[sortOptions.fieldName],
         b[sortOptions.fieldName],
         sortOptions.fieldName,
-        sortOptions.fieldType
+        fieldType
       );
       firstValue = values.firstValue;
       secondValue = values.secondValue;
@@ -52,26 +99,19 @@ export const sortByField = (
           firstValue = new Date(a);
           secondValue = new Date(b);
           break;
+        case "date":
+          firstValue = new Date(a);
+          secondValue = new Date(b);
+          break;
         default:
           firstValue = a;
           secondValue = b;
           break;
       }
     }
-    if (
-      firstValue.localeCompare(secondValue, undefined, {
-        numeric: true,
-      }) < 0
-    ) {
-      return direction === "desc" ? -1 : 1;
+    if (fieldType === "date") {
+      return sortByValues(firstValue, secondValue, direction);
     }
-    if (
-      firstValue.localeCompare(secondValue, undefined, {
-        numeric: true,
-      }) > 0
-    ) {
-      return direction === "desc" ? 1 : -1;
-    }
-    return 0;
+    return sortStrings(firstValue, secondValue, direction);
   });
 };
