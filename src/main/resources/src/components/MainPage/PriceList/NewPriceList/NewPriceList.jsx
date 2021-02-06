@@ -324,10 +324,11 @@ const NewPriceList = (props) => {
             )}
             {priceList.length > 0 && (
               <Button
-                text="Открыть .pdf (новое)"
+                text="Новый прайс"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
+                isRecent
                 onClick={() => {
                   setIsLoading(true);
                   console.log(priceList);
@@ -345,9 +346,7 @@ const NewPriceList = (props) => {
                         }
                         return 0;
                       }),
-                    locationTypes,
-                    disclaimer,
-                    titlePage
+                    locationTypes
                   ).then(() => {
                     setIsLoading(false);
                   });

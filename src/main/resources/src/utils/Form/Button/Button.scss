@@ -68,6 +68,23 @@
     }
   }
 
+  &--recent {
+    span {
+      position: relative;
+      &::after {
+        display: flex;
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        width: 8px;
+        height: 8px;
+        background-color: $button__background--inverted;
+        content: "";
+        border-radius: 999px;
+      }
+    }
+  }
+
   &__text {
     &--hidden {
       visibility: hidden;
