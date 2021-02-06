@@ -28,6 +28,8 @@ const NewPriceList = (props) => {
   const [categories, setCategories] = useState(defaultCategories);
   const [priceList, setPriceList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectAllCategories, setSelectAllCategories] = useState(true);
+  const [selectAllGroups, setSelectAllGroups] = useState(true);
   const [disclaimer, setDisclaimer] = useState("");
   const [titlePage, setTitlePage] = useState(defaultTitlePage);
 
@@ -399,9 +401,10 @@ const NewPriceList = (props) => {
               <div className="new-price-item__checkbox-container">
                 <CheckBox
                   text="Выделить все категории"
-                  defaultChecked={true}
+                  checked={selectAllCategories}
                   name="header"
                   onChange={(value) => {
+                    setSelectAllCategories(value);
                     let originalList = categories.map((item) => {
                       return {
                         ...item,
@@ -413,9 +416,10 @@ const NewPriceList = (props) => {
                 />
                 <CheckBox
                   text="Выделить все группы товаров"
-                  defaultChecked={true}
+                  checked={selectAllGroups}
                   name="header"
                   onChange={(value) => {
+                    setSelectAllGroups(value);
                     let originalList = priceList.map((item) => {
                       return {
                         ...item,
@@ -461,7 +465,7 @@ const NewPriceList = (props) => {
                     Титульная страница
                   </div>
                   <CheckBox
-                    defaultChecked={true}
+                    checked={titlePage.active}
                     name="titleList"
                     onChange={(value) => {
                       setTitlePage({
