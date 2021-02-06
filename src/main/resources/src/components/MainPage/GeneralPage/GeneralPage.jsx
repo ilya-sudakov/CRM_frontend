@@ -6,6 +6,7 @@ import "../../../utils/MainWindow/MainWindow.scss";
 import DownloadIcon from "../../../../../../../assets/download.svg";
 import GraphIcon from "../../../../../../../assets/statistics/graph-16.inline.svg";
 import StatsIcon from "../../../../../../../assets/statistics/bar-chart-line.inline.svg";
+import HistoryIcon from "../../../../../../../assets/statistics/history-outlined.inline.svg";
 import ReportIcon from "../../../../../../../assets/statistics/report.svg";
 import calenderIcon from "../../../../../../../assets/tableview/calendar.svg";
 import { exportReportTableExcel } from "../../../utils/xlsxFunctions.jsx";
@@ -13,13 +14,13 @@ import Button from "../../../utils/Form/Button/Button.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 
 const GeneralPage = (props) => {
-  const [workshops, setWorkshops] = useState([
+  const workshops = [
     "ЦехЛЭМЗ",
     "ЦехЛепсари",
     "ЦехЛиговский",
     "Офис",
     "Уволенные",
-  ]);
+  ];
   const [isLoading, setIsLoading] = useState(false);
 
   const getFilteredWorkshops = () => {
@@ -114,6 +115,12 @@ const GeneralPage = (props) => {
                 <Link className="main-window__button" to="/statistics">
                   <StatsIcon className="main-window__img" />
                   Статистика
+                </Link>
+              )}
+              {props.userHasAccess(["ROLE_ADMIN"]) && (
+                <Link className="main-window__button" to="/profile/log-list">
+                  <HistoryIcon className="main-window__img" />
+                  Логи
                 </Link>
               )}
               <Button
