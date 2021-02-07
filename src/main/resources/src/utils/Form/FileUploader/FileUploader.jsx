@@ -30,6 +30,7 @@ const FileUploader = ({
   const onDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    // setIsDraggingOver(true);
   };
 
   const handleDropFile = (event) => {
@@ -94,7 +95,7 @@ const FileUploader = ({
     };
   }, []);
 
-  useEffect(() => {}, [previewImage]);
+  useEffect(() => {}, [previewImage, isDraggingOver]);
 
   return (
     <div className="file-uploader">
@@ -116,7 +117,7 @@ const FileUploader = ({
         {data || previewImage ? (
           <ul className="file-uploader__file-list">
             <li>
-              {data.name ?? "Фотография" }
+              {data?.name ?? "Фотография"}
               <div onClick={handleDeleteFile}>удалить</div>
             </li>
           </ul>
@@ -163,4 +164,6 @@ FileUploader.propTypes = {
   regex: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
+  previewImage: PropTypes.string,
+  uniqueId: PropTypes.string,
 };
