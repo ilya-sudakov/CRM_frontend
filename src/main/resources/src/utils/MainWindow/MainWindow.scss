@@ -457,6 +457,31 @@
       color: #ffffff !important;
       // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
     }
+
+    &--recent {
+      position: relative;
+      &::after {
+        display: flex;
+        position: absolute;
+        width: fit-content;
+        height: auto;
+        top: -1px;
+        right: -1px;
+        border-top: 1px solid #cccccc;
+        border-right: 1px solid #cccccc;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 3px;
+        background-color: #ffffff;
+        color: #333333;
+        font-size: 0.6rem;
+        padding: 1px 4px;
+        content: "новое";
+        box-sizing: border-box;
+        transition: all 100ms ease-in-out;
+      }
+    }
   }
 
   &__button--inverted {
@@ -467,6 +492,13 @@
     .main-window__img,
     .button__img {
       filter: brightness(1) !important;
+    }
+
+    &.main-window__button--recent {
+      &::after {
+        color: #eeeeee;
+        background-color: $button__background--inverted;
+      }
     }
 
     &:hover {

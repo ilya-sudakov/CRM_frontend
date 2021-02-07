@@ -125,7 +125,6 @@ exports[`PrivateRoute component matches snapshot 1`] = `
         </div>
         <button
           class="button  main-window__button "
-          title="Войти"
           type="submit"
         >
           <img
