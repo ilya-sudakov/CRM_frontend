@@ -291,8 +291,8 @@ const NewPriceList = (props) => {
               }}
             />
           </div>
-          <div className="main-form__buttons main-form__buttons--full">
-            {priceList.length > 0 && (
+          {priceList.length > 0 && (
+            <div className="main-form__buttons main-form__buttons--full">
               <Button
                 text="Открыть .pdf"
                 isLoading={isLoading}
@@ -323,8 +323,6 @@ const NewPriceList = (props) => {
                   });
                 }}
               />
-            )}
-            {priceList.length > 0 && (
               <Button
                 text="Новый прайс"
                 isLoading={isLoading}
@@ -354,8 +352,6 @@ const NewPriceList = (props) => {
                   });
                 }}
               />
-            )}
-            {priceList.length > 0 && (
               <Button
                 text="Скачать .xlsx"
                 isLoading={isLoading}
@@ -382,8 +378,6 @@ const NewPriceList = (props) => {
                   });
                 }}
               />
-            )}
-            {priceList.length > 0 && (
               <Button
                 text="Сохранить данные"
                 isLoading={isLoading}
@@ -394,8 +388,8 @@ const NewPriceList = (props) => {
                   saveImages();
                 }}
               />
-            )}
-          </div>
+            </div>
+          )}
           {priceList.length > 0 && (
             <div className="main-form__buttons main-form__buttons--full">
               <div className="new-price-item__checkbox-container">

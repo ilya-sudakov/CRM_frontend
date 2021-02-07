@@ -2,6 +2,7 @@
 
 .new-price-item {
   background-color: #fff;
+  height: 100%;
 
   .main-form__title {
     width: 100%;
@@ -103,14 +104,6 @@
         width: 100%;
         min-height: 25px;
       }
-    }
-    & .file-uploader {
-      margin-left: 15px;
-      // margin-right: auto;
-      // justify-content: flex-end;
-    }
-    & .file-uploader {
-      max-width: 250px;
     }
   }
   .main-form__buttons {
