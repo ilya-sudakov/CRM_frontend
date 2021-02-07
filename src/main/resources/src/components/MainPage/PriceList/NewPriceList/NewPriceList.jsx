@@ -330,7 +330,6 @@ const NewPriceList = (props) => {
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
-                isRecent
                 onClick={() => {
                   setIsLoading(true);
                   console.log(priceList);
