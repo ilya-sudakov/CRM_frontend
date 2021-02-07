@@ -490,11 +490,10 @@ const NewPriceList = (props) => {
                         <FileUploader
                           uniqueId={"fileTitlePage" + 1}
                           onChange={async (result) => {
-                            const downgraded = await getDataUri(
-                              result,
-                              "jpeg",
-                              0.3
-                            );
+                            const downgraded =
+                              result !== ""
+                                ? await getDataUri(result, "jpeg", 0.3)
+                                : "";
                             setTitlePage({
                               ...titlePage,
                               img1: downgraded,
@@ -512,11 +511,10 @@ const NewPriceList = (props) => {
                         <FileUploader
                           uniqueId={"fileTitlePage" + 2}
                           onChange={async (result) => {
-                            const downgraded = await getDataUri(
-                              result,
-                              "jpeg",
-                              0.3
-                            );
+                            const downgraded =
+                              result !== ""
+                                ? await getDataUri(result, "jpeg", 0.3)
+                                : "";
                             setTitlePage({
                               ...titlePage,
                               img2: downgraded,
@@ -534,11 +532,10 @@ const NewPriceList = (props) => {
                         <FileUploader
                           uniqueId={"fileTitlePage" + 3}
                           onChange={async (result) => {
-                            const downgraded = await getDataUri(
-                              result,
-                              "jpeg",
-                              0.3
-                            );
+                            const downgraded =
+                              result !== ""
+                                ? await getDataUri(result, "jpeg", 0.3)
+                                : "";
                             setTitlePage({
                               ...titlePage,
                               img3: downgraded,

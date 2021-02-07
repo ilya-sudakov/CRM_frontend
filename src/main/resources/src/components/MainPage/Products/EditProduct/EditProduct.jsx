@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import './EditProduct.scss'
-import '../../../../utils/Form/Form.scss'
+import React, { useEffect, useState } from "react";
+import "./EditProduct.scss";
+import "../../../../utils/Form/Form.scss";
 import {
   getProductById,
   editProduct,
-} from '../../../../utils/RequestsAPI/Products.js'
-import InputText from '../../../../utils/Form/InputText/InputText.jsx'
-import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import SelectCategory from '../SelectCategory/SelectCategory.jsx'
-import { imgToBlobDownload, getDataUri } from '../../../../utils/functions.jsx'
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx'
-import Button from '../../../../utils/Form/Button/Button.jsx'
-import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx'
+} from "../../../../utils/RequestsAPI/Products.js";
+import InputText from "../../../../utils/Form/InputText/InputText.jsx";
+import ErrorMessage from "../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import SelectCategory from "../SelectCategory/SelectCategory.jsx";
+import { imgToBlobDownload, getDataUri } from "../../../../utils/functions.jsx";
+import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
+import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
 import {
   deletePackagingFromProduct,
   addPackagingToProduct,
-} from '../../../../utils/RequestsAPI/Products/packaging.js'
+} from "../../../../utils/RequestsAPI/Products/packaging.js";
 
 const EditProduct = (props) => {
   const [productInputs, setProductInputs] = useState({
-    name: '',
-    item: '',
-    weight: '',
-    description: '',
-    barcode: '',
-    productionLocation: 'ЦехЛЭМЗ',
-    group: '',
+    name: "",
+    item: "",
+    weight: "",
+    description: "",
+    barcode: "",
+    productionLocation: "ЦехЛЭМЗ",
+    group: "",
     unit: 0,
-    vendor: '',
-    photo: '',
-    category: '',
+    vendor: "",
+    photo: "",
+    category: "",
     packages: [],
-    comment: '',
-  })
+    comment: "",
+  });
   const [productErrors, setProductErrors] = useState({
     name: false,
     category: false,
@@ -43,7 +43,7 @@ const EditProduct = (props) => {
     photo: false,
     unit: false,
     weight: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     name: true,
     category: true,
@@ -53,9 +53,9 @@ const EditProduct = (props) => {
     // photo: false,
     unit: true,
     weight: true,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
@@ -63,102 +63,102 @@ const EditProduct = (props) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       name: false,
       category: false,
       packages: false,
       unit: false,
       weight: false,
-    })
+    });
     for (let item in validInputs) {
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setProductErrors(newErrors)
+    setProductErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
       // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
   const handleSubmit = (event) => {
     // event.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     // console.log(productInputs);
-    const id = props.history.location.pathname.split('/products/edit/')[1]
+    const id = props.history.location.pathname.split("/products/edit/")[1];
     formIsValid() &&
       editProduct(productInputs, id)
         .then(() => {
-          return deletePackagingFromProduct(id)
+          return deletePackagingFromProduct(id);
         })
         .then(() => {
           return addPackagingToProduct(
             {
               packings: [
                 ...productInputs.packages.map((item) => {
-                  return item.id
+                  return item.id;
                 }),
               ],
             },
-            id,
-          )
+            id
+          );
         })
-        .then(() => props.history.push('/products'))
+        .then(() => props.history.push("/products"))
         .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при добавлении записи')
-        })
-  }
+          setIsLoading(false);
+          alert("Ошибка при добавлении записи");
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setProductInputs({
       ...productInputs,
       [name]: value,
-    })
+    });
     setProductErrors({
       ...productErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   const handleCategoryChange = (value) => {
-    validateField('category', value)
+    validateField("category", value);
     setProductInputs({
       ...productInputs,
       category: value,
-    })
+    });
     setProductErrors({
       ...productErrors,
       category: false,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    document.title = 'Редактирование продукта'
-    const id = props.history.location.pathname.split('/products/edit/')[1]
+    document.title = "Редактирование продукта";
+    const id = props.history.location.pathname.split("/products/edit/")[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс заявки!')
-      props.history.push('/products')
+      alert("Неправильный индекс заявки!");
+      props.history.push("/products");
     } else {
       getProductById(id)
         .then((res) => res.json())
@@ -176,15 +176,15 @@ const EditProduct = (props) => {
             category: oldProduct.category,
             comment: oldProduct.comment,
             photo: oldProduct.photo,
-          })
+          });
         })
         .catch((error) => {
-          console.log(error)
-          alert('Неправильный индекс заявки!')
-          props.history.push('/products')
-        })
+          console.log(error);
+          alert("Неправильный индекс заявки!");
+          props.history.push("/products");
+        });
     }
-  }, [])
+  }, []);
   return (
     <div className="main-form">
       <form className="main-form__form">
@@ -209,13 +209,13 @@ const EditProduct = (props) => {
               imgSrc={productInputs.photo}
               noPhotoTemplate
             />
-            {productInputs.photo !== '' && (
+            {productInputs.photo !== "" && (
               <div
                 className="main-form__submit"
                 onClick={() =>
                   imgToBlobDownload(
                     productInputs.photo,
-                    productInputs.name + '.jpeg',
+                    productInputs.name + ".jpeg"
                   )
                 }
               >
@@ -308,11 +308,11 @@ const EditProduct = (props) => {
           <SelectPackaging
             required
             onChange={(packages) => {
-              validateField('packages', packages)
+              validateField("packages", packages);
               setProductInputs({
                 ...productInputs,
                 packages: packages,
-              })
+              });
             }}
             defaultValue={productInputs.packages}
             errorName="packages"
@@ -344,14 +344,13 @@ const EditProduct = (props) => {
         <div className="main-form__item">
           <div className="main-form__input_name">Фотография</div>
           <FileUploader
-            regex={/.+\.(jpeg|jpg|png|img)/}
-            uniqueId={0}
             onChange={async (result) => {
-              const downgraded = await getDataUri(result, 'jpeg', 0.3)
+              const downgraded =
+                result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
               setProductInputs({
                 ...productInputs,
                 photo: downgraded,
-              })
+              });
             }}
           />
         </div>
@@ -362,7 +361,7 @@ const EditProduct = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => props.history.push('/products')}
+            onClick={() => props.history.push("/products")}
             value="Вернуться назад"
           />
           {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
@@ -376,7 +375,7 @@ const EditProduct = (props) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditProduct
+export default EditProduct;

@@ -249,7 +249,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file1" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setGroupImg1(downgraded);
                       props.handleImgChange(downgraded, "groupImg1");
                     }}
@@ -265,7 +268,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file2" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setGroupImg2(downgraded);
                       props.handleImgChange(downgraded, "groupImg2");
                     }}
@@ -281,7 +287,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file3" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setGroupImg3(downgraded);
                       props.handleImgChange(downgraded, "groupImg3");
                     }}
@@ -297,7 +306,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file4" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setGroupImg4(downgraded);
                       props.handleImgChange(downgraded, "groupImg4");
                     }}
@@ -313,7 +325,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file5" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setFooterImg(downgraded);
                       props.handleImgChange(downgraded, "footerImg");
                     }}

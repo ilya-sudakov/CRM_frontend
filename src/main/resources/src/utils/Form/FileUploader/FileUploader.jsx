@@ -41,7 +41,6 @@ const FileUploader = ({
   const onDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(dragCounter, e);
     dragCounter--;
     if (dragCounter === 0) {
       setIsDraggingOver(false);
@@ -97,7 +96,8 @@ const FileUploader = ({
     setHasError(false);
   };
 
-  const handleDeleteFile = () => {
+  const handleDeleteFile = (event) => {
+    event.preventDefault();
     setData(null);
     onChange("");
   };
@@ -121,7 +121,8 @@ const FileUploader = ({
 
   return (
     <div className="file-uploader">
-      {previewImage ? (
+      {console.log(previewImage)}
+      {previewImage && previewImage !== "" ? (
         <img className="file-uploader__preview-image" src={previewImage} />
       ) : null}
       <div
@@ -131,12 +132,12 @@ const FileUploader = ({
         ref={dropRef}
         style={{
           minHeight:
-            data || previewImage
+            data || (previewImage && previewImage !== "")
               ? "fit-content"
               : "var(--file-uploader__min-height)",
         }}
       >
-        {data || previewImage ? (
+        {data || (previewImage && previewImage !== "") ? (
           <ul className="file-uploader__file-list">
             <li>
               {data?.name ?? "фотография.jpeg"}
