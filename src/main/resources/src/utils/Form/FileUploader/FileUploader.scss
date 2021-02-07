@@ -92,9 +92,10 @@
     border-radius: 3px;
     background-color: #fadada;
     color: #ad1c1c;
-    margin-top: 5px;
-    padding: 5px 15px;
-    font-size: 1rem;
+    margin-top: 3px;
+    padding: 5px 10px;
+    // margin-bottom: 3px;
+    font-size: 0.85rem;
     box-sizing: border-box;
     cursor: pointer;
   }
@@ -109,7 +110,7 @@
     width: 100%;
     max-width: var(--file-uploader__max-width);
     box-sizing: border-box;
-    padding: 0 2px;
+    // padding: 0 5px;
   }
 
   &__preview-image {
