@@ -31,7 +31,7 @@ const NewEmployee = (props) => {
     citizenship: false,
     position: false,
     workshop: false,
-    // passportScan1: false,
+    passportScan1: false,
     // comment: false,
     relevance: false,
   });
@@ -43,7 +43,7 @@ const NewEmployee = (props) => {
     citizenship: false,
     position: false,
     workshop: true,
-    // passportScan1: false,
+    passportScan1: false,
     // comment: false,
     relevance: true,
   });
@@ -79,7 +79,7 @@ const NewEmployee = (props) => {
       citizenship: false,
       position: false,
       workshop: false,
-      // passportScan1: false,
+      passportScan1: false,
       // comment: false,
       relevance: false,
     });
@@ -267,21 +267,27 @@ const NewEmployee = (props) => {
           </div>
         </div>
         <div className="main-form__item">
-          <div className="main-form__input_name">Паспорт*</div>
+          <div className="main-form__input_name">Паспорт</div>
           <FileUploader
+            error={employeeErrors.passportScan1}
             onChange={(result) => {
+              validateField("passportScan1", result);
               setEmployeeInputs({
                 ...employeeInputs,
                 passportScan1: result,
               });
             }}
             previewImage={employeeInputs.passportScan1}
+            hideError={() =>
+              setEmployeeErrors({
+                ...employeeErrors,
+                passportScan1: false,
+              })
+            }
           />
         </div>
         <InputText
           inputName="Комментарий"
-          // required
-          // error={employeeErrors.comment}
           name="comment"
           handleInputChange={handleInputChange}
           errorsArr={employeeErrors}

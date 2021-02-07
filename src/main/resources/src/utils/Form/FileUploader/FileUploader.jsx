@@ -9,7 +9,8 @@ const FileUploader = ({
   previewImage,
   maxSize = 5,
   uniqueId = 0,
-  error,
+  error = false,
+  hideError,
 }) => {
   const [data, setData] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
@@ -128,7 +129,7 @@ const FileUploader = ({
       <div
         className={`file-uploader__wrapper ${
           isDraggingOver ? "file-uploader__wrapper--dragging" : ""
-        } ${hasError ? "file-uploader__wrapper--error" : ""}`}
+        } ${hasError || error ? "file-uploader__wrapper--error" : ""}`}
         ref={dropRef}
         style={{
           minHeight:
@@ -182,12 +183,15 @@ const FileUploader = ({
           </div>
         )}
       </div>
-      {hasError && (
+      {(error || hasError) && (
         <div
           className="file-uploader__error"
-          onClick={() => setHasError(false)}
+          onClick={() => {
+            if (hideError) hideError();
+            setHasError(false);
+          }}
         >
-          {hasError}
+          {error ? "Поле не заполнено!" : hasError}
         </div>
       )}
       {formats[regex.toString()] && (
@@ -208,4 +212,5 @@ FileUploader.propTypes = {
   previewImage: PropTypes.string,
   uniqueId: PropTypes.string,
   error: PropTypes.string,
+  hideError: PropTypes.func,
 };
