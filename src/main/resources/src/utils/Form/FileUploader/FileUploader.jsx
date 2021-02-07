@@ -149,7 +149,9 @@ const FileUploader = ({
             draggable="true"
             onDragStart={(e) => e.preventDefault()}
           >
-            <div className="file-uploader__text">Отпустите файл</div>
+            <div className="file-uploader__text">
+              Отпустите файл для загрузки
+            </div>
           </div>
         ) : (
           <div
