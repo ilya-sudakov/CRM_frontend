@@ -117,7 +117,7 @@ const FileUploader = ({
         {data || previewImage ? (
           <ul className="file-uploader__file-list">
             <li>
-              {data?.name ?? "Фотография"}
+              {data?.name ?? "фотография.jpeg"}
               <div onClick={handleDeleteFile}>удалить</div>
             </li>
           </ul>
@@ -137,7 +137,7 @@ const FileUploader = ({
                 className="main-window__button"
                 htmlFor={`fileuploader-${uniqueId}`}
               >
-                Выберите файл
+                Загрузите файл
               </label>
               <input
                 onChange={handleDropFile}
