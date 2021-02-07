@@ -99,9 +99,20 @@
     cursor: pointer;
   }
 
+  &__hint {
+    text-align: center;
+    width: fit-content;
+    font-size: 0.9rem;
+    color: #777777;
+    margin-top: 5px;
+    text-align: center;
+    width: 100%;
+    max-width: var(--file-uploader__max-width);
+  }
+
   &__preview-image {
     border-radius: 3px;
-    max-width: var(--file-uploader__max-width);
+    max-width: Min(100%, var(--file-uploader__max-width));
   }
 
   &__file-list {

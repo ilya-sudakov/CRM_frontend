@@ -9,11 +9,21 @@ const FileUploader = ({
   previewImage,
   maxSize = 5,
   uniqueId = 0,
+  error,
 }) => {
   const [data, setData] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
-  const [error, setError] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const dropRef = React.createRef();
+
+  const formats = {
+    "/.+\\.(jpeg|jpg|png|img)/": {
+      text: "Поддерживаемые форматы JPEG, PNG, IMG",
+    },
+    "/.+\\.(xlsx|csv)/": {
+      text: "Поддерживаемые форматы XLSX и CSV",
+    },
+  };
 
   const onDragEnter = (e) => {
     e.preventDefault();
@@ -30,7 +40,6 @@ const FileUploader = ({
   const onDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // setIsDraggingOver(true);
   };
 
   const handleDropFile = (event) => {
@@ -43,7 +52,7 @@ const FileUploader = ({
 
     //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
     if (file.name.match(regex) === null) {
-      return setError("Некорректный формат файла!");
+      return setHasError("Некорректный формат файла!");
     }
     if (type === "fileOnly") return onChange(file);
 
@@ -51,10 +60,10 @@ const FileUploader = ({
     const { size } = file;
     setData(null);
     if (size / 1024 / 1024 > maxSize) {
-      setError(`Файл превышает ${maxSize} МБайт`);
+      setHasError(`Файл превышает ${maxSize} МБайт`);
       return false;
     }
-    setError(false);
+    setHasError(false);
 
     //Для разных типов файла - разные функции обработки данных
     switch (type) {
@@ -72,7 +81,7 @@ const FileUploader = ({
       setData(file);
       onChange(loadEvent.target.result);
     };
-    setError(false);
+    setHasError(false);
   };
 
   const handleDeleteFile = () => {
@@ -105,7 +114,7 @@ const FileUploader = ({
       <div
         className={`file-uploader__wrapper ${
           isDraggingOver ? "file-uploader__wrapper--dragging" : ""
-        } ${error ? "file-uploader__wrapper--error" : ""}`}
+        } ${hasError ? "file-uploader__wrapper--error" : ""}`}
         ref={dropRef}
         style={{
           minHeight:
@@ -149,9 +158,17 @@ const FileUploader = ({
           </div>
         )}
       </div>
-      {error && (
-        <div className="file-uploader__error" onClick={() => setError(false)}>
-          {error}
+      {hasError && (
+        <div
+          className="file-uploader__error"
+          onClick={() => setHasError(false)}
+        >
+          {hasError}
+        </div>
+      )}
+      {formats[regex.toString()] && (
+        <div className="file-uploader__hint">
+          {formats[regex.toString()].text}
         </div>
       )}
     </div>
@@ -166,4 +183,5 @@ FileUploader.propTypes = {
   onChange: PropTypes.func,
   previewImage: PropTypes.string,
   uniqueId: PropTypes.string,
+  error: PropTypes.string,
 };
