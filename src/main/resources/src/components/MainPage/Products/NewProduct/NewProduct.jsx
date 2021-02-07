@@ -164,14 +164,6 @@ const NewProduct = (props) => {
         <div className="main-form__header main-form__header--full">
           <div className="main-form__title">Новая продукция</div>
         </div>
-        {productInputs.photo && (
-          <div className="main-form__item">
-            <div className="main-form__input_name">Фотография</div>
-            <div className="main-form__product_img">
-              <img src={productInputs.photo} alt="" />
-            </div>
-          </div>
-        )}
         <ErrorMessage
           message="Не заполнены все обязательные поля!"
           showError={showError}
@@ -281,8 +273,6 @@ const NewProduct = (props) => {
         <div className="main-form__item">
           <div className="main-form__input_name">Фотография</div>
           <FileUploader
-            regex={/.+\.(jpeg|jpg|png|img)/}
-            uniqueId={0}
             onChange={async (result) => {
               const downgraded = await getDataUri(result, 'jpeg', 0.3)
               setProductInputs({
@@ -290,6 +280,7 @@ const NewProduct = (props) => {
                 photo: downgraded,
               })
             }}
+            previewImage={productInputs.photo}
           />
         </div>
         <div className="main-form__input_hint">

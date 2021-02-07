@@ -116,7 +116,7 @@ const FileUploader = ({
         {data || previewImage ? (
           <ul className="file-uploader__file-list">
             <li>
-              {previewImage ? "Фотография" : data.name}
+              {data.name ?? "Фотография" }
               <div onClick={handleDeleteFile}>удалить</div>
             </li>
           </ul>
