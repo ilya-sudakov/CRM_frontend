@@ -2,6 +2,7 @@
 
 .new-price-item {
   background-color: #fff;
+  height: 100%;
 
   .main-form__title {
     width: 100%;
@@ -29,7 +30,7 @@
     max-width: 1000px !important;
     --form__max-width: 1000px;
     margin-right: auto;
-    padding-top: 25px;
+    padding-top: 15px;
 
     .main-form__title {
       width: 100%;
@@ -91,6 +92,7 @@
     flex-direction: row !important;
     .main-form__input_name {
       width: fit-content !important;
+      white-space: nowrap;
     }
   }
   .main-form__item .main-form__input_field {
@@ -103,14 +105,6 @@
         width: 100%;
         min-height: 25px;
       }
-    }
-    & .file-uploader {
-      margin-left: 15px;
-      // margin-right: auto;
-      // justify-content: flex-end;
-    }
-    & .file-uploader {
-      max-width: 250px;
     }
   }
   .main-form__buttons {
@@ -130,6 +124,10 @@
 
     .checkbox {
       width: 50%;
+
+      &__text {
+        white-space: nowrap;
+      }
     }
     .checkbox__container {
       width: 100%;

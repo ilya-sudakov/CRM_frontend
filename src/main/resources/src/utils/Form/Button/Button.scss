@@ -68,6 +68,23 @@
     }
   }
 
+  &--recent {
+    position: relative;
+    &::after {
+      display: flex;
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 9px;
+      height: 9px;
+      background-color: $button__background--inverted;
+      border: 1px solid #ffffff;
+      content: "";
+      border-radius: 999px;
+      box-sizing: border-box;
+    }
+  }
+
   &__text {
     &--hidden {
       visibility: hidden;

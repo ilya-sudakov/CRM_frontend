@@ -28,6 +28,8 @@ const NewPriceList = (props) => {
   const [categories, setCategories] = useState(defaultCategories);
   const [priceList, setPriceList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectAllCategories, setSelectAllCategories] = useState(true);
+  const [selectAllGroups, setSelectAllGroups] = useState(true);
   const [disclaimer, setDisclaimer] = useState("");
   const [titlePage, setTitlePage] = useState(defaultTitlePage);
 
@@ -276,21 +278,21 @@ const NewPriceList = (props) => {
   return (
     <div className="new-price-item">
       <div className="main-form">
-        <div className="main-form__title">Считать данные из файла</div>
+        <div className="main-form__title">Прайс-лист</div>
         <form className="main-form__form">
           <div className="main-form__item">
-            <div className="main-form__input_name">Файл .xlsx</div>
+            <div className="main-form__input_name">Excel-таблица для парсинга</div>
             <FileUploader
               regex={/.+\.(xlsx|csv)/}
-              uniqueId={"file"}
+              uniqueId="excel-reader"
               type="readAsArrayBuffer"
               onChange={(result) => {
                 parseExcelData(result);
               }}
             />
           </div>
-          <div className="main-form__buttons main-form__buttons--full">
-            {priceList.length > 0 && (
+          {priceList.length > 0 && (
+            <div className="main-form__buttons main-form__buttons--full">
               <Button
                 text="Открыть .pdf"
                 isLoading={isLoading}
@@ -321,13 +323,12 @@ const NewPriceList = (props) => {
                   });
                 }}
               />
-            )}
-            {priceList.length > 0 && (
               <Button
-                text="Открыть .pdf (новое)"
+                text="Новый прайс"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
+                isRecent
                 onClick={() => {
                   setIsLoading(true);
                   console.log(priceList);
@@ -345,16 +346,12 @@ const NewPriceList = (props) => {
                         }
                         return 0;
                       }),
-                    locationTypes,
-                    disclaimer,
-                    titlePage
+                    locationTypes
                   ).then(() => {
                     setIsLoading(false);
                   });
                 }}
               />
-            )}
-            {priceList.length > 0 && (
               <Button
                 text="Скачать .xlsx"
                 isLoading={isLoading}
@@ -381,8 +378,6 @@ const NewPriceList = (props) => {
                   });
                 }}
               />
-            )}
-            {priceList.length > 0 && (
               <Button
                 text="Сохранить данные"
                 isLoading={isLoading}
@@ -393,16 +388,17 @@ const NewPriceList = (props) => {
                   saveImages();
                 }}
               />
-            )}
-          </div>
+            </div>
+          )}
           {priceList.length > 0 && (
             <div className="main-form__buttons main-form__buttons--full">
               <div className="new-price-item__checkbox-container">
                 <CheckBox
                   text="Выделить все категории"
-                  defaultChecked={true}
+                  checked={selectAllCategories}
                   name="header"
                   onChange={(value) => {
+                    setSelectAllCategories(value);
                     let originalList = categories.map((item) => {
                       return {
                         ...item,
@@ -414,9 +410,10 @@ const NewPriceList = (props) => {
                 />
                 <CheckBox
                   text="Выделить все группы товаров"
-                  defaultChecked={true}
+                  checked={selectAllGroups}
                   name="header"
                   onChange={(value) => {
+                    setSelectAllGroups(value);
                     let originalList = priceList.map((item) => {
                       return {
                         ...item,
@@ -462,7 +459,7 @@ const NewPriceList = (props) => {
                     Титульная страница
                   </div>
                   <CheckBox
-                    defaultChecked={true}
+                    checked={titlePage.active}
                     name="titleList"
                     onChange={(value) => {
                       setTitlePage({
@@ -488,14 +485,8 @@ const NewPriceList = (props) => {
                     <div className="main-form__item">
                       <div className="main-form__input_name">Фотография 1</div>
                       <div className="main-form__input_field">
-                        {titlePage.img1 !== "" && (
-                          <div className="main-form__product_img">
-                            <img src={titlePage.img1} alt="" />
-                          </div>
-                        )}
                         <FileUploader
                           uniqueId={"fileTitlePage" + 1}
-                          regex={/.+\.(jpeg|jpg|png|img)/}
                           onChange={async (result) => {
                             const downgraded = await getDataUri(
                               result,
@@ -507,20 +498,17 @@ const NewPriceList = (props) => {
                               img1: downgraded,
                             });
                           }}
+                          previewImage={
+                            titlePage.img1 !== "" ? titlePage.img1 : null
+                          }
                         />
                       </div>
                     </div>
                     <div className="main-form__item">
                       <div className="main-form__input_name">Фотография 2</div>
                       <div className="main-form__input_field">
-                        {titlePage.img2 !== "" && (
-                          <div className="main-form__product_img">
-                            <img src={titlePage.img2} alt="" />
-                          </div>
-                        )}
                         <FileUploader
                           uniqueId={"fileTitlePage" + 2}
-                          regex={/.+\.(jpeg|jpg|png|img)/}
                           onChange={async (result) => {
                             const downgraded = await getDataUri(
                               result,
@@ -532,20 +520,17 @@ const NewPriceList = (props) => {
                               img2: downgraded,
                             });
                           }}
+                          previewImage={
+                            titlePage.img2 !== "" ? titlePage.img2 : null
+                          }
                         />
                       </div>
                     </div>
                     <div className="main-form__item">
                       <div className="main-form__input_name">Фотография 3</div>
                       <div className="main-form__input_field">
-                        {titlePage.img3 !== "" && (
-                          <div className="main-form__product_img">
-                            <img src={titlePage.img3} alt="" />
-                          </div>
-                        )}
                         <FileUploader
                           uniqueId={"fileTitlePage" + 3}
-                          regex={/.+\.(jpeg|jpg|png|img)/}
                           onChange={async (result) => {
                             const downgraded = await getDataUri(
                               result,
@@ -557,6 +542,9 @@ const NewPriceList = (props) => {
                               img3: downgraded,
                             });
                           }}
+                          previewImage={
+                            titlePage.img3 !== "" ? titlePage.img3 : null
+                          }
                         />
                       </div>
                     </div>
@@ -592,7 +580,9 @@ const NewPriceList = (props) => {
                 return (
                   <React.Fragment>
                     <div className="main-form__item main-form__item--header">
-                      <div className="main-form__input_name">Категория</div>
+                      <div className="main-form__input_name">
+                        {category.name}
+                      </div>
                       <CheckBox
                         checked={category.active}
                         name="category"
@@ -606,18 +596,8 @@ const NewPriceList = (props) => {
                         }}
                       />
                       <div className="main-form__input_field">
-                        <div
-                          className="main-form__title"
-                          style={{
-                            backgroundImage: `url('${category.img}')`,
-                            backgroundSize: "100% 100%",
-                          }}
-                        >
-                          {category.name}
-                        </div>
                         <FileUploader
                           uniqueId={"categoryImg" + categoryIndex}
-                          regex={/.+\.(jpeg|jpg|png|img)/}
                           onChange={(result) => {
                             let temp = categories;
                             temp.splice(categoryIndex, 1, {
@@ -626,6 +606,7 @@ const NewPriceList = (props) => {
                             });
                             setCategories([...temp]);
                           }}
+                          previewImage={category.img}
                         />
                       </div>
                     </div>

@@ -64,7 +64,7 @@ const SelectClient = (props) => {
               Выбрать клиента
             </button>
           )}
-          {id !== 0 && (
+          {(id !== 0 || props.defaultValue) && (
             <div className="select-client__searchbar">
               <input
                 type="text"

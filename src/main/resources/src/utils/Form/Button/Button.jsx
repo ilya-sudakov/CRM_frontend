@@ -10,6 +10,7 @@ const Button = ({
   type = "button",
   text = "Нажмите",
   onClick = null,
+  isRecent = false,
 }) => {
   const [newClassName] = useState(
     `button ${inverted ? ` button--inverted` : ""}`
@@ -24,8 +25,11 @@ const Button = ({
 
   return (
     <button
-      className={`${newClassName} ${className ?? ""}`}
+      className={`${newClassName} ${className ?? ""} ${
+        isRecent ? "button--recent" : ""
+      }`}
       onClick={handleClick}
+      title={isRecent ? "Новая функция" : text}
       type={type ? type : "button"}
     >
       {imgSrc && (
@@ -51,6 +55,7 @@ Button.propTypes = {
   inverted: PropTypes.bool,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  isRecent: PropTypes.bool,
   imgSrc: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   type: PropTypes.string,
   text: PropTypes.string,

@@ -170,19 +170,16 @@ export const renderRequestStatusColumn = (
     >
       <div className="main-window__mobile-text">Статус заявки:</div>
       <select
-        id={request.id}
-        index={request.id}
-        sum={request.sum}
         className="main-window__status_select"
         value={request.status}
-        onChange={handleStatusChange}
+        onChange={(event) => handleStatusChange(event, request)}
       >
         {requestStatuses.map((status) => {
           if (userHasAccess && userHasAccess(status.access)) {
             return (
               <option
                 value={
-                  status.oldName === request.status
+                  status.oldName && status.oldName === request.status
                     ? status.oldName
                     : status.name
                 }

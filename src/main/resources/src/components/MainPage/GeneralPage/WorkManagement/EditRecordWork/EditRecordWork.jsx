@@ -232,7 +232,7 @@ const EditRecordWork = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Редактирование заявки";
+    document.title = "Редактирование записи о работе";
     const abortController = new AbortController();
     const id = history.location.pathname.split(
       "/work-management/record-time/edit/"

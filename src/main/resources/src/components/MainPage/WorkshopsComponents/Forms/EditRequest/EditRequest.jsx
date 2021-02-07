@@ -27,7 +27,6 @@ const EditRequest = (props) => {
   const [requestInputs, setRequestInputs] = useState({
     date: "",
     products: [],
-    // quantity: "",
     codeWord: "",
     responsible: "",
     status: "Не готово",
@@ -40,7 +39,6 @@ const EditRequest = (props) => {
   const [requestErrors, setRequestErrors] = useState({
     date: false,
     requestProducts: false,
-    // codeWord: false,
     clientId: false,
     responsible: false,
     shippingDate: false,

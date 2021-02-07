@@ -124,7 +124,8 @@ exports[`Header component matches snapshot 1`] = `
           </label>
         </div>
         <button
-          class="button  main-window__button"
+          class="button  main-window__button "
+          title="Войти"
           type="submit"
         >
           <img

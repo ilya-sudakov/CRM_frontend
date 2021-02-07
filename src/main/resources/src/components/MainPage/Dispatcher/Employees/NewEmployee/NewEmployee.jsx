@@ -280,14 +280,17 @@ const NewEmployee = (props) => {
         <div className="main-form__item">
           <div className="main-form__input_name">Паспорт*</div>
           <FileUploader
-            regex={/.+\.(jpeg|jpg|png|img)/}
-            uniqueId={0}
             onChange={(result) => {
               setEmployeeInputs({
                 ...employeeInputs,
                 passportScan1: result,
               });
             }}
+            previewImage={
+              employeeInputs.passportScan1 !== ""
+                ? employeeInputs.passportScan1
+                : null
+            }
           />
         </div>
         <InputText
