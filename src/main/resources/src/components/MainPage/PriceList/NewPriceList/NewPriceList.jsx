@@ -278,7 +278,7 @@ const NewPriceList = (props) => {
   return (
     <div className="new-price-item">
       <div className="main-form">
-        <div className="main-form__title">Считать данные из файла</div>
+        <div className="main-form__title">Прайс-лист</div>
         <form className="main-form__form">
           <div className="main-form__item">
             <div className="main-form__input_name">Файл .xlsx</div>
