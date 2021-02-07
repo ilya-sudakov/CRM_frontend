@@ -266,17 +266,6 @@ const NewEmployee = (props) => {
             />
           </div>
         </div>
-        {employeeInputs.passportScan1 !== "" && (
-          <div className="main-form__item">
-            <div className="main-form__input_name">Паспорт</div>
-            <div className="main-form__passport_img">
-              {/* {employeeInputs.passportScan.map((photo) => (
-                            <img src={photo} alt=""/>
-                        ))} */}
-              <img src={employeeInputs.passportScan1} alt="" />
-            </div>
-          </div>
-        )}
         <div className="main-form__item">
           <div className="main-form__input_name">Паспорт*</div>
           <FileUploader
@@ -286,11 +275,7 @@ const NewEmployee = (props) => {
                 passportScan1: result,
               });
             }}
-            previewImage={
-              employeeInputs.passportScan1 !== ""
-                ? employeeInputs.passportScan1
-                : null
-            }
+            previewImage={employeeInputs.passportScan1}
           />
         </div>
         <InputText
