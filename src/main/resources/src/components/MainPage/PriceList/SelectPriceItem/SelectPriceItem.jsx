@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import deleteSVG from '../../../../../../../../assets/select/delete.svg'
-import './SelectPriceItem.scss'
-import { getPriceListCoefficient } from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx'
-import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx'
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
-import { getDataUri } from '../../../../utils/functions.jsx'
+import React, { useState, useEffect } from "react";
+import deleteSVG from "../../../../../../../../assets/select/delete.svg";
+import "./SelectPriceItem.scss";
+import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
+import CheckBox from "../../../../utils/Form/CheckBox/CheckBox.jsx";
+import { getDataUri } from "../../../../utils/functions.jsx";
 
 const SelectPriceItem = (props) => {
   // const [imgName, setImgName] = useState("Имя файла...");
   const [selected, setSelected] = useState([
     {
-      number: '',
-      units: '',
-      name: '',
-      description: '',
+      number: "",
+      units: "",
+      name: "",
+      description: "",
       retailPrice: 0,
       lessThan1500Price: 0,
       lessThan5000Price: 0,
@@ -27,13 +26,10 @@ const SelectPriceItem = (props) => {
       isTopSeller: false,
       isMinimized: true,
     },
-  ])
-  const [options, setOptions] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [newItem, setNewItem] = useState(false)
-  const [uniqueItem, setUniqueItem] = useState(false)
-  const [proprietaryItem, setProprietaryItem] = useState(false)
-  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
+  ]);
+  const [options, setOptions] = useState([]);
+  const [proprietaryItem, setProprietaryItem] = useState(false);
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
   const [coefficients, setCoefficients] = useState({
     retailPrice: 1,
     dealerPrice: 0.56,
@@ -42,12 +38,12 @@ const SelectPriceItem = (props) => {
     stopPrice: 0.4545,
     lessThan5000Price: 0.89,
     lessThan1500Price: 0.96,
-  })
-  const [groupImg1, setGroupImg1] = useState(null)
-  const [groupImg2, setGroupImg2] = useState(null)
-  const [groupImg3, setGroupImg3] = useState(null)
-  const [groupImg4, setGroupImg4] = useState(null)
-  const [footerImg, setFooterImg] = useState(null)
+  });
+  const [groupImg1, setGroupImg1] = useState(null);
+  const [groupImg2, setGroupImg2] = useState(null);
+  const [groupImg3, setGroupImg3] = useState(null);
+  const [groupImg4, setGroupImg4] = useState(null);
+  const [footerImg, setFooterImg] = useState(null);
   // const [visibleItems, setVisibleItems] = useState([{
   //     id:
   // }])
@@ -56,31 +52,31 @@ const SelectPriceItem = (props) => {
     if (props.defaultValue !== undefined && !defaultValueLoaded) {
       setSelected([
         ...props.defaultValue.map((item) => {
-          return Object.assign({ ...item, isMinimized: true })
+          return Object.assign({ ...item, isMinimized: true });
         }),
-      ])
-      setDefaultValueLoaded(true)
+      ]);
+      setDefaultValueLoaded(true);
     }
     if (props.options !== undefined) {
-      setOptions([...props.options])
+      setOptions([...props.options]);
     }
     if (props.groupImg1 !== undefined) {
-      setGroupImg1(props.groupImg1)
+      setGroupImg1(props.groupImg1);
     }
     if (props.groupImg2 !== undefined) {
-      setGroupImg2(props.groupImg2)
+      setGroupImg2(props.groupImg2);
     }
     if (props.groupImg3 !== undefined) {
-      setGroupImg3(props.groupImg3)
+      setGroupImg3(props.groupImg3);
     }
     if (props.groupImg4 !== undefined) {
-      setGroupImg4(props.groupImg4)
+      setGroupImg4(props.groupImg4);
     }
     if (props.footerImg !== undefined) {
-      setFooterImg(props.footerImg)
+      setFooterImg(props.footerImg);
     }
     if (props.proprietaryItem !== undefined) {
-      setProprietaryItem(props.proprietaryItem)
+      setProprietaryItem(props.proprietaryItem);
     }
   }, [
     props.defaultValue,
@@ -91,19 +87,19 @@ const SelectPriceItem = (props) => {
     props.groupImg4,
     props.footerImg,
     selected,
-  ])
+  ]);
 
   const handleNewPriceItem = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     //Открыть по дефолту форму
-    const id = selected.length
+    const id = selected.length;
     setSelected([
       ...selected,
       {
-        number: '',
-        units: '',
-        name: '',
-        description: '',
+        number: "",
+        units: "",
+        name: "",
+        description: "",
         retailPrice: 0,
         lessThan1500Price: 0,
         lessThan5000Price: 0,
@@ -117,14 +113,14 @@ const SelectPriceItem = (props) => {
         isTopSeller: false,
         isMinimized: true,
       },
-    ])
+    ]);
     props.handlePriceItemChange([
       ...selected,
       {
-        number: '',
-        units: '',
-        name: '',
-        description: '',
+        number: "",
+        units: "",
+        name: "",
+        description: "",
         retailMarketPrice: 0,
         lessThan5000Price: 0,
         lessThan1500Price: 0,
@@ -137,25 +133,25 @@ const SelectPriceItem = (props) => {
         onSale: false,
         isTopSeller: false,
       },
-    ])
-  }
+    ]);
+  };
 
   const deletePriceItem = (e) => {
-    const id = e.target.getAttribute('index')
-    let temp = selected
-    temp.splice(id, 1)
-    setSelected([...temp])
-    props.handlePriceItemChange([...temp])
-  }
+    const id = e.target.getAttribute("index");
+    let temp = selected;
+    temp.splice(id, 1);
+    setSelected([...temp]);
+    props.handlePriceItemChange([...temp]);
+  };
 
   const handleInputChange = (event) => {
-    const id = event.target.getAttribute('index')
-    const name = event.target.getAttribute('name')
-    let value = event.target.value
-    let temp = selected
-    let originalItem = selected[id]
-    if (name === 'cost') {
-      value = parseFloat(value)
+    const id = event.target.getAttribute("index");
+    const name = event.target.getAttribute("name");
+    let value = event.target.value;
+    let temp = selected;
+    let originalItem = selected[id];
+    if (name === "cost") {
+      value = parseFloat(value);
       temp.splice(id, 1, {
         ...originalItem,
         [name]: value,
@@ -187,11 +183,11 @@ const SelectPriceItem = (props) => {
           (originalItem.retailMarketPrice - value) *
             coefficients.lessThan1500Price
         ).toFixed(2),
-      })
-      setSelected([...temp])
-      props.handlePriceItemChange([...temp])
-    } else if (name === 'retailMarketPrice') {
-      value = parseFloat(value)
+      });
+      setSelected([...temp]);
+      props.handlePriceItemChange([...temp]);
+    } else if (name === "retailMarketPrice") {
+      value = parseFloat(value);
       temp.splice(id, 1, {
         ...originalItem,
         [name]: value,
@@ -220,18 +216,18 @@ const SelectPriceItem = (props) => {
           originalItem.cost +
           (value - originalItem.cost) * coefficients.lessThan1500Price
         ).toFixed(2),
-      })
-      setSelected([...temp])
-      props.handlePriceItemChange([...temp])
+      });
+      setSelected([...temp]);
+      props.handlePriceItemChange([...temp]);
     } else {
       temp.splice(id, 1, {
         ...originalItem,
         [name]: value,
-      })
-      setSelected([...temp])
-      props.handlePriceItemChange([...temp])
+      });
+      setSelected([...temp]);
+      props.handlePriceItemChange([...temp]);
     }
-  }
+  };
 
   return (
     <div className="select-price-item">
@@ -249,23 +245,15 @@ const SelectPriceItem = (props) => {
             <div className="main-form__item">
               <div className="main-form__input_name">Фотография 1</div>
               <div className="main-form__input_field">
-                {groupImg1 && (
-                  <div className="main-form__product_img">
-                    <img src={groupImg1} alt="" />
-                  </div>
-                )}
                 {!props.readOnly && (
                   <FileUploader
-                    uniqueId={'file1' + props.uniqueId}
-                    regex={/.+\.(jpeg|jpg|png|img)/}
+                    uniqueId={"file1" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, 'jpeg', 0.3)
-                      // setGroupImg1(result)
-                      // props.handleImgChange(result, 'groupImg1')
-                      // console.log(result.length, downgraded.length);
-                      setGroupImg1(downgraded)
-                      props.handleImgChange(downgraded, 'groupImg1')
+                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      setGroupImg1(downgraded);
+                      props.handleImgChange(downgraded, "groupImg1");
                     }}
+                    previewImage={groupImg1}
                   />
                 )}
               </div>
@@ -273,20 +261,15 @@ const SelectPriceItem = (props) => {
             <div className="main-form__item">
               <div className="main-form__input_name">Фотография 2</div>
               <div className="main-form__input_field">
-                {groupImg2 && (
-                  <div className="main-form__product_img">
-                    <img src={groupImg2} alt="" />
-                  </div>
-                )}
                 {!props.readOnly && (
                   <FileUploader
-                    uniqueId={'file2' + props.uniqueId}
-                    regex={/.+\.(jpeg|jpg|png|img)/}
+                    uniqueId={"file2" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, 'jpeg', 0.3)
-                      setGroupImg2(downgraded)
-                      props.handleImgChange(downgraded, 'groupImg2')
+                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      setGroupImg2(downgraded);
+                      props.handleImgChange(downgraded, "groupImg2");
                     }}
+                    previewImage={groupImg2}
                   />
                 )}
               </div>
@@ -294,20 +277,15 @@ const SelectPriceItem = (props) => {
             <div className="main-form__item">
               <div className="main-form__input_name">Фотография 3</div>
               <div className="main-form__input_field">
-                {groupImg3 && (
-                  <div className="main-form__product_img">
-                    <img src={groupImg3} alt="" />
-                  </div>
-                )}
                 {!props.readOnly && (
                   <FileUploader
-                    uniqueId={'file3' + props.uniqueId}
-                    regex={/.+\.(jpeg|jpg|png|img)/}
+                    uniqueId={"file3" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, 'jpeg', 0.3)
-                      setGroupImg3(downgraded)
-                      props.handleImgChange(downgraded, 'groupImg3')
+                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      setGroupImg3(downgraded);
+                      props.handleImgChange(downgraded, "groupImg3");
                     }}
+                    previewImage={groupImg3}
                   />
                 )}
               </div>
@@ -315,20 +293,15 @@ const SelectPriceItem = (props) => {
             <div className="main-form__item">
               <div className="main-form__input_name">Фотография 4</div>
               <div className="main-form__input_field">
-                {groupImg4 && (
-                  <div className="main-form__product_img">
-                    <img src={groupImg4} alt="" />
-                  </div>
-                )}
                 {!props.readOnly && (
                   <FileUploader
-                    uniqueId={'file4' + props.uniqueId}
-                    regex={/.+\.(jpeg|jpg|png|img)/}
+                    uniqueId={"file4" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, 'jpeg', 0.3)
-                      setGroupImg4(downgraded)
-                      props.handleImgChange(downgraded, 'groupImg4')
+                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      setGroupImg4(downgraded);
+                      props.handleImgChange(downgraded, "groupImg4");
                     }}
+                    previewImage={groupImg4}
                   />
                 )}
               </div>
@@ -336,52 +309,33 @@ const SelectPriceItem = (props) => {
             <div className="main-form__item">
               <div className="main-form__input_name">Фотография снизу</div>
               <div className="main-form__input_field">
-                {footerImg && (
-                  <div className="main-form__product_img">
-                    <img src={footerImg} alt="" />
-                  </div>
-                )}
                 {!props.readOnly && (
                   <FileUploader
-                    uniqueId={'file5' + props.uniqueId}
-                    regex={/.+\.(jpeg|jpg|png|img)/}
+                    uniqueId={"file5" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, 'jpeg', 0.3)
-                      setFooterImg(downgraded)
-                      props.handleImgChange(downgraded, 'footerImg')
+                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      setFooterImg(downgraded);
+                      props.handleImgChange(downgraded, "footerImg");
                     }}
+                    previewImage={footerImg}
                   />
                 )}
               </div>
             </div>
           </React.Fragment>
         )}
-        {/* <div className="main-form__item">
-                    <div className="main-form__input_name">Ярлыки</div>
-                    <div className="main-form__input_field">
-                        <CheckBox
-                            text="Запатентована"
-                            checked={proprietaryItem}
-                            name="proprietaryItemText"
-                            onChange={(value, name) => {
-                                setProprietaryItem(value);
-                                props.handleLabelChange('Патент', name);
-                            }}
-                        />
-                    </div>
-                </div> */}
         {selected.map((item, index) => (
           <div className="select-price-item__selected_item">
             <div
               className="select-price-item__selected_header"
               index={index}
               onClick={() => {
-                let temp = selected
+                let temp = selected;
                 temp.splice(index, 1, {
                   ...item,
                   isMinimized: !item.isMinimized,
-                })
-                setSelected([...temp])
+                });
+                setSelected([...temp]);
               }}
             >
               <div className="select-price-item__selected_name">
@@ -403,8 +357,8 @@ const SelectPriceItem = (props) => {
             <div
               className={
                 item.isMinimized
-                  ? 'select-price-item__selected_form select-price-item__selected_form--hidden'
-                  : 'select-price-item__selected_form'
+                  ? "select-price-item__selected_form select-price-item__selected_form--hidden"
+                  : "select-price-item__selected_form"
               }
             >
               <div className="select-price-item__item">
@@ -449,20 +403,6 @@ const SelectPriceItem = (props) => {
                   />
                 </div>
               </div>
-              {/* <div className="select-price-item__item">
-                                <div className="select-price-item__input_name">Себестоимость</div>
-                                <div className="select-price-item__input_field">
-                                    <input
-                                        type="number"
-                                        name="cost"
-                                        index={index}
-                                        autoComplete="off"
-                                        onChange={handleInputChange}
-                                        value={item.cost}
-                                        readOnly={props.readOnly}
-                                    />
-                                </div>
-                            </div> */}
               <div className="select-price-item__item">
                 <div className="select-price-item__input_name">
                   Розница (рыночная цена)
@@ -583,34 +523,17 @@ const SelectPriceItem = (props) => {
                   <CheckBox
                     checked={item.onSale}
                     onChange={(value) => {
-                      let temp = selected
+                      let temp = selected;
                       temp.splice(index, 1, {
                         ...item,
                         onSale: value,
-                      })
-                      setSelected([...temp])
-                      props.handlePriceItemChange([...temp])
+                      });
+                      setSelected([...temp]);
+                      props.handlePriceItemChange([...temp]);
                     }}
                   />
                 </div>
               </div>
-              {/* <div className="select-price-item__item">
-                                <div className="select-price-item__input_name">Хит</div>
-                                <div className="select-price-item__input_field">
-                                    <CheckBox
-                                        checked={item.isTopSeller}
-                                        onChange={(value) => {
-                                            let temp = selected;
-                                            temp.splice(index, 1, {
-                                                ...item,
-                                                isTopSeller: value
-                                            })
-                                            setSelected([...temp]);
-                                            props.handlePriceItemChange([...temp]);
-                                        }}
-                                    />
-                                </div>
-                            </div> */}
             </div>
             {!props.readOnly && index !== 0 && (
               <img
@@ -624,7 +547,7 @@ const SelectPriceItem = (props) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SelectPriceItem
+export default SelectPriceItem;

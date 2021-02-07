@@ -92,6 +92,7 @@
     flex-direction: row !important;
     .main-form__input_name {
       width: fit-content !important;
+      white-space: nowrap;
     }
   }
   .main-form__item .main-form__input_field {
@@ -123,6 +124,10 @@
 
     .checkbox {
       width: 50%;
+
+      &__text {
+        white-space: nowrap;
+      }
     }
     .checkbox__container {
       width: 100%;

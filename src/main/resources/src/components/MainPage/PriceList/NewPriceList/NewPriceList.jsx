@@ -485,14 +485,8 @@ const NewPriceList = (props) => {
                     <div className="main-form__item">
                       <div className="main-form__input_name">Фотография 1</div>
                       <div className="main-form__input_field">
-                        {titlePage.img1 !== "" && (
-                          <div className="main-form__product_img">
-                            <img src={titlePage.img1} alt="" />
-                          </div>
-                        )}
                         <FileUploader
                           uniqueId={"fileTitlePage" + 1}
-                          regex={/.+\.(jpeg|jpg|png|img)/}
                           onChange={async (result) => {
                             const downgraded = await getDataUri(
                               result,
@@ -504,20 +498,17 @@ const NewPriceList = (props) => {
                               img1: downgraded,
                             });
                           }}
+                          previewImage={
+                            titlePage.img1 !== "" ? titlePage.img1 : null
+                          }
                         />
                       </div>
                     </div>
                     <div className="main-form__item">
                       <div className="main-form__input_name">Фотография 2</div>
                       <div className="main-form__input_field">
-                        {titlePage.img2 !== "" && (
-                          <div className="main-form__product_img">
-                            <img src={titlePage.img2} alt="" />
-                          </div>
-                        )}
                         <FileUploader
                           uniqueId={"fileTitlePage" + 2}
-                          regex={/.+\.(jpeg|jpg|png|img)/}
                           onChange={async (result) => {
                             const downgraded = await getDataUri(
                               result,
@@ -529,20 +520,17 @@ const NewPriceList = (props) => {
                               img2: downgraded,
                             });
                           }}
+                          previewImage={
+                            titlePage.img2 !== "" ? titlePage.img2 : null
+                          }
                         />
                       </div>
                     </div>
                     <div className="main-form__item">
                       <div className="main-form__input_name">Фотография 3</div>
                       <div className="main-form__input_field">
-                        {titlePage.img3 !== "" && (
-                          <div className="main-form__product_img">
-                            <img src={titlePage.img3} alt="" />
-                          </div>
-                        )}
                         <FileUploader
                           uniqueId={"fileTitlePage" + 3}
-                          regex={/.+\.(jpeg|jpg|png|img)/}
                           onChange={async (result) => {
                             const downgraded = await getDataUri(
                               result,
@@ -554,6 +542,9 @@ const NewPriceList = (props) => {
                               img3: downgraded,
                             });
                           }}
+                          previewImage={
+                            titlePage.img3 !== "" ? titlePage.img3 : null
+                          }
                         />
                       </div>
                     </div>
@@ -589,7 +580,9 @@ const NewPriceList = (props) => {
                 return (
                   <React.Fragment>
                     <div className="main-form__item main-form__item--header">
-                      <div className="main-form__input_name">Категория</div>
+                      <div className="main-form__input_name">
+                        {category.name}
+                      </div>
                       <CheckBox
                         checked={category.active}
                         name="category"
@@ -603,18 +596,8 @@ const NewPriceList = (props) => {
                         }}
                       />
                       <div className="main-form__input_field">
-                        <div
-                          className="main-form__title"
-                          style={{
-                            backgroundImage: `url('${category.img}')`,
-                            backgroundSize: "100% 100%",
-                          }}
-                        >
-                          {category.name}
-                        </div>
                         <FileUploader
                           uniqueId={"categoryImg" + categoryIndex}
-                          regex={/.+\.(jpeg|jpg|png|img)/}
                           onChange={(result) => {
                             let temp = categories;
                             temp.splice(categoryIndex, 1, {
@@ -623,6 +606,7 @@ const NewPriceList = (props) => {
                             });
                             setCategories([...temp]);
                           }}
+                          previewImage={category.img}
                         />
                       </div>
                     </div>

@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./FileUploader.scss";
 
-const FileUploader = ({ regex, type, onChange }) => {
+const FileUploader = ({
+  regex = /.+\.(jpeg|jpg|png|img)/,
+  type = "readAsDataURL",
+  onChange,
+  previewImage,
+  maxSize = 5,
+  uniqueId = 0,
+}) => {
   const [data, setData] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [error, setError] = useState(false);
@@ -27,8 +34,9 @@ const FileUploader = ({ regex, type, onChange }) => {
 
   const handleDropFile = (event) => {
     event.preventDefault();
+    setIsDraggingOver(false);
     let file =
-      event?.dataTransfer?.files && event.dataTransfer.files.length > 0
+      event?.dataTransfer?.files && event?.dataTransfer?.files?.length > 0
         ? event.dataTransfer.files[0]
         : event.target.files[0];
 
@@ -41,23 +49,27 @@ const FileUploader = ({ regex, type, onChange }) => {
     let reader = new FileReader();
     const { size } = file;
     setData(null);
-    if (size / 1024 / 1024 > 5) {
-      setError("Файл превышает 5 МБайт");
+    if (size / 1024 / 1024 > maxSize) {
+      setError(`Файл превышает ${maxSize} МБайт`);
       return false;
     }
     setError(false);
 
     //Для разных типов файла - разные функции обработки данных
     switch (type) {
+      case "readAsArrayBuffer":
+        reader.readAsArrayBuffer(file);
+        break;
+      case "readAsDataURL":
+        reader.readAsDataURL(file);
+        break;
       default:
         reader.readAsDataURL(file);
         break;
-      case "readAsArrayBuffer":
-        reader.readAsArrayBuffer(file);
     }
-    reader.onloadend = () => {
+    reader.onload = (loadEvent) => {
       setData(file);
-      onChange(reader.result);
+      onChange(loadEvent.target.result);
     };
     setError(false);
   };
@@ -82,21 +94,29 @@ const FileUploader = ({ regex, type, onChange }) => {
     };
   }, []);
 
+  useEffect(() => {}, [previewImage]);
+
   return (
     <div className="file-uploader">
+      {previewImage ? (
+        <img className="file-uploader__preview-image" src={previewImage} />
+      ) : null}
       <div
         className={`file-uploader__wrapper ${
           isDraggingOver ? "file-uploader__wrapper--dragging" : ""
         } ${error ? "file-uploader__wrapper--error" : ""}`}
         ref={dropRef}
         style={{
-          minHeight: data ? "fit-content" : "var(--file-uploader__min-height)",
+          minHeight:
+            data || previewImage
+              ? "fit-content"
+              : "var(--file-uploader__min-height)",
         }}
       >
-        {data ? (
+        {data || previewImage ? (
           <ul className="file-uploader__file-list">
             <li>
-              {data.name}
+              {previewImage ? "Фотография" : data.name}
               <div onClick={handleDeleteFile}>удалить</div>
             </li>
           </ul>
@@ -112,20 +132,27 @@ const FileUploader = ({ regex, type, onChange }) => {
             </div>
 
             <div className="file-uploader__input">
-              <label className="main-window__button" htmlFor="file">
+              <label
+                className="main-window__button"
+                htmlFor={`fileuploader-${uniqueId}`}
+              >
                 Выберите файл
               </label>
               <input
                 onChange={handleDropFile}
                 type="file"
                 name="file"
-                id="file"
+                id={`fileuploader-${uniqueId}`}
               />
             </div>
           </div>
         )}
       </div>
-      {error && <div className="file-uploader__error">{error}</div>}
+      {error && (
+        <div className="file-uploader__error" onClick={() => setError(false)}>
+          {error}
+        </div>
+      )}
     </div>
   );
 };
