@@ -272,7 +272,7 @@ const NewPriceList = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Добавление продукции";
+    document.title = "Прайс-лист";
   }, [priceList]);
 
   return (
@@ -281,7 +281,9 @@ const NewPriceList = (props) => {
         <div className="main-form__title">Прайс-лист</div>
         <form className="main-form__form">
           <div className="main-form__item">
-            <div className="main-form__input_name">Excel-таблица для парсинга</div>
+            <div className="main-form__input_name">
+              Excel-таблица для парсинга
+            </div>
             <FileUploader
               regex={/.+\.(xlsx|csv)/}
               uniqueId="excel-reader"

@@ -13,6 +13,7 @@ const FileUploader = ({
 }) => {
   const [data, setData] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
+  let dragCounter = 0;
   const [hasError, setHasError] = useState(false);
   const dropRef = React.createRef();
 
@@ -23,18 +24,28 @@ const FileUploader = ({
     "/.+\\.(xlsx|csv)/": {
       text: "Поддерживаемые форматы XLSX и CSV",
     },
+    "/.+\\.(docx)/": {
+      text: "Поддерживаемые форматы DOCX",
+    },
   };
 
   const onDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDraggingOver(true);
+    dragCounter++;
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setIsDraggingOver(true);
+    }
   };
 
   const onDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDraggingOver(false);
+    console.log(dragCounter, e);
+    dragCounter--;
+    if (dragCounter === 0) {
+      setIsDraggingOver(false);
+    }
   };
 
   const onDragOver = (e) => {
@@ -44,11 +55,13 @@ const FileUploader = ({
 
   const handleDropFile = (event) => {
     event.preventDefault();
+    event.stopPropagation();
     setIsDraggingOver(false);
     let file =
       event?.dataTransfer?.files && event?.dataTransfer?.files?.length > 0
         ? event.dataTransfer.files[0]
         : event.target.files[0];
+    dragCounter = 0;
 
     //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
     if (file.name.match(regex) === null) {
@@ -131,11 +144,19 @@ const FileUploader = ({
             </li>
           </ul>
         ) : isDraggingOver ? (
-          <div className="file-uploader__info">
+          <div
+            className="file-uploader__info"
+            draggable="true"
+            onDragStart={(e) => e.preventDefault()}
+          >
             <div className="file-uploader__text">Отпустите файл</div>
           </div>
         ) : (
-          <div className="file-uploader__info">
+          <div
+            className="file-uploader__info"
+            draggable="true"
+            onDragStart={(e) => e.preventDefault()}
+          >
             <div className="file-uploader__text">Перетащите файл сюда</div>
             <div className="file-uploader__text file-uploader__text--small">
               или
