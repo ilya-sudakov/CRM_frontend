@@ -176,17 +176,12 @@
         background-color: transparent;
         box-sizing: border-box;
         padding-left: 12px;
+        transition: 100ms ease-in-out;
 
         //dark-theme
         // background-color: rgba(#333333, 0.3);
         // border: 1px solid #555555;
         // color: #bbbbbb !important;
-
-        //test
-        // border: none;
-        // border-bottom: 1px solid #dddddd;
-        // background-color: transparent;
-        // border-radius: 0;
 
         //check for autofill
         &:-webkit-autofill {
@@ -198,6 +193,14 @@
         &:not(:-webkit-autofill) {
           animation-name: onAutoFillCancel;
           // color: #bbbbbb !important;
+        }
+
+        &:hover {
+          border-color: #bbbbbb;
+        }
+
+        &:focus {
+          border-color: $button__background--inverted;
         }
       }
       & .authorization__line {
