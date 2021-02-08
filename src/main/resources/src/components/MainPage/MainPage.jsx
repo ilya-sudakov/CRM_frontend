@@ -37,7 +37,7 @@ import {
   LogListPage,
   EditRecordWork,
   WorkManagementPage,
-  NewPriceList,
+  PriceList,
   ClientCategories,
   EditClient,
   FeedbackPage,
@@ -266,7 +266,7 @@ const MainPage = () => {
                 <PrivateRoute
                   exact
                   path="/price-list"
-                  component={NewPriceList}
+                  component={PriceList}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}

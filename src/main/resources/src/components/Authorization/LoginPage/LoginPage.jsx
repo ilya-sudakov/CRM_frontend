@@ -108,6 +108,7 @@ const LoginPage = (props) => {
                 onFocus={() => setFocus(true)}
                 onBlur={() => setFocus(false)}
                 id="login"
+                autoComplete="on"
                 defaultValue=""
                 onKeyDown={(event) => {
                   if (event.key === "Enter") {
@@ -147,6 +148,7 @@ const LoginPage = (props) => {
               <input
                 type={showPassword ? "text" : "password"}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="on"
                 id="password"
                 onAnimationStart={handleAutoFill}
                 onFocus={() => setFocus(true)}

@@ -158,23 +158,6 @@
     margin-top: 15px;
   }
 
-  &__button {
-    border: 0;
-    cursor: pointer;
-    outline: none;
-    font-size: 70%;
-    padding: 10px 10px;
-    border-radius: 5px;
-    background-color: $button__background--inverted;
-    color: #ffffff;
-    transition: 0.2s ease-in-out;
-
-    &:hover {
-      background-color: lighten($button__background--inverted, 5%);
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    }
-  }
-
   &__input {
     border: 1px solid #bbbbbb;
     width: 100%;

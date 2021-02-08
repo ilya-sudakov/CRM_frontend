@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import deleteSVG from "../../../../../../../../assets/select/delete.svg";
 import "./SelectPriceItem.scss";
 import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
-import CheckBox from "../../../../utils/Form/CheckBox/CheckBox.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
 import { getDataUri } from "../../../../utils/functions.jsx";
 
 const SelectPriceItem = (props) => {
@@ -231,17 +231,9 @@ const SelectPriceItem = (props) => {
 
   return (
     <div className="select-price-item">
-      {!props.readOnly && (
-        <button
-          className="select-price-item__button"
-          onClick={handleNewPriceItem}
-        >
-          Добавить продукцию
-        </button>
-      )}
       <div className="select-price-item__selected">
         {!props.readOnly && (
-          <React.Fragment>
+          <div className="price-list__images-wrapper">
             <div className="main-form__item">
               <div className="main-form__input_name">Фотография 1</div>
               <div className="main-form__input_field">
@@ -337,7 +329,14 @@ const SelectPriceItem = (props) => {
                 )}
               </div>
             </div>
-          </React.Fragment>
+          </div>
+        )}
+        {!props.readOnly && (
+          <Button
+            className="main-window__button"
+            onClick={handleNewPriceItem}
+            text="Добавить продукцию"
+          />
         )}
         {selected.map((item, index) => (
           <div className="select-price-item__selected_item">
@@ -529,23 +528,6 @@ const SelectPriceItem = (props) => {
                     onChange={handleInputChange}
                     value={item.stopPrice}
                     readOnly={props.readOnly}
-                  />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Акция</div>
-                <div className="select-price-item__input_field">
-                  <CheckBox
-                    checked={item.onSale}
-                    onChange={(value) => {
-                      let temp = selected;
-                      temp.splice(index, 1, {
-                        ...item,
-                        onSale: value,
-                      });
-                      setSelected([...temp]);
-                      props.handlePriceItemChange([...temp]);
-                    }}
                   />
                 </div>
               </div>

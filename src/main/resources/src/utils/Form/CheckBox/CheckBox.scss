@@ -1,16 +1,18 @@
 @import "../../../variables.scss";
 
 .checkbox {
+  width: 100%;
+  margin-bottom: 15px;
+  --checkbox__checkmark--size: 22px;
+
   /* Customize the label (the checkbox__checkbox-container) */
   .checkbox__container {
-    display: block;
+    display: flex;
+    align-items: center;
     position: relative;
-    // padding-left: 35px;
-    // margin-bottom: 12px;
-    width: 25px;
-    height: 25px;
+    width: 100%;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 0.9rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -29,52 +31,58 @@
 
   /* Create a custom checkbox */
   .checkbox__checkmark {
-    position: absolute;
+    display: flex;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #ddd;
-    border-radius: 5px;
+    height: var(--checkbox__checkmark--size);
+    min-width: var(--checkbox__checkmark--size);
+    border-radius: 3px;
     transition: background-color 100ms ease-in-out;
+    margin-right: 5px;
+    box-sizing: border-box;
+    position: relative;
+
+    border: 1px solid #cccccc;
   }
 
   /* On mouse-over, add a grey background color */
   .checkbox__container:hover input ~ .checkbox__checkmark {
-    background-color: #ccc;
+    background-color: #f4f4f4;
   }
 
   /* When the checkbox is checked, add a blue background */
   .checkbox__container input:checked ~ .checkbox__checkmark {
-    background-color: #77c2ff;
+    // background-color: #77c2ff;
+    border-color: transparent;
+    background-color: $button__background--inverted;
   }
 
   /* Create the checkmark/indicator (hidden when not checked) */
   .checkbox__checkmark:after {
     content: "";
     position: absolute;
-    // display: none;
-    display: block;
+    display: none;
   }
 
   /* Show the checkmark when checked */
   .checkbox__container input:checked ~ .checkbox__checkmark:after {
-    // display: block;
+    display: block;
   }
 
   /* Style the checkmark/indicator */
   .checkbox__container .checkbox__checkmark:after {
-    left: 9px;
-    top: 5px;
+    left: 7px;
+    top: 2px;
     width: 5px;
     height: 10px;
     border: solid white;
-    border-width: 0 3px 3px 0;
+    border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
   .checkbox__text {
     width: 100%;
+    color: #555555;
   }
 }

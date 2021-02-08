@@ -204,8 +204,8 @@ const LEMZ = lazy(() => import("./LEMZ/LEMZ.jsx"));
 
 const Lepsari = lazy(() => import("./Lepsari/Lepsari.jsx"));
 
-const NewPriceList = lazy(() =>
-  import("./PriceList/NewPriceList/NewPriceList.jsx")
+const PriceList = lazy(() =>
+  import("./PriceList/PriceList/PriceList.jsx")
 );
 
 const FeedbackPage = lazy(() => import("./FeedbackPage/FeedbackPage.jsx"));
@@ -309,7 +309,7 @@ export {
   EditStorageLepsari,
   LEMZ,
   Lepsari,
-  NewPriceList,
+  PriceList,
   FeedbackPage,
   NewFeedback,
   ViewFeedback,

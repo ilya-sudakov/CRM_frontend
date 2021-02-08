@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./NewPriceList.scss";
+import "./PriceList.scss";
 import "../../../../utils/Form/Form.scss";
 import SelectPriceItem from "../SelectPriceItem/SelectPriceItem.jsx";
 import XLSX from "xlsx";
@@ -456,9 +456,6 @@ const NewPriceList = (props) => {
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Каталог продукции</div>
                 <div className="main-form__item main-form__item--header">
-                  <div className="main-form__input_name">
-                    Титульная страница
-                  </div>
                   <CheckBox
                     checked={titlePage.active}
                     name="titleList"
@@ -468,6 +465,7 @@ const NewPriceList = (props) => {
                         active: value,
                       });
                     }}
+                    text="Титульная страница"
                   />
                 </div>
                 {titlePage.active && (
@@ -483,67 +481,75 @@ const NewPriceList = (props) => {
                         });
                       }}
                     />
-                    <div className="main-form__item">
-                      <div className="main-form__input_name">Фотография 1</div>
-                      <div className="main-form__input_field">
-                        <FileUploader
-                          uniqueId={"fileTitlePage" + 1}
-                          onChange={async (result) => {
-                            const downgraded =
-                              result !== ""
-                                ? await getDataUri(result, "jpeg", 0.3)
-                                : "";
-                            setTitlePage({
-                              ...titlePage,
-                              img1: downgraded,
-                            });
-                          }}
-                          previewImage={
-                            titlePage.img1 !== "" ? titlePage.img1 : null
-                          }
-                        />
+                    <div className="price-list__images-wrapper">
+                      <div className="main-form__item">
+                        <div className="main-form__input_name">
+                          Фотография 1
+                        </div>
+                        <div className="main-form__input_field">
+                          <FileUploader
+                            uniqueId={"fileTitlePage" + 1}
+                            onChange={async (result) => {
+                              const downgraded =
+                                result !== ""
+                                  ? await getDataUri(result, "jpeg", 0.3)
+                                  : "";
+                              setTitlePage({
+                                ...titlePage,
+                                img1: downgraded,
+                              });
+                            }}
+                            previewImage={
+                              titlePage.img1 !== "" ? titlePage.img1 : null
+                            }
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="main-form__item">
-                      <div className="main-form__input_name">Фотография 2</div>
-                      <div className="main-form__input_field">
-                        <FileUploader
-                          uniqueId={"fileTitlePage" + 2}
-                          onChange={async (result) => {
-                            const downgraded =
-                              result !== ""
-                                ? await getDataUri(result, "jpeg", 0.3)
-                                : "";
-                            setTitlePage({
-                              ...titlePage,
-                              img2: downgraded,
-                            });
-                          }}
-                          previewImage={
-                            titlePage.img2 !== "" ? titlePage.img2 : null
-                          }
-                        />
+                      <div className="main-form__item">
+                        <div className="main-form__input_name">
+                          Фотография 2
+                        </div>
+                        <div className="main-form__input_field">
+                          <FileUploader
+                            uniqueId={"fileTitlePage" + 2}
+                            onChange={async (result) => {
+                              const downgraded =
+                                result !== ""
+                                  ? await getDataUri(result, "jpeg", 0.3)
+                                  : "";
+                              setTitlePage({
+                                ...titlePage,
+                                img2: downgraded,
+                              });
+                            }}
+                            previewImage={
+                              titlePage.img2 !== "" ? titlePage.img2 : null
+                            }
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="main-form__item">
-                      <div className="main-form__input_name">Фотография 3</div>
-                      <div className="main-form__input_field">
-                        <FileUploader
-                          uniqueId={"fileTitlePage" + 3}
-                          onChange={async (result) => {
-                            const downgraded =
-                              result !== ""
-                                ? await getDataUri(result, "jpeg", 0.3)
-                                : "";
-                            setTitlePage({
-                              ...titlePage,
-                              img3: downgraded,
-                            });
-                          }}
-                          previewImage={
-                            titlePage.img3 !== "" ? titlePage.img3 : null
-                          }
-                        />
+                      <div className="main-form__item">
+                        <div className="main-form__input_name">
+                          Фотография 3
+                        </div>
+                        <div className="main-form__input_field">
+                          <FileUploader
+                            uniqueId={"fileTitlePage" + 3}
+                            onChange={async (result) => {
+                              const downgraded =
+                                result !== ""
+                                  ? await getDataUri(result, "jpeg", 0.3)
+                                  : "";
+                              setTitlePage({
+                                ...titlePage,
+                                img3: downgraded,
+                              });
+                            }}
+                            previewImage={
+                              titlePage.img3 !== "" ? titlePage.img3 : null
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
                   </>
@@ -576,11 +582,8 @@ const NewPriceList = (props) => {
                 }, 0) > 0
               ) {
                 return (
-                  <React.Fragment>
+                  <>
                     <div className="main-form__item main-form__item--header">
-                      <div className="main-form__input_name">
-                        {category.name}
-                      </div>
                       <CheckBox
                         checked={category.active}
                         name="category"
@@ -592,6 +595,7 @@ const NewPriceList = (props) => {
                           });
                           setCategories([...originalList]);
                         }}
+                        text={category.name}
                       />
                       <div className="main-form__input_field">
                         <FileUploader
@@ -622,11 +626,8 @@ const NewPriceList = (props) => {
                         .map((item, index) => {
                           if (item.category === category.name) {
                             return (
-                              <React.Fragment>
+                              <div className="price-list__group-wrapper">
                                 <div className="main-form__item">
-                                  <div className="main-form__input_name">
-                                    Группа продукций
-                                  </div>
                                   <CheckBox
                                     checked={item.active}
                                     name="groupOfProducts"
@@ -638,6 +639,7 @@ const NewPriceList = (props) => {
                                       });
                                       setPriceList([...originalList]);
                                     }}
+                                    text="Группа продукций"
                                   />
                                   <div className="main-form__input_field">
                                     <input
@@ -664,9 +666,6 @@ const NewPriceList = (props) => {
                                       : " main-form__item main-form__item--hidden"
                                   }
                                 >
-                                  <div className="main-form__input_name">
-                                    Продукция
-                                  </div>
                                   <div className="main-form__input_field">
                                     <SelectPriceItem
                                       handlePriceItemChange={(value) => {
@@ -731,11 +730,11 @@ const NewPriceList = (props) => {
                                     />
                                   </div>
                                 </div>
-                              </React.Fragment>
+                              </div>
                             );
                           }
                         })}
-                  </React.Fragment>
+                  </>
                 );
               }
             })}

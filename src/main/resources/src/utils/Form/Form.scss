@@ -20,10 +20,6 @@
     text-align: center;
   }
 
-  .checkbox__container {
-    width: 100% !important;
-  }
-
   .main-form__header {
     display: flex;
     // width: calc(100% - 25px);
@@ -362,7 +358,7 @@
         max-width: calc(100% - 20px);
         min-width: calc(100% - 20px);
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 3px;
         outline: none;
         height: 1.25rem;
 

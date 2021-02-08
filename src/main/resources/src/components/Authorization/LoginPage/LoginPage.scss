@@ -286,37 +286,9 @@
     }
   }
   & .checkbox {
-    width: calc(100% - 35px);
-    margin: 0px auto 15px 0px;
-    // margin-left: 5px;
     margin-top: 5px;
-    &__container {
-      padding-left: 30px;
-      width: 100% !important;
-
-      //dark-theme
-      color: #777777;
-
-      & input ~ .checkbox__checkmark {
-        width: 20px;
-        margin-top: 2.5px;
-        height: 20px;
-
-        &:after {
-          top: 3px;
-          left: 6px;
-          height: 8px;
-          width: 4px;
-        }
-      }
-      & input:checked ~ .checkbox__checkmark {
-        background-color: $button__background--inverted !important;
-      }
-    }
     &__text {
-      font-size: 80%;
-      width: fit-content;
-
+      font-size: 0.85rem;
       //dark-theme
       // color: #eeeeee;
     }
