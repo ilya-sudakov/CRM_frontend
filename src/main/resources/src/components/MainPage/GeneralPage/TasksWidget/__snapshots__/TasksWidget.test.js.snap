@@ -75,6 +75,7 @@ exports[`TasksWidget component matches snapshot 1`] = `
             Логин
           </div>
           <input
+            autocomplete="on"
             id="login"
             type="text"
             value=""
@@ -97,6 +98,7 @@ exports[`TasksWidget component matches snapshot 1`] = `
             class="authorization__line authorization__line--hidden"
           />
           <input
+            autocomplete="on"
             id="password"
             type="password"
           />
@@ -107,11 +109,6 @@ exports[`TasksWidget component matches snapshot 1`] = `
           <label
             class="checkbox__container"
           >
-            <span
-              class="checkbox__text"
-            >
-              Запомнить меня
-            </span>
             <input
               checked=""
               name=""
@@ -121,6 +118,11 @@ exports[`TasksWidget component matches snapshot 1`] = `
             <div
               class="checkbox__checkmark"
             />
+            <span
+              class="checkbox__text"
+            >
+              Запомнить меня
+            </span>
           </label>
         </div>
         <button
