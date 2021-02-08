@@ -123,8 +123,8 @@
         }
 
         .main-window__img {
+          transition: 100ms ease-in-out;
           cursor: pointer;
-          transform: rotate(0) !important;
         }
       }
 
