@@ -20,6 +20,12 @@
 
   .select-draft {
     margin-bottom: 15px;
+
+    &__input_name {
+      color: #666666;
+      font-size: 1rem;
+      margin-bottom: 3px;
+    }
   }
 
   .select-work-item {

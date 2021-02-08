@@ -10,7 +10,6 @@ import {
   addProductToRecordedWork,
   addDraftToRecordedWork,
 } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx'
-// import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx'
 import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx'
 import Button from '../../../../../utils/Form/Button/Button.jsx'
 import { dateDiffInDays } from '../../../../../utils/functions.jsx'

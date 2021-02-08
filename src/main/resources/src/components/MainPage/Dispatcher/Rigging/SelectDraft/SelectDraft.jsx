@@ -4,7 +4,7 @@ import "./SelectDraft.scss";
 import SearchBar from "../../../SearchBar/SearchBar.jsx";
 import TableView from "./TableView/TableView.jsx";
 import FormWindow from "../../../../../utils/Form/FormWindow/FormWindow.jsx";
-import ImgLoader from "../../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
+import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 import { getStamp } from "../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
 import { getPressForm } from "../../../../../utils/RequestsAPI/Rigging/PressForm.jsx";
 import { getMachine } from "../../../../../utils/RequestsAPI/Rigging/Machine.jsx";
@@ -220,6 +220,15 @@ const SelectDraft = (props) => {
 
   return (
     <div className="select-draft">
+      <div className="select-draft__input_name main-form__input_name--row">
+        Чертежи
+        {!props.readOnly && (
+          <SelectFromButton
+            text="Выбрать чертеж"
+            onClick={() => setShowWindow(!showWindow)}
+          />
+        )}
+      </div>
       <div
         className={
           showOptions
@@ -230,17 +239,6 @@ const SelectDraft = (props) => {
       ></div>
       {!props.readOnly && !props.workshop && (
         <div className="select-draft__searchbar">
-          <div className="select-draft__buttons">
-            <button
-              className="select-draft__search_button"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowWindow(!showWindow);
-              }}
-            >
-              Добавить чертеж
-            </button>
-          </div>
           <input
             type="text"
             className={
