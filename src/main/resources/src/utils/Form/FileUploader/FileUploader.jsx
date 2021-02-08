@@ -20,13 +20,13 @@ const FileUploader = ({
 
   const formats = {
     "/.+\\.(jpeg|jpg|png|img)/": {
-      text: "Поддерживаемые форматы JPEG, PNG, IMG",
+      text: "Форматы JPEG, PNG, IMG",
     },
     "/.+\\.(xlsx|csv)/": {
-      text: "Поддерживаемые форматы XLSX и CSV",
+      text: "Форматы XLSX и CSV",
     },
     "/.+\\.(docx)/": {
-      text: "Поддерживаемые форматы DOCX",
+      text: "Формат DOCX",
     },
   };
 
