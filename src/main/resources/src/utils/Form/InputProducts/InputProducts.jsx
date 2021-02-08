@@ -459,10 +459,12 @@ const InputProducts = (props) => {
       <div className="input_products__input">
         <div className="input_products__input_name main-form__input_name--row">
           {props.inputName + (props.required ? "*" : "")}
-          <SelectFromButton
-            text="Выбрать продукцию"
-            onClick={() => setShowWindow(!showWindow)}
-          />
+          {!props.readOnly && (
+            <SelectFromButton
+              text="Выбрать продукцию"
+              onClick={() => setShowWindow(!showWindow)}
+            />
+          )}
         </div>
         <div className="select">
           <div

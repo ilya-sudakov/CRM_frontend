@@ -186,7 +186,6 @@ const NewProduct = (props) => {
           handleCategoryChange={handleCategoryChange}
           errorsArr={productErrors}
           setErrorsArr={setProductErrors}
-          readOnly
         />
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Характеристика продукции</div>
