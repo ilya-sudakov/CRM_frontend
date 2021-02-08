@@ -8,7 +8,7 @@ import {
   getEmployeesByWorkshop,
 } from "../../../../../utils/RequestsAPI/Employees.jsx";
 import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
+import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 
 const SelectEmployee = (props) => {
   const [showWindow, setShowWindow] = useState(false);
@@ -131,17 +131,14 @@ const SelectEmployee = (props) => {
   return (
     <div className="select-employee">
       <div className="select-employee__input">
-        {props.inputName ? (
-          <div className="select-employee__input_name">
-            {props.inputName + (props.required ? "*" : "")}
-          </div>
-        ) : null}
-        <div className={"select-employee__input_field"}>
-          <Button
+        <div className="select-employee__input_name main-form__input_name--row">
+          {`${props.inputName} ${props.required ? "*" : ""}`}
+          <SelectFromButton
             text="Выбрать сотрудника"
-            className="main-form__button"
             onClick={() => setShowWindow(!showWindow)}
           />
+        </div>
+        <div className={"select-employee__input_field"}>
           <div className="select-employee__searchbar">
             <input
               type="text"

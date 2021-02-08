@@ -206,12 +206,14 @@ const EmployeeReportPage = () => {
           }
         />
         {!isLoadingWorkData ? (
-          <SelectEmployee
-            userHasAccess={userContext.userHasAccess}
-            inputName="Выбор сотрудника"
-            name="employee"
-            handleEmployeeChange={handleEmployeeChange}
-          />
+          <div className="main-form">
+            <SelectEmployee
+              userHasAccess={userContext.userHasAccess}
+              inputName="Выбор сотрудника"
+              name="employee"
+              handleEmployeeChange={handleEmployeeChange}
+            />
+          </div>
         ) : (
           <Button
             text="Идет загрузка"

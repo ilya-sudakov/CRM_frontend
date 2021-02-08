@@ -6,16 +6,15 @@
     // padding: 5px 30px;
     // box-sizing: border-box;
 
+    .main-form {
+        padding: 0;
+    }
+
     .select-employee {
         margin-top: 15px;
         margin-bottom: 15px;
         padding-left: 15px;
         box-sizing: border-box;
-        &__input {
-            .select-employee__input_name {
-                display: none;
-            }
-        }
         &__searchbar {
             display: none;
         }

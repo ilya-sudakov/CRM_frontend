@@ -5,6 +5,7 @@ import SearchBar from "../../SearchBar/SearchBar.jsx";
 import { getWork } from "../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx";
 import TableView from "./TableViewWork/TableView.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
+import SelectFromButton from "../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 
 const SelectWorkItem = (props) => {
   const [showWindow, setShowWindow] = useState(false);
@@ -44,15 +45,16 @@ const SelectWorkItem = (props) => {
   return (
     <div className="select-work-item">
       <div className="select-work-item__input">
-        <div className="select-work-item__input_name">
+        <div className="select-work-item__input_name main-form__input_name--row">
           {props.inputName + (props.required ? "*" : "")}
+          {(props.readOnly === undefined || !props.readOnly) && (
+            <SelectFromButton
+              text="Выбрать тип работы"
+              onClick={() => setShowWindow(!showWindow)}
+            />
+          )}
         </div>
         <div className="select-work-item__input_field">
-          <Button
-            className="main-form__button"
-            onClick={() => setShowWindow(!showWindow)}
-            text="Выбрать тип работы"
-          />
           <div className="select-work-item__searchbar">
             <input
               type="text"

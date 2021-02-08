@@ -254,7 +254,6 @@ const NewRecordWork = (props) => {
                 }}
                 errorsArr={workTimeErrors}
                 setErrorsArr={setWorkTimeErrors}
-                readOnly
               />
               {/* Создание работы */}
               <div className="main-form__item">

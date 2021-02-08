@@ -191,7 +191,7 @@ const SelectWork = (props) => {
                   }}
                   userHasAccess={userContext.userHasAccess}
                   workItems={props.workItems}
-                  readOnly
+                  readOnly={props.readOnly}
                 />
               )}
               {/* Вставить InputProducts, только вместо фасовки сделать 
