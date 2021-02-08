@@ -133,26 +133,32 @@ const SelectEmployee = (props) => {
       <div className="select-employee__input">
         <div className="select-employee__input_name main-form__input_name--row">
           {`${props.inputName} ${props.required ? "*" : ""}`}
-          <SelectFromButton
-            text="Выбрать сотрудника"
-            onClick={() => setShowWindow(!showWindow)}
-          />
-        </div>
-        <div className={"select-employee__input_field"}>
-          <div className="select-employee__searchbar">
-            <input
-              type="text"
-              className={
-                props.error === true
-                  ? "select-employee__input select-employee__input--error"
-                  : "select-employee__input"
-              }
-              defaultValue={props.defaultValue ? props.defaultValue : fullName}
-              placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
-              readOnly
+          {!props.readOnly && (
+            <SelectFromButton
+              text="Выбрать сотрудника"
+              onClick={() => setShowWindow(!showWindow)}
             />
-          </div>
+          )}
         </div>
+        {(props.defaultValue || fullName) && (
+          <div className={"select-employee__input_field"}>
+            <div className="select-employee__searchbar">
+              <input
+                type="text"
+                className={
+                  props.error === true
+                    ? "select-employee__input select-employee__input--error"
+                    : "select-employee__input"
+                }
+                defaultValue={
+                  props.defaultValue ? props.defaultValue : fullName
+                }
+                placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
+                disabled
+              />
+            </div>
+          </div>
+        )}
       </div>
       {props.error === true && (
         <div

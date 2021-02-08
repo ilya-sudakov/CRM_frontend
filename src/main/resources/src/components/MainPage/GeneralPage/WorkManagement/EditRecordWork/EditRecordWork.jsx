@@ -326,105 +326,113 @@ const EditRecordWork = (props) => {
   }, []);
 
   return (
-    <div className="main-form">
-      <form className="main-form__form">
-        <div className="main-form__header main-form__header--full">
-          <div className="main-form__title">Редактирование записи о работе</div>
-        </div>
-        <ErrorMessage
-          message="Не заполнены все обязательные поля!"
-          showError={showError}
-          setShowError={setShowError}
-        />
-        <InputDate
-          inputName="Дата"
-          required
-          error={Date.parse(workTimeErrors.date)}
-          name="date"
-          selected={worktimeInputs.date}
-          // filterDate={isNewDate}
-          handleDateChange={(date) => {
-            validateField("date", date);
-            setWorkTimeInputs({
-              ...worktimeInputs,
-              date: date,
-            });
-            setWorkTimeErrors({
-              ...workTimeErrors,
-              date: false,
-            });
-          }}
-          errorsArr={workTimeErrors}
-          setErrorsArr={setWorkTimeErrors}
-        />
-        {/* Список сотрудников */}
-        <SelectEmployee
-          inputName="Выбор сотрудника"
-          required
-          error={workTimeErrors.employee}
-          userHasAccess={props.userHasAccess}
-          defaultValue={worktimeInputs.employeeName}
-          windowName="select-employee"
-          name="employee"
-          handleEmployeeChange={(value) => {
-            validateField("employee", value);
-            setWorkTimeInputs({
-              ...worktimeInputs,
-              employeeId: value,
-            });
-            setWorkTimeErrors({
-              ...workTimeErrors,
-              employee: false,
-            });
-          }}
-          errorsArr={workTimeErrors}
-          setErrorsArr={setWorkTimeErrors}
-          readOnly
-        />
-        {/* Создание работы */}
-        <div className="main-form__item">
-          <div className="main-form__input_name">Работы*</div>
-          <div className="main-form__input_field">
-            <SelectWork
-              handleWorkChange={(value) => {
-                validateField("works", value);
-                setWorkTimeInputs({
-                  ...worktimeInputs,
-                  works: value,
-                });
-                setWorkTimeErrors({
-                  ...workTimeErrors,
-                  works: false,
-                });
-              }}
-              userHasAccess={props.userHasAccess}
-              totalHours={totalHours}
-              setTotalHours={setTotalHours}
-              categories={categories}
-              products={products}
-              defaultValue={worktimeInputs.works}
+    <div className="edit-record-work">
+      <div className="main-form">
+        <form className="main-form__form">
+          <div className="main-form__header main-form__header--full">
+            <div className="main-form__title">
+              Редактирование записи о работе
+            </div>
+          </div>
+          <ErrorMessage
+            message="Не заполнены все обязательные поля!"
+            showError={showError}
+            setShowError={setShowError}
+          />
+          <InputDate
+            inputName="Дата"
+            required
+            error={Date.parse(workTimeErrors.date)}
+            name="date"
+            selected={worktimeInputs.date}
+            // filterDate={isNewDate}
+            handleDateChange={(date) => {
+              validateField("date", date);
+              setWorkTimeInputs({
+                ...worktimeInputs,
+                date: date,
+              });
+              setWorkTimeErrors({
+                ...workTimeErrors,
+                date: false,
+              });
+            }}
+            errorsArr={workTimeErrors}
+            setErrorsArr={setWorkTimeErrors}
+          />
+          {/* Список сотрудников */}
+          <SelectEmployee
+            inputName="Выбор сотрудника"
+            required
+            error={workTimeErrors.employee}
+            userHasAccess={props.userHasAccess}
+            defaultValue={worktimeInputs.employeeName}
+            windowName="select-employee"
+            name="employee"
+            handleEmployeeChange={(value) => {
+              validateField("employee", value);
+              setWorkTimeInputs({
+                ...worktimeInputs,
+                employeeId: value,
+              });
+              setWorkTimeErrors({
+                ...workTimeErrors,
+                employee: false,
+              });
+            }}
+            errorsArr={workTimeErrors}
+            setErrorsArr={setWorkTimeErrors}
+            readOnly
+          />
+          {/* Создание работы */}
+          <div className="main-form__item">
+            <div className="main-form__input_name">Работы*</div>
+            <div className="main-form__input_field">
+              <SelectWork
+                handleWorkChange={(value) => {
+                  validateField("works", value);
+                  setWorkTimeInputs({
+                    ...worktimeInputs,
+                    works: value,
+                  });
+                  setWorkTimeErrors({
+                    ...workTimeErrors,
+                    works: false,
+                  });
+                }}
+                userHasAccess={props.userHasAccess}
+                totalHours={totalHours}
+                setTotalHours={setTotalHours}
+                categories={categories}
+                products={products}
+                defaultValue={worktimeInputs.works}
+              />
+            </div>
+          </div>
+          <InputText
+            inputName="Всего часов"
+            readOnly
+            defaultValue={totalHours}
+          />
+          <div className="main-form__input_hint">
+            * - поля, обязательные для заполнения
+          </div>
+          <div className="main-form__buttons main-form__buttons--full">
+            <input
+              className="main-form__submit main-form__submit--inverted"
+              type="submit"
+              onClick={() => history.push("/work-management")}
+              value="Вернуться назад"
+            />
+            <Button
+              text="Редактировать запись"
+              isLoading={isLoading}
+              className="main-form__submit"
+              onClick={handleSubmit}
             />
           </div>
-        </div>
-        <InputText inputName="Всего часов" readOnly defaultValue={totalHours} />
-        <div className="main-form__input_hint">
-          * - поля, обязательные для заполнения
-        </div>
-        <div className="main-form__buttons main-form__buttons--full">
-          <input
-            className="main-form__submit main-form__submit--inverted"
-            type="submit"
-            onClick={() => history.push("/work-management")}
-            value="Вернуться назад"
-          />
-          <Button
-            text="Редактировать запись"
-            isLoading={isLoading}
-            className="main-form__submit"
-            onClick={handleSubmit}
-          />
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

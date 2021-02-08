@@ -71,6 +71,7 @@
 
             //column direction
             width: 100%;
+            margin-bottom: 3px;
         }
 
         .select-packaging__input-field {
@@ -135,6 +136,17 @@
 
         .main-window__reminder {
             width: fit-content;
+        }
+    }
+
+    .searchbar {
+        margin-bottom: 0;
+    }
+
+    .form-window {
+        .main-window__list {
+            margin-left: -15px;
+            width: calc(100% + 30px) !important;
         }
     }
 

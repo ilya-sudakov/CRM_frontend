@@ -32,6 +32,18 @@
           max-height: 120px;
         }
 
+        .select-employee {
+          margin-bottom: 15px;
+        }
+
+        .select-work-item {
+          input {
+            &:disabled {
+              background-color: #f4f4f4;
+            }
+          }
+        }
+
         .select-draft__options {
           max-height: 120px;
         }

@@ -36,21 +36,23 @@ const SelectCategory = (props) => {
             />
           )}
         </div>
-        <div className={"select-category__input_field"}>
-          <div className="select-category__searchbar">
-            <input
-              type="text"
-              className={
-                props.error === true
-                  ? "select-category__input select-category__input--error"
-                  : "select-category__input"
-              }
-              value={props.defaultValue ? props.defaultValue : id}
-              placeholder="Выберите категорию, нажав на кнопку 'Выбрать категорию'"
-              readOnly
-            />
+        {(props.defaultValue || id) && (
+          <div className={"select-category__input_field"}>
+            <div className="select-category__searchbar">
+              <input
+                type="text"
+                className={
+                  props.error === true
+                    ? "select-category__input select-category__input--error"
+                    : "select-category__input"
+                }
+                value={props.defaultValue ? props.defaultValue : id}
+                placeholder="Выберите категорию, нажав на кнопку 'Выбрать категорию'"
+                disabled
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
       {props.error === true && (
         <div

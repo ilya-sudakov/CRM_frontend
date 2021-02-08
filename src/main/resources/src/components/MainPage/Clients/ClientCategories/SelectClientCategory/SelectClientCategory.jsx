@@ -79,8 +79,8 @@ const SelectClientCategory = (props) => {
                   defaultValue={
                     props.defaultValue ? props.defaultValue : fullName
                   }
+                  disabled
                   placeholder="Выберите категорию, нажав на кнопку 'Выбрать категорию'"
-                  readOnly
                 />
               </div>
             )}

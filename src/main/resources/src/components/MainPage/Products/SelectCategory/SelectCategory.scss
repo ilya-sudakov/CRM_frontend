@@ -105,6 +105,14 @@
       }
     }
   }
+  
+  .form-window {
+    &__content {
+      .searchbar {
+        margin-bottom: 0;
+      }
+    }
+  }
 
   @media (max-width: 768px) {
     .select-category__input {

@@ -122,7 +122,6 @@ const SelectPackaging = (props) => {
             <div className="main-window__list-item main-window__list-item--header">
               <span>Название</span>
               <span>Количество</span>
-              <span>Комментарий</span>
               <span>Размер</span>
               {!props.readOnly && (
                 <div className="main-window__actions">Действие</div>
@@ -138,10 +137,6 @@ const SelectPackaging = (props) => {
                   <span>
                     <div className="main-window__mobile-text">Количество:</div>
                     {item.quantity}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Комментарий:</div>
-                    {item.comment}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">Размер:</div>
@@ -184,7 +179,7 @@ const TableView = (props) => {
 
   return (
     <div className="main-window">
-      <div className="main-window__list">
+      <div className="main-window__list main-window__list--full">
         <TableLoading isLoading={props.isLoading} />
         <div className="main-window__list-item main-window__list-item--header">
           <span>Название</span>
@@ -206,7 +201,18 @@ const TableView = (props) => {
           })
           .map((item) => {
             return (
-              <div className="main-window__list-item">
+              <div
+                className="main-window__list-item"
+                onClick={(event) => {
+                  event.preventDefault();
+                  props.onSelect(item);
+                  setSelectedItem({
+                    ...item,
+                  });
+                  props.setCloseWindow(!props.closeWindow);
+                  props.setShowWindow(false);
+                }}
+              >
                 <span>
                   <div className="main-window__mobile-text">Название:</div>
                   {item.name}
@@ -224,19 +230,7 @@ const TableView = (props) => {
                   {item.size}
                 </span>
                 <div className="main-window__actions">
-                  <div
-                    className="main-window__action"
-                    title="Выбрать упаковку"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      props.onSelect(item);
-                      setSelectedItem({
-                        ...item,
-                      });
-                      props.setCloseWindow(!props.closeWindow);
-                      props.setShowWindow(false);
-                    }}
-                  >
+                  <div className="main-window__action" title="Выбрать упаковку">
                     {/* Выбрать */}
                     <img className="main-window__img" src={okSVG} />
                   </div>

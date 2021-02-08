@@ -54,23 +54,23 @@ const SelectWorkItem = (props) => {
             />
           )}
         </div>
-        <div className="select-work-item__input_field">
-          <div className="select-work-item__searchbar">
-            <input
-              type="text"
-              className={
-                props.error === true
-                  ? "select-work-item__input select-work-item__input--error"
-                  : "select-work-item__input"
-              }
-              // onChange={props.handleInputChange}
-              value={props.defaultValue ? props.defaultValue : fullName}
-              // onClick={!props.readOnly ? clickOnInput : null}
-              placeholder="Выберите работу, нажав на кнопку 'Выбрать тип работы'"
-              readOnly={props.readOnly}
-            />
+        {(props.defaultValue || fullName) && (
+          <div className="select-work-item__input_field">
+            <div className="select-work-item__searchbar">
+              <input
+                type="text"
+                className={
+                  props.error === true
+                    ? "select-work-item__input select-work-item__input--error"
+                    : "select-work-item__input"
+                }
+                value={props.defaultValue ? props.defaultValue : fullName}
+                placeholder="Выберите работу, нажав на кнопку 'Выбрать тип работы'"
+                disabled
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
       {props.error === true && (
         <div
