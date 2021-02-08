@@ -66,7 +66,6 @@ const NewPriceList = () => {
       .then(() => getPriceGroupImageByName("titlePage"))
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         setTitlePage({
           ...titlePage1,
           img1: res.imgOne,
@@ -123,6 +122,7 @@ const NewPriceList = () => {
       slogan: excelRows[2].titlePage,
       list: excelRows[3].titlePage.split("/"),
       active: true,
+      isMinimized: true,
     });
     setTitlePage(titlePage1);
     let newData = [];
@@ -648,23 +648,40 @@ const CategoryHeader = ({
 };
 
 const GroupTitlePage = ({ titlePage, setTitlePage }) => {
+  const handleActivateTitlePageGroup = (value) => {
+    return setTitlePage({
+      ...titlePage,
+      active: value,
+    });
+  };
+
+  const handleMinimizeTitlePageGroup = () => {
+    return setTitlePage({
+      ...titlePage,
+      isMinimized: !titlePage.isMinimized,
+    });
+  };
+
   return (
     <>
       <div className="main-form__item main-form__item--header">
         <CheckBox
           checked={titlePage.active}
           name="titleList"
-          onChange={(value) => {
-            setTitlePage({
-              ...titlePage,
-              active: value,
-            });
-          }}
+          onChange={handleActivateTitlePageGroup}
           text="Титульная страница"
         />
+        <ChevronSVG
+          className={`main-window__img`}
+          style={{ transform: `rotate(${titlePage.isMinimized ? 0 : 180}deg)` }}
+          title={`${
+            titlePage.isMinimized ? "Раскрыть" : "Скрыть"
+          } Титульный лист`}
+          onClick={handleMinimizeTitlePageGroup}
+        />
       </div>
-      {titlePage.active && (
-        <>
+      {!titlePage.isMinimized && titlePage.active ? (
+        <div className="price-list__title-page-wrapper">
           <InputText
             inputName="Получатель"
             name="to"
@@ -735,8 +752,8 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
               </div>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      ) : null}
     </>
   );
 };
