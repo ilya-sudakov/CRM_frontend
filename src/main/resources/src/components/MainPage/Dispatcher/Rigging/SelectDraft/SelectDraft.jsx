@@ -320,11 +320,6 @@ const SelectDraft = (props) => {
         </div>
       )}
       <div className="select-draft__selected">
-        {/* {selected.length !== 0 && (
-          <span className="select-draft__selected_title">
-            Выбранные чертежи:
-          </span>
-        )} */}
         {selected.map((item, index) => (
           <div className="select-draft__selected_row">
             <div className="select-draft__selected_item">
