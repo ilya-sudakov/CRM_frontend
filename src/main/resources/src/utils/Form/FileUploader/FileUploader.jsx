@@ -122,7 +122,6 @@ const FileUploader = ({
 
   return (
     <div className="file-uploader">
-      {console.log(previewImage)}
       {previewImage && previewImage !== "" ? (
         <img className="file-uploader__preview-image" src={previewImage} />
       ) : null}

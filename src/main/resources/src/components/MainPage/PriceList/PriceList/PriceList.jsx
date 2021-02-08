@@ -78,7 +78,6 @@ const NewPriceList = (props) => {
 
   const saveImages = () => {
     setIsLoading(true);
-    console.log(titlePage);
     Promise.all(
       priceList.map((item) =>
         updatePriceGroupByName(item.number, {
@@ -275,6 +274,85 @@ const NewPriceList = (props) => {
     document.title = "Прайс-лист";
   }, [priceList]);
 
+  const handleOpenPDF = () => {
+    setIsLoading(true);
+    getPriceListPdfText(
+      categories,
+      priceList.filter((item) => item.active),
+      optionalCols
+        .filter((item) => item.active && item)
+        .sort((a, b) => {
+          if (a.id < b.id) {
+            return -1;
+          }
+          if (a.id > b.id) {
+            return 1;
+          }
+          return 0;
+        }),
+      locationTypes,
+      disclaimer,
+      titlePage
+    ).then(() => {
+      setIsLoading(false);
+    });
+  };
+
+  const handleOpenNewPDF = () => {
+    setIsLoading(true);
+    getPriceListPdfTextMini(
+      categories,
+      priceList.filter((item) => item.active),
+      optionalCols
+        .filter((item) => item.active && item)
+        .sort((a, b) => {
+          if (a.id < b.id) {
+            return -1;
+          }
+          if (a.id > b.id) {
+            return 1;
+          }
+          return 0;
+        }),
+      locationTypes
+    ).then(() => {
+      setIsLoading(false);
+    });
+  };
+
+  const handleDownloadExcel = () => {
+    setIsLoading(true);
+    exportPriceListToXLSX(
+      categories,
+      priceList.filter((item) => item.active),
+      optionalCols
+        .filter((item) => item.active && item)
+        .sort((a, b) => {
+          if (a.id < b.id) {
+            return -1;
+          }
+          if (a.id > b.id) {
+            return 1;
+          }
+          return 0;
+        })
+    ).then(() => {
+      setIsLoading(false);
+    });
+  };
+
+  const sortCategories = (categories) => {
+    return categories.sort((a, b) => {
+      if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
+        return -1;
+      }
+      if (a.name.localeCompare(b.name, undefined, { numeric: true }) > 0) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
   return (
     <div className="new-price-item">
       <div className="main-form">
@@ -300,94 +378,27 @@ const NewPriceList = (props) => {
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
-                onClick={() => {
-                  setIsLoading(true);
-                  console.log(priceList);
-                  getPriceListPdfText(
-                    categories,
-                    priceList.filter((item) => item.active),
-                    optionalCols
-                      .filter((item) => item.active && item)
-                      .sort((a, b) => {
-                        if (a.id < b.id) {
-                          return -1;
-                        }
-                        if (a.id > b.id) {
-                          return 1;
-                        }
-                        return 0;
-                      }),
-                    locationTypes,
-                    disclaimer,
-                    titlePage
-                  ).then(() => {
-                    setIsLoading(false);
-                  });
-                }}
+                onClick={handleOpenPDF}
               />
               <Button
                 text="Новый прайс"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
-                onClick={() => {
-                  setIsLoading(true);
-                  console.log(priceList);
-                  getPriceListPdfTextMini(
-                    categories,
-                    priceList.filter((item) => item.active),
-                    optionalCols
-                      .filter((item) => item.active && item)
-                      .sort((a, b) => {
-                        if (a.id < b.id) {
-                          return -1;
-                        }
-                        if (a.id > b.id) {
-                          return 1;
-                        }
-                        return 0;
-                      }),
-                    locationTypes
-                  ).then(() => {
-                    setIsLoading(false);
-                  });
-                }}
+                onClick={handleOpenNewPDF}
               />
               <Button
                 text="Скачать .xlsx"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
-                onClick={() => {
-                  setIsLoading(true);
-                  exportPriceListToXLSX(
-                    categories,
-                    priceList.filter((item) => item.active),
-                    optionalCols
-                      .filter((item) => item.active && item)
-                      .sort((a, b) => {
-                        if (a.id < b.id) {
-                          return -1;
-                        }
-                        if (a.id > b.id) {
-                          return 1;
-                        }
-                        return 0;
-                      })
-                  ).then(() => {
-                    setIsLoading(false);
-                  });
-                }}
+                onClick={handleDownloadExcel}
               />
               <Button
                 text="Сохранить данные"
                 isLoading={isLoading}
                 className="main-form__submit"
-                onClick={() => {
-                  // setIsLoading(true);
-                  console.log(priceList);
-                  saveImages();
-                }}
+                onClick={saveImages}
               />
             </div>
           )}
@@ -455,289 +466,58 @@ const NewPriceList = (props) => {
             <div className="main-form__buttons main-form__buttons--vertical">
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Каталог продукции</div>
-                <div className="main-form__item main-form__item--header">
-                  <CheckBox
-                    checked={titlePage.active}
-                    name="titleList"
-                    onChange={(value) => {
-                      setTitlePage({
-                        ...titlePage,
-                        active: value,
-                      });
-                    }}
-                    text="Титульная страница"
-                  />
-                </div>
-                {titlePage.active && (
-                  <>
-                    <InputText
-                      inputName="Получатель"
-                      name="to"
-                      defaultValue={titlePage.to}
-                      handleInputChange={(event) => {
-                        setTitlePage({
-                          ...titlePage,
-                          to: event.target.value,
-                        });
-                      }}
-                    />
-                    <div className="price-list__images-wrapper">
-                      <div className="main-form__item">
-                        <div className="main-form__input_name">
-                          Фотография 1
-                        </div>
-                        <div className="main-form__input_field">
-                          <FileUploader
-                            uniqueId={"fileTitlePage" + 1}
-                            onChange={async (result) => {
-                              const downgraded =
-                                result !== ""
-                                  ? await getDataUri(result, "jpeg", 0.3)
-                                  : "";
-                              setTitlePage({
-                                ...titlePage,
-                                img1: downgraded,
-                              });
-                            }}
-                            previewImage={
-                              titlePage.img1 !== "" ? titlePage.img1 : null
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className="main-form__item">
-                        <div className="main-form__input_name">
-                          Фотография 2
-                        </div>
-                        <div className="main-form__input_field">
-                          <FileUploader
-                            uniqueId={"fileTitlePage" + 2}
-                            onChange={async (result) => {
-                              const downgraded =
-                                result !== ""
-                                  ? await getDataUri(result, "jpeg", 0.3)
-                                  : "";
-                              setTitlePage({
-                                ...titlePage,
-                                img2: downgraded,
-                              });
-                            }}
-                            previewImage={
-                              titlePage.img2 !== "" ? titlePage.img2 : null
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className="main-form__item">
-                        <div className="main-form__input_name">
-                          Фотография 3
-                        </div>
-                        <div className="main-form__input_field">
-                          <FileUploader
-                            uniqueId={"fileTitlePage" + 3}
-                            onChange={async (result) => {
-                              const downgraded =
-                                result !== ""
-                                  ? await getDataUri(result, "jpeg", 0.3)
-                                  : "";
-                              setTitlePage({
-                                ...titlePage,
-                                img3: downgraded,
-                              });
-                            }}
-                            previewImage={
-                              titlePage.img3 !== "" ? titlePage.img3 : null
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
+                <GroupTitlePage
+                  titlePage={titlePage}
+                  setTitlePage={setTitlePage}
+                />
               </div>
             </div>
           )}
-          {categories
-            .sort((a, b) => {
-              if (
-                a.name.localeCompare(b.name, undefined, { numeric: true }) < 0
-              ) {
-                return -1;
-              }
-              if (
-                a.name.localeCompare(b.name, undefined, { numeric: true }) > 0
-              ) {
-                return 1;
-              }
-              return 0;
-            })
-            .map((category, categoryIndex) => {
-              if (
-                priceList.reduce((prev, cur) => {
-                  if (cur.category === category.name) {
-                    return prev + 1;
-                  } else {
-                    return prev;
-                  }
-                }, 0) > 0
-              ) {
-                return (
-                  <>
-                    <div className="main-form__item main-form__item--header">
-                      <CheckBox
-                        checked={category.active}
-                        name="category"
-                        onChange={(value) => {
-                          let originalList = categories;
-                          originalList.splice(categoryIndex, 1, {
-                            ...category,
-                            active: value,
-                          });
-                          setCategories([...originalList]);
-                        }}
-                        text={category.name}
-                      />
-                      <div className="main-form__input_field">
-                        <FileUploader
-                          uniqueId={"categoryImg" + categoryIndex}
-                          onChange={(result) => {
-                            let temp = categories;
-                            temp.splice(categoryIndex, 1, {
-                              ...category,
-                              img: result,
-                            });
-                            setCategories([...temp]);
-                          }}
-                          previewImage={category.img}
-                        />
-                      </div>
-                    </div>
-                    {category.active &&
-                      priceList
-                        .sort((a, b) => {
-                          if (a.id < b.id) {
-                            return -1;
-                          }
-                          if (a.id > b.id) {
-                            return 1;
-                          }
-                          return 0;
-                        })
-                        .map((item, index) => {
-                          if (item.category === category.name) {
-                            return (
-                              <div className="price-list__group-wrapper">
-                                <div className="main-form__item">
-                                  <CheckBox
-                                    checked={item.active}
-                                    name="groupOfProducts"
-                                    onChange={(value) => {
-                                      let originalList = priceList;
-                                      originalList.splice(index, 1, {
-                                        ...item,
-                                        active: value,
-                                      });
-                                      setPriceList([...originalList]);
-                                    }}
-                                    text="Группа продукций"
-                                  />
-                                  <div className="main-form__input_field">
-                                    <input
-                                      name="name"
-                                      type="text"
-                                      autoComplete="off"
-                                      onChange={(event) => {
-                                        let temp = priceList;
-                                        temp.splice(index, 1, {
-                                          ...item,
-                                          name: event.target.value,
-                                        });
-                                        setPriceList([...temp]);
-                                      }}
-                                      value={item.name}
-                                      readOnly={props.readOnly}
-                                    />
-                                  </div>
-                                </div>
-                                <div
-                                  className={
-                                    item.active
-                                      ? "main-form__item"
-                                      : " main-form__item main-form__item--hidden"
-                                  }
-                                >
-                                  <div className="main-form__input_field">
-                                    <SelectPriceItem
-                                      handlePriceItemChange={(value) => {
-                                        let temp = priceList;
-                                        temp.splice(index, 1, {
-                                          ...item,
-                                          products: value,
-                                        });
-                                        setPriceList([...temp]);
-                                      }}
-                                      groupImg1={item.groupImg1}
-                                      groupImg2={item.groupImg2}
-                                      groupImg3={item.groupImg3}
-                                      groupImg4={item.groupImg4}
-                                      footerImg={item.footerImg}
-                                      proprietaryItem={item.proprietaryItemText}
-                                      handleLabelChange={(value, name) => {
-                                        console.log(item[name]);
-                                        let temp = priceList;
-                                        temp.splice(index, 1, {
-                                          ...item,
-                                          [name]: value,
-                                        });
-                                        setPriceList([...temp]);
-                                      }}
-                                      handleImgChange={(newImg, name) => {
-                                        let temp = priceList;
-                                        temp.splice(index, 1, {
-                                          ...item,
-                                          [name]: newImg,
-                                        });
-                                        setPriceList([...temp]);
-                                      }}
-                                      uniqueId={index}
-                                      defaultValue={item.products.sort(
-                                        (a, b) => {
-                                          if (priceList.length <= 1) return 0;
-                                          else {
-                                            if (
-                                              a.number.localeCompare(
-                                                b.number,
-                                                undefined,
-                                                { numeric: true }
-                                              ) < 0
-                                            ) {
-                                              return -1;
-                                            }
-                                            if (
-                                              a.number.localeCompare(
-                                                b.number,
-                                                undefined,
-                                                { numeric: true }
-                                              ) > 0
-                                            ) {
-                                              return 1;
-                                            }
-                                            return 0;
-                                          }
-                                        }
-                                      )}
-                                      userHasAccess={props.userHasAccess}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          }
-                        })}
-                  </>
-                );
-              }
-            })}
+          {sortCategories(categories).map((category, categoryIndex) => {
+            if (
+              priceList.reduce((prev, cur) => {
+                if (cur.category === category.name) {
+                  return prev + 1;
+                } else {
+                  return prev;
+                }
+              }, 0) > 0
+            ) {
+              return (
+                <div className="price-list__category-wrapper">
+                  <CategoryHeader
+                    category={category}
+                    setCategories={setCategories}
+                    categories={categories}
+                    categoryIndex={categoryIndex}
+                  />
+                  {category.active &&
+                    priceList
+                      .sort((a, b) => {
+                        if (a.id < b.id) {
+                          return -1;
+                        }
+                        if (a.id > b.id) {
+                          return 1;
+                        }
+                        return 0;
+                      })
+                      .map((item, index) => {
+                        if (item.category === category.name) {
+                          return (
+                            <GroupProducts
+                              item={item}
+                              priceList={priceList}
+                              setPriceList={setPriceList}
+                              index={index}
+                            />
+                          );
+                        }
+                      })}
+                </div>
+              );
+            }
+          })}
         </form>
       </div>
     </div>
@@ -745,3 +525,240 @@ const NewPriceList = (props) => {
 };
 
 export default NewPriceList;
+
+const GroupProducts = ({ item, priceList, setPriceList, index }) => {
+  return (
+    <div className="price-list__group-wrapper">
+      <div className="main-form__item">
+        <CheckBox
+          checked={item.active}
+          name="groupOfProducts"
+          onChange={(value) => {
+            let originalList = priceList;
+            originalList.splice(index, 1, {
+              ...item,
+              active: value,
+            });
+            setPriceList([...originalList]);
+          }}
+          // text="Группа продукций"
+          text={item.name}
+        />
+        {/* <div className="main-form__input_field">
+      <input
+        name="name"
+        type="text"
+        autoComplete="off"
+        onChange={(event) => {
+          let temp = priceList;
+          temp.splice(index, 1, {
+            ...item,
+            name: event.target.value,
+          });
+          setPriceList([...temp]);
+        }}
+        value={item.name}
+        readOnly={props.readOnly}
+      />
+    </div> */}
+      </div>
+      <div
+        className={
+          item.active
+            ? "main-form__item"
+            : " main-form__item main-form__item--hidden"
+        }
+      >
+        <div className="main-form__input_field">
+          <SelectPriceItem
+            handlePriceItemChange={(value) => {
+              let temp = priceList;
+              temp.splice(index, 1, {
+                ...item,
+                products: value,
+              });
+              setPriceList([...temp]);
+            }}
+            groupImg1={item.groupImg1}
+            groupImg2={item.groupImg2}
+            groupImg3={item.groupImg3}
+            groupImg4={item.groupImg4}
+            footerImg={item.footerImg}
+            proprietaryItem={item.proprietaryItemText}
+            handleLabelChange={(value, name) => {
+              console.log(item[name]);
+              let temp = priceList;
+              temp.splice(index, 1, {
+                ...item,
+                [name]: value,
+              });
+              setPriceList([...temp]);
+            }}
+            handleImgChange={(newImg, name) => {
+              let temp = priceList;
+              temp.splice(index, 1, {
+                ...item,
+                [name]: newImg,
+              });
+              setPriceList([...temp]);
+            }}
+            uniqueId={index}
+            defaultValue={item.products.sort((a, b) => {
+              if (priceList.length <= 1) return 0;
+              else {
+                if (
+                  a.number.localeCompare(b.number, undefined, {
+                    numeric: true,
+                  }) < 0
+                ) {
+                  return -1;
+                }
+                if (
+                  a.number.localeCompare(b.number, undefined, {
+                    numeric: true,
+                  }) > 0
+                ) {
+                  return 1;
+                }
+                return 0;
+              }
+            })}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const CategoryHeader = ({
+  category,
+  setCategories,
+  categories,
+  categoryIndex,
+}) => {
+  return (
+    <div className="main-form__item main-form__item--header">
+      <CheckBox
+        checked={category.active}
+        name="category"
+        onChange={(value) => {
+          let originalList = categories;
+          originalList.splice(categoryIndex, 1, {
+            ...category,
+            active: value,
+          });
+          setCategories([...originalList]);
+        }}
+        text={category.name}
+      />
+      <div className="main-form__input_field">
+        <FileUploader
+          uniqueId={"categoryImg" + categoryIndex}
+          onChange={(result) => {
+            let temp = categories;
+            temp.splice(categoryIndex, 1, {
+              ...category,
+              img: result,
+            });
+            setCategories([...temp]);
+          }}
+          previewImage={category.img}
+        />
+      </div>
+    </div>
+  );
+};
+
+const GroupTitlePage = ({ titlePage, setTitlePage }) => {
+  return (
+    <>
+      <div className="main-form__item main-form__item--header">
+        <CheckBox
+          checked={titlePage.active}
+          name="titleList"
+          onChange={(value) => {
+            setTitlePage({
+              ...titlePage,
+              active: value,
+            });
+          }}
+          text="Титульная страница"
+        />
+      </div>
+      {titlePage.active && (
+        <>
+          <InputText
+            inputName="Получатель"
+            name="to"
+            defaultValue={titlePage.to}
+            handleInputChange={(event) => {
+              setTitlePage({
+                ...titlePage,
+                to: event.target.value,
+              });
+            }}
+          />
+          <div className="price-list__images-wrapper">
+            <div className="main-form__item">
+              <div className="main-form__input_name">Фотография 1</div>
+              <div className="main-form__input_field">
+                <FileUploader
+                  uniqueId={"fileTitlePage" + 1}
+                  onChange={async (result) => {
+                    const downgraded =
+                      result !== ""
+                        ? await getDataUri(result, "jpeg", 0.3)
+                        : "";
+                    setTitlePage({
+                      ...titlePage,
+                      img1: downgraded,
+                    });
+                  }}
+                  previewImage={titlePage.img1 !== "" ? titlePage.img1 : null}
+                />
+              </div>
+            </div>
+            <div className="main-form__item">
+              <div className="main-form__input_name">Фотография 2</div>
+              <div className="main-form__input_field">
+                <FileUploader
+                  uniqueId={"fileTitlePage" + 2}
+                  onChange={async (result) => {
+                    const downgraded =
+                      result !== ""
+                        ? await getDataUri(result, "jpeg", 0.3)
+                        : "";
+                    setTitlePage({
+                      ...titlePage,
+                      img2: downgraded,
+                    });
+                  }}
+                  previewImage={titlePage.img2 !== "" ? titlePage.img2 : null}
+                />
+              </div>
+            </div>
+            <div className="main-form__item">
+              <div className="main-form__input_name">Фотография 3</div>
+              <div className="main-form__input_field">
+                <FileUploader
+                  uniqueId={"fileTitlePage" + 3}
+                  onChange={async (result) => {
+                    const downgraded =
+                      result !== ""
+                        ? await getDataUri(result, "jpeg", 0.3)
+                        : "";
+                    setTitlePage({
+                      ...titlePage,
+                      img3: downgraded,
+                    });
+                  }}
+                  previewImage={titlePage.img3 !== "" ? titlePage.img3 : null}
+                />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
+};
