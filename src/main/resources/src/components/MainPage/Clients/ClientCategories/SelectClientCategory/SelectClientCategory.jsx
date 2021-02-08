@@ -7,6 +7,7 @@ import {
   getClientCategories,
   getSupplierCategories,
 } from "../../../../../utils/RequestsAPI/Clients/Categories.js";
+import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 
 const SelectClientCategory = (props) => {
   const [showWindow, setShowWindow] = useState(false);
@@ -57,38 +58,33 @@ const SelectClientCategory = (props) => {
   return (
     <div className="select-client-category">
       <div className="select-client-category__input">
-        <div className="select-client-category__input_name">
+        <div className="select-client-category__input_name main-form__input_name--row">
           {props.inputName + (props.required ? "*" : "")}
-        </div>
-        <div className={"select-client-category__input_field"}>
           {!props.readOnly && (
-            <button
-              className="select-client-category__button"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowWindow(!showWindow);
-              }}
-            >
-              Выбрать категорию
-            </button>
+            <SelectFromButton
+              text="Выбрать клиента"
+              onClick={() => setShowWindow(!showWindow)}
+            />
           )}
-          {id !== 0 && (
-            <div className="select-client-category__searchbar">
-              <input
-                type="text"
-                className={
-                  props.error === true
-                    ? "select-client-category__input select-client-category__input--error"
-                    : "select-client-category__input"
-                }
-                defaultValue={
-                  props.defaultValue ? props.defaultValue : fullName
-                }
-                placeholder="Выберите категорию, нажав на кнопку 'Выбрать категорию'"
-                readOnly
-              />
-            </div>
-          )}
+          <div className={"select-client-category__input_field"}>
+            {id !== 0 && (
+              <div className="select-client-category__searchbar">
+                <input
+                  type="text"
+                  className={
+                    props.error === true
+                      ? "select-client-category__input select-client-category__input--error"
+                      : "select-client-category__input"
+                  }
+                  defaultValue={
+                    props.defaultValue ? props.defaultValue : fullName
+                  }
+                  placeholder="Выберите категорию, нажав на кнопку 'Выбрать категорию'"
+                  readOnly
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
       {props.error === true && (

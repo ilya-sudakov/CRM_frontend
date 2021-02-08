@@ -3,6 +3,7 @@ import "./SelectClients.scss";
 import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
 import SearchBar from "../../SearchBar/SearchBar.jsx";
 import { searchClients } from "../../../../utils/RequestsAPI/Clients.jsx";
+import SelectFromButton from "../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const SelectClient = (props) => {
@@ -13,10 +14,6 @@ const SelectClient = (props) => {
   const [id, setId] = useState(0);
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleInputChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
 
   useEffect(() => {}, []);
 
@@ -49,21 +46,16 @@ const SelectClient = (props) => {
   return (
     <div className="select-client">
       <div className="select-client__input">
-        <div className="select-client__input_name">
+        <div className="select-client__input_name main-form__input_name--row">
           {props.inputName + (props.required ? "*" : "")}
+          {!props.readonly && (
+            <SelectFromButton
+              text="Выбрать клиента"
+              onClick={() => setShowWindow(!showWindow)}
+            />
+          )}
         </div>
         <div className={"select-client__input_field"}>
-          {!props.readOnly && (
-            <button
-              className="main-form__button"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowWindow(!showWindow);
-              }}
-            >
-              Выбрать клиента
-            </button>
-          )}
           {(id !== 0 || props.defaultValue) && (
             <div className="select-client__searchbar">
               <input
