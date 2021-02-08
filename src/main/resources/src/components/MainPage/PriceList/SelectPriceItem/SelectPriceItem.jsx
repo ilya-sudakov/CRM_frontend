@@ -89,51 +89,29 @@ const SelectPriceItem = (props) => {
     selected,
   ]);
 
-  const handleNewPriceItem = (e) => {
-    e.preventDefault();
+  const handleNewPriceItem = () => {
     //Открыть по дефолту форму
     const id = selected.length;
-    setSelected([
-      ...selected,
-      {
-        number: "",
-        units: "",
-        name: "",
-        description: "",
-        retailPrice: 0,
-        lessThan1500Price: 0,
-        lessThan5000Price: 0,
-        retailMarketPrice: 0,
-        cost: 0,
-        dealerPrice: 0,
-        distributorPrice: 0,
-        partnerPrice: 0,
-        stopPrice: 0,
-        onSale: false,
-        isTopSeller: false,
-        isMinimized: true,
-      },
-    ]);
-    props.handlePriceItemChange([
-      ...selected,
-      {
-        number: "",
-        units: "",
-        name: "",
-        description: "",
-        retailMarketPrice: 0,
-        lessThan5000Price: 0,
-        lessThan1500Price: 0,
-        retailPrice: 0,
-        cost: 0,
-        dealerPrice: 0,
-        distributorPrice: 0,
-        partnerPrice: 0,
-        stopPrice: 0,
-        onSale: false,
-        isTopSeller: false,
-      },
-    ]);
+    const newObject = {
+      number: "",
+      units: "",
+      name: "",
+      description: "",
+      retailPrice: 0,
+      lessThan1500Price: 0,
+      lessThan5000Price: 0,
+      retailMarketPrice: 0,
+      cost: 0,
+      dealerPrice: 0,
+      distributorPrice: 0,
+      partnerPrice: 0,
+      stopPrice: 0,
+      onSale: false,
+      isTopSeller: false,
+      isMinimized: true,
+    };
+    setSelected([...selected, newObject]);
+    props.handlePriceItemChange([...selected, newObject]);
   };
 
   const deletePriceItem = (e) => {
