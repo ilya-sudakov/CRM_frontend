@@ -22,8 +22,9 @@ import {
   defaultTitlePage,
 } from "./objects.js";
 import { getPriceListPdfTextMini } from "./functions";
+import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 
-const NewPriceList = (props) => {
+const NewPriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
   const [categories, setCategories] = useState(defaultCategories);
   const [priceList, setPriceList] = useState([]);
@@ -164,6 +165,7 @@ const NewPriceList = (props) => {
           distributorName: item.distributorName,
           partnerName: item.partnerName,
           active: true,
+          isMinimized: true,
           proprietaryItemText1: item.proprietaryItemText1,
           proprietaryItemText2: item.proprietaryItemText2,
         });
@@ -249,6 +251,7 @@ const NewPriceList = (props) => {
               distributorName: item.distributorName,
               partnerName: item.partnerName,
               active: true,
+              isMinimized: true,
               proprietaryItemText1: item.proprietaryItemText1,
               proprietaryItemText2: item.proprietaryItemText2,
             });
@@ -274,22 +277,24 @@ const NewPriceList = (props) => {
     document.title = "Прайс-лист";
   }, [priceList]);
 
+  const sortPriceList = (priceList) => {
+    return priceList.sort((a, b) => {
+      if (a.id < b.id) {
+        return -1;
+      }
+      if (a.id > b.id) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
   const handleOpenPDF = () => {
     setIsLoading(true);
     getPriceListPdfText(
       categories,
       priceList.filter((item) => item.active),
-      optionalCols
-        .filter((item) => item.active && item)
-        .sort((a, b) => {
-          if (a.id < b.id) {
-            return -1;
-          }
-          if (a.id > b.id) {
-            return 1;
-          }
-          return 0;
-        }),
+      sortPriceList(optionalCols.filter((item) => item.active && item)),
       locationTypes,
       disclaimer,
       titlePage
@@ -303,17 +308,7 @@ const NewPriceList = (props) => {
     getPriceListPdfTextMini(
       categories,
       priceList.filter((item) => item.active),
-      optionalCols
-        .filter((item) => item.active && item)
-        .sort((a, b) => {
-          if (a.id < b.id) {
-            return -1;
-          }
-          if (a.id > b.id) {
-            return 1;
-          }
-          return 0;
-        }),
+      sortPriceList(optionalCols.filter((item) => item.active && item)),
       locationTypes
     ).then(() => {
       setIsLoading(false);
@@ -325,17 +320,7 @@ const NewPriceList = (props) => {
     exportPriceListToXLSX(
       categories,
       priceList.filter((item) => item.active),
-      optionalCols
-        .filter((item) => item.active && item)
-        .sort((a, b) => {
-          if (a.id < b.id) {
-            return -1;
-          }
-          if (a.id > b.id) {
-            return 1;
-          }
-          return 0;
-        })
+      sortPriceList(optionalCols.filter((item) => item.active && item))
     ).then(() => {
       setIsLoading(false);
     });
@@ -492,28 +477,18 @@ const NewPriceList = (props) => {
                     categoryIndex={categoryIndex}
                   />
                   {category.active &&
-                    priceList
-                      .sort((a, b) => {
-                        if (a.id < b.id) {
-                          return -1;
-                        }
-                        if (a.id > b.id) {
-                          return 1;
-                        }
-                        return 0;
-                      })
-                      .map((item, index) => {
-                        if (item.category === category.name) {
-                          return (
-                            <GroupProducts
-                              item={item}
-                              priceList={priceList}
-                              setPriceList={setPriceList}
-                              index={index}
-                            />
-                          );
-                        }
-                      })}
+                    sortPriceList(priceList).map((item, index) => {
+                      if (item.category === category.name) {
+                        return (
+                          <GroupProducts
+                            item={item}
+                            priceList={priceList}
+                            setPriceList={setPriceList}
+                            index={index}
+                          />
+                        );
+                      }
+                    })}
                 </div>
               );
             }
@@ -527,46 +502,50 @@ const NewPriceList = (props) => {
 export default NewPriceList;
 
 const GroupProducts = ({ item, priceList, setPriceList, index }) => {
+  const handleActivateGroup = (value) => {
+    let originalList = priceList;
+    originalList.splice(index, 1, {
+      ...item,
+      active: value,
+    });
+    setPriceList([...originalList]);
+  };
+
+  const handleMinimizeGroup = () => {
+    let originalList = priceList;
+    const isMinimized = priceList[index].isMinimized;
+    originalList.splice(index, 1, {
+      ...item,
+      isMinimized: !isMinimized,
+    });
+    setPriceList([...originalList]);
+  };
+
   return (
     <div className="price-list__group-wrapper">
       <div className="main-form__item">
         <CheckBox
           checked={item.active}
           name="groupOfProducts"
-          onChange={(value) => {
-            let originalList = priceList;
-            originalList.splice(index, 1, {
-              ...item,
-              active: value,
-            });
-            setPriceList([...originalList]);
-          }}
-          // text="Группа продукций"
+          onChange={handleActivateGroup}
           text={item.name}
         />
-        {/* <div className="main-form__input_field">
-      <input
-        name="name"
-        type="text"
-        autoComplete="off"
-        onChange={(event) => {
-          let temp = priceList;
-          temp.splice(index, 1, {
-            ...item,
-            name: event.target.value,
-          });
-          setPriceList([...temp]);
-        }}
-        value={item.name}
-        readOnly={props.readOnly}
-      />
-    </div> */}
+        <ChevronSVG
+          className={`main-window__img`}
+          style={{ transform: `rotate(${item.isMinimized ? 0 : 180}deg)` }}
+          title={`${item.isMinimized ? "Раскрыть" : "Скрыть"} всю группу ${
+            item.name
+          }`}
+          onClick={handleMinimizeGroup}
+        />
       </div>
       <div
         className={
-          item.active
+          item.isMinimized
+            ? " main-form__item main-form__item--hidden"
+            : item.active
             ? "main-form__item"
-            : " main-form__item main-form__item--hidden"
+            : "main-form__item main-form__item--hidden"
         }
       >
         <div className="main-form__input_field">
@@ -586,7 +565,6 @@ const GroupProducts = ({ item, priceList, setPriceList, index }) => {
             footerImg={item.footerImg}
             proprietaryItem={item.proprietaryItemText}
             handleLabelChange={(value, name) => {
-              console.log(item[name]);
               let temp = priceList;
               temp.splice(index, 1, {
                 ...item,
