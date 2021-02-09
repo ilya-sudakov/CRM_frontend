@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from 'react'
-import './ViewRig.scss'
-import '../../../../../../../utils/Form/Form.scss'
-import SelectParts from '../../../SelectParts/SelectParts.jsx'
-import { getStampById } from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { formatDateString } from '../../../../../../../utils/functions.jsx'
-import { rigTypes } from '../../rigsVariables.js'
+import React, { useState, useEffect } from "react";
+import "./ViewRig.scss";
+import "../../../../../../../utils/Form/Form.scss";
+import SelectParts from "../../../SelectParts/SelectParts.jsx";
+import { getStampById } from "../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
+import { formatDateString } from "../../../../../../../utils/functions.jsx";
+import { rigTypes } from "../../rigsVariables.js";
 
 const ViewRig = (props) => {
   const [rigInputs, setRigInputs] = useState({
-    name: '',
-    number: '',
-    comment: '',
+    name: "",
+    number: "",
+    comment: "",
     parts: [],
     lastEdited: new Date(),
-  })
+  });
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    props.history.push(`${rigTypes[props.type].redirectURL}#${rigInputs.id}`)
-  }
+    event.preventDefault();
+    props.history.push(`${rigTypes[props.type].redirectURL}#${rigInputs.id}`);
+  };
 
   useEffect(() => {
-    document.title = `Просмотр записи`
-    const id = props.history.location.pathname.split('/view/')[1]
+    document.title = `Просмотр записи`;
+    const id = props.history.location.pathname.split("/view/")[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс!')
-      props.history.push(rigTypes[props.type].redirectURL)
+      alert("Неправильный индекс!");
+      props.history.push(rigTypes[props.type].redirectURL);
     } else {
       getStampById(id)
         .then((res) => res.json())
         .then((res) => {
-          setRigInputs(res)
+          setRigInputs(res);
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     }
-  }, [])
+  }, []);
 
   return (
     <div className="view-rig">
@@ -88,7 +88,11 @@ const ViewRig = (props) => {
           <div className="main-form__item">
             <div className="main-form__input_name">Детали</div>
             <div className="main-form__input_field">
-              <SelectParts readOnly defaultValue={rigInputs.stampParts} />
+              <SelectParts
+                readOnly
+                defaultValue={rigInputs.stampParts}
+                isMinimizedDefault={true}
+              />
             </div>
           </div>
           <div className="main-form__item">
@@ -116,7 +120,7 @@ const ViewRig = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ViewRig
+export default ViewRig;
