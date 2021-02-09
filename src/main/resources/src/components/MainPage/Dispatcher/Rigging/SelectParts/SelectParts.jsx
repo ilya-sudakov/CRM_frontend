@@ -100,7 +100,11 @@ const SelectParts = (props) => {
             index={index}
             id={item.id}
             itemsLength={selected.length}
-            isMinimizedDefault={props.isMinimizedDefault}
+            isMinimizedDefault={
+              item.id === Number.parseInt(props.scrollToId)
+                ? false
+                : props.isMinimizedDefault
+            }
             handleDeleteItem={() => deletePart(index)}
             headerItems={[
               {
