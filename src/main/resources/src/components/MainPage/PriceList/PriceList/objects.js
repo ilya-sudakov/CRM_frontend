@@ -72,6 +72,7 @@ export const defaultTitlePage = {
   slogan: "",
   list: [],
   active: true,
+  isMinimized: true,
   img1: "",
   img2: "",
   img3: "",

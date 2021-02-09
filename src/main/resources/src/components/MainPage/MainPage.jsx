@@ -2,6 +2,7 @@ import React, { Suspense, useContext, useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import "./MainPage.scss";
 import "../../utils/MainWindow/MainWindow.scss";
+import "../../utils/Form/Form.scss";
 import Header from "../Header/Header.jsx";
 import {
   Clients,
@@ -37,7 +38,7 @@ import {
   LogListPage,
   EditRecordWork,
   WorkManagementPage,
-  NewPriceList,
+  PriceList,
   ClientCategories,
   EditClient,
   FeedbackPage,
@@ -266,7 +267,7 @@ const MainPage = () => {
                 <PrivateRoute
                   exact
                   path="/price-list"
-                  component={NewPriceList}
+                  component={PriceList}
                   userHasAccess={userContext.userHasAccess}
                   userData={userContext.userData}
                   allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}

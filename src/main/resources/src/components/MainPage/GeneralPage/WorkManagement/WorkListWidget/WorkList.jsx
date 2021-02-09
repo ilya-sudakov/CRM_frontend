@@ -10,18 +10,21 @@ const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
   return (
     <div className="work-list-widget__list">
       {workshops.map((workshop) => {
+        const filteredEmployees = filterEmployeesObject(
+          Object.entries(employees),
+          workshop
+        );
         if (
           userContext.userHasAccess(workshop.visibility) &&
-          filterEmployeesObject(Object.entries(employees), workshop).length > 0
+          filteredEmployees.filter((item) => employeesMap[item[1].id]).length >
+            0
         ) {
           return (
             <>
               <div className="work-list-widget__workshop-item">
                 {workshop.name}
               </div>
-              {sortEmployeesObject(
-                filterEmployeesObject(Object.entries(employees), workshop)
-              ).map((employee) => {
+              {sortEmployeesObject(filteredEmployees).map((employee) => {
                 const item = employee[1];
                 return <ListItem item={item} employeesMap={employeesMap} />;
               })}

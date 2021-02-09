@@ -4,7 +4,6 @@ exports[`Button component matches snapshot 1`] = `
 <DocumentFragment>
   <button
     class="button   "
-    title="Нажмите"
     type="button"
   >
     <span

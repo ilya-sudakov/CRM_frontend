@@ -1,18 +1,7 @@
 @import "../../../../variables.scss";
 
 .new_client {
-  .main-form__item {
-    .checkbox {
-      width: 100%;
-      align-items: center;
-      .checkbox__container {
-        padding-left: 35px;
-        margin-bottom: 10px;
-        font-size: 0.9rem;
-      }
-
-      color: #333333;
-      font-size: 0.9rem;
-    }
+  .main-form__form {
+    --form__max-width: 1000px;
   }
 }

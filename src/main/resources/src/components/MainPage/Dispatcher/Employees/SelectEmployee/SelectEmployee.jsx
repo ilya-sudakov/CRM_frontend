@@ -8,7 +8,7 @@ import {
   getEmployeesByWorkshop,
 } from "../../../../../utils/RequestsAPI/Employees.jsx";
 import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
+import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 
 const SelectEmployee = (props) => {
   const [showWindow, setShowWindow] = useState(false);
@@ -131,31 +131,34 @@ const SelectEmployee = (props) => {
   return (
     <div className="select-employee">
       <div className="select-employee__input">
-        {props.inputName ? (
-          <div className="select-employee__input_name">
-            {props.inputName + (props.required ? "*" : "")}
-          </div>
-        ) : null}
-        <div className={"select-employee__input_field"}>
-          <Button
-            text="Выбрать сотрудника"
-            className="main-form__button"
-            onClick={() => setShowWindow(!showWindow)}
-          />
-          <div className="select-employee__searchbar">
-            <input
-              type="text"
-              className={
-                props.error === true
-                  ? "select-employee__input select-employee__input--error"
-                  : "select-employee__input"
-              }
-              defaultValue={props.defaultValue ? props.defaultValue : fullName}
-              placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
-              readOnly
+        <div className="select-employee__input_name main-form__input_name--row">
+          {`${props.inputName} ${props.required ? "*" : ""}`}
+          {!props.readOnly && (
+            <SelectFromButton
+              text="Выбрать сотрудника"
+              onClick={() => setShowWindow(!showWindow)}
             />
-          </div>
+          )}
         </div>
+        {(props.defaultValue || fullName) && (
+          <div className={"select-employee__input_field"}>
+            <div className="select-employee__searchbar">
+              <input
+                type="text"
+                className={
+                  props.error === true
+                    ? "select-employee__input select-employee__input--error"
+                    : "select-employee__input"
+                }
+                defaultValue={
+                  props.defaultValue ? props.defaultValue : fullName
+                }
+                placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
+                disabled
+              />
+            </div>
+          </div>
+        )}
       </div>
       {props.error === true && (
         <div

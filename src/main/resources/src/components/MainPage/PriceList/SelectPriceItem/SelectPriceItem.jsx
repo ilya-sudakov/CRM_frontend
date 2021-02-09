@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import deleteSVG from "../../../../../../../../assets/select/delete.svg";
 import "./SelectPriceItem.scss";
 import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
-import CheckBox from "../../../../utils/Form/CheckBox/CheckBox.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
 import { getDataUri } from "../../../../utils/functions.jsx";
+import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
 
 const SelectPriceItem = (props) => {
   // const [imgName, setImgName] = useState("Имя файла...");
@@ -89,55 +90,32 @@ const SelectPriceItem = (props) => {
     selected,
   ]);
 
-  const handleNewPriceItem = (e) => {
-    e.preventDefault();
+  const handleNewPriceItem = () => {
     //Открыть по дефолту форму
     const id = selected.length;
-    setSelected([
-      ...selected,
-      {
-        number: "",
-        units: "",
-        name: "",
-        description: "",
-        retailPrice: 0,
-        lessThan1500Price: 0,
-        lessThan5000Price: 0,
-        retailMarketPrice: 0,
-        cost: 0,
-        dealerPrice: 0,
-        distributorPrice: 0,
-        partnerPrice: 0,
-        stopPrice: 0,
-        onSale: false,
-        isTopSeller: false,
-        isMinimized: true,
-      },
-    ]);
-    props.handlePriceItemChange([
-      ...selected,
-      {
-        number: "",
-        units: "",
-        name: "",
-        description: "",
-        retailMarketPrice: 0,
-        lessThan5000Price: 0,
-        lessThan1500Price: 0,
-        retailPrice: 0,
-        cost: 0,
-        dealerPrice: 0,
-        distributorPrice: 0,
-        partnerPrice: 0,
-        stopPrice: 0,
-        onSale: false,
-        isTopSeller: false,
-      },
-    ]);
+    const newObject = {
+      number: "",
+      units: "",
+      name: "",
+      description: "",
+      retailPrice: 0,
+      lessThan1500Price: 0,
+      lessThan5000Price: 0,
+      retailMarketPrice: 0,
+      cost: 0,
+      dealerPrice: 0,
+      distributorPrice: 0,
+      partnerPrice: 0,
+      stopPrice: 0,
+      onSale: false,
+      isTopSeller: false,
+      isMinimized: true,
+    };
+    setSelected([...selected, newObject]);
+    props.handlePriceItemChange([...selected, newObject]);
   };
 
-  const deletePriceItem = (e) => {
-    const id = e.target.getAttribute("index");
+  const deletePriceItem = () => {
     let temp = selected;
     temp.splice(id, 1);
     setSelected([...temp]);
@@ -231,17 +209,9 @@ const SelectPriceItem = (props) => {
 
   return (
     <div className="select-price-item">
-      {!props.readOnly && (
-        <button
-          className="select-price-item__button"
-          onClick={handleNewPriceItem}
-        >
-          Добавить продукцию
-        </button>
-      )}
       <div className="select-price-item__selected">
         {!props.readOnly && (
-          <React.Fragment>
+          <div className="price-list__images-wrapper">
             <div className="main-form__item">
               <div className="main-form__input_name">Фотография 1</div>
               <div className="main-form__input_field">
@@ -249,7 +219,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file1" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setGroupImg1(downgraded);
                       props.handleImgChange(downgraded, "groupImg1");
                     }}
@@ -265,7 +238,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file2" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setGroupImg2(downgraded);
                       props.handleImgChange(downgraded, "groupImg2");
                     }}
@@ -281,7 +257,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file3" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setGroupImg3(downgraded);
                       props.handleImgChange(downgraded, "groupImg3");
                     }}
@@ -297,7 +276,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file4" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setGroupImg4(downgraded);
                       props.handleImgChange(downgraded, "groupImg4");
                     }}
@@ -313,7 +295,10 @@ const SelectPriceItem = (props) => {
                   <FileUploader
                     uniqueId={"file5" + props.uniqueId}
                     onChange={async (result) => {
-                      const downgraded = await getDataUri(result, "jpeg", 0.3);
+                      const downgraded =
+                        result !== ""
+                          ? await getDataUri(result, "jpeg", 0.3)
+                          : "";
                       setFooterImg(downgraded);
                       props.handleImgChange(downgraded, "footerImg");
                     }}
@@ -322,48 +307,57 @@ const SelectPriceItem = (props) => {
                 )}
               </div>
             </div>
-          </React.Fragment>
+          </div>
+        )}
+        {!props.readOnly && (
+          <Button
+            className="main-window__button"
+            onClick={handleNewPriceItem}
+            text="Добавить продукцию"
+          />
         )}
         {selected.map((item, index) => (
-          <div className="select-price-item__selected_item">
-            <div
-              className="select-price-item__selected_header"
-              index={index}
-              onClick={() => {
-                let temp = selected;
-                temp.splice(index, 1, {
-                  ...item,
-                  isMinimized: !item.isMinimized,
-                });
-                setSelected([...temp]);
-              }}
-            >
-              <div className="select-price-item__selected_name">
-                <span>Артикул: </span> <span>{item.number}</span>
-              </div>
-              <div className="select-price-item__selected_name">
-                <span>Описание: </span> <span>{item.description}</span>
-              </div>
-              <div className="select-price-item__selected_name">
-                <span>Розница: </span> <span>{item.retailPrice}</span>
-              </div>
-              <div className="select-price-item__selected_name">
-                <span>до 1500 шт.: </span> <span>{item.lessThan1500Price}</span>
-              </div>
-              <div className="select-price-item__selected_name">
-                <span>до 5000 шт.: </span> <span>{item.lessThan5000Price}</span>
-              </div>
-            </div>
-            <div
-              className={
-                item.isMinimized
-                  ? "select-price-item__selected_form select-price-item__selected_form--hidden"
-                  : "select-price-item__selected_form"
-              }
-            >
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Название</div>
-                <div className="select-price-item__input_field">
+          <NestedFormItem
+            index={index}
+            itemsLength={selected.length}
+            handleDeleteItem={deletePriceItem}
+            isMinimizedDefault={true}
+            headerItems={[
+              {
+                text: "Артикул",
+                value: item.number,
+                placeholder: "Введите артикул...",
+                style: { flex: " 0 1 15%" },
+              },
+              {
+                text: "Описание",
+                value: item.description,
+                placeholder: "Введите описание...",
+                style: { flex: " 0 1 40%" },
+              },
+              {
+                text: "Розница",
+                value: item.retailPrice,
+                placeholder: "Введите розн. цену...",
+                style: { flex: " 0 1 15%" },
+              },
+              {
+                text: "до 1500 шт.",
+                value: item.lessThan1500Price,
+                placeholder: "Введите цену до 1500шт...",
+                style: { flex: " 0 1 15%" },
+              },
+              {
+                text: "до 5000 шт.",
+                value: item.lessThan5000Price,
+                placeholder: "Введите цену до 5000шт...",
+                style: { flex: " 0 1 15%" },
+              },
+            ]}
+            formInputs={[
+              {
+                name: "Название",
+                element: (
                   <input
                     type="text"
                     name="name"
@@ -373,11 +367,11 @@ const SelectPriceItem = (props) => {
                     defaultValue={item.name}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Артикул</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "Артикул",
+                element: (
                   <input
                     type="text"
                     name="number"
@@ -387,11 +381,11 @@ const SelectPriceItem = (props) => {
                     defaultValue={item.number}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Описание</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "Описание",
+                element: (
                   <input
                     type="text"
                     name="description"
@@ -401,13 +395,11 @@ const SelectPriceItem = (props) => {
                     defaultValue={item.description}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">
-                  Розница (рыночная цена)
-                </div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "Розница (рыночная цена)",
+                element: (
                   <input
                     type="number"
                     name="retailMarketPrice"
@@ -417,11 +409,11 @@ const SelectPriceItem = (props) => {
                     value={item.retailMarketPrice}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Розница</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "Розница",
+                element: (
                   <input
                     type="number"
                     name="retailPrice"
@@ -431,11 +423,11 @@ const SelectPriceItem = (props) => {
                     value={item.retailPrice}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">до 1500 шт.</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "До 1500 шт.",
+                element: (
                   <input
                     type="number"
                     name="lessThan1500Price"
@@ -445,11 +437,11 @@ const SelectPriceItem = (props) => {
                     value={item.lessThan1500Price}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">до 5000 шт.</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "До 5000 шт.",
+                element: (
                   <input
                     type="number"
                     name="lessThan5000Price"
@@ -459,11 +451,11 @@ const SelectPriceItem = (props) => {
                     value={item.lessThan5000Price}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Партнер</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "Партнер",
+                element: (
                   <input
                     type="number"
                     name="cost"
@@ -473,11 +465,11 @@ const SelectPriceItem = (props) => {
                     value={item.partnerPrice}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Дилер</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "Дилер",
+                element: (
                   <input
                     type="number"
                     name="dealerPrice"
@@ -487,11 +479,11 @@ const SelectPriceItem = (props) => {
                     value={item.dealerPrice}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Дистрибутор</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "Дистрибутор",
+                element: (
                   <input
                     type="number"
                     name="distributorPrice"
@@ -501,11 +493,11 @@ const SelectPriceItem = (props) => {
                     value={item.distributorPrice}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Стопцена</div>
-                <div className="select-price-item__input_field">
+                ),
+              },
+              {
+                name: "Стопцена",
+                element: (
                   <input
                     type="number"
                     name="stopPrice"
@@ -515,35 +507,10 @@ const SelectPriceItem = (props) => {
                     value={item.stopPrice}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-price-item__item">
-                <div className="select-price-item__input_name">Акция</div>
-                <div className="select-price-item__input_field">
-                  <CheckBox
-                    checked={item.onSale}
-                    onChange={(value) => {
-                      let temp = selected;
-                      temp.splice(index, 1, {
-                        ...item,
-                        onSale: value,
-                      });
-                      setSelected([...temp]);
-                      props.handlePriceItemChange([...temp]);
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            {!props.readOnly && index !== 0 && (
-              <img
-                index={index}
-                onClick={deletePriceItem}
-                className="select-price-item__img"
-                src={deleteSVG}
-              />
-            )}
-          </div>
+                ),
+              },
+            ]}
+          />
         ))}
       </div>
     </div>

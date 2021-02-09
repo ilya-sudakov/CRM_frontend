@@ -8,9 +8,6 @@ exports[`CheckBox component matches snapshot 1`] = `
     <label
       class="checkbox__container"
     >
-      <span
-        class="checkbox__text"
-      />
       <input
         name=""
         type="checkbox"
@@ -18,6 +15,9 @@ exports[`CheckBox component matches snapshot 1`] = `
       />
       <div
         class="checkbox__checkmark"
+      />
+      <span
+        class="checkbox__text"
       />
     </label>
   </div>

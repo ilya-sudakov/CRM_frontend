@@ -11,25 +11,27 @@ const CheckBox = ({
   onChange,
   checked = false,
 }) => {
+  const handleChange = ({ target }) => {
+    const name = target.name;
+    const value = target.checked;
+    const id = target.id;
+    onChange(value, name, id);
+  };
+  
   return (
     <div className="checkbox">
       <label className="checkbox__container">
-        <span className="checkbox__text">{text}</span>
         <input
           type="checkbox"
           name={name}
           id={id}
           value={value}
           disabled={disabled}
-          onChange={({ target }) => {
-            const name = target.name;
-            const value = target.checked;
-            const id = target.id;
-            onChange(value, name, id);
-          }}
+          onChange={handleChange}
           checked={checked}
         />
         <div className="checkbox__checkmark"></div>
+        <span className="checkbox__text">{text}</span>
       </label>
     </div>
   );

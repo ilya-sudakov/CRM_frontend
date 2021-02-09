@@ -1,5 +1,11 @@
 @import "../../../../../variables.scss";
 
 .edit-record-work {
-  
+    .select-work-item {
+        input {
+            &:disabled {
+                background-color: #f4f4f4;
+            }
+        }
+    }
 }

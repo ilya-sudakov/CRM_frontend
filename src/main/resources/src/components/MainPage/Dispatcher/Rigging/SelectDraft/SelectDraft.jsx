@@ -1,60 +1,60 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import deleteSVG from '../../../../../../../../../assets/select/delete.svg'
-import './SelectDraft.scss'
-import SearchBar from '../../../SearchBar/SearchBar.jsx'
-import TableView from './TableView/TableView.jsx'
-import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx'
-import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { getPressForm } from '../../../../../utils/RequestsAPI/Rigging/PressForm.jsx'
-import { getMachine } from '../../../../../utils/RequestsAPI/Rigging/Machine.jsx'
-import { getParts } from '../../../../../utils/RequestsAPI/Parts.jsx'
+import React, { useState, useEffect, useCallback } from "react";
+import deleteSVG from "../../../../../../../../../assets/select/delete.svg";
+import "./SelectDraft.scss";
+import SearchBar from "../../../SearchBar/SearchBar.jsx";
+import TableView from "./TableView/TableView.jsx";
+import FormWindow from "../../../../../utils/Form/FormWindow/FormWindow.jsx";
+import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
+import { getStamp } from "../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
+import { getPressForm } from "../../../../../utils/RequestsAPI/Rigging/PressForm.jsx";
+import { getMachine } from "../../../../../utils/RequestsAPI/Rigging/Machine.jsx";
+import { getParts } from "../../../../../utils/RequestsAPI/Parts.jsx";
 
 const SelectDraft = (props) => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [searchQueryCategory, setSearchQueryCategory] = useState('')
-  const [selected, setSelected] = useState([])
-  const [drafts, setDrafts] = useState([])
-  const [showWindow, setShowWindow] = useState(false)
-  const [closeWindow, setCloseWindow] = useState(false)
-  const [showOptions, setShowOptions] = useState(false)
-  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQueryCategory, setSearchQueryCategory] = useState("");
+  const [selected, setSelected] = useState([]);
+  const [drafts, setDrafts] = useState([]);
+  const [showWindow, setShowWindow] = useState(false);
+  const [closeWindow, setCloseWindow] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
 
   const search = () => {
     // console.log(drafts);
-    let re = /[.,\s]/gi
-    const query = searchQuery.toLowerCase()
-    let searchArr = query.split(' ')
+    let re = /[.,\s]/gi;
+    const query = searchQuery.toLowerCase();
+    let searchArr = query.split(" ");
     return (props.drafts ? props.drafts : drafts).filter((item) => {
-      let check = true
+      let check = true;
       searchArr.map((searchWord) => {
         if (
           item.name.toLowerCase().includes(searchWord.toLowerCase()) ===
             false &&
           item.number
             .toLowerCase()
-            .replace(re, '')
-            .includes(query.replace(re, '')) === false
+            .replace(re, "")
+            .includes(query.replace(re, "")) === false
         )
-          check = false
-      })
+          check = false;
+      });
       if (check === true) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
-    })
-  }
+    });
+  };
 
   const handleInputChange = (event) => {
-    setSearchQuery(event.target.value)
-  }
+    setSearchQuery(event.target.value);
+  };
 
   async function loadDrafts() {
     if (props.drafts) {
-      setDrafts([...props.drafts])
+      setDrafts([...props.drafts]);
     } else {
-      let newDrafts = []
+      let newDrafts = [];
       getStamp()
         .then((response) => response.json())
         .then((response) => {
@@ -65,12 +65,12 @@ const SelectDraft = (props) => {
                 ...stamp,
                 value: stamp.id,
                 label: `${stamp.number}, ${stamp.name}`,
-                type: 'Stamp',
-              })
-            })
-          })
+                type: "Stamp",
+              });
+            });
+          });
           // console.log(newDrafts);
-          return setDrafts([...newDrafts])
+          return setDrafts([...newDrafts]);
         })
         .then(() => getPressForm())
         .then((response) => response.json())
@@ -82,11 +82,11 @@ const SelectDraft = (props) => {
                 ...stamp,
                 value: stamp.id,
                 label: `${stamp.number}, ${stamp.name}`,
-                type: 'Press',
-              })
-            })
-          })
-          return setDrafts([...newDrafts])
+                type: "Press",
+              });
+            });
+          });
+          return setDrafts([...newDrafts]);
         })
         .then(() => getMachine())
         .then((response) => response.json())
@@ -98,11 +98,11 @@ const SelectDraft = (props) => {
                 ...stamp,
                 value: stamp.id,
                 label: `${stamp.number}, ${stamp.name}`,
-                type: 'Bench',
-              })
-            })
-          })
-          return setDrafts([...newDrafts])
+                type: "Bench",
+              });
+            });
+          });
+          return setDrafts([...newDrafts]);
           // console.log(newDrafts)
         })
         .then(() => getParts())
@@ -115,22 +115,22 @@ const SelectDraft = (props) => {
                 ...stamp,
                 value: stamp.id,
                 label: `${stamp.number}, ${stamp.name}`,
-                type: 'Detail',
-              })
-            })
-          })
-          console.log(newDrafts)
-          return setDrafts([...newDrafts])
-        })
+                type: "Detail",
+              });
+            });
+          });
+          console.log(newDrafts);
+          return setDrafts([...newDrafts]);
+        });
     }
   }
 
   const clickOnOption = (event) => {
-    const value = event.currentTarget.getAttribute('name')
-    const id = event.currentTarget.getAttribute('id')
-    const type = event.currentTarget.getAttribute('type')
-    const number = event.currentTarget.getAttribute('number')
-    setShowOptions(!showOptions)
+    const value = event.currentTarget.getAttribute("name");
+    const id = event.currentTarget.getAttribute("id");
+    const type = event.currentTarget.getAttribute("type");
+    const number = event.currentTarget.getAttribute("number");
+    setShowOptions(!showOptions);
     setSelected([
       ...selected,
       {
@@ -140,7 +140,7 @@ const SelectDraft = (props) => {
         type: type,
         quantity: 0,
       },
-    ])
+    ]);
     props.onChange([
       ...selected,
       {
@@ -150,8 +150,8 @@ const SelectDraft = (props) => {
         name: value,
         quantity: 0,
       },
-    ])
-  }
+    ]);
+  };
 
   const selectDraft = (id, value, type, number) => {
     setSelected([
@@ -163,7 +163,7 @@ const SelectDraft = (props) => {
         number: number,
         quantity: 0,
       },
-    ])
+    ]);
     props.onChange([
       ...selected,
       {
@@ -173,84 +173,82 @@ const SelectDraft = (props) => {
         number: number,
         quantity: 0,
       },
-    ])
-  }
+    ]);
+  };
 
   const clickOnSelected = (event) => {
-    const id = event.target.getAttribute('id')
-    let newSelected = selected
-    newSelected.splice(id, 1)
-    setSelected([...newSelected])
-    props.onChange([...newSelected])
-  }
+    const id = event.target.getAttribute("id");
+    let newSelected = selected;
+    newSelected.splice(id, 1);
+    setSelected([...newSelected]);
+    props.onChange([...newSelected]);
+  };
 
   const handleParamChange = (event) => {
-    const value = event.target.value
-    const name = event.target.getAttribute('name')
-    const id = event.target.getAttribute(name + '_id')
-    let newSelected = selected
+    const value = event.target.value;
+    const name = event.target.getAttribute("name");
+    const id = event.target.getAttribute(name + "_id");
+    let newSelected = selected;
     newSelected = newSelected.map((item, index) => {
       return {
         ...item,
         [name]: index == id ? value : item[name],
-      }
-    })
-    setSelected([...newSelected])
-    props.onChange([...newSelected])
-  }
+      };
+    });
+    setSelected([...newSelected]);
+    props.onChange([...newSelected]);
+  };
 
   const pressEscKey = useCallback((event) => {
     if (event.keyCode === 27) {
-      setShowOptions(!showOptions)
+      setShowOptions(!showOptions);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (props.defaultValue !== undefined && !defaultValueLoaded) {
-      setSelected([...props.defaultValue])
-      setDefaultValueLoaded(true)
+      setSelected([...props.defaultValue]);
+      setDefaultValueLoaded(true);
     }
-    document.addEventListener('keydown', pressEscKey, false)
-    drafts.length === 0 && loadDrafts()
+    document.addEventListener("keydown", pressEscKey, false);
+    drafts.length === 0 && loadDrafts();
     // loadDrafts();
     return () => {
-      document.removeEventListener('keydown', pressEscKey, false)
-    }
-  }, [props.defaultValue, props.categories, showOptions])
+      document.removeEventListener("keydown", pressEscKey, false);
+    };
+  }, [props.defaultValue, props.categories, showOptions]);
 
   return (
     <div className="select-draft">
+      <div className="select-draft__input_name main-form__input_name--row">
+        Чертежи
+        {!props.readOnly && (
+          <SelectFromButton
+            text="Выбрать чертеж"
+            onClick={() => setShowWindow(!showWindow)}
+          />
+        )}
+      </div>
       <div
         className={
           showOptions
-            ? 'select-draft__overlay'
-            : 'select-draft__overlay select-draft__overlay--hidden'
+            ? "select-draft__overlay"
+            : "select-draft__overlay select-draft__overlay--hidden"
         }
         onClick={() => setShowOptions(!showOptions)}
       ></div>
       {!props.readOnly && !props.workshop && (
         <div className="select-draft__searchbar">
-          <div className="select-draft__buttons">
-            <button
-              className="select-draft__search_button"
-              onClick={(e) => {
-                e.preventDefault()
-                setShowWindow(!showWindow)
-              }}
-            >
-              Добавить чертеж
-            </button>
-          </div>
           <input
             type="text"
             className={
               props.error === true
-                ? 'select-draft__input select-draft__input--error'
-                : 'select-draft__input'
+                ? "select-draft__input select-draft__input--error"
+                : "select-draft__input"
             }
             onChange={handleInputChange}
             onClick={() => {
-              !props.readOnly && setShowOptions(!showOptions)
+              !props.readOnly && setShowOptions(!showOptions);
             }}
             placeholder={props.searchPlaceholder}
             readOnly={props.readOnly || props.workshop}
@@ -300,8 +298,8 @@ const SelectDraft = (props) => {
         <div
           className={
             showOptions
-              ? 'select-draft__options'
-              : 'select-draft__options select-draft__options--hidden'
+              ? "select-draft__options"
+              : "select-draft__options select-draft__options--hidden"
           }
         >
           {search().map((item, index) => (
@@ -314,17 +312,12 @@ const SelectDraft = (props) => {
               className="select-draft__option_item"
               onClick={clickOnOption}
             >
-              <div>{item.number + ', ' + item.name}</div>
+              <div>{item.number + ", " + item.name}</div>
             </div>
           ))}
         </div>
       )}
       <div className="select-draft__selected">
-        {/* {selected.length !== 0 && (
-          <span className="select-draft__selected_title">
-            Выбранные чертежи:
-          </span>
-        )} */}
         {selected.map((item, index) => (
           <div className="select-draft__selected_row">
             <div className="select-draft__selected_item">
@@ -335,8 +328,8 @@ const SelectDraft = (props) => {
                 name="name"
                 autoComplete="off"
                 readOnly
-                value={`${item.number || ''}, ${item.name}`}
-                onChange={item.type === 'new' ? handleParamChange : null}
+                value={`${item.number || ""}, ${item.name}`}
+                onChange={item.type === "new" ? handleParamChange : null}
               />
               {!props.readOnly && !props.workshop && (
                 <img
@@ -350,7 +343,7 @@ const SelectDraft = (props) => {
             </div>
             <div className="select-draft__selected_quantity">
               <span className="select-draft__input-name">
-                Кол-во (шт.){!props.readOnly && '*'}
+                Кол-во (шт.){!props.readOnly && "*"}
               </span>
               <input
                 quantity_id={index}
@@ -368,6 +361,6 @@ const SelectDraft = (props) => {
         ))}
       </div>
     </div>
-  )
-}
-export default SelectDraft
+  );
+};
+export default SelectDraft;

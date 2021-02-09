@@ -9,32 +9,43 @@ const FileUploader = ({
   previewImage,
   maxSize = 5,
   uniqueId = 0,
-  error,
+  error = false,
+  hideError,
 }) => {
   const [data, setData] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
+  let dragCounter = 0;
   const [hasError, setHasError] = useState(false);
   const dropRef = React.createRef();
 
   const formats = {
     "/.+\\.(jpeg|jpg|png|img)/": {
-      text: "Поддерживаемые форматы JPEG, PNG, IMG",
+      text: "Форматы JPEG, PNG, IMG",
     },
     "/.+\\.(xlsx|csv)/": {
-      text: "Поддерживаемые форматы XLSX и CSV",
+      text: "Форматы XLSX и CSV",
+    },
+    "/.+\\.(docx)/": {
+      text: "Формат DOCX",
     },
   };
 
   const onDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDraggingOver(true);
+    dragCounter++;
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setIsDraggingOver(true);
+    }
   };
 
   const onDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDraggingOver(false);
+    dragCounter--;
+    if (dragCounter === 0) {
+      setIsDraggingOver(false);
+    }
   };
 
   const onDragOver = (e) => {
@@ -44,11 +55,13 @@ const FileUploader = ({
 
   const handleDropFile = (event) => {
     event.preventDefault();
+    event.stopPropagation();
     setIsDraggingOver(false);
     let file =
       event?.dataTransfer?.files && event?.dataTransfer?.files?.length > 0
         ? event.dataTransfer.files[0]
         : event.target.files[0];
+    dragCounter = 0;
 
     //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
     if (file.name.match(regex) === null) {
@@ -84,7 +97,8 @@ const FileUploader = ({
     setHasError(false);
   };
 
-  const handleDeleteFile = () => {
+  const handleDeleteFile = (event) => {
+    event.preventDefault();
     setData(null);
     onChange("");
   };
@@ -108,22 +122,22 @@ const FileUploader = ({
 
   return (
     <div className="file-uploader">
-      {previewImage ? (
+      {previewImage && previewImage !== "" ? (
         <img className="file-uploader__preview-image" src={previewImage} />
       ) : null}
       <div
         className={`file-uploader__wrapper ${
           isDraggingOver ? "file-uploader__wrapper--dragging" : ""
-        } ${hasError ? "file-uploader__wrapper--error" : ""}`}
+        } ${hasError || error ? "file-uploader__wrapper--error" : ""}`}
         ref={dropRef}
         style={{
           minHeight:
-            data || previewImage
+            data || (previewImage && previewImage !== "")
               ? "fit-content"
               : "var(--file-uploader__min-height)",
         }}
       >
-        {data || previewImage ? (
+        {data || (previewImage && previewImage !== "") ? (
           <ul className="file-uploader__file-list">
             <li>
               {data?.name ?? "фотография.jpeg"}
@@ -131,11 +145,21 @@ const FileUploader = ({
             </li>
           </ul>
         ) : isDraggingOver ? (
-          <div className="file-uploader__info">
-            <div className="file-uploader__text">Отпустите файл</div>
+          <div
+            className="file-uploader__info"
+            draggable="true"
+            onDragStart={(e) => e.preventDefault()}
+          >
+            <div className="file-uploader__text">
+              Отпустите файл для загрузки
+            </div>
           </div>
         ) : (
-          <div className="file-uploader__info">
+          <div
+            className="file-uploader__info"
+            draggable="true"
+            onDragStart={(e) => e.preventDefault()}
+          >
             <div className="file-uploader__text">Перетащите файл сюда</div>
             <div className="file-uploader__text file-uploader__text--small">
               или
@@ -158,12 +182,15 @@ const FileUploader = ({
           </div>
         )}
       </div>
-      {hasError && (
+      {(error || hasError) && (
         <div
           className="file-uploader__error"
-          onClick={() => setHasError(false)}
+          onClick={() => {
+            if (hideError) hideError();
+            setHasError(false);
+          }}
         >
-          {hasError}
+          {error ? "Поле не заполнено!" : hasError}
         </div>
       )}
       {formats[regex.toString()] && (
@@ -184,4 +211,5 @@ FileUploader.propTypes = {
   previewImage: PropTypes.string,
   uniqueId: PropTypes.string,
   error: PropTypes.string,
+  hideError: PropTypes.func,
 };

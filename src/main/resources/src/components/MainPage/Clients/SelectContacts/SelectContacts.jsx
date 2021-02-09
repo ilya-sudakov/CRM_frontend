@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import deleteSVG from '../../../../../../../../assets/select/delete.svg'
-import './SelectContacts.scss'
+import React, { useState, useEffect } from "react";
+import deleteSVG from "../../../../../../../../assets/select/delete.svg";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
+import "./SelectContacts.scss";
 
 const SelectContacts = (props) => {
   const [selected, setSelected] = useState([
     {
-      name: '',
-      lastName: '',
-      email: '',
-      position: '',
-      phoneNumber: '',
+      name: "",
+      lastName: "",
+      email: "",
+      position: "",
+      phoneNumber: "",
       isMinimized: false,
     },
-  ])
-  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
+  ]);
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
 
   useEffect(() => {
     if (
@@ -21,110 +23,96 @@ const SelectContacts = (props) => {
       props.defaultValue.length !== 0 &&
       !defaultValueLoaded
     ) {
-      setDefaultValueLoaded(true)
-      setSelected([...props.defaultValue])
+      setDefaultValueLoaded(true);
+      setSelected([...props.defaultValue]);
     }
-  }, [props.defaultValue, selected])
+  }, [props.defaultValue, selected]);
 
-  const handleNewContact = (e) => {
-    e.preventDefault()
+  const handleNewContact = () => {
     //Открыть по дефолту форму
-    const id = selected.length
+    const id = selected.length;
     setSelected([
       ...selected,
       {
-        name: '',
-        lastName: '',
-        email: '',
-        position: '',
-        phoneNumber: '',
+        name: "",
+        lastName: "",
+        email: "",
+        position: "",
+        phoneNumber: "",
         isMinimized: true,
       },
-    ])
+    ]);
     props.handleContactsChange([
       ...selected,
       {
-        name: '',
-        lastName: '',
-        email: '',
-        position: '',
-        phoneNumber: '',
+        name: "",
+        lastName: "",
+        email: "",
+        position: "",
+        phoneNumber: "",
       },
-    ])
-  }
+    ]);
+  };
 
   const deleteContact = (event) => {
-    const id = event.target.getAttribute('index')
-    let temp = selected
-    temp.splice(id, 1)
-    setSelected([...temp])
-    props.handleContactsChange([...temp])
-  }
+    const id = event.target.getAttribute("index");
+    let temp = selected;
+    temp.splice(id, 1);
+    setSelected([...temp]);
+    props.handleContactsChange([...temp]);
+  };
 
   const handleInputChange = (event) => {
-    const id = event.target.getAttribute('index')
-    const name = event.target.getAttribute('name')
-    let value = event.target.value
-    let temp = selected
-    let originalItem = selected[id]
+    const id = event.target.getAttribute("index");
+    const name = event.target.getAttribute("name");
+    let value = event.target.value;
+    let temp = selected;
+    let originalItem = selected[id];
     temp.splice(id, 1, {
       ...originalItem,
       [name]: value,
-    })
-    setSelected([...temp])
-    props.handleContactsChange([...temp])
-  }
+    });
+    setSelected([...temp]);
+    props.handleContactsChange([...temp]);
+  };
 
   return (
     <div className="select-contacts">
       {!props.readOnly && (
-        <button className="select-contacts__button" onClick={handleNewContact}>
-          Добавить контактное лицо
-        </button>
+        <Button onClick={handleNewContact} text="Добавить контактное лицо" />
       )}
       <div className="select-contacts__selected">
         {selected.map((item, index) => (
-          <div
-            className={
-              !props.readOnly && selected.length > 1
-                ? 'select-contacts__selected_item select-contacts__selected_item--minimized'
-                : 'select-contacts__selected_item'
-            }
-          >
-            <div
-              className="select-contacts__selected_header"
-              index={index}
-              onClick={() => {
-                const temp = selected
-                temp.splice(index, 1, {
-                  ...item,
-                  isMinimized: !item.isMinimized,
-                })
-                setSelected([...temp])
-                props.handleLegalEntityChange([...temp])
-              }}
-            >
-              <div className="select-contacts__selected_name">
-                <span>ФИО: </span>{' '}
-                <span>{item.lastName + ' ' + item.name}</span>
-              </div>
-              <div className="select-contacts__selected_name">
-                <span>E-mail: </span> <span>{item.email}</span>
-              </div>
-              <div className="select-contacts__selected_name">
-                <span>Телефон: </span> <span>{item.phoneNumber}</span>
-              </div>
-            </div>
-            <div
-              className={
-                item.isMinimized
-                  ? 'select-contacts__selected_form select-contacts__selected_form--hidden'
-                  : 'select-contacts__selected_form'
-              }
-            >
-              <div className="select-contacts__item">
-                <div className="select-contacts__input_name">Имя</div>
-                <div className="select-contacts__input_field">
+          <NestedFormItem
+            item={item}
+            index={index}
+            readOnly={props.readOnly}
+            itemsLength={selected.length}
+            handleDeleteItem={deleteContact}
+            headerItems={[
+              {
+                text: "ФИО",
+                value:
+                  item.lastName === "" && item.name === ""
+                    ? ""
+                    : `${item.lastName} ${item.name}`,
+                placeholder: "Введите ФИО...",
+              },
+              {
+                text: "E-mail",
+                value: item.email,
+                placeholder: "Введите email...",
+              },
+              {
+                text: "Телефон",
+                value: item.phoneNumber,
+                placeholder: "Введите телефон...",
+              },
+            ]}
+            formInputs={[
+              {
+                name: "Имя",
+                element: (
                   <input
                     type="text"
                     name="name"
@@ -134,11 +122,11 @@ const SelectContacts = (props) => {
                     defaultValue={item.name}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-contacts__item">
-                <div className="select-contacts__input_name">Фамилия</div>
-                <div className="select-contacts__input_field">
+                ),
+              },
+              {
+                name: "Фамилия",
+                element: (
                   <input
                     type="text"
                     name="lastName"
@@ -148,11 +136,11 @@ const SelectContacts = (props) => {
                     defaultValue={item.lastName}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-contacts__item">
-                <div className="select-contacts__input_name">Должность</div>
-                <div className="select-contacts__input_field">
+                ),
+              },
+              {
+                name: "Должность",
+                element: (
                   <input
                     type="text"
                     name="position"
@@ -162,11 +150,11 @@ const SelectContacts = (props) => {
                     defaultValue={item.position}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-contacts__item">
-                <div className="select-contacts__input_name">E-mail</div>
-                <div className="select-contacts__input_field">
+                ),
+              },
+              {
+                name: "E-mail",
+                element: (
                   <input
                     type="text"
                     name="email"
@@ -176,13 +164,11 @@ const SelectContacts = (props) => {
                     defaultValue={item.email}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select-contacts__item">
-                <div className="select-contacts__input_name">
-                  Номер телефона
-                </div>
-                <div className="select-contacts__input_field">
+                ),
+              },
+              {
+                name: "Номер телефона",
+                element: (
                   <input
                     type="text"
                     name="phoneNumber"
@@ -192,22 +178,15 @@ const SelectContacts = (props) => {
                     defaultValue={item.phoneNumber}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-            </div>
-            {!props.readOnly && selected.length > 1 && (
-              <img
-                index={index}
-                onClick={deleteContact}
-                className="select-contacts__img"
-                src={deleteSVG}
-              />
-            )}
-          </div>
+                ),
+              },
+            ]}
+            handleDeleteItem={deleteContact}
+          />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SelectContacts
+export default SelectContacts;

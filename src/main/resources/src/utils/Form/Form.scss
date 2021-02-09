@@ -20,8 +20,14 @@
     text-align: center;
   }
 
-  .checkbox__container {
-    width: 100% !important;
+  .main-form__img {
+    transition: 100ms ease-in-out;
+    &--rotated {
+      transform: rotate(180deg) !important;
+    }
+    &--more {
+      transform: rotate(-90deg) !important;
+    }
   }
 
   .main-form__header {
@@ -362,7 +368,7 @@
         max-width: calc(100% - 20px);
         min-width: calc(100% - 20px);
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 3px;
         outline: none;
         height: 1.25rem;
 
@@ -561,6 +567,51 @@
         &:hover {
           color: #000000 !important;
           background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+
+  .main-form__input_name {
+    &--row {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  .main-form__link {
+    display: flex;
+    align-items: center;
+    transition: 100ms ease-in-out;
+    color: #777777 !important;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 2px 8px;
+    padding-right: 3px;
+    margin-top: 2px;
+    width: fit-content;
+    margin-left: 10px;
+
+    .main-form__img {
+      width: 20px;
+      transition: margin-left 200ms ease-in-out;
+      path:first-child {
+        transition: fill 200ms ease-in-out;
+        fill: #bbbbbb;
+      }
+    }
+
+    &:hover {
+      color: #333333 !important;
+      .main-form__img {
+        margin-left: 8px;
+
+        path:first-child {
+          fill: lighten($button__background--inverted, 6%);
         }
       }
     }

@@ -1,136 +1,127 @@
-import React, { useState, useEffect } from 'react'
-import deleteSVG from '../../../../../../../../../assets/select/delete.svg'
-import './SelectParts.scss'
+import React, { useState, useEffect } from "react";
+import deleteSVG from "../../../../../../../../../assets/select/delete.svg";
+import "./SelectParts.scss";
 import {
   workshopsLocations,
   checkRiggingTypesInputs,
-} from '../RiggingComponents/rigsVariables'
+} from "../RiggingComponents/rigsVariables";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import NestedFormItem from "../../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
+import { scrollToElement } from "../../../../../utils/functions.jsx";
 
 const SelectParts = (props) => {
-  const [selected, setSelected] = useState([])
-  const [options, setOptions] = useState([])
-  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false)
+  const [selected, setSelected] = useState([]);
+  const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
     if (props.defaultValue !== undefined && !defaultValueLoaded) {
-      setSelected([...props.defaultValue])
-      setDefaultValueLoaded(true)
+      setSelected([...props.defaultValue]);
+      setDefaultValueLoaded(true);
     }
-  }, [props.defaultValue, selected])
+  }, [props.defaultValue, selected]);
 
-  const handleNewPart = (e) => {
-    e.preventDefault()
+  useEffect(() => {
+    const titleElement = document.getElementById(props.scrollToId);
+    if (titleElement && !hasScrolled) {
+      scrollToElement(titleElement, -10);
+      setHasScrolled(true);
+    }
+  }, [props.scrollToId, selected]);
+
+  const handleNewPart = () => {
     setSelected([
       ...selected,
       {
-        number: '',
-        name: '',
-        amount: '',
-        location: 'lemz',
-        comment: '',
-        cuttingDimensions: '',
-        milling: '',
-        harding: '',
-        grinding: '',
-        erosion: '',
-        controll: '',
-        color: 'production',
+        number: "",
+        name: "",
+        amount: "",
+        location: "lemz",
+        comment: "",
+        cuttingDimensions: "",
+        milling: "",
+        harding: "",
+        grinding: "",
+        erosion: "",
+        controll: "",
+        color: "production",
         isMinimized: true,
       },
-    ])
+    ]);
     props.handlePartsChange([
       ...selected,
       {
-        number: '',
-        name: '',
-        amount: '',
-        location: 'lemz',
-        comment: '',
-        cuttingDimensions: '',
-        milling: '',
-        harding: '',
-        grinding: '',
-        erosion: '',
-        controll: '',
-        color: 'production',
+        number: "",
+        name: "",
+        amount: "",
+        location: "lemz",
+        comment: "",
+        cuttingDimensions: "",
+        milling: "",
+        harding: "",
+        grinding: "",
+        erosion: "",
+        controll: "",
+        color: "production",
       },
-    ])
-  }
+    ]);
+  };
 
-  const deletePart = (e) => {
-    const id = e.target.getAttribute('index')
-    let temp = selected
-    temp.splice(id, 1)
-    setSelected([...temp])
-    props.handlePartsChange([...temp])
-  }
+  const deletePart = (id) => {
+    let temp = selected;
+    temp.splice(id, 1);
+    setSelected([...temp]);
+    props.handlePartsChange([...temp]);
+  };
 
   const handleInputChange = (event) => {
-    const id = event.target.getAttribute('index')
-    const name = event.target.getAttribute('name')
-    const value = event.target.value
-    let temp = selected
-    let originalItem = selected[id]
+    const id = event.target.getAttribute("index");
+    const name = event.target.getAttribute("name");
+    const value = event.target.value;
+    let temp = selected;
+    let originalItem = selected[id];
     temp.splice(id, 1, {
       ...originalItem,
       [name]: value,
-    })
-    setSelected([...temp])
-    props.handlePartsChange([...temp])
-  }
+    });
+    setSelected([...temp]);
+    props.handlePartsChange([...temp]);
+  };
 
   return (
     <div className="select_parts">
       {!props.readOnly && (
-        <button className="select_parts__button" onClick={handleNewPart}>
-          Добавить деталь
-        </button>
+        <Button text="Добавить деталь" onClick={handleNewPart} />
       )}
       <div className="select_parts__selected">
         {selected.map((item, index) => (
-          <div
-            className={
-              !props.readOnly && selected.length > 1
-                ? 'select_parts__selected_item select_parts__selected_item--minimized'
-                : 'select_parts__selected_item'
-            }
-          >
-            <div
-              className="select_parts__selected_header"
-              index={index}
-              onClick={() => {
-                const temp = selected
-                temp.splice(index, 1, {
-                  ...item,
-                  isMinimized: !item.isMinimized,
-                })
-                setSelected([...temp])
-                props.handlePartsChange([...temp])
-              }}
-            >
-              <div className="select_parts__selected_name">
-                <span>Название: </span>
-                <span>{item.name}</span>
-              </div>
-              <div className="select_parts__selected_name">
-                <span>Артикул: </span>
-                <span>{item.number}</span>
-              </div>
-              <div className="select_parts__selected_name">
-                <span>Комментарий: </span>
-                <span>{item.comment}</span>
-              </div>
-            </div>
-            <div
-              className={
-                item.isMinimized
-                  ? 'select_parts__selected_form select_parts__selected_form--hidden'
-                  : 'select_parts__selected_form'
-              }
-            >
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Название</div>
-                <div className="select_parts__input_field">
+          <NestedFormItem
+            readOnly={props.readOnly}
+            index={index}
+            id={item.id}
+            itemsLength={selected.length}
+            handleDeleteItem={() => deletePart(index)}
+            headerItems={[
+              {
+                text: "Название",
+                value: item.name,
+                placeholder: "Введите название...",
+              },
+              {
+                text: "Артикул",
+                value: item.number,
+                placeholder: "Введите артикул...",
+              },
+              {
+                text: "Комментарий",
+                value: item.comment,
+                placeholder: "Введите комментарий...",
+              },
+            ]}
+            formInputs={[
+              {
+                name: "Название",
+                element: (
                   <input
                     type="text"
                     name="name"
@@ -140,11 +131,11 @@ const SelectParts = (props) => {
                     defaultValue={item.name}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Артикул</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Артикул",
+                element: (
                   <input
                     type="text"
                     name="number"
@@ -154,11 +145,11 @@ const SelectParts = (props) => {
                     defaultValue={item.number}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Кол-во</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Кол-во",
+                element: (
                   <input
                     type="text"
                     name="amount"
@@ -168,11 +159,11 @@ const SelectParts = (props) => {
                     defaultValue={item.amount}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Местоположение</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Местоположение",
+                element: (
                   <select
                     index={index}
                     name="location"
@@ -184,11 +175,11 @@ const SelectParts = (props) => {
                       <option value={workshop[0]}>{workshop[1].name}</option>
                     ))}
                   </select>
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Комментарий</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Комментарий",
+                element: (
                   <input
                     type="text"
                     name="comment"
@@ -198,11 +189,11 @@ const SelectParts = (props) => {
                     defaultValue={item.comment}
                     readOnly={props.readOnly}
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Распил/Габариты</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Распил/Габариты",
+                element: (
                   <input
                     type="text"
                     name="cuttingDimensions"
@@ -213,16 +204,14 @@ const SelectParts = (props) => {
                     readOnly={props.readOnly}
                     disabled={
                       !props.readOnly &&
-                      !checkRiggingTypesInputs(item, 'cuttingDimensions')
+                      !checkRiggingTypesInputs(item, "cuttingDimensions")
                     }
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">
-                  Фрезеровка/Точение
-                </div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Фрезеровка/Точение",
+                element: (
                   <input
                     type="text"
                     index={index}
@@ -233,14 +222,14 @@ const SelectParts = (props) => {
                     readOnly={props.readOnly}
                     disabled={
                       !props.readOnly &&
-                      !checkRiggingTypesInputs(item, 'milling')
+                      !checkRiggingTypesInputs(item, "milling")
                     }
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Закалка</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Закалка",
+                element: (
                   <input
                     type="text"
                     index={index}
@@ -251,14 +240,14 @@ const SelectParts = (props) => {
                     readOnly={props.readOnly}
                     disabled={
                       !props.readOnly &&
-                      !checkRiggingTypesInputs(item, 'harding')
+                      !checkRiggingTypesInputs(item, "harding")
                     }
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Шлифовка</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Шлифовка",
+                element: (
                   <input
                     type="text"
                     index={index}
@@ -269,14 +258,14 @@ const SelectParts = (props) => {
                     readOnly={props.readOnly}
                     disabled={
                       !props.readOnly &&
-                      !checkRiggingTypesInputs(item, 'grinding')
+                      !checkRiggingTypesInputs(item, "grinding")
                     }
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Эрозия</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Эрозия",
+                element: (
                   <input
                     type="text"
                     name="erosion"
@@ -287,14 +276,14 @@ const SelectParts = (props) => {
                     readOnly={props.readOnly}
                     disabled={
                       !props.readOnly &&
-                      !checkRiggingTypesInputs(item, 'erosion')
+                      !checkRiggingTypesInputs(item, "erosion")
                     }
                   />
-                </div>
-              </div>
-              <div className="select_parts__item">
-                <div className="select_parts__input_name">Проверка</div>
-                <div className="select_parts__input_field">
+                ),
+              },
+              {
+                name: "Проверка",
+                element: (
                   <input
                     type="text"
                     name="controll"
@@ -305,25 +294,17 @@ const SelectParts = (props) => {
                     readOnly={props.readOnly}
                     disabled={
                       !props.readOnly &&
-                      !checkRiggingTypesInputs(item, 'controll')
+                      !checkRiggingTypesInputs(item, "controll")
                     }
                   />
-                </div>
-              </div>
-            </div>
-            {!props.readOnly && selected.length > 1 && (
-              <img
-                index={index}
-                onClick={deletePart}
-                className="select_parts__img"
-                src={deleteSVG}
-              />
-            )}
-          </div>
+                ),
+              },
+            ]}
+          />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SelectParts
+export default SelectParts;

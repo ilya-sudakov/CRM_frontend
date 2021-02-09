@@ -191,7 +191,7 @@ const SelectWork = (props) => {
                   }}
                   userHasAccess={userContext.userHasAccess}
                   workItems={props.workItems}
-                  readOnly
+                  readOnly={props.readOnly}
                 />
               )}
               {/* Вставить InputProducts, только вместо фасовки сделать 
@@ -279,29 +279,24 @@ const SelectWork = (props) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="select-work__item  select-work__item--drafts">
-                    <div className="select-work__input_name">Чертежи</div>
-                    <div className="select-work__input_field">
-                      <SelectDraft
-                        options
-                        defaultValue={item.draft}
-                        onChange={(value) => {
-                          let temp = selected;
-                          let originalItem = selected[index];
-                          temp.splice(index, 1, {
-                            ...originalItem,
-                            draft: value,
-                          });
-                          setSelected([...temp]);
-                          props.handleWorkChange([...temp]);
-                        }}
-                        searchPlaceholder={
-                          "Добавьте чертеж нажав на кнопку 'Добавить чертеж'"
-                        }
-                        userHasAccess={userContext.userHasAccess}
-                      />
-                    </div>
-                  </div>
+                  <SelectDraft
+                    options
+                    defaultValue={item.draft}
+                    onChange={(value) => {
+                      let temp = selected;
+                      let originalItem = selected[index];
+                      temp.splice(index, 1, {
+                        ...originalItem,
+                        draft: value,
+                      });
+                      setSelected([...temp]);
+                      props.handleWorkChange([...temp]);
+                    }}
+                    searchPlaceholder={
+                      "Добавьте чертеж нажав на кнопку 'Добавить чертеж'"
+                    }
+                    userHasAccess={userContext.userHasAccess}
+                  />
                 )
               ) : null}
               {!props.noComment && (

@@ -10,7 +10,6 @@ import PageLoading from "../../PageLoading/PageLoading.jsx";
 import NewRig from "./RiggingComponents/Forms/NewRig/NewRig.jsx";
 import ViewRig from "./RiggingComponents/Forms/ViewRig/ViewRig.jsx";
 import EditRig from "./RiggingComponents/Forms/EditRig/EditRig.jsx";
-import EditPartInRigging from "./RiggingComponents/Forms/EditPartInRigging/EditPartInRigging.jsx";
 
 const Rigging = (props) => {
   const [cachedItems, setCachedItems] = useState({
@@ -318,21 +317,6 @@ const Rigging = (props) => {
                   "ROLE_ENGINEER",
                   "ROLE_WORKSHOP",
                   "ROLE_WORKSHOP",
-                ]}
-              />
-              <PrivateRoute
-                path={`/dispatcher/rigging/${
-                  (props.location.pathname.includes("stamp") && "stamp") ||
-                  (props.location.pathname.includes("machine") && "machine") ||
-                  (props.location.pathname.includes("press-form") &&
-                    "press-form") ||
-                  (props.location.pathname.includes("parts") && "parts")
-                }/edit-part/`}
-                component={EditPartInRigging}
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
                 ]}
               />
               <Route component={PageNotFound} />

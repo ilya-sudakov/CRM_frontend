@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import './NewProduct.scss'
-import '../../../../utils/Form/Form.scss'
-import { addProduct } from '../../../../utils/RequestsAPI/Products.js'
-import InputText from '../../../../utils/Form/InputText/InputText.jsx'
-import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import SelectCategory from '../SelectCategory/SelectCategory.jsx'
-import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx'
-import { getDataUri } from '../../../../utils/functions.jsx'
-import Button from '../../../../utils/Form/Button/Button.jsx'
-import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx'
-import { addPackagingToProduct } from '../../../../utils/RequestsAPI/Products/packaging.js'
+import React, { useEffect, useState } from "react";
+import "./NewProduct.scss";
+import "../../../../utils/Form/Form.scss";
+import { addProduct } from "../../../../utils/RequestsAPI/Products.js";
+import InputText from "../../../../utils/Form/InputText/InputText.jsx";
+import ErrorMessage from "../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import SelectCategory from "../SelectCategory/SelectCategory.jsx";
+import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
+import { getDataUri } from "../../../../utils/functions.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
+import { addPackagingToProduct } from "../../../../utils/RequestsAPI/Products/packaging.js";
 
 const NewProduct = (props) => {
   const [productInputs, setProductInputs] = useState({
@@ -20,11 +20,11 @@ const NewProduct = (props) => {
     description: null,
     barcode: null,
     packages: [],
-    photo: '',
+    photo: "",
     unit: 0,
-    productionLocation: 'ЦехЛЭМЗ',
+    productionLocation: "ЦехЛЭМЗ",
     weight: null,
-  })
+  });
   const [productErrors, setProductErrors] = useState({
     name: false,
     category: false,
@@ -33,7 +33,7 @@ const NewProduct = (props) => {
     photo: false,
     unit: false,
     weight: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     name: false,
     category: false,
@@ -42,37 +42,37 @@ const NewProduct = (props) => {
     photo: true,
     unit: true,
     weight: false,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case 'category':
+      case "category":
         setValidInputs({
           ...validInputs,
-          category: value !== '',
-        })
-        break
-      case 'packages':
+          category: value !== "",
+        });
+        break;
+      case "packages":
         setValidInputs({
           ...validInputs,
           packages: value.length > 0,
-        })
-        break
+        });
+        break;
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       name: false,
       category: false,
@@ -81,30 +81,30 @@ const NewProduct = (props) => {
       photo: false,
       unit: false,
       weight: false,
-    })
+    });
     for (let item in validInputs) {
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setProductErrors(newErrors)
+    setProductErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
       // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
   const handleSubmit = (event) => {
     // event.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     // console.log(productInputs)
     formIsValid() &&
       addProduct(productInputs)
@@ -115,48 +115,48 @@ const NewProduct = (props) => {
             {
               packings: [
                 ...productInputs.packages.map((item) => {
-                  return item.id
+                  return item.id;
                 }),
               ],
             },
-            res.id,
-          )
+            res.id
+          );
         })
-        .then(() => props.history.push('/products'))
+        .then(() => props.history.push("/products"))
         .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при добавлении записи')
-        })
-  }
+          setIsLoading(false);
+          alert("Ошибка при добавлении записи");
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setProductInputs({
       ...productInputs,
       [name]: value,
-    })
+    });
     setProductErrors({
       ...productErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   const handleCategoryChange = (value) => {
-    validateField('category', value)
+    validateField("category", value);
     setProductInputs({
       ...productInputs,
       category: value,
-    })
+    });
     setProductErrors({
       ...productErrors,
       category: false,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    document.title = 'Создание продукции'
-  }, [])
+    document.title = "Создание продукции";
+  }, []);
 
   return (
     <div className="main-form">
@@ -186,7 +186,6 @@ const NewProduct = (props) => {
           handleCategoryChange={handleCategoryChange}
           errorsArr={productErrors}
           setErrorsArr={setProductErrors}
-          readOnly
         />
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Характеристика продукции</div>
@@ -243,11 +242,11 @@ const NewProduct = (props) => {
           <SelectPackaging
             required
             onChange={(packages) => {
-              validateField('packages', packages)
+              validateField("packages", packages);
               setProductInputs({
                 ...productInputs,
                 packages: packages,
-              })
+              });
             }}
             errorName="packages"
             errorsArr={productErrors}
@@ -274,11 +273,12 @@ const NewProduct = (props) => {
           <div className="main-form__input_name">Фотография</div>
           <FileUploader
             onChange={async (result) => {
-              const downgraded = await getDataUri(result, 'jpeg', 0.3)
+              const downgraded =
+                result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
               setProductInputs({
                 ...productInputs,
                 photo: downgraded,
-              })
+              });
             }}
             previewImage={productInputs.photo}
           />
@@ -290,7 +290,7 @@ const NewProduct = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => props.history.push('/products')}
+            onClick={() => props.history.push("/products")}
             value="Вернуться назад"
           />
           {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить продукцию" />
@@ -304,7 +304,7 @@ const NewProduct = (props) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default NewProduct
+export default NewProduct;

@@ -26,10 +26,9 @@ const Button = ({
   return (
     <button
       className={`${newClassName} ${className ?? ""} ${
-        isRecent ? "button--recent" : ""
+        isRecent ? "main-window__button--recent" : ""
       }`}
       onClick={handleClick}
-      title={isRecent ? "Новая функция" : text}
       type={type ? type : "button"}
     >
       {imgSrc && (

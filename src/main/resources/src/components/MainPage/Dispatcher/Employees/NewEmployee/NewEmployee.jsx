@@ -32,7 +32,6 @@ const NewEmployee = (props) => {
     position: false,
     workshop: false,
     // passportScan1: false,
-    // comment: false,
     relevance: false,
   });
   const [validInputs, setValidInputs] = useState({
@@ -44,7 +43,6 @@ const NewEmployee = (props) => {
     position: false,
     workshop: true,
     // passportScan1: false,
-    // comment: false,
     relevance: true,
   });
   const [showError, setShowError] = useState(false);
@@ -80,7 +78,6 @@ const NewEmployee = (props) => {
       position: false,
       workshop: false,
       // passportScan1: false,
-      // comment: false,
       relevance: false,
     });
     for (let item in validInputs) {
@@ -266,37 +263,28 @@ const NewEmployee = (props) => {
             />
           </div>
         </div>
-        {employeeInputs.passportScan1 !== "" && (
-          <div className="main-form__item">
-            <div className="main-form__input_name">Паспорт</div>
-            <div className="main-form__passport_img">
-              {/* {employeeInputs.passportScan.map((photo) => (
-                            <img src={photo} alt=""/>
-                        ))} */}
-              <img src={employeeInputs.passportScan1} alt="" />
-            </div>
-          </div>
-        )}
         <div className="main-form__item">
-          <div className="main-form__input_name">Паспорт*</div>
+          <div className="main-form__input_name">Паспорт</div>
           <FileUploader
+            // error={employeeErrors.passportScan1}
             onChange={(result) => {
+              // validateField("passportScan1", result);
               setEmployeeInputs({
                 ...employeeInputs,
                 passportScan1: result,
               });
             }}
-            previewImage={
-              employeeInputs.passportScan1 !== ""
-                ? employeeInputs.passportScan1
-                : null
-            }
+            previewImage={employeeInputs.passportScan1}
+            // hideError={() =>
+            //   setEmployeeErrors({
+            //     ...employeeErrors,
+            //     passportScan1: false,
+            //   })
+            // }
           />
         </div>
         <InputText
           inputName="Комментарий"
-          // required
-          // error={employeeErrors.comment}
           name="comment"
           handleInputChange={handleInputChange}
           errorsArr={employeeErrors}

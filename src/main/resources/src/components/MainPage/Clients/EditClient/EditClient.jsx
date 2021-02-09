@@ -469,6 +469,7 @@ const EditClient = (props) => {
                     }}
                     defaultValue={clientInputs.legalEntity}
                     userHasAccess={props.userHasAccess}
+                    // isMinimizedDefault={true}
                   />
                 </div>
               </div>

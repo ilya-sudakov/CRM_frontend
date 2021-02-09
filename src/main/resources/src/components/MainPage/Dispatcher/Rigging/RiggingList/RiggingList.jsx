@@ -57,6 +57,8 @@ const RiggingList = () => {
               newDrafts.push({
                 ...stamp,
                 type: "Stamp",
+                itemId: item.id,
+                status: item.status,
               });
             });
         });
