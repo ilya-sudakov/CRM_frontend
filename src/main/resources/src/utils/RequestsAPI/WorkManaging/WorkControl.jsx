@@ -45,7 +45,7 @@ export function getRecordedWorkByDateRange(dF, mF, yF, dL, mL, yL, signal) {
 
 export function getWorkReportByEmployee(id, month, year, signal) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/report/${id}&${month}${year}`,
+    url: `${process.env.API_BASE_URL}/api/v1/work_control/report/${id}&${month}&${year}`,
     method: "GET",
     signal: signal,
   });
