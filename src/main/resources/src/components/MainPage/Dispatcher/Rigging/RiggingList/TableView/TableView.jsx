@@ -5,7 +5,10 @@ import UserContext from "../../../../../../App.js";
 
 import chevronDownSVG from "../../../../../../../../../../assets/tableview/chevron-down.svg";
 import editIcon from "../../../../../../../../../../assets/tableview/edit.svg";
-import { rigStatuses } from "../../RiggingComponents/rigsVariables.js";
+import {
+  rigStatuses,
+  rigTypes,
+} from "../../RiggingComponents/rigsVariables.js";
 import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const TableView = (props) => {
@@ -134,12 +137,16 @@ const TableView = (props) => {
                               </div>
                               {rigStatuses[item.color || "production"].name}
                             </span>
+                            {console.log(item)}
                             <div className="main-window__actions">
                               <Link
                                 className="main-window__action"
-                                to={`/dispatcher/rigging/${
-                                  riggingNames[item.type.toLowerCase()]
-                                }/edit-part/${item.id}/${item.id}`}
+                                // to={`/dispatcher/rigging/${
+                                //   riggingNames[item.type.toLowerCase()]
+                                // }/edit-part/${item.id}/${item.id}`}
+                                to={`${
+                                  rigTypes[item.status].redirectURL
+                                }/edit/${item.itemId}?part=${item.id}`}
                                 title="Редактирование"
                               >
                                 <img
@@ -147,7 +154,6 @@ const TableView = (props) => {
                                   src={editIcon}
                                   alt=""
                                 />
-                                {/* Редактирование */}
                               </Link>
                             </div>
                           </div>

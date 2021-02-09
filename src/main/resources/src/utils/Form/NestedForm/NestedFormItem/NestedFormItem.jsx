@@ -4,6 +4,7 @@ import "./NestedFormItem.scss";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { useRef } from "react";
 import PropTypes from "prop-types";
+import { is } from "date-fns/locale";
 
 const NestedFormItem = ({
   readOnly,
@@ -14,26 +15,24 @@ const NestedFormItem = ({
   itemsLength = 0,
   isMinimizedDefault = false,
   handleDeleteItem,
+  id = 0,
 }) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const formRef = useRef(null);
   const [formHeight, setFormHeight] = useState(formRef?.current?.clientHeight);
 
   useEffect(() => {
-    if (isMinimizedDefault === true && formHeight > 0)
+    if (isMinimizedDefault === true && formHeight !== "0px" && formHeight) {
+      console.log(formHeight);
       setIsMinimized(isMinimizedDefault);
+    }
+    setFormHeight(`${formRef.current.clientHeight}px`);
   }, [formRef.current]);
 
   useEffect(() => {
-    if (formHeight > 15) return;
-    if (!isMinimized && formHeight === 0)
-      setFormHeight(formRef.current.clientHeight);
+    if (!isMinimized && formHeight === "0px")
+      setFormHeight(`${formRef.current.clientHeight}px`);
   }, [isMinimized]);
-
-  useEffect(() => {
-    if (formHeight <= 15) return;
-    setFormHeight(formRef.current.clientHeight);
-  }, [formRef.current]);
 
   return (
     <div
@@ -47,6 +46,7 @@ const NestedFormItem = ({
         className="form-item__header"
         index={index}
         onClick={() => setIsMinimized(!isMinimized)}
+        id={id}
       >
         {headerItems.map((headerItem) => (
           <div className="form-item__name" style={{ ...headerItem.style }}>
@@ -75,9 +75,14 @@ const NestedFormItem = ({
         style={{
           height: isMinimized
             ? "0px"
-            : `${
-                formHeight === 0 ? formRef.current?.clientHeight : formHeight
-              }px`,
+            : formHeight === "0px"
+            ? formRef.current?.clientHeight
+            : formHeight,
+          transition:
+            isMinimizedDefault &&
+            (formHeight === "0px" || formHeight === undefined)
+              ? "0s ease-in"
+              : "all 100ms ease-in-out",
         }}
         ref={formRef}
       >
@@ -111,6 +116,7 @@ NestedFormItem.propTypes = {
   formInputs: PropTypes.array,
   bottomButton: PropTypes,
   itemsLength: PropTypes.number,
+  id: PropTypes.number,
   isMinimizedDefault: PropTypes.bool,
   handleDeleteItem: PropTypes.element,
 };

@@ -274,7 +274,6 @@ const TableView = (props) => {
                     <span>Закалка</span>
                     <span>Шлифовка</span>
                     <span>Эрозия</span>
-                    {/* <span>Проверка</span> */}
                     <div className="main-window__actions">Действия</div>
                   </div>
                   {sortStampParts(stamp.stampParts).map((part, index) => (
@@ -397,9 +396,9 @@ const TableView = (props) => {
                       </span>
                       <div className="main-window__actions">
                         <Link
-                          to={`${rigTypes[props.type].redirectURL}/edit-part/${
+                          to={`${rigTypes[props.type].redirectURL}/edit/${
                             stamp.id
-                          }/${part.id}`}
+                          }?part=${part.id}`}
                           className="main-window__action"
                           title="Редактировать"
                         >
