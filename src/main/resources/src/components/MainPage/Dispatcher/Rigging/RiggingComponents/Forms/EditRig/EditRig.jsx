@@ -239,6 +239,7 @@ const EditRig = (props) => {
                 handlePartsChange={handlePartsChange}
                 defaultValue={rigInputs.stampParts}
                 scrollToId={query.get("part")}
+                isMinimizedDefault={true}
                 searchPlaceholder="Введите название продукта для поиска..."
               />
             </div>

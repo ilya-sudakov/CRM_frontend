@@ -89,6 +89,7 @@ const SelectContacts = (props) => {
             readOnly={props.readOnly}
             itemsLength={selected.length}
             handleDeleteItem={deleteContact}
+            isMinimizedDefault={props.isMinimizedDefault}
             headerItems={[
               {
                 text: "ФИО",
