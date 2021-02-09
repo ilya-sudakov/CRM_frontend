@@ -1,6 +1,7 @@
 @import "../../../../variables.scss";
 
 .new_client {
-  .main-form__item {
+  .main-form__form {
+    --form__max-width: 1000px;
   }
 }

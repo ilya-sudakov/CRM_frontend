@@ -62,7 +62,7 @@ const SelectClientCategory = (props) => {
           {props.inputName + (props.required ? "*" : "")}
           {!props.readOnly && (
             <SelectFromButton
-              text="Выбрать клиента"
+              text="Выбрать категорию"
               onClick={() => setShowWindow(!showWindow)}
             />
           )}

@@ -21,6 +21,7 @@
   }
 
   .main-form__img {
+    transition: 100ms ease-in-out;
     &--rotated {
       transform: rotate(180deg) !important;
     }
