@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import deleteSVG from "../../../../../../../../assets/select/delete.svg";
 import "./SelectLegalEntity.scss";
 import {
   getInfoByINN,
   getBIKByINN,
 } from "../../../../utils/RequestsAPI/Clients.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
-import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
 
 const SelectLegalEntity = (props) => {
@@ -23,7 +21,6 @@ const SelectLegalEntity = (props) => {
       isMinimized: false,
     },
   ]);
-  const [options, setOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
 
@@ -167,6 +164,7 @@ const SelectLegalEntity = (props) => {
             readOnly={props.readOnly}
             itemsLength={selected.length}
             handleDeleteItem={deleteLegalEntity}
+            isMinimizedDefault={props.isMinimizedDefault}
             headerItems={[
               {
                 text: "Название",

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import deleteSVG from "../../../../../../../../assets/select/delete.svg";
+import DeleteSVG from "../../../../../../../../assets/tableview/delete.inline.svg";
 import "./NestedFormItem.scss";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { useRef } from "react";
+import PropTypes from "prop-types";
 
 const NestedFormItem = ({
   item,
@@ -15,13 +16,17 @@ const NestedFormItem = ({
   isMinimizedDefault = false,
   handleDeleteItem,
 }) => {
-  const [isMinimized, setIsMinimized] = useState(isMinimizedDefault);
-  const [formHeight, setFormHeight] = useState(0);
+  const [isMinimized, setIsMinimized] = useState(false);
   const formRef = useRef(null);
+  const [formHeight, setFormHeight] = useState(formRef?.current?.clientHeight);
+
+  useEffect(() => {
+    if (isMinimizedDefault === true && formHeight > 0)
+      setIsMinimized(isMinimizedDefault);
+  }, [formRef.current]);
 
   useEffect(() => {
     if (formHeight > 15) return;
-    console.log(formRef.current.clientHeight);
     if (!isMinimized && formHeight === 0)
       setFormHeight(formRef.current.clientHeight);
   }, [isMinimized]);
@@ -88,11 +93,10 @@ const NestedFormItem = ({
         {!readOnly && bottomButton && bottomButton}
       </div>
       {!readOnly && itemsLength > 1 && (
-        <img
+        <DeleteSVG
           index={index}
           onClick={handleDeleteItem}
           className="form-item__img"
-          src={deleteSVG}
         />
       )}
     </div>
@@ -100,3 +104,15 @@ const NestedFormItem = ({
 };
 
 export default NestedFormItem;
+
+NestedFormItem.propTypes = {
+  item: PropTypes.object,
+  readOnly: PropTypes.bool,
+  index: PropTypes.number,
+  headerItems: PropTypes.array,
+  formInputs: PropTypes.array,
+  bottomButton: PropTypes,
+  itemsLength: PropTypes.number,
+  isMinimizedDefault: PropTypes.bool,
+  handleDeleteItem: PropTypes.element,
+};
