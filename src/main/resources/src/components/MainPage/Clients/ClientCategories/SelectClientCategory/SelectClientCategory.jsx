@@ -67,7 +67,7 @@ const SelectClientCategory = (props) => {
             />
           )}
           <div className={"select-client-category__input_field"}>
-            {id !== 0 && (
+            {(id !== 0 || props.defaultValue) && (
               <div className="select-client-category__searchbar">
                 <input
                   type="text"
