@@ -11,7 +11,7 @@
     transition: 100ms ease-in-out;
 
     &--minimized {
-        width: calc(100% - 80px);
+        width: calc(100% - 50px);
     }
 
     .form-item__img {
@@ -32,7 +32,8 @@
             flex-direction: column;
             margin-right: 10px;
             flex: 0 1 33.333%;
-            &:last-child {
+            min-width: 0;
+            &:nth-last-child(2) {
                 margin-right: 0;
             }
             span {
@@ -43,6 +44,9 @@
 
                 &:nth-child(2) {
                     font-size: 1rem;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
                 }
             }
 

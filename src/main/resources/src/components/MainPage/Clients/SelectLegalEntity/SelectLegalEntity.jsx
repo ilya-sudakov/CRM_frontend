@@ -178,13 +178,13 @@ const SelectLegalEntity = (props) => {
                 text: "Адрес",
                 name: "legalAddress",
                 placeholder: "Введите адрес...",
-                style: { flex: "0 1 80%" },
+                style: { flex: "0 1 50%" },
               },
               {
                 text: "ИНН",
                 name: "inn",
                 placeholder: "Введите ИНН...",
-                style: { flex: "0 1 20%", maxWidth: "150px" },
+                style: { flex: "0 1 20%", maxWidth: "120px" },
               },
             ]}
             formInputs={[
