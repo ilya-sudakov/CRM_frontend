@@ -168,19 +168,19 @@ const SelectLegalEntity = (props) => {
             headerItems={[
               {
                 text: "Название",
-                name: "name",
+                value: item.name,
                 placeholder: "Введите название...",
                 style: { flex: "0 1 30%" },
               },
               {
                 text: "Адрес",
-                name: "legalAddress",
+                value: item.legalAddress,
                 placeholder: "Введите адрес...",
                 style: { flex: "0 1 50%" },
               },
               {
                 text: "ИНН",
-                name: "inn",
+                value: item.inn,
                 placeholder: "Введите ИНН...",
                 style: { flex: "0 1 20%", maxWidth: "120px" },
               },

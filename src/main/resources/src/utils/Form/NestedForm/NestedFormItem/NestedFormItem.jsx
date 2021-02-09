@@ -52,8 +52,8 @@ const NestedFormItem = ({
         {headerItems.map((headerItem) => (
           <div className="form-item__name" style={{ ...headerItem.style }}>
             <span>{headerItem.text}</span>
-            {item[headerItem.name] !== "" ? (
-              <span>{item[headerItem.name]}</span>
+            {headerItem.value !== "" ? (
+              <span>{headerItem.value}</span>
             ) : (
               <span className="form-item__name--placeholder">
                 {headerItem.placeholder}

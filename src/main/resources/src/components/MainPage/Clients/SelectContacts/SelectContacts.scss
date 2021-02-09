@@ -18,26 +18,8 @@
     }
   }
 
-  .input_products {
-    width: 100%;
-    margin-top: 10px;
-
-    // .input_products__input {
-    //   width: calc(100% - 10px);
-    // }
-    .input_products__input_name {
-      font-size: 85%;
-    }
-    .select {
-      width: calc(80% - 0px);
-      // width: 100%;
-      // flex: 0 1 calc(80% - 0px);
-      // font-size: 80%;
-    }
-    .select__input {
-      width: calc(100% - 20px);
-      min-width: 0 !important;
-    }
+  .button {
+    font-size: 0.8rem;
   }
 
   &__selected_item {
@@ -127,39 +109,6 @@
           }
         }
       }
-    }
-  }
-
-  .select-contacts__selected_form .select-contacts__button {
-    margin-top: 15px;
-  }
-
-  &__button {
-    border: 0;
-    cursor: pointer;
-    outline: none;
-    font-size: 70%;
-    padding: 10px 10px;
-    border-radius: 5px;
-    background-color: $button__background--inverted;
-    color: #ffffff;
-    transition: 0.2s ease-in-out;
-
-    &:hover {
-      background-color: lighten($button__background--inverted, 5%);
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    }
-  }
-
-  &__input {
-    border: 1px solid #bbbbbb;
-    width: 100%;
-    padding: 5px 10px;
-    border-radius: 5px;
-    z-index: 2;
-
-    &:focus {
-      border: 1px solid $button__background--inverted;
     }
   }
 

@@ -72,6 +72,7 @@
         width: calc(100%);
         transition: height 200ms ease-in-out;
         overflow: hidden;
+        padding-bottom: 5px;
 
         &--hidden {
             padding: 0;
@@ -79,7 +80,6 @@
 
         .button {
             margin-top: 10px;
-            margin-bottom: 10px;
         }
 
         .form-item__item {

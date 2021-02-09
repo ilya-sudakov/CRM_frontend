@@ -21,45 +21,4 @@
   .button {
     font-size: 0.8rem;
   }
-
-  &__input {
-    border: 1px solid #bbbbbb;
-    width: 100%;
-    padding: 5px 10px;
-    border-radius: 5px;
-    z-index: 2;
-
-    &:focus {
-      border: 1px solid $button__background--inverted;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .select-legal-entity__selected_form {
-      height: 570px;
-    }
-    .select-legal-entity__selected_form--hidden {
-      height: 0;
-    }
-    .select-legal-entity__selected_header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .select-legal-entity__item {
-      width: 100%;
-      flex-direction: column !important;
-    }
-    .select-legal-entity__input_name {
-      width: 100%;
-    }
-    .select-legal-entity__selected_name {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .select-legal-entity__input_field {
-      width: 100%;
-    }
-  }
 }
