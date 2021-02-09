@@ -103,6 +103,9 @@
                 border-radius: 3px;
                 font-size: 0.85rem;
                 pointer-events: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
             .form-item__input_field {
                 width: 100%;
@@ -146,6 +149,7 @@
             }
 
             .main-form__img {
+                margin-left: 0 !important;
                 flex: none !important;
             }
         }

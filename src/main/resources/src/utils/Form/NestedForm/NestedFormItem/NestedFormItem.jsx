@@ -6,7 +6,6 @@ import { useRef } from "react";
 import PropTypes from "prop-types";
 
 const NestedFormItem = ({
-  item,
   readOnly,
   index,
   headerItems = [],
@@ -106,7 +105,6 @@ const NestedFormItem = ({
 export default NestedFormItem;
 
 NestedFormItem.propTypes = {
-  item: PropTypes.object,
   readOnly: PropTypes.bool,
   index: PropTypes.number,
   headerItems: PropTypes.array,
