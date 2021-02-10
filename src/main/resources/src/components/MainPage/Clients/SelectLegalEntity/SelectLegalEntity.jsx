@@ -6,6 +6,7 @@ import {
 } from "../../../../utils/RequestsAPI/Clients.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
+import AddToButton from "../../../../utils/Form/AddToButton/AddToButton.jsx";
 
 const SelectLegalEntity = (props) => {
   const [selected, setSelected] = useState([
@@ -149,168 +150,172 @@ const SelectLegalEntity = (props) => {
 
   return (
     <div className="select-legal-entity">
-      {!props.readOnly && (
-        <Button
-          className="select-legal-entity__button"
-          onClick={handleNewLegalEntity}
-          text="Добавить юридическое лицо"
-        />
-      )}
-      <div className="select-legal-entity__selected">
-        {selected.map((item, index) => (
-          <NestedFormItem
-            item={item}
-            index={index}
-            readOnly={props.readOnly}
-            itemsLength={selected.length}
-            handleDeleteItem={deleteLegalEntity}
-            isMinimizedDefault={props.isMinimizedDefault}
-            headerItems={[
-              {
-                text: "Название",
-                value: item.name,
-                placeholder: "Введите название...",
-                style: { flex: "0 1 30%" },
-              },
-              {
-                text: "Адрес",
-                value: item.legalAddress,
-                placeholder: "Введите адрес...",
-                style: { flex: "0 1 50%" },
-              },
-              {
-                text: "ИНН",
-                value: item.inn,
-                placeholder: "Введите ИНН...",
-                style: { flex: "0 1 20%", maxWidth: "120px" },
-              },
-            ]}
-            formInputs={[
-              {
-                name: "Название",
-                element: (
-                  <input
-                    type="text"
-                    name="name"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.name}
-                    readOnly={props.readOnly}
+      <div className="main-form__item">
+        <div className="main-form__input_name main-form__input_name--row">
+          Юридическое лицо
+          {!props.readOnly && (
+            <AddToButton
+              text="Добавить юридическое лицо"
+              onClick={handleNewLegalEntity}
+            />
+          )}
+        </div>
+        <div className="select-legal-entity__selected">
+          {selected.map((item, index) => (
+            <NestedFormItem
+              item={item}
+              index={index}
+              readOnly={props.readOnly}
+              itemsLength={selected.length}
+              handleDeleteItem={deleteLegalEntity}
+              isMinimizedDefault={props.isMinimizedDefault}
+              headerItems={[
+                {
+                  text: "Название",
+                  value: item.name,
+                  placeholder: "Введите название...",
+                  style: { flex: "0 1 30%" },
+                },
+                {
+                  text: "Адрес",
+                  value: item.legalAddress,
+                  placeholder: "Введите адрес...",
+                  style: { flex: "0 1 50%" },
+                },
+                {
+                  text: "ИНН",
+                  value: item.inn,
+                  placeholder: "Введите ИНН...",
+                  style: { flex: "0 1 20%", maxWidth: "120px" },
+                },
+              ]}
+              formInputs={[
+                {
+                  name: "Название",
+                  element: (
+                    <input
+                      type="text"
+                      name="name"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.name}
+                      readOnly={props.readOnly}
+                    />
+                  ),
+                },
+                {
+                  name: "ИНН",
+                  element: (
+                    <input
+                      type="text"
+                      name="inn"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.inn}
+                      readOnly={props.readOnly}
+                    />
+                  ),
+                },
+                {
+                  name: "КПП",
+                  element: (
+                    <input
+                      type="text"
+                      name="kpp"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.kpp}
+                      readOnly={props.readOnly}
+                    />
+                  ),
+                },
+                {
+                  name: "ОГРН",
+                  element: (
+                    <input
+                      type="text"
+                      name="ogrn"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.ogrn}
+                      readOnly={props.readOnly}
+                    />
+                  ),
+                },
+                {
+                  name: "БИК",
+                  element: (
+                    <input
+                      type="text"
+                      name="bik"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.bik}
+                      readOnly={props.readOnly}
+                    />
+                  ),
+                },
+                {
+                  name: "Расчетный счет",
+                  element: (
+                    <input
+                      type="text"
+                      name="checkingAccount"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.checkingAccount}
+                      readOnly={props.readOnly}
+                    />
+                  ),
+                },
+                {
+                  name: "Юридический адрес",
+                  element: (
+                    <input
+                      type="text"
+                      name="legalAddress"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.legalAddress}
+                      readOnly={props.readOnly}
+                    />
+                  ),
+                },
+                {
+                  name: "Фактический адрес",
+                  element: (
+                    <input
+                      type="text"
+                      name="factualAddress"
+                      index={index}
+                      autoComplete="off"
+                      onChange={handleInputChange}
+                      value={item.factualAddress}
+                      readOnly={props.readOnly}
+                    />
+                  ),
+                },
+              ]}
+              bottomButton={
+                !props.readOnly && (
+                  <Button
+                    text="Загрузить данные по ИНН"
+                    isLoading={isLoading}
+                    className="select-legal-entity__button"
+                    onClick={() => fetchINNData(item, index)}
                   />
-                ),
-              },
-              {
-                name: "ИНН",
-                element: (
-                  <input
-                    type="text"
-                    name="inn"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.inn}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "КПП",
-                element: (
-                  <input
-                    type="text"
-                    name="kpp"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.kpp}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "ОГРН",
-                element: (
-                  <input
-                    type="text"
-                    name="ogrn"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.ogrn}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "БИК",
-                element: (
-                  <input
-                    type="text"
-                    name="bik"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.bik}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "Расчетный счет",
-                element: (
-                  <input
-                    type="text"
-                    name="checkingAccount"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.checkingAccount}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "Юридический адрес",
-                element: (
-                  <input
-                    type="text"
-                    name="legalAddress"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.legalAddress}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "Фактический адрес",
-                element: (
-                  <input
-                    type="text"
-                    name="factualAddress"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.factualAddress}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-            ]}
-            bottomButton={
-              !props.readOnly && (
-                <Button
-                  text="Загрузить данные по ИНН"
-                  isLoading={isLoading}
-                  className="select-legal-entity__button"
-                  onClick={() => fetchINNData(item, index)}
-                />
-              )
-            }
-          />
-        ))}
+                )
+              }
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

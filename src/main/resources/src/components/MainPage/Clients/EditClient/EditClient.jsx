@@ -456,43 +456,33 @@ const EditClient = (props) => {
                 handleInputChange={handleInputChange}
               />
               {/* Добавление юридических лиц */}
-              <div className="main-form__item">
-                <div className="main-form__input_name">Юридическое лицо</div>
-                <div className="main-form__input_field">
-                  <SelectLegalEntity
-                    handleLegalEntityChange={(value) => {
-                      // validateField("legalEntity", value);
-                      setClientInputs({
-                        ...clientInputs,
-                        legalEntityNew: value,
-                      });
-                    }}
-                    defaultValue={clientInputs.legalEntity}
-                    userHasAccess={props.userHasAccess}
-                    isMinimizedDefault={true}
-                  />
-                </div>
-              </div>
+              <SelectLegalEntity
+                handleLegalEntityChange={(value) => {
+                  // validateField("legalEntity", value);
+                  setClientInputs({
+                    ...clientInputs,
+                    legalEntityNew: value,
+                  });
+                }}
+                defaultValue={clientInputs.legalEntity}
+                userHasAccess={props.userHasAccess}
+                isMinimizedDefault={true}
+              />
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Контактные данные</div>
                 {/* Добавление контактных лиц */}
-                <div className="main-form__item">
-                  <div className="main-form__input_name">Контактное лицо*</div>
-                  <div className="main-form__input_field">
-                    <SelectContacts
-                      handleContactsChange={(value) => {
-                        validateField("contacts", value);
-                        setClientInputs({
-                          ...clientInputs,
-                          contactsNew: value,
-                        });
-                      }}
-                      defaultValue={clientInputs.contacts}
-                      userHasAccess={props.userHasAccess}
-                      isMinimizedDefault={true}
-                    />
-                  </div>
-                </div>
+                <SelectContacts
+                  handleContactsChange={(value) => {
+                    validateField("contacts", value);
+                    setClientInputs({
+                      ...clientInputs,
+                      contactsNew: value,
+                    });
+                  }}
+                  defaultValue={clientInputs.contacts}
+                  userHasAccess={props.userHasAccess}
+                  isMinimizedDefault={true}
+                />
                 <InputText
                   inputName="Сайт"
                   required

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import deleteSVG from "../../../../../../../../assets/select/delete.svg";
+import AddToButton from "../../../../utils/Form/AddToButton/AddToButton.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
 import "./SelectContacts.scss";
@@ -78,113 +79,123 @@ const SelectContacts = (props) => {
 
   return (
     <div className="select-contacts">
-      {!props.readOnly && (
-        <Button onClick={handleNewContact} text="Добавить контактное лицо" />
-      )}
-      <div className="select-contacts__selected">
-        {selected.map((item, index) => (
-          <NestedFormItem
-            item={item}
-            index={index}
-            readOnly={props.readOnly}
-            itemsLength={selected.length}
-            handleDeleteItem={deleteContact}
-            isMinimizedDefault={props.isMinimizedDefault}
-            headerItems={[
-              {
-                text: "ФИО",
-                value:
-                  item.lastName === "" && item.name === ""
-                    ? ""
-                    : `${item.lastName} ${item.name}`,
-                placeholder: "Введите ФИО...",
-              },
-              {
-                text: "E-mail",
-                value: item.email,
-                placeholder: "Введите email...",
-              },
-              {
-                text: "Телефон",
-                value: item.phoneNumber,
-                placeholder: "Введите телефон...",
-              },
-            ]}
-            formInputs={[
-              {
-                name: "Имя",
-                element: (
-                  <input
-                    type="text"
-                    name="name"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.name}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "Фамилия",
-                element: (
-                  <input
-                    type="text"
-                    name="lastName"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.lastName}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "Должность",
-                element: (
-                  <input
-                    type="text"
-                    name="position"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.position}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "E-mail",
-                element: (
-                  <input
-                    type="text"
-                    name="email"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.email}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-              {
-                name: "Номер телефона",
-                element: (
-                  <input
-                    type="text"
-                    name="phoneNumber"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.phoneNumber}
-                    readOnly={props.readOnly}
-                  />
-                ),
-              },
-            ]}
-            handleDeleteItem={deleteContact}
-          />
-        ))}
+      <div className="main-form__item">
+        <div className="main-form__input_name main-form__input_name--row">
+          Контактное лицо*
+          {!props.readOnly && (
+            <AddToButton
+              text="Добавить контактное лицо"
+              onClick={handleNewContact}
+            />
+          )}
+        </div>
+        <div className="main-form__input_field">
+          <div className="select-contacts__selected">
+            {selected.map((item, index) => (
+              <NestedFormItem
+                item={item}
+                index={index}
+                readOnly={props.readOnly}
+                itemsLength={selected.length}
+                handleDeleteItem={deleteContact}
+                isMinimizedDefault={props.isMinimizedDefault}
+                headerItems={[
+                  {
+                    text: "ФИО",
+                    value:
+                      item.lastName === "" && item.name === ""
+                        ? ""
+                        : `${item.lastName} ${item.name}`,
+                    placeholder: "Введите ФИО...",
+                  },
+                  {
+                    text: "E-mail",
+                    value: item.email,
+                    placeholder: "Введите email...",
+                  },
+                  {
+                    text: "Телефон",
+                    value: item.phoneNumber,
+                    placeholder: "Введите телефон...",
+                  },
+                ]}
+                formInputs={[
+                  {
+                    name: "Имя",
+                    element: (
+                      <input
+                        type="text"
+                        name="name"
+                        index={index}
+                        autoComplete="off"
+                        onChange={handleInputChange}
+                        defaultValue={item.name}
+                        readOnly={props.readOnly}
+                      />
+                    ),
+                  },
+                  {
+                    name: "Фамилия",
+                    element: (
+                      <input
+                        type="text"
+                        name="lastName"
+                        index={index}
+                        autoComplete="off"
+                        onChange={handleInputChange}
+                        defaultValue={item.lastName}
+                        readOnly={props.readOnly}
+                      />
+                    ),
+                  },
+                  {
+                    name: "Должность",
+                    element: (
+                      <input
+                        type="text"
+                        name="position"
+                        index={index}
+                        autoComplete="off"
+                        onChange={handleInputChange}
+                        defaultValue={item.position}
+                        readOnly={props.readOnly}
+                      />
+                    ),
+                  },
+                  {
+                    name: "E-mail",
+                    element: (
+                      <input
+                        type="text"
+                        name="email"
+                        index={index}
+                        autoComplete="off"
+                        onChange={handleInputChange}
+                        defaultValue={item.email}
+                        readOnly={props.readOnly}
+                      />
+                    ),
+                  },
+                  {
+                    name: "Номер телефона",
+                    element: (
+                      <input
+                        type="text"
+                        name="phoneNumber"
+                        index={index}
+                        autoComplete="off"
+                        onChange={handleInputChange}
+                        defaultValue={item.phoneNumber}
+                        readOnly={props.readOnly}
+                      />
+                    ),
+                  },
+                ]}
+                handleDeleteItem={deleteContact}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

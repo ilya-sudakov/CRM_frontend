@@ -85,7 +85,7 @@
         border-top-right-radius: 5px;
         border-bottom-left-radius: 2.5px;
         border-bottom-right-radius: 2.5px;
-        height: 5px;
+        height: 3px;
         bottom: 0;
         left: -5px;
         background-color: transparent;
@@ -599,19 +599,34 @@
     .main-form__img {
       width: 20px;
       transition: margin-left 200ms ease-in-out;
-      path:first-child {
-        transition: fill 200ms ease-in-out;
-        fill: #bbbbbb;
+      &--plus {
+        margin-left: 7px;
+        path:first-child {
+          transition: fill 200ms ease-in-out;
+          fill: #bbbbbb;
+        }
+      }
+      &--more {
+        path:first-child {
+          transition: fill 200ms ease-in-out;
+          fill: #bbbbbb;
+        }
       }
     }
 
     &:hover {
       color: #333333 !important;
       .main-form__img {
-        margin-left: 8px;
-
-        path:first-child {
-          fill: lighten($button__background--inverted, 6%);
+        &--more {
+          margin-left: 8px;
+          path:first-child {
+            fill: lighten($button__background--inverted, 6%);
+          }
+        }
+        &--plus {
+          path:first-child {
+            fill: lighten($button__background--inverted, 6%);
+          }
         }
       }
     }
