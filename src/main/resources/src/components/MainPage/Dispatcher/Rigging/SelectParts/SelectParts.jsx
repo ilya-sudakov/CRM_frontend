@@ -110,7 +110,7 @@ const SelectParts = (props) => {
                     ? false
                     : props.isMinimizedDefault
                 }
-                handleDeleteItem={() => deletePart(index)}
+                handleDeleteItem={deletePart}
                 headerItems={[
                   {
                     text: "Название",

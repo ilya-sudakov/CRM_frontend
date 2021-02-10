@@ -115,9 +115,9 @@ const SelectPriceItem = (props) => {
     props.handlePriceItemChange([...selected, newObject]);
   };
 
-  const deletePriceItem = () => {
+  const deletePriceItem = (index) => {
     let temp = selected;
-    temp.splice(id, 1);
+    temp.splice(index, 1);
     setSelected([...temp]);
     props.handlePriceItemChange([...temp]);
   };

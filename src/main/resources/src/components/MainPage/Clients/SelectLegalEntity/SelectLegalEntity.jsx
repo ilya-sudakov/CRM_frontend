@@ -71,10 +71,9 @@ const SelectLegalEntity = (props) => {
     ]);
   };
 
-  const deleteLegalEntity = (e) => {
-    const id = e.target.getAttribute("index");
+  const deleteLegalEntity = (index) => {
     let temp = selected;
-    temp.splice(id, 1);
+    temp.splice(index, 1);
     setSelected([...temp]);
     props.handleLegalEntityChange([...temp]);
   };

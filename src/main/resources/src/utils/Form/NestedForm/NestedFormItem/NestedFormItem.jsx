@@ -85,8 +85,7 @@ const NestedFormItem = ({
       </div>
       {!readOnly && itemsLength > 1 && (
         <DeleteSVG
-          index={index}
-          onClick={handleDeleteItem}
+          onClick={() => handleDeleteItem(index)}
           className="form-item__img"
         />
       )}

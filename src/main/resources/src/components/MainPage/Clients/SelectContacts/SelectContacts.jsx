@@ -55,10 +55,9 @@ const SelectContacts = (props) => {
     ]);
   };
 
-  const deleteContact = (event) => {
-    const id = event.target.getAttribute("index");
+  const deleteContact = (index) => {
     let temp = selected;
-    temp.splice(id, 1);
+    temp.splice(index, 1);
     setSelected([...temp]);
     props.handleContactsChange([...temp]);
   };
