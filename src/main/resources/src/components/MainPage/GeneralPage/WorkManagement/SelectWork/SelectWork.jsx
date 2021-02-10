@@ -300,7 +300,9 @@ const SelectWork = (props) => {
                   ) : null}
                   {!props.noComment && (
                     <div className="select-work__item select-work__item--comment">
-                      <div className="select-work__input_name">Комментарий</div>
+                      <div className="select-work__input_name">
+                        Комментарий (необязательно)
+                      </div>
                       <div className="select-work__input_field">
                         <textarea
                           type="text"
@@ -310,7 +312,6 @@ const SelectWork = (props) => {
                           onChange={handleInputChange}
                           value={item.comment}
                           readOnly={props.readOnly}
-                          placeholder="Вы можете добавить комментарий для более точного описания работы... (необязательно)"
                         />
                       </div>
                     </div>
