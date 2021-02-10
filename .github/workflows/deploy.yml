@@ -21,4 +21,4 @@ jobs:
           script: |
             cd osfix/front/osfix-frontend # Navigate into the folder
             git pull # Pull latest changes
-            npm i # Update all packages, install new ones
+            npm install # Update all packages, install new ones
