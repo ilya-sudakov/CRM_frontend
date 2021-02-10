@@ -142,7 +142,7 @@ const SelectEmployee = (props) => {
   return (
     <div className="select-employee">
       <div className="select-employee__input">
-        <div className="select-employee__input_name main-form__input_name--row">
+        <div className="select-employee__input_name main-form__input_name--header">
           {`${props.inputName} ${props.required ? "*" : ""}`}
           {!props.readOnly && (
             <SelectFromButton

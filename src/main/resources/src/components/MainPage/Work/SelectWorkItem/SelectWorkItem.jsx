@@ -45,7 +45,7 @@ const SelectWorkItem = (props) => {
   return (
     <div className="select-work-item">
       <div className="select-work-item__input">
-        <div className="select-work-item__input_name main-form__input_name--row">
+        <div className="select-work-item__input_name main-form__input_name--header">
           {props.inputName + (props.required ? "*" : "")}
           {(props.readOnly === undefined || !props.readOnly) && (
             <SelectFromButton

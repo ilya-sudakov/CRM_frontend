@@ -573,7 +573,7 @@
   }
 
   .main-form__input_name {
-    &--row {
+    &--header {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -760,6 +760,18 @@
 
       > * {
         width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 425px) {
+    .main-form__input_name--header {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .main-form__link {
+        margin-left: 0;
+        padding-left: 0;
       }
     }
   }

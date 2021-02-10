@@ -91,7 +91,7 @@ const SelectParts = (props) => {
   return (
     <div className="select_parts">
       <div className="main-form__item">
-        <div className="main-form__input_name main-form__input_name--row">
+        <div className="main-form__input_name main-form__input_name--header">
           Детали*
           {!props.readOnly && (
             <AddToButton text="Добавить деталь" onClick={handleNewPart} />

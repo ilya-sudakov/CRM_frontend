@@ -457,7 +457,7 @@ const InputProducts = (props) => {
   return (
     <div className="input_products">
       <div className="input_products__input">
-        <div className="input_products__input_name main-form__input_name--row">
+        <div className="input_products__input_name main-form__input_name--header">
           {props.inputName + (props.required ? "*" : "")}
           {!props.readOnly && (
             <SelectFromButton
