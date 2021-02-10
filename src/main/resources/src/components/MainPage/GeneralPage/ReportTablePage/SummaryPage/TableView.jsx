@@ -133,7 +133,7 @@ const HalfOfTheMonthList = ({
           .map((workshop) => {
             return (
               <>
-                <div className="main-window__list-item main-window__list-item--divider">
+                <div className="main-window__list-item report-table-page__workshop-name">
                   <span>{workshop.name}</span>
                 </div>
                 {isLoading ? (
