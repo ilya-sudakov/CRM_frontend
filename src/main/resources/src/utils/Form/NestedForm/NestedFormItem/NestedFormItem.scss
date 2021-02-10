@@ -134,7 +134,13 @@
                         border: 1px solid $button__background--inverted;
                     }
 
+                    &:not(select):read-only {
+                        opacity: 1;
+                        background-color: #f7f7f7;
+                    }
+
                     &:disabled {
+                        opacity: 1;
                         background-color: #f4f4f4;
                     }
                 }

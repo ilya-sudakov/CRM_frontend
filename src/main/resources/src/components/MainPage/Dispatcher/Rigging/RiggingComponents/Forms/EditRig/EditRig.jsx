@@ -232,18 +232,13 @@ const EditRig = (props) => {
             defaultValue={rigInputs.comment}
             handleInputChange={handleInputChange}
           />
-          <div className="main-form__item">
-            <div className="main-form__input_name">Детали*</div>
-            <div className="main-form__input_field">
-              <SelectParts
-                handlePartsChange={handlePartsChange}
-                defaultValue={rigInputs.stampParts}
-                scrollToId={query.get("part")}
-                isMinimizedDefault={true}
-                searchPlaceholder="Введите название продукта для поиска..."
-              />
-            </div>
-          </div>
+          <SelectParts
+            handlePartsChange={handlePartsChange}
+            defaultValue={rigInputs.stampParts}
+            scrollToId={query.get("part")}
+            isMinimizedDefault={true}
+            searchPlaceholder="Введите название продукта для поиска..."
+          />
           <InputText
             inputName="Дата последнего изменения"
             name="lastEdited"

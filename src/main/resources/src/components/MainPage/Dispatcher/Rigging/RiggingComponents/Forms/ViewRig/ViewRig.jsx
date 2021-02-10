@@ -85,16 +85,11 @@ const ViewRig = (props) => {
               />
             </div>
           </div>
-          <div className="main-form__item">
-            <div className="main-form__input_name">Детали</div>
-            <div className="main-form__input_field">
-              <SelectParts
-                readOnly
-                defaultValue={rigInputs.stampParts}
-                isMinimizedDefault={true}
-              />
-            </div>
-          </div>
+          <SelectParts
+            readOnly
+            defaultValue={rigInputs.stampParts}
+            isMinimizedDefault={true}
+          />
           <div className="main-form__item">
             <div className="main-form__input_name">
               Дата последнего изменения
