@@ -191,7 +191,8 @@
           }
         }
 
-        &--comment {
+        &--comment,
+        &--time {
           position: relative;
           .select-work__input_name {
             color: #888888;
@@ -208,7 +209,8 @@
             white-space: nowrap;
             overflow: hidden;
           }
-          textarea {
+          textarea,
+          input {
             padding-top: 22px;
             padding-bottom: 7px;
             border: 1px solid #cccccc;
@@ -221,6 +223,14 @@
             transition: 100ms ease-in-out;
             min-width: 0;
             max-width: 100%;
+
+            &:hover {
+              border: 1px solid #aaaaaa;
+            }
+
+            &:focus {
+              border: 1px solid $button__background--inverted;
+            }
           }
         }
       }
