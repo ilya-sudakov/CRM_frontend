@@ -53,6 +53,14 @@
       // width: 100%;
       // flex: 0 1 calc(80% - 0px);
       // font-size: 80%;
+      &__input {
+        min-height: 1.25rem !important;
+      }
+      .select__selected_row {
+        input {
+          min-width: 100% !important;
+        }
+      }
     }
     .select__input {
       box-sizing: content-box;

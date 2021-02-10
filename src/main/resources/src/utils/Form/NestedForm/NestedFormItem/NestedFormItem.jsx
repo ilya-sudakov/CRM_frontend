@@ -4,7 +4,6 @@ import "./NestedFormItem.scss";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { useRef } from "react";
 import PropTypes from "prop-types";
-import { is } from "date-fns/locale";
 
 const NestedFormItem = ({
   readOnly,
@@ -17,15 +16,11 @@ const NestedFormItem = ({
   handleDeleteItem,
   id = 0,
 }) => {
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(isMinimizedDefault);
   const formRef = useRef(null);
   const [formHeight, setFormHeight] = useState(formRef?.current?.clientHeight);
 
   useEffect(() => {
-    if (isMinimizedDefault === true && formHeight !== "0px" && formHeight) {
-      console.log(formHeight);
-      setIsMinimized(isMinimizedDefault);
-    }
     setFormHeight(`${formRef.current.clientHeight}px`);
   }, [formRef.current]);
 
@@ -73,16 +68,8 @@ const NestedFormItem = ({
             : "form-item__form"
         }
         style={{
-          height: isMinimized
-            ? "0px"
-            : formHeight === "0px"
-            ? formRef.current?.clientHeight
-            : formHeight,
-          transition:
-            isMinimizedDefault &&
-            (formHeight === "0px" || formHeight === undefined)
-              ? "0s ease-in"
-              : "all 100ms ease-in-out",
+          height: isMinimized ? "0px" : "auto",
+          transition: "0s ease-in",
         }}
         ref={formRef}
       >
@@ -98,8 +85,7 @@ const NestedFormItem = ({
       </div>
       {!readOnly && itemsLength > 1 && (
         <DeleteSVG
-          index={index}
-          onClick={handleDeleteItem}
+          onClick={() => handleDeleteItem(index)}
           className="form-item__img"
         />
       )}

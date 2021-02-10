@@ -194,8 +194,6 @@ const SelectWork = (props) => {
                   readOnly={props.readOnly}
                 />
               )}
-              {/* Вставить InputProducts, только вместо фасовки сделать 
-                                единицу измерения(или просто кол-во оставить) */}
               {selected[index].workType === "Продукция" ||
               selected[index].workType === undefined ||
               selected[index].typeOfWork === "Продукция" ? (

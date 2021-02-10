@@ -620,7 +620,13 @@ const InputProducts = (props) => {
                   <>
                     {renderSelectedItemName(index, item)}
                     {renderQuantity(index, item)}
-                    {!props.noPackaging && renderPackaging(index, item)}
+                    {!props.noPackaging
+                      ? renderPackaging(index, item)
+                      : renderPackaging(index, item, {
+                          readOnly: true,
+                          customName: `Фасовка${!props.readOnly ? "*" : ""}`,
+                          marginRight: "0px",
+                        })}
                   </>
                 )}
                 {/* {!props.noPackaging && renderSelectPackaging(index, item, products)} */}

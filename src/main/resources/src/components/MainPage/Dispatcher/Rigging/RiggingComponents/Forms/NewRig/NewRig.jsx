@@ -1,88 +1,88 @@
-import React, { useState, useEffect } from 'react'
-import './NewRig.scss'
-import '../../../../../../../utils/Form/Form.scss'
-import SelectParts from '../../../SelectParts/SelectParts.jsx'
+import React, { useState, useEffect } from "react";
+import "./NewRig.scss";
+import "../../../../../../../utils/Form/Form.scss";
+import SelectParts from "../../../SelectParts/SelectParts.jsx";
 
-import InputText from '../../../../../../../utils/Form/InputText/InputText.jsx'
-import ErrorMessage from '../../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import Button from '../../../../../../../utils/Form/Button/Button.jsx'
+import InputText from "../../../../../../../utils/Form/InputText/InputText.jsx";
+import ErrorMessage from "../../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import Button from "../../../../../../../utils/Form/Button/Button.jsx";
 import {
   addStamp,
   addPartsToStamp,
-} from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx'
-import { rigTypes } from '../../rigsVariables.js'
+} from "../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
+import { rigTypes } from "../../rigsVariables.js";
 
 const NewRig = (props) => {
   const [rigInputs, setRigInputs] = useState({
-    name: '',
-    number: '',
-    comment: '',
+    name: "",
+    number: "",
+    comment: "",
     parts: [],
     lastEdited: new Date(),
-    color: 'production',
+    color: "production",
     status: props.type,
-  })
+  });
   const [riggingErrors, setRiggingErrors] = useState({
     name: false,
     number: false,
     parts: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     name: false,
     number: false,
     parts: false,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case 'parts':
+      case "parts":
         setValidInputs({
           ...validInputs,
           parts: value.length > 0,
-        })
-        break
+        });
+        break;
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       name: false,
       number: false,
       parts: false,
-    })
+    });
     for (let item in validInputs) {
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setRiggingErrors(newErrors)
+    setRiggingErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
   const handleSubmit = () => {
-    setIsLoading(true)
-    let itemId = 1
+    setIsLoading(true);
+    let itemId = 1;
     formIsValid() &&
       addStamp(rigInputs)
         .then((res) => res.json())
@@ -92,48 +92,48 @@ const NewRig = (props) => {
             let newPart = Object.assign({
               ...item,
               riggingId: itemId,
-            })
-            return addPartsToStamp(newPart)
-          })
+            });
+            return addPartsToStamp(newPart);
+          });
           Promise.all(parts).then(() =>
-            props.history.push(rigTypes[props.type].redirectURL),
-          )
+            props.history.push(rigTypes[props.type].redirectURL)
+          );
         })
         .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при добавлении записи')
-          console.log(error)
-        })
-  }
+          setIsLoading(false);
+          alert("Ошибка при добавлении записи");
+          console.log(error);
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setRigInputs({
       ...rigInputs,
       [name]: value,
-    })
+    });
     setRiggingErrors({
       ...riggingErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   const handlePartsChange = (newParts) => {
-    validateField('parts', newParts)
+    validateField("parts", newParts);
     setRigInputs({
       ...rigInputs,
       parts: newParts,
-    })
+    });
     setRiggingErrors({
       ...riggingErrors,
       parts: false,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    document.title = `Создание ${rigTypes[props.type].name}`
-  }, [props.type])
+    document.title = `Создание ${rigTypes[props.type].name}`;
+  }, [props.type]);
 
   return (
     <div className="new-rig">
@@ -172,12 +172,7 @@ const NewRig = (props) => {
             name="comment"
             handleInputChange={handleInputChange}
           />
-          <div className="main-form__item">
-            <div className="main-form__input_name">Детали*</div>
-            <div className="main-form__input_field">
-              <SelectParts handlePartsChange={handlePartsChange} />
-            </div>
-          </div>
+          <SelectParts handlePartsChange={handlePartsChange} />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>
@@ -200,7 +195,7 @@ const NewRig = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewRig
+export default NewRig;

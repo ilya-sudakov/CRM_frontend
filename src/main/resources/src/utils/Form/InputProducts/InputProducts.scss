@@ -17,21 +17,6 @@
     padding-right: 10px;
   }
 
-  .input_products__error {
-    align-self: flex-end;
-    width: calc(80%);
-    margin-top: 1px;
-    font-size: 0.75rem;
-    // position: absolute;
-    // top: 2rem;
-    background-color: #f73434;
-    color: #ffffff;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-  }
-
   .input_products__input {
     display: flex;
     // flex-direction: row;

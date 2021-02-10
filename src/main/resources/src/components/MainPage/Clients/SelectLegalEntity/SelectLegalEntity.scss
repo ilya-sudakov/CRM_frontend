@@ -1,8 +1,16 @@
 @import "../../../../variables.scss";
 
 .select-legal-entity {
-  width: calc(100%);
+  width: calc(100% - 20px);
   position: relative;
+
+  .main-form__item {
+    width: 100%;
+  }
+
+  &__selected {
+    width: 100%;
+  }
 
   .select-legal-entity__overlay {
     width: 100vw;

@@ -1,0 +1,26 @@
+name: deploy
+
+on:
+  pull_request:
+    branches: [master]
+
+  # Allows to run job manually
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy frontend
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+          script: |
+            cd osfix/front/osfix-frontend # Navigate into the folder
+            git pull # Pull latest changes
+            export NVM_DIR=~/.nvm 
+            source ~/.nvm/nvm.sh
+            npm install # Update all packages, install new ones
