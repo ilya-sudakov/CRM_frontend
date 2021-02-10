@@ -4,9 +4,6 @@ on:
   pull_request:
     branches: [master]
 
-  # Allows to run job manually
-  workflow_dispatch:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
