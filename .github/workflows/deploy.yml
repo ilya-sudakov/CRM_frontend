@@ -21,4 +21,6 @@ jobs:
           script: |
             cd osfix/front/osfix-frontend # Navigate into the folder
             git pull # Pull latest changes
+            export NVM_DIR=~/.nvm 
+            source ~/.nvm/nvm.sh
             npm install # Update all packages, install new ones
