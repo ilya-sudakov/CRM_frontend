@@ -121,9 +121,20 @@ const HalfOfTheMonthList = ({
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
           <span>ФИО сотрудника</span>
-          {dates.map((date) => (
-            <span>{date}</span>
-          ))}
+          {dates.map((dateItem) => {
+            const weekday = new Date(date.setDate(dateItem)).getDay();
+            return (
+              <span
+                className={
+                  weekday === 6 || weekday === 0
+                    ? "report-table-page__day--weekend"
+                    : ""
+                }
+              >
+                {dateItem}
+              </span>
+            );
+          })}
           <span>Сумма</span>
         </div>
         {workshops
@@ -172,6 +183,13 @@ const HalfOfTheMonthList = ({
                         {Object.values(work.works).map(
                           (workItem, workItemIndex) => {
                             if (datesComparison(workItemIndex)) {
+                              const weekday = new Date(
+                                date.setDate(
+                                  workItem.length > 0
+                                    ? workItem[0].day
+                                    : workItem.day
+                                )
+                              ).getDay();
                               return (
                                 <span
                                   onClick={() => {
@@ -197,6 +215,11 @@ const HalfOfTheMonthList = ({
                                     });
                                     setShowWindow(true);
                                   }}
+                                  className={
+                                    weekday === 6 || weekday === 0
+                                      ? "report-table-page__day--weekend"
+                                      : ""
+                                  }
                                 >
                                   <div className="report-table-report__date-hint">
                                     {formatDateStringNoYear(

@@ -307,6 +307,16 @@
                 &:last-child {
                     border-bottom: 1px solid #cccccc;
                 }
+
+                .report-table-page__day--weekend {
+                    background-color: #f0c8c855;
+                    color: #777777;
+                    border-right-color: #e9d0d0 !important;
+
+                    + .report-table-page__day--weekend {
+                        border-right-color: #cccccc !important;
+                    }
+                }
             }
             .main-window__list-item:not(.main-window__list-item--divider) {
                 padding: 0 !important;
