@@ -25,8 +25,6 @@
     }
 
     &--error {
-      // border-style: solid;
-      // border-width: 1px;
       border-color: #d48282;
       background-color: #ffefef;
     }
@@ -83,16 +81,16 @@
   &__error {
     width: 100%;
     max-width: var(--file-uploader__max-width);
-    border: 1px solid #d48282;
     border-radius: 3px;
-    background-color: #fadada;
-    color: #ad1c1c;
     margin-top: 3px;
     padding: 5px 10px;
-    // margin-bottom: 3px;
     font-size: 0.85rem;
     box-sizing: border-box;
     cursor: pointer;
+    
+    border: 1px solid #d48282;
+    background-color: #fadada;
+    color: #ad1c1c;
   }
 
   &__hint {

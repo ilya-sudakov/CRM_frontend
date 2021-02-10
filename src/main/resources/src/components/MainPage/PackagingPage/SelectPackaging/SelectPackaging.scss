@@ -44,11 +44,10 @@
         // max-width: 150px;
         margin-top: -4px;
         font-size: 0.75rem;
-        // position: absolute;
-        // top: 2rem;
-        background-color: #f73434;
-        color: #ffffff;
-        border-radius: 5px;
+        border: 1px solid #d48282;
+        background-color: #fadada;
+        color: #ad1c1c;
+        border-radius: 3px;
         padding: 5px 10px;
         cursor: pointer;
         transition: 0.2s ease-in-out;
@@ -115,7 +114,7 @@
                 input[type="text"],
                 input[type="number"],
                 input[type="password"] {
-                    border: 1px solid #f73434 !important;
+                    border: 1px solid #d48282 !important;
                 }
             }
 
