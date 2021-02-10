@@ -8,13 +8,11 @@
 
   и заполнить его следующим образом:
 
-  > API_BASE_URL = http://localhost:port
+        API_BASE_URL = http://localhost:port
+        ACCESS_TOKEN = accessToken
+        NODE_ENV = production
+        INN_TOKEN = INNToken
 
-  > ACCESS_TOKEN = accessToken
-
-  > NODE_ENV = production
-
-  > INN_TOKEN = INNToken
 
 - Затем необходимо создать папку static/built, для этого выполните команду (Windows):
 
@@ -43,3 +41,4 @@
 - Для просмотра test coverage:
 
         npm run test --  --silent --coverage --watchAll=false
+
