@@ -142,6 +142,23 @@ const HalfOfTheMonthList = ({
             userContext.userHasAccess(workshop.allowedRoles)
           )
           .map((workshop) => {
+            const filteredEmployees = sortEmployees(
+              Object.values(workData).filter((item) => {
+                return (
+                  (item.employee.lastName
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase()) ||
+                    item.employee.name
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase()) ||
+                    item.employee.middleName
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())) &&
+                  item.employee.workshop === workshop.name
+                );
+              })
+            );
+            if (filteredEmployees.length === 0) return;
             return (
               <>
                 <div className="main-window__list-item report-table-page__workshop-name">
