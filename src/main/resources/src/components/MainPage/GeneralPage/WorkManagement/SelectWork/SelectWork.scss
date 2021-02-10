@@ -91,7 +91,7 @@
     transition: 0.2s ease-in-out;
 
     //test
-    background-color: rgba(#bbbbbb, 0.3);
+    background-color: #eeeeee;
     border: 1px solid #cccccc;
 
     &--minimized {
@@ -100,14 +100,6 @@
 
     &:first-child {
       margin-top: 5px;
-    }
-
-    &:focus-within,
-    &:hover {
-      background-color: darken(#dddddd, 5%);
-
-      //test
-      background-color: rgba(#bbbbbb, 0.5);
     }
 
     .select-work__img {
