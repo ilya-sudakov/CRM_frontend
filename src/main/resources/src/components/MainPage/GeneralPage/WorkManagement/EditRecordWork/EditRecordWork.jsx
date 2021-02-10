@@ -249,6 +249,7 @@ const EditRecordWork = (props) => {
           setWorkTimeInputs({
             date: new Date(res.year, res.month - 1, res.day),
             employeeId: res.employee.id,
+            employee: res.employee,
             employeeName:
               res.employee.lastName +
               " " +
@@ -366,7 +367,7 @@ const EditRecordWork = (props) => {
             required
             error={workTimeErrors.employee}
             userHasAccess={props.userHasAccess}
-            defaultValue={worktimeInputs.employeeName}
+            defaultValue={worktimeInputs.employee}
             windowName="select-employee"
             name="employee"
             handleEmployeeChange={(value) => {
@@ -385,30 +386,25 @@ const EditRecordWork = (props) => {
             readOnly
           />
           {/* Создание работы */}
-          <div className="main-form__item">
-            <div className="main-form__input_name">Работы*</div>
-            <div className="main-form__input_field">
-              <SelectWork
-                handleWorkChange={(value) => {
-                  validateField("works", value);
-                  setWorkTimeInputs({
-                    ...worktimeInputs,
-                    works: value,
-                  });
-                  setWorkTimeErrors({
-                    ...workTimeErrors,
-                    works: false,
-                  });
-                }}
-                userHasAccess={props.userHasAccess}
-                totalHours={totalHours}
-                setTotalHours={setTotalHours}
-                categories={categories}
-                products={products}
-                defaultValue={worktimeInputs.works}
-              />
-            </div>
-          </div>
+          <SelectWork
+            handleWorkChange={(value) => {
+              validateField("works", value);
+              setWorkTimeInputs({
+                ...worktimeInputs,
+                works: value,
+              });
+              setWorkTimeErrors({
+                ...workTimeErrors,
+                works: false,
+              });
+            }}
+            userHasAccess={props.userHasAccess}
+            totalHours={totalHours}
+            setTotalHours={setTotalHours}
+            categories={categories}
+            products={products}
+            defaultValue={worktimeInputs.works}
+          />
           <div className="main-form__item">
             <div class="main-form__input_name">{`Всего: ${totalHours} ч`}</div>
           </div>

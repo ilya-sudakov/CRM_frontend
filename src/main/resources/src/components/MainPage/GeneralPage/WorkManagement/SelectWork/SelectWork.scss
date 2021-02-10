@@ -1,8 +1,16 @@
 @import "../../../../../variables.scss";
 
 .select-work {
-  width: calc(100%);
+  width: calc(100% - 20px);
   position: relative;
+
+  .main-form__item {
+    width: 100%;
+  }
+
+  .main-form__input_name {
+    margin-bottom: 0 !important;
+  }
 
   .select-work__overlay {
     width: 100vw;
@@ -26,6 +34,10 @@
       font-size: 1rem;
       margin-bottom: 3px;
     }
+  }
+
+  &__selected {
+    width: 100%;
   }
 
   .select-work-item {

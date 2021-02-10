@@ -270,30 +270,25 @@ const NewRecordWork = (props) => {
                   setErrorsArr={setWorkTimeErrors}
                 />
                 {/* Создание работы */}
-                <div className="main-form__item">
-                  <div className="main-form__input_name">Работы*</div>
-                  <div className="main-form__input_field">
-                    <SelectWork
-                      handleWorkChange={(value) => {
-                        validateField("works", value);
-                        setWorkTimeInputs({
-                          ...worktimeInputs,
-                          works: value,
-                        });
-                        setWorkTimeErrors({
-                          ...workTimeErrors,
-                          works: false,
-                        });
-                      }}
-                      userHasAccess={props.userHasAccess}
-                      totalHours={totalHours}
-                      setTotalHours={setTotalHours}
-                      categories={categories}
-                      products={products}
-                      noTime
-                    />
-                  </div>
-                </div>
+                <SelectWork
+                  handleWorkChange={(value) => {
+                    validateField("works", value);
+                    setWorkTimeInputs({
+                      ...worktimeInputs,
+                      works: value,
+                    });
+                    setWorkTimeErrors({
+                      ...workTimeErrors,
+                      works: false,
+                    });
+                  }}
+                  userHasAccess={props.userHasAccess}
+                  totalHours={totalHours}
+                  setTotalHours={setTotalHours}
+                  categories={categories}
+                  products={products}
+                  noTime
+                />
                 <div className="main-form__input_hint">
                   * - поля, обязательные для заполнения
                 </div>

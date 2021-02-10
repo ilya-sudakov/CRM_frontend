@@ -15,6 +15,7 @@ const SelectEmployee = (props) => {
   const [closeWindow, setCloseWindow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [employees, setEmployees] = useState([]);
+  const [employee, setEmployee] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [id, setId] = useState(0);
   const [fullName, setFullName] = useState("");
@@ -29,6 +30,15 @@ const SelectEmployee = (props) => {
     }
     employees.length === 0 && loadEmployees();
   }, [props.employees]);
+
+  useEffect(() => {
+    if (
+      typeof props.defaultValue === "object" &&
+      props.defaultValue?.lastName
+    ) {
+      setEmployee(props.defaultValue);
+    }
+  }, [props.defaultValue]);
 
   const loadEmployees = () => {
     setIsLoading(true);
@@ -74,6 +84,7 @@ const SelectEmployee = (props) => {
   const clickEmployee = (employeeName, employeeId, employee) => {
     setId(employeeId);
     setFullName(employeeName);
+    setEmployee(employee);
     props.handleEmployeeChange(employeeId, employeeName, employee);
     setShowWindow(!showWindow);
   };
@@ -140,24 +151,35 @@ const SelectEmployee = (props) => {
             />
           )}
         </div>
-        {(props.defaultValue || fullName) && (
-          <div className={"select-employee__input_field"}>
-            <div className="select-employee__searchbar">
-              <input
-                type="text"
-                className={
-                  props.error === true
-                    ? "select-employee__input select-employee__input--error"
-                    : "select-employee__input"
-                }
-                defaultValue={
-                  props.defaultValue ? props.defaultValue : fullName
-                }
-                placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
-                disabled
-              />
+        {employee ? (
+          <div className="select-employee__employee-info">
+            <div className="employee-info__name">
+              {`${employee.lastName} ${employee.name} ${employee.middleName}`}
             </div>
+            <div className="employee-info__workshop">{employee.workshop}</div>
+            <div className="employee-info__position">{employee.position}</div>
           </div>
+        ) : (
+          ((props.defaultValue && typeof props.defaultValue !== "object") ||
+            fullName) && (
+            <div className={"select-employee__input_field"}>
+              <div className="select-employee__searchbar">
+                <input
+                  type="text"
+                  className={
+                    props.error === true
+                      ? "select-employee__input select-employee__input--error"
+                      : "select-employee__input"
+                  }
+                  defaultValue={
+                    props.defaultValue ? props.defaultValue : fullName
+                  }
+                  placeholder="Выберите работника, нажав на кнопку 'Выбрать сотрудника'"
+                  disabled
+                />
+              </div>
+            </div>
+          )
         )}
       </div>
       {props.error === true && (
