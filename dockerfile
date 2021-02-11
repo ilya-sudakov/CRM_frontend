@@ -8,11 +8,15 @@ RUN npm rebuild node-sass
 
 RUN npm install -g webpack
 
+RUN npm install -g jest
+
 WORKDIR /CRM_frontend
 
 COPY . .
 
 RUN npm run mkdir-built
+
+RUN npm run test -- --silent
 
 RUN npm run webpack:prod
 
@@ -22,7 +26,7 @@ FROM nginx:alpine
 
 COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 
-## Remove default nginx index page
+# Remove default nginx index page
 RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=builder /CRM_frontend/src/main/resources/static/built /var/www
