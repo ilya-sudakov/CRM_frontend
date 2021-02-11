@@ -158,7 +158,7 @@ const HalfOfTheMonthList = ({
                 );
               })
             );
-            if (filteredEmployees.length === 0) return;
+            if (filteredEmployees.length === 0 && !isLoading) return;
             return (
               <>
                 <div className="main-window__list-item report-table-page__workshop-name">

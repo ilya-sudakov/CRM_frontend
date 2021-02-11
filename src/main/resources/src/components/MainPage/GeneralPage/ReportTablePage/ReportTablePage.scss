@@ -3,6 +3,7 @@
 .report-table-page {
     position: relative;
     background-color: #ffffff;
+    overflow: auto;
     .main-window {
         position: relative;
 
@@ -289,9 +290,6 @@
                         background-color: #eeeeee;
                     }
                 }
-                &--header {
-                    margin-left: -1px;
-                }
                 &--divider {
                     display: flex;
                     flex-direction: row;
@@ -334,6 +332,9 @@
                         flex: 0 1 100%;
                         min-width: 300px;
                         max-width: 300px;
+                        position: sticky;
+                        left: 0;
+                        background-color: #fff;
                     }
                     &:not(:last-child) {
                         border: 1px solid transparent;
