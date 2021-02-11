@@ -1,0 +1,18 @@
+# docker build --pull --rm -f "dockerfile" -t osfix-erp-frontend
+name: docker
+
+on:
+  pull_request:
+    branches: [master]
+
+  # Allows to run job manually
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repo
+      - uses: actions/checkout@v2
+      - name: Build docker image
+        run: docker build --pull --rm -f "dockerfile" -t osfix-erp-frontend

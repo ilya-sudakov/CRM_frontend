@@ -250,7 +250,7 @@ const SelectDraft = (props) => {
             onClick={() => {
               !props.readOnly && setShowOptions(!showOptions);
             }}
-            placeholder={props.searchPlaceholder}
+            placeholder={"Введите артикул чертежа для поиска..."}
             readOnly={props.readOnly || props.workshop}
           />
           <FormWindow

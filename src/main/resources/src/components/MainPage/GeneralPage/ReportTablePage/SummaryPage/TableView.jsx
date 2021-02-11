@@ -27,9 +27,9 @@ const TableView = (props) => {
               title="Пред. месяц"
               src={ChevronSVG}
             />
-            <div>
-              1/2 {months[props.date.getMonth()]}.{props.date.getFullYear()}
-            </div>
+            <div>{`1/2 ${
+              months[props.date.getMonth()]
+            } ${props.date.getFullYear()}`}</div>
             <img
               className="main-window__img"
               style={{ transform: "rotate(-90deg)" }}
@@ -70,9 +70,9 @@ const TableView = (props) => {
               title="Пред. месяц"
               src={ChevronSVG}
             />
-            <div>
-              2/2 {months[props.date.getMonth()]}.{props.date.getFullYear()}
-            </div>
+            <div>{`2/2 ${
+              months[props.date.getMonth()]
+            } ${props.date.getFullYear()}`}</div>
             <img
               className="main-window__img"
               style={{ transform: "rotate(-90deg)" }}

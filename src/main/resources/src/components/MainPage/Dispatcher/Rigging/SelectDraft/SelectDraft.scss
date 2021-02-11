@@ -35,7 +35,7 @@
     // top: 2rem;
     background-color: #f73434;
     color: #ffffff;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 5px 10px;
     transition: 0.2s ease-in-out;
 
@@ -128,16 +128,6 @@
         color: $secondary-text-color;
         background-color: $button__background--inverted;
       }
-
-      // &:first-child {
-      //   border-top-left-radius: 2.5px;
-      //   border-top-right-radius: 2.5px;
-      // }
-
-      // &:last-child {
-      //   border-bottom-left-radius: 2.5px;
-      //   border-bottom-right-radius: 2.5px;
-      // }
     }
   }
 
@@ -182,7 +172,7 @@
       .select-draft__selected_item {
         display: flex;
         padding: 0px 0px;
-        border-radius: 5px;
+        border-radius: 3px;
         width: calc(60% - 30px);
         margin-right: 50px;
         position: relative;
@@ -254,7 +244,7 @@
           min-width: 100px;
           display: flex;
           padding: 10px 10px;
-          border-radius: 5px;
+          border-radius: 3px;
           outline: none;
           position: relative;
           align-items: center;
