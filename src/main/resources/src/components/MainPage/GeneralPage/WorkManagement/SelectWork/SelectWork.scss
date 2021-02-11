@@ -1,8 +1,16 @@
 @import "../../../../../variables.scss";
 
 .select-work {
-  width: calc(100%);
+  width: calc(100% - 20px);
   position: relative;
+
+  .main-form__item {
+    width: 100%;
+  }
+
+  .main-form__input_name {
+    margin-bottom: 0 !important;
+  }
 
   .select-work__overlay {
     width: 100vw;
@@ -26,6 +34,10 @@
       font-size: 1rem;
       margin-bottom: 3px;
     }
+  }
+
+  &__selected {
+    width: 100%;
   }
 
   .select-work-item {
@@ -79,7 +91,7 @@
     transition: 0.2s ease-in-out;
 
     //test
-    background-color: rgba(#bbbbbb, 0.3);
+    background-color: #eeeeee;
     border: 1px solid #cccccc;
 
     &--minimized {
@@ -88,14 +100,6 @@
 
     &:first-child {
       margin-top: 5px;
-    }
-
-    &:focus-within,
-    &:hover {
-      background-color: darken(#dddddd, 5%);
-
-      //test
-      background-color: rgba(#bbbbbb, 0.5);
     }
 
     .select-work__img {
@@ -184,6 +188,49 @@
             min-height: 50px;
             resize: none;
             transition: 100ms ease-in-out;
+          }
+        }
+
+        &--comment,
+        &--time {
+          position: relative;
+          .select-work__input_name {
+            color: #888888;
+            flex: 0 1 20%;
+            font-size: 80%;
+            position: absolute;
+            top: 4px;
+            left: 5px;
+            padding: 0 5px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+          textarea,
+          input {
+            padding-top: 22px;
+            padding-bottom: 7px;
+            border: 1px solid #cccccc;
+            width: 100%;
+            padding: 5px 10px;
+            padding-top: 22px;
+            padding-bottom: 7px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            transition: 100ms ease-in-out;
+            min-width: 0;
+            max-width: 100%;
+
+            &:hover {
+              border: 1px solid #aaaaaa;
+            }
+
+            &:focus {
+              border: 1px solid $button__background--inverted;
+            }
           }
         }
       }

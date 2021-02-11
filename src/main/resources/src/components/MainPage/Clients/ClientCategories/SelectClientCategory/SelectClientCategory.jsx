@@ -58,7 +58,7 @@ const SelectClientCategory = (props) => {
   return (
     <div className="select-client-category">
       <div className="select-client-category__input">
-        <div className="select-client-category__input_name main-form__input_name--row">
+        <div className="select-client-category__input_name main-form__input_name--header">
           {props.inputName + (props.required ? "*" : "")}
           {!props.readOnly && (
             <SelectFromButton

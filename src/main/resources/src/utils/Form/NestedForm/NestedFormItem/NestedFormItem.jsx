@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 const NestedFormItem = ({
   readOnly,
   index,
-  headerItems = [],
+  headerItems,
   formInputs = [],
   bottomButton,
   itemsLength = 0,
@@ -37,30 +37,32 @@ const NestedFormItem = ({
           : "form-item"
       }
     >
-      <div
-        className="form-item__header"
-        index={index}
-        onClick={() => setIsMinimized(!isMinimized)}
-        id={id}
-      >
-        {headerItems.map((headerItem) => (
-          <div className="form-item__name" style={{ ...headerItem.style }}>
-            <span>{headerItem.text}</span>
-            {headerItem.value !== "" ? (
-              <span>{headerItem.value}</span>
-            ) : (
-              <span className="form-item__name--placeholder">
-                {headerItem.placeholder}
-              </span>
-            )}
-          </div>
-        ))}
-        <ChevronSVG
-          className={`main-form__img ${
-            !isMinimized ? "main-form__img--rotated" : ""
-          }`}
-        />
-      </div>
+      {headerItems ? (
+        <div
+          className="form-item__header"
+          index={index}
+          onClick={() => setIsMinimized(!isMinimized)}
+          id={id}
+        >
+          {headerItems.map((headerItem) => (
+            <div className="form-item__name" style={{ ...headerItem.style }}>
+              <span>{headerItem.text}</span>
+              {headerItem.value !== "" ? (
+                <span>{headerItem.value}</span>
+              ) : (
+                <span className="form-item__name--placeholder">
+                  {headerItem.placeholder}
+                </span>
+              )}
+            </div>
+          ))}
+          <ChevronSVG
+            className={`main-form__img ${
+              !isMinimized ? "main-form__img--rotated" : ""
+            }`}
+          />
+        </div>
+      ) : null}
       <div
         className={
           isMinimized

@@ -30,6 +30,29 @@
     padding: 10px 10px;
   }
 
+  &__employee-info {
+    border: 1px solid #ccc;
+    padding: 5px 15px;
+    border-radius: 3px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #333333;
+    font-size: 1rem;
+
+    .employee-info__name {
+      font-size: 1.1rem;
+    }
+
+    .employee-info__workshop {
+      font-size: 0.95rem;
+    }
+
+    .employee-info__position {
+      font-size: 0.9rem;
+      color: #777777;
+    }
+  }
+
   .select-employee__error {
     width: 100%;
     margin-top: 1px;

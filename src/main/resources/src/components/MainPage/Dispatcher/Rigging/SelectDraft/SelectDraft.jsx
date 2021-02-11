@@ -220,7 +220,7 @@ const SelectDraft = (props) => {
 
   return (
     <div className="select-draft">
-      <div className="select-draft__input_name main-form__input_name--row">
+      <div className="select-draft__input_name main-form__input_name--header">
         Чертежи
         {!props.readOnly && (
           <SelectFromButton
@@ -250,7 +250,7 @@ const SelectDraft = (props) => {
             onClick={() => {
               !props.readOnly && setShowOptions(!showOptions);
             }}
-            placeholder={props.searchPlaceholder}
+            placeholder={"Введите артикул чертежа для поиска..."}
             readOnly={props.readOnly || props.workshop}
           />
           <FormWindow

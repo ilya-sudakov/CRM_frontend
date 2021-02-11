@@ -170,15 +170,26 @@
             display: flex;
             flex-wrap: wrap;
             flex-direction: row;
+            width: 100%;
 
             &__img {
                 max-width: 22px;
-                // right: -20px !important;
-                // position: relative !important;
-                // right: -10px !important;
+            }
+
+            .main-form__item {
+                padding: 0;
+                margin: 0;
+
+                .main-form__input_name {
+                    display: none;
+                }
             }
 
             .button {
+                display: none;
+            }
+
+            .main-form__link {
                 display: none;
             }
 

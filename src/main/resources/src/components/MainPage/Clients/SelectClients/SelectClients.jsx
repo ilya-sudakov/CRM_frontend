@@ -46,7 +46,7 @@ const SelectClient = (props) => {
   return (
     <div className="select-client">
       <div className="select-client__input">
-        <div className="select-client__input_name main-form__input_name--row">
+        <div className="select-client__input_name main-form__input_name--header">
           {props.inputName + (props.required ? "*" : "")}
           {!props.readonly && (
             <SelectFromButton

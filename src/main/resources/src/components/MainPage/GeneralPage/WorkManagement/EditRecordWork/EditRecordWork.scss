@@ -1,6 +1,9 @@
 @import "../../../../../variables.scss";
 
 .edit-record-work {
+    .select-employee {
+      margin-bottom: 10px;
+    }
     .select-work-item {
         input {
             &:disabled {

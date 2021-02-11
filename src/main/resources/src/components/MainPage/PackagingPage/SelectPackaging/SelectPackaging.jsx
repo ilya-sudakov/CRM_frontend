@@ -74,7 +74,7 @@ const SelectPackaging = (props) => {
         setShowWindow={setShowWindow}
       />
       <div className="select-packaging__input">
-        <div className="select-packaging__input_name main-form__input_name--row">
+        <div className="select-packaging__input_name main-form__input_name--header">
           {"Упаковка" + (props.required ? "*" : "")}
           {!props.readOnly && (
             <SelectFromButton

@@ -27,7 +27,7 @@ const SelectCategory = (props) => {
   return (
     <div className="select-category">
       <div className="select-category__input">
-        <div className="select-category__input_name main-form__input_name--row">
+        <div className="select-category__input_name main-form__input_name--header">
           {props.inputName + (props.required ? "*" : "")}
           {!props.readOnly && (
             <SelectFromButton

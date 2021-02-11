@@ -27,9 +27,9 @@ const TableView = (props) => {
               title="Пред. месяц"
               src={ChevronSVG}
             />
-            <div>
-              1/2 {months[props.date.getMonth()]}.{props.date.getFullYear()}
-            </div>
+            <div>{`1/2 ${
+              months[props.date.getMonth()]
+            } ${props.date.getFullYear()}`}</div>
             <img
               className="main-window__img"
               style={{ transform: "rotate(-90deg)" }}
@@ -70,9 +70,9 @@ const TableView = (props) => {
               title="Пред. месяц"
               src={ChevronSVG}
             />
-            <div>
-              2/2 {months[props.date.getMonth()]}.{props.date.getFullYear()}
-            </div>
+            <div>{`2/2 ${
+              months[props.date.getMonth()]
+            } ${props.date.getFullYear()}`}</div>
             <img
               className="main-window__img"
               style={{ transform: "rotate(-90deg)" }}
@@ -121,9 +121,20 @@ const HalfOfTheMonthList = ({
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
           <span>ФИО сотрудника</span>
-          {dates.map((date) => (
-            <span>{date}</span>
-          ))}
+          {dates.map((dateItem) => {
+            const weekday = new Date(date.setDate(dateItem)).getDay();
+            return (
+              <span
+                className={
+                  weekday === 6 || weekday === 0
+                    ? "report-table-page__day--weekend"
+                    : ""
+                }
+              >
+                {dateItem}
+              </span>
+            );
+          })}
           <span>Сумма</span>
         </div>
         {workshops
@@ -131,9 +142,26 @@ const HalfOfTheMonthList = ({
             userContext.userHasAccess(workshop.allowedRoles)
           )
           .map((workshop) => {
+            const filteredEmployees = sortEmployees(
+              Object.values(workData).filter((item) => {
+                return (
+                  (item.employee.lastName
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase()) ||
+                    item.employee.name
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase()) ||
+                    item.employee.middleName
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())) &&
+                  item.employee.workshop === workshop.name
+                );
+              })
+            );
+            if (filteredEmployees.length === 0 && !isLoading) return;
             return (
               <>
-                <div className="main-window__list-item main-window__list-item--divider">
+                <div className="main-window__list-item report-table-page__workshop-name">
                   <span>{workshop.name}</span>
                 </div>
                 {isLoading ? (
@@ -172,6 +200,13 @@ const HalfOfTheMonthList = ({
                         {Object.values(work.works).map(
                           (workItem, workItemIndex) => {
                             if (datesComparison(workItemIndex)) {
+                              const weekday = new Date(
+                                date.setDate(
+                                  workItem.length > 0
+                                    ? workItem[0].day
+                                    : workItem.day
+                                )
+                              ).getDay();
                               return (
                                 <span
                                   onClick={() => {
@@ -197,6 +232,11 @@ const HalfOfTheMonthList = ({
                                     });
                                     setShowWindow(true);
                                   }}
+                                  className={
+                                    weekday === 6 || weekday === 0
+                                      ? "report-table-page__day--weekend"
+                                      : ""
+                                  }
                                 >
                                   <div className="report-table-report__date-hint">
                                     {formatDateStringNoYear(

@@ -79,7 +79,7 @@ const SelectContacts = (props) => {
   return (
     <div className="select-contacts">
       <div className="main-form__item">
-        <div className="main-form__input_name main-form__input_name--row">
+        <div className="main-form__input_name main-form__input_name--header">
           Контактное лицо*
           {!props.readOnly && (
             <AddToButton

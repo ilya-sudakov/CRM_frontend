@@ -1,5 +1,5 @@
 @import "../../variables.scss";
-@import "../../../../../../node_modules/react-datepicker/dist/react-datepicker.css";
+// @import "react-datepicker/dist/react-datepicker.css";
 
 .main-form {
   width: 100%;
@@ -573,7 +573,7 @@
   }
 
   .main-form__input_name {
-    &--row {
+    &--header {
       display: flex;
       flex-direction: row;
       justify-content: flex-start;
@@ -760,6 +760,18 @@
 
       > * {
         width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 425px) {
+    .main-form__input_name--header {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .main-form__link {
+        margin-left: 0;
+        padding-left: 0;
       }
     }
   }

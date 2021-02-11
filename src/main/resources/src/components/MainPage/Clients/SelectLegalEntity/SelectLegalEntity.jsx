@@ -150,7 +150,7 @@ const SelectLegalEntity = (props) => {
   return (
     <div className="select-legal-entity">
       <div className="main-form__item">
-        <div className="main-form__input_name main-form__input_name--row">
+        <div className="main-form__input_name main-form__input_name--header">
           Юридическое лицо
           {!props.readOnly && (
             <AddToButton
