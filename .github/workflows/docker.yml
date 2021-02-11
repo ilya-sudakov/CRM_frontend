@@ -1,5 +1,5 @@
 # docker build --pull --rm -f "dockerfile" -t osfix-erp-frontend
-name: docker
+name: docker ci
 
 on:
   pull_request:
