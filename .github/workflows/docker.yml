@@ -15,4 +15,4 @@ jobs:
       # Checkout repo
       - uses: actions/checkout@v2
       - name: Build docker image
-        run: docker build --pull --rm -f "dockerfile" -t osfix-erp-frontend
+        run: docker build --pull --rm -f "dockerfile" -t osfix-erp-frontend .
