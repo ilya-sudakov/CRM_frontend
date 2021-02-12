@@ -1,0 +1,30 @@
+.select-ltd {
+    width: 100%;
+    margin-bottom: 20px;
+
+    .form-window {
+        &__body {
+            padding: 0;
+
+            .main-window {
+                &__list {
+                    &-item {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    .main-form__input_field {
+        p {
+            border: 1px solid #cccccc;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin: 0;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 300px;
+        }
+    }
+}

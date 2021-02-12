@@ -19,6 +19,7 @@ export const fetchINNData = (
         console.log(res);
         const data = res.suggestions[0].data;
         formData = Object.assign({
+          ...inputs,
           name: data.name.full,
           shortName: data.name.short,
           kpp: data.kpp,
@@ -52,7 +53,6 @@ export const fetchINNData = (
               res.suggestions.length > 0 ? res.suggestions[0].data.bic : ""
             );
             setFormInputs({
-              ...inputs,
               ...formData,
               bik:
                 res.suggestions.length > 0 ? res.suggestions[0].data.bic : "",

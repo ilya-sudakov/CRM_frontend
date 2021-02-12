@@ -8,11 +8,8 @@ import {
   getLTDList,
 } from "../../../../utils/RequestsAPI/PriceList/lts_list.js";
 import SearchBar from "../../SearchBar/SearchBar.jsx";
-import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
-import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
 import UserContext from "../../../../App.js";
-
-import editSVG from "../../../../../../../../assets/tableview/edit.svg";
+import TableView from "./TableView/TableView.jsx";
 
 import "./LtdListPage.scss";
 
@@ -93,45 +90,12 @@ const LtdListPage = () => {
           sorting={sortPanel}
           itemsCount={`Всего: ${ltdData.length} записей`}
         />
-        <div className="main-window__list main-window__list--full">
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>Название</span>
-            <span>Адрес</span>
-            <span>ИНН</span>
-            <div className="main-window__table-actions"></div>
-          </div>
-          {data.map((item) => (
-            <div className="main-window__list-item">
-              <span>{item.name}</span>
-              <span>{item.legalAddress}</span>
-              <span>{item.inn}</span>
-              <TableActions
-                actionsList={[
-                  {
-                    title: "Редактирование",
-                    link: `/ltd-list/edit/${item.id}`,
-                    imgSrc: editSVG,
-                    isRendered: userContext.userHasAccess([
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                    ]),
-                  },
-                  {
-                    customElement: (
-                      <DeleteItemAction
-                        title="Удаление заявки"
-                        onClick={() => deleteItem(item.id)}
-                      />
-                    ),
-                    isRendered:
-                      (deleteItem ? deleteItem : false) &&
-                      userContext.userHasAccess(["ROLE_ADMIN"]),
-                  },
-                ]}
-              />
-            </div>
-          ))}
-        </div>
+        <TableView
+          data={data}
+          deleteItem={deleteItem}
+          userHasAccess={userContext.userHasAccess}
+          isLoading={isLoading}
+        />
         {pagination}
       </div>
     </div>

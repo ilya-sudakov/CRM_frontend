@@ -3,6 +3,7 @@
         &__list {
             &-item {
                 &:not(.main-window__list-item--header) {
+                    cursor: pointer;
                     span {
                         padding-top: 15px;
                         padding-bottom: 15px;

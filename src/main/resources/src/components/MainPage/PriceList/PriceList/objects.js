@@ -78,31 +78,11 @@ export const defaultTitlePage = {
   img3: "",
 };
 
-export const pdfHeaderCompanyContacts = [
-  {
-    text: "ООО «ОСФИКС»\n",
-    link: "https://www.osfix.ru",
-    bold: true,
-    fontSize: 10,
-    margin: [0, 0, 0, 2],
-  },
-  {
-    text: "Лиговский пр., 52, Санкт-Петербург, 191040\n",
-    link: "https://yandex.ru/maps/-/CKUrY0Ih",
-    fontSize: 10,
-    lineHeight: 1.1,
-  },
-  {
-    text: "www.osfix.ru\n",
-    fontSize: 10,
-    link: "https://www.osfix.ru",
-    lineHeight: 1.1,
-  },
-  { text: "info@osfix.ru\n", fontSize: 10, lineHeight: 1.1 },
-  {
-    text: "+7 (812) 449-10-09\n",
-    link: "tel:+78124491009",
-    fontSize: 10,
-    lineHeight: 1.1,
-  },
-];
+export const pdfHeaderCompanyContacts = {
+  name: "ООО «ОСФИКС»",
+  site: "https://www.osfix.ru",
+  legalAddress: "Лиговский пр., 52, Санкт-Петербург, 191040",
+  name: "ООО «ОСФИКС»",
+  email: "info@osfix.ru",
+  phone: "+7 (812) 449-10-09",
+};
