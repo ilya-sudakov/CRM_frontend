@@ -60,6 +60,7 @@ import {
   ShipRequest,
   EditRequest,
   NewLtd,
+  EditLtd,
 } from "./lazyImports.jsx";
 import SideMenu from "../SideMenu/SideMenu.jsx";
 import PageNotFound from "./PageNotFound/PageNotFound.jsx";
@@ -596,6 +597,11 @@ const MainPage = () => {
                   exact
                   path="/ltd-list/new"
                   component={NewLtd}
+                  allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                />
+                <PrivateRoute
+                  path="/ltd-list/edit/"
+                  component={EditLtd}
                   allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
                 />
                 <PrivateRoute

@@ -10,6 +10,7 @@ const Button = ({
   type = "button",
   text = "Нажмите",
   onClick = null,
+  style = {},
   isRecent = false,
 }) => {
   const [newClassName] = useState(
@@ -30,6 +31,7 @@ const Button = ({
       }`}
       onClick={handleClick}
       type={type ? type : "button"}
+      style={{ ...style }}
     >
       {imgSrc && (
         <img
@@ -58,5 +60,6 @@ Button.propTypes = {
   imgSrc: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   type: PropTypes.string,
   text: PropTypes.string,
+  style: PropTypes.object,
   onClick: PropTypes.func,
 };

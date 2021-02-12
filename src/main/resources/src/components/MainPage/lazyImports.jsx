@@ -28,6 +28,10 @@ const NewLtd = lazy(() =>
   import("./PriceList/LtdListPage/Forms/NewLtd/NewLtd.jsx")
 );
 
+const EditLtd = lazy(() =>
+  import("./PriceList/LtdListPage/Forms/EditLtd/EditLtd.jsx")
+);
+
 const RiggingList = lazy(() =>
   import("./Dispatcher/Rigging/RiggingList/RiggingList.jsx")
 );
@@ -299,6 +303,7 @@ export {
   GeneralTasks,
   LtdListPage,
   NewLtd,
+  EditLtd,
   NewTask,
   EditTask,
   Parts,

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import "./NewLtd.scss";
+import "./EditLtd.scss";
 import ErrorMessage from "../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import InputText from "../../../../../../utils/Form/InputText/InputText.jsx";
 import Button from "../../../../../../utils/Form/Button/Button.jsx";
-import { addLTD } from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
+import {
+  addLTD,
+  getLTDById,
+} from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
 import FileUploader from "../../../../../../utils/Form/FileUploader/FileUploader.jsx";
 import { fetchINNData } from "../functions";
 
-const NewLtd = (props) => {
+const EditLtd = (props) => {
   const [formInputs, setFormInputs] = useState({
     name: "",
     shortName: "",
@@ -17,7 +20,7 @@ const NewLtd = (props) => {
     site: "",
     inn: "",
     kpp: "",
-    ogrn: "",
+    orgn: "",
     okpo: "",
     okved: "",
     checkingAccount: "",
@@ -71,13 +74,12 @@ const NewLtd = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const validateField = (fieldName, value) => {
-    console.log(fieldName, value);
     switch (fieldName) {
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== "" && value !== undefined,
+            [fieldName]: value !== "",
           });
         }
         break;
@@ -129,7 +131,6 @@ const NewLtd = (props) => {
   const handleSubmit = () => {
     setIsLoading(true);
     console.log(formInputs);
-    console.log(validInputs);
     formIsValid() &&
       addLTD(formInputs)
         .then(() => {})
@@ -153,22 +154,39 @@ const NewLtd = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Добавление ООО";
-    console.log(validInputs);
-  }, [validInputs]);
+    document.title = "Редактирование ООО";
+    const id = props.history.location.pathname.split("/ltd-list/edit/")[1];
+    if (isNaN(Number.parseInt(id))) {
+      alert("Неправильный индекс!");
+      props.history.push("/ltd-list");
+    } else {
+      getLTDById(id)
+        .then((data) => {
+          setFormInputs({
+            ...data.data,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Неправильный индекс!");
+          props.history.push("/ltd-list");
+        });
+    }
+  }, []);
 
   return (
-    <div className="new-ltd">
+    <div className="new-packaging">
       <div className="main-form">
         <form className="main-form__form">
           <div className="main-form__header main-form__header--full">
-            <div className="main-form__title">Добавление ООО</div>
+            <div className="main-form__title">Редактирование ООО</div>
           </div>
           <ErrorMessage
             message="Не заполнены все обязательные поля!"
             showError={showError}
             setShowError={setShowError}
           />
+
           <InputText
             inputName="Наименование"
             required
@@ -202,6 +220,7 @@ const NewLtd = (props) => {
             inputName="Почтовый адрес"
             required
             error={formErrors.mailingAddress}
+            defaultValue={formInputs.mailingAddress}
             handleInputChange={({ target }) =>
               handleInputChange("mailingAddress", target.value)
             }
@@ -250,7 +269,7 @@ const NewLtd = (props) => {
                 formInputs,
                 setIsLoading,
                 setFormInputs,
-                (name, value) => validateField(name, value)
+                validateField
               )
             }
             isLoading={isLoading}
@@ -304,6 +323,7 @@ const NewLtd = (props) => {
             inputName="Расчетный счет №"
             required
             error={formErrors.checkingAccount}
+            defaultValue={formInputs.checkingAccount}
             handleInputChange={({ target }) =>
               handleInputChange("checkingAccount", target.value)
             }
@@ -314,6 +334,7 @@ const NewLtd = (props) => {
             inputName="Банк"
             required
             error={formErrors.bank}
+            defaultValue={formInputs.bank}
             handleInputChange={({ target }) =>
               handleInputChange("bank", target.value)
             }
@@ -323,6 +344,7 @@ const NewLtd = (props) => {
           <InputText
             inputName="Корреспондентский счет"
             required
+            defaultValue={formInputs.correspondentAccount}
             error={formErrors.correspondentAccount}
             handleInputChange={({ target }) =>
               handleInputChange("correspondentAccount", target.value)
@@ -383,7 +405,7 @@ const NewLtd = (props) => {
               value="Вернуться назад"
             />
             <Button
-              text="Добавить запись"
+              text="Редактировать запись"
               isLoading={isLoading}
               className="main-form__submit"
               onClick={handleSubmit}
@@ -395,4 +417,4 @@ const NewLtd = (props) => {
   );
 };
 
-export default NewLtd;
+export default EditLtd;
