@@ -23,6 +23,7 @@ import {
 } from "./objects.js";
 import { getPriceListPdfTextMini } from "./functions";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
+import { Link } from "react-router-dom";
 
 const NewPriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
@@ -341,7 +342,14 @@ const NewPriceList = () => {
   return (
     <div className="new-price-item">
       <div className="main-form">
-        <div className="main-form__title">Прайс-лист</div>
+        <div className="main-window__header">
+          <div className="main-form__title">
+            Прайс-лист{" "}
+            <Link className="main-window__button" to="/ltd-list">
+              Список ООО
+            </Link>
+          </div>
+        </div>
         <form className="main-form__form">
           <div className="main-form__item">
             <div className="main-form__input_name">
