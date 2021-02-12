@@ -156,7 +156,7 @@ const NewRecordWork = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Создание заявки";
+    document.title = "Добавление записи о работе";
     const abortController = new AbortController();
     const buttonHeight =
       (window.innerWidth ||

@@ -1,0 +1,14 @@
+.ltd-list {
+    .main-window {
+        &__list {
+            &-item {
+                &:not(.main-window__list-item--header) {
+                    span {
+                        padding-top: 15px;
+                        padding-bottom: 15px;
+                    }
+                }
+            }
+        }
+    }
+}

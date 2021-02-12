@@ -27,6 +27,7 @@ const NotificationsList = ({ notifications, isLoading }) => {
 export default NotificationsList;
 
 const ListItem = ({ item }) => {
+  const expirationTime = new Date(item.expirationTime);
   return (
     <div
       className={`notifications__list-item ${
@@ -37,7 +38,7 @@ const ListItem = ({ item }) => {
         <Link to={item.link}>{item.name}</Link>
         <div>{item.description}</div>
       </div>
-      {item.description === "Сегодня день рождения" ? (
+      {item.type === "ДР" ? (
         <CakeIcon className="main-window__img" />
       ) : (
         <DocumentsIcon className="main-window__img" />
