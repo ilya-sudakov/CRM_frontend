@@ -25,9 +25,9 @@ FROM nginx:alpine
 # Remove default nginx index page
 RUN rm -rf /usr/share/nginx/html/* 
 
-RUN chmod +x /CRM_frontend/init-letsencrypt.sh
+RUN chmod +x ./init-letsencrypt.sh
 
-RUN sudo /CRM_frontend/init-letsencrypt.sh
+RUN sudo ./init-letsencrypt.sh
 
 #!/bin/sh
 

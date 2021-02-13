@@ -18,8 +18,15 @@ const useEmployeesNotifications = () => {
         const filteredEmployees = res
           .filter((item) => item.relevance !== "Уволен")
           .map((item) => {
-            const expirationTime = new Date(item.dateOfBirth);
+            const expirationTime = new Date(
+              new Date(item.dateOfBirth).setFullYear(new Date().getFullYear())
+            );
             let birthdayDays = "";
+            console.log(
+              expirationTime,
+              new Date(),
+              dateDiffInDays(new Date(), expirationTime)
+            );
             if (expirationTime.getDate() === new Date().getDate()) {
               birthdayDays = "Сегодня день рождения";
             }
