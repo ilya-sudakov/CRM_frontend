@@ -20,6 +20,7 @@ const NewLtd = (props) => {
     ogrn: "",
     okpo: "",
     okved: "",
+    email: "",
     checkingAccount: "",
     bank: "",
     correspondentAccount: "",
@@ -42,6 +43,7 @@ const NewLtd = (props) => {
     checkingAccount: false,
     bank: false,
     correspondentAccount: false,
+    email: false,
     bik: false,
     generalDirector: false,
     accountant: false,
@@ -55,6 +57,7 @@ const NewLtd = (props) => {
     site: false,
     inn: false,
     kpp: false,
+    email: false,
     ogrn: false,
     okpo: false,
     okved: false,
@@ -97,6 +100,7 @@ const NewLtd = (props) => {
       ogrn: false,
       okpo: false,
       okved: false,
+      email: false,
       checkingAccount: false,
       bank: false,
       correspondentAccount: false,
@@ -215,17 +219,33 @@ const NewLtd = (props) => {
               />
             </div>
           </div>
-          <InputText
-            inputName="Телефон"
-            required
-            error={formErrors.phone}
-            defaultValue={formInputs.phone}
-            handleInputChange={({ target }) =>
-              handleInputChange("phone", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
+          <div className="main-form__fieldset">
+            <div className="main-form__group-name">Контактные данные</div>
+            <div className="main-form__group-content">
+              <InputText
+                inputName="Телефон"
+                required
+                error={formErrors.phone}
+                defaultValue={formInputs.phone}
+                handleInputChange={({ target }) =>
+                  handleInputChange("phone", target.value)
+                }
+                errorsArr={formErrors}
+                setErrorsArr={setFormErrors}
+              />
+              <InputText
+                inputName="E-mail"
+                required
+                error={formErrors.email}
+                defaultValue={formInputs.email}
+                handleInputChange={({ target }) =>
+                  handleInputChange("email", target.value)
+                }
+                errorsArr={formErrors}
+                setErrorsArr={setFormErrors}
+              />
+            </div>
+          </div>
           <InputText
             inputName="Сайт"
             required
