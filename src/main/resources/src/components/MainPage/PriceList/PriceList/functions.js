@@ -375,13 +375,15 @@ export async function getPriceListPdfTextMini(
                 margin: [5, 0, 0, 0],
                 alignment: "left",
               },
-              {
-                image: companyContacts?.logo ?? companyLogoData,
-                link: "https://www.osfix.ru",
-                fit: [100, 100],
-                margin: [0, 13, 0, 0],
-                alignment: "right",
-              },
+              companyContacts?.logo
+                ? {
+                    image: companyContacts?.logo,
+                    link: "https://www.osfix.ru",
+                    fit: [100, 100],
+                    margin: [0, 13, 0, 0],
+                    alignment: "right",
+                  }
+                : { text: "" },
             ],
           },
           {

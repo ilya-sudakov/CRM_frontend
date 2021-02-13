@@ -25,20 +25,19 @@ FROM nginx:alpine
 # Remove default nginx index page
 RUN rm -rf /usr/share/nginx/html/* 
 
-# add www-data user
-# RUN adduser -u 1010 -D -S -G www-data www-data && \
-#     touch /var/run/nginx.pid && \
-#     chown -R www-data:www-data /var/run/nginx.pid && \
-#     chown -R www-data:www-data /var/cache/nginx
+RUN chmod +x /CRM_frontend/init-letsencrypt.sh
 
-# USER www-data
+RUN sudo /CRM_frontend/init-letsencrypt.sh
 
 #!/bin/sh
 
 COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./.nginx/app.conf /etc/nginx/sites-enabled/194-58-104-192.ovz.vps.regruhosting.ru
 
-COPY --from=builder /CRM_frontend/src/main/resources/static/built /root/crm.osfix.ru
+
 COPY --from=builder /CRM_frontend/src/main/resources/static/built /usr/share/nginx/html/
+COPY --from=builder /CRM_frontend/src/main/resources/templates/firebase-messaging-sw.js /usr/share/nginx/html/
+COPY --from=builder /CRM_frontend/src/main/resources/templates/manifest.json /usr/share/nginx/html/
 
 EXPOSE 80
+EXPOSE 443

@@ -7,7 +7,6 @@ services:
       dockerfile: dockerfile
     restart: unless-stopped
     volumes:
-      # - ./.nginx/app.conf:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     ports:
