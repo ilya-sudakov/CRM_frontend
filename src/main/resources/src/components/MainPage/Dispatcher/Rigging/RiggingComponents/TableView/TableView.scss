@@ -107,7 +107,6 @@
             .main-window__list-options {
                 .main-window__list {
                     &-item {
-                        // border-color: #ffffff66;
                         &:not(.main-window__list-item--header) {
                             span:nth-child(6) {
                                 &::before {
