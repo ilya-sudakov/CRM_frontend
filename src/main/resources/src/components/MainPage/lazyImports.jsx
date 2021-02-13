@@ -20,6 +20,18 @@ const ShipRequest = lazy(() =>
 
 const GeneralPage = lazy(() => import("./GeneralPage/GeneralPage.jsx"));
 
+const LtdListPage = lazy(() =>
+  import("./PriceList/LtdListPage/LtdListPage.jsx")
+);
+
+const NewLtd = lazy(() =>
+  import("./PriceList/LtdListPage/Forms/NewLtd/NewLtd.jsx")
+);
+
+const EditLtd = lazy(() =>
+  import("./PriceList/LtdListPage/Forms/EditLtd/EditLtd.jsx")
+);
+
 const RiggingList = lazy(() =>
   import("./Dispatcher/Rigging/RiggingList/RiggingList.jsx")
 );
@@ -204,9 +216,7 @@ const LEMZ = lazy(() => import("./LEMZ/LEMZ.jsx"));
 
 const Lepsari = lazy(() => import("./Lepsari/Lepsari.jsx"));
 
-const PriceList = lazy(() =>
-  import("./PriceList/PriceList/PriceList.jsx")
-);
+const PriceList = lazy(() => import("./PriceList/PriceList/PriceList.jsx"));
 
 const FeedbackPage = lazy(() => import("./FeedbackPage/FeedbackPage.jsx"));
 
@@ -291,6 +301,9 @@ export {
   EditTransportation,
   NewTransportation,
   GeneralTasks,
+  LtdListPage,
+  NewLtd,
+  EditLtd,
   NewTask,
   EditTask,
   Parts,

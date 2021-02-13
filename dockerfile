@@ -22,16 +22,16 @@ RUN npm run webpack:prod
 
 FROM nginx:alpine
 
+# Remove default nginx index page
+RUN rm -rf /usr/share/nginx/html/* 
+
 #!/bin/sh
 
 COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./.nginx/app.conf /etc/nginx/sites-enabled/194-58-104-192.ovz.vps.regruhosting.ru
 
-# Remove default nginx index page
-RUN rm -rf /usr/share/nginx/html/*
+COPY --from=builder /CRM_frontend/src/main/resources/static/built /usr/share/nginx/html/
+COPY --from=builder /CRM_frontend/src/main/resources/templates/firebase-messaging-sw.js /usr/share/nginx/html/
+COPY --from=builder /CRM_frontend/src/main/resources/templates/manifest.json /usr/share/nginx/html/
 
-COPY --from=builder /CRM_frontend/src/main/resources/static/built /var/www
-COPY --from=builder /CRM_frontend/src/main/resources/static/built /usr/share/nginx/html
-
-EXPOSE 80
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EXPOSE 80 443

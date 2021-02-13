@@ -50,6 +50,7 @@ const sortByValues = (firstValue, secondValue, direction) => {
 };
 
 const sortStrings = (firstValue, secondValue, direction) => {
+  if (firstValue === undefined || secondValue === undefined) return 0;
   if (
     firstValue.localeCompare(secondValue, undefined, {
       numeric: true,

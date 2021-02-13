@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { dateDiffInDays } from "../functions.jsx";
 import {
   getEmployeesByComingBirthday,
   getEmployeesByExpiredDocuments,
@@ -17,10 +18,38 @@ const useEmployeesNotifications = () => {
         const filteredEmployees = res
           .filter((item) => item.relevance !== "Уволен")
           .map((item) => {
+            const expirationTime = new Date(
+              new Date(item.dateOfBirth).setFullYear(new Date().getFullYear())
+            );
+            let birthdayDays = "";
+            console.log(
+              expirationTime,
+              new Date(),
+              dateDiffInDays(new Date(), expirationTime)
+            );
+            if (expirationTime.getDate() === new Date().getDate()) {
+              birthdayDays = "Сегодня день рождения";
+            }
+            const dateDiff = dateDiffInDays(new Date(), expirationTime);
+            if (dateDiff <= 0) {
+              birthdayDays = `День рождения был ${Math.abs(
+                dateDiff
+              )} дн. назад`;
+            }
+            if (dateDiff > 0) {
+              birthdayDays = `День рождения будет через ${dateDiffInDays(
+                new Date(),
+                expirationTime
+              )} дн.`;
+            }
+            if (expirationTime.getDate() === new Date().getDate()) {
+              birthdayDays = "Сегодня день рождения!";
+            }
             return {
               id: item.id,
               name: `${item.lastName} ${item.name} ${item.middleName}`,
-              description: "Сегодня день рождения",
+              description: birthdayDays,
+              type: "ДР",
               expirationTime: item.dateOfBirth,
               read: true,
               link: `/dispatcher/employees/edit/${item.id}`,
@@ -38,6 +67,7 @@ const useEmployeesNotifications = () => {
               id: item.id,
               name: `${item.lastName} ${item.name} ${item.middleName}`,
               description: "Просроченные документы",
+              type: "Просроченные документы",
               expirationTime: item.patentExpirationDate,
               read: true,
               link: `/dispatcher/employees/edit/${item.id}`,

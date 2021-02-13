@@ -18,8 +18,8 @@ import { formatDateString } from "../../../../utils/functions.jsx";
 import useSort from "../../../../utils/hooks/useSort/useSort.js";
 
 const Transportation = (props) => {
-  const [transportation, setTransportation] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [transportation, setTransportation] = useState([]);
   const { sortPanel, sortedData, sortOrder } = useSort(transportation, {}, [
     transportation,
   ]);

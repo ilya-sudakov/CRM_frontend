@@ -23,6 +23,8 @@ import {
 } from "./objects.js";
 import { getPriceListPdfTextMini } from "./functions";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
+import { Link } from "react-router-dom";
+import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
 
 const NewPriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
@@ -33,6 +35,7 @@ const NewPriceList = () => {
   const [selectAllGroups, setSelectAllGroups] = useState(true);
   const [disclaimer, setDisclaimer] = useState("");
   const [titlePage, setTitlePage] = useState(defaultTitlePage);
+  const [selectedLtd, setSelectedLtd] = useState(null);
 
   const isExistingCategory = (category) => {
     return categories.find((item) => item.name === category);
@@ -309,7 +312,8 @@ const NewPriceList = () => {
       categories,
       priceList.filter((item) => item.active),
       sortPriceList(optionalCols.filter((item) => item.active && item)),
-      locationTypes
+      locationTypes,
+      selectedLtd
     ).then(() => {
       setIsLoading(false);
     });
@@ -341,8 +345,16 @@ const NewPriceList = () => {
   return (
     <div className="new-price-item">
       <div className="main-form">
-        <div className="main-form__title">Прайс-лист</div>
+        <div className="main-window__header">
+          <div className="main-form__title">
+            Прайс-лист{" "}
+            <Link className="main-window__button" to="/ltd-list">
+              Список ООО
+            </Link>
+          </div>
+        </div>
         <form className="main-form__form">
+          <SelectLtd onChange={(item) => setSelectedLtd(item)} />
           <div className="main-form__item">
             <div className="main-form__input_name">
               Excel-таблица для парсинга

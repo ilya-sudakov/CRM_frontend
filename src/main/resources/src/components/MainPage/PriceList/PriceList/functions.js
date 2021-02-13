@@ -9,7 +9,8 @@ export async function getPriceListPdfTextMini(
   categories,
   priceList,
   optionalCols,
-  locationTypes
+  locationTypes,
+  companyContacts
 ) {
   let finalList = [];
   let dd;
@@ -326,18 +327,63 @@ export async function getPriceListPdfTextMini(
                 alignment: "left",
               },
               {
-                text: pdfHeaderCompanyContacts,
+                text: [
+                  {
+                    text: `${
+                      companyContacts?.name ?? pdfHeaderCompanyContacts.name
+                    }\n`,
+                    link:
+                      companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+                    bold: true,
+                    fontSize: 10,
+                    margin: [0, 0, 0, 2],
+                  },
+                  {
+                    text: `${
+                      companyContacts?.legalAddress ??
+                      pdfHeaderCompanyContacts.legalAddress
+                    }\n`,
+                    link: "https://yandex.ru/maps/-/CKUrY0Ih",
+                    fontSize: 10,
+                    lineHeight: 1.1,
+                  },
+                  {
+                    text: `${
+                      companyContacts?.site ?? pdfHeaderCompanyContacts.site
+                    }\n`,
+                    fontSize: 10,
+                    link:
+                      companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+                    lineHeight: 1.1,
+                  },
+                  {
+                    text: `${
+                      companyContacts?.email ?? pdfHeaderCompanyContacts.email
+                    }\n`,
+                    fontSize: 10,
+                    lineHeight: 1.1,
+                  },
+                  {
+                    text: `${
+                      companyContacts?.phone ?? pdfHeaderCompanyContacts.phone
+                    }\n`,
+                    link: "tel:+78124491009",
+                    fontSize: 10,
+                    lineHeight: 1.1,
+                  },
+                ],
                 margin: [5, 0, 0, 0],
                 alignment: "left",
               },
-              {
-                image: companyLogoData,
-                // width: 100,
-                link: "https://www.osfix.ru",
-                fit: [100, 100],
-                margin: [0, 13, 0, 0],
-                alignment: "right",
-              },
+              companyContacts?.logo
+                ? {
+                    image: companyContacts?.logo,
+                    link: "https://www.osfix.ru",
+                    fit: [100, 100],
+                    margin: [0, 13, 0, 0],
+                    alignment: "right",
+                  }
+                : { text: "" },
             ],
           },
           {
@@ -389,19 +435,42 @@ export async function getPriceListPdfTextMini(
           {
             text: [
               { text: "ИНН ", fontSize: 10, bold: true },
-              { text: "7842143789\t", fontSize: 10 },
+              {
+                text: `${companyContacts?.inn ?? "7842143789"}\t`,
+                fontSize: 10,
+              },
               { text: "КПП ", fontSize: 10, bold: true },
-              { text: "784201001\t", fontSize: 10 },
+              {
+                text: `${companyContacts?.kpp ?? "784201001"}\t`,
+                fontSize: 10,
+              },
               { text: "ОГРН ", fontSize: 10, bold: true },
-              { text: "1177847364584\t", fontSize: 10 },
+              {
+                text: `${companyContacts?.ogrn ?? "1177847364584"}\t`,
+                fontSize: 10,
+              },
               { text: "ОКПО ", fontSize: 10, bold: true },
-              { text: "20161337\n", fontSize: 10 },
+              {
+                text: `${companyContacts?.okpo ?? "20161337"}\n`,
+                fontSize: 10,
+              },
               { text: "Банк ", fontSize: 10, bold: true },
-              { text: "Филиал №7806 ВТБ (ПАО)\t", fontSize: 10 },
+              {
+                text: `${companyContacts?.bank ?? "Филиал №7806 ВТБ (ПАО)"}\t`,
+                fontSize: 10,
+              },
               { text: "Расчетный счет № ", fontSize: 10, bold: true },
-              { text: "40702810717060000232\t", fontSize: 10 },
+              {
+                text: `${
+                  companyContacts?.checkingAccount ?? "40702810717060000232"
+                }\t`,
+                fontSize: 10,
+              },
               { text: "БИК ", fontSize: 10, bold: true },
-              { text: "044525411\t", fontSize: 10 },
+              {
+                text: `${companyContacts?.bik ?? "044525411"}\t`,
+                fontSize: 10,
+              },
             ],
             alignment: "left",
             width: "*",

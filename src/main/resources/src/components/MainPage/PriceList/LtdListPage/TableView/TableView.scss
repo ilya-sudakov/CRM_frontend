@@ -1,0 +1,27 @@
+.ltd-tableview {
+    width: 100%;
+    .main-window {
+        &__list {
+            &-item {
+                &:not(.main-window__list-item--header) {
+                    cursor: pointer;
+                    span {
+                        padding-top: 15px;
+                        padding-bottom: 15px;
+                    }
+                }
+                span {
+                    &:nth-child(1) {
+                        flex: 0 1 20%;
+                    }
+                    &:nth-child(2) {
+                        flex: 0 1 40%;
+                    }
+                    &:nth-child(3) {
+                        flex: 0 1 10%;
+                    }
+                }
+            }
+        }
+    }
+}

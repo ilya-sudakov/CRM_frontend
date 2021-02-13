@@ -319,6 +319,12 @@ export const getDefaultItems = (userContext) => {
       addButtonName: "Добавить пользователя",
     },
     {
+      pathname: "/ltd-list",
+      mainRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
+      addButtonRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
+      addButtonName: "Добавить ООО",
+    },
+    {
       pathname: "/dispatcher/employees",
       name: "Сотрудники",
       mainRoles: ["ROLE_ADMIN", "ROLE_DISPATCHER", "ROLE_ENGINEER"],

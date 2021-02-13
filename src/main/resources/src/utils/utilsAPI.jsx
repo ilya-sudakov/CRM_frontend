@@ -44,3 +44,17 @@ export const requestINN = (options) => {
     return response;
   });
 };
+
+export const getAuthHeaders = (contentType = "application/json") => {
+  let headers = Object.assign({
+    "Content-Type": contentType,
+  });
+
+  if (localStorage.getItem("accessToken")) {
+    headers = {
+      ...headers,
+      authorization: `Bearer_${localStorage.getItem("accessToken")}`,
+    };
+  }
+  return { headers: headers };
+};
