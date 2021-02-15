@@ -664,7 +664,7 @@ export default EditClient;
 }
 const RequestHistory = ({ id }) => {
   const [requests, setRequests] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -675,8 +675,11 @@ const RequestHistory = ({ id }) => {
         const filteredData = res.filter(
           (request) => request.client !== null && request.client?.id === id
         );
-        console.log(res, filteredData, id);
         setRequests([...filteredData]);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
       });
   }, []);
 

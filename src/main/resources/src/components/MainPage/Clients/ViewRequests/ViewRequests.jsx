@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ViewRequests.scss";
 import TableView from "../../WorkshopsComponents/TableView/TableView.jsx";
 import usePagination from "../../../../utils/hooks/usePagination/usePagination";
 import { sortRequests } from "../../WorkshopsComponents/TableView/functions.js";
 
-const ViewRequests = (data = []) => {
+const ViewRequests = (data) => {
   const sortBy = { curSort: "id", id: "desc" };
 
   const printConfig = {
@@ -50,7 +50,7 @@ const ViewRequests = (data = []) => {
   return (
     <div className="view-requests">
       <div className="main-window">
-        {pages.data.length > 0 ? (
+        {pages.data.length > 0 || data.isLoading ? (
           <>
             <TableView
               data={pages.data}
