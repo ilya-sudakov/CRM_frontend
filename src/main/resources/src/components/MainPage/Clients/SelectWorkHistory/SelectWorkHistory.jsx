@@ -186,26 +186,20 @@ const SelectWorkHistory = (props) => {
                 <ImgLoader />
               ) : (
                 <div className="main-form__buttons">
-                  <span>
-                    <img
-                      onClick={() => {
-                        setIsLoading(true);
-                        setItems([...items, newItem]);
-                        props.handleWorkHistoryChange([...items, newItem]);
-                        setIsLoading(false);
-                        setCreatingItem(false);
-                      }}
-                      className="main-form__img"
-                      src={okSVG}
-                    />
+                  <span
+                    onClick={() => {
+                      setIsLoading(true);
+                      setItems([...items, newItem]);
+                      props.handleWorkHistoryChange([...items, newItem]);
+                      setIsLoading(false);
+                      setCreatingItem(false);
+                    }}
+                  >
+                    <img className="main-form__img" src={okSVG} />
                     Добавить
                   </span>
-                  <span>
-                    <img
-                      onClick={() => setCreatingItem(false)}
-                      className="main-form__img"
-                      src={cancelSVG}
-                    />
+                  <span onClick={() => setCreatingItem(false)}>
+                    <img className="main-form__img" src={cancelSVG} />
                     Удалить
                   </span>
                 </div>
@@ -255,7 +249,7 @@ const SelectWorkHistory = (props) => {
                   element: (
                     <input
                       type="text"
-                      value={formatDateStringWithTime(newItem.date)}
+                      value={formatDateStringWithTime(item.date)}
                       readOnly
                     />
                   ),
@@ -263,19 +257,19 @@ const SelectWorkHistory = (props) => {
                 {
                   name: "Действие",
                   element: (
-                    <input type="text" value={newItem.action} readOnly />
+                    <input type="text" value={item.action} readOnly />
                   ),
                 },
                 {
                   name: "Результат",
                   element: (
-                    <input type="text" value={newItem.result} readOnly />
+                    <input type="text" value={item.result} readOnly />
                   ),
                 },
                 {
                   name: "Комментарий",
                   element: (
-                    <textarea type="text" value={newItem.comment} readOnly />
+                    <textarea type="text" value={item.comment} readOnly />
                   ),
                 },
               ]}
