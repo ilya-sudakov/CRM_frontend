@@ -5,7 +5,7 @@ import usePagination from "../../../../utils/hooks/usePagination/usePagination";
 import { sortRequests } from "../../WorkshopsComponents/TableView/functions.js";
 
 const ViewRequests = (data = []) => {
-  const sortBy = { curSort: "sum", sum: "desc" };
+  const sortBy = { curSort: "id", id: "desc" };
 
   const printConfig = {
     ["id"]: {
