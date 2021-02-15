@@ -272,7 +272,7 @@
           }
         }
         .main-window__list-col {
-          width: calc(100% - 50px);
+          width: calc(100% - 30px);
         }
 
         span {
@@ -309,6 +309,7 @@
           // margin-right: auto !important;
           position: absolute;
           top: 5px;
+          padding: 0 !important;
           // top: calc(50% - 25px);
           left: 17px;
         }
