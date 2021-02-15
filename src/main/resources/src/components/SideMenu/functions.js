@@ -346,7 +346,7 @@ export const getDefaultItems = (userContext) => {
     },
     {
       pathname: "/feedback",
-      name: "Обратная связь",
+      name: "Сообщить об ошибке",
       mainRoles: [
         "ROLE_ADMIN",
         "ROLE_DISPATCHER",

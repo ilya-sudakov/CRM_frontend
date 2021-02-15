@@ -303,7 +303,7 @@ const TableView = (props) => {
                           ? workshopsLocations[part.location].name
                           : ""}
                       </span>
-                      <span>
+                      <span title={part.comment}>
                         <div className="main-window__mobile-text">
                           Комментарий:
                         </div>
