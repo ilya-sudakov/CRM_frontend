@@ -682,7 +682,7 @@ const RequestHistory = ({ id }) => {
 
   return (
     <div className="main-form__item">
-      <div className="main-form__input_name">История заявок</div>
+      <div className="main-form__input_name">История заказов</div>
       <div className="main-form__input_field">
         <ViewRequests isLoading={isLoading} requests={requests} />
       </div>
