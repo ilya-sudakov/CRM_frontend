@@ -21,7 +21,10 @@ import {
   locationTypes,
   defaultTitlePage,
 } from "./objects.js";
-import { getPriceListPdfTextMini } from "./functions";
+import {
+  exportPriceListToXLSXMini,
+  getPriceListPdfTextMini,
+} from "./functions";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { Link } from "react-router-dom";
 import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
@@ -330,6 +333,17 @@ const NewPriceList = () => {
     });
   };
 
+  const handleDownloadExcelNew = () => {
+    setIsLoading(true);
+    exportPriceListToXLSXMini(
+      categories,
+      priceList.filter((item) => item.active),
+      sortPriceList(optionalCols.filter((item) => item.active && item))
+    ).then(() => {
+      setIsLoading(false);
+    });
+  };
+
   const sortCategories = (categories) => {
     return categories.sort((a, b) => {
       if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
@@ -390,6 +404,13 @@ const NewPriceList = () => {
                 className="main-form__submit main-form__submit--inverted"
                 inverted
                 onClick={handleDownloadExcel}
+              />
+              <Button
+                text="Краткий .xlsx"
+                isLoading={isLoading}
+                className="main-form__submit main-form__submit--inverted"
+                inverted
+                onClick={handleDownloadExcelNew}
               />
               <Button
                 text="Сохранить данные"

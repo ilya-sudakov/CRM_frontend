@@ -65,7 +65,9 @@ const SelectLtd = ({ data, onChange }) => {
           />
           {selectedLtd ? (
             <p>{`${selectedLtd.name} | ИНН: ${selectedLtd.inn}`}</p>
-          ) : null}
+          ) : (
+            <span>По умолчанию используются данные Osfix</span>
+          )}
         </div>
       </div>
     </div>
