@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link, withRouter } from "react-router-dom";
-import viewIcon from "../../../../../../../../../../assets/tableview/view.svg";
 import editIcon from "../../../../../../../../../../assets/tableview/edit.svg";
 import deleteIcon from "../../../../../../../../../../assets/tableview/delete.svg";
 import "./TableView.scss";
@@ -228,13 +227,6 @@ const TableView = (props) => {
                 <TableActions
                   actionsList={[
                     {
-                      link: `${rigTypes[props.type].redirectURL}/view/${
-                        stamp.id
-                      }`,
-                      title: "Просмотр",
-                      imgSrc: viewIcon,
-                    },
-                    {
                       link: `${rigTypes[props.type].redirectURL}/edit/${
                         stamp.id
                       }`,
@@ -351,9 +343,10 @@ const TableView = (props) => {
                         <div className="main-window__mobile-text">
                           Распил/габариты:
                         </div>
-                        {part.cuttingDimensions && part.cuttingDimensions !== ""
+                        {/* {part.cuttingDimensions && part.cuttingDimensions !== ""
                           ? "🛈Выполнено"
-                          : ""}
+                          : ""} */}
+                        {part.cuttingDimensions}
                       </span>
                       <span
                         className="main-window__list-item--border-checked"
@@ -362,18 +355,20 @@ const TableView = (props) => {
                         <div className="main-window__mobile-text">
                           Фрезеровка/точение:
                         </div>
-                        {part.milling && part.milling !== ""
+                        {/* {part.milling && part.milling !== ""
                           ? "🛈Выполнено"
-                          : ""}
+                          : ""} */}
+                        {part.milling}
                       </span>
                       <span
                         className="main-window__list-item--border-checked"
                         title={part.harding}
                       >
                         <div className="main-window__mobile-text">Закалка:</div>
-                        {part.harding && part.harding !== ""
+                        {/* {part.harding && part.harding !== ""
                           ? "🛈Выполнено"
-                          : ""}
+                          : ""} */}
+                        {part.harding}
                       </span>
                       <span
                         className="main-window__list-item--border-checked"
@@ -382,18 +377,20 @@ const TableView = (props) => {
                         <div className="main-window__mobile-text">
                           Шлифовка:
                         </div>
-                        {part.grinding && part.grinding !== ""
+                        {/* {part.grinding && part.grinding !== ""
                           ? "🛈Выполнено"
-                          : ""}
+                          : ""} */}
+                        {part.grinding}
                       </span>
                       <span
                         className="main-window__list-item--border-checked"
                         title={part.erosion}
                       >
                         <div className="main-window__mobile-text">Эрозия:</div>
-                        {part.erosion && part.erosion !== ""
+                        {/* {part.erosion && part.erosion !== ""
                           ? "🛈Выполнено"
-                          : ""}
+                          : ""} */}
+                        {part.erosion}
                       </span>
                       <div className="main-window__actions">
                         <Link

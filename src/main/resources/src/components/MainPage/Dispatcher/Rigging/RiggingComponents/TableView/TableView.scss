@@ -107,6 +107,9 @@
             .main-window__list-options {
                 .main-window__list {
                     &-item {
+                        padding-top: 0;
+                        padding-bottom: 0;
+                        min-height: 3rem;
                         &:not(.main-window__list-item--header) {
                             span:nth-child(6) {
                                 &::before {
@@ -125,6 +128,18 @@
                         }
                         span {
                             flex: 0 1 15%;
+                            &:not(:nth-child(1)),
+                            &:not(:nth-child(2)),
+                            &:not(:nth-child(3)) {
+                                display: -webkit-box;
+                                // white-space: nowrap;
+                                // overflow-x: hidden;
+                                word-break: break-all;
+                                -webkit-line-clamp: 3;
+                                -webkit-box-orient: vertical;
+                                text-overflow: ellipsis;
+                                overflow: hidden;
+                            }
                             &:nth-child(1) {
                                 flex: 0 1 20%;
                                 max-width: 100px;

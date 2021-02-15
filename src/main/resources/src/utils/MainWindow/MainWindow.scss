@@ -679,13 +679,12 @@
     transform-origin: 0 0;
     transform: scaleY(1);
     min-height: 25px;
-    // overflow-y: hidden;
     border: 1px solid #bbbbbb;
     border-bottom-left-radius: 2.5px;
     border-bottom-right-radius: 2.5px;
     background-color: #dddddd;
     padding: 10px 10px;
-    transition: 100ms ease-in-out;
+    transition: none;
 
     &:hover {
       background-color: #dddddd;
