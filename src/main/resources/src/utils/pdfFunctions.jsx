@@ -1,5 +1,4 @@
 import font from "pdfmake/build/vfs_fonts.js";
-// import DejaVuSans from 'pdfmake/build/vfs_fonts_new.js'
 import pdfMake from "pdfmake";
 import testImg from "../../../../../assets/priceList/no_img.png";
 import companyLogo from "../../../../../assets/priceList/osfix_logo.png";
@@ -8,9 +7,6 @@ import companyLogoNoSlogan from "../../../../../assets/priceList/osfix_logo__no_
 import contactsImg from "../../../../../assets/priceList/contacts.png";
 import linkButtonImg from "../../../../../assets/priceList/linkButton.png";
 import saleImg from "../../../../../assets/priceList/onSale.png";
-// import topSellerImg from '../../../../../assets/priceList/top_seller.png';
-// import newItemImg from '../../../../../assets/priceList/new_item.png';
-// import uniqueItemImg from '../../../../../assets/priceList/unique_item.png';
 import proprietaryItemImg from "../../../../../assets/priceList/rospatent.png";
 import { formatDateString, getDataUri } from "./functions.jsx";
 
