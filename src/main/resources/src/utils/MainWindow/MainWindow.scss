@@ -796,6 +796,13 @@
       }
     }
 
+    &--sticky {
+      background-color: #ffffff !important;
+      width: 100%;
+      position: fixed;
+      z-index: 1;
+    }
+
     // message  - это информационное сообщение под элементов списка
     &--message {
       border-bottom-left-radius: 0 !important;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link, withRouter } from "react-router-dom";
 import viewIcon from "../../../../../../../../../../assets/tableview/view.svg";
 import editIcon from "../../../../../../../../../../assets/tableview/edit.svg";
@@ -16,6 +16,7 @@ import {
 import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import TableActions from "../../../../../../utils/TableView/TableActions/TableActions.jsx";
 import DeleteItemAction from "../../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
+import useStickyElement from "../../../../../../utils/hooks/useStickyElement.js";
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
