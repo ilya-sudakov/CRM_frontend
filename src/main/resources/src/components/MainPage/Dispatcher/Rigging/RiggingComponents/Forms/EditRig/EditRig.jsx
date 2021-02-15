@@ -260,7 +260,7 @@ const EditRig = (props) => {
               value="Вернуться назад"
             />
             <Button
-              text="Редактировать запись"
+              text="Сохранить данные"
               isLoading={isLoading}
               className="main-form__submit"
               onClick={handleSubmit}
