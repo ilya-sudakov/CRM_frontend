@@ -70,8 +70,7 @@
 
     .form-item__form {
         width: calc(100%);
-        // transition: height 200ms ease-in-out;
-        overflow: hidden;
+        // overflow: hidden;
         padding-bottom: 10px;
 
         &--hidden {
@@ -147,6 +146,28 @@
 
                 select {
                     padding-left: 5px;
+                }
+
+                textarea {
+                    resize: vertical;
+                    min-height: 4rem;
+                    max-height: 5rem;
+                    line-height: unset;
+                    // overflow: hidden;
+                }
+
+                .input_date {
+                    width: 100%;
+                    margin-bottom: 0;
+                    &__input_name {
+                        font-size: 0.9rem;
+                        padding-left: 5px;
+                    }
+                    input {
+                        padding: 5px 10px;
+                        line-height: normal;
+                        height: auto;
+                    }
                 }
             }
         }
