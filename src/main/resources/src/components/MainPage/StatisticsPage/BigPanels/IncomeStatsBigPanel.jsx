@@ -110,16 +110,26 @@ const IncomeStatsBigPanel = ({
     let clients = {};
 
     const colors = [
-      "#173635",
-      "#1a4f4e",
-      "#196a69",
-      "#148685",
-      "#00a3a2",
-      "#50b2b1",
-      "#79c2c0",
-      "#9cd1cf",
-      "#bee0df",
-      "#def0ef",
+      "#e6194b",
+      "#3cb44b",
+      "#ffe119",
+      "#4363d8",
+      "#f58231",
+      "#911eb4",
+      "#46f0f0",
+      "#f032e6",
+      "#bcf60c",
+      "#fabebe",
+      "#008080",
+      "#e6beff",
+      "#9a6324",
+      "#fffac8",
+      "#800000",
+      "#aaffc3",
+      "#808000",
+      "#ffd8b1",
+      "#000075",
+      "#808080",
     ];
 
     requests.map((request) => {
@@ -158,6 +168,29 @@ const IncomeStatsBigPanel = ({
         return 0;
       })
       .splice(0, 10);
+
+    //get income for the rest of the clients outside of top 10
+    let restOfClientsDataset = [];
+    months.map((item, index) => {
+      const curYear = currDate.startDate.getFullYear();
+      const newRequests = checkRequestsForSelectedMonth(
+        requests.filter(
+          (request) =>
+            request?.client?.id && clients[request?.client?.id] === undefined
+        ),
+        new Date(curYear, index, 1)
+      );
+      const sum = newRequests.reduce(
+        (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
+        0
+      );
+      return restOfClientsDataset.push(sum);
+    });
+    newClients.push({
+      data: restOfClientsDataset,
+      label: "Остальные",
+      color: "#cccccc",
+    });
 
     return newClients.map((item, index) => {
       return { ...item, color: colors[index] };

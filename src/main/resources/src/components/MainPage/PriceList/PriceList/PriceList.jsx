@@ -371,21 +371,21 @@ const NewPriceList = () => {
           {priceList.length > 0 && (
             <div className="main-form__buttons main-form__buttons--full">
               <Button
-                text="Открыть .pdf"
+                text="Полный .pdf"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
                 onClick={handleOpenPDF}
               />
               <Button
-                text="Новый прайс"
+                text="Краткий .pdf"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
                 onClick={handleOpenNewPDF}
               />
               <Button
-                text="Скачать .xlsx"
+                text="Полный .xlsx"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
