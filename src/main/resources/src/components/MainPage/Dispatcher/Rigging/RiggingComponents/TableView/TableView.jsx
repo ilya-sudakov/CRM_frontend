@@ -337,11 +337,7 @@ const TableView = (props) => {
                         </select>
                       </span>
                       <span
-                        className={`main-window__list-item--border-checked rigging-tableview__table-text--${
-                          part.cuttingDimensions.split(" ").length === 1
-                            ? "one-row"
-                            : "two-rows"
-                        }`}
+                        className="main-window__list-item--border-checked"
                         title={part.cuttingDimensions}
                       >
                         <div className="main-window__mobile-text">
@@ -387,7 +383,7 @@ const TableView = (props) => {
                         {part.grinding}
                       </span>
                       <span
-                        className="main-window__list-item--border-checked"
+                        // className="main-window__list-item--border-checked"
                         title={part.erosion}
                       >
                         <div className="main-window__mobile-text">Эрозия:</div>
