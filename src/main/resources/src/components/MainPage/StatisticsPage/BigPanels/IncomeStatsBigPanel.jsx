@@ -107,26 +107,19 @@ const IncomeStatsBigPanel = ({
     let clients = {};
 
     const colors = [
-      "#e6194b",
-      "#3cb44b",
-      "#ffe119",
-      "#4363d8",
-      "#f58231",
-      "#911eb4",
-      "#46f0f0",
-      "#f032e6",
-      "#bcf60c",
-      "#fabebe",
-      "#008080",
-      "#e6beff",
-      "#9a6324",
-      "#fffac8",
-      "#800000",
-      "#aaffc3",
-      "#808000",
-      "#ffd8b1",
-      "#000075",
-      "#808080",
+      "#F1B5CB",
+      "#D6D9CE",
+      "#E88EED",
+      "#CC3F0C",
+      "#9A6D38",
+      "#33673B",
+      "#DB8A74",
+      "#444054",
+      "#FFB7FF",
+      "#3B8EA5",
+      "#F4C3C2",
+      "#2D728F",
+      "#F3DAD8",
     ];
 
     requests.map((request) => {
@@ -196,16 +189,16 @@ const IncomeStatsBigPanel = ({
       );
       return restOfClientsDataset.push(sum);
     });
-    newClients.push({
-      data: restOfClientsDataset,
-      label: "Остальные",
-      color: "#cccccc",
-    });
-
-    console.log(newClients);
-    return newClients.map((item, index) => {
-      return { ...item, color: colors[index] };
-    });
+    return [
+      ...newClients.map((item, index) => {
+        return { ...item, color: colors[index] };
+      }),
+      {
+        data: restOfClientsDataset,
+        label: "Остальные",
+        color: "#CCCCCC",
+      },
+    ];
   };
 
   const getStats = (requests) => {
