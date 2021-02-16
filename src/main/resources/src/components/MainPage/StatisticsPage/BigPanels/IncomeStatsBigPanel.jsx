@@ -53,9 +53,6 @@ const IncomeStatsBigPanel = ({
         (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
         0
       );
-
-      console.log(curMonth);
-
       monthsIncome.push({
         value: totalIncome,
         label: months[i],
@@ -159,6 +156,7 @@ const IncomeStatsBigPanel = ({
     });
 
     //pick only 10 clients who provided most income
+    let topIds = {};
     const newClients = Object.values(clients)
       .sort((a, b) => {
         const sumA = a.data.reduce((prev, cur) => prev + cur, 0);
@@ -168,6 +166,7 @@ const IncomeStatsBigPanel = ({
         return 0;
       })
       .splice(0, 10);
+    newClients.map((item) => (topIds = { ...topIds, [item.label]: "" }));
 
     //get income for the rest of the clients outside of top 10
     let restOfClientsDataset = [];
@@ -176,13 +175,24 @@ const IncomeStatsBigPanel = ({
       const newRequests = checkRequestsForSelectedMonth(
         requests.filter(
           (request) =>
-            request?.client?.id && clients[request?.client?.id] === undefined
+            request?.client?.name && topIds[request?.client?.name] === undefined
         ),
         new Date(curYear, index, 1)
       );
       const sum = newRequests.reduce(
         (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
         0
+      );
+      console.log(
+        newRequests,
+        checkRequestsForSelectedMonth(
+          requests.filter(
+            (request) =>
+              request?.client?.id && topIds[request?.client?.name] === undefined
+          ),
+          new Date(curYear, index, 1)
+        ),
+        sum
       );
       return restOfClientsDataset.push(sum);
     });
@@ -192,6 +202,7 @@ const IncomeStatsBigPanel = ({
       color: "#cccccc",
     });
 
+    console.log(newClients);
     return newClients.map((item, index) => {
       return { ...item, color: colors[index] };
     });
@@ -376,7 +387,6 @@ const IncomeStatsBigPanel = ({
 
   //При первой загрузке
   useEffect(() => {
-    console.log("first render");
     !stats.isLoaded && requests.length > 1 && getStats(requests);
   }, [requests]);
 
