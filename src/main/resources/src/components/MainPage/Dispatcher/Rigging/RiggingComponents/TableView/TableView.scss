@@ -132,12 +132,12 @@
                             &:not(:nth-child(2)),
                             &:not(:nth-child(3)) {
                                 // вариант 1 - максимум две строки, перенос в любом месте
-                                display: -webkit-box;
-                                word-break: break-all;
-                                -webkit-line-clamp: 2;
-                                -webkit-box-orient: vertical;
-                                text-overflow: ellipsis;
-                                overflow: hidden;
+                                // display: -webkit-box;
+                                // word-break: break-all;
+                                // -webkit-line-clamp: 2;
+                                // -webkit-box-orient: vertical;
+                                // text-overflow: ellipsis;
+                                // overflow: hidden;
 
                                 // вариант 2 - одна строка, перенос по пробелам
                                 // white-space: nowrap;
@@ -172,6 +172,22 @@
                             &:nth-child(6) {
                                 max-width: 100px;
                                 position: relative;
+                            }
+                        }
+                        .rigging-tableview__table-text {
+                            &--two-rows {
+                                display: -webkit-box;
+                                word-break: normal;
+                                white-space: normal;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                text-overflow: ellipsis;
+                                overflow: hidden;
+                            }
+                            &--one-row {
+                                white-space: nowrap;
+                                overflow-x: hidden;
+                                text-overflow: ellipsis;
                             }
                         }
                         .main-window__actions {
