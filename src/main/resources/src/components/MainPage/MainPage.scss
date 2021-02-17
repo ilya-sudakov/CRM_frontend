@@ -15,7 +15,7 @@
       width: 100%;
       height: 100%;
       background-color: rgba(#000000, 0.3);
-      z-index: 98;
+      z-index: 999;
 
       &--hidden {
         transform: scale(0);
@@ -25,12 +25,9 @@
 
     .main_page__activity_panel {
       width: 100%;
-      // overflow-y: auto;
-      // overflow-x: auto;
-      margin-left: 230px;
+      margin-left: 231px;
       margin-top: 60px;
       background-color: #f6f6f6;
-      // border-left: 1px solid #cccccc;
 
       &--minimized {
         margin-left: 61px;
