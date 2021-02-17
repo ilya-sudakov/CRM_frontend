@@ -6,10 +6,11 @@
     --completed: #c7e9ce;
     --defect: #ebbdba;
     --production: #eaebde;
-    width: calc(100%);
-    max-width: calc(100% - 200px);
+    min-width: 1000px;
+    width: calc(100% + 25px);
+    // max-width: calc(100% - 200px);
     align-self: flex-start;
-    margin-left: -20px;
+    margin-left: -12.5px;
 
     .main-window {
         padding: 0;
