@@ -24,6 +24,8 @@ const TableView = (props) => {
   });
   const [partsVisible, setPartsVisible] = useState([]);
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
+  const myRef = useRef(null);
+  useStickyElement(myRef.current);
 
   const searchQuery = (data) => {
     let re = /[.,\s]/gi;
@@ -89,6 +91,11 @@ const TableView = (props) => {
       });
     });
     // console.log(cacheElements)
+    const mainPage = document.getElementsByClassName(
+      "main_page__activity_panel"
+    )[0];
+    mainPage.style.overflowX = "unset";
+    mainPage.style.overflowY = "unset";
     setPartsVisible([...temp]);
   }, [props.data]);
 
@@ -255,7 +262,10 @@ const TableView = (props) => {
                   }`}
               >
                 <div className="main-window__list">
-                  <div className="main-window__list-item main-window__list-item--header">
+                  <div
+                    className="main-window__list-item main-window__list-item--header"
+                    // ref={stamp_id === 0 ? myRef : null}
+                  >
                     <span className="main-window__list-item--border-checked">
                       Артикул
                     </span>

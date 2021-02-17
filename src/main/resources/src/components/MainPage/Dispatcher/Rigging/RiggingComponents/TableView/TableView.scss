@@ -162,8 +162,8 @@
                             }
                             &:nth-child(1) {
                                 flex: 0 1 100%;
-                                max-width: 130px;
-                                word-break: break-all;
+                                max-width: 135px;
+                                // word-break: break-all;
                             }
                             &:nth-child(2) {
                                 flex: 0 1 15%;
@@ -210,9 +210,9 @@
 
                         &--header {
                             position: sticky;
-                            top: 100px;
-                            background-color: #ffffffee !important;
-                            z-index: 999;
+                            top: 60px;
+                            background-color: #ffffff !important;
+                            // z-index: 0;
                             min-height: 2rem;
                             border-left: none;
                             border-right: none;

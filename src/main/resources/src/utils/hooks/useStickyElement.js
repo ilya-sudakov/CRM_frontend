@@ -5,31 +5,31 @@ const useStickyElement = (
   offsetTop = 0,
   stickyClassName = "main-window__list-item--sticky"
 ) => {
-  const getPosition = (element) => {
-    let xPosition = 0;
-    let yPosition = 0;
-
-    while (element) {
-      xPosition += element.offsetLeft - element.scrollLeft + element.clientLeft;
-      yPosition += element.offsetTop - element.scrollTop + element.clientTop;
-      element = element.offsetParent;
-    }
-
-    return { x: xPosition + offsetTop, y: yPosition };
+  const getAllParentsHeight = (element) => {
+    if (element === null) return 0;
+    let height = element?.offsetTop ?? 0;
+    height += getAllParentsHeight(element?.offsetParent);
+    return height;
   };
 
   useEffect(() => {
     if (!element) return;
-    const { x: offset } = getPosition(element);
     const scrollCallBack = window.addEventListener("scroll", () => {
       const headerHeight =
         document.getElementsByClassName("header")[0]?.clientHeight ?? 60;
-      console.log(offset + headerHeight, window.pageYOffset);
-      if (window.pageYOffset > offset + headerHeight) {
+      console.log(
+        window.pageYOffset,
+        getAllParentsHeight(element) + headerHeight,
+        window.pageYOffset - getAllParentsHeight(element) + headerHeight
+      );
+      if (window.pageYOffset > getAllParentsHeight(element) - headerHeight) {
         element.classList.add(stickyClassName);
-        element.style.top = `${headerHeight}px`;
+        element.style.top = `${
+          window.pageYOffset - getAllParentsHeight(element) + headerHeight
+        }px`;
       } else {
         element.classList.remove(stickyClassName);
+        element.style.top = 0;
       }
     });
     return () => {
