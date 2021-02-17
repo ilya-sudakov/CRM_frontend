@@ -105,7 +105,11 @@ const MainPage = () => {
               }}
             ></div>
           )}
-          <div className="main_page__activity_panel">
+          <div
+            className={`main_page__activity_panel ${
+              sidemenuHidden ? "main_page__activity_panel--minimized" : ""
+            }`}
+          >
             <Suspense fallback={<PageLoading />}>
               <Switch>
                 <PrivateRoute
