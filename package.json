@@ -8,7 +8,7 @@
     "test:watch": "npm run test -- --watch",
     "dev": "webpack --mode development",
     "webpack:prod": "webpack --mode production",
-    "deploy:prod": "rsync -avzhe ssh --progress ./src/main/resources/static/built/* root@194.58.104.192:/root/crm.osfix.ru",
+    "deploy:prod": "rsync -anv --progress ./src/main/resources/static/built/ root@194.58.104.192:/root/crm.osfix.ru",
     "build-prod": "npm run webpack:prod && npm run deploy:prod",
     "prod": "webpack --mode production && npm run prod-server",
     "start": "npm-run-all --parallel watch:build server-dev clean",
