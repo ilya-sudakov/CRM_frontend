@@ -8,11 +8,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  position: -webkit-sticky;
+  position: fixed;
+  width: 100%;
   z-index: 999;
   top: 0px;
   transition: 100ms ease-in-out;
+  box-sizing: border-box;
 
   .header__img {
     width: 35px;

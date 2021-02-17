@@ -8,7 +8,6 @@ import "../../../../utils/MainWindow/MainWindow.scss";
 import PageNotFound from "../../PageNotFound/PageNotFound.jsx";
 import PageLoading from "../../PageLoading/PageLoading.jsx";
 import NewRig from "./RiggingComponents/Forms/NewRig/NewRig.jsx";
-import ViewRig from "./RiggingComponents/Forms/ViewRig/ViewRig.jsx";
 import EditRig from "./RiggingComponents/Forms/EditRig/EditRig.jsx";
 
 const Rigging = (props) => {
@@ -135,20 +134,7 @@ const Rigging = (props) => {
                 type="stamp"
               />
               <PrivateRoute
-                path="/dispatcher/rigging/stamp/view/"
-                // component={ViewStamp}
-                component={ViewRig}
-                type="stamp"
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
-                ]}
-              />
-              <PrivateRoute
                 path="/dispatcher/rigging/stamp/edit/"
-                // component={EditStamp}
                 component={EditRig}
                 type="stamp"
                 allowedRoles={[
@@ -185,18 +171,6 @@ const Rigging = (props) => {
                   "ROLE_ADMIN",
                   "ROLE_DISPATCHER",
                   "ROLE_ENGINEER",
-                ]}
-              />
-              <PrivateRoute
-                path="/dispatcher/rigging/machine/view/"
-                // component={ViewMachine}
-                component={ViewRig}
-                type="machine"
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -238,18 +212,6 @@ const Rigging = (props) => {
                   "ROLE_ADMIN",
                   "ROLE_DISPATCHER",
                   "ROLE_ENGINEER",
-                ]}
-              />
-              <PrivateRoute
-                path="/dispatcher/rigging/press-form/view/"
-                // component={ViewPressForm}
-                component={ViewRig}
-                type="pressForm"
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
                 ]}
               />
               <PrivateRoute
@@ -304,19 +266,6 @@ const Rigging = (props) => {
                   "ROLE_DISPATCHER",
                   "ROLE_WORKSHOP",
                   "ROLE_ENGINEER",
-                ]}
-              />
-              <PrivateRoute
-                path="/dispatcher/rigging/parts/view/"
-                // component={ViewPart}
-                component={ViewRig}
-                type="parts"
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
-                  "ROLE_WORKSHOP",
                 ]}
               />
               <Route component={PageNotFound} />

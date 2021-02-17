@@ -267,7 +267,6 @@
             align-items: center;
             padding: 10px 25px;
             margin: 0;
-            margin-top: -1px;
             // border-top: 1px solid #cccccc;
 
             .main-window__img {
@@ -428,11 +427,16 @@
     @media (max-width: 768px) {
         .control-panel {
             .report-table-page__date {
+                margin-top: 5px;
                 .input_date__input {
                     .input_date__input_name {
                         margin-top: 10px;
                     }
                 }
+            }
+
+            .button {
+                margin-top: 5px !important;
             }
         }
         .report-table-page__tableview {
@@ -446,6 +450,12 @@
                         width: auto;
                         text-align: initial !important;
                         margin-bottom: 0;
+
+                        &:first-child {
+                            min-width: 200px;
+                            max-width: 200px;
+                            position: relative;
+                        }
                     }
                 }
             }

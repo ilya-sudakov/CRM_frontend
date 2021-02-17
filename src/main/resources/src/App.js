@@ -11,6 +11,9 @@ const UserContext = React.createContext();
 import { AppIcon__128 } from "../../../../assets/app_icon__128.png";
 import { AppIcon__144 } from "../../../../assets/app_icon__144.png";
 import { messaging } from "./init-fcm.js";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+
+const queryClient = new QueryClient();
 
 export const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -136,36 +139,38 @@ export const App = () => {
   };
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route
-          path="/login"
-          render={(props) => (
-            <LoginPage
-              isAuthorized={isAuthorized}
-              setUserData={setUserData}
-              {...props}
-            />
-          )}
-        />
-        {/* Отображение компонента загрузки страницы, пока грузятся внутренние компоненты */}
-        <Suspense fallback={<PageLoading />}>
-          <UserContext.Provider
-            value={{
-              userData: user,
-              isAuthorized,
-              expiredIn,
-              userHasAccess,
-              newNotifications,
-              lastNotification,
-              setLastNotification,
-            }}
-          >
-            <PrivateRoute path="/" component={MainPage} />
-          </UserContext.Provider>
-        </Suspense>
-      </Switch>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Switch>
+          <Route
+            path="/login"
+            render={(props) => (
+              <LoginPage
+                isAuthorized={isAuthorized}
+                setUserData={setUserData}
+                {...props}
+              />
+            )}
+          />
+          {/* Отображение компонента загрузки страницы, пока грузятся внутренние компоненты */}
+          <Suspense fallback={<PageLoading />}>
+            <UserContext.Provider
+              value={{
+                userData: user,
+                isAuthorized,
+                expiredIn,
+                userHasAccess,
+                newNotifications,
+                lastNotification,
+                setLastNotification,
+              }}
+            >
+              <PrivateRoute path="/" component={MainPage} />
+            </UserContext.Provider>
+          </Suspense>
+        </Switch>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

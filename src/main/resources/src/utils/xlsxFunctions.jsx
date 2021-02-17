@@ -1,10 +1,5 @@
 import XLSX2 from "xlsx";
 import Excel from "exceljs";
-// import category1Img from '../../../../../assets/priceList/крепеж_для_деревянных_досок_excel.png'
-// import category2Img from '../../../../../assets/priceList/крепеж_для_дпк_досок_excel.png'
-// import category3Img from '../../../../../assets/priceList/крепежные_элементы_excel.png'
-// import categoryImg from '../../../../../assets/priceList/default_category_excel.png'
-import contactsExcelImg from "../../../../../assets/priceList/contacts_excel.png";
 import FileSaver from "file-saver";
 import { getDataUri } from "./functions.jsx";
 import { getEmployeesByWorkshop } from "./RequestsAPI/Employees.jsx";

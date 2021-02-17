@@ -6,7 +6,11 @@
     --completed: #c7e9ce;
     --defect: #ebbdba;
     --production: #eaebde;
+    min-width: 1000px;
     width: calc(100% + 25px);
+    // max-width: calc(100% - 200px);
+    align-self: flex-start;
+    margin-left: -12.5px;
 
     .main-window {
         padding: 0;
@@ -107,31 +111,66 @@
             .main-window__list-options {
                 .main-window__list {
                     &-item {
+                        padding-top: 0px;
+                        padding-bottom: 0px;
+                        min-height: 3.5rem;
+                        &--border-checked {
+                            border-right: 1px solid #cccccc;
+                        }
                         &:not(.main-window__list-item--header) {
-                            span:nth-child(6) {
-                                &::before {
-                                    content: "";
-                                    display: inline-block;
-                                    position: absolute;
-                                    width: 5px;
-                                    height: 5px;
-                                    left: 9px;
-                                    top: calc(50% - 2.5px);
-                                    border-radius: 999px;
-                                    background-color: #cccccc;
-                                    border: 1px solid #bbbbbb;
+                            span {
+                                &:nth-child(6) {
+                                    &::before {
+                                        content: "";
+                                        display: inline-block;
+                                        position: absolute;
+                                        width: 5px;
+                                        height: 5px;
+                                        left: 9px;
+                                        top: calc(50% - 2.5px);
+                                        border-radius: 999px;
+                                        background-color: #cccccc;
+                                        border: 1px solid #bbbbbb;
+                                    }
+                                    // align-self: center;
+                                    // padding-top: 5px;
+                                }
+
+                                &:nth-child(n + 7) {
+                                    align-self: stretch;
+                                    padding-top: calc(1.5rem - 5px);
+                                    padding-bottom: 5px;
+                                    text-overflow: ellipsis;
+                                    box-sizing: border-box;
                                 }
                             }
                         }
                         span {
                             flex: 0 1 15%;
+                            &:not(:nth-child(1)),
+                            &:not(:nth-child(2)),
+                            &:not(:nth-child(3)),
+                            &:not(:nth-child(6)) {
+                                // вариант 1 - максимум две строки, перенос в любом месте
+                                // display: -webkit-box;
+                                // word-break: break-all;
+                                // -webkit-line-clamp: 2;
+                                // -webkit-box-orient: vertical;
+                                // text-overflow: ellipsis;
+                                // overflow: hidden;
+
+                                // вариант 2 - одна строка, перенос по пробелам
+                                white-space: nowrap;
+                                overflow-x: hidden;
+                                text-overflow: ellipsis;
+                            }
                             &:nth-child(1) {
-                                flex: 0 1 20%;
-                                max-width: 100px;
-                                word-break: break-all;
+                                flex: 0 1 100%;
+                                max-width: 135px;
+                                // word-break: break-all;
                             }
                             &:nth-child(2) {
-                                flex: 0 1 20%;
+                                flex: 0 1 15%;
                             }
                             &:nth-child(3) {
                                 flex: 0 1 20%;
@@ -139,11 +178,7 @@
                             }
                             &:nth-child(4) {
                                 flex: 0 1 15%;
-                                max-width: 150px;
-                            }
-                            &:nth-child(8) {
-                                flex: 0 1 20%;
-                                max-width: 170px;
+                                max-width: 120px;
                             }
                             &:nth-child(5) {
                                 &::before {
@@ -153,11 +188,47 @@
                             &:nth-child(6) {
                                 max-width: 100px;
                                 position: relative;
+                                padding-top: calc(1.25rem - 5px);
+                            }
+                            &:nth-child(8) {
+                                flex: 0 1 20%;
                             }
                         }
-                        .main-window__actions {
-                            min-width: 50px;
-                            max-width: 80px;
+
+                        span {
+                            // &:nth-child(n + 7) {
+                            align-self: stretch;
+                            padding-top: calc(1.5rem - 5px);
+                            padding-bottom: 5px;
+                            text-overflow: ellipsis;
+                            box-sizing: border-box;
+                            border-right: 1px solid #cccccc;
+                            box-sizing: border-box;
+                            // }
+                            &:nth-child(n + 7) {
+                                flex: 0 1 10%;
+                                max-width: Max(10%, 200px);
+                                box-sizing: border-box;
+                            }
+                        }
+
+                        &--header {
+                            position: sticky;
+                            top: 60px;
+                            background-color: #ffffff !important;
+                            // z-index: 0;
+                            min-height: 2rem;
+                            border-left: none;
+                            border-right: none;
+                            border-top-left-radius: 3px !important;
+                            border-top-right-radius: 3px !important;
+
+                            span {
+                                padding-top: 0.5rem;
+                                &:nth-child(6) {
+                                    padding-top: 0.5rem;
+                                }
+                            }
                         }
                     }
                 }

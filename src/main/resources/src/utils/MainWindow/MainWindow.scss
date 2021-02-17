@@ -590,6 +590,7 @@
       .main-window__list-item {
         padding-left: 15px;
         padding-right: 15px;
+        border-radius: 0 !important;
       }
     }
   }
@@ -679,13 +680,13 @@
     transform-origin: 0 0;
     transform: scaleY(1);
     min-height: 25px;
-    // overflow-y: hidden;
     border: 1px solid #bbbbbb;
     border-bottom-left-radius: 2.5px;
     border-bottom-right-radius: 2.5px;
     background-color: #dddddd;
     padding: 10px 10px;
-    transition: 100ms ease-in-out;
+    transition: none;
+    border-radius: 0;
 
     &:hover {
       background-color: #dddddd;
@@ -706,6 +707,14 @@
   .main-window__list-options .main-window__list-item {
     padding: 15px 10px;
     cursor: auto;
+
+    &--header {
+      background-color: #ffffff;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      z-index: 1;
+    }
   }
 
   .main-window__actions {
@@ -794,6 +803,14 @@
           margin-left: 2.5px;
         }
       }
+    }
+
+    &--sticky {
+      width: 100% !important;
+      z-index: 999;
+      box-sizing: border-box;
+      position: absolute;
+      transition: top 0 ease-in-out;
     }
 
     // message  - это информационное сообщение под элементов списка

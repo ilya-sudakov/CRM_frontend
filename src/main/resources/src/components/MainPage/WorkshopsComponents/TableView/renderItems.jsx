@@ -325,7 +325,7 @@ export const renderListHeader = (isMinimized, printConfig, workshop) => {
       {printConfig["responsible"].visible ? (
         <span className="requests__column--responsible">Ответственный</span>
       ) : null}
-      {printConfig["client"].visible ? (
+      {printConfig["status"].visible ? (
         <span className="requests__column--status">Статус заявки</span>
       ) : null}
       {printConfig["date-shipping"].visible ? (

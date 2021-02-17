@@ -53,9 +53,6 @@ const IncomeStatsBigPanel = ({
         (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
         0
       );
-
-      console.log(curMonth);
-
       monthsIncome.push({
         value: totalIncome,
         label: months[i],
@@ -110,16 +107,19 @@ const IncomeStatsBigPanel = ({
     let clients = {};
 
     const colors = [
-      "#173635",
-      "#1a4f4e",
-      "#196a69",
-      "#148685",
-      "#00a3a2",
-      "#50b2b1",
-      "#79c2c0",
-      "#9cd1cf",
-      "#bee0df",
-      "#def0ef",
+      "#F1B5CB",
+      "#E88EED",
+      "#CC3F0C",
+      "#9A6D38",
+      "#33673B",
+      "#DB8A74",
+      "#444054",
+      "#FFB7FF",
+      "#3B8EA5",
+      "#F4C3C2",
+      "#2D728F",
+      "#F3DAD8",
+      "#D6D9CE",
     ];
 
     requests.map((request) => {
@@ -149,6 +149,7 @@ const IncomeStatsBigPanel = ({
     });
 
     //pick only 10 clients who provided most income
+    let topIds = {};
     const newClients = Object.values(clients)
       .sort((a, b) => {
         const sumA = a.data.reduce((prev, cur) => prev + cur, 0);
@@ -158,10 +159,46 @@ const IncomeStatsBigPanel = ({
         return 0;
       })
       .splice(0, 10);
+    newClients.map((item) => (topIds = { ...topIds, [item.label]: "" }));
 
-    return newClients.map((item, index) => {
-      return { ...item, color: colors[index] };
+    //get income for the rest of the clients outside of top 10
+    let restOfClientsDataset = [];
+    months.map((item, index) => {
+      const curYear = currDate.startDate.getFullYear();
+      const newRequests = checkRequestsForSelectedMonth(
+        requests.filter(
+          (request) =>
+            request?.client?.name && topIds[request?.client?.name] === undefined
+        ),
+        new Date(curYear, index, 1)
+      );
+      const sum = newRequests.reduce(
+        (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
+        0
+      );
+      console.log(
+        newRequests,
+        checkRequestsForSelectedMonth(
+          requests.filter(
+            (request) =>
+              request?.client?.id && topIds[request?.client?.name] === undefined
+          ),
+          new Date(curYear, index, 1)
+        ),
+        sum
+      );
+      return restOfClientsDataset.push(sum);
     });
+    return [
+      ...newClients.map((item, index) => {
+        return { ...item, color: colors[index] };
+      }),
+      {
+        data: restOfClientsDataset,
+        label: "Остальные",
+        color: "#CCCCCC",
+      },
+    ];
   };
 
   const getStats = (requests) => {
@@ -343,7 +380,6 @@ const IncomeStatsBigPanel = ({
 
   //При первой загрузке
   useEffect(() => {
-    console.log("first render");
     !stats.isLoaded && requests.length > 1 && getStats(requests);
   }, [requests]);
 

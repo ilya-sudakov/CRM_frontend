@@ -5,6 +5,12 @@
     flex-direction: column;
     width: 100%;
 
+    .tableview-workshops {
+        .main-window {
+            min-width: 100%;
+        }
+    }
+
     .main-window {
         width: 100%;
         padding: 0;
@@ -13,18 +19,18 @@
             &-item {
                 padding-top: 10px;
                 padding-bottom: 10px;
-                .main-window__col--date {
-                    max-width: 40px;
-                }
-                .main-window__col--id {
-                    max-width: 60px;
-                    a {
-                        color: $button__background--hover;
-                    }
-                }
-                .main-window__col--sum {
-                    max-width: 15%;
-                }
+                // .main-window__col--date {
+                //     max-width: 40px;
+                // }
+                // .main-window__col--id {
+                //     max-width: 60px;
+                //     a {
+                //         color: $button__background--hover;
+                //     }
+                // }
+                // .main-window__col--sum {
+                //     max-width: 15%;
+                // }
             }
         }
     }
