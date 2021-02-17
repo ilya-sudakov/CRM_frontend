@@ -10,7 +10,7 @@
     "webpack:prod": "webpack --mode production",
     "deploy:local": "rsync -av --progress ./src/main/resources/static/built/ /root/crm.osfix.ru",
     "deploy:remote": "rsync -avzhe ssh --progress ./src/main/resources/static/built/* root@194.58.104.192:/root/crm.osfix.ru",
-    "build-prod": "npm run webpack:prod && npm run deploy:prod",
+    "build-prod": "npm run webpack:prod && npm run deploy:local",
     "prod": "webpack --mode production && npm run prod-server",
     "start": "npm-run-all --parallel watch:build server-dev clean",
     "watch:build": "webpack --watch",
