@@ -256,18 +256,38 @@ const TableView = (props) => {
               >
                 <div className="main-window__list">
                   <div className="main-window__list-item main-window__list-item--header">
-                    <span>Артикул</span>
-                    <span>Название</span>
-                    <span>Кол-во</span>
-                    <span>Местоположение</span>
-                    <span>Комментарий</span>
-                    <span>Статус</span>
-                    <span>Распил/габариты</span>
-                    <span>Фрезеровка/точение</span>
-                    <span>Закалка</span>
-                    <span>Шлифовка</span>
+                    <span className="main-window__list-item--border-checked">
+                      Артикул
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Название
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Кол-во
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Местоположение
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Комментарий
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Статус
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Распил/габариты
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Фрезеровка/точение
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Закалка
+                    </span>
+                    <span className="main-window__list-item--border-checked">
+                      Шлифовка
+                    </span>
                     <span>Эрозия</span>
-                    <div className="main-window__actions">Действия</div>
+                    <div className="main-window__table-actions"></div>
                   </div>
                   {sortStampParts(stamp.stampParts).map((part, index) => (
                     <div
@@ -281,17 +301,26 @@ const TableView = (props) => {
                       }
                       data-msg="Предупреждение! Введите корректное местоположение"
                     >
-                      <span title={part.number}>
+                      <span
+                        className="main-window__list-item--border-checked"
+                        title={part.number}
+                      >
                         <div className="main-window__mobile-text">Артикул:</div>
                         {part.number}
                       </span>
-                      <span title={part.name}>
+                      <span
+                        className="main-window__list-item--border-checked"
+                        title={part.name}
+                      >
                         <div className="main-window__mobile-text">
                           Название:
                         </div>{" "}
                         {part.name}
                       </span>
-                      <span title={addSpaceDelimiter(part.amount)}>
+                      <span
+                        className="main-window__list-item--border-checked"
+                        title={addSpaceDelimiter(part.amount)}
+                      >
                         <div className="main-window__mobile-text">Кол-во:</div>
                         {addSpaceDelimiter(part.amount)}
                       </span>
@@ -301,6 +330,7 @@ const TableView = (props) => {
                             ? workshopsLocations[part.location].name
                             : ""
                         }
+                        className="main-window__list-item--border-checked"
                       >
                         <div className="main-window__mobile-text">
                           Местоположение:
@@ -318,7 +348,8 @@ const TableView = (props) => {
                       <span
                         className={
                           "main-window__list-item--" +
-                          rigStatuses[part.color || "production"].className
+                          rigStatuses[part.color || "production"].className +
+                          "main-window__list-item--border-checked"
                         }
                       >
                         <div className="main-window__mobile-text">Статус:</div>
@@ -391,6 +422,7 @@ const TableView = (props) => {
                       <span
                         // className="main-window__list-item--border-checked"
                         title={part.erosion}
+                        className="main-window__list-item--border-checked"
                       >
                         <div className="main-window__mobile-text">Эрозия:</div>
                         {/* {part.erosion && part.erosion !== ""
@@ -398,21 +430,18 @@ const TableView = (props) => {
                           : ""} */}
                         {part.erosion}
                       </span>
-                      <div className="main-window__actions">
-                        <Link
-                          to={`${rigTypes[props.type].redirectURL}/edit/${
-                            stamp.id
-                          }?part=${part.id}`}
-                          className="main-window__action"
-                          title="Редактировать"
-                        >
-                          <img
-                            className="main-window__img"
-                            src={editIcon}
-                            alt=""
-                          />
-                        </Link>
-                      </div>
+                      <TableActions
+                        actionsList={[
+                          {
+                            link: `${rigTypes[props.type].redirectURL}/edit/${
+                              stamp.id
+                            }?part=${part.id}`,
+                            // text: "Редактировать",
+                            imgSrc: editIcon,
+                            title: "Редактировать",
+                          },
+                        ]}
+                      />
                     </div>
                   ))}
                 </div>
