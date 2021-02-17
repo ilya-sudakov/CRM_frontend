@@ -281,21 +281,27 @@ const TableView = (props) => {
                       }
                       data-msg="Предупреждение! Введите корректное местоположение"
                     >
-                      <span>
+                      <span title={part.number}>
                         <div className="main-window__mobile-text">Артикул:</div>
                         {part.number}
                       </span>
-                      <span>
+                      <span title={part.name}>
                         <div className="main-window__mobile-text">
                           Название:
                         </div>{" "}
                         {part.name}
                       </span>
-                      <span>
+                      <span title={addSpaceDelimiter(part.amount)}>
                         <div className="main-window__mobile-text">Кол-во:</div>
                         {addSpaceDelimiter(part.amount)}
                       </span>
-                      <span>
+                      <span
+                        title={
+                          workshopsLocations[part.location]
+                            ? workshopsLocations[part.location].name
+                            : ""
+                        }
+                      >
                         <div className="main-window__mobile-text">
                           Местоположение:
                         </div>

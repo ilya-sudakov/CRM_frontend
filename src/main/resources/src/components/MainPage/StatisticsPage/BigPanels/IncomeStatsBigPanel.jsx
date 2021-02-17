@@ -108,7 +108,6 @@ const IncomeStatsBigPanel = ({
 
     const colors = [
       "#F1B5CB",
-      "#D6D9CE",
       "#E88EED",
       "#CC3F0C",
       "#9A6D38",
@@ -120,6 +119,7 @@ const IncomeStatsBigPanel = ({
       "#F4C3C2",
       "#2D728F",
       "#F3DAD8",
+      "#D6D9CE",
     ];
 
     requests.map((request) => {
