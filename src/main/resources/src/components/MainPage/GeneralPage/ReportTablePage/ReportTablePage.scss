@@ -331,9 +331,6 @@
                         flex: 0 1 100%;
                         min-width: 300px;
                         max-width: 300px;
-                        position: sticky;
-                        left: 0;
-                        background-color: #fff;
                     }
                     &:not(:last-child) {
                         border: 1px solid transparent;
@@ -412,7 +409,9 @@
 
             .main-window__list-item--header {
                 span {
+                    background-color: #ffffff !important;
                     min-height: 0 !important;
+                    border-bottom: 1px solid #ccc;
                     &:last-child {
                         display: flex;
                         align-items: center;

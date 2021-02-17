@@ -91,6 +91,7 @@
                     }
                     &:nth-child(5) {
                         position: relative;
+                        max-width: 150px;
 
                         .main-window__status_select {
                             max-width: fit-content;
