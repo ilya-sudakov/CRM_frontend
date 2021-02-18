@@ -27,13 +27,11 @@
       width: 100%;
       margin-left: 231px;
       margin-top: 60px;
-      // background-color: #f6f6f6;
-      // max-width: calc(100vw - 248px);
+      background-color: #f6f6f6;
       max-width: calc(100vw - 231px);
 
       &--minimized {
         margin-left: 61px;
-        // max-width: calc(100vw - 78px);
         max-width: calc(100vw - 61px);
       }
     }
