@@ -8,7 +8,6 @@ import { formatDateStringNoYear } from "../../../utils/functions.jsx";
 import { months } from "../../../utils/dataObjects.js";
 
 import RequestsQuantityPanel from "./Panels/RequestsQuantityPanel.jsx";
-import IncomeStatsPanel from "./Panels/IncomeStatsPanel.jsx";
 import AverageSumStatsPanel from "./Panels/AverageSumStatsPanel.jsx";
 import NewClientsStatsPanel from "./Panels/NewClientsStatsPanel.jsx";
 import NewOldClientsStatsPanel from "./Panels/NewOldClientsStatsPanel.jsx";
