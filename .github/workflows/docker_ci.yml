@@ -4,6 +4,8 @@ name: docker ci
 on:
   pull_request:
     branches: [master]
+  push:
+    branches: [master]
 
   # Allows to run job manually
   workflow_dispatch:
