@@ -3,7 +3,10 @@
 .report-table-page {
     position: relative;
     background-color: #ffffff;
-    overflow: auto;
+    width: intrinsic; /* Safari/WebKit uses a non-standard name */
+    width: -moz-max-content; /* Firefox/Gecko */
+    width: -webkit-max-content; /* Chrome */
+    width: 100%;
     .main-window {
         position: relative;
 
@@ -259,6 +262,8 @@
     }
     &__tableview {
         width: 100%;
+        min-width: 1000px;
+        align-self: flex-start;
 
         .main-window__title {
             font-size: 20px;
@@ -280,9 +285,13 @@
             width: fit-content;
             margin-bottom: 20px;
             min-height: 100px;
+            width: intrinsic; /* Safari/WebKit uses a non-standard name */
+            width: -moz-max-content; /* Firefox/Gecko */
+            width: -webkit-max-content; /* Chrome */
             &-item {
                 border-top: 1px solid #cccccc;
                 border-radius: 0 !important;
+                justify-content: flex-start;
                 &:not(.main-window__list-item--header) {
                     border-bottom: none;
                     &:hover {
@@ -319,8 +328,7 @@
                 padding: 0 !important;
                 align-items: stretch;
                 span {
-                    // flex: 0 1 40px;
-                    max-width: 40px;
+                    // max-width: 40px;
                     min-width: 40px;
                     min-height: 35px;
                     padding: 5px 10px;
@@ -331,9 +339,6 @@
                         flex: 0 1 100%;
                         min-width: 300px;
                         max-width: 300px;
-                        position: sticky;
-                        left: 0;
-                        background-color: #fff;
                     }
                     &:not(:last-child) {
                         border: 1px solid transparent;
@@ -412,7 +417,9 @@
 
             .main-window__list-item--header {
                 span {
+                    background-color: #ffffff !important;
                     min-height: 0 !important;
+                    border-bottom: 1px solid #ccc;
                     &:last-child {
                         display: flex;
                         align-items: center;

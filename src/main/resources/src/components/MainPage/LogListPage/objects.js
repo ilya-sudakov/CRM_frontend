@@ -3,6 +3,10 @@ export const logItemsTypes = {
     name: "Заявки",
     originalName: "request",
   },
+  clients: {
+    name: "Клиенты",
+    originalName: "clients",
+  },
 };
 
 export const logItemsCategories = {
@@ -10,5 +14,10 @@ export const logItemsCategories = {
     name: "Заявки",
     originalName: "request",
     linkToView: "/requests/edit",
+  },
+  clients: {
+    name: "Клиенты",
+    originalName: "clients",
+    linkToView: "/clients/edit",
   },
 };
