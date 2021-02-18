@@ -37,6 +37,8 @@
           padding: 8px 25px;
 
           span {
+            display: table;
+            width: fit-content;
             max-width: fit-content;
             padding-right: 3px;
             color: #666666;

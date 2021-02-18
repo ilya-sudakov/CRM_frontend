@@ -364,7 +364,8 @@
   }
 
   &--hidden {
-    width: fit-content;
+    // width: fit-content;
+    width: 60px;
     align-items: flex-start;
 
     .sidemenu__add-buttons {
