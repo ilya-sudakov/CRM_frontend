@@ -13,7 +13,7 @@ const TableView = ({
   const filterEmployees = (employees, searchQuery) => {
     const query = searchQuery.toLowerCase();
     return employees.filter((employee) =>
-      employee.employee.lastName.toLowerCase().includes(query)
+      employee.employee?.lastName?.toLowerCase()?.includes(query)
     );
   };
 

@@ -89,7 +89,6 @@ const NotesJournal = ({}) => {
       //fetch prev day
       .then(() => getNotesJournalList(prevDay))
       .then(({ data }) => {
-        // console.log(employeesNotes);
         employeesData = updateEmployeesData(data, "yesterday", employeesData);
         console.log(employeesData);
         setEmployeesNotes([...employeesData]);
@@ -132,7 +131,6 @@ const NotesJournal = ({}) => {
           break;
       }
     });
-    // console.log(newEmployeesNotes);
     return newEmployeesNotes;
   };
 
