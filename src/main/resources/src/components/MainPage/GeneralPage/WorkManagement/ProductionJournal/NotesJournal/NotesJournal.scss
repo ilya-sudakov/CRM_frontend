@@ -165,4 +165,42 @@
             }
         }
     }
+
+    @media (max-width: 768px) {
+        &__list {
+            &-item {
+                .employees__row {
+                    flex-direction: column;
+
+                    > span {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        &__list {
+            padding: 0 10px;
+            &-item {
+                .employees__row {
+                    flex-direction: column;
+
+                    > span {
+                        margin-bottom: 10px;
+                    }
+
+                    .employees__days-wrapper {
+                        flex-direction: column;
+
+                        span:first-child {
+                            margin-right: 0;
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
