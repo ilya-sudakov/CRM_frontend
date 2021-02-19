@@ -187,7 +187,7 @@ const NotesJournal = ({}) => {
         {`${formatDateStringNoYear(curDay)} - ${days[curDay.getDay()]}`}
       </div>
       <TableView
-        isLoadingEmployees={isLoadingEmployees}
+        isLoading={isLoadingEmployees || isLoading}
         workshops={workshops}
         curDay={curDay}
         employeesNotes={employeesNotes}

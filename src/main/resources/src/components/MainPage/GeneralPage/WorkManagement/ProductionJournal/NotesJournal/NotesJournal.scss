@@ -91,7 +91,7 @@
                     background-color: #e7e7e7;
                 }
 
-                &--even {
+                &:nth-child(2n + 1) {
                     background-color: #ffffff;
 
                     &:hover {
