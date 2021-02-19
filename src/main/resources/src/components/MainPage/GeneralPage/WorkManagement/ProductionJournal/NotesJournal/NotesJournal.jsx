@@ -5,6 +5,7 @@ import {
   addJournalNote,
   getNotesJournalList,
   editJournalNote,
+  deleteJournalNote,
 } from "../../../../../../utils/RequestsAPI/WorkManaging/notes_journal.js";
 import ControlPanel from "../../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import InputDate from "../../../../../../utils/Form/InputDate/InputDate.jsx";
@@ -117,12 +118,19 @@ const NotesJournal = ({}) => {
   const handleSubmit = () => {
     Promise.all(
       employeesNotes.map((note) => {
+        //delete all empty comments
+        if (
+          note.noteId &&
+          note.workCommentToday === "" &&
+          note.workCommentTodayOG !== ""
+        )
+          return deleteJournalNote(note.noteId);
+        //add/edit all nonempty todays comments
         if (
           note.workCommentToday === "" ||
           note.workCommentToday === note.workCommentTodayOG
         )
           return;
-        //add/edit all nonempty todays comments
         const noteObject = {
           comment: note.workCommentToday,
           date: Math.floor(curDay.getTime() / 1000),
@@ -140,6 +148,13 @@ const NotesJournal = ({}) => {
             const prevDay = new Date(
               new Date(curDay).setDate(curDay.getDate() - 1)
             );
+            //delete all empty comments
+            if (
+              note.noteId &&
+              note.workCommentYesterday === "" &&
+              note.workCommentYesterdayOG !== ""
+            )
+              return deleteJournalNote(note.noteId);
             if (
               note.workCommentYesterday === "" ||
               note.workCommentYesterday === note.workCommentYesterdayOG

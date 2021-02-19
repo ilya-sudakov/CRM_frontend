@@ -23,9 +23,17 @@ export function addJournalNote(item) {
 
 export function editJournalNote(item, id) {
   const headers = getAuthHeaders();
-  return axios.post(
+  return axios.put(
     `${process.env.API_BASE_URL}/api/v1/journal/${id}`,
     item,
+    headers
+  );
+}
+
+export function deleteJournalNote(id) {
+  const headers = getAuthHeaders();
+  return axios.delete(
+    `${process.env.API_BASE_URL}/api/v1/journal/${id}`,
     headers
   );
 }
