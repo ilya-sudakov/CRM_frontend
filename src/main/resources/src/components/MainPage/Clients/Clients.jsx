@@ -74,21 +74,23 @@ const Clients = (props) => {
   ];
 
   const deleteItem = async (clientId, index) => {
+    const client = data.find((item) => item.id === clientId);
+    console.log(clients, clientId, client);
     return Promise.all(
-      clients[index].legalEntities.map((item) =>
+      client.legalEntities.map((item) =>
         clientTypes[props.type].deleteLegalEntityFunction(item.id)
       )
     )
       .then(() =>
         Promise.all(
-          clients[index].contacts.map((item) => {
+          client.contacts.map((item) => {
             return clientTypes[props.type].deleteContactsFunction(item.id);
           })
         )
       )
       .then(() =>
         Promise.all(
-          clients[index].histories.map((item) => {
+          client.histories.map((item) => {
             return clientTypes[props.type].deleteWorkHistoryFunction(item.id);
           })
         )
