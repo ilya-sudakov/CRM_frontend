@@ -68,6 +68,7 @@ const NotesJournal = ({}) => {
 
   const fetchBothDays = () => {
     setIsLoading(true);
+    console.log('fetching both days');
     const today = curDay;
     let employeesData = [...employeesNotes];
     employeesData = employeesData.map((item) => ({
