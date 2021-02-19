@@ -13,7 +13,10 @@ import TableView from "./TableView.jsx";
 
 import "./NotesJournal.scss";
 import Button from "../../../../../../utils/Form/Button/Button.jsx";
-import { formatDateStringNoYear } from "../../../../../../utils/functions.jsx";
+import {
+  formatDateString,
+  formatDateStringNoYear,
+} from "../../../../../../utils/functions.jsx";
 import { days } from "../../../../../../utils/dataObjects.js";
 
 const NotesJournal = ({}) => {
@@ -27,22 +30,26 @@ const NotesJournal = ({}) => {
   useEffect(() => {
     document.title = "Журнал руководителя";
     if (employees.length === 0 || employeesNotes.length > 0) return;
+    const newList = employees.map((employee) => ({
+      employee: employee,
+      workCommentYesterday: "",
+      workCommentToday: "",
+    }));
     if (employees.length > 0 && employeesNotes.length === 0) {
-      setEmployeesNotes([
-        ...employees.map((employee) => ({
-          employee: employee,
-          workCommentYesterday: "",
-          workCommentToday: "",
-        })),
-      ]);
+      setEmployeesNotes([...newList]);
     }
+    return fetchBothDays([...newList]);
   }, [employees]);
 
   useEffect(() => {
-    if (loadedDay !== curDay && !isLoading && employeesNotes.length > 0) {
-      return fetchBothDays();
+    if (
+      formatDateString(loadedDay) !== formatDateString(curDay) &&
+      !isLoading &&
+      employeesNotes.length > 0
+    ) {
+      return fetchBothDays(employeesNotes);
     }
-  }, [curDay, employeesNotes]);
+  }, [curDay]);
 
   const onInputChange = (value, type = "yesterday", id) => {
     const employee = employeesNotes.find(
@@ -66,9 +73,9 @@ const NotesJournal = ({}) => {
     return setEmployeesNotes([...newEmployeesNotes]);
   };
 
-  const fetchBothDays = () => {
+  const fetchBothDays = (employeesNotes) => {
     setIsLoading(true);
-    console.log('fetching both days');
+    console.log("fetching both days");
     const today = curDay;
     let employeesData = [...employeesNotes];
     employeesData = employeesData.map((item) => ({
