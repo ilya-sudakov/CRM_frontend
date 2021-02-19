@@ -3,8 +3,29 @@ import axios from "axios";
 
 export function getNotesJournalList(date = new Date()) {
   const headers = getAuthHeaders();
-  return axios.get(
-    `${process.env.API_BASE_URL}/api/v1/notes_journal?day=${date.getDate()}`,
+  return axios.post(
+    `${process.env.API_BASE_URL}/api/v1/journal/date/`,
+    {
+      date: date,
+    },
+    headers
+  );
+}
+
+export function addJournalNote(item) {
+  const headers = getAuthHeaders();
+  return axios.post(
+    `${process.env.API_BASE_URL}/api/v1/journal/`,
+    item,
+    headers
+  );
+}
+
+export function editJournalNote(item, id) {
+  const headers = getAuthHeaders();
+  return axios.post(
+    `${process.env.API_BASE_URL}/api/v1/journal/${id}`,
+    item,
     headers
   );
 }

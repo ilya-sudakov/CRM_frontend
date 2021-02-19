@@ -12,7 +12,7 @@ const TableView = ({
   const filterEmployees = (employees, searchQuery) => {
     const query = searchQuery.toLowerCase();
     return employees.filter((employee) =>
-      employee.lastName.toLowerCase().includes(query)
+      employee.employee.lastName.toLowerCase().includes(query)
     );
   };
 
@@ -23,7 +23,7 @@ const TableView = ({
         : workshops.map((workshop) => {
             const filteredEmployees = sortByField(
               filterEmployees(employeesNotes, searchQuery).filter(
-                (employee) => employee.workshop === workshop
+                (employee) => employee.employee.workshop === workshop
               ),
               { fieldName: "lastName", direction: "desc" }
             );
@@ -43,8 +43,8 @@ const TableView = ({
                         }`}
                       >
                         <span>
-                          {`${employee.lastName} ${employee.name} ${employee.middleName}`}
-                          <div>{employee.position}</div>
+                          {`${employee.employee.lastName} ${employee.employee.name} ${employee.employee.middleName}`}
+                          <div>{employee.employee.position}</div>
                         </span>
                         <div className="employees__days-wrapper">
                           <span
@@ -60,7 +60,7 @@ const TableView = ({
                                 onInputChange(
                                   target.value,
                                   "yesterday",
-                                  employee.id
+                                  employee.employee.id
                                 )
                               }
                               value={employee.workCommentYesterday}
@@ -84,7 +84,7 @@ const TableView = ({
                                 onInputChange(
                                   target.value,
                                   "today",
-                                  employee.id
+                                  employee.employee.id
                                 )
                               }
                               value={employee.workCommentToday}

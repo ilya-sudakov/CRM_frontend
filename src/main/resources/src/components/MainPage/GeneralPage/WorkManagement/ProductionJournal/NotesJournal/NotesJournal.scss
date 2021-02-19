@@ -40,9 +40,16 @@
         }
     }
 
+    &__current-date {
+        margin-left: 25px;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
     &__list {
         display: flex;
         flex-direction: column;
+        // max-width: 1200px;
         padding: 0 25px;
 
         &-item {
@@ -66,6 +73,10 @@
                 }
             }
 
+            &:last-child {
+                margin-bottom: 0;
+            }
+
             .employees__row {
                 display: flex;
                 align-items: flex-start;
@@ -86,6 +97,16 @@
                     &:hover {
                         background-color: #f4f4f4;
                     }
+                }
+
+                // TABLE DESIGN
+                margin-bottom: 0;
+                border-radius: 0;
+                &:not(:last-child) {
+                    border-bottom: none;
+                }
+                &:last-child {
+                    margin-bottom: 15px;
                 }
 
                 span {
@@ -157,13 +178,17 @@
                             background-color: transparent;
                         }
                         textarea {
-                            border-color: #f3c7c7;
+                            border-color: #f3c9c9;
                             background-color: #faf3f3;
                         }
                     }
                 }
             }
         }
+    }
+
+    .button {
+        margin-left: 25px;
     }
 
     @media (max-width: 768px) {

@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
 import useEmployeesList from "../../../../../../utils/hooks/useEmployeesList.js";
 import SearchBar from "../../../../SearchBar/SearchBar.jsx";
-import { getNotesJournalList } from "../../../../../../utils/RequestsAPI/WorkManaging/notes_journal.js";
+import {
+  addJournalNote,
+  getNotesJournalList,
+  editJournalNote,
+} from "../../../../../../utils/RequestsAPI/WorkManaging/notes_journal.js";
 import ControlPanel from "../../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import InputDate from "../../../../../../utils/Form/InputDate/InputDate.jsx";
 import TableView from "./TableView.jsx";
 
 import "./NotesJournal.scss";
+import Button from "../../../../../../utils/Form/Button/Button.jsx";
+import { formatDateStringNoYear } from "../../../../../../utils/functions.jsx";
+import { days } from "../../../../../../utils/dataObjects.js";
 
 const NotesJournal = ({}) => {
   const { employees, isLoadingEmployees, workshops } = useEmployeesList();
   const [employeesNotes, setEmployeesNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [curDay, setCurDay] = useState(new Date());
+  const [loadedDay, setLoadedDay] = useState(new Date());
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -20,7 +28,7 @@ const NotesJournal = ({}) => {
     if (employees.length === 0 || employeesNotes.length > 0) return;
     setEmployeesNotes([
       ...employees.map((employee) => ({
-        ...employee,
+        employee: employee,
         workCommentYesterday: "",
         workCommentToday: "",
       })),
@@ -28,13 +36,15 @@ const NotesJournal = ({}) => {
   }, [employees]);
 
   useEffect(() => {
-    if (!isLoading && employeesNotes.length > 0) {
+    if (loadedDay !== curDay && !isLoading && employeesNotes.length > 0) {
       return fetchBothDays();
     }
   }, [curDay, employeesNotes]);
 
   const onInputChange = (value, type = "yesterday", id) => {
-    const employee = employeesNotes.find((employee) => employee.id === id);
+    const employee = employeesNotes.find(
+      (employee) => employee.employee.id === id
+    );
     let newEmployeesNotes = employeesNotes;
     switch (type) {
       case "yesterday":
@@ -66,6 +76,7 @@ const NotesJournal = ({}) => {
       .then(() => getNotesJournalList(prevDay))
       .then(({ data }) => {
         updateEmployeesData(data, "yesterday");
+        setLoadedDay(curDay);
         setIsLoading(false);
         return;
       })
@@ -79,24 +90,78 @@ const NotesJournal = ({}) => {
     let newEmployeesNotes = employeesNotes;
     employeeData.map((item) => {
       const employee = employeesNotes.find(
-        (employee) => employee.id === item.employee.id
+        (employee) => employee.employee.id === item.employee.id
       );
       switch (type) {
         case "yesterday":
           newEmployeesNotes.splice(employeesNotes.indexOf(employee), 1, {
             ...employee,
+            noteId: item.id,
             workCommentYesterday: item.comment,
+            workCommentYesterdayOG: item.comment,
           });
           break;
         case "today":
           newEmployeesNotes.splice(employeesNotes.indexOf(employee), 1, {
             ...employee,
+            noteId: item.id,
             workCommentToday: item.comment,
+            workCommentTodayOG: item.comment,
           });
           break;
       }
     });
     return setEmployeesNotes([...newEmployeesNotes]);
+  };
+
+  const handleSubmit = () => {
+    Promise.all(
+      employeesNotes.map((note) => {
+        if (
+          note.workCommentToday === "" ||
+          note.workCommentToday === note.workCommentTodayOG
+        )
+          return;
+        //add/edit all nonempty todays comments
+        const noteObject = {
+          comment: note.workCommentToday,
+          date: Math.floor(curDay.getTime() / 1000),
+          employeeId: note.employee.id,
+        };
+        if (note.noteId && note.workCommentToday !== note.workCommentTodayOG) {
+          return editJournalNote(noteObject, note.noteId);
+        }
+        return addJournalNote(noteObject);
+      })
+    )
+      .then(() =>
+        Promise.all(
+          employeesNotes.map((note) => {
+            const prevDay = new Date(
+              new Date(curDay).setDate(curDay.getDate() - 1)
+            );
+            if (
+              note.workCommentYesterday === "" ||
+              note.workCommentYesterday === note.workCommentYesterdayOG
+            )
+              return;
+            //add/edit all nonempty yesterday comments
+            if (
+              note.noteId &&
+              note.workCommentYesterday !== note.workCommentYesterdayOG
+            ) {
+              return editJournalNote(noteObject, note.noteId);
+            }
+            const noteObject = {
+              comment: note.workCommentYesterday,
+              date: Math.floor(prevDay.getTime() / 1000),
+              employeeId: note.employee.id,
+            };
+            return addJournalNote(noteObject);
+          })
+        )
+      )
+      .then(() => setIsLoading(false));
   };
 
   return (
@@ -118,6 +183,9 @@ const NotesJournal = ({}) => {
           />
         }
       />
+      <div className="notes-journal__current-date">
+        {`${formatDateStringNoYear(curDay)} - ${days[curDay.getDay()]}`}
+      </div>
       <TableView
         isLoadingEmployees={isLoadingEmployees}
         workshops={workshops}
@@ -125,6 +193,14 @@ const NotesJournal = ({}) => {
         employeesNotes={employeesNotes}
         searchQuery={searchQuery}
         onInputChange={onInputChange}
+      />
+      <Button
+        text="Сохранить данные"
+        className="main-window__button"
+        onClick={handleSubmit}
+        isLoading={
+          isLoadingEmployees || isLoading || employeesNotes.length === 0
+        }
       />
     </div>
   );
