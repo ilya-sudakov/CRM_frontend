@@ -27,13 +27,15 @@ const NotesJournal = ({}) => {
   useEffect(() => {
     document.title = "Журнал руководителя";
     if (employees.length === 0 || employeesNotes.length > 0) return;
-    setEmployeesNotes([
-      ...employees.map((employee) => ({
-        employee: employee,
-        workCommentYesterday: "",
-        workCommentToday: "",
-      })),
-    ]);
+    if (employees.length > 0 && employeesNotes.length === 0) {
+      setEmployeesNotes([
+        ...employees.map((employee) => ({
+          employee: employee,
+          workCommentYesterday: "",
+          workCommentToday: "",
+        })),
+      ]);
+    }
   }, [employees]);
 
   useEffect(() => {
@@ -67,16 +69,30 @@ const NotesJournal = ({}) => {
   const fetchBothDays = () => {
     setIsLoading(true);
     const today = curDay;
+    let employeesData = [...employeesNotes];
+    employeesData = employeesData.map((item) => ({
+      ...item,
+      noteIdYesterday: null,
+      workCommentYesterday: "",
+      workCommentYesterdayOG: null,
+      noteIdToday: null,
+      workCommentToday: "",
+      workCommentTodayOG: null,
+    }));
     const prevDay = new Date(new Date(curDay).setDate(curDay.getDate() - 1));
     //fetch cur day
     getNotesJournalList(today)
-      .then(({ data }) => {
-        return updateEmployeesData(data, "today");
-      })
+      .then(
+        ({ data }) =>
+          (employeesData = updateEmployeesData(data, "today", employeesData))
+      )
       //fetch prev day
       .then(() => getNotesJournalList(prevDay))
       .then(({ data }) => {
-        updateEmployeesData(data, "yesterday");
+        // console.log(employeesNotes);
+        employeesData = updateEmployeesData(data, "yesterday", employeesData);
+        console.log(employeesData);
+        setEmployeesNotes([...employeesData]);
         setLoadedDay(curDay);
         setIsLoading(false);
         return;
@@ -87,44 +103,50 @@ const NotesJournal = ({}) => {
       });
   };
 
-  const updateEmployeesData = (employeeData, type = "yesterday") => {
-    let newEmployeesNotes = employeesNotes;
+  const updateEmployeesData = (
+    employeeData,
+    type = "yesterday",
+    employeesData
+  ) => {
+    let newEmployeesNotes = [...employeesData];
     employeeData.map((item) => {
-      const employee = employeesNotes.find(
-        (employee) => employee.employee.id === item.employee.id
+      const employee = employeesData.find(
+        (employee) => employee.employee.id === item.employeeId
       );
       switch (type) {
         case "yesterday":
-          newEmployeesNotes.splice(employeesNotes.indexOf(employee), 1, {
+          newEmployeesNotes.splice(newEmployeesNotes.indexOf(employee), 1, {
             ...employee,
-            noteId: item.id,
+            noteIdYesterday: item.id,
             workCommentYesterday: item.comment,
             workCommentYesterdayOG: item.comment,
           });
           break;
         case "today":
-          newEmployeesNotes.splice(employeesNotes.indexOf(employee), 1, {
+          newEmployeesNotes.splice(newEmployeesNotes.indexOf(employee), 1, {
             ...employee,
-            noteId: item.id,
+            noteIdToday: item.id,
             workCommentToday: item.comment,
             workCommentTodayOG: item.comment,
           });
           break;
       }
     });
-    return setEmployeesNotes([...newEmployeesNotes]);
+    // console.log(newEmployeesNotes);
+    return newEmployeesNotes;
   };
 
   const handleSubmit = () => {
+    console.log(employeesNotes);
     Promise.all(
       employeesNotes.map((note) => {
         //delete all empty comments
         if (
-          note.noteId &&
+          note.noteIdToday &&
           note.workCommentToday === "" &&
           note.workCommentTodayOG !== ""
         )
-          return deleteJournalNote(note.noteId);
+          return deleteJournalNote(note.noteIdToday);
         //add/edit all nonempty todays comments
         if (
           note.workCommentToday === "" ||
@@ -136,8 +158,11 @@ const NotesJournal = ({}) => {
           date: Math.floor(curDay.getTime() / 1000),
           employeeId: note.employee.id,
         };
-        if (note.noteId && note.workCommentToday !== note.workCommentTodayOG) {
-          return editJournalNote(noteObject, note.noteId);
+        if (
+          note.noteIdToday &&
+          note.workCommentToday !== note.workCommentTodayOG
+        ) {
+          return editJournalNote(noteObject, note.noteIdToday);
         }
         return addJournalNote(noteObject);
       })
@@ -150,33 +175,36 @@ const NotesJournal = ({}) => {
             );
             //delete all empty comments
             if (
-              note.noteId &&
+              note.noteIdYesterday &&
               note.workCommentYesterday === "" &&
               note.workCommentYesterdayOG !== ""
             )
-              return deleteJournalNote(note.noteId);
+              return deleteJournalNote(note.noteIdYesterday);
             if (
               note.workCommentYesterday === "" ||
               note.workCommentYesterday === note.workCommentYesterdayOG
             )
               return;
             //add/edit all nonempty yesterday comments
-            if (
-              note.noteId &&
-              note.workCommentYesterday !== note.workCommentYesterdayOG
-            ) {
-              return editJournalNote(noteObject, note.noteId);
-            }
             const noteObject = {
               comment: note.workCommentYesterday,
               date: Math.floor(prevDay.getTime() / 1000),
               employeeId: note.employee.id,
             };
+            if (
+              note.noteIdYesterday &&
+              note.workCommentYesterday !== note.workCommentYesterdayOG
+            ) {
+              return editJournalNote(noteObject, note.noteIdYesterday);
+            }
             return addJournalNote(noteObject);
           })
         )
       )
-      .then(() => setIsLoading(false));
+      .then(() => {
+        alert("Данные успешно сохранены");
+        return setIsLoading(false);
+      });
   };
 
   return (

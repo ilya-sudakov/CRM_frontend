@@ -6,7 +6,7 @@ export function getNotesJournalList(date = new Date()) {
   return axios.post(
     `${process.env.API_BASE_URL}/api/v1/journal/date/`,
     {
-      date: date,
+      date: Math.floor(date.getTime() / 1000),
     },
     headers
   );
