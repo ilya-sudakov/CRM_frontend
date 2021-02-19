@@ -13,12 +13,15 @@ const EditWorkHistory = (props) => {
     //PUT if edited, POST if item is new
     const itemsArr = workHistoryNew.map((selected) => {
       let edited = false;
+      let editedItem = null;
       workHistory.map((item) => {
         if (item.id === selected.id) {
           edited = true;
+          editedItem = item;
           return;
         }
       });
+      if (selected === editedItem) return;
       return edited === true
         ? props.editWorkHistory(
             {

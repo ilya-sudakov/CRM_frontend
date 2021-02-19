@@ -9,6 +9,7 @@ const useEmployeesList = () => {
   const [employees, setEmployees] = useState([]);
   const [isLoadingEmployees, setIsLoadingEmployees] = useState(true);
   const userContext = useContext(UserContext);
+  const workshops = ["ЦехЛЭМЗ", "ЦехЛепсари", "ЦехЛиговский", "Офис"];
 
   const loadData = () => {
     setIsLoadingEmployees(true);
@@ -66,7 +67,7 @@ const useEmployeesList = () => {
     };
   }, []);
 
-  return { employees, isLoadingEmployees };
+  return { employees, isLoadingEmployees, workshops };
 };
 
 export default useEmployeesList;

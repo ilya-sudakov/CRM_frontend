@@ -95,6 +95,14 @@ const GeneralPage = (props) => {
                   Дневник производства
                 </Link>
               )}
+              {props.userHasAccess(["ROLE_ADMIN"]) && (
+                <Link
+                  className="main-window__button"
+                  to="/work-management/notes/"
+                >
+                  Журнал руководителя
+                </Link>
+              )}
               <Link className="main-window__button" to="/report-table">
                 <img className="main-window__img" src={calenderIcon} />
                 Табель

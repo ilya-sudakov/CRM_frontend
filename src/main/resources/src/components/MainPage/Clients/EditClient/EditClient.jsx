@@ -164,6 +164,7 @@ const EditClient = (props) => {
                   return;
                 }
               });
+              if (selected === item) return;
               return edited === true
                 ? editClientWorkHistory(
                     {
