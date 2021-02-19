@@ -48,6 +48,7 @@
                     }
                 }
                 &:not(.main-window__list-item--header) {
+                    border-color: #bbb;
                     span:nth-child(5) {
                         font-size: 0.9rem;
                         &::before {
