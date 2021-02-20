@@ -153,18 +153,20 @@ const EditClient = (props) => {
         },
         clientId
       )
-        .then((res) => {
+        .then(() => {
           //PUT if edited, POST if item is new
           return Promise.all(
             clientInputs.workHistoryNew.map((selected) => {
               let edited = false;
+              let oldItem = null;
               clientInputs.workHistory.map((item) => {
                 if (item.id === selected.id) {
                   edited = true;
+                  oldItem = item;
                   return;
                 }
               });
-              if (selected === item) return;
+              if (selected === oldItem) return;
               return edited === true
                 ? editClientWorkHistory(
                     {
@@ -204,12 +206,15 @@ const EditClient = (props) => {
           //PUT if edited, POST if item is new
           const itemsArr = clientInputs.legalEntityNew.map((selected) => {
             let edited = false;
+            let oldItem = null;
             clientInputs.legalEntity.map((item) => {
               if (item.id === selected.id) {
                 edited = true;
+                oldItem = item;
                 return;
               }
             });
+            if (selected === oldItem) return;
             return edited === true
               ? editClientLegalEntity(
                   {
@@ -259,12 +264,15 @@ const EditClient = (props) => {
           //PUT if edited, POST if item is new
           const itemsArr = clientInputs.contactsNew.map((selected) => {
             let edited = false;
+            let oldItem = null;
             clientInputs.contacts.map((item) => {
               if (item.id === selected.id) {
                 edited = true;
+                oldItem = item;
                 return;
               }
             });
+            if (selected === oldItem) return;
             return edited === true
               ? editClientContact(
                   {
