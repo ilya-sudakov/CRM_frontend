@@ -109,6 +109,16 @@
                     background-color: #e7e7e7;
                 }
 
+                &:first-child {
+                    border-top-left-radius: 3px;
+                    border-top-right-radius: 3px;
+                }
+
+                &:last-child {
+                    border-bottom-left-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                }
+
                 &:nth-child(2n + 1) {
                     background-color: #ffffff;
 
