@@ -78,7 +78,7 @@ const NotesJournal = ({}) => {
 
   const fetchBothDays = (employeesNotes) => {
     setIsLoading(true);
-    console.log("fetching both days");
+    // console.log("fetching both days");
     const today = curDay;
     let employeesData = [...employeesNotes];
     employeesData = employeesData.map((item) => ({
@@ -101,7 +101,7 @@ const NotesJournal = ({}) => {
       .then(() => getNotesJournalList(prevDay))
       .then(({ data }) => {
         employeesData = updateEmployeesData(data, "yesterday", employeesData);
-        console.log(employeesData);
+        // console.log(employeesData);
         setEmployeesNotes([...employeesData]);
         setLoadedDay(curDay);
         setIsLoading(false);
@@ -146,7 +146,6 @@ const NotesJournal = ({}) => {
   };
 
   const handleSubmit = () => {
-    console.log(employeesNotes);
     Promise.all(
       employeesNotes.map((note) => {
         //delete all empty comments

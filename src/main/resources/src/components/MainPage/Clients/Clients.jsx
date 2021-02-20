@@ -22,7 +22,6 @@ const Clients = (props) => {
   const [clients, setClients] = useState([]);
   const [curCategory, setCurCategory] = useState("");
   const [curClientType, setCurClientType] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const {
     pagination,
@@ -46,6 +45,7 @@ const Clients = (props) => {
       size: 10,
     }
   );
+  const [isLoading, setIsLoading] = useState(false);
   const [itemsActiveCount, setItemsActiveCount] = useState(0);
   const [itemsPotentialCount, setItemsPotentialCount] = useState(0);
   const [itemsProgressCount, setItemsProgressCount] = useState(0);
