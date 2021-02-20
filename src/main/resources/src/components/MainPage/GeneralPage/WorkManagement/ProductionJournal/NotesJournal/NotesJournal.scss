@@ -42,9 +42,23 @@
     }
 
     &__current-date {
+        display: flex;
+        align-items: center;
         margin-left: 25px;
         font-size: 1.5rem;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+
+        .main-window__img {
+            padding: 5px;
+            cursor: pointer;
+            &:first-child {
+                margin-right: 5px;
+                margin-left: -10px;
+            }
+            &:nth-child(2) {
+                margin-left: 5px;
+            }
+        }
     }
 
     &__list {
@@ -216,6 +230,12 @@
     }
 
     @media (max-width: 500px) {
+        .control-panel {
+            margin-bottom: 10px;
+        }
+        &__current-date {
+            margin-left: 10px;
+        }
         &__list {
             padding: 0 10px;
             &-item {

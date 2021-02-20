@@ -8,6 +8,7 @@ import {
   deleteJournalNote,
 } from "../../../../../../utils/RequestsAPI/WorkManaging/notes_journal.js";
 import ControlPanel from "../../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import InputDate from "../../../../../../utils/Form/InputDate/InputDate.jsx";
 import TableView from "./TableView.jsx";
 
@@ -233,7 +234,21 @@ const NotesJournal = ({}) => {
         }
       />
       <div className="notes-journal__current-date">
+        <ChevronSVG
+          className="main-window__img"
+          style={{ transform: "rotate(90deg)" }}
+          onClick={() =>
+            setCurDay(new Date(new Date(curDay).setDate(curDay.getDate() - 1)))
+          }
+        />
         {`${formatDateStringNoYear(curDay)} - ${days[curDay.getDay()]}`}
+        <ChevronSVG
+          className="main-window__img"
+          style={{ transform: "rotate(-90deg)" }}
+          onClick={() =>
+            setCurDay(new Date(new Date(curDay).setDate(curDay.getDate() + 1)))
+          }
+        />
       </div>
       <TableView
         isLoading={isLoadingEmployees || isLoading}
