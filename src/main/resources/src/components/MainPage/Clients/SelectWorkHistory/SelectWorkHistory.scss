@@ -69,17 +69,18 @@
       cursor: pointer;
       font-size: 1rem;
 
-      &:last-child {
-        margin-right: 0px;
+      .main-form__img {
+        transition: 100ms ease-in-out;
+        width: 20px;
+        // padding: 5px;
+        margin-right: 4px;
       }
-    }
-    .main-form__img {
-      transition: 100ms ease-in-out;
-      width: 25px;
-      padding: 5px;
 
       &:last-child {
-        width: 22px;
+        margin-right: 0px;
+        .main-form__img {
+        width: 17px;
+        }
       }
     }
   }
