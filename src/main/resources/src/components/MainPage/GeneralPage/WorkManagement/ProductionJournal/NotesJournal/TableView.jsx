@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
 
 const TableView = ({
   isLoading,
-  workshops,
   employeesNotes,
   searchQuery,
   curDay,
   onInputChange,
 }) => {
+  const [workshops, setWorkshops] = useState({
+    ЦехЛЭМЗ: { active: true, name: "ЦехЛЭМЗ" },
+    ЦехЛепсари: { active: true, name: "ЦехЛепсари" },
+    ЦехЛиговский: { active: true, name: "ЦехЛиговский" },
+    Офис: { active: true, name: "Офис" },
+  });
   const filterEmployees = (employees, searchQuery) => {
     const query = searchQuery.toLowerCase();
     return employees.filter((employee) =>
@@ -30,20 +36,37 @@ const TableView = ({
 
   return (
     <div className="notes-journal__list">
-      {workshops.map((workshop) => {
+      {Object.values(workshops).map((workshop) => {
         const filteredEmployees = sortEmployees(
           filterEmployees(employeesNotes, searchQuery).filter(
-            (employee) => employee.employee.workshop === workshop
+            (employee) => employee.employee.workshop === workshop.name
           )
         );
         if (filteredEmployees.length === 0) return null;
         return (
           <div className="notes-journal__list-item">
-            <span>{workshop}</span>
+            <span
+              onClick={() =>
+                setWorkshops({
+                  ...workshops,
+                  [workshop.name]: {
+                    ...workshop,
+                    active: !workshop.active,
+                  },
+                })
+              }
+            >
+              {workshop.name}
+              <ChevronSVG
+                className={`main-window__img ${
+                  !workshop.active ? "main-window__img--rotated" : ""
+                }`}
+              />
+            </span>
             <div className="notes-journal__employees">
               {isLoading ? (
                 <PlaceholderLoading itemClassName="employees__row" />
-              ) : (
+              ) : workshop.active ? (
                 filteredEmployees.map((employee) => {
                   const prevDay = new Date(
                     new Date(curDay).setDate(curDay.getDate() - 1)
@@ -107,7 +130,7 @@ const TableView = ({
                     </div>
                   );
                 })
-              )}
+              ) : null}
             </div>
           </div>
         );

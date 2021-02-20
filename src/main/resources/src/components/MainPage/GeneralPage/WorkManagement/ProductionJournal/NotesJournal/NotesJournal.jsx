@@ -20,7 +20,7 @@ import {
 import { days } from "../../../../../../utils/dataObjects.js";
 
 const NotesJournal = ({}) => {
-  const { employees, isLoadingEmployees, workshops } = useEmployeesList();
+  const { employees, isLoadingEmployees } = useEmployeesList();
   const [employeesNotes, setEmployeesNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [curDay, setCurDay] = useState(new Date());
@@ -237,7 +237,6 @@ const NotesJournal = ({}) => {
       </div>
       <TableView
         isLoading={isLoadingEmployees || isLoading}
-        workshops={workshops}
         curDay={curDay}
         employeesNotes={employeesNotes}
         searchQuery={searchQuery}

@@ -59,8 +59,11 @@
             margin-bottom: 15px;
 
             > span {
+                display: flex;
+                align-items: center;
                 font-size: 1.2rem;
                 margin-bottom: 5px;
+                cursor: pointer;
             }
 
             &--header {
