@@ -27,7 +27,7 @@ const Clients = (props) => {
     pagination,
     curPage,
     setCurPage,
-    isLoadingPages = isLoading,
+    isLoading,
     itemsPerPage,
     sortOrder,
     data,
@@ -45,7 +45,7 @@ const Clients = (props) => {
       size: 10,
     }
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingClients, setIsLoadingClients] = useState(false);
   const [itemsActiveCount, setItemsActiveCount] = useState(0);
   const [itemsPotentialCount, setItemsPotentialCount] = useState(0);
   const [itemsProgressCount, setItemsProgressCount] = useState(0);
@@ -75,7 +75,7 @@ const Clients = (props) => {
 
   const deleteItem = async (clientId, index) => {
     const client = data.find((item) => item.id === clientId);
-    console.log(clients, clientId, client);
+    setIsLoadingClients(true);
     return Promise.all(
       client.legalEntities.map((item) =>
         clientTypes[props.type].deleteLegalEntityFunction(item.id)
@@ -95,14 +95,16 @@ const Clients = (props) => {
           })
         )
       )
-      .then(() =>
-        clientTypes[props.type].deleteItemFunction(clientId).then(() => {
+      .then(() => {
+        setIsLoadingClients(false);
+        return clientTypes[props.type].deleteItemFunction(clientId).then(() => {
           let temp = clients;
           temp.splice(index, 1);
           setClients([...temp]);
-        })
-      )
+        });
+      })
       .catch((error) => {
+        setIsLoadingClients(false);
         alert("Ошибка при удалении");
         console.log(error);
       });
@@ -240,9 +242,9 @@ const Clients = (props) => {
           setSearchQuery={setSearchQuery}
           searchQuery={searchQuery}
           onButtonClick={(query) => {
-            setIsLoading(true);
+            setIsLoadingClients(true);
             if (query === "") {
-              setIsLoading(false);
+              setIsLoadingClients(false);
               loadData(curCategory, curClientType);
             } else {
               searchClients({
@@ -252,11 +254,11 @@ const Clients = (props) => {
                 .then((res) => res.json())
                 .then((res) => {
                   setClients(res);
-                  setIsLoading(false);
+                  setIsLoadingClients(false);
                 })
                 .catch((error) => {
                   console.log(error);
-                  setIsLoading(false);
+                  setIsLoadingClients(false);
                 });
             }
           }}
@@ -321,7 +323,7 @@ const Clients = (props) => {
           }
         />
         <ClientsList
-          isLoading={isLoadingPages || isLoading}
+          isLoading={isLoadingClients || isLoading}
           itemsPerPage={itemsPerPage}
           clients={searchQuery === "" ? data : clients}
           searchQuery={searchQuery}

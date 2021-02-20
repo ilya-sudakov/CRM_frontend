@@ -28,6 +28,7 @@ const ClientsList = ({
   setClients,
 }) => {
   const userContext = useContext(UserContext);
+  console.log(isLoading);
 
   return (
     <div className="main-window__list main-window__list--full">
