@@ -71,7 +71,7 @@ const MessageForUser = ({
         <div
           className="main-window__button"
           onClick={(event) => {
-            onClick();
+            onClick && onClick();
             clickOnMessageWindow(event);
           }}
         >

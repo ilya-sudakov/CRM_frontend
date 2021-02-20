@@ -11,8 +11,7 @@ import ControlPanel from "../../../../../../utils/MainWindow/ControlPanel/Contro
 import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import InputDate from "../../../../../../utils/Form/InputDate/InputDate.jsx";
 import TableView from "./TableView.jsx";
-
-import "./NotesJournal.scss";
+import MessageForUser from "../../../../../../utils/Form/MessageForUser/MessageForUser.jsx";
 import Button from "../../../../../../utils/Form/Button/Button.jsx";
 import {
   formatDateString,
@@ -20,10 +19,13 @@ import {
 } from "../../../../../../utils/functions.jsx";
 import { days } from "../../../../../../utils/dataObjects.js";
 
+import "./NotesJournal.scss";
+
 const NotesJournal = ({}) => {
   const { employees, isLoadingEmployees } = useEmployeesList();
   const [employeesNotes, setEmployeesNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
   const [curDay, setCurDay] = useState(new Date());
   const [loadedDay, setLoadedDay] = useState(new Date());
   const [searchQuery, setSearchQuery] = useState("");
@@ -209,7 +211,7 @@ const NotesJournal = ({}) => {
         )
       )
       .then(() => {
-        alert("Данные успешно сохранены");
+        setShowMessage(true);
         return setIsLoading(false);
       });
   };
@@ -223,6 +225,12 @@ const NotesJournal = ({}) => {
         fullSize
         placeholder="Введите фамилию сотрудника для поиска..."
         setSearchQuery={setSearchQuery}
+      />
+      <MessageForUser
+        message="Данные успешно сохранены"
+        title="Сохранение данных"
+        showMessage={showMessage}
+        setShowMessage={setShowMessage}
       />
       <ControlPanel
         buttons={
