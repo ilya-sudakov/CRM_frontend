@@ -1,5 +1,4 @@
 import React from "react";
-import { sortByField } from "../../../../../../utils/sorting/sorting.js";
 import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const TableView = ({
@@ -17,14 +16,25 @@ const TableView = ({
     );
   };
 
+  const sortEmployees = (employees) => {
+    return employees.sort((a, b) => {
+      if (a.employee.lastName < b.employee.lastName) {
+        return -1;
+      }
+      if (a.employee.lastName > b.employee.lastName) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
   return (
     <div className="notes-journal__list">
       {workshops.map((workshop) => {
-        const filteredEmployees = sortByField(
+        const filteredEmployees = sortEmployees(
           filterEmployees(employeesNotes, searchQuery).filter(
             (employee) => employee.employee.workshop === workshop
-          ),
-          { fieldName: "lastName", direction: "desc" }
+          )
         );
         if (filteredEmployees.length === 0) return null;
         return (

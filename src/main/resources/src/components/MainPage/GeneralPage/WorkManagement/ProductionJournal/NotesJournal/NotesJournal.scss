@@ -139,7 +139,9 @@
                         div {
                             position: absolute;
                             left: 6px;
-                            top: 4px;
+                            top: 1px;
+                            padding-top: 3px;
+                            box-sizing: border-box;
                             user-select: none;
                             pointer-events: none;
                             color: #888;
@@ -176,7 +178,7 @@
 
                     .employees__weekend {
                         div {
-                            background-color: transparent;
+                            background-color: #faf3f3;
                         }
                         textarea {
                             border-color: #f3c9c9;
