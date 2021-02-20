@@ -125,8 +125,21 @@
     margin-bottom: 10px;
     box-sizing: border-box;
 
+    //TABLE DESIGN
+    margin-bottom: 0;
+    border-radius: 0;
+    border-bottom: none;
+
+    &:first-child {
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+
     &:last-child {
       margin-bottom: 0;
+      border-bottom: 1px solid #ccc;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
     }
 
     .main-form__item {
