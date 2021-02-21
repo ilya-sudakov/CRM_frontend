@@ -1,0 +1,54 @@
+@import "../../../variables.scss";
+
+.select-from-button {
+    &__link {
+        display: flex;
+        align-items: center;
+        transition: 100ms ease-in-out;
+        color: #777777 !important;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 2px 8px;
+        padding-right: 3px;
+        margin-top: 2px;
+        width: fit-content;
+        margin-left: 10px;
+
+        .select-from-button__img {
+            width: 20px;
+            transition: margin-left 200ms ease-in-out;
+            &--plus {
+                margin-left: 7px;
+                path:first-child {
+                    transition: fill 200ms ease-in-out;
+                    fill: #bbbbbb;
+                }
+            }
+            &--more {
+                transform: rotate(-90deg) !important;
+                path:first-child {
+                    transition: fill 200ms ease-in-out;
+                    fill: #bbbbbb;
+                }
+            }
+        }
+
+        &:hover {
+            color: #333333 !important;
+            .select-from-button__img {
+                &--more {
+                    margin-left: 8px;
+                    path:first-child {
+                        fill: lighten($button__background--inverted, 6%);
+                    }
+                }
+                &--plus {
+                    path:first-child {
+                        fill: lighten($button__background--inverted, 6%);
+                    }
+                }
+            }
+        }
+    }
+}

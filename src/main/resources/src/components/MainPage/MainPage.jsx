@@ -62,6 +62,7 @@ import {
   NewLtd,
   EditLtd,
   NotesJournal,
+  ProductionJournalNew,
 } from "./lazyImports.jsx";
 import SideMenu from "../SideMenu/SideMenu.jsx";
 import PageNotFound from "./PageNotFound/PageNotFound.jsx";
@@ -536,6 +537,17 @@ const MainPage = () => {
                     component={ProductionJournal}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
+                    allowedRoles={[
+                      "ROLE_ADMIN",
+                      "ROLE_MANAGER",
+                      "ROLE_WORKSHOP",
+                      "ROLE_DISPATCHER",
+                      "ROLE_ENGINEER",
+                    ]}
+                  />
+                  <PrivateRoute
+                    path="/work-management/journal-new/"
+                    component={ProductionJournalNew}
                     allowedRoles={[
                       "ROLE_ADMIN",
                       "ROLE_MANAGER",
