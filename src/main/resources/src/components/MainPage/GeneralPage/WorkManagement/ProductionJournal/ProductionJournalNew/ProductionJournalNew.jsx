@@ -32,13 +32,21 @@ const ProductionJournalNew = ({}) => {
     worksList: [],
     workId: 0,
   });
+  const handleCloseWindow = () => {
+    return setShowWindow(!showWindow);
+  };
   const {
     formWindow,
     setShowWindow,
     showWindow,
   } = useFormWindow(
     curWorkItem.title,
-    <RecordWorkForm inputs={curWorkItem} />,
+    <RecordWorkForm
+      inputs={curWorkItem}
+      handleCloseWindow={() => setShowWindow(false)}
+      showWindow={() => showWindow}
+      setShowWindow={setShowWindow}
+    />,
     [curWorkItem]
   );
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,7 +61,7 @@ const ProductionJournalNew = ({}) => {
 
   useEffect(() => {
     document.title = "Дневник производства v2.0";
-    console.log(todaysWork, yesterdaysWork);
+    // console.log(todaysWork, yesterdaysWork);
   }, [todaysWork, yesterdaysWork]);
 
   const handleOpenWorkForm = (
@@ -64,7 +72,8 @@ const ProductionJournalNew = ({}) => {
     worksList,
     workId
   ) => {
-    setShowWindow(!showWindow);
+    const selectedWork = worksList.find((work) => work.id === workId);
+    handleCloseWindow();
     setCurWorkItem({
       day: day,
       date:
@@ -77,7 +86,6 @@ const ProductionJournalNew = ({}) => {
       works:
         type === "new"
           ? [
-              ...worksList,
               {
                 product: [],
                 draft: [],
@@ -88,14 +96,14 @@ const ProductionJournalNew = ({}) => {
                 comment: "",
               },
             ]
-          : worksList,
-      workId: workId,
+          : [selectedWork],
       title:
         type === "new"
           ? "Создание записи о работе"
           : "Редактирование записи о работе",
+      hideWindow: () => setShowWindow(!showWindow),
     });
-    console.log(day, type, workshop, employee, worksList, workId);
+    // console.log(day, type, workshop, employee, worksList, workId);
   };
 
   return (

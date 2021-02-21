@@ -9,7 +9,7 @@ const useFormWindow = (
 ) => {
   const [showWindow, setShowWindow] = useState(false);
 
-  useEffect(() => {}, [...updates]);
+  useEffect(() => {}, [...updates, showWindow]);
 
   const formWindow = (
     <FormWindow

@@ -324,6 +324,20 @@
         .form-window__content {
             transform: none;
         }
+
+        .form-window {
+            .form-window__content {
+                width: 70vw;
+                height: 70vh;
+            }
+
+            &--hidden {
+                .form-window__content {
+                    width: 0;
+                    height: 0;
+                }
+            }
+        }
     }
     .form-window--hidden {
         .form-window__content {

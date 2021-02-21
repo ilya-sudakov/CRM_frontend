@@ -18,7 +18,7 @@ import Button from "../../../../../../utils/Form/Button/Button.jsx";
 import useProductsList from "../../../../../../utils/hooks/useProductsList/useProductsList.js";
 import SelectWork from "../../SelectWork/SelectWork.jsx";
 
-const RecordWorkForm = ({ inputs }) => {
+const RecordWorkForm = ({ inputs, handleCloseWindow, showWindow }) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
     employee: null,
@@ -37,6 +37,7 @@ const RecordWorkForm = ({ inputs }) => {
   });
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const { products, categories, isLoadingProducts } = useProductsList();
   const [totalHours, setTotalHours] = useState(0);
   const [itemId, setItemId] = useState(0);
@@ -95,6 +96,10 @@ const RecordWorkForm = ({ inputs }) => {
     console.log(worktimeInputs);
   };
 
+  const handleDelete = () => {
+    console.log(worktimeInputs);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     validateField(name, value);
@@ -120,9 +125,15 @@ const RecordWorkForm = ({ inputs }) => {
       inputs.employee?.id !== worktimeInputs.employee?.id ||
       inputs.date !== worktimeInputs.date
     ) {
-      setWorkTimeInputs({ ...inputs });
+      setWorkTimeInputs({ ...inputs, originalWorks: inputs.works });
     }
-  }, [inputs]);
+  }, [inputs, handleCloseWindow]);
+
+  useEffect(() => {
+    if (!isSaved) return;
+    handleCloseWindow();
+    setIsSaved(false);
+  }, [isSaved]);
 
   return (
     <div className="record-work-form">
@@ -171,12 +182,21 @@ const RecordWorkForm = ({ inputs }) => {
             * - поля, обязательные для заполнения
           </div>
           <div className="main-form__buttons main-form__buttons--full">
-            <input
+            <button
+              inverted
               className="main-form__submit main-form__submit--inverted"
-              type="submit"
-              //   onClick={() => history.push("/work-management")}
-              value="Закрыть"
-            />
+              onClick={() => setIsSaved(true)}
+            >
+              Закрыть
+            </button>
+            {worktimeInputs.type === "edit" ? (
+              <Button
+                text="Удалить запись"
+                isLoading={isLoading}
+                className="main-form__submit"
+                onClick={handleDelete}
+              />
+            ) : null}
             <Button
               text="Редактировать запись"
               isLoading={isLoading}
