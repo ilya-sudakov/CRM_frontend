@@ -16,6 +16,7 @@ import { days } from "../../../../../../utils/dataObjects.js";
 import "./ProductionJournalNew.scss";
 import useWorkReport from "../../../../../../utils/hooks/useWorkReport.js";
 import useFormWindow from "../../../../../../utils/hooks/useFormWindow.js";
+import RecordWorkForm from "./RecordWorkForm.jsx";
 
 const ProductionJournalNew = ({}) => {
   const { employees, isLoadingEmployees } = useEmployeesList();
@@ -24,18 +25,18 @@ const ProductionJournalNew = ({}) => {
   const [curDay, setCurDay] = useState(new Date());
   const [curWorkItem, setCurWorkItem] = useState({
     day: "today",
+    title: "Создание записи о работе",
     type: "new",
     workshop: "lemz",
     employee: {},
     worksList: [],
     workId: 0,
   });
-  const { formWindow, setShowWindow, showWindow } = useFormWindow(
-    "Данные о работе",
-    curWorkItem.employee?.lastName ? (
-      <span>{curWorkItem.employee?.lastName}</span>
-    ) : null
-  );
+  const {
+    formWindow,
+    setShowWindow,
+    showWindow,
+  } = useFormWindow(curWorkItem.title, <RecordWorkForm inputs={curWorkItem} />, [curWorkItem]);
   const [searchQuery, setSearchQuery] = useState("");
   const {
     worktimeInputs: todaysWork,
@@ -62,11 +63,18 @@ const ProductionJournalNew = ({}) => {
     setShowWindow(!showWindow);
     setCurWorkItem({
       day: day,
+      date: day.today
+        ? curDay
+        : new Date(new Date(curDay).setDate(curDay.getDate() - 1)),
       type: type,
       workshop: workshop,
       employee: employee,
       worksList: worksList,
       workId: workId,
+      title:
+        type === "new"
+          ? "Создание записи о работе"
+          : "Редактирование записи о работе",
     });
     console.log(day, type, workshop, employee, worksList, workId);
   };
