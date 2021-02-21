@@ -1,20 +1,20 @@
 export const sortEmployees = (employees) => {
   return employees.sort((a, b) => {
-    a = a[1]
-    b = b[1]
+    a = a[1];
+    b = b[1];
     if (a.employee.lastName < b.employee.lastName) {
-      return -1
+      return -1;
     }
     if (a.employee.lastName > b.employee.lastName) {
-      return 1
+      return 1;
     }
-    return 0
-  })
-}
+    return 0;
+  });
+};
 
 export const areWorkshopItemsMinimized = (workshopItems) => {
-  return Object.values(workshopItems)[0]?.isMinimized
-}
+  return Object.values(workshopItems)[0]?.isMinimized;
+};
 
 export const combineOriginalAndNewWorks = (
   works,
@@ -22,13 +22,13 @@ export const combineOriginalAndNewWorks = (
   setIsLoading,
   workshops,
   setWorkTimeInputs,
-  worktimeInputs,
+  worktimeInputs
 ) => {
-  setIsLoading(true)
-  let newWorkshops = {}
+  setIsLoading(true);
+  let newWorkshops = {};
   Object.entries(workshops).map((workshop) => {
-    let newWorkshopValues = {}
-    const curWorkshopEmployees = Object.entries(employees[workshop[1]])
+    let newWorkshopValues = {};
+    const curWorkshopEmployees = Object.entries(employees[workshop[1]]);
     curWorkshopEmployees.map((employee) => {
       // console.log(employee[0])
       if (works[employee[0]] !== undefined) {
@@ -39,7 +39,7 @@ export const combineOriginalAndNewWorks = (
             originalWorks: works[employee[0]].works,
             works: works[employee[0]].works,
           },
-        })
+        });
       }
       return (newWorkshopValues = {
         ...newWorkshopValues,
@@ -47,36 +47,35 @@ export const combineOriginalAndNewWorks = (
           ...employee[1],
           works: employees[workshop[1]][employee[0]].works,
         },
-      })
-    })
+      });
+    });
     return (newWorkshops = {
       ...newWorkshops,
       [workshop[1]]: newWorkshopValues,
-    })
-  })
-  setIsLoading(false)
-  console.log(newWorkshops)
+    });
+  });
+  setIsLoading(false);
   setWorkTimeInputs({
     ...worktimeInputs,
     ...newWorkshops,
-  })
-}
+  });
+};
 
 export const combineWorksForSamePeople = (
   works,
   setEmployeesMap,
-  setIsLoading,
+  setIsLoading
 ) => {
   // let newEmployeesWorkMap = [];
-  let newEmployeesMap = {}
+  let newEmployeesMap = {};
   return Promise.all(
     works.map((work) => {
-      const { id } = work.employee
+      const { id } = work.employee;
       const workList = {
         workId: work.workList.id,
         workType: work.workList.typeOfWork,
         workName: work.workList.work,
-      }
+      };
       if (newEmployeesMap[id] !== undefined) {
         return (newEmployeesMap = Object.assign({
           ...newEmployeesMap,
@@ -93,13 +92,13 @@ export const combineWorksForSamePeople = (
                     ...product,
                     name: product.product.name,
                     status: product.product.status,
-                  }
+                  };
                 }),
                 draft: work.partsWorks,
               },
             ],
           },
-        }))
+        }));
       } else {
         return (newEmployeesMap = Object.assign({
           ...newEmployeesMap,
@@ -115,23 +114,22 @@ export const combineWorksForSamePeople = (
                     ...product,
                     name: product.product.name,
                     status: product.product.status,
-                  }
+                  };
                 }),
                 draft: work.partsWorks,
               },
             ],
           },
-        }))
+        }));
       }
-    }),
+    })
   )
     .then(() => {
-      console.log(newEmployeesMap)
-      setEmployeesMap(newEmployeesMap)
-      return newEmployeesMap
+      setEmployeesMap(newEmployeesMap);
+      return newEmployeesMap;
     })
     .catch((error) => {
-      console.log(error)
-      setIsLoading(false)
-    })
-}
+      console.log(error);
+      setIsLoading(false);
+    });
+};

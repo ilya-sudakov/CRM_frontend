@@ -152,6 +152,11 @@
         font-size: 1rem;
         align-self: flex-start;
         font-size: 0.95rem;
+
+        p {
+          margin: 0;
+          margin-bottom: 8px;
+        }
       }
 
       .main-window__menu {

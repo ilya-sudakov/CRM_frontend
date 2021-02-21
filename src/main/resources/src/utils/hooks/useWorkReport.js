@@ -5,6 +5,7 @@ import {
   combineOriginalAndNewWorks,
   combineWorksForSamePeople,
 } from "../../components/MainPage/GeneralPage/WorkManagement/ProductionJournal/helpers.js";
+import { formatDateString } from "../functions.jsx";
 import { getRecordedWorkByDay } from "../RequestsAPI/WorkManaging/WorkControl.jsx";
 
 const useWorkReport = (curDay) => {
@@ -59,12 +60,11 @@ const useWorkReport = (curDay) => {
     ? ROLE_MANAGER
     : ROLE_ADMIN;
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    let employees = [];
-
-    loadEmployees(
-      abortController.signal,
+  const handleFetchData = async (date, signal) => {
+    setIsLoading(true);
+    let localEmployees = [];
+    return loadEmployees(
+      signal,
       setIsLoading,
       setEmployees,
       setWorkTimeInputs,
@@ -72,12 +72,11 @@ const useWorkReport = (curDay) => {
       workshops
     )
       .then((res) => {
-        employees = res;
-        setIsLoading(true);
+        localEmployees = res;
         return getRecordedWorkByDay(
-          curDay.getMonth() + 1,
-          curDay.getDate(),
-          curDay.getFullYear()
+          date.getMonth() + 1,
+          date.getDate(),
+          date.getFullYear()
         );
       })
       .then((res) => res.json())
@@ -87,9 +86,9 @@ const useWorkReport = (curDay) => {
           setEmployeesMap,
           setIsLoading
         );
-        combineOriginalAndNewWorks(
+        return combineOriginalAndNewWorks(
           combinedWorks,
-          employees,
+          localEmployees,
           setIsLoading,
           workshops,
           setWorkTimeInputs,
@@ -100,9 +99,76 @@ const useWorkReport = (curDay) => {
         console.log(error);
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    console.log("first render", curDay);
+    const abortController = new AbortController();
+    handleFetchData(curDay, abortController.signal);
   }, []);
 
-  return { worktimeInputs, setWorkTimeInputs, isLoading };
+  useEffect(() => {
+    if (
+      formatDateString(worktimeInputs.date) === formatDateString(curDay) ||
+      employees.length === 0 ||
+      isLoading
+    )
+      return;
+    const abortController = new AbortController();
+    if (formatDateString(worktimeInputs.date) !== formatDateString(curDay)) {
+      setWorkTimeInputs({ ...worktimeInputs, date: curDay });
+    //   setIsLoading(true);
+      let localEmployees = [];
+      loadEmployees(
+        abortController.signal,
+        setIsLoading,
+        setEmployees,
+        setWorkTimeInputs,
+        worktimeInputs,
+        workshops
+      )
+        .then((res) => {
+          localEmployees = res;
+          return getRecordedWorkByDay(
+            curDay.getMonth() + 1,
+            curDay.getDate(),
+            curDay.getFullYear()
+          );
+        })
+        .then((res) => res.json())
+        .then(async (res) => {
+          const combinedWorks = await combineWorksForSamePeople(
+            res,
+            setEmployeesMap,
+            setIsLoading
+          );
+          combineOriginalAndNewWorks(
+            combinedWorks,
+            localEmployees,
+            // setIsLoading,
+            () => {},
+            workshops,
+            setWorkTimeInputs,
+            // () => {},
+            worktimeInputs
+          );
+        //   setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+    console.log(
+      "date change1",
+      curDay,
+      worktimeInputs.date,
+      formatDateString(worktimeInputs.date) === formatDateString(curDay),
+      employees
+    );
+  }, [curDay, worktimeInputs.date]);
+
+  return { employees, worktimeInputs, setWorkTimeInputs, isLoading };
 };
 
 export default useWorkReport;

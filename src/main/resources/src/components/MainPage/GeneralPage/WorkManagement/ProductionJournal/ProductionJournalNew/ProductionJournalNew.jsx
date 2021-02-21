@@ -19,8 +19,6 @@ import useFormWindow from "../../../../../../utils/hooks/useFormWindow.js";
 import RecordWorkForm from "./RecordWorkForm.jsx";
 
 const ProductionJournalNew = ({}) => {
-  const { employees, isLoadingEmployees } = useEmployeesList();
-  const [isLoading, setIsLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [curDay, setCurDay] = useState(new Date());
   const [curWorkItem, setCurWorkItem] = useState({
@@ -52,6 +50,7 @@ const ProductionJournalNew = ({}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const {
     worktimeInputs: todaysWork,
+    employees,
     setWorkTimeInputs: setTodaysWork,
   } = useWorkReport(curDay);
   const {
@@ -61,7 +60,7 @@ const ProductionJournalNew = ({}) => {
 
   useEffect(() => {
     document.title = "Дневник производства v2.0";
-    // console.log(todaysWork, yesterdaysWork);
+    console.log(todaysWork, yesterdaysWork);
   }, [todaysWork, yesterdaysWork]);
 
   const handleOpenWorkForm = (
@@ -113,7 +112,9 @@ const ProductionJournalNew = ({}) => {
         <div className="main-window__description">
           Для того, чтобы сохранить введенные вами данные о работе в системе
           нажмите кнопку "Сохранить данные" в окне создания/редактирования
-          записи о работе. 
+          записи о работе. <p />
+          Для редактирования записи о работе достаточно нажать на эту запись
+          мышкой - вы перейдете в окно редактирования.
         </div>
       </div>
       {formWindow}
@@ -155,7 +156,10 @@ const ProductionJournalNew = ({}) => {
         />
       </div>
       <TableView
-        isLoading={isLoadingEmployees || isLoading}
+        isLoading={
+          Object.values(todaysWork.lemz).length == 0 ||
+          Object.values(yesterdaysWork.lemz).length === 0
+        }
         curDay={curDay}
         todaysWork={todaysWork}
         yesterdaysWork={yesterdaysWork}
