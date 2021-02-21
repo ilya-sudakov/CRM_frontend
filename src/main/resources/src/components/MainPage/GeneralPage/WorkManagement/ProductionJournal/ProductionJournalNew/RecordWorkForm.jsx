@@ -22,7 +22,7 @@ const RecordWorkForm = ({ inputs }) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
     employee: null,
-    worksList: [],
+    works: [],
     originalWorks: [],
   });
   const [workTimeErrors, setWorkTimeErrors] = useState({
@@ -91,7 +91,9 @@ const RecordWorkForm = ({ inputs }) => {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    console.log(worktimeInputs);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -115,7 +117,8 @@ const RecordWorkForm = ({ inputs }) => {
   useEffect(() => {
     if (
       (inputs?.employee?.lastName && worktimeInputs.employee === null) ||
-      inputs.employee?.id !== worktimeInputs.employee?.id
+      inputs.employee?.id !== worktimeInputs.employee?.id ||
+      inputs.date !== worktimeInputs.date
     ) {
       setWorkTimeInputs({ ...inputs });
     }
@@ -136,7 +139,6 @@ const RecordWorkForm = ({ inputs }) => {
             selected={worktimeInputs.date}
             readOnly
           />
-          {console.log(worktimeInputs.employee?.lastName)}
           <SelectEmployee
             inputName="Выбор сотрудника"
             defaultValue={worktimeInputs.employee}
@@ -160,7 +162,7 @@ const RecordWorkForm = ({ inputs }) => {
             setTotalHours={setTotalHours}
             categories={categories}
             products={products}
-            defaultValue={worktimeInputs.worksList}
+            defaultValue={worktimeInputs.works}
           />
           <div className="main-form__item">
             <div class="main-form__input_name">{`Всего: ${totalHours} ч`}</div>

@@ -36,7 +36,11 @@ const ProductionJournalNew = ({}) => {
     formWindow,
     setShowWindow,
     showWindow,
-  } = useFormWindow(curWorkItem.title, <RecordWorkForm inputs={curWorkItem} />, [curWorkItem]);
+  } = useFormWindow(
+    curWorkItem.title,
+    <RecordWorkForm inputs={curWorkItem} />,
+    [curWorkItem]
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const {
     worktimeInputs: todaysWork,
@@ -63,13 +67,28 @@ const ProductionJournalNew = ({}) => {
     setShowWindow(!showWindow);
     setCurWorkItem({
       day: day,
-      date: day.today
-        ? curDay
-        : new Date(new Date(curDay).setDate(curDay.getDate() - 1)),
+      date:
+        day === "today"
+          ? curDay
+          : new Date(new Date(curDay).setDate(curDay.getDate() - 1)),
       type: type,
       workshop: workshop,
       employee: employee,
-      worksList: worksList,
+      works:
+        type === "new"
+          ? [
+              ...worksList,
+              {
+                product: [],
+                draft: [],
+                workName: "",
+                workType: "",
+                workId: null,
+                hours: 0,
+                comment: "",
+              },
+            ]
+          : worksList,
       workId: workId,
       title:
         type === "new"

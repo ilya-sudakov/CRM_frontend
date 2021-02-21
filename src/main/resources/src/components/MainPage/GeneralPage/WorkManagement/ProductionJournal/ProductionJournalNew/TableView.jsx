@@ -104,6 +104,17 @@ const TableView = ({
                               }
                             />
                             <span>Вчера</span>
+                            {yesterdaysWork[workshop.engName][employee.id]
+                              ?.works?.length > 0 ? (
+                              <span>
+                                {`${yesterdaysWork[workshop.engName][
+                                  employee.id
+                                ]?.works?.reduce(
+                                  (sum, cur) => cur.hours + sum,
+                                  0
+                                )} ч`}
+                              </span>
+                            ) : null}
                           </div>
                           {yesterdaysWork[workshop.engName][
                             employee.id
@@ -146,6 +157,17 @@ const TableView = ({
                               }
                             />
                             <span>Сегодня</span>
+                            {todaysWork[workshop.engName][employee.id]?.works
+                              ?.length > 0 ? (
+                              <span>
+                                {`${todaysWork[workshop.engName][
+                                  employee.id
+                                ]?.works?.reduce(
+                                  (sum, cur) => cur.hours + sum,
+                                  0
+                                )} ч`}
+                              </span>
+                            ) : null}
                           </div>
                           {todaysWork[workshop.engName][employee.id]?.works.map(
                             (work) => (
