@@ -20,22 +20,25 @@ import {
 import { days } from "../../../../../../utils/dataObjects.js";
 
 import "./ProductionJournalNew.scss";
-import {
-  combineOriginalAndNewWorks,
-  combineWorksForSamePeople,
-} from "../helpers.js";
+import useWorkReport from "../../../../../../utils/hooks/useWorkReport.js";
 
 const ProductionJournalNew = ({}) => {
   const { employees, isLoadingEmployees } = useEmployeesList();
   const [employeesNotes, setEmployeesNotes] = useState([]);
+  // const [todaysWork, setTodaysWork] = useState({});
+  // const [yesterdayWorks, setYesterdayWorks] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [curDay, setCurDay] = useState(new Date());
   const [loadedDay, setLoadedDay] = useState(new Date());
   const [searchQuery, setSearchQuery] = useState("");
+  const { worktimeInputs: todaysWork } = useWorkReport(curDay);
+  const { worktimeInputs: yesterdaysWork } = useWorkReport(
+    new Date(new Date(curDay).setDate(curDay.getDate() - 1))
+  );
 
   useEffect(() => {
-    document.title = "Дневник производства v2.0";
+    document.title = "Журнал руководителя";
     if (employees.length === 0 || employeesNotes.length > 0) return;
     const newList = employees.map((employee) => ({
       employee: employee,
@@ -97,39 +100,15 @@ const ProductionJournalNew = ({}) => {
     const prevDay = new Date(new Date(curDay).setDate(curDay.getDate() - 1));
     //fetch cur day
     getNotesJournalList(today)
-      //  getRecordedWorkByDay(
-      //   curDay.getMonth() + 1,
-      //   curDay.getDate(),
-      //   curDay.getFullYear()
-      // )
       .then(
         ({ data }) =>
           (employeesData = updateEmployeesData(data, "today", employeesData))
       )
       //fetch prev day
-      .then(() =>
-        //  getRecordedWorkByDay(
-        //   prevDay.getMonth() + 1,
-        //   prevDay.getDate(),
-        //   prevDay.getFullYear()
-        // )
-        getNotesJournalList(prevDay)
-      )
+      .then(() => getNotesJournalList(prevDay))
       .then(({ data }) => {
         employeesData = updateEmployeesData(data, "yesterday", employeesData);
-        // const combinedWorks = await combineWorksForSamePeople(
-        //   data,
-        //   setEmployeesMap,
-        //   setIsLoading
-        // );
-        // combineOriginalAndNewWorks(
-        //   combinedWorks,
-        //   employees,
-        //   setIsLoading,
-        //   workshops,
-        //   setWorkTimeInputs,
-        //   worktimeInputs
-        // );
+        // console.log(employeesData);
         setEmployeesNotes([...employeesData]);
         setLoadedDay(curDay);
         setIsLoading(false);
@@ -243,10 +222,14 @@ const ProductionJournalNew = ({}) => {
       });
   };
 
+  useEffect(() => {
+    console.log(todaysWork, yesterdaysWork);
+  }, [todaysWork, yesterdaysWork]);
+
   return (
-    <div className="production-journal-new">
+    <div className="notes-journal">
       <div className="main-window__header main-window__header--full">
-        <div className="main-window__title">Дневник производства v2.0</div>
+        <div className="main-window__title">Журнал руководителя</div>
       </div>
       <SearchBar
         fullSize
@@ -268,7 +251,7 @@ const ProductionJournalNew = ({}) => {
           />
         }
       />
-      <div className="production-journal-new__current-date">
+      <div className="notes-journal__current-date">
         <ChevronSVG
           className="main-window__img"
           style={{ transform: "rotate(90deg)" }}
@@ -288,6 +271,8 @@ const ProductionJournalNew = ({}) => {
       <TableView
         isLoading={isLoadingEmployees || isLoading}
         curDay={curDay}
+        todaysWork={todaysWork}
+        yesterdaysWork={yesterdaysWork}
         employeesNotes={employeesNotes}
         searchQuery={searchQuery}
         onInputChange={onInputChange}

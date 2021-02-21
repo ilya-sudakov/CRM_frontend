@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
-import SelectWork from "../../SelectWork/SelectWork.jsx";
-import SelectWorkNew from "../../SelectWork/SelectWorkNew.jsx";
+import EditSVG from "../../../../../../../../../../assets/tableview/edit.inline.svg";
 
 const TableView = ({
   isLoading,
@@ -10,12 +9,14 @@ const TableView = ({
   searchQuery,
   curDay,
   onInputChange,
+  todaysWork,
+  yesterdaysWork,
 }) => {
   const [workshops, setWorkshops] = useState({
-    ЦехЛЭМЗ: { active: true, name: "ЦехЛЭМЗ" },
-    ЦехЛепсари: { active: true, name: "ЦехЛепсари" },
-    ЦехЛиговский: { active: true, name: "ЦехЛиговский" },
-    Офис: { active: true, name: "Офис" },
+    lemz: { active: true, name: "ЦехЛЭМЗ", engName: "lemz" },
+    lepsari: { active: true, name: "ЦехЛепсари", engName: "lepsari" },
+    ligovskiy: { active: true, name: "ЦехЛиговский", engName: "ligovskiy" },
+    office: { active: true, name: "Офис", engName: "office" },
   });
   const filterEmployees = (employees, searchQuery) => {
     const query = searchQuery.toLowerCase();
@@ -37,7 +38,7 @@ const TableView = ({
   };
 
   return (
-    <div className="production-journal-new__list">
+    <div className="notes-journal__list">
       {Object.values(workshops).map((workshop) => {
         const filteredEmployees = sortEmployees(
           filterEmployees(employeesNotes, searchQuery).filter(
@@ -46,12 +47,12 @@ const TableView = ({
         );
         if (filteredEmployees.length === 0) return null;
         return (
-          <div className="production-journal-new__list-item">
+          <div className="notes-journal__list-item">
             <span
               onClick={() =>
                 setWorkshops({
                   ...workshops,
-                  [workshop.name]: {
+                  [workshop.engName]: {
                     ...workshop,
                     active: !workshop.active,
                   },
@@ -65,7 +66,7 @@ const TableView = ({
                 }`}
               />
             </span>
-            <div className="production-journal-new__employees">
+            <div className="notes-journal__employees">
               {isLoading ? (
                 <PlaceholderLoading itemClassName="employees__row" />
               ) : workshop.active ? (
@@ -83,42 +84,51 @@ const TableView = ({
                         <span
                           className={
                             prevDay.getDay() === 0 || prevDay.getDay() === 6
-                              ? "employees__weekend"
-                              : ""
+                              ? "employees__day employees__weekend"
+                              : "employees__day "
                           }
                         >
-                          <SelectWorkNew
-                            // handleWorkChange={handleWorkChange}
-                            // totalHours={workItem.totalHours}
-                            // defaultConfig={defaultConfig}
-                            // setTotalHours={handleTotalHoursChange}
-                            // categories={categories}
-                            // products={products}
-                            // drafts={drafts}
-                            // workItems={works}
-                            // defaultValue={workItem.works}
-                            readOnly={false}
-                          />
+                          {todaysWork[workshop.engName][
+                            employee.employee.id
+                          ]?.works.map((work) => (
+                            <div className="employees__work-item">
+                              <EditSVG className="employees__img" />
+                              <div className="employees__work-header">
+                                <span>{work.workName}</span>
+                                <span>{`${work.hours} ч`}</span>
+                              </div>
+                              {work.product ? (
+                                <div className="employees__item-list">
+                                  {work.product.map((product) => (
+                                    <span>{`${product.name} - ${product.quantity} шт`}</span>
+                                  ))}
+                                </div>
+                              ) : null}
+                              {work.draft ? (
+                                <div className="employees__item-list">
+                                  {work.draft.map((draft) => (
+                                    <span>{`${draft.name} - ${draft.quantity} шт`}</span>
+                                  ))}
+                                </div>
+                              ) : null}
+                            </div>
+                          ))}
                         </span>
                         <span
                           className={
-                            curDay.getDay() === 0 || curDay.getDay() === 6
-                              ? "employees__weekend"
-                              : ""
+                            prevDay.getDay() === 0 || prevDay.getDay() === 6
+                              ? "employees__day employees__weekend"
+                              : "employees__day "
                           }
                         >
-                          <SelectWorkNew
-                            // handleWorkChange={handleWorkChange}
-                            // totalHours={workItem.totalHours}
-                            // defaultConfig={defaultConfig}
-                            // setTotalHours={handleTotalHoursChange}
-                            // categories={categories}
-                            // products={products}
-                            // drafts={drafts}
-                            // workItems={works}
-                            // defaultValue={workItem.works}
-                            readOnly={false}
-                          />
+                          {yesterdaysWork[workshop.engName][
+                            employee.employee.id
+                          ]?.works.map((work) => (
+                            <div className="employees__work-item">
+                              {work.workName}
+                              <EditSVG className="employees__img" />
+                            </div>
+                          ))}
                         </span>
                       </div>
                     </div>

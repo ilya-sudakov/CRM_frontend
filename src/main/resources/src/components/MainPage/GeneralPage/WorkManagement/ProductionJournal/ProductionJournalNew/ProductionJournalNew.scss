@@ -1,6 +1,6 @@
 @import "../../../../../../variables.scss";
 
-.production-journal-new {
+.notes-journal {
     padding: 15px 0;
     padding-bottom: 60px;
     background-color: #fff;
@@ -14,7 +14,7 @@
         }
     }
 
-    > .control-panel {
+    .control-panel {
         margin-bottom: 25px;
 
         .main-window__control-panel-wrapper {
@@ -142,27 +142,130 @@
                     align-self: stretch;
                     display: flex;
                     flex-direction: column;
+
+                    > div {
+                        font-size: 0.9rem;
+                        color: #777;
+                    }
                 }
 
                 .employees__days-wrapper {
                     flex: 0 1 60%;
                     display: flex;
                     flex-direction: row;
-                    align-items: stretch;
+                    align-items: center;
                     align-self: stretch;
 
                     > span {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
                         flex: 0 1 50%;
                         &:nth-child(1) {
                             margin-right: 10px;
                         }
                         position: relative;
+
+                        .employees__field-name {
+                            position: absolute;
+                            left: 6px;
+                            top: 1px;
+                            padding-top: 3px;
+                            box-sizing: border-box;
+                            user-select: none;
+                            pointer-events: none;
+                            color: #888;
+                            font-size: 0.9rem;
+                            background-color: #fff;
+                            padding-right: 2px;
+                            width: fit-content;
+                        }
+
+                        textarea {
+                            resize: vertical;
+                            width: 100%;
+                            padding: 5px 5px;
+                            padding-top: 22px;
+                            box-sizing: border-box;
+                            border-radius: 3px;
+                            border: 1px solid #ccc;
+                            outline: none;
+                            height: 3.2rem;
+                            min-height: 3.2rem;
+                            max-height: 5rem;
+                            font-size: 1rem;
+                            transition: 100ms ease-in-out;
+
+                            &:hover {
+                                border-color: #999;
+                            }
+
+                            &:focus {
+                                border-color: $button__background--inverted;
+                            }
+                        }
                     }
 
-                    .employees__weekend {
+                    // .employees__weekend {
+                    //     div {
+                    //         background-color: #faf3f3;
+                    //     }
+                    //     textarea {
+                    //         border-color: #f3c9c9;
+                    //         background-color: #faf3f3;
+                    //     }
+                    // }
+
+                    .employees__day {
+                        font-size: 1rem;
+                        .employees__work-item {
+                            border: 1px solid transparent;
+                            padding: 5px 10px;
+                            background-color: transparent;
+                            width: 100%;
+                            box-sizing: border-box;
+                            cursor: pointer;
+                            position: relative;
+                            border-radius: 3px;
+                            transition: 100ms ease-in-out;
+
+                            .employees__img {
+                                position: absolute;
+                                top: 7px;
+                                right: 10px;
+                                opacity: 0;
+                                transition: 100ms ease-in-out;
+                            }
+
+                            &:hover {
+                                background-color: #eee;
+                                border-color: #ccc;
+
+                                .employees__img {
+                                    opacity: 1;
+                                }
+                            }
+
+                            .employees__work-header {
+                                display: flex;
+                                align-items: center;
+
+                                span {
+                                    &:nth-child(1) {
+                                        margin-right: 5px;
+                                    }
+                                    &:nth-child(2) {
+                                        color: #777;
+                                        padding: 2px 5px;
+                                        border: 1px solid #ccc;
+                                        border-radius: 3px;
+                                    }
+                                }
+                            }
+
+                            .employees__item-list {
+                                padding: 0 10px;
+                                color: #555;
+                                font-size: 0.9rem;
+                            }
+                        }
                     }
                 }
             }
