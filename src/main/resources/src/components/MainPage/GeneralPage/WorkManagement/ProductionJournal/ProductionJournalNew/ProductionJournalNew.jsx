@@ -110,6 +110,11 @@ const ProductionJournalNew = ({}) => {
     <div className="notes-journal">
       <div className="main-window__header main-window__header--full">
         <div className="main-window__title">Дневник производства v2.0</div>
+        <div className="main-window__description">
+          Для того, чтобы сохранить введенные вами данные о работе в системе
+          нажмите кнопку "Сохранить данные" в окне создания/редактирования
+          записи о работе. 
+        </div>
       </div>
       {formWindow}
       <SearchBar
