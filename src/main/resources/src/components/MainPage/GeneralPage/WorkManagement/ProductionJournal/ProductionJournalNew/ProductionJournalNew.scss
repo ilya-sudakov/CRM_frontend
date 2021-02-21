@@ -103,10 +103,10 @@
                 margin-bottom: 15px;
                 border-radius: 3px;
                 transition: 100ms ease-in-out;
-                background-color: #f2f2f2;
+                background-color: #f5f5f5;
 
                 &:hover {
-                    background-color: #e7e7e7;
+                    // background-color: #e7e7e7;
                 }
 
                 &:first-child {
@@ -123,7 +123,7 @@
                     background-color: #ffffff;
 
                     &:hover {
-                        background-color: #f4f4f4;
+                        // background-color: #f4f4f4;
                     }
                 }
 
@@ -138,7 +138,7 @@
                 }
 
                 > span {
-                    flex: 0 1 40%;
+                    flex: 0 1 30%;
                     align-self: stretch;
                     display: flex;
                     flex-direction: column;
@@ -150,7 +150,7 @@
                 }
 
                 .employees__days-wrapper {
-                    flex: 0 1 60%;
+                    flex: 0 1 70%;
                     display: flex;
                     flex-direction: row;
                     align-items: center;
@@ -159,7 +159,7 @@
                     > span {
                         flex: 0 1 50%;
                         &:nth-child(1) {
-                            margin-right: 10px;
+                            margin-right: 20px;
                         }
                         position: relative;
 
@@ -203,28 +203,46 @@
                         }
                     }
 
-                    // .employees__weekend {
-                    //     div {
-                    //         background-color: #faf3f3;
-                    //     }
-                    //     textarea {
-                    //         border-color: #f3c9c9;
-                    //         background-color: #faf3f3;
-                    //     }
-                    // }
-
                     .employees__day {
                         font-size: 1rem;
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+
+                        &-header {
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                            margin-bottom: 5px;
+                            & > span {
+                                color: #999;
+                                font-size: 0.9rem;
+                            }
+                            .add-to-button {
+                                margin-right: 7px;
+                                &__link {
+                                    margin: 0;
+                                    border: 1px solid #ccc;
+                                    border-radius: 999px;
+                                    padding: 2px 10px;
+                                    padding-left: 12px;
+                                }
+                            }
+                        }
                         .employees__work-item {
-                            border: 1px solid transparent;
-                            padding: 5px 10px;
+                            // border: 1px solid transparent;
+                            border: 1px solid #ccc;
                             background-color: transparent;
+                            padding: 5px 10px;
                             width: 100%;
+                            // min-height: 3rem;
+                            // height: 100%;
                             box-sizing: border-box;
                             cursor: pointer;
                             position: relative;
                             border-radius: 3px;
                             transition: 100ms ease-in-out;
+                            margin-bottom: 5px;
 
                             .employees__img {
                                 position: absolute;
@@ -249,7 +267,7 @@
 
                                 span {
                                     &:nth-child(1) {
-                                        margin-right: 5px;
+                                        margin-right: 10px;
                                     }
                                     &:nth-child(2) {
                                         color: #777;
@@ -261,12 +279,29 @@
                             }
 
                             .employees__item-list {
-                                padding: 0 10px;
                                 color: #555;
                                 font-size: 0.9rem;
+                                display: flex;
+                                flex-direction: column;
+                                margin-top: 4px;
+
+                                span {
+                                    margin-bottom: 4px;
+
+                                    &:last-child {
+                                        margin-bottom: 0;
+                                    }
+                                }
                             }
                         }
                     }
+
+                    // .employees__weekend {
+                    //     .employees__work-item {
+                    //         border-color: #f3c9c9;
+                    //         background-color: #faf3f3;
+                    //     }
+                    // }
                 }
             }
         }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../../App.js";
 import { loadEmployees } from "../../components/MainPage/GeneralPage/WorkManagement/ProductionJournal/fetchData.js";
 import {
@@ -102,7 +102,7 @@ const useWorkReport = (curDay) => {
       });
   }, []);
 
-  return { worktimeInputs, isLoading };
+  return { worktimeInputs, setWorkTimeInputs, isLoading };
 };
 
 export default useWorkReport;

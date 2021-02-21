@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import EditSVG from "../../../../../../../../../../assets/tableview/edit.inline.svg";
+import AddToButton from "../../../../../../utils/Form/AddToButton/AddToButton.jsx";
 
 const TableView = ({
   isLoading,
   employeesNotes,
   searchQuery,
   curDay,
-  onInputChange,
   todaysWork,
   yesterdaysWork,
+  handleOpenWorkForm,
 }) => {
   const [workshops, setWorkshops] = useState({
     lemz: { active: true, name: "ЦехЛЭМЗ", engName: "lemz" },
@@ -21,16 +22,16 @@ const TableView = ({
   const filterEmployees = (employees, searchQuery) => {
     const query = searchQuery.toLowerCase();
     return employees.filter((employee) =>
-      employee.employee?.lastName?.toLowerCase()?.includes(query)
+      employee?.lastName?.toLowerCase()?.includes(query)
     );
   };
 
   const sortEmployees = (employees) => {
     return employees.sort((a, b) => {
-      if (a.employee.lastName < b.employee.lastName) {
+      if (a.lastName < b.lastName) {
         return -1;
       }
-      if (a.employee.lastName > b.employee.lastName) {
+      if (a.lastName > b.lastName) {
         return 1;
       }
       return 0;
@@ -42,7 +43,7 @@ const TableView = ({
       {Object.values(workshops).map((workshop) => {
         const filteredEmployees = sortEmployees(
           filterEmployees(employeesNotes, searchQuery).filter(
-            (employee) => employee.employee.workshop === workshop.name
+            (employee) => employee.workshop === workshop.name
           )
         );
         if (filteredEmployees.length === 0) return null;
@@ -77,8 +78,8 @@ const TableView = ({
                   return (
                     <div className="employees__row">
                       <span>
-                        {`${employee.employee.lastName} ${employee.employee.name} ${employee.employee.middleName}`}
-                        <div>{employee.employee.position}</div>
+                        {`${employee.lastName} ${employee.name} ${employee.middleName}`}
+                        <div>{employee.position}</div>
                       </span>
                       <div className="employees__days-wrapper">
                         <span
@@ -88,30 +89,39 @@ const TableView = ({
                               : "employees__day "
                           }
                         >
-                          {todaysWork[workshop.engName][
-                            employee.employee.id
+                          <div className="employees__day-header">
+                            <AddToButton
+                              text="Добавить работу"
+                              onClick={() =>
+                                handleOpenWorkForm(
+                                  "yesterday",
+                                  "new",
+                                  workshop.engName,
+                                  employee,
+                                  yesterdaysWork[workshop.engName][employee.id]
+                                    ?.works
+                                )
+                              }
+                            />
+                            <span>Вчера</span>
+                          </div>
+                          {yesterdaysWork[workshop.engName][
+                            employee.id
                           ]?.works.map((work) => (
-                            <div className="employees__work-item">
-                              <EditSVG className="employees__img" />
-                              <div className="employees__work-header">
-                                <span>{work.workName}</span>
-                                <span>{`${work.hours} ч`}</span>
-                              </div>
-                              {work.product ? (
-                                <div className="employees__item-list">
-                                  {work.product.map((product) => (
-                                    <span>{`${product.name} - ${product.quantity} шт`}</span>
-                                  ))}
-                                </div>
-                              ) : null}
-                              {work.draft ? (
-                                <div className="employees__item-list">
-                                  {work.draft.map((draft) => (
-                                    <span>{`${draft.name} - ${draft.quantity} шт`}</span>
-                                  ))}
-                                </div>
-                              ) : null}
-                            </div>
+                            <WorkItem
+                              work={work}
+                              onClick={() =>
+                                handleOpenWorkForm(
+                                  "yesterday",
+                                  "edit",
+                                  workshop.engName,
+                                  employee,
+                                  yesterdaysWork[workshop.engName][employee.id]
+                                    ?.works,
+                                  work.id
+                                )
+                              }
+                            />
                           ))}
                         </span>
                         <span
@@ -121,14 +131,40 @@ const TableView = ({
                               : "employees__day "
                           }
                         >
-                          {yesterdaysWork[workshop.engName][
-                            employee.employee.id
-                          ]?.works.map((work) => (
-                            <div className="employees__work-item">
-                              {work.workName}
-                              <EditSVG className="employees__img" />
-                            </div>
-                          ))}
+                          <div className="employees__day-header">
+                            <AddToButton
+                              text="Добавить работу"
+                              onClick={() =>
+                                handleOpenWorkForm(
+                                  "today",
+                                  "new",
+                                  workshop.engName,
+                                  employee,
+                                  todaysWork[workshop.engName][employee.id]
+                                    ?.works
+                                )
+                              }
+                            />
+                            <span>Сегодня</span>
+                          </div>
+                          {todaysWork[workshop.engName][employee.id]?.works.map(
+                            (work) => (
+                              <WorkItem
+                                work={work}
+                                onClick={() =>
+                                  handleOpenWorkForm(
+                                    "today",
+                                    "edit",
+                                    workshop.engName,
+                                    employee,
+                                    todaysWork[workshop.engName][employee.id]
+                                      ?.works,
+                                    work.id
+                                  )
+                                }
+                              />
+                            )
+                          )}
                         </span>
                       </div>
                     </div>
@@ -144,3 +180,29 @@ const TableView = ({
 };
 
 export default TableView;
+
+const WorkItem = ({ work, onClick }) => {
+  return (
+    <div className="employees__work-item" onClick={onClick}>
+      <EditSVG className="employees__img" />
+      <div className="employees__work-header">
+        <span>{work.workName}</span>
+        <span>{`${work.hours} ч`}</span>
+      </div>
+      {work.product.length > 0 ? (
+        <div className="employees__item-list">
+          {work.product.map((product) => (
+            <span>{`${product.name} - ${product.quantity} шт`}</span>
+          ))}
+        </div>
+      ) : null}
+      {work.draft.length > 0 ? (
+        <div className="employees__item-list">
+          {work.draft.map((draft) => (
+            <span>{`${draft.name} - ${draft.quantity} шт`}</span>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+};
