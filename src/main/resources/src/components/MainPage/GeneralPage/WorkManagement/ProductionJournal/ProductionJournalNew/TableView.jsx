@@ -162,7 +162,7 @@ const DayItem = ({
           <span>{`${works?.reduce((sum, cur) => cur.hours + sum, 0)} ч`}</span>
         ) : null}
       </div>
-      {works.map((work) => (
+      {works?.map((work) => (
         <WorkItem
           work={work}
           onClick={() =>
@@ -191,14 +191,14 @@ const WorkItem = ({ work, onClick }) => {
       </div>
       {work.product.length > 0 ? (
         <div className="employees__item-list">
-          {work.product.map((product) => (
+          {work.product?.map((product) => (
             <span>{`${product.name} - ${product.quantity} шт`}</span>
           ))}
         </div>
       ) : null}
       {work.draft.length > 0 ? (
         <div className="employees__item-list">
-          {work.draft.map((draft) => (
+          {work.draft?.map((draft) => (
             <span>{`${draft.name} - ${draft.quantity} шт`}</span>
           ))}
         </div>
