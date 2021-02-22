@@ -230,7 +230,7 @@ const WorkItem = ({ work, onClick }) => {
         <div className="employees__error">Не указана продукция</div>
       ) : null}
       {noDraftError ? (
-        <div className="employees__error">Не указаны чертежи</div>
+        <div className="employees__error">Не указан чертеж</div>
       ) : null}
     </div>
   );

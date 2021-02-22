@@ -329,9 +329,15 @@
                             }
 
                             &--no-product {
-                                border-color: #f7a5a5;
-                                background-color: #f7e9e9;
-                                margin-bottom: 32px;
+                                border-color: #f8c9c9;
+                                background-color: #faf1f1;
+                                margin-bottom: 28px;
+
+                                .employees__work-header {
+                                    span:first-child {
+                                        color: #444;
+                                    }
+                                }
                             }
 
                             .employees__work-header {
@@ -388,9 +394,9 @@
 
                             .employees__error {
                                 color: #888888cc;
-                                font-size: 0.9rem;
+                                font-size: 0.85rem;
                                 position: absolute;
-                                bottom: -28px;
+                                bottom: -25px;
                                 border: 1px solid #f8c9c9;
                                 background-color: #faf1f1;
                                 width: calc(100% + 2px);
@@ -402,13 +408,6 @@
                             }
                         }
                     }
-
-                    // .employees__weekend {
-                    //     .employees__work-item {
-                    //         border-color: #f3c9c9;
-                    //         background-color: #faf3f3;
-                    //     }
-                    // }
                 }
             }
         }
