@@ -27,8 +27,11 @@ const TableView = ({
   });
   const filterEmployees = (employees, searchQuery) => {
     const query = searchQuery.toLowerCase();
-    return employees.filter((employee) =>
-      employee?.lastName?.toLowerCase()?.includes(query)
+    return employees.filter(
+      (employee) =>
+        employee?.relevance !== "Уволен" &&
+        employee?.workshop !== "Уволенные" &&
+        employee?.lastName?.toLowerCase()?.includes(query)
     );
   };
 
