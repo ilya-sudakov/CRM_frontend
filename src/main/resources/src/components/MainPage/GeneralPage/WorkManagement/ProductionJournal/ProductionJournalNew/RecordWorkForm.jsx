@@ -456,6 +456,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
             categories={categories}
             products={products}
             defaultValue={worktimeInputs.works}
+            noNewItems
           />
           <div className="main-form__item">
             <div class="main-form__input_name">{`Всего: ${totalHours} ч`}</div>

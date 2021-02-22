@@ -127,7 +127,7 @@ const SelectWork = (props) => {
       <div className="main-form__item">
         <div className="main-form__input_name main-form__input_name--header">
           Работы*
-          {!props.readOnly && (
+          {!props.readOnly && !props.noNewItems && (
             <AddToButton text="Добавить работу" onClick={handleNewPart} />
           )}
         </div>
