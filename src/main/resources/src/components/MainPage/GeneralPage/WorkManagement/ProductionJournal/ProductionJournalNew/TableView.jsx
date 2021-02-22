@@ -171,21 +171,31 @@ const DayItem = ({
           <span>{`${works?.reduce((sum, cur) => cur.hours + sum, 0)} ч`}</span>
         ) : null}
       </div>
-      {works?.map((work) => (
-        <WorkItem
-          work={work}
-          onClick={() =>
-            handleOpenWorkForm(
-              dayType,
-              "edit",
-              workshopName,
-              employee,
-              works,
-              work.id
-            )
+      {works
+        ?.sort((a, b) => {
+          if (a.hours > b.hours) {
+            return -1;
           }
-        />
-      ))}
+          if (a.hours < b.hours) {
+            return 1;
+          }
+          return 0;
+        })
+        ?.map((work) => (
+          <WorkItem
+            work={work}
+            onClick={() =>
+              handleOpenWorkForm(
+                dayType,
+                "edit",
+                workshopName,
+                employee,
+                works,
+                work.id
+              )
+            }
+          />
+        ))}
     </span>
   );
 };
