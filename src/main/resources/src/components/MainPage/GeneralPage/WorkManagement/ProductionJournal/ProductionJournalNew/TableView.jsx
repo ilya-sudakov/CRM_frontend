@@ -3,6 +3,10 @@ import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoa
 import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import EditSVG from "../../../../../../../../../../assets/tableview/edit.inline.svg";
 import AddToButton from "../../../../../../utils/Form/AddToButton/AddToButton.jsx";
+import {
+  dateDiffInDays,
+  formatDateStringNoYear,
+} from "../../../../../../utils/functions.jsx";
 
 const TableView = ({
   isLoading,
@@ -90,6 +94,7 @@ const TableView = ({
                           dayType="yesterday"
                           employee={employee}
                           workshopName={workshop.engName}
+                          curDay={curDay}
                           works={
                             yesterdaysWork[workshop.engName][employee.id]?.works
                           }
@@ -100,6 +105,7 @@ const TableView = ({
                           dayType="today"
                           employee={employee}
                           workshopName={workshop.engName}
+                          curDay={curDay}
                           works={
                             todaysWork[workshop.engName][employee.id]?.works
                           }
@@ -126,7 +132,14 @@ const DayItem = ({
   employee,
   workshopName,
   works,
+  curDay,
 }) => {
+  const isOldData = dateDiffInDays(curDay, new Date()) >= 1;
+  const prevDay = new Date(new Date(curDay).setDate(curDay.getDate() - 1));
+  const dayTypes = {
+    yesterday: "Вчера",
+    today: "Сегодня",
+  };
   return (
     <span
       className={
@@ -140,7 +153,11 @@ const DayItem = ({
             handleOpenWorkForm(dayType, "new", workshopName, employee, works)
           }
         />
-        <span>Вчера</span>
+        <span>
+          {isOldData
+            ? formatDateStringNoYear(dayType === "yesterday" ? prevDay : curDay)
+            : dayTypes[dayType]}
+        </span>
         {works?.length > 0 ? (
           <span>{`${works?.reduce((sum, cur) => cur.hours + sum, 0)} ч`}</span>
         ) : null}
