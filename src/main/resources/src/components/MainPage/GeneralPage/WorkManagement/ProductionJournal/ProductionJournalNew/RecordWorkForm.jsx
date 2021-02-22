@@ -287,6 +287,8 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
               }
             })
           );
+
+          inputs.updateSelectedDaysWork(item);
         }
 
         //if item is new, then just add it
@@ -322,6 +324,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
                 })
               );
             })
+            .then(() => inputs.addSelectedDaysWork(item))
             .catch((error) => {
               alert("Ошибка при добавлении записи");
               setIsLoading(false);

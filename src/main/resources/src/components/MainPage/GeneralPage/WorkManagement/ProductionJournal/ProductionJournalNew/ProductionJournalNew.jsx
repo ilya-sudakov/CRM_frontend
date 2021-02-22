@@ -65,6 +65,12 @@ const ProductionJournalNew = ({}) => {
     console.log(todaysWork, yesterdaysWork);
   }, [todaysWork, yesterdaysWork]);
 
+  const updateData = (worksList, selectedWork, newData) => {
+    const temp = worksList;
+    temp.splice(worksList.indexOf(selectedWork), 1, newData);
+    return temp;
+  };
+
   const handleOpenWorkForm = (
     day = "today",
     type = "new",
@@ -76,7 +82,14 @@ const ProductionJournalNew = ({}) => {
     const selectedWork = worksList
       ? worksList.find((work) => work.id === workId)
       : null;
-    console.log(day, type, workshop, worksList, selectedWork);
+    console.log(
+      day,
+      type,
+      workshop,
+      worksList,
+      selectedWork,
+      worksList.indexOf(selectedWork)
+    );
     handleCloseWindow();
     setCurWorkItem({
       day: day,
@@ -114,8 +127,10 @@ const ProductionJournalNew = ({}) => {
               [workshop]: {
                 [employee.id]: {
                   ...todaysWork[workshop][employee.id],
-                  works: [...newData],
-                  originalWorks: [...newData],
+                  works: [...updateData(worksList, selectedWork, newData)],
+                  originalWorks: [
+                    ...updateData(worksList, selectedWork, newData),
+                  ],
                 },
               },
             })
@@ -124,8 +139,10 @@ const ProductionJournalNew = ({}) => {
               [workshop]: {
                 [employee.id]: {
                   ...yesterdaysWork[workshop][employee.id],
-                  works: [...newData],
-                  originalWorks: [...newData],
+                  works: [...updateData(worksList, selectedWork, newData)],
+                  originalWorks: [
+                    ...updateData(worksList, selectedWork, newData),
+                  ],
                 },
               },
             }),
@@ -148,6 +165,28 @@ const ProductionJournalNew = ({}) => {
                   ...yesterdaysWork[workshop][employee.id],
                   works: worksList.filter((work) => work.id !== workId),
                   originalWorks: worksList.filter((work) => work.id !== workId),
+                },
+              },
+            }),
+      addSelectedDaysWork: (newWork) =>
+        day === "today"
+          ? setTodaysWork({
+              ...todaysWork,
+              [workshop]: {
+                [employee.id]: {
+                  ...todaysWork[workshop][employee.id],
+                  works: [...worksList, newWork],
+                  originalWorks: [...worksList, newWork],
+                },
+              },
+            })
+          : setYesterdaysWork({
+              ...yesterdaysWork,
+              [workshop]: {
+                [employee.id]: {
+                  ...yesterdaysWork[workshop][employee.id],
+                  works: [...worksList, newWork],
+                  originalWorks: [...worksList, newWork],
                 },
               },
             }),
