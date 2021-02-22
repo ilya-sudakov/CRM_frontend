@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import EditSVG from "../../../../../../../../../../assets/tableview/edit.inline.svg";
+import ShareSVG from "../../../../../../../../../../assets/tableview/bx-window-open.inline.svg";
 import AddToButton from "../../../../../../utils/Form/AddToButton/AddToButton.jsx";
 import {
   dateDiffInDays,
   formatDateStringNoYear,
 } from "../../../../../../utils/functions.jsx";
+import { Link } from "react-router-dom";
 
 const TableView = ({
   isLoading,
@@ -84,8 +86,16 @@ const TableView = ({
                   return (
                     <div className="employees__row">
                       <span>
-                        {`${employee.lastName} ${employee.name} ${employee.middleName}`}
-                        <div>{employee.position}</div>
+                        <Link
+                          to={`/dispatcher/employees/edit/${employee.id}`}
+                          target="_blank"
+                        >
+                          <div>
+                            {`${employee.lastName} ${employee.name} ${employee.middleName}`}
+                            <ShareSVG className="main-window__img" />
+                          </div>
+                          <div>{employee.position}</div>
+                        </Link>
                       </span>
                       <div className="employees__days-wrapper">
                         <DayItem
