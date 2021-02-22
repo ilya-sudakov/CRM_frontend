@@ -17,6 +17,7 @@ import {
 import Button from "../../../../../../utils/Form/Button/Button.jsx";
 import useProductsList from "../../../../../../utils/hooks/useProductsList/useProductsList.js";
 import SelectWork from "../../SelectWork/SelectWork.jsx";
+import MessageForUser from "../../../../../../utils/Form/MessageForUser/MessageForUser.jsx";
 
 const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -41,6 +42,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const { products, categories, isLoadingProducts } = useProductsList();
   const [totalHours, setTotalHours] = useState(0);
   const [itemId, setItemId] = useState(0);
+  const [showMessage, setShowMessage] = useState(false);
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
@@ -414,6 +416,16 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
             showError={showError}
             setShowError={setShowError}
           />
+          <MessageForUser
+            showMessage={showMessage}
+            setShowMessage={setShowMessage}
+            title="Подтверждение удаления"
+            message="Вы уверены что хотите удалить этот элемент?"
+            onClick={() => {
+              handleDelete();
+              setShowMessage(false);
+            }}
+          />
           <InputDate
             inputName="Дата"
             name="date"
@@ -464,7 +476,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
                 text="Удалить запись"
                 isLoading={isLoading}
                 className="main-form__submit"
-                onClick={handleDelete}
+                onClick={() => setShowMessage(true)}
               />
             ) : null}
             <Button
