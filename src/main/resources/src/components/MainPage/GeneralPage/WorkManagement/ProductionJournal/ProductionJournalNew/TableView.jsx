@@ -154,11 +154,7 @@ const DayItem = ({
     today: "Сегодня",
   };
   return (
-    <span
-      className={
-        isWeekend ? "employees__day employees__weekend" : "employees__day "
-      }
-    >
+    <span className={`employees__day ${isWeekend ? "employees__weekend" : ""}`}>
       <div className="employees__day-header">
         <AddToButton
           text="Добавить работу"
@@ -195,8 +191,16 @@ const DayItem = ({
 };
 
 const WorkItem = ({ work, onClick }) => {
+  const noProductError =
+    work.product.length === 0 && work.workType === "Продукция";
+  const noDraftError = work.draft.length === 0 && work.workType === "Чертеж";
   return (
-    <div className="employees__work-item" onClick={onClick}>
+    <div
+      className={`employees__work-item ${
+        noProductError || noDraftError ? "employees__work-item--no-product" : ""
+      }`}
+      onClick={onClick}
+    >
       <EditSVG className="employees__img" />
       <div className="employees__work-header">
         <span>{work.workName}</span>
@@ -221,6 +225,12 @@ const WorkItem = ({ work, onClick }) => {
           <span>Комментарий:</span>
           <span>{work.comment}</span>
         </div>
+      ) : null}
+      {noProductError ? (
+        <div className="employees__error">Не указана продукция</div>
+      ) : null}
+      {noDraftError ? (
+        <div className="employees__error">Не указаны чертежи</div>
       ) : null}
     </div>
   );

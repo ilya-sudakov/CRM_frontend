@@ -328,6 +328,11 @@
                                 }
                             }
 
+                            &--no-product {
+                                border-color: #f7a5a5;
+                                background-color: #f7e9e9;
+                            }
+
                             .employees__work-header {
                                 display: flex;
                                 align-items: center;
@@ -378,6 +383,21 @@
                                         font-style: italic;
                                     }
                                 }
+                            }
+
+                            .employees__error {
+                                color: #888888cc;
+                                font-size: 0.9rem;
+                                position: absolute;
+                                bottom: -28px;
+                                border: 1px solid #f8c9c9;
+                                background-color: #faf1f1;
+                                width: calc(100% + 2px);
+                                margin-left: -1px;
+                                left: 0;
+                                box-sizing: border-box;
+                                border-radius: 3px;
+                                padding: 2px 10px;
                             }
                         }
                     }
