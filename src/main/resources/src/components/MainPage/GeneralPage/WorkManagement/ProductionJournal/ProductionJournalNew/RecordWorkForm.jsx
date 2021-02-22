@@ -94,10 +94,12 @@ const RecordWorkForm = ({ inputs, handleCloseWindow, showWindow }) => {
 
   const handleSubmit = () => {
     console.log(worktimeInputs);
+    setIsSaved(true);
   };
 
   const handleDelete = () => {
     console.log(worktimeInputs);
+    setIsSaved(true);
   };
 
   const handleInputChange = (e) => {
@@ -123,7 +125,8 @@ const RecordWorkForm = ({ inputs, handleCloseWindow, showWindow }) => {
     if (
       (inputs?.employee?.lastName && worktimeInputs.employee === null) ||
       inputs.employee?.id !== worktimeInputs.employee?.id ||
-      inputs.date !== worktimeInputs.date
+      inputs.date !== worktimeInputs.date ||
+      inputs.type !== worktimeInputs.type
     ) {
       setWorkTimeInputs({ ...inputs, originalWorks: inputs.works });
     }

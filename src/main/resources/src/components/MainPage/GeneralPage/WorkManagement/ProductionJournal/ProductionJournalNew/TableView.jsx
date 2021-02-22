@@ -75,6 +75,8 @@ const TableView = ({
                   const prevDay = new Date(
                     new Date(curDay).setDate(curDay.getDate() - 1)
                   );
+                  const isWeekend =
+                    prevDay.getDay() === 0 || prevDay.getDay() === 6;
                   return (
                     <div className="employees__row">
                       <span>
@@ -82,112 +84,26 @@ const TableView = ({
                         <div>{employee.position}</div>
                       </span>
                       <div className="employees__days-wrapper">
-                        <span
-                          className={
-                            prevDay.getDay() === 0 || prevDay.getDay() === 6
-                              ? "employees__day employees__weekend"
-                              : "employees__day "
+                        <DayItem
+                          isWeekend={isWeekend}
+                          handleOpenWorkForm={handleOpenWorkForm}
+                          dayType="yesterday"
+                          employee={employee}
+                          workshopName={workshop.engName}
+                          works={
+                            yesterdaysWork[workshop.engName][employee.id]?.works
                           }
-                        >
-                          <div className="employees__day-header">
-                            <AddToButton
-                              text="Добавить работу"
-                              onClick={() =>
-                                handleOpenWorkForm(
-                                  "yesterday",
-                                  "new",
-                                  workshop.engName,
-                                  employee,
-                                  yesterdaysWork[workshop.engName][employee.id]
-                                    ?.works
-                                )
-                              }
-                            />
-                            <span>Вчера</span>
-                            {yesterdaysWork[workshop.engName][employee.id]
-                              ?.works?.length > 0 ? (
-                              <span>
-                                {`${yesterdaysWork[workshop.engName][
-                                  employee.id
-                                ]?.works?.reduce(
-                                  (sum, cur) => cur.hours + sum,
-                                  0
-                                )} ч`}
-                              </span>
-                            ) : null}
-                          </div>
-                          {yesterdaysWork[workshop.engName][
-                            employee.id
-                          ]?.works.map((work) => (
-                            <WorkItem
-                              work={work}
-                              onClick={() =>
-                                handleOpenWorkForm(
-                                  "yesterday",
-                                  "edit",
-                                  workshop.engName,
-                                  employee,
-                                  yesterdaysWork[workshop.engName][employee.id]
-                                    ?.works,
-                                  work.id
-                                )
-                              }
-                            />
-                          ))}
-                        </span>
-                        <span
-                          className={
-                            prevDay.getDay() === 0 || prevDay.getDay() === 6
-                              ? "employees__day employees__weekend"
-                              : "employees__day "
+                        />
+                        <DayItem
+                          isWeekend={isWeekend}
+                          handleOpenWorkForm={handleOpenWorkForm}
+                          dayType="today"
+                          employee={employee}
+                          workshopName={workshop.engName}
+                          works={
+                            todaysWork[workshop.engName][employee.id]?.works
                           }
-                        >
-                          <div className="employees__day-header">
-                            <AddToButton
-                              text="Добавить работу"
-                              onClick={() =>
-                                handleOpenWorkForm(
-                                  "today",
-                                  "new",
-                                  workshop.engName,
-                                  employee,
-                                  todaysWork[workshop.engName][employee.id]
-                                    ?.works
-                                )
-                              }
-                            />
-                            <span>Сегодня</span>
-                            {todaysWork[workshop.engName][employee.id]?.works
-                              ?.length > 0 ? (
-                              <span>
-                                {`${todaysWork[workshop.engName][
-                                  employee.id
-                                ]?.works?.reduce(
-                                  (sum, cur) => cur.hours + sum,
-                                  0
-                                )} ч`}
-                              </span>
-                            ) : null}
-                          </div>
-                          {todaysWork[workshop.engName][employee.id]?.works.map(
-                            (work) => (
-                              <WorkItem
-                                work={work}
-                                onClick={() =>
-                                  handleOpenWorkForm(
-                                    "today",
-                                    "edit",
-                                    workshop.engName,
-                                    employee,
-                                    todaysWork[workshop.engName][employee.id]
-                                      ?.works,
-                                    work.id
-                                  )
-                                }
-                              />
-                            )
-                          )}
-                        </span>
+                        />
                       </div>
                     </div>
                   );
@@ -202,6 +118,51 @@ const TableView = ({
 };
 
 export default TableView;
+
+const DayItem = ({
+  isWeekend,
+  handleOpenWorkForm,
+  dayType = "yesterday",
+  employee,
+  workshopName,
+  works,
+}) => {
+  return (
+    <span
+      className={
+        isWeekend ? "employees__day employees__weekend" : "employees__day "
+      }
+    >
+      <div className="employees__day-header">
+        <AddToButton
+          text="Добавить работу"
+          onClick={() =>
+            handleOpenWorkForm(dayType, "new", workshopName, employee, works)
+          }
+        />
+        <span>Вчера</span>
+        {works?.length > 0 ? (
+          <span>{`${works?.reduce((sum, cur) => cur.hours + sum, 0)} ч`}</span>
+        ) : null}
+      </div>
+      {works.map((work) => (
+        <WorkItem
+          work={work}
+          onClick={() =>
+            handleOpenWorkForm(
+              dayType,
+              "edit",
+              workshopName,
+              employee,
+              works,
+              work.id
+            )
+          }
+        />
+      ))}
+    </span>
+  );
+};
 
 const WorkItem = ({ work, onClick }) => {
   return (

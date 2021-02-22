@@ -105,17 +105,13 @@
                 transition: 100ms ease-in-out;
                 background-color: #f5f5f5;
 
-                &:hover {
-                    // background-color: #e7e7e7;
-                }
-
-                .employees__day {
-                    &-header {
-                        span:nth-child(2) {
-                            background-color: #f5f5f5;
-                        }
-                    }
-                }
+                // .employees__day {
+                //     &-header {
+                //         span:nth-child(2) {
+                //             background-color: #f5f5f5;
+                //         }
+                //     }
+                // }
 
                 &:first-child {
                     border-top-left-radius: 3px;
@@ -130,17 +126,13 @@
                 &:nth-child(2n + 1) {
                     background-color: #ffffff;
 
-                    &:hover {
-                        // background-color: #f4f4f4;
-                    }
-
-                    .employees__day {
-                        &-header {
-                            span:nth-child(2) {
-                                background-color: #fff;
-                            }
-                        }
-                    }
+                    // .employees__day {
+                    //     &-header {
+                    //         span:nth-child(2) {
+                    //             background-color: #fff;
+                    //         }
+                    //     }
+                    // }
                 }
 
                 // TABLE DESIGN
@@ -175,7 +167,7 @@
                     > span {
                         flex: 0 1 50%;
                         &:nth-child(1) {
-                            margin-right: 10%;
+                            margin-right: 50px;
                         }
                         position: relative;
 
@@ -242,7 +234,7 @@
                                     border-radius: 999px;
                                     padding: 2px 10px;
                                     padding-left: 12px;
-                                    padding-top: 5px;
+                                    // padding-top: 5px;
 
                                     // NO BORDER DESIGN
                                     // border: none;
@@ -256,11 +248,11 @@
                             }
 
                             & > span:nth-child(2) {
-                                position: absolute;
-                                top: -10px;
-                                left: 8px;
-                                // background-color: #fff;
-                                padding: 0 5px;
+                                // position: absolute;
+                                // top: -10px;
+                                // left: 8px;
+                                // padding: 0 5px;
+                                // background-color: transparent !important;
                             }
                             & > span:nth-child(3) {
                                 color: #777;
@@ -275,7 +267,6 @@
                             }
                         }
                         .employees__work-item {
-                            // border: 1px solid transparent;
                             border: 1px solid #ccc;
                             background-color: transparent;
                             padding: 5px 10px;
