@@ -12,6 +12,7 @@ const useWorkReport = (curDay) => {
   const userContext = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [employees, setEmployees] = useState([]);
+  const [curLoadedDay, setCurLoadedDay] = useState(curDay);
   const [employeesMap, setEmployeesMap] = useState({});
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: curDay,
@@ -65,7 +66,7 @@ const useWorkReport = (curDay) => {
     let localEmployees = [];
     return loadEmployees(
       signal,
-      setIsLoading,
+      () => {},
       setEmployees,
       setWorkTimeInputs,
       worktimeInputs,
@@ -84,16 +85,18 @@ const useWorkReport = (curDay) => {
         const combinedWorks = await combineWorksForSamePeople(
           res,
           setEmployeesMap,
-          setIsLoading
+          () => {}
         );
-        return combineOriginalAndNewWorks(
+        combineOriginalAndNewWorks(
           combinedWorks,
           localEmployees,
-          setIsLoading,
+          () => {},
           workshops,
           setWorkTimeInputs,
           worktimeInputs
         );
+        setCurLoadedDay(curDay);
+        return setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -105,24 +108,36 @@ const useWorkReport = (curDay) => {
     console.log("first render", curDay);
     const abortController = new AbortController();
     handleFetchData(curDay, abortController.signal);
+    return function cancel() {
+      abortController.abort();
+    };
   }, []);
 
   useEffect(() => {
+    console.log(
+      "smth change",
+      formatDateString(curLoadedDay),
+      formatDateString(curDay),
+      isLoading,
+      worktimeInputs
+    );
     if (
-      formatDateString(worktimeInputs.date) === formatDateString(curDay) ||
+      formatDateString(curLoadedDay) === formatDateString(curDay) ||
       employees.length === 0 ||
       isLoading
     )
       return;
     const abortController = new AbortController();
-    if (formatDateString(worktimeInputs.date) !== formatDateString(curDay)) {
-      setWorkTimeInputs({ ...worktimeInputs, date: curDay });
-    //   setIsLoading(true);
+    console.log("date change", curDay, curLoadedDay);
+    if (formatDateString(curLoadedDay) !== formatDateString(curDay)) {
+      setIsLoading(true);
       let localEmployees = [];
       loadEmployees(
         abortController.signal,
-        setIsLoading,
-        setEmployees,
+        // setIsLoading,
+        () => {},
+        // setEmployees,
+        () => {},
         setWorkTimeInputs,
         worktimeInputs,
         workshops
@@ -140,33 +155,31 @@ const useWorkReport = (curDay) => {
           const combinedWorks = await combineWorksForSamePeople(
             res,
             setEmployeesMap,
-            setIsLoading
+            () => {}
           );
           combineOriginalAndNewWorks(
             combinedWorks,
             localEmployees,
-            // setIsLoading,
             () => {},
             workshops,
             setWorkTimeInputs,
-            // () => {},
             worktimeInputs
           );
-        //   setIsLoading(false);
+          return setCurLoadedDay(curDay);
         })
+        .then(() => setIsLoading(false))
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
         });
     }
-    console.log(
-      "date change1",
-      curDay,
-      worktimeInputs.date,
-      formatDateString(worktimeInputs.date) === formatDateString(curDay),
-      employees
-    );
-  }, [curDay, worktimeInputs.date]);
+
+    return function cancel() {
+      abortController.abort();
+    };
+  }, [curDay, worktimeInputs]);
+
+  useEffect(() => {}, [curDay]);
 
   return { employees, worktimeInputs, setWorkTimeInputs, isLoading };
 };

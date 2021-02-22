@@ -51,17 +51,19 @@ const ProductionJournalNew = ({}) => {
   const {
     worktimeInputs: todaysWork,
     employees,
+    isLoading: todayLoading,
     setWorkTimeInputs: setTodaysWork,
   } = useWorkReport(curDay);
   const {
     worktimeInputs: yesterdaysWork,
+    isLoading: yesterdayLoading,
     setWorkTimeInputs: setYesterdaysWork,
   } = useWorkReport(new Date(new Date(curDay).setDate(curDay.getDate() - 1)));
 
   useEffect(() => {
     document.title = "Дневник производства v2.0";
     console.log(todaysWork, yesterdaysWork);
-  }, [todaysWork, yesterdaysWork]);
+  }, []);
 
   const handleOpenWorkForm = (
     day = "today",
@@ -159,10 +161,7 @@ const ProductionJournalNew = ({}) => {
         />
       </div>
       <TableView
-        isLoading={
-          Object.values(todaysWork.lemz).length == 0 ||
-          Object.values(yesterdaysWork.lemz).length === 0
-        }
+        isLoading={todayLoading || yesterdayLoading}
         curDay={curDay}
         todaysWork={todaysWork}
         yesterdaysWork={yesterdaysWork}

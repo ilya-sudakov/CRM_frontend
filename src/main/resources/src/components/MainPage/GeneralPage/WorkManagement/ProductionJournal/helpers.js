@@ -55,7 +55,7 @@ export const combineOriginalAndNewWorks = (
     });
   });
   setIsLoading(false);
-  setWorkTimeInputs({
+  return setWorkTimeInputs({
     ...worktimeInputs,
     ...newWorkshops,
   });
