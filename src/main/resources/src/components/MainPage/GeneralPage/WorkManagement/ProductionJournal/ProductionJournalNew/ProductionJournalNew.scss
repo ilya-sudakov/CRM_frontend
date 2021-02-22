@@ -433,6 +433,13 @@
                 }
             }
         }
+        
+        .main-form {
+            padding: 0;
+            &__form {
+                padding-top: 15px;
+            }
+        }
     }
     .form-window--hidden {
         .form-window__content {

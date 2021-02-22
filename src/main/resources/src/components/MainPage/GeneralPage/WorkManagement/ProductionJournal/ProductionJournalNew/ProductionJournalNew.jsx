@@ -98,6 +98,7 @@ const ProductionJournalNew = ({}) => {
                 workId: null,
                 hours: 0,
                 comment: "",
+                isOld: false,
               },
             ]
           : [selectedWork],
