@@ -144,7 +144,7 @@ const DayItem = ({
   works,
   curDay,
 }) => {
-  const isOldData = dateDiffInDays(curDay, new Date()) >= 1;
+  const isOldData = Math.abs(dateDiffInDays(curDay, new Date())) >= 1;
   const prevDay = new Date(new Date(curDay).setDate(curDay.getDate() - 1));
   const dayTypes = {
     yesterday: "Вчера",
@@ -211,6 +211,12 @@ const WorkItem = ({ work, onClick }) => {
           {work.draft?.map((draft) => (
             <span>{`${draft.name} - ${draft.quantity} шт`}</span>
           ))}
+        </div>
+      ) : null}
+      {work.comment !== "" ? (
+        <div className="employees__comment">
+          <span>Комментарий:</span>
+          <span>{work.comment}</span>
         </div>
       ) : null}
     </div>
