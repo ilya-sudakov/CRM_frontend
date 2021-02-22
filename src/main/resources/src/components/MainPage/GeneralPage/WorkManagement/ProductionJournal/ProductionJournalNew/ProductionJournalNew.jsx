@@ -71,7 +71,9 @@ const ProductionJournalNew = ({}) => {
     worksList,
     workId
   ) => {
-    const selectedWork = worksList.find((work) => work.id === workId);
+    const selectedWork = worksList
+      ? worksList.find((work) => work.id === workId)
+      : null;
     handleCloseWindow();
     setCurWorkItem({
       day: day,
