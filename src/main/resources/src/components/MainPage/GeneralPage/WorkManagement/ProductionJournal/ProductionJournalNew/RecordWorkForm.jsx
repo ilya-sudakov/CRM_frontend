@@ -479,12 +479,21 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
                 onClick={() => setShowMessage(true)}
               />
             ) : null}
-            <Button
-              text="Сохранить данные"
-              isLoading={isLoading}
-              className="main-form__submit"
-              onClick={handleSubmit}
-            />
+            {worktimeInputs.works?.length > 0 &&
+            worktimeInputs.works?.reduce((sum, cur) => {
+              if (cur.workType === "Без продукции/чертежа") {
+                return sum + 1;
+              } else if (cur.workType === "Чертеж") {
+                return sum + 1;
+              } else return cur?.product.length;
+            }, 0) > 0 ? (
+              <Button
+                text="Сохранить данные"
+                isLoading={isLoading}
+                className="main-form__submit"
+                onClick={handleSubmit}
+              />
+            ) : null}
           </div>
         </form>
       </div>
