@@ -1090,15 +1090,11 @@
           white-space: nowrap;
           // padding: 10px 0;
           margin: 0 15px;
-
-          //testing
-          // padding: 10px 25px !important;
-          // &::after {
-          //   left: 20px;
-          //   min-width: 80px;
-          //   width: calc(100% - 40px);
-          // }
         }
+      }
+
+      .main-window__description {
+        padding: 0 15px;
       }
 
       &--full {
