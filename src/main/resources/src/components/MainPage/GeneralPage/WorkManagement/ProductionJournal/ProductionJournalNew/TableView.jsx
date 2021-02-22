@@ -31,7 +31,9 @@ const TableView = ({
       (employee) =>
         employee?.relevance !== "Уволен" &&
         employee?.workshop !== "Уволенные" &&
-        employee?.lastName?.toLowerCase()?.includes(query)
+        (employee?.lastName?.toLowerCase()?.includes(query) ||
+          employee?.name?.toLowerCase()?.includes(query) ||
+          employee?.middleName?.toLowerCase()?.includes(query))
     );
   };
 
