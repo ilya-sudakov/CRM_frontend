@@ -423,12 +423,21 @@ const EditRecordWork = (props) => {
               onClick={() => history.push("/work-management")}
               value="Вернуться назад"
             />
-            <Button
-              text="Редактировать запись"
-              isLoading={isLoading}
-              className="main-form__submit"
-              onClick={handleSubmit}
-            />
+            {worktimeInputs.works.length > 0 &&
+            worktimeInputs.works.reduce((sum, cur) => {
+              if (cur.workType === "Без продукции/чертежа") {
+                return sum + 1;
+              } else if (cur.workType === "Чертеж") {
+                return sum + 1;
+              } else return cur?.product.length;
+            }, 0) > 0 ? (
+              <Button
+                text="Редактировать запись"
+                isLoading={isLoading}
+                className="main-form__submit"
+                onClick={handleSubmit}
+              />
+            ) : null}
           </div>
         </form>
       </div>
