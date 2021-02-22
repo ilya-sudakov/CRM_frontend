@@ -63,7 +63,7 @@ const ProductionJournalNew = ({}) => {
   useEffect(() => {
     document.title = "Дневник производства v2.0";
     console.log(todaysWork, yesterdaysWork);
-  }, []);
+  }, [todaysWork, yesterdaysWork]);
 
   const handleOpenWorkForm = (
     day = "today",
@@ -107,6 +107,50 @@ const ProductionJournalNew = ({}) => {
           ? "Создание записи о работе"
           : "Редактирование записи о работе",
       hideWindow: () => setShowWindow(!showWindow),
+      updateSelectedDaysWork: (newData) =>
+        day === "today"
+          ? setTodaysWork({
+              ...todaysWork,
+              [workshop]: {
+                [employee.id]: {
+                  ...todaysWork[workshop][employee.id],
+                  works: [...newData],
+                  originalWorks: [...newData],
+                },
+              },
+            })
+          : setYesterdaysWork({
+              ...yesterdaysWork,
+              [workshop]: {
+                [employee.id]: {
+                  ...yesterdaysWork[workshop][employee.id],
+                  works: [...newData],
+                  originalWorks: [...newData],
+                },
+              },
+            }),
+      deleteSelectedDaysWork: () =>
+        day === "today"
+          ? setTodaysWork({
+              ...todaysWork,
+              [workshop]: {
+                [employee.id]: {
+                  ...todaysWork[workshop][employee.id],
+                  works: worksList.filter((work) => work.id !== workId),
+                  originalWorks: worksList.filter((work) => work.id !== workId),
+                },
+              },
+            })
+          : setYesterdaysWork({
+              ...yesterdaysWork,
+              [workshop]: {
+                [employee.id]: {
+                  ...yesterdaysWork[workshop][employee.id],
+                  works: worksList.filter((work) => work.id !== workId),
+                  originalWorks: worksList.filter((work) => work.id !== workId),
+                },
+              },
+            }),
     });
     // console.log(day, type, workshop, employee, worksList, workId);
   };

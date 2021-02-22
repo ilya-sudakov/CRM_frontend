@@ -18,7 +18,7 @@ import Button from "../../../../../../utils/Form/Button/Button.jsx";
 import useProductsList from "../../../../../../utils/hooks/useProductsList/useProductsList.js";
 import SelectWork from "../../SelectWork/SelectWork.jsx";
 
-const RecordWorkForm = ({ inputs, handleCloseWindow, showWindow }) => {
+const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
     employee: null,
@@ -360,6 +360,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow, showWindow }) => {
       })
       .then(() => deleteRecordedWork(originalWork.id))
       .then(() => {
+        inputs.deleteSelectedDaysWork();
         setIsSaved(true);
         setIsLoading(false);
       });
