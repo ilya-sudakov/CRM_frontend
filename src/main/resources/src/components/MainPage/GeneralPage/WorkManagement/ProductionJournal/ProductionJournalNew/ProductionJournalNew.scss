@@ -367,10 +367,12 @@
                             .employees__comment {
                                 color: #777;
                                 font-size: 0.8rem;
+                                margin-top: 3px;
 
                                 span {
                                     &:nth-child(1) {
                                         margin-right: 5px;
+                                        color: #aaa;
                                     }
                                     &:nth-child(2) {
                                         font-style: italic;
