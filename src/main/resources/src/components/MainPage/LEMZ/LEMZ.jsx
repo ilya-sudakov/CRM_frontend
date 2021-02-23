@@ -11,7 +11,7 @@ import {
   Storage,
   NewStorage,
   EditStorage,
-  WorkshopOrdersLEMZ,
+  WorkshopOrders,
   NewWorkshopOrderLEMZ,
   ViewWorkshopOrderLEMZ,
   EditWorkshopOrderLEMZ,
@@ -137,8 +137,8 @@ const LEMZ = (props) => {
               <PrivateRoute
                 exact
                 path="/lemz/workshop-orders"
-                component={WorkshopOrdersLEMZ}
-                userHasAccess={props.userHasAccess}
+                component={WorkshopOrders}
+                type="lemz"
                 allowedRoles={[
                   "ROLE_ADMIN",
                   "ROLE_DISPATCHER",

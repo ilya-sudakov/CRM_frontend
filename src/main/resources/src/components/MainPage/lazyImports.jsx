@@ -102,8 +102,20 @@ const EditProduct = lazy(() =>
 
 const WorkshopLEMZ = lazy(() => import("./WorkshopLEMZ/WorkshopLEMZ.jsx"));
 
-const WorkshopOrdersLEMZ = lazy(() =>
-  import("./LEMZ/WorkshopOrders/WorkshopOrders.jsx")
+const WorkshopOrders = lazy(() =>
+  import("./WorkshopsComponents/WorkshopOrders/WorkshopOrders.jsx")
+);
+
+const NewWorkshopOrder = lazy(() =>
+  import(
+    "./WorkshopsComponents/WorkshopOrders/NewWorkshopOrder/NewWorkshopOrder.jsx"
+  )
+);
+
+const EditWorkshopOrder = lazy(() =>
+  import(
+    "./WorkshopsComponents/WorkshopOrders/EditWorkshopOrder/EditWorkshopOrder.jsx"
+  )
 );
 
 const NewWorkshopOrderLEMZ = lazy(() =>
@@ -116,10 +128,6 @@ const ViewWorkshopOrderLEMZ = lazy(() =>
 
 const EditWorkshopOrderLEMZ = lazy(() =>
   import("./LEMZ/WorkshopOrders/EditWorkshopOrder/EditWorkshopOrder.jsx")
-);
-
-const WorkshopOrdersLepsari = lazy(() =>
-  import("./Lepsari/WorkshopOrders/WorkshopOrders.jsx")
 );
 
 const NewWorkshopOrderLepsari = lazy(() =>
@@ -295,14 +303,15 @@ export {
   Storage,
   NewStorage,
   EditStorage,
-  WorkshopOrdersLEMZ,
   NewWorkshopOrderLEMZ,
   ViewWorkshopOrderLEMZ,
   EditWorkshopOrderLEMZ,
-  WorkshopOrdersLepsari,
   NewWorkshopOrderLepsari,
   ViewWorkshopOrderLepsari,
   EditWorkshopOrderLepsari,
+  WorkshopOrders,
+  NewWorkshopOrder,
+  EditWorkshopOrder,
   Rigging,
   Transportation,
   EditTransportation,

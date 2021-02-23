@@ -14,7 +14,7 @@ import {
   EditWorkshopOrderLepsari,
   ViewWorkshopOrderLepsari,
   NewWorkshopOrderLepsari,
-  WorkshopOrdersLepsari,
+  WorkshopOrders,
   NewRequest,
   EditRequest,
   ShipRequest,
@@ -145,8 +145,8 @@ const Lepsari = (props) => {
               <PrivateRoute
                 exact
                 path="/lepsari/workshop-orders"
-                component={WorkshopOrdersLepsari}
-                userHasAccess={props.userHasAccess}
+                component={WorkshopOrders}
+                type="lepsari"
                 allowedRoles={[
                   "ROLE_ADMIN",
                   "ROLE_DISPATCHER",
@@ -159,25 +159,12 @@ const Lepsari = (props) => {
                 path="/lepsari/workshop-orders/new"
                 component={NewWorkshopOrderLepsari}
                 userHasAccess={props.userHasAccess}
-                // transferState={props.transferState}
-                // transferData={props.transferData}
-                // setTransferState={props.setTransferState}
-                // setTransferData={props.setTransferData}
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  // 'ROLE_DISPATCHER',
-                  "ROLE_ENGINEER",
-                  "ROLE_LEPSARI",
-                ]}
+                allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEPSARI"]}
               />
               <PrivateRoute
                 path="/lepsari/workshop-orders/view/"
                 component={ViewWorkshopOrderLepsari}
                 userHasAccess={props.userHasAccess}
-                // transferState={props.transferState}
-                // transferData={props.transferData}
-                // setTransferState={props.setTransferState}
-                // setTransferData={props.setTransferData}
                 allowedRoles={[
                   "ROLE_ADMIN",
                   "ROLE_DISPATCHER",
@@ -189,10 +176,6 @@ const Lepsari = (props) => {
                 path="/lepsari/workshop-orders/edit/"
                 component={EditWorkshopOrderLepsari}
                 userHasAccess={props.userHasAccess}
-                // transferState={props.transferState}
-                // transferData={props.transferData}
-                // setTransferState={props.setTransferState}
-                // setTransferData={props.setTransferData}
                 allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
               />
               <Route component={PageNotFound} />
