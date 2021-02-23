@@ -64,10 +64,7 @@ const InputProducts = (props) => {
   };
 
   async function loadCategories() {
-    //Динамическая загрузка продукции
     if (props.categories && props.products) {
-      // console.log('already have loaded products');
-      // console.log(props.products);
       setCategories([...props.categories]);
       setProducts([...props.products]);
     } else {
@@ -114,7 +111,6 @@ const InputProducts = (props) => {
           }
           Promise.all(temp)
             .then(() => {
-              //Загружаем картинки по отдельности для каждой продукции
               return Promise.all(
                 productsArr.map((item, index) => {
                   getProductById(item.id)
@@ -127,9 +123,7 @@ const InputProducts = (props) => {
                 })
               );
             })
-            .then(() => {
-              // console.log('all images downloaded');
-            });
+            .then(() => {});
         })
         .catch((error) => {
           console.log(error);
@@ -141,62 +135,34 @@ const InputProducts = (props) => {
     const value = event.currentTarget.getAttribute("name");
     const id = event.currentTarget.getAttribute("id");
     const productId = event.currentTarget.getAttribute("productId");
+    const newData = {
+      id: id,
+      name: value,
+      quantity: 0,
+      quantityNew: 0,
+      packaging: "",
+      // packaging: null,
+      status: "production",
+      productId: productId,
+    };
     clickOnInput();
-    setSelected([
-      ...selected,
-      {
-        id: id,
-        name: value,
-        quantity: 0,
-        quantityNew: 0,
-        packaging: "",
-        // packaging: null,
-        status: "production",
-        productId: productId,
-      },
-    ]);
-    props.onChange([
-      ...selected,
-      {
-        id: id,
-        name: value,
-        quantity: 0,
-        quantityNew: 0,
-        packaging: "",
-        // packaging: null,
-        status: "production",
-        productId: productId,
-      },
-    ]);
+    setSelected([...selected, newData]);
+    props.onChange([...selected, newData]);
   };
 
   const selectProduct = (id, value, productId) => {
-    setSelected([
-      ...selected,
-      {
-        id: id,
-        name: value,
-        quantity: 0,
-        quantityNew: 0,
-        packaging: "",
-        // packaging: null,
-        status: "production",
-        productId: productId,
-      },
-    ]);
-    props.onChange([
-      ...selected,
-      {
-        id: id,
-        name: value,
-        quantity: 0,
-        quantityNew: 0,
-        packaging: "",
-        // packaging: null,
-        status: "production",
-        productId: productId,
-      },
-    ]);
+    const newData = {
+      id: id,
+      name: value,
+      quantity: 0,
+      quantityNew: 0,
+      packaging: "",
+      // packaging: null,
+      status: "production",
+      productId: productId,
+    };
+    setSelected([...selected, newData]);
+    props.onChange([...selected, newData]);
   };
 
   const clickOnSelected = (event) => {
