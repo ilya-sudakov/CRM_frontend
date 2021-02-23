@@ -98,6 +98,14 @@ const GeneralPage = (props) => {
               {props.userHasAccess(["ROLE_ADMIN"]) && (
                 <Link
                   className="main-window__button"
+                  to="/work-management/journal-new"
+                >
+                  Дневник производства v2.0
+                </Link>
+              )}
+              {props.userHasAccess(["ROLE_ADMIN"]) && (
+                <Link
+                  className="main-window__button"
                   to="/work-management/notes/"
                 >
                   Журнал руководителя
