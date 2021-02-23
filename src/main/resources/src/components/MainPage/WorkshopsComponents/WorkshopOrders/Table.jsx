@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import {
   formatDateString,
@@ -6,14 +6,13 @@ import {
 } from "../../../../utils/functions.jsx";
 
 import editSVG from "../../../../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../../../../assets/tableview/delete.svg";
-import viewSVG from "../../../../../../../../assets/tableview/view.svg";
+import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
+import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
 
 const Tableview = ({
   data,
   isLoading,
   statuses,
-  history,
   deleteItem,
   userHasAccess,
   link,
@@ -27,7 +26,7 @@ const Tableview = ({
         <span>Комплектация</span>
         <span>Статус</span>
         <span>Дата поставки</span>
-        <div className="main-window__actions">Действие</div>
+        <div className="main-window__table-actions"></div>
       </div>
       {isLoading && (
         <PlaceholderLoading
@@ -36,7 +35,7 @@ const Tableview = ({
           items={3}
         />
       )}
-      {data.map((order, orderIndex) => {
+      {data.map((order) => {
         return (
           <div
             className={
@@ -84,31 +83,24 @@ const Tableview = ({
                 formatDateString(order.deliverBy)
               )}
             </span>
-            <div className="main-window__actions">
-              <div
-                className="main-window__action"
-                title="Просмотр заказа"
-                onClick={() => history.push(`${link}/view/${order.id}`)}
-              >
-                <img className="main-window__img" src={viewSVG} />
-              </div>
-              <div
-                className="main-window__action"
-                title="Редактирование заказа"
-                onClick={() => history.push(`${link}/edit/${order.id}`)}
-              >
-                <img className="main-window__img" src={editSVG} />
-              </div>
-              {userHasAccess(["ROLE_ADMIN"]) && (
-                <div
-                  className="main-window__action"
-                  title="Удаление заказа"
-                  onClick={() => deleteItem(orderIndex)}
-                >
-                  <img className="main-window__img" src={deleteSVG} />
-                </div>
-              )}
-            </div>
+            <TableActions
+              actionsList={[
+                {
+                  link: `${link}/edit/${order.id}`,
+                  imgSrc: editSVG,
+                  title: "Редактирование заказа",
+                },
+                {
+                  customElement: (
+                    <DeleteItemAction
+                      title="Удаление заказа"
+                      onClick={() => deleteItem(order)}
+                    />
+                  ),
+                  isRendered: userHasAccess(["ROLE_ADMIN"]),
+                },
+              ]}
+            />
           </div>
         );
       })}

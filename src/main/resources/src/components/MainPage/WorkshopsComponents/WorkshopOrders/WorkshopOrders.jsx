@@ -61,16 +61,12 @@ const WorkshopOrders = (props) => {
       });
   };
 
-  const deleteItem = (orderIndex) => {
+  const deleteItem = (item) => {
     Promise.all(
-      orders[orderIndex].products.map((product) => {
-        return deleteProductFromOrder(product.id);
-      })
-    ).then(() => {
-      return deleteOrder(orders[orderIndex].id).then(() => {
-        return loadData();
-      });
-    });
+      item.products.map((product) => deleteProductFromOrder(product.id))
+    )
+      .then(() => deleteOrder(item.id))
+      .then(() => loadData());
   };
 
   const filterOrders = (data) => {
@@ -122,7 +118,7 @@ const WorkshopOrders = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <FloatingPlus
-          linkTo={`${workshops[props.type].redirectURL}/new`}
+          linkTo={`${workshops[props.type].ordersRedirectURL}/new`}
           visibility={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
         />
         <ControlPanel
@@ -152,10 +148,9 @@ const WorkshopOrders = (props) => {
             fieldName: "date",
             direction: "desc",
           })}
-          link={workshops[props.type].redirectURL}
+          link={workshops[props.type].ordersRedirectURL}
           isLoading={isLoading}
           statuses={statuses}
-          history={props.history}
           deleteItem={deleteItem}
           userHasAccess={userContext.userHasAccess}
         />
