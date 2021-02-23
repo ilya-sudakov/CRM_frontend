@@ -1,18 +1,11 @@
 import "./InputProducts.scss";
 import SelectFromButton from "../SelectFromButton/SelectFromButton.jsx";
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Select.scss";
 import SearchBar from "../../../components/MainPage/SearchBar/SearchBar.jsx";
 import TableView from "../../../components/MainPage/Products/TableView/TableView.jsx";
-import { getCategoriesNames } from "../../RequestsAPI/Products/Categories.js";
 import FormWindow from "../../Form/FormWindow/FormWindow.jsx";
-import {
-  getProductsByCategory,
-  getProductById,
-  getProductsByLocation,
-} from "../../../utils/RequestsAPI/Products.js";
 import ImgLoader from "../../../utils/TableView/ImgLoader/ImgLoader.jsx";
-import UserContext from "../../../App.js";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import useSort from "../../hooks/useSort/useSort";
 import {
@@ -22,13 +15,15 @@ import {
   renderSelectedItemName,
   renderSelectPackaging,
 } from "./functions.jsx";
+import useProductsList from "../../hooks/useProductsList/useProductsList";
 
 const InputProducts = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueryCategory, setSearchQueryCategory] = useState("");
   const [selected, setSelected] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
+  const { products, categories } = useProductsList(
+    !props.products || !props.categories
+  );
   const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -49,11 +44,10 @@ const InputProducts = (props) => {
     },
     [props.products ?? products]
   );
-  const userContext = useContext(UserContext);
 
   const search = () => {
     let searchArr = searchQuery.split(" ");
-    return (props.products ? props.products : products).filter((item) => {
+    return (props.products ?? products).filter((item) => {
       let check = true;
       searchArr.map((searchWord) => {
         if (
@@ -83,68 +77,6 @@ const InputProducts = (props) => {
       clickOnInput();
     }
   };
-
-  async function loadCategories() {
-    getCategoriesNames() //Только категории
-      .then((res) => res.json())
-      .then((res) => {
-        const categoriesArr = res;
-        setCategories(res);
-        let productsArr = [];
-        let temp;
-        if (
-          userContext.userHasAccess([
-            "ROLE_ADMIN",
-            "ROLE_DISPATCHER",
-            "ROLE_ENGINEER",
-            "ROLE_MANAGER",
-            "ROLE_WORKSHOP", //temp
-          ])
-        ) {
-          temp = categoriesArr.map((item) => {
-            let category = {
-              category: item.category,
-            };
-            return getProductsByCategory(category) //Продукция по категории
-              .then((res) => res.json())
-              .then((res) => {
-                res.map((item) => productsArr.push(item));
-                setProducts([...productsArr]);
-              });
-          });
-        } else if (userContext.userHasAccess(["ROLE_WORKSHOP"])) {
-          temp = getProductsByLocation({
-            productionLocation: userContext.userHasAccess(["ROLE_LEMZ"])
-              ? "ЦехЛЭМЗ"
-              : userContext.userHasAccess(["ROLE_LEPSARI"])
-              ? "ЦехЛепсари"
-              : "ЦехЛЭМЗ",
-          })
-            .then((res) => res.json())
-            .then((res) => {
-              res.map((item) => productsArr.push(item));
-              setProducts([...productsArr]);
-            });
-        }
-        Promise.all(temp)
-          .then(() => {
-            return Promise.all(
-              productsArr.map((item, index) => {
-                getProductById(item.id)
-                  .then((res) => res.json())
-                  .then((res) => {
-                    productsArr.splice(index, 1, res);
-                    setProducts([...productsArr]);
-                  });
-              })
-            );
-          })
-          .then(() => {});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
   const clickOnOption = (event) => {
     const value = event.currentTarget.getAttribute("name");
@@ -243,13 +175,6 @@ const InputProducts = (props) => {
     if (props.defaultValue !== undefined) {
       setSelected([...props.defaultValue]);
     }
-
-    if (props.categories && props.products) {
-      setCategories([...props.categories]);
-      setProducts([...props.products]);
-    } else {
-      loadCategories();
-    }
     document.addEventListener("keydown", pressEscKey, false);
     return () => {
       document.removeEventListener("keydown", pressEscKey, false);
@@ -295,7 +220,7 @@ const InputProducts = (props) => {
           index,
           item,
           defaultPropsForLayoutFunctions,
-          products
+          props.products ?? products
         ),
     },
   };
@@ -347,12 +272,14 @@ const InputProducts = (props) => {
                         setSearchQuery={setSearchQueryCategory}
                       />
                       <ControlPanel
-                        itemsCount={`Всего: ${products.length} записей`}
+                        itemsCount={`Всего: ${
+                          (props.products ?? products).length
+                        } записей`}
                         sorting={sortPanel}
                       />
                       <TableView
                         products={filterSearchQuery(sortedData)}
-                        categories={categories}
+                        categories={props.categories ?? categories}
                         searchQuery={searchQueryCategory}
                         deleteItem={null}
                         selectProduct={selectProduct}
