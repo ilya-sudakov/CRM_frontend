@@ -71,6 +71,17 @@ const ProductionJournalNew = ({}) => {
     return temp;
   };
 
+  const defaultWorkItem = {
+    product: [],
+    draft: [],
+    workName: "",
+    workType: "",
+    workId: null,
+    hours: 0,
+    comment: "",
+    isOld: false,
+  };
+
   const handleOpenWorkForm = (
     day = "today",
     type = "new",
@@ -80,16 +91,6 @@ const ProductionJournalNew = ({}) => {
     workId
   ) => {
     handleCloseWindow();
-    const defaultWorkItem = {
-      product: [],
-      draft: [],
-      workName: "",
-      workType: "",
-      workId: null,
-      hours: 0,
-      comment: "",
-      isOld: false,
-    };
     const deletedWork = worksList.filter((work) => work.id !== workId);
     const selectedWork = worksList
       ? worksList.find((work) => work.id === workId)
