@@ -64,9 +64,9 @@ const FileUploader = ({
     dragCounter = 0;
 
     //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
-    if (file.name.match(regex) === null) {
+    if (file.name.match(regex) === null)
       return setHasError("Некорректный формат файла!");
-    }
+
     if (type === "fileOnly") return onChange(file);
 
     let reader = new FileReader();
