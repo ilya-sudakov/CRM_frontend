@@ -92,53 +92,12 @@ const Header = (props) => {
               alt=""
             />
           </div>
-          <div
-            className={
-              showProfileMenu
-                ? "header__profile_menu"
-                : "header__profile_menu header__profile_menu--hidden"
-            }
-          >
-            {userContext.userHasAccess(["ROLE_ADMIN"]) ? (
-              <Link
-                to="/profile/users"
-                className={`header__profile_item ${
-                  props.location.pathname.includes("/profile/users")
-                    ? "header__profile_item--active"
-                    : ""
-                }`}
-                onClick={() => setShowProfileMenu(!showProfileMenu)}
-              >
-                <img className="header__img" src={employeeSVG} alt="" />
-                <span>Управление пользователями</span>
-              </Link>
-            ) : null}
-            {userContext.userHasAccess(["ROLE_ADMIN"]) ? (
-              <Link
-                to="/profile/log-list"
-                className={`header__profile_item ${
-                  props.location.pathname.includes("/profile/log-list")
-                    ? "header__profile_item--active"
-                    : ""
-                }`}
-                onClick={() => setShowProfileMenu(!showProfileMenu)}
-              >
-                <HistorySVG
-                  className="header__img header__img--history"
-                  alt=""
-                />
-                <span>Логи</span>
-              </Link>
-            ) : null}
-            <Link
-              to="/login"
-              className="header__profile_item"
-              onClick={() => setShowProfileMenu(!showProfileMenu)}
-            >
-              <img className="header__img" src={exitSVG} alt="" />
-              <span>Выйти из профиля</span>
-            </Link>
-          </div>
+          <HeaderMenu
+            userHasAccess={userContext.userHasAccess}
+            location={props.location}
+            showProfileMenu={showProfileMenu}
+            setShowProfileMenu={setShowProfileMenu}
+          />
         </div>
       </div>
     </div>
@@ -151,4 +110,74 @@ Header.propTypes = {
   sidemenuHidden: PropTypes.bool,
   setSidemenuHidden: PropTypes.func,
   location: PropTypes.object,
+};
+
+const HeaderMenu = ({
+  showProfileMenu,
+  setShowProfileMenu,
+  userHasAccess,
+  location,
+}) => {
+  return (
+    <div
+      className={
+        showProfileMenu
+          ? "header__profile_menu"
+          : "header__profile_menu header__profile_menu--hidden"
+      }
+    >
+      {userHasAccess(["ROLE_ADMIN"]) ? (
+        <HeaderMenuItem
+          showProfileMenu={showProfileMenu}
+          setShowProfileMenu={setShowProfileMenu}
+          link="/profile/users"
+          text="Управление пользователями"
+          location={location}
+          icon={<img className="header__img" src={employeeSVG} alt="" />}
+        />
+      ) : null}
+      {userHasAccess(["ROLE_ADMIN"]) ? (
+        <HeaderMenuItem
+          showProfileMenu={showProfileMenu}
+          setShowProfileMenu={setShowProfileMenu}
+          link="/profile/log-list"
+          text="Логи"
+          location={location}
+          icon={
+            <HistorySVG className="header__img header__img--history" alt="" />
+          }
+        />
+      ) : null}
+      <HeaderMenuItem
+        showProfileMenu={showProfileMenu}
+        setShowProfileMenu={setShowProfileMenu}
+        link="/login"
+        text="Выйти из профиля"
+        location={location}
+        icon={<img className="header__img" src={exitSVG} alt="" />}
+      />
+    </div>
+  );
+};
+
+const HeaderMenuItem = ({
+  link,
+  setShowProfileMenu,
+  showProfileMenu,
+  text,
+  icon,
+  location,
+}) => {
+  return (
+    <Link
+      to={link}
+      className={`header__profile_item ${
+        location.pathname.includes(link) ? "header__profile_item--active" : ""
+      }`}
+      onClick={() => setShowProfileMenu(!showProfileMenu)}
+    >
+      {icon}
+      <span>{text}</span>
+    </Link>
+  );
 };
