@@ -6,8 +6,9 @@ import { sortByField } from "../../sorting/sorting.js";
 const useSort = (
   data = [],
   props = {
+    //default values
     ignoreURL: false,
-  }, //default values
+  },
   changableParams = []
 ) => {
   const { query, pushParamToURL } = useQuery();
@@ -25,9 +26,8 @@ const useSort = (
   };
 
   const [sortOrder, setSortOrder] = useState(
-    props.sortOrder ?? props.ignoreURL
-      ? defaultSort
-      : sortParamInURL ?? defaultSort
+    props.sortOrder ??
+      (props.ignoreURL ? defaultSort : sortParamInURL ?? defaultSort)
   );
 
   const changeSortOrder = (event) => {
@@ -64,7 +64,7 @@ const useSort = (
       fieldName: sortOrder.curSort,
       direction: sortOrder[sortOrder.curSort],
     });
-    setSortedData(newData);
+    setSortedData([...newData]);
   }, [...changableParams, sortOrder]);
 
   return {

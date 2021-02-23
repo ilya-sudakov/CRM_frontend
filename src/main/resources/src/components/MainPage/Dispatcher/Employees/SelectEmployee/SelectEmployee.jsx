@@ -9,6 +9,7 @@ import {
 } from "../../../../../utils/RequestsAPI/Employees.jsx";
 import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
+import useSort from "../../../../../utils/hooks/useSort/useSort";
 
 const SelectEmployee = (props) => {
   const [showWindow, setShowWindow] = useState(false);
@@ -19,6 +20,21 @@ const SelectEmployee = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [id, setId] = useState(0);
   const [fullName, setFullName] = useState("");
+  const { sortedData, sortPanel } = useSort(
+    employees,
+    {
+      sortOrder: {
+        curSort: "lastName",
+        lastName: "desc",
+      },
+      sortOptions: [
+        { value: "lastName desc", text: "По фамилии (А-Я)" },
+        { value: "lastName asc", text: "По фамилии (Я-А)" },
+      ],
+      ignoreURL: true,
+    },
+    [employees]
+  );
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
@@ -91,51 +107,23 @@ const SelectEmployee = (props) => {
 
   // * Sorting
 
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "lastName",
-    lastName: "asc",
-  });
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    });
-  };
-
   const filterSearchQuery = (data) => {
     const query = searchQuery.toLowerCase();
     return data.filter((item) => {
-      if (item.name !== null) {
-        return (
-          item.lastName.toLowerCase().includes(query) ||
-          item.name.toLowerCase().includes(query) ||
-          item.middleName.toLowerCase().includes(query) ||
-          item.id.toString().includes(query) ||
-          (item.yearOfBirth && item.yearOfBirth.toString().includes(query)) ||
-          (item.dateOfBirth && item.dateOfBirth.toString().includes(query)) ||
-          item.citizenship.toLowerCase().includes(query) ||
-          item.workshop.toLowerCase().includes(query) ||
-          item.position.toLowerCase().includes(query) ||
-          item.comment.toLowerCase().includes(query) ||
-          item.relevance.toLowerCase().includes(query)
-        );
-      }
-      return false;
-    });
-  };
-
-  const sortEmployees = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
+      if (item.name === null) return false;
+      const isFound =
+        item.lastName.toLowerCase().includes(query) ||
+        item.name.toLowerCase().includes(query) ||
+        item.middleName.toLowerCase().includes(query) ||
+        item.id.toString().includes(query) ||
+        (item.yearOfBirth && item.yearOfBirth.toString().includes(query)) ||
+        (item.dateOfBirth && item.dateOfBirth.toString().includes(query)) ||
+        item.citizenship.toLowerCase().includes(query) ||
+        item.workshop.toLowerCase().includes(query) ||
+        item.position.toLowerCase().includes(query) ||
+        item.comment.toLowerCase().includes(query) ||
+        item.relevance.toLowerCase().includes(query);
+      return isFound;
     });
   };
 
@@ -210,19 +198,11 @@ const SelectEmployee = (props) => {
               placeholder="Введите ФИО сотрудника для поиска..."
             />
             <ControlPanel
-              sorting={
-                <div className="main-window__sort-panel">
-                  <select onChange={changeSortOrder}>
-                    <option value="lastName asc">По алфавиту (А-Я)</option>
-                    <option value="lastName desc">По алфавиту (Я-А)</option>
-                    <option value="yearOfBirth asc">По дате рождения</option>
-                  </select>
-                </div>
-              }
+              sorting={sortPanel}
               itemsCount={`Всего: ${employees.length} записей`}
             />
             <TableView
-              data={sortEmployees(employees)}
+              data={filterSearchQuery(sortedData)}
               searchQuery={searchQuery}
               userHasAccess={props.userHasAccess}
               selectEmployee={clickEmployee}
