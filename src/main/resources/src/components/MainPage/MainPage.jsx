@@ -61,7 +61,6 @@ import {
   EditRequest,
   NewLtd,
   EditLtd,
-  NotesJournal,
   ProductionJournalNew,
 } from "./lazyImports.jsx";
 import SideMenu from "../SideMenu/SideMenu.jsx";
@@ -555,11 +554,6 @@ const MainPage = () => {
                       "ROLE_DISPATCHER",
                       "ROLE_ENGINEER",
                     ]}
-                  />
-                  <PrivateRoute
-                    path="/work-management/notes/"
-                    component={NotesJournal}
-                    allowedRoles={["ROLE_ADMIN"]}
                   />
                   <PrivateRoute
                     exact

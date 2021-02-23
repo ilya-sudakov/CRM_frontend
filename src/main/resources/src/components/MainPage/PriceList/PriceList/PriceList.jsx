@@ -28,6 +28,7 @@ import {
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { Link } from "react-router-dom";
 import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
+import { sortByField } from "../../../../utils/sorting/sorting";
 
 const NewPriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
@@ -284,15 +285,7 @@ const NewPriceList = () => {
   }, [priceList]);
 
   const sortPriceList = (priceList) => {
-    return priceList.sort((a, b) => {
-      if (a.id < b.id) {
-        return -1;
-      }
-      if (a.id > b.id) {
-        return 1;
-      }
-      return 0;
-    });
+    return sortByField(priceList, { fieldName: "id", direction: "desc" });
   };
 
   const handleOpenPDF = () => {

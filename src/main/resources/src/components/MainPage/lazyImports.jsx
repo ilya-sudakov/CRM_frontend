@@ -66,12 +66,6 @@ const ProductionJournal = lazy(() =>
   import("./GeneralPage/WorkManagement/ProductionJournal/ProductionJournal.jsx")
 );
 
-const NotesJournal = lazy(() =>
-  import(
-    "./GeneralPage/WorkManagement/ProductionJournal/NotesJournal/NotesJournal.jsx"
-  )
-);
-
 const ProductionJournalNew = lazy(() =>
   import(
     "./GeneralPage/WorkManagement/ProductionJournal/ProductionJournalNew/ProductionJournalNew.jsx"
@@ -286,7 +280,6 @@ export {
   EditRecordWork,
   ProductionJournal,
   ProductionJournalNew,
-  NotesJournal,
   WorkManagementPage,
   Products,
   NewProduct,

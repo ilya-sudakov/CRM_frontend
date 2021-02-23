@@ -1,5 +1,4 @@
-# Система управления для малого предприятия - Фронтенд
-
+# Система управления для малого предприятия - Фронтенд [![codecov](https://codecov.io/gh/ilyasudakov/osfix_erp_frontend/branch/master/graph/badge.svg?token=V42H3BD550)](https://codecov.io/gh/ilyasudakov/osfix_erp_frontend)
 # Инструкция по установке
 
 - После копирования репозитория необходимо создать файл

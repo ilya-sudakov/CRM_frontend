@@ -9,6 +9,7 @@ import {
   formatDateStringNoYear,
 } from "../../../../../../utils/functions.jsx";
 import { Link } from "react-router-dom";
+import { sortByField } from "../../../../../../utils/sorting/sorting.js";
 
 const TableView = ({
   isLoading,
@@ -37,25 +38,17 @@ const TableView = ({
     );
   };
 
-  const sortEmployees = (employees) => {
-    return employees.sort((a, b) => {
-      if (a.lastName < b.lastName) {
-        return -1;
-      }
-      if (a.lastName > b.lastName) {
-        return 1;
-      }
-      return 0;
-    });
-  };
-
   return (
     <div className="notes-journal__list">
       {Object.values(workshops).map((workshop) => {
-        const filteredEmployees = sortEmployees(
+        const filteredEmployees = sortByField(
           filterEmployees(employeesNotes, searchQuery).filter(
             (employee) => employee.workshop === workshop.name
-          )
+          ),
+          {
+            fieldName: "lastName",
+            direction: "desc",
+          }
         );
         if (filteredEmployees.length === 0) return null;
         return (
