@@ -144,7 +144,7 @@ const WorkshopOrders = (props) => {
         <Tableview
           data={sortByField(filterOrders(orders), {
             fieldName: "date",
-            direction: "desc",
+            direction: "asc",
           })}
           link={workshops[props.type].ordersRedirectURL}
           isLoading={isLoading}

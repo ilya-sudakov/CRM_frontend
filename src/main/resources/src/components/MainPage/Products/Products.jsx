@@ -37,12 +37,12 @@ const Products = (props) => {
       ignoreURL: true,
       sortOrder: {
         curSort: "name",
-        name: "desc",
+        name: "asc",
       },
       sortOptions: [
-        { value: "name desc", text: "По алфавиту (А-Я)" },
-        { value: "name asc", text: "По алфавиту (Я-А)" },
-        { value: "weight asc", text: "По весу" },
+        { value: "name asc", text: "По алфавиту (А-Я)" },
+        { value: "name desc", text: "По алфавиту (Я-А)" },
+        { value: "weight desc", text: "По весу" },
       ],
     },
     [products]

@@ -91,7 +91,7 @@ export const getRequestPdfText = (
 ) => {
   let productsArr = sortByField(requestProducts, {
     fieldName: "name",
-    direction: "desc",
+    direction: "asc",
   }).map((item) => {
     return [item.name, item.quantity, item.packaging, "", ""];
   });

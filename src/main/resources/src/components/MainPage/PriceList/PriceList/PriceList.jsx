@@ -285,7 +285,7 @@ const NewPriceList = () => {
   }, [priceList]);
 
   const sortPriceList = (priceList) => {
-    return sortByField(priceList, { fieldName: "id", direction: "desc" });
+    return sortByField(priceList, { fieldName: "id", direction: "asc" });
   };
 
   const handleOpenPDF = () => {

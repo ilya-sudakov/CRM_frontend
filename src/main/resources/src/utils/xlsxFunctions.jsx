@@ -10,7 +10,7 @@ export const exportClientsEmailsCSV = (clients) => {
   let index = 0;
   let dataWS = null;
   Promise.all(
-    sortByField(clients, { fieldName: "name", direction: "desc" }).map(
+    sortByField(clients, { fieldName: "name", direction: "asc" }).map(
       (client) => {
         client.contacts.map((contactData) => {
           if (index === 0) {

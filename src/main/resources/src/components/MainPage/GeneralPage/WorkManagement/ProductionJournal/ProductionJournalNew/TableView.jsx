@@ -47,7 +47,7 @@ const TableView = ({
           ),
           {
             fieldName: "lastName",
-            direction: "desc",
+            direction: "asc",
           }
         );
         if (filteredEmployees.length === 0) return null;

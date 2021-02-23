@@ -1,51 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 // import sortIcon from '../../../../../../../../assets/tableview/sort_icon.png'
-import editSVG from '../../../../../../../../assets/tableview/edit.svg'
-import deleteSVG from '../../../../../../../../assets/tableview/delete.svg'
-import './TableView.scss'
-import '../../../../utils/MainWindow/MainWindow.scss'
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
+import editSVG from "../../../../../../../../assets/tableview/edit.svg";
+import deleteSVG from "../../../../../../../../assets/tableview/delete.svg";
+import "./TableView.scss";
+import "../../../../utils/MainWindow/MainWindow.scss";
+import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import { sortByField } from "../../../../utils/sorting/sorting";
 
 const TableView = (props) => {
-  const [sortOrder, setSortOrder] = useState({
-    curSort: 'work',
-    id: 'desc',
-  })
-  const [isLoading, setIsLoading] = useState(true)
-
-  const changeSortOrder = (event) => {
-    const name = event.target.getAttribute('name')
-    setSortOrder({
-      curSort: name,
-      [name]: sortOrder[name] === 'desc' ? 'asc' : 'desc',
-    })
-  }
+  const [isLoading, setIsLoading] = useState(true);
 
   const searchQuery = (data) => {
-    const query = props.searchQuery.toLowerCase()
+    const query = props.searchQuery.toLowerCase();
     return data.filter(
       (item) =>
         item.work.toLowerCase().includes(query) ||
-        item.id.toString().includes(query),
-    )
-  }
+        item.id.toString().includes(query)
+    );
+  };
 
-  const sortProducts = (data) => {
-    return searchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
-      }
-      return 0
-    })
-  }
+  const sortWorkItems = (data) => {
+    return searchQuery(
+      sortByField(data, { fieldName: "id", direction: "asc" })
+    );
+  };
 
   useEffect(() => {
-    props.data.length > 0 && setIsLoading(false)
-  }, [props.data])
+    props.data.length > 0 && setIsLoading(false);
+  }, [props.data]);
 
   return (
     <div className="tableview-work">
@@ -63,7 +46,7 @@ const TableView = (props) => {
               items={8}
             />
           )}
-          {sortProducts(props.data).map((work, work_id) => (
+          {sortWorkItems(props.data).map((work, work_id) => (
             <div key={work_id} className="main-window__list-item">
               <span>
                 <div className="main-window__mobile-text">Название:</div>
@@ -75,9 +58,9 @@ const TableView = (props) => {
               </span>
               <div className="main-window__actions">
                 {props.userHasAccess &&
-                  props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
+                  props.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) && (
                     <Link
-                      to={'/work-list/edit/' + work.id}
+                      to={"/work-list/edit/" + work.id}
                       className="main-window__action"
                       title="Редактирование"
                     >
@@ -85,12 +68,11 @@ const TableView = (props) => {
                       {/* Редактировать */}
                     </Link>
                   )}
-                {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && (
+                {props.userHasAccess && props.userHasAccess(["ROLE_ADMIN"]) && (
                   <div
-                    data-id={work.id}
                     className="main-window__action"
                     title="Удаление"
-                    onClick={props.deleteItem}
+                    onClick={() => props.deleteItem(work.id)}
                   >
                     <img className="main-window__img" src={deleteSVG} />
                   </div>
@@ -101,7 +83,7 @@ const TableView = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TableView
+export default TableView;

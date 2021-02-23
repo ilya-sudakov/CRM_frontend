@@ -54,14 +54,14 @@ const sortStrings = (firstValue, secondValue, direction) => {
   if (
     firstValue.localeCompare(secondValue, undefined, {
       numeric: true,
-    }) < 0
+    }) > 0
   ) {
     return direction === "desc" ? -1 : 1;
   }
   if (
     firstValue.localeCompare(secondValue, undefined, {
       numeric: true,
-    }) > 0
+    }) < 0
   ) {
     return direction === "desc" ? 1 : -1;
   }

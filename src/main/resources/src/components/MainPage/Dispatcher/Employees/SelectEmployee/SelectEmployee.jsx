@@ -25,11 +25,11 @@ const SelectEmployee = (props) => {
     {
       sortOrder: {
         curSort: "lastName",
-        lastName: "desc",
+        lastName: "asc",
       },
       sortOptions: [
-        { value: "lastName desc", text: "По фамилии (А-Я)" },
-        { value: "lastName asc", text: "По фамилии (Я-А)" },
+        { value: "lastName asc", text: "По фамилии (А-Я)" },
+        { value: "lastName desc", text: "По фамилии (Я-А)" },
       ],
       ignoreURL: true,
     },
