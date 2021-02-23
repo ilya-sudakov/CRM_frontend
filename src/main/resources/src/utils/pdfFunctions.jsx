@@ -9,6 +9,7 @@ import linkButtonImg from "../../../../../assets/priceList/linkButton.png";
 import saleImg from "../../../../../assets/priceList/onSale.png";
 import proprietaryItemImg from "../../../../../assets/priceList/rospatent.png";
 import { formatDateString, getDataUri } from "./functions.jsx";
+import { sortByField } from "./sorting/sorting.js";
 
 export const getTransportationListPdfText = (transportation) => {
   const transportationList = [];
@@ -88,19 +89,12 @@ export const getRequestPdfText = (
   workshopName,
   itemId
 ) => {
-  let productsArr = requestProducts
-    .sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      }
-      if (a.name > b.name) {
-        return 1;
-      }
-      return 0;
-    })
-    .map((item) => {
-      return [item.name, item.quantity, item.packaging, "", ""];
-    });
+  let productsArr = sortByField(requestProducts, {
+    fieldName: "name",
+    direction: "desc",
+  }).map((item) => {
+    return [item.name, item.quantity, item.packaging, "", ""];
+  });
   var dd = {
     info: {
       title: "Очередь производства №" + itemId,
@@ -178,7 +172,6 @@ export const getRequestPdfText = (
       },
       subheader: {
         fontSize: 16,
-        // bold: true,
       },
       regularText: {
         fontSize: 14,
@@ -258,15 +251,6 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
             ],
           }
         : "\n",
-      // {
-      //   text: [
-      //     {
-      //       text: 'Продукция: \n',
-      //       style: 'regularText',
-      //       margin: [0, 5, 0, 5],
-      //     },
-      //   ],
-      // },
       Object.entries(products)
         .sort((a, b) => {
           if (
@@ -349,7 +333,6 @@ export const getEmployeesListPdfText = (employees, workshops) => {
     });
     let employeeInfo = [];
     employees.map((employee) => {
-      // if (employee.workshop === workshop) {
       if (
         (workshop === employee.workshop && employee.relevance !== "Уволен") ||
         (workshop === "Уволенные" && employee.relevance === "Уволен")
@@ -558,7 +541,6 @@ export async function getPriceListPdfText(
                 "jpeg",
                 0.3
               );
-              // console.log(groupOfProducts.groupImg1.length, groupImg1Data.length);
             }
             if (
               groupOfProducts.groupImg2 !== null &&

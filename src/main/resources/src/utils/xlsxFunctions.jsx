@@ -4,22 +4,14 @@ import FileSaver from "file-saver";
 import { getDataUri } from "./functions.jsx";
 import { getEmployeesByWorkshop } from "./RequestsAPI/Employees.jsx";
 import { getWorkReportByEmployee } from "./RequestsAPI/WorkManaging/WorkControl.jsx";
+import { sortByField } from "./sorting/sorting.js";
 
 export const exportClientsEmailsCSV = (clients) => {
   let index = 0;
   let dataWS = null;
   Promise.all(
-    clients
-      .sort((a, b) => {
-        if (a.name < b.name) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      })
-      .map((client, clientIndex) => {
+    sortByField(clients, { fieldName: "name", direction: "desc" }).map(
+      (client) => {
         client.contacts.map((contactData) => {
           if (index === 0) {
             dataWS = XLSX2.utils.aoa_to_sheet([
@@ -34,10 +26,8 @@ export const exportClientsEmailsCSV = (clients) => {
           }
           index++;
         });
-        //   dataWS = XLSX2.utils.aoa_to_sheet([[]])
-        //   dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [dates[0]], { origin: 'A3' })
-        //   dataWS = XLSX2.utils.sheet_add_aoa(dataWS, [])
-      })
+      }
+    )
   ).then(() => {
     var wscols = [
       { width: 30 }, // first column
@@ -82,9 +72,6 @@ export const selectCellRange = (sheet, startCell, endCell) => {
 
   if (!endColumn) throw new Error("End column not found");
   if (!startColumn) throw new Error("Start column not found");
-
-  // endColumn = endColumn._number
-  // startColumn = startColumn._number
 
   const cells = [];
   for (let y = startRow; y <= endRow; y++) {
@@ -415,28 +402,6 @@ export async function exportPriceListToXLSX(
       ) {
         //adding category name
         const rowCategoryName = workSheet.addRow([category.name]);
-        // const tempImg = await getDataUri(
-        //   category.img.split('.png')[0] + '_excel.png',
-        // )
-        // const categoryImg = workBook.addImage({
-        //   base64: tempImg,
-        //   extension: 'png',
-        // })
-        // workSheet.addImage(categoryImg, {
-        //   tl: { col: 0, row: workSheet.rowCount - 1 },
-        //   br: { col: 7, row: workSheet.rowCount },
-        //   editAs: 'absolute',
-        // })
-        // workSheet.getCell(workSheet.rowCount, 1).fill = {
-        //   type: 'pattern',
-        //   pattern: 'solid',
-        //   bgColor: {
-        //     argb: 'FFFFFFFF',
-        //   },
-        //   fgColor: {
-        //     argb: '00FF1B5F',
-        //   },
-        // }
         workSheet.getCell(workSheet.rowCount, 1).border = {
           left: { style: "medium", color: { argb: "FF666666" } },
           top: { style: "medium", color: { argb: "FF666666" } },
@@ -473,11 +438,6 @@ export async function exportPriceListToXLSX(
             name: "DejaVu",
             family: 2,
           };
-          // workSheet.getCell(workSheet.rowCount, 1).value = {
-          //   text: '\t' + item.name,
-          //   hyperlink: item.linkAddress !== undefined ? item.linkAddress : '',
-          //   tooltip: 'Перейти на сайт www.osfix.ru',
-          // }
           newRowName.height = 50;
           newRowName.alignment = {
             wrapText: true,
@@ -824,10 +784,6 @@ export async function exportPriceListToXLSX(
             workSheet.rowCount,
             lastColumnNumber
           );
-          // rowInfoText.height =
-          //   (item.infoText.split(' ').length > 9
-          //     ? item.infoText.split(' ').length / 9
-          // : 1.5) * 22
 
           rowInfoText.height =
             (item.infoText.split(" ").length > 17 + optionalCols.length
@@ -842,24 +798,6 @@ export async function exportPriceListToXLSX(
     const buffer = await workBook.xlsx.writeBuffer();
     saveAs(new Blob([buffer]), "Osfix_Прайс-лист.xlsx");
   });
-
-  // workSheet.columns = [
-  //   {
-  //     key: 'name',
-  //     width: 45,
-  //     style: {
-  //       font: { size: 12 },
-  //       alignment: { vertical: 'middle' },
-  //     },
-  //   },
-  //   {
-  //     width: 5,
-  //     style: {
-  //       font: { size: 12 },
-  //       alignment: { vertical: 'middle', horizontal: 'center' },
-  //     },
-  //   },
-  // ]
 }
 
 export async function exportReportTableExcel(
@@ -1038,16 +976,18 @@ export async function exportReportTableExcel(
     },
   ];
 
-  //adding date header
-  const dateTitleRow = workSheet.addRow([
-    "1/2 " + monthsNew[curDate.getMonth()] + "." + curDate.getFullYear(),
-  ]);
-  workSheet.getCell(workSheet.rowCount, 1).border = {
+  const defaultBorder = {
     top: { style: "thin", color: { argb: "00000000" } },
     left: { style: "thin", color: { argb: "00000000" } },
     bottom: { style: "thin", color: { argb: "00000000" } },
     right: { style: "thin", color: { argb: "00000000" } },
   };
+
+  //adding date header
+  const dateTitleRow = workSheet.addRow([
+    "1/2 " + monthsNew[curDate.getMonth()] + "." + curDate.getFullYear(),
+  ]);
+  workSheet.getCell(workSheet.rowCount, 1).border = defaultBorder;
   workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18);
   dateTitleRow.font = { bold: true, size: 18 };
   dateTitleRow.alignment = { vertical: "middle", horizontal: "center" };
@@ -1056,12 +996,7 @@ export async function exportReportTableExcel(
   //adding dates
   workSheet.addRow([...dates[0], "", "Сумма"]);
   for (let i = 1; i <= 18; i++) {
-    workSheet.getCell(workSheet.rowCount, i).border = {
-      top: { style: "thin", color: { argb: "00000000" } },
-      left: { style: "thin", color: { argb: "00000000" } },
-      bottom: { style: "thin", color: { argb: "00000000" } },
-      right: { style: "thin", color: { argb: "00000000" } },
-    };
+    workSheet.getCell(workSheet.rowCount, i).border = defaultBorder;
     if (i >= 2 && i <= 17) {
       workSheet.getCell(workSheet.rowCount, i).border = {
         right: { style: "hair", color: { argb: "00000000" } },
@@ -1118,12 +1053,7 @@ export async function exportReportTableExcel(
             ).length > 0
           ) {
             const titleRow = workSheet.addRow([workshop]);
-            workSheet.getCell(workSheet.rowCount, 1).border = {
-              top: { style: "thin", color: { argb: "00000000" } },
-              left: { style: "thin", color: { argb: "00000000" } },
-              bottom: { style: "thin", color: { argb: "00000000" } },
-              right: { style: "thin", color: { argb: "00000000" } },
-            };
+            workSheet.getCell(workSheet.rowCount, 1).border = defaultBorder;
             workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18);
             titleRow.font = { size: 14, bold: true };
             titleRow.alignment = { vertical: "middle", horizontal: "center" };
@@ -1190,12 +1120,10 @@ export async function exportReportTableExcel(
                   right: { style: "hair", color: { argb: "00000000" } },
                 };
               }
-              return (workSheet.getCell(workSheet.rowCount, 18).border = {
-                top: { style: "thin", color: { argb: "00000000" } },
-                left: { style: "thin", color: { argb: "00000000" } },
-                bottom: { style: "thin", color: { argb: "00000000" } },
-                right: { style: "thin", color: { argb: "00000000" } },
-              });
+              return (workSheet.getCell(
+                workSheet.rowCount,
+                18
+              ).border = defaultBorder);
             });
         })
       );
@@ -1226,12 +1154,7 @@ export async function exportReportTableExcel(
       const dateTitleRow = workSheet.addRow([
         "2/2 " + monthsNew[curDate.getMonth()] + "." + curDate.getFullYear(),
       ]);
-      workSheet.getCell(workSheet.rowCount, 1).border = {
-        top: { style: "thin", color: { argb: "00000000" } },
-        left: { style: "thin", color: { argb: "00000000" } },
-        bottom: { style: "thin", color: { argb: "00000000" } },
-        right: { style: "thin", color: { argb: "00000000" } },
-      };
+      workSheet.getCell(workSheet.rowCount, 1).border = defaultBorder;
       workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18);
       dateTitleRow.font = { bold: true, size: 18 };
       dateTitleRow.alignment = { vertical: "middle", horizontal: "center" };
@@ -1239,12 +1162,7 @@ export async function exportReportTableExcel(
 
       workSheet.addRow([...dates[1], "Сумма"]);
       for (let i = 1; i <= 18; i++) {
-        workSheet.getCell(workSheet.rowCount, i).border = {
-          top: { style: "thin", color: { argb: "00000000" } },
-          left: { style: "thin", color: { argb: "00000000" } },
-          bottom: { style: "thin", color: { argb: "00000000" } },
-          right: { style: "thin", color: { argb: "00000000" } },
-        };
+        workSheet.getCell(workSheet.rowCount, i).border = defaultBorder;
         if (i >= 2 && i <= 17) {
           workSheet.getCell(workSheet.rowCount, i).border = {
             right: { style: "hair", color: { argb: "00000000" } },
@@ -1267,12 +1185,7 @@ export async function exportReportTableExcel(
             ).length > 0
           ) {
             const titleRow = workSheet.addRow([workshop]);
-            workSheet.getCell(workSheet.rowCount, 1).border = {
-              top: { style: "thin", color: { argb: "00000000" } },
-              left: { style: "thin", color: { argb: "00000000" } },
-              bottom: { style: "thin", color: { argb: "00000000" } },
-              right: { style: "thin", color: { argb: "00000000" } },
-            };
+            workSheet.getCell(workSheet.rowCount, 1).border = defaultBorder;
             workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18);
             titleRow.font = { size: 14, bold: true };
             titleRow.alignment = { vertical: "middle", horizontal: "center" };
@@ -1341,12 +1254,10 @@ export async function exportReportTableExcel(
                   right: { style: "hair", color: { argb: "00000000" } },
                 };
               }
-              return (workSheet.getCell(workSheet.rowCount, 18).border = {
-                top: { style: "thin", color: { argb: "00000000" } },
-                left: { style: "thin", color: { argb: "00000000" } },
-                bottom: { style: "thin", color: { argb: "00000000" } },
-                right: { style: "thin", color: { argb: "00000000" } },
-              });
+              return (workSheet.getCell(
+                workSheet.rowCount,
+                18
+              ).border = defaultBorder);
             });
         })
       );
@@ -1382,10 +1293,8 @@ export async function exportReportTableExcel(
           curDate.getFullYear() +
           ".xlsx"
       );
-      // setIsLoading(false)
     })
     .catch((error) => {
       console.log(error);
-      // setIsLoading(false)
     });
 }

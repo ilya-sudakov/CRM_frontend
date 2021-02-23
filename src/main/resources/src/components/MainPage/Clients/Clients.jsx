@@ -217,12 +217,7 @@ const Clients = (props) => {
               isLoading={isLoading}
               className="main-window__button main-window__button--inverted"
               inverted
-              onClick={async () => {
-                setIsLoading(true);
-                getEmailsExcel().then(() => {
-                  setIsLoading(false);
-                });
-              }}
+              onClick={() => getEmailsExcel()}
             />
           </div>
           <div className="main-window__menu">
