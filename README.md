@@ -1,4 +1,4 @@
-# Система управления для малого предприятия - Фронтенд [![codecov](https://codecov.io/gh/ilyasudakov/osfix_erp_frontend/branch/master/graph/badge.svg?token=V42H3BD550)](https://codecov.io/gh/ilyasudakov/osfix_erp_frontend)
+# Система управления для малого предприятия - Фронтенд [![codecov](https://codecov.io/gh/ilyasudakov/osfix_erp_frontend/branch/master/graph/badge.svg?token=V42H3BD550)](https://codecov.io/gh/ilyasudakov/osfix_erp_frontend) <a href="https://codeclimate.com/github/ilyasudakov/osfix_erp_frontend/maintainability"><img src="https://api.codeclimate.com/v1/badges/4caebb62502ad174f310/maintainability" /></a>
 # Инструкция по установке
 
 - После копирования репозитория необходимо создать файл
