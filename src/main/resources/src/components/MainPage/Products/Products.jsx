@@ -11,12 +11,42 @@ import TableViewCategory from "./CategoryManagement/TableView/TableViewCategory.
 import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import useProductsList from "../../../utils/hooks/useProductsList/useProductsList.js";
+import useSort from "../../../utils/hooks/useSort/useSort";
 
 const Products = (props) => {
   const { products, categories, isProductsLoading } = useProductsList();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueryCategory, setSearchQueryCategory] = useState("");
   const [showWindow, setShowWindow] = useState(false);
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase();
+    return data.filter((item) => {
+      return (
+        item.name.toLowerCase().includes(query) ||
+        item.id.toString().includes(query) ||
+        item.weight.toString().includes(query) ||
+        (item.comment !== null && item.comment.toLowerCase().includes(query))
+      );
+    });
+  };
+
+  const { sortPanel, sortedData } = useSort(
+    filterSearchQuery(products),
+    {
+      ignoreURL: true,
+      sortOrder: {
+        curSort: "name",
+        name: "desc",
+      },
+      sortOptions: [
+        { value: "name desc", text: "По алфавиту (А-Я)" },
+        { value: "name asc", text: "По алфавиту (Я-А)" },
+        { value: "weight asc", text: "По весу" },
+      ],
+    },
+    [products]
+  );
 
   useEffect(() => {
     document.title = "Продукция";
@@ -32,46 +62,6 @@ const Products = (props) => {
   const deleteItemCategory = (event) => {
     const id = event.target.dataset.id;
     deleteCategory(id).then(() => loadCategories());
-  };
-
-  // * SORTING
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "name",
-    name: "asc",
-  });
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    });
-  };
-
-  const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase();
-    return data.filter((item) => {
-      return (
-        item.name.toLowerCase().includes(query) ||
-        item.id.toString().includes(query) ||
-        item.weight.toString().includes(query) ||
-        (item.comment !== null && item.comment.toLowerCase().includes(query))
-      );
-    });
-  };
-
-  const sortProducts = (data) => {
-    return data.sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
-    });
   };
 
   return (
@@ -109,7 +99,7 @@ const Products = (props) => {
         <FormWindow
           title="Категории продукции"
           content={
-            <React.Fragment>
+            <>
               <FloatingPlus
                 linkTo="/products/category/new"
                 visibility={["ROLE_ADMIN"]}
@@ -125,12 +115,8 @@ const Products = (props) => {
                 userHasAccess={props.userHasAccess}
                 deleteItem={deleteItemCategory}
               />
-            </React.Fragment>
+            </>
           }
-          // headerButton={{
-          //   name: 'Создать категорию',
-          //   path: '/products/category/new',
-          // }}
           showWindow={showWindow}
           setShowWindow={setShowWindow}
         />
@@ -141,19 +127,11 @@ const Products = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <ControlPanel
-          sorting={
-            <div className="main-window__sort-panel">
-              <select onChange={changeSortOrder}>
-                <option value="name asc">По алфавиту (А-Я)</option>
-                <option value="name desc">По алфавиту (Я-А)</option>
-                <option value="weight desc">По весу</option>
-              </select>
-            </div>
-          }
+          sorting={sortPanel}
           itemsCount={`Всего: ${products.length} записей`}
         />
         <TableView
-          products={sortProducts(filterSearchQuery(products))}
+          products={sortedData}
           categories={categories}
           searchQuery={searchQuery}
           isLoading={isProductsLoading}
