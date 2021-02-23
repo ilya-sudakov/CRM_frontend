@@ -127,18 +127,16 @@ const WorkshopOrders = (props) => {
             <div className="main-window__info-panel">
               <div className="main-window__status-panel">
                 <div>Фильтр по статусам: </div>
-                {statuses.map((status, index) => {
-                  return (
-                    <div
-                      className={`main-window__button ${
-                        status.visible ? "" : "main-window__button--inverted"
-                      } main-window__list-item--${status.className}`}
-                      onClick={() => handleStatusClick(index, status)}
-                    >
-                      {status.name}
-                    </div>
-                  );
-                })}
+                {statuses.map((status, index) => (
+                  <div
+                    className={`main-window__button ${
+                      status.visible ? "" : "main-window__button--inverted"
+                    } main-window__list-item--${status.className}`}
+                    onClick={() => handleStatusClick(index, status)}
+                  >
+                    {status.name}
+                  </div>
+                ))}
               </div>
             </div>
           }

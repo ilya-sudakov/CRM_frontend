@@ -11,9 +11,8 @@ import {
   StorageLepsari,
   NewStorageLepsari,
   EditStorageLepsari,
-  EditWorkshopOrderLepsari,
-  ViewWorkshopOrderLepsari,
-  NewWorkshopOrderLepsari,
+  EditWorkshopOrder,
+  NewWorkshopOrder,
   WorkshopOrders,
   NewRequest,
   EditRequest,
@@ -102,12 +101,7 @@ const Lepsari = (props) => {
                 path="/lepsari/workshop-lepsari/"
                 component={WorkshopLepsari}
                 userHasAccess={props.userHasAccess}
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  // 'ROLE_DISPATCHER',
-                  "ROLE_ENGINEER",
-                  "ROLE_LEPSARI",
-                ]}
+                allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEPSARI"]}
               />
               <PrivateRoute
                 exact
@@ -157,26 +151,20 @@ const Lepsari = (props) => {
               <PrivateRoute
                 exact
                 path="/lepsari/workshop-orders/new"
-                component={NewWorkshopOrderLepsari}
-                userHasAccess={props.userHasAccess}
+                component={NewWorkshopOrder}
+                type="lepsari"
                 allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEPSARI"]}
               />
               <PrivateRoute
-                path="/lepsari/workshop-orders/view/"
-                component={ViewWorkshopOrderLepsari}
-                userHasAccess={props.userHasAccess}
+                path="/lepsari/workshop-orders/edit/"
+                component={EditWorkshopOrder}
+                type="lepsari"
                 allowedRoles={[
                   "ROLE_ADMIN",
                   "ROLE_DISPATCHER",
                   "ROLE_ENGINEER",
                   "ROLE_LEPSARI",
                 ]}
-              />
-              <PrivateRoute
-                path="/lepsari/workshop-orders/edit/"
-                component={EditWorkshopOrderLepsari}
-                userHasAccess={props.userHasAccess}
-                allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
               />
               <Route component={PageNotFound} />
             </Switch>

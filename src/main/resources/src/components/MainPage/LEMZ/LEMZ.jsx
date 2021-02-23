@@ -13,7 +13,6 @@ import {
   EditStorage,
   WorkshopOrders,
   NewWorkshopOrder,
-  ViewWorkshopOrder,
   EditWorkshopOrder,
   NewRequest,
   EditRequest,
@@ -157,7 +156,12 @@ const LEMZ = (props) => {
                 path="/lemz/workshop-orders/edit/"
                 component={EditWorkshopOrder}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
+                allowedRoles={[
+                  "ROLE_ADMIN",
+                  "ROLE_DISPATCHER",
+                  "ROLE_ENGINEER",
+                  "ROLE_LEPSARI",
+                ]}
               />
               <Route component={PageNotFound} />
             </Switch>

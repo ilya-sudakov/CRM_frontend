@@ -1,108 +1,108 @@
-import React, { useState, useEffect } from 'react'
-import './NewWorkshopOrder.scss'
-import '../../../../../utils/Form/Form.scss'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx'
+import React, { useState, useEffect } from "react";
+import "./NewWorkshopOrder.scss";
+import "../../../../../utils/Form/Form.scss";
+import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import SelectItems from "../../../../../utils/Form/SelectItems/SelectItems.jsx";
 import {
   addOrder,
   addProductToOrder,
-} from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
+} from "../../../../../utils/RequestsAPI/Workshop/Orders.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import { workshops } from "../../workshopVariables";
 
 const NewWorkshopOrder = (props) => {
   const [formInputs, setFormInputs] = useState({
-    name: '',
-    status: 'ordered',
+    name: "",
+    status: "ordered",
     deliverBy: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
     products: [
       {
-        name: '',
-        quantity: '',
+        name: "",
+        quantity: "",
       },
     ],
-    assembly: '',
+    assembly: "",
     date: new Date(),
-    factoryName: 'ЦехЛЭМЗ',
-  })
+    factoryName: workshops[props.type].fullName,
+  });
   const [formErrors, setFormErrors] = useState({
     name: false,
     // products: false,
     date: false,
     deliverBy: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     name: false,
     // products: false,
     date: true,
     deliverBy: true,
-  })
+  });
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case 'date':
+      case "date":
         setValidInputs({
           ...validInputs,
           date: value !== null,
-        })
-        break
-      case 'deliverBy':
+        });
+        break;
+      case "deliverBy":
         setValidInputs({
           ...validInputs,
           date: value !== null,
-        })
-        break
-      case 'products':
+        });
+        break;
+      case "products":
         setValidInputs({
           ...validInputs,
           products: value.length > 0,
-        })
-        break
+        });
+        break;
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       name: false,
       // products: false,
       date: false,
       deliverBy: false,
-    })
+    });
     for (let item in validInputs) {
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setFormErrors(newErrors)
+    setFormErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
       // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    setIsLoading(true)
-    console.log(formInputs)
-    let orderId = 0
+  const handleSubmit = () => {
+    setIsLoading(true);
+    console.log(formInputs);
+    let orderId = 0;
     formIsValid() &&
       addOrder({
         ...formInputs,
@@ -111,41 +111,41 @@ const NewWorkshopOrder = (props) => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.id)
-          orderId = res.id
+          console.log(res.id);
+          orderId = res.id;
           Promise.all(
             formInputs.products.map((product) => {
               return addProductToOrder({
                 ...product,
                 equipmentId: orderId,
-              })
-            }),
+              });
+            })
           ).then(() => {
-            setIsLoading(false)
-            props.history.push('/lemz/workshop-orders')
-          })
-        })
-  }
+            setIsLoading(false);
+            props.history.push(workshops[props.type].ordersRedirectURL);
+          });
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setFormInputs({
       ...formInputs,
       [name]: value,
-    })
+    });
     setFormErrors({
       ...formErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    document.title = 'Создание заказа ЛЭМЗ'
-  }, [])
+    document.title = `Создание заказа ${workshops[props.type].name}`;
+  }, []);
 
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="new-workshop-order">
@@ -166,15 +166,15 @@ const NewWorkshopOrder = (props) => {
             name="date"
             selected={Date.parse(formInputs.date)}
             handleDateChange={(date) => {
-              validateField('date', date)
+              validateField("date", date);
               setFormInputs({
                 ...formInputs,
                 date: date,
-              })
+              });
               setFormErrors({
                 ...formErrors,
                 date: false,
-              })
+              });
             }}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -200,15 +200,15 @@ const NewWorkshopOrder = (props) => {
             name="deliverBy"
             selected={Date.parse(formInputs.deliverBy)}
             handleDateChange={(date) => {
-              validateField('deliverBy', date)
+              validateField("deliverBy", date);
               setFormInputs({
                 ...formInputs,
                 deliverBy: date,
-              })
+              });
               setFormErrors({
                 ...formErrors,
                 deliverBy: false,
-              })
+              });
             }}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -219,15 +219,15 @@ const NewWorkshopOrder = (props) => {
             defaultValue={formInputs.products}
             required
             onChange={(value) => {
-              validateField('products', value)
+              validateField("products", value);
               setFormInputs({
                 ...formInputs,
                 products: value,
-              })
+              });
               setFormErrors({
                 ...formErrors,
                 products: value,
-              })
+              });
             }}
             error={formErrors.products}
             errorsArr={formErrors}
@@ -255,11 +255,11 @@ const NewWorkshopOrder = (props) => {
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() => props.history.push('/lemz/workshop-orders')}
+              onClick={() =>
+                props.history.push(workshops[props.type].ordersRedirectURL)
+              }
               value="Вернуться назад"
             />
-            {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить заказ" />
-                        {isLoading && <ImgLoader />} */}
             <Button
               text="Добавить запись"
               isLoading={isLoading}
@@ -270,7 +270,7 @@ const NewWorkshopOrder = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewWorkshopOrder
+export default NewWorkshopOrder;
