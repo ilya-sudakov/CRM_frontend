@@ -1,13 +1,11 @@
 import "./InputProducts.scss";
 import SelectFromButton from "../SelectFromButton/SelectFromButton.jsx";
 import React, { useState, useEffect, useCallback, useContext } from "react";
-import deleteSVG from "../../../../../../../assets/select/delete.svg";
 import "./Select.scss";
 import SearchBar from "../../../components/MainPage/SearchBar/SearchBar.jsx";
 import TableView from "../../../components/MainPage/Products/TableView/TableView.jsx";
 import { getCategoriesNames } from "../../RequestsAPI/Products/Categories.js";
 import FormWindow from "../../Form/FormWindow/FormWindow.jsx";
-import ColorPicker from "./ColorPicker/ColorPicker.jsx";
 import {
   getProductsByCategory,
   getProductById,
@@ -16,6 +14,14 @@ import {
 import ImgLoader from "../../../utils/TableView/ImgLoader/ImgLoader.jsx";
 import UserContext from "../../../App.js";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import useSort from "../../hooks/useSort/useSort";
+import {
+  renderNewQuantity,
+  renderPackaging,
+  renderQuantity,
+  renderSelectedItemName,
+  renderSelectPackaging,
+} from "./functions.jsx";
 
 const InputProducts = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,10 +33,25 @@ const InputProducts = (props) => {
   const [closeWindow, setCloseWindow] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
+  const { sortPanel, sortedData } = useSort(
+    props.products ?? products,
+    {
+      ignoreURL: true,
+      sortOrder: {
+        curSort: "name",
+        name: "asc",
+      },
+      sortOptions: [
+        { value: "name asc", text: "По алфавиту (А-Я)" },
+        { value: "name desc", text: "По алфавиту (Я-А)" },
+        { value: "weight desc", text: "По весу" },
+      ],
+    },
+    [props.products ?? products]
+  );
   const userContext = useContext(UserContext);
 
   const search = () => {
-    // console.log(products);
     let searchArr = searchQuery.split(" ");
     return (props.products ? props.products : products).filter((item) => {
       let check = true;
@@ -64,71 +85,65 @@ const InputProducts = (props) => {
   };
 
   async function loadCategories() {
-    if (props.categories && props.products) {
-      setCategories([...props.categories]);
-      setProducts([...props.products]);
-    } else {
-      getCategoriesNames() //Только категории
-        .then((res) => res.json())
-        .then((res) => {
-          const categoriesArr = res;
-          setCategories(res);
-          let productsArr = [];
-          let temp;
-          if (
-            userContext.userHasAccess([
-              "ROLE_ADMIN",
-              "ROLE_DISPATCHER",
-              "ROLE_ENGINEER",
-              "ROLE_MANAGER",
-              "ROLE_WORKSHOP", //temp
-            ])
-          ) {
-            temp = categoriesArr.map((item) => {
-              let category = {
-                category: item.category,
-              };
-              return getProductsByCategory(category) //Продукция по категории
-                .then((res) => res.json())
-                .then((res) => {
-                  res.map((item) => productsArr.push(item));
-                  setProducts([...productsArr]);
-                });
-            });
-          } else if (userContext.userHasAccess(["ROLE_WORKSHOP"])) {
-            temp = getProductsByLocation({
-              productionLocation: userContext.userHasAccess(["ROLE_LEMZ"])
-                ? "ЦехЛЭМЗ"
-                : userContext.userHasAccess(["ROLE_LEPSARI"])
-                ? "ЦехЛепсари"
-                : "ЦехЛЭМЗ",
-            })
+    getCategoriesNames() //Только категории
+      .then((res) => res.json())
+      .then((res) => {
+        const categoriesArr = res;
+        setCategories(res);
+        let productsArr = [];
+        let temp;
+        if (
+          userContext.userHasAccess([
+            "ROLE_ADMIN",
+            "ROLE_DISPATCHER",
+            "ROLE_ENGINEER",
+            "ROLE_MANAGER",
+            "ROLE_WORKSHOP", //temp
+          ])
+        ) {
+          temp = categoriesArr.map((item) => {
+            let category = {
+              category: item.category,
+            };
+            return getProductsByCategory(category) //Продукция по категории
               .then((res) => res.json())
               .then((res) => {
                 res.map((item) => productsArr.push(item));
                 setProducts([...productsArr]);
               });
-          }
-          Promise.all(temp)
-            .then(() => {
-              return Promise.all(
-                productsArr.map((item, index) => {
-                  getProductById(item.id)
-                    .then((res) => res.json())
-                    .then((res) => {
-                      // console.log(res);
-                      productsArr.splice(index, 1, res);
-                      setProducts([...productsArr]);
-                    });
-                })
-              );
-            })
-            .then(() => {});
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+          });
+        } else if (userContext.userHasAccess(["ROLE_WORKSHOP"])) {
+          temp = getProductsByLocation({
+            productionLocation: userContext.userHasAccess(["ROLE_LEMZ"])
+              ? "ЦехЛЭМЗ"
+              : userContext.userHasAccess(["ROLE_LEPSARI"])
+              ? "ЦехЛепсари"
+              : "ЦехЛЭМЗ",
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              res.map((item) => productsArr.push(item));
+              setProducts([...productsArr]);
+            });
+        }
+        Promise.all(temp)
+          .then(() => {
+            return Promise.all(
+              productsArr.map((item, index) => {
+                getProductById(item.id)
+                  .then((res) => res.json())
+                  .then((res) => {
+                    productsArr.splice(index, 1, res);
+                    setProducts([...productsArr]);
+                  });
+              })
+            );
+          })
+          .then(() => {});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   const clickOnOption = (event) => {
@@ -141,7 +156,6 @@ const InputProducts = (props) => {
       quantity: 0,
       quantityNew: 0,
       packaging: "",
-      // packaging: null,
       status: "production",
       productId: productId,
     };
@@ -157,7 +171,6 @@ const InputProducts = (props) => {
       quantity: 0,
       quantityNew: 0,
       packaging: "",
-      // packaging: null,
       status: "production",
       productId: productId,
     };
@@ -191,14 +204,13 @@ const InputProducts = (props) => {
 
   const handleStatusChange = (color, id) => {
     let newSelected = selected;
-    newSelected = newSelected.map((item, index) => {
+    newSelected = newSelected.map((item) => {
       return {
         ...item,
         status: item.id == id ? color : item.status,
       };
     });
     setSelected([...newSelected]);
-    // console.log(color, id, newSelected);
     props.onChange([...newSelected]);
   };
 
@@ -215,20 +227,6 @@ const InputProducts = (props) => {
     [showOptions, showOverlay]
   );
 
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "name",
-    name: "asc",
-  });
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    });
-  };
-
   const filterSearchQuery = (data) => {
     const query = searchQueryCategory.toLowerCase();
     return data.filter((item) => {
@@ -241,24 +239,18 @@ const InputProducts = (props) => {
     });
   };
 
-  const sortProducts = (data) => {
-    return data.sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
-    });
-  };
-
   useEffect(() => {
     if (props.defaultValue !== undefined) {
       setSelected([...props.defaultValue]);
     }
+
+    if (props.categories && props.products) {
+      setCategories([...props.categories]);
+      setProducts([...props.products]);
+    } else {
+      loadCategories();
+    }
     document.addEventListener("keydown", pressEscKey, false);
-    categories.length === 0 && loadCategories();
     return () => {
       document.removeEventListener("keydown", pressEscKey, false);
     };
@@ -266,158 +258,46 @@ const InputProducts = (props) => {
 
   // LAYOUT OPTIONS, RENDER FUNCTIONS
 
+  const defaultPropsForLayoutFunctions = {
+    numberInput: props.numberInput,
+    readOnly: props.readOnly,
+    workshop: props.workshop,
+    handleParamChange: (event) => handleParamChange(event),
+    clickOnSelected: clickOnSelected,
+    handleStatusChange: handleStatusChange,
+  };
+
   const customLayoutOptions = {
     productName: {
       render: (index, item, options) =>
-        renderSelectedItemName(index, item, options),
+        renderSelectedItemName(
+          index,
+          item,
+          defaultPropsForLayoutFunctions,
+          options
+        ),
     },
     quantity: {
-      render: (index, item, options) => renderQuantity(index, item, options),
+      render: (index, item, options) =>
+        renderQuantity(index, item, defaultPropsForLayoutFunctions, options),
     },
     newQuantity: {
-      render: (index, item, options) => renderNewQuantity(index, item, options),
+      render: (index, item, options) =>
+        renderNewQuantity(index, item, defaultPropsForLayoutFunctions, options),
     },
     packaging: {
-      render: (index, item, options) => renderPackaging(index, item, options),
+      render: (index, item, options) =>
+        renderPackaging(index, item, defaultPropsForLayoutFunctions, options),
     },
     selectPackaging: {
-      render: (index, item, options) =>
-        renderSelectPackaging(index, item, options),
+      render: (index, item) =>
+        renderSelectPackaging(
+          index,
+          item,
+          defaultPropsForLayoutFunctions,
+          products
+        ),
     },
-  };
-
-  const renderQuantity = (
-    index,
-    item,
-    options = {
-      customName: `Кол-во (шт.)${!props.readOnly ? "*" : ""}`,
-      readOnly: false,
-    }
-  ) => {
-    return (
-      <div className="select__selected_quantity">
-        <span>{options.customName}</span>
-        <input
-          quantity_id={index}
-          type={props.numberInput ? "number" : "text"}
-          name="quantity"
-          autoComplete="off"
-          defaultValue={item.quantity != 0 ? item.quantity : 0}
-          value={item.quantity}
-          onChange={handleParamChange}
-          disabled={props.readOnly || props.workshop || options.readOnly}
-        />
-      </div>
-    );
-  };
-
-  const renderNewQuantity = (
-    index,
-    item,
-    options = {
-      customName: `Отгружено (шт.)${!props.readOnly ? "*" : ""}`,
-      readOnly: false,
-    }
-  ) => {
-    return (
-      <div className="select__selected_quantity">
-        <span>{options.customName}</span>
-        <input
-          quantityNew_id={index}
-          type="number"
-          name="quantityNew"
-          autoComplete="off"
-          defaultValue={0}
-          value={item.quantityNew}
-          onChange={handleParamChange}
-          disabled={options.readOnly}
-        />
-      </div>
-    );
-  };
-
-  const renderPackaging = (
-    index,
-    item,
-    options = {
-      customName: `Фасовка${!props.readOnly ? "*" : ""}`,
-      readOnly: false,
-      marginRight: "0px",
-    }
-  ) => {
-    return (
-      <div
-        className="select__selected_packaging"
-        style={{ marginRight: options.marginRight }}
-      >
-        <span>{options.customName}</span>
-        <input
-          packaging_id={index}
-          type="text"
-          name="packaging"
-          autoComplete="off"
-          defaultValue={item.packaging}
-          value={item.packaging}
-          onChange={handleParamChange}
-          disabled={options.readOnly || props.workshop}
-        />
-      </div>
-    );
-  };
-
-  const renderSelectPackaging = (index, item) => {
-    return (
-      <select
-        onChange={handleParamChange}
-        packaging_id={index}
-        name="packaging"
-        defaultValue={item.packaging}
-        value={item.packaging}
-        disabled={props.readOnly || props.workshop}
-      >
-        {products
-          .find((product) => product.id === Number.parseInt(item.productId))
-          ?.packings?.map((packagingItem) => (
-            <option value={packagingItem.id}>{packagingItem.name}</option>
-          ))}
-      </select>
-    );
-  };
-
-  const renderSelectedItemName = (
-    index,
-    item,
-    options = {
-      readOnly: false,
-      showColorPicker: true,
-      showDelete: true,
-    }
-  ) => {
-    return (
-      <div
-        className={
-          "select__selected_item select__selected_item--" +
-          (item.status ? item.status : "production")
-        }
-      >
-        {!props.readOnly && options.showColorPicker ? (
-          <ColorPicker
-            defaultName={item.name}
-            id={item.id}
-            handleStatusChange={handleStatusChange}
-          />
-        ) : (
-          <div className="select__selected_name">{item.name}</div>
-        )}
-        <img
-          id={index}
-          className="select__img"
-          src={deleteSVG}
-          alt=""
-          onClick={clickOnSelected}
-        />
-      </div>
-    );
   };
 
   return (
@@ -445,15 +325,6 @@ const InputProducts = (props) => {
             !props.workshop &&
             props.customSearch?.display !== false && (
               <div className="select__searchbar">
-                {/* <button
-              className="main-form__button"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowWindow(!showWindow);
-              }}
-            >
-              Добавить продукцию
-            </button> */}
                 <input
                   type="text"
                   className={
@@ -472,36 +343,15 @@ const InputProducts = (props) => {
                     <React.Fragment>
                       <SearchBar
                         fullSize
-                        // title="Поиск по продукции"
                         placeholder="Введите название продукции для поиска..."
                         setSearchQuery={setSearchQueryCategory}
                       />
                       <ControlPanel
                         itemsCount={`Всего: ${products.length} записей`}
-                        sorting={
-                          <div className="main-window__sort-panel">
-                            <select
-                              className="main-window__select"
-                              onChange={changeSortOrder}
-                            >
-                              <option value="name asc">
-                                По алфавиту (А-Я)
-                              </option>
-                              <option value="name desc">
-                                По алфавиту (Я-А)
-                              </option>
-                              <option value="weight desc">По весу</option>
-                            </select>
-                          </div>
-                        }
+                        sorting={sortPanel}
                       />
                       <TableView
-                        // products={products}
-                        products={
-                          props.products
-                            ? sortProducts(filterSearchQuery(props.products))
-                            : sortProducts(filterSearchQuery(products))
-                        }
+                        products={filterSearchQuery(sortedData)}
                         categories={categories}
                         searchQuery={searchQueryCategory}
                         deleteItem={null}
@@ -584,18 +434,30 @@ const InputProducts = (props) => {
                   </>
                 ) : (
                   <>
-                    {renderSelectedItemName(index, item)}
-                    {renderQuantity(index, item)}
-                    {!props.noPackaging
-                      ? renderPackaging(index, item)
-                      : renderPackaging(index, item, {
-                          readOnly: true,
-                          customName: `Фасовка${!props.readOnly ? "*" : ""}`,
-                          marginRight: "0px",
-                        })}
+                    {renderSelectedItemName(
+                      index,
+                      item,
+                      defaultPropsForLayoutFunctions
+                    )}
+                    {renderQuantity(
+                      index,
+                      item,
+                      defaultPropsForLayoutFunctions
+                    )}
+                    {renderPackaging(
+                      index,
+                      item,
+                      defaultPropsForLayoutFunctions,
+                      props.noPackaging
+                        ? {
+                            readOnly: true,
+                            customName: `Фасовка${!props.readOnly ? "*" : ""}`,
+                            marginRight: "0px",
+                          }
+                        : undefined
+                    )}
                   </>
                 )}
-                {/* {!props.noPackaging && renderSelectPackaging(index, item, products)} */}
               </div>
             ))}
           </div>
