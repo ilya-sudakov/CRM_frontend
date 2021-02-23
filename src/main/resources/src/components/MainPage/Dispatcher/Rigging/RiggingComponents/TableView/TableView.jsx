@@ -134,12 +134,6 @@ const TableView = (props) => {
       const rig = Number.parseInt(query.get("rig"));
       const part = Number.parseInt(query.get("part"));
 
-      console.log(
-        rig,
-        part,
-        node,
-        props.data.find((item) => item.id === rig)
-      );
       if (
         !props.data ||
         scrolledToPrev ||
@@ -178,8 +172,8 @@ const TableView = (props) => {
             <div
               id={stamp.id}
               ref={
-                Number.parseInt(props.history.location.hash.split("#")[1]) ===
-                  stamp.id && query.get("part") === null
+                Number.parseInt(query.get("rig")) === stamp.id &&
+                query.get("part") === null
                   ? prevRef
                   : null
               }
