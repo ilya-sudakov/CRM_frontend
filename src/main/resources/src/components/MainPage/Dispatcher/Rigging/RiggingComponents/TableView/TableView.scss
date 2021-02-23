@@ -152,10 +152,11 @@
 
                                 &:nth-child(n + 7) {
                                     align-self: stretch;
-                                    padding-top: calc(1.5rem - 5px);
+                                    padding-top: calc(1.5rem - 15px);
                                     padding-bottom: 5px;
                                     text-overflow: ellipsis;
                                     box-sizing: border-box;
+                                    overflow: hidden;
                                 }
                             }
                         }
@@ -165,13 +166,14 @@
                             &:not(:nth-child(2)),
                             &:not(:nth-child(3)),
                             &:not(:nth-child(6)) {
-                                white-space: nowrap;
+                                // white-space: nowrap;
+                                word-break: break-all;
                                 overflow-x: hidden;
-                                text-overflow: ellipsis;
                             }
                             &:nth-child(1) {
                                 flex: 0 1 100%;
-                                max-width: 135px;
+                                max-width: 140px;
+                                font-size: 0.85rem;
                             }
                             &:nth-child(2) {
                                 flex: 0 1 15%;
@@ -180,6 +182,7 @@
                             &:nth-child(3) {
                                 flex: 0 1 20%;
                                 max-width: 60px;
+                                white-space: nowrap;
                             }
                             &:nth-child(4) {
                                 flex: 0 1 15%;
@@ -203,15 +206,14 @@
                         }
 
                         span {
-                            // &:nth-child(n + 7) {
                             align-self: stretch;
-                            padding-top: calc(1.5rem - 5px);
+                            padding-top: calc(1.5rem - 15px);
                             padding-bottom: 5px;
-                            text-overflow: ellipsis;
                             box-sizing: border-box;
                             border-right: 1px solid #cccccc;
                             box-sizing: border-box;
-                            // }
+                            text-overflow: ellipsis;
+                            font-size: 0.85rem;
                             &:nth-child(n + 7),
                             &:nth-child(5) {
                                 flex: 0 1 10%;
@@ -219,7 +221,12 @@
                                 max-width: 100px;
                                 max-width: 150px;
                                 box-sizing: border-box;
-                                font-size: 0.9rem;
+
+                                &:after {
+                                    content: "";
+                                    display: block;
+                                    margin-bottom: -100%;
+                                }
                             }
                         }
 
