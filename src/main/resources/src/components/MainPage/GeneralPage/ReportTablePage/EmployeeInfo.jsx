@@ -111,6 +111,12 @@ const WorksItem = ({ item }) => {
           ))}
         </div>
       )}
+      {item.comment ? (
+        <div className="report-table-page__comment">
+          <span>Комментарий:</span>
+          <span>{item.comment}</span>
+        </div>
+      ) : null}
     </div>
   );
 };

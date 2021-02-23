@@ -109,8 +109,8 @@
             .report-table-page__list {
                 display: flex;
                 flex-direction: column;
-                margin-top: 10px;
-                padding-left: 20px;
+                margin-top: 5px;
+                // padding-left: 20px;
                 font-size: 1rem;
 
                 &-item {
@@ -173,6 +173,22 @@
                 white-space: nowrap;
                 cursor: pointer;
                 font-size: 80%;
+            }
+            .report-table-page__comment {
+                font-size: 0.85rem;
+                margin-top: 5px;
+                display: flex;
+                align-items: center;
+
+                span {
+                    color: #888;
+                    margin-right: 5px;
+
+                    &:nth-child(2) {
+                        margin-right: 0;
+                        color: #333;
+                    }
+                }
             }
             .report-table-page__employee-works-wrapper {
                 padding: 5px 0;
