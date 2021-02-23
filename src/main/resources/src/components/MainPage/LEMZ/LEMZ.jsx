@@ -110,27 +110,20 @@ const LEMZ = (props) => {
                 exact
                 path="/lemz/workshop-storage"
                 component={Storage}
-                userHasAccess={props.userHasAccess}
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  // 'ROLE_DISPATCHER',
-                  "ROLE_ENGINEER",
-                  "ROLE_LEMZ",
-                ]}
+                type="lemz"
+                allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
               />
               <PrivateRoute
                 exact
                 path="/lemz/workshop-storage/new"
                 component={NewStorage}
-                userHasAccess={props.userHasAccess}
-                userData={props.userData}
+                type="lemz"
                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
               />
               <PrivateRoute
                 path="/lemz/workshop-storage/edit/"
                 component={EditStorage}
-                userHasAccess={props.userHasAccess}
-                userData={props.userData}
+                type="lemz"
                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
               />
               <PrivateRoute

@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import './NewStorage.scss'
-import '../../../../../utils/Form/Form.scss'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import { addStorage } from '../../../../../utils/RequestsAPI/Workshop/LepsariStorage.jsx'
-// import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx'
+import React, { useEffect, useState } from "react";
+import "./NewStorage.scss";
+import "../../../../../utils/Form/Form.scss";
+import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import { createStorage } from "../../../../../utils/RequestsAPI/Workshop/storage.js";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import { workshops } from "../../workshopVariables.js";
 
 const NewPart = (props) => {
   const [storageInputs, setStorageInputs] = useState({
-    number: '',
-    name: '',
-    quantity: '',
-    comment: '',
-  })
+    number: "",
+    name: "",
+    quantity: "",
+    comment: "",
+  });
   const [storageErrors, setStorageErrors] = useState({
     number: false,
     name: false,
     quantity: false,
     comment: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     number: false,
     name: false,
     quantity: false,
     comment: false,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
@@ -35,71 +35,70 @@ const NewPart = (props) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       number: false,
       name: false,
       quantity: false,
       comment: false,
-    })
+    });
     for (let item in validInputs) {
-      // console.log(item, validInputs[item]);
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setStorageErrors(newErrors)
+    setStorageErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    setIsLoading(true)
+  const handleSubmit = () => {
+    setIsLoading(true);
     formIsValid() &&
-      addStorage(storageInputs)
-        .then(() => props.history.push('/lepsari/workshop-storage'))
+      createStorage(props.type, storageInputs)
+        .then(() =>
+          props.history.push(workshops[props.type].storageRedirectURL)
+        )
         .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при добавлении записи')
-          console.log(error)
-        })
-  }
+          setIsLoading(false);
+          alert("Ошибка при добавлении записи");
+          console.log(error);
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setStorageInputs({
       ...storageInputs,
       [name]: value,
-    })
+    });
     setStorageErrors({
       ...storageErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    document.title = 'Добавление детали на склад'
-  }, [])
+    document.title = "Добавление детали на склад";
+  }, []);
   return (
     <div className="main-form">
       <form className="main-form__form">
@@ -155,11 +154,11 @@ const NewPart = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => props.history.push('/lepsari/workshop-storage')}
+            onClick={() =>
+              props.history.push(workshops[props.type].storageRedirectURL)
+            }
             value="Вернуться назад"
           />
-          {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить деталь" />
-                    {isLoading && <ImgLoader />} */}
           <Button
             text="Добавить запись"
             isLoading={isLoading}
@@ -169,7 +168,7 @@ const NewPart = (props) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default NewPart
+export default NewPart;

@@ -8,9 +8,9 @@ import PageNotFound from "../PageNotFound/PageNotFound.jsx";
 import PageLoading from "../PageLoading/PageLoading.jsx";
 import {
   WorkshopLepsari,
-  StorageLepsari,
-  NewStorageLepsari,
-  EditStorageLepsari,
+  Storage,
+  NewStorage,
+  EditStorage,
   EditWorkshopOrder,
   NewWorkshopOrder,
   WorkshopOrders,
@@ -106,8 +106,8 @@ const Lepsari = (props) => {
               <PrivateRoute
                 exact
                 path="/lepsari/workshop-storage"
-                component={StorageLepsari}
-                userHasAccess={props.userHasAccess}
+                component={Storage}
+                type="lepsari"
                 allowedRoles={[
                   "ROLE_ADMIN",
                   // 'ROLE_DISPATCHER',
@@ -118,16 +118,14 @@ const Lepsari = (props) => {
               <PrivateRoute
                 exact
                 path="/lepsari/workshop-storage/new"
-                component={NewStorageLepsari}
-                userHasAccess={props.userHasAccess}
-                userData={props.userData}
+                component={NewStorage}
+                type="lepsari"
                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
               />
               <PrivateRoute
                 path="/lepsari/workshop-storage/edit/"
-                component={EditStorageLepsari}
-                userHasAccess={props.userHasAccess}
-                userData={props.userData}
+                component={EditStorage}
+                type="lepsari"
                 allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEPSARI"]}
               />
               <PrivateRoute

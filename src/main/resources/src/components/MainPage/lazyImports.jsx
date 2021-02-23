@@ -176,22 +176,14 @@ const WorkshopLepsari = lazy(() =>
   import("./WorkshopLepsari/WorkshopLepsari.jsx")
 );
 
-const Storage = lazy(() => import("./Storage/Storage.jsx"));
+const Storage = lazy(() => import("./WorkshopsComponents/Storage/Storage.jsx"));
 
-const NewStorage = lazy(() => import("./Storage/NewStorage/NewStorage.jsx"));
-
-const EditStorage = lazy(() => import("./Storage/EditStorage/EditStorage.jsx"));
-
-const StorageLepsari = lazy(() =>
-  import("./Lepsari/Storage/StorageLepsari.jsx")
+const NewStorage = lazy(() =>
+  import("./WorkshopsComponents/Storage/NewStorage/NewStorage.jsx")
 );
 
-const NewStorageLepsari = lazy(() =>
-  import("./Lepsari/Storage/NewStorage/NewStorage.jsx")
-);
-
-const EditStorageLepsari = lazy(() =>
-  import("./Lepsari/Storage/EditStorage/EditStorage.jsx")
+const EditStorage = lazy(() =>
+  import("./WorkshopsComponents/Storage/EditStorage/EditStorage.jsx")
 );
 
 const NewCategory = lazy(() =>
@@ -303,9 +295,6 @@ export {
   NewWork,
   EditWork,
   WorkshopLepsari,
-  StorageLepsari,
-  NewStorageLepsari,
-  EditStorageLepsari,
   LEMZ,
   Lepsari,
   PriceList,
