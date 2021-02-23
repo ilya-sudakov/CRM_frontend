@@ -22,7 +22,7 @@ const SelectDraft = (props) => {
 
   const search = () => {
     // console.log(drafts);
-    let re = /[.,\s]/gi;
+    let re = /[.,\s\-_]/gi;
     const query = searchQuery.toLowerCase();
     let searchArr = query.split(" ");
     return (props.drafts ? props.drafts : drafts).filter((item) => {

@@ -6,7 +6,7 @@ import okSVG from "../../../../../../../../../../assets/tableview/ok.svg";
 const TableView = (props) => {
   const search = () => {
     // console.log(drafts);
-    let re = /[.,\s]/gi;
+    let re = /[.,\s\-_]/gi;
     const query = props.searchQuery.toLowerCase();
     let searchArr = query.split(" ");
     return props.drafts.filter((item) => {
@@ -72,7 +72,12 @@ const TableView = (props) => {
                   className="main-window__list-item"
                   onClick={() => {
                     console.log(draft);
-                    props.selectDraft(draft.id, draft.name, draft.type, draft.number);
+                    props.selectDraft(
+                      draft.id,
+                      draft.name,
+                      draft.type,
+                      draft.number
+                    );
                     props.setCloseWindow(!props.closeWindow);
                   }}
                 >

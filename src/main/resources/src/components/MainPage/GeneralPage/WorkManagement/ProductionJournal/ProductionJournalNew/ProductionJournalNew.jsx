@@ -61,7 +61,7 @@ const ProductionJournalNew = ({}) => {
   } = useWorkReport(new Date(new Date(curDay).setDate(curDay.getDate() - 1)));
 
   useEffect(() => {
-    document.title = "Дневник производства v2.0";
+    document.title = "Дневник производства";
     console.log(todaysWork, yesterdaysWork);
   }, [todaysWork, yesterdaysWork]);
 
@@ -197,7 +197,7 @@ const ProductionJournalNew = ({}) => {
   return (
     <div className="notes-journal">
       <div className="main-window__header main-window__header--full">
-        <div className="main-window__title">Дневник производства v2.0</div>
+        <div className="main-window__title">Дневник производства</div>
         <div className="main-window__description">
           Для того, чтобы сохранить введенные вами данные о работе в системе,
           нажмите кнопку "Сохранить данные" в окне создания/редактирования
