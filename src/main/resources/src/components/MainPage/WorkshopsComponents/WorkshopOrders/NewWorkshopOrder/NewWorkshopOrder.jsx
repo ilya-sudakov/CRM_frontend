@@ -3,7 +3,6 @@ import './NewWorkshopOrder.scss'
 import '../../../../../utils/Form/Form.scss'
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-// import ImgLoader from '../../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
 import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx'
 import {

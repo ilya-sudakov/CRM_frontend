@@ -12,6 +12,7 @@ import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel
 import UserContext from "../../../../App.js";
 import Tableview from "./Table.jsx";
 import { sortByField } from "../../../../utils/sorting/sorting";
+import { workshops } from "../workshopVariables.js";
 
 const WorkshopOrders = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -40,16 +41,12 @@ const WorkshopOrders = (props) => {
       visible: true,
     },
   ]);
-  const types = {
-    lemz: { name: "ЦехЛЭМЗ", link: "/lemz/workshop-orders" },
-    lepsari: { name: "ЦехЛепсари", link: "/lepsari/workshop-orders" },
-  };
 
   const loadData = (signal) => {
     setIsLoading(true);
     return getOrdersByName(
       {
-        name: types[props.type].name,
+        name: workshops[props.type].fullName,
       },
       signal
     )
@@ -107,7 +104,7 @@ const WorkshopOrders = (props) => {
   };
 
   useState(() => {
-    document.title = `Комплектация ${types[props.type].name}`;
+    document.title = `Комплектация ${workshops[props.type].name}`;
     const abortController = new AbortController();
     loadData(abortController.signal);
     setIsLoading(false);
@@ -125,7 +122,7 @@ const WorkshopOrders = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <FloatingPlus
-          linkTo={`${types[props.type].link}/new`}
+          linkTo={`${workshops[props.type].redirectURL}/new`}
           visibility={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
         />
         <ControlPanel
@@ -155,7 +152,7 @@ const WorkshopOrders = (props) => {
             fieldName: "date",
             direction: "desc",
           })}
-          link={types[props.type].link}
+          link={workshops[props.type].redirectURL}
           isLoading={isLoading}
           statuses={statuses}
           history={props.history}
