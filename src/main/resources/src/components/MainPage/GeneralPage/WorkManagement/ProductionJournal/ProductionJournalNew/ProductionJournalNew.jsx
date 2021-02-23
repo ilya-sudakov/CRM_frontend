@@ -79,18 +79,44 @@ const ProductionJournalNew = ({}) => {
     worksList,
     workId
   ) => {
+    handleCloseWindow();
+    const defaultWorkItem = {
+      product: [],
+      draft: [],
+      workName: "",
+      workType: "",
+      workId: null,
+      hours: 0,
+      comment: "",
+      isOld: false,
+    };
+    const deletedWork = worksList.filter((work) => work.id !== workId);
     const selectedWork = worksList
       ? worksList.find((work) => work.id === workId)
       : null;
-    console.log(
-      day,
-      type,
-      workshop,
-      worksList,
-      selectedWork,
-      worksList.indexOf(selectedWork)
-    );
-    handleCloseWindow();
+    const updateWork = (daysWork, setDaysWork, works) => {
+      setDaysWork({
+        ...daysWork,
+        [workshop]: {
+          [employee.id]: {
+            ...daysWork[workshop][employee.id],
+            works: works,
+            originalWorks: works,
+          },
+        },
+      });
+    };
+    const updateSelectedDaysWork = (daysWork, setDaysWork, newData) => {
+      updateWork(daysWork, setDaysWork, [
+        ...updateData(worksList, selectedWork, newData),
+      ]);
+    };
+    const addSelectedDaysWork = (daysWork, setDaysWork, newData) => {
+      updateWork(daysWork, setDaysWork, [...worksList, newData]);
+    };
+    const deleteSelectedDaysWork = (daysWork, setDaysWork) => {
+      updateWork(daysWork, setDaysWork, deletedWork);
+    };
     setCurWorkItem({
       day: day,
       date:
@@ -100,21 +126,7 @@ const ProductionJournalNew = ({}) => {
       type: type,
       workshop: workshop,
       employee: employee,
-      works:
-        type === "new"
-          ? [
-              {
-                product: [],
-                draft: [],
-                workName: "",
-                workType: "",
-                workId: null,
-                hours: 0,
-                comment: "",
-                isOld: false,
-              },
-            ]
-          : [selectedWork],
+      works: type === "new" ? [defaultWorkItem] : [selectedWork],
       title:
         type === "new"
           ? "Создание записи о работе"
@@ -122,76 +134,17 @@ const ProductionJournalNew = ({}) => {
       hideWindow: () => setShowWindow(!showWindow),
       updateSelectedDaysWork: (newData) =>
         day === "today"
-          ? setTodaysWork({
-              ...todaysWork,
-              [workshop]: {
-                [employee.id]: {
-                  ...todaysWork[workshop][employee.id],
-                  works: [...updateData(worksList, selectedWork, newData)],
-                  originalWorks: [
-                    ...updateData(worksList, selectedWork, newData),
-                  ],
-                },
-              },
-            })
-          : setYesterdaysWork({
-              ...yesterdaysWork,
-              [workshop]: {
-                [employee.id]: {
-                  ...yesterdaysWork[workshop][employee.id],
-                  works: [...updateData(worksList, selectedWork, newData)],
-                  originalWorks: [
-                    ...updateData(worksList, selectedWork, newData),
-                  ],
-                },
-              },
-            }),
+          ? updateSelectedDaysWork(todaysWork, setTodaysWork, newData)
+          : updateSelectedDaysWork(yesterdaysWork, setYesterdaysWork, newData),
       deleteSelectedDaysWork: () =>
         day === "today"
-          ? setTodaysWork({
-              ...todaysWork,
-              [workshop]: {
-                [employee.id]: {
-                  ...todaysWork[workshop][employee.id],
-                  works: worksList.filter((work) => work.id !== workId),
-                  originalWorks: worksList.filter((work) => work.id !== workId),
-                },
-              },
-            })
-          : setYesterdaysWork({
-              ...yesterdaysWork,
-              [workshop]: {
-                [employee.id]: {
-                  ...yesterdaysWork[workshop][employee.id],
-                  works: worksList.filter((work) => work.id !== workId),
-                  originalWorks: worksList.filter((work) => work.id !== workId),
-                },
-              },
-            }),
-      addSelectedDaysWork: (newWork) =>
+          ? deleteSelectedDaysWork(todaysWork, setTodaysWork)
+          : deleteSelectedDaysWork(yesterdaysWork, setYesterdaysWork),
+      addSelectedDaysWork: (newData) =>
         day === "today"
-          ? setTodaysWork({
-              ...todaysWork,
-              [workshop]: {
-                [employee.id]: {
-                  ...todaysWork[workshop][employee.id],
-                  works: [...worksList, newWork],
-                  originalWorks: [...worksList, newWork],
-                },
-              },
-            })
-          : setYesterdaysWork({
-              ...yesterdaysWork,
-              [workshop]: {
-                [employee.id]: {
-                  ...yesterdaysWork[workshop][employee.id],
-                  works: [...worksList, newWork],
-                  originalWorks: [...worksList, newWork],
-                },
-              },
-            }),
+          ? addSelectedDaysWork(todaysWork, setTodaysWork, newData)
+          : addSelectedDaysWork(yesterdaysWork, setYesterdaysWork, newData),
     });
-    // console.log(day, type, workshop, employee, worksList, workId);
   };
 
   return (
@@ -230,21 +183,10 @@ const ProductionJournalNew = ({}) => {
         }
       />
       <div className="notes-journal__current-date">
-        <ChevronSVG
-          className="main-window__img"
-          style={{ transform: "rotate(90deg)" }}
-          onClick={() =>
-            setCurDay(new Date(new Date(curDay).setDate(curDay.getDate() - 1)))
-          }
-        />
+        <ChangeDayButton day="prevDay" curDay={curDay} setCurDay={setCurDay} />
         {`${formatDateStringNoYear(curDay)} - ${days[curDay.getDay()]}`}
-        <ChevronSVG
-          className="main-window__img"
-          style={{ transform: "rotate(-90deg)" }}
-          onClick={() =>
-            setCurDay(new Date(new Date(curDay).setDate(curDay.getDate() + 1)))
-          }
-        />
+
+        <ChangeDayButton day="nextDay" curDay={curDay} setCurDay={setCurDay} />
       </div>
       <TableView
         isLoading={todayLoading || yesterdayLoading}
@@ -260,3 +202,21 @@ const ProductionJournalNew = ({}) => {
 };
 
 export default ProductionJournalNew;
+
+const ChangeDayButton = ({ day = "prevDay", setCurDay, curDay }) => {
+  return (
+    <ChevronSVG
+      className="main-window__img"
+      style={{ transform: `rotate(${day === "prevDay" ? "90deg" : "-90deg"})` }}
+      onClick={() =>
+        setCurDay(
+          new Date(
+            new Date(curDay).setDate(
+              curDay.getDate() + (day === "prevDay " ? 1 : -1)
+            )
+          )
+        )
+      }
+    />
+  );
+};
