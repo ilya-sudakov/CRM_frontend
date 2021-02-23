@@ -68,6 +68,8 @@ const LoginPage = (props) => {
     setHide(e.animationName === "onAutoFillStart");
   };
 
+  const isFocused = username !== "" || password !== "" || hide || focus;
+
   return (
     <div className="authorization">
       <div className="authorization__background">
@@ -94,9 +96,7 @@ const LoginPage = (props) => {
             <div className="authorization__field_input">
               <div
                 className={`authorization__field_name ${
-                  username !== "" || password !== "" || hide || focus
-                    ? "authorization__field_name--focused"
-                    : ""
+                  isFocused ? "authorization__field_name--focused" : ""
                 }`}
               >
                 Логин
@@ -120,9 +120,7 @@ const LoginPage = (props) => {
             <div className="authorization__field_input">
               <div
                 className={`authorization__field_name  ${
-                  username !== "" || password !== "" || hide || focus
-                    ? "authorization__field_name--focused"
-                    : ""
+                  isFocused ? "authorization__field_name--focused" : ""
                 }`}
               >
                 Пароль
