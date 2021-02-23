@@ -243,6 +243,8 @@
 
                             span {
                                 padding-top: 0.5rem;
+                                word-break: normal;
+                                white-space: nowrap;
                                 &:nth-child(6) {
                                     padding-top: 0.5rem;
                                 }

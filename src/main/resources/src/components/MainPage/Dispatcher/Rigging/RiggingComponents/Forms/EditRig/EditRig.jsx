@@ -252,11 +252,16 @@ const EditRig = (props) => {
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() =>
+              onClick={() => {
+                const part = query.get("part")
+                  ? `&part=${query.get("part")}`
+                  : "";
                 props.history.push(
-                  `${rigTypes[props.type].redirectURL}#${rigInputs.id}`
-                )
-              }
+                  `${rigTypes[props.type].redirectURL}?rig=${
+                    rigInputs.id
+                  }${part}`
+                );
+              }}
               value="Вернуться назад"
             />
             <Button

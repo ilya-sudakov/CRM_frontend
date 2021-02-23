@@ -15,6 +15,7 @@ import {
 import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import TableActions from "../../../../../../utils/TableView/TableActions/TableActions.jsx";
 import DeleteItemAction from "../../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
+import useQuery from "../../../../../../utils/hooks/useQuery";
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
@@ -23,6 +24,7 @@ const TableView = (props) => {
   });
   const [partsVisible, setPartsVisible] = useState([]);
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
+  const { query } = useQuery();
 
   const searchQuery = (data) => {
     let re = /[.,\s]/gi;
@@ -129,12 +131,19 @@ const TableView = (props) => {
 
   const prevRef = useCallback(
     (node) => {
-      const id = Number.parseInt(props.history.location.hash.split("#")[1]);
+      const rig = Number.parseInt(query.get("rig"));
+      const part = Number.parseInt(query.get("part"));
 
+      console.log(
+        rig,
+        part,
+        node,
+        props.data.find((item) => item.id === rig)
+      );
       if (
         !props.data ||
         scrolledToPrev ||
-        props.data.find((item) => item.id === id) === undefined
+        props.data.find((item) => item.id === rig) === undefined
       )
         return;
 
@@ -170,7 +179,7 @@ const TableView = (props) => {
               id={stamp.id}
               ref={
                 Number.parseInt(props.history.location.hash.split("#")[1]) ===
-                stamp.id
+                  stamp.id && query.get("part") === null
                   ? prevRef
                   : null
               }
@@ -246,9 +255,10 @@ const TableView = (props) => {
               id={stamp_id}
               className={`main-window__list-options 
                   ${
-                    isPartHidden(stamp.id) === true
-                      ? "main-window__list-options--hidden"
-                      : ""
+                    !isPartHidden(stamp.id) ||
+                    Number.parseInt(query.get("rig")) === stamp.id
+                      ? ""
+                      : "main-window__list-options--hidden"
                   }`}
             >
               <div className="main-window__list">
@@ -297,6 +307,12 @@ const TableView = (props) => {
                         : " main-window__list-item--message main-window__list-item--warning")
                     }
                     data-msg="Предупреждение! Введите корректное местоположение"
+                    ref={
+                      Number.parseInt(query.get("rig")) === stamp.id &&
+                      Number.parseInt(query.get("part")) === part.id
+                        ? prevRef
+                        : null
+                    }
                   >
                     <span
                       className="main-window__list-item--border-checked"
