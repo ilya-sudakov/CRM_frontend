@@ -39,3 +39,12 @@ export const pages = {
     name: "Завершено",
   },
 };
+
+export const requstsSortOptions = [
+  { value: "date desc", text: "По дате (убыв.)" },
+  { value: "date asc", text: "По дате (возр.)" },
+  { value: "sum desc", text: "По сумме (убыв.)" },
+  { value: "sum asc", text: "По сумме (возр.)" },
+  { value: "shippingDate desc", text: "По даты отгрузки (убыв.)" },
+  { value: "shippingDate asc", text: "По даты отгрузки (возр.)" },
+];

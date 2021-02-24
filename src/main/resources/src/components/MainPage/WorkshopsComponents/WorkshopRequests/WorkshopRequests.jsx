@@ -26,7 +26,7 @@ import {
   getDatesFromRequests,
 } from "../../../../utils/functions.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { pages } from "../objects.js";
+import { pages, requstsSortOptions } from "../objects.js";
 import chevronDown from "../../../../../../../../assets/tableview/chevron-down.svg";
 import useSort from "../../../../utils/hooks/useSort/useSort.js";
 import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader";
@@ -103,14 +103,7 @@ const WorkshopRequests = (props) => {
       curSort: "date",
       date: "desc",
     },
-    sortOptions: [
-      { value: "date desc", text: "По дате (убыв.)" },
-      { value: "date asc", text: "По дате (возр.)" },
-      { value: "sum desc", text: "По сумме (убыв.)" },
-      { value: "sum asc", text: "По сумме (возр.)" },
-      { value: "shippingDate desc", text: "По даты отгрузки (убыв.)" },
-      { value: "shippingDate asc", text: "По даты отгрузки (возр.)" },
-    ],
+    sortOptions: requstsSortOptions,
   });
   const [workshopsFilter, setWorkshopsFilter] = useState([
     {
