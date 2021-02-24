@@ -248,24 +248,33 @@ const TableView = ({
           />
         ),
         isRendered:
-          (deleteItem ? deleteItem : false) &&
-          userContext.userHasAccess(["ROLE_ADMIN"]),
+          (workshopName === "requests"
+            ? deleteItem
+              ? deleteItem
+              : false
+            : false) && userContext.userHasAccess(["ROLE_ADMIN"]),
       },
       {
         title: "Перенос заявки",
         onClick: () => handleRequestTransfer(request),
         imgSrc: transferSVG,
         isRendered:
-          (transferRequest ? transferRequest : false) &&
-          userContext.userHasAccess(["ROLE_ADMIN"]),
+          (workshopName === "requests"
+            ? transferRequest
+              ? transferRequest
+              : false
+            : false) && userContext.userHasAccess(["ROLE_ADMIN"]),
       },
       {
         title: "Копирование заявки",
         onClick: () => copyRequest(request.id),
         imgSrc: copySVG,
         isRendered:
-          (copyRequest ? copyRequest : false) &&
-          userContext.userHasAccess(["ROLE_ADMIN"]),
+          (workshopName === "requests"
+            ? copyRequest
+              ? copyRequest
+              : false
+            : false) && userContext.userHasAccess(["ROLE_ADMIN"]),
       },
     ];
   };

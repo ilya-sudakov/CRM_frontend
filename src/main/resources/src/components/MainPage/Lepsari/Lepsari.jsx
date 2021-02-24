@@ -78,7 +78,7 @@ const Lepsari = (props) => {
   );
 
   return (
-    <div className="requests-lepsari">
+    <div className="lepsari">
       <div className="main-window">
         {titleHeader}
         <div className="main-window__content">

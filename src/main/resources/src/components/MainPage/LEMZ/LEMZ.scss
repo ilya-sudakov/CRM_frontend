@@ -14,13 +14,17 @@
     }
   }
 
+  .control-panel {
+    width: calc(100% + 25px);
+  }
+
   .searchbar {
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
     text-align: left;
     margin-top: -5px;
     padding-top: 5px;
-    width: calc(100% + 25px);
+    width: calc(100% + 25px) !important;
     border: 0;
   }
 
@@ -41,12 +45,20 @@
 
     .main-window {
       padding-top: 0;
+
+      .title-header {
+        width: calc(100% + 25px);
+      }
     }
 
     .main-form {
       .main-form__form {
         width: calc(100% - 40px);
       }
+    }
+
+    .tableview-workshops {
+      width: calc(100% + 25px);
     }
   }
 

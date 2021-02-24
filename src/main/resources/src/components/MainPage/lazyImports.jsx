@@ -4,8 +4,6 @@ const Clients = lazy(() => import("./Clients/Clients.jsx"));
 
 const Contracts = lazy(() => import("./Contracts/Contracts.jsx"));
 
-const Requests = lazy(() => import("./Requests/Requests.jsx"));
-
 const NewRequest = lazy(() =>
   import("./WorkshopsComponents/Forms/NewRequest/NewRequest.jsx")
 );
@@ -242,7 +240,6 @@ export {
   EditClient,
   ClientCategories,
   Contracts,
-  Requests,
   NewRequest,
   EditRequest,
   ShipRequest,

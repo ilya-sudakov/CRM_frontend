@@ -1,6 +1,6 @@
 @import "../../../variables.scss";
 
-.requests-lepsari {
+.lepsari {
   .main-window {
     padding: 10px 0;
   }
@@ -14,13 +14,17 @@
     }
   }
 
+  .control-panel {
+    width: calc(100% + 25px);
+  }
+
   .searchbar {
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
     text-align: left;
     margin-top: -5px;
     padding-top: 5px;
-    width: calc(100% + 25px);
+    width: calc(100% + 25px) !important;
     border: 0;
   }
 
@@ -41,6 +45,10 @@
 
     .main-window {
       padding-top: 0;
+
+      .title-header {
+        width: calc(100% + 25px);
+      }
     }
 
     .main-form {
@@ -48,14 +56,20 @@
         width: calc(100% - 40px);
       }
     }
+
+    .tableview-workshops {
+      width: calc(100% + 25px);
+    }
   }
 
   @media (max-width: 768px) {
-    .main-window__header {
-      margin-bottom: 5px;
+    .main-window {
+      .main-window__header {
+        margin-bottom: 5px;
 
-      .main-window__title {
-        margin-bottom: 10px !important;
+        .main-window__title {
+          margin-bottom: 10px !important;
+        }
       }
     }
   }

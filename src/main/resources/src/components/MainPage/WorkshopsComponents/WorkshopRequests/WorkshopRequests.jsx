@@ -13,6 +13,11 @@ import {
   deleteProductsToRequest,
   deleteRequest,
   getRequestsByWorkshop,
+  transferRequest,
+  addRequest,
+  addProductsToRequest,
+  connectClientToRequest,
+  getRequests,
 } from "../../../../utils/RequestsAPI/Requests.jsx";
 import { getCategories } from "../../../../utils/RequestsAPI/Products/Categories.js";
 import {
@@ -27,7 +32,8 @@ import useSort from "../../../../utils/hooks/useSort/useSort.js";
 import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader";
 import { sortByField } from "../../../../utils/sorting/sorting";
 import { requestStatuses, workshops } from "../workshopVariables.js";
-import { filterRequestsByPage } from "../functions.js";
+import { filterRequestsByPage, getPageByRequest } from "../functions.js";
+import useFormWindow from "../../../../utils/hooks/useFormWindow";
 
 const WorkshopRequests = (props) => {
   const [requests, setRequests] = useState([]);
@@ -35,7 +41,62 @@ const WorkshopRequests = (props) => {
   const [productsQuantities, setProductsQuantities] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(props.type === "requests");
+  const [toWorkshop, setToWorkshop] = useState("lemz"); //Название цеха для переноса заявки
+  const [requestId, setRequestId] = useState(0);
+
+  const handleTransferRequest = () => {
+    setIsLoading(true);
+    const request = requests.find((item) => item.id === requestId);
+    transferRequest(request.id, toWorkshop)
+      .then((res) => res.json())
+      .then(() => {
+        setIsLoading(false);
+        setShowWindow(false);
+        props.history.push(
+          `/${toWorkshop}/workshop-${toWorkshop}/${getPageByRequest(request)}#${
+            request.id
+          }`
+        );
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Ошибка при копировании записи");
+        setIsLoading(false);
+      });
+  };
+
+  const { formWindow, showWindow, setShowWindow } = useFormWindow(
+    "Перенос заявки в план производства",
+    <>
+      <div className="main-form">
+        <div className="main-form__form">
+          <div className="main-form__item">
+            <div className="main-form__input_name">Подразделение</div>
+            <div className="main-form__input_field">
+              <select
+                name="workshop"
+                onChange={({ target }) => setToWorkshop(target.value)}
+              >
+                <option value="lemz">ЦехЛЭМЗ</option>
+                <option value="lepsari">ЦехЛепсари</option>
+              </select>
+            </div>
+          </div>
+          <div className="main-form__buttons main-form__buttons--full">
+            <Button
+              className="main-form__submit"
+              isLoading={isLoading}
+              onClick={handleTransferRequest}
+              text="Перенести в цех"
+            />
+          </div>
+        </div>
+      </div>
+    </>,
+    []
+  );
   const { sortOrder, sortPanel } = useSort([], {
     ignoreURL: false,
     sortOrder: {
@@ -51,6 +112,16 @@ const WorkshopRequests = (props) => {
       { value: "shippingDate asc", text: "По даты отгрузки (возр.)" },
     ],
   });
+  const [workshopsFilter, setWorkshopsFilter] = useState([
+    {
+      filter: ["lemz", "lepsari", null, "requests"],
+      fullName: "Все",
+      visible: true,
+    },
+    { filter: ["lemz"], fullName: "ЦехЛЭМЗ", visible: false },
+    { filter: ["lepsari"], fullName: "ЦехЛепсари", visible: false },
+    { filter: [null, "requests"], fullName: "Не перенесенные", visible: false },
+  ]);
 
   const deleteItem = (id) => {
     getRequestById(id)
@@ -64,6 +135,62 @@ const WorkshopRequests = (props) => {
         });
       })
       .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  //Перенести заявку
+  const transferRequestId = (id) => {
+    setRequestId(id);
+    setShowWindow(!showWindow);
+  };
+
+  //Копировать заявку
+  const copySelectedRequest = (id) => {
+    setIsLoading(true);
+    const requestToBeCopied = requests.find((item) => {
+      if (item.id === id) {
+        return true;
+      }
+    });
+    let newId = 0;
+    addRequest({
+      date: requestToBeCopied.date,
+      products: requestToBeCopied.requestProducts,
+      quantity: requestToBeCopied.quantity,
+      clientId: requestToBeCopied.client?.id,
+      sum: requestToBeCopied.sum,
+      responsible: requestToBeCopied.responsible,
+      status: requestToBeCopied.status,
+      shippingDate:
+        requestToBeCopied.shippingDate !== null
+          ? requestToBeCopied.shippingDate
+          : new Date(),
+      comment: requestToBeCopied.comment,
+      factory: requestToBeCopied.factory,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        newId = res.id;
+        return Promise.all(
+          requestToBeCopied.requestProducts.map((item) => {
+            return addProductsToRequest({
+              requestId: res.id,
+              quantity: item.quantity,
+              packaging: item.packaging,
+              status: item.status,
+              name: item.name,
+            });
+          })
+        );
+      })
+      .then(() => connectClientToRequest(newId, requestToBeCopied.client?.id))
+      .then(() => {
+        setIsLoading(false);
+        loadRequests();
+      })
+      .catch((error) => {
+        setIsLoading(false);
         console.log(error);
       });
   };
@@ -118,7 +245,10 @@ const WorkshopRequests = (props) => {
 
   const loadRequests = (signal) => {
     setIsLoading(true);
-    return getRequestsByWorkshop(props.type, signal)
+    return (props.type === "requests"
+      ? getRequests(signal)
+      : getRequestsByWorkshop(props.type, signal)
+    )
       .then((res) => res.json())
       .then((requests) => {
         setRequests(requests);
@@ -165,7 +295,9 @@ const WorkshopRequests = (props) => {
     return filterSearchQuery(
       filterRequestsByStatuses(
         filterRequestsByPage(
-          filterRequestsByWorkshop(requests),
+          props.type === "requests"
+            ? requests
+            : filterRequestsByWorkshop(requests),
           pages[curPage].name
         )
       )
@@ -189,8 +321,10 @@ const WorkshopRequests = (props) => {
   };
 
   const getCategoriesCount = (category) => {
-    return filterRequestsByPage(filterRequestsByWorkshop(requests), category)
-      .length;
+    return filterRequestsByPage(
+      props.type === "requests" ? requests : filterRequestsByWorkshop(requests),
+      category
+    ).length;
   };
 
   const pageNameInURL = props.location.pathname.split(
@@ -216,7 +350,7 @@ const WorkshopRequests = (props) => {
     },
   ];
   const { curPage, titleHeader } = useTitleHeader(
-    undefined,
+    props.type === "requests" ? "Заявки" : undefined,
     menuItems,
     pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
   );
@@ -245,12 +379,14 @@ const WorkshopRequests = (props) => {
           visibility={["ROLE_ADMIN", "ROLE_WORKSHOP"]}
           iconStyles={{ transform: isMinimized ? "rotate(180deg)" : "" }}
         />
+        {props.type === "requests" ? titleHeader : null}
         <SearchBar
           fullSize
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        {titleHeader}
+        {props.type !== "requests" ? titleHeader : null}
+        {props.type === "requests" && formWindow}
         <ControlPanel
           itemsCount={`Всего: ${requests.length} записей`}
           buttons={
@@ -264,25 +400,61 @@ const WorkshopRequests = (props) => {
             />
           }
           content={
-            <div className="main-window__status-panel">
-              <div>Фильтр по статусам: </div>
-              {statuses.map((status, index) => {
-                return (
-                  <div
-                    className={
-                      (status.visible
-                        ? "main-window__button"
-                        : "main-window__button main-window__button--inverted") +
-                      " main-window__list-item--" +
-                      status.className
-                    }
-                    onClick={() => handleStatusClick(status, index)}
-                  >
-                    {status.name}
-                  </div>
-                );
-              })}
-            </div>
+            <>
+              <div className="main-window__status-panel">
+                <div>Фильтр по статусам: </div>
+                {statuses.map((status, index) => {
+                  return (
+                    <div
+                      className={
+                        (status.visible
+                          ? "main-window__button"
+                          : "main-window__button main-window__button--inverted") +
+                        " main-window__list-item--" +
+                        status.className
+                      }
+                      onClick={() => handleStatusClick(status, index)}
+                    >
+                      {status.name}
+                    </div>
+                  );
+                })}
+              </div>
+              {props.type === "requests" && (
+                <div
+                  className="main-window__filter-pick"
+                  style={{ marginTop: "10px" }}
+                >
+                  <div>Фильтр по цехам: </div>
+                  {workshopsFilter.map((workshop, index) => {
+                    return (
+                      <div
+                        className={
+                          workshop.visible
+                            ? "main-window__button"
+                            : "main-window__button main-window__button--inverted"
+                        }
+                        onClick={() => {
+                          let temp = workshopsFilter.map((tempWorkshop) => {
+                            return {
+                              ...tempWorkshop,
+                              visible: false,
+                            };
+                          });
+                          temp.splice(index, 1, {
+                            ...workshop,
+                            visible: !workshop.visible,
+                          });
+                          setWorkshopsFilter([...temp]);
+                        }}
+                      >
+                        {workshop.fullName}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </>
           }
           sorting={sortPanel}
         />
@@ -299,7 +471,9 @@ const WorkshopRequests = (props) => {
           })}
           deleteItem={deleteItem}
           searchQuery={searchQuery}
-          userHasAccess={props.userHasAccess}
+          deleteItem={deleteItem}
+          transferRequest={transferRequestId}
+          copyRequest={copySelectedRequest}
         />
       </div>
     </div>

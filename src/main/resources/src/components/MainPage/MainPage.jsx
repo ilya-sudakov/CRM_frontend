@@ -7,7 +7,6 @@ import Header from "../Header/Header.jsx";
 import {
   Clients,
   Contracts,
-  Requests,
   GeneralPage,
   newClient,
   Products,
@@ -62,6 +61,7 @@ import {
   NewLtd,
   EditLtd,
   ProductionJournalNew,
+  WorkshopRequests,
 } from "./lazyImports.jsx";
 import SideMenu from "../SideMenu/SideMenu.jsx";
 import PageNotFound from "./PageNotFound/PageNotFound.jsx";
@@ -272,7 +272,7 @@ const MainPage = () => {
                   />
                   <PrivateRoute
                     path="/requests/"
-                    component={Requests}
+                    component={WorkshopRequests}
                     type="requests"
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
