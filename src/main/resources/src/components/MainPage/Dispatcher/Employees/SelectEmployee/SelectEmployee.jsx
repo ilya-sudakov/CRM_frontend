@@ -108,6 +108,7 @@ const SelectEmployee = (props) => {
   const filterSearchQuery = (data) => {
     const query = searchQuery.toLowerCase();
     return data.filter((item) => {
+      console.log(item);
       if (item.name === null) return false;
       const isFound =
         item.lastName.toLowerCase().includes(query) ||
@@ -137,7 +138,7 @@ const SelectEmployee = (props) => {
             />
           )}
         </div>
-        {/* {employee ? (
+        {employee ? (
           <div className="select-employee__employee-info">
             <div className="employee-info__name">
               {`${employee.lastName} ${employee.name} ${employee.middleName}`}
@@ -166,7 +167,7 @@ const SelectEmployee = (props) => {
               </div>
             </div>
           )
-        )} */}
+        )}
       </div>
       {props.error === true && (
         <div
