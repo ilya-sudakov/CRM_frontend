@@ -11,23 +11,46 @@ const TitleHeader = ({ title, menuItems, curPage, setCurPage }) => {
         {title ? <div className="main-window__title">{title}</div> : null}
         {menuItems ? (
           <div className="main-window__menu">
-            {menuItems.map((item) => (
-              <Link
-                className={`main-window__item ${
-                  (item.isActive === undefined && curPage === item.pageName) ||
-                  item.isActive
-                    ? "main-window__item--active"
-                    : ""
-                }`}
-                to={item.link}
-                onClick={() => setCurPage(item.pageName)}
-              >
-                {item.pageTitle}
-                {item.count ? (
-                  <span className="main-window__items-count">{item.count}</span>
-                ) : null}
-              </Link>
-            ))}
+            {menuItems.map((item) => {
+              const itemContents = (
+                <>
+                  {item.pageTitle}
+                  {item.count ? (
+                    <span className="main-window__items-count">
+                      {item.count}
+                    </span>
+                  ) : null}
+                </>
+              );
+              return item.link ? (
+                <Link
+                  className={`main-window__item ${
+                    (item.isActive === undefined &&
+                      curPage === item.pageName) ||
+                    item.isActive
+                      ? "main-window__item--active"
+                      : ""
+                  }`}
+                  to={item.link}
+                  onClick={() => setCurPage(item.pageName)}
+                >
+                  {itemContents}
+                </Link>
+              ) : (
+                <div
+                  className={`main-window__item ${
+                    (item.isActive === undefined &&
+                      curPage === item.pageName) ||
+                    item.isActive
+                      ? "main-window__item--active"
+                      : ""
+                  }`}
+                  onClick={() => setCurPage(item.pageName)}
+                >
+                  {itemContents}
+                </div>
+              );
+            })}
           </div>
         ) : null}
       </div>

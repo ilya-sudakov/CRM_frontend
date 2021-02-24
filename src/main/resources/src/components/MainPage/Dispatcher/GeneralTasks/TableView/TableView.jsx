@@ -11,23 +11,6 @@ import deleteSVG from "../../../../../../../../../assets/tableview/delete.svg";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const TableView = (props) => {
-  // const [statuses, setStatuses] = {
-  //   Проблема: {
-  //     className: 'problem',
-  //   },
-  //   Материалы: {
-  //     className: 'materials',
-  //   },
-  //   Выполнено: {
-  //     className: 'completed',
-  //   },
-  //   'В процессе': {
-  //     className: 'in-progress',
-  //   },
-  //   Отложено: {
-  //     className: 'delayed',
-  //   },
-  // }
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
