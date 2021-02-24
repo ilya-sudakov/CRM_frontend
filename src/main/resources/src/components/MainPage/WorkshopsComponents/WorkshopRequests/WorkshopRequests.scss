@@ -1,28 +1,28 @@
-@import "../../../variables.scss";
+@import "../../../../variables.scss";
 
-.requests_lepsari {
+.workshop-requests {
     --shipped: #b8c493;
-    // --priority: #e08989;
     --priority: #e29c9c;
     --completed: #98dda6;
-    // --ready: #77c78a;
     --ready: #7fd192;
-    // --in-production: #dadbba;
     --in-production: #e3e4cb;
-    // --waiting: #84c7b1;
     --waiting: #95ddc5;
     --problem: #d6574e;
-    // --materials: #d4ae63;
     --materials: #dfc38b;
 
     .control-panel {
         margin-top: -5px;
         width: calc(100% + 25px);
+        // margin-bottom: 5px;
 
         .main-window__control-panel-wrapper {
             padding-top: 10px;
             padding-bottom: 15px;
         }
+    }
+
+    .title-header {
+        width: calc(100% + 25px);
     }
 
     .main-window__status-panel {
@@ -72,10 +72,9 @@
             }
         }
     }
-
-    .main-window__header {
+    
+    .tableview-workshops {
         width: calc(100% + 25px);
-        border-bottom: 1px solid #dddddd;
     }
 
     .searchbar {
@@ -85,10 +84,6 @@
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         // margin-bottom: 5px;
-    }
-    
-    .tableview-workshops {
-        width: calc(100% + 25px);
     }
 
     .main-window__status-panel {

@@ -14,7 +14,10 @@ const TitleHeader = ({ title, menuItems, curPage, setCurPage }) => {
             {menuItems.map((item) => (
               <Link
                 className={`main-window__item ${
-                  curPage === item.pageName ? "main-window__item--active" : ""
+                  (item.isActive === undefined && curPage === item.pageName) ||
+                  item.isActive
+                    ? "main-window__item--active"
+                    : ""
                 }`}
                 to={item.link}
                 onClick={() => setCurPage(item.pageName)}

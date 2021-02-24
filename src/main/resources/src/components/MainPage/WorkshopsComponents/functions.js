@@ -19,6 +19,29 @@ export const getPageByRequest = (item) => {
   return "open";
 };
 
+export const filterRequestsByPage = (data, page) => {
+  return data.filter((item) => {
+    if (page === "Завершено" && item.status === "Завершено") {
+      return true;
+    }
+    if (
+      page === "Отгружено" &&
+      (item.status === "Отгружено" || item.status === "Частично отгружено")
+    ) {
+      return true;
+    }
+    if (
+      page === "Открытые" &&
+      item.status !== "Завершено" &&
+      item.status !== "Отгружено" &&
+      item.status !== "Частично отгружено"
+    ) {
+      return true;
+    }
+    return false;
+  });
+};
+
 export const printRequest = (request) => {
   let dd = getRequestPdfText(
     request.date,

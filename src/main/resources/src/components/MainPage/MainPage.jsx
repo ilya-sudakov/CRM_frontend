@@ -273,6 +273,7 @@ const MainPage = () => {
                   <PrivateRoute
                     path="/requests/"
                     component={Requests}
+                    type="requests"
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
                     allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}

@@ -18,7 +18,7 @@ import {
 } from "../../../../../utils/RequestsAPI/Requests.jsx";
 import { requestStatuses, workshops } from "../../workshopVariables.js";
 import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
-import { getPageByRequest } from "../../../Requests/functions.js";
+import { getPageByRequest } from "../../functions.js";
 
 const EditRequest = (props) => {
   const [requestId, setRequestId] = useState(1);

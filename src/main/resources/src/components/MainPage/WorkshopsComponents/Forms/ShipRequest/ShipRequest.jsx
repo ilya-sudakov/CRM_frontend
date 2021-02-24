@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react'
-import './ShipRequest.scss'
-import '../../../../../utils/Form/Form.scss'
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx'
-import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
-import UserContext from '../../../../../App.js'
+import React, { useEffect, useState, useContext } from "react";
+import "./ShipRequest.scss";
+import "../../../../../utils/Form/Form.scss";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
+import InputProducts from "../../../../../utils/Form/InputProducts/InputProducts.jsx";
+import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import UserContext from "../../../../../App.js";
 import {
   editRequest,
   editProductsToRequest,
@@ -15,106 +15,106 @@ import {
   deleteProductsToRequest,
   getRequestById,
   connectClientToRequest,
-} from '../../../../../utils/RequestsAPI/Requests.jsx'
-import { requestStatuses, workshops } from '../../workshopVariables.js'
-import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx'
+} from "../../../../../utils/RequestsAPI/Requests.jsx";
+import { requestStatuses, workshops } from "../../workshopVariables.js";
+import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
 
 const ShipRequest = (props) => {
-  const [requestId, setRequestId] = useState(1)
-  const userContext = useContext(UserContext)
-  const [selectedProducts, setSelectedProducts] = useState([])
+  const [requestId, setRequestId] = useState(1);
+  const userContext = useContext(UserContext);
+  const [selectedProducts, setSelectedProducts] = useState([]);
   const [requestInputs, setRequestInputs] = useState({
-    date: '',
+    date: "",
     products: [],
     // quantity: "",
-    codeWord: '',
-    responsible: '',
-    status: 'Не готово',
-    shippingDate: '',
-    comment: '',
+    codeWord: "",
+    responsible: "",
+    status: "Не готово",
+    shippingDate: "",
+    comment: "",
     sum: 0,
     clientId: 0,
     client: null,
-  })
+  });
   const [requestErrors, setRequestErrors] = useState({
     requestProducts: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     requestProducts: true,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case 'requestProducts':
+      case "requestProducts":
         setValidInputs({
           ...validInputs,
           requestProducts: value.length > 0,
-        })
-        break
+        });
+        break;
       default:
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== '',
-          })
+            [fieldName]: value !== "",
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
     // console.log(validInputs);
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       requestProducts: false,
-    })
+    });
     for (let item in validInputs) {
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setRequestErrors(newErrors)
+    setRequestErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
       // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
   const checkIfAllProductsAreShipped = (products) => {
-    let check = true
+    let check = true;
     products.map((product) => {
       if (
         Number.parseFloat(product.quantityNew) -
           Number.parseFloat(product.quantity) !==
         0
       ) {
-        return (check = false)
+        return (check = false);
       }
-    })
-    return check
-  }
+    });
+    return check;
+  };
 
   const handleSubmit = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     formIsValid() &&
       editRequest(
         {
           ...requestInputs,
           status: checkIfAllProductsAreShipped(selectedProducts)
-            ? 'Отгружено'
-            : 'Частично отгружено',
+            ? "Отгружено"
+            : "Частично отгружено",
         },
-        requestId,
+        requestId
       )
         .then(() => {
           return Promise.all(
@@ -123,62 +123,62 @@ const ShipRequest = (props) => {
                 Number.parseFloat(selected.quantityNew) === 0 ||
                 selected.quantityNew === undefined
               )
-                return
+                return;
 
               const diff =
                 Number.parseFloat(selected.quantity) -
-                Number.parseFloat(selected.quantityNew)
+                Number.parseFloat(selected.quantityNew);
 
               return editProductsToRequest(
                 {
                   requestId: requestId,
                   quantity: diff < 0 ? 0 : diff,
-                  status: diff <= 0 ? 'completed' : selected.status,
+                  status: diff <= 0 ? "completed" : selected.status,
                   packaging: selected.packaging,
                   name: selected.name,
                 },
-                selected.id,
-              )
-            }),
-          )
+                selected.id
+              );
+            })
+          );
         })
         .then(() => props.history.push(workshops[props.type].redirectURL))
         .catch((error) => {
-          setIsLoading(false)
-          console.log(error)
-        })
-  }
+          setIsLoading(false);
+          console.log(error);
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setRequestInputs({
       ...requestInputs,
       [name]: value,
-    })
+    });
     setRequestErrors({
       ...requestErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   const handleProductsChange = (newProducts) => {
-    validateField('requestProducts', newProducts)
-    setSelectedProducts(newProducts)
+    validateField("requestProducts", newProducts);
+    setSelectedProducts(newProducts);
     setRequestErrors({
       ...requestErrors,
       requestProducts: false,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    document.title = 'Отгрузка продукции'
-    const id = props.history.location.pathname.split('ship/')[1]
+    document.title = "Отгрузка продукции";
+    const id = props.history.location.pathname.split("ship/")[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс заявки!')
-      props.history.push(workshops[props.type].redirectURL)
+      alert("Неправильный индекс заявки!");
+      props.history.push(workshops[props.type].redirectURL);
     } else {
-      setRequestId(id)
+      setRequestId(id);
       getRequestById(id)
         .then((res) => res.json())
         .then((oldRequest) => {
@@ -199,24 +199,24 @@ const ShipRequest = (props) => {
             sum: oldRequest.sum,
             client: oldRequest.client,
             clientId: oldRequest.client ? oldRequest.client.id : 0,
-          })
-          oldRequest.client && validateField('clientId', oldRequest.client.id)
+          });
+          oldRequest.client && validateField("clientId", oldRequest.client.id);
           setSelectedProducts(
             oldRequest.requestProducts.map((product) => {
               return {
                 ...product,
                 quantityNew: product.quantity,
-              }
-            }),
-          )
+              };
+            })
+          );
         })
         .catch((error) => {
-          console.log(error)
-          alert('Неправильный индекс заявки!')
-          props.history.push(workshops[props.type].redirectURL)
-        })
+          console.log(error);
+          alert("Неправильный индекс заявки!");
+          props.history.push(workshops[props.type].redirectURL);
+        });
     }
-  }, [])
+  }, []);
 
   return (
     <div className="ship-request">
@@ -264,16 +264,16 @@ const ShipRequest = (props) => {
                 readOnly: true,
               },
               packaging: {
-                customName: 'Фасовка',
+                customName: "Фасовка",
                 readOnly: true,
-                marginRight: '10px',
+                marginRight: "10px",
               },
               quantity: {
-                customName: 'Исх. кол-во (шт.)',
+                customName: "Исх. кол-во (шт.)",
                 readOnly: true,
               },
               newQuantity: {
-                customName: 'Отгружено (шт.)',
+                customName: "Отгружено (шт.)",
               },
             }}
           />
@@ -300,9 +300,11 @@ const ShipRequest = (props) => {
               className="main-form__submit main-form__submit--inverted"
               type="submit"
               onClick={(event) => {
-                event.preventDefault()
-                const id = props.history.location.pathname.split('ship/')[1]
-                props.history.push(`${workshops[props.type].redirectURL}#${id}`)
+                event.preventDefault();
+                const id = props.history.location.pathname.split("ship/")[1];
+                props.history.push(
+                  `${workshops[props.type].redirectURL}#${id}`
+                );
               }}
               value="Вернуться назад"
             />
@@ -316,7 +318,7 @@ const ShipRequest = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ShipRequest
+export default ShipRequest;

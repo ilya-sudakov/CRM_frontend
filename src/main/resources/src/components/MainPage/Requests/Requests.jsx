@@ -8,10 +8,10 @@ import {
   deleteProductsToRequest,
   getRequestById,
   addRequest,
-  editRequest,
   addProductsToRequest,
   connectClientToRequest,
   transferRequest,
+  getRequests,
 } from "../../../utils/RequestsAPI/Requests.jsx";
 import TableView from "../WorkshopsComponents/TableView/TableView.jsx";
 import SearchBar from "../SearchBar/SearchBar.jsx";
@@ -23,10 +23,19 @@ import {
   getDatesFromRequests,
 } from "../../../utils/functions.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { filterRequestsByPage, getPageByRequest } from "./functions.js";
-import { pages } from "./objects.js";
-import { Link } from "react-router-dom";
+import {
+  filterRequestsByPage,
+  getPageByRequest,
+} from "../WorkshopsComponents/functions.js";
 import chevronDown from "../../../../../../../assets/tableview/chevron-down.svg";
+import {
+  requestStatuses,
+  workshops,
+} from "../WorkshopsComponents/workshopVariables.js";
+import { pages } from "../WorkshopsComponents/objects.js";
+import useSort from "../../../utils/hooks/useSort/useSort.js";
+import useTitleHeader from "../../../utils/hooks/uiComponents/useTitleHeader.js";
+import { sortByField } from "../../../utils/sorting/sorting.js";
 
 const Requests = (props) => {
   const [requests, setRequests] = useState([]); //Массив заявок
@@ -37,55 +46,12 @@ const Requests = (props) => {
   //id заявки, использующийся при ее дальнейшем копировании или переносе в цеха
   const [requestId, setRequestId] = useState(0);
   const [dates, setDates] = useState([]);
-  const pageNameInURL = props.location.pathname.split("/requests/")[1];
-  const [curPage, setCurPage] = useState(
-    pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
-  ); //Текущая страница
   const [isMinimized, setIsMinimized] = useState(true);
-
   //Статусы заявок
-  const [requestStatuses, setRequestStatutes] = useState([
-    {
-      name: "Проблема/Материалы",
-      oldName: "Проблема-материалы",
-      className: "materials",
-      access: ["ROLE_ADMIN", "ROLE_WORKSHOP"],
-      visible: false,
-    },
-    // {
-    //   name: 'Отгружено',
-    //   className: 'shipped',
-    //   access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-    //   visible: false,
-    // },
-    {
-      name: "Готово к отгрузке",
-      oldName: "Готово",
-      className: "ready",
-      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
-      visible: false,
-    },
-    {
-      name: "В производстве",
-      className: "in-production",
-      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
-      visible: false,
-    },
-    {
-      name: "Ожидание",
-      className: "waiting",
-      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
-      visible: false,
-    },
-    {
-      name: "Приоритет",
-      className: "priority",
-      access: ["ROLE_ADMIN"],
-      visible: false,
-    },
-  ]);
-
-  const [workshops, setWorkshops] = useState([
+  const [statuses, setStatuses] = useState(
+    requestStatuses.map((status) => ({ ...status, visible: false }))
+  );
+  const [workshopsFilter, setWorkshopsFilter] = useState([
     {
       filter: ["lemz", "lepsari", null, "requests"],
       fullName: "Все",
@@ -95,6 +61,122 @@ const Requests = (props) => {
     { filter: ["lepsari"], fullName: "ЦехЛепсари", visible: false },
     { filter: [null, "requests"], fullName: "Не перенесенные", visible: false },
   ]);
+  const { sortOrder, sortPanel } = useSort([], {
+    ignoreURL: false,
+    sortOrder: {
+      curSort: "date",
+      date: "desc",
+    },
+    sortOptions: [
+      { value: "date desc", text: "По дате (убыв.)" },
+      { value: "date asc", text: "По дате (возр.)" },
+      { value: "sum desc", text: "По сумме (убыв.)" },
+      { value: "sum asc", text: "По сумме (возр.)" },
+      { value: "shippingDate desc", text: "По даты отгрузки (убыв.)" },
+      { value: "shippingDate asc", text: "По даты отгрузки (возр.)" },
+    ],
+  });
+
+  const filterRequestsByWorkshop = (data) => {
+    return data.filter((item) => {
+      const selectedWorkshop = workshopsFilter.find(
+        (workshop) => workshop.visible
+      );
+      if (selectedWorkshop === undefined) {
+        return false;
+      }
+      let check = false;
+      selectedWorkshop.filter.map((type) => {
+        if (type === item.factory) {
+          return (check = true);
+        }
+      });
+      return check;
+    });
+  };
+
+  const filterRequestsByStatuses = (data) => {
+    return data.filter((item) => {
+      let check = false;
+      let noActiveStatuses = true;
+      statuses.map((status) => {
+        statuses.map((status) => {
+          if (status.visible) {
+            noActiveStatuses = false;
+          }
+        });
+        if (
+          noActiveStatuses === true ||
+          (status.visible &&
+            (status.name === item.status || status.oldName === item.status))
+        ) {
+          check = true;
+          return;
+        }
+      });
+      return check;
+    });
+  };
+
+  const filterRequests = (requests) => {
+    return filterSearchQuery(
+      filterRequestsByStatuses(
+        filterRequestsByPage(
+          filterRequestsByWorkshop(requests),
+          pages[curPage].name
+        )
+      )
+    );
+  };
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase();
+    return data.filter((item) => {
+      return item.requestProducts.length !== 0 &&
+        item.requestProducts[0].name !== null
+        ? item.requestProducts[0].name.toLowerCase().includes(query) ||
+            item.id.toString().includes(query) ||
+            formatDateString(item.date).includes(query) ||
+            (item.codeWord || "").toLowerCase().includes(query) ||
+            item.status.toLowerCase().includes(query) ||
+            (item.responsible || "").toLowerCase().includes(query) ||
+            formatDateString(item.shippingDate).includes(query)
+        : item.status.toLowerCase().includes(query);
+    });
+  };
+
+  const getCategoriesCount = (category) => {
+    return filterRequestsByPage(filterRequestsByWorkshop(requests), category)
+      .length;
+  };
+
+  const pageNameInURL = props.location.pathname.split(
+    `${workshops[props.type].redirectURL}/`
+  )[1];
+  const menuItems = [
+    {
+      pageName: "open",
+      pageTitle: "Открытые",
+      count: getCategoriesCount("Открытые"),
+      link: `${workshops[props.type].redirectURL}/open`,
+    },
+    {
+      pageName: "shipped",
+      pageTitle: "Отгружено",
+      count: getCategoriesCount("Отгружено"),
+      link: `${workshops[props.type].redirectURL}/shipped`,
+    },
+    {
+      pageName: "completed",
+      pageTitle: "Завершено",
+      link: `${workshops[props.type].redirectURL}/completed`,
+    },
+  ];
+  const { curPage, titleHeader } = useTitleHeader(
+    "Заявки",
+    menuItems,
+    pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
+  );
 
   //Удалить заявку
   const deleteItem = (id) => {
@@ -122,8 +204,7 @@ const Requests = (props) => {
   //GET-запрос на получение всех заявок
   const loadRequests = (signal) => {
     setIsLoading(true);
-    return pages[curPage]
-      .getRequests(signal)
+    return getRequests(signal)
       .then((res) => res.json())
       .then((requests) => {
         let temp = requests.map((item) => {
@@ -133,7 +214,6 @@ const Requests = (props) => {
           };
         });
         setIsLoading(false);
-        // console.log(temp)
         setRequests(temp);
         setDates(getDatesFromRequests(temp));
         return;
@@ -201,86 +281,40 @@ const Requests = (props) => {
       });
   };
 
-  const filterRequestsByWorkshop = (data) => {
-    return data.filter((item) => {
-      const selectedWorkshop = workshops.find((workshop) => workshop.visible);
-      if (selectedWorkshop === undefined) {
-        return false;
-      }
-      let check = false;
-      selectedWorkshop.filter.map((type) => {
-        if (type === item.factory) {
-          return (check = true);
-        }
+  const handleStatusClick = (status, index) => {
+    let temp = statuses.map((status) => {
+      return {
+        ...status,
+        visible: false,
+      };
+    });
+    temp.splice(index, 1, {
+      ...status,
+      visible: !status.visible,
+    });
+    setStatuses([...temp]);
+  };
+
+  const handleTransferRequest = () => {
+    setIsLoading(true);
+    const request = requests.find((item) => item.id === requestId);
+    transferRequest(request.id, toWorkshop)
+      .then((res) => res.json())
+      .then(() => {
+        setIsLoading(false);
+        setShowWindow(false);
+        props.history.push(
+          `/${toWorkshop}/workshop-${toWorkshop}/${getPageByRequest(request)}#${
+            request.id
+          }`
+        );
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Ошибка при копировании записи");
+        setIsLoading(false);
       });
-      return check;
-    });
-  };
-
-  const filterRequestsByStatuses = (data) => {
-    return data.filter((item) => {
-      let check = false;
-      let noActiveStatuses = true;
-      requestStatuses.map((status) => {
-        requestStatuses.map((status) => {
-          if (status.visible) {
-            noActiveStatuses = false;
-          }
-        });
-        if (
-          noActiveStatuses === true ||
-          (status.visible &&
-            (status.name === item.status || status.oldName === item.status))
-        ) {
-          check = true;
-          return;
-        }
-      });
-      return check;
-    });
-  };
-
-  const filterRequests = (requests) => {
-    return filterSearchQuery(
-      filterRequestsByStatuses(
-        filterRequestsByPage(
-          filterRequestsByWorkshop(requests),
-          pages[curPage].name
-        )
-      )
-    );
-  };
-
-  // * Sorting
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "date",
-    date: "desc",
-  });
-
-  const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase();
-    return data.filter((item) => {
-      return item.requestProducts.length !== 0 &&
-        item.requestProducts[0].name !== null
-        ? item.requestProducts[0].name.toLowerCase().includes(query) ||
-            item.id.toString().includes(query) ||
-            formatDateString(item.date).includes(query) ||
-            (item.codeWord || "").toLowerCase().includes(query) ||
-            item.status.toLowerCase().includes(query) ||
-            (item.responsible || "").toLowerCase().includes(query) ||
-            formatDateString(item.shippingDate).includes(query)
-        : item.status.toLowerCase().includes(query);
-    });
-  };
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    });
   };
 
   return (
@@ -293,60 +327,7 @@ const Requests = (props) => {
           iconStyles={{ transform: isMinimized ? "rotate(180deg)" : "" }}
           title="Свернуть заявки"
         />
-        <div className="main-window__header main-window__header--full">
-          <div className="main-window__title">Заявки</div>
-          <div className="main-window__menu">
-            <Link
-              className={
-                curPage === "open"
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-              to="/requests/open"
-              onClick={() => setCurPage("open")}
-            >
-              Открытые
-              <span className="main-window__items-count">
-                {
-                  filterRequestsByPage(
-                    filterRequestsByWorkshop(requests),
-                    "Открытые"
-                  ).length
-                }
-              </span>
-            </Link>
-            <Link
-              className={
-                curPage === "shipped"
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-              to="/requests/shipped"
-              onClick={() => setCurPage("shipped")}
-            >
-              Отгружено
-              <span className="main-window__items-count">
-                {
-                  filterRequestsByPage(
-                    filterRequestsByWorkshop(requests),
-                    "Отгружено"
-                  ).length
-                }
-              </span>
-            </Link>
-            <Link
-              className={
-                curPage === "completed"
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-              to="/requests/completed"
-              onClick={() => setCurPage("completed")}
-            >
-              Завершено
-            </Link>
-          </div>
-        </div>
+        {titleHeader}
         <SearchBar
           fullSize
           placeholder="Введите название продукции для поиска..."
@@ -364,9 +345,7 @@ const Requests = (props) => {
                     <div className="main-form__input_field">
                       <select
                         name="workshop"
-                        onChange={(event) => {
-                          setToWorkshop(event.target.value);
-                        }}
+                        onChange={({ target }) => setToWorkshop(target.value)}
                       >
                         <option value="lemz">ЦехЛЭМЗ</option>
                         <option value="lepsari">ЦехЛепсари</option>
@@ -377,29 +356,7 @@ const Requests = (props) => {
                     <Button
                       className="main-form__submit"
                       isLoading={isLoading}
-                      onClick={() => {
-                        setIsLoading(true);
-                        const request = requests.find(
-                          (item) => item.id === requestId
-                        );
-                        transferRequest(request.id, toWorkshop)
-                          .then((res) => res.json())
-                          .then((res) => {
-                            setIsLoading(false);
-                            setShowWindow(false);
-                            props.history.push(
-                              `/${toWorkshop}/workshop-${toWorkshop}/${getPageByRequest(
-                                request
-                              )}#${request.id}`
-                            );
-                            window.location.reload();
-                          })
-                          .catch((error) => {
-                            console.log(error);
-                            alert("Ошибка при копировании записи");
-                            setIsLoading(false);
-                          });
-                      }}
+                      onClick={handleTransferRequest}
                       text="Перенести в цех"
                     />
                   </div>
@@ -412,27 +369,12 @@ const Requests = (props) => {
         />
         <ControlPanel
           itemsCount={`Всего: ${requests.length} записей`}
-          sorting={
-            <div className="main-window__sort-panel">
-              <select onChange={changeSortOrder}>
-                <option value="date desc">По дате (убыв.)</option>
-                <option value="date asc">По дате (возр.)</option>
-                <option value="sum desc">По сумме (убыв.)</option>
-                <option value="sum asc">По сумме (возр.)</option>
-                <option value="shippingDate desc">
-                  По дате отгрузки (убыв.)
-                </option>
-                <option value="shippingDate asc">
-                  По дате отгрузки (возр.)
-                </option>
-              </select>
-            </div>
-          }
+          sorting={sortPanel}
           content={
             <>
               <div className="main-window__status-panel">
                 <div>Фильтр по статусам: </div>
-                {requestStatuses.map((status, index) => {
+                {statuses.map((status, index) => {
                   return (
                     <div
                       className={
@@ -442,19 +384,7 @@ const Requests = (props) => {
                         " main-window__list-item--" +
                         status.className
                       }
-                      onClick={() => {
-                        let temp = requestStatuses.map((status) => {
-                          return {
-                            ...status,
-                            visible: false,
-                          };
-                        });
-                        temp.splice(index, 1, {
-                          ...status,
-                          visible: !status.visible,
-                        });
-                        setRequestStatutes([...temp]);
-                      }}
+                      onClick={() => handleStatusClick(status, index)}
                     >
                       {status.name}
                     </div>
@@ -466,7 +396,7 @@ const Requests = (props) => {
                 style={{ marginTop: "10px" }}
               >
                 <div>Фильтр по цехам: </div>
-                {workshops.map((workshop, index) => {
+                {workshopsFilter.map((workshop, index) => {
                   return (
                     <div
                       className={
@@ -475,7 +405,7 @@ const Requests = (props) => {
                           : "main-window__button main-window__button--inverted"
                       }
                       onClick={() => {
-                        let temp = workshops.map((tempWorkshop) => {
+                        let temp = workshopsFilter.map((tempWorkshop) => {
                           return {
                             ...tempWorkshop,
                             visible: false,
@@ -485,7 +415,7 @@ const Requests = (props) => {
                           ...workshop,
                           visible: !workshop.visible,
                         });
-                        setWorkshops([...temp]);
+                        setWorkshopsFilter([...temp]);
                       }}
                     >
                       {workshop.fullName}
@@ -498,14 +428,9 @@ const Requests = (props) => {
         />
         <TableView
           data={filterRequests(requests)}
-          dates={dates.sort((a, b) => {
-            if (a < b) {
-              return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-            }
-            if (a > b) {
-              return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-            }
-            return 0;
+          dates={sortByField(dates, {
+            fieldName: sortOrder.curSort,
+            direction: sortOrder[sortOrder.curSort],
           })}
           isLoading={isLoading}
           sortOrder={sortOrder}

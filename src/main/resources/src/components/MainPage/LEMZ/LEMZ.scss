@@ -1,12 +1,11 @@
 @import "../../../variables.scss";
 
-.requests-lemz {
+.lemz {
   .main-window {
     padding: 10px 0;
   }
   .main-window__header {
     z-index: 1;
-    border-bottom: 1px solid #dddddd;
 
     &--hidden {
       transform: scaleY(0);

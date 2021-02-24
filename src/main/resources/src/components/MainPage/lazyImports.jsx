@@ -100,7 +100,9 @@ const EditProduct = lazy(() =>
   import("./Products/EditProduct/EditProduct.jsx")
 );
 
-const WorkshopLEMZ = lazy(() => import("./WorkshopLEMZ/WorkshopLEMZ.jsx"));
+const WorkshopRequests = lazy(() =>
+  import("./WorkshopsComponents/WorkshopRequests/WorkshopRequests.jsx")
+);
 
 const WorkshopOrders = lazy(() =>
   import("./WorkshopsComponents/WorkshopOrders/WorkshopOrders.jsx")
@@ -171,10 +173,6 @@ const Work = lazy(() => import("./Work/Work.jsx"));
 const NewWork = lazy(() => import("./Work/NewWork/NewWork.jsx"));
 
 const EditWork = lazy(() => import("./Work/EditWork/EditWork.jsx"));
-
-const WorkshopLepsari = lazy(() =>
-  import("./WorkshopLepsari/WorkshopLepsari.jsx")
-);
 
 const Storage = lazy(() => import("./WorkshopsComponents/Storage/Storage.jsx"));
 
@@ -267,7 +265,7 @@ export {
   EditUser,
   NewUser,
   LogListPage,
-  WorkshopLEMZ,
+  WorkshopRequests,
   Storage,
   NewStorage,
   EditStorage,
@@ -294,7 +292,6 @@ export {
   Work,
   NewWork,
   EditWork,
-  WorkshopLepsari,
   LEMZ,
   Lepsari,
   PriceList,

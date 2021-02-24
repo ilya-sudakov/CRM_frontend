@@ -7,7 +7,7 @@ import "../../../utils/MainWindow/MainWindow.scss";
 import PageNotFound from "../PageNotFound/PageNotFound.jsx";
 import PageLoading from "../PageLoading/PageLoading.jsx";
 import {
-  WorkshopLEMZ,
+  WorkshopRequests,
   Storage,
   NewStorage,
   EditStorage,
@@ -18,66 +18,66 @@ import {
   EditRequest,
   ShipRequest,
 } from "../lazyImports.jsx";
+import useTitleHeader from "../../../utils/hooks/uiComponents/useTitleHeader.js";
 
 const LEMZ = (props) => {
+  const menuItems = [
+    {
+      pageName: "/lemz/workshop-lemz",
+      isActive: props.location.pathname.includes("/lemz/workshop-lemz"),
+      pageTitle: (
+        <>
+          Очередь производства
+          <Link to="/lemz/workshop-lemz/new" className="main-window__addButton">
+            <PlusImg className="main-window__img" alt="" />
+          </Link>
+        </>
+      ),
+      link: "/lemz/workshop-lemz",
+    },
+    {
+      pageName: "/lemz/workshop-storage",
+      isActive: props.location.pathname.includes("/lemz/workshop-storage"),
+      pageTitle: (
+        <>
+          Склад
+          <Link
+            to="/lemz/workshop-storage/new"
+            className="main-window__addButton"
+          >
+            <PlusImg className="main-window__img" alt="" />
+          </Link>
+        </>
+      ),
+      link: "/lemz/workshop-storage",
+    },
+    {
+      pageName: "/lemz/workshop-orders",
+      isActive: props.location.pathname.includes("/lemz/workshop-orders"),
+      pageTitle: (
+        <>
+          Комплектация Цеха
+          <Link
+            to="/lemz/workshop-orders/new"
+            className="main-window__addButton"
+          >
+            <PlusImg className="main-window__img" alt="" />
+          </Link>
+        </>
+      ),
+      link: "/lemz/workshop-orders",
+    },
+  ];
+  const { titleHeader } = useTitleHeader(
+    "Цех ЛЭМЗ",
+    menuItems,
+    "/lemz/workshop-lemz"
+  );
+
   return (
-    <div className="requests-lemz">
+    <div className="lemz">
       <div className="main-window">
-        <div className="main-window__header main-window__header--full">
-          <div className="main-window__title">Цех ЛЭМЗ</div>
-          <div className="main-window__menu">
-            <Link
-              to="/lemz/workshop-lemz"
-              className={
-                props.location.pathname.includes("/lemz/workshop-lemz") === true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-            >
-              Очередь производства
-              <Link
-                to="/lemz/workshop-lemz/new"
-                className="main-window__addButton"
-              >
-                <PlusImg className="main-window__img" alt="" />
-              </Link>
-            </Link>
-            <Link
-              to="/lemz/workshop-storage"
-              className={
-                props.location.pathname.includes("/lemz/workshop-storage") ===
-                true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-            >
-              Склад
-              <Link
-                to="/lemz/workshop-storage/new"
-                className="main-window__addButton"
-              >
-                <PlusImg className="main-window__img" alt="" />
-              </Link>
-            </Link>
-            <Link
-              to="/lemz/workshop-orders"
-              className={
-                props.location.pathname.includes("/lemz/workshop-orders") ===
-                true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-            >
-              Комплектация Цеха
-              <Link
-                to="/lemz/workshop-orders/new"
-                className="main-window__addButton"
-              >
-                <PlusImg className="main-window__img" alt="" />
-              </Link>
-            </Link>
-          </div>
-        </div>
+        {titleHeader}
         <div className="main-window__content">
           <Suspense fallback={<PageLoading />}>
             <Switch>
@@ -102,8 +102,8 @@ const LEMZ = (props) => {
               />
               <PrivateRoute
                 path="/lemz/workshop-lemz/"
-                component={WorkshopLEMZ}
-                userHasAccess={props.userHasAccess}
+                component={WorkshopRequests}
+                type="lemz"
                 allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
               />
               <PrivateRoute

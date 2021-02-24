@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from "react";
-import "./WorkshopLEMZ.scss";
-import "../../../utils/MainWindow/MainWindow.scss";
-import PrintIcon from "../../../../../../../assets/print.png";
+import "./WorkshopRequests.scss";
+import "../../../../utils/MainWindow/MainWindow.scss";
+import PrintIcon from "../../../../../../../../assets/print.png";
 import pdfMake from "pdfmake";
-import TableView from "../WorkshopsComponents/TableView/TableView.jsx";
-import SearchBar from "../SearchBar/SearchBar.jsx";
-import { getProductsFromRequestsListPdfText } from "../../../utils/pdfFunctions.jsx";
-import Button from "../../../utils/Form/Button/Button.jsx";
-import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
+import TableView from "../TableView/TableView.jsx";
+import SearchBar from "../../SearchBar/SearchBar.jsx";
+import { getProductsFromRequestsListPdfText } from "../../../../utils/pdfFunctions.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import {
   getRequestById,
   deleteProductsToRequest,
   deleteRequest,
   getRequestsByWorkshop,
-} from "../../../utils/RequestsAPI/Requests.jsx";
-import { getCategories } from "../../../utils/RequestsAPI/Products/Categories.js";
+} from "../../../../utils/RequestsAPI/Requests.jsx";
+import { getCategories } from "../../../../utils/RequestsAPI/Products/Categories.js";
 import {
   getQuantityOfProductsFromRequests,
   formatDateString,
   getDatesFromRequests,
-} from "../../../utils/functions.jsx";
-import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { pages } from "../Requests/objects.js";
-import chevronDown from "../../../../../../../assets/tableview/chevron-down.svg";
-import useSort from "../../../utils/hooks/useSort/useSort.js";
-import useTitleHeader from "../../../utils/hooks/uiComponents/useTitleHeader";
+} from "../../../../utils/functions.jsx";
+import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import { pages } from "../objects.js";
+import chevronDown from "../../../../../../../../assets/tableview/chevron-down.svg";
+import useSort from "../../../../utils/hooks/useSort/useSort.js";
+import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader";
+import { sortByField } from "../../../../utils/sorting/sorting";
+import { requestStatuses, workshops } from "../workshopVariables.js";
+import { filterRequestsByPage } from "../functions.js";
 
-const WorkshopLEMZ = (props) => {
+const WorkshopRequests = (props) => {
   const [requests, setRequests] = useState([]);
   const [dates, setDates] = useState([]);
   const [productsQuantities, setProductsQuantities] = useState({});
@@ -92,7 +95,10 @@ const WorkshopLEMZ = (props) => {
       })
       .then(() => {
         setIsLoading(false);
-        let dd = getProductsFromRequestsListPdfText(categories, "ЦехЛЭМЗ");
+        let dd = getProductsFromRequestsListPdfText(
+          categories,
+          workshops[props.type].fullName
+        );
         pdfMake.createPdf(dd).print();
       })
       .catch((error) => {
@@ -102,7 +108,7 @@ const WorkshopLEMZ = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Заявки - ЛЭМЗ";
+    document.title = `Заявки - ${workshops[props.type].fullName}`;
     const abortController = new AbortController();
     loadRequests(abortController.signal);
     return function cancel() {
@@ -112,7 +118,7 @@ const WorkshopLEMZ = (props) => {
 
   const loadRequests = (signal) => {
     setIsLoading(true);
-    return getRequestsByWorkshop("lemz", signal)
+    return getRequestsByWorkshop(props.type, signal)
       .then((res) => res.json())
       .then((requests) => {
         setRequests(requests);
@@ -124,43 +130,20 @@ const WorkshopLEMZ = (props) => {
   };
 
   //Статусы заявок
-  const [requestStatuses, setRequestStatutes] = useState(
+  const [statuses, setStatuses] = useState(
     requestStatuses.map((status) => ({ ...status, visible: false }))
   );
 
-  const filterRequestsByPage = (data, page) => {
-    return data.filter((item) => {
-      if (page === "Завершено" && item.status === "Завершено") {
-        return true;
-      }
-      if (
-        page === "Отгружено" &&
-        (item.status === "Отгружено" || item.status === "Частично отгружено")
-      ) {
-        return true;
-      }
-      if (
-        page === "Открытые" &&
-        item.status !== "Завершено" &&
-        item.status !== "Отгружено" &&
-        item.status !== "Частично отгружено"
-      ) {
-        return true;
-      }
-      return false;
-    });
-  };
-
   const filterRequestsByWorkshop = (data) => {
-    return data.filter((item) => item.factory === "lemz");
+    return data.filter((item) => item.factory === props.type);
   };
 
   const filterRequestsByStatuses = (data) => {
     return data.filter((item) => {
       let check = false;
       let noActiveStatuses = true;
-      requestStatuses.map((status) => {
-        requestStatuses.map((status) => {
+      statuses.map((status) => {
+        statuses.map((status) => {
           if (status.visible) {
             noActiveStatuses = false;
           }
@@ -211,26 +194,25 @@ const WorkshopLEMZ = (props) => {
   };
 
   const pageNameInURL = props.location.pathname.split(
-    "/lemz/workshop-lemz/"
+    `${workshops[props.type].redirectURL}/`
   )[1];
   const menuItems = [
     {
       pageName: "open",
       pageTitle: "Открытые",
       count: getCategoriesCount("Открытые"),
-      link: "/lemz/workshop-lemz/open",
+      link: `${workshops[props.type].redirectURL}/open`,
     },
     {
       pageName: "shipped",
       pageTitle: "Отгружено",
       count: getCategoriesCount("Отгружено"),
-      link: "/lemz/workshop-lemz/shipped",
+      link: `${workshops[props.type].redirectURL}/shipped`,
     },
     {
       pageName: "completed",
       pageTitle: "Завершено",
-      count: getCategoriesCount("Завершено"),
-      link: "/lemz/workshop-lemz/completed",
+      link: `${workshops[props.type].redirectURL}/completed`,
     },
   ];
   const { curPage, titleHeader } = useTitleHeader(
@@ -240,7 +222,7 @@ const WorkshopLEMZ = (props) => {
   );
 
   const handleStatusClick = (status, index) => {
-    let temp = requestStatuses.map((status) => {
+    let temp = statuses.map((status) => {
       return {
         ...status,
         visible: false,
@@ -250,17 +232,17 @@ const WorkshopLEMZ = (props) => {
       ...status,
       visible: !status.visible,
     });
-    setRequestStatutes([...temp]);
+    setStatuses([...temp]);
   };
 
   return (
-    <div className="requests_LEMZ">
+    <div className="workshop-requests">
       <div className="main-window">
         <FloatingPlus
           onClick={() => setIsMinimized(!isMinimized)}
           iconSrc={chevronDown}
           title="Свернуть заявки"
-          visibility={["ROLE_ADMIN", "ROLE_LEMZ"]}
+          visibility={["ROLE_ADMIN", "ROLE_WORKSHOP"]}
           iconStyles={{ transform: isMinimized ? "rotate(180deg)" : "" }}
         />
         <SearchBar
@@ -284,7 +266,7 @@ const WorkshopLEMZ = (props) => {
           content={
             <div className="main-window__status-panel">
               <div>Фильтр по статусам: </div>
-              {requestStatuses.map((status, index) => {
+              {statuses.map((status, index) => {
                 return (
                   <div
                     className={
@@ -306,19 +288,14 @@ const WorkshopLEMZ = (props) => {
         />
         <TableView
           data={filterRequests(requests)}
-          workshopName="lemz"
+          workshopName={props.type}
           isLoading={isLoading}
           sortOrder={sortOrder}
           loadData={loadRequests}
           isMinimized={isMinimized}
-          dates={dates.sort((a, b) => {
-            if (a < b) {
-              return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-            }
-            if (a > b) {
-              return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-            }
-            return 0;
+          dates={sortByField(dates, {
+            fieldName: sortOrder.curSort,
+            direction: sortOrder[sortOrder.curSort],
           })}
           deleteItem={deleteItem}
           searchQuery={searchQuery}
@@ -329,4 +306,4 @@ const WorkshopLEMZ = (props) => {
   );
 };
 
-export default WorkshopLEMZ;
+export default WorkshopRequests;

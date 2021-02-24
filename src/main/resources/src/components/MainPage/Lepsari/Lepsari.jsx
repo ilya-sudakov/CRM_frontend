@@ -7,7 +7,7 @@ import "../../../utils/MainWindow/MainWindow.scss";
 import PageNotFound from "../PageNotFound/PageNotFound.jsx";
 import PageLoading from "../PageLoading/PageLoading.jsx";
 import {
-  WorkshopLepsari,
+  WorkshopRequests,
   Storage,
   NewStorage,
   EditStorage,
@@ -18,69 +18,69 @@ import {
   EditRequest,
   ShipRequest,
 } from "../lazyImports.jsx";
+import useTitleHeader from "../../../utils/hooks/uiComponents/useTitleHeader.js";
 
 const Lepsari = (props) => {
+  const menuItems = [
+    {
+      pageName: "/lepsari/workshop-lepsari",
+      isActive: props.location.pathname.includes("/lepsari/workshop-lepsari"),
+      pageTitle: (
+        <>
+          Очередь производства
+          <Link
+            to="/lepsari/workshop-lepsari/new"
+            className="main-window__addButton"
+          >
+            <PlusImg className="main-window__img" alt="" />
+          </Link>
+        </>
+      ),
+      link: "/lepsari/workshop-lepsari",
+    },
+    {
+      pageName: "/lepsari/workshop-storage",
+      isActive: props.location.pathname.includes("/lepsari/workshop-storage"),
+      pageTitle: (
+        <>
+          Склад
+          <Link
+            to="/lepsari/workshop-storage/new"
+            className="main-window__addButton"
+          >
+            <PlusImg className="main-window__img" alt="" />
+          </Link>
+        </>
+      ),
+      link: "/lepsari/workshop-storage",
+    },
+    {
+      pageName: "/lepsari/workshop-orders",
+      isActive: props.location.pathname.includes("/lepsari/workshop-orders"),
+      pageTitle: (
+        <>
+          Комплектация Цеха
+          <Link
+            to="/lepsari/workshop-orders/new"
+            className="main-window__addButton"
+          >
+            <PlusImg className="main-window__img" alt="" />
+          </Link>
+        </>
+      ),
+      link: "/lepsari/workshop-orders",
+    },
+  ];
+  const { titleHeader } = useTitleHeader(
+    "Цех Лепсари",
+    menuItems,
+    "/lepsari/workshop-lepsari"
+  );
+
   return (
     <div className="requests-lepsari">
       <div className="main-window">
-        <div className="main-window__header main-window__header--full">
-          <div className="main-window__title">Цех Лепсари</div>
-          <div className="main-window__menu">
-            <Link
-              to="/lepsari/workshop-lepsari"
-              className={
-                props.location.pathname.includes(
-                  "/lepsari/workshop-lepsari"
-                ) === true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-            >
-              Очередь производства
-              <Link
-                to="/lepsari/workshop-lepsari/new"
-                className="main-window__addButton"
-              >
-                <PlusImg className="main-window__img" alt="" />
-              </Link>
-            </Link>
-            <Link
-              to="/lepsari/workshop-storage"
-              className={
-                props.location.pathname.includes(
-                  "/lepsari/workshop-storage"
-                ) === true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-            >
-              Склад
-              <Link
-                to="/lepsari/workshop-storage/new"
-                className="main-window__addButton"
-              >
-                <PlusImg className="main-window__img" alt="" />
-              </Link>
-            </Link>
-            <Link
-              to="/lepsari/workshop-orders"
-              className={
-                props.location.pathname.includes("/lepsari/workshop-orders") ===
-                true
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-            >
-              Комплектация Цеха
-              <Link
-                to="/lepsari/workshop-orders/new"
-                className="main-window__addButton"
-              >
-                <PlusImg className="main-window__img" alt="" />
-              </Link>
-            </Link>
-          </div>
-        </div>
+        {titleHeader}
         <div className="main-window__content">
           <Suspense fallback={<PageLoading />}>
             <Switch>
@@ -99,8 +99,8 @@ const Lepsari = (props) => {
               />
               <PrivateRoute
                 path="/lepsari/workshop-lepsari/"
-                component={WorkshopLepsari}
-                userHasAccess={props.userHasAccess}
+                component={WorkshopRequests}
+                type="lepsari"
                 allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEPSARI"]}
               />
               <PrivateRoute
@@ -108,12 +108,7 @@ const Lepsari = (props) => {
                 path="/lepsari/workshop-storage"
                 component={Storage}
                 type="lepsari"
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  // 'ROLE_DISPATCHER',
-                  "ROLE_ENGINEER",
-                  "ROLE_LEPSARI",
-                ]}
+                allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEPSARI"]}
               />
               <PrivateRoute
                 exact
