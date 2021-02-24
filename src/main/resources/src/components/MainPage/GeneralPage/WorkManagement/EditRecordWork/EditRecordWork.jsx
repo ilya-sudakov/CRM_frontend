@@ -343,13 +343,12 @@ const EditRecordWork = (props) => {
             setErrorsArr={setWorkTimeErrors}
           />
           {/* Список сотрудников */}
-          {/* <SelectEmployee
+          <SelectEmployee
             inputName="Выбор сотрудника"
             required
             error={workTimeErrors.employee}
             userHasAccess={props.userHasAccess}
             defaultValue={worktimeInputs.employee}
-            windowName="select-employee"
             name="employee"
             handleEmployeeChange={(value) => {
               validateField("employee", value);
@@ -365,7 +364,7 @@ const EditRecordWork = (props) => {
             errorsArr={workTimeErrors}
             setErrorsArr={setWorkTimeErrors}
             readOnly
-          /> */}
+          />
           {/* Создание работы */}
           <SelectWork
             handleWorkChange={(value) => {

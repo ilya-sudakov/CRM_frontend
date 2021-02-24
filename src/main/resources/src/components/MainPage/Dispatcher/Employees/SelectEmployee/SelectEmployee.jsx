@@ -105,8 +105,6 @@ const SelectEmployee = (props) => {
     setShowWindow(!showWindow);
   };
 
-  // * Sorting
-
   const filterSearchQuery = (data) => {
     const query = searchQuery.toLowerCase();
     return data.filter((item) => {
