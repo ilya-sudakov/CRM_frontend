@@ -70,6 +70,11 @@ export const renderDateShippedColumn = (request) => {
   const curDateDiff = Math.abs(
     dateDiffInDays(new Date(), new Date(request.shippingDate))
   );
+  const shippingDate = formatDateString(
+    request.shippingDate === null || request.shippingDate === undefined
+      ? new Date()
+      : request.shippingDate
+  );
   return (
     <span className="requests__column--date-shipping">
       <div className="main-window__mobile-text">Отгрузка:</div>
@@ -84,24 +89,8 @@ export const renderDateShippedColumn = (request) => {
               : `Заявка отгружена вовремя`
           }
         >
-          {Math.abs(
-            dateDiffInDays(
-              new Date(request.date),
-              new Date(request.shippingDate)
-            )
-          ) > 7 ? (
-            <div>&#x2713;</div>
-          ) : (
-            <div>&#x2713;</div>
-          )}
-          <div>
-            {formatDateString(
-              request.shippingDate === null ||
-                request.shippingDate === undefined
-                ? new Date()
-                : request.shippingDate
-            )}
-          </div>
+          <div>&#x2713;</div>
+          <div>{shippingDate}</div>
         </div>
       ) : new Date(request.shippingDate) < new Date() ? (
         <div
@@ -109,25 +98,14 @@ export const renderDateShippedColumn = (request) => {
           title={`Заявка опаздывает на ${curDateDiff} дн.`}
         >
           <div>!</div>
-          <div>
-            {formatDateString(
-              request.shippingDate === null ||
-                request.shippingDate === undefined
-                ? new Date()
-                : request.shippingDate
-            )}
-          </div>
+          <div>{shippingDate}</div>
         </div>
       ) : (
         <div
           className="main-window__date"
           title={`Заявка должна быть отгружена через ${curDateDiff} дн.`}
         >
-          {formatDateString(
-            request.shippingDate === null || request.shippingDate === undefined
-              ? new Date()
-              : request.shippingDate
-          )}
+          {shippingDate}
         </div>
       )}
     </span>
@@ -152,6 +130,15 @@ export const renderPriceColumn = ({ sum }) => {
   );
 };
 
+const findStatusClassName = (statuses, curStatus) => {
+  return statuses.find(
+    (item) =>
+      item.name === curStatus ||
+      item.className === curStatus ||
+      item.oldName === curStatus
+  )?.className;
+};
+
 export const renderRequestStatusColumn = (
   request,
   userHasAccess,
@@ -159,14 +146,10 @@ export const renderRequestStatusColumn = (
 ) => {
   return (
     <span
-      className={
-        "main-window__list-item--" +
-        requestStatuses.find(
-          (item) =>
-            item.name === request.status || item.oldName === request.status
-        )?.className +
-        " requests__column--status"
-      }
+      className={`main-window__list-item--${findStatusClassName(
+        requestStatuses,
+        request.status
+      )}  requests__column--status`}
     >
       <div className="main-window__mobile-text">Статус заявки:</div>
       <select
@@ -175,21 +158,22 @@ export const renderRequestStatusColumn = (
         onChange={(event) => handleStatusChange(event, request)}
       >
         {requestStatuses.map((status) => {
-          if (userHasAccess && userHasAccess(status.access)) {
-            return (
-              <option
-                value={
-                  status.oldName && status.oldName === request.status
-                    ? status.oldName
-                    : status.name
-                }
-              >
-                {status.name}
-              </option>
-            );
-          } else {
-            return <option style={{ display: `none` }}>{status.name}</option>;
-          }
+          const optionStyle =
+            userHasAccess && userHasAccess(status.access) ? "block" : "none";
+          const optionsValue =
+            status.oldName && status.oldName === request.status
+              ? status.oldName
+              : status.name;
+          return (
+            <option
+              style={{
+                display: optionStyle,
+              }}
+              value={optionsValue}
+            >
+              {status.name}
+            </option>
+          );
         })}
       </select>
     </span>
@@ -202,13 +186,10 @@ export const renderProductStatusSelect = (
 ) => {
   return (
     <span
-      className={
-        "main-window__list-item--" +
-        productsStatuses.find(
-          (item) =>
-            item.className === product.status || item.oldName === product.status
-        )?.className
-      }
+      className={`main-window__list-item--${findStatusClassName(
+        productsStatuses,
+        product.status
+      )}`}
     >
       <div className="main-window__mobile-text">Статус:</div>
       <select
@@ -273,13 +254,10 @@ export const renderProductsSubItem = (request, handleStatusChange) => {
         </div>
         {request?.requestProducts.map((product) => (
           <div
-            className={`main-window__list-item main-window__list-item--${
-              productsStatuses.find(
-                (item) =>
-                  item.className === product.status ||
-                  item.oldName === product.status
-              )?.className
-            }`}
+            className={`main-window__list-item main-window__list-item--${findStatusClassName(
+              productsStatuses,
+              product.status
+            )}`}
           >
             <span>
               <div className="main-window__mobile-text">Название</div>
@@ -367,13 +345,10 @@ export const renderProductsColumn = (
         .map((product) => {
           return (
             <div
-              className={`main-window__list-col-row main-window__list-item--${
-                productsStatuses.find(
-                  (item) =>
-                    item.className === product.status ||
-                    item.oldName === product.status
-                )?.className
-              }`}
+              className={`main-window__list-item main-window__list-item--${findStatusClassName(
+                productsStatuses,
+                product.status
+              )}`}
             >
               <span onClick={() => createLabelForProduct(product)}>
                 <div className="main-window__mobile-text">Название:</div>

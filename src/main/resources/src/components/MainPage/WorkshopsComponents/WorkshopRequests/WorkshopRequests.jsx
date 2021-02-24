@@ -22,7 +22,6 @@ import {
 import { getCategories } from "../../../../utils/RequestsAPI/Products/Categories.js";
 import {
   getQuantityOfProductsFromRequests,
-  formatDateString,
   getDatesFromRequests,
 } from "../../../../utils/functions.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
@@ -269,7 +268,8 @@ const WorkshopRequests = (props) => {
           pages[curPage].name
         ),
         statuses
-      )
+      ),
+      searchQuery
     );
   };
 
