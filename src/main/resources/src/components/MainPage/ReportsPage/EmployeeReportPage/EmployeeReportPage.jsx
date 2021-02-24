@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import SelectEmployee from "../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
-import EmployeeInfoPanel from "./EmployeeInfo.jsx";
+// import EmployeeInfoPanel from "./EmployeeInfo.jsx";
+import EmployeeInfoPanel from "../../GeneralPage/ReportTablePage/EmployeeInfo/EmployeeInfo.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import { formatDateString } from "../../../../utils/functions.jsx";
 import useWorkReportByRange from "../../../../utils/hooks/useWorkReportByRange.js";

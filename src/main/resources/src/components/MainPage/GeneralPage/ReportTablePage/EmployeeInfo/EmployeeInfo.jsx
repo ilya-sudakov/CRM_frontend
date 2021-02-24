@@ -4,10 +4,11 @@ import {
   addSpaceDelimiter,
   formatDateStringNoYear,
   roundUpWorkHours,
-} from "../../../../utils/functions.jsx";
-import editIcon from "../../../../../../../../assets/tableview/edit.svg";
+} from "../../../../../utils/functions.jsx";
+import editIcon from "../../../../../../../../../assets/tableview/edit.svg";
 import { Link } from "react-router-dom";
-import { days } from "../../../../utils/dataObjects.js";
+import { days } from "../../../../../utils/dataObjects.js";
+import "./EmployeeInfo.scss";
 
 //Окно для вывода информации о сотруднике и его работе за неделю
 const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
@@ -16,29 +17,29 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
   }, [selectedInfo]);
 
   return (
-    <div className="report-table-page__employee-info">
-      <div className="report-table-page__employee-wrapper">
-        <div className="report-table-page__employee-title">
+    <div className="employee-info">
+      <div className="employee-info__employee-wrapper">
+        <div className="employee-info__employee-title">
           {header ??
             `Данные сотрудника (${formatDateStringNoYear(
               dates[0]
             )} - ${formatDateStringNoYear(dates[dates.length - 1])})`}
         </div>
-        <div className="report-table-page__employee-general">
-          <div className="report-table-page__full-name">
+        <div className="employee-info__employee-general">
+          <div className="employee-info__full-name">
             {selectedInfo?.employeeName ??
               `${selectedInfo.employee?.lastName} ${selectedInfo.employee?.name} ${selectedInfo.employee?.middleName}`}
           </div>
-          <div className="report-table-page__workshop">
+          <div className="employee-info__workshop">
             {selectedInfo?.employee?.workshop}
           </div>
-          <div className="report-table-page__position">
+          <div className="employee-info__position">
             {selectedInfo?.employee?.position}
           </div>
         </div>
         {/* //Вывод работ сотрудника */}
-        <div className="report-table-page__employee-title">Список работ</div>
-        <div className="report-table-page__employee-works-wrapper">
+        <div className="employee-info__employee-title">Список работ</div>
+        <div className="employee-info__employee-works-wrapper">
           {selectedInfo?.works?.length === undefined ? (
             <div>Нет учтенной работы</div>
           ) : (
@@ -58,8 +59,8 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
                 );
               });
               return filteredData.length > 0 ? (
-                <div className="report-table-page__wrapper">
-                  <div className="report-table-page__employee-title report-table-page__employee-title--date">
+                <div className="employee-info__wrapper">
+                  <div className="employee-info__employee-title employee-info__employee-title--date">
                     {`${formatDateStringNoYear(date)} - ${days[date.getDay()]}`}
                   </div>
                   {filteredData?.map((item) =>
@@ -85,7 +86,7 @@ export default EmployeeInfoPanel;
 const WorksItem = ({ item }) => {
   return (
     <div
-      className="report-table-page__employee-works-item"
+      className="employee-info__employee-works-item"
       style={{
         marginBottom: "15px",
         marginTop: "5px",
@@ -95,14 +96,12 @@ const WorksItem = ({ item }) => {
       <span>
         <Link to={`/work-management/record-time/edit/${item.workId}`}>
           {item.workList.work}
-          <img className="report-table-page__img" src={editIcon} alt="" />
+          <img className="employee-info__img" src={editIcon} alt="" />
         </Link>
       </span>
-      <span className="report-table-page__employee-hours">
-        {`${item.hours} ч`}
-      </span>
+      <span className="employee-info__employee-hours">{`${item.hours} ч`}</span>
       {(item.workControlProduct.length > 0 || item?.partsWorks.length > 0) && (
-        <div className="report-table-page__list">
+        <div className="employee-info__list">
           {item.workControlProduct.map((product) => (
             <ProductItem item={product} />
           ))}
@@ -112,7 +111,7 @@ const WorksItem = ({ item }) => {
         </div>
       )}
       {item.comment ? (
-        <div className="report-table-page__comment">
+        <div className="employee-info__comment">
           <span>Комментарий:</span>
           <span>{item.comment}</span>
         </div>
@@ -123,7 +122,7 @@ const WorksItem = ({ item }) => {
 
 const ProductItem = ({ item }) => {
   return (
-    <div className="report-table-page__list-item">
+    <div className="employee-info__list-item">
       <span>
         <div className="main-window__mobile-text">Название:</div>
         {item.name ?? item.product.name}
@@ -138,7 +137,7 @@ const ProductItem = ({ item }) => {
 
 const WeekSummary = ({ selectedInfo, dates }) => {
   return (
-    <div className="report-table-page__employee-title">
+    <div className="employee-info__employee-title">
       Всего:{` `}
       {selectedInfo?.works?.length > 0
         ? selectedInfo?.works?.reduce(
