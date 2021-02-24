@@ -32,7 +32,12 @@ import useSort from "../../../../utils/hooks/useSort/useSort.js";
 import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader";
 import { sortByField } from "../../../../utils/sorting/sorting";
 import { requestStatuses, workshops } from "../workshopVariables.js";
-import { filterRequestsByPage, getPageByRequest } from "../functions.js";
+import {
+  filterRequestsByPage,
+  filterRequestsBySearchQuery,
+  filterRequestsByStatuses,
+  getPageByRequest,
+} from "../functions.js";
 import useFormWindow from "../../../../utils/hooks/useFormWindow";
 
 const WorkshopRequests = (props) => {
@@ -141,11 +146,7 @@ const WorkshopRequests = (props) => {
   //Копировать заявку
   const copySelectedRequest = (id) => {
     setIsLoading(true);
-    const requestToBeCopied = requests.find((item) => {
-      if (item.id === id) {
-        return true;
-      }
-    });
+    const requestToBeCopied = requests.find((item) => item.id === id);
     let newId = 0;
     addRequest({
       date: requestToBeCopied.date,
@@ -155,10 +156,7 @@ const WorkshopRequests = (props) => {
       sum: requestToBeCopied.sum,
       responsible: requestToBeCopied.responsible,
       status: requestToBeCopied.status,
-      shippingDate:
-        requestToBeCopied.shippingDate !== null
-          ? requestToBeCopied.shippingDate
-          : new Date(),
+      shippingDate: requestToBeCopied.shippingDate ?? new Date(),
       comment: requestToBeCopied.comment,
       factory: requestToBeCopied.factory,
     })
@@ -166,15 +164,15 @@ const WorkshopRequests = (props) => {
       .then((res) => {
         newId = res.id;
         return Promise.all(
-          requestToBeCopied.requestProducts.map((item) => {
-            return addProductsToRequest({
+          requestToBeCopied.requestProducts.map((item) =>
+            addProductsToRequest({
               requestId: res.id,
               quantity: item.quantity,
               packaging: item.packaging,
               status: item.status,
               name: item.name,
-            });
-          })
+            })
+          )
         );
       })
       .then(() => connectClientToRequest(newId, requestToBeCopied.client?.id))
@@ -261,56 +259,18 @@ const WorkshopRequests = (props) => {
     return data.filter((item) => item.factory === props.type);
   };
 
-  const filterRequestsByStatuses = (data) => {
-    return data.filter((item) => {
-      let check = false;
-      let noActiveStatuses = true;
-      statuses.map((status) => {
-        statuses.map((status) => {
-          if (status.visible) {
-            noActiveStatuses = false;
-          }
-        });
-        if (
-          noActiveStatuses === true ||
-          (status.visible &&
-            (status.name === item.status || status.oldName === item.status))
-        ) {
-          check = true;
-          return;
-        }
-      });
-      return check;
-    });
-  };
-
   const filterRequests = (requests) => {
-    return filterSearchQuery(
+    return filterRequestsBySearchQuery(
       filterRequestsByStatuses(
         filterRequestsByPage(
           props.type === "requests"
             ? requests
             : filterRequestsByWorkshop(requests),
           pages[curPage].name
-        )
+        ),
+        statuses
       )
     );
-  };
-
-  const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase();
-    return data.filter((item) => {
-      return item.requestProducts.length !== 0 &&
-        item.requestProducts[0].name !== null
-        ? item.requestProducts[0].name.toLowerCase().includes(query) ||
-            item.id.toString().includes(query) ||
-            formatDateString(item.date).includes(query) ||
-            (item.codeWord || "").toLowerCase().includes(query) ||
-            item.status.toLowerCase().includes(query) ||
-            item.responsible.toLowerCase().includes(query) ||
-            formatDateString(item.shippingDate).includes(query)
-        : item.status.toLowerCase().includes(query);
-    });
   };
 
   const getCategoriesCount = (category) => {
