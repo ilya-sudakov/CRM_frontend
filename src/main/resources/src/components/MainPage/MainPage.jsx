@@ -6,7 +6,6 @@ import "../../utils/Form/Form.scss";
 import Header from "../Header/Header.jsx";
 import {
   Clients,
-  Contracts,
   GeneralPage,
   newClient,
   Products,
@@ -246,7 +245,6 @@ const MainPage = () => {
                       "ROLE_DISPATCHER",
                     ]}
                   />
-                  <Route exact path="/contracts" component={Contracts} />
                   <PrivateRoute
                     exact
                     path="/requests/new"
