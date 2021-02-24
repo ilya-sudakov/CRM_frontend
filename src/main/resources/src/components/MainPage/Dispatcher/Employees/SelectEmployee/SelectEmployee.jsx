@@ -107,8 +107,8 @@ const SelectEmployee = (props) => {
 
   const filterSearchQuery = (data) => {
     const query = searchQuery.toLowerCase();
+    console.log("filter", data);
     return data.filter((item) => {
-      console.log(item);
       if (item.name === null) return false;
       const isFound =
         item.lastName.toLowerCase().includes(query) ||
