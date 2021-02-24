@@ -48,6 +48,7 @@ export const requestStatuses = [
     oldName: "Проблема-материалы",
     className: "materials",
     access: ["ROLE_ADMIN", "ROLE_WORKSHOP"],
+    visible: false,
   },
   {
     name: "Завершено",

@@ -21,24 +21,33 @@ import {
   getDatesFromRequests,
 } from "../../../utils/functions.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { Link } from "react-router-dom";
 import { pages } from "../Requests/objects.js";
 import chevronDown from "../../../../../../../assets/tableview/chevron-down.svg";
+import useSort from "../../../utils/hooks/useSort/useSort.js";
+import useTitleHeader from "../../../utils/hooks/uiComponents/useTitleHeader";
 
 const WorkshopLEMZ = (props) => {
-  const [requestsLEMZ, setRequestsLEMZ] = useState([]);
+  const [requests, setRequests] = useState([]);
   const [dates, setDates] = useState([]);
   const [productsQuantities, setProductsQuantities] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-
-  const pageNameInURL = props.location.pathname.split(
-    "/lemz/workshop-lemz/"
-  )[1];
-  const [curPage, setCurPage] = useState(
-    pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
-  ); //Текущая страница
+  const { sortOrder, sortPanel } = useSort([], {
+    ignoreURL: false,
+    sortOrder: {
+      curSort: "date",
+      date: "desc",
+    },
+    sortOptions: [
+      { value: "date desc", text: "По дате (убыв.)" },
+      { value: "date asc", text: "По дате (возр.)" },
+      { value: "sum desc", text: "По сумме (убыв.)" },
+      { value: "sum asc", text: "По сумме (возр.)" },
+      { value: "shippingDate desc", text: "По даты отгрузки (убыв.)" },
+      { value: "shippingDate asc", text: "По даты отгрузки (возр.)" },
+    ],
+  });
 
   const deleteItem = (id) => {
     getRequestById(id)
@@ -48,7 +57,7 @@ const WorkshopLEMZ = (props) => {
           return deleteProductsToRequest(product.id);
         });
         Promise.all(productsArr).then(() => {
-          deleteRequest(id).then(() => loadRequestsLEMZ());
+          deleteRequest(id).then(() => loadRequests());
         });
       })
       .catch((error) => {
@@ -58,8 +67,6 @@ const WorkshopLEMZ = (props) => {
 
   const printRequestsList = () => {
     let categories = {};
-    //получаем список категорий продукций для категоризации
-    //в pdf файле
     setIsLoading(true);
     getCategories()
       .then((res) => res.json())
@@ -97,18 +104,18 @@ const WorkshopLEMZ = (props) => {
   useEffect(() => {
     document.title = "Заявки - ЛЭМЗ";
     const abortController = new AbortController();
-    loadRequestsLEMZ(abortController.signal);
+    loadRequests(abortController.signal);
     return function cancel() {
       abortController.abort();
     };
   }, []);
 
-  const loadRequestsLEMZ = (signal) => {
+  const loadRequests = (signal) => {
     setIsLoading(true);
     return getRequestsByWorkshop("lemz", signal)
       .then((res) => res.json())
       .then((requests) => {
-        setRequestsLEMZ(requests);
+        setRequests(requests);
         setProductsQuantities(getQuantityOfProductsFromRequests(requests));
         setDates(getDatesFromRequests(requests));
         setIsLoading(false);
@@ -117,46 +124,9 @@ const WorkshopLEMZ = (props) => {
   };
 
   //Статусы заявок
-  const [requestStatuses, setRequestStatutes] = useState([
-    {
-      name: "Проблема/Материалы",
-      oldName: "Проблема-материалы",
-      className: "materials",
-      access: ["ROLE_ADMIN", "ROLE_WORKSHOP"],
-      visible: false,
-    },
-    // {
-    //   name: 'Отгружено',
-    //   className: 'shipped',
-    //   access: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
-    //   visible: false,
-    // },
-    {
-      name: "Готово к отгрузке",
-      oldName: "Готово",
-      className: "ready",
-      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
-      visible: false,
-    },
-    {
-      name: "В производстве",
-      className: "in-production",
-      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
-      visible: false,
-    },
-    {
-      name: "Ожидание",
-      className: "waiting",
-      access: ["ROLE_ADMIN", "ROLE_MANAGER"],
-      visible: false,
-    },
-    {
-      name: "Приоритет",
-      className: "priority",
-      access: ["ROLE_ADMIN"],
-      visible: false,
-    },
-  ]);
+  const [requestStatuses, setRequestStatutes] = useState(
+    requestStatuses.map((status) => ({ ...status, visible: false }))
+  );
 
   const filterRequestsByPage = (data, page) => {
     return data.filter((item) => {
@@ -208,23 +178,16 @@ const WorkshopLEMZ = (props) => {
     });
   };
 
-  const filterRequests = (requestsLEMZ) => {
+  const filterRequests = (requests) => {
     return filterSearchQuery(
       filterRequestsByStatuses(
         filterRequestsByPage(
-          filterRequestsByWorkshop(requestsLEMZ),
+          filterRequestsByWorkshop(requests),
           pages[curPage].name
         )
       )
     );
   };
-
-  // * Sorting
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "date",
-    date: "desc",
-  });
 
   const filterSearchQuery = (data) => {
     const query = searchQuery.toLowerCase();
@@ -242,13 +205,52 @@ const WorkshopLEMZ = (props) => {
     });
   };
 
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
+  const getCategoriesCount = (category) => {
+    return filterRequestsByPage(filterRequestsByWorkshop(requests), category)
+      .length;
+  };
+
+  const pageNameInURL = props.location.pathname.split(
+    "/lemz/workshop-lemz/"
+  )[1];
+  const menuItems = [
+    {
+      pageName: "open",
+      pageTitle: "Открытые",
+      count: getCategoriesCount("Открытые"),
+      link: "/lemz/workshop-lemz/open",
+    },
+    {
+      pageName: "shipped",
+      pageTitle: "Отгружено",
+      count: getCategoriesCount("Отгружено"),
+      link: "/lemz/workshop-lemz/shipped",
+    },
+    {
+      pageName: "completed",
+      pageTitle: "Завершено",
+      count: getCategoriesCount("Завершено"),
+      link: "/lemz/workshop-lemz/completed",
+    },
+  ];
+  const { curPage, titleHeader } = useTitleHeader(
+    undefined,
+    menuItems,
+    pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
+  );
+
+  const handleStatusClick = (status, index) => {
+    let temp = requestStatuses.map((status) => {
+      return {
+        ...status,
+        visible: false,
+      };
     });
+    temp.splice(index, 1, {
+      ...status,
+      visible: !status.visible,
+    });
+    setRequestStatutes([...temp]);
   };
 
   return (
@@ -266,72 +268,18 @@ const WorkshopLEMZ = (props) => {
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <div className="main-window__header main-window__header--full">
-          <div className="main-window__menu">
-            <Link
-              className={
-                curPage === "open"
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-              to="/lemz/workshop-lemz/open"
-              onClick={() => setCurPage("open")}
-            >
-              Открытые
-              <span className="main-window__items-count">
-                {
-                  filterRequestsByPage(
-                    filterRequestsByWorkshop(requestsLEMZ),
-                    "Открытые"
-                  ).length
-                }
-              </span>
-            </Link>
-            <Link
-              className={
-                curPage === "shipped"
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-              to="/lemz/workshop-lemz/shipped"
-              onClick={() => setCurPage("shipped")}
-            >
-              Отгружено
-              <span className="main-window__items-count">
-                {
-                  filterRequestsByPage(
-                    filterRequestsByWorkshop(requestsLEMZ),
-                    "Отгружено"
-                  ).length
-                }
-              </span>
-            </Link>
-            <Link
-              className={
-                curPage === "completed"
-                  ? "main-window__item--active main-window__item"
-                  : "main-window__item"
-              }
-              to="/lemz/workshop-lemz/completed"
-              onClick={() => setCurPage("completed")}
-            >
-              Завершено
-            </Link>
-          </div>
-        </div>
+        {titleHeader}
         <ControlPanel
-          itemsCount={`Всего: ${requestsLEMZ.length} записей`}
+          itemsCount={`Всего: ${requests.length} записей`}
           buttons={
-            <>
-              <Button
-                text="Печать списка"
-                isLoading={isLoading}
-                imgSrc={PrintIcon}
-                inverted
-                className="main-window__button main-window__button--inverted"
-                onClick={printRequestsList}
-              />
-            </>
+            <Button
+              text="Печать списка"
+              isLoading={isLoading}
+              imgSrc={PrintIcon}
+              inverted
+              className="main-window__button main-window__button--inverted"
+              onClick={printRequestsList}
+            />
           }
           content={
             <div className="main-window__status-panel">
@@ -346,19 +294,7 @@ const WorkshopLEMZ = (props) => {
                       " main-window__list-item--" +
                       status.className
                     }
-                    onClick={() => {
-                      let temp = requestStatuses.map((status) => {
-                        return {
-                          ...status,
-                          visible: false,
-                        };
-                      });
-                      temp.splice(index, 1, {
-                        ...status,
-                        visible: !status.visible,
-                      });
-                      setRequestStatutes([...temp]);
-                    }}
+                    onClick={() => handleStatusClick(status, index)}
                   >
                     {status.name}
                   </div>
@@ -366,29 +302,14 @@ const WorkshopLEMZ = (props) => {
               })}
             </div>
           }
-          sorting={
-            <div className="main-window__sort-panel">
-              <select onChange={changeSortOrder}>
-                <option value="date desc">По дате (убыв.)</option>
-                <option value="date asc">По дате (возр.)</option>
-                <option value="sum desc">По сумме (убыв.)</option>
-                <option value="sum asc">По сумме (возр.)</option>
-                <option value="shippingDate desc">
-                  По дате отгрузки (убыв.)
-                </option>
-                <option value="shippingDate asc">
-                  По дате отгрузки (возр.)
-                </option>
-              </select>
-            </div>
-          }
+          sorting={sortPanel}
         />
         <TableView
-          data={filterRequests(requestsLEMZ)}
+          data={filterRequests(requests)}
           workshopName="lemz"
           isLoading={isLoading}
           sortOrder={sortOrder}
-          loadData={loadRequestsLEMZ}
+          loadData={loadRequests}
           isMinimized={isMinimized}
           dates={dates.sort((a, b) => {
             if (a < b) {

@@ -5,6 +5,7 @@ import {
 } from "../../../../utils/functions.jsx";
 import { requestStatuses } from "../workshopVariables.js";
 import html2canvas from "html2canvas";
+import { sortByField } from "../../../../utils/sorting/sorting.js";
 
 export const getRequestItemClassName = (request, isMinimized) => {
   return `main-window__list-item main-window__list-item--${
@@ -78,14 +79,9 @@ export const handleMinimizeRequestItem = (
 };
 
 export const sortRequests = (data, sortOrder) => {
-  return data.sort((a, b) => {
-    if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-      return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-    }
-    if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-      return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-    }
-    return 0;
+  return sortByField(data, {
+    fieldName: sortOrder.curSort,
+    direction: sortOrder[sortOrder.curSort],
   });
 };
 
