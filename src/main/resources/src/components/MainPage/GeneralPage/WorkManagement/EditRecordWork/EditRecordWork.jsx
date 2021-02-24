@@ -211,7 +211,7 @@ const EditRecordWork = (props) => {
       Promise.all(editedInputs).then(() => {});
     });
   };
-  
+
   useEffect(() => {
     document.title = "Редактирование записи о работе";
     const abortController = new AbortController();
@@ -343,7 +343,7 @@ const EditRecordWork = (props) => {
             setErrorsArr={setWorkTimeErrors}
           />
           {/* Список сотрудников */}
-          <SelectEmployee
+          {/* <SelectEmployee
             inputName="Выбор сотрудника"
             required
             error={workTimeErrors.employee}
@@ -365,9 +365,9 @@ const EditRecordWork = (props) => {
             errorsArr={workTimeErrors}
             setErrorsArr={setWorkTimeErrors}
             readOnly
-          />
+          /> */}
           {/* Создание работы */}
-          <SelectWork
+          {/* <SelectWork
             handleWorkChange={(value) => {
               validateField("works", value);
               setWorkTimeInputs({
@@ -385,7 +385,7 @@ const EditRecordWork = (props) => {
             categories={categories}
             products={products}
             defaultValue={worktimeInputs.works}
-          />
+          /> */}
           <div className="main-form__item">
             <div class="main-form__input_name">{`Всего: ${totalHours} ч`}</div>
           </div>
