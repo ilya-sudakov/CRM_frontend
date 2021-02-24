@@ -362,6 +362,20 @@ const WorkshopRequests = (props) => {
     setStatuses([...temp]);
   };
 
+  const handleWorkshopClick = (workshop, index) => {
+    let temp = workshopsFilter.map((tempWorkshop) => {
+      return {
+        ...tempWorkshop,
+        visible: false,
+      };
+    });
+    temp.splice(index, 1, {
+      ...workshop,
+      visible: !workshop.visible,
+    });
+    setWorkshopsFilter([...temp]);
+  };
+
   return (
     <div className="workshop-requests">
       <div className="main-window">
@@ -422,24 +436,12 @@ const WorkshopRequests = (props) => {
                   {workshopsFilter.map((workshop, index) => {
                     return (
                       <div
-                        className={
+                        className={`main-window__button ${
                           workshop.visible
-                            ? "main-window__button"
-                            : "main-window__button main-window__button--inverted"
-                        }
-                        onClick={() => {
-                          let temp = workshopsFilter.map((tempWorkshop) => {
-                            return {
-                              ...tempWorkshop,
-                              visible: false,
-                            };
-                          });
-                          temp.splice(index, 1, {
-                            ...workshop,
-                            visible: !workshop.visible,
-                          });
-                          setWorkshopsFilter([...temp]);
-                        }}
+                            ? ""
+                            : "main-window__button--inverted"
+                        }`}
+                        onClick={() => handleWorkshopClick(workshop, index)}
                       >
                         {workshop.fullName}
                       </div>
