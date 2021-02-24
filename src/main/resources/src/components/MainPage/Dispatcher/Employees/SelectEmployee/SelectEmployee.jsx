@@ -45,7 +45,7 @@ const SelectEmployee = (props) => {
       return setEmployees(props.employees);
     }
     employees.length === 0 && loadEmployees();
-  }, [props.employees]);
+  }, [props.employees, employees]);
 
   useEffect(() => {
     if (

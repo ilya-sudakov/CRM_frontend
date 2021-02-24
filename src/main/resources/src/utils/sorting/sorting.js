@@ -77,6 +77,7 @@ export const sortByField = (
 ) => {
   const direction = sortOptions.direction.toLowerCase();
   return data.sort((a, b) => {
+    console.log(a, b);
     let firstValue, secondValue;
     let fieldType = getFieldType(sortOptions, a);
     //Если запрашиваем сортировку массива объектов по полю внутри объекта
