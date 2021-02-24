@@ -1,5 +1,4 @@
 import React from "react";
-
 import HomeImg from "../../../../../../assets/sidemenu/home.inline.svg";
 import ClientImg from "../../../../../../assets/sidemenu/client.inline.svg";
 import SupplierIcon from "../../../../../../assets/sidemenu/supplier_icon.inline.svg";
@@ -16,24 +15,18 @@ import ListImg from "../../../../../../assets/sidemenu/list.inline.svg";
 import ScrewImg from "../../../../../../assets/sidemenu/screw.inline.svg";
 import FactoryIcon from "../../../../../../assets/sidemenu/factory.inline.svg";
 
+const allRoles = [
+  "ROLE_ADMIN",
+  "ROLE_DISPATCHER",
+  "ROLE_MANAGER",
+  "ROLE_WORKSHOP",
+  "ROLE_ENGINEER",
+];
+
 export const mainPage = {
   pathname: "/",
-  mainRoles: [
-    "ROLE_ADMIN",
-    "ROLE_MANAGER",
-    "ROLE_WORKSHOP",
-    "ROLE_DISPATCHER",
-    "ROLE_ENGINEER",
-  ],
-  addButtonRoles: [
-    "ROLE_ADMIN",
-    "ROLE_MANAGER",
-    "ROLE_DISPATCHER",
-    "ROLE_LEMZ",
-    "ROLE_LEPSARI",
-    "ROLE_LIGOVSKIY",
-    "ROLE_ENGINEER",
-  ],
+  mainRoles: allRoles,
+  addButtonRoles: allRoles,
   addButtonName: "Учесть рабочее время",
   linkTo: "/",
   addButtonLinkTo: "/work-management/record-time/new",
@@ -44,13 +37,7 @@ export const mainPage = {
 export const generalTasks = {
   pathname: "/dispatcher/general-tasks",
   name: "Основные задачи",
-  mainRoles: [
-    "ROLE_ADMIN",
-    "ROLE_DISPATCHER",
-    "ROLE_ENGINEER",
-    "ROLE_MANAGER",
-    "ROLE_WORKSHOP",
-  ],
+  mainRoles: allRoles,
   addButtonRoles: ["ROLE_ADMIN", "ROLE_DISPATCHER", "ROLE_ENGINEER"],
   addButtonName: "Добавить задачу",
   renderIcon: () => <TasksImg width="20" className="sidemenu__img" />,
@@ -72,13 +59,7 @@ export const suppliers = {
   addButtonRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
   addButtonName: "Добавить поставщика",
   addButtonLinkTo: "/suppliers/new",
-  mainRoles: [
-    "ROLE_ADMIN",
-    "ROLE_MANAGER",
-    "ROLE_DISPATCHER",
-    "ROLE_ENGINEER",
-    "ROLE_WORKSHOP",
-  ],
+  mainRoles: allRoles,
   name: "Поставщики",
   renderIcon: () => <SupplierIcon className="sidemenu__img" />,
   dropdownMenu: [],
@@ -87,24 +68,8 @@ export const suppliers = {
 export const workManagement = {
   pathname: "/work-management",
   addButtonLinkTo: "/work-management/record-time/new",
-  mainRoles: [
-    "ROLE_ADMIN",
-    "ROLE_MANAGER",
-    "ROLE_DISPATCHER",
-    "ROLE_LEMZ",
-    "ROLE_LEPSARI",
-    "ROLE_LIGOVSKIY",
-    "ROLE_ENGINEER",
-  ],
-  addButtonRoles: [
-    "ROLE_ADMIN",
-    "ROLE_MANAGER",
-    "ROLE_DISPATCHER",
-    "ROLE_LEMZ",
-    "ROLE_LEPSARI",
-    "ROLE_LIGOVSKIY",
-    "ROLE_ENGINEER",
-  ],
+  mainRoles: allRoles,
+  addButtonRoles: allRoles,
   addButtonName: "Учесть рабочее время",
 };
 
@@ -342,20 +307,8 @@ export const transportation = {
 export const feedback = {
   pathname: "/feedback",
   name: "Сообщить об ошибке",
-  mainRoles: [
-    "ROLE_ADMIN",
-    "ROLE_DISPATCHER",
-    "ROLE_ENGINEER",
-    "ROLE_MANAGER",
-    "ROLE_WORKSHOP",
-  ],
-  addButtonRoles: [
-    "ROLE_ADMIN",
-    "ROLE_DISPATCHER",
-    "ROLE_ENGINEER",
-    "ROLE_MANAGER",
-    "ROLE_WORKSHOP",
-  ],
+  mainRoles: allRoles,
+  addButtonRoles: allRoles,
   addButtonName: "Оставить сообщение",
   renderIcon: () => <FeedbackImg className="sidemenu__img" />,
 };
@@ -363,13 +316,7 @@ export const feedback = {
 export const etcetera = {
   pathname: "/etcetera",
   name: "Остальное",
-  mainRoles: [
-    "ROLE_ADMIN",
-    "ROLE_DISPATCHER",
-    "ROLE_MANAGER",
-    "ROLE_WORKSHOP",
-    "ROLE_ENGINEER",
-  ],
+  mainRoles: allRoles,
   renderIcon: () => <MoreImg className="sidemenu__img" />,
 };
 
