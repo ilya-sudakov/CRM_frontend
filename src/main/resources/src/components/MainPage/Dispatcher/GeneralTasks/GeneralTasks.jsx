@@ -9,7 +9,6 @@ import {
 } from "../../../../utils/RequestsAPI/MainTasks.js";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { formatDateString } from "../../../../utils/functions.jsx";
 import UserContext from "../../../../App.js";
 import useSort from "../../../../utils/hooks/useSort/useSort";
 import {
@@ -145,7 +144,7 @@ const GeneralTasks = (props) => {
         { value: "dateControl desc", text: "По дате контроля (возр.)" },
       ],
     },
-    [generalTasks, curPage, taskUsers]
+    [generalTasks, curPage, taskUsers, searchQuery]
   );
 
   const handleFilterUserClick = (user) => {

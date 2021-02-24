@@ -107,17 +107,11 @@
         .employee-info__comment {
             font-size: 0.85rem;
             margin-top: 5px;
-            display: flex;
-            align-items: center;
+            color: #888;
 
             span {
-                color: #888;
-                margin-right: 5px;
-
-                &:nth-child(2) {
-                    margin-right: 0;
-                    color: #333;
-                }
+                margin-left: 5px;
+                color: #333;
             }
         }
         .employee-info__employee-works-wrapper {

@@ -112,7 +112,7 @@ const WorksItem = ({ item }) => {
       )}
       {item.comment ? (
         <div className="employee-info__comment">
-          <span>Комментарий:</span>
+          Комментарий:
           <span>{item.comment}</span>
         </div>
       ) : null}
