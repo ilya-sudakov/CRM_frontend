@@ -2,24 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./WorkshopRequests.scss";
 import "../../../../utils/MainWindow/MainWindow.scss";
 import PrintIcon from "../../../../../../../../assets/print.png";
-import pdfMake from "pdfmake";
 import TableView from "../TableView/TableView.jsx";
 import SearchBar from "../../SearchBar/SearchBar.jsx";
-import { getProductsFromRequestsListPdfText } from "../../../../utils/pdfFunctions.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import {
-  getRequestById,
-  deleteProductsToRequest,
-  deleteRequest,
   getRequestsByWorkshop,
   transferRequest,
-  addRequest,
-  addProductsToRequest,
-  connectClientToRequest,
   getRequests,
 } from "../../../../utils/RequestsAPI/Requests.jsx";
-import { getCategories } from "../../../../utils/RequestsAPI/Products/Categories.js";
 import {
   getQuantityOfProductsFromRequests,
   getDatesFromRequests,
@@ -32,10 +23,13 @@ import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader"
 import { sortByField } from "../../../../utils/sorting/sorting";
 import { requestStatuses, workshops } from "../workshopVariables.js";
 import {
+  copySelectedRequest,
+  deleteItem,
   filterRequestsByPage,
   filterRequestsBySearchQuery,
   filterRequestsByStatuses,
   getPageByRequest,
+  printRequestsList,
 } from "../functions.js";
 import useFormWindow from "../../../../utils/hooks/useFormWindow";
 
@@ -120,108 +114,10 @@ const WorkshopRequests = (props) => {
     { filter: [null, "requests"], fullName: "Не перенесенные", visible: false },
   ]);
 
-  const deleteItem = (id) => {
-    getRequestById(id)
-      .then((res) => res.json())
-      .then((res) => {
-        const productsArr = res.requestProducts.map((product) => {
-          return deleteProductsToRequest(product.id);
-        });
-        Promise.all(productsArr).then(() => {
-          deleteRequest(id).then(() => loadRequests());
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   //Перенести заявку
   const transferRequestId = (id) => {
     setRequestId(id);
     setShowWindow(!showWindow);
-  };
-
-  //Копировать заявку
-  const copySelectedRequest = (id) => {
-    setIsLoading(true);
-    const requestToBeCopied = requests.find((item) => item.id === id);
-    let newId = 0;
-    addRequest({
-      date: requestToBeCopied.date,
-      products: requestToBeCopied.requestProducts,
-      quantity: requestToBeCopied.quantity,
-      clientId: requestToBeCopied.client?.id,
-      sum: requestToBeCopied.sum,
-      responsible: requestToBeCopied.responsible,
-      status: requestToBeCopied.status,
-      shippingDate: requestToBeCopied.shippingDate ?? new Date(),
-      comment: requestToBeCopied.comment,
-      factory: requestToBeCopied.factory,
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        newId = res.id;
-        return Promise.all(
-          requestToBeCopied.requestProducts.map((item) =>
-            addProductsToRequest({
-              requestId: res.id,
-              quantity: item.quantity,
-              packaging: item.packaging,
-              status: item.status,
-              name: item.name,
-            })
-          )
-        );
-      })
-      .then(() => connectClientToRequest(newId, requestToBeCopied.client?.id))
-      .then(() => {
-        setIsLoading(false);
-        loadRequests();
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.log(error);
-      });
-  };
-
-  const printRequestsList = () => {
-    let categories = {};
-    setIsLoading(true);
-    getCategories()
-      .then((res) => res.json())
-      .then((res) => {
-        res.map((category) => {
-          if (categories[category.category] === undefined) {
-            categories = { ...categories, [category.category]: {} };
-          }
-          Object.entries(productsQuantities).map((product) => {
-            category.products.map((categoryProduct) => {
-              if (product[0] === categoryProduct.name) {
-                categories = {
-                  ...categories,
-                  [category.category]: {
-                    ...categories[category.category],
-                    [product[0]]: product[1],
-                  },
-                };
-              }
-            });
-          });
-        });
-      })
-      .then(() => {
-        setIsLoading(false);
-        let dd = getProductsFromRequestsListPdfText(
-          categories,
-          workshops[props.type].fullName
-        );
-        pdfMake.createPdf(dd).print();
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-      });
   };
 
   useEffect(() => {
@@ -308,32 +204,18 @@ const WorkshopRequests = (props) => {
     pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
   );
 
-  const handleStatusClick = (status, index) => {
-    let temp = statuses.map((status) => {
+  const handleItemClick = (array, setArray, item, index) => {
+    let temp = array.map((item) => {
       return {
-        ...status,
+        ...item,
         visible: false,
       };
     });
     temp.splice(index, 1, {
-      ...status,
-      visible: !status.visible,
+      ...item,
+      visible: !item.visible,
     });
-    setStatuses([...temp]);
-  };
-
-  const handleWorkshopClick = (workshop, index) => {
-    let temp = workshopsFilter.map((tempWorkshop) => {
-      return {
-        ...tempWorkshop,
-        visible: false,
-      };
-    });
-    temp.splice(index, 1, {
-      ...workshop,
-      visible: !workshop.visible,
-    });
-    setWorkshopsFilter([...temp]);
+    setArray([...temp]);
   };
 
   return (
@@ -363,7 +245,13 @@ const WorkshopRequests = (props) => {
               imgSrc={PrintIcon}
               inverted
               className="main-window__button main-window__button--inverted"
-              onClick={printRequestsList}
+              onClick={() =>
+                printRequestsList(
+                  setIsLoading,
+                  productsQuantities,
+                  workshops[props.type].fullName
+                )
+              }
             />
           }
           content={
@@ -380,7 +268,9 @@ const WorkshopRequests = (props) => {
                         " main-window__list-item--" +
                         status.className
                       }
-                      onClick={() => handleStatusClick(status, index)}
+                      onClick={() =>
+                        handleItemClick(statuses, setStatuses, status, index)
+                      }
                     >
                       {status.name}
                     </div>
@@ -401,7 +291,14 @@ const WorkshopRequests = (props) => {
                             ? ""
                             : "main-window__button--inverted"
                         }`}
-                        onClick={() => handleWorkshopClick(workshop, index)}
+                        onClick={() =>
+                          handleItemClick(
+                            workshopsFilter,
+                            setWorkshopsFilter,
+                            workshop,
+                            index
+                          )
+                        }
                       >
                         {workshop.fullName}
                       </div>
@@ -426,9 +323,11 @@ const WorkshopRequests = (props) => {
           })}
           deleteItem={deleteItem}
           searchQuery={searchQuery}
-          deleteItem={deleteItem}
+          deleteItem={(id) => deleteItem(id, loadRequests)}
           transferRequest={transferRequestId}
-          copyRequest={copySelectedRequest}
+          copyRequest={(id) =>
+            copySelectedRequest(id, requests, setIsLoading, loadRequests)
+          }
         />
       </div>
     </div>
