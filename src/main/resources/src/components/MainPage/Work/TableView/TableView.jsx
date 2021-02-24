@@ -22,7 +22,7 @@ const TableView = (props) => {
 
   const sortWorkItems = (data) => {
     return searchQuery(
-      sortByField(data, { fieldName: "id", direction: "asc" })
+      sortByField(data, { fieldName: "work", direction: "asc" })
     );
   };
 

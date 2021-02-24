@@ -150,7 +150,8 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
           if (
             originalItem &&
             (item.hours !== originalItem.hours ||
-              item.comment !== originalItem.comment)
+              item.comment !== originalItem.comment ||
+              item.workName !== originalItem.workName)
           ) {
             await editRecordedWork(temp, item.id);
           }
@@ -369,25 +370,6 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
         setIsSaved(true);
         setIsLoading(false);
       });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setWorkTimeInputs({
-      ...worktimeInputs,
-      [name]: value,
-    });
-    setWorkTimeErrors({
-      ...workTimeErrors,
-      [name]: false,
-    });
-  };
-
-  const isNewDate = (date) => {
-    return (
-      Math.abs(dateDiffInDays(date, new Date())) <= 3 && date <= new Date()
-    );
   };
 
   useEffect(() => {
