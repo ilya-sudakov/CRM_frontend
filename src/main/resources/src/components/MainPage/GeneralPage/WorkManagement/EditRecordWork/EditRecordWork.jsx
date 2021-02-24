@@ -388,11 +388,6 @@ const EditRecordWork = (props) => {
           <div className="main-form__item">
             <div class="main-form__input_name">{`Всего: ${totalHours} ч`}</div>
           </div>
-          {/* <InputText
-            inputName="Всего часов"
-            readOnly
-            defaultValue={totalHours}
-          /> */}
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>

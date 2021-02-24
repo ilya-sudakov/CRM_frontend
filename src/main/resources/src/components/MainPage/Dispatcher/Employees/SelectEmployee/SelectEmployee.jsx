@@ -52,6 +52,7 @@ const SelectEmployee = (props) => {
       typeof props.defaultValue === "object" &&
       props.defaultValue?.lastName
     ) {
+      console.log(props.defaultValue);
       setEmployee(props.defaultValue);
     }
   }, [props.defaultValue]);
@@ -78,6 +79,7 @@ const SelectEmployee = (props) => {
         .then((res) => res.json())
         .then((res) => {
           setIsLoading(false);
+          console.log("fetch1", res);
           setEmployees(res);
         })
         .catch((error) => {
@@ -89,6 +91,7 @@ const SelectEmployee = (props) => {
         .then((res) => res.json())
         .then((res) => {
           setIsLoading(false);
+          console.log("fetch2", res);
           setEmployees(res);
         })
         .catch((error) => {

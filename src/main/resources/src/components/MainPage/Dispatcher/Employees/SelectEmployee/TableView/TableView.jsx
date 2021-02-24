@@ -37,12 +37,12 @@ const TableView = (props) => {
                   key={employee_id}
                   onClick={() => {
                     props.selectEmployee(
-                      employee.lastName +
+                      employee?.lastName +
                         " " +
-                        employee.name +
+                        employee?.name +
                         " " +
-                        employee.middleName,
-                      employee.id,
+                        employee?.middleName,
+                      employee?.id,
                       employee
                     );
                     props.setCloseWindow(!props.closeWindow);
@@ -80,12 +80,12 @@ const TableView = (props) => {
                       title="Выбрать сотрудника"
                       onClick={() => {
                         props.selectEmployee(
-                          employee.lastName +
+                          employee?.lastName +
                             " " +
-                            employee.name +
+                            employee?.name +
                             " " +
-                            employee.middleName,
-                          employee.id,
+                            employee?.middleName,
+                          employee?.id,
                           employee
                         );
                         props.setCloseWindow(!props.closeWindow);
