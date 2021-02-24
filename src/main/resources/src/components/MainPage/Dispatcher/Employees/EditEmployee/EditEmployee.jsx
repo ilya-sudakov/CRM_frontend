@@ -4,6 +4,7 @@ import "../../../../../utils/Form/Form.scss";
 import {
   getEmployeeById,
   editEmployee,
+  deleteEmployee,
 } from "../../../../../utils/RequestsAPI/Employees.jsx";
 import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
 import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
@@ -377,6 +378,12 @@ const EditEmployee = (props) => {
             type="submit"
             onClick={() => props.history.push("/dispatcher/employees")}
             value="Вернуться назад"
+          />
+          <Button
+            text="Удалить запись"
+            isLoading={isLoading}
+            className="main-form__submit"
+            onClick={() => deleteEmployee(employeeId)}
           />
           <Button
             text="Редактировать запись"

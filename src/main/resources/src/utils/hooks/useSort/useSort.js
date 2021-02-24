@@ -60,14 +60,6 @@ const useSort = (
   );
 
   useEffect(() => {
-    console.log(
-      "useSort",
-      data,
-      sortByField(data, {
-        fieldName: sortOrder.curSort,
-        direction: sortOrder[sortOrder.curSort],
-      })
-    );
     const newData = sortByField(data, {
       fieldName: sortOrder.curSort,
       direction: sortOrder[sortOrder.curSort],

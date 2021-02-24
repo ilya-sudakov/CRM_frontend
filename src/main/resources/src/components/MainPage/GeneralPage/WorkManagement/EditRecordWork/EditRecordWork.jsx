@@ -23,7 +23,7 @@ import { useHistory } from "react-router-dom";
 const EditRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: new Date(),
-    employee: '',
+    employee: "",
     works: [],
     originalWorks: [],
   });
