@@ -137,7 +137,7 @@ const SelectEmployee = (props) => {
             />
           )}
         </div>
-        {employee ? (
+        {/* {employee ? (
           <div className="select-employee__employee-info">
             <div className="employee-info__name">
               {`${employee.lastName} ${employee.name} ${employee.middleName}`}
@@ -166,7 +166,7 @@ const SelectEmployee = (props) => {
               </div>
             </div>
           )
-        )}
+        )} */}
       </div>
       {props.error === true && (
         <div
