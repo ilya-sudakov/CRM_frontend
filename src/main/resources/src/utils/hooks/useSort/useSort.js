@@ -63,7 +63,7 @@ const useSort = (
     console.log(
       "useSort",
       data,
-      ortByField(data, {
+      sortByField(data, {
         fieldName: sortOrder.curSort,
         direction: sortOrder[sortOrder.curSort],
       })
