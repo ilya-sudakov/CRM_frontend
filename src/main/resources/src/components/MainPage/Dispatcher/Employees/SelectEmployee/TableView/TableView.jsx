@@ -49,33 +49,30 @@ const TableView = (props) => {
                 >
                   <span>
                     <div className="main-window__mobile-text">ФИО:</div>
-                    {employee.lastName +
+                    {employee?.lastName +
                       " " +
-                      employee.name +
+                      employee?.name +
                       " " +
-                      employee.middleName}
+                      employee?.middleName}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">
                       Дата рождения:
                     </div>
                     {formatDateString(
-                      employee.dateOfBirth ?? employee.yearOfBirth
+                      employee?.dateOfBirth ?? employee?.yearOfBirth
                     )}
                   </span>
-                  {/* <span>{employee.citizenship}</span> */}
                   <span>
                     <div className="main-window__mobile-text">
                       Подразделение:
                     </div>
-                    {employee.workshop}
+                    {employee?.workshop}
                   </span>
                   <span>
                     <div className="main-window__mobile-text">Должность:</div>
-                    {employee.position}
+                    {employee?.position}
                   </span>
-                  {/* <span>{employee.comment}</span> */}
-                  {/* <span>{employee.relevance}</span> */}
                   <div className="main-window__actions">
                     <div
                       className="main-window__action"

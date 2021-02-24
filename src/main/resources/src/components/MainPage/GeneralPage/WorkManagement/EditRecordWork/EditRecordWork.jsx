@@ -211,26 +211,7 @@ const EditRecordWork = (props) => {
       Promise.all(editedInputs).then(() => {});
     });
   };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setWorkTimeInputs({
-      ...worktimeInputs,
-      [name]: value,
-    });
-    setWorkTimeErrors({
-      ...workTimeErrors,
-      [name]: false,
-    });
-  };
-
-  const isNewDate = (date) => {
-    return (
-      Math.abs(dateDiffInDays(date, new Date())) <= 3 && date <= new Date()
-    );
-  };
-
+  
   useEffect(() => {
     document.title = "Редактирование записи о работе";
     const abortController = new AbortController();
