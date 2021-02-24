@@ -83,16 +83,16 @@ const Clients = (props) => {
     )
       .then(() =>
         Promise.all(
-          client.contacts.map((item) => {
-            return clientTypes[props.type].deleteContactsFunction(item.id);
-          })
+          client.contacts.map((item) =>
+            clientTypes[props.type].deleteContactsFunction(item.id)
+          )
         )
       )
       .then(() =>
         Promise.all(
-          client.histories.map((item) => {
-            return clientTypes[props.type].deleteWorkHistoryFunction(item.id);
-          })
+          client.histories.map((item) =>
+            clientTypes[props.type].deleteWorkHistoryFunction(item.id)
+          )
         )
       )
       .then(() => {
@@ -111,48 +111,36 @@ const Clients = (props) => {
   };
 
   const loadClientsTotalByType = (category) => {
-    return clientTypes[props.type]
-      .loadItemsByCategory(
-        {
-          categoryName: category,
-          clientType: "Активные",
-        },
-        1,
-        1,
-        sortOrder
-      )
-      .then((res) => res.json())
-      .then((res) => {
-        setItemsActiveCount(res.totalElements);
-        return clientTypes[props.type]
+    const clientCategories = [
+      {
+        clientType: "Активные",
+        setter: (count) => setItemsActiveCount(count),
+      },
+      {
+        clientType: "Потенциальные",
+        setter: (count) => setItemsPotentialCount(count),
+      },
+      {
+        clientType: "В разработке",
+        setter: (count) => setItemsProgressCount(count),
+      },
+    ];
+    return Promise.all(
+      clientCategories.map((item) =>
+        clientTypes[props.type]
           .loadItemsByCategory(
             {
               categoryName: category,
-              clientType: "Потенциальные",
+              clientType: item.clientType,
             },
             1,
             1,
             sortOrder
           )
           .then((res) => res.json())
-          .then((res) => {
-            setItemsPotentialCount(res.totalElements);
-            return clientTypes[props.type]
-              .loadItemsByCategory(
-                {
-                  categoryName: category,
-                  clientType: "В разработке",
-                },
-                1,
-                1,
-                sortOrder
-              )
-              .then((res) => res.json())
-              .then((res) => {
-                setItemsProgressCount(res.totalElements);
-              });
-          });
-      });
+          .then((res) => item.setter(res.totalElements))
+      )
+    );
   };
 
   const loadData = (category, type, signal) => {

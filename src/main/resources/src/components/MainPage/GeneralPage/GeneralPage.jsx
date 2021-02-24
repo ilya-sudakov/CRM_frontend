@@ -95,7 +95,7 @@ const GeneralPage = (props) => {
                   Дневник производства
                 </Link>
               )}
-              {props.userHasAccess(["ROLE_ADMIN"]) && (
+              {props.userHasAccess(["ROLE_ADMIN", "ROLE_DISPATCHER"]) && (
                 <Link
                   className="main-window__button"
                   to="/work-management/journal-new"
