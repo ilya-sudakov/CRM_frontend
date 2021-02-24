@@ -345,7 +345,7 @@ export const renderProductsColumn = (
         .map((product) => {
           return (
             <div
-              className={`main-window__list-item main-window__list-item--${findStatusClassName(
+              className={`main-window__list-col-row main-window__list-item--${findStatusClassName(
                 productsStatuses,
                 product.status
               )}`}
