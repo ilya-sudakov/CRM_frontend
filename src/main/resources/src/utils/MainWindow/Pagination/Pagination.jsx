@@ -16,6 +16,11 @@ const Pagination = ({
     Math.ceil(itemsCount / itemsPerPage) !== 0
       ? Math.ceil(itemsCount / itemsPerPage)
       : 1;
+  const isLastPageNotInTheLastPlace =
+    paginationList.indexOf(curPage - 1) === paginationList.length - 1 &&
+    curPage - 1 !== lastPage;
+  const isFirstPageNotInTheFirstPlace =
+    paginationList.indexOf(curPage - 1) === 0 && item !== 1;
 
   useEffect(() => {}, [curPage]);
 
@@ -48,7 +53,7 @@ const Pagination = ({
     setCurPage(item);
     pushParamToURL("page", item, ignoreURL);
     if (lastPage <= 5) return;
-    if (paginationList.indexOf(item) === 0 && item !== 1) {
+    if (isFirstPageNotInTheFirstPlace) {
       let temp = [];
       for (
         let i = paginationList[0] - 1;
@@ -59,10 +64,8 @@ const Pagination = ({
       }
       return setPaginationList(temp);
     }
-    if (
-      paginationList.indexOf(item) === paginationList.length - 1 &&
-      item !== lastPage
-    ) {
+
+    if (isLastPageNotInTheLastPlace) {
       let temp = [];
       for (
         let i = paginationList[0] + 1;
@@ -128,7 +131,7 @@ const Pagination = ({
     setCurPage(item);
     pushParamToURL("page", item, ignoreURL);
     if (maxPage < 5) return;
-    if (paginationList.indexOf(item) === 0 && item !== 1) {
+    if (isFirstPageNotInTheFirstPlace) {
       let temp = [];
       for (
         let i = paginationList[0] - 1;
@@ -139,10 +142,7 @@ const Pagination = ({
       }
       return setPaginationList(temp);
     }
-    if (
-      paginationList.indexOf(item) === paginationList.length - 1 &&
-      item !== maxPage
-    ) {
+    if (isLastPageNotInTheLastPlace) {
       let temp = [];
       for (
         let i = paginationList[0] + 1;
