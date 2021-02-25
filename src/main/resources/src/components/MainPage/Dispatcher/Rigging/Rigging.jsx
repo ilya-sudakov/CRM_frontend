@@ -14,82 +14,71 @@ import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader.
 const Rigging = (props) => {
   const [cachedItems, setCachedItems] = useState({
     stamp: {},
-    press: {},
+    pressForm: {},
     machine: {},
     parts: {},
   });
+
+  const getMenuItem = (itemName, title) => {
+    return {
+      pageName: `/dispatcher/rigging/${itemName}`,
+      link: `/dispatcher/rigging/${itemName}`,
+      isActive: props.location.pathname.includes(itemName),
+      pageTitle: (
+        <>
+          {title}
+          <Link
+            to={`/dispatcher/rigging/${itemName}/new`}
+            className="main-window__addButton"
+          >
+            <PlusImg className="main-window__img" alt="" />
+          </Link>
+        </>
+      ),
+    };
+  };
+
   const { titleHeader } = useTitleHeader(
     "Оснастка",
     [
-      {
-        pageName: "/dispatcher/rigging/stamp",
-        link: "/dispatcher/rigging/stamp",
-        isActive: props.location.pathname.includes("stamp"),
-        pageTitle: (
-          <>
-            Штамп
-            <Link
-              to="/dispatcher/rigging/stamp/new"
-              className="main-window__addButton"
-            >
-              <PlusImg className="main-window__img" alt="" />
-            </Link>
-          </>
-        ),
-      },
-      {
-        pageName: "/dispatcher/rigging/machine",
-        link: "/dispatcher/rigging/machine",
-        isActive: props.location.pathname.includes("machine"),
-        pageTitle: (
-          <>
-            Станок
-            <Link
-              to="/dispatcher/rigging/machine/new"
-              className="main-window__addButton"
-            >
-              <PlusImg className="main-window__img" alt="" />
-            </Link>
-          </>
-        ),
-      },
-      {
-        pageName: "/dispatcher/rigging/press-form",
-        link: "/dispatcher/rigging/press-form",
-        isActive: props.location.pathname.includes("press-form"),
-        pageTitle: (
-          <>
-            Пресс-форма
-            <Link
-              to="/dispatcher/rigging/press-form/new"
-              className="main-window__addButton"
-            >
-              <PlusImg className="main-window__img" alt="" />
-            </Link>
-          </>
-        ),
-      },
-      {
-        pageName: "/dispatcher/rigging/parts",
-        link: "/dispatcher/rigging/parts",
-        isActive: props.location.pathname.includes("parts"),
-        pageTitle: (
-          <>
-            Запчасти
-            <Link
-              to="/dispatcher/rigging/parts/new"
-              className="main-window__addButton"
-            >
-              <PlusImg className="main-window__img" alt="" />
-            </Link>
-          </>
-        ),
-      },
+      getMenuItem("stamp", "Штамп"),
+      getMenuItem("machine", "Станок"),
+      getMenuItem("press-form", "Пресс-форма"),
+      getMenuItem("parts", "Запчасти"),
     ],
     "/dispatcher/rigging/stamp"
   );
 
   useEffect(() => {}, [cachedItems]);
+
+  const getRiggingPage = (itemName, type) => {
+    return (
+      <PrivateRoute
+        exact
+        path={`/dispatcher/rigging/${itemName}`}
+        component={RiggingWorkshop}
+        cachedItems={cachedItems[type]}
+        type={type}
+        setCachedItems={(items) =>
+          setCachedItems((cachedItems) => ({
+            ...cachedItems,
+            [type]: { ...items },
+          }))
+        }
+        allowedRoles={[
+          "ROLE_ADMIN",
+          "ROLE_DISPATCHER",
+          "ROLE_ENGINEER",
+          "ROLE_WORKSHOP",
+        ]}
+      />
+    );
+  };
+
+  const stampPage = getRiggingPage("stamp", "stamp");
+  const machinePage = getRiggingPage("machine", "machine");
+  const pressFormPage = getRiggingPage("press-form", "pressForm");
+  const partsPage = getRiggingPage("parts", "parts");
 
   return (
     <div className="rigging">
@@ -98,24 +87,10 @@ const Rigging = (props) => {
         <div className="main-window__content">
           <Suspense fallback={<PageLoading />}>
             <Switch>
-              <PrivateRoute
-                exact
-                path="/dispatcher/rigging/stamp"
-                component={RiggingWorkshop}
-                cachedItems={cachedItems["stamp"]}
-                type="stamp"
-                setCachedItems={(items) => {
-                  setCachedItems((cachedItems) => {
-                    return { ...cachedItems, stamp: { ...items } };
-                  });
-                }}
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
-                ]}
-              />
+              {stampPage}
+              {machinePage}
+              {pressFormPage}
+              {partsPage}
               <PrivateRoute
                 exact
                 path="/dispatcher/rigging/stamp/new"
@@ -131,24 +106,6 @@ const Rigging = (props) => {
                 path="/dispatcher/rigging/stamp/edit/"
                 component={EditRig}
                 type="stamp"
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
-                ]}
-              />
-              <PrivateRoute
-                exact
-                path="/dispatcher/rigging/machine"
-                component={RiggingWorkshop}
-                type="machine"
-                cachedItems={cachedItems["machine"]}
-                setCachedItems={(items) => {
-                  setCachedItems((cachedItems) => {
-                    return { ...cachedItems, machine: { ...items } };
-                  });
-                }}
                 allowedRoles={[
                   "ROLE_ADMIN",
                   "ROLE_DISPATCHER",
@@ -180,24 +137,6 @@ const Rigging = (props) => {
               />
               <PrivateRoute
                 exact
-                path="/dispatcher/rigging/press-form"
-                component={RiggingWorkshop}
-                type="pressForm"
-                cachedItems={cachedItems["press"]}
-                setCachedItems={(items) => {
-                  setCachedItems((cachedItems) => {
-                    return { ...cachedItems, press: { ...items } };
-                  });
-                }}
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
-                ]}
-              />
-              <PrivateRoute
-                exact
                 path="/dispatcher/rigging/press-form/new"
                 component={NewRig}
                 type="pressForm"
@@ -211,24 +150,6 @@ const Rigging = (props) => {
                 path="/dispatcher/rigging/press-form/edit/"
                 component={EditRig}
                 type="pressForm"
-                allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
-                ]}
-              />
-              <PrivateRoute
-                exact
-                path="/dispatcher/rigging/parts"
-                component={RiggingWorkshop}
-                type="parts"
-                cachedItems={cachedItems["parts"]}
-                setCachedItems={(items) => {
-                  setCachedItems((cachedItems) => {
-                    return { ...cachedItems, parts: { ...items } };
-                  });
-                }}
                 allowedRoles={[
                   "ROLE_ADMIN",
                   "ROLE_DISPATCHER",
