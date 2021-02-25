@@ -20,7 +20,7 @@ const Pagination = ({
     paginationList.indexOf(curPage - 1) === paginationList.length - 1 &&
     curPage - 1 !== lastPage;
   const isFirstPageNotInTheFirstPlace =
-    paginationList.indexOf(curPage - 1) === 0 && item !== 1;
+    paginationList.indexOf(curPage - 1) === 0 && curPage - 1 !== 1;
 
   useEffect(() => {}, [curPage]);
 
@@ -52,29 +52,24 @@ const Pagination = ({
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
     pushParamToURL("page", item, ignoreURL);
-    if (lastPage <= 5) return;
-    if (isFirstPageNotInTheFirstPlace) {
+    const calcPagesForPrevPage = (index) => {
       let temp = [];
       for (
-        let i = paginationList[0] - 1;
-        i <= lastPage && i <= paginationList[paginationList.length - 1] - 1;
+        let i = paginationList[0] + index;
+        i <= lastPage && i <= paginationList[paginationList.length - 1] + index;
         i++
       ) {
         temp.push(i);
       }
-      return setPaginationList(temp);
+      return temp;
+    };
+    if (lastPage <= 5) return;
+    if (isFirstPageNotInTheFirstPlace) {
+      return setPaginationList(calcPagesForPrevPage(-1));
     }
 
     if (isLastPageNotInTheLastPlace) {
-      let temp = [];
-      for (
-        let i = paginationList[0] + 1;
-        i <= lastPage && i <= paginationList[paginationList.length - 1] + 1;
-        i++
-      ) {
-        temp.push(i);
-      }
-      return setPaginationList(temp);
+      return setPaginationList(calcPagesForPrevPage(1));
     }
   };
 
@@ -83,32 +78,26 @@ const Pagination = ({
     pushParamToURL("page", item, ignoreURL);
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     if (lastPage <= 5) return;
-    if (paginationList.indexOf(item) === 0 && item !== 1) {
+    const calcPagesForBetweenPage = (index) => {
       let temp = [];
       for (
-        let i = paginationList[0] - 1;
+        let i = paginationList[0] + index;
         i <= Math.floor(itemsCount / itemsPerPage) &&
-        i <= paginationList[paginationList.length - 1] - 1;
+        i <= paginationList[paginationList.length - 1] + index;
         i++
       ) {
         temp.push(i);
       }
-      return setPaginationList(temp);
+      return temp;
+    };
+    if (paginationList.indexOf(item) === 0 && item !== 1) {
+      return setPaginationList(calcPagesForBetweenPage(-1));
     }
     if (
       paginationList.indexOf(item) === paginationList.length - 1 &&
       item !== Math.ceil(itemsCount / itemsPerPage)
     ) {
-      let temp = [];
-      for (
-        let i = paginationList[0] + 1;
-        i <= Math.ceil(itemsCount / itemsPerPage) &&
-        i <= paginationList[paginationList.length - 1] + 1;
-        i++
-      ) {
-        temp.push(i);
-      }
-      return setPaginationList(temp);
+      return setPaginationList(calcPagesForBetweenPage(1));
     }
   };
 
@@ -131,27 +120,22 @@ const Pagination = ({
     setCurPage(item);
     pushParamToURL("page", item, ignoreURL);
     if (maxPage < 5) return;
-    if (isFirstPageNotInTheFirstPlace) {
+    const calcPagesForNextPage = (index) => {
       let temp = [];
       for (
-        let i = paginationList[0] - 1;
-        i <= maxPage && i <= paginationList[paginationList.length - 1] - 1;
+        let i = paginationList[0] + index;
+        i <= maxPage && i <= paginationList[paginationList.length - 1] + index;
         i++
       ) {
         temp.push(i);
       }
-      return setPaginationList(temp);
+      return temp;
+    };
+    if (isFirstPageNotInTheFirstPlace) {
+      return setPaginationList(calcPagesForNextPage(-1));
     }
     if (isLastPageNotInTheLastPlace) {
-      let temp = [];
-      for (
-        let i = paginationList[0] + 1;
-        i <= maxPage && i <= paginationList[paginationList.length - 1] + 1;
-        i++
-      ) {
-        temp.push(i);
-      }
-      return setPaginationList(temp);
+      return setPaginationList(calcPagesForNextPage(1));
     }
   };
 
@@ -241,7 +225,6 @@ Pagination.propTypes = {
   itemsCount: PropTypes.number,
   ignoreURL: PropTypes.bool,
 };
-
 const ItemsPerPage = ({
   itemsPerPage,
   setItemsPerPage,
