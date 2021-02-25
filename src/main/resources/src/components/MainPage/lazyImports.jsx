@@ -144,15 +144,11 @@ const EditTask = lazy(() =>
   import("./Dispatcher/GeneralTasks/EditTask/EditTask.jsx")
 );
 
-const Stamp = lazy(() => import("./Dispatcher/Rigging/Stamp/Stamp.jsx"));
-
-const Machine = lazy(() => import("./Dispatcher/Rigging/Machine/Machine.jsx"));
-
-const PressForm = lazy(() =>
-  import("./Dispatcher/Rigging/PressForm/PressForm.jsx")
+const RiggingWorkshop = lazy(() =>
+  import(
+    "./Dispatcher/Rigging/RiggingComponents/RiggingWorkshop/RiggingWorkshop.jsx"
+  )
 );
-
-const Parts = lazy(() => import("./Dispatcher/Rigging/Parts/Parts.jsx"));
 
 const Employees = lazy(() => import("./Dispatcher/Employees/Employees.jsx"));
 
@@ -241,6 +237,7 @@ export {
   EditRequest,
   ShipRequest,
   GeneralPage,
+  RiggingWorkshop,
   MainPageWorkspace,
   Notifications,
   WorkManagement,
@@ -276,13 +273,9 @@ export {
   EditLtd,
   NewTask,
   EditTask,
-  Parts,
   Employees,
   NewEmployee,
   EditEmployee,
-  Stamp,
-  Machine,
-  PressForm,
   Work,
   NewWork,
   EditWork,

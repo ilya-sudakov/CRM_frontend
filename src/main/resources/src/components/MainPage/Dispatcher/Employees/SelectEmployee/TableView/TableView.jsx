@@ -21,7 +21,6 @@ const TableView = (props) => {
             <span>Должность</span>
             <div className="main-window__actions">Действия</div>
           </div>
-          {console.log("tableview", props.data)}
           {props.isLoading && (
             <PlaceholderLoading
               itemClassName="main-window__list-item"

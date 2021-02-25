@@ -148,6 +148,16 @@ const EditEmployee = (props) => {
     console.log(error);
   };
 
+  const handleDeleteItem = () => {
+    deleteEmployee(employeeId)
+      .then(() => props.history.push("/dispatcher/employees"))
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Ошибка при добавлении записи");
+        console.log(error);
+      });
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     validateField(name, value);
@@ -383,7 +393,7 @@ const EditEmployee = (props) => {
             text="Удалить запись"
             isLoading={isLoading}
             className="main-form__submit"
-            onClick={() => deleteEmployee(employeeId)}
+            onClick={handleDeleteItem}
           />
           <Button
             text="Редактировать запись"
