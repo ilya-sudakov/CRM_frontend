@@ -46,30 +46,31 @@ const Pagination = ({
     setPaginationList(temp);
   }, [itemsPerPage, itemsCount]);
 
+  const calcPagesForSkippedPages = (index) => {
+    let temp = [];
+    for (
+      let i = paginationList[0] + index;
+      i <= lastPage && i <= paginationList[paginationList.length - 1] + index;
+      i++
+    ) {
+      temp.push(i);
+    }
+    return temp;
+  };
+
   const handlePrevPageClick = () => {
     if (curPage <= 1) return;
     const item = curPage - 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
     pushParamToURL("page", item, ignoreURL);
-    const calcPagesForPrevPage = (index) => {
-      let temp = [];
-      for (
-        let i = paginationList[0] + index;
-        i <= lastPage && i <= paginationList[paginationList.length - 1] + index;
-        i++
-      ) {
-        temp.push(i);
-      }
-      return temp;
-    };
     if (lastPage <= 5) return;
     if (isFirstPageNotInTheFirstPlace) {
-      return setPaginationList(calcPagesForPrevPage(-1));
+      return setPaginationList(calcPagesForSkippedPages(-1));
     }
 
     if (isLastPageNotInTheLastPlace) {
-      return setPaginationList(calcPagesForPrevPage(1));
+      return setPaginationList(calcPagesForSkippedPages(1));
     }
   };
 
@@ -114,28 +115,16 @@ const Pagination = ({
   };
 
   const handleNextPageClick = () => {
-    const maxPage = Math.ceil(itemsCount / itemsPerPage);
     if (curPage >= maxPage) return;
     const item = curPage + 1;
     setCurPage(item);
     pushParamToURL("page", item, ignoreURL);
     if (maxPage < 5) return;
-    const calcPagesForNextPage = (index) => {
-      let temp = [];
-      for (
-        let i = paginationList[0] + index;
-        i <= maxPage && i <= paginationList[paginationList.length - 1] + index;
-        i++
-      ) {
-        temp.push(i);
-      }
-      return temp;
-    };
     if (isFirstPageNotInTheFirstPlace) {
-      return setPaginationList(calcPagesForNextPage(-1));
+      return setPaginationList(calcPagesForSkippedPages(-1));
     }
     if (isLastPageNotInTheLastPlace) {
-      return setPaginationList(calcPagesForNextPage(1));
+      return setPaginationList(calcPagesForSkippedPages(1));
     }
   };
 
