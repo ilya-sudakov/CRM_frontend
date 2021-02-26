@@ -115,11 +115,11 @@ const Pagination = ({
   };
 
   const handleNextPageClick = () => {
-    if (curPage >= maxPage) return;
+    if (curPage >= lastPage) return;
     const item = curPage + 1;
     setCurPage(item);
     pushParamToURL("page", item, ignoreURL);
-    if (maxPage < 5) return;
+    if (lastPage < 5) return;
     if (isFirstPageNotInTheFirstPlace) {
       return setPaginationList(calcPagesForSkippedPages(-1));
     }

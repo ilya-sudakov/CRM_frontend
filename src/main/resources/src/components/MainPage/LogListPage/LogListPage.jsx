@@ -7,13 +7,24 @@ import { logItemsTypes } from "./objects.js";
 import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
 import usePagination from "../../../utils/hooks/usePagination/usePagination";
 import useSort from "../../../utils/hooks/useSort/useSort";
+import useQuery from "../../../utils/hooks/useQuery";
 
 const LogListPage = () => {
-  const [curCategory, setCurCategory] = useState("request");
+  const { query, pushParamToURL } = useQuery();
+  const [curCategory, setCurCategory] = useState(
+    query.get("category") ?? "request"
+  );
   const { sortOrder, sortPanel } = useSort(data, {}, [data]);
-  const { curPage, itemsPerPage, data, isLoading, pagination } = usePagination(
+  const {
+    curPage,
+    setCurPage,
+    itemsPerPage,
+    data,
+    isLoading,
+    pagination,
+  } = usePagination(
     () => getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder),
-    [curCategory, sortOrder],
+    [curCategory, sortOrder, setCurPage, curPage],
     "dynamic"
   );
 
@@ -30,7 +41,12 @@ const LogListPage = () => {
                     ? "main-window__item--active main-window__item"
                     : "main-window__item"
                 }
-                onClick={() => setCurCategory(item.originalName)}
+                onClick={() => {
+                  setCurPage(1);
+                  pushParamToURL("page", 1);
+                  pushParamToURL("category", item.originalName);
+                  setCurCategory(item.originalName);
+                }}
               >
                 {item.name}
               </div>
