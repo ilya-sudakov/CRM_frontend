@@ -214,6 +214,7 @@ describe("general functions", () => {
       ЦехЛЭМЗ: {
         [new Date(2021, 0, 25)]: {
           16: {
+            day: 25,
             employee: {
               id: 16,
               name: "Илья",
@@ -222,6 +223,7 @@ describe("general functions", () => {
               workshop: "ЦехЛЭМЗ",
             },
             isOpen: false,
+            month: 1,
             works: [
               {
                 hours: 1,
@@ -243,8 +245,10 @@ describe("general functions", () => {
               },
             ],
             workshop: "ЦехЛЭМЗ",
+            year: 2021,
           },
           2: {
+            day: 25,
             employee: {
               id: 2,
               name: "Илья",
@@ -253,6 +257,7 @@ describe("general functions", () => {
               workshop: "ЦехЛЭМЗ",
             },
             isOpen: false,
+            month: 1,
             works: [
               {
                 hours: 1,
@@ -265,6 +270,7 @@ describe("general functions", () => {
               },
             ],
             workshop: "ЦехЛЭМЗ",
+            year: 2021,
           },
         },
       },
