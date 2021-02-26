@@ -151,7 +151,7 @@ const NewRecordWork = (props) => {
       .catch((error) => {
         console.log(error);
         alert("Ошибка при загрузке работы!");
-        history.push("/");
+        props.history.push("/");
       });
     return function cancel() {
       abortController.abort();
