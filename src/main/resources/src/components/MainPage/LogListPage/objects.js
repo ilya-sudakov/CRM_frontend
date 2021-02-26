@@ -15,10 +15,15 @@ export const logItemsTypes = {
     name: "Оснастка",
     originalName: "rigging",
   },
+  riggingPart: {
+    name: "Детали",
+    originalName: "riggingPart",
+  },
 };
 
 export const logItemsRedirectLinks = {
   request: "/requests/edit",
   clients: "/clients/edit",
   rigging: "/dispatcher/rigging/stamp/edit",
+  riggingPart: "/dispatcher/rigging/stamp/edit",
 };

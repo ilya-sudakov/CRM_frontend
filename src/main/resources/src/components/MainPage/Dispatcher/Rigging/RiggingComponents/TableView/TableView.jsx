@@ -122,7 +122,9 @@ const TableView = (props) => {
   };
 
   const handleClickStamp = (event) => {
-    let id = event.currentTarget.getAttribute("id");
+    event.preventDefault();
+    event.stopPropagation();
+    const id = event.currentTarget.getAttribute("id");
     !event.target.className.includes("main-window__status_select") &&
       !event.target.className.includes("main-window__action") &&
       !event.target.className.includes("main-window__img") &&

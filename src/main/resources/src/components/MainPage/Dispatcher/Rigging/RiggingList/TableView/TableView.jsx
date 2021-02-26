@@ -33,13 +33,6 @@ const TableView = (props) => {
     },
   ]);
 
-  const riggingNames = {
-    stamp: "stamp",
-    bench: "machine",
-    press: "press-form",
-    detail: "parts",
-  };
-
   const userContext = useContext(UserContext);
 
   return (
@@ -141,9 +134,6 @@ const TableView = (props) => {
                             <div className="main-window__actions">
                               <Link
                                 className="main-window__action"
-                                // to={`/dispatcher/rigging/${
-                                //   riggingNames[item.type.toLowerCase()]
-                                // }/edit-part/${item.id}/${item.id}`}
                                 to={`${
                                   rigTypes[item.status].redirectURL
                                 }/edit/${item.itemId}?part=${item.id}`}
