@@ -7,17 +7,18 @@ export const logItemsTypes = {
     name: "Клиенты",
     originalName: "clients",
   },
+  login: {
+    name: "Входы",
+    originalName: "login",
+  },
+  rigging: {
+    name: "Оснастка",
+    originalName: "rigging",
+  },
 };
 
-export const logItemsCategories = {
-  request: {
-    name: "Заявки",
-    originalName: "request",
-    linkToView: "/requests/edit",
-  },
-  clients: {
-    name: "Клиенты",
-    originalName: "clients",
-    linkToView: "/clients/edit",
-  },
+export const logItemsRedirectLinks = {
+  request: "/requests/edit",
+  clients: "/clients/edit",
+  rigging: "/dispatcher/rigging/stamp/edit",
 };

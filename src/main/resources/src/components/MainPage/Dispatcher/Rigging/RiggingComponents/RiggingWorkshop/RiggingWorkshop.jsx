@@ -94,7 +94,7 @@ const RiggingWorkshop = (props) => {
         placeholder="Введите здесь запрос для поиска..."
       />
       {titleHeader}
-      <ControlPanel itemsCount={`Всего: ${rigItems.length} записей`} />
+      <ControlPanel itemsCount={`Всего: ${rigItems[props.type].length} записей`} />
       <TableView
         data={filterRigItems(rigItems[props.type], curPage)}
         searchQuery={searchQuery}
