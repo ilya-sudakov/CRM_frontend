@@ -1,4 +1,4 @@
-# Система управления для малого предприятия - Фронтенд
+# Система управления для малого предприятия - Фронтенд <a href="https://codeclimate.com/github/ilyasudakov/osfix_erp_frontend/test_coverage"><img src="https://api.codeclimate.com/v1/badges/4caebb62502ad174f310/test_coverage" /></a>
 
 # Инструкция по установке
 
