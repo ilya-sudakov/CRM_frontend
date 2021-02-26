@@ -210,20 +210,22 @@ const TableView = (props) => {
             >
               <div className="main-window__list">
                 {riggingListOptionsHeader}
-                {sortStampParts(stamp.stampParts).map((part) => (
-                  <PartItem
-                    part={part}
-                    ref={
-                      Number.parseInt(query.get("rig")) === stamp.id &&
-                      Number.parseInt(query.get("part")) === part.id
-                        ? prevRef
-                        : null
-                    }
-                    loadData={props.loadData}
-                    type={props.type}
-                    stampId={stamp.id}
-                  />
-                ))}
+                {sortStampParts(stamp.stampParts).map((part) => {
+                  const ref =
+                    Number.parseInt(query.get("rig")) === stamp.id &&
+                    Number.parseInt(query.get("part")) === part.id
+                      ? prevRef
+                      : null;
+                  return (
+                    <PartItem
+                      part={part}
+                      refItem={ref}
+                      loadData={props.loadData}
+                      type={props.type}
+                      stampId={stamp.id}
+                    />
+                  );
+                })}
               </div>
             </div>
           </>

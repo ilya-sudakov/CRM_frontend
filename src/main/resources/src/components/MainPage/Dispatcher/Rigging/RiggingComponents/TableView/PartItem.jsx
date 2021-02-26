@@ -6,7 +6,7 @@ import { rigStatuses, rigTypes, workshopsLocations } from "../rigsVariables";
 import { editStampPartColor } from "../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
 import TableActions from "../../../../../../utils/TableView/TableActions/TableActions.jsx";
 
-const PartItem = ({ part, ref, loadData, type, stampId }) => {
+const PartItem = ({ part, refItem, loadData, type, stampId }) => {
   return (
     <div
       key={part.id}
@@ -18,7 +18,7 @@ const PartItem = ({ part, ref, loadData, type, stampId }) => {
           : " main-window__list-item--message main-window__list-item--warning")
       }
       data-msg="Предупреждение! Введите корректное местоположение"
-      ref={ref}
+      ref={refItem}
     >
       <span
         className="main-window__list-item--border-checked"
