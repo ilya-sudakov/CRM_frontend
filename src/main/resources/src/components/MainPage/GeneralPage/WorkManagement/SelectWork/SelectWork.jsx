@@ -59,6 +59,7 @@ const SelectWork = (props) => {
         workType: "",
         hours: 0,
         comment: "",
+        isOld: false,
       },
     ]);
   };

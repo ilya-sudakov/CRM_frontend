@@ -35,7 +35,6 @@ import {
   Lepsari,
   NewRecordWork,
   LogListPage,
-  EditRecordWork,
   WorkManagementPage,
   PriceList,
   ClientCategories,
@@ -504,24 +503,8 @@ const MainPage = () => {
                     ]}
                   />
                   <PrivateRoute
-                    exact
-                    path="/work-management/record-time/new"
+                    path="/work-management/record-time"
                     component={NewRecordWork}
-                    userHasAccess={userContext.userHasAccess}
-                    userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
-                  />
-                  <PrivateRoute
-                    path="/work-management/record-time/edit/"
-                    component={EditRecordWork}
-                    userHasAccess={userContext.userHasAccess}
-                    userData={userContext.userData}
                     allowedRoles={[
                       "ROLE_ADMIN",
                       "ROLE_MANAGER",

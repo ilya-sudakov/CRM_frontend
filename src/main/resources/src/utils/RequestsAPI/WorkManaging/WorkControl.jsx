@@ -1,4 +1,6 @@
 import { request } from "../../utilsAPI.jsx";
+import { getAuthHeaders } from "../../utilsAPI.jsx";
+import axios from "axios";
 
 export function getRecordedWorks() {
   return request({
@@ -49,6 +51,19 @@ export function getWorkReportByEmployee(id, month, year, signal) {
     method: "GET",
     signal: signal,
   });
+}
+
+export function getWorkReportByDateAndEmployee(
+  employeeId,
+  year,
+  month,
+  day
+) {
+  const headers = getAuthHeaders();
+  return axios.get(
+    `${process.env.API_BASE_URL}/api/v1/work_control/employeeDay/${employeeId}&${year}&${month}&${day}`,
+    headers
+  );
 }
 
 export function addProductToRecordedWork(

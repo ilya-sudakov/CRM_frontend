@@ -199,10 +199,7 @@ const TableView = (props) => {
                             <div className="work-management-page__item">
                               <Link
                                 title="Редактировать"
-                                to={
-                                  "/work-management/record-time/edit/" +
-                                  workItem.id
-                                }
+                                to={`/work-management/record-time?employee=${item.employee.id}&date=${item.year},${item.month},${item.day}`}
                               >
                                 {workItem.workList.work +
                                   " - " +

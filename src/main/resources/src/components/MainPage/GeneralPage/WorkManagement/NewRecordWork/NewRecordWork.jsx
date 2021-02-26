@@ -1,38 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./NewRecordWork.scss";
 import "../../../../../utils/Form/Form.scss";
 import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
 import SelectEmployee from "../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
 import SelectWork from "../SelectWork/SelectWork.jsx";
-import {
-  addRecordedWork,
-  addProductToRecordedWork,
-  addDraftToRecordedWork,
-} from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
 import SelectWorkHours from "../SelectWorkHours/SelectWorkHours.jsx";
 import Button from "../../../../../utils/Form/Button/Button.jsx";
-import { dateDiffInDays } from "../../../../../utils/functions.jsx";
 import useProductsList from "../../../../../utils/hooks/useProductsList/useProductsList.js";
+import { submitWorkData } from "./functions.js";
+import useQuery from "../../../../../utils/hooks/useQuery";
+import { getWorkReportByDateAndEmployee } from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
+import TableLoading from "../../../../../utils/TableView/TableLoading/TableLoading.jsx";
+import UserContext from "../../../../../App.js";
+import { getEmployeeById } from "../../../../../utils/RequestsAPI/Employees.jsx";
 
 const NewRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
-    date: new Date(),
-    employee: null,
     works: [],
   });
   const [workTimeErrors, setWorkTimeErrors] = useState({
-    date: false,
-    employee: false,
     works: false,
   });
   const [validInputs, setValidInputs] = useState({
-    date: true,
-    employee: false,
     works: false,
   });
+  const userContext = useContext(UserContext);
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [curEmployee, setCurEmployee] = useState(null);
+  const { query } = useQuery();
+  const [curDate, setCurDate] = useState(
+    query.get("date") ? new Date(query.get("date")) : new Date()
+  );
   const { products, categories, isLoadingProducts } = useProductsList();
   const [totalHours, setTotalHours] = useState(0);
   const [curPage, setCurPage] = useState(0);
@@ -40,12 +40,6 @@ const NewRecordWork = (props) => {
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case "date":
-        setValidInputs({
-          ...validInputs,
-          date: value !== null,
-        });
-        break;
       case "works":
         setValidInputs({
           ...validInputs,
@@ -66,8 +60,6 @@ const NewRecordWork = (props) => {
   const formIsValid = () => {
     let check = true;
     let newErrors = Object.assign({
-      date: false,
-      employee: false,
       works: false,
     });
     for (let item in validInputs) {
@@ -88,111 +80,90 @@ const NewRecordWork = (props) => {
     }
   };
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
     if (curPage !== 1) {
       return setCurPage(1);
     } else {
-      let workId = 0;
+      if (!formIsValid) return;
       setIsLoading(true);
-      console.log(worktimeInputs);
-      const newWork = worktimeInputs.works.map((item) => {
-        const temp = Object.assign({
-          day: worktimeInputs.date.getDate(),
-          month: worktimeInputs.date.getMonth() + 1,
-          year: worktimeInputs.date.getFullYear(),
-          employeeId: worktimeInputs.employeeId,
-          comment: item.comment,
-          workListId: item.workId,
-          hours: item.hours,
-        });
-        if (formIsValid())
-          return addRecordedWork(temp)
-            .then((res) => res.json())
-            .then((res) => {
-              workId = res.id;
-              // console.log(res);
-              Promise.all(
-                item.product.map((product) => {
-                  // console.log(product);
-                  return addProductToRecordedWork(
-                    workId,
-                    product.id,
-                    product.quantity,
-                    { name: product.name }
-                  );
-                })
-              );
-            })
-            .then(() => {
-              return Promise.all(
-                item.draft.map((draft) => {
-                  // console.log(product);
-                  return addDraftToRecordedWork(
-                    workId,
-                    draft.partId,
-                    draft.type,
-                    draft.quantity,
-                    draft.name
-                  );
-                })
-              );
-            })
-            .then(() => {
-              props.history.push("/work-management");
-            });
-      });
-      Promise.all(newWork)
-        .then(() => {
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          alert("Ошибка при добавлении записи");
-          setIsLoading(false);
-          // setShowError(true);
-          console.log(error);
-        });
+      return submitWorkData(
+        worktimeInputs,
+        curDate,
+        curEmployee,
+        setIsLoading
+      ).then(() => props.history.push("/work-management"));
     }
   };
 
   useEffect(() => {
-    document.title = "Добавление записи о работе";
+    document.title = "Запись о работе";
     const abortController = new AbortController();
-    const buttonHeight =
-      (window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth) >= 768
-        ? 50
-        : 80;
-    setWrapperHeight(
-      document.getElementById(`${curPage}page`)?.scrollHeight +
-        buttonHeight +
-        "px"
-    );
+    const employeeId = query.get("employee") ?? curEmployee?.id;
+    console.log(query.get("employee"), query.get("date"), curEmployee, curDate);
+    if (!employeeId || !curDate) return;
+    if (query.get("employee") && curEmployee === null) {
+      setIsLoading(true);
+      getEmployeeById(query.get("employee"))
+        .then((res) => res.json())
+        .then((res) => setCurEmployee(res));
+    }
+    setIsLoading(true);
+    getWorkReportByDateAndEmployee(
+      employeeId,
+      curDate.getFullYear(),
+      curDate.getMonth() + 1,
+      curDate.getDate()
+    )
+      .then(({ data }) => {
+        const works = data.map((item) => ({
+          id: item.id,
+          workName: item.workList.work,
+          workId: item.workList.id,
+          workType: item.workList.typeOfWork,
+          hours: item.hours,
+          comment: item.comment,
+          isOld: true,
+          product: [
+            ...item.workControlProduct.map((item) => ({
+              id: item.product.id,
+              name: item.product.name,
+              quantity: item.quantity,
+            })),
+          ],
+          draft: [
+            ...item.partsWorks.map((item) => ({
+              id: item.id,
+              partId: item.partId,
+              name: item.name,
+              type: item.partType,
+              quantity: item.quantity,
+            })),
+          ],
+        }));
+        console.log(data, works);
+        return setWorkTimeInputs({
+          ...worktimeInputs,
+          works: [...works],
+          originalWorks: [...works],
+        });
+      })
+      .then(() => setIsLoading(false))
+      .catch((error) => {
+        console.log(error);
+        alert("Ошибка при загрузке работы!");
+        history.push("/");
+      });
     return function cancel() {
       abortController.abort();
     };
-  }, [worktimeInputs]);
+  }, [curEmployee, curDate]);
 
   useEffect(() => {
-    const buttonHeight =
-      (window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth) >= 768
-        ? 50
-        : 80;
     setWrapperHeight(
-      document.getElementById(`${curPage}page`)?.scrollHeight +
-        buttonHeight +
-        "px"
+      document.getElementById(`${curPage}page`)?.clientHeight + "px"
     );
-  }, [curPage]);
-
-  const isNewDate = (date) => {
-    return (
-      Math.abs(dateDiffInDays(date, new Date())) <= 3 && date <= new Date()
-    );
-  };
+    console.log(document.getElementById(`${curPage}page`)?.clientHeight);
+  }, [worktimeInputs, curPage, curEmployee, curDate, isLoading]);
 
   return (
     <div className="record-work">
@@ -205,11 +176,11 @@ const NewRecordWork = (props) => {
         <form
           className="main-form__form"
           style={{
-            minHeight: `calc(${wrapperHeight})`,
+            minHeight: `calc(${wrapperHeight} + 45px)`,
           }}
         >
           <div className="main-form__header main-form__header--full">
-            <div className="main-form__title">Новая запись о работе</div>
+            <div className="main-form__title">Запись о работе</div>
           </div>
           <div
             className="main-form__wrapper"
@@ -221,55 +192,32 @@ const NewRecordWork = (props) => {
                   ? "35px"
                   : "20px"
               } + 15px * ${curPage}))`,
+              height: `calc(${wrapperHeight})`,
             }}
           >
-            <div className="main-form__wrapper-item">
-              <div id="0page">
-                <InputDate
-                  inputName="Дата"
-                  required
-                  error={workTimeErrors.date}
-                  name="date"
-                  // filterDate={isNewDate}
-                  selected={worktimeInputs.date}
-                  handleDateChange={(date) => {
-                    validateField("date", date);
-                    setWorkTimeInputs({
-                      ...worktimeInputs,
-                      date: date,
-                    });
-                    setWorkTimeErrors({
-                      ...workTimeErrors,
-                      date: false,
-                    });
-                  }}
-                  errorsArr={workTimeErrors}
-                  setErrorsArr={setWorkTimeErrors}
-                />
-                {/* Список сотрудников */}
-                <SelectEmployee
-                  inputName="Выбор сотрудника"
-                  required
-                  error={workTimeErrors.employee}
-                  userHasAccess={props.userHasAccess}
-                  windowName="select-employee"
-                  name="employee"
-                  handleEmployeeChange={(value, name) => {
-                    validateField("employee", value);
-                    setWorkTimeInputs({
-                      ...worktimeInputs,
-                      employeeId: value,
-                      employeeName: name,
-                    });
-                    setWorkTimeErrors({
-                      ...workTimeErrors,
-                      employee: false,
-                    });
-                  }}
-                  errorsArr={workTimeErrors}
-                  setErrorsArr={setWorkTimeErrors}
-                />
-                {/* Создание работы */}
+            <div className="main-form__wrapper-item" id="0page">
+              <InputDate
+                inputName="Дата"
+                required
+                name="date"
+                selected={curDate}
+                handleDateChange={(date) => {
+                  setCurDate(date);
+                }}
+              />
+              {/* Список сотрудников */}
+              <SelectEmployee
+                inputName="Выбор сотрудника"
+                required
+                userHasAccess={userContext.userHasAccess}
+                defaultValue={curEmployee}
+                handleEmployeeChange={(id, name, employee) =>
+                  setCurEmployee(employee)
+                }
+              />
+              {/* Создание работы */}
+              <div style={{ position: "relative" }}>
+                <TableLoading isLoading={isLoading} />
                 <SelectWork
                   handleWorkChange={(value) => {
                     validateField("works", value);
@@ -282,92 +230,91 @@ const NewRecordWork = (props) => {
                       works: false,
                     });
                   }}
-                  userHasAccess={props.userHasAccess}
+                  userHasAccess={userContext.userHasAccess}
+                  defaultValue={worktimeInputs.works}
                   totalHours={totalHours}
                   setTotalHours={setTotalHours}
                   categories={categories}
                   products={products}
                   noTime
+                  noNewItems={!curDate || !curEmployee}
                 />
-                <div className="main-form__input_hint">
-                  * - поля, обязательные для заполнения
-                </div>
-                <div className="main-form__buttons">
-                  <input
-                    className="main-form__submit main-form__submit--inverted"
-                    type="submit"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      if (curPage !== 0) {
-                        let temp = curPage - 1;
-                        setCurPage(temp);
-                      } else {
-                        props.history.push("/");
-                      }
-                    }}
-                    value="Вернуться назад"
-                  />
-                  {worktimeInputs.works.length > 0 &&
-                  worktimeInputs.works.reduce((sum, cur) => {
-                    if (cur.workType === "Без продукции/чертежа") {
-                      return sum + 1;
-                    } else if (cur.workType === "Чертеж") {
-                      return sum + 1;
-                    } else return cur?.product.length;
-                  }, 0) > 0 ? (
-                    <Button
-                      text="Указать часы"
-                      isLoading={isLoading}
-                      className="main-form__submit"
-                      onClick={handleSubmit}
-                    />
-                  ) : null}
-                </div>
               </div>
-            </div>
-            <div className="main-form__wrapper-item">
-              <div id="1page">
-                <SelectWorkHours
-                  workArray={worktimeInputs.works}
-                  date={worktimeInputs.date}
-                  employee={worktimeInputs.employeeName}
-                  onChange={(value) => {
-                    validateField("works", value);
-                    setWorkTimeInputs({
-                      ...worktimeInputs,
-                      works: value,
-                    });
-                    setWorkTimeErrors({
-                      ...workTimeErrors,
-                      works: false,
-                    });
+              <div className="main-form__input_hint">
+                * - поля, обязательные для заполнения
+              </div>
+              <div className="main-form__buttons">
+                <Button
+                  text="Вернуться назад"
+                  isLoading={isLoading}
+                  className="main-form__submit main-form__submit--inverted"
+                  inverted
+                  onClick={() => {
+                    if (curPage !== 0) {
+                      let temp = curPage - 1;
+                      setCurPage(temp);
+                    } else {
+                      props.history.push("/");
+                    }
                   }}
                 />
-                <div className="main-form__input_hint">
-                  * - поля, обязательные для заполнения
-                </div>
-                <div className="main-form__buttons">
-                  <input
-                    className="main-form__submit main-form__submit--inverted"
-                    type="submit"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      if (curPage !== 0) {
-                        let temp = curPage - 1;
-                        setCurPage(temp);
-                      } else {
-                        props.history.push("/");
-                      }
-                    }}
-                    value="Вернуться назад"
-                  />
+                {worktimeInputs.works.length > 0 &&
+                worktimeInputs.works.reduce((sum, cur) => {
+                  if (cur.workType === "Без продукции/чертежа") {
+                    return sum + 1;
+                  } else if (cur.workType === "Чертеж") {
+                    return sum + 1;
+                  } else return cur?.product.length;
+                }, 0) > 0 ? (
                   <Button
-                    text="Создать запись"
+                    text="Указать часы"
                     isLoading={isLoading}
                     className="main-form__submit"
                     onClick={handleSubmit}
                   />
-                </div>
+                ) : null}
+              </div>
+            </div>
+            <div className="main-form__wrapper-item" id="1page">
+              <SelectWorkHours
+                workArray={worktimeInputs.works}
+                date={curDate}
+                onChange={(value) => {
+                  validateField("works", value);
+                  setWorkTimeInputs({
+                    ...worktimeInputs,
+                    works: value,
+                  });
+                  setWorkTimeErrors({
+                    ...workTimeErrors,
+                    works: false,
+                  });
+                }}
+              />
+              <div className="main-form__input_hint">
+                * - поля, обязательные для заполнения
+              </div>
+              <div className="main-form__buttons">
+                <input
+                  className="main-form__submit main-form__submit--inverted"
+                  type="submit"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    if (curPage !== 0) {
+                      let temp = curPage - 1;
+                      setCurPage(temp);
+                    } else {
+                      props.history.push("/");
+                    }
+                  }}
+                  value="Вернуться назад"
+                />
+                <Button
+                  text="Создать запись"
+                  isLoading={isLoading}
+                  className="main-form__submit"
+                  onClick={handleSubmit}
+                />
               </div>
             </div>
           </div>

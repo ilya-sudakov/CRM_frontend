@@ -29,7 +29,7 @@ export const mainPage = {
   addButtonRoles: allRoles,
   addButtonName: "Учесть рабочее время",
   linkTo: "/",
-  addButtonLinkTo: "/work-management/record-time/new",
+  addButtonLinkTo: "/work-management/record-time",
   name: "Главная",
   renderIcon: () => <HomeImg className="sidemenu__img" />,
 };
@@ -67,7 +67,7 @@ export const suppliers = {
 
 export const workManagement = {
   pathname: "/work-management",
-  addButtonLinkTo: "/work-management/record-time/new",
+  addButtonLinkTo: "/work-management/record-time",
   mainRoles: allRoles,
   addButtonRoles: allRoles,
   addButtonName: "Учесть рабочее время",
@@ -115,7 +115,7 @@ export const reportTable = {
   mainRoles: ["ROLE_ADMIN", "ROLE_DISPATCHER"],
   addButtonRoles: ["ROLE_ADMIN", "ROLE_DISPATCHER"],
   addButtonName: "Учесть рабочее время",
-  addButtonLinkTo: "/work-management/record-time/new",
+  addButtonLinkTo: "/work-management/record-time",
 };
 
 export const workshopLigosvkiy = {

@@ -5,8 +5,15 @@ import {
   roundUpWorkHours,
 } from "../../../../../utils/functions.jsx";
 import { filterEmployeesObject, sortEmployeesObject } from "./functions.js";
+import { Link } from "react-router-dom";
 
-const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
+const WorkList = ({
+  workshops,
+  employees,
+  employeesMap,
+  userContext,
+  date = new Date(),
+}) => {
   return (
     <div className="work-list-widget__list">
       {workshops.map((workshop) => {
@@ -26,7 +33,14 @@ const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
               </div>
               {sortEmployeesObject(filteredEmployees).map((employee) => {
                 const item = employee[1];
-                return <ListItem item={item} employeesMap={employeesMap} />;
+                console.log(item, employee);
+                return (
+                  <ListItem
+                    date={date}
+                    item={item}
+                    employeesMap={employeesMap}
+                  />
+                );
               })}
             </>
           );
@@ -38,11 +52,14 @@ const WorkList = ({ workshops, employees, employeesMap, userContext }) => {
 
 export default WorkList;
 
-const ListItem = ({ item, employeesMap }) => {
+const ListItem = ({ item, employeesMap, date = new Date() }) => {
   return employeesMap[item.id] ||
     (new Date().getDay() !== 0 && new Date().getDay() !== 1) ? (
-    <div
-      index={item.id}
+    <Link
+      key={item.id}
+      to={`/work-management/record-time?employee=${
+        item.id
+      }&date=${date.getFullYear()},${date.getMonth() + 1},${date.getDate()}`}
       className={`work-list-widget__item ${
         employeesMap[item.id] ? "" : "work-list-widget__item--no-data"
       }`}
@@ -60,6 +77,6 @@ const ListItem = ({ item, employeesMap }) => {
           <span className="work-list-widget__info-message">Нет записи</span>
         )}
       </div>
-    </div>
+    </Link>
   ) : null;
 };

@@ -100,6 +100,7 @@ const WorkListWidget = () => {
             employees={employees}
             employeesMap={employeesMap}
             userContext={userContext}
+            date={new Date(new Date().setDate(new Date().getDate() - 1))}
           />
         )
       }

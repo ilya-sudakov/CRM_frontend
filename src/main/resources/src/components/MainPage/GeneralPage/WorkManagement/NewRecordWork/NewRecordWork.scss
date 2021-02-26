@@ -7,7 +7,7 @@
   --buttons-height: 70px;
   .main-form__form {
     overflow-x: hidden;
-    min-height: 200px;
+    // min-height: 200px;
     position: relative;
     overflow-y: hidden;
     transition: 200ms ease-in-out;
@@ -27,6 +27,7 @@
       .main-form__wrapper-item {
         width: calc(100% / var(--page-items) - 45px);
         margin-right: 45px;
+        height: fit-content;
 
         .select__options {
           max-height: 120px;

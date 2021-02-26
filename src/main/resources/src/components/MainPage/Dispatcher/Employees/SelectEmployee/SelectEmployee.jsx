@@ -44,7 +44,8 @@ const SelectEmployee = (props) => {
     if (props.employees && employees.length === 0) {
       return setEmployees(props.employees);
     }
-    employees.length === 0 && loadEmployees();
+    console.log(employees);
+    employees.length === 0 && !isLoading && loadEmployees();
   }, [props.employees, employees]);
 
   useEffect(() => {
@@ -74,27 +75,28 @@ const SelectEmployee = (props) => {
         : props.userHasAccess(["ROLE_MANAGER"]) && "Офис",
     });
     if (workshop.workshop === "Админ" || workshop.workshop === "Диспетчер") {
-      getEmployees()
+      return getEmployees()
         .then((res) => res.json())
         .then((res) => {
-          setIsLoading(false);
           setEmployees(res);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
         });
-    } else
-      getEmployeesByWorkshop(workshop)
+    } else {
+      return getEmployeesByWorkshop(workshop)
         .then((res) => res.json())
         .then((res) => {
-          setIsLoading(false);
           setEmployees(res);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.log(error);
           setIsLoading(false);
         });
+    }
   };
 
   const clickEmployee = (employeeName, employeeId, employee) => {

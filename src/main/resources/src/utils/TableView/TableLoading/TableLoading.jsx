@@ -1,18 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./TableLoading.scss";
 
-const TableLoading = (props) => {
+const TableLoading = ({ isLoading }) => {
   return (
     <div
-      className={
-        props.isLoading
-          ? "table-loading"
-          : "table-loading table-loading--hidden"
-      }
+      className={`table-loading ${isLoading ? "" : "table-loading--hidden"}`}
     >
-      {props.isLoading && <div className="table-loading__circle"></div>}
+      {isLoading && <div className="table-loading__circle"></div>}
     </div>
   );
 };
 
 export default TableLoading;
+
+TableLoading.propTypes = {
+  isLoading: PropTypes.bool,
+};

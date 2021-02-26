@@ -65,9 +65,14 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
                   </div>
                   {filteredData?.map((item) =>
                     item.length > 0 ? (
-                      item.map((workItem) => <WorksItem item={workItem} />)
+                      item.map((workItem) => (
+                        <WorksItem
+                          item={workItem}
+                          selectedInfo={selectedInfo}
+                        />
+                      ))
                     ) : (
-                      <WorksItem item={item} />
+                      <WorksItem item={item} selectedInfo={selectedInfo} />
                     )
                   )}
                 </div>
@@ -83,7 +88,7 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
 
 export default EmployeeInfoPanel;
 
-const WorksItem = ({ item }) => {
+const WorksItem = ({ item, selectedInfo }) => {
   return (
     <div
       className="employee-info__employee-works-item"
@@ -94,7 +99,9 @@ const WorksItem = ({ item }) => {
       }}
     >
       <span>
-        <Link to={`/work-management/record-time/edit/${item.workId}`}>
+        <Link
+          to={`/work-management/record-time?employee=${selectedInfo?.employee?.id}&date=${item.year},${item.month},${item.day}`}
+        >
           {item.workList.work}
           <img className="employee-info__img" src={editIcon} alt="" />
         </Link>

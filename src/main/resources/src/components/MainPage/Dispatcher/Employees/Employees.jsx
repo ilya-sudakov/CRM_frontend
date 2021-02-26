@@ -83,7 +83,6 @@ const Employees = (props) => {
         </div>
         <SearchBar
           fullSize
-          // title="Поиск сотрудников"
           placeholder="Введите фамилию сотрудника для поиска..."
           setSearchQuery={setSearchQuery}
         />

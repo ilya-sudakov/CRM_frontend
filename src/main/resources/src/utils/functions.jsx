@@ -233,6 +233,9 @@ export const getDatesAndWorkItems = (works) => {
           [curDate]: {
             [item.employee.id]: {
               employee: item.employee,
+              year: item.year,
+              month: item.month,
+              day: item.day,
               workshop: item.employee.workshop,
               isOpen: false,
               works: [
@@ -258,6 +261,9 @@ export const getDatesAndWorkItems = (works) => {
               ...newData[curWorkshop][curDate],
               [item.employee.id]: {
                 employee: item.employee,
+                year: item.year,
+                month: item.month,
+                day: item.day,
                 workshop: item.employee.workshop,
                 isOpen: false,
                 works: [
