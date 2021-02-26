@@ -162,7 +162,6 @@ const NewRecordWork = (props) => {
     setWrapperHeight(
       document.getElementById(`${curPage}page`)?.clientHeight + "px"
     );
-    console.log(document.getElementById(`${curPage}page`)?.clientHeight);
   }, [worktimeInputs, curPage, curEmployee, curDate, isLoading]);
 
   const handleClickPrevPage = () => {

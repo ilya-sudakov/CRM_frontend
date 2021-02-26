@@ -48,16 +48,15 @@
             font-size: 125%;
             display: flex;
             width: 100%;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             position: relative;
             min-height: 25px;
 
             .window-message__title {
-                width: 100%;
+                width: calc(100% - 50px);
                 font-size: 1.1rem;
                 font-weight: 500;
-                flex: 0 1 100% !important;
                 padding-left: 0;
             }
         }
@@ -74,7 +73,7 @@
             margin: 0 auto;
             margin-top: auto;
             width: fit-content;
-            min-width: 100px;
+            min-width: 80px;
         }
 
         .window-message__exit {
@@ -82,7 +81,7 @@
             width: 45px;
             height: 45px;
             right: -5px;
-            border-radius: 5px;
+            border-radius: 3px;
             transition: 0.2s ease-in-out;
             cursor: pointer;
 
@@ -95,7 +94,7 @@
                 content: "";
                 background-color: #777777;
                 position: absolute;
-                right: 9px;
+                right: 10px;
                 bottom: 21px;
 
                 &:first-of-type {

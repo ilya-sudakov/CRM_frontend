@@ -3,9 +3,9 @@ import MessageForUser from "../Form/MessageForUser/MessageForUser.jsx";
 
 const useMessageForUser = (
   content = {
+    title: "Сообщение",
     message: "",
     onClick: () => {},
-    title: "Сообщение",
     buttonText: "ОК",
   },
   updates = []

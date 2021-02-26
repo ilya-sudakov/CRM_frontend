@@ -9,17 +9,22 @@ import UserContext from "../../../../../App.js";
 import SelectDraftNew from "../../../Dispatcher/Rigging/SelectDraft/SelectDraftNew.jsx";
 import InputProductsNew from "../../../../../utils/Form/InputProducts/InputProductsNew.jsx";
 import AddToButton from "../../../../../utils/Form/AddToButton/AddToButton.jsx";
+import useMessageForUser from "../../../../../utils/hooks/useMessageForUser";
 
 const SelectWork = (props) => {
   const [selected, setSelected] = useState(props.defaultConfig ?? []);
-  const [options, setOptions] = useState([]);
-  const [curItemsType, setCurItemsType] = useState("");
   const userContext = useContext(UserContext);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const { messageForUser, showMessage, setShowMessage } = useMessageForUser({
+    title: "Удаление элемента",
+    message: "Вы действительно хотите удалить этот элемент?",
+    onClick: () => deletePart(selectedIndex),
+    buttonText: "ОК",
+  });
 
   useEffect(() => {
     if (props.defaultValue !== undefined) {
       setSelected([...props.defaultValue]);
-      // console.log(props.defaultValue);
       const total = props.defaultValue.reduce(
         (sum, cur) => sum + Number.parseFloat(cur.hours),
         0
@@ -28,9 +33,6 @@ const SelectWork = (props) => {
       if (isNaN(total)) {
         props.setTotalHours(0);
       } else props.setTotalHours(total);
-    }
-    if (props.options !== undefined) {
-      setOptions([...props.options]);
     }
   }, [props.defaultValue, props.options, props.products]);
 
@@ -64,8 +66,7 @@ const SelectWork = (props) => {
     ]);
   };
 
-  const deletePart = (e) => {
-    const id = e.target.getAttribute("index");
+  const deletePart = (id) => {
     let temp = selected;
     temp.splice(id, 1);
     setSelected([...temp]);
@@ -125,6 +126,7 @@ const SelectWork = (props) => {
 
   return (
     <div className="select-work">
+      {messageForUser}
       <div className="main-form__item">
         <div className="main-form__input_name main-form__input_name--header">
           Работы*
@@ -163,7 +165,6 @@ const SelectWork = (props) => {
                           workName: name,
                           workId: id,
                         });
-                        setCurItemsType(type);
                         setSelected([...temp]);
                         props.handleWorkChange([...temp]);
                       }}
@@ -187,7 +188,6 @@ const SelectWork = (props) => {
                           workName: name,
                           workId: id,
                         });
-                        setCurItemsType(type);
                         setSelected([...temp]);
                         props.handleWorkChange([...temp]);
                       }}
@@ -346,8 +346,10 @@ const SelectWork = (props) => {
                 </div>
                 {!props.readOnly && !props.newDesign && selected.length > 1 && (
                   <img
-                    index={index}
-                    onClick={deletePart}
+                    onClick={() => {
+                      setSelectedIndex(index);
+                      setShowMessage(!showMessage);
+                    }}
                     className="select-work__img"
                     src={deleteSVG}
                   />

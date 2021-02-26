@@ -4,6 +4,7 @@ import "./NestedFormItem.scss";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { useRef } from "react";
 import PropTypes from "prop-types";
+import useMessageForUser from "../../../hooks/useMessageForUser.js";
 
 const NestedFormItem = ({
   readOnly,
@@ -17,7 +18,14 @@ const NestedFormItem = ({
   id = 0,
 }) => {
   const [isMinimized, setIsMinimized] = useState(isMinimizedDefault);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const formRef = useRef(null);
+  const { messageForUser, showMessage, setShowMessage } = useMessageForUser({
+    title: "Удаление элемента",
+    message: "Вы действительно хотите удалить этот элемент?",
+    onClick: () => handleDeleteItem(selectedIndex),
+    buttonText: "ОК",
+  });
   const [formHeight, setFormHeight] = useState(formRef?.current?.clientHeight);
 
   useEffect(() => {
@@ -85,9 +93,13 @@ const NestedFormItem = ({
         ))}
         {!readOnly && bottomButton && bottomButton}
       </div>
+      {messageForUser}
       {!readOnly && itemsLength > 1 && (
         <DeleteSVG
-          onClick={() => handleDeleteItem(index)}
+          onClick={() => {
+            setSelectedIndex(index);
+            setShowMessage(!showMessage);
+          }}
           className="form-item__img"
         />
       )}
