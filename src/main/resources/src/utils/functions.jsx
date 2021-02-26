@@ -466,3 +466,10 @@ export const saveCanvasAsImage = (canvas, fileName) => {
     1
   );
 };
+
+export const changeVisibilityOfListItem = (list, index) => {
+  index = Number.parseInt(index);
+  return list.map((element) =>
+    element.id == index ? { id: index, hidden: !element.hidden } : element
+  );
+};

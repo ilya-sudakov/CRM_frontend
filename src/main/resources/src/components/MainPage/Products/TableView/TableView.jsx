@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import plusIcon from "../../../../../../../../assets/tableview/add_item.png";
 import plusContIcon from "../../../../../../../../assets/tableview/add_cont.png";
@@ -11,28 +11,14 @@ import viewSVG from "../../../../../../../../assets/tableview/view.svg";
 import editSVG from "../../../../../../../../assets/tableview/edit.svg";
 import deleteSVG from "../../../../../../../../assets/tableview/delete.svg";
 import {
-  numberToString,
   addSpaceDelimiter,
+  changeVisibilityOfListItem,
 } from "../../../../utils/functions.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [productsVisible, setProductsVisible] = useState([]);
-
-  const checkProduct = (index) => {
-    index = Number.parseInt(index);
-    return productsVisible.map((element, element_index) => {
-      if (element.id == index) {
-        let temp2 = Object.assign({
-          id: index,
-          hidden: !element.hidden,
-        });
-        return temp2;
-      }
-      return element;
-    });
-  };
 
   const isProductsHidden = (index) => {
     index = Number.parseInt(index);
@@ -70,7 +56,9 @@ const TableView = (props) => {
             <div
               className="main-window__list-item"
               onClick={() => {
-                setProductsVisible([...checkProduct(category.id)]);
+                setProductsVisible([
+                  ...changeVisibilityOfListItem(productsVisible, category.id),
+                ]);
               }}
             >
               <span>

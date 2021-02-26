@@ -5,7 +5,10 @@ import deleteIcon from "../../../../../../../../../assets/tableview/delete.svg";
 import printSVG from "../../../../../../../../../assets/tableview/print.svg";
 import pdfMake from "pdfmake";
 import "./TableView.scss";
-import { formatDateString } from "../../../../../utils/functions.jsx";
+import {
+  changeVisibilityOfListItem,
+  formatDateString,
+} from "../../../../../utils/functions.jsx";
 import { getEmployeesByWorkshopListPdfText } from "../../../../../utils/pdfFunctions.jsx";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import { sortByField } from "../../../../../utils/sorting/sorting";
@@ -28,20 +31,6 @@ const TableView = (props) => {
     });
   };
 
-  const checkWorkshop = (index = 0) => {
-    index = Number.parseInt(index);
-    return workshopsVisible.map((element) => {
-      if (element.id == index) {
-        const temp = Object.assign({
-          id: index,
-          hidden: !element.hidden,
-        });
-        return temp;
-      }
-      return element;
-    });
-  };
-
   const isWorkshopHidden = (index) => {
     index = Number.parseInt(index);
     let check = true;
@@ -53,8 +42,8 @@ const TableView = (props) => {
     return check;
   };
 
-  const handleClickWorkshop = (id) => {
-    setWorkshopsVisible([...checkWorkshop(id)]);
+  const handleClickWorkshop = (index) => {
+    setWorkshopsVisible([...changeVisibilityOfListItem(workshopsVisible, index)]);
   };
 
   const filterEmployees = (data, workshopItem) => {
