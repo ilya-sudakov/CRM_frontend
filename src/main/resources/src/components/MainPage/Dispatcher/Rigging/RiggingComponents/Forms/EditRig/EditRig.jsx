@@ -89,23 +89,24 @@ const EditRig = (props) => {
     }
   };
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
     setIsLoading(true);
-    // console.log(rigInputs.parts);
     formIsValid() &&
       editStamp({ ...rigInputs, lastEdited: new Date() }, stampId)
         .then(() => {
           //PUT if edited, POST if part is new
           const partsArr = rigInputs.parts.map((selected) => {
             let edited = false;
+            let oldItem = null;
             rigInputs.stampParts.map((item) => {
               if (item.id === selected.id) {
                 edited = true;
+                oldItem = item;
                 return;
               }
             });
-            return edited === true
+            if (oldItem === selected) return;
+            return edited
               ? editPartsOfStamp(
                   {
                     ...selected,

@@ -28,6 +28,13 @@ const LogListPage = () => {
     "dynamic"
   );
 
+  const handleCategoryChange = (item) => {
+    setCurPage(1);
+    pushParamToURL("page", 1);
+    pushParamToURL("category", item.originalName);
+    setCurCategory(item.originalName);
+  };
+
   return (
     <div className="log-list">
       <div className="main-window">
@@ -41,12 +48,7 @@ const LogListPage = () => {
                     ? "main-window__item--active main-window__item"
                     : "main-window__item"
                 }
-                onClick={() => {
-                  setCurPage(1);
-                  pushParamToURL("page", 1);
-                  pushParamToURL("category", item.originalName);
-                  setCurCategory(item.originalName);
-                }}
+                onClick={() => handleCategoryChange(item)}
               >
                 {item.name}
               </div>
