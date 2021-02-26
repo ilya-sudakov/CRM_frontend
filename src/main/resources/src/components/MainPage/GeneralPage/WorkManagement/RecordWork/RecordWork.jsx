@@ -165,6 +165,15 @@ const NewRecordWork = (props) => {
     console.log(document.getElementById(`${curPage}page`)?.clientHeight);
   }, [worktimeInputs, curPage, curEmployee, curDate, isLoading]);
 
+  const handleClickPrevPage = () => {
+    if (curPage !== 0) {
+      let temp = curPage - 1;
+      setCurPage(temp);
+    } else {
+      props.history.push("/");
+    }
+  };
+
   return (
     <div className="record-work">
       <div className="main-form">
@@ -249,14 +258,7 @@ const NewRecordWork = (props) => {
                   isLoading={isLoading}
                   className="main-form__submit main-form__submit--inverted"
                   inverted
-                  onClick={() => {
-                    if (curPage !== 0) {
-                      let temp = curPage - 1;
-                      setCurPage(temp);
-                    } else {
-                      props.history.push("/");
-                    }
-                  }}
+                  onClick={handleClickPrevPage}
                 />
                 {worktimeInputs.works.length > 0 &&
                 worktimeInputs.works.reduce((sum, cur) => {
@@ -295,19 +297,12 @@ const NewRecordWork = (props) => {
                 * - поля, обязательные для заполнения
               </div>
               <div className="main-form__buttons">
-                <input
+                <Button
+                  text="Вернуться назад"
+                  isLoading={isLoading}
                   className="main-form__submit main-form__submit--inverted"
-                  type="submit"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    if (curPage !== 0) {
-                      let temp = curPage - 1;
-                      setCurPage(temp);
-                    } else {
-                      props.history.push("/");
-                    }
-                  }}
-                  value="Вернуться назад"
+                  inverted
+                  onClick={handleClickPrevPage}
                 />
                 <Button
                   text="Создать запись"
