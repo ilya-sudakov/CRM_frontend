@@ -14,8 +14,8 @@ jobs:
       - uses: actions/setup-node@v1
       - run: npm install
       - run: npm run start
-      - uses: paambaati/codeclimate-action@v2.2.4
+      - uses: paambaati/codeclimate-action@v2.7.2
         env:
-          CC_TEST_REPORTER_ID: fd9aae5b8192ec345b567c2913292630eaedee1248a920ffa11a00cfcefe8160
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: npm run test -- --watchAll=false --coverage
