@@ -8,60 +8,35 @@ import "./TableView.scss";
 import { formatDateString } from "../../../../../utils/functions.jsx";
 import { getEmployeesByWorkshopListPdfText } from "../../../../../utils/pdfFunctions.jsx";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import { sortByField } from "../../../../../utils/sorting/sorting";
+import { filterEmployeesBySearchQuery } from "../functions.js";
 
 const TableView = (props) => {
-  const [workshops, setWorkshops] = useState([
+  const workshops = [
     "ЦехЛЭМЗ",
     "ЦехЛепсари",
     "ЦехЛиговский",
     "Офис",
     "Уволенные",
-  ]);
+  ];
   const [workshopsVisible, setWorkshopsVisible] = useState([]);
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "lastName",
-    date: "desc",
-  });
-
-  const searchQuery = (data) => {
-    const query = props.searchQuery.toLowerCase();
-    return data.filter(
-      (item) =>
-        item.lastName.toLowerCase().includes(query) ||
-        item.name.toLowerCase().includes(query) ||
-        item.middleName.toLowerCase().includes(query) ||
-        item.id.toString().includes(query) ||
-        (item.yearOfBirth && item.yearOfBirth.toString().includes(query)) ||
-        (item.dateOfBirth && item.dateOfBirth.toString().includes(query)) ||
-        item.citizenship.toLowerCase().includes(query) ||
-        item.workshop.toLowerCase().includes(query) ||
-        item.position.toLowerCase().includes(query) ||
-        item.comment.toLowerCase().includes(query) ||
-        item.relevance.toLowerCase().includes(query)
-    );
-  };
 
   const sortEmployees = (data) => {
-    return searchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
+    return sortByField(filterEmployeesBySearchQuery(data, props.searchQuery), {
+      fieldName: "lastName",
+      direction: "asc",
     });
   };
 
-  const checkWorkshop = (index) => {
+  const checkWorkshop = (index = 0) => {
     index = Number.parseInt(index);
-    return workshopsVisible.map((element, element_index) => {
+    return workshopsVisible.map((element) => {
       if (element.id == index) {
-        let temp2 = Object.assign({
+        const temp = Object.assign({
           id: index,
           hidden: !element.hidden,
         });
-        return temp2;
+        return temp;
       }
       return element;
     });
@@ -111,71 +86,74 @@ const TableView = (props) => {
           <span>Подразделение</span>
           <div className="main-window__actions">Действия</div>
         </div>
-        {workshops.map((item, index) => (
-          <React.Fragment>
-            <div
-              className="main-window__list-item"
-              onClick={() => handleClickWorkshop(index)}
-            >
-              <span>
-                <div className="main-window__mobile-text">Подразделение:</div>
-                {item}
-                {item !== "Уволенные" ? (
-                  <span className="main-window__items-count">
-                    {searchQuery(filterEmployees(props.data, item)).length}
-                  </span>
-                ) : null}
-              </span>
-              <div className="main-window__actions">
-                <div
-                  className="main-window__action"
-                  onClick={() => {
-                    let dd = getEmployeesByWorkshopListPdfText(
-                      sortEmployees(filterEmployees(props.data, item)),
-                      item
-                    );
-                    pdfMake.createPdf(dd).print();
-                  }}
-                  title="Печать"
-                >
-                  <img className="main-window__img" src={printSVG} alt="" />
-                  {"    "}
-                  Печать
+        {workshops.map((item, index) => {
+          const sortedEmployees = sortEmployees(
+            filterEmployees(props.data, item)
+          );
+          return (
+            <>
+              <div
+                className="main-window__list-item"
+                onClick={() => handleClickWorkshop(index)}
+              >
+                <span>
+                  <div className="main-window__mobile-text">Подразделение:</div>
+                  {item}
+                  {item !== "Уволенные" ? (
+                    <span className="main-window__items-count">
+                      {
+                        filterEmployeesBySearchQuery(
+                          sortedEmployees,
+                          props.searchQuery
+                        ).length
+                      }
+                    </span>
+                  ) : null}
+                </span>
+                <div className="main-window__actions">
+                  <div
+                    className="main-window__action"
+                    onClick={() => {
+                      const dd = getEmployeesByWorkshopListPdfText(
+                        sortedEmployees,
+                        item
+                      );
+                      pdfMake.createPdf(dd).print();
+                    }}
+                    title="Печать"
+                  >
+                    <img className="main-window__img" src={printSVG} alt="" />
+                    Печать
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              className={
-                isWorkshopHidden(index)
-                  ? "main-window__list-options main-window__list-options--hidden"
-                  : "main-window__list-options"
-              }
-            >
-              <div className="main-window__list">
-                <div className="main-window__list-item main-window__list-item--header">
-                  <span>ФИО</span>
-                  <span>Дата рождения</span>
-                  <span>Гражданство</span>
-                  <span>Должность</span>
-                  <div className="main-window__actions">Действия</div>
-                </div>
-                {props.isLoading && (
-                  <PlaceholderLoading
-                    itemClassName="main-window__list-item"
-                    minHeight="35px"
-                    items={8}
-                  />
-                )}
-                {sortEmployees(filterEmployees(props.data, item)).map(
-                  (employee, employee_id) => (
+              <div
+                className={
+                  isWorkshopHidden(index)
+                    ? "main-window__list-options main-window__list-options--hidden"
+                    : "main-window__list-options"
+                }
+              >
+                <div className="main-window__list">
+                  <div className="main-window__list-item main-window__list-item--header">
+                    <span>ФИО</span>
+                    <span>Дата рождения</span>
+                    <span>Гражданство</span>
+                    <span>Должность</span>
+                    <div className="main-window__actions">Действия</div>
+                  </div>
+                  {props.isLoading && (
+                    <PlaceholderLoading
+                      itemClassName="main-window__list-item"
+                      minHeight="35px"
+                      items={8}
+                    />
+                  )}
+                  {sortedEmployees.map((employee, employee_id) => (
                     <div key={employee_id} className={"main-window__list-item"}>
                       <span>
                         <div className="main-window__mobile-text">ФИО:</div>
-                        {employee.lastName +
-                          " " +
-                          employee.name +
-                          " " +
-                          employee.middleName}
+                        {`${employee.lastName} ${employee.name} ${employee.middleName}`}
                       </span>
                       <span>
                         <div className="main-window__mobile-text">
@@ -201,7 +179,7 @@ const TableView = (props) => {
                       </span>
                       <div className="main-window__actions">
                         <Link
-                          to={"/dispatcher/employees/edit/" + employee.id}
+                          to={`/dispatcher/employees/edit/${employee.id}`}
                           className="main-window__action"
                           title="Редактирование"
                         >
@@ -226,12 +204,12 @@ const TableView = (props) => {
                         )}
                       </div>
                     </div>
-                  )
-                )}
+                  ))}
+                </div>
               </div>
-            </div>
-          </React.Fragment>
-        ))}
+            </>
+          );
+        })}
       </div>
     </div>
   );

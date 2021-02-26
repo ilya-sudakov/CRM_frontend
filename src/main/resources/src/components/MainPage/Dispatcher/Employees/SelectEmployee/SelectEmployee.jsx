@@ -10,6 +10,7 @@ import {
 import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 import useSort from "../../../../../utils/hooks/useSort/useSort";
+import { filterEmployeesBySearchQuery } from "../functions";
 
 const SelectEmployee = (props) => {
   const [showWindow, setShowWindow] = useState(false);
@@ -18,7 +19,6 @@ const SelectEmployee = (props) => {
   const [employees, setEmployees] = useState([]);
   const [employee, setEmployee] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [id, setId] = useState(0);
   const [fullName, setFullName] = useState("");
   const { sortedData, sortPanel } = useSort(
     employees,
@@ -35,10 +35,6 @@ const SelectEmployee = (props) => {
     },
     [employees]
   );
-
-  const handleInputChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
 
   useEffect(() => {
     if (props.employees && employees.length === 0) {
@@ -100,31 +96,10 @@ const SelectEmployee = (props) => {
   };
 
   const clickEmployee = (employeeName, employeeId, employee) => {
-    setId(employeeId);
     setFullName(employeeName);
     setEmployee(employee);
     props.handleEmployeeChange(employeeId, employeeName, employee);
     setShowWindow(!showWindow);
-  };
-
-  const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase();
-    return data.filter((item) => {
-      if (item.name === null) return false;
-      const isFound =
-        item.lastName.toLowerCase().includes(query) ||
-        item.name.toLowerCase().includes(query) ||
-        item.middleName.toLowerCase().includes(query) ||
-        item.id.toString().includes(query) ||
-        (item.yearOfBirth && item.yearOfBirth.toString().includes(query)) ||
-        (item.dateOfBirth && item.dateOfBirth.toString().includes(query)) ||
-        item.citizenship.toLowerCase().includes(query) ||
-        item.workshop.toLowerCase().includes(query) ||
-        item.position.toLowerCase().includes(query) ||
-        item.comment.toLowerCase().includes(query) ||
-        item.relevance.toLowerCase().includes(query);
-      return isFound;
-    });
   };
 
   return (
@@ -190,9 +165,8 @@ const SelectEmployee = (props) => {
         title="Выбор сотрудника"
         windowName="select-employee-window"
         content={
-          <React.Fragment>
+          <>
             <SearchBar
-              // title="Поиск по сотрудникам"
               fullSize
               setSearchQuery={setSearchQuery}
               placeholder="Введите ФИО сотрудника для поиска..."
@@ -202,7 +176,7 @@ const SelectEmployee = (props) => {
               itemsCount={`Всего: ${employees.length} записей`}
             />
             <TableView
-              data={filterSearchQuery(sortedData)}
+              data={filterEmployeesBySearchQuery(sortedData, searchQuery)}
               searchQuery={searchQuery}
               userHasAccess={props.userHasAccess}
               selectEmployee={clickEmployee}
@@ -211,7 +185,7 @@ const SelectEmployee = (props) => {
               setShowWindow={setShowWindow}
               isLoading={isLoading}
             />
-          </React.Fragment>
+          </>
         }
         showWindow={showWindow}
         setShowWindow={setShowWindow}
