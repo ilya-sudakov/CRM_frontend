@@ -26,7 +26,7 @@ const SelectEmployee = (props) => {
     employees,
     {
       sortOrder: {
-        curSort: "lastName",
+        curSort: "lastName", 
         lastName: "asc",
       },
       sortOptions: [
