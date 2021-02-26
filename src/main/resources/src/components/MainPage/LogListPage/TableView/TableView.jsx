@@ -6,7 +6,7 @@ import {
 } from "../../../../utils/functions.jsx";
 import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import "./TableView.scss";
-import { logItemsCategories } from "../objects.js";
+import { logItemsRedirectLinks } from "../objects.js";
 
 const TableView = ({ data = [], isLoading = false }) => {
   return (
@@ -25,32 +25,41 @@ const TableView = ({ data = [], isLoading = false }) => {
             items={10}
           />
         ) : (
-          data.map((work, work_id) => {
-            const itemId = work.description.split("№")[1];
+          data.map((item) => {
+            const itemId = item.description.split("№")[1];
             return (
-              <div key={work_id} className="main-window__list-item">
+              <div key={item.id} className="main-window__list-item">
                 <span>
                   <div className="main-window__mobile-text">Время</div>
                   {`${formatDateStringNoYear(
-                    work.date
-                  )} ${formatDateStringToTime(work.date)} `}
+                    item.date
+                  )} ${formatDateStringToTime(item.date)} `}
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Пользователь</div>
-                  {work.author}
+                  {item.author}
                 </span>
                 <span>
                   <div className="main-window__mobile-text">Действие</div>
-                  {work.action}
+                  {item.action}
                 </span>
                 <span>
-                  <Link
-                    className="main-window__link"
-                    to={`${logItemsCategories[work.type].linkToView}/${itemId}`}
-                  >
-                    <div className="main-window__mobile-text">Описание</div>
-                    {work.description}
-                  </Link>
+                  {logItemsRedirectLinks[item.type] ? (
+                    <Link
+                      className="main-window__link"
+                      to={`${logItemsRedirectLinks[item.type]}/${
+                        item.elementId ?? itemId
+                      }`}
+                    >
+                      <div className="main-window__mobile-text">Описание</div>
+                      {item.description}
+                    </Link>
+                  ) : (
+                    <div>
+                      <div className="main-window__mobile-text">Описание</div>
+                      {item.description}
+                    </div>
+                  )}
                 </span>
               </div>
             );
