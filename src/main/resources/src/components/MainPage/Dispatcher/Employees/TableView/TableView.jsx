@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import sortIcon from "../../../../../../../../../assets/tableview/sort_icon.png";
-import viewIcon from "../../../../../../../../../assets/tableview/view.svg";
 import editIcon from "../../../../../../../../../assets/tableview/edit.svg";
 import deleteIcon from "../../../../../../../../../assets/tableview/delete.svg";
 import printSVG from "../../../../../../../../../assets/tableview/print.svg";
-import printIcon from "../../../../../../../../../assets/print.png";
 import pdfMake from "pdfmake";
 import "./TableView.scss";
 import { formatDateString } from "../../../../../utils/functions.jsx";

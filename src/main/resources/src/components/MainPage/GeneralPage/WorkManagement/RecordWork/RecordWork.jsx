@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./NewRecordWork.scss";
+import "./RecordWork.scss";
 import "../../../../../utils/Form/Form.scss";
 import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";

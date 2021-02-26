@@ -33,7 +33,7 @@ import {
   EditCategory,
   LEMZ,
   Lepsari,
-  NewRecordWork,
+  RecordWork,
   LogListPage,
   WorkManagementPage,
   PriceList,
@@ -504,7 +504,7 @@ const MainPage = () => {
                   />
                   <PrivateRoute
                     path="/work-management/record-time"
-                    component={NewRecordWork}
+                    component={RecordWork}
                     allowedRoles={[
                       "ROLE_ADMIN",
                       "ROLE_MANAGER",

@@ -18,7 +18,7 @@ import Button from "../../../../../../utils/Form/Button/Button.jsx";
 import useProductsList from "../../../../../../utils/hooks/useProductsList/useProductsList.js";
 import SelectWork from "../../SelectWork/SelectWork.jsx";
 import MessageForUser from "../../../../../../utils/Form/MessageForUser/MessageForUser.jsx";
-import { submitWorkData } from "../../NewRecordWork/functions.js";
+import { submitWorkData } from "../../RecordWork/functions.js";
 
 const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({

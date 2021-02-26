@@ -50,8 +50,8 @@ const WorkManagementPage = lazy(() =>
   )
 );
 
-const NewRecordWork = lazy(() =>
-  import("./GeneralPage/WorkManagement/NewRecordWork/NewRecordWork.jsx")
+const RecordWork = lazy(() =>
+  import("./GeneralPage/WorkManagement/RecordWork/RecordWork.jsx")
 );
 
 const ProductionJournal = lazy(() =>
@@ -237,7 +237,7 @@ export {
   MainPageWorkspace,
   Notifications,
   WorkManagement,
-  NewRecordWork,
+  RecordWork,
   ProductionJournal,
   ProductionJournalNew,
   WorkManagementPage,
