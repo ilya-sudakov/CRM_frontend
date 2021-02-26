@@ -11,15 +11,17 @@ import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPa
 import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 import useSort from "../../../../../utils/hooks/useSort/useSort";
 import { filterEmployeesBySearchQuery } from "../functions";
+import useEmployeesList from "../../../../../utils/hooks/useEmployeesList";
 
 const SelectEmployee = (props) => {
   const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [employees, setEmployees] = useState([]);
   const [employee, setEmployee] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [fullName, setFullName] = useState("");
+  const { employees, setEmployees, isLoadingEmployees } = useEmployeesList(
+    !props.employees
+  );
   const { sortedData, sortPanel } = useSort(
     employees,
     {
@@ -40,8 +42,6 @@ const SelectEmployee = (props) => {
     if (props.employees && employees.length === 0) {
       return setEmployees(props.employees);
     }
-    console.log(employees);
-    employees.length === 0 && !isLoading && loadEmployees();
   }, [props.employees, employees]);
 
   useEffect(() => {
@@ -52,48 +52,6 @@ const SelectEmployee = (props) => {
       setEmployee(props.defaultValue);
     }
   }, [props.defaultValue]);
-
-  const loadEmployees = () => {
-    setIsLoading(true);
-    let workshop = Object.assign({
-      workshop: props.userHasAccess(["ROLE_ADMIN"])
-        ? "Админ"
-        : props.userHasAccess(["ROLE_DISPATCHER"])
-        ? "Диспетчер"
-        : props.userHasAccess(["ROLE_LEMZ"])
-        ? "ЦехЛЭМЗ"
-        : props.userHasAccess(["ROLE_LEPSARI"])
-        ? "ЦехЛепсари"
-        : props.userHasAccess(["ROLE_LIGOVSKIY"])
-        ? "ЦехЛиговский"
-        : props.userHasAccess(["ROLE_ENGINEER"])
-        ? "Офис"
-        : props.userHasAccess(["ROLE_MANAGER"]) && "Офис",
-    });
-    if (workshop.workshop === "Админ" || workshop.workshop === "Диспетчер") {
-      return getEmployees()
-        .then((res) => res.json())
-        .then((res) => {
-          setEmployees(res);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setIsLoading(false);
-        });
-    } else {
-      return getEmployeesByWorkshop(workshop)
-        .then((res) => res.json())
-        .then((res) => {
-          setEmployees(res);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setIsLoading(false);
-        });
-    }
-  };
 
   const clickEmployee = (employeeName, employeeId, employee) => {
     setFullName(employeeName);
@@ -163,7 +121,6 @@ const SelectEmployee = (props) => {
       )}
       <FormWindow
         title="Выбор сотрудника"
-        windowName="select-employee-window"
         content={
           <>
             <SearchBar
@@ -183,7 +140,7 @@ const SelectEmployee = (props) => {
               setCloseWindow={setCloseWindow}
               closeWindow={closeWindow}
               setShowWindow={setShowWindow}
-              isLoading={isLoading}
+              isLoading={isLoadingEmployees}
             />
           </>
         }

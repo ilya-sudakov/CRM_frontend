@@ -5,9 +5,9 @@ import {
   getEmployeesByWorkshop,
 } from "../RequestsAPI/Employees.jsx";
 
-const useEmployeesList = () => {
+const useEmployeesList = (shouldExecute = true) => {
   const [employees, setEmployees] = useState([]);
-  const [isLoadingEmployees, setIsLoadingEmployees] = useState(true);
+  const [isLoadingEmployees, setIsLoadingEmployees] = useState(false);
   const userContext = useContext(UserContext);
   const workshops = ["ЦехЛЭМЗ", "ЦехЛепсари", "ЦехЛиговский", "Офис"];
 
@@ -59,15 +59,15 @@ const useEmployeesList = () => {
   };
 
   useEffect(() => {
+    if (!shouldExecute) return;
     const abortController = new AbortController();
     loadData(abortController.signal);
-
     return function cancel() {
       abortController.abort();
     };
   }, []);
 
-  return { employees, isLoadingEmployees, workshops };
+  return { employees, setEmployees, isLoadingEmployees, workshops };
 };
 
 export default useEmployeesList;
