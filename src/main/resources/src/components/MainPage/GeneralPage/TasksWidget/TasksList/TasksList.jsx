@@ -13,7 +13,7 @@ const TasksList = ({
   tasks = [],
   isLoading = false,
   controlDates = {},
-  userHasAccess,
+  userHasAccess = () => {},
 }) => {
   return (
     <div className="tasks-widget__list">

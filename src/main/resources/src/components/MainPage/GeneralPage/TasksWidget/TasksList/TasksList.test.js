@@ -66,7 +66,13 @@ describe("TasksList component", () => {
       [new Date(2200, 10, 12)]: [tasks[2]],
     };
 
-    renderWithRouter(<TasksList controlDates={controlDates} tasks={tasks} />);
+    renderWithRouter(
+      <TasksList
+        userHasAccess={() => true}
+        controlDates={controlDates}
+        tasks={tasks}
+      />
+    );
     expect(await screen.findByText("asd")).toBeInTheDocument();
     expect(await screen.findByText("123")).toBeInTheDocument();
     fireEvent.click(
@@ -91,7 +97,13 @@ describe("TasksList component", () => {
 
     const controlDates = { [new Date(2019, 10, 12)]: [...tasks] };
 
-    renderWithRouter(<TasksList controlDates={controlDates} tasks={tasks} />);
+    renderWithRouter(
+      <TasksList
+        userHasAccess={() => true}
+        controlDates={controlDates}
+        tasks={tasks}
+      />
+    );
     expect(
       await screen.findByText(
         `до ${formatDateStringNoYear(
