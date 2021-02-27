@@ -24,7 +24,7 @@ export const defaultStylesPDF = {
     fontSize: 16,
   },
   regularText: {
-    fontSize: 10,
+    fontSize: 11,
     alignment: "left",
   },
   tableHeader: {
@@ -116,6 +116,7 @@ export const getRequestPdfText = (
               {
                 text: "\nПодразделение: \n",
                 style: "regularText",
+                fontSize: 12,
               },
               {
                 text: workshopName + "\n\n",
@@ -129,6 +130,7 @@ export const getRequestPdfText = (
           {
             text: "Дата: \n",
             style: "regularText",
+            fontSize: 12,
           },
           {
             text: formatDateString(date) + "\n\n",
@@ -139,6 +141,7 @@ export const getRequestPdfText = (
       {
         text: "Продукция: ",
         style: "regularText",
+        fontSize: 12,
         margin: [0, 0, 0, 5],
       },
       {
@@ -161,6 +164,7 @@ export const getRequestPdfText = (
         text: [
           {
             text: "Кодовое слово: \n",
+            fontSize: 12,
             style: "regularText",
           },
           {
@@ -170,24 +174,7 @@ export const getRequestPdfText = (
         ],
       },
     ],
-    styles: {
-      header: {
-        fontSize: 20,
-        bold: true,
-      },
-      subheader: {
-        fontSize: 16,
-      },
-      regularText: {
-        fontSize: 14,
-        color: "#444444",
-      },
-      tableHeader: {
-        fontSize: 12,
-        bold: true,
-        alignment: "left",
-      },
-    },
+    styles: defaultStylesPDF,
   };
   pdfMake.vfs = font.pdfMake.vfs;
   return dd;
@@ -248,6 +235,7 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
               {
                 text: "\nПодразделение: \n",
                 style: "regularText",
+                fontSize: 12,
               },
               {
                 text: workshopName + "\n\n",
@@ -281,6 +269,7 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
                 text: [
                   {
                     text: `${category[0]} \n`,
+                    fontSize: 12,
                     style: "regularText",
                     margin: [5, 5, 5, 5],
                   },
@@ -292,29 +281,7 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
           }
         }),
     ],
-    styles: {
-      header: {
-        fontSize: 20,
-        bold: true,
-      },
-      title: {
-        fontSize: 20,
-        bold: true,
-      },
-      subheader: {
-        fontSize: 16,
-        // bold: true,
-      },
-      regularText: {
-        fontSize: 14,
-        color: "#444444",
-      },
-      tableHeader: {
-        fontSize: 12,
-        bold: true,
-        alignment: "left",
-      },
-    },
+    styles: defaultStylesPDF,
   };
   pdfMake.vfs = font.pdfMake.vfs;
   return dd;
@@ -327,12 +294,12 @@ export const getEmployeesListPdfText = (employees, workshops) => {
       text: [
         {
           text: "\n" + "Подразделение: ",
-          style: "header",
+          style: "regularText",
           alignment: "center",
         },
         {
           text: workshop + "\n\n",
-          style: "regularText",
+          style: "subheader",
         },
       ],
     });
@@ -379,28 +346,7 @@ export const getEmployeesListPdfText = (employees, workshops) => {
       },
       ...employeesList,
     ],
-    styles: {
-      header: {
-        fontSize: 22,
-        bold: true,
-      },
-      title: {
-        fontSize: 24,
-        bold: true,
-      },
-      subheader: {
-        fontSize: 18,
-        bold: true,
-      },
-      regularText: {
-        fontSize: 16,
-      },
-      tableHeader: {
-        fontSize: 12,
-        bold: true,
-        alignment: "center",
-      },
-    },
+    styles: defaultStylesPDF,
   };
   pdfMake.vfs = font.pdfMake.vfs;
   return dd;
@@ -445,28 +391,7 @@ export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
       },
       ...employeesList,
     ],
-    styles: {
-      header: {
-        fontSize: 22,
-        bold: true,
-      },
-      title: {
-        fontSize: 24,
-        bold: true,
-      },
-      subheader: {
-        fontSize: 18,
-        bold: true,
-      },
-      regularText: {
-        fontSize: 16,
-      },
-      tableHeader: {
-        fontSize: 12,
-        bold: true,
-        alignment: "center",
-      },
-    },
+    styles: defaultStylesPDF,
   };
   pdfMake.vfs = font.pdfMake.vfs;
   return dd;
@@ -610,7 +535,6 @@ export async function getPriceListPdfText(
                     {
                       text: [
                         {
-                          // text: '  ' + groupOfProducts.description,
                           text: groupOfProducts.description,
                           style: "regularText",
                           color: "#666666",
@@ -657,7 +581,6 @@ export async function getPriceListPdfText(
                         },
                       ],
                       alignment: "right",
-                      // width: '*',
                       width: 100,
                     },
                   ],
@@ -668,31 +591,24 @@ export async function getPriceListPdfText(
                     {
                       image: groupImg1Data !== "" ? groupImg1Data : testImgData,
                       fit: [120, 100],
-                      // margin: [80, 0, 0, 5],
                       margin: [0, 0, 0, 5],
                       alignment: "left",
                     },
                     {
                       image: groupImg2Data !== "" ? groupImg2Data : testImgData,
-                      // width: 200,
                       fit: [120, 100],
-                      // margin: [70, 0, 0, 5],
                       margin: [10, 0, 0, 5],
                       alignment: "right",
                     },
                     {
                       image: groupImg3Data !== "" ? groupImg3Data : testImgData,
-                      // width: 200,
                       fit: [120, 100],
-                      // margin: [70, 0, 0, 5],
                       margin: [10, 0, 0, 5],
                       alignment: "right",
                     },
                     {
                       image: groupImg4Data !== "" ? groupImg4Data : testImgData,
-                      // width: 200,
                       fit: [120, 100],
-                      // margin: [70, 0, 0, 5],
                       margin: [11, 0, 0, 5],
                       alignment: "right",
                     },
@@ -734,10 +650,6 @@ export async function getPriceListPdfText(
                             ...optionalCols.map(() => {}),
                           ],
                           [
-                            // {
-                            //     text: '',
-                            //     border: [false, false, false, false]
-                            // },
                             {
                               text: "Артикул",
                               // bold: true
@@ -807,9 +719,6 @@ export async function getPriceListPdfText(
                               return 0;
                             })
                             .map((product) => {
-                              // return {
-                              //     text: product.name
-                              // };
                               return [
                                 {
                                   text: product.number,
@@ -953,16 +862,16 @@ export async function getPriceListPdfText(
                         ],
                       },
                       layout: {
-                        hLineWidth: function (i, node) {
+                        hLineWidth: function () {
                           return 1;
                         },
-                        vLineWidth: function (i, node) {
+                        vLineWidth: function () {
                           return 1;
                         },
-                        hLineColor: function (i, node) {
+                        hLineColor: function () {
                           return "#444444";
                         },
-                        vLineColor: function (i, node) {
+                        vLineColor: function () {
                           return "#444444";
                         },
                       },
@@ -970,7 +879,6 @@ export async function getPriceListPdfText(
                       width: "*",
                       fontSize: 8,
                       color: "#555555",
-                      // margin: [10, 0, 0, 5]
                       margin: [0, 0, 0, 5],
                     },
                   ],
@@ -1065,8 +973,6 @@ export async function getPriceListPdfText(
                         0.3
                       ),
                       fit: [512, 100],
-                      // width: 512,
-                      // height: 100
                     }
                   : {
                       text: "  ",
@@ -1105,7 +1011,6 @@ export async function getPriceListPdfText(
                     item.stack[2].columns[0].table.body.length <= 10
                       ? true
                       : false,
-                  // unbreakable: item.stack[2].columns[0].table.body.length <= 5 ? true : false,
                   stack: [
                     {
                       image: tempImg,
@@ -1128,35 +1033,10 @@ export async function getPriceListPdfText(
             }),
           ],
         });
-      //Без переноса категории на некст страницу если она без продукции
-      // fullGroup.length > 0 && finalList.push({
-      //     stack: [
-      //         {
-      //             image: tempImg,
-      //             width: 510,
-      //             height: 54,
-      //             alignment: 'center',
-      //         },
-      //         {
-      //             text: category.name.toUpperCase(),
-      //             style: 'header',
-      //             fontSize: 16,
-      //             color: '#ffffff',
-      //             alignment: 'center',
-      //             relativePosition: { x: 0, y: -40 }
-      //         },
-      //         ...fullGroup.map(item => {
-      //             return item
-      //         })
-      //     ],
-      //     margin: [0, 10, 0, 10]
-      // })
     });
   });
   Promise.all(temp).then(async () => {
-    // console.log(finalList);
     finalList = finalList.sort((a, b) => {
-      // console.log(a.stack[0], b.stack[0]);
       if (finalList.length <= 1) return 0;
       else {
         if (
@@ -1184,10 +1064,7 @@ export async function getPriceListPdfText(
       info: {
         title: "Прайс-лист",
       },
-      // defaultStyle: {
-      //     font: 'DejaVuSans'
-      // },
-      header: function (currentPage, pageCount) {
+      header: function (currentPage) {
         if (currentPage !== 1 || !titlePage.active) {
           return [
             {
@@ -1266,16 +1143,7 @@ export async function getPriceListPdfText(
             },
           ];
       },
-      // pageMargins: function (currentPage, pageCount) {
-      //     if (currentPage === pageCount) {
-      //         return [40, 125, 40, 170]
-      //     }
-      //     else return [40, 125, 40, 70]
-      // },
       pageMargins: [40, 125, 40, 70],
-      // pageBreakBefore: function (currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
-      //     return currentNode.headlineLevel === 1 && followingNodesOnPage.length === 0;
-      // },
       footer: function (currentPage, pageCount) {
         if (currentPage === 1 && titlePage.active) {
           return {
@@ -1532,17 +1400,6 @@ export async function getPriceListPdfText(
         },
       },
     };
-    // pdfMake.fonts = {
-    //     DejaVuSans: {
-    //         normal: 'DejaVuSans.ttf',
-    //         bold: 'DejaVuSans-Bold.ttf',
-    //         italics: 'DejaVuSans-Oblique.ttf',
-    //         bolditalics: 'DejaVuSans-BoldOblique.ttf'
-    //     }
-    // };
-    // pdfMake.vfs = DejaVuSans.pdfMake.vfs;
-    pdfMake.vfs = font.pdfMake.vfs;
-    pdfMake.createPdf(dd).open();
-    // return dd;
+    createPDF(dd);
   });
 }
