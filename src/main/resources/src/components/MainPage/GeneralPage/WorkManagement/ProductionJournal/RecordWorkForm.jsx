@@ -111,7 +111,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
       inputs.employee?.id !== worktimeInputs.employee?.id ||
       inputs.date !== worktimeInputs.date ||
       inputs.type !== worktimeInputs.type ||
-      inputs.works !== worktimeInputs.works
+      inputs.works !== worktimeInputs.works 
     ) {
       setWorkTimeInputs({ ...inputs, originalWorks: inputs.works });
     }
