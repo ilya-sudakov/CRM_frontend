@@ -37,6 +37,35 @@ const sortProductsByNumber = (data) => {
   });
 };
 
+const priceStyles = {
+  header: {
+    fontSize: 20,
+    bold: true,
+    alignment: "center",
+    margin: [0, 5, 0, 5],
+  },
+  title: {
+    fontSize: 24,
+    bold: true,
+  },
+  subheader: {
+    fontSize: 12,
+    bold: true,
+    margin: [0, 0, 0, 5],
+    color: "white",
+    background: "#e30434",
+  },
+  regularText: {
+    fontSize: 10,
+    italics: true,
+  },
+  tableHeader: {
+    fontSize: 12,
+    bold: true,
+    alignment: "center",
+  },
+};
+
 const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
   if (currentPage === 1 && active) {
     return {
@@ -114,35 +143,6 @@ const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
       color: "#999999",
       margin: [0, 20, 0, 0],
     };
-};
-
-const priceStyles = {
-  header: {
-    fontSize: 20,
-    bold: true,
-    alignment: "center",
-    margin: [0, 5, 0, 5],
-  },
-  title: {
-    fontSize: 24,
-    bold: true,
-  },
-  subheader: {
-    fontSize: 12,
-    bold: true,
-    margin: [0, 0, 0, 5],
-    color: "white",
-    background: "#e30434",
-  },
-  regularText: {
-    fontSize: 10,
-    italics: true,
-  },
-  tableHeader: {
-    fontSize: 12,
-    bold: true,
-    alignment: "center",
-  },
 };
 
 const getPriceHeader = async (currentPage, active, companyContacts) => {
@@ -308,32 +308,34 @@ const getGroupOfProductsDescription = ({ description }) => {
   };
 };
 
+const sortLocations = (locations) => {
+  return locations.sort((a, b) => {
+    if (locations.length <= 1) return 0;
+    else {
+      if (
+        a.columns[0].text.localeCompare(b.columns[0].text, undefined, {
+          numeric: true,
+        }) < 0
+      ) {
+        return -1;
+      }
+      if (
+        a.columns[0].text.localeCompare(b.columns[0].text, undefined, {
+          numeric: true,
+        }) > 0
+      ) {
+        return 1;
+      }
+      return 0;
+    }
+  });
+};
+
 const getGroupOfProductsLocations = (locations) => {
   return {
     stack: [
       {
-        columns: [
-          ...locations.sort((a, b) => {
-            if (locations.length <= 1) return 0;
-            else {
-              if (
-                a.columns[0].text.localeCompare(b.columns[0].text, undefined, {
-                  numeric: true,
-                }) < 0
-              ) {
-                return -1;
-              }
-              if (
-                a.columns[0].text.localeCompare(b.columns[0].text, undefined, {
-                  numeric: true,
-                }) > 0
-              ) {
-                return 1;
-              }
-              return 0;
-            }
-          }),
-        ],
+        columns: [...sortLocations(locations)],
         margin: [0, 0, 0, 2.5],
         columnGap: 1,
         width: 100,
