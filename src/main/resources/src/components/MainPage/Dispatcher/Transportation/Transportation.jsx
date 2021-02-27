@@ -11,7 +11,7 @@ import {
 import {
   createPDF,
   getTransportationListPdfText,
-} from "../../../../utils/pdfFunctions.jsx";
+} from "../../../../utils/pdfFunctions.js";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";

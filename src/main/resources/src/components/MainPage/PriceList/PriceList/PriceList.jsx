@@ -7,8 +7,7 @@ import {
   getPriceGroupImageByName,
   updatePriceGroupByName,
 } from "../../../../utils/RequestsAPI/PriceList/PriceList.jsx";
-import { getPriceListPdfText } from "../../../../utils/pdfFunctions.jsx";
-import { exportPriceListToXLSX } from "../../../../utils/xlsxFunctions.jsx";
+import { exportPriceListToXLSX } from "../../../../utils/xlsxFunctions.js";
 import categoryImg from "../../../../../../../../assets/priceList/default_category.png";
 import InputText from "../../../../utils/Form/InputText/InputText.jsx";
 import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
@@ -24,6 +23,7 @@ import {
 import {
   exportPriceListToXLSXMini,
   getPriceListPdfTextMini,
+  getPriceListPdfText,
 } from "./functions";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { Link } from "react-router-dom";

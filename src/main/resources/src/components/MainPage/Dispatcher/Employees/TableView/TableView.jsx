@@ -9,7 +9,7 @@ import {
   changeVisibilityOfListItem,
   formatDateString,
 } from "../../../../../utils/functions.jsx";
-import { getEmployeesByWorkshopListPdfText } from "../../../../../utils/pdfFunctions.jsx";
+import { getEmployeesByWorkshopListPdfText } from "../../../../../utils/pdfFunctions.js";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import { sortByField } from "../../../../../utils/sorting/sorting";
 import { filterEmployeesBySearchQuery } from "../functions.js";

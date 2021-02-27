@@ -5,7 +5,7 @@ import {
 import {
   createPDF,
   defaultStylesPDF,
-} from "../../../../../utils/pdfFunctions.jsx";
+} from "../../../../../utils/pdfFunctions.js";
 import { sortByField } from "../../../../../utils/sorting/sorting.js";
 import { defaultJournalWorkshops } from "./objects.js";
 

@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake";
 import { formatDateString } from "../../../utils/functions.jsx";
-import { getRequestPdfText } from "../../../utils/pdfFunctions.jsx";
+import { getRequestPdfText } from "../../../utils/pdfFunctions.js";
 import {
   deleteProductsToRequest,
   getRequestById,
@@ -10,7 +10,7 @@ import {
   addRequest,
 } from "../../../utils/RequestsAPI/Requests.jsx";
 import { workshops } from "./workshopVariables.js";
-import { getProductsFromRequestsListPdfText } from "../../../utils/pdfFunctions.jsx";
+import { getProductsFromRequestsListPdfText } from "../../../utils/pdfFunctions.js";
 import { getCategories } from "../../../utils/RequestsAPI/Products/Categories.js";
 
 export const getPageByRequest = (item) => {
@@ -92,14 +92,13 @@ export const filterRequestsBySearchQuery = (data, searchQuery) => {
 };
 
 export const printRequest = (request) => {
-  let dd = getRequestPdfText(
+  getRequestPdfText(
     request.date,
     request.requestProducts,
     request.client?.name ?? request.codeWord,
     workshops[request.factory].name,
     request.id
   );
-  pdfMake.createPdf(dd).print();
 };
 
 export const deleteItem = (id, loadRequests) => {
@@ -150,8 +149,7 @@ export const printRequestsList = (
     })
     .then(() => {
       setIsLoading(false);
-      let dd = getProductsFromRequestsListPdfText(categories, fullName);
-      pdfMake.createPdf(dd).print();
+      getProductsFromRequestsListPdfText(categories, fullName);
     })
     .catch((error) => {
       console.log(error);
