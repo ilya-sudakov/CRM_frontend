@@ -85,6 +85,20 @@ export const selectCellRange = (sheet, startCell, endCell) => {
   return cells;
 };
 
+const getPriceListColumnXLSX = (name, width = 30) => {
+  return {
+    key: name,
+    width: width,
+    style: {
+      font: {
+        size: 11,
+        color: { argb: "FF333333" },
+      },
+      alignment: { vertical: "middle", horizontal: "center", wrapText: true },
+    },
+  };
+};
+
 export async function exportPriceListToXLSX(
   categories = [],
   priceList = [],
@@ -99,136 +113,16 @@ export async function exportPriceListToXLSX(
   const workSheet = workBook.addWorksheet("Каталог продукции");
   // console.log(categories, priceList, optionalCols, locationTypes, disclaimer)
   workSheet.columns = [
-    {
-      // key: 'number',
-      width: 30,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "number",
-      width: 30,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "name",
-      width: 30,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "units",
-      width: 30,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "group1",
-      width: 14,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "group2",
-      width: 14,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "group3",
-      width: 14,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "group4",
-      width: 14,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "group5",
-      width: 14,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
-    {
-      key: "group6",
-      width: 14,
-      style: {
-        font: {
-          size: 11,
-          color: { argb: "FF333333" },
-          // name: 'DejaVu',
-          // family: 2,
-        },
-        alignment: { vertical: "middle", horizontal: "center", wrapText: true },
-      },
-    },
+    getPriceListColumnXLSX(undefined, 30),
+    getPriceListColumnXLSX("number", 30),
+    getPriceListColumnXLSX("name", 30),
+    getPriceListColumnXLSX("units", 30),
+    getPriceListColumnXLSX("group1", 14),
+    getPriceListColumnXLSX("group2", 14),
+    getPriceListColumnXLSX("group3", 14),
+    getPriceListColumnXLSX("group4", 14),
+    getPriceListColumnXLSX("group5", 14),
+    getPriceListColumnXLSX("group6", 14),
   ];
 
   const lastColumnNumber = 7 + optionalCols.length;
@@ -246,9 +140,6 @@ export async function exportPriceListToXLSX(
     name: "DejaVu",
     family: 2,
   };
-  // workSheet.getCell(1,3).border = {
-  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  // }
   temp.alignment = {
     // horizontal: 'left',
     vertical: "middle",
@@ -257,38 +148,12 @@ export async function exportPriceListToXLSX(
   };
   workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
   temp.height = 25;
-
-  // temp = workSheet.addRow([''])
-  // workSheet.getCell(3,3).value = {
-  //   text: 'info@osfix.ru',
-  //   hyperlink: 'mailto:info@osfix.ru',
-  //   tooltip: 'Написать',
-  // }
-  // // workSheet.getCell(3, 3).border = {
-  // //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  // // }
-  // temp.alignment = {
-  //   vertical: 'middle',
-  //   // horizontal: 'left',
-  //   // indent: 2,
-  //   horizontal: 'center',
-  // }
-  // workSheet.mergeCells(
-  //   workSheet.rowCount,
-  //  3,
-  //   workSheet.rowCount,
-  //  4,
-  // )
-  // temp.height = 25
   temp = workSheet.addRow([""]);
   workSheet.getCell(2, 3).value = {
     text: "Лиговский пр., 52, Санкт-Петербург, 191040",
     hyperlink: "https://yandex.ru/maps/-/CKUrY0Ih",
     tooltip: "Открыть Яндекс.Карту",
   };
-  // workSheet.getCell(2,3).border = {
-  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  // }
   workSheet.getCell(2, 3).font = {
     name: "DejaVu",
     family: 2,
@@ -367,10 +232,6 @@ export async function exportPriceListToXLSX(
       right: { style: "medium", color: { argb: "FFFF1B5F" } },
     };
   }
-  // workSheet.getCell(workSheet.rowCount, lastColumnNumber).border = {
-  //   bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  // }
 
   //adding contacts icons
   const contactsExcelImg = workBook.addImage({
@@ -385,15 +246,6 @@ export async function exportPriceListToXLSX(
 
   temp = workSheet.addRow([""]);
   temp.height = 25;
-  // for (let i = 1; i <= 2; i++) {
-  //   workSheet.getCell(workSheet.rowCount - 1, i).border = {
-  //     bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  //   }
-  // }
-  // workSheet.getCell(4, 2).border = {
-  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  //   bottom: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  // }
 
   Promise.all(
     categories.map((category) => {
@@ -800,6 +652,17 @@ export async function exportPriceListToXLSX(
   });
 }
 
+const getReportTableColumnXLSX = (name, width = 5) => {
+  return {
+    key: name,
+    width: width,
+    style: {
+      font: { size: 12 },
+      alignment: { vertical: "middle" },
+    },
+  };
+};
+
 export async function exportReportTableExcel(
   curDate = new Date(),
   filteredWorkshops = []
@@ -847,133 +710,24 @@ export async function exportReportTableExcel(
   const workSheet = workBook.addWorksheet(months[curDate.getMonth()]);
 
   workSheet.columns = [
-    {
-      key: "name",
-      width: 45,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 5,
-      style: {
-        font: { size: 12 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
-    {
-      width: 10,
-      style: {
-        font: { bold: true, size: 14 },
-        alignment: { vertical: "middle", horizontal: "center" },
-      },
-    },
+    getReportTableColumnXLSX("name", 45),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined),
+    getReportTableColumnXLSX(undefined, 10),
   ];
 
   const defaultBorder = {
