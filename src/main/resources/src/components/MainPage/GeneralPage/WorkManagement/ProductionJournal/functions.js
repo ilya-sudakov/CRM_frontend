@@ -15,14 +15,16 @@ export const updateData = (worksList, selectedWork, newData) => {
   return temp;
 };
 
+const getProductListText = (products) => {
+  return products
+    .map((product) => `${product.name} - ${product.quantity} шт\n`)
+    .join("");
+};
+
 const getDaysWorkText = (workItem) => {
   let workText = workItem.works.map((work) => {
-    const productText = work.product
-      .map((product) => `${product.name} - ${product.quantity} шт\n`)
-      .join("");
-    const draftText = work.draft
-      .map((draft) => `${draft.name} - ${draft.quantity} шт\n`)
-      .join("");
+    const productText = getProductListText(work.product);
+    const draftText = getProductListText(work.draft);
     return [
       `${work.workName} - ${work.hours} ч\n`,
       { text: productText, fontSize: 10, color: "#666" },
