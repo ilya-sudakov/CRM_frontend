@@ -107,7 +107,12 @@ const NewRecordWork = (props) => {
         .then((res) => setCurEmployee(res))
         .then(() => setIsLoading(false));
     }
-    if (isLoading) return;
+    if (
+      isLoading ||
+      (worktimeInputs.date === curDate &&
+        worktimeInputs.employeeId === curEmployee?.id)
+    )
+      return;
     console.log(isLoading, curEmployee, curDate, worktimeInputs);
     setIsLoading(true);
     getWorkReportByDateAndEmployee(
@@ -145,6 +150,8 @@ const NewRecordWork = (props) => {
         console.log(data, works);
         setWorkTimeInputs({
           ...worktimeInputs,
+          date: curDate,
+          employeeId: Number.parseInt(employeeId),
           works: [...works],
           originalWorks: [...works],
         });
