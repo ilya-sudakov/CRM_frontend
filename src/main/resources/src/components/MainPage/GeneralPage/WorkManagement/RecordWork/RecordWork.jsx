@@ -97,7 +97,12 @@ const NewRecordWork = (props) => {
   useEffect(() => {
     document.title = "Запись о работе";
     const abortController = new AbortController();
-    const employeeId = query.get("employee") ?? curEmployee?.id;
+    const employeeId = query.get("employee")
+      ? Number.parseInt(query.get("employee")) !== curEmployee?.id &&
+        curEmployee !== null
+        ? curEmployee?.id
+        : query.get("employee")
+      : curEmployee?.id;
     // console.log(query.get("employee"), query.get("date"), curEmployee, curDate);
     if (!employeeId || !curDate) return;
     if (query.get("employee") && curEmployee === null) {
