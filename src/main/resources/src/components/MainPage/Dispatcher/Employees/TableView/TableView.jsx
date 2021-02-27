@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import editIcon from "../../../../../../../../../assets/tableview/edit.svg";
 import deleteIcon from "../../../../../../../../../assets/tableview/delete.svg";
 import printSVG from "../../../../../../../../../assets/tableview/print.svg";
-import pdfMake from "pdfmake";
 import "./TableView.scss";
 import {
   changeVisibilityOfListItem,
@@ -43,7 +42,9 @@ const TableView = (props) => {
   };
 
   const handleClickWorkshop = (index) => {
-    setWorkshopsVisible([...changeVisibilityOfListItem(workshopsVisible, index)]);
+    setWorkshopsVisible([
+      ...changeVisibilityOfListItem(workshopsVisible, index),
+    ]);
   };
 
   const filterEmployees = (data, workshopItem) => {
@@ -103,11 +104,7 @@ const TableView = (props) => {
                   <div
                     className="main-window__action"
                     onClick={() => {
-                      const dd = getEmployeesByWorkshopListPdfText(
-                        sortedEmployees,
-                        item
-                      );
-                      pdfMake.createPdf(dd).print();
+                      getEmployeesByWorkshopListPdfText(sortedEmployees, item);
                     }}
                     title="Печать"
                   >

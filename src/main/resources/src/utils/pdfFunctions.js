@@ -287,8 +287,8 @@ export const getEmployeesListPdfText = (employees, workshops) => {
 };
 
 export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
-  const employeesList = [];
-  let employeeInfo = [];
+  let employeesList = [],
+    employeeInfo = [];
   employees.map((item) => {
     employeeInfo.push([
       getEmployeeNameText(employee),
@@ -299,13 +299,13 @@ export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
     ]);
   });
   employeesList.push(getEmployeesTablePDF(employeeInfo));
-  var dd = {
+  const dd = {
     info: {
-      title: "Список сотрудников - " + workshop,
+      title: `Список сотрудников - ${workshop}`,
     },
     content: [
       {
-        text: "Список сотрудников " + workshop + "\n\n",
+        text: `Список сотрудников ${workshop}\n\n`,
         alignment: "center",
         style: "title",
       },
@@ -313,6 +313,5 @@ export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
     ],
     styles: defaultStylesPDF,
   };
-  pdfMake.vfs = font.pdfMake.vfs;
-  return dd;
+  createPDF(dd);
 };
