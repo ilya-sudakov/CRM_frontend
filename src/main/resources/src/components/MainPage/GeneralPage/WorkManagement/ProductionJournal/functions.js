@@ -71,12 +71,12 @@ const getWorkshopList = (
     {
       stack: getDaysWorkText(yesterdaysWork[workshop.engName][employee.id]),
       style: "regularText",
-      fontSize: 12,
+      fontSize: 11,
     },
     {
       stack: getDaysWorkText(todaysWork[workshop.engName][employee.id]),
       style: "regularText",
-      fontSize: 12,
+      fontSize: 11,
     },
   ]);
   const list = [
