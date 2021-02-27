@@ -296,7 +296,8 @@ const NewPriceList = () => {
       sortPriceList(optionalCols.filter((item) => item.active && item)),
       locationTypes,
       disclaimer,
-      titlePage
+      titlePage,
+      selectedLtd
     ).then(() => {
       setIsLoading(false);
     });

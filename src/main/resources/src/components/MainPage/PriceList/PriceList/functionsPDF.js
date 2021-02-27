@@ -10,481 +10,237 @@ import { getDataUri } from "../../../../utils/functions.jsx";
 import { pdfHeaderCompanyContacts } from "./objects.js";
 import { createPDF } from "../../../../utils/pdfFunctions.js";
 
-export async function getPriceListPdfTextMini(
-  categories,
-  priceList,
-  optionalCols,
-  companyContacts
-) {
-  let finalList = [];
-  let dd;
-  const contactsImgData = await getDataUri(contactsImg);
-  const temp = categories.map(async (category) => {
-    let fullGroup = [];
-    return Promise.all(
-      priceList.map(async (groupOfProducts) => {
-        if (category.name === groupOfProducts.category) {
-          return fullGroup.push({
-            unbreakable: groupOfProducts.products.length <= 20 ? true : false,
-            stack: [
-              {
-                columns: [
-                  {
-                    unbreakable:
-                      groupOfProducts.products.length <= 10 ? true : false,
-                    table: {
-                      widths: [
-                        40,
-                        "*",
-                        "*",
-                        35,
-                        35,
-                        35,
-                        ...optionalCols.map((item, index) =>
-                          index < optionalCols.length - 1 ? 35 : 35
-                        ),
-                      ],
-                      body: [
-                        [
-                          // { text: '', border: [false, false, false, false] },
-                          { text: "", border: [false, false, false, false] },
-                          { text: "", border: [false, false, false, false] },
-                          { text: "", border: [false, false, false, false] },
-                          {
-                            text: groupOfProducts.priceHeader
-                              ? groupOfProducts.priceHeader + ", ₽"
-                              : "Цена за штуку, ₽",
-                            colSpan: 3 + optionalCols.length,
-                            // bold: true,
-                            italics: true,
-                          },
-                          {},
-                          {},
-                          ...optionalCols.map(() => {}),
-                        ],
-                        [
-                          {
-                            text: "Артикул",
-                            margin: [0, 5, 0, 0],
-                          },
-                          {
-                            text: "Название",
-                            margin: [0, 5, 0, 0],
-                          },
-                          {
-                            text: "Ед. изм.",
-                            margin: [0, 5, 0, 0],
-                          },
-                          {
-                            text: groupOfProducts.retailName
-                              ? groupOfProducts.retailName
-                              : "Розница",
-                            margin: [0, 1.5, 0, 0],
-                          },
-                          {
-                            text: groupOfProducts.firstPriceName
-                              ? groupOfProducts.firstPriceName
-                              : "до 1500 шт.",
-                            margin: [0, 1.5, 0, 0],
-                          },
-                          {
-                            text: groupOfProducts.secondPriceName
-                              ? groupOfProducts.secondPriceName
-                              : "до 5000 шт.",
-                            margin: [0, 1.5, 0, 0],
-                          },
-                          ...optionalCols.map((column) => {
-                            return {
-                              text:
-                                column.property === "partnerPrice"
-                                  ? groupOfProducts.partnerName
-                                  : column.property === "dealerPrice"
-                                  ? groupOfProducts.dealerName
-                                  : column.property === "distributorPrice" &&
-                                    groupOfProducts.distributorName,
-                              margin: [0, 1.5, 0, 0],
-                            };
-                          }),
-                        ],
-                        ...groupOfProducts.products
-                          .sort((a, b) => {
-                            if (
-                              a.number.localeCompare(b.number, undefined, {
-                                numeric: true,
-                              }) < 0
-                            ) {
-                              return -1;
-                            }
-                            if (
-                              a.number.localeCompare(b.number, undefined, {
-                                numeric: true,
-                              }) > 0
-                            ) {
-                              return 1;
-                            }
-                            return 0;
-                          })
-                          .map((product) => {
-                            return [
-                              {
-                                text: product.number,
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 5 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              {
-                                text: product.name,
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 1 : 0,
-                                  0,
-                                  0,
-                                ],
-                                alignment: "left",
-                              },
-                              {
-                                text: product.units,
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 1 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              {
-                                text:
-                                  product.retailPrice !== "" &&
-                                  !Number.isNaN(product.retailPrice) &&
-                                  product.retailPrice !== 0
-                                    ? product.retailPrice
-                                    : " ",
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 4.5 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              {
-                                text:
-                                  product.lessThan1500Price !== "" &&
-                                  !Number.isNaN(product.lessThan1500Price) &&
-                                  product.lessThan1500Price !== 0
-                                    ? product.lessThan1500Price
-                                    : " ",
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 4.5 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              {
-                                text:
-                                  product.lessThan5000Price !== "" &&
-                                  !Number.isNaN(product.lessThan5000Price) &&
-                                  product.lessThan5000Price !== 0
-                                    ? product.lessThan5000Price
-                                    : " ",
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 4.5 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              ...optionalCols.map((column) =>
-                                product[column.property] !== undefined
-                                  ? {
-                                      text:
-                                        product[column.property] !== "" &&
-                                        !Number.isNaN(
-                                          product[column.property]
-                                        ) &&
-                                        product[column.property] !== 0
-                                          ? product[column.property]
-                                          : " ",
-                                      margin: [
-                                        0,
-                                        optionalCols.length > 1 ? 4.5 : 0,
-                                        0,
-                                        0,
-                                      ],
-                                      bold: product.onSale,
-                                      color: product.onSale
-                                        ? "#111111"
-                                        : "#666666",
-                                    }
-                                  : {
-                                      text: "",
-                                      margin: [
-                                        0,
-                                        optionalCols.length > 1 ? 4.5 : 0,
-                                        0,
-                                        0,
-                                      ],
-                                      bold: product.onSale,
-                                      color: product.onSale
-                                        ? "#111111"
-                                        : "#666666",
-                                    }
-                              ),
-                            ];
-                          }),
-                      ],
-                    },
-                    layout: {
-                      hLineWidth: () => 1,
-                      vLineWidth: () => 1,
-                      hLineColor: () => "#444444",
-                      vLineColor: () => "#444444",
-                    },
-                    alignment: "center",
-                    width: "*",
-                    fontSize: 8,
-                    color: "#555555",
-                    margin: [0, 0, 0, 5],
-                  },
-                ],
-              },
-              groupOfProducts.footerImg !== "" &&
-              groupOfProducts.footerImg !== null
-                ? {
-                    image: await getDataUri(
-                      groupOfProducts.footerImg,
-                      "jpeg",
-                      0.3
-                    ),
-                    fit: [512, 100],
-                  }
-                : {
-                    text: "  ",
-                  },
-            ],
-          });
-        }
-      })
-    ).then(async () => {
-      const sortedArr = fullGroup;
-      fullGroup.length > 0 &&
-        category.active &&
-        finalList.push({
-          stack: [...sortedArr],
-        });
-    });
+const loadGroupImage = async (img) => {
+  if (img !== null && img !== "") {
+    return await getDataUri(img, "jpeg", 0.3);
+  }
+  return null;
+};
+
+const sortProductsByNumber = (data) => {
+  return data.sort((a, b) => {
+    if (
+      a.number.localeCompare(b.number, undefined, {
+        numeric: true,
+      }) < 0
+    ) {
+      return -1;
+    }
+    if (
+      a.number.localeCompare(b.number, undefined, {
+        numeric: true,
+      }) > 0
+    ) {
+      return 1;
+    }
+    return 0;
   });
-  Promise.all(temp).then(async () => {
-    dd = {
-      info: {
-        title: "Прайс-лист",
-      },
-      header: function () {
-        return [
+};
+
+const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
+  if (currentPage === 1 && active) {
+    return {
+      text: " ",
+    };
+  }
+  if (currentPage === pageCount) {
+    return [
+      {
+        canvas: [
           {
-            alignment: "justify",
-            width: "*",
-            margin: [40, 40, 40, 0],
-            columns: [
-              {
-                image: contactsImgData,
-                width: 10,
-                alignment: "left",
-              },
-              {
-                text: [
-                  {
-                    text: `${
-                      companyContacts?.name ?? pdfHeaderCompanyContacts.name
-                    }\n`,
-                    link:
-                      companyContacts?.site ?? pdfHeaderCompanyContacts.site,
-                    bold: true,
-                    fontSize: 10,
-                    margin: [0, 0, 0, 2],
-                  },
-                  {
-                    text: `${
-                      companyContacts?.legalAddress ??
-                      pdfHeaderCompanyContacts.legalAddress
-                    }\n`,
-                    link: "https://yandex.ru/maps/-/CKUrY0Ih",
-                    fontSize: 10,
-                    lineHeight: 1.1,
-                  },
-                  {
-                    text: `${
-                      companyContacts?.site ?? pdfHeaderCompanyContacts.site
-                    }\n`,
-                    fontSize: 10,
-                    link:
-                      companyContacts?.site ?? pdfHeaderCompanyContacts.site,
-                    lineHeight: 1.1,
-                  },
-                  {
-                    text: `${
-                      companyContacts?.email ?? pdfHeaderCompanyContacts.email
-                    }\n`,
-                    fontSize: 10,
-                    lineHeight: 1.1,
-                  },
-                  {
-                    text: `${
-                      companyContacts?.phone ?? pdfHeaderCompanyContacts.phone
-                    }\n`,
-                    link: "tel:+78124491009",
-                    fontSize: 10,
-                    lineHeight: 1.1,
-                  },
-                ],
-                margin: [5, 0, 0, 0],
-                alignment: "left",
-              },
-              companyContacts?.logo
-                ? {
-                    image: companyContacts?.logo,
-                    link: "https://www.osfix.ru",
-                    fit: [100, 100],
-                    margin: [0, 13, 0, 0],
-                    alignment: "right",
-                  }
-                : { text: "" },
-            ],
+            type: "line",
+            x1: 0,
+            y1: 0,
+            x2: 515,
+            y2: 0,
+            lineWidth: 2,
+            lineColor: "#e30434",
           },
-          {
-            canvas: [
-              {
-                type: "line",
-                x1: 0,
-                y1: 0,
-                x2: 515,
-                y2: 0,
-                lineWidth: 2,
-                lineColor: "#e30434",
-              },
-            ],
-            alignment: "justify",
-            width: "*",
-            margin: [40, 5, 40, 40],
-          },
-        ];
+        ],
+        alignment: "justify",
+        width: "*",
+        margin: [40, 0, 40, 10],
       },
-      pageMargins: [40, 125, 40, 70],
-      footer: function (currentPage) {
-        return [
+      {
+        text: [
+          { text: "ИНН ", fontSize: 10, bold: true },
           {
-            canvas: [
-              {
-                type: "line",
-                x1: 0,
-                y1: 0,
-                x2: 515,
-                y2: 0,
-                lineWidth: 2,
-                lineColor: "#e30434",
-              },
-            ],
-            alignment: "justify",
-            width: "*",
-            margin: [40, 0, 40, 10],
+            text: `${companyContacts?.inn ?? "7842143789"}\t`,
+            fontSize: 10,
+          },
+          { text: "КПП ", fontSize: 10, bold: true },
+          {
+            text: `${companyContacts?.kpp ?? "784201001"}\t`,
+            fontSize: 10,
+          },
+          { text: "ОГРН ", fontSize: 10, bold: true },
+          {
+            text: `${companyContacts?.ogrn ?? "1177847364584"}\t`,
+            fontSize: 10,
+          },
+          { text: "ОКПО ", fontSize: 10, bold: true },
+          {
+            text: `${companyContacts?.okpo ?? "20161337"}\n`,
+            fontSize: 10,
+          },
+          { text: "Банк ", fontSize: 10, bold: true },
+          {
+            text: `${companyContacts?.bank ?? "Филиал №7806 ВТБ (ПАО)"}\t`,
+            fontSize: 10,
+          },
+          { text: "Расчетный счет № ", fontSize: 10, bold: true },
+          {
+            text: `${
+              companyContacts?.checkingAccount ?? "40702810717060000232"
+            }\t`,
+            fontSize: 10,
+          },
+          { text: "БИК ", fontSize: 10, bold: true },
+          {
+            text: `${companyContacts?.bik ?? "044525411"}\t`,
+            fontSize: 10,
+          },
+        ],
+        alignment: "left",
+        width: "*",
+        margin: [40, 0, 40, 10],
+      },
+    ];
+  } else
+    return {
+      text: "Страница " + currentPage.toString(),
+      alignment: "center",
+      fontSize: 11,
+      color: "#999999",
+      margin: [0, 20, 0, 0],
+    };
+};
+
+const priceStyles = {
+  header: {
+    fontSize: 20,
+    bold: true,
+    alignment: "center",
+    margin: [0, 5, 0, 5],
+  },
+  title: {
+    fontSize: 24,
+    bold: true,
+  },
+  subheader: {
+    fontSize: 12,
+    bold: true,
+    margin: [0, 0, 0, 5],
+    color: "white",
+    background: "#e30434",
+  },
+  regularText: {
+    fontSize: 10,
+    italics: true,
+  },
+  tableHeader: {
+    fontSize: 12,
+    bold: true,
+    alignment: "center",
+  },
+};
+
+const getPriceHeader = async (currentPage, active, companyContacts) => {
+  const contactsImgData = await getDataUri(contactsImg);
+  if (currentPage !== 1 || !active) {
+    return [
+      {
+        alignment: "justify",
+        width: "*",
+        margin: [40, 40, 40, 0],
+        columns: [
+          {
+            image: contactsImgData,
+            width: 10,
+            alignment: "left",
           },
           {
             text: [
-              { text: "ИНН ", fontSize: 10, bold: true },
-              {
-                text: `${companyContacts?.inn ?? "7842143789"}\t`,
-                fontSize: 10,
-              },
-              { text: "КПП ", fontSize: 10, bold: true },
-              {
-                text: `${companyContacts?.kpp ?? "784201001"}\t`,
-                fontSize: 10,
-              },
-              { text: "ОГРН ", fontSize: 10, bold: true },
-              {
-                text: `${companyContacts?.ogrn ?? "1177847364584"}\t`,
-                fontSize: 10,
-              },
-              { text: "ОКПО ", fontSize: 10, bold: true },
-              {
-                text: `${companyContacts?.okpo ?? "20161337"}\n`,
-                fontSize: 10,
-              },
-              { text: "Банк ", fontSize: 10, bold: true },
-              {
-                text: `${companyContacts?.bank ?? "Филиал №7806 ВТБ (ПАО)"}\t`,
-                fontSize: 10,
-              },
-              { text: "Расчетный счет № ", fontSize: 10, bold: true },
               {
                 text: `${
-                  companyContacts?.checkingAccount ?? "40702810717060000232"
-                }\t`,
+                  companyContacts?.name ?? pdfHeaderCompanyContacts.name
+                }\n`,
+                link: companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+                bold: true,
                 fontSize: 10,
+                margin: [0, 0, 0, 2],
               },
-              { text: "БИК ", fontSize: 10, bold: true },
               {
-                text: `${companyContacts?.bik ?? "044525411"}\t`,
+                text: `${
+                  companyContacts?.legalAddress ??
+                  pdfHeaderCompanyContacts.legalAddress
+                }\n`,
+                link: "https://yandex.ru/maps/-/CKUrY0Ih",
                 fontSize: 10,
+                lineHeight: 1.1,
+              },
+              {
+                text: `${
+                  companyContacts?.site ?? pdfHeaderCompanyContacts.site
+                }\n`,
+                fontSize: 10,
+                link: companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+                lineHeight: 1.1,
+              },
+              {
+                text: `${
+                  companyContacts?.email ?? pdfHeaderCompanyContacts.email
+                }\n`,
+                fontSize: 10,
+                lineHeight: 1.1,
+              },
+              {
+                text: `${
+                  companyContacts?.phone ?? pdfHeaderCompanyContacts.phone
+                }\n`,
+                link: "tel:+78124491009",
+                fontSize: 10,
+                lineHeight: 1.1,
               },
             ],
+            margin: [5, 0, 0, 0],
             alignment: "left",
-            width: "*",
-            margin: [40, 0, 40, 10],
           },
+          companyContacts?.logo
+            ? {
+                image: companyContacts?.logo,
+                link: "https://www.osfix.ru",
+                fit: [100, 100],
+                margin: [0, 13, 0, 0],
+                alignment: "right",
+              }
+            : { text: "" },
+        ],
+      },
+      {
+        canvas: [
           {
-            text: "Страница " + currentPage.toString(),
-            alignment: "center",
-            fontSize: 11,
-            color: "#999999",
+            type: "line",
+            x1: 0,
+            y1: 0,
+            x2: 515,
+            y2: 0,
+            lineWidth: 2,
+            lineColor: "#e30434",
           },
-        ];
+        ],
+        alignment: "justify",
+        width: "*",
+        margin: [40, 5, 40, 40],
       },
-      content: [finalList],
-      styles: {
-        header: {
-          fontSize: 20,
-          bold: true,
-          alignment: "center",
-          margin: [0, 5, 0, 5],
-        },
-        title: {
-          fontSize: 24,
-          bold: true,
-        },
-        subheader: {
-          fontSize: 12,
-          bold: true,
-          margin: [0, 0, 0, 5],
-          color: "white",
-          background: "#e30434",
-        },
-        regularText: {
-          fontSize: 10,
-          italics: true,
-        },
-        tableHeader: {
-          fontSize: 12,
-          bold: true,
-          alignment: "center",
-        },
+    ];
+  } else
+    return [
+      {
+        text: "",
       },
-    };
-    createPDF(dd);
-  });
-}
+    ];
+};
 
 export async function getPriceListPdfText(
   categories,
@@ -492,28 +248,20 @@ export async function getPriceListPdfText(
   optionalCols,
   locationTypes,
   disclaimer,
-  titlePage
+  titlePage,
+  companyContacts,
+  isMini
 ) {
   let finalList = [];
-  let dd;
   let linkButtonData = await getDataUri(linkButtonImg);
   const testImgData = await getDataUri(testImg);
   const saleImgData = await getDataUri(saleImg);
-  const companyLogoData = await getDataUri(companyLogo);
   const companyLogoNoSloganData = await getDataUri(companyLogoNoSlogan);
-  const contactsImgData = await getDataUri(contactsImg);
   const proprietaryItemImgData = await getDataUri(proprietaryItemImg);
   const listImgData = await getDataUri(listImg);
-  let titlePageImg1Data, titlePageImg2Data, titlePageImg3Data;
-  if (titlePage.img1 !== null && titlePage.img1 !== "") {
-    titlePageImg1Data = await getDataUri(titlePage.img1, "jpeg", 0.3);
-  }
-  if (titlePage.img2 !== null && titlePage.img2 !== "") {
-    titlePageImg2Data = await getDataUri(titlePage.img2, "jpeg", 0.3);
-  }
-  if (titlePage.img3 !== null && titlePage.img3 !== "") {
-    titlePageImg3Data = await getDataUri(titlePage.img3, "jpeg", 0.3);
-  }
+  const titlePageImg1Data = await loadGroupImage(titlePage.img1),
+    titlePageImg2Data = await loadGroupImage(titlePage.img2),
+    titlePageImg3Data = await loadGroupImage(titlePage.img3);
   const temp = categories.map(async (category) => {
     let fullGroup = [];
     return Promise.all(
@@ -547,50 +295,13 @@ export async function getPriceListPdfText(
               );
             })
           ).then(async () => {
-            let groupImg1Data = "";
-            let groupImg2Data = "";
-            let groupImg3Data = "";
-            let groupImg4Data = "";
-            if (
-              groupOfProducts.groupImg1 !== null &&
-              groupOfProducts.groupImg1 !== ""
-            ) {
-              groupImg1Data = await getDataUri(
-                groupOfProducts.groupImg1,
-                "jpeg",
-                0.3
-              );
-            }
-            if (
-              groupOfProducts.groupImg2 !== null &&
-              groupOfProducts.groupImg2 !== ""
-            ) {
-              groupImg2Data = await getDataUri(
-                groupOfProducts.groupImg2,
-                "jpeg",
-                0.3
-              );
-            }
-            if (
-              groupOfProducts.groupImg3 !== null &&
-              groupOfProducts.groupImg3 !== ""
-            ) {
-              groupImg3Data = await getDataUri(
-                groupOfProducts.groupImg3,
-                "jpeg",
-                0.3
-              );
-            }
-            if (
-              groupOfProducts.groupImg4 !== null &&
-              groupOfProducts.groupImg4 !== ""
-            ) {
-              groupImg4Data = await getDataUri(
-                groupOfProducts.groupImg4,
-                "jpeg",
-                0.3
-              );
-            }
+            const groupImg1Data = await loadGroupImage(groupOfProducts.groupImg1);
+            const groupImg2Data = await loadGroupImage(groupOfProducts.groupImg2);
+            const groupImg3Data = await loadGroupImage(groupOfProducts.groupImg3);
+            const groupImg4Data = await loadGroupImage(groupOfProducts.groupImg4);
+            const groupImgFooterData = await loadGroupImage(
+              groupOfProducts.footerImg
+            );
             fullGroup.push({
               unbreakable: groupOfProducts.products.length <= 20 ? true : false,
               stack: [
@@ -678,25 +389,25 @@ export async function getPriceListPdfText(
                 {
                   columns: [
                     {
-                      image: groupImg1Data !== "" ? groupImg1Data : testImgData,
+                      image: groupImg1Data ?? testImgData,
                       fit: [120, 100],
                       margin: [0, 0, 0, 5],
                       alignment: "left",
                     },
                     {
-                      image: groupImg2Data !== "" ? groupImg2Data : testImgData,
+                      image: groupImg2Data ?? testImgData,
                       fit: [120, 100],
                       margin: [10, 0, 0, 5],
                       alignment: "right",
                     },
                     {
-                      image: groupImg3Data !== "" ? groupImg3Data : testImgData,
+                      image: groupImg3Data ?? testImgData,
                       fit: [120, 100],
                       margin: [10, 0, 0, 5],
                       alignment: "right",
                     },
                     {
-                      image: groupImg4Data !== "" ? groupImg4Data : testImgData,
+                      image: groupImg4Data ?? testImgData,
                       fit: [120, 100],
                       margin: [11, 0, 0, 5],
                       alignment: "right",
@@ -722,7 +433,6 @@ export async function getPriceListPdfText(
                         ],
                         body: [
                           [
-                            // { text: '', border: [false, false, false, false] },
                             { text: "", border: [false, false, false, false] },
                             { text: "", border: [false, false, false, false] },
                             { text: "", border: [false, false, false, false] },
@@ -731,7 +441,6 @@ export async function getPriceListPdfText(
                                 ? groupOfProducts.priceHeader + ", ₽"
                                 : "Цена за штуку, ₽",
                               colSpan: 3 + optionalCols.length,
-                              // bold: true,
                               italics: true,
                             },
                             {},
@@ -741,41 +450,35 @@ export async function getPriceListPdfText(
                           [
                             {
                               text: "Артикул",
-                              // bold: true
                               margin: [0, 5, 0, 0],
                             },
                             {
                               text: "Название",
-                              // bold: true
                               margin: [0, 5, 0, 0],
                             },
                             {
                               text: "Ед. изм.",
-                              // bold: true
                               margin: [0, 5, 0, 0],
                             },
                             {
                               text: groupOfProducts.retailName
                                 ? groupOfProducts.retailName
                                 : "Розница",
-                              // bold: true
                               margin: [0, 1.5, 0, 0],
                             },
                             {
                               text: groupOfProducts.firstPriceName
                                 ? groupOfProducts.firstPriceName
                                 : "до 1500 шт.",
-                              // bold: true
                               margin: [0, 1.5, 0, 0],
                             },
                             {
                               text: groupOfProducts.secondPriceName
                                 ? groupOfProducts.secondPriceName
                                 : "до 5000 шт.",
-                              // bold: true
                               margin: [0, 1.5, 0, 0],
                             },
-                            ...optionalCols.map((column, index) => {
+                            ...optionalCols.map((column) => {
                               return {
                                 text:
                                   column.property === "partnerPrice"
@@ -784,30 +487,12 @@ export async function getPriceListPdfText(
                                     ? groupOfProducts.dealerName
                                     : column.property === "distributorPrice" &&
                                       groupOfProducts.distributorName,
-                                // bold: true
                                 margin: [0, 1.5, 0, 0],
                               };
                             }),
                           ],
-                          ...groupOfProducts.products
-                            .sort((a, b) => {
-                              if (
-                                a.number.localeCompare(b.number, undefined, {
-                                  numeric: true,
-                                }) < 0
-                              ) {
-                                return -1;
-                              }
-                              if (
-                                a.number.localeCompare(b.number, undefined, {
-                                  numeric: true,
-                                }) > 0
-                              ) {
-                                return 1;
-                              }
-                              return 0;
-                            })
-                            .map((product) => {
+                          ...sortProductsByNumber(groupOfProducts.products).map(
+                            (product) => {
                               return [
                                 {
                                   text: product.number,
@@ -947,7 +632,8 @@ export async function getPriceListPdfText(
                                       }
                                 ),
                               ];
-                            }),
+                            }
+                          ),
                         ],
                       },
                       layout: {
@@ -1053,14 +739,9 @@ export async function getPriceListPdfText(
                     },
                   ],
                 },
-                groupOfProducts.footerImg !== "" &&
-                groupOfProducts.footerImg !== null
+                groupImgFooterData !== null
                   ? {
-                      image: await getDataUri(
-                        groupOfProducts.footerImg,
-                        "jpeg",
-                        0.3
-                      ),
+                      image: groupImgFooterData,
                       fit: [512, 100],
                     }
                   : {
@@ -1149,154 +830,20 @@ export async function getPriceListPdfText(
         return 0;
       }
     });
-    dd = {
+    const dd = {
       info: {
         title: "Прайс-лист",
       },
-      header: function (currentPage) {
-        if (currentPage !== 1 || !titlePage.active) {
-          return [
-            {
-              alignment: "justify",
-              width: "*",
-              margin: [40, 40, 40, 0],
-              columns: [
-                {
-                  image: contactsImgData,
-                  width: 10,
-                  alignment: "left",
-                },
-                {
-                  text: [
-                    {
-                      text: "ООО «ОСФИКС»\n",
-                      link: "https://www.osfix.ru",
-                      bold: true,
-                      fontSize: 10,
-                      margin: [0, 0, 0, 2],
-                    },
-                    {
-                      text: "Лиговский пр., 52, Санкт-Петербург, 191040\n",
-                      link: "https://yandex.ru/maps/-/CKUrY0Ih",
-                      fontSize: 10,
-                      lineHeight: 1.1,
-                    },
-                    {
-                      text: "www.osfix.ru\n",
-                      fontSize: 10,
-                      link: "https://www.osfix.ru",
-                      lineHeight: 1.1,
-                    },
-                    { text: "info@osfix.ru\n", fontSize: 10, lineHeight: 1.1 },
-                    {
-                      text: "+7 (812) 449-10-09\n",
-                      link: "tel:+78124491009",
-                      fontSize: 10,
-                      lineHeight: 1.1,
-                    },
-                  ],
-                  margin: [5, 0, 0, 0],
-                  alignment: "left",
-                },
-                {
-                  image: companyLogoData,
-                  // width: 100,
-                  link: "https://www.osfix.ru",
-                  fit: [100, 100],
-                  margin: [0, 13, 0, 0],
-                  alignment: "right",
-                },
-              ],
-            },
-            {
-              canvas: [
-                {
-                  type: "line",
-                  x1: 0,
-                  y1: 0,
-                  x2: 515,
-                  y2: 0,
-                  lineWidth: 2,
-                  lineColor: "#e30434",
-                },
-              ],
-              alignment: "justify",
-              width: "*",
-              margin: [40, 5, 40, 40],
-            },
-          ];
-        } else
-          return [
-            {
-              text: "",
-            },
-          ];
-      },
+      header: (currentPage) =>
+        getPriceHeader(currentPage, titlePage.active, companyContacts),
       pageMargins: [40, 125, 40, 70],
-      footer: function (currentPage, pageCount) {
-        if (currentPage === 1 && titlePage.active) {
-          return {
-            text: " ",
-          };
-        }
-        if (currentPage === pageCount) {
-          return [
-            {
-              canvas: [
-                {
-                  type: "line",
-                  x1: 0,
-                  y1: 0,
-                  x2: 515,
-                  y2: 0,
-                  lineWidth: 2,
-                  lineColor: "#e30434",
-                },
-              ],
-              alignment: "justify",
-              width: "*",
-              margin: [40, 0, 40, 10],
-            },
-            {
-              text: [
-                { text: "ИНН ", fontSize: 10, bold: true },
-                { text: "7842143789\t", fontSize: 10 },
-                { text: "КПП ", fontSize: 10, bold: true },
-                { text: "784201001\t", fontSize: 10 },
-                { text: "ОГРН ", fontSize: 10, bold: true },
-                { text: "117784736458\t", fontSize: 10 },
-                { text: "ОКПО ", fontSize: 10, bold: true },
-                { text: "20161337\n", fontSize: 10 },
-                { text: "Банк ", fontSize: 10, bold: true },
-                { text: "Филиал №7806 ВТБ (ПАО)\t", fontSize: 10 },
-                { text: "Расчетный счет № ", fontSize: 10, bold: true },
-                { text: "40702810117060000232\t", fontSize: 10 },
-                { text: "БИК ", fontSize: 10, bold: true },
-                { text: "044030707\t", fontSize: 10 },
-              ],
-              alignment: "left",
-              width: "*",
-              margin: [40, 0, 40, 10],
-            },
-            {
-              text: "Страница " + currentPage.toString(),
-              alignment: "center",
-              fontSize: 11,
-              color: "#999999",
-            },
-          ];
-        } else
-          return {
-            text: "Страница " + currentPage.toString(),
-            alignment: "center",
-            fontSize: 11,
-            color: "#999999",
-            margin: [0, 20, 0, 0],
-          };
-      },
-      // defaultStyle: {
-      //     font: 'DejaVuSans'
-      // },
+      footer: (currentPage, pageCount) =>
+        getPriceFooter(
+          currentPage,
+          pageCount,
+          titlePage.active,
+          companyContacts
+        ),
       content: [
         titlePage.active
           ? {
@@ -1373,28 +920,19 @@ export async function getPriceListPdfText(
                 {
                   columns: [
                     {
-                      image:
-                        titlePageImg1Data !== undefined
-                          ? titlePageImg1Data
-                          : testImgData,
+                      image: titlePageImg1Data ?? testImgData,
                       fit: [150, 130],
                       margin: [0, 0, 0, 5],
                       alignment: "right",
                     },
                     {
-                      image:
-                        titlePageImg2Data !== undefined
-                          ? titlePageImg2Data
-                          : testImgData,
+                      image: titlePageImg2Data ?? testImgData,
                       fit: [150, 130],
                       margin: [0, 0, 0, 5],
                       alignment: "center",
                     },
                     {
-                      image:
-                        titlePageImg3Data !== undefined
-                          ? titlePageImg3Data
-                          : testImgData,
+                      image: titlePageImg3Data ?? testImgData,
                       fit: [150, 130],
                       margin: [0, 0, 0, 5],
                       alignment: "left",
@@ -1460,34 +998,371 @@ export async function getPriceListPdfText(
           },
         },
       ],
-      styles: {
-        header: {
-          fontSize: 20,
-          bold: true,
-          alignment: "center",
-          margin: [0, 5, 0, 5],
-        },
-        title: {
-          fontSize: 24,
-          bold: true,
-        },
-        subheader: {
-          fontSize: 12,
-          bold: true,
-          margin: [0, 0, 0, 5],
-          color: "white",
-          background: "#e30434",
-        },
-        regularText: {
-          fontSize: 10,
-          italics: true,
-        },
-        tableHeader: {
-          fontSize: 12,
-          bold: true,
-          alignment: "center",
-        },
+      styles: priceStyles,
+    };
+    createPDF(dd);
+  });
+}
+
+export async function getPriceListPdfTextMini(
+  categories,
+  priceList,
+  optionalCols,
+  companyContacts
+) {
+  let finalList = [];
+  let dd;
+  const contactsImgData = await getDataUri(contactsImg);
+  const temp = categories.map(async (category) => {
+    let fullGroup = [];
+    return Promise.all(
+      priceList.map(async (groupOfProducts) => {
+        if (category.name === groupOfProducts.category) {
+          return fullGroup.push({
+            unbreakable: groupOfProducts.products.length <= 20 ? true : false,
+            stack: [
+              {
+                columns: [
+                  {
+                    unbreakable:
+                      groupOfProducts.products.length <= 10 ? true : false,
+                    table: {
+                      widths: [
+                        40,
+                        "*",
+                        "*",
+                        35,
+                        35,
+                        35,
+                        ...optionalCols.map((item, index) =>
+                          index < optionalCols.length - 1 ? 35 : 35
+                        ),
+                      ],
+                      body: [
+                        [
+                          // { text: '', border: [false, false, false, false] },
+                          { text: "", border: [false, false, false, false] },
+                          { text: "", border: [false, false, false, false] },
+                          { text: "", border: [false, false, false, false] },
+                          {
+                            text: groupOfProducts.priceHeader
+                              ? groupOfProducts.priceHeader + ", ₽"
+                              : "Цена за штуку, ₽",
+                            colSpan: 3 + optionalCols.length,
+                            // bold: true,
+                            italics: true,
+                          },
+                          {},
+                          {},
+                          ...optionalCols.map(() => {}),
+                        ],
+                        [
+                          {
+                            text: "Артикул",
+                            margin: [0, 5, 0, 0],
+                          },
+                          {
+                            text: "Название",
+                            margin: [0, 5, 0, 0],
+                          },
+                          {
+                            text: "Ед. изм.",
+                            margin: [0, 5, 0, 0],
+                          },
+                          {
+                            text: groupOfProducts.retailName
+                              ? groupOfProducts.retailName
+                              : "Розница",
+                            margin: [0, 1.5, 0, 0],
+                          },
+                          {
+                            text: groupOfProducts.firstPriceName
+                              ? groupOfProducts.firstPriceName
+                              : "до 1500 шт.",
+                            margin: [0, 1.5, 0, 0],
+                          },
+                          {
+                            text: groupOfProducts.secondPriceName
+                              ? groupOfProducts.secondPriceName
+                              : "до 5000 шт.",
+                            margin: [0, 1.5, 0, 0],
+                          },
+                          ...optionalCols.map((column) => {
+                            return {
+                              text:
+                                column.property === "partnerPrice"
+                                  ? groupOfProducts.partnerName
+                                  : column.property === "dealerPrice"
+                                  ? groupOfProducts.dealerName
+                                  : column.property === "distributorPrice" &&
+                                    groupOfProducts.distributorName,
+                              margin: [0, 1.5, 0, 0],
+                            };
+                          }),
+                        ],
+                        ...sortProductsByNumber(groupOfProducts.products).map(
+                          (product) => {
+                            return [
+                              {
+                                text: product.number,
+                                margin: [
+                                  0,
+                                  optionalCols.length > 1 ? 5 : 0,
+                                  0,
+                                  0,
+                                ],
+                                bold: product.onSale,
+                                color: product.onSale ? "#111111" : "#666666",
+                              },
+                              {
+                                text: product.name,
+                                margin: [
+                                  0,
+                                  optionalCols.length > 1 ? 1 : 0,
+                                  0,
+                                  0,
+                                ],
+                                alignment: "left",
+                              },
+                              {
+                                text: product.units,
+                                margin: [
+                                  0,
+                                  optionalCols.length > 1 ? 1 : 0,
+                                  0,
+                                  0,
+                                ],
+                                bold: product.onSale,
+                                color: product.onSale ? "#111111" : "#666666",
+                              },
+                              {
+                                text:
+                                  product.retailPrice !== "" &&
+                                  !Number.isNaN(product.retailPrice) &&
+                                  product.retailPrice !== 0
+                                    ? product.retailPrice
+                                    : " ",
+                                margin: [
+                                  0,
+                                  optionalCols.length > 1 ? 4.5 : 0,
+                                  0,
+                                  0,
+                                ],
+                                bold: product.onSale,
+                                color: product.onSale ? "#111111" : "#666666",
+                              },
+                              {
+                                text:
+                                  product.lessThan1500Price !== "" &&
+                                  !Number.isNaN(product.lessThan1500Price) &&
+                                  product.lessThan1500Price !== 0
+                                    ? product.lessThan1500Price
+                                    : " ",
+                                margin: [
+                                  0,
+                                  optionalCols.length > 1 ? 4.5 : 0,
+                                  0,
+                                  0,
+                                ],
+                                bold: product.onSale,
+                                color: product.onSale ? "#111111" : "#666666",
+                              },
+                              {
+                                text:
+                                  product.lessThan5000Price !== "" &&
+                                  !Number.isNaN(product.lessThan5000Price) &&
+                                  product.lessThan5000Price !== 0
+                                    ? product.lessThan5000Price
+                                    : " ",
+                                margin: [
+                                  0,
+                                  optionalCols.length > 1 ? 4.5 : 0,
+                                  0,
+                                  0,
+                                ],
+                                bold: product.onSale,
+                                color: product.onSale ? "#111111" : "#666666",
+                              },
+                              ...optionalCols.map((column) =>
+                                product[column.property] !== undefined
+                                  ? {
+                                      text:
+                                        product[column.property] !== "" &&
+                                        !Number.isNaN(
+                                          product[column.property]
+                                        ) &&
+                                        product[column.property] !== 0
+                                          ? product[column.property]
+                                          : " ",
+                                      margin: [
+                                        0,
+                                        optionalCols.length > 1 ? 4.5 : 0,
+                                        0,
+                                        0,
+                                      ],
+                                      bold: product.onSale,
+                                      color: product.onSale
+                                        ? "#111111"
+                                        : "#666666",
+                                    }
+                                  : {
+                                      text: "",
+                                      margin: [
+                                        0,
+                                        optionalCols.length > 1 ? 4.5 : 0,
+                                        0,
+                                        0,
+                                      ],
+                                      bold: product.onSale,
+                                      color: product.onSale
+                                        ? "#111111"
+                                        : "#666666",
+                                    }
+                              ),
+                            ];
+                          }
+                        ),
+                      ],
+                    },
+                    layout: {
+                      hLineWidth: () => 1,
+                      vLineWidth: () => 1,
+                      hLineColor: () => "#444444",
+                      vLineColor: () => "#444444",
+                    },
+                    alignment: "center",
+                    width: "*",
+                    fontSize: 8,
+                    color: "#555555",
+                    margin: [0, 0, 0, 5],
+                  },
+                ],
+              },
+              groupOfProducts.footerImg !== "" &&
+              groupOfProducts.footerImg !== null
+                ? {
+                    image: await getDataUri(
+                      groupOfProducts.footerImg,
+                      "jpeg",
+                      0.3
+                    ),
+                    fit: [512, 100],
+                  }
+                : {
+                    text: "  ",
+                  },
+            ],
+          });
+        }
+      })
+    ).then(async () => {
+      const sortedArr = fullGroup;
+      fullGroup.length > 0 &&
+        category.active &&
+        finalList.push({
+          stack: [...sortedArr],
+        });
+    });
+  });
+  Promise.all(temp).then(async () => {
+    dd = {
+      info: {
+        title: "Прайс-лист",
       },
+      header: function () {
+        return [
+          {
+            alignment: "justify",
+            width: "*",
+            margin: [40, 40, 40, 0],
+            columns: [
+              {
+                image: contactsImgData,
+                width: 10,
+                alignment: "left",
+              },
+              {
+                text: [
+                  {
+                    text: `${
+                      companyContacts?.name ?? pdfHeaderCompanyContacts.name
+                    }\n`,
+                    link:
+                      companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+                    bold: true,
+                    fontSize: 10,
+                    margin: [0, 0, 0, 2],
+                  },
+                  {
+                    text: `${
+                      companyContacts?.legalAddress ??
+                      pdfHeaderCompanyContacts.legalAddress
+                    }\n`,
+                    link: "https://yandex.ru/maps/-/CKUrY0Ih",
+                    fontSize: 10,
+                    lineHeight: 1.1,
+                  },
+                  {
+                    text: `${
+                      companyContacts?.site ?? pdfHeaderCompanyContacts.site
+                    }\n`,
+                    fontSize: 10,
+                    link:
+                      companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+                    lineHeight: 1.1,
+                  },
+                  {
+                    text: `${
+                      companyContacts?.email ?? pdfHeaderCompanyContacts.email
+                    }\n`,
+                    fontSize: 10,
+                    lineHeight: 1.1,
+                  },
+                  {
+                    text: `${
+                      companyContacts?.phone ?? pdfHeaderCompanyContacts.phone
+                    }\n`,
+                    link: "tel:+78124491009",
+                    fontSize: 10,
+                    lineHeight: 1.1,
+                  },
+                ],
+                margin: [5, 0, 0, 0],
+                alignment: "left",
+              },
+              companyContacts?.logo
+                ? {
+                    image: companyContacts?.logo,
+                    link: "https://www.osfix.ru",
+                    fit: [100, 100],
+                    margin: [0, 13, 0, 0],
+                    alignment: "right",
+                  }
+                : { text: "" },
+            ],
+          },
+          {
+            canvas: [
+              {
+                type: "line",
+                x1: 0,
+                y1: 0,
+                x2: 515,
+                y2: 0,
+                lineWidth: 2,
+                lineColor: "#e30434",
+              },
+            ],
+            alignment: "justify",
+            width: "*",
+            margin: [40, 5, 40, 40],
+          },
+        ];
+      },
+      pageMargins: [40, 125, 40, 70],
+      footer: function (currentPage) {},
+      content: [finalList],
+      styles: priceStyles,
     };
     createPDF(dd);
   });
