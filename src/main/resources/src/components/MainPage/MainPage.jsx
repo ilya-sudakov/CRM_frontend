@@ -43,7 +43,6 @@ import {
   NewFeedback,
   ViewFeedback,
   EtceteraPage,
-  GraphsPage,
   PackagingPage,
   NewPackaging,
   EditPackaging,
@@ -619,14 +618,6 @@ const MainPage = () => {
                     exact
                     path="/reports/employee"
                     component={EmployeeReportPage}
-                    allowedRoles={["ROLE_ADMIN"]}
-                  />
-                  <PrivateRoute
-                    exact
-                    path="/graphs"
-                    component={GraphsPage}
-                    userHasAccess={userContext.userHasAccess}
-                    userData={userContext.userData}
                     allowedRoles={["ROLE_ADMIN"]}
                   />
                   <PrivateRoute

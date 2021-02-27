@@ -204,8 +204,6 @@ const EmployeeReportPage = lazy(() =>
   import("./ReportsPage/EmployeeReportPage/EmployeeReportPage.jsx")
 );
 
-const GraphsPage = lazy(() => import("./GraphsPage/GraphsPage.jsx"));
-
 const PackagingPage = lazy(() => import("./PackagingPage/PackagingPage.jsx"));
 
 const NewPackaging = lazy(() =>
@@ -281,7 +279,6 @@ export {
   NewFeedback,
   ViewFeedback,
   EtceteraPage,
-  GraphsPage,
   PackagingPage,
   NewPackaging,
   EditPackaging,

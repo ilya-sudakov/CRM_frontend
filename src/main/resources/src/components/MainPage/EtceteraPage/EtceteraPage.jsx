@@ -91,12 +91,6 @@ const EtceteraPage = (props) => {
         access: ["ROLE_ADMIN"],
         icon: statsIcon,
       },
-      {
-        linkTo: "/graphs",
-        name: "Графики",
-        access: ["ROLE_ADMIN"],
-        icon: graphIcon,
-      },
     ],
   });
 
