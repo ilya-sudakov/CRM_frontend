@@ -98,7 +98,7 @@ const NewRecordWork = (props) => {
     document.title = "Запись о работе";
     const abortController = new AbortController();
     const employeeId = query.get("employee") ?? curEmployee?.id;
-    console.log(query.get("employee"), query.get("date"), curEmployee, curDate);
+    // console.log(query.get("employee"), query.get("date"), curEmployee, curDate);
     if (!employeeId || !curDate) return;
     if (query.get("employee") && curEmployee === null) {
       setIsLoading(true);
@@ -108,6 +108,7 @@ const NewRecordWork = (props) => {
         .then(() => setIsLoading(false));
     }
     if (isLoading) return;
+    console.log(isLoading, curEmployee, curDate, worktimeInputs);
     setIsLoading(true);
     getWorkReportByDateAndEmployee(
       employeeId,
@@ -141,13 +142,13 @@ const NewRecordWork = (props) => {
             })),
           ],
         }));
-        setIsLoading(false);
         console.log(data, works);
-        return setWorkTimeInputs({
+        setWorkTimeInputs({
           ...worktimeInputs,
           works: [...works],
           originalWorks: [...works],
         });
+        return setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -163,15 +164,7 @@ const NewRecordWork = (props) => {
     setWrapperHeight(
       document.getElementById(`${curPage}page`)?.clientHeight + "px"
     );
-  }, [
-    worktimeInputs,
-    curPage,
-    curEmployee,
-    curDate,
-    isLoading,
-    products,
-    categories,
-  ]);
+  });
 
   const handleClickPrevPage = () => {
     if (curPage !== 0) {
