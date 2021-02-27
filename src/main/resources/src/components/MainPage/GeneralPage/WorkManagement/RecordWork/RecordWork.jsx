@@ -224,30 +224,27 @@ const NewRecordWork = (props) => {
                 }
               />
               {/* Создание работы */}
-              <div style={{ position: "relative" }}>
-                <TableLoading isLoading={isLoading} />
-                <SelectWork
-                  handleWorkChange={(value) => {
-                    validateField("works", value);
-                    setWorkTimeInputs({
-                      ...worktimeInputs,
-                      works: value,
-                    });
-                    setWorkTimeErrors({
-                      ...workTimeErrors,
-                      works: false,
-                    });
-                  }}
-                  userHasAccess={userContext.userHasAccess}
-                  defaultValue={worktimeInputs.works}
-                  totalHours={totalHours}
-                  setTotalHours={setTotalHours}
-                  categories={categories}
-                  products={products}
-                  noTime
-                  noNewItems={!curDate || !curEmployee}
-                />
-              </div>
+              <SelectWork
+                handleWorkChange={(value) => {
+                  validateField("works", value);
+                  setWorkTimeInputs({
+                    ...worktimeInputs,
+                    works: value,
+                  });
+                  setWorkTimeErrors({
+                    ...workTimeErrors,
+                    works: false,
+                  });
+                }}
+                userHasAccess={userContext.userHasAccess}
+                defaultValue={worktimeInputs.works}
+                totalHours={totalHours}
+                setTotalHours={setTotalHours}
+                categories={categories}
+                products={products}
+                noTime
+                noNewItems={!curDate || !curEmployee}
+              />
               <div className="main-form__input_hint">
                 * - поля, обязательные для заполнения
               </div>
