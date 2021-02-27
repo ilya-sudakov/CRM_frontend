@@ -140,6 +140,7 @@ const NewRecordWork = (props) => {
             })),
           ],
         }));
+        setIsLoading(false);
         console.log(data, works);
         return setWorkTimeInputs({
           ...worktimeInputs,
@@ -147,7 +148,6 @@ const NewRecordWork = (props) => {
           originalWorks: [...works],
         });
       })
-      .then(() => setIsLoading(false))
       .catch((error) => {
         console.log(error);
         alert("Ошибка при загрузке работы!");
