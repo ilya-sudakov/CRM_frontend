@@ -11,7 +11,6 @@ import useProductsList from "../../../../../utils/hooks/useProductsList/useProdu
 import { submitWorkData } from "./functions.js";
 import useQuery from "../../../../../utils/hooks/useQuery";
 import { getWorkReportByDateAndEmployee } from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import TableLoading from "../../../../../utils/TableView/TableLoading/TableLoading.jsx";
 import UserContext from "../../../../../App.js";
 import { getEmployeeById } from "../../../../../utils/RequestsAPI/Employees.jsx";
 
@@ -105,8 +104,10 @@ const NewRecordWork = (props) => {
       setIsLoading(true);
       getEmployeeById(query.get("employee"))
         .then((res) => res.json())
-        .then((res) => setCurEmployee(res));
+        .then((res) => setCurEmployee(res))
+        .then(() => setIsLoading(false));
     }
+    if (isLoading) return;
     setIsLoading(true);
     getWorkReportByDateAndEmployee(
       employeeId,
@@ -162,7 +163,15 @@ const NewRecordWork = (props) => {
     setWrapperHeight(
       document.getElementById(`${curPage}page`)?.clientHeight + "px"
     );
-  }, [worktimeInputs, curPage, curEmployee, curDate, isLoading]);
+  }, [
+    worktimeInputs,
+    curPage,
+    curEmployee,
+    curDate,
+    isLoading,
+    products,
+    categories,
+  ]);
 
   const handleClickPrevPage = () => {
     if (curPage !== 0) {
