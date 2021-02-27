@@ -305,12 +305,15 @@ const NewPriceList = () => {
 
   const handleOpenNewPDF = () => {
     setIsLoading(true);
-    getPriceListPdfTextMini(
+    getPriceListPdfText(
       categories,
       priceList.filter((item) => item.active),
       sortPriceList(optionalCols.filter((item) => item.active && item)),
       locationTypes,
-      selectedLtd
+      disclaimer,
+      titlePage,
+      selectedLtd,
+      true
     ).then(() => {
       setIsLoading(false);
     });
