@@ -30,7 +30,6 @@ export const defaultStylesPDF = {
   tableHeader: {
     fontSize: 12,
     bold: true,
-    italics: true,
     alignment: "left",
   },
 };

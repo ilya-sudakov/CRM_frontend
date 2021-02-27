@@ -16,7 +16,6 @@ export const updateData = (worksList, selectedWork, newData) => {
 };
 
 const getDaysWorkText = (workItem) => {
-  console.log(workItem);
   let workText = workItem.works.map((work) => {
     const productText = work.product
       .map((product) => `${product.name} - ${product.quantity} шт\n`)
@@ -24,8 +23,17 @@ const getDaysWorkText = (workItem) => {
     const draftText = work.draft
       .map((draft) => `${draft.name} - ${draft.quantity} шт\n`)
       .join("");
-    console.log(productText, draftText);
-    return `${work.workName} - ${work.hours} ч\n ${productText} ${draftText}`;
+    return [
+      `${work.workName} - ${work.hours} ч\n`,
+      { text: productText, fontSize: 10, color: "#666" },
+      { text: draftText, fontSize: 10, color: "#666" },
+      work.comment && {
+        text: `Комментарий: ${work.comment}`,
+        fontSize: 10,
+        color: "#999",
+        italics: true,
+      },
+    ];
   });
   return workText;
 };
@@ -59,12 +67,12 @@ const getWorkshopList = (
   const listItems = filteredEmployees.map((employee) => [
     { text: getEmployeeNameText(employee), style: "regularText", fontSize: 11 },
     {
-      text: getDaysWorkText(yesterdaysWork[workshop.engName][employee.id]),
+      stack: getDaysWorkText(yesterdaysWork[workshop.engName][employee.id]),
       style: "regularText",
       fontSize: 12,
     },
     {
-      text: getDaysWorkText(todaysWork[workshop.engName][employee.id]),
+      stack: getDaysWorkText(todaysWork[workshop.engName][employee.id]),
       style: "regularText",
       fontSize: 12,
     },

@@ -173,14 +173,14 @@ const ProductionJournal = ({}) => {
               inputName="Выбор даты:"
               handleDateChange={(date) => setCurDay(date)}
             />
-            {/* <Button
+            <Button
               className="main-window__button main-window__button--inverted"
               inverted
               text="Печатная форма"
               onClick={() =>
                 createWorkListPDF(employees, todaysWork, yesterdaysWork, curDay)
               }
-            /> */}
+            />
           </>
         }
       />
