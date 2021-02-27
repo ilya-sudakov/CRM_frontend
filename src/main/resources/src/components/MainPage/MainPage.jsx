@@ -48,7 +48,6 @@ import {
   EditPackaging,
   ReportTablePage,
   RiggingList,
-  ProductionJournal,
   StatisticsPage,
   ReportsPage,
   EmployeeReportPage,
@@ -514,19 +513,6 @@ const MainPage = () => {
                   />
                   <PrivateRoute
                     path="/work-management/journal/"
-                    component={ProductionJournal}
-                    userHasAccess={userContext.userHasAccess}
-                    userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
-                  />
-                  <PrivateRoute
-                    path="/work-management/journal-new/"
                     component={ProductionJournalNew}
                     allowedRoles={[
                       "ROLE_ADMIN",

@@ -1,12 +1,12 @@
 import {
   formatDateStringNoYear,
   getEmployeeNameText,
-} from "../../../../../../utils/functions.jsx";
+} from "../../../../../utils/functions.jsx";
 import {
   createPDF,
   defaultStylesPDF,
-} from "../../../../../../utils/pdfFunctions.jsx";
-import { sortByField } from "../../../../../../utils/sorting/sorting.js";
+} from "../../../../../utils/pdfFunctions.jsx";
+import { sortByField } from "../../../../../utils/sorting/sorting.js";
 import { defaultJournalWorkshops } from "./objects.js";
 
 export const updateData = (worksList, selectedWork, newData) => {

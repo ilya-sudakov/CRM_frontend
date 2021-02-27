@@ -54,14 +54,8 @@ const RecordWork = lazy(() =>
   import("./GeneralPage/WorkManagement/RecordWork/RecordWork.jsx")
 );
 
-const ProductionJournal = lazy(() =>
-  import("./GeneralPage/WorkManagement/ProductionJournal/ProductionJournal.jsx")
-);
-
 const ProductionJournalNew = lazy(() =>
-  import(
-    "./GeneralPage/WorkManagement/ProductionJournal/ProductionJournalNew/ProductionJournalNew.jsx"
-  )
+  import("./GeneralPage/WorkManagement/ProductionJournal/ProductionJournal.jsx")
 );
 
 const newClient = lazy(() => import("./Clients/NewClient/NewClient.jsx"));
@@ -236,7 +230,6 @@ export {
   Notifications,
   WorkManagement,
   RecordWork,
-  ProductionJournal,
   ProductionJournalNew,
   WorkManagementPage,
   Products,

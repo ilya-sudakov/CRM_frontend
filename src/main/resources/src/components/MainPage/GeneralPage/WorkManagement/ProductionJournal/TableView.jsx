@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
-import EditSVG from "../../../../../../../../../../assets/tableview/edit.inline.svg";
-import ShareSVG from "../../../../../../../../../../assets/tableview/bx-window-open.inline.svg";
-import AddToButton from "../../../../../../utils/Form/AddToButton/AddToButton.jsx";
+import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import ChevronSVG from "../../../../../../../../../assets/tableview/chevron-down.inline.svg";
+import EditSVG from "../../../../../../../../../assets/tableview/edit.inline.svg";
+import ShareSVG from "../../../../../../../../../assets/tableview/bx-window-open.inline.svg";
+import AddToButton from "../../../../../utils/Form/AddToButton/AddToButton.jsx";
 import {
   dateDiffInDays,
   formatDateStringNoYear,
-} from "../../../../../../utils/functions.jsx";
+} from "../../../../../utils/functions.jsx";
 import { Link } from "react-router-dom";
-import { sortByField } from "../../../../../../utils/sorting/sorting.js";
+import { sortByField } from "../../../../../utils/sorting/sorting.js";
 import { defaultJournalWorkshops } from "./objects.js";
 
 const TableView = ({

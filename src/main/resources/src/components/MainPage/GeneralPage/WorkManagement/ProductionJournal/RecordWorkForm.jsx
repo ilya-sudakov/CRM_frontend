@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./RecordWorkForm.scss";
-import "../../../../../../utils/Form/Form.scss";
-import ErrorMessage from "../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import InputDate from "../../../../../../utils/Form/InputDate/InputDate.jsx";
-import SelectEmployee from "../../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
+import "../../../../../utils/Form/Form.scss";
+import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import SelectEmployee from "../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
 import {
-  getRecordedWorkById,
-  editRecordedWork,
   deleteProductFromRecordedWork,
-  addProductToRecordedWork,
-  addRecordedWork,
   deleteDraftFromRecordedWork,
-  addDraftToRecordedWork,
   deleteRecordedWork,
-} from "../../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import Button from "../../../../../../utils/Form/Button/Button.jsx";
-import useProductsList from "../../../../../../utils/hooks/useProductsList/useProductsList.js";
-import SelectWork from "../../SelectWork/SelectWork.jsx";
-import MessageForUser from "../../../../../../utils/Form/MessageForUser/MessageForUser.jsx";
-import { submitWorkData } from "../../RecordWork/functions.js";
+} from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import useProductsList from "../../../../../utils/hooks/useProductsList/useProductsList.js";
+import SelectWork from "../SelectWork/SelectWork.jsx";
+import MessageForUser from "../../../../../utils/Form/MessageForUser/MessageForUser.jsx";
+import { submitWorkData } from "../RecordWork/functions.js";
 
 const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
