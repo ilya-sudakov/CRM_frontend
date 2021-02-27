@@ -10,22 +10,18 @@ import {
 } from "../../../../../../utils/functions.jsx";
 import { Link } from "react-router-dom";
 import { sortByField } from "../../../../../../utils/sorting/sorting.js";
+import { defaultJournalWorkshops } from "./objects.js";
 
 const TableView = ({
   isLoading,
-  employeesNotes,
+  employees,
   searchQuery,
   curDay,
   todaysWork,
   yesterdaysWork,
   handleOpenWorkForm,
 }) => {
-  const [workshops, setWorkshops] = useState({
-    lemz: { active: true, name: "ЦехЛЭМЗ", engName: "lemz" },
-    lepsari: { active: true, name: "ЦехЛепсари", engName: "lepsari" },
-    ligovskiy: { active: true, name: "ЦехЛиговский", engName: "ligovskiy" },
-    office: { active: true, name: "Офис", engName: "office" },
-  });
+  const [workshops, setWorkshops] = useState(defaultJournalWorkshops);
   const filterEmployees = (employees, searchQuery) => {
     const query = searchQuery.toLowerCase();
     return employees.filter(
@@ -42,7 +38,7 @@ const TableView = ({
     <div className="notes-journal__list">
       {Object.values(workshops).map((workshop) => {
         const filteredEmployees = sortByField(
-          filterEmployees(employeesNotes, searchQuery).filter(
+          filterEmployees(employees, searchQuery).filter(
             (employee) => employee.workshop === workshop.name
           ),
           {

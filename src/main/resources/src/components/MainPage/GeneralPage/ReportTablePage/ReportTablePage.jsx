@@ -144,7 +144,7 @@ const ReportTablePage = () => {
           <div className="main-window__title">Табель</div>
         </div>
         <FloatingPlus
-          linkTo="/work-management/record-time/new"
+          linkTo="/work-management/record-time"
           visibility={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
         />
         <SummaryPage

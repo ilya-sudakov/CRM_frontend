@@ -23,6 +23,9 @@
 
         .input_date {
             margin-bottom: 0;
+            width: fit-content;
+            // margin-top: 5px;
+            // margin-right: 10px;
 
             &__input {
                 flex-direction: row;

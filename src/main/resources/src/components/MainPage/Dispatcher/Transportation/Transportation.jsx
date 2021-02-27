@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import pdfMake from "pdfmake";
 import "./Transportation.scss";
 import "../../../../utils/MainWindow/MainWindow.scss";
 import SearchBar from "../../SearchBar/SearchBar.jsx";
@@ -9,7 +8,10 @@ import {
   getTransportations,
   deleteTransportation,
 } from "../../../../utils/RequestsAPI/Transportation.jsx";
-import { getTransportationListPdfText } from "../../../../utils/pdfFunctions.jsx";
+import {
+  createPDF,
+  getTransportationListPdfText,
+} from "../../../../utils/pdfFunctions.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
@@ -115,7 +117,7 @@ const Transportation = (props) => {
           } else return 0;
         })
     );
-    pdfMake.createPdf(dd).print();
+    createPDF(dd);
   };
 
   useEffect(() => {

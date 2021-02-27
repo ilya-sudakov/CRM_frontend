@@ -473,3 +473,7 @@ export const changeVisibilityOfListItem = (list, index) => {
     element.id == index ? { id: index, hidden: !element.hidden } : element
   );
 };
+
+export const getEmployeeNameText = (employee) => {
+  return `${employee.lastName} ${employee.name} ${employee.middleName}`;
+};

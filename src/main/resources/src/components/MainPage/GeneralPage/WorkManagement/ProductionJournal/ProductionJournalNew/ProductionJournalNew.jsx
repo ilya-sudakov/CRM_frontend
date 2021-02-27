@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
-import useEmployeesList from "../../../../../../utils/hooks/useEmployeesList.js";
 import SearchBar from "../../../../SearchBar/SearchBar.jsx";
 import ControlPanel from "../../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import ChevronSVG from "../../../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import InputDate from "../../../../../../utils/Form/InputDate/InputDate.jsx";
 import TableView from "./TableView.jsx";
 import MessageForUser from "../../../../../../utils/Form/MessageForUser/MessageForUser.jsx";
-import Button from "../../../../../../utils/Form/Button/Button.jsx";
-import {
-  formatDateString,
-  formatDateStringNoYear,
-} from "../../../../../../utils/functions.jsx";
+import { formatDateStringNoYear } from "../../../../../../utils/functions.jsx";
 import { days } from "../../../../../../utils/dataObjects.js";
 
 import "./ProductionJournalNew.scss";
 import useWorkReport from "../../../../../../utils/hooks/useWorkReport.js";
 import useFormWindow from "../../../../../../utils/hooks/useFormWindow.js";
 import RecordWorkForm from "./RecordWorkForm.jsx";
+import { createWorkListPDF, updateData } from "./functions.js";
+import Button from "../../../../../../utils/Form/Button/Button.jsx";
 
 const ProductionJournalNew = ({}) => {
   const [showMessage, setShowMessage] = useState(false);
@@ -64,12 +61,6 @@ const ProductionJournalNew = ({}) => {
     document.title = "Дневник производства";
     console.log(todaysWork, yesterdaysWork);
   }, [todaysWork, yesterdaysWork]);
-
-  const updateData = (worksList, selectedWork, newData) => {
-    const temp = worksList;
-    temp.splice(worksList.indexOf(selectedWork), 1, newData);
-    return temp;
-  };
 
   const defaultWorkItem = {
     product: [],
@@ -176,11 +167,21 @@ const ProductionJournalNew = ({}) => {
       />
       <ControlPanel
         buttons={
-          <InputDate
-            selected={Date.parse(curDay)}
-            inputName="Выбор даты:"
-            handleDateChange={(date) => setCurDay(date)}
-          />
+          <>
+            <InputDate
+              selected={Date.parse(curDay)}
+              inputName="Выбор даты:"
+              handleDateChange={(date) => setCurDay(date)}
+            />
+            {/* <Button
+              className="main-window__button main-window__button--inverted"
+              inverted
+              text="Печатная форма"
+              onClick={() =>
+                createWorkListPDF(employees, todaysWork, yesterdaysWork, curDay)
+              }
+            /> */}
+          </>
         }
       />
       <div className="notes-journal__current-date">
@@ -195,7 +196,7 @@ const ProductionJournalNew = ({}) => {
         todaysWork={todaysWork}
         yesterdaysWork={yesterdaysWork}
         searchQuery={searchQuery}
-        employeesNotes={employees}
+        employees={employees}
         handleOpenWorkForm={handleOpenWorkForm}
       />
     </div>

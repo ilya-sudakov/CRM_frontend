@@ -11,6 +11,35 @@ import proprietaryItemImg from "../../../../../assets/priceList/rospatent.png";
 import { formatDateString, getDataUri } from "./functions.jsx";
 import { sortByField } from "./sorting/sorting.js";
 
+export const defaultStylesPDF = {
+  header: {
+    fontSize: 20,
+    bold: true,
+  },
+  title: {
+    fontSize: 22,
+    bold: true,
+  },
+  subheader: {
+    fontSize: 16,
+  },
+  regularText: {
+    fontSize: 10,
+    alignment: "left",
+  },
+  tableHeader: {
+    fontSize: 12,
+    bold: true,
+    italics: true,
+    alignment: "left",
+  },
+};
+
+export const createPDF = (data) => {
+  pdfMake.vfs = font.pdfMake.vfs;
+  return pdfMake.createPdf(data).print();
+};
+
 export const getTransportationListPdfText = (transportation) => {
   const transportationList = [];
   let transportationInfo = [];
@@ -53,30 +82,7 @@ export const getTransportationListPdfText = (transportation) => {
       },
       ...transportationList,
     ],
-    styles: {
-      header: {
-        fontSize: 22,
-        bold: true,
-      },
-      title: {
-        fontSize: 24,
-        bold: true,
-      },
-      subheader: {
-        fontSize: 18,
-        bold: true,
-      },
-      regularText: {
-        fontSize: 10,
-        alignment: "center",
-      },
-      tableHeader: {
-        fontSize: 12,
-        bold: true,
-        italics: true,
-        alignment: "center",
-      },
-    },
+    styles: defaultStylesPDF,
   };
   pdfMake.vfs = font.pdfMake.vfs;
   return dd;
