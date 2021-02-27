@@ -171,26 +171,27 @@ const sortRequestProducts = (data) => {
   });
 };
 
-export const getProductsFromRequestsListPdfText = (products, workshopName) => {
-  const formatProducts = (products) => [
-    {
-      table: {
-        margin: [0, 5, 0, 5],
-        widths: ["*", 100, 80, 80],
-        body: [
-          [
-            { text: "Название", style: "tableHeader" },
-            { text: "Кол-во", style: "tableHeader" },
-            { text: "", style: "tableHeader" },
-            { text: "", style: "tableHeader" },
-          ],
-          ...sortRequestProducts(Object.entries(products)).map((product) => {
-            return [product[0], product[1], "", ""];
-          }),
+const formatProducts = (products) => [
+  {
+    table: {
+      margin: [0, 5, 0, 5],
+      widths: ["*", 100, 80, 80],
+      body: [
+        [
+          { text: "Название", style: "tableHeader" },
+          { text: "Кол-во", style: "tableHeader" },
+          { text: "", style: "tableHeader" },
+          { text: "", style: "tableHeader" },
         ],
-      },
+        ...sortRequestProducts(Object.entries(products)).map((product) => {
+          return [product[0], product[1], "", ""];
+        }),
+      ],
     },
-  ];
+  },
+];
+
+export const getProductsFromRequestsListPdfText = (products, workshopName) => {
   const dd = {
     info: {
       title: "Очередь производства - список",
@@ -228,6 +229,24 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
   createPDF(dd);
 };
 
+const getEmployeesTablePDF = (employeeInfo) => {
+  return {
+    table: {
+      widths: ["*", 70, 80, 120, 100],
+      body: [
+        [
+          { text: "ФИО", style: "tableHeader" },
+          { text: "Дата рождения", style: "tableHeader" },
+          { text: "Гражданство", style: "tableHeader" },
+          { text: "Должность", style: "tableHeader" },
+          { text: "", style: "tableHeader" },
+        ],
+        ...employeeInfo,
+      ],
+    },
+  };
+};
+
 export const getEmployeesListPdfText = (employees, workshops) => {
   const employeesList = [];
   workshops.map((workshop) => {
@@ -247,21 +266,7 @@ export const getEmployeesListPdfText = (employees, workshops) => {
         ]);
       }
     });
-    employeesList.push({
-      table: {
-        widths: ["*", 70, 80, 120, 100],
-        body: [
-          [
-            { text: "ФИО", style: "tableHeader" },
-            { text: "Дата рождения", style: "tableHeader" },
-            { text: "Гражданство", style: "tableHeader" },
-            { text: "Должность", style: "tableHeader" },
-            { text: "", style: "tableHeader" },
-          ],
-          ...employeeInfo,
-        ],
-      },
-    });
+    employeesList.push(getEmployeesTablePDF(employeeInfo));
   });
   var dd = {
     info: {
@@ -293,21 +298,7 @@ export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
       "",
     ]);
   });
-  employeesList.push({
-    table: {
-      widths: ["*", 70, 80, 120, 100],
-      body: [
-        [
-          { text: "ФИО", style: "tableHeader" },
-          { text: "Дата рождения", style: "tableHeader" },
-          { text: "Гражданство", style: "tableHeader" },
-          { text: "Должность", style: "tableHeader" },
-          { text: "", style: "tableHeader" },
-        ],
-        ...employeeInfo,
-      ],
-    },
-  });
+  employeesList.push(getEmployeesTablePDF(employeeInfo));
   var dd = {
     info: {
       title: "Список сотрудников - " + workshop,
