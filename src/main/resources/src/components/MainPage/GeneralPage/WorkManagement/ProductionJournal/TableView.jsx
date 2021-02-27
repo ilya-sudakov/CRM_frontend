@@ -77,6 +77,10 @@ const TableView = ({
                   );
                   const isWeekend =
                     prevDay.getDay() === 0 || prevDay.getDay() === 6;
+                  const screenIsMobile =
+                    (window.innerWidth ||
+                      document.documentElement.clientWidth ||
+                      document.body.clientWidth) <= 768;
                   return (
                     <div className="employees__row">
                       <span>
@@ -92,17 +96,20 @@ const TableView = ({
                         </Link>
                       </span>
                       <div className="employees__days-wrapper">
-                        <DayItem
-                          isWeekend={isWeekend}
-                          handleOpenWorkForm={handleOpenWorkForm}
-                          dayType="yesterday"
-                          employee={employee}
-                          workshopName={workshop.engName}
-                          curDay={curDay}
-                          works={
-                            yesterdaysWork[workshop.engName][employee.id]?.works
-                          }
-                        />
+                        {screenIsMobile ? null : (
+                          <DayItem
+                            isWeekend={isWeekend}
+                            handleOpenWorkForm={handleOpenWorkForm}
+                            dayType="yesterday"
+                            employee={employee}
+                            workshopName={workshop.engName}
+                            curDay={curDay}
+                            works={
+                              yesterdaysWork[workshop.engName][employee.id]
+                                ?.works
+                            }
+                          />
+                        )}
                         <DayItem
                           isWeekend={isWeekend}
                           handleOpenWorkForm={handleOpenWorkForm}
