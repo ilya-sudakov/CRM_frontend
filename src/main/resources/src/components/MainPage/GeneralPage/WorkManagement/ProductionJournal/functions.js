@@ -88,7 +88,7 @@ const getWorkshopList = (
     },
     {
       table: {
-        widths: [170, "*", "*"],
+        widths: [150, "*", "*"],
         body: [
           [
             { text: "ФИО сотрудника", style: "tableHeader" },
