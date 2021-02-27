@@ -187,6 +187,11 @@ const NewRecordWork = (props) => {
     }
   };
 
+  const screenIsMobile =
+    (window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth) <= 768;
+
   return (
     <div className="record-work">
       <div className="main-form">
@@ -198,7 +203,9 @@ const NewRecordWork = (props) => {
         <form
           className="main-form__form"
           style={{
-            minHeight: `calc(${wrapperHeight} + 45px)`,
+            minHeight: `calc(${wrapperHeight} + ${
+              screenIsMobile ? 80 : 45
+            }px)`,
           }}
         >
           <div className="main-form__header main-form__header--full">

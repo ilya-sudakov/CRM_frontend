@@ -140,4 +140,18 @@
       }
     }
   }
+
+  @media (max-width: 500px) {
+    .select-from-button {
+      &__link {
+        margin-left: 0;
+        padding-left: 0;
+      }
+    }
+    .select-employee__input_name {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+  }
 }
