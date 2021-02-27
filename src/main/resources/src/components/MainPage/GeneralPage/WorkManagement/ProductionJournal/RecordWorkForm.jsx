@@ -37,7 +37,6 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const [isSaved, setIsSaved] = useState(false);
   const { products, categories, isLoadingProducts } = useProductsList();
   const [totalHours, setTotalHours] = useState(0);
-  const [itemId, setItemId] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
 
   const validateField = (fieldName, value) => {
@@ -62,31 +61,6 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
           });
         }
         break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      date: false,
-      employee: false,
-      works: false,
-    });
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setWorkTimeErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      setShowError(true);
-      return false;
     }
   };
 
@@ -136,7 +110,8 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
       (inputs?.employee?.lastName && worktimeInputs.employee === null) ||
       inputs.employee?.id !== worktimeInputs.employee?.id ||
       inputs.date !== worktimeInputs.date ||
-      inputs.type !== worktimeInputs.type
+      inputs.type !== worktimeInputs.type ||
+      inputs.works !== worktimeInputs.works
     ) {
       setWorkTimeInputs({ ...inputs, originalWorks: inputs.works });
     }
