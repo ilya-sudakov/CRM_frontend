@@ -61,18 +61,28 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
               return filteredData.length > 0 ? (
                 <div className="employee-info__wrapper">
                   <div className="employee-info__employee-title employee-info__employee-title--date">
-                    {`${formatDateStringNoYear(date)} - ${days[date.getDay()]}`}
+                    <Link
+                      to={`/work-management/record-time?employee=${
+                        selectedInfo?.employee?.id
+                      }&date=${date.getFullYear()},${
+                        date.getMonth() + 1
+                      },${date.getDate()}`}
+                    >
+                      {`${formatDateStringNoYear(date)} - ${
+                        days[date.getDay()]
+                      }`}
+                      <img
+                        className="employee-info__img"
+                        src={editIcon}
+                        alt=""
+                      />
+                    </Link>
                   </div>
                   {filteredData?.map((item) =>
                     item.length > 0 ? (
-                      item.map((workItem) => (
-                        <WorksItem
-                          item={workItem}
-                          selectedInfo={selectedInfo}
-                        />
-                      ))
+                      item.map((workItem) => <WorksItem item={workItem} />)
                     ) : (
-                      <WorksItem item={item} selectedInfo={selectedInfo} />
+                      <WorksItem item={item} />
                     )
                   )}
                 </div>
@@ -88,7 +98,7 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
 
 export default EmployeeInfoPanel;
 
-const WorksItem = ({ item, selectedInfo }) => {
+const WorksItem = ({ item }) => {
   return (
     <div
       className="employee-info__employee-works-item"
@@ -98,14 +108,7 @@ const WorksItem = ({ item, selectedInfo }) => {
         marginLeft: "15px",
       }}
     >
-      <span>
-        <Link
-          to={`/work-management/record-time?employee=${selectedInfo?.employee?.id}&date=${item.year},${item.month},${item.day}`}
-        >
-          {item.workList.work}
-          <img className="employee-info__img" src={editIcon} alt="" />
-        </Link>
-      </span>
+      <span>{item.workList.work}</span>
       <span className="employee-info__employee-hours">{`${item.hours} ч`}</span>
       {(item.workControlProduct.length > 0 || item?.partsWorks.length > 0) && (
         <div className="employee-info__list">

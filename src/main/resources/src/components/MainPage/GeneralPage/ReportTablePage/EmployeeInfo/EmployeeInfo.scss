@@ -83,12 +83,37 @@
 
             &--date {
                 font-size: 1.1rem;
-                border-bottom: 1px solid #bbbbbb;
+                border-bottom: 1px solid #bbb;
 
                 &::after {
                     height: 2px;
                     top: calc(100% + 1px);
                     width: 100%;
+                }
+
+                a {
+                    color: #333;
+                    display: inline-block;
+                    flex-direction: row;
+                    align-items: center;
+                    width: fit-content;
+                    cursor: pointer;
+                    line-height: 1.5rem;
+
+                    .employee-info__img {
+                        margin-bottom: -5px;
+                        margin-left: 5px;
+                        max-width: 22px;
+                        transition: 100ms ease-in-out;
+                    }
+
+                    &:hover {
+                        color: #000;
+
+                        .employee-info__img {
+                            margin-left: 10px;
+                        }
+                    }
                 }
             }
         }
@@ -127,26 +152,6 @@
                 &:last-child {
                     .main-window__list {
                         margin-bottom: 0;
-                    }
-                }
-
-                a {
-                    color: #000000;
-                    display: inline-block;
-                    flex-direction: row;
-                    align-items: center;
-                    width: fit-content;
-                    cursor: pointer;
-                    line-height: 1.5rem;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-
-                    .employee-info__img {
-                        margin-bottom: -5px;
-                        margin-left: 5px;
-                        max-width: 22px;
                     }
                 }
 
