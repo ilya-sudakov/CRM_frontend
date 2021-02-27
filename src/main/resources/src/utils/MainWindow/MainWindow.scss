@@ -1095,6 +1095,17 @@
 
       .main-window__description {
         padding: 0 15px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+
+        &:focus,
+        &:hover {
+          display: block;
+          max-height: none;
+          overflow: auto;
+        }
       }
 
       &--full {

@@ -63,6 +63,7 @@ const TasksWidget = () => {
           tasks={tasks}
           isLoading={isLoading}
           controlDates={controlDates}
+          userHasAccess={userContext.userHasAccess}
         />
       }
     />
