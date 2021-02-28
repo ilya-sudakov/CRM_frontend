@@ -142,8 +142,8 @@ const getPriceListHeader = async (workSheet, workBook, lastColumnNumber) => {
   temp.height = 25;
 };
 
-const filterPriceListItems = (priceList) => {
-  return priceList.filter((item) => item.category === category.name);
+const filterPriceListItems = (priceList, category) => {
+  return priceList.filter((item) => item.category === category);
 };
 
 const greyBorder = {
@@ -340,196 +340,250 @@ const getPriceListProductTopImages = (
   }
 };
 
+const getPriceListProductProprietaryText = async (
+  workBook,
+  workSheet,
+  item,
+  lastColumnNumber
+) => {
+  const rospatentTempImg = await getDataUri("assets/rospatent.png");
+  const rospatentImg = workBook.addImage({
+    base64: rospatentTempImg,
+    extension: "png",
+  });
+  workSheet.addImage(rospatentImg, {
+    tl: {
+      col: lastColumnNumber - 2 + 0.6,
+      row: workSheet.rowCount - 1 + 0.3,
+    },
+    ext: { width: 125, height: 80 },
+  });
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).value =
+    item.proprietaryItemText1 !== undefined
+      ? item.proprietaryItemText1 + "\n"
+      : item.proprietaryItemText2 + "\n";
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
+    size: 12,
+  };
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).alignment = {
+    vertical: "bottom",
+    horizontal: "center",
+    wrapText: true,
+  };
+};
+
+const getPriceListProductTableFakeHeader = (workSheet, lastColumnNumber) => {
+  const fakeTableHeaderRow = workSheet.addRow([
+    "",
+    "",
+    "",
+    "",
+    "Стоимость 1 шт., ₽",
+  ]);
+  fakeTableHeaderRow.font = {
+    italic: true,
+  };
+  fakeTableHeaderRow.height = 20;
+  workSheet.getCell(workSheet.rowCount, 5).border = greyBorder;
+  workSheet.mergeCells(
+    workSheet.rowCount,
+    5,
+    workSheet.rowCount,
+    lastColumnNumber
+  );
+};
+
+const getPriceListProductTableHeader = (
+  workSheet,
+  item,
+  lastColumnNumber,
+  optionalCols
+) => {
+  const tableHeaderRow = workSheet.addRow([
+    "Артикул",
+    "Название",
+    "",
+    "Ед. изм.",
+    item.retailName,
+    item.firstPriceName,
+    item.secondPriceName,
+    ...optionalCols.map((column) =>
+      column.property === "partnerPrice"
+        ? item.partnerName
+        : column.property === "dealerPrice"
+        ? item.dealerName
+        : column.property === "distributorPrice" && item.distributorName
+    ),
+  ]);
+  for (let i = 1; i <= lastColumnNumber; i++) {
+    workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
+  }
+  workSheet.mergeCells(workSheet.rowCount, 2, workSheet.rowCount, 3);
+  tableHeaderRow.font = {
+    color: {
+      argb: "FF111111",
+    },
+  };
+  tableHeaderRow.height = 30;
+};
+
+const getPriceListProductTableList = (
+  workSheet,
+  item,
+  lastColumnNumber,
+  optionalCols
+) => {
+  item.products.map((product) => {
+    const productRow = workSheet.addRow([
+      product.number,
+      product.name,
+      "",
+      product.units,
+      product.retailPrice,
+      product.firstPrice,
+      product.secondPrice,
+      ...optionalCols.map((column) =>
+        product[column.property] !== undefined
+          ? product[column.property] !== "" &&
+            !Number.isNaN(product[column.property]) &&
+            product[column.property] !== 0
+            ? product[column.property]
+            : " "
+          : " "
+      ),
+    ]);
+    productRow.height = 25;
+    for (let i = 1; i <= lastColumnNumber; i++) {
+      workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
+    }
+    return workSheet.mergeCells(workSheet.rowCount, 2, workSheet.rowCount, 3);
+  });
+};
+
+const getPriceListProductInfoText = (
+  workSheet,
+  infoText,
+  lastColumnNumber,
+  optionalCols
+) => {
+  workSheet.addRow([""]);
+  const rowInfoText = workSheet.addRow([infoText]);
+  rowInfoText.font = {
+    size: 11,
+    italic: true,
+    color: {
+      argb: "FF000000",
+    },
+  };
+  workSheet.getCell(workSheet.rowCount, 1).border = {
+    right: { style: "medium", color: { argb: "FFFF1B5F" } },
+  };
+  workSheet.getCell(workSheet.rowCount, 1).alignment = {
+    vertical: "top",
+    horizontal: "left",
+    wrapText: true,
+    indent: 1,
+  };
+  workSheet.mergeCells(
+    workSheet.rowCount,
+    1,
+    workSheet.rowCount,
+    lastColumnNumber
+  );
+  rowInfoText.height =
+    (infoText.split(" ").length > 17 + optionalCols.length
+      ? infoText.split(" ").length / (17 + optionalCols.length)
+      : 1.5) * 22;
+};
+
+const getPriceListProductGroupTable = (
+  workSheet,
+  item,
+  lastColumnNumber,
+  optionalCols
+) => {
+  getPriceListProductTableFakeHeader(workSheet, lastColumnNumber);
+  getPriceListProductTableHeader(
+    workSheet,
+    item,
+    lastColumnNumber,
+    optionalCols
+  );
+  getPriceListProductTableList(workSheet, item, lastColumnNumber, optionalCols);
+};
+
+const getPriceListProductGroup = async (
+  workBook,
+  workSheet,
+  item,
+  lastColumnNumber,
+  optionalCols
+) => {
+  getPriceListProductGroupHeader(workSheet, item, lastColumnNumber);
+  getPriceListProductDescription(workSheet, item.description, lastColumnNumber); // adding product group description
+  const isProprietary =
+    item.proprietaryItemText1 !== undefined ||
+    item.proprietaryItemText2 !== undefined;
+  //adding 4 group images
+  const hasImages =
+    item.groupImg1 !== "" ||
+    item.groupImg2 !== "" ||
+    item.groupImg3 !== "" ||
+    item.groupImg4 !== "";
+  if (hasImages || isProprietary) {
+    getPriceListProductTopImages(workSheet, workBook, item, lastColumnNumber);
+  }
+  //adding patent data rospatentTempImg
+  if (isProprietary) {
+    await getPriceListProductProprietaryText(
+      workBook,
+      workSheet,
+      item,
+      lastColumnNumber
+    );
+  }
+  //adding products
+  getPriceListProductGroupTable(
+    workSheet,
+    item,
+    lastColumnNumber,
+    optionalCols
+  );
+  getPriceListProductInfoText(workSheet, item, lastColumnNumber, optionalCols); //adding infoText
+  const spaceBetweenRow = workSheet.addRow([""]);
+  spaceBetweenRow.height = 50;
+};
+
 export async function getPriceListPdfExcel(
   categories = [],
   priceList = [],
-  optionalCols = []
+  optionalCols = [],
+  isMini = false
 ) {
   let workBook = new Excel.Workbook();
   workBook.creator = "Osfix";
   workBook.created = new Date();
   const workSheet = workBook.addWorksheet("Каталог продукции");
   const lastColumnNumber = 7 + optionalCols.length;
-  const rospatentTempImg = await getDataUri("assets/rospatent.png");
   workSheet.columns = getPriceListDefaultColumns(); // default columns
   await getPriceListHeader(workSheet, workBook, lastColumnNumber); // company header
   Promise.all(
     categories.map((category) => {
-      const filteredData = filterPriceListItems(priceList);
+      const filteredData = filterPriceListItems(priceList, category.name);
       //adding category name
       if (filteredData.length > 0) {
         getPriceListCategoryName(workSheet, category.name, lastColumnNumber);
       }
-      return filteredData.map((item) => {
-        getPriceListProductGroupHeader(workSheet, item, lastColumnNumber);
-        getPriceListProductDescription(
-          workSheet,
-          item.description,
-          lastColumnNumber
-        ); // adding product group description
-
-        const isProprietary =
-          item.proprietaryItemText1 !== undefined ||
-          item.proprietaryItemText2 !== undefined;
-        //adding 4 group images
-        if (
-          item.groupImg1 !== "" ||
-          item.groupImg2 !== "" ||
-          item.groupImg3 !== "" ||
-          item.groupImg4 !== "" ||
-          isProprietary
-        ) {
-          getPriceListProductTopImages(
-            workSheet,
+      return filteredData.map(
+        async (item) =>
+          await getPriceListProductGroup(
             workBook,
+            workSheet,
             item,
-            lastColumnNumber
-          );
-        }
-
-        //adding patent data rospatentTempImg
-        if (isProprietary) {
-          const rospatentImg = workBook.addImage({
-            base64: rospatentTempImg,
-            extension: "png",
-          });
-          workSheet.addImage(rospatentImg, {
-            tl: {
-              col: lastColumnNumber - 2 + 0.6,
-              row: workSheet.rowCount - 1 + 0.3,
-            },
-            ext: { width: 125, height: 80 },
-          });
-          workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).value =
-            item.proprietaryItemText1 !== undefined
-              ? item.proprietaryItemText1 + "\n"
-              : item.proprietaryItemText2 + "\n";
-          workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
-            size: 12,
-          };
-          workSheet.getCell(
-            workSheet.rowCount,
-            lastColumnNumber - 1
-          ).alignment = {
-            vertical: "bottom",
-            horizontal: "center",
-            wrapText: true,
-          };
-        }
-
-        //adding products
-        const fakeTableHeaderRow = workSheet.addRow([
-          "",
-          "",
-          "",
-          "",
-          "Стоимость 1 шт., ₽",
-        ]);
-        fakeTableHeaderRow.font = {
-          italic: true,
-          // name: 'DejaVu',
-          // family: 2,
-        };
-        fakeTableHeaderRow.height = 20;
-        workSheet.getCell(workSheet.rowCount, 5).border = greyBorder;
-        workSheet.mergeCells(
-          workSheet.rowCount,
-          5,
-          workSheet.rowCount,
-          lastColumnNumber
-        );
-
-        const tableHeaderRow = workSheet.addRow([
-          "Артикул",
-          "Название",
-          "",
-          "Ед. изм.",
-          item.retailName,
-          item.firstPriceName,
-          item.secondPriceName,
-          ...optionalCols.map((column) =>
-            column.property === "partnerPrice"
-              ? item.partnerName
-              : column.property === "dealerPrice"
-              ? item.dealerName
-              : column.property === "distributorPrice" && item.distributorName
-          ),
-        ]);
-        for (let i = 1; i <= lastColumnNumber; i++) {
-          workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
-        }
-        workSheet.mergeCells(workSheet.rowCount, 2, workSheet.rowCount, 3);
-        tableHeaderRow.font = {
-          color: {
-            argb: "FF111111",
-          },
-        };
-        tableHeaderRow.height = 30;
-        item.products.map((product) => {
-          const productRow = workSheet.addRow([
-            product.number,
-            product.name,
-            "",
-            product.units,
-            product.retailPrice,
-            product.firstPrice,
-            product.secondPrice,
-            ...optionalCols.map((column) =>
-              product[column.property] !== undefined
-                ? product[column.property] !== "" &&
-                  !Number.isNaN(product[column.property]) &&
-                  product[column.property] !== 0
-                  ? product[column.property]
-                  : " "
-                : " "
-            ),
-          ]);
-          productRow.height = 25;
-          for (let i = 1; i <= lastColumnNumber; i++) {
-            workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
-          }
-          return workSheet.mergeCells(
-            workSheet.rowCount,
-            2,
-            workSheet.rowCount,
-            3
-          );
-        });
-
-        //adding infoText
-        workSheet.addRow([""]);
-        const rowInfoText = workSheet.addRow([item.infoText]);
-        rowInfoText.font = {
-          size: 11,
-          italic: true,
-          color: {
-            argb: "FF000000",
-          },
-        };
-        workSheet.getCell(workSheet.rowCount, 1).border = {
-          right: { style: "medium", color: { argb: "FFFF1B5F" } },
-        };
-        workSheet.getCell(workSheet.rowCount, 1).alignment = {
-          vertical: "top",
-          horizontal: "left",
-          wrapText: true,
-          indent: 1,
-        };
-        workSheet.mergeCells(
-          workSheet.rowCount,
-          1,
-          workSheet.rowCount,
-          lastColumnNumber
-        );
-
-        rowInfoText.height =
-          (item.infoText.split(" ").length > 17 + optionalCols.length
-            ? item.infoText.split(" ").length / (17 + optionalCols.length)
-            : 1.5) * 22;
-
-        const spaceBetweenRow = workSheet.addRow([""]);
-        spaceBetweenRow.height = 50;
-      });
+            lastColumnNumber,
+            optionalCols
+          )
+      );
     })
   ).then(async () => {
     const buffer = await workBook.xlsx.writeBuffer();
