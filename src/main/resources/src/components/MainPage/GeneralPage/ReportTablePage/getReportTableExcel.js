@@ -133,20 +133,7 @@ const getWorkshopNameRow = (workSheet, workshop) => {
   titleRow.height = 30;
 };
 
-const sortWorksByEmployee = (data) => {
-  return data.sort((a, b) => {
-    if (a.employee.lastName < b.employee.lastName) {
-      return -1;
-    }
-    if (a.employee.lastName > b.employee.lastName) {
-      return 1;
-    }
-    return 0;
-  });
-};
-
 const getRemainingDaysSpaces = (dates) => {
-  console.log(dates);
   if (dates.length > 16) return [];
   let array = [""];
   if (15 - (dates.length - 1) > 0) {
@@ -237,7 +224,7 @@ const getHalfMonthList = (
     if (filteredWorksList.length > 0) {
       getWorkshopNameRow(workSheet, workshop);
     }
-    return sortWorksByEmployee(filteredWorksList).map((item, index) =>
+    return sortEmployees(filteredWorksList).map((item, index) =>
       getEmployeeWorkRow(workSheet, item, index, dates[arrayIndex])
     );
   });
