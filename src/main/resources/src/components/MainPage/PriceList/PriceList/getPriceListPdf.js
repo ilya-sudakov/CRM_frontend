@@ -751,6 +751,118 @@ const getLinkButton = (linkButtonData, linkAddress) => {
   };
 };
 
+const makeListUnbreakable = (sortedArr, tempImg, category) => {
+  return {
+    stack: [
+      ...sortedArr.map((item, index) => {
+        if (index === 0) {
+          return {
+            unbreakable:
+              item.stack[2].columns[0].table.body.length <= 10 ? true : false,
+            stack: [
+              {
+                image: tempImg,
+                width: 510,
+                height: 50,
+                alignment: "center",
+              },
+              {
+                text: category.toUpperCase(),
+                style: "header",
+                fontSize: 16,
+                color: "#ffffff",
+                alignment: "center",
+                relativePosition: { x: 0, y: -38 },
+              },
+              ...item.stack,
+            ],
+          };
+        } else return item;
+      }),
+    ],
+  };
+};
+
+const getFullGroup = async (
+  groupOfProducts,
+  locations,
+  testImgData,
+  optionalCols,
+  isMini
+) => {
+  let linkButtonData = await getDataUri(linkButtonImg);
+  const groupImg1Data = await loadGroupImage(groupOfProducts.groupImg1);
+  const groupImg2Data = await loadGroupImage(groupOfProducts.groupImg2);
+  const groupImg3Data = await loadGroupImage(groupOfProducts.groupImg3);
+  const groupImg4Data = await loadGroupImage(groupOfProducts.groupImg4);
+  const groupImgFooterData = await loadGroupImage(groupOfProducts.footerImg);
+  const proprietaryItem1 = await getProprietaryItem(
+    groupOfProducts.proprietaryItemText1
+  );
+  const proprietaryItem2 = await getProprietaryItem(
+    groupOfProducts.proprietaryItemText2
+  );
+  const productsTableList = await getProductsTableList(
+    groupOfProducts,
+    optionalCols
+  );
+  return {
+    unbreakable: groupOfProducts.products.length <= 20 ? true : false,
+    stack: [
+      !isMini
+        ? {
+            width: "*",
+            headlineLevel: 1,
+            columns: [
+              getGroupOfProductsName(groupOfProducts),
+              getGroupOfProductsDescription(groupOfProducts),
+              getGroupOfProductsLocations(locations),
+            ],
+            margin: [0, 10, 0, 10],
+          }
+        : emptyTextObject,
+      !isMini
+        ? getGroupOfProductsTopImages(
+            groupImg1Data,
+            groupImg2Data,
+            groupImg3Data,
+            groupImg4Data,
+            testImgData
+          )
+        : emptyTextObject,
+      productsTableList,
+      !isMini
+        ? {
+            unbreakable: true,
+            alignment: "justify",
+            width: "*",
+            margin: [0, 0, 0, 10],
+            columns: [
+              getProductsInfoText(groupOfProducts.infoText),
+              {
+                unbreakable: true,
+                stack: [
+                  getLinkButton(linkButtonData, groupOfProducts.linkAddress),
+                  proprietaryItem1,
+                  proprietaryItem2,
+                ],
+                width: 100,
+              },
+            ],
+          }
+        : emptyTextObject,
+      !isMini && groupImgFooterData !== null
+        ? {
+            image: groupImgFooterData,
+            fit: [512, 100],
+          }
+        : {
+            text: "  ",
+          },
+    ],
+  };
+};
+
 export async function getPriceListPdfText(
   categories,
   priceList,
@@ -762,7 +874,6 @@ export async function getPriceListPdfText(
   isMini = false
 ) {
   let finalList = [];
-  let linkButtonData = await getDataUri(linkButtonImg);
   const testImgData = await getDataUri(testImg);
   const temp = categories.map(async (category) => {
     let fullGroup = [];
@@ -778,81 +889,14 @@ export async function getPriceListPdfText(
               getAllLocationTypes(locationTypes, location, locations)
             )
         ).then(async () => {
-          const groupImg1Data = await loadGroupImage(groupOfProducts.groupImg1);
-          const groupImg2Data = await loadGroupImage(groupOfProducts.groupImg2);
-          const groupImg3Data = await loadGroupImage(groupOfProducts.groupImg3);
-          const groupImg4Data = await loadGroupImage(groupOfProducts.groupImg4);
-          const groupImgFooterData = await loadGroupImage(
-            groupOfProducts.footerImg
-          );
-          const proprietaryItem1 = await getProprietaryItem(
-            groupOfProducts.proprietaryItemText1
-          );
-          const proprietaryItem2 = await getProprietaryItem(
-            groupOfProducts.proprietaryItemText2
-          );
-          const productsTableList = await getProductsTableList(
+          const temp = await getFullGroup(
             groupOfProducts,
-            optionalCols
+            locations,
+            testImgData,
+            optionalCols,
+            isMini
           );
-          fullGroup.push({
-            unbreakable: groupOfProducts.products.length <= 20 ? true : false,
-            stack: [
-              !isMini
-                ? {
-                    width: "*",
-                    headlineLevel: 1,
-                    columns: [
-                      getGroupOfProductsName(groupOfProducts),
-                      getGroupOfProductsDescription(groupOfProducts),
-                      getGroupOfProductsLocations(locations),
-                    ],
-                    margin: [0, 10, 0, 10],
-                  }
-                : emptyTextObject,
-              !isMini
-                ? getGroupOfProductsTopImages(
-                    groupImg1Data,
-                    groupImg2Data,
-                    groupImg3Data,
-                    groupImg4Data,
-                    testImgData
-                  )
-                : emptyTextObject,
-              productsTableList,
-              !isMini
-                ? {
-                    unbreakable: true,
-                    alignment: "justify",
-                    width: "*",
-                    margin: [0, 0, 0, 10],
-                    columns: [
-                      getProductsInfoText(groupOfProducts.infoText),
-                      {
-                        unbreakable: true,
-                        stack: [
-                          getLinkButton(
-                            linkButtonData,
-                            groupOfProducts.linkAddress
-                          ),
-                          proprietaryItem1,
-                          proprietaryItem2,
-                        ],
-                        width: 100,
-                      },
-                    ],
-                  }
-                : emptyTextObject,
-              !isMini && groupImgFooterData !== null
-                ? {
-                    image: groupImgFooterData,
-                    fit: [512, 100],
-                  }
-                : {
-                    text: "  ",
-                  },
-            ],
-          });
+          fullGroup.push(temp);
         });
       })
     ).then(async () => {
@@ -866,37 +910,9 @@ export async function getPriceListPdfText(
           stack: [...sortedArr],
         });
       }
-      return finalList.push({
-        stack: [
-          ...sortedArr.map((item, index) => {
-            if (index === 0) {
-              return {
-                unbreakable:
-                  item.stack[2].columns[0].table.body.length <= 10
-                    ? true
-                    : false,
-                stack: [
-                  {
-                    image: tempImg,
-                    width: 510,
-                    height: 50,
-                    alignment: "center",
-                  },
-                  {
-                    text: category.name.toUpperCase(),
-                    style: "header",
-                    fontSize: 16,
-                    color: "#ffffff",
-                    alignment: "center",
-                    relativePosition: { x: 0, y: -38 },
-                  },
-                  ...item.stack,
-                ],
-              };
-            } else return item;
-          }),
-        ],
-      });
+      return finalList.push(
+        makeListUnbreakable(sortedArr, tempImg, category.name)
+      );
     });
   });
   Promise.all(temp).then(async () => {
