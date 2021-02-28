@@ -576,12 +576,12 @@ const getPriceListProductGroup = async (
   spaceBetweenRow.height = 50;
 };
 
-export async function getPriceListPdfExcel(
+export async function getPriceListExcel(
   categories = [],
   priceList = [],
-  optionalCols = [],
-  isMini = false
+  options
 ) {
+  const { optionalCols, isMini } = options;
   let workBook = new Excel.Workbook();
   workBook.creator = "Osfix";
   workBook.created = new Date();

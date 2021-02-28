@@ -866,16 +866,15 @@ const getFullGroup = async (
   };
 };
 
-export async function getPriceListPdfText(
-  categories,
-  priceList,
-  optionalCols,
-  locationTypes,
-  disclaimer,
-  titlePage,
-  companyContacts,
-  isMini = false
-) {
+export async function getPriceListPdf(categories, priceList, options) {
+  const {
+    optionalCols,
+    locationTypes,
+    disclaimer,
+    titlePage,
+    companyContacts,
+    isMini,
+  } = options;
   let finalList = [];
   const testImgData = await getDataUri(testImg);
   const temp = categories.map(async (category) => {
@@ -884,10 +883,10 @@ export async function getPriceListPdfText(
       priceList.map(async (groupOfProducts) => {
         let locations = [];
         if (category.name !== groupOfProducts.category) return;
-        const locationTypes = groupOfProducts.locationType.split("/");
+        const locationTypesArray = groupOfProducts.locationType.split("/");
         //getting location types
         return Promise.all(
-          locationTypes.map((location) =>
+          locationTypesArray.map((location) =>
             getAllLocationTypes(locationTypes, location, locations)
           )
         ).then(async () => {

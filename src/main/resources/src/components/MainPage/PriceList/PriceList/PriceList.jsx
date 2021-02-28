@@ -19,8 +19,8 @@ import {
   locationTypes,
   defaultTitlePage,
 } from "./objects.js";
-import { getPriceListPdfText } from "./getPriceListPdf.js";
-import { getPriceListPdfExcel } from "./getPriceListExcel.js";
+import { getPriceListPdf } from "./getPriceListPdf.js";
+import { getPriceListExcel } from "./getPriceListExcel.js";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { Link } from "react-router-dom";
 import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
@@ -284,55 +284,37 @@ const NewPriceList = () => {
     return sortByField(priceList, { fieldName: "id", direction: "asc" });
   };
 
-  const handleOpenPDF = () => {
+  const handleOpenPDF = (newPDF = false) => {
     setIsLoading(true);
-    getPriceListPdfText(
+    getPriceListPdf(
       categories,
       priceList.filter((item) => item.active),
-      sortPriceList(optionalCols.filter((item) => item.active && item)),
-      locationTypes,
-      disclaimer,
-      titlePage,
-      selectedLtd
+      {
+        optionalCols: sortPriceList(
+          optionalCols.filter((item) => item.active && item)
+        ),
+        locationTypes: locationTypes,
+        disclaimer: disclaimer,
+        titlePage: titlePage,
+        companyContacts: selectedLtd,
+        isMini: newPDF,
+      }
     ).then(() => {
       setIsLoading(false);
     });
   };
 
-  const handleOpenNewPDF = () => {
+  const handleDownloadExcel = (newXLSX = false) => {
     setIsLoading(true);
-    getPriceListPdfText(
+    getPriceListExcel(
       categories,
       priceList.filter((item) => item.active),
-      sortPriceList(optionalCols.filter((item) => item.active && item)),
-      locationTypes,
-      disclaimer,
-      titlePage,
-      selectedLtd,
-      true
-    ).then(() => {
-      setIsLoading(false);
-    });
-  };
-
-  const handleDownloadExcel = () => {
-    setIsLoading(true);
-    getPriceListPdfExcel(
-      categories,
-      priceList.filter((item) => item.active),
-      sortPriceList(optionalCols.filter((item) => item.active && item))
-    ).then(() => {
-      setIsLoading(false);
-    });
-  };
-
-  const handleDownloadExcelNew = () => {
-    setIsLoading(true);
-    getPriceListPdfExcel(
-      categories,
-      priceList.filter((item) => item.active),
-      sortPriceList(optionalCols.filter((item) => item.active && item)),
-      true
+      {
+        optionalCols: sortPriceList(
+          optionalCols.filter((item) => item.active && item)
+        ),
+        isMini: newXLSX,
+      }
     ).then(() => {
       setIsLoading(false);
     });
@@ -383,28 +365,28 @@ const NewPriceList = () => {
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
-                onClick={handleOpenPDF}
+                onClick={() => handleOpenPDF(false)}
               />
               <Button
                 text="Краткий .pdf"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
-                onClick={handleOpenNewPDF}
+                onClick={() => handleOpenPDF(true)}
               />
               <Button
                 text="Полный .xlsx"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
-                onClick={handleDownloadExcel}
+                onClick={() => handleDownloadExcel(false)}
               />
               <Button
                 text="Краткий .xlsx"
                 isLoading={isLoading}
                 className="main-form__submit main-form__submit--inverted"
                 inverted
-                onClick={handleDownloadExcelNew}
+                onClick={() => handleDownloadExcel(true)}
               />
               <Button
                 text="Сохранить данные"
