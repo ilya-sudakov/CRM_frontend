@@ -8,7 +8,7 @@ import StatsIcon from "../../../../../../../assets/statistics/bar-chart-line.inl
 import HistoryIcon from "../../../../../../../assets/statistics/history-outlined.inline.svg";
 import ReportIcon from "../../../../../../../assets/statistics/report.svg";
 import calenderIcon from "../../../../../../../assets/tableview/calendar.svg";
-import { exportReportTableExcel } from "../../../utils/xlsxFunctions.js";
+import { getReportTableExcel } from "./ReportTablePage/getReportTableExcel.js";
 import Button from "../../../utils/Form/Button/Button.jsx";
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 
@@ -46,10 +46,10 @@ const GeneralPage = (props) => {
     }
   };
 
-  async function testExcelJSLibrary() {
+  async function downloadTableReport() {
     setIsLoading(true);
     const filteredWorkshops = getFilteredWorkshops();
-    await exportReportTableExcel(new Date(), filteredWorkshops);
+    await getReportTableExcel(new Date(), filteredWorkshops);
     return setIsLoading(false);
   }
 
@@ -122,7 +122,7 @@ const GeneralPage = (props) => {
                 className="main-window__button main-window__button--inverted"
                 inverted
                 isLoading={isLoading}
-                onClick={testExcelJSLibrary}
+                onClick={downloadTableReport}
               />
             </>
           }
