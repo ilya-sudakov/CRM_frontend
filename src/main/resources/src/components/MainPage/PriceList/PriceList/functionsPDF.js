@@ -145,8 +145,13 @@ const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
   ];
 };
 
-const getPriceHeader = async (currentPage, active, companyContacts) => {
-  const contactsImgData = await getDataUri(contactsImg);
+const getPriceHeader = (
+  currentPage,
+  active,
+  contactsImgData,
+  companyLogoData,
+  companyContacts
+) => {
   if (currentPage === 1 && active) {
     return [
       {
@@ -431,6 +436,29 @@ const getProductsTableHeader = (groupOfProducts, optionalCols) => {
       }),
     ],
   ];
+};
+
+const getDisclaimerText = (disclaimer) => {
+  return {
+    margin: [0, 10, 0, 0],
+    table: {
+      body: [
+        [
+          {
+            border: [true, false, false, false],
+            fontSize: 12,
+            borderColor: ["#e30434", "#e30434", "#e30434", "#e30434"],
+            text: [
+              {
+                text: disclaimer,
+              },
+            ],
+            margin: [0, 0, 10, 0],
+          },
+        ],
+      ],
+    },
+  };
 };
 
 export async function getPriceListPdfText(
@@ -854,12 +882,18 @@ export async function getPriceListPdfText(
         return 0;
       }
     });
+    const contactsImgData = await getDataUri(contactsImg);
     const dd = {
       info: {
         title: "Прайс-лист",
       },
       header: (currentPage) =>
-        getPriceHeader(currentPage, titlePage.active, companyContacts),
+        getPriceHeader(
+          currentPage,
+          titlePage.active,
+          contactsImgData,
+          companyContacts
+        ),
       pageMargins: [40, 125, 40, 70],
       footer: (currentPage, pageCount) =>
         getPriceFooter(
@@ -916,7 +950,6 @@ export async function getPriceListPdfText(
                             ],
                           },
                           alignment: "right",
-                          // margin: [0, 0, 0, 10],
                         },
                       ],
                       margin: [0, 0, 0, 5],
@@ -1001,26 +1034,7 @@ export async function getPriceListPdfText(
               text: "",
             },
         finalList,
-        {
-          margin: [0, 10, 0, 0],
-          table: {
-            body: [
-              [
-                {
-                  border: [true, false, false, false],
-                  fontSize: 12,
-                  borderColor: ["#e30434", "#e30434", "#e30434", "#e30434"],
-                  text: [
-                    {
-                      text: disclaimer,
-                    },
-                  ],
-                  margin: [0, 0, 10, 0],
-                },
-              ],
-            ],
-          },
-        },
+        getDisclaimerText(disclaimer),
       ],
       styles: priceStyles,
     };
