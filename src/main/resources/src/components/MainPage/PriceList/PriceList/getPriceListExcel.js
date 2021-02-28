@@ -312,13 +312,14 @@ const priceListProductsAddImage = (
   groupImg,
   imageIndex
 ) => {
+  let index = imageIndex;
   const img = workBook.addImage({
     base64: groupImg,
     extension: "jpeg",
   });
   workSheet.addImage(img, {
-    tl: { col: imageIndex, row: workSheet.rowCount - 1 },
-    br: { col: ++imageIndex, row: workSheet.rowCount },
+    tl: { col: index, row: workSheet.rowCount - 1 },
+    br: { col: ++index, row: workSheet.rowCount },
     editAs: "absolute",
   });
 };
@@ -340,12 +341,15 @@ const getPriceListProductTopImages = (
   );
   if (item.groupImg1 !== "") {
     priceListProductsAddImage(workBook, workSheet, item.groupImg1, imageIndex);
+    imageIndex++;
   }
   if (item.groupImg2 !== "") {
     priceListProductsAddImage(workBook, workSheet, item.groupImg2, imageIndex);
+    imageIndex++;
   }
   if (item.groupImg3 !== "") {
     priceListProductsAddImage(workBook, workSheet, item.groupImg3, imageIndex);
+    imageIndex++;
   }
   if (item.groupImg4 !== "") {
     priceListProductsAddImage(workBook, workSheet, item.groupImg4, imageIndex);
