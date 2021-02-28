@@ -1,7 +1,4 @@
-import XLSX2 from "xlsx";
 import Excel from "exceljs";
-import FileSaver from "file-saver";
-import { sortByField } from "./../../../../utils/sorting/sorting.js";
 import { getDataUri } from "../../../../utils/functions.jsx";
 
 const getPriceListDefaultColumnXLSX = (name, width = 30) => {
@@ -36,11 +33,14 @@ const getPriceListDefaultColumns = () => {
 const getPriceListHeaderItem = (workSheet, data = {}, customStyles = {}) => {
   let temp = workSheet.addRow([""]);
   const curRow = workSheet.rowCount;
-  const value = {
-    text: data.text,
-    hyperlink: data.link,
-    tooltip: data.tooltip,
-  };
+  const value = data.link
+    ? {
+        text: data.text,
+        hyperlink: data.link,
+        tooltip: data.tooltip,
+      }
+    : data.text;
+  console.log(value);
   workSheet.getCell(curRow, 3).value = value;
   workSheet.getCell(curRow, 3).font = {
     name: "DejaVu",
@@ -63,7 +63,7 @@ const getPriceListHeader = async (workSheet, workBook, lastColumnNumber) => {
     workSheet,
     {
       text: "ООО «ОСФИКС»",
-      hyperlink: "https://www.osfix.ru",
+      link: "https://www.osfix.ru",
       tooltip: "Перейти на сайт www.osfix.ru",
     },
     {
@@ -73,7 +73,7 @@ const getPriceListHeader = async (workSheet, workBook, lastColumnNumber) => {
   );
   getPriceListHeaderItem(workSheet, {
     text: "Лиговский пр., 52, Санкт-Петербург, 191040",
-    hyperlink: "https://yandex.ru/maps/-/CKUrY0Ih",
+    link: "https://yandex.ru/maps/-/CKUrY0Ih",
     tooltip: "Открыть Яндекс.Карту",
   });
   getPriceListHeaderItem(workSheet, {
@@ -83,7 +83,7 @@ const getPriceListHeader = async (workSheet, workBook, lastColumnNumber) => {
     workSheet,
     {
       text: "www.osfix.ru",
-      hyperlink: "https://www.osfix.ru",
+      link: "https://www.osfix.ru",
       tooltip: "Открыть сайт",
     },
     {
