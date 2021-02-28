@@ -9,6 +9,7 @@ import proprietaryItemImg from "../../../../../../../../assets/priceList/rospate
 import { getDataUri } from "../../../../utils/functions.jsx";
 import { pdfHeaderCompanyContacts } from "./objects.js";
 import { createPDF } from "../../../../utils/pdfFunctions.js";
+import { sortByField } from "../../../../utils/sorting/sorting";
 
 const loadGroupImage = async (img) => {
   if (img !== null && img !== "") {
@@ -18,23 +19,26 @@ const loadGroupImage = async (img) => {
 };
 
 const sortProductsByNumber = (data) => {
-  return data.sort((a, b) => {
-    if (
-      a.number.localeCompare(b.number, undefined, {
-        numeric: true,
-      }) < 0
-    ) {
-      return -1;
-    }
-    if (
-      a.number.localeCompare(b.number, undefined, {
-        numeric: true,
-      }) > 0
-    ) {
-      return 1;
-    }
-    return 0;
-  });
+  return sortByField(data, { fieldName: "number", direction: "asc" });
+};
+
+const getLine = (margins) => {
+  return {
+    canvas: [
+      {
+        type: "line",
+        x1: 0,
+        y1: 0,
+        x2: 515,
+        y2: 0,
+        lineWidth: 2,
+        lineColor: "#e30434",
+      },
+    ],
+    alignment: "justify",
+    width: "*",
+    margin: [margins.l, margins.t, margins.r, margins.b],
+  };
 };
 
 const priceStyles = {
@@ -82,22 +86,7 @@ const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
     };
   }
   return [
-    {
-      canvas: [
-        {
-          type: "line",
-          x1: 0,
-          y1: 0,
-          x2: 515,
-          y2: 0,
-          lineWidth: 2,
-          lineColor: "#e30434",
-        },
-      ],
-      alignment: "justify",
-      width: "*",
-      margin: [40, 0, 40, 10],
-    },
+    getLine({ l: 40, t: 0, r: 40, b: 10 }),
     {
       text: [
         { text: "ИНН ", fontSize: 10, bold: true },
@@ -228,22 +217,7 @@ const getPriceHeader = (
           : { text: "" },
       ],
     },
-    {
-      canvas: [
-        {
-          type: "line",
-          x1: 0,
-          y1: 0,
-          x2: 515,
-          y2: 0,
-          lineWidth: 2,
-          lineColor: "#e30434",
-        },
-      ],
-      alignment: "justify",
-      width: "*",
-      margin: [40, 5, 40, 40],
-    },
+    getLine({ l: 40, t: 5, r: 40, b: 40 }),
   ];
 };
 
@@ -316,23 +290,16 @@ const getGroupOfProductsDescription = ({ description }) => {
 const sortLocations = (locations) => {
   return locations.sort((a, b) => {
     if (locations.length <= 1) return 0;
-    else {
-      if (
-        a.columns[0].text.localeCompare(b.columns[0].text, undefined, {
-          numeric: true,
-        }) < 0
-      ) {
-        return -1;
+    const element = a.columns[0].text.localeCompare(
+      b.columns[0].text,
+      undefined,
+      {
+        numeric: true,
       }
-      if (
-        a.columns[0].text.localeCompare(b.columns[0].text, undefined, {
-          numeric: true,
-        }) > 0
-      ) {
-        return 1;
-      }
-      return 0;
-    }
+    );
+    if (element < 0) return -1;
+    if (element > 0) return 1;
+    return 0;
   });
 };
 
@@ -597,29 +564,26 @@ const getTitlePage = async (titlePage) => {
 
 const sortFinalList = (data) => {
   return data.sort((a, b) => {
-    if (finalList.length <= 1) return 0;
-    else {
-      if (
-        a.stack[0].stack[1].text.localeCompare(
-          b.stack[0].stack[1].text,
-          undefined,
-          { numeric: true }
-        ) < 0
-      ) {
-        return -1;
-      }
-      if (
-        a.stack[0].stack[1].text.localeCompare(
-          b.stack[0].stack[1].text,
-          undefined,
-          { numeric: true }
-        ) > 0
-      ) {
-        return 1;
-      }
-      return 0;
-    }
+    if (data.length <= 1) return 0;
+    const element = a.stack[0].stack[1].text.localeCompare(
+      b.stack[0].stack[1].text,
+      undefined,
+      { numeric: true }
+    );
+    if (element < 0) return -1;
+    if (element > 0) return 1;
+    return 0;
   });
+};
+
+const getPriceColumnText = (price, onSale, isOptionsColsLengthMoreThanOne) => {
+  const isNumber = price !== "" && !Number.isNaN(price) && price !== 0;
+  return {
+    text: isNumber ? price : " ",
+    margin: [0, isOptionsColsLengthMoreThanOne ? 4.5 : 0, 0, 0],
+    bold: onSale,
+    color: onSale ? "#111111" : "#666666",
+  };
 };
 
 const getProductsTableList = async (groupOfProducts, optionalCols) => {
@@ -643,10 +607,11 @@ const getProductsTableList = async (groupOfProducts, optionalCols) => {
           body: [
             ...getProductsTableHeader(groupOfProducts, optionalCols),
             ...sortProductsByNumber(groupOfProducts.products).map((product) => {
+              const isOptionsColsLengthMoreThanOne = optionalCols.length > 1;
               return [
                 {
                   text: product.number,
-                  margin: [0, optionalCols.length > 1 ? 5 : 0, 0, 0],
+                  margin: [0, isOptionsColsLengthMoreThanOne ? 5 : 0, 0, 0],
                   bold: product.onSale,
                   color: product.onSale ? "#111111" : "#666666",
                 },
@@ -659,7 +624,12 @@ const getProductsTableList = async (groupOfProducts, optionalCols) => {
                         },
                         {
                           text: product.name,
-                          margin: [5, optionalCols.length > 1 ? 2 : 1.5, 0, 0],
+                          margin: [
+                            5,
+                            isOptionsColsLengthMoreThanOne ? 2 : 1.5,
+                            0,
+                            0,
+                          ],
                           alignment: "left",
                           bold: product.onSale,
                           color: "#111111",
@@ -668,67 +638,42 @@ const getProductsTableList = async (groupOfProducts, optionalCols) => {
                     }
                   : {
                       text: product.name,
-                      margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0],
+                      margin: [0, isOptionsColsLengthMoreThanOne ? 1 : 0, 0, 0],
                       alignment: "left",
                     },
                 {
                   text: product.units,
-                  margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0],
+                  margin: [0, isOptionsColsLengthMoreThanOne ? 1 : 0, 0, 0],
                   bold: product.onSale,
                   color: product.onSale ? "#111111" : "#666666",
                 },
-                {
-                  text:
-                    product.retailPrice !== "" &&
-                    !Number.isNaN(product.retailPrice) &&
-                    product.retailPrice !== 0
-                      ? product.retailPrice
-                      : " ",
-                  margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
-                  bold: product.onSale,
-                  color: product.onSale ? "#111111" : "#666666",
-                },
-                {
-                  text:
-                    product.lessThan1500Price !== "" &&
-                    !Number.isNaN(product.lessThan1500Price) &&
-                    product.lessThan1500Price !== 0
-                      ? product.lessThan1500Price
-                      : " ",
-                  margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
-                  bold: product.onSale,
-                  color: product.onSale ? "#111111" : "#666666",
-                },
-                {
-                  text:
-                    product.lessThan5000Price !== "" &&
-                    !Number.isNaN(product.lessThan5000Price) &&
-                    product.lessThan5000Price !== 0
-                      ? product.lessThan5000Price
-                      : " ",
-                  margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
-                  bold: product.onSale,
-                  color: product.onSale ? "#111111" : "#666666",
-                },
+                getPriceColumnText(
+                  product.retailPrice,
+                  product.onSale,
+                  isOptionsColsLengthMoreThanOne
+                ),
+                getPriceColumnText(
+                  product.lessThan1500Price,
+                  product.onSale,
+                  isOptionsColsLengthMoreThanOne
+                ),
+                getPriceColumnText(
+                  product.lessThan5000Price,
+                  product.onSale,
+                  isOptionsColsLengthMoreThanOne
+                ),
                 ...optionalCols.map((column) =>
                   product[column.property] !== undefined
-                    ? {
-                        text:
-                          product[column.property] !== "" &&
-                          !Number.isNaN(product[column.property]) &&
-                          product[column.property] !== 0
-                            ? product[column.property]
-                            : " ",
-                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
-                        bold: product.onSale,
-                        color: product.onSale ? "#111111" : "#666666",
-                      }
-                    : {
-                        text: "",
-                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
-                        bold: product.onSale,
-                        color: product.onSale ? "#111111" : "#666666",
-                      }
+                    ? getPriceColumnText(
+                        product[column.property],
+                        product.onSale,
+                        isOptionsColsLengthMoreThanOne
+                      )
+                    : getPriceColumnText(
+                        0,
+                        product.onSale,
+                        isOptionsColsLengthMoreThanOne
+                      )
                 ),
               ];
             }),
@@ -803,18 +748,10 @@ const getProprietaryItem = async (text) => {
 
 const sortFullGroup = (data) => {
   return data.sort((a, b) => {
-    if (
-      a.stack[0].columns[0].text[1].groupId <
-      b.stack[0].columns[0].text[1].groupId
-    ) {
-      return -1;
-    }
-    if (
-      a.stack[0].columns[0].text[1].groupId >
-      b.stack[0].columns[0].text[1].groupId
-    ) {
-      return 1;
-    }
+    const first = a.stack[0].columns[0].text[1].groupId;
+    const second = b.stack[0].columns[0].text[1].groupId;
+    if (first < second) return -1;
+    if (first > second) return 1;
     return 0;
   });
 };
