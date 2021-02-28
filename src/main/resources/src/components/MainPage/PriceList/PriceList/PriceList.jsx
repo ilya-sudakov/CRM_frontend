@@ -7,7 +7,6 @@ import {
   getPriceGroupImageByName,
   updatePriceGroupByName,
 } from "../../../../utils/RequestsAPI/PriceList/PriceList.jsx";
-import { exportPriceListToXLSX } from "../../../../utils/xlsxFunctions.js";
 import categoryImg from "../../../../../../../../assets/priceList/default_category.png";
 import InputText from "../../../../utils/Form/InputText/InputText.jsx";
 import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
@@ -21,7 +20,7 @@ import {
   defaultTitlePage,
 } from "./objects.js";
 import { getPriceListPdfText } from "./getPriceListPdfText.js";
-import { exportPriceListToXLSXMini } from "./functionsXLSX.js";
+import { getPriceListPdfExcel } from "./getPriceListPdfExcel.js";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { Link } from "react-router-dom";
 import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
@@ -318,7 +317,7 @@ const NewPriceList = () => {
 
   const handleDownloadExcel = () => {
     setIsLoading(true);
-    exportPriceListToXLSX(
+    getPriceListPdfExcel(
       categories,
       priceList.filter((item) => item.active),
       sortPriceList(optionalCols.filter((item) => item.active && item))
@@ -329,10 +328,11 @@ const NewPriceList = () => {
 
   const handleDownloadExcelNew = () => {
     setIsLoading(true);
-    exportPriceListToXLSXMini(
+    getPriceListPdfExcel(
       categories,
       priceList.filter((item) => item.active),
-      sortPriceList(optionalCols.filter((item) => item.active && item))
+      sortPriceList(optionalCols.filter((item) => item.active && item)),
+      true
     ).then(() => {
       setIsLoading(false);
     });
