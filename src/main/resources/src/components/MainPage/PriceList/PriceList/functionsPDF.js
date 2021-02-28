@@ -70,12 +70,44 @@ const priceStyles = {
   },
 };
 
+const getPriceFooterItem = (title, value) => {
+  return [
+    { text: `${title} `, fontSize: 10, bold: true },
+    {
+      text: `${value}\t`,
+      fontSize: 10,
+    },
+  ];
+};
+
+const getPriceFooterList = (companyContacts) => {
+  return {
+    text: [
+      ...getPriceFooterItem("ИНН", companyContacts?.inn ?? "7842143789"),
+      ...getPriceFooterItem("КПП", companyContacts?.kpp ?? "784201001"),
+      ...getPriceFooterItem("ОГРН", companyContacts?.ogrn ?? "1177847364584"),
+      ...getPriceFooterItem("ОКПО", companyContacts?.okpo ?? "20161337"),
+      ...getPriceFooterItem(
+        "Банк",
+        companyContacts?.bank ?? "Филиал №7806 ВТБ (ПАО)"
+      ),
+      ...getPriceFooterItem(
+        "Расчетный счет №",
+        companyContacts?.checkingAccount ?? "40702810717060000232"
+      ),
+      ...getPriceFooterItem("БИК", companyContacts?.bik ?? "044525411"),
+    ],
+    alignment: "left",
+    width: "*",
+    margin: [40, 0, 40, 10],
+  };
+};
+
 const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
-  if (currentPage === 1 && active) {
+  if (currentPage === 1 && active)
     return {
       text: " ",
     };
-  }
   if (currentPage !== pageCount) {
     return {
       text: "Страница " + currentPage.toString(),
@@ -87,50 +119,7 @@ const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
   }
   return [
     getLine({ l: 40, t: 0, r: 40, b: 10 }),
-    {
-      text: [
-        { text: "ИНН ", fontSize: 10, bold: true },
-        {
-          text: `${companyContacts?.inn ?? "7842143789"}\t`,
-          fontSize: 10,
-        },
-        { text: "КПП ", fontSize: 10, bold: true },
-        {
-          text: `${companyContacts?.kpp ?? "784201001"}\t`,
-          fontSize: 10,
-        },
-        { text: "ОГРН ", fontSize: 10, bold: true },
-        {
-          text: `${companyContacts?.ogrn ?? "1177847364584"}\t`,
-          fontSize: 10,
-        },
-        { text: "ОКПО ", fontSize: 10, bold: true },
-        {
-          text: `${companyContacts?.okpo ?? "20161337"}\n`,
-          fontSize: 10,
-        },
-        { text: "Банк ", fontSize: 10, bold: true },
-        {
-          text: `${companyContacts?.bank ?? "Филиал №7806 ВТБ (ПАО)"}\t`,
-          fontSize: 10,
-        },
-        { text: "Расчетный счет № ", fontSize: 10, bold: true },
-        {
-          text: `${
-            companyContacts?.checkingAccount ?? "40702810717060000232"
-          }\t`,
-          fontSize: 10,
-        },
-        { text: "БИК ", fontSize: 10, bold: true },
-        {
-          text: `${companyContacts?.bik ?? "044525411"}\t`,
-          fontSize: 10,
-        },
-      ],
-      alignment: "left",
-      width: "*",
-      margin: [40, 0, 40, 10],
-    },
+    getPriceFooterList(companyContacts),
   ];
 };
 
