@@ -20,10 +20,7 @@ import {
   locationTypes,
   defaultTitlePage,
 } from "./objects.js";
-import {
-  getPriceListPdfTextMini,
-  getPriceListPdfText,
-} from "./functionsPDF.js";
+import { getPriceListPdfText } from "./getPriceListPdfText.js";
 import { exportPriceListToXLSXMini } from "./functionsXLSX.js";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { Link } from "react-router-dom";

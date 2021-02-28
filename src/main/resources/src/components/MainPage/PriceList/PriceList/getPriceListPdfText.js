@@ -1,4 +1,3 @@
-import companyLogo from "../../../../../../../../assets/priceList/osfix_logo.png";
 import contactsImg from "../../../../../../../../assets/priceList/contacts.png";
 import testImg from "../../../../../../../../assets/priceList/no_img.png";
 import listImg from "../../../../../../../../assets/priceList/list.png";
@@ -103,12 +102,18 @@ const getPriceFooterList = (companyContacts) => {
   };
 };
 
-const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
-  if (currentPage === 1 && active)
+const getPriceFooter = (
+  currentPage,
+  pageCount,
+  active,
+  companyContacts,
+  isMini
+) => {
+  if (currentPage === 1 && active && !isMini)
     return {
       text: " ",
     };
-  if (currentPage !== pageCount) {
+  if (currentPage !== pageCount && !isMini) {
     return {
       text: "Страница " + currentPage.toString(),
       alignment: "center",
@@ -123,11 +128,9 @@ const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
   ];
 };
 
-const emptyTextObject = [
-  {
-    text: "",
-  },
-];
+const emptyTextObject = {
+  text: "",
+};
 
 const getPriceHeaderItem = (name, link, options = {}) => {
   return {
@@ -171,16 +174,17 @@ const getPriceHeaderLogo = (logo) => {
         margin: [0, 13, 0, 0],
         alignment: "right",
       }
-    : { text: "" };
+    : emptyTextObject;
 };
 
 const getPriceHeader = (
   currentPage,
   active,
   contactsImgData,
-  companyContacts = {}
+  companyContacts = {},
+  isMini
 ) => {
-  if (currentPage === 1 && active) return emptyTextObject;
+  if (currentPage === 1 && active && !isMini) return [emptyTextObject];
   return [
     {
       alignment: "justify",
@@ -726,10 +730,14 @@ const getProprietaryItem = async (text) => {
       };
 };
 
-const sortFullGroup = (data) => {
+const sortFullGroup = (data, isMini) => {
   return data.sort((a, b) => {
-    const first = a.stack[0].columns[0].text[1].groupId;
-    const second = b.stack[0].columns[0].text[1].groupId;
+    const first = isMini
+      ? a.stack[2].columns[0].table.body[2][0].text
+      : a.stack[0].columns[0].text[1].groupId;
+    const second = isMini
+      ? b.stack[2].columns[0].table.body[2][0].text
+      : b.stack[0].columns[0].text[1].groupId;
     if (first < second) return -1;
     if (first > second) return 1;
     return 0;
@@ -779,59 +787,65 @@ export async function getPriceListPdfText(
           const groupImgFooterData = await loadGroupImage(
             groupOfProducts.footerImg
           );
-          const productsTableList = await getProductsTableList(
-            groupOfProducts,
-            optionalCols
-          );
           const proprietaryItem1 = await getProprietaryItem(
             groupOfProducts.proprietaryItemText1
           );
           const proprietaryItem2 = await getProprietaryItem(
             groupOfProducts.proprietaryItemText2
           );
+          const productsTableList = await getProductsTableList(
+            groupOfProducts,
+            optionalCols
+          );
           fullGroup.push({
             unbreakable: groupOfProducts.products.length <= 20 ? true : false,
             stack: [
-              {
-                width: "*",
-                headlineLevel: 1,
-                columns: [
-                  getGroupOfProductsName(groupOfProducts),
-                  getGroupOfProductsDescription(groupOfProducts),
-                  getGroupOfProductsLocations(locations),
-                ],
-                margin: [0, 10, 0, 10],
-              },
-              getGroupOfProductsTopImages(
-                groupImg1Data,
-                groupImg2Data,
-                groupImg3Data,
-                groupImg4Data,
-                testImgData
-              ),
-              productsTableList,
-              {
-                unbreakable: true,
-                alignment: "justify",
-                width: "*",
-                margin: [0, 0, 0, 10],
-                columns: [
-                  getProductsInfoText(groupOfProducts.infoText),
-                  {
-                    unbreakable: true,
-                    stack: [
-                      getLinkButton(
-                        linkButtonData,
-                        groupOfProducts.linkAddress
-                      ),
-                      proprietaryItem1,
-                      proprietaryItem2,
+              !isMini
+                ? {
+                    width: "*",
+                    headlineLevel: 1,
+                    columns: [
+                      getGroupOfProductsName(groupOfProducts),
+                      getGroupOfProductsDescription(groupOfProducts),
+                      getGroupOfProductsLocations(locations),
                     ],
-                    width: 100,
-                  },
-                ],
-              },
-              groupImgFooterData !== null
+                    margin: [0, 10, 0, 10],
+                  }
+                : emptyTextObject,
+              !isMini
+                ? getGroupOfProductsTopImages(
+                    groupImg1Data,
+                    groupImg2Data,
+                    groupImg3Data,
+                    groupImg4Data,
+                    testImgData
+                  )
+                : emptyTextObject,
+              productsTableList,
+              !isMini
+                ? {
+                    unbreakable: true,
+                    alignment: "justify",
+                    width: "*",
+                    margin: [0, 0, 0, 10],
+                    columns: [
+                      getProductsInfoText(groupOfProducts.infoText),
+                      {
+                        unbreakable: true,
+                        stack: [
+                          getLinkButton(
+                            linkButtonData,
+                            groupOfProducts.linkAddress
+                          ),
+                          proprietaryItem1,
+                          proprietaryItem2,
+                        ],
+                        width: 100,
+                      },
+                    ],
+                  }
+                : emptyTextObject,
+              !isMini && groupImgFooterData !== null
                 ? {
                     image: groupImgFooterData,
                     fit: [512, 100],
@@ -845,9 +859,15 @@ export async function getPriceListPdfText(
       })
     ).then(async () => {
       const tempImg = await getDataUri(category.img);
-      const sortedArr = sortFullGroup(fullGroup);
-      //Перенос категории на некст страницу если она без продукции
-      if (fullGroup.length === 0 || !category.active) return;
+      if (fullGroup.length === 0 || !category.active)
+        //Перенос категории на некст страницу если она без продукции
+        return;
+      const sortedArr = sortFullGroup(fullGroup, isMini);
+      if (isMini) {
+        return finalList.push({
+          stack: [...sortedArr],
+        });
+      }
       return finalList.push({
         stack: [
           ...sortedArr.map((item, index) => {
@@ -882,7 +902,7 @@ export async function getPriceListPdfText(
     });
   });
   Promise.all(temp).then(async () => {
-    finalList = sortFinalList(finalList);
+    finalList = isMini ? finalList : sortFinalList(finalList);
     const contactsImgData = await getDataUri(contactsImg);
     const titlePageObject = await getTitlePage(titlePage);
     const dd = {
@@ -894,7 +914,8 @@ export async function getPriceListPdfText(
           currentPage,
           titlePage.active,
           contactsImgData,
-          companyContacts
+          companyContacts,
+          isMini
         ),
       pageMargins: [40, 125, 40, 70],
       footer: (currentPage, pageCount) =>
@@ -902,16 +923,13 @@ export async function getPriceListPdfText(
           currentPage,
           pageCount,
           titlePage.active,
-          companyContacts
+          companyContacts,
+          isMini
         ),
       content: [
-        titlePage.active
-          ? titlePageObject
-          : {
-              text: "",
-            },
+        titlePage.active && !isMini ? titlePageObject : emptyTextObject,
         finalList,
-        getDisclaimerText(disclaimer),
+        !isMini ? getDisclaimerText(disclaimer) : emptyTextObject,
       ],
       styles: priceStyles,
     };
