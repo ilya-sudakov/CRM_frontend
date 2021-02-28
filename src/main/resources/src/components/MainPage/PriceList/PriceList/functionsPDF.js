@@ -152,33 +152,21 @@ const getPriceHeaderItem = (name, link, options = {}) => {
 };
 
 const getPriceHeaderList = (companyContacts) => {
+  const site = companyContacts?.site ?? pdfHeaderCompanyContacts.site;
+  const name = companyContacts?.name ?? pdfHeaderCompanyContacts.name;
+  const phone = companyContacts?.phone ?? pdfHeaderCompanyContacts.phone;
+  const email = companyContacts?.email ?? pdfHeaderCompanyContacts.email;
+  const legalAddress =
+    companyContacts?.legalAddress ?? pdfHeaderCompanyContacts.legalAddress;
   return {
     text: [
-      getPriceHeaderItem(
-        companyContacts?.name ?? pdfHeaderCompanyContacts.name,
-        companyContacts?.site ?? pdfHeaderCompanyContacts.site,
-        { margin: [0, 0, 0, 0], bold: true }
-      ),
-      getPriceHeaderItem(
-        companyContacts?.legalAddress ?? pdfHeaderCompanyContacts.legalAddress,
-        "https://yandex.ru/maps/-/CKUrY0Ih",
-        { lineHeight: 1.1 }
-      ),
-      getPriceHeaderItem(
-        companyContacts?.site ?? pdfHeaderCompanyContacts.site,
-        companyContacts?.site ?? pdfHeaderCompanyContacts.site,
-        { lineHeight: 1.1 }
-      ),
-      getPriceHeaderItem(
-        companyContacts?.email ?? pdfHeaderCompanyContacts.email,
-        null,
-        { lineHeight: 1.1 }
-      ),
-      getPriceHeaderItem(
-        companyContacts?.siphonete ?? pdfHeaderCompanyContacts.phone,
-        "tel:+78124491009",
-        { lineHeight: 1.1 }
-      ),
+      getPriceHeaderItem(name, site, { margin: [0, 0, 0, 0], bold: true }),
+      getPriceHeaderItem(legalAddress, "https://yandex.ru/maps/-/CKUrY0Ih", {
+        lineHeight: 1.1,
+      }),
+      getPriceHeaderItem(site, site, { lineHeight: 1.1 }),
+      getPriceHeaderItem(email, null, { lineHeight: 1.1 }),
+      getPriceHeaderItem(phone, "tel:+78124491009", { lineHeight: 1.1 }),
     ],
     margin: [5, 0, 0, 0],
     alignment: "left",
@@ -350,7 +338,7 @@ const getProductsTableHeaderItem = (text, marginTop = 1.5) => {
   };
 };
 
-getProductsTableHeaderFakeRow = (priceHeader, optionalCols) => {
+const getProductsTableHeaderFakeRow = (priceHeader, optionalCols) => {
   const emptyRow = { text: "", border: [false, false, false, false] };
   return [
     emptyRow,
@@ -583,6 +571,19 @@ const getPriceColumnText = (price, onSale, isOptionsColsLengthMoreThanOne) => {
   );
 };
 
+const getProductsTablePriceColumns = (
+  product,
+  isOptionsColsLengthMoreThanOne
+) => {
+  return ["retailPrice", "lessThan1500Price", "lessThan5000Price"].map((item) =>
+    getPriceColumnText(
+      product[item],
+      product.onSale,
+      isOptionsColsLengthMoreThanOne
+    )
+  );
+};
+
 const getProductsTableListItem = (product, optionalCols, saleImgData) => {
   const isOptionsColsLengthMoreThanOne = optionalCols.length > 1;
   return [
@@ -597,21 +598,7 @@ const getProductsTableListItem = (product, optionalCols, saleImgData) => {
       product.onSale,
       isOptionsColsLengthMoreThanOne ? 1 : 0
     ),
-    getPriceColumnText(
-      product.retailPrice,
-      product.onSale,
-      isOptionsColsLengthMoreThanOne
-    ),
-    getPriceColumnText(
-      product.lessThan1500Price,
-      product.onSale,
-      isOptionsColsLengthMoreThanOne
-    ),
-    getPriceColumnText(
-      product.lessThan5000Price,
-      product.onSale,
-      isOptionsColsLengthMoreThanOne
-    ),
+    ...getProductsTablePriceColumns(product, isOptionsColsLengthMoreThanOne),
     ...optionalCols.map((column) =>
       product[column.property] !== undefined
         ? getPriceColumnText(
