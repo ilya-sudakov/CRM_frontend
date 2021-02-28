@@ -176,6 +176,124 @@ const getPriceListCategoryName = (workSheet, name, lastColumnNumber) => {
   workSheet.addRow([""]);
 };
 
+const getPriceListProductGroupName = (workSheet, name, lastColumnNumber) => {
+  const newRowName = workSheet.addRow([`\t${name}`]);
+  newRowName.font = {
+    size: 14,
+    bold: true,
+    name: "DejaVu",
+    family: 2,
+  };
+  newRowName.height = 50;
+  newRowName.alignment = {
+    wrapText: true,
+    vertical: "middle",
+    horizontal: "center",
+  };
+  workSheet.mergeCells(
+    workSheet.rowCount,
+    1,
+    workSheet.rowCount,
+    lastColumnNumber - 4
+  );
+  workSheet.getCell(workSheet.rowCount, 1).border = greyBorder;
+};
+
+const getPriceListProductLocation = (
+  workSheet,
+  locationType,
+  lastColumnNumber
+) => {
+  workSheet.getCell(
+    workSheet.rowCount,
+    lastColumnNumber - 3
+  ).value = locationType;
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).font = {
+    size: 11,
+    bold: false,
+  };
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).alignment = {
+    horizontal: "center",
+    vertical: "middle",
+  };
+  workSheet.getCell(
+    workSheet.rowCount,
+    lastColumnNumber - 3
+  ).border = greyBorder;
+  workSheet.mergeCells(
+    workSheet.rowCount,
+    lastColumnNumber - 3,
+    workSheet.rowCount,
+    lastColumnNumber - 2
+  );
+};
+
+const getPriceListProductLinkButton = (
+  workSheet,
+  linkAddress,
+  lastColumnNumber
+) => {
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).value = {
+    text: "Смотреть на сайте",
+    hyperlink: linkAddress ?? "https://www.osfix.ru",
+    tooltip: "Смотреть на сайте",
+  };
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).alignment = {
+    horizontal: "center",
+    vertical: "middle",
+    wrapText: true,
+  };
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "FFE30235" },
+  };
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
+    size: 12,
+    bold: false,
+    color: {
+      argb: "FFFFFFFF",
+    },
+  };
+  workSheet.mergeCells(
+    workSheet.rowCount,
+    lastColumnNumber - 1,
+    workSheet.rowCount,
+    lastColumnNumber
+  );
+};
+
+const getPriceListProductGroupHeader = (workSheet, item, lastColumnNumber) => {
+  getPriceListProductGroupName(workSheet, item.name, lastColumnNumber); // adding product group name
+  getPriceListProductLocation(workSheet, item.locationType, lastColumnNumber); // adding location type
+  getPriceListProductLinkButton(workSheet, item.linkAddress, lastColumnNumber); // adding link button
+};
+
+const getPriceListProductDescription = (
+  workSheet,
+  description,
+  lastColumnNumber
+) => {
+  const newRowDescription = workSheet.addRow([description]);
+  newRowDescription.font = {
+    size: 10,
+    color: {
+      argb: "FF666666",
+    },
+  };
+  newRowDescription.height = 35;
+  newRowDescription.alignment = {
+    vertical: "middle",
+    wrapText: true,
+  };
+  workSheet.mergeCells(
+    workSheet.rowCount,
+    1,
+    workSheet.rowCount,
+    lastColumnNumber
+  );
+};
+
 export async function getPriceListPdfExcel(
   categories = [],
   priceList = [],
@@ -188,7 +306,7 @@ export async function getPriceListPdfExcel(
   const lastColumnNumber = 7 + optionalCols.length;
   const rospatentTempImg = await getDataUri("assets/rospatent.png");
   workSheet.columns = getPriceListDefaultColumns(); // default columns
-  await getPriceListHeader(workSheet, workBook, lastColumnNumber); //company header
+  await getPriceListHeader(workSheet, workBook, lastColumnNumber); // company header
   Promise.all(
     categories.map((category) => {
       const filteredData = filterPriceListItems(priceList);
@@ -197,115 +315,12 @@ export async function getPriceListPdfExcel(
         getPriceListCategoryName(workSheet, category.name, lastColumnNumber);
       }
       return filteredData.map((item) => {
-        //adding product group name
-        const newRowName = workSheet.addRow(["\t" + item.name]);
-        newRowName.font = {
-          size: 14,
-          bold: true,
-          name: "DejaVu",
-          family: 2,
-        };
-        newRowName.height = 50;
-        newRowName.alignment = {
-          wrapText: true,
-          vertical: "middle",
-          horizontal: "center",
-        };
-        workSheet.mergeCells(
-          workSheet.rowCount,
-          1,
-          workSheet.rowCount,
-          lastColumnNumber - 4
-        );
-        workSheet.getCell(workSheet.rowCount, 1).border = {
-          left: { style: "medium", color: { argb: "FF666666" } },
-          top: { style: "medium", color: { argb: "FF666666" } },
-          right: { style: "medium", color: { argb: "FF666666" } },
-          bottom: { style: "medium", color: { argb: "FF666666" } },
-        };
-
-        //adding location type
-        workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).value =
-          item.locationType;
-        workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).font = {
-          size: 11,
-          bold: false,
-        };
-        workSheet.getCell(
-          workSheet.rowCount,
-          lastColumnNumber - 3
-        ).alignment = {
-          horizontal: "center",
-          vertical: "middle",
-        };
-        workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).border = {
-          left: { style: "medium", color: { argb: "FF666666" } },
-          top: { style: "medium", color: { argb: "FF666666" } },
-          right: { style: "medium", color: { argb: "FF666666" } },
-          bottom: { style: "medium", color: { argb: "FF666666" } },
-        };
-        workSheet.mergeCells(
-          workSheet.rowCount,
-          lastColumnNumber - 3,
-          workSheet.rowCount,
-          lastColumnNumber - 2
-        );
-
-        //adding link button
-        workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).value = {
-          text: "Смотреть на сайте",
-          hyperlink:
-            item.linkAddress !== undefined
-              ? item.linkAddress
-              : "https://www.osfix.ru",
-          tooltip: "Смотреть на сайте",
-        };
-        workSheet.getCell(
-          workSheet.rowCount,
-          lastColumnNumber - 1
-        ).alignment = {
-          horizontal: "center",
-          vertical: "middle",
-          wrapText: true,
-        };
-        workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).fill = {
-          type: "pattern",
-          pattern: "solid",
-          fgColor: { argb: "FFE30235" },
-        };
-        workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
-          size: 12,
-          bold: false,
-          color: {
-            argb: "FFFFFFFF",
-          },
-        };
-        workSheet.mergeCells(
-          workSheet.rowCount,
-          lastColumnNumber - 1,
-          workSheet.rowCount,
+        getPriceListProductGroupHeader(workSheet, item, lastColumnNumber);
+        getPriceListProductDescription(
+          workSheet,
+          item.description,
           lastColumnNumber
-        );
-
-        //adding product group description
-        const newRowDescription = workSheet.addRow([item.description]);
-        newRowDescription.font = {
-          size: 10,
-          color: {
-            argb: "FF666666",
-          },
-        };
-        newRowDescription.height = 35;
-        newRowDescription.alignment = {
-          vertical: "middle",
-          wrapText: true,
-        };
-        workSheet.mergeCells(
-          workSheet.rowCount,
-          1,
-          workSheet.rowCount,
-          lastColumnNumber
-        );
+        ); // adding product group description
 
         //adding 4 group images
         if (
@@ -424,12 +439,7 @@ export async function getPriceListPdfExcel(
           // family: 2,
         };
         fakeTableHeaderRow.height = 20;
-        workSheet.getCell(workSheet.rowCount, 5).border = {
-          left: { style: "medium", color: { argb: "FF666666" } },
-          top: { style: "medium", color: { argb: "FF666666" } },
-          right: { style: "medium", color: { argb: "FF666666" } },
-          bottom: { style: "medium", color: { argb: "FF666666" } },
-        };
+        workSheet.getCell(workSheet.rowCount, 5).border = greyBorder;
         workSheet.mergeCells(
           workSheet.rowCount,
           5,
@@ -454,12 +464,7 @@ export async function getPriceListPdfExcel(
           ),
         ]);
         for (let i = 1; i <= lastColumnNumber; i++) {
-          workSheet.getCell(workSheet.rowCount, i).border = {
-            left: { style: "medium", color: { argb: "FF666666" } },
-            top: { style: "medium", color: { argb: "FF666666" } },
-            right: { style: "medium", color: { argb: "FF666666" } },
-            bottom: { style: "medium", color: { argb: "FF666666" } },
-          };
+          workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
         }
         workSheet.mergeCells(workSheet.rowCount, 2, workSheet.rowCount, 3);
         tableHeaderRow.font = {
@@ -489,12 +494,7 @@ export async function getPriceListPdfExcel(
           ]);
           productRow.height = 25;
           for (let i = 1; i <= lastColumnNumber; i++) {
-            workSheet.getCell(workSheet.rowCount, i).border = {
-              left: { style: "medium", color: { argb: "FF666666" } },
-              top: { style: "medium", color: { argb: "FF666666" } },
-              right: { style: "medium", color: { argb: "FF666666" } },
-              bottom: { style: "medium", color: { argb: "FF666666" } },
-            };
+            workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
           }
           return workSheet.mergeCells(
             workSheet.rowCount,
