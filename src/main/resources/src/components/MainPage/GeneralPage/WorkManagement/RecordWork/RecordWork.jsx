@@ -203,9 +203,7 @@ const NewRecordWork = (props) => {
         <form
           className="main-form__form"
           style={{
-            minHeight: `calc(${wrapperHeight} + ${
-              screenIsMobile ? 80 : 45
-            }px)`,
+            minHeight: `calc(${wrapperHeight} + ${screenIsMobile ? 80 : 45}px)`,
           }}
         >
           <div className="main-form__header main-form__header--full">
@@ -215,16 +213,16 @@ const NewRecordWork = (props) => {
             className="main-form__wrapper"
             style={{
               left: `calc(-100% * ${curPage} + (${
-                (window.innerWidth ||
-                  document.documentElement.clientWidth ||
-                  document.body.clientWidth) >= 768
-                  ? "35px"
-                  : "20px"
+                screenIsMobile ? "20px" : "35px"
               } + 15px * ${curPage}))`,
               height: `calc(${wrapperHeight})`,
             }}
           >
-            <div className="main-form__wrapper-item" id="0page">
+            <div
+              className="main-form__wrapper-item"
+              id="0page"
+              style={{ minHeight: screenIsMobile ? "280px" : "255px" }}
+            >
               <InputDate
                 inputName="Дата"
                 required
