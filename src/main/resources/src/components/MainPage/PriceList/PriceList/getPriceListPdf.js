@@ -876,7 +876,7 @@ const getFullGroup = async (
             proprietaryItem2: proprietaryItem2,
           })
         : emptyTextObject,
-      !isMini && getProductFooterImg(groupImgFooterData),
+      !isMini ? getProductFooterImg(groupImgFooterData) : emptyTextObject,
     ],
   };
 };
