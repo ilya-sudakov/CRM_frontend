@@ -518,10 +518,16 @@ const getPriceListProductGroup = async (
   item,
   lastColumnNumber,
   optionalCols,
-  rospatentTempImg
+  rospatentTempImg,
+  isMini
 ) => {
-  getPriceListProductGroupHeader(workSheet, item, lastColumnNumber);
-  getPriceListProductDescription(workSheet, item.description, lastColumnNumber); // adding product group description
+  !isMini && getPriceListProductGroupHeader(workSheet, item, lastColumnNumber);
+  !isMini &&
+    getPriceListProductDescription(
+      workSheet,
+      item.description,
+      lastColumnNumber
+    ); // adding product group description
   const isProprietary =
     item.proprietaryItemText1 !== undefined ||
     item.proprietaryItemText2 !== undefined;
@@ -531,11 +537,11 @@ const getPriceListProductGroup = async (
     item.groupImg2 !== "" ||
     item.groupImg3 !== "" ||
     item.groupImg4 !== "";
-  if (hasImages || isProprietary) {
+  if ((hasImages || isProprietary) && !isMini) {
     getPriceListProductTopImages(workSheet, workBook, item, lastColumnNumber);
   }
   //adding patent data rospatentTempImg
-  if (isProprietary) {
+  if (isProprietary && !isMini) {
     getPriceListProductProprietaryText(
       workBook,
       workSheet,
@@ -551,7 +557,13 @@ const getPriceListProductGroup = async (
     lastColumnNumber,
     optionalCols
   );
-  getPriceListProductInfoText(workSheet, item, lastColumnNumber, optionalCols); //adding infoText
+  !isMini &&
+    getPriceListProductInfoText(
+      workSheet,
+      item,
+      lastColumnNumber,
+      optionalCols
+    ); //adding infoText
   const spaceBetweenRow = workSheet.addRow([""]);
   spaceBetweenRow.height = 50;
 };
@@ -574,7 +586,7 @@ export async function getPriceListPdfExcel(
     categories.map((category) => {
       const filteredData = filterPriceListItems(priceList, category.name);
       //adding category name
-      if (filteredData.length > 0) {
+      if (filteredData.length > 0 && !isMini) {
         getPriceListCategoryName(workSheet, category.name, lastColumnNumber);
       }
       return filteredData.map((item) =>
@@ -584,7 +596,8 @@ export async function getPriceListPdfExcel(
           item,
           lastColumnNumber,
           optionalCols,
-          rospatentTempImg
+          rospatentTempImg,
+          isMini
         )
       );
     })
