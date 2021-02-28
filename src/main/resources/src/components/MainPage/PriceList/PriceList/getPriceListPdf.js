@@ -751,33 +751,36 @@ const getLinkButton = (linkButtonData, linkAddress) => {
   };
 };
 
+const priceListCategoryNameStyles = {
+  style: "header",
+  fontSize: 16,
+  color: "#ffffff",
+  alignment: "center",
+  relativePosition: { x: 0, y: -38 },
+};
+
 const makeListUnbreakable = (sortedArr, tempImg, category) => {
   return {
     stack: [
       ...sortedArr.map((item, index) => {
-        if (index === 0) {
-          return {
-            unbreakable:
-              item.stack[2].columns[0].table.body.length <= 10 ? true : false,
-            stack: [
-              {
-                image: tempImg,
-                width: 510,
-                height: 50,
-                alignment: "center",
-              },
-              {
-                text: category.toUpperCase(),
-                style: "header",
-                fontSize: 16,
-                color: "#ffffff",
-                alignment: "center",
-                relativePosition: { x: 0, y: -38 },
-              },
-              ...item.stack,
-            ],
-          };
-        } else return item;
+        if (index !== 0) return item;
+        return {
+          unbreakable:
+            item.stack[2].columns[0].table.body.length <= 10 ? true : false,
+          stack: [
+            {
+              image: tempImg,
+              width: 510,
+              height: 50,
+              alignment: "center",
+            },
+            {
+              text: category.toUpperCase(),
+              ...priceListCategoryNameStyles,
+            },
+            ...item.stack,
+          ],
+        };
       }),
     ],
   };
@@ -881,13 +884,12 @@ export async function getPriceListPdfText(
       priceList.map(async (groupOfProducts) => {
         let locations = [];
         if (category.name !== groupOfProducts.category) return;
+        const locationTypes = groupOfProducts.locationType.split("/");
         //getting location types
         return Promise.all(
-          groupOfProducts.locationType
-            .split("/")
-            .map((location) =>
-              getAllLocationTypes(locationTypes, location, locations)
-            )
+          locationTypes.map((location) =>
+            getAllLocationTypes(locationTypes, location, locations)
+          )
         ).then(async () => {
           const temp = await getFullGroup(
             groupOfProducts,
