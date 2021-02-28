@@ -15,6 +15,8 @@ const getReportTableColumnXLSX = (name, width = 5) => {
   };
 };
 
+const thinBorder = { style: "thin", color: { argb: "00000000" } };
+
 const reportTableDefaultColumnds = [
   getReportTableColumnXLSX("name", 45),
   getReportTableColumnXLSX(undefined),
@@ -37,10 +39,10 @@ const reportTableDefaultColumnds = [
 ];
 
 const defaultBorder = {
-  top: { style: "thin", color: { argb: "00000000" } },
-  left: { style: "thin", color: { argb: "00000000" } },
-  bottom: { style: "thin", color: { argb: "00000000" } },
-  right: { style: "thin", color: { argb: "00000000" } },
+  top: thinBorder,
+  left: thinBorder,
+  bottom: thinBorder,
+  right: thinBorder,
 };
 
 const months = [
@@ -98,17 +100,21 @@ const getDateTitle = (workSheet, curDate, type = "first") => {
   dateTitleRow.height = 50;
 };
 
+const fillBorderInBetween = (workSheet) => {
+  if (i >= 2 && i <= 17) {
+    workSheet.getCell(workSheet.rowCount, i).border = {
+      right: { style: "hair", color: { argb: "00000000" } },
+      bottom: thinBorder,
+    };
+  }
+};
+
 const getDatesHeaderList = (workSheet, dates) => {
   const array = getRemainingDaysSpaces(dates);
   workSheet.addRow([...dates, ...array, "Сумма"]);
   for (let i = 1; i <= 18; i++) {
     workSheet.getCell(workSheet.rowCount, i).border = defaultBorder;
-    if (i >= 2 && i <= 17) {
-      workSheet.getCell(workSheet.rowCount, i).border = {
-        right: { style: "hair", color: { argb: "00000000" } },
-        bottom: { style: "thin", color: { argb: "00000000" } },
-      };
-    }
+    fillBorderInBetween(workSheet);
   }
 };
 
@@ -175,7 +181,7 @@ const getEmployeeWorkRowBorders = (workSheet, index) => {
     };
   }
   workSheet.getCell(workSheet.rowCount, 1).border = {
-    right: { style: "thin", color: { argb: "00000000" } },
+    right: thinBorder,
   };
   for (let i = 2; i <= 17; i++) {
     workSheet.getCell(workSheet.rowCount, i).border = {
@@ -188,23 +194,18 @@ const getEmployeeWorkRowBorders = (workSheet, index) => {
 const createBorders = (workSheet) => {
   for (let i = 1; i <= 18; i++) {
     workSheet.getCell(workSheet.rowCount, i).border = {
-      bottom: { style: "thin", color: { argb: "00000000" } },
+      bottom: thinBorder,
     };
-    if (i >= 2 && i <= 17) {
-      workSheet.getCell(workSheet.rowCount, i).border = {
-        right: { style: "hair", color: { argb: "00000000" } },
-        bottom: { style: "thin", color: { argb: "00000000" } },
-      };
-    }
+    fillBorderInBetween(workSheet);
   }
   workSheet.getCell(workSheet.rowCount, 1).border = {
-    right: { style: "thin", color: { argb: "00000000" } },
-    bottom: { style: "thin", color: { argb: "00000000" } },
+    right: thinBorder,
+    bottom: thinBorder,
   };
   workSheet.getCell(workSheet.rowCount, 18).border = {
-    right: { style: "thin", color: { argb: "00000000" } },
-    bottom: { style: "thin", color: { argb: "00000000" } },
-    left: { style: "thin", color: { argb: "00000000" } },
+    right: thinBorder,
+    bottom: thinBorder,
+    left: thinBorder,
   };
 };
 
