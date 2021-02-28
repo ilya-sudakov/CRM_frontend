@@ -1,5 +1,6 @@
 import Excel from "exceljs";
 import { getDataUri } from "../../../../utils/functions.jsx";
+import { saveExcelFile } from "../../../../utils/xlsxFunctions.js";
 import { getPriceListColumnValue } from "./functions.js";
 
 const getPriceListDefaultColumnXLSX = (name, width = 30) => {
@@ -609,8 +610,5 @@ export async function getPriceListExcel(
         )
       );
     })
-  ).then(async () => {
-    const buffer = await workBook.xlsx.writeBuffer();
-    saveAs(new Blob([buffer]), "Osfix_Прайс-лист.xlsx");
-  });
+  ).then(() => saveExcelFile(workBook, "Osfix_Прайс-лист"));
 }
