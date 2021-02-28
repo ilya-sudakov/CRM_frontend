@@ -786,6 +786,53 @@ const makeListUnbreakable = (sortedArr, tempImg, category) => {
   };
 };
 
+const getProductsHeader = (groupOfProducts, locations) => {
+  return {
+    width: "*",
+    headlineLevel: 1,
+    columns: [
+      getGroupOfProductsName(groupOfProducts),
+      getGroupOfProductsDescription(groupOfProducts),
+      getGroupOfProductsLocations(locations),
+    ],
+    margin: [0, 10, 0, 10],
+  };
+};
+
+const getProductsFooter = (
+  groupOfProducts,
+  linkButtonData,
+  proprietaryItems = {}
+) => {
+  return {
+    unbreakable: true,
+    alignment: "justify",
+    width: "*",
+    margin: [0, 0, 0, 10],
+    columns: [
+      getProductsInfoText(groupOfProducts.infoText),
+      {
+        unbreakable: true,
+        stack: [
+          getLinkButton(linkButtonData, groupOfProducts.linkAddress),
+          proprietaryItems.proprietaryItem1,
+          proprietaryItems.proprietaryItem2,
+        ],
+        width: 100,
+      },
+    ],
+  };
+};
+
+const getProductFooterImg = (groupImgFooterData) => {
+  return groupImgFooterData !== null
+    ? {
+        image: groupImgFooterData,
+        fit: [512, 100],
+      }
+    : emptyTextObject;
+};
+
 const getFullGroup = async (
   groupOfProducts,
   locations,
@@ -812,18 +859,7 @@ const getFullGroup = async (
   return {
     unbreakable: groupOfProducts.products.length <= 20 ? true : false,
     stack: [
-      !isMini
-        ? {
-            width: "*",
-            headlineLevel: 1,
-            columns: [
-              getGroupOfProductsName(groupOfProducts),
-              getGroupOfProductsDescription(groupOfProducts),
-              getGroupOfProductsLocations(locations),
-            ],
-            margin: [0, 10, 0, 10],
-          }
-        : emptyTextObject,
+      !isMini ? getProductsHeader(groupOfProducts, locations) : emptyTextObject,
       !isMini
         ? getGroupOfProductsTopImages(
             groupImg1Data,
@@ -835,33 +871,12 @@ const getFullGroup = async (
         : emptyTextObject,
       productsTableList,
       !isMini
-        ? {
-            unbreakable: true,
-            alignment: "justify",
-            width: "*",
-            margin: [0, 0, 0, 10],
-            columns: [
-              getProductsInfoText(groupOfProducts.infoText),
-              {
-                unbreakable: true,
-                stack: [
-                  getLinkButton(linkButtonData, groupOfProducts.linkAddress),
-                  proprietaryItem1,
-                  proprietaryItem2,
-                ],
-                width: 100,
-              },
-            ],
-          }
+        ? getProductsFooter(groupOfProducts, linkButtonData, {
+            proprietaryItem1: proprietaryItem1,
+            proprietaryItem2: proprietaryItem2,
+          })
         : emptyTextObject,
-      !isMini && groupImgFooterData !== null
-        ? {
-            image: groupImgFooterData,
-            fit: [512, 100],
-          }
-        : {
-            text: "  ",
-          },
+      !isMini && getProductFooterImg(groupImgFooterData),
     ],
   };
 };
