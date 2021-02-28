@@ -343,15 +343,23 @@ const getGroupOfProductsTopImages = (
   };
 };
 
+const getProductsTableHeaderItem = (text, marginTop = 1.5) => {
+  return {
+    text: text,
+    margin: [0, marginTop, 0, 0],
+  };
+};
+
 const getProductsTableHeader = (groupOfProducts, optionalCols) => {
+  const emptyRow = { text: "", border: [false, false, false, false] };
   return [
     [
-      { text: "", border: [false, false, false, false] },
-      { text: "", border: [false, false, false, false] },
-      { text: "", border: [false, false, false, false] },
+      emptyRow,
+      emptyRow,
+      emptyRow,
       {
         text: groupOfProducts.priceHeader
-          ? groupOfProducts.priceHeader + ", ₽"
+          ? `${groupOfProducts.priceHeader}, ₽`
           : "Цена за штуку, ₽",
         colSpan: 3 + optionalCols.length,
         italics: true,
@@ -361,48 +369,26 @@ const getProductsTableHeader = (groupOfProducts, optionalCols) => {
       ...optionalCols.map(() => {}),
     ],
     [
-      {
-        text: "Артикул",
-        margin: [0, 5, 0, 0],
-      },
-      {
-        text: "Название",
-        margin: [0, 5, 0, 0],
-      },
-      {
-        text: "Ед. изм.",
-        margin: [0, 5, 0, 0],
-      },
-      {
-        text: groupOfProducts.retailName
-          ? groupOfProducts.retailName
-          : "Розница",
-        margin: [0, 1.5, 0, 0],
-      },
-      {
-        text: groupOfProducts.firstPriceName
-          ? groupOfProducts.firstPriceName
-          : "до 1500 шт.",
-        margin: [0, 1.5, 0, 0],
-      },
-      {
-        text: groupOfProducts.secondPriceName
-          ? groupOfProducts.secondPriceName
-          : "до 5000 шт.",
-        margin: [0, 1.5, 0, 0],
-      },
-      ...optionalCols.map((column) => {
-        return {
-          text:
-            column.property === "partnerPrice"
-              ? groupOfProducts.partnerName
-              : column.property === "dealerPrice"
-              ? groupOfProducts.dealerName
-              : column.property === "distributorPrice" &&
-                groupOfProducts.distributorName,
-          margin: [0, 1.5, 0, 0],
-        };
-      }),
+      getProductsTableHeaderItem("Артикул", 5),
+      getProductsTableHeaderItem("Название", 5),
+      getProductsTableHeaderItem("Ед. изм.", 5),
+      getProductsTableHeaderItem(groupOfProducts.retailName ?? "Розница"),
+      getProductsTableHeaderItem(
+        groupOfProducts.firstPriceName ?? "до 1500 шт."
+      ),
+      getProductsTableHeaderItem(
+        groupOfProducts.secondPriceName ?? "до 5000 шт."
+      ),
+      ...optionalCols.map((column) =>
+        getProductsTableHeaderItem(
+          column.property === "partnerPrice"
+            ? groupOfProducts.partnerName
+            : column.property === "dealerPrice"
+            ? groupOfProducts.dealerName
+            : column.property === "distributorPrice" &&
+              groupOfProducts.distributorName
+        )
+      ),
     ],
   ];
 };
