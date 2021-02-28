@@ -288,8 +288,8 @@ const getGroupOfProductsDescription = ({ description }) => {
 };
 
 const sortLocations = (locations) => {
+  if (locations.length <= 1) return locations;
   return locations.sort((a, b) => {
-    if (locations.length <= 1) return 0;
     const element = a.columns[0].text.localeCompare(
       b.columns[0].text,
       undefined,
@@ -565,8 +565,8 @@ const getTitlePage = async (titlePage) => {
 };
 
 const sortFinalList = (data) => {
+  if (data.length <= 1) return data;
   return data.sort((a, b) => {
-    if (data.length <= 1) return 0;
     const element = a.stack[0].stack[1].text.localeCompare(
       b.stack[0].stack[1].text,
       undefined,
@@ -578,22 +578,38 @@ const sortFinalList = (data) => {
   });
 };
 
+const getCustomColumnText = (field, onSale, marginTop = 5) => {
+  return {
+    text: field,
+    margin: [0, marginTop, 0, 0],
+    bold: onSale,
+    color: onSale ? "#111111" : "#666666",
+  };
+};
+
+const getPriceColumnText = (price, onSale, isOptionsColsLengthMoreThanOne) => {
+  const isNumber = price !== "" && !Number.isNaN(price) && price !== 0;
+  return getCustomColumnText(
+    isNumber ? price : " ",
+    onSale,
+    isOptionsColsLengthMoreThanOne ? 4.5 : 0
+  );
+};
+
 const getProductsTableListItem = (product, optionalCols, saleImgData) => {
   const isOptionsColsLengthMoreThanOne = optionalCols.length > 1;
   return [
-    {
-      text: product.number,
-      margin: [0, isOptionsColsLengthMoreThanOne ? 5 : 0, 0, 0],
-      bold: product.onSale,
-      color: product.onSale ? "#111111" : "#666666",
-    },
+    getCustomColumnText(
+      product.number,
+      product.onSale,
+      isOptionsColsLengthMoreThanOne ? 5 : 0
+    ),
     getProductsTableOnSaleText(product, saleImgData),
-    {
-      text: product.units,
-      margin: [0, isOptionsColsLengthMoreThanOne ? 1 : 0, 0, 0],
-      bold: product.onSale,
-      color: product.onSale ? "#111111" : "#666666",
-    },
+    getCustomColumnText(
+      product.units,
+      product.onSale,
+      isOptionsColsLengthMoreThanOne ? 1 : 0
+    ),
     getPriceColumnText(
       product.retailPrice,
       product.onSale,
@@ -619,16 +635,6 @@ const getProductsTableListItem = (product, optionalCols, saleImgData) => {
         : getPriceColumnText(0, product.onSale, isOptionsColsLengthMoreThanOne)
     ),
   ];
-};
-
-const getPriceColumnText = (price, onSale, isOptionsColsLengthMoreThanOne) => {
-  const isNumber = price !== "" && !Number.isNaN(price) && price !== 0;
-  return {
-    text: isNumber ? price : " ",
-    margin: [0, isOptionsColsLengthMoreThanOne ? 4.5 : 0, 0, 0],
-    bold: onSale,
-    color: onSale ? "#111111" : "#666666",
-  };
 };
 
 const getProductsTableOnSaleText = (
