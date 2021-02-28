@@ -1,7 +1,7 @@
 import Excel from "exceljs";
 import { getDataUri } from "../../../../utils/functions.jsx";
 
-const getPriceListColumnXLSX = (name, width = 30) => {
+const getPriceListDefaultColumnXLSX = (name, width = 30) => {
   return {
     key: name,
     width: width,
@@ -15,34 +15,24 @@ const getPriceListColumnXLSX = (name, width = 30) => {
   };
 };
 
-export async function getPriceListPdfExcel(
-  categories = [],
-  priceList = [],
-  optionalCols = []
-) {
-  let workBook = new Excel.Workbook();
-  workBook.creator = "Osfix";
-  workBook.created = new Date();
-  const rospatentTempImg = await getDataUri("assets/rospatent.png");
+const getPriceListDefaultColumns = () => {
+  return [
+    getPriceListDefaultColumnXLSX(undefined, 30),
+    getPriceListDefaultColumnXLSX("number", 30),
+    getPriceListDefaultColumnXLSX("name", 30),
+    getPriceListDefaultColumnXLSX("units", 30),
+    getPriceListDefaultColumnXLSX("group1", 14),
+    getPriceListDefaultColumnXLSX("group2", 14),
+    getPriceListDefaultColumnXLSX("group3", 14),
+    getPriceListDefaultColumnXLSX("group4", 14),
+    getPriceListDefaultColumnXLSX("group5", 14),
+    getPriceListDefaultColumnXLSX("group6", 14),
+  ];
+};
+
+const getPriceListHeader = async (workSheet) => {
   const tempImg = await getDataUri("assets/osfix_logo.png");
   const contactsImg = await getDataUri("assets/contacts_excel.png");
-  const workSheet = workBook.addWorksheet("Каталог продукции");
-  // console.log(categories, priceList, optionalCols, locationTypes, disclaimer)
-  workSheet.columns = [
-    getPriceListColumnXLSX(undefined, 30),
-    getPriceListColumnXLSX("number", 30),
-    getPriceListColumnXLSX("name", 30),
-    getPriceListColumnXLSX("units", 30),
-    getPriceListColumnXLSX("group1", 14),
-    getPriceListColumnXLSX("group2", 14),
-    getPriceListColumnXLSX("group3", 14),
-    getPriceListColumnXLSX("group4", 14),
-    getPriceListColumnXLSX("group5", 14),
-    getPriceListColumnXLSX("group6", 14),
-  ];
-
-  const lastColumnNumber = 7 + optionalCols.length;
-
   //adding company header
   let temp = workSheet.addRow([""]);
   workSheet.getCell(1, 3).value = {
@@ -57,9 +47,7 @@ export async function getPriceListPdfExcel(
     family: 2,
   };
   temp.alignment = {
-    // horizontal: 'left',
     vertical: "middle",
-    // indent: 2,
     horizontal: "center",
   };
   workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
@@ -76,19 +64,14 @@ export async function getPriceListPdfExcel(
   };
   workSheet.getCell(2, 3).alignment = {
     vertical: "middle",
-    // horizontal: 'left',
-    // indent: 2,
     horizontal: "center",
   };
   workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
   temp.height = 25;
-
   temp = workSheet.addRow([""]);
   workSheet.getCell(3, 3).value = "info@osfix.ru, +7 (812) 449-10-09";
   temp.alignment = {
     vertical: "middle",
-    // horizontal: 'left',
-    // indent: 2,
     horizontal: "center",
   };
   temp.font = {
@@ -97,16 +80,12 @@ export async function getPriceListPdfExcel(
   };
   workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
   temp.height = 25;
-
   temp = workSheet.addRow([""]);
   workSheet.getCell(4, 3).value = {
     text: "www.osfix.ru",
     hyperlink: "https://www.osfix.ru",
     tooltip: "Открыть сайт",
   };
-  // workSheet.getCell(2, 3).border = {
-  //   right: { style: 'medium', color: { argb: 'FFFF1B5F' } },
-  // }
   workSheet.getCell(4, 3).font = {
     size: 14,
     name: "DejaVu",
@@ -114,8 +93,6 @@ export async function getPriceListPdfExcel(
   };
   workSheet.getCell(4, 3).alignment = {
     vertical: "middle",
-    // horizontal: 'left',
-    // indent: 2,
     horizontal: "center",
   };
   workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
@@ -126,26 +103,24 @@ export async function getPriceListPdfExcel(
     base64: tempImg,
     extension: "jpeg",
   });
-
   workSheet.mergeCells(1, 1, 4, 1);
   workSheet.addImage(logoImg, {
     tl: { col: 0.3, row: 0.4 },
     ext: { width: 180, height: 80 },
-    // editAs: 'absolute',
   });
 
+  const border = { style: "medium", color: { argb: "FFFF1B5F" } };
   //border-bottom
   for (let i = 1; i <= lastColumnNumber; i++) {
     workSheet.getCell(workSheet.rowCount, i).border = {
-      bottom: { style: "medium", color: { argb: "FFFF1B5F" } },
+      bottom: border,
     };
   }
-
   //border-right
   for (let i = 1; i <= workSheet.rowCount; i++) {
     workSheet.getCell(i, lastColumnNumber).border = {
       ...workSheet.getCell(i, lastColumnNumber).border,
-      right: { style: "medium", color: { argb: "FFFF1B5F" } },
+      right: border,
     };
   }
 
@@ -157,12 +132,25 @@ export async function getPriceListPdfExcel(
   workSheet.addImage(contactsExcelImg, {
     tl: { col: 2.1, row: 0.3 },
     ext: { width: 17, height: 96 },
-    // editAs: 'absolute',
   });
 
   temp = workSheet.addRow([""]);
   temp.height = 25;
+};
 
+export async function getPriceListPdfExcel(
+  categories = [],
+  priceList = [],
+  optionalCols = []
+) {
+  let workBook = new Excel.Workbook();
+  workBook.creator = "Osfix";
+  workBook.created = new Date();
+  const workSheet = workBook.addWorksheet("Каталог продукции");
+  const lastColumnNumber = 7 + optionalCols.length;
+  const rospatentTempImg = await getDataUri("assets/rospatent.png");
+  workSheet.columns = getPriceListDefaultColumns(); // default columns
+  await getPriceListHeader(workSheet); //company header
   Promise.all(
     categories.map((category) => {
       if (
@@ -210,8 +198,6 @@ export async function getPriceListPdfExcel(
           newRowName.alignment = {
             wrapText: true,
             vertical: "middle",
-            // indent: 2,
-            // horizontal: 'left',
             horizontal: "center",
           };
           workSheet.mergeCells(
@@ -229,12 +215,10 @@ export async function getPriceListPdfExcel(
 
           //adding location type
           workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).value =
-            item.locationType; //.split('/').join('/ ')
+            item.locationType;
           workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).font = {
             size: 11,
             bold: false,
-            // name: 'DejaVu',
-            // family: 2,
           };
           workSheet.getCell(
             workSheet.rowCount,
@@ -242,7 +226,6 @@ export async function getPriceListPdfExcel(
           ).alignment = {
             horizontal: "center",
             vertical: "middle",
-            // wrapText: true,
           };
           workSheet.getCell(workSheet.rowCount, lastColumnNumber - 3).border = {
             left: { style: "medium", color: { argb: "FF666666" } },
@@ -277,9 +260,6 @@ export async function getPriceListPdfExcel(
           workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).fill = {
             type: "pattern",
             pattern: "solid",
-            bgColor: {
-              // argb: 'FFFFFFFF',
-            },
             fgColor: { argb: "FFE30235" },
           };
           workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
@@ -288,8 +268,6 @@ export async function getPriceListPdfExcel(
             color: {
               argb: "FFFFFFFF",
             },
-            // name: 'DejaVu',
-            // family: 2,
           };
           workSheet.mergeCells(
             workSheet.rowCount,
@@ -305,14 +283,11 @@ export async function getPriceListPdfExcel(
             color: {
               argb: "FF666666",
             },
-            // name: 'DejaVu',
-            // family: 2,
           };
           newRowDescription.height = 35;
           newRowDescription.alignment = {
             vertical: "middle",
             wrapText: true,
-            // horizontal: 'center',
           };
           workSheet.mergeCells(
             workSheet.rowCount,
@@ -322,7 +297,6 @@ export async function getPriceListPdfExcel(
           );
 
           //adding 4 group images
-
           if (
             item.groupImg1 !== "" ||
             item.groupImg2 !== "" ||
@@ -414,8 +388,6 @@ export async function getPriceListPdfExcel(
                 : item.proprietaryItemText2 + "\n";
             workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
               size: 12,
-              // name: 'DejaVu',
-              // family: 2,
             };
             workSheet.getCell(
               workSheet.rowCount,
@@ -428,7 +400,6 @@ export async function getPriceListPdfExcel(
           }
 
           //adding products
-          // workSheet.addRow([''])
           const fakeTableHeaderRow = workSheet.addRow([
             "",
             "",
@@ -484,8 +455,6 @@ export async function getPriceListPdfExcel(
             color: {
               argb: "FF111111",
             },
-            // name: 'DejaVu',
-            // family: 2,
           };
           tableHeaderRow.height = 30;
           item.products.map((product) => {
@@ -533,14 +502,11 @@ export async function getPriceListPdfExcel(
             color: {
               argb: "FF000000",
             },
-            // name: 'DejaVu',
-            // family: 2,
           };
           workSheet.getCell(workSheet.rowCount, 1).border = {
             right: { style: "medium", color: { argb: "FFFF1B5F" } },
           };
           workSheet.getCell(workSheet.rowCount, 1).alignment = {
-            // vertical: 'middle',
             vertical: "top",
             horizontal: "left",
             wrapText: true,
