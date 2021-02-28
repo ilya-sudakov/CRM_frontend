@@ -8,7 +8,7 @@ import {
   changeVisibilityOfListItem,
   formatDateString,
 } from "../../../../../utils/functions.jsx";
-import { getEmployeesByWorkshopListPdfText } from "../../../../../utils/pdfFunctions.js";
+import { getEmployeesByWorkshopListPdfText } from "../functions.js";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import { sortByField } from "../../../../../utils/sorting/sorting";
 import { filterEmployeesBySearchQuery } from "../functions.js";

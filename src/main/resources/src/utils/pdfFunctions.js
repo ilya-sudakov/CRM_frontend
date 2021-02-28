@@ -1,6 +1,6 @@
 import font from "pdfmake/build/vfs_fonts.js";
 import pdfMake from "pdfmake";
-import { formatDateString, getEmployeeNameText } from "./functions.jsx";
+import { formatDateString } from "./functions.jsx";
 import { sortByField } from "./sorting/sorting.js";
 
 export const defaultStylesPDF = {
@@ -31,7 +31,15 @@ export const createPDF = (data) => {
   return pdfMake.createPdf(data).print();
 };
 
-const getInputElementTextPDF = (title, value) => {
+export const getPDFTitleObject = (name) => {
+  return {
+    text: `${name}\n`,
+    alignment: "center",
+    style: "title",
+  };
+};
+
+export const getInputElementTextPDF = (title, value) => {
   return {
     text: [
       {
@@ -81,12 +89,7 @@ export const getTransportationListPdfText = (transportation) => {
       title: "Реестр транспортировок",
     },
     content: [
-      {
-        text: "Реестр транспортировок\n",
-        alignment: "center",
-        style: "title",
-        margin: [0, 0, 0, 10],
-      },
+      getPDFTitleObject("Реестр транспортировок"),
       ...transportationList,
     ],
     styles: defaultStylesPDF,
@@ -113,11 +116,7 @@ export const getRequestPdfText = (
       title: "Очередь производства №" + itemId,
     },
     content: [
-      {
-        text: "Очередь производства  №" + itemId + "\n",
-        alignment: "center",
-        style: "header",
-      },
+      getPDFTitleObject(`Очередь производства  №${itemId}`),
       workshopName
         ? getInputElementTextPDF("Подразделение", workshopName)
         : "\n",
@@ -197,11 +196,7 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
       title: "Очередь производства - список",
     },
     content: [
-      {
-        text: "Очередь производства - список\n",
-        alignment: "center",
-        style: "title",
-      },
+      getPDFTitleObject("Очередь производства - список"),
       workshopName
         ? getInputElementTextPDF("Подразделение", workshopName)
         : "\n",
@@ -223,93 +218,6 @@ export const getProductsFromRequestsListPdfText = (products, workshopName) => {
           ];
         }
       }),
-    ],
-    styles: defaultStylesPDF,
-  };
-  createPDF(dd);
-};
-
-const getEmployeesTablePDF = (employeeInfo) => {
-  return {
-    table: {
-      widths: ["*", 70, 80, 120, 100],
-      body: [
-        [
-          { text: "ФИО", style: "tableHeader" },
-          { text: "Дата рождения", style: "tableHeader" },
-          { text: "Гражданство", style: "tableHeader" },
-          { text: "Должность", style: "tableHeader" },
-          { text: "", style: "tableHeader" },
-        ],
-        ...employeeInfo,
-      ],
-    },
-  };
-};
-
-export const getEmployeesListPdfText = (employees, workshops) => {
-  const employeesList = [];
-  workshops.map((workshop) => {
-    employeesList.push(getInputElementTextPDF("Подразделение", workshop));
-    let employeeInfo = [];
-    employees.map((employee) => {
-      if (
-        (workshop === employee.workshop && employee.relevance !== "Уволен") ||
-        (workshop === "Уволенные" && employee.relevance === "Уволен")
-      ) {
-        employeeInfo.push([
-          getEmployeeNameText(employee),
-          formatDateString(employee.yearOfBirth),
-          employee.citizenship,
-          employee.position,
-          "",
-        ]);
-      }
-    });
-    employeesList.push(getEmployeesTablePDF(employeeInfo));
-  });
-  var dd = {
-    info: {
-      title: "Список сотрудников",
-    },
-    content: [
-      {
-        text: "Список сотрудников\n",
-        alignment: "center",
-        style: "title",
-      },
-      ...employeesList,
-    ],
-    styles: defaultStylesPDF,
-  };
-  pdfMake.vfs = font.pdfMake.vfs;
-  return dd;
-};
-
-export const getEmployeesByWorkshopListPdfText = (employees, workshop) => {
-  let employeesList = [],
-    employeeInfo = [];
-  employees.map((item) => {
-    employeeInfo.push([
-      getEmployeeNameText(employee),
-      formatDateString(item.yearOfBirth),
-      item.citizenship,
-      item.position,
-      "",
-    ]);
-  });
-  employeesList.push(getEmployeesTablePDF(employeeInfo));
-  const dd = {
-    info: {
-      title: `Список сотрудников - ${workshop}`,
-    },
-    content: [
-      {
-        text: `Список сотрудников ${workshop}\n\n`,
-        alignment: "center",
-        style: "title",
-      },
-      ...employeesList,
     ],
     styles: defaultStylesPDF,
   };

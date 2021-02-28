@@ -4,14 +4,14 @@ import "../../../../utils/MainWindow/MainWindow.scss";
 import SearchBar from "../../SearchBar/SearchBar.jsx";
 import TableView from "./TableView/TableView.jsx";
 import PrintIcon from "../../../../../../../../assets/print.png";
-import pdfMake from "pdfmake";
-import { getEmployeesListPdfText } from "../../../../utils/pdfFunctions.js";
+import { getEmployeesListPdfText } from "./functions.js";
 import {
   deleteEmployee,
   getEmployeesByWorkshop,
 } from "../../../../utils/RequestsAPI/Employees.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import { sortByField } from "../../../../utils/sorting/sorting";
 
 const Employees = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,15 +60,10 @@ const Employees = (props) => {
   };
 
   const printEmployeesList = () => {
-    let dd = getEmployeesListPdfText(
-      employees.sort((a, b) => {
-        if (a.lastName < b.lastName) {
-          return -1;
-        } else return 1;
-      }),
+    getEmployeesListPdfText(
+      sortByField(employees, { fieldName: "lastName", direction: "asc" }),
       workshops
     );
-    pdfMake.createPdf(dd).print();
   };
 
   const deleteItem = (id) => {
