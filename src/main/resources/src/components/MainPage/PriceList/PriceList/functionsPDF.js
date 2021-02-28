@@ -461,6 +461,373 @@ const getDisclaimerText = (disclaimer) => {
   };
 };
 
+const getTitlePage = async (titlePage) => {
+  const listImgData = await getDataUri(listImg);
+  const titlePageImg1Data = await loadGroupImage(titlePage.img1),
+    titlePageImg2Data = await loadGroupImage(titlePage.img2),
+    titlePageImg3Data = await loadGroupImage(titlePage.img3),
+    companyLogoNoSloganData = await getDataUri(companyLogoNoSlogan),
+    testImgData = await getDataUri(testImg);
+  return {
+    stack: [
+      {
+        alignment: "right",
+        stack: [
+          {
+            columns: [
+              { width: "*", text: "" },
+              {
+                width: 180,
+                table: {
+                  body: [
+                    [
+                      {
+                        border: [true, true, true, false],
+                        fontSize: 13,
+                        borderColor: [
+                          "#e30434",
+                          "#e30434",
+                          "#e30434",
+                          "#e30434",
+                        ],
+                        text: titlePage.to,
+                        alignment: "left",
+                        margin: [2.5, 2.5, 10, 2.5],
+                      },
+                    ],
+                    [
+                      {
+                        text: titlePage.date,
+                        alignment: "right",
+                        fontSize: 11,
+                        color: "#666666",
+                        border: [true, false, true, true],
+                        borderColor: [
+                          "#e30434",
+                          "#e30434",
+                          "#e30434",
+                          "#e30434",
+                        ],
+                      },
+                    ],
+                  ],
+                },
+                alignment: "right",
+              },
+            ],
+            margin: [0, 0, 0, 5],
+          },
+        ],
+        margin: [0, 0, 0, 50],
+      },
+      {
+        stack: [
+          {
+            image: companyLogoNoSloganData,
+            link: "https://www.osfix.ru",
+            fit: [200, 200],
+            margin: [0, 0, 0, 0],
+            alignment: "center",
+          },
+          {
+            text: titlePage.slogan,
+            alignment: "center",
+            margin: [0, 5, 0, 15],
+            fontSize: 18,
+          },
+        ],
+      },
+      {
+        columns: [
+          {
+            image: titlePageImg1Data ?? testImgData,
+            fit: [150, 130],
+            margin: [0, 0, 0, 5],
+            alignment: "right",
+          },
+          {
+            image: titlePageImg2Data ?? testImgData,
+            fit: [150, 130],
+            margin: [0, 0, 0, 5],
+            alignment: "center",
+          },
+          {
+            image: titlePageImg3Data ?? testImgData,
+            fit: [150, 130],
+            margin: [0, 0, 0, 5],
+            alignment: "left",
+          },
+        ],
+        alignment: "center",
+        width: 125,
+        margin: [0, 0, 0, 30],
+      },
+      {
+        stack: [
+          ...titlePage.list.map((item) => {
+            return [
+              {
+                margin: [0, 10, 0, 0],
+                alignment: "left",
+                columns: [
+                  {
+                    image: listImgData,
+                    fit: [15, 15],
+                    margin: [0, 1, 0, 0],
+                    width: 15,
+                  },
+                  {
+                    text: item,
+                    margin: [5, 0, 0, 0],
+                    fontSize: 16,
+                    alignment: "center",
+                    width: "auto",
+                  },
+                ],
+              },
+            ];
+          }),
+        ],
+      },
+    ],
+    pageBreak: "after",
+    margin: [0, -50, 0, 0],
+  };
+};
+
+const sortFinalList = (data) => {
+  return data.sort((a, b) => {
+    if (finalList.length <= 1) return 0;
+    else {
+      if (
+        a.stack[0].stack[1].text.localeCompare(
+          b.stack[0].stack[1].text,
+          undefined,
+          { numeric: true }
+        ) < 0
+      ) {
+        return -1;
+      }
+      if (
+        a.stack[0].stack[1].text.localeCompare(
+          b.stack[0].stack[1].text,
+          undefined,
+          { numeric: true }
+        ) > 0
+      ) {
+        return 1;
+      }
+      return 0;
+    }
+  });
+};
+
+const getProductsTableList = async (groupOfProducts, optionalCols) => {
+  const saleImgData = await getDataUri(saleImg);
+  return {
+    columns: [
+      {
+        unbreakable: groupOfProducts.products.length <= 10 ? true : false,
+        table: {
+          widths: [
+            40,
+            "*",
+            "*",
+            35,
+            35,
+            35,
+            ...optionalCols.map((item, index) =>
+              index < optionalCols.length - 1 ? 35 : 35
+            ),
+          ],
+          body: [
+            ...getProductsTableHeader(groupOfProducts, optionalCols),
+            ...sortProductsByNumber(groupOfProducts.products).map((product) => {
+              return [
+                {
+                  text: product.number,
+                  margin: [0, optionalCols.length > 1 ? 5 : 0, 0, 0],
+                  bold: product.onSale,
+                  color: product.onSale ? "#111111" : "#666666",
+                },
+                product.onSale
+                  ? {
+                      columns: [
+                        {
+                          image: saleImgData,
+                          width: 15,
+                        },
+                        {
+                          text: product.name,
+                          margin: [5, optionalCols.length > 1 ? 2 : 1.5, 0, 0],
+                          alignment: "left",
+                          bold: product.onSale,
+                          color: "#111111",
+                        },
+                      ],
+                    }
+                  : {
+                      text: product.name,
+                      margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0],
+                      alignment: "left",
+                    },
+                {
+                  text: product.units,
+                  margin: [0, optionalCols.length > 1 ? 1 : 0, 0, 0],
+                  bold: product.onSale,
+                  color: product.onSale ? "#111111" : "#666666",
+                },
+                {
+                  text:
+                    product.retailPrice !== "" &&
+                    !Number.isNaN(product.retailPrice) &&
+                    product.retailPrice !== 0
+                      ? product.retailPrice
+                      : " ",
+                  margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
+                  bold: product.onSale,
+                  color: product.onSale ? "#111111" : "#666666",
+                },
+                {
+                  text:
+                    product.lessThan1500Price !== "" &&
+                    !Number.isNaN(product.lessThan1500Price) &&
+                    product.lessThan1500Price !== 0
+                      ? product.lessThan1500Price
+                      : " ",
+                  margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
+                  bold: product.onSale,
+                  color: product.onSale ? "#111111" : "#666666",
+                },
+                {
+                  text:
+                    product.lessThan5000Price !== "" &&
+                    !Number.isNaN(product.lessThan5000Price) &&
+                    product.lessThan5000Price !== 0
+                      ? product.lessThan5000Price
+                      : " ",
+                  margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
+                  bold: product.onSale,
+                  color: product.onSale ? "#111111" : "#666666",
+                },
+                ...optionalCols.map((column) =>
+                  product[column.property] !== undefined
+                    ? {
+                        text:
+                          product[column.property] !== "" &&
+                          !Number.isNaN(product[column.property]) &&
+                          product[column.property] !== 0
+                            ? product[column.property]
+                            : " ",
+                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
+                        bold: product.onSale,
+                        color: product.onSale ? "#111111" : "#666666",
+                      }
+                    : {
+                        text: "",
+                        margin: [0, optionalCols.length > 1 ? 4.5 : 0, 0, 0],
+                        bold: product.onSale,
+                        color: product.onSale ? "#111111" : "#666666",
+                      }
+                ),
+              ];
+            }),
+          ],
+        },
+        layout: {
+          hLineWidth: function () {
+            return 1;
+          },
+          vLineWidth: function () {
+            return 1;
+          },
+          hLineColor: function () {
+            return "#444444";
+          },
+          vLineColor: function () {
+            return "#444444";
+          },
+        },
+        alignment: "center",
+        width: "*",
+        fontSize: 8,
+        color: "#555555",
+        margin: [0, 0, 0, 5],
+      },
+    ],
+  };
+};
+
+const getProductsInfoText = (infoText) => {
+  return {
+    table: {
+      body: [
+        [
+          {
+            border: [true, false, false, false],
+            style: "regularText",
+            borderColor: ["#e30434", "#e30434", "#e30434", "#e30434"],
+            text: infoText,
+
+            margin: [0, 0, 10, 0],
+          },
+        ],
+      ],
+    },
+  };
+};
+
+const getProprietaryItem = async (text) => {
+  const proprietaryItemImgData = await getDataUri(proprietaryItemImg);
+  return text
+    ? {
+        stack: [
+          {
+            image: proprietaryItemImgData,
+            width: 65,
+            margin: [0, 10, 9, 0],
+            alignment: "right",
+          },
+          {
+            text: text,
+            margin: [0, 5, 0, 0],
+            alignment: "center",
+            fontSize: 10,
+          },
+        ],
+      }
+    : {
+        text: "  ",
+      };
+};
+
+const sortFullGroup = (data) => {
+  return data.sort((a, b) => {
+    if (
+      a.stack[0].columns[0].text[1].groupId <
+      b.stack[0].columns[0].text[1].groupId
+    ) {
+      return -1;
+    }
+    if (
+      a.stack[0].columns[0].text[1].groupId >
+      b.stack[0].columns[0].text[1].groupId
+    ) {
+      return 1;
+    }
+    return 0;
+  });
+};
+
+const getLinkButton = (linkButtonData, linkAddress) => {
+  return {
+    image: linkButtonData,
+    link: linkAddress,
+    width: 100,
+    alignment: "right",
+  };
+};
+
 export async function getPriceListPdfText(
   categories,
   priceList,
@@ -474,13 +841,6 @@ export async function getPriceListPdfText(
   let finalList = [];
   let linkButtonData = await getDataUri(linkButtonImg);
   const testImgData = await getDataUri(testImg);
-  const saleImgData = await getDataUri(saleImg);
-  const companyLogoNoSloganData = await getDataUri(companyLogoNoSlogan);
-  const proprietaryItemImgData = await getDataUri(proprietaryItemImg);
-  const listImgData = await getDataUri(listImg);
-  const titlePageImg1Data = await loadGroupImage(titlePage.img1),
-    titlePageImg2Data = await loadGroupImage(titlePage.img2),
-    titlePageImg3Data = await loadGroupImage(titlePage.img3);
   const temp = categories.map(async (category) => {
     let fullGroup = [];
     return Promise.all(
@@ -502,6 +862,16 @@ export async function getPriceListPdfText(
           const groupImgFooterData = await loadGroupImage(
             groupOfProducts.footerImg
           );
+          const productsTableList = await getProductsTableList(
+            groupOfProducts,
+            optionalCols
+          );
+          const proprietaryItem1 = await getProprietaryItem(
+            groupOfProducts.proprietaryItemText1
+          );
+          const proprietaryItem2 = await getProprietaryItem(
+            groupOfProducts.proprietaryItemText2
+          );
           fullGroup.push({
             unbreakable: groupOfProducts.products.length <= 20 ? true : false,
             stack: [
@@ -522,271 +892,23 @@ export async function getPriceListPdfText(
                 groupImg4Data,
                 testImgData
               ),
-              {
-                columns: [
-                  {
-                    unbreakable:
-                      groupOfProducts.products.length <= 10 ? true : false,
-                    table: {
-                      widths: [
-                        40,
-                        "*",
-                        "*",
-                        35,
-                        35,
-                        35,
-                        ...optionalCols.map((item, index) =>
-                          index < optionalCols.length - 1 ? 35 : 35
-                        ),
-                      ],
-                      body: [
-                        ...getProductsTableHeader(
-                          groupOfProducts,
-                          optionalCols
-                        ),
-                        ...sortProductsByNumber(groupOfProducts.products).map(
-                          (product) => {
-                            return [
-                              {
-                                text: product.number,
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 5 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              product.onSale
-                                ? {
-                                    columns: [
-                                      {
-                                        image: saleImgData,
-                                        width: 15,
-                                      },
-                                      {
-                                        text: product.name,
-                                        margin: [
-                                          5,
-                                          optionalCols.length > 1 ? 2 : 1.5,
-                                          0,
-                                          0,
-                                        ],
-                                        alignment: "left",
-                                        bold: product.onSale,
-                                        color: "#111111",
-                                      },
-                                    ],
-                                  }
-                                : {
-                                    text: product.name,
-                                    margin: [
-                                      0,
-                                      optionalCols.length > 1 ? 1 : 0,
-                                      0,
-                                      0,
-                                    ],
-                                    alignment: "left",
-                                  },
-                              {
-                                text: product.units,
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 1 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              {
-                                text:
-                                  product.retailPrice !== "" &&
-                                  !Number.isNaN(product.retailPrice) &&
-                                  product.retailPrice !== 0
-                                    ? product.retailPrice
-                                    : " ",
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 4.5 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              {
-                                text:
-                                  product.lessThan1500Price !== "" &&
-                                  !Number.isNaN(product.lessThan1500Price) &&
-                                  product.lessThan1500Price !== 0
-                                    ? product.lessThan1500Price
-                                    : " ",
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 4.5 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              {
-                                text:
-                                  product.lessThan5000Price !== "" &&
-                                  !Number.isNaN(product.lessThan5000Price) &&
-                                  product.lessThan5000Price !== 0
-                                    ? product.lessThan5000Price
-                                    : " ",
-                                margin: [
-                                  0,
-                                  optionalCols.length > 1 ? 4.5 : 0,
-                                  0,
-                                  0,
-                                ],
-                                bold: product.onSale,
-                                color: product.onSale ? "#111111" : "#666666",
-                              },
-                              ...optionalCols.map((column) =>
-                                product[column.property] !== undefined
-                                  ? {
-                                      text:
-                                        product[column.property] !== "" &&
-                                        !Number.isNaN(
-                                          product[column.property]
-                                        ) &&
-                                        product[column.property] !== 0
-                                          ? product[column.property]
-                                          : " ",
-                                      margin: [
-                                        0,
-                                        optionalCols.length > 1 ? 4.5 : 0,
-                                        0,
-                                        0,
-                                      ],
-                                      bold: product.onSale,
-                                      color: product.onSale
-                                        ? "#111111"
-                                        : "#666666",
-                                    }
-                                  : {
-                                      text: "",
-                                      margin: [
-                                        0,
-                                        optionalCols.length > 1 ? 4.5 : 0,
-                                        0,
-                                        0,
-                                      ],
-                                      bold: product.onSale,
-                                      color: product.onSale
-                                        ? "#111111"
-                                        : "#666666",
-                                    }
-                              ),
-                            ];
-                          }
-                        ),
-                      ],
-                    },
-                    layout: {
-                      hLineWidth: function () {
-                        return 1;
-                      },
-                      vLineWidth: function () {
-                        return 1;
-                      },
-                      hLineColor: function () {
-                        return "#444444";
-                      },
-                      vLineColor: function () {
-                        return "#444444";
-                      },
-                    },
-                    alignment: "center",
-                    width: "*",
-                    fontSize: 8,
-                    color: "#555555",
-                    margin: [0, 0, 0, 5],
-                  },
-                ],
-              },
+              productsTableList,
               {
                 unbreakable: true,
                 alignment: "justify",
                 width: "*",
                 margin: [0, 0, 0, 10],
                 columns: [
-                  {
-                    table: {
-                      body: [
-                        [
-                          {
-                            border: [true, false, false, false],
-                            style: "regularText",
-                            borderColor: [
-                              "#e30434",
-                              "#e30434",
-                              "#e30434",
-                              "#e30434",
-                            ],
-                            text: groupOfProducts.infoText,
-
-                            margin: [0, 0, 10, 0],
-                          },
-                        ],
-                      ],
-                    },
-                  },
+                  getProductsInfoText(groupOfProducts.infoText),
                   {
                     unbreakable: true,
                     stack: [
-                      {
-                        image: linkButtonData,
-                        link: groupOfProducts.linkAddress,
-                        width: 100,
-                        alignment: "right",
-                      },
-                      groupOfProducts.proprietaryItemText1
-                        ? {
-                            stack: [
-                              {
-                                image: proprietaryItemImgData,
-                                width: 65,
-                                margin: [0, 10, 9, 0],
-                                alignment: "right",
-                              },
-                              {
-                                text: groupOfProducts.proprietaryItemText1,
-                                margin: [0, 5, 0, 0],
-                                alignment: "center",
-                                fontSize: 10,
-                              },
-                            ],
-                          }
-                        : {
-                            text: "  ",
-                          },
-                      groupOfProducts.proprietaryItemText2
-                        ? {
-                            stack: [
-                              {
-                                image: proprietaryItemImgData,
-                                width: 65,
-                                margin: [0, 10, 9, 0],
-                                alignment: "right",
-                              },
-                              {
-                                text: groupOfProducts.proprietaryItemText2,
-                                margin: [0, 5, 0, 0],
-                                alignment: "center",
-                                fontSize: 10,
-                              },
-                            ],
-                          }
-                        : {
-                            text: "  ",
-                          },
+                      getLinkButton(
+                        linkButtonData,
+                        groupOfProducts.linkAddress
+                      ),
+                      proprietaryItem1,
+                      proprietaryItem2,
                     ],
                     width: 100,
                   },
@@ -806,21 +928,7 @@ export async function getPriceListPdfText(
       })
     ).then(async () => {
       const tempImg = await getDataUri(category.img);
-      const sortedArr = fullGroup.sort((a, b) => {
-        if (
-          a.stack[0].columns[0].text[1].groupId <
-          b.stack[0].columns[0].text[1].groupId
-        ) {
-          return -1;
-        }
-        if (
-          a.stack[0].columns[0].text[1].groupId >
-          b.stack[0].columns[0].text[1].groupId
-        ) {
-          return 1;
-        }
-        return 0;
-      });
+      const sortedArr = sortFullGroup(fullGroup);
       //Перенос категории на некст страницу если она без продукции
       fullGroup.length > 0 &&
         category.active &&
@@ -858,31 +966,9 @@ export async function getPriceListPdfText(
     });
   });
   Promise.all(temp).then(async () => {
-    finalList = finalList.sort((a, b) => {
-      if (finalList.length <= 1) return 0;
-      else {
-        if (
-          a.stack[0].stack[1].text.localeCompare(
-            b.stack[0].stack[1].text,
-            undefined,
-            { numeric: true }
-          ) < 0
-        ) {
-          return -1;
-        }
-        if (
-          a.stack[0].stack[1].text.localeCompare(
-            b.stack[0].stack[1].text,
-            undefined,
-            { numeric: true }
-          ) > 0
-        ) {
-          return 1;
-        }
-        return 0;
-      }
-    });
+    finalList = sortFinalList(finalList);
     const contactsImgData = await getDataUri(contactsImg);
+    const titlePageObject = await getTitlePage(titlePage);
     const dd = {
       info: {
         title: "Прайс-лист",
@@ -904,132 +990,7 @@ export async function getPriceListPdfText(
         ),
       content: [
         titlePage.active
-          ? {
-              stack: [
-                {
-                  alignment: "right",
-                  stack: [
-                    {
-                      columns: [
-                        { width: "*", text: "" },
-                        {
-                          width: 180,
-                          table: {
-                            body: [
-                              [
-                                {
-                                  border: [true, true, true, false],
-                                  // style: 'regularText',
-                                  fontSize: 13,
-                                  borderColor: [
-                                    "#e30434",
-                                    "#e30434",
-                                    "#e30434",
-                                    "#e30434",
-                                  ],
-                                  text: titlePage.to,
-                                  alignment: "left",
-                                  margin: [2.5, 2.5, 10, 2.5],
-                                },
-                              ],
-                              [
-                                {
-                                  text: titlePage.date,
-                                  alignment: "right",
-                                  fontSize: 11,
-                                  color: "#666666",
-                                  border: [true, false, true, true],
-                                  borderColor: [
-                                    "#e30434",
-                                    "#e30434",
-                                    "#e30434",
-                                    "#e30434",
-                                  ],
-                                },
-                              ],
-                            ],
-                          },
-                          alignment: "right",
-                        },
-                      ],
-                      margin: [0, 0, 0, 5],
-                    },
-                  ],
-                  margin: [0, 0, 0, 50],
-                },
-                {
-                  stack: [
-                    {
-                      image: companyLogoNoSloganData,
-                      link: "https://www.osfix.ru",
-                      fit: [200, 200],
-                      margin: [0, 0, 0, 0],
-                      alignment: "center",
-                    },
-                    {
-                      text: titlePage.slogan,
-                      alignment: "center",
-                      margin: [0, 5, 0, 15],
-                      fontSize: 18,
-                    },
-                  ],
-                },
-                {
-                  columns: [
-                    {
-                      image: titlePageImg1Data ?? testImgData,
-                      fit: [150, 130],
-                      margin: [0, 0, 0, 5],
-                      alignment: "right",
-                    },
-                    {
-                      image: titlePageImg2Data ?? testImgData,
-                      fit: [150, 130],
-                      margin: [0, 0, 0, 5],
-                      alignment: "center",
-                    },
-                    {
-                      image: titlePageImg3Data ?? testImgData,
-                      fit: [150, 130],
-                      margin: [0, 0, 0, 5],
-                      alignment: "left",
-                    },
-                  ],
-                  alignment: "center",
-                  width: 125,
-                  margin: [0, 0, 0, 30],
-                },
-                {
-                  stack: [
-                    ...titlePage.list.map((item) => {
-                      return [
-                        {
-                          margin: [0, 10, 0, 0],
-                          alignment: "left",
-                          columns: [
-                            {
-                              image: listImgData,
-                              fit: [15, 15],
-                              margin: [0, 1, 0, 0],
-                              width: 15,
-                            },
-                            {
-                              text: item,
-                              margin: [5, 0, 0, 0],
-                              fontSize: 16,
-                              alignment: "center",
-                              width: "auto",
-                            },
-                          ],
-                        },
-                      ];
-                    }),
-                  ],
-                },
-              ],
-              pageBreak: "after",
-              margin: [0, -50, 0, 0],
-            }
+          ? titlePageObject
           : {
               text: "",
             },
