@@ -294,6 +294,52 @@ const getPriceListProductDescription = (
   );
 };
 
+const priceListProductsAddImage = (
+  workBook,
+  workSheet,
+  groupImg,
+  imageIndex
+) => {
+  const img = workBook.addImage({
+    base64: groupImg,
+    extension: "jpeg",
+  });
+  workSheet.addImage(img, {
+    tl: { col: imageIndex, row: workSheet.rowCount - 1 },
+    br: { col: ++imageIndex, row: workSheet.rowCount },
+    editAs: "absolute",
+  });
+};
+
+const getPriceListProductTopImages = (
+  workSheet,
+  workBook,
+  item,
+  lastColumnNumber
+) => {
+  const imagesRow = workSheet.addRow([""]);
+  imagesRow.height = 120;
+  let imageIndex = 0;
+  workSheet.mergeCells(
+    workSheet.rowCount,
+    lastColumnNumber - 1,
+    workSheet.rowCount,
+    lastColumnNumber
+  );
+  if (item.groupImg1 !== "") {
+    priceListProductsAddImage(workBook, workSheet, item.groupImg1, imageIndex);
+  }
+  if (item.groupImg2 !== "") {
+    priceListProductsAddImage(workBook, workSheet, item.groupImg2, imageIndex);
+  }
+  if (item.groupImg3 !== "") {
+    priceListProductsAddImage(workBook, workSheet, item.groupImg3, imageIndex);
+  }
+  if (item.groupImg4 !== "") {
+    priceListProductsAddImage(workBook, workSheet, item.groupImg4, imageIndex);
+  }
+};
+
 export async function getPriceListPdfExcel(
   categories = [],
   priceList = [],
@@ -322,81 +368,27 @@ export async function getPriceListPdfExcel(
           lastColumnNumber
         ); // adding product group description
 
+        const isProprietary =
+          item.proprietaryItemText1 !== undefined ||
+          item.proprietaryItemText2 !== undefined;
         //adding 4 group images
         if (
           item.groupImg1 !== "" ||
           item.groupImg2 !== "" ||
           item.groupImg3 !== "" ||
           item.groupImg4 !== "" ||
-          item.proprietaryItemText1 !== undefined ||
-          item.proprietaryItemText2 !== undefined
+          isProprietary
         ) {
-          const imagesRow = workSheet.addRow([""]);
-          imagesRow.height = 120;
-
-          let imageIndex = 0;
-
-          workSheet.mergeCells(
-            workSheet.rowCount,
-            lastColumnNumber - 1,
-            workSheet.rowCount,
+          getPriceListProductTopImages(
+            workSheet,
+            workBook,
+            item,
             lastColumnNumber
           );
-
-          // add image to workbook by base64
-          if (item.groupImg1 !== "") {
-            const groupImg1 = workBook.addImage({
-              base64: item.groupImg1,
-              extension: "jpeg",
-            });
-            workSheet.addImage(groupImg1, {
-              tl: { col: imageIndex, row: workSheet.rowCount - 1 },
-              br: { col: ++imageIndex, row: workSheet.rowCount },
-              editAs: "absolute",
-            });
-          }
-
-          if (item.groupImg2 !== "") {
-            const groupImg2 = workBook.addImage({
-              base64: item.groupImg2,
-              extension: "jpeg",
-            });
-            workSheet.addImage(groupImg2, {
-              tl: { col: imageIndex, row: workSheet.rowCount - 1 },
-              br: { col: ++imageIndex, row: workSheet.rowCount },
-              editAs: "absolute",
-            });
-          }
-
-          if (item.groupImg3 !== "") {
-            const groupImg3 = workBook.addImage({
-              base64: item.groupImg3,
-              extension: "jpeg",
-            });
-            workSheet.addImage(groupImg3, {
-              tl: { col: imageIndex, row: workSheet.rowCount - 1 },
-              br: { col: ++imageIndex, row: workSheet.rowCount },
-              editAs: "absolute",
-            });
-          }
-          if (item.groupImg4 !== "") {
-            const groupImg4 = workBook.addImage({
-              base64: item.groupImg4,
-              extension: "jpeg",
-            });
-            workSheet.addImage(groupImg4, {
-              tl: { col: imageIndex, row: workSheet.rowCount - 1 },
-              br: { col: ++imageIndex, row: workSheet.rowCount },
-              editAs: "absolute",
-            });
-          }
         }
 
         //adding patent data rospatentTempImg
-        if (
-          item.proprietaryItemText1 !== undefined ||
-          item.proprietaryItemText2 !== undefined
-        ) {
+        if (isProprietary) {
           const rospatentImg = workBook.addImage({
             base64: rospatentTempImg,
             extension: "png",
