@@ -214,7 +214,7 @@ const ChangeDayButton = ({ day = "prevDay", setCurDay, curDay }) => {
         setCurDay(
           new Date(
             new Date(curDay).setDate(
-              curDay.getDate() + (day === "prevDay " ? 1 : -1)
+              curDay.getDate() + (day === "prevDay" ? 1 : -1)
             )
           )
         )
