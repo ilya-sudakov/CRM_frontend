@@ -134,20 +134,76 @@ const getPriceFooter = (currentPage, pageCount, active, companyContacts) => {
   ];
 };
 
+const emptyTextObject = [
+  {
+    text: "",
+  },
+];
+
+const getPriceHeaderItem = (name, link, options = {}) => {
+  return {
+    text: `${name}\n`,
+    link: link ?? undefined,
+    bold: options.bold ?? false,
+    fontSize: 10,
+    margin: options.margin ?? [0, 0, 0, 0],
+    lineHeight: options.lineHeight ?? 1,
+  };
+};
+
+const getPriceHeaderList = (companyContacts) => {
+  return {
+    text: [
+      getPriceHeaderItem(
+        companyContacts?.name ?? pdfHeaderCompanyContacts.name,
+        companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+        { margin: [0, 0, 0, 0], bold: true }
+      ),
+      getPriceHeaderItem(
+        companyContacts?.legalAddress ?? pdfHeaderCompanyContacts.legalAddress,
+        "https://yandex.ru/maps/-/CKUrY0Ih",
+        { lineHeight: 1.1 }
+      ),
+      getPriceHeaderItem(
+        companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+        companyContacts?.site ?? pdfHeaderCompanyContacts.site,
+        { lineHeight: 1.1 }
+      ),
+      getPriceHeaderItem(
+        companyContacts?.email ?? pdfHeaderCompanyContacts.email,
+        null,
+        { lineHeight: 1.1 }
+      ),
+      getPriceHeaderItem(
+        companyContacts?.siphonete ?? pdfHeaderCompanyContacts.phone,
+        "tel:+78124491009",
+        { lineHeight: 1.1 }
+      ),
+    ],
+    margin: [5, 0, 0, 0],
+    alignment: "left",
+  };
+};
+
+const getPriceHeaderLogo = (logo) => {
+  return logo
+    ? {
+        image: logo,
+        link: "https://www.osfix.ru",
+        fit: [100, 100],
+        margin: [0, 13, 0, 0],
+        alignment: "right",
+      }
+    : { text: "" };
+};
+
 const getPriceHeader = (
   currentPage,
   active,
   contactsImgData,
-  companyLogoData,
-  companyContacts
+  companyContacts = {}
 ) => {
-  if (currentPage === 1 && active) {
-    return [
-      {
-        text: "",
-      },
-    ];
-  }
+  if (currentPage === 1 && active) return emptyTextObject;
   return [
     {
       alignment: "justify",
@@ -159,62 +215,8 @@ const getPriceHeader = (
           width: 10,
           alignment: "left",
         },
-        {
-          text: [
-            {
-              text: `${
-                companyContacts?.name ?? pdfHeaderCompanyContacts.name
-              }\n`,
-              link: companyContacts?.site ?? pdfHeaderCompanyContacts.site,
-              bold: true,
-              fontSize: 10,
-              margin: [0, 0, 0, 2],
-            },
-            {
-              text: `${
-                companyContacts?.legalAddress ??
-                pdfHeaderCompanyContacts.legalAddress
-              }\n`,
-              link: "https://yandex.ru/maps/-/CKUrY0Ih",
-              fontSize: 10,
-              lineHeight: 1.1,
-            },
-            {
-              text: `${
-                companyContacts?.site ?? pdfHeaderCompanyContacts.site
-              }\n`,
-              fontSize: 10,
-              link: companyContacts?.site ?? pdfHeaderCompanyContacts.site,
-              lineHeight: 1.1,
-            },
-            {
-              text: `${
-                companyContacts?.email ?? pdfHeaderCompanyContacts.email
-              }\n`,
-              fontSize: 10,
-              lineHeight: 1.1,
-            },
-            {
-              text: `${
-                companyContacts?.phone ?? pdfHeaderCompanyContacts.phone
-              }\n`,
-              link: "tel:+78124491009",
-              fontSize: 10,
-              lineHeight: 1.1,
-            },
-          ],
-          margin: [5, 0, 0, 0],
-          alignment: "left",
-        },
-        companyContacts?.logo
-          ? {
-              image: companyContacts?.logo,
-              link: "https://www.osfix.ru",
-              fit: [100, 100],
-              margin: [0, 13, 0, 0],
-              alignment: "right",
-            }
-          : { text: "" },
+        getPriceHeaderList(companyContacts),
+        getPriceHeaderLogo(companyContacts?.logo),
       ],
     },
     getLine({ l: 40, t: 5, r: 40, b: 40 }),
