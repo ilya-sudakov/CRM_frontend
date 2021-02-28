@@ -340,13 +340,13 @@ const getPriceListProductTopImages = (
   }
 };
 
-const getPriceListProductProprietaryText = async (
+const getPriceListProductProprietaryText = (
   workBook,
   workSheet,
   item,
-  lastColumnNumber
+  lastColumnNumber,
+  rospatentTempImg
 ) => {
-  const rospatentTempImg = await getDataUri("assets/rospatent.png");
   const rospatentImg = workBook.addImage({
     base64: rospatentTempImg,
     extension: "png",
@@ -462,12 +462,12 @@ const getPriceListProductTableList = (
 
 const getPriceListProductInfoText = (
   workSheet,
-  infoText,
+  item,
   lastColumnNumber,
   optionalCols
 ) => {
   workSheet.addRow([""]);
-  const rowInfoText = workSheet.addRow([infoText]);
+  const rowInfoText = workSheet.addRow([item.infoText]);
   rowInfoText.font = {
     size: 11,
     italic: true,
@@ -491,8 +491,8 @@ const getPriceListProductInfoText = (
     lastColumnNumber
   );
   rowInfoText.height =
-    (infoText.split(" ").length > 17 + optionalCols.length
-      ? infoText.split(" ").length / (17 + optionalCols.length)
+    (item.infoText.split(" ").length > 17 + optionalCols.length
+      ? item.infoText.split(" ").length / (17 + optionalCols.length)
       : 1.5) * 22;
 };
 
@@ -517,7 +517,8 @@ const getPriceListProductGroup = async (
   workSheet,
   item,
   lastColumnNumber,
-  optionalCols
+  optionalCols,
+  rospatentTempImg
 ) => {
   getPriceListProductGroupHeader(workSheet, item, lastColumnNumber);
   getPriceListProductDescription(workSheet, item.description, lastColumnNumber); // adding product group description
@@ -535,11 +536,12 @@ const getPriceListProductGroup = async (
   }
   //adding patent data rospatentTempImg
   if (isProprietary) {
-    await getPriceListProductProprietaryText(
+    getPriceListProductProprietaryText(
       workBook,
       workSheet,
       item,
-      lastColumnNumber
+      lastColumnNumber,
+      rospatentTempImg
     );
   }
   //adding products
@@ -567,6 +569,7 @@ export async function getPriceListPdfExcel(
   const lastColumnNumber = 7 + optionalCols.length;
   workSheet.columns = getPriceListDefaultColumns(); // default columns
   await getPriceListHeader(workSheet, workBook, lastColumnNumber); // company header
+  const rospatentTempImg = await getDataUri("assets/rospatent.png");
   Promise.all(
     categories.map((category) => {
       const filteredData = filterPriceListItems(priceList, category.name);
@@ -574,15 +577,15 @@ export async function getPriceListPdfExcel(
       if (filteredData.length > 0) {
         getPriceListCategoryName(workSheet, category.name, lastColumnNumber);
       }
-      return filteredData.map(
-        async (item) =>
-          await getPriceListProductGroup(
-            workBook,
-            workSheet,
-            item,
-            lastColumnNumber,
-            optionalCols
-          )
+      return filteredData.map((item) =>
+        getPriceListProductGroup(
+          workBook,
+          workSheet,
+          item,
+          lastColumnNumber,
+          optionalCols,
+          rospatentTempImg
+        )
       );
     })
   ).then(async () => {
