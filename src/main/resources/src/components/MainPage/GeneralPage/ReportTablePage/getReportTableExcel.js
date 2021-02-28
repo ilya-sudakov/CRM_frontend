@@ -2,7 +2,9 @@ import Excel from "exceljs";
 import { getEmployeesByWorkshop } from "../../../../utils/RequestsAPI/Employees.jsx";
 import { getWorkReportByEmployee } from "../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
 import { getEmployeeNameText } from "../../../../utils/functions.jsx";
+import { months } from "../../../../utils/dataObjects.js";
 import { saveExcelFile } from "../../../../utils/xlsxFunctions.js";
+import { sortEmployees } from "./functions.js";
 
 const getReportTableColumnXLSX = (name, width = 5) => {
   return {
@@ -14,27 +16,11 @@ const getReportTableColumnXLSX = (name, width = 5) => {
     },
   };
 };
-
 const thinBorder = { style: "thin", color: { argb: "00000000" } };
 
 const reportTableDefaultColumnds = [
   getReportTableColumnXLSX("name", 45),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
-  getReportTableColumnXLSX(undefined),
+  ...Array(16).fill(getReportTableColumnXLSX(undefined)),
   getReportTableColumnXLSX(undefined, 10),
 ];
 
@@ -45,43 +31,11 @@ const defaultBorder = {
   right: thinBorder,
 };
 
-const months = [
-  "Январь",
-  "Февраль",
-  "Март",
-  "Апрель",
-  "Май",
-  "Июнь",
-  "Июль",
-  "Август",
-  "Сентябрь",
-  "Октябрь",
-  "Ноябрь",
-  "Декабрь",
-];
-const monthsNew = [
-  "Января",
-  "Февраля",
-  "Марта",
-  "Апреля",
-  "Мая",
-  "Июня",
-  "Июля",
-  "Августа",
-  "Сентября",
-  "Октября",
-  "Ноября",
-  "Декабря",
-];
-
 const getDatesForReportTable = (curDate) => {
   const dates = [[""], [""]];
-  for (
-    let i = 1;
-    i <
+  const lastDate =
     new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate() + 1;
-    i++
-  )
+  for (let i = 1; i < lastDate; i++)
     if (i < 16) dates[0].push(i);
     else dates[1].push(i);
   return dates;
@@ -90,7 +44,7 @@ const getDatesForReportTable = (curDate) => {
 const getDateTitle = (workSheet, curDate, type = "first") => {
   const dateTitleRow = workSheet.addRow([
     `${type === "first" ? "1/2" : "2/2"} ${
-      monthsNew[curDate.getMonth()]
+      months[curDate.getMonth()]
     }.${curDate.getFullYear()}`,
   ]);
   workSheet.getCell(workSheet.rowCount, 1).border = defaultBorder;
@@ -100,7 +54,7 @@ const getDateTitle = (workSheet, curDate, type = "first") => {
   dateTitleRow.height = 50;
 };
 
-const fillBorderInBetween = (workSheet) => {
+const fillBorderInBetween = (workSheet, i) => {
   if (i >= 2 && i <= 17) {
     workSheet.getCell(workSheet.rowCount, i).border = {
       right: { style: "hair", color: { argb: "00000000" } },
@@ -114,7 +68,7 @@ const getDatesHeaderList = (workSheet, dates) => {
   workSheet.addRow([...dates, ...array, "Сумма"]);
   for (let i = 1; i <= 18; i++) {
     workSheet.getCell(workSheet.rowCount, i).border = defaultBorder;
-    fillBorderInBetween(workSheet);
+    fillBorderInBetween(workSheet, i);
   }
 };
 
@@ -196,7 +150,7 @@ const createBorders = (workSheet) => {
     workSheet.getCell(workSheet.rowCount, i).border = {
       bottom: thinBorder,
     };
-    fillBorderInBetween(workSheet);
+    fillBorderInBetween(workSheet, i);
   }
   workSheet.getCell(workSheet.rowCount, 1).border = {
     right: thinBorder,
