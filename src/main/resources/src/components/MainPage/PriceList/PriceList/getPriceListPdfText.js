@@ -730,14 +730,16 @@ const getProprietaryItem = async (text) => {
       };
 };
 
+const getGroupSortItem = (item, isMini) => {
+  return isMini
+    ? item.stack[2].columns[0].table.body[2][0].text
+    : item.stack[0].columns[0].text[1].groupId;
+};
+
 const sortFullGroup = (data, isMini) => {
   return data.sort((a, b) => {
-    const first = isMini
-      ? a.stack[2].columns[0].table.body[2][0].text
-      : a.stack[0].columns[0].text[1].groupId;
-    const second = isMini
-      ? b.stack[2].columns[0].table.body[2][0].text
-      : b.stack[0].columns[0].text[1].groupId;
+    const first = getGroupSortItem(a, isMini);
+    const second = getGroupSortItem(b, isMini);
     if (first < second) return -1;
     if (first > second) return 1;
     return 0;
