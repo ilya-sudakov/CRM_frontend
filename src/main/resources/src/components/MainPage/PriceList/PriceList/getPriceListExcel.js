@@ -1,5 +1,6 @@
 import Excel from "exceljs";
 import { getDataUri } from "../../../../utils/functions.jsx";
+import { getPriceListColumnValue } from "./functions.js";
 
 const getPriceListDefaultColumnXLSX = (name, width = 30) => {
   return {
@@ -228,33 +229,43 @@ const getPriceListProductLocation = (
   );
 };
 
-const getPriceListProductLinkButton = (
-  workSheet,
-  linkAddress,
-  lastColumnNumber
-) => {
-  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).value = {
-    text: "Смотреть на сайте",
-    hyperlink: linkAddress ?? "https://www.osfix.ru",
-    tooltip: "Смотреть на сайте",
-  };
-  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).alignment = {
-    horizontal: "center",
-    vertical: "middle",
-    wrapText: true,
-  };
-  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).fill = {
-    type: "pattern",
-    pattern: "solid",
-    fgColor: { argb: "FFE30235" },
-  };
-  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = {
+const buttonStyles = {
+  font: {
     size: 12,
     bold: false,
     color: {
       argb: "FFFFFFFF",
     },
+  },
+  fill: {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "FFE30235" },
+  },
+  alignment: {
+    horizontal: "center",
+    vertical: "middle",
+    wrapText: true,
+  },
+};
+
+const getPriceListProductLinkButton = (
+  workSheet,
+  linkAddress,
+  lastColumnNumber
+) => {
+  const { font, fill, alignment } = buttonStyles;
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).value = {
+    text: "Смотреть на сайте",
+    hyperlink: linkAddress ?? "https://www.osfix.ru",
+    tooltip: "Смотреть на сайте",
   };
+  workSheet.getCell(
+    workSheet.rowCount,
+    lastColumnNumber - 1
+  ).alignment = alignment;
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).fill = fill;
+  workSheet.getCell(workSheet.rowCount, lastColumnNumber - 1).font = font;
   workSheet.mergeCells(
     workSheet.rowCount,
     lastColumnNumber - 1,
@@ -393,6 +404,12 @@ const getPriceListProductTableFakeHeader = (workSheet, lastColumnNumber) => {
   );
 };
 
+const createBorderBottomAllLength = (workSheet, lastColumnNumber) => {
+  for (let i = 1; i <= lastColumnNumber; i++) {
+    workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
+  }
+};
+
 const getPriceListProductTableHeader = (
   workSheet,
   item,
@@ -407,17 +424,9 @@ const getPriceListProductTableHeader = (
     item.retailName,
     item.firstPriceName,
     item.secondPriceName,
-    ...optionalCols.map((column) =>
-      column.property === "partnerPrice"
-        ? item.partnerName
-        : column.property === "dealerPrice"
-        ? item.dealerName
-        : column.property === "distributorPrice" && item.distributorName
-    ),
+    ...optionalCols.map((column) => getPriceListColumnValue(column, item)),
   ]);
-  for (let i = 1; i <= lastColumnNumber; i++) {
-    workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
-  }
+  createBorderBottomAllLength(workSheet, lastColumnNumber);
   workSheet.mergeCells(workSheet.rowCount, 2, workSheet.rowCount, 3);
   tableHeaderRow.font = {
     color: {
@@ -453,11 +462,28 @@ const getPriceListProductTableList = (
       ),
     ]);
     productRow.height = 25;
-    for (let i = 1; i <= lastColumnNumber; i++) {
-      workSheet.getCell(workSheet.rowCount, i).border = greyBorder;
-    }
+    createBorderBottomAllLength(workSheet, lastColumnNumber);
     return workSheet.mergeCells(workSheet.rowCount, 2, workSheet.rowCount, 3);
   });
+};
+
+const infoTextStyles = {
+  border: {
+    right: { style: "medium", color: { argb: "FFFF1B5F" } },
+  },
+  alignment: {
+    vertical: "top",
+    horizontal: "left",
+    wrapText: true,
+    indent: 1,
+  },
+  font: {
+    size: 11,
+    italic: true,
+    color: {
+      argb: "FF000000",
+    },
+  },
 };
 
 const getPriceListProductInfoText = (
@@ -466,24 +492,12 @@ const getPriceListProductInfoText = (
   lastColumnNumber,
   optionalCols
 ) => {
+  const { border, font, alignment } = infoTextStyles;
   workSheet.addRow([""]);
   const rowInfoText = workSheet.addRow([item.infoText]);
-  rowInfoText.font = {
-    size: 11,
-    italic: true,
-    color: {
-      argb: "FF000000",
-    },
-  };
-  workSheet.getCell(workSheet.rowCount, 1).border = {
-    right: { style: "medium", color: { argb: "FFFF1B5F" } },
-  };
-  workSheet.getCell(workSheet.rowCount, 1).alignment = {
-    vertical: "top",
-    horizontal: "left",
-    wrapText: true,
-    indent: 1,
-  };
+  rowInfoText.font = font;
+  workSheet.getCell(workSheet.rowCount, 1).border = border;
+  workSheet.getCell(workSheet.rowCount, 1).alignment = alignment;
   workSheet.mergeCells(
     workSheet.rowCount,
     1,
@@ -512,6 +526,22 @@ const getPriceListProductGroupTable = (
   getPriceListProductTableList(workSheet, item, lastColumnNumber, optionalCols);
 };
 
+const doesItemHaveImages = (item) => {
+  const hasImages =
+    item.groupImg1 !== "" ||
+    item.groupImg2 !== "" ||
+    item.groupImg3 !== "" ||
+    item.groupImg4 !== "";
+  return hasImages;
+};
+
+const doesItemHaveProprietoryStatus = (item) => {
+  const isProprietary =
+    item.proprietaryItemText1 !== undefined ||
+    item.proprietaryItemText2 !== undefined;
+  return isProprietary;
+};
+
 const getPriceListProductGroup = async (
   workBook,
   workSheet,
@@ -521,26 +551,15 @@ const getPriceListProductGroup = async (
   rospatentTempImg,
   isMini
 ) => {
-  !isMini && getPriceListProductGroupHeader(workSheet, item, lastColumnNumber);
-  !isMini &&
-    getPriceListProductDescription(
-      workSheet,
-      item.description,
-      lastColumnNumber
-    ); // adding product group description
-  const isProprietary =
-    item.proprietaryItemText1 !== undefined ||
-    item.proprietaryItemText2 !== undefined;
-  //adding 4 group images
-  const hasImages =
-    item.groupImg1 !== "" ||
-    item.groupImg2 !== "" ||
-    item.groupImg3 !== "" ||
-    item.groupImg4 !== "";
-  if ((hasImages || isProprietary) && !isMini) {
-    getPriceListProductTopImages(workSheet, workBook, item, lastColumnNumber);
+  const { description } = item;
+  if (!isMini) {
+    getPriceListProductGroupHeader(workSheet, item, lastColumnNumber);
+    getPriceListProductDescription(workSheet, description, lastColumnNumber);
   }
-  //adding patent data rospatentTempImg
+  const isProprietary = doesItemHaveProprietoryStatus(item);
+  if ((doesItemHaveImages(item) || isProprietary) && !isMini) {
+    getPriceListProductTopImages(workSheet, workBook, item, lastColumnNumber); //adding 4 group images
+  }
   if (isProprietary && !isMini) {
     getPriceListProductProprietaryText(
       workBook,
@@ -550,20 +569,9 @@ const getPriceListProductGroup = async (
       rospatentTempImg
     );
   }
-  //adding products
-  getPriceListProductGroupTable(
-    workSheet,
-    item,
-    lastColumnNumber,
-    optionalCols
-  );
-  !isMini &&
-    getPriceListProductInfoText(
-      workSheet,
-      item,
-      lastColumnNumber,
-      optionalCols
-    ); //adding infoText
+  const defaultParams = [workSheet, item, lastColumnNumber, optionalCols];
+  getPriceListProductGroupTable(...defaultParams); //adding products
+  !isMini && getPriceListProductInfoText(...defaultParams); //adding infoText
   const spaceBetweenRow = workSheet.addRow([""]);
   spaceBetweenRow.height = 50;
 };

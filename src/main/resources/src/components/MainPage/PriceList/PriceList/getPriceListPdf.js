@@ -9,6 +9,7 @@ import { getDataUri } from "../../../../utils/functions.jsx";
 import { pdfHeaderCompanyContacts } from "./objects.js";
 import { createPDF } from "../../../../utils/pdfFunctions.js";
 import { sortByField } from "../../../../utils/sorting/sorting";
+import { getPriceListColumnValue } from "./functions.js";
 
 const loadGroupImage = async (img) => {
   if (img !== null && img !== "") {
@@ -361,12 +362,7 @@ const getProductsTableHeader = (groupOfProducts, optionalCols) => {
       getProductsTableHeaderItem(secondPriceName ?? "до 5000 шт."),
       ...optionalCols.map((column) =>
         getProductsTableHeaderItem(
-          column.property === "partnerPrice"
-            ? groupOfProducts.partnerName
-            : column.property === "dealerPrice"
-            ? groupOfProducts.dealerName
-            : column.property === "distributorPrice" &&
-              groupOfProducts.distributorName
+          getPriceListColumnValue(column, groupOfProducts)
         )
       ),
     ],

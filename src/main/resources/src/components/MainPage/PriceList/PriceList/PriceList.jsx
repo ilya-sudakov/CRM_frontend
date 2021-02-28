@@ -19,8 +19,8 @@ import {
   locationTypes,
   defaultTitlePage,
 } from "./objects.js";
-import { getPriceListPdfText } from "./getPriceListPdfText.js";
-import { getPriceListPdfExcel } from "./getPriceListPdfExcel.js";
+import { getPriceListPdfText } from "./getPriceListPdf.js";
+import { getPriceListPdfExcel } from "./getPriceListExcel.js";
 import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { Link } from "react-router-dom";
 import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
