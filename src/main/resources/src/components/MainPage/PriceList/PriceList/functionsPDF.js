@@ -350,35 +350,34 @@ const getProductsTableHeaderItem = (text, marginTop = 1.5) => {
   };
 };
 
-const getProductsTableHeader = (groupOfProducts, optionalCols) => {
+getProductsTableHeaderFakeRow = (priceHeader, optionalCols) => {
   const emptyRow = { text: "", border: [false, false, false, false] };
   return [
-    [
-      emptyRow,
-      emptyRow,
-      emptyRow,
-      {
-        text: groupOfProducts.priceHeader
-          ? `${groupOfProducts.priceHeader}, ₽`
-          : "Цена за штуку, ₽",
-        colSpan: 3 + optionalCols.length,
-        italics: true,
-      },
-      {},
-      {},
-      ...optionalCols.map(() => {}),
-    ],
+    emptyRow,
+    emptyRow,
+    emptyRow,
+    {
+      text: priceHeader ? `${priceHeader}, ₽` : "Цена за штуку, ₽",
+      colSpan: 3 + optionalCols.length,
+      italics: true,
+    },
+    {},
+    {},
+    ...optionalCols.map(() => {}),
+  ];
+};
+
+const getProductsTableHeader = (groupOfProducts, optionalCols) => {
+  const { retailName, firstPriceName, secondPriceName } = groupOfProducts;
+  return [
+    getProductsTableHeaderFakeRow(groupOfProducts.priceHeader, optionalCols),
     [
       getProductsTableHeaderItem("Артикул", 5),
       getProductsTableHeaderItem("Название", 5),
       getProductsTableHeaderItem("Ед. изм.", 5),
-      getProductsTableHeaderItem(groupOfProducts.retailName ?? "Розница"),
-      getProductsTableHeaderItem(
-        groupOfProducts.firstPriceName ?? "до 1500 шт."
-      ),
-      getProductsTableHeaderItem(
-        groupOfProducts.secondPriceName ?? "до 5000 шт."
-      ),
+      getProductsTableHeaderItem(retailName ?? "Розница"),
+      getProductsTableHeaderItem(firstPriceName ?? "до 1500 шт."),
+      getProductsTableHeaderItem(secondPriceName ?? "до 5000 шт."),
       ...optionalCols.map((column) =>
         getProductsTableHeaderItem(
           column.property === "partnerPrice"
