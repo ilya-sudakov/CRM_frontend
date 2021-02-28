@@ -1,10 +1,9 @@
 import XLSX2 from "xlsx";
 import Excel from "exceljs";
 import FileSaver from "file-saver";
-import { getDataUri } from "./functions.jsx";
+import { sortByField } from "./sorting/sorting.js";
 import { getEmployeesByWorkshop } from "./RequestsAPI/Employees.jsx";
 import { getWorkReportByEmployee } from "./RequestsAPI/WorkManaging/WorkControl.jsx";
-import { sortByField } from "./sorting/sorting.js";
 
 export const exportClientsEmailsCSV = (clients) => {
   let index = 0;

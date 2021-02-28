@@ -1,4 +1,7 @@
+import XLSX2 from "xlsx";
 import Excel from "exceljs";
+import FileSaver from "file-saver";
+import { sortByField } from "./../../../../utils/sorting/sorting.js";
 import { getDataUri } from "../../../../utils/functions.jsx";
 
 const getPriceListDefaultColumnXLSX = (name, width = 30) => {
@@ -30,73 +33,63 @@ const getPriceListDefaultColumns = () => {
   ];
 };
 
-const getPriceListHeader = async (workSheet) => {
+const getPriceListHeaderItem = (workSheet, data = {}, customStyles = {}) => {
+  let temp = workSheet.addRow([""]);
+  const curRow = workSheet.rowCount;
+  const value = {
+    text: data.text,
+    hyperlink: data.link,
+    tooltip: data.tooltip,
+  };
+  workSheet.getCell(curRow, 3).value = value;
+  workSheet.getCell(curRow, 3).font = {
+    name: "DejaVu",
+    family: 2,
+    ...customStyles,
+  };
+  temp.alignment = {
+    vertical: "middle",
+    horizontal: "center",
+  };
+  workSheet.mergeCells(curRow, 3, curRow, 4);
+  temp.height = 25;
+};
+
+const getPriceListHeader = async (workSheet, workBook, lastColumnNumber) => {
   const tempImg = await getDataUri("assets/osfix_logo.png");
   const contactsImg = await getDataUri("assets/contacts_excel.png");
   //adding company header
-  let temp = workSheet.addRow([""]);
-  workSheet.getCell(1, 3).value = {
-    text: "ООО «ОСФИКС»",
-    hyperlink: "https://www.osfix.ru",
-    tooltip: "Перейти на сайт www.osfix.ru",
-  };
-  workSheet.getCell(1, 3).font = {
-    size: 16,
-    bold: true,
-    name: "DejaVu",
-    family: 2,
-  };
-  temp.alignment = {
-    vertical: "middle",
-    horizontal: "center",
-  };
-  workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
-  temp.height = 25;
-  temp = workSheet.addRow([""]);
-  workSheet.getCell(2, 3).value = {
+  getPriceListHeaderItem(
+    workSheet,
+    {
+      text: "ООО «ОСФИКС»",
+      hyperlink: "https://www.osfix.ru",
+      tooltip: "Перейти на сайт www.osfix.ru",
+    },
+    {
+      size: 16,
+      bold: true,
+    }
+  );
+  getPriceListHeaderItem(workSheet, {
     text: "Лиговский пр., 52, Санкт-Петербург, 191040",
     hyperlink: "https://yandex.ru/maps/-/CKUrY0Ih",
     tooltip: "Открыть Яндекс.Карту",
-  };
-  workSheet.getCell(2, 3).font = {
-    name: "DejaVu",
-    family: 2,
-  };
-  workSheet.getCell(2, 3).alignment = {
-    vertical: "middle",
-    horizontal: "center",
-  };
-  workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
-  temp.height = 25;
-  temp = workSheet.addRow([""]);
-  workSheet.getCell(3, 3).value = "info@osfix.ru, +7 (812) 449-10-09";
-  temp.alignment = {
-    vertical: "middle",
-    horizontal: "center",
-  };
-  temp.font = {
-    name: "DejaVu",
-    family: 2,
-  };
-  workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
-  temp.height = 25;
-  temp = workSheet.addRow([""]);
-  workSheet.getCell(4, 3).value = {
-    text: "www.osfix.ru",
-    hyperlink: "https://www.osfix.ru",
-    tooltip: "Открыть сайт",
-  };
-  workSheet.getCell(4, 3).font = {
-    size: 14,
-    name: "DejaVu",
-    family: 2,
-  };
-  workSheet.getCell(4, 3).alignment = {
-    vertical: "middle",
-    horizontal: "center",
-  };
-  workSheet.mergeCells(workSheet.rowCount, 3, workSheet.rowCount, 4);
-  temp.height = 25;
+  });
+  getPriceListHeaderItem(workSheet, {
+    text: "info@osfix.ru, +7 (812) 449-10-09",
+  });
+  getPriceListHeaderItem(
+    workSheet,
+    {
+      text: "www.osfix.ru",
+      hyperlink: "https://www.osfix.ru",
+      tooltip: "Открыть сайт",
+    },
+    {
+      size: 14,
+    }
+  );
 
   //adding logo assets/osfix_logo.png
   const logoImg = workBook.addImage({
@@ -131,10 +124,9 @@ const getPriceListHeader = async (workSheet) => {
   });
   workSheet.addImage(contactsExcelImg, {
     tl: { col: 2.1, row: 0.3 },
-    ext: { width: 17, height: 96 },
+    ext: { width: 22, height: 120 },
   });
-
-  temp = workSheet.addRow([""]);
+  const temp = workSheet.addRow([""]);
   temp.height = 25;
 };
 
@@ -150,7 +142,7 @@ export async function getPriceListPdfExcel(
   const lastColumnNumber = 7 + optionalCols.length;
   const rospatentTempImg = await getDataUri("assets/rospatent.png");
   workSheet.columns = getPriceListDefaultColumns(); // default columns
-  await getPriceListHeader(workSheet); //company header
+  await getPriceListHeader(workSheet, workBook, lastColumnNumber); //company header
   Promise.all(
     categories.map((category) => {
       if (
