@@ -55,53 +55,43 @@ const getPriceListHeaderItem = (workSheet, data = {}, customStyles = {}) => {
   temp.height = 25;
 };
 
-const getPriceListHeader = async (workSheet, workBook, lastColumnNumber) => {
-  const tempImg = await getDataUri("assets/osfix_logo.png");
-  const contactsImg = await getDataUri("assets/contacts_excel.png");
-  //adding company header
-  getPriceListHeaderItem(
-    workSheet,
-    {
+const priceListHeaderItems = [
+  {
+    data: {
       text: "ООО «ОСФИКС»",
       link: "https://www.osfix.ru",
       tooltip: "Перейти на сайт www.osfix.ru",
     },
-    {
+    styles: {
       size: 16,
       bold: true,
-    }
-  );
-  getPriceListHeaderItem(workSheet, {
-    text: "Лиговский пр., 52, Санкт-Петербург, 191040",
-    link: "https://yandex.ru/maps/-/CKUrY0Ih",
-    tooltip: "Открыть Яндекс.Карту",
-  });
-  getPriceListHeaderItem(workSheet, {
-    text: "info@osfix.ru, +7 (812) 449-10-09",
-  });
-  getPriceListHeaderItem(
-    workSheet,
-    {
+    },
+  },
+  {
+    data: {
+      text: "Лиговский пр., 52, Санкт-Петербург, 191040",
+      link: "https://yandex.ru/maps/-/CKUrY0Ih",
+      tooltip: "Открыть Яндекс.Карту",
+    },
+  },
+  {
+    data: {
+      text: "info@osfix.ru, +7 (812) 449-10-09",
+    },
+  },
+  {
+    data: {
       text: "www.osfix.ru",
       link: "https://www.osfix.ru",
       tooltip: "Открыть сайт",
     },
-    {
+    styles: {
       size: 14,
-    }
-  );
+    },
+  },
+];
 
-  //adding logo assets/osfix_logo.png
-  const logoImg = workBook.addImage({
-    base64: tempImg,
-    extension: "jpeg",
-  });
-  workSheet.mergeCells(1, 1, 4, 1);
-  workSheet.addImage(logoImg, {
-    tl: { col: 0.3, row: 0.4 },
-    ext: { width: 180, height: 80 },
-  });
-
+const getPriceListHeaderBorder = (workSheet, lastColumnNumber) => {
   const border = { style: "medium", color: { argb: "FFFF1B5F" } };
   //border-bottom
   for (let i = 1; i <= lastColumnNumber; i++) {
@@ -116,16 +106,39 @@ const getPriceListHeader = async (workSheet, workBook, lastColumnNumber) => {
       right: border,
     };
   }
+};
 
-  //adding contacts icons
-  const contactsExcelImg = workBook.addImage({
-    base64: contactsImg,
+const priceListHeaderAddImage = (workBook, workSheet, imgObject) => {
+  const logoImg = workBook.addImage({
+    base64: imgObject.imgData,
     extension: "jpeg",
   });
-  workSheet.addImage(contactsExcelImg, {
+  imgObject.mergeCells && imgObject.mergeCells();
+  workSheet.addImage(logoImg, {
+    tl: imgObject.tl,
+    ext: imgObject.ext,
+  });
+};
+
+const getPriceListHeader = async (workSheet, workBook, lastColumnNumber) => {
+  const tempImg = await getDataUri("assets/osfix_logo.png");
+  const contactsImg = await getDataUri("assets/contacts_excel.png");
+  priceListHeaderItems.map((item) =>
+    getPriceListHeaderItem(workSheet, item.data, item.styles)
+  );
+  getPriceListHeaderBorder(workSheet, lastColumnNumber); // adding border
+  priceListHeaderAddImage(workBook, workSheet, {
+    imgData: tempImg,
+    mergeCells: () => workSheet.mergeCells(1, 1, 4, 1),
+    tl: { col: 0.3, row: 0.4 },
+    ext: { width: 180, height: 80 },
+  }); // adding logo assets/osfix_logo.png
+  priceListHeaderAddImage(workBook, workSheet, {
+    imgData: contactsImg,
     tl: { col: 2.1, row: 0.3 },
     ext: { width: 22, height: 120 },
-  });
+  }); // adding contacts icons
+  //add row for space after header
   const temp = workSheet.addRow([""]);
   temp.height = 25;
 };
