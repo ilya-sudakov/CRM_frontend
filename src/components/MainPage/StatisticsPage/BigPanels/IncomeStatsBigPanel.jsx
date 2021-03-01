@@ -296,23 +296,7 @@ const IncomeStatsBigPanel = ({
         <BarChart
           data={monthsIncome}
           labels={months}
-          options={{
-            legend: { display: false },
-            tooltips: {
-              callbacks: {
-                label: (tooltipItem, data) =>
-                  tooltipLabelRubles(tooltipItem, data),
-              },
-            },
-            scales: {
-              xAxes: { gridLines: { display: false } },
-              yAxes: {
-                ticks: {
-                  callback: (value) => `${addSpaceDelimiter(value)} ₽`,
-                },
-              },
-            },
-          }}
+          options={defaultOptions}
           chartClassName="panel__chart"
           wrapperClassName="panel__chart-wrapper"
         />
