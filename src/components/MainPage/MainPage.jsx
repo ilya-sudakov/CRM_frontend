@@ -79,6 +79,14 @@ const MainPage = () => {
     if (userScreenWidth > 1366) setSidemenuHidden(false);
   }, []);
 
+  const allUsers = [
+    "ROLE_ADMIN",
+    "ROLE_WORKSHOP",
+    "ROLE_MANAGER",
+    "ROLE_DISPATCHER",
+    "ROLE_ENGINEER",
+  ];
+
   return (
     <div className="main_page">
       <Header
@@ -114,13 +122,7 @@ const MainPage = () => {
                     exact
                     path="/"
                     component={GeneralPage}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_WORKSHOP",
-                      "ROLE_MANAGER",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
@@ -192,13 +194,7 @@ const MainPage = () => {
                     type="suppliers"
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_DISPATCHER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
@@ -207,13 +203,7 @@ const MainPage = () => {
                     type="suppliers"
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_DISPATCHER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
@@ -222,13 +212,7 @@ const MainPage = () => {
                     type="suppliers"
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                      "ROLE_WORKSHOP",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     path="/suppliers/edit/"
@@ -375,13 +359,7 @@ const MainPage = () => {
                     userData={userContext.userData}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_MANAGER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
@@ -389,13 +367,7 @@ const MainPage = () => {
                     component={NewTask}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_MANAGER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     path="/dispatcher/general-tasks/edit/"
@@ -492,35 +464,17 @@ const MainPage = () => {
                     component={WorkManagementPage}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     path="/work-management/record-time"
                     component={RecordWork}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     path="/work-management/journal/"
                     component={ProductionJournalNew}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
@@ -528,13 +482,7 @@ const MainPage = () => {
                     component={FeedbackPage}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
@@ -542,26 +490,14 @@ const MainPage = () => {
                     component={NewFeedback}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     path="/feedback/view/"
                     component={ViewFeedback}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_MANAGER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
@@ -569,13 +505,7 @@ const MainPage = () => {
                     component={EtceteraPage}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_DISPATCHER",
-                      "ROLE_MANAGER",
-                      "ROLE_ENGINEER",
-                      "ROLE_WORKSHOP",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
@@ -635,26 +565,14 @@ const MainPage = () => {
                     component={ReportTablePage}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_DISPATCHER",
-                      "ROLE_WORKSHOP",
-                      "ROLE_MANAGER",
-                      "ROLE_ENGINEER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
                     path="/rigging-list"
                     component={RiggingList}
                     userHasAccess={userContext.userHasAccess}
-                    allowedRoles={[
-                      "ROLE_ADMIN",
-                      "ROLE_WORKSHOP",
-                      "ROLE_DISPATCHER",
-                      "ROLE_ENGINEER",
-                      "ROLE_MANAGER",
-                    ]}
+                    allowedRoles={allUsers}
                   />
                   <PrivateRoute
                     exact
