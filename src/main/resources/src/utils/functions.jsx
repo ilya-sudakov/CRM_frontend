@@ -1,64 +1,40 @@
 import { animateScroll as scroll } from "react-scroll";
 
+const getDateMonthString = (date) =>
+  date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+
 //Получение строки типа 'дд.мм.ГГГГ' из объекта Date
 export const formatDateString = (dateString) => {
-  const temp = new Date(dateString);
-  const testDate = new Date(
-    temp.getFullYear() + "/" + (temp.getMonth() + 1) + "/" + temp.getDate()
-  );
+  const date = new Date(dateString);
   return `${
-    testDate.getDate() < 10 ? "0" + testDate.getDate() : testDate.getDate()
-  }.${
-    testDate.getMonth() + 1 < 10
-      ? "0" + (testDate.getMonth() + 1)
-      : testDate.getMonth() + 1
-  }.${testDate.getFullYear()}`;
+    date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+  }.${getDateMonthString(date)}.${date.getFullYear()}`;
 };
 
 export const formatDateStringNoDate = (dateString) => {
-  const temp = new Date(dateString);
-  const testDate = new Date(
-    temp.getFullYear() + "/" + (temp.getMonth() + 1) + "/" + temp.getDate()
-  );
-  return (
-    (testDate.getMonth() + 1 < 10
-      ? "0" + (testDate.getMonth() + 1)
-      : testDate.getMonth() + 1) +
-    "." +
-    testDate.getFullYear()
-  );
+  const date = new Date(dateString);
+  return `${getDateMonthString(date)}.${date.getFullYear()}`;
 };
 
 export const formatDateStringNoYear = (dateString) => {
-  const temp = new Date(dateString);
-  const testDate = new Date(
-    temp.getFullYear() + "/" + (temp.getMonth() + 1) + "/" + temp.getDate()
-  );
-  return (
-    (testDate.getDate() < 10 ? "0" + testDate.getDate() : testDate.getDate()) +
-    "." +
-    (testDate.getMonth() + 1 < 10
-      ? "0" + (testDate.getMonth() + 1)
-      : testDate.getMonth() + 1)
-  );
+  const date = new Date(dateString);
+  return `${
+    date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+  }.${getDateMonthString(date)}`;
 };
 
 export const formatDateStringToTime = (dateString) => {
-  const testDate = new Date(dateString);
+  const date = new Date(dateString);
   return (
-    (testDate.getHours() < 10
-      ? "0" + testDate.getHours()
-      : testDate.getHours()) +
+    (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) +
     ":" +
-    (testDate.getMinutes() < 10
-      ? "0" + testDate.getMinutes()
-      : testDate.getMinutes())
+    (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes())
   );
 };
 
 export const formatDateStringWithTime = (dateString) => {
-  const testDate = new Date(dateString);
-  return `${formatDateString(testDate)} ${formatDateStringToTime(testDate)}`;
+  const date = new Date(dateString);
+  return `${formatDateString(date)} ${formatDateStringToTime(date)}`;
 };
 
 //Определение склонения слова в зависимости от остатка числа
@@ -78,6 +54,16 @@ export const numberToString = (number, wordForms) => {
   return wordForms[2];
 };
 
+const contextToBlob = (blob, imageName) => {
+  // получаем содержимое как JPEG Blob
+  let link = document.createElement("a");
+  link.download = imageName;
+  link.href = URL.createObjectURL(blob);
+  link.click();
+  // удаляем ссылку на Blo
+  URL.revokeObjectURL(link.href);
+};
+
 //Функция для скачивания переданной картинки
 export const imgToBlobDownload = (imageSrc, imageName) => {
   let img = new Image();
@@ -87,19 +73,7 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
   c.width = img.naturalWidth;
   c.height = img.naturalHeight;
   ctx.drawImage(img, 0, 0);
-  c.toBlob(
-    function (blob) {
-      // получаем содержимое как JPEG Blob
-      let link = document.createElement("a");
-      link.download = imageName;
-      link.href = URL.createObjectURL(blob);
-      link.click();
-      // удаляем ссылку на Blo
-      URL.revokeObjectURL(link.href);
-    },
-    "image/jpeg",
-    1
-  );
+  c.toBlob(contextToBlob(blob, imageName), "image/jpeg", 1);
   img.crossOrigin = ""; // if from different origin
   img.src = "url-to-image";
 };
@@ -141,7 +115,6 @@ export const changeSortOrder = (event) => {
 export const getAllProductsFromWorkCount = (works) => {
   let parts = {};
   works.map((work) => {
-    // console.log(work)
     work.workControlProduct.map((product) => {
       if (parts[product.product.id] === undefined) {
         return (parts = Object.assign({
@@ -165,53 +138,37 @@ export const getAllProductsFromWorkCount = (works) => {
       }
     });
   });
-  // console.log(parts)
   return parts;
 };
 
 export const getAllDraftsFromWorkCount = (works) => {
   let parts = { Stamp: {}, Press: {}, Detail: {}, Bench: {} };
-  const Stamp = {},
-    Press = {},
-    Detail = {},
-    Bench = {};
   works.map((work) => {
     const draftTypes = ["Stamp", "Press", "Detail", "Bench"];
-    // console.log(work)
     draftTypes.map((draftType) => {
       return work.partsWorks.map((draft) => {
-        if (draft.partType === draftType) {
-          if (parts[draftType][draft.partId] === undefined) {
-            return (parts[draftType] = Object.assign({
-              ...parts[draftType],
-              [draft.partId]: {
-                name: draft.name,
-                partType: draft.partType,
-                partId: draft.partId,
-                quantity: Number.parseFloat(draft.quantity),
-              },
-            }));
-          } else {
-            return (parts[draftType] = Object.assign({
-              ...parts[draftType],
-              [draft.partId]: {
-                ...parts[draftType][draft.partId],
-                quantity:
-                  Number.parseFloat(parts[draftType][draft.partId].quantity) +
-                  Number.parseFloat(draft.quantity),
-              },
-            }));
-          }
-        }
+        if (draft.partType !== draftType) return;
+        const quantity =
+          parts[draftType][draft.partId] === undefined
+            ? Number.parseFloat(draft.quantity)
+            : Number.parseFloat(parts[draftType][draft.partId].quantity) +
+              Number.parseFloat(draft.quantity);
+        return (parts[draftType] = {
+          ...parts[draftType],
+          [draft.partId]: {
+            name: draft.name,
+            partType: draft.partType,
+            partId: draft.partId,
+            quantity: quantity,
+          },
+        });
       });
     });
   });
   let newParts = [];
-  Object.values(parts).map((draftType) => {
-    Object.values(draftType).map((draft) => {
-      newParts.push(draft);
-    });
-  });
+  Object.values(parts).map((draftType) =>
+    Object.values(draftType).map((draft) => newParts.push(draft))
+  );
   return newParts;
 };
 
@@ -225,85 +182,41 @@ export const getDatesAndWorkItems = (works) => {
   works.map((item) => {
     const curDate = new Date(item.year, item.month - 1, item.day);
     const curWorkshop = item.employee.workshop;
-    if (newData[curWorkshop][curDate] === undefined) {
-      newData = Object.assign({
-        ...newData,
-        [curWorkshop]: {
-          ...newData[curWorkshop],
-          [curDate]: {
-            [item.employee.id]: {
-              employee: item.employee,
-              year: item.year,
-              month: item.month,
-              day: item.day,
-              workshop: item.employee.workshop,
-              isOpen: false,
-              works: [
-                {
-                  id: item.id,
-                  hours: item.hours,
-                  workList: item.workList,
-                  workControlProduct: item.workControlProduct,
-                  partsWorks: item.partsWorks,
-                },
-              ],
-            },
+    const prevDateData = newData[curWorkshop][curDate]
+      ? newData[curWorkshop][curDate]
+      : {};
+    const prevWorkData =
+      newData[curWorkshop][curDate] &&
+      newData[curWorkshop][curDate][item.employee.id]
+        ? newData[curWorkshop][curDate][item.employee.id].works
+        : [];
+    newData = Object.assign({
+      ...newData,
+      [curWorkshop]: {
+        ...newData[curWorkshop],
+        [curDate]: {
+          ...prevDateData,
+          [item.employee.id]: {
+            employee: item.employee,
+            year: item.year,
+            month: item.month,
+            day: item.day,
+            workshop: item.employee.workshop,
+            isOpen: false,
+            works: [
+              ...prevWorkData,
+              {
+                id: item.id,
+                hours: item.hours,
+                workList: item.workList,
+                workControlProduct: item.workControlProduct,
+                partsWorks: item.partsWorks,
+              },
+            ],
           },
         },
-      });
-    } else {
-      if (newData[curWorkshop][curDate][item.employee.id] === undefined) {
-        newData = Object.assign({
-          ...newData,
-          [curWorkshop]: {
-            ...newData[curWorkshop],
-            [curDate]: {
-              ...newData[curWorkshop][curDate],
-              [item.employee.id]: {
-                employee: item.employee,
-                year: item.year,
-                month: item.month,
-                day: item.day,
-                workshop: item.employee.workshop,
-                isOpen: false,
-                works: [
-                  {
-                    id: item.id,
-                    hours: item.hours,
-                    workList: item.workList,
-                    workControlProduct: item.workControlProduct,
-                    partsWorks: item.partsWorks,
-                  },
-                ],
-              },
-            },
-          },
-        });
-      } else {
-        newData = Object.assign({
-          ...newData,
-          [curWorkshop]: {
-            ...newData[curWorkshop],
-            [curDate]: {
-              ...newData[curWorkshop][curDate],
-              [item.employee.id]: {
-                ...newData[curWorkshop][curDate][item.employee.id],
-                works: [
-                  ...newData[curWorkshop][curDate][item.employee.id].works,
-                  {
-                    id: item.id,
-                    hours: item.hours,
-                    workList: item.workList,
-                    workControlProduct: item.workControlProduct,
-                    partsWorks: item.partsWorks,
-                  },
-                ],
-              },
-            },
-          },
-        });
-      }
-    }
+      },
+    });
   });
   return newData;
 };
@@ -453,15 +366,7 @@ export const roundUpWorkHours = (hours) => {
 
 export const saveCanvasAsImage = (canvas, fileName) => {
   canvas.toBlob(
-    function (blob) {
-      // получаем содержимое как JPEG Blob
-      let link = document.createElement("a");
-      link.download = fileName;
-      link.href = URL.createObjectURL(blob);
-      link.click();
-      // удаляем ссылку на Blo
-      URL.revokeObjectURL(link.href);
-    },
+    c.toBlob(contextToBlob(blob, fileName), "image/jpeg", 1),
     "image/jpeg",
     1
   );
