@@ -363,6 +363,15 @@ const GroupProducts = ({ item, priceList, setPriceList, index }) => {
     setPriceList([...originalList]);
   };
 
+  const handleValuesChange = (value, name) => {
+    let temp = priceList;
+    temp.splice(index, 1, {
+      ...item,
+      [name]: value,
+    });
+    return setPriceList([...temp]);
+  };
+
   return (
     <div className="price-list__group-wrapper">
       <div className="main-form__item">
@@ -406,42 +415,12 @@ const GroupProducts = ({ item, priceList, setPriceList, index }) => {
             groupImg4={item.groupImg4}
             footerImg={item.footerImg}
             proprietaryItem={item.proprietaryItemText}
-            handleLabelChange={(value, name) => {
-              let temp = priceList;
-              temp.splice(index, 1, {
-                ...item,
-                [name]: value,
-              });
-              setPriceList([...temp]);
-            }}
-            handleImgChange={(newImg, name) => {
-              let temp = priceList;
-              temp.splice(index, 1, {
-                ...item,
-                [name]: newImg,
-              });
-              setPriceList([...temp]);
-            }}
+            handleLabelChange={handleValuesChange}
+            handleImgChange={handleValuesChange}
             uniqueId={index}
-            defaultValue={item.products.sort((a, b) => {
-              if (priceList.length <= 1) return 0;
-              else {
-                if (
-                  a.number.localeCompare(b.number, undefined, {
-                    numeric: true,
-                  }) < 0
-                ) {
-                  return -1;
-                }
-                if (
-                  a.number.localeCompare(b.number, undefined, {
-                    numeric: true,
-                  }) > 0
-                ) {
-                  return 1;
-                }
-                return 0;
-              }
+            defaultValue={sortByField(item.products, {
+              fieldName: "number",
+              direction: "asc",
             })}
           />
         </div>
@@ -475,12 +454,12 @@ const CategoryHeader = ({
         <FileUploader
           uniqueId={"categoryImg" + categoryIndex}
           onChange={(result) => {
-            let temp = categories;
-            temp.splice(categoryIndex, 1, {
+            let originalList = categories;
+            originalList.splice(categoryIndex, 1, {
               ...category,
               img: result,
             });
-            setCategories([...temp]);
+            setCategories([...originalList]);
           }}
           previewImage={category.img}
         />
