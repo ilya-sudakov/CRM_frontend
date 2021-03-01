@@ -6,9 +6,6 @@ import TableView from "./TableView/TableView.jsx";
 import FormWindow from "../../../../../utils/Form/FormWindow/FormWindow.jsx";
 import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 import { getStamp } from "../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
-import { getPressForm } from "../../../../../utils/RequestsAPI/Rigging/PressForm.jsx";
-import { getMachine } from "../../../../../utils/RequestsAPI/Rigging/Machine.jsx";
-import { getParts } from "../../../../../utils/RequestsAPI/Parts.jsx";
 
 const SelectDraft = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,10 +53,9 @@ const SelectDraft = (props) => {
     } else {
       let newDrafts = [];
       getStamp()
-        .then((response) => response.json())
-        .then((response) => {
-          // console.log(response);
-          response.map((item) => {
+        .then((res) => res.json())
+        .then((res) => {
+          res.map((item) => {
             return item.stampParts.map((stamp) => {
               return newDrafts.push({
                 ...stamp,
@@ -69,57 +65,6 @@ const SelectDraft = (props) => {
               });
             });
           });
-          // console.log(newDrafts);
-          return setDrafts([...newDrafts]);
-        })
-        .then(() => getPressForm())
-        .then((response) => response.json())
-        .then((response) => {
-          // console.log(response);
-          response.map((item) => {
-            return item.pressParts.map((stamp) => {
-              return newDrafts.push({
-                ...stamp,
-                value: stamp.id,
-                label: `${stamp.number}, ${stamp.name}`,
-                type: "Press",
-              });
-            });
-          });
-          return setDrafts([...newDrafts]);
-        })
-        .then(() => getMachine())
-        .then((response) => response.json())
-        .then((response) => {
-          // console.log(response)
-          response.map((item) => {
-            return item.benchParts.map((stamp) => {
-              return newDrafts.push({
-                ...stamp,
-                value: stamp.id,
-                label: `${stamp.number}, ${stamp.name}`,
-                type: "Bench",
-              });
-            });
-          });
-          return setDrafts([...newDrafts]);
-          // console.log(newDrafts)
-        })
-        .then(() => getParts())
-        .then((res) => res.json())
-        .then((res) => {
-          // console.log(res)
-          res.map((item) => {
-            return item.detailParts.map((stamp) => {
-              return newDrafts.push({
-                ...stamp,
-                value: stamp.id,
-                label: `${stamp.number}, ${stamp.name}`,
-                type: "Detail",
-              });
-            });
-          });
-          console.log(newDrafts);
           return setDrafts([...newDrafts]);
         });
     }

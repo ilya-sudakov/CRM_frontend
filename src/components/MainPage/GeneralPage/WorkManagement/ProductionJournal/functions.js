@@ -111,7 +111,7 @@ export const createWorkListPDF = (
   todaysWork,
   yesterdaysWork,
   curDate
-) => { 
+) => {
   const list = [];
   Object.values(defaultJournalWorkshops).map((workshop) => {
     list.push(
