@@ -9,19 +9,18 @@ import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/Nes
 import AddToButton from "../../../../utils/Form/AddToButton/AddToButton.jsx";
 
 const SelectLegalEntity = (props) => {
-  const [selected, setSelected] = useState([
-    {
-      name: "",
-      inn: "",
-      kpp: "",
-      ogrn: "",
-      bik: "",
-      checkingAccount: "",
-      legalAddress: "",
-      factualAddress: "",
-      isMinimized: false,
-    },
-  ]);
+  const newEntity = {
+    name: "",
+    inn: "",
+    kpp: "",
+    ogrn: "",
+    bik: "",
+    checkingAccount: "",
+    legalAddress: "",
+    factualAddress: "",
+    isMinimized: true,
+  };
+  const [selected, setSelected] = useState([newEntity]);
   const [isLoading, setIsLoading] = useState(false);
   const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
 
@@ -41,34 +40,8 @@ const SelectLegalEntity = (props) => {
 
   const handleNewLegalEntity = () => {
     //Открыть по дефолту форму
-    const id = selected.length;
-    setSelected([
-      ...selected,
-      {
-        name: "",
-        inn: "7842143789",
-        kpp: "",
-        ogrn: "",
-        bik: "",
-        checkingAccount: "",
-        legalAddress: "",
-        factualAddress: "",
-        isMinimized: true,
-      },
-    ]);
-    props.handleLegalEntityChange([
-      ...selected,
-      {
-        name: "",
-        inn: "7842143789",
-        kpp: "",
-        ogrn: "",
-        bik: "",
-        checkingAccount: "",
-        legalAddress: "",
-        factualAddress: "",
-      },
-    ]);
+    setSelected([...selected, newEntity]);
+    props.handleLegalEntityChange([...selected, newEntity]);
   };
 
   const deleteLegalEntity = (index) => {
@@ -78,12 +51,9 @@ const SelectLegalEntity = (props) => {
     props.handleLegalEntityChange([...temp]);
   };
 
-  const handleInputChange = (event) => {
-    const id = event.target.getAttribute("index");
-    const name = event.target.getAttribute("name");
-    let value = event.target.value;
+  const handleInputChange = (index, name, value) => {
     let temp = selected;
-    let originalItem = selected[id];
+    let originalItem = selected[index];
     temp.splice(id, 1, {
       ...originalItem,
       [name]: value,
@@ -147,6 +117,20 @@ const SelectLegalEntity = (props) => {
       });
   };
 
+  const getInputElement = (name, index) => {
+    return (
+      <input
+        type="text"
+        name={name}
+        index={index}
+        autoComplete="off"
+        onChange={({ target }) => handleInputChange(index, name, target.value)}
+        value={item[name]}
+        readOnly={props.readOnly}
+      />
+    );
+  };
+
   return (
     <div className="select-legal-entity">
       <div className="main-form__item">
@@ -191,115 +175,35 @@ const SelectLegalEntity = (props) => {
               formInputs={[
                 {
                   name: "Название",
-                  element: (
-                    <input
-                      type="text"
-                      name="name"
-                      index={index}
-                      autoComplete="off"
-                      onChange={handleInputChange}
-                      value={item.name}
-                      readOnly={props.readOnly}
-                    />
-                  ),
+                  element: getInputElement("name", index),
                 },
                 {
                   name: "ИНН",
-                  element: (
-                    <input
-                      type="text"
-                      name="inn"
-                      index={index}
-                      autoComplete="off"
-                      onChange={handleInputChange}
-                      value={item.inn}
-                      readOnly={props.readOnly}
-                    />
-                  ),
+                  element: getInputElement("inn", index),
                 },
                 {
                   name: "КПП",
-                  element: (
-                    <input
-                      type="text"
-                      name="kpp"
-                      index={index}
-                      autoComplete="off"
-                      onChange={handleInputChange}
-                      value={item.kpp}
-                      readOnly={props.readOnly}
-                    />
-                  ),
+                  element: getInputElement("kpp", index),
                 },
                 {
                   name: "ОГРН",
-                  element: (
-                    <input
-                      type="text"
-                      name="ogrn"
-                      index={index}
-                      autoComplete="off"
-                      onChange={handleInputChange}
-                      value={item.ogrn}
-                      readOnly={props.readOnly}
-                    />
-                  ),
+                  element: getInputElement("ogrn", index),
                 },
                 {
                   name: "БИК",
-                  element: (
-                    <input
-                      type="text"
-                      name="bik"
-                      index={index}
-                      autoComplete="off"
-                      onChange={handleInputChange}
-                      value={item.bik}
-                      readOnly={props.readOnly}
-                    />
-                  ),
+                  element: getInputElement("bik", index),
                 },
                 {
                   name: "Расчетный счет",
-                  element: (
-                    <input
-                      type="text"
-                      name="checkingAccount"
-                      index={index}
-                      autoComplete="off"
-                      onChange={handleInputChange}
-                      value={item.checkingAccount}
-                      readOnly={props.readOnly}
-                    />
-                  ),
+                  element: getInputElement("checkingAccount", index),
                 },
                 {
                   name: "Юридический адрес",
-                  element: (
-                    <input
-                      type="text"
-                      name="legalAddress"
-                      index={index}
-                      autoComplete="off"
-                      onChange={handleInputChange}
-                      value={item.legalAddress}
-                      readOnly={props.readOnly}
-                    />
-                  ),
+                  element: getInputElement("legalAddress", index),
                 },
                 {
                   name: "Фактический адрес",
-                  element: (
-                    <input
-                      type="text"
-                      name="factualAddress"
-                      index={index}
-                      autoComplete="off"
-                      onChange={handleInputChange}
-                      value={item.factualAddress}
-                      readOnly={props.readOnly}
-                    />
-                  ),
+                  element: getInputElement("factualAddress", index),
                 },
               ]}
               bottomButton={
