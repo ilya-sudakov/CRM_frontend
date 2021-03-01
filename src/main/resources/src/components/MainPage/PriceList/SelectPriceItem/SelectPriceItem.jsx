@@ -28,26 +28,12 @@ const SelectPriceItem = (props) => {
       isMinimized: true,
     },
   ]);
-  const [options, setOptions] = useState([]);
-  const [proprietaryItem, setProprietaryItem] = useState(false);
   const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
-  const [coefficients, setCoefficients] = useState({
-    retailPrice: 1,
-    dealerPrice: 0.56,
-    distributorPrice: 0.485,
-    partnerPrice: 0.79,
-    stopPrice: 0.4545,
-    lessThan5000Price: 0.89,
-    lessThan1500Price: 0.96,
-  });
   const [groupImg1, setGroupImg1] = useState(null);
   const [groupImg2, setGroupImg2] = useState(null);
   const [groupImg3, setGroupImg3] = useState(null);
   const [groupImg4, setGroupImg4] = useState(null);
   const [footerImg, setFooterImg] = useState(null);
-  // const [visibleItems, setVisibleItems] = useState([{
-  //     id:
-  // }])
 
   useEffect(() => {
     if (props.defaultValue !== undefined && !defaultValueLoaded) {
@@ -57,9 +43,6 @@ const SelectPriceItem = (props) => {
         }),
       ]);
       setDefaultValueLoaded(true);
-    }
-    if (props.options !== undefined) {
-      setOptions([...props.options]);
     }
     if (props.groupImg1 !== undefined) {
       setGroupImg1(props.groupImg1);
@@ -76,9 +59,6 @@ const SelectPriceItem = (props) => {
     if (props.footerImg !== undefined) {
       setFooterImg(props.footerImg);
     }
-    if (props.proprietaryItem !== undefined) {
-      setProprietaryItem(props.proprietaryItem);
-    }
   }, [
     props.defaultValue,
     props.options,
@@ -92,7 +72,6 @@ const SelectPriceItem = (props) => {
 
   const handleNewPriceItem = () => {
     //Открыть по дефолту форму
-    const id = selected.length;
     const newObject = {
       number: "",
       units: "",
@@ -122,89 +101,53 @@ const SelectPriceItem = (props) => {
     props.handlePriceItemChange([...temp]);
   };
 
-  const handleInputChange = (event) => {
-    const id = event.target.getAttribute("index");
-    const name = event.target.getAttribute("name");
-    let value = event.target.value;
+  const handleInputChange = (index, name, value) => {
     let temp = selected;
-    let originalItem = selected[id];
-    if (name === "cost") {
-      value = parseFloat(value);
-      temp.splice(id, 1, {
-        ...originalItem,
-        [name]: value,
-        retailPrice: originalItem.retailMarketPrice,
-        dealerPrice: (
-          value +
-          (originalItem.retailMarketPrice - value) * coefficients.dealerPrice
-        ).toFixed(2),
-        distributorPrice: (
-          value +
-          (originalItem.retailMarketPrice - value) *
-            coefficients.distributorPrice
-        ).toFixed(2),
-        partnerPrice: (
-          value +
-          (originalItem.retailMarketPrice - value) * coefficients.partnerPrice
-        ).toFixed(2),
-        stopPrice: (
-          value +
-          (originalItem.retailMarketPrice - value) * coefficients.stopPrice
-        ).toFixed(2),
-        lessThan5000Price: (
-          value +
-          (originalItem.retailMarketPrice - value) *
-            coefficients.lessThan5000Price
-        ).toFixed(2),
-        lessThan1500Price: (
-          value +
-          (originalItem.retailMarketPrice - value) *
-            coefficients.lessThan1500Price
-        ).toFixed(2),
-      });
-      setSelected([...temp]);
-      props.handlePriceItemChange([...temp]);
-    } else if (name === "retailMarketPrice") {
-      value = parseFloat(value);
-      temp.splice(id, 1, {
-        ...originalItem,
-        [name]: value,
-        retailPrice: value,
-        dealerPrice: (
-          originalItem.cost +
-          (value - originalItem.cost) * coefficients.dealerPrice
-        ).toFixed(2),
-        distributorPrice: (
-          originalItem.cost +
-          (value - originalItem.cost) * coefficients.distributorPrice
-        ).toFixed(2),
-        partnerPrice: (
-          originalItem.cost +
-          (value - originalItem.cost) * coefficients.partnerPrice
-        ).toFixed(2),
-        stopPrice: (
-          originalItem.cost +
-          (value - originalItem.cost) * coefficients.stopPrice
-        ).toFixed(2),
-        lessThan5000Price: (
-          originalItem.cost +
-          (value - originalItem.cost) * coefficients.lessThan5000Price
-        ).toFixed(2),
-        lessThan1500Price: (
-          originalItem.cost +
-          (value - originalItem.cost) * coefficients.lessThan1500Price
-        ).toFixed(2),
-      });
-      setSelected([...temp]);
-      props.handlePriceItemChange([...temp]);
-    } else {
-      temp.splice(id, 1, {
-        ...originalItem,
-        [name]: value,
-      });
-      setSelected([...temp]);
-      props.handlePriceItemChange([...temp]);
-    }
+    let originalItem = selected[index];
+    temp.splice(id, 1, {
+      ...originalItem,
+      [name]: value,
+    });
+    setSelected([...temp]);
+    props.handlePriceItemChange([...temp]);
+  };
+
+  const getInputElement = (type = "text", name, index) => {
+    return (
+      <input
+        type={type}
+        name={name}
+        index={index}
+        autoComplete="off"
+        onChange={({ target }) => handleInputChange(index, name, target.value)}
+        defaultValue={item[name]}
+        readOnly={props.readOnly}
+      />
+    );
+  };
+
+  const onImageDataChange = async (result, imgInfo) => {
+    const downgraded =
+      result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
+    imgInfo.setter(downgraded);
+    props.handleImgChange(downgraded, imgInfo.itemName);
+  };
+
+  const getPhotoInputElement = (title, index, imgInfo) => {
+    return (
+      <div className="main-form__item">
+        <div className="main-form__input_name">{title}</div>
+        <div className="main-form__input_field">
+          {!props.readOnly && (
+            <FileUploader
+              uniqueId={`file${index}${props.uniqueId}`}
+              onChange={(result) => onImageDataChange(result, imgInfo)}
+              previewImage={imgInfo.previewImage}
+            />
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -212,101 +155,31 @@ const SelectPriceItem = (props) => {
       <div className="select-price-item__selected">
         {!props.readOnly && (
           <div className="price-list__images-wrapper">
-            <div className="main-form__item">
-              <div className="main-form__input_name">Фотография 1</div>
-              <div className="main-form__input_field">
-                {!props.readOnly && (
-                  <FileUploader
-                    uniqueId={"file1" + props.uniqueId}
-                    onChange={async (result) => {
-                      const downgraded =
-                        result !== ""
-                          ? await getDataUri(result, "jpeg", 0.3)
-                          : "";
-                      setGroupImg1(downgraded);
-                      props.handleImgChange(downgraded, "groupImg1");
-                    }}
-                    previewImage={groupImg1}
-                  />
-                )}
-              </div>
-            </div>
-            <div className="main-form__item">
-              <div className="main-form__input_name">Фотография 2</div>
-              <div className="main-form__input_field">
-                {!props.readOnly && (
-                  <FileUploader
-                    uniqueId={"file2" + props.uniqueId}
-                    onChange={async (result) => {
-                      const downgraded =
-                        result !== ""
-                          ? await getDataUri(result, "jpeg", 0.3)
-                          : "";
-                      setGroupImg2(downgraded);
-                      props.handleImgChange(downgraded, "groupImg2");
-                    }}
-                    previewImage={groupImg2}
-                  />
-                )}
-              </div>
-            </div>
-            <div className="main-form__item">
-              <div className="main-form__input_name">Фотография 3</div>
-              <div className="main-form__input_field">
-                {!props.readOnly && (
-                  <FileUploader
-                    uniqueId={"file3" + props.uniqueId}
-                    onChange={async (result) => {
-                      const downgraded =
-                        result !== ""
-                          ? await getDataUri(result, "jpeg", 0.3)
-                          : "";
-                      setGroupImg3(downgraded);
-                      props.handleImgChange(downgraded, "groupImg3");
-                    }}
-                    previewImage={groupImg3}
-                  />
-                )}
-              </div>
-            </div>
-            <div className="main-form__item">
-              <div className="main-form__input_name">Фотография 4</div>
-              <div className="main-form__input_field">
-                {!props.readOnly && (
-                  <FileUploader
-                    uniqueId={"file4" + props.uniqueId}
-                    onChange={async (result) => {
-                      const downgraded =
-                        result !== ""
-                          ? await getDataUri(result, "jpeg", 0.3)
-                          : "";
-                      setGroupImg4(downgraded);
-                      props.handleImgChange(downgraded, "groupImg4");
-                    }}
-                    previewImage={groupImg4}
-                  />
-                )}
-              </div>
-            </div>
-            <div className="main-form__item">
-              <div className="main-form__input_name">Фотография снизу</div>
-              <div className="main-form__input_field">
-                {!props.readOnly && (
-                  <FileUploader
-                    uniqueId={"file5" + props.uniqueId}
-                    onChange={async (result) => {
-                      const downgraded =
-                        result !== ""
-                          ? await getDataUri(result, "jpeg", 0.3)
-                          : "";
-                      setFooterImg(downgraded);
-                      props.handleImgChange(downgraded, "footerImg");
-                    }}
-                    previewImage={footerImg}
-                  />
-                )}
-              </div>
-            </div>
+            {getPhotoInputElement("Фотография 1", 1, {
+              setter: (downgraded) => setGroupImg1(downgraded),
+              itemName: "groupImg1",
+              previewImage: groupImg1,
+            })}
+            {getPhotoInputElement("Фотография 2", 2, {
+              setter: (downgraded) => setGroupImg2(downgraded),
+              itemName: "groupImg2",
+              previewImage: groupImg2,
+            })}
+            {getPhotoInputElement("Фотография 3", 3, {
+              setter: (downgraded) => setGroupImg3(downgraded),
+              itemName: "groupImg3",
+              previewImage: groupImg3,
+            })}
+            {getPhotoInputElement("Фотография 4", 4, {
+              setter: (downgraded) => setGroupImg4(downgraded),
+              itemName: "groupImg4",
+              previewImage: groupImg4,
+            })}
+            {getPhotoInputElement("Фотография снизу", 5, {
+              setter: (downgraded) => setFooterImg(downgraded),
+              itemName: "footerImg",
+              previewImage: footerImg,
+            })}
           </div>
         )}
         {!props.readOnly && (
@@ -357,157 +230,47 @@ const SelectPriceItem = (props) => {
             formInputs={[
               {
                 name: "Название",
-                element: (
-                  <input
-                    type="text"
-                    name="name"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.name}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("text", "name", index),
               },
               {
                 name: "Артикул",
-                element: (
-                  <input
-                    type="text"
-                    name="number"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.number}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("text", "number", index),
               },
               {
                 name: "Описание",
-                element: (
-                  <input
-                    type="text"
-                    name="description"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    defaultValue={item.description}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("text", "description", index),
               },
               {
                 name: "Розница (рыночная цена)",
-                element: (
-                  <input
-                    type="number"
-                    name="retailMarketPrice"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.retailMarketPrice}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("number", "retailMarketPrice", index),
               },
               {
                 name: "Розница",
-                element: (
-                  <input
-                    type="number"
-                    name="retailPrice"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.retailPrice}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("number", "retailPrice", index),
               },
               {
                 name: "До 1500 шт.",
-                element: (
-                  <input
-                    type="number"
-                    name="lessThan1500Price"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.lessThan1500Price}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("number", "lessThan1500Price", index),
               },
               {
                 name: "До 5000 шт.",
-                element: (
-                  <input
-                    type="number"
-                    name="lessThan5000Price"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.lessThan5000Price}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("number", "lessThan5000Price", index),
               },
               {
                 name: "Партнер",
-                element: (
-                  <input
-                    type="number"
-                    name="cost"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.partnerPrice}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("number", "cost", index),
               },
               {
                 name: "Дилер",
-                element: (
-                  <input
-                    type="number"
-                    name="dealerPrice"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.dealerPrice}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("number", "dealerPrice", index),
               },
               {
                 name: "Дистрибутор",
-                element: (
-                  <input
-                    type="number"
-                    name="distributorPrice"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.distributorPrice}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("number", "distributorPrice", index),
               },
               {
                 name: "Стопцена",
-                element: (
-                  <input
-                    type="number"
-                    name="stopPrice"
-                    index={index}
-                    autoComplete="off"
-                    onChange={handleInputChange}
-                    value={item.stopPrice}
-                    readOnly={props.readOnly}
-                  />
-                ),
+                element: getInputElement("number", "stopPrice", index),
               },
             ]}
           />
