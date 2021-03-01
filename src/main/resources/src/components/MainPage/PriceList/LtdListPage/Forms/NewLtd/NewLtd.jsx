@@ -5,7 +5,8 @@ import InputText from "../../../../../../utils/Form/InputText/InputText.jsx";
 import Button from "../../../../../../utils/Form/Button/Button.jsx";
 import { addLTD } from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
 import FileUploader from "../../../../../../utils/Form/FileUploader/FileUploader.jsx";
-import { fetchINNData } from "../functions";
+import { fetchINNData, ltdFormCreateInput } from "../functions";
+import { ltdListDefaultInputObject } from "../objects";
 
 const NewLtd = (props) => {
   const [formInputs, setFormInputs] = useState({
@@ -29,50 +30,10 @@ const NewLtd = (props) => {
     accountant: "",
     logo: "",
   });
-  const [formErrors, setFormErrors] = useState({
-    name: false,
-    legalAddress: false,
-    mailingAddress: false,
-    phone: false,
-    site: false,
-    inn: false,
-    kpp: false,
-    ogrn: false,
-    okpo: false,
-    okved: false,
-    checkingAccount: false,
-    bank: false,
-    correspondentAccount: false,
-    email: false,
-    bik: false,
-    generalDirector: false,
-    accountant: false,
-    logo: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    name: false,
-    legalAddress: false,
-    mailingAddress: false,
-    phone: false,
-    site: false,
-    inn: false,
-    kpp: false,
-    email: false,
-    ogrn: false,
-    okpo: false,
-    okved: false,
-    checkingAccount: false,
-    bank: false,
-    correspondentAccount: false,
-    bik: false,
-    generalDirector: false,
-    accountant: false,
-    logo: false,
-  });
-
+  const [formErrors, setFormErrors] = useState(ltdListDefaultInputObject);
+  const [validInputs, setValidInputs] = useState(ltdListDefaultInputObject);
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const validateField = (fieldName, value) => {
     console.log(fieldName, value);
     switch (fieldName) {
@@ -86,31 +47,10 @@ const NewLtd = (props) => {
         break;
     }
   };
-
   const formIsValid = () => {
     let check = true;
-    let newErrors = Object.assign({
-      name: false,
-      legalAddress: false,
-      mailingAddress: false,
-      phone: false,
-      site: false,
-      inn: false,
-      kpp: false,
-      ogrn: false,
-      okpo: false,
-      okved: false,
-      email: false,
-      checkingAccount: false,
-      bank: false,
-      correspondentAccount: false,
-      bik: false,
-      generalDirector: false,
-      accountant: false,
-      logo: false,
-    });
+    let newErrors = ltdListDefaultInputObject;
     for (let item in validInputs) {
-      // if (validInputs[item] === false) {
       if (formInputs[item] === "") {
         check = false;
         newErrors = Object.assign({
@@ -123,7 +63,6 @@ const NewLtd = (props) => {
     if (check === true) {
       return true;
     } else {
-      // alert("Форма не заполнена");
       setIsLoading(false);
       setShowError(true);
       return false;
@@ -136,7 +75,6 @@ const NewLtd = (props) => {
     console.log(validInputs);
     formIsValid() &&
       addLTD(formInputs)
-        .then(() => {})
         .then(() => props.history.push("/ltd-list"))
         .catch((error) => {
           setIsLoading(false);
@@ -160,8 +98,90 @@ const NewLtd = (props) => {
 
   useEffect(() => {
     document.title = "Добавление ООО";
-    console.log(validInputs);
   }, [validInputs]);
+
+  const getInputsListFromArray = (array) => {
+    return array.map((input) =>
+      input.custom
+        ? input.custom
+        : ltdFormCreateInput(
+            input,
+            {
+              formErrors: formErrors,
+              setFormErrors: setFormErrors,
+            },
+            {
+              formInputs: formInputs,
+              handleInputChange: (name, value) =>
+                handleInputChange(name, value),
+            }
+          )
+    );
+  };
+
+  const nameInputs = [
+    { name: "name", inputName: "Наименование", required: true },
+    { name: "shortName", inputName: "Краткое наименование" },
+  ];
+
+  const addressInputs = [
+    { name: "legalAddress", inputName: "Юридический адрес", required: true },
+    { name: "mailingAddress", inputName: "Почтовый адрес", required: true },
+  ];
+
+  const contactsInputs = [
+    { name: "phone", inputName: "Телефон", required: true },
+    { name: "email", inputName: "E-mail", required: true },
+  ];
+
+  const allOtherInputs = [
+    { name: "inn", inputName: "ИНН", required: true },
+    {
+      custom: (
+        <Button
+          text="Загрузить данные по ИНН"
+          className="main-window__button main-window__button--inverted"
+          inverted
+          onClick={() =>
+            fetchINNData(
+              formInputs,
+              setIsLoading,
+              setFormInputs,
+              (name, value) => validateField(name, value)
+            )
+          }
+          isLoading={isLoading}
+          style={{ margin: "-15px auto 20px 10px" }}
+        />
+      ),
+    },
+    { name: "kpp", inputName: "КПП", required: true },
+    { name: "ogrn", inputName: "ОГРН", required: true },
+    { name: "okpo", inputName: "ОКПО", required: true },
+    { name: "okved", inputName: "ОКВЭД", required: true },
+    { name: "okpo", inputName: "ОКПО", required: true },
+    { name: "okpo", inputName: "ОКПО", required: true },
+  ];
+
+  const bankInputs = [
+    { name: "checkingAccount", inputName: "Расчетный счет №", required: true },
+    { name: "bank", inputName: "Банк", required: true },
+    {
+      name: "correspondentAccount",
+      inputName: "Корреспондентский счет",
+      required: true,
+    },
+    { name: "bik", inputName: "БИК", required: true },
+  ];
+
+  const employeesInputs = [
+    {
+      name: "generalDirector",
+      inputName: "Генеральный директор",
+      required: true,
+    },
+    { name: "accountant", inputName: "Главный бухгалтер", required: true },
+  ];
 
   return (
     <div className="new-ltd">
@@ -175,224 +195,25 @@ const NewLtd = (props) => {
             showError={showError}
             setShowError={setShowError}
           />
-          <InputText
-            inputName="Наименование"
-            required
-            error={formErrors.name}
-            defaultValue={formInputs.name}
-            handleInputChange={({ target }) =>
-              handleInputChange("name", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="Краткое наименование"
-            defaultValue={formInputs.shortName}
-            handleInputChange={({ target }) =>
-              handleInputChange("shortName", target.value)
-            }
-          />
+          {getInputsListFromArray(nameInputs)}
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Адреса</div>
             <div className="main-form__group-content">
-              <InputText
-                inputName="Юридический адрес"
-                required
-                error={formErrors.legalAddress}
-                defaultValue={formInputs.legalAddress}
-                handleInputChange={({ target }) =>
-                  handleInputChange("legalAddress", target.value)
-                }
-                errorsArr={formErrors}
-                setErrorsArr={setFormErrors}
-              />
-              <InputText
-                inputName="Почтовый адрес"
-                required
-                error={formErrors.mailingAddress}
-                handleInputChange={({ target }) =>
-                  handleInputChange("mailingAddress", target.value)
-                }
-                errorsArr={formErrors}
-                setErrorsArr={setFormErrors}
-              />
+              {getInputsListFromArray(addressInputs)}
             </div>
           </div>
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Контактные данные</div>
             <div className="main-form__group-content">
-              <InputText
-                inputName="Телефон"
-                required
-                error={formErrors.phone}
-                defaultValue={formInputs.phone}
-                handleInputChange={({ target }) =>
-                  handleInputChange("phone", target.value)
-                }
-                errorsArr={formErrors}
-                setErrorsArr={setFormErrors}
-              />
-              <InputText
-                inputName="E-mail"
-                required
-                error={formErrors.email}
-                defaultValue={formInputs.email}
-                handleInputChange={({ target }) =>
-                  handleInputChange("email", target.value)
-                }
-                errorsArr={formErrors}
-                setErrorsArr={setFormErrors}
-              />
+              {getInputsListFromArray(contactsInputs)}
             </div>
           </div>
-          <InputText
-            inputName="Сайт"
-            required
-            error={formErrors.site}
-            defaultValue={formInputs.site}
-            handleInputChange={({ target }) =>
-              handleInputChange("site", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="ИНН"
-            required
-            error={formErrors.inn}
-            defaultValue={formInputs.inn}
-            handleInputChange={({ target }) =>
-              handleInputChange("inn", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <Button
-            text="Загрузить данные по ИНН"
-            className="main-window__button main-window__button--inverted"
-            inverted
-            onClick={() =>
-              fetchINNData(
-                formInputs,
-                setIsLoading,
-                setFormInputs,
-                (name, value) => validateField(name, value)
-              )
-            }
-            isLoading={isLoading}
-            style={{ margin: "-15px auto 20px 10px" }}
-          />
-          <InputText
-            inputName="КПП"
-            required
-            defaultValue={formInputs.kpp}
-            error={formErrors.kpp}
-            handleInputChange={({ target }) =>
-              handleInputChange("kpp", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="ОГРН"
-            required
-            error={formErrors.ogrn}
-            defaultValue={formInputs.ogrn}
-            handleInputChange={({ target }) =>
-              handleInputChange("ogrn", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="ОКПО"
-            required
-            error={formErrors.okpo}
-            defaultValue={formInputs.okpo}
-            handleInputChange={({ target }) =>
-              handleInputChange("okpo", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="ОКВЭД"
-            required
-            error={formErrors.okved}
-            defaultValue={formInputs.okved}
-            handleInputChange={({ target }) =>
-              handleInputChange("okved", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
+          {getInputsListFromArray(allOtherInputs)}
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Банковская информация</div>
-            <InputText
-              inputName="Расчетный счет №"
-              required
-              error={formErrors.checkingAccount}
-              handleInputChange={({ target }) =>
-                handleInputChange("checkingAccount", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
-            <InputText
-              inputName="Банк"
-              required
-              error={formErrors.bank}
-              handleInputChange={({ target }) =>
-                handleInputChange("bank", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
-            <InputText
-              inputName="Корреспондентский счет"
-              required
-              error={formErrors.correspondentAccount}
-              handleInputChange={({ target }) =>
-                handleInputChange("correspondentAccount", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
-            <InputText
-              inputName="БИК"
-              required
-              error={formErrors.bik}
-              defaultValue={formInputs.bik}
-              handleInputChange={({ target }) =>
-                handleInputChange("bik", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
+            {getInputsListFromArray(bankInputs)}
           </div>
-          <InputText
-            inputName="Генеральный директор"
-            required
-            defaultValue={formInputs.generalDirector}
-            error={formErrors.generalDirector}
-            handleInputChange={({ target }) =>
-              handleInputChange("generalDirector", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="Главный бухгалтер"
-            required
-            error={formErrors.accountant}
-            defaultValue={formInputs.accountant}
-            handleInputChange={({ target }) =>
-              handleInputChange("accountant", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
+          {getInputsListFromArray(employeesInputs)}
           <div className="main-form__item">
             <div className="main-form__input_name">Лого*</div>
             <FileUploader
@@ -406,11 +227,12 @@ const NewLtd = (props) => {
             * - поля, обязательные для заполнения
           </div>
           <div className="main-form__buttons main-form__buttons--full">
-            <input
+            <Button
+              inverted
+              isLoading={isLoading}
               className="main-form__submit main-form__submit--inverted"
-              type="submit"
               onClick={() => props.history.push("/ltd-list")}
-              value="Вернуться назад"
+              text="Вернуться назад"
             />
             <Button
               text="Добавить запись"
@@ -424,5 +246,4 @@ const NewLtd = (props) => {
     </div>
   );
 };
-
 export default NewLtd;

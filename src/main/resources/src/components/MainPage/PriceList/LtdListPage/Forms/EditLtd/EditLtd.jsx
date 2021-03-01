@@ -9,6 +9,7 @@ import {
 } from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
 import FileUploader from "../../../../../../utils/Form/FileUploader/FileUploader.jsx";
 import { fetchINNData } from "../functions";
+import { ltdListDefaultInputObject } from "../objects";
 
 const EditLtd = (props) => {
   const [formInputs, setFormInputs] = useState({
@@ -32,46 +33,8 @@ const EditLtd = (props) => {
     accountant: "",
     logo: "",
   });
-  const [formErrors, setFormErrors] = useState({
-    name: false,
-    legalAddress: false,
-    mailingAddress: false,
-    phone: false,
-    site: false,
-    inn: false,
-    kpp: false,
-    ogrn: false,
-    okpo: false,
-    email: false,
-    okved: false,
-    checkingAccount: false,
-    bank: false,
-    correspondentAccount: false,
-    bik: false,
-    generalDirector: false,
-    accountant: false,
-    logo: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    name: false,
-    legalAddress: false,
-    mailingAddress: false,
-    phone: false,
-    site: false,
-    inn: false,
-    kpp: false,
-    email: false,
-    ogrn: false,
-    okpo: false,
-    okved: false,
-    checkingAccount: false,
-    bank: false,
-    correspondentAccount: false,
-    bik: false,
-    generalDirector: false,
-    accountant: false,
-    logo: false,
-  });
+  const [formErrors, setFormErrors] = useState(ltdListDefaultInputObject);
+  const [validInputs, setValidInputs] = useState(ltdListDefaultInputObject);
 
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -91,26 +54,7 @@ const EditLtd = (props) => {
 
   const formIsValid = () => {
     let check = true;
-    let newErrors = Object.assign({
-      name: false,
-      legalAddress: false,
-      mailingAddress: false,
-      phone: false,
-      site: false,
-      inn: false,
-      kpp: false,
-      email: false,
-      ogrn: false,
-      okpo: false,
-      okved: false,
-      checkingAccount: false,
-      bank: false,
-      correspondentAccount: false,
-      bik: false,
-      generalDirector: false,
-      accountant: false,
-      logo: false,
-    });
+    let newErrors = ltdListDefaultInputObject;
     for (let item in validInputs) {
       // if (validInputs[item] === false) {
       if (formInputs[item] === "") {

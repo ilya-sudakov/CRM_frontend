@@ -1,3 +1,5 @@
+import React from "react";
+import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
 import {
   getBIKByINN,
   getInfoByINN,
@@ -64,4 +66,20 @@ export const fetchINNData = (
         setIsLoading(false);
       }
     });
+};
+
+export const ltdFormCreateInput = (options, errors, inputs) => {
+  return (
+    <InputText
+      inputName={options.inputName}
+      required={options.required ?? false}
+      error={options.required ? errors.formErrors[options.name] : undefined}
+      defaultValue={inputs.formInputs[options.name]}
+      handleInputChange={({ target }) =>
+        inputs.handleInputChange(options.name, target.value)
+      }
+      errorsArr={options.required ? errors.formErrors : undefined}
+      setErrorsArr={options.required ? errors.setFormErrors : undefined}
+    />
+  );
 };
