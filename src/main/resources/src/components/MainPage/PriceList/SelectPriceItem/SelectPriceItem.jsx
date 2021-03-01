@@ -227,7 +227,11 @@ const SelectPriceItem = (props) => {
               },
               {
                 name: "Партнер",
-                element: getInputElement("cost", index, item.cost),
+                element: getInputElement(
+                  "partnerPrice",
+                  index,
+                  item.partnerPrice
+                ),
               },
               {
                 name: "Дилер",

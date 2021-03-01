@@ -2,12 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./PriceList.scss";
 import "../../../../utils/Form/Form.scss";
 import SelectPriceItem from "../SelectPriceItem/SelectPriceItem.jsx";
-import XLSX from "xlsx";
 import {
   getPriceGroupImageByName,
   updatePriceGroupByName,
 } from "../../../../utils/RequestsAPI/PriceList/PriceList.jsx";
-import categoryImg from "../../../../../../../../assets/priceList/default_category.png";
 import InputText from "../../../../utils/Form/InputText/InputText.jsx";
 import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
 import CheckBox from "../../../../utils/Form/CheckBox/CheckBox.jsx";
@@ -25,12 +23,9 @@ import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.in
 import { Link } from "react-router-dom";
 import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
 import { sortByField } from "../../../../utils/sorting/sorting";
-import {
-  getPriceListDefaultParsedObject,
-  getPriceListParsedProduct,
-} from "./functions";
+import { parseExcelData } from "./functions.js";
 
-const NewPriceList = () => {
+const PriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
   const [categories, setCategories] = useState(defaultCategories);
   const [priceList, setPriceList] = useState([]);
@@ -41,11 +36,7 @@ const NewPriceList = () => {
   const [titlePage, setTitlePage] = useState(defaultTitlePage);
   const [selectedLtd, setSelectedLtd] = useState(null);
 
-  const isExistingCategory = (category) => {
-    return categories.find((item) => item.name === category);
-  };
-
-  const loadImages = (data, titlePage1) => {
+  const loadImages = (data, _titlePage) => {
     setIsLoading(true);
     Promise.all(
       data.map((item, index) => {
@@ -74,7 +65,7 @@ const NewPriceList = () => {
       .then((res) => res.json())
       .then((res) => {
         setTitlePage({
-          ...titlePage1,
+          ..._titlePage,
           img1: res.imgOne,
           img2: res.imgTwo,
           img3: res.imgThree,
@@ -109,64 +100,6 @@ const NewPriceList = () => {
         setIsLoading(false);
         alert("Данные были успешно сохранены!");
       });
-  };
-
-  const parseExcelData = (result) => {
-    let data = new Uint8Array(result);
-    let wb = XLSX.read(data, { type: "array" });
-    var firstSheetName = wb.SheetNames[0];
-    let firstSheet = wb.Sheets[firstSheetName];
-    var excelRows = XLSX.utils.sheet_to_json(firstSheet);
-    if (excelRows.length === 0) {
-      return alert("Файл пустой либо заполнен некорректно!");
-    }
-    setDisclaimer(excelRows[excelRows.length - 1].id);
-    setTitlePage({
-      to: excelRows[0].titlePage,
-      date: excelRows[1].titlePage,
-      slogan: excelRows[2].titlePage,
-      list: excelRows[3].titlePage.split("/"),
-      active: true,
-      isMinimized: true,
-    });
-    let newData = [];
-    let tempNumber = "000";
-    let groupData = null;
-    let startId = 0,
-      endId = 0;
-    for (let index = 3; index < excelRows.length; index++) {
-      let item = excelRows[index];
-      if (item.id === 1) {
-        startId, (endId = index);
-        groupData = getPriceListDefaultParsedObject(item);
-        return (tempNumber = item.number.substring(0, 3));
-      }
-      let products = [];
-      for (let i = startId; i <= endId; i++) {
-        products.push(getPriceListParsedProduct(excelRows[i]));
-      }
-      if (item.number) {
-        if (item.number.includes(tempNumber)) {
-          endId++;
-        } else {
-          newData.push({
-            ...groupData,
-            products,
-          });
-          groupData = getPriceListDefaultParsedObject(item);
-          startId, (endId = index);
-          tempNumber = item.number.substring(0, 3);
-        }
-      } else {
-        newData.push({
-          ...groupData,
-          products,
-        });
-        break;
-      }
-    }
-    setPriceList(newData);
-    return loadImages(newData, titlePage1);
   };
 
   useEffect(() => {
@@ -225,7 +158,7 @@ const NewPriceList = () => {
       <div className="main-form">
         <div className="main-window__header">
           <div className="main-form__title">
-            Прайс-лист{" "}
+            Прайс-лист
             <Link className="main-window__button" to="/ltd-list">
               Список ООО
             </Link>
@@ -242,7 +175,13 @@ const NewPriceList = () => {
               uniqueId="excel-reader"
               type="readAsArrayBuffer"
               onChange={(result) => {
-                parseExcelData(result);
+                const { parsedData, disclaimer, titlePage } = parseExcelData(
+                  result
+                );
+                setDisclaimer(disclaimer);
+                setTitlePage(titlePage);
+                setPriceList(parsedData);
+                loadImages(parsedData, titlePage);
               }}
             />
           </div>
@@ -396,7 +335,7 @@ const NewPriceList = () => {
   );
 };
 
-export default NewPriceList;
+export default PriceList;
 
 const GroupProducts = ({ item, priceList, setPriceList, index }) => {
   const handleActivateGroup = (value) => {
