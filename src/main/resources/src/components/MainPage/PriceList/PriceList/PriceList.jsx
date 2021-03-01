@@ -159,6 +159,24 @@ const PriceList = () => {
     });
   };
 
+  const getSelectAllCheckbox = (text, item) => {
+    return (
+      <CheckBox
+        text={text}
+        checked={item.checked}
+        name="header"
+        onChange={(value) => {
+          item.setAll(value);
+          let originalList = item.list.map((item) => ({
+            ...item,
+            active: value,
+          }));
+          item.setList([...originalList]);
+        }}
+      />
+    );
+  };
+
   return (
     <div className="new-price-item">
       <div className="main-form">
@@ -232,36 +250,18 @@ const PriceList = () => {
           {priceList.length > 0 && (
             <div className="main-form__buttons main-form__buttons--full">
               <div className="new-price-item__checkbox-container">
-                <CheckBox
-                  text="Выделить все категории"
-                  checked={selectAllCategories}
-                  name="header"
-                  onChange={(value) => {
-                    setSelectAllCategories(value);
-                    let originalList = categories.map((item) => {
-                      return {
-                        ...item,
-                        active: value,
-                      };
-                    });
-                    setCategories([...originalList]);
-                  }}
-                />
-                <CheckBox
-                  text="Выделить все группы товаров"
-                  checked={selectAllGroups}
-                  name="header"
-                  onChange={(value) => {
-                    setSelectAllGroups(value);
-                    let originalList = priceList.map((item) => {
-                      return {
-                        ...item,
-                        active: value,
-                      };
-                    });
-                    setPriceList([...originalList]);
-                  }}
-                />
+                {getSelectAllCheckbox("Выделить все категории", {
+                  checked: selectAllCategories,
+                  setAll: (value) => setSelectAllCategories(value),
+                  list: categories,
+                  setList: (value) => setCategories(value),
+                })}
+                {getSelectAllCheckbox("Выделить все группы товаров", {
+                  checked: selectAllGroups,
+                  setAll: (value) => setSelectAllGroups(value),
+                  list: priceList,
+                  setList: (value) => setPriceList(value),
+                })}
               </div>
               <div className="main-form__info-panel">
                 <span>Дополнительные столбцы: </span>
