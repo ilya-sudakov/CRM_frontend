@@ -194,6 +194,13 @@ const HalfOfTheMonthList = ({
                                     : workItem.day
                                 )
                               ).getDay();
+                              const startDate = new Date(
+                                date.getFullYear(),
+                                date.getMonth(),
+                                workItem.length > 0
+                                  ? workItem[0].day
+                                  : workItem.day
+                              );
                               return (
                                 <span
                                   onClick={() => {
@@ -207,13 +214,7 @@ const HalfOfTheMonthList = ({
                                       month: date.getMonth() + 1,
                                       year: date.getFullYear(),
                                       selectedDay: {
-                                        startDate: new Date(
-                                          date.getFullYear(),
-                                          date.getMonth(),
-                                          workItem.length > 0
-                                            ? workItem[0].day
-                                            : workItem.day
-                                        ),
+                                        startDate: startDate,
                                       },
                                       works: workItem,
                                     });
@@ -227,13 +228,7 @@ const HalfOfTheMonthList = ({
                                 >
                                   <div className="report-table-report__date-hint">
                                     {formatDateStringNoYear(
-                                      new Date(
-                                        date.getFullYear(),
-                                        date.getMonth(),
-                                        workItem.length > 0
-                                          ? workItem[0].day
-                                          : workItem.day
-                                      )
+                                      new Date(startDate)
                                     )}
                                   </div>
                                   {workItem.hours === 0
