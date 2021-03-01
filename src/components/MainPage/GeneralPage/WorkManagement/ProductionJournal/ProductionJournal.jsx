@@ -181,7 +181,7 @@ const ProductionJournal = ({}) => {
                 createWorkListPDF(employees, todaysWork, yesterdaysWork, curDay)
               }
             />
-          </>
+          </> 
         }
       />
       <div className="notes-journal__current-date">
