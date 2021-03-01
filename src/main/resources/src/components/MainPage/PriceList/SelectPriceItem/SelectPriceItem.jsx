@@ -1,33 +1,13 @@
 import React, { useState, useEffect } from "react";
-import deleteSVG from "../../../../../../../../assets/select/delete.svg";
 import "./SelectPriceItem.scss";
 import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import { getDataUri } from "../../../../utils/functions.jsx";
 import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
+import { defaultPriceItemObject } from "./objects.js";
 
 const SelectPriceItem = (props) => {
-  // const [imgName, setImgName] = useState("Имя файла...");
-  const [selected, setSelected] = useState([
-    {
-      number: "",
-      units: "",
-      name: "",
-      description: "",
-      retailPrice: 0,
-      lessThan1500Price: 0,
-      lessThan5000Price: 0,
-      retailMarketPrice: 0,
-      cost: 0,
-      dealerPrice: 0,
-      distributorPrice: 0,
-      partnerPrice: 0,
-      stopPrice: 0,
-      onSale: false,
-      isTopSeller: false,
-      isMinimized: true,
-    },
-  ]);
+  const [selected, setSelected] = useState([defaultPriceItemObject]);
   const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
   const [groupImg1, setGroupImg1] = useState(null);
   const [groupImg2, setGroupImg2] = useState(null);
@@ -38,30 +18,17 @@ const SelectPriceItem = (props) => {
   useEffect(() => {
     if (props.defaultValue !== undefined && !defaultValueLoaded) {
       setSelected([
-        ...props.defaultValue.map((item) => {
-          return Object.assign({ ...item, isMinimized: true });
-        }),
+        ...props.defaultValue.map((item) => ({ ...item, isMinimized: true })),
       ]);
       setDefaultValueLoaded(true);
     }
-    if (props.groupImg1 !== undefined) {
-      setGroupImg1(props.groupImg1);
-    }
-    if (props.groupImg2 !== undefined) {
-      setGroupImg2(props.groupImg2);
-    }
-    if (props.groupImg3 !== undefined) {
-      setGroupImg3(props.groupImg3);
-    }
-    if (props.groupImg4 !== undefined) {
-      setGroupImg4(props.groupImg4);
-    }
-    if (props.footerImg !== undefined) {
-      setFooterImg(props.footerImg);
-    }
+    if (props.groupImg1 !== undefined) setGroupImg1(props.groupImg1);
+    if (props.groupImg2 !== undefined) setGroupImg2(props.groupImg2);
+    if (props.groupImg3 !== undefined) setGroupImg3(props.groupImg3);
+    if (props.groupImg4 !== undefined) setGroupImg4(props.groupImg4);
+    if (props.footerImg !== undefined) setFooterImg(props.footerImg);
   }, [
     props.defaultValue,
-    props.options,
     props.groupImg1,
     props.groupImg2,
     props.groupImg3,
@@ -72,26 +39,8 @@ const SelectPriceItem = (props) => {
 
   const handleNewPriceItem = () => {
     //Открыть по дефолту форму
-    const newObject = {
-      number: "",
-      units: "",
-      name: "",
-      description: "",
-      retailPrice: 0,
-      lessThan1500Price: 0,
-      lessThan5000Price: 0,
-      retailMarketPrice: 0,
-      cost: 0,
-      dealerPrice: 0,
-      distributorPrice: 0,
-      partnerPrice: 0,
-      stopPrice: 0,
-      onSale: false,
-      isTopSeller: false,
-      isMinimized: true,
-    };
-    setSelected([...selected, newObject]);
-    props.handlePriceItemChange([...selected, newObject]);
+    setSelected([...selected, defaultPriceItemObject]);
+    props.handlePriceItemChange([...selected, defaultPriceItemObject]);
   };
 
   const deletePriceItem = (index) => {
@@ -112,7 +61,7 @@ const SelectPriceItem = (props) => {
     props.handlePriceItemChange([...temp]);
   };
 
-  const getInputElement = (type = "text", name, index, value) => {
+  const getInputElement = (name, index, value, type = "number") => {
     return (
       <input
         type={type}
@@ -229,25 +178,24 @@ const SelectPriceItem = (props) => {
             formInputs={[
               {
                 name: "Название",
-                element: getInputElement("text", "name", index, item.name),
+                element: getInputElement("name", index, item.name, "text"),
               },
               {
                 name: "Артикул",
-                element: getInputElement("text", "number", index, item.number),
+                element: getInputElement("number", index, item.number, "text"),
               },
               {
                 name: "Описание",
                 element: getInputElement(
-                  "text",
                   "description",
                   index,
-                  item.description
+                  item.description,
+                  "text"
                 ),
               },
               {
                 name: "Розница (рыночная цена)",
                 element: getInputElement(
-                  "number",
                   "retailMarketPrice",
                   index,
                   item.retailMarketPrice
@@ -256,7 +204,6 @@ const SelectPriceItem = (props) => {
               {
                 name: "Розница",
                 element: getInputElement(
-                  "number",
                   "retailPrice",
                   index,
                   item.retailPrice
@@ -265,7 +212,6 @@ const SelectPriceItem = (props) => {
               {
                 name: "До 1500 шт.",
                 element: getInputElement(
-                  "number",
                   "lessThan1500Price",
                   index,
                   item.lessThan1500Price
@@ -274,7 +220,6 @@ const SelectPriceItem = (props) => {
               {
                 name: "До 5000 шт.",
                 element: getInputElement(
-                  "number",
                   "lessThan5000Price",
                   index,
                   item.lessThan5000Price
@@ -282,12 +227,11 @@ const SelectPriceItem = (props) => {
               },
               {
                 name: "Партнер",
-                element: getInputElement("number", "cost", index, item.cost),
+                element: getInputElement("cost", index, item.cost),
               },
               {
                 name: "Дилер",
                 element: getInputElement(
-                  "number",
                   "dealerPrice",
                   index,
                   item.dealerPrice
@@ -296,7 +240,6 @@ const SelectPriceItem = (props) => {
               {
                 name: "Дистрибутор",
                 element: getInputElement(
-                  "number",
                   "distributorPrice",
                   index,
                   item.distributorPrice
@@ -304,12 +247,7 @@ const SelectPriceItem = (props) => {
               },
               {
                 name: "Стопцена",
-                element: getInputElement(
-                  "number",
-                  "stopPrice",
-                  index,
-                  item.stopPrice
-                ),
+                element: getInputElement("stopPrice", index, item.stopPrice),
               },
             ]}
           />
