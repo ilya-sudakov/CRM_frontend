@@ -2,7 +2,10 @@
 import React, { useEffect } from "react";
 import { months } from "../../../../../utils/dataObjects.js"; //Список месяцев
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import { formatDateStringNoYear } from "../../../../../utils/functions.jsx";
+import {
+  formatDateStringNoYear,
+  getEmployeeNameText,
+} from "../../../../../utils/functions.jsx";
 import { workshops } from "../objects.js";
 import { sortEmployees } from "../functions.js";
 import ChevronSVG from "../../../../../../assets/tableview/chevron-down.svg";
@@ -115,6 +118,22 @@ const HalfOfTheMonthList = ({
   setShowWindow,
   datesComparison,
 }) => {
+  const filterEmployeesData = (data, workshop) => {
+    return data.filter((item) => {
+      return (
+        (item.employee.lastName
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+          item.employee.name
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          item.employee.middleName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase())) &&
+        item.employee.workshop === workshop.name
+      );
+    });
+  };
   return (
     <>
       {title()}
@@ -143,20 +162,7 @@ const HalfOfTheMonthList = ({
           )
           .map((workshop) => {
             const filteredEmployees = sortEmployees(
-              Object.values(workData).filter((item) => {
-                return (
-                  (item.employee.lastName
-                    .toLowerCase()
-                    .includes(searchQuery.toLowerCase()) ||
-                    item.employee.name
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase()) ||
-                    item.employee.middleName
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase())) &&
-                  item.employee.workshop === workshop.name
-                );
-              })
+              filterEmployeesData(Object.values(workData), workshop)
             );
             if (filteredEmployees.length === 0 && !isLoading) return;
             return (
@@ -172,28 +178,9 @@ const HalfOfTheMonthList = ({
                   />
                 ) : (
                   sortEmployees(
-                    Object.values(workData).filter((item) => {
-                      return (
-                        (item.employee.lastName
-                          .toLowerCase()
-                          .includes(searchQuery.toLowerCase()) ||
-                          item.employee.name
-                            .toLowerCase()
-                            .includes(searchQuery.toLowerCase()) ||
-                          item.employee.middleName
-                            .toLowerCase()
-                            .includes(searchQuery.toLowerCase())) &&
-                        item.employee.workshop === workshop.name
-                      );
-                    })
+                    filterEmployeesData(Object.values(workData), workshop)
                   ).map((work) => {
-                    const fullEmployeeName =
-                      work.employee.lastName +
-                      " " +
-                      work.employee.name +
-                      " " +
-                      work.employee.middleName;
-
+                    const fullEmployeeName = getEmployeeNameText(work.employee);
                     return (
                       <div className="main-window__list-item">
                         <span>{fullEmployeeName}</span>
