@@ -30,41 +30,23 @@ const SelectParts = (props) => {
   }, [props.scrollToId, selected]);
 
   const handleNewPart = () => {
-    setSelected([
-      ...selected,
-      {
-        number: "",
-        name: "",
-        amount: "",
-        location: "lemz",
-        comment: "",
-        cuttingDimensions: "",
-        milling: "",
-        harding: "",
-        grinding: "",
-        erosion: "",
-        controll: "",
-        color: "production",
-        isMinimized: true,
-      },
-    ]);
-    props.handlePartsChange([
-      ...selected,
-      {
-        number: "",
-        name: "",
-        amount: "",
-        location: "lemz",
-        comment: "",
-        cuttingDimensions: "",
-        milling: "",
-        harding: "",
-        grinding: "",
-        erosion: "",
-        controll: "",
-        color: "production",
-      },
-    ]);
+    const newPart = {
+      number: "",
+      name: "",
+      amount: "",
+      location: "lemz",
+      comment: "",
+      cuttingDimensions: "",
+      milling: "",
+      harding: "",
+      grinding: "",
+      erosion: "",
+      controll: "",
+      color: "production",
+      isMinimized: true,
+    };
+    setSelected([...selected, newPart]);
+    props.handlePartsChange([...selected, newPart]);
   };
 
   const deletePart = (id) => {
