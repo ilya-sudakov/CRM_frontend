@@ -167,24 +167,16 @@ const EditClient = (props) => {
                 }
               });
               if (selected === oldItem) return;
+              const newWorkHistory = {
+                date: selected.date,
+                action: selected.action,
+                result: selected.result,
+                comment: selected.comment,
+                clientId: clientId,
+              };
               return edited === true
-                ? editClientWorkHistory(
-                    {
-                      date: selected.date,
-                      action: selected.action,
-                      result: selected.result,
-                      comment: selected.comment,
-                      clientId: clientId,
-                    },
-                    selected.id
-                  )
-                : addClientWorkHistory({
-                    date: selected.date,
-                    action: selected.action,
-                    result: selected.result,
-                    comment: selected.comment,
-                    clientId: clientId,
-                  });
+                ? editClientWorkHistory(newWorkHistory, selected.id)
+                : addClientWorkHistory(newWorkHistory);
             })
           );
         })
@@ -215,34 +207,21 @@ const EditClient = (props) => {
               }
             });
             if (selected === oldItem) return;
+            const newLegalEntity = {
+              name: selected.name,
+              inn: selected.inn,
+              kpp: selected.kpp,
+              ogrn: selected.ogrn,
+              bik: selected.bik,
+              checkingAccount: selected.checkingAccount,
+              legalAddress: selected.legalAddress,
+              factualAddress: selected.factualAddress,
+              legalEntity: selected.legalEntity,
+              clientId: clientId,
+            };
             return edited === true
-              ? editClientLegalEntity(
-                  {
-                    name: selected.name,
-                    inn: selected.inn,
-                    kpp: selected.kpp,
-                    ogrn: selected.ogrn,
-                    bik: selected.bik,
-                    checkingAccount: selected.checkingAccount,
-                    legalAddress: selected.legalAddress,
-                    factualAddress: selected.factualAddress,
-                    legalEntity: selected.legalEntity,
-                    clientId: clientId,
-                  },
-                  selected.id
-                )
-              : addClientLegalEntity({
-                  name: selected.name,
-                  inn: selected.inn,
-                  kpp: selected.kpp,
-                  ogrn: selected.ogrn,
-                  bik: selected.bik,
-                  checkingAccount: selected.checkingAccount,
-                  legalAddress: selected.legalAddress,
-                  factualAddress: selected.factualAddress,
-                  legalEntity: selected.legalEntity,
-                  clientId: clientId,
-                });
+              ? editClientLegalEntity(newLegalEntity, selected.id)
+              : addClientLegalEntity(newLegalEntity);
           });
           return Promise.all(itemsArr);
         })
@@ -273,26 +252,17 @@ const EditClient = (props) => {
               }
             });
             if (selected === oldItem) return;
+            const newContacts = {
+              name: selected.name,
+              lastName: selected.lastName,
+              email: selected.email,
+              position: selected.position,
+              phoneNumber: selected.phoneNumber,
+              clientId: clientId,
+            };
             return edited === true
-              ? editClientContact(
-                  {
-                    name: selected.name,
-                    lastName: selected.lastName,
-                    email: selected.email,
-                    position: selected.position,
-                    phoneNumber: selected.phoneNumber,
-                    clientId: clientId,
-                  },
-                  selected.id
-                )
-              : addClientContact({
-                  name: selected.name,
-                  lastName: selected.lastName,
-                  email: selected.email,
-                  position: selected.position,
-                  phoneNumber: selected.phoneNumber,
-                  clientId: clientId,
-                });
+              ? editClientContact(newContacts, selected.id)
+              : addClientContact(newContacts);
           });
           return Promise.all(itemsArr);
         })
