@@ -14,7 +14,7 @@ export const sortEmployees = (employees) => {
 
 export const areWorkshopItemsMinimized = (workshopItems) => {
   return Object.values(workshopItems)[0]?.isMinimized;
-};
+}; 
 
 export const combineOriginalAndNewWorks = (
   works,
