@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./PriceList.scss";
 import "../../../../utils/Form/Form.scss";
-import SelectPriceItem from "../SelectPriceItem/SelectPriceItem.jsx";
 import {
   getPriceGroupImageByName,
   updatePriceGroupByName,
 } from "../../../../utils/RequestsAPI/PriceList/PriceList.jsx";
-import InputText from "../../../../utils/Form/InputText/InputText.jsx";
 import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
 import CheckBox from "../../../../utils/Form/CheckBox/CheckBox.jsx";
-import { getDataUri } from "../../../../utils/functions.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import {
   defaultCategories,
@@ -19,11 +16,13 @@ import {
 } from "./objects.js";
 import { getPriceListPdf } from "./getPriceListPdf.js";
 import { getPriceListExcel } from "./getPriceListExcel.js";
-import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.inline.svg";
 import { Link } from "react-router-dom";
 import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
 import { sortByField } from "../../../../utils/sorting/sorting";
 import { parseExcelData } from "./functions.js";
+import GroupTitlePage from "./components/GroupTitlePage.jsx";
+import CategoryHeader from "./components/CategoryHeader.jsx";
+import GroupOfProducts from "./components/GroupOfProducts.jsx";
 
 const PriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
@@ -322,7 +321,7 @@ const PriceList = () => {
                     sortPriceList(priceList).map((item, index) => {
                       if (item.category === category.name) {
                         return (
-                          <GroupProducts
+                          <GroupOfProducts
                             item={item}
                             priceList={priceList}
                             setPriceList={setPriceList}
@@ -342,207 +341,3 @@ const PriceList = () => {
 };
 
 export default PriceList;
-
-const GroupProducts = ({ item, priceList, setPriceList, index }) => {
-  const handleActivateGroup = (value) => {
-    let originalList = priceList;
-    originalList.splice(index, 1, {
-      ...item,
-      active: value,
-    });
-    setPriceList([...originalList]);
-  };
-
-  const handleMinimizeGroup = () => {
-    let originalList = priceList;
-    const isMinimized = priceList[index].isMinimized;
-    originalList.splice(index, 1, {
-      ...item,
-      isMinimized: !isMinimized,
-    });
-    setPriceList([...originalList]);
-  };
-
-  const handleValuesChange = (value, name) => {
-    let temp = priceList;
-    temp.splice(index, 1, {
-      ...item,
-      [name]: value,
-    });
-    return setPriceList([...temp]);
-  };
-
-  return (
-    <div className="price-list__group-wrapper">
-      <div className="main-form__item">
-        <CheckBox
-          checked={item.active}
-          name="groupOfProducts"
-          onChange={handleActivateGroup}
-          text={item.name}
-        />
-        <ChevronSVG
-          className={`main-window__img`}
-          style={{ transform: `rotate(${item.isMinimized ? 0 : 180}deg)` }}
-          title={`${item.isMinimized ? "Раскрыть" : "Скрыть"} всю группу ${
-            item.name
-          }`}
-          onClick={handleMinimizeGroup}
-        />
-      </div>
-      <div
-        className={
-          item.isMinimized
-            ? " main-form__item main-form__item--hidden"
-            : item.active
-            ? "main-form__item"
-            : "main-form__item main-form__item--hidden"
-        }
-      >
-        <div className="main-form__input_field">
-          <SelectPriceItem
-            handlePriceItemChange={(value) => {
-              let temp = priceList;
-              temp.splice(index, 1, {
-                ...item,
-                products: value,
-              });
-              setPriceList([...temp]);
-            }}
-            groupImg1={item.groupImg1}
-            groupImg2={item.groupImg2}
-            groupImg3={item.groupImg3}
-            groupImg4={item.groupImg4}
-            footerImg={item.footerImg}
-            proprietaryItem={item.proprietaryItemText}
-            handleLabelChange={handleValuesChange}
-            handleImgChange={handleValuesChange}
-            uniqueId={index}
-            defaultValue={sortByField(item.products, {
-              fieldName: "number",
-              direction: "asc",
-            })}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CategoryHeader = ({
-  category,
-  setCategories,
-  categories,
-  categoryIndex,
-}) => {
-  return (
-    <div className="main-form__item main-form__item--header">
-      <CheckBox
-        checked={category.active}
-        name="category"
-        onChange={(value) => {
-          let originalList = categories;
-          originalList.splice(categoryIndex, 1, {
-            ...category,
-            active: value,
-          });
-          setCategories([...originalList]);
-        }}
-        text={category.name}
-      />
-      <div className="main-form__input_field">
-        <FileUploader
-          uniqueId={"categoryImg" + categoryIndex}
-          onChange={(result) => {
-            let originalList = categories;
-            originalList.splice(categoryIndex, 1, {
-              ...category,
-              img: result,
-            });
-            setCategories([...originalList]);
-          }}
-          previewImage={category.img}
-        />
-      </div>
-    </div>
-  );
-};
-
-const GroupTitlePage = ({ titlePage, setTitlePage }) => {
-  const handleActivateTitlePageGroup = (value) => {
-    return setTitlePage({
-      ...titlePage,
-      active: value,
-    });
-  };
-
-  const handleMinimizeTitlePageGroup = () => {
-    return setTitlePage({
-      ...titlePage,
-      isMinimized: !titlePage.isMinimized,
-    });
-  };
-
-  const getTitlePagePhotoInputElement = (title, index, name) => {
-    return (
-      <div className="main-form__item">
-        <div className="main-form__input_name">{title}</div>
-        <div className="main-form__input_field">
-          <FileUploader
-            uniqueId={`fileTitlePage${index}`}
-            onChange={async (result) => {
-              const downgraded =
-                result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
-              setTitlePage({
-                ...titlePage,
-                [name]: downgraded,
-              });
-            }}
-            previewImage={titlePage[name] !== "" ? titlePage[name] : null}
-          />
-        </div>
-      </div>
-    );
-  };
-
-  return (
-    <>
-      <div className="main-form__item main-form__item--header">
-        <CheckBox
-          checked={titlePage.active}
-          name="titleList"
-          onChange={handleActivateTitlePageGroup}
-          text="Титульная страница"
-        />
-        <ChevronSVG
-          className={`main-window__img`}
-          style={{ transform: `rotate(${titlePage.isMinimized ? 0 : 180}deg)` }}
-          title={`${
-            titlePage.isMinimized ? "Раскрыть" : "Скрыть"
-          } Титульный лист`}
-          onClick={handleMinimizeTitlePageGroup}
-        />
-      </div>
-      {!titlePage.isMinimized && titlePage.active ? (
-        <div className="price-list__title-page-wrapper">
-          <InputText
-            inputName="Получатель"
-            name="to"
-            defaultValue={titlePage.to}
-            handleInputChange={(event) => {
-              setTitlePage({
-                ...titlePage,
-                to: event.target.value,
-              });
-            }}
-          />
-          <div className="price-list__images-wrapper">
-            {getTitlePagePhotoInputElement("Фотография 1", 1, "img1")}
-            {getTitlePagePhotoInputElement("Фотография 2", 2, "img2")}
-            {getTitlePagePhotoInputElement("Фотография 3", 3, "img3")}
-          </div>
-        </div>
-      ) : null}
-    </>
-  );
-};
