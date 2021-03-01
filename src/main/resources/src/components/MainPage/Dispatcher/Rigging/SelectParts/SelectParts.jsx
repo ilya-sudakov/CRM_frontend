@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import deleteSVG from "../../../../../../../../../assets/select/delete.svg";
 import "./SelectParts.scss";
 import {
   workshopsLocations,
@@ -56,18 +55,29 @@ const SelectParts = (props) => {
     props.handlePartsChange([...temp]);
   };
 
-  const handleInputChange = (event) => {
-    const id = event.target.getAttribute("index");
-    const name = event.target.getAttribute("name");
-    const value = event.target.value;
+  const handleInputChange = (item, name, value) => {
     let temp = selected;
-    let originalItem = selected[id];
+    const id = selected.indexOf(item);
     temp.splice(id, 1, {
-      ...originalItem,
+      ...item,
       [name]: value,
     });
     setSelected([...temp]);
     props.handlePartsChange([...temp]);
+  };
+
+  const getInputElement = (name, item, disabled = false) => {
+    return (
+      <input
+        type="text"
+        name={name}
+        autoComplete="off"
+        onChange={({ target }) => handleInputChange(item, name, target.value)}
+        defaultValue={item[name]}
+        readOnly={props.readOnly}
+        disabled={disabled}
+      />
+    );
   };
 
   return (
@@ -113,53 +123,24 @@ const SelectParts = (props) => {
                 formInputs={[
                   {
                     name: "Название",
-                    element: (
-                      <input
-                        type="text"
-                        name="name"
-                        index={index}
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.name}
-                        readOnly={props.readOnly}
-                      />
-                    ),
+                    element: getInputElement("name", item),
                   },
                   {
                     name: "Артикул",
-                    element: (
-                      <input
-                        type="text"
-                        name="number"
-                        index={index}
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.number}
-                        readOnly={props.readOnly}
-                      />
-                    ),
+                    element: getInputElement("number", item),
                   },
                   {
                     name: "Кол-во",
-                    element: (
-                      <input
-                        type="text"
-                        name="amount"
-                        index={index}
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.amount}
-                        readOnly={props.readOnly}
-                      />
-                    ),
+                    element: getInputElement("amount", item),
                   },
                   {
                     name: "Местоположение",
                     element: (
                       <select
-                        index={index}
                         name="location"
-                        onChange={handleInputChange}
+                        onChange={({ target }) =>
+                          handleInputChange(item, "location", target.value)
+                        }
                         value={item.location}
                         disabled={props.readOnly}
                       >
@@ -173,124 +154,60 @@ const SelectParts = (props) => {
                   },
                   {
                     name: "Комментарий",
-                    element: (
-                      <input
-                        type="text"
-                        name="comment"
-                        index={index}
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.comment}
-                        readOnly={props.readOnly}
-                      />
-                    ),
+                    element: getInputElement("comment", item),
                   },
                   {
                     name: "Распил/Габариты",
-                    element: (
-                      <input
-                        type="text"
-                        name="cuttingDimensions"
-                        index={index}
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.cuttingDimensions}
-                        readOnly={props.readOnly}
-                        disabled={
-                          !props.readOnly &&
-                          !checkRiggingTypesInputs(item, "cuttingDimensions")
-                        }
-                      />
+                    element: getInputElement(
+                      "cuttingDimensions",
+                      item,
+                      !props.readOnly &&
+                        !checkRiggingTypesInputs(item, "cuttingDimensions")
                     ),
                   },
                   {
                     name: "Фрезеровка/Точение",
-                    element: (
-                      <input
-                        type="text"
-                        index={index}
-                        name="milling"
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.milling}
-                        readOnly={props.readOnly}
-                        disabled={
-                          !props.readOnly &&
-                          !checkRiggingTypesInputs(item, "milling")
-                        }
-                      />
+                    element: getInputElement(
+                      "milling",
+                      item,
+                      !props.readOnly &&
+                        !checkRiggingTypesInputs(item, "milling")
                     ),
                   },
                   {
                     name: "Закалка",
-                    element: (
-                      <input
-                        type="text"
-                        index={index}
-                        name="harding"
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.harding}
-                        readOnly={props.readOnly}
-                        disabled={
-                          !props.readOnly &&
-                          !checkRiggingTypesInputs(item, "harding")
-                        }
-                      />
+                    element: getInputElement(
+                      "harding",
+                      item,
+                      !props.readOnly &&
+                        !checkRiggingTypesInputs(item, "harding")
                     ),
                   },
                   {
                     name: "Шлифовка",
-                    element: (
-                      <input
-                        type="text"
-                        index={index}
-                        name="grinding"
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.grinding}
-                        readOnly={props.readOnly}
-                        disabled={
-                          !props.readOnly &&
-                          !checkRiggingTypesInputs(item, "grinding")
-                        }
-                      />
+                    element: getInputElement(
+                      "grinding",
+                      item,
+                      !props.readOnly &&
+                        !checkRiggingTypesInputs(item, "grinding")
                     ),
                   },
                   {
                     name: "Эрозия",
-                    element: (
-                      <input
-                        type="text"
-                        name="erosion"
-                        index={index}
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.erosion}
-                        readOnly={props.readOnly}
-                        disabled={
-                          !props.readOnly &&
-                          !checkRiggingTypesInputs(item, "erosion")
-                        }
-                      />
+                    element: getInputElement(
+                      "erosion",
+                      item,
+                      !props.readOnly &&
+                        !checkRiggingTypesInputs(item, "erosion")
                     ),
                   },
                   {
                     name: "Проверка",
-                    element: (
-                      <input
-                        type="text"
-                        name="controll"
-                        index={index}
-                        autoComplete="off"
-                        onChange={handleInputChange}
-                        defaultValue={item.controll}
-                        readOnly={props.readOnly}
-                        disabled={
-                          !props.readOnly &&
-                          !checkRiggingTypesInputs(item, "controll")
-                        }
-                      />
+                    element: getInputElement(
+                      "controll",
+                      item,
+                      !props.readOnly &&
+                        !checkRiggingTypesInputs(item, "controll")
                     ),
                   },
                 ]}
