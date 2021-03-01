@@ -1,35 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./NewLtd.scss";
 import ErrorMessage from "../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import InputText from "../../../../../../utils/Form/InputText/InputText.jsx";
 import Button from "../../../../../../utils/Form/Button/Button.jsx";
 import { addLTD } from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
 import FileUploader from "../../../../../../utils/Form/FileUploader/FileUploader.jsx";
-import { fetchINNData, ltdFormCreateInput } from "../functions";
-import { ltdListDefaultInputObject } from "../objects";
+import { fetchINNData, getInputsListFromArray } from "../functions";
+import {
+  ltdFormNameInputs,
+  ltdListDefaultInputObject,
+  ltdListDefaultInputObjectValues,
+  ltdFormAddressInputs,
+  ltdFormContactsInputs,
+  ltdFormBankInputs,
+  ltdFormEmployeesInputs,
+} from "../objects.js";
 
 const NewLtd = (props) => {
-  const [formInputs, setFormInputs] = useState({
-    name: "",
-    shortName: "",
-    legalAddress: "",
-    mailingAddress: "",
-    phone: "",
-    site: "",
-    inn: "",
-    kpp: "",
-    ogrn: "",
-    okpo: "",
-    okved: "",
-    email: "",
-    checkingAccount: "",
-    bank: "",
-    correspondentAccount: "",
-    bik: "",
-    generalDirector: "",
-    accountant: "",
-    logo: "",
-  });
+  const [formInputs, setFormInputs] = useState(ltdListDefaultInputObjectValues);
   const [formErrors, setFormErrors] = useState(ltdListDefaultInputObject);
   const [validInputs, setValidInputs] = useState(ltdListDefaultInputObject);
   const [showError, setShowError] = useState(false);
@@ -100,40 +87,6 @@ const NewLtd = (props) => {
     document.title = "Добавление ООО";
   }, [validInputs]);
 
-  const getInputsListFromArray = (array) => {
-    return array.map((input) =>
-      input.custom
-        ? input.custom
-        : ltdFormCreateInput(
-            input,
-            {
-              formErrors: formErrors,
-              setFormErrors: setFormErrors,
-            },
-            {
-              formInputs: formInputs,
-              handleInputChange: (name, value) =>
-                handleInputChange(name, value),
-            }
-          )
-    );
-  };
-
-  const nameInputs = [
-    { name: "name", inputName: "Наименование", required: true },
-    { name: "shortName", inputName: "Краткое наименование" },
-  ];
-
-  const addressInputs = [
-    { name: "legalAddress", inputName: "Юридический адрес", required: true },
-    { name: "mailingAddress", inputName: "Почтовый адрес", required: true },
-  ];
-
-  const contactsInputs = [
-    { name: "phone", inputName: "Телефон", required: true },
-    { name: "email", inputName: "E-mail", required: true },
-  ];
-
   const allOtherInputs = [
     { name: "inn", inputName: "ИНН", required: true },
     {
@@ -163,24 +116,9 @@ const NewLtd = (props) => {
     { name: "okpo", inputName: "ОКПО", required: true },
   ];
 
-  const bankInputs = [
-    { name: "checkingAccount", inputName: "Расчетный счет №", required: true },
-    { name: "bank", inputName: "Банк", required: true },
-    {
-      name: "correspondentAccount",
-      inputName: "Корреспондентский счет",
-      required: true,
-    },
-    { name: "bik", inputName: "БИК", required: true },
-  ];
-
-  const employeesInputs = [
-    {
-      name: "generalDirector",
-      inputName: "Генеральный директор",
-      required: true,
-    },
-    { name: "accountant", inputName: "Главный бухгалтер", required: true },
+  const defaultInputsListParams = [
+    { formErrors: formErrors, setFormErrors: setFormErrors },
+    { formInputs: formInputs, handleInputChange: handleInputChange },
   ];
 
   return (
@@ -195,25 +133,40 @@ const NewLtd = (props) => {
             showError={showError}
             setShowError={setShowError}
           />
-          {getInputsListFromArray(nameInputs)}
+          {getInputsListFromArray(
+            ltdFormNameInputs,
+            ...defaultInputsListParams
+          )}
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Адреса</div>
             <div className="main-form__group-content">
-              {getInputsListFromArray(addressInputs)}
+              {getInputsListFromArray(
+                ltdFormAddressInputs,
+                ...defaultInputsListParams
+              )}
             </div>
           </div>
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Контактные данные</div>
             <div className="main-form__group-content">
-              {getInputsListFromArray(contactsInputs)}
+              {getInputsListFromArray(
+                ltdFormContactsInputs,
+                ...defaultInputsListParams
+              )}
             </div>
           </div>
-          {getInputsListFromArray(allOtherInputs)}
+          {getInputsListFromArray(allOtherInputs, ...defaultInputsListParams)}
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Банковская информация</div>
-            {getInputsListFromArray(bankInputs)}
+            {getInputsListFromArray(
+              ltdFormBankInputs,
+              ...defaultInputsListParams
+            )}
           </div>
-          {getInputsListFromArray(employeesInputs)}
+          {getInputsListFromArray(
+            ltdFormEmployeesInputs,
+            ...defaultInputsListParams
+          )}
           <div className="main-form__item">
             <div className="main-form__input_name">Лого*</div>
             <FileUploader

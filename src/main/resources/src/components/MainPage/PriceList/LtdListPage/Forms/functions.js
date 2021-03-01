@@ -83,3 +83,9 @@ export const ltdFormCreateInput = (options, errors, inputs) => {
     />
   );
 };
+
+export const getInputsListFromArray = (array, errors, inputs) => {
+  return array.map((input) =>
+    input.custom ? input.custom : ltdFormCreateInput(input, errors, inputs)
+  );
+};

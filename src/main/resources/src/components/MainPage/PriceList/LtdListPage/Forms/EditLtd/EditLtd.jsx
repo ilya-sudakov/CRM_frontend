@@ -8,31 +8,19 @@ import {
   getLTDById,
 } from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
 import FileUploader from "../../../../../../utils/Form/FileUploader/FileUploader.jsx";
-import { fetchINNData } from "../functions";
-import { ltdListDefaultInputObject } from "../objects";
+import { fetchINNData, getInputsListFromArray } from "../functions.js";
+import {
+  ltdFormAddressInputs,
+  ltdFormBankInputs,
+  ltdFormContactsInputs,
+  ltdFormEmployeesInputs,
+  ltdFormNameInputs,
+  ltdListDefaultInputObject,
+  ltdListDefaultInputObjectValues,
+} from "../objects.js";
 
 const EditLtd = (props) => {
-  const [formInputs, setFormInputs] = useState({
-    name: "",
-    shortName: "",
-    legalAddress: "",
-    mailingAddress: "",
-    phone: "",
-    site: "",
-    inn: "",
-    email: "",
-    kpp: "",
-    orgn: "",
-    okpo: "",
-    okved: "",
-    checkingAccount: "",
-    bank: "",
-    correspondentAccount: "",
-    bik: "",
-    generalDirector: "",
-    accountant: "",
-    logo: "",
-  });
+  const [formInputs, setFormInputs] = useState(ltdListDefaultInputObjectValues);
   const [formErrors, setFormErrors] = useState(ltdListDefaultInputObject);
   const [validInputs, setValidInputs] = useState(ltdListDefaultInputObject);
 
@@ -124,6 +112,40 @@ const EditLtd = (props) => {
     }
   }, []);
 
+  const allOtherInputs = [
+    { name: "inn", inputName: "ИНН", required: true },
+    {
+      custom: (
+        <Button
+          text="Загрузить данные по ИНН"
+          className="main-window__button main-window__button--inverted"
+          inverted
+          onClick={() =>
+            fetchINNData(
+              formInputs,
+              setIsLoading,
+              setFormInputs,
+              (name, value) => validateField(name, value)
+            )
+          }
+          isLoading={isLoading}
+          style={{ margin: "-15px auto 20px 10px" }}
+        />
+      ),
+    },
+    { name: "kpp", inputName: "КПП", required: true },
+    { name: "ogrn", inputName: "ОГРН", required: true },
+    { name: "okpo", inputName: "ОКПО", required: true },
+    { name: "okved", inputName: "ОКВЭД", required: true },
+    { name: "okpo", inputName: "ОКПО", required: true },
+    { name: "okpo", inputName: "ОКПО", required: true },
+  ];
+
+  const defaultInputsListParams = [
+    { formErrors: formErrors, setFormErrors: setFormErrors },
+    { formInputs: formInputs, handleInputChange: handleInputChange },
+  ];
+
   return (
     <div className="new-packaging">
       <div className="main-form">
@@ -136,227 +158,38 @@ const EditLtd = (props) => {
             showError={showError}
             setShowError={setShowError}
           />
-
-          <InputText
-            inputName="Наименование"
-            required
-            error={formErrors.name}
-            defaultValue={formInputs.name}
-            handleInputChange={({ target }) =>
-              handleInputChange("name", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="Краткое наименование"
-            defaultValue={formInputs.shortName}
-            handleInputChange={({ target }) =>
-              handleInputChange("shortName", target.value)
-            }
-          />
+          {getInputsListFromArray(
+            ltdFormNameInputs,
+            ...defaultInputsListParams
+          )}
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Адреса</div>
-            <InputText
-              inputName="Юридический адрес"
-              required
-              error={formErrors.legalAddress}
-              defaultValue={formInputs.legalAddress}
-              handleInputChange={({ target }) =>
-                handleInputChange("legalAddress", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
-            <InputText
-              inputName="Почтовый адрес"
-              required
-              error={formErrors.mailingAddress}
-              defaultValue={formInputs.mailingAddress}
-              handleInputChange={({ target }) =>
-                handleInputChange("mailingAddress", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
+            {getInputsListFromArray(
+              ltdFormAddressInputs,
+              ...defaultInputsListParams
+            )}
           </div>
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Контактные данные</div>
             <div className="main-form__group-content">
-              <InputText
-                inputName="Телефон"
-                required
-                error={formErrors.phone}
-                defaultValue={formInputs.phone}
-                handleInputChange={({ target }) =>
-                  handleInputChange("phone", target.value)
-                }
-                errorsArr={formErrors}
-                setErrorsArr={setFormErrors}
-              />
-              <InputText
-                inputName="E-mail"
-                required
-                error={formErrors.email}
-                defaultValue={formInputs.email}
-                handleInputChange={({ target }) =>
-                  handleInputChange("email", target.value)
-                }
-                errorsArr={formErrors}
-                setErrorsArr={setFormErrors}
-              />
+              {getInputsListFromArray(
+                ltdFormContactsInputs,
+                ...defaultInputsListParams
+              )}
             </div>
           </div>
-          <InputText
-            inputName="Сайт"
-            required
-            error={formErrors.site}
-            defaultValue={formInputs.site}
-            handleInputChange={({ target }) =>
-              handleInputChange("site", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="ИНН"
-            required
-            error={formErrors.inn}
-            defaultValue={formInputs.inn}
-            handleInputChange={({ target }) =>
-              handleInputChange("inn", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <Button
-            text="Загрузить данные по ИНН"
-            className="main-window__button main-window__button--inverted"
-            inverted
-            onClick={() =>
-              fetchINNData(
-                formInputs,
-                setIsLoading,
-                setFormInputs,
-                validateField
-              )
-            }
-            isLoading={isLoading}
-            style={{ margin: "-15px auto 20px 10px" }}
-          />
-          <InputText
-            inputName="КПП"
-            required
-            defaultValue={formInputs.kpp}
-            error={formErrors.kpp}
-            handleInputChange={({ target }) =>
-              handleInputChange("kpp", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="ОГРН"
-            required
-            error={formErrors.ogrn}
-            defaultValue={formInputs.ogrn}
-            handleInputChange={({ target }) =>
-              handleInputChange("ogrn", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="ОКПО"
-            required
-            error={formErrors.okpo}
-            defaultValue={formInputs.okpo}
-            handleInputChange={({ target }) =>
-              handleInputChange("okpo", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="ОКВЭД"
-            required
-            error={formErrors.okved}
-            defaultValue={formInputs.okved}
-            handleInputChange={({ target }) =>
-              handleInputChange("okved", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
+          {getInputsListFromArray(allOtherInputs, ...defaultInputsListParams)}
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Банковская информация</div>
-            <InputText
-              inputName="Расчетный счет №"
-              required
-              error={formErrors.checkingAccount}
-              defaultValue={formInputs.checkingAccount}
-              handleInputChange={({ target }) =>
-                handleInputChange("checkingAccount", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
-            <InputText
-              inputName="Банк"
-              required
-              error={formErrors.bank}
-              defaultValue={formInputs.bank}
-              handleInputChange={({ target }) =>
-                handleInputChange("bank", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
-            <InputText
-              inputName="Корреспондентский счет"
-              required
-              defaultValue={formInputs.correspondentAccount}
-              error={formErrors.correspondentAccount}
-              handleInputChange={({ target }) =>
-                handleInputChange("correspondentAccount", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
-            <InputText
-              inputName="БИК"
-              required
-              error={formErrors.bik}
-              defaultValue={formInputs.bik}
-              handleInputChange={({ target }) =>
-                handleInputChange("bik", target.value)
-              }
-              errorsArr={formErrors}
-              setErrorsArr={setFormErrors}
-            />
+            {getInputsListFromArray(
+              ltdFormBankInputs,
+              ...defaultInputsListParams
+            )}
           </div>
-          <InputText
-            inputName="Генеральный директор"
-            required
-            defaultValue={formInputs.generalDirector}
-            error={formErrors.generalDirector}
-            handleInputChange={({ target }) =>
-              handleInputChange("generalDirector", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
-          <InputText
-            inputName="Главный бухгалтер"
-            required
-            error={formErrors.accountant}
-            defaultValue={formInputs.accountant}
-            handleInputChange={({ target }) =>
-              handleInputChange("accountant", target.value)
-            }
-            errorsArr={formErrors}
-            setErrorsArr={setFormErrors}
-          />
+          {getInputsListFromArray(
+            ltdFormEmployeesInputs,
+            ...defaultInputsListParams
+          )}
           <div className="main-form__item">
             <div className="main-form__input_name">Лого*</div>
             <FileUploader
