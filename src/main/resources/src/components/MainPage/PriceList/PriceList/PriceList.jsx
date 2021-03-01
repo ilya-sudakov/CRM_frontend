@@ -36,32 +36,9 @@ const PriceList = () => {
   const [titlePage, setTitlePage] = useState(defaultTitlePage);
   const [selectedLtd, setSelectedLtd] = useState(null);
 
-  const loadImages = (data, _titlePage) => {
+  const loadTitlePageImages = (_titlePage) => {
     setIsLoading(true);
-    Promise.all(
-      data.map((item, index) => {
-        return getPriceGroupImageByName(item.number)
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.id !== null) {
-              let temp = data;
-              temp.splice(index, 1, {
-                ...temp[index],
-                groupImg1: res.imgOne,
-                groupImg2: res.imgTwo,
-                groupImg3: res.imgThree,
-                groupImg4: res.imgFour,
-                footerImg: res.imgFive,
-              });
-              setPriceList(temp);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-    )
-      .then(() => getPriceGroupImageByName("titlePage"))
+    return getPriceGroupImageByName("titlePage")
       .then((res) => res.json())
       .then((res) => {
         setTitlePage({
@@ -71,7 +48,36 @@ const PriceList = () => {
           img3: res.imgThree,
         });
         setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
       });
+  };
+
+  const loadImages = (data, _titlePage) => {
+    setIsLoading(true);
+    return Promise.all(
+      data.map((item, index) => {
+        return getPriceGroupImageByName(item.number)
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.id === null) return;
+            let temp = data;
+            temp.splice(index, 1, {
+              ...temp[index],
+              groupImg1: res.imgOne,
+              groupImg2: res.imgTwo,
+              groupImg3: res.imgThree,
+              groupImg4: res.imgFour,
+              footerImg: res.imgFive,
+            });
+            setPriceList(temp);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+    ).then(() => loadTitlePageImages(_titlePage));
   };
 
   const saveImages = () => {
@@ -498,6 +504,28 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
     });
   };
 
+  const getTitlePagePhotoInputElement = (title, index, name) => {
+    return (
+      <div className="main-form__item">
+        <div className="main-form__input_name">{title}</div>
+        <div className="main-form__input_field">
+          <FileUploader
+            uniqueId={`fileTitlePage${index}`}
+            onChange={async (result) => {
+              const downgraded =
+                result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
+              setTitlePage({
+                ...titlePage,
+                [name]: downgraded,
+              });
+            }}
+            previewImage={titlePage[name] !== "" ? titlePage[name] : null}
+          />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="main-form__item main-form__item--header">
@@ -530,63 +558,9 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
             }}
           />
           <div className="price-list__images-wrapper">
-            <div className="main-form__item">
-              <div className="main-form__input_name">Фотография 1</div>
-              <div className="main-form__input_field">
-                <FileUploader
-                  uniqueId={"fileTitlePage" + 1}
-                  onChange={async (result) => {
-                    const downgraded =
-                      result !== ""
-                        ? await getDataUri(result, "jpeg", 0.3)
-                        : "";
-                    setTitlePage({
-                      ...titlePage,
-                      img1: downgraded,
-                    });
-                  }}
-                  previewImage={titlePage.img1 !== "" ? titlePage.img1 : null}
-                />
-              </div>
-            </div>
-            <div className="main-form__item">
-              <div className="main-form__input_name">Фотография 2</div>
-              <div className="main-form__input_field">
-                <FileUploader
-                  uniqueId={"fileTitlePage" + 2}
-                  onChange={async (result) => {
-                    const downgraded =
-                      result !== ""
-                        ? await getDataUri(result, "jpeg", 0.3)
-                        : "";
-                    setTitlePage({
-                      ...titlePage,
-                      img2: downgraded,
-                    });
-                  }}
-                  previewImage={titlePage.img2 !== "" ? titlePage.img2 : null}
-                />
-              </div>
-            </div>
-            <div className="main-form__item">
-              <div className="main-form__input_name">Фотография 3</div>
-              <div className="main-form__input_field">
-                <FileUploader
-                  uniqueId={"fileTitlePage" + 3}
-                  onChange={async (result) => {
-                    const downgraded =
-                      result !== ""
-                        ? await getDataUri(result, "jpeg", 0.3)
-                        : "";
-                    setTitlePage({
-                      ...titlePage,
-                      img3: downgraded,
-                    });
-                  }}
-                  previewImage={titlePage.img3 !== "" ? titlePage.img3 : null}
-                />
-              </div>
-            </div>
+            {getTitlePagePhotoInputElement("Фотография 1", 1, "img1")}
+            {getTitlePagePhotoInputElement("Фотография 2", 2, "img2")}
+            {getTitlePagePhotoInputElement("Фотография 3", 3, "img3")}
           </div>
         </div>
       ) : null}
