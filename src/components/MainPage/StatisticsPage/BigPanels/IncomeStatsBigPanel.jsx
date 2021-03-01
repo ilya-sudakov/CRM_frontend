@@ -3,7 +3,6 @@ import MoneyIcon from "../../../../../assets/etc/bx-ruble.inline.svg";
 import { months } from "../../../../utils/dataObjects";
 import {
   addSpaceDelimiter,
-  getRandomColor,
   getRandomNiceColor,
 } from "../../../../utils/functions.jsx";
 import {
@@ -13,10 +12,7 @@ import {
 import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
 import BigPanel from "./BigPanel.jsx";
 import BarChart from "../../../../utils/Charts/BarChart/BarChart.jsx";
-import {
-  tooltipLabelRubles,
-  tooltipLabelPercent,
-} from "../../../../utils/Charts/callbacks.js";
+import { tooltipLabelRubles } from "../../../../utils/Charts/callbacks.js";
 
 const IncomeStatsBigPanel = ({
   requests,
@@ -176,17 +172,6 @@ const IncomeStatsBigPanel = ({
         (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
         0
       );
-      console.log(
-        newRequests,
-        checkRequestsForSelectedMonth(
-          requests.filter(
-            (request) =>
-              request?.client?.id && topIds[request?.client?.name] === undefined
-          ),
-          new Date(curYear, index, 1)
-        ),
-        sum
-      );
       return restOfClientsDataset.push(sum);
     });
     return [
@@ -246,6 +231,22 @@ const IncomeStatsBigPanel = ({
       currDate
     );
     const incomeByClients = getIncomeByClients(requests, currDate);
+    const defaultOptions = {
+      legend: { display: false },
+      tooltips: {
+        callbacks: {
+          label: (tooltipItem, data) => tooltipLabelRubles(tooltipItem, data),
+        },
+      },
+      scales: {
+        xAxes: { gridLines: { display: false } },
+        yAxes: {
+          ticks: {
+            callback: (value) => `${addSpaceDelimiter(value)} ₽`,
+          },
+        },
+      },
+    };
 
     setStats((stats) => ({
       ...stats,
@@ -263,23 +264,7 @@ const IncomeStatsBigPanel = ({
           <BarChart
             data={monthsIncome}
             labels={months}
-            options={{
-              legend: { display: false },
-              tooltips: {
-                callbacks: {
-                  label: (tooltipItem, data) =>
-                    tooltipLabelRubles(tooltipItem, data),
-                },
-              },
-              scales: {
-                xAxes: { gridLines: { display: false } },
-                yAxes: {
-                  ticks: {
-                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
-                  },
-                },
-              },
-            }}
+            options={defaultOptions}
             color="#3e95cd"
             chartClassName="panel__chart"
             wrapperClassName="panel__chart-wrapper"
@@ -293,43 +278,14 @@ const IncomeStatsBigPanel = ({
             title="Доход за год (по клиентам)"
             isStacked={true}
             options={{
-              scales: {
-                xAxes: { gridLines: { display: false } },
-                yAxes: {
-                  ticks: {
-                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
-                  },
-                },
-              },
-              tooltips: {
-                callbacks: {
-                  label: (tooltipItem, data) =>
-                    tooltipLabelRubles(tooltipItem, data),
-                },
-              },
+              ...defaultOptions,
               legend: { position: "right" },
             }}
           />
           <BarChart
             data={monthsAccumilationIncome}
             labels={months}
-            options={{
-              legend: { display: false },
-              tooltips: {
-                callbacks: {
-                  label: (tooltipItem, data) =>
-                    tooltipLabelRubles(tooltipItem, data),
-                },
-              },
-              scales: {
-                xAxes: { gridLines: { display: false } },
-                yAxes: {
-                  ticks: {
-                    callback: (value) => `${addSpaceDelimiter(value)} ₽`,
-                  },
-                },
-              },
-            }}
+            options={defaultOptions}
             chartClassName="panel__chart"
             wrapperClassName="panel__chart-wrapper"
             title="График накопления"
