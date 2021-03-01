@@ -18,6 +18,7 @@ import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel
 import usePagination from "../../../../utils/hooks/usePagination/usePagination.js";
 import { formatDateString } from "../../../../utils/functions.jsx";
 import useSort from "../../../../utils/hooks/useSort/useSort.js";
+import { sortByField } from "../../../../utils/sorting/sorting.js";
 
 const Transportation = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,8 +40,8 @@ const Transportation = (props) => {
     );
   };
 
-  const handleFilterData = (data) => {
-    return filterSearchQuery(data).filter((item) => {
+  const filterTransportation = (data) => {
+    return data.filter((item) => {
       let senderCheck = false;
       let recipientCheck = false;
       workshops.map((workshop) => {
@@ -53,6 +54,10 @@ const Transportation = (props) => {
       });
       return recipientCheck && senderCheck;
     });
+  };
+
+  const handleFilterData = (data) => {
+    return filterTransportation(filterSearchQuery(data));
   };
 
   const { pagination, data } = usePagination(
@@ -94,28 +99,10 @@ const Transportation = (props) => {
   ]);
   const printTransportationList = () => {
     let dd = getTransportationListPdfText(
-      transportation
-        .filter((item) => {
-          let senderCheck = false;
-          let recipientCheck = false;
-          workshops.map((workshop) => {
-            if (workshop.senderActive && workshop.name === item.sender) {
-              senderCheck = true;
-            }
-            if (workshop.recipientActive && workshop.name === item.recipient) {
-              recipientCheck = true;
-            }
-          });
-          return recipientCheck && senderCheck;
-        })
-        .sort((a, b) => {
-          if (a.date < b.date) {
-            return 1;
-          }
-          if (a.date > b.date) {
-            return -1;
-          } else return 0;
-        })
+      sortByField(filterTransportation(transportation), {
+        fieldName: "date",
+        direction: "desc",
+      })
     );
     createPDF(dd);
   };
