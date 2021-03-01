@@ -122,7 +122,7 @@ const HalfOfTheMonthList = ({
         <div className="main-window__list-item main-window__list-item--header">
           <span>ФИО сотрудника</span>
           {dates.map((dateItem) => {
-            const weekday = new Date(date.setDate(dateItem)).getDay();
+            const weekday = new Date(new Date(date).setDate(dateItem)).getDay();
             return (
               <span
                 className={
@@ -201,7 +201,7 @@ const HalfOfTheMonthList = ({
                           (workItem, workItemIndex) => {
                             if (datesComparison(workItemIndex)) {
                               const weekday = new Date(
-                                date.setDate(
+                                new Date(date).setDate(
                                   workItem.length > 0
                                     ? workItem[0].day
                                     : workItem.day

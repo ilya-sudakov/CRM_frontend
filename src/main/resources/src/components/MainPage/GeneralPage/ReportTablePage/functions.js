@@ -19,15 +19,11 @@ export const sortEmployees = (employees) => {
 };
 
 export const getMonthDates = (curDate) => {
+  const date =
+    new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate() + 1;
   //Получаем массив с датами месяца
   let dates = [];
-  for (
-    let i = 1;
-    i <
-    new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate() + 1;
-    i++
-  )
-    dates.push(i);
+  for (let i = 1; i < date; i++) dates.push(i);
 
   return dates;
 };

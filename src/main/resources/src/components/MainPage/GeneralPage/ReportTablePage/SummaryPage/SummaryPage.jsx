@@ -42,9 +42,7 @@ const SummaryPage = ({
               <InputDate
                 selected={Date.parse(date)}
                 inputName="Выбор месяца:"
-                handleDateChange={(date) => {
-                  setDate(date);
-                }}
+                handleDateChange={(date) => setDate(date)}
                 showMonthYearPicker
               />
             </div>
