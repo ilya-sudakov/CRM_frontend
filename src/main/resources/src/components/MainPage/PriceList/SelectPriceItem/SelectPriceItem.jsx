@@ -112,15 +112,14 @@ const SelectPriceItem = (props) => {
     props.handlePriceItemChange([...temp]);
   };
 
-  const getInputElement = (type = "text", name, index) => {
+  const getInputElement = (type = "text", name, index, value) => {
     return (
       <input
         type={type}
         name={name}
-        index={index}
         autoComplete="off"
         onChange={({ target }) => handleInputChange(index, name, target.value)}
-        defaultValue={item[name]}
+        value={value}
         readOnly={props.readOnly}
       />
     );
@@ -230,47 +229,87 @@ const SelectPriceItem = (props) => {
             formInputs={[
               {
                 name: "Название",
-                element: getInputElement("text", "name", index),
+                element: getInputElement("text", "name", index, item.name),
               },
               {
                 name: "Артикул",
-                element: getInputElement("text", "number", index),
+                element: getInputElement("text", "number", index, item.number),
               },
               {
                 name: "Описание",
-                element: getInputElement("text", "description", index),
+                element: getInputElement(
+                  "text",
+                  "description",
+                  index,
+                  item.description
+                ),
               },
               {
                 name: "Розница (рыночная цена)",
-                element: getInputElement("number", "retailMarketPrice", index),
+                element: getInputElement(
+                  "number",
+                  "retailMarketPrice",
+                  index,
+                  item.retailMarketPrice
+                ),
               },
               {
                 name: "Розница",
-                element: getInputElement("number", "retailPrice", index),
+                element: getInputElement(
+                  "number",
+                  "retailPrice",
+                  index,
+                  item.retailPrice
+                ),
               },
               {
                 name: "До 1500 шт.",
-                element: getInputElement("number", "lessThan1500Price", index),
+                element: getInputElement(
+                  "number",
+                  "lessThan1500Price",
+                  index,
+                  item.lessThan1500Price
+                ),
               },
               {
                 name: "До 5000 шт.",
-                element: getInputElement("number", "lessThan5000Price", index),
+                element: getInputElement(
+                  "number",
+                  "lessThan5000Price",
+                  index,
+                  item.lessThan5000Price
+                ),
               },
               {
                 name: "Партнер",
-                element: getInputElement("number", "cost", index),
+                element: getInputElement("number", "cost", index, item.cost),
               },
               {
                 name: "Дилер",
-                element: getInputElement("number", "dealerPrice", index),
+                element: getInputElement(
+                  "number",
+                  "dealerPrice",
+                  index,
+                  item.dealerPrice
+                ),
               },
               {
                 name: "Дистрибутор",
-                element: getInputElement("number", "distributorPrice", index),
+                element: getInputElement(
+                  "number",
+                  "distributorPrice",
+                  index,
+                  item.distributorPrice
+                ),
               },
               {
                 name: "Стопцена",
-                element: getInputElement("number", "stopPrice", index),
+                element: getInputElement(
+                  "number",
+                  "stopPrice",
+                  index,
+                  item.stopPrice
+                ),
               },
             ]}
           />
