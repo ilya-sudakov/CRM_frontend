@@ -17,5 +17,5 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - "/node_modules"
-      - "./src/main/resources/static/built:/usr/share/nginx/html/"
+      - "./src/static/built:/usr/share/nginx/html/"
       # - letsencrypt:/etc/letsencrypt
