@@ -1,29 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./StatisticsPage.scss";
-
-import { getRequests } from "../../../utils/RequestsAPI/Requests.jsx";
-import { getStamp } from "../../../utils/RequestsAPI/Rigging/Stamp.jsx";
-import { getRecordedWorkByDateRange } from "../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
 import { formatDateStringNoYear } from "../../../utils/functions.jsx";
 import { months } from "../../../utils/dataObjects.js";
 
-import RequestsQuantityPanel from "./Panels/RequestsQuantityPanel.jsx";
-import AverageSumStatsPanel from "./Panels/AverageSumStatsPanel.jsx";
-import NewClientsStatsPanel from "./Panels/NewClientsStatsPanel.jsx";
-import NewOldClientsStatsPanel from "./Panels/NewOldClientsStatsPanel.jsx";
-import ManagerEfficiencyGraphPanel from "./Graphs/ManagerEfficiencyGraphPanel.jsx";
-import ManagerMoneyGraphPanel from "./Graphs/ManagerMoneyGraphPanel.jsx";
-import RequestsAverageTimeCompletion from "./Panels/RequestsAverageTimeCompletionPanel.jsx";
-import ProductQuantityInRequest from "./Panels/ProductQuantityInRequest.jsx";
-import ClientTypeDistributionInRequests from "./Graphs/ClientTypeDistributionInRequests.jsx";
-import RiggingItemsQuantityForType from "./Graphs/RiggingItemsQuantityForType.jsx";
-import ProductQuantityProduced from "./Panels/ProductQuantityProduced.jsx";
-import AverageProductQuantityProduced from "./Panels/AverageProductQuantityProduced.jsx";
-import OnTimeRequestsDistribution from "./Panels/OnTimeRequestsDistribution.jsx";
-import IncomeStatsBigPanel from "./BigPanels/IncomeStatsBigPanel.jsx";
-
 import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import useDraftsList from "../../../utils/hooks/useDraftsList";
 import {
   getDaysArray,
   getPreviousMonthDates,
@@ -31,10 +11,20 @@ import {
   getPreviousQuarterDates,
   getPreviousYearDates,
 } from "./functions.js";
+import useTitleHeader from "../../../utils/hooks/uiComponents/useTitleHeader.js";
+import ProductionPage from "./Pages/ProductionPage.jsx";
+import RequestsPage from "./Pages/RequestsPage.jsx";
 
 const StatisticsPage = () => {
-  const [curPage, setCurPage] = useState("requests");
   const [curPeriod, setCurPeriod] = useState("month");
+  const { titleHeader, curPage } = useTitleHeader(
+    "Статистика",
+    [
+      { pageTitle: "Заявки", pageName: "requests" },
+      { pageTitle: "Производство", pageName: "production" },
+    ],
+    "requests"
+  );
   const [currDate, setCurrDate] = useState({
     startDate: getPreviousMonthDates(new Date(), "current").startDate,
     endDate: getPreviousMonthDates(new Date(), "current").endDate,
@@ -185,27 +175,7 @@ const StatisticsPage = () => {
   return (
     <div className="statistics">
       <div className="main-window">
-        <div className="main-window__header main-window__header--full">
-          <div className="main-window__title">Статистика</div>
-          <div className="main-window__menu">
-            <div
-              className={`main-window__item ${
-                curPage === "requests" ? "main-window__item--active" : ""
-              }`}
-              onClick={() => setCurPage("requests")}
-            >
-              Заказы
-            </div>
-            <div
-              className={`main-window__item ${
-                curPage === "production" ? "main-window__item--active" : ""
-              }`}
-              onClick={() => setCurPage("production")}
-            >
-              Производство
-            </div>
-          </div>
-        </div>
+        {titleHeader}
         <ControlPanel
           buttons={
             <>
@@ -244,169 +214,3 @@ const StatisticsPage = () => {
 };
 
 export default StatisticsPage;
-
-const RequestsPage = ({ currDate, timePeriod }) => {
-  const [requests, setRequests] = useState([]);
-  const [requestsLoaded, setRequestsLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const loadRequests = (signal) => {
-    if (!requestsLoaded && !isLoading) {
-      setIsLoading(true);
-      getRequests(signal)
-        .then((res) => res.json())
-        .then((res) => {
-          setRequestsLoaded(true);
-          setRequests([...res]);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          setRequestsLoaded(true);
-          console.log(error);
-        });
-    }
-  };
-
-  useEffect(() => {
-    const abortController = new AbortController();
-    loadRequests(abortController.signal);
-    return function cancel() {
-      abortController.abort();
-    };
-  }, []);
-
-  return (
-    <div className="statistics__page-wrapper">
-      <div className="statistics__row">
-        <div className="statistics__column" style={{ maxWidth: "700px" }}>
-          <IncomeStatsBigPanel
-            currDate={currDate}
-            requests={requests}
-            timeText={timePeriod.timeTextSmallPanel}
-            getPrevData={timePeriod.getPrevData}
-            loadData={loadRequests}
-            curPeriod={timePeriod}
-          />
-        </div>
-        <div className="statistics__column">
-          <RequestsQuantityPanel
-            currDate={currDate}
-            requests={requests}
-            timeText={timePeriod.timeTextSmallPanel}
-            getPrevData={timePeriod.getPrevData}
-          />
-          <OnTimeRequestsDistribution
-            currDate={currDate}
-            requests={requests}
-            timeText={timePeriod.timeTextSmallPanel}
-            getPrevData={timePeriod.getPrevData}
-          />
-          <div className="statistics__row statistics__row--full">
-            <NewClientsStatsPanel
-              currDate={currDate}
-              requests={requests}
-              timeText={timePeriod.timeTextSmallPanel}
-              getPrevData={timePeriod.getPrevData}
-            />
-            <NewOldClientsStatsPanel
-              currDate={currDate}
-              requests={requests}
-              timeText={timePeriod.timeTextSmallPanel}
-              getPrevData={timePeriod.getPrevData}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="statistics__row">
-        <ManagerEfficiencyGraphPanel
-          currDate={currDate}
-          data={requests}
-          timeText={timePeriod.timeTextGraphPanel}
-        />
-        <ManagerMoneyGraphPanel
-          currDate={currDate}
-          data={requests}
-          timeText={timePeriod.timeTextGraphPanel}
-        />
-      </div>
-      <div className="statistics__row statistics__row--full">
-        <ProductQuantityInRequest
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
-        <AverageSumStatsPanel
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
-        <RequestsAverageTimeCompletion
-          currDate={currDate}
-          requests={requests}
-          timeText={timePeriod.timeTextSmallPanel}
-          getPrevData={timePeriod.getPrevData}
-        />
-      </div>
-      <div className="statistics__row">
-        <ClientTypeDistributionInRequests
-          currDate={currDate}
-          data={requests}
-          timeText={timePeriod.timeTextGraphPanel}
-        />
-      </div>
-    </div>
-  );
-};
-
-const ProductionPage = ({ curDate }) => {
-  const { drafts, isLoadingDrafts } = useDraftsList();
-
-  const [workData, setWorkData] = useState([]);
-
-  const getDataForTwoWeeks = (signal) => {
-    let curMonday = curDate;
-    let prevMonday = curDate;
-
-    prevMonday = new Date(
-      prevMonday.setDate(
-        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7) - 7
-      )
-    );
-    getRecordedWorkByDateRange(
-      prevMonday.getDate(),
-      prevMonday.getMonth() + 1,
-      prevMonday.getFullYear(),
-      curMonday.getDate(),
-      curMonday.getMonth() + 1,
-      curMonday.getFullYear(),
-      signal
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        setWorkData([...res]);
-      });
-  };
-
-  useEffect(() => {
-    const abortController = new AbortController();
-    getDataForTwoWeeks(abortController.signal);
-    return function cancel() {
-      abortController.abort();
-    };
-  }, [curDate]);
-
-  return (
-    <div className="statistics__page-wrapper">
-      <div className="statistics__row">
-        {/* <ProductQuantityProduced data={workData} curDate={curDate} />
-        <AverageProductQuantityProduced data={workData} curDate={curDate} /> */}
-      </div>
-      <div className="statistics__row">
-        <RiggingItemsQuantityForType data={drafts} />
-      </div>
-    </div>
-  );
-};
