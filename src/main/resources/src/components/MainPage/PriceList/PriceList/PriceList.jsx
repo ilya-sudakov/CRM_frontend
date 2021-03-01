@@ -25,6 +25,10 @@ import ChevronSVG from "../../../../../../../../assets/tableview/chevron-down.in
 import { Link } from "react-router-dom";
 import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
 import { sortByField } from "../../../../utils/sorting/sorting";
+import {
+  getPriceListDefaultParsedObject,
+  getPriceListParsedProduct,
+} from "./functions";
 
 const NewPriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
@@ -113,13 +117,11 @@ const NewPriceList = () => {
     var firstSheetName = wb.SheetNames[0];
     let firstSheet = wb.Sheets[firstSheetName];
     var excelRows = XLSX.utils.sheet_to_json(firstSheet);
-    // console.log(excelRows);
     if (excelRows.length === 0) {
       return alert("Файл пустой либо заполнен некорректно!");
     }
     setDisclaimer(excelRows[excelRows.length - 1].id);
-    const titlePage1 = Object.assign({
-      // ...titlePage,
+    setTitlePage({
       to: excelRows[0].titlePage,
       date: excelRows[1].titlePage,
       slogan: excelRows[2].titlePage,
@@ -127,7 +129,6 @@ const NewPriceList = () => {
       active: true,
       isMinimized: true,
     });
-    setTitlePage(titlePage1);
     let newData = [];
     let tempNumber = "000";
     let groupData = null;
@@ -136,142 +137,34 @@ const NewPriceList = () => {
     for (let index = 3; index < excelRows.length; index++) {
       let item = excelRows[index];
       if (item.id === 1) {
-        startId = index;
-        endId = index;
-        if (!isExistingCategory(item.category)) {
-          let newCategories = categories;
-          newCategories.push({
-            groupImg1: categoryImg,
-            name: item.category !== undefined ? item.category : "",
-            active: true,
-          });
-        }
-        groupData = Object.assign({
-          id: item.id,
-          groupImg1: "",
-          groupImg2: "",
-          groupImg3: "",
-          groupImg4: "",
-          footerImg: "",
-          number: item.number,
-          category: item.category,
-          name: item.groupName,
-          description: item.description,
-          infoText: item.infoText,
-          linkAddress: item.linkAddress,
-          locationType: item.locationType,
-          priceHeader: item.priceHeader,
-          retailName: item.retailName,
-          firstPriceName: item.firstPriceName,
-          secondPriceName: item.secondPriceName,
-          dealerName: item.dealerName,
-          distributorName: item.distributorName,
-          partnerName: item.partnerName,
-          active: true,
-          isMinimized: true,
-          proprietaryItemText1: item.proprietaryItemText1,
-          proprietaryItemText2: item.proprietaryItemText2,
-        });
-        tempNumber = item.number.substring(0, 3);
-      } else {
-        let products = [];
-        for (let i = startId; i <= endId; i++) {
-          products.push(
-            Object.assign({
-              id: excelRows[i].id,
-              number: excelRows[i].number,
-              name: excelRows[i].name,
-              description: excelRows[i].productDescription,
-              units: excelRows[i].units,
-              lessThan1500Price: excelRows[i].firstPrice
-                ? excelRows[i].firstPrice.toFixed(2)
-                : 0,
-              lessThan5000Price: excelRows[i].secondPrice
-                ? excelRows[i].secondPrice.toFixed(2)
-                : 0,
-              cost: excelRows[i].cost ? excelRows[i].cost.toFixed(2) : 0,
-              retailMarketPrice: excelRows[i].retailMarketPrice
-                ? excelRows[i].retailMarketPrice.toFixed(2)
-                : 0,
-              retailPrice: excelRows[i].retailPrice
-                ? excelRows[i].retailPrice.toFixed(2)
-                : 0,
-              firstPrice: excelRows[i].firstPrice
-                ? excelRows[i].firstPrice.toFixed(2)
-                : 0,
-              secondPrice: excelRows[i].secondPrice
-                ? excelRows[i].secondPrice.toFixed(2)
-                : 0,
-              partnerPrice: excelRows[i].partnerPrice
-                ? excelRows[i].partnerPrice.toFixed(2)
-                : 0,
-              dealerPrice: excelRows[i].dealerPrice
-                ? excelRows[i].dealerPrice.toFixed(2)
-                : 0,
-              distributorPrice: excelRows[i].distributorPrice
-                ? excelRows[i].distributorPrice.toFixed(2)
-                : 0,
-              onSale: excelRows[i].onSale === "да" ? true : false,
-            })
-          );
-        }
-        if (item.number) {
-          if (item.number.includes(tempNumber)) {
-            endId++;
-          } else {
-            if (!isExistingCategory(item.category)) {
-              let newCategories = categories;
-              newCategories.push({
-                groupImg1: categoryImg,
-                name: item.category !== undefined ? item.category : "",
-                active: true,
-              });
-            }
-
-            newData.push({
-              ...groupData,
-              products,
-            });
-            groupData = Object.assign({
-              id: item.id,
-              groupImg1: "",
-              groupImg2: "",
-              groupImg3: "",
-              groupImg4: "",
-              footerImg: "",
-              number: item.number,
-              category: item.category,
-              name: item.groupName,
-              description: item.description,
-              infoText: item.infoText,
-              linkAddress: item.linkAddress,
-              locationType: item.locationType,
-              priceHeader: item.priceHeader,
-              retailName: item.retailName,
-              firstPriceName: item.firstPriceName,
-              secondPriceName: item.secondPriceName,
-              dealerName: item.dealerName,
-              distributorName: item.distributorName,
-              partnerName: item.partnerName,
-              active: true,
-              isMinimized: true,
-              proprietaryItemText1: item.proprietaryItemText1,
-              proprietaryItemText2: item.proprietaryItemText2,
-            });
-            startId = index;
-            endId = index;
-            tempNumber = item.number.substring(0, 3);
-          }
+        startId, (endId = index);
+        groupData = getPriceListDefaultParsedObject(item);
+        return (tempNumber = item.number.substring(0, 3));
+      }
+      let products = [];
+      for (let i = startId; i <= endId; i++) {
+        products.push(getPriceListParsedProduct(excelRows[i]));
+      }
+      if (item.number) {
+        if (item.number.includes(tempNumber)) {
+          endId++;
         } else {
           newData.push({
             ...groupData,
             products,
           });
-          break;
+          groupData = getPriceListDefaultParsedObject(item);
+          startId, (endId = index);
+          tempNumber = item.number.substring(0, 3);
         }
+      } else {
+        newData.push({
+          ...groupData,
+          products,
+        });
+        break;
       }
     }
-    // console.log(newData)
     setPriceList(newData);
     return loadImages(newData, titlePage1);
   };
@@ -321,14 +214,9 @@ const NewPriceList = () => {
   };
 
   const sortCategories = (categories) => {
-    return categories.sort((a, b) => {
-      if (a.name.localeCompare(b.name, undefined, { numeric: true }) < 0) {
-        return -1;
-      }
-      if (a.name.localeCompare(b.name, undefined, { numeric: true }) > 0) {
-        return 1;
-      }
-      return 0;
+    return sortByField(categories, {
+      fieldName: "name",
+      direction: "asc",
     });
   };
 
